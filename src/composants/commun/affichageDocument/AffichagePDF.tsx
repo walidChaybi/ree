@@ -3,7 +3,7 @@ import React, { memo, useMemo } from "react";
 
 interface IAffichagePDFProps {
   contenuBase64: string | null;
-  typeZoom?: "page-fit" | "auto";
+  typeZoom?: "page-fit" | "auto" | number;
 }
 
 const AffichagePDF: React.FC<IAffichagePDFProps> = memo(({ contenuBase64, typeZoom = "page-fit" }) => {

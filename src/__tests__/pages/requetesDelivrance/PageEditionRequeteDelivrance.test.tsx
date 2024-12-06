@@ -1,5 +1,9 @@
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import { idRequeteRDDASigner } from "@mock/data/requeteDelivrance";
+import { IDroit } from "@model/agent/Habilitation";
+import { IOfficier } from "@model/agent/IOfficier";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { ID, ID_ACTE, URL_CONTEXT_APP, URL_MES_REQUETES_DELIVRANCE_EDITION_ID } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
@@ -98,5 +102,34 @@ describe("Test de la page aperçu requête edition analyse marginale", async () 
       const button = screen.getAllByRole("button", { name: /Acte registre/i });
       expect((button[0] as HTMLButtonElement).disabled).toBeTruthy();
     });
+  });
+
+  test("Les boutons d'action sont disponibles", async () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
+          element: (
+            <MockRECEContextProvider
+              utilisateurConnecte={
+                {
+                  idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162",
+                  habilitations: [{ profil: { droits: [{ nom: Droit.SIGNER_DELIVRANCE_DEMAT } as IDroit] } }]
+                } as IOfficier
+              }
+              utilisateurs={[{} as IUtilisateur]}
+            >
+              <PageEditionRequeteDelivrance />
+            </MockRECEContextProvider>
+          )
+        }
+      ],
+      [URL_MES_REQUETES_DELIVRANCE_EDITION_ID.replace(ID, idRequeteRDDASigner).replace(ID_ACTE, idActe)]
+    );
+
+    render(<RouterProvider router={router} />);
+
+    await waitFor(() => expect(screen.getByText("Terminer et signer")).toBeDefined());
+    expect(screen.getByText("Terminer")).toBeDefined();
   });
 });

@@ -8,6 +8,7 @@ interface IReponseItem {
   idRequete: string;
   numeroFonctionnel: string;
   contenu: string;
+  idActe?: string;
 }
 
 export const CONFIG_POST_RECUPERER_DOCUMENTS_REPONSES_A_SIGNER: TConfigurationApi<typeof URI, string[], undefined, IReponseItem[]> = {

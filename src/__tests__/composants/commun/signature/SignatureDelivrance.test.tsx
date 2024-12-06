@@ -2,6 +2,13 @@ import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { IHabilitation, IProfil } from "@model/agent/Habilitation";
 import { IOfficier } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { IRegistre } from "@model/etatcivil/acte/IRegistre";
+import { IMention } from "@model/etatcivil/acte/mention/IMention";
+import { ITypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { NatureMention } from "@model/etatcivil/enum/NatureMention";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import request from "superagent";
@@ -69,7 +76,11 @@ describe("Test du composant Signature délivrance", () => {
 
   afterAll(() => superagentMock.unset());
 
-  const renderComposant = (numerosFonctionnel: string[] = [], avecDroit: boolean = true) =>
+  const renderComposant = (
+    numerosFonctionnel: string[] = [],
+    avecDroit: boolean = true,
+    paramsMention?: { acte?: IFicheActe; documents: IDocumentReponse[] }
+  ) =>
     render(
       <MockRECEContextProvider
         utilisateurConnecte={
@@ -89,6 +100,7 @@ describe("Test du composant Signature délivrance", () => {
           titreBouton={TITRE_BOUTON}
           titreModale={TITRE_MODALE}
           numerosFonctionnel={numerosFonctionnel}
+          {...(paramsMention ? { donneesAvertissementsMentions: paramsMention } : {})}
         />
       </MockRECEContextProvider>
     );
@@ -116,7 +128,7 @@ describe("Test du composant Signature délivrance", () => {
     await waitFor(() => expect(boutonSigner.disabled).toBeFalsy());
     fireEvent.click(boutonSigner);
 
-    expect(screen.getByText(TITRE_MODALE)).toBeDefined();
+    await waitFor(() => expect(screen.getByText(TITRE_MODALE)).toBeDefined());
 
     fireEvent.click(screen.getByTitle("Annuler"));
 
@@ -128,7 +140,7 @@ describe("Test du composant Signature délivrance", () => {
 
     const boutonSigner: HTMLButtonElement = screen.getByTitle(TITRE_BOUTON);
     await waitFor(() => expect(boutonSigner.disabled).toBeFalsy());
-    fireEvent.click(boutonSigner);
+    await act(() => fireEvent.click(boutonSigner));
 
     const demonterListener = listenerSignature({ erreur: { code: CODE_PIN_INVALIDE } });
 
@@ -150,7 +162,7 @@ describe("Test du composant Signature délivrance", () => {
 
     const boutonSigner: HTMLButtonElement = screen.getByTitle(TITRE_BOUTON);
     await waitFor(() => expect(boutonSigner.disabled).toBeFalsy());
-    fireEvent.click(boutonSigner);
+    await act(() => fireEvent.click(boutonSigner));
 
     const LIBELLE_BLOQUANT = "Libelle bloquant";
     const demonterListener = listenerSignature({ erreur: { code: CODES_ERREUR_BLOQUANTS[0], libelle: LIBELLE_BLOQUANT } });
@@ -174,7 +186,7 @@ describe("Test du composant Signature délivrance", () => {
 
     const boutonSigner: HTMLButtonElement = screen.getByTitle(TITRE_BOUTON);
     await waitFor(() => expect(boutonSigner.disabled).toBeFalsy());
-    fireEvent.click(boutonSigner);
+    await act(() => fireEvent.click(boutonSigner));
 
     const LIBELLE_NON_BLOQUANT = "Libelle non bloquant";
     const demonterListener = listenerSignature({
@@ -186,9 +198,8 @@ describe("Test du composant Signature délivrance", () => {
     expect(champPin).toBeDefined();
     expect(boutonValider).toBeDefined();
     await act(() => userEvent.type(champPin, "1234"));
-    await waitFor(() => fireEvent.click(boutonValider));
+    await act(() => fireEvent.click(boutonValider));
 
-    await waitFor(() => expect(screen.getByText("signature des documents : 2/2")).toBeDefined());
     await waitFor(() => expect(() => screen.queryByText("Aucun document n'a pu être signé")).toBeDefined());
     demonterListener();
   });
@@ -198,7 +209,7 @@ describe("Test du composant Signature délivrance", () => {
 
     const boutonSigner: HTMLButtonElement = screen.getByTitle(TITRE_BOUTON);
     await waitFor(() => expect(boutonSigner.disabled).toBeFalsy());
-    fireEvent.click(boutonSigner);
+    await act(() => fireEvent.click(boutonSigner));
 
     const LIBELLE_NON_BLOQUANT = "Libelle non bloquant";
     const demonterListener = listenerSignature({
@@ -213,12 +224,43 @@ describe("Test du composant Signature délivrance", () => {
     await act(() => userEvent.type(champPin, "1234"));
     await waitFor(() => fireEvent.click(boutonValider));
 
-    await waitFor(() => expect(screen.getByText("signature des documents : 2/2")).toBeDefined());
-    expect(screen.queryAllByText(LIBELLE_NON_BLOQUANT).length).toBe(2);
     await waitFor(() => expect(() => screen.queryByText("Signature des documents effectuée.")).toBeDefined());
+    expect(screen.queryAllByText(LIBELLE_NON_BLOQUANT).length).toBe(2);
     demonterListener();
 
+    await waitFor(() => expect(screen.getByTitle("Fermer")).toBeDefined());
     fireEvent.click(screen.getByTitle("Fermer"));
     await waitFor(() => expect(screen.queryByText(TITRE_MODALE)).toBeNull());
+  });
+
+  test("Un avertissement consernant les mentions s'affiche", async () => {
+    const acte: IFicheActe = {
+      id: "idActe",
+      registre: { famille: "ACQ" } as IRegistre,
+      nature: NatureActe.NAISSANCE,
+      mentions: [
+        {
+          typeMention: { natureMention: { code: "4" } as NatureMention } as ITypeMention
+        } as IMention
+      ]
+    } as IFicheActe;
+
+    const NOM_DOC = "nom doc";
+    const documentsReponse = [{ nom: NOM_DOC, typeDocument: "28580709-06dd-4df2-bf6e-70a9482940a1" } as IDocumentReponse];
+
+    renderComposant([NUM_AVEC_DOC], true, { acte: acte, documents: documentsReponse });
+
+    const boutonSigner: HTMLButtonElement = screen.getByTitle(TITRE_BOUTON);
+    await waitFor(() => expect(boutonSigner.disabled).toBeFalsy());
+    await act(() => fireEvent.click(boutonSigner));
+
+    const messageNationalite = `Aucune mention de nationalité n'a été cochée pour le document ${NOM_DOC}`;
+    const messageInterdit = `Vous allez délivrer un extrait avec une mention à intégrer ou à ne pas reporter pour le document ${NOM_DOC}`;
+    expect(screen.getByText(messageNationalite)).toBeDefined();
+    expect(screen.getByText(messageInterdit)).toBeDefined();
+
+    await act(() => fireEvent.click(screen.getByTitle("Non")));
+
+    expect(screen.queryByText(TITRE_MODALE)).toBeNull();
   });
 });

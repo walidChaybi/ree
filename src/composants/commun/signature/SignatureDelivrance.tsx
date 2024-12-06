@@ -3,26 +3,41 @@ import TRAITEMENT_ENREGISTRER_DOCUMENTS_SIGNES from "@api/traitements/signature/
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { utilisateurADroit } from "@model/agent/IUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
+import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { NatureMention } from "@model/etatcivil/enum/NatureMention";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import CircularProgress from "@mui/material/CircularProgress";
+import {
+  aucuneMentionsNationalite,
+  getNaturesMentions
+} from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { useContext, useEffect, useMemo, useState } from "react";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import useTraitementApi from "../../../hooks/api/TraitementApiHook";
 import Signature, { CODES_ERREUR_BLOQUANTS, CODE_PIN_INVALIDE, IDocumentASigner, IDocumentSigne } from "../../../utils/Signature";
 import Bouton from "../bouton/Bouton";
+import PageChargeur from "../chargeurs/PageChargeur";
 import ConteneurModale from "../conteneurs/modale/ConteneurModale";
 import CodePinForm from "./CodePinForm";
+import InformationsDeveloppeur from "./InformationsDeveloppeur";
 import ListeErreursSignature from "./ListeErreursSignature";
 
-interface IModaleSignatureDelivranceProps {
+interface ISignatureDelivranceProps {
   titreBouton: string;
   titreModale: string;
   numerosFonctionnel: string[];
-  apreSignature?: () => void;
+  apreSignature?: (succes?: boolean) => void;
+  donneesAvertissementsMentions?: { acte?: IFicheActe; documents: IDocumentReponse[] } | null;
+  chargerDocumentsAuClic?: boolean;
 }
 
 interface IInformationsSignature {
   modaleOuverte: boolean;
   statut: "attente-pin" | "en-cours" | "termine";
+  avertissementsMentions: string[] | null;
   codePin: string | null;
   erreurPin: boolean;
   erreur: string | null;
@@ -31,65 +46,111 @@ interface IInformationsSignature {
   total: number;
 }
 
-const SignatureDelivrance: React.FC<IModaleSignatureDelivranceProps> = ({
+const INFORMATIONS_SIGNATURE_DEFAUT: IInformationsSignature = {
+  modaleOuverte: false,
+  statut: "attente-pin",
+  avertissementsMentions: null,
+  codePin: null,
+  erreurPin: false,
+  erreur: null,
+  aSigner: null,
+  signes: [],
+  total: 0
+};
+
+const genererMessagesMentions = (acte?: IFicheActe, documents?: IDocumentReponse[]): string[] | null => {
+  const estActeACQouOP2ouOP3 = FicheActe.acteEstACQouOP2ouOP3(acte);
+  const estActeNaissance = FicheActe.estActeNaissance(acte);
+
+  const messagesMentions =
+    documents?.reduce((messages: string[], document) => {
+      DocumentDelivrance.estExtraitAvecFilliation(document?.typeDocument) &&
+        estActeACQouOP2ouOP3 &&
+        estActeNaissance &&
+        aucuneMentionsNationalite(
+          document.mentionsRetirees?.map(mentionRetiree => mentionRetiree.idMention),
+          acte?.mentions
+        ) &&
+        messages.push(`Aucune mention de nationalité n'a été cochée pour le document ${document.nom}`);
+
+      DocumentDelivrance.estExtraitAvecOuSansFilliation(document?.typeDocument) &&
+        NatureMention.ilExisteUneMentionInterdite(
+          getNaturesMentions(
+            document.mentionsRetirees?.map(mentionRetiree => mentionRetiree.idMention),
+            acte?.mentions
+          ),
+          acte?.nature,
+          DocumentDelivrance.getEnumForUUID(document.typeDocument)
+        ) &&
+        messages.push(`Vous allez délivrer un extrait avec une mention à intégrer ou à ne pas reporter pour le document ${document.nom}`);
+
+      return messages;
+    }, []) ?? [];
+
+  return messagesMentions.length ? messagesMentions : null;
+};
+
+const SignatureDelivrance: React.FC<ISignatureDelivranceProps> = ({
   titreBouton,
   titreModale,
   numerosFonctionnel,
-  apreSignature
+  apreSignature,
+  donneesAvertissementsMentions,
+  chargerDocumentsAuClic = false
 }) => {
   const { utilisateurConnecte } = useContext(RECEContextData);
   const aDroitSigner = useMemo(() => utilisateurADroit(Droit.SIGNER_DELIVRANCE_DEMAT, utilisateurConnecte), [utilisateurConnecte]);
-  const [informationsSignature, setInformationsSignature] = useState<IInformationsSignature>({
-    modaleOuverte: false,
-    statut: "attente-pin",
-    codePin: null,
-    erreurPin: false,
-    erreur: null,
-    aSigner: null,
-    signes: [],
-    total: 0
-  });
-  const { appelApi: appelRecupererDocumentsReponses } = useFetchApi(CONFIG_POST_RECUPERER_DOCUMENTS_REPONSES_A_SIGNER);
+  const [informationsSignature, setInformationsSignature] = useState<IInformationsSignature>({ ...INFORMATIONS_SIGNATURE_DEFAUT });
+  const { appelApi: appelRecupererDocumentsReponses, enAttenteDeReponseApi: enRecuperationDocuments } = useFetchApi(
+    CONFIG_POST_RECUPERER_DOCUMENTS_REPONSES_A_SIGNER
+  );
   const { lancerTraitement: lancerTraitementEnregistrement } = useTraitementApi(TRAITEMENT_ENREGISTRER_DOCUMENTS_SIGNES);
 
   useEffect(() => {
     if (!numerosFonctionnel.length) {
-      setInformationsSignature({
-        modaleOuverte: false,
-        statut: "attente-pin",
-        codePin: null,
-        erreurPin: false,
-        erreur: null,
-        aSigner: null,
-        signes: [],
-        total: 0
-      });
+      setInformationsSignature({ ...INFORMATIONS_SIGNATURE_DEFAUT });
 
       return;
     }
 
-    const numerosOntChanges = Boolean(
-      numerosFonctionnel.filter(
-        numeroFonctionnel =>
-          !informationsSignature.aSigner?.find(documentASigner => documentASigner.numeroFonctionnel === numeroFonctionnel)
-      ).length
-    );
+    const peutChargerDocuments = chargerDocumentsAuClic
+      ? informationsSignature.modaleOuverte && informationsSignature.aSigner === null
+      : Boolean(
+          numerosFonctionnel.filter(
+            numeroFonctionnel =>
+              !informationsSignature.aSigner?.find(documentASigner => documentASigner.numeroFonctionnel === numeroFonctionnel)
+          ).length
+        );
 
-    if (!numerosOntChanges) {
+    if (!peutChargerDocuments) {
       return;
     }
 
     appelRecupererDocumentsReponses({
       parametres: { body: numerosFonctionnel },
-      apresSucces: documents =>
+      apresSucces: documents => {
+        if (chargerDocumentsAuClic && !documents.length) {
+          setInformationsSignature(prec => ({
+            ...prec,
+            statut: "termine",
+            erreur: "Aucun document à signer"
+          }));
+
+          return;
+        }
+
         documents.length &&
-        setInformationsSignature(prec => ({
-          ...prec,
-          aSigner: documents,
-          total: documents.length
-        }))
+          setInformationsSignature(prec => ({
+            ...prec,
+            avertissementsMentions: donneesAvertissementsMentions
+              ? genererMessagesMentions(donneesAvertissementsMentions.acte, donneesAvertissementsMentions.documents)
+              : null,
+            aSigner: documents,
+            total: documents.length
+          }));
+      }
     });
-  }, [numerosFonctionnel]);
+  }, [numerosFonctionnel, informationsSignature.modaleOuverte]);
 
   useEffect(() => {
     if (informationsSignature.aSigner === null || !informationsSignature.codePin || informationsSignature.statut === "termine") {
@@ -135,8 +196,8 @@ const SignatureDelivrance: React.FC<IModaleSignatureDelivranceProps> = ({
       return;
     }
 
-    const documentAEnregistrer = informationsSignature.signes.filter(documentSigne => Boolean(documentSigne.contenu?.length));
-    if (!documentAEnregistrer.length) {
+    const documentsAEnregistrer = informationsSignature.signes.filter(documentSigne => Boolean(documentSigne.contenu?.length));
+    if (!documentsAEnregistrer.length) {
       setInformationsSignature(prec => ({
         ...prec,
         statut: "termine",
@@ -147,7 +208,7 @@ const SignatureDelivrance: React.FC<IModaleSignatureDelivranceProps> = ({
     }
 
     lancerTraitementEnregistrement({
-      parametres: { documentsSigne: documentAEnregistrer },
+      parametres: { documentsSigne: documentsAEnregistrer },
       apresSucces: () =>
         setInformationsSignature(prec => ({
           ...prec,
@@ -164,46 +225,95 @@ const SignatureDelivrance: React.FC<IModaleSignatureDelivranceProps> = ({
 
   return (
     <>
+      {chargerDocumentsAuClic && enRecuperationDocuments && <PageChargeur />}
+
       <Bouton
         type="button"
         title={titreBouton}
         onClick={() => setInformationsSignature(prec => ({ ...prec, modaleOuverte: true }))}
-        styleBouton="principal"
-        disabled={!informationsSignature.total || !aDroitSigner}
+        styleBouton={gestionnaireFeatureFlag.estActif(FeatureFlag.FF_AFFICHAGE_NOUVELLE_PAGE_DELIVRANCE) ? "principal" : "old"}
+        disabled={!aDroitSigner || !(informationsSignature.total || chargerDocumentsAuClic) || enRecuperationDocuments}
       >
         {titreBouton}
       </Bouton>
-      {aDroitSigner && informationsSignature.modaleOuverte && Boolean(informationsSignature.total) && (
+
+      {aDroitSigner && !enRecuperationDocuments && informationsSignature.modaleOuverte && Boolean(informationsSignature.total) && (
         <ConteneurModale>
           <div className="border-3 w-[28rem] max-w-full rounded-xl border-solid border-bleu-sombre bg-blanc p-5">
             <h2 className="m-0 mb-4 text-center font-medium text-bleu-sombre">{titreModale}</h2>
 
             {informationsSignature.statut === "attente-pin" && (
-              <CodePinForm
-                onSubmit={codePin =>
-                  setInformationsSignature(prec => ({
-                    ...prec,
-                    codePin: codePin,
-                    erreurPin: false,
-                    statut: "en-cours"
-                  }))
-                }
-                fermerModale={() =>
-                  setInformationsSignature(prec => ({
-                    ...prec,
-                    modaleOuverte: false,
-                    codePin: null,
-                    erreurPin: false,
-                    statut: "attente-pin"
-                  }))
-                }
-                erreurPin={informationsSignature.erreurPin}
-              />
+              <>
+                {informationsSignature.avertissementsMentions?.length ? (
+                  <div className="text-start">
+                    {informationsSignature.avertissementsMentions.map(message => (
+                      <div key={message}>{message}</div>
+                    ))}
+
+                    <div className="mt-2 text-center">{"Voulez-vous continuer ?"}</div>
+
+                    <div className="mt-6 flex justify-center gap-4">
+                      <Bouton
+                        title="Non"
+                        type="button"
+                        styleBouton="secondaire"
+                        onClick={() =>
+                          setInformationsSignature(prec => ({
+                            ...prec,
+                            modaleOuverte: false,
+                            avertissementMentions: null,
+                            codePin: null,
+                            erreurPin: false,
+                            statut: "attente-pin",
+                            ...(chargerDocumentsAuClic ? { aSigner: null } : {})
+                          }))
+                        }
+                      >
+                        {"Non"}
+                      </Bouton>
+
+                      <Bouton
+                        title="Oui"
+                        type="button"
+                        styleBouton="principal"
+                        onClick={() => setInformationsSignature(prec => ({ ...prec, avertissementMentions: null }))}
+                      >
+                        {"Oui"}
+                      </Bouton>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <InformationsDeveloppeur />
+                    <CodePinForm
+                      onSubmit={codePin =>
+                        setInformationsSignature(prec => ({
+                          ...prec,
+                          codePin: codePin,
+                          erreurPin: false,
+                          statut: "en-cours"
+                        }))
+                      }
+                      fermerModale={() =>
+                        setInformationsSignature(prec => ({
+                          ...prec,
+                          modaleOuverte: false,
+                          codePin: null,
+                          erreurPin: false,
+                          statut: "attente-pin",
+                          ...(chargerDocumentsAuClic ? { aSigner: null } : {})
+                        }))
+                      }
+                      erreurPin={informationsSignature.erreurPin}
+                    />
+                  </>
+                )}
+              </>
             )}
 
             {informationsSignature.statut === "en-cours" && (
               <div>
-                <div className="text-center">{`signature des documents : ${informationsSignature.signes.length}/${informationsSignature.total}`}</div>
+                <div className="text-center">{`Documents signés : ${informationsSignature.signes.length}/${informationsSignature.total}`}</div>
                 <div className="mt-1 h-2 w-full overflow-hidden rounded-full border border-solid border-gris">
                   <div
                     className="h-full bg-bleu"
@@ -213,6 +323,9 @@ const SignatureDelivrance: React.FC<IModaleSignatureDelivranceProps> = ({
                     }}
                   ></div>
                 </div>
+                {informationsSignature.signes.length === informationsSignature.total && (
+                  <div className="text-center">{"Enregistrement des documents signés en cours ..."}</div>
+                )}
                 <div className="pt-4 text-center">
                   <CircularProgress size={30} />
                 </div>
@@ -253,7 +366,7 @@ const SignatureDelivrance: React.FC<IModaleSignatureDelivranceProps> = ({
                       signes: [],
                       total: 0
                     }));
-                    apreSignature?.();
+                    apreSignature?.(!informationsSignature.erreur);
                   }}
                 >
                   {"Fermer"}

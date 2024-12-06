@@ -95,7 +95,7 @@ const PartieDocuments: React.FC<IPartieDocumentsProps> = React.memo(({ ongletAct
   }, [documentsDelivrance, ajoutEffectue]);
 
   return (
-    <div className="w-7/12">
+    <div className="w-1/2">
       <OngletsBouton
         onglets={onglets}
         cleOngletActif={ongletActif}

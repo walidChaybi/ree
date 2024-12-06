@@ -1,17 +1,17 @@
 import PlayArrow from "@mui/icons-material/PlayArrow";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Bouton, { TStyleBouton } from "./Bouton";
 
 type TPointAncrageMenu = "gauche" | "droite";
 
-interface BoutonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface IBoutonListeDeroulanteProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   titre: string;
   styleBouton?: TStyleBouton;
   garderStyleSiDisabled?: boolean;
   pointAncrageMenu?: TPointAncrageMenu;
 }
 
-const BoutonListeDeroulante = ({
+const BoutonListeDeroulante: React.FC<React.PropsWithChildren<IBoutonListeDeroulanteProps>> = ({
   titre,
   styleBouton = "principal",
   garderStyleSiDisabled = false,
@@ -19,11 +19,9 @@ const BoutonListeDeroulante = ({
   className,
   children,
   ...props
-}: React.PropsWithChildren<BoutonProps>) => {
+}) => {
   const [menuOuvert, setMenuOuvert] = useState<boolean>(false);
-
-  const boutonMenuNonVide =
-    React.Children.toArray(children).filter(Boolean).length > 0;
+  const boutonMenuNonVide = useMemo(() => React.Children.toArray(children).filter(Boolean).length > 0, [children]);
 
   return (
     <>
@@ -36,8 +34,9 @@ const BoutonListeDeroulante = ({
             className={`${styleBouton === "secondaire" ? "group-hover:text-bleu" : "group-hover:text-blanc"}`}
             styleBouton={styleBouton}
             type="button"
-            title={"Choix supplémentaires"}
+            title={titre}
             onClick={() => setMenuOuvert(!menuOuvert)}
+            onMouseEnter={() => setMenuOuvert(true)}
             {...props}
           >
             <div className="flex items-center justify-center">

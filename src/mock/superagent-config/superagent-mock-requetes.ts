@@ -50,8 +50,10 @@ import {
   idRequeteRDCPourModification,
   idRequeteRDCPourModificationMaCorbeille,
   idRequeteRDCSC,
+  idRequeteRDDASigner,
   requeteRDCPourModification,
-  requeteRDCPourModificationMaCorbeille
+  requeteRDCPourModificationMaCorbeille,
+  requeteRDDASigner
 } from "../data/requeteDelivrance";
 import { DataRMCRequeteRechercheViaNumeroDossierNational, ReponseAppelRMCRequete } from "../data/RMCRequete";
 import { CreationRDCSC, UpdateRDC, UpdateRDCMaCorbeille, UpdateRDCSC } from "../data/SaisirRequeteDelivrance";
@@ -593,6 +595,11 @@ export const configRequetes = [
       if (match[1] === `/requetes/${idRequeteRDCPourModification}`) {
         return {
           data: requeteRDCPourModification
+        };
+      }
+      if (match[1] === `/requetes/${idRequeteRDDASigner}`) {
+        return {
+          data: requeteRDDASigner
         };
       }
       if (match[1] === `/requetes/${idRequeteRDCPourModificationMaCorbeille}`) {

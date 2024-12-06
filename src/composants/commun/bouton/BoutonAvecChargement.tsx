@@ -1,17 +1,13 @@
-import {
-  RECEContextActions,
-  RECEContextData,
-} from "@core/contexts/RECEContext";
+import { RECEContextActions, RECEContextData } from "@core/contexts/RECEContext";
 import { checkDirty } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import React, { ReactNode, useContext, useState } from "react";
-import Bouton from "./Bouton";
+import Bouton, { TStyleBouton } from "./Bouton";
 
-interface BoutonAvecChargementProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface BoutonAvecChargementProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   executerApresClick: () => void;
   children: ReactNode;
-  styleBouton?: "principal" | "secondaire" | "suppression";
+  styleBouton?: TStyleBouton;
   activerVerificationDirty?: boolean;
   timeoutEnMilliSecondes?: number;
 }

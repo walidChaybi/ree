@@ -16,6 +16,9 @@ module.exports = {
         rouge: {
           DEFAULT: "#f44336"
         },
+        orange: {
+          DEFAULT: "#ff9800"
+        },
         blanc: {
           DEFAULT: "#ffffff"
         },

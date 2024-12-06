@@ -52,7 +52,7 @@ const PartieActeRequete: React.FC<IPartieActeRequeteProps> = React.memo(({ ongle
   //const { declancherRetoucheImage } = useRetoucherImage(requete, resultatInformationsActeApiHook); Refondre complètement la retouche image, c'est une catastrophe
 
   return (
-    <div className="w-5/12">
+    <div className="w-1/2">
       <OngletsBouton
         onglets={[
           ...(acte
@@ -89,7 +89,7 @@ const PartieActeRequete: React.FC<IPartieActeRequeteProps> = React.memo(({ ongle
             />
             <AffichagePDF
               contenuBase64={contenuActe}
-              typeZoom="auto"
+              typeZoom={90}
             />
           </div>
         </ConteneurVoletEdition>
@@ -106,7 +106,7 @@ const PartieActeRequete: React.FC<IPartieActeRequeteProps> = React.memo(({ ongle
         <ConteneurVoletEdition estActif={ongletActif === ECleOngletRequete.COURRIER_EDITE}>
           <AffichagePDF
             contenuBase64={contenuCourrier}
-            typeZoom="auto"
+            typeZoom={90}
           />
         </ConteneurVoletEdition>
       )}

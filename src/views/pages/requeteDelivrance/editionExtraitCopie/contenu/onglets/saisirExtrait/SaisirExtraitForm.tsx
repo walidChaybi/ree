@@ -116,8 +116,8 @@ export const SaisirExtraitForm: React.FC<ISaisirExtraitFormProps> = props => {
   const fermerOngletApresValidation = useCallback(() => {
     setOperationEnCours(false);
     setSaisieVerrouillee(true);
-    rechargerRequete();
-    rafraichirRequete();
+    rechargerRequete?.();
+    rafraichirRequete?.();
     props.setOngletDocumentDelivre?.(ECleOngletDocumentDelivre.DOCUMENT_EDITE);
   }, []);
 

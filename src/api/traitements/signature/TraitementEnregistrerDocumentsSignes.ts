@@ -1,3 +1,4 @@
+import { CONFIG_PATCH_DERNIERE_DELIVRANCE_ACTE } from "@api/configurations/etatCivil/acte/PatchDerniereDelivranceActeConfigApi";
 import { CONFIG_PATCH_SIGNATURE_PAR_LOT_DOCUMENTS_REPONSES } from "@api/configurations/requete/documentsReponses/PatchSignatureParLotDocumentsResponsesConfigApi";
 import { CONFIG_POST_SAUVEGARDER_DOCUMENTS } from "@api/configurations/televerification/PostSauvegarderDocumentsConfigApi";
 import { useEffect, useState } from "react";
@@ -14,6 +15,22 @@ const TRAITEMENT_ENREGISTRER_DOCUMENTS_SIGNES: TTraitementApi<IParamTraitement> 
     const [enEchec, setEnEchec] = useState<boolean>(false);
     const { appelApi: appelEnregistrerRequeteApi } = useFetchApi(CONFIG_PATCH_SIGNATURE_PAR_LOT_DOCUMENTS_REPONSES);
     const { appelApi: appelEnregistrerTeleverificationApi } = useFetchApi(CONFIG_POST_SAUVEGARDER_DOCUMENTS);
+    const { appelApi: appelMiseAJourDerniereDelivrance } = useFetchApi(CONFIG_PATCH_DERNIERE_DELIVRANCE_ACTE);
+
+    const mettreAJourDerniereDelivrance = (idsActes: string[]) => {
+      const idsActesAMettreAJour = [...idsActes];
+      const idActe = idsActesAMettreAJour.shift();
+      if (!idActe) {
+        terminerTraitement();
+
+        return;
+      }
+
+      appelMiseAJourDerniereDelivrance({
+        parametres: { path: { idActe: idActe } },
+        finalement: () => mettreAJourDerniereDelivrance(idsActesAMettreAJour)
+      });
+    };
 
     const lancer = (parametres?: IParamTraitement) => {
       if (!parametres) {
@@ -21,6 +38,15 @@ const TRAITEMENT_ENREGISTRER_DOCUMENTS_SIGNES: TTraitementApi<IParamTraitement> 
 
         return;
       }
+
+      const idsActesConcernes = parametres.documentsSigne.reduce((idsActes: string[], documentSigne) => {
+        const idActe = documentSigne.idActe;
+        if (idActe?.length && !idsActes.includes(idActe)) {
+          idsActes.push(idActe);
+        }
+
+        return idsActes;
+      }, []);
 
       appelEnregistrerRequeteApi({
         parametres: {
@@ -41,7 +67,7 @@ const TRAITEMENT_ENREGISTRER_DOCUMENTS_SIGNES: TTraitementApi<IParamTraitement> 
               }))
             },
             apresErreur: () => setEnEchec(true),
-            finalement: () => terminerTraitement()
+            finalement: () => mettreAJourDerniereDelivrance(idsActesConcernes)
           }),
         apresErreur: () => setEnEchec(true)
       });

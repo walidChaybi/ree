@@ -15,6 +15,7 @@ export interface IDocumentASigner {
   idRequete: string;
   numeroFonctionnel: string;
   contenu: string;
+  idActe?: string;
 }
 
 export interface IDocumentSigne {
@@ -27,6 +28,7 @@ export interface IDocumentSigne {
     libelle: string;
     detail: string | null;
   };
+  idActe?: string;
 }
 
 interface ISignerParams {
@@ -40,9 +42,8 @@ interface ISignerParams {
 const EVENT_REPONSE_SIGNATURE = "signWebextResponse";
 const EVENT_ENVOI_SIGNATURE_WEBEXT = "signWebextCall";
 const TIMEOUT_WEBEXT = 30000;
-export const CODE_WEBEXT_INDISPONIBLE = "WEB_EXT1";
+const CODE_WEBEXT_INDISPONIBLE = "WEB_EXT1";
 export const CODE_PIN_INVALIDE = "FONC_3";
-
 export const CODES_ERREUR_BLOQUANTS = [
   "FONC_1",
   "FONC_2",
@@ -61,8 +62,40 @@ export const CODES_ERREUR_BLOQUANTS = [
   CODE_WEBEXT_INDISPONIBLE
 ];
 
+// DEV seulement
+/* v8 ignore start */
+const reponseDelivranceModeDeveloppement = (signerParams: ISignerParams) => {
+  const codesPin = {
+    valide: "0000",
+    invalide: "1111",
+    erreur: "2222"
+  };
+  if (process.env.NODE_ENV !== "development" || !Object.values(codesPin).includes(signerParams.parametres.codePin)) {
+    return;
+  }
+
+  setTimeout(() => {
+    const pinIncorrect = signerParams.parametres.codePin === codesPin.invalide;
+    const genererErreur = signerParams.parametres.codePin === codesPin.erreur;
+    window.top?.dispatchEvent(
+      new CustomEvent<IReponseDocumentSigne>(EVENT_REPONSE_SIGNATURE, {
+        detail: {
+          erreur:
+            pinIncorrect || genererErreur
+              ? { code: pinIncorrect ? CODE_PIN_INVALIDE : "FAKE_ERR", libelle: "Une erreur sur le document", detail: null }
+              : undefined,
+          document: pinIncorrect || genererErreur ? undefined : signerParams.parametres.document.contenu
+        }
+      })
+    );
+  }, 3000);
+};
+/* v8 ignore end */
+
 const Signature = {
   signerDocumentDelivrance: (signerParams: ISignerParams) => {
+    reponseDelivranceModeDeveloppement(signerParams);
+
     let retournerDocumentSigne: null | EventListener = null;
 
     const reponseWebext: Promise<IDocumentSigne> = new Promise(resolve => {
@@ -72,7 +105,8 @@ const Signature = {
           idRequete: signerParams.parametres.document.idRequete,
           numeroFonctionnel: signerParams.parametres.document.numeroFonctionnel,
           contenu: reponse.detail.document,
-          erreur: reponse.detail.erreur
+          erreur: reponse.detail.erreur,
+          idActe: signerParams.parametres.document.idActe
         })) as EventListener;
 
       window.top?.addEventListener(EVENT_REPONSE_SIGNATURE, retournerDocumentSigne);
@@ -91,7 +125,8 @@ const Signature = {
           code: CODE_WEBEXT_INDISPONIBLE,
           libelle: "La signature électronique est actuellement indisponible ou n'est pas installée.",
           detail: null
-        }
+        },
+        idActe: signerParams.parametres.document.idActe
       });
     }, TIMEOUT_WEBEXT);
 

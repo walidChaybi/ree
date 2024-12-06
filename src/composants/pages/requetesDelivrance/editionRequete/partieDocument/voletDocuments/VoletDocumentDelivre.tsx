@@ -123,7 +123,7 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
           estActif={ongletActif === ECleOngletDocumentDelivre.SAISIE}
           estSousOnglet
         >
-          <div className="m-0 overflow-auto">
+          <div className="m-0 overflow-auto text-start">
             <SaisirExtraitForm
               acte={acte as IFicheActe}
               requete={requete}
@@ -169,7 +169,7 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
       >
         <AffichagePDF
           contenuBase64={contenuDocument}
-          typeZoom="auto"
+          typeZoom={90}
         />
       </ConteneurVoletEdition>
     </>

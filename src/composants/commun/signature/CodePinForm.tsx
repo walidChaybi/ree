@@ -43,15 +43,7 @@ const CodePinForm: React.FC<ICodePinFormProps> = ({ onSubmit, fermerModale, erre
             autoComplete="off"
           />
 
-          <div className="mt-10 flex flex-nowrap justify-center gap-4">
-            <Bouton
-              title="Valider"
-              type="submit"
-              styleBouton="principal"
-            >
-              {"Valider"}
-            </Bouton>
-
+          <div className="mt-12 flex flex-nowrap justify-center gap-4">
             <Bouton
               title="Annuler"
               type="button"
@@ -59,6 +51,14 @@ const CodePinForm: React.FC<ICodePinFormProps> = ({ onSubmit, fermerModale, erre
               onClick={fermerModale}
             >
               {"Annuler"}
+            </Bouton>
+
+            <Bouton
+              title="Valider"
+              type="submit"
+              styleBouton="principal"
+            >
+              {"Valider"}
             </Bouton>
           </div>
         </Form>

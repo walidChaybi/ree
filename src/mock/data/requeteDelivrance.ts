@@ -27,12 +27,12 @@ const requeteDelivrance: IRequeteDelivrance = {
   documentDemande: {
     libelle: "Certificat de situation au rca",
     categorie: "DOCUMENT_DELIVRANCE",
-    code: "CERTIFICAT_SITUATION_RCA",
+    code: "CERTIFICAT_SITUATION_RCA"
   } as DocumentDelivrance,
   documentsReponses: [documentReponseCourrier117],
   evenement: {
     id: "755e30c2-2586-4a32-b2a4-8d52d4ed32e0",
-    natureActe: NatureActeRequete.MARIAGE,
+    natureActe: NatureActeRequete.MARIAGE
   },
   id: "0ad85c1f-57cf-45cc-ab66-6a17f31247df",
   idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
@@ -50,16 +50,16 @@ const requeteDelivrance: IRequeteDelivrance = {
       mimeType: "",
       nom: "Jérome",
       taille: 0,
-      typePieceJustificative: TYPE_PIECE_JUSTIFICATIVE[0],
-    },
+      typePieceJustificative: TYPE_PIECE_JUSTIFICATIVE[0]
+    }
   ],
   provenanceRequete: {
     provenance: Provenance.SERVICE_PUBLIC,
     provenancePlanete: {} as IProvenancePlanete,
     provenanceRece: {} as IProvenanceRece,
     provenanceServicePublic: {
-      referenceDila: "MEL-8701",
-    },
+      referenceDila: "MEL-8701"
+    }
   },
 
   requerant: {
@@ -70,7 +70,7 @@ const requeteDelivrance: IRequeteDelivrance = {
       ligne5: "lieu dit la martinière",
       codePostal: "310 GL24",
       ville: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
-      pays: "France",
+      pays: "France"
     },
     courriel: "ldubois@wanadoo.fr",
     dateCreation: new Date("1624615266000"),
@@ -84,16 +84,16 @@ const requeteDelivrance: IRequeteDelivrance = {
       mandataireHabilite: { type: TypeMandataireReq.AUTRE },
       particulier: undefined,
       qualite: Qualite.PARTICULIER,
-      utilisateurRece: undefined,
+      utilisateurRece: undefined
     },
-    telephone: "",
+    telephone: ""
   },
   sousType: SousTypeDelivrance.RDCSC,
 
   statutCourant: {
     dateEffet: 1624602323000,
     raisonStatut: "",
-    statut: StatutRequete.PRISE_EN_CHARGE,
+    statut: StatutRequete.PRISE_EN_CHARGE
   },
   titulaires: [
     {
@@ -110,12 +110,12 @@ const requeteDelivrance: IRequeteDelivrance = {
       prenoms: [
         {
           numeroOrdre: 1,
-          prenom: "Elodie",
-        },
+          prenom: "Elodie"
+        }
       ],
 
       sexe: "FEMININ",
-      villeNaissance: "Barcelone",
+      villeNaissance: "Barcelone"
     },
     {
       anneeNaissance: 1990,
@@ -131,16 +131,16 @@ const requeteDelivrance: IRequeteDelivrance = {
       prenoms: [
         {
           numeroOrdre: 1,
-          prenom: "Jack",
-        },
+          prenom: "Jack"
+        }
       ],
 
       sexe: "MASCULIN",
-      villeNaissance: "Barcelone",
-    },
+      villeNaissance: "Barcelone"
+    }
   ],
   type: TypeRequete.DELIVRANCE,
-  choixDelivrance: ChoixDelivrance.REP_SANS_DEL_EC_REQUETE_INCOMPLETE,
+  choixDelivrance: ChoixDelivrance.REP_SANS_DEL_EC_REQUETE_INCOMPLETE
 };
 
 export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
@@ -151,7 +151,7 @@ export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
   documentDemande: {
     libelle: "Certificat de situation au rca",
     categorie: "DOCUMENT_DELIVRANCE",
-    code: "CERTIFICAT_SITUATION_RCA",
+    code: "CERTIFICAT_SITUATION_RCA"
   } as DocumentDelivrance,
   documentsReponses: [],
   evenement: undefined,
@@ -171,16 +171,16 @@ export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
       mimeType: "",
       nom: "Jérome",
       taille: 0,
-      typePieceJustificative: "Carte" as unknown as TypePieceJustificative,
-    },
+      typePieceJustificative: "Carte" as unknown as TypePieceJustificative
+    }
   ],
   provenanceRequete: {
     provenance: Provenance.SERVICE_PUBLIC,
     provenancePlanete: {} as IProvenancePlanete,
     provenanceRece: {} as IProvenanceRece,
     provenanceServicePublic: {
-      referenceDila: "MEL-8701",
-    },
+      referenceDila: "MEL-8701"
+    }
   },
 
   requerant: {
@@ -191,7 +191,7 @@ export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
       ligne5: "lieu dit la martinière",
       codePostal: "310 GL24",
       ville: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
-      pays: "Rwanda",
+      pays: "Rwanda"
     },
     courriel: "ldubois@wanadoo.fr",
     dateCreation: new Date("1624615266000"),
@@ -203,21 +203,21 @@ export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
       autreProfessionnel: undefined,
       institutionnel: {
         type: TypeInstitutionnel.AMBASSADE,
-        nomInstitution: "Ambassade du Rwanda",
+        nomInstitution: "Ambassade du Rwanda"
       },
       mandataireHabilite: undefined,
       particulier: undefined,
       qualite: Qualite.INSTITUTIONNEL,
-      utilisateurRece: undefined,
+      utilisateurRece: undefined
     },
-    telephone: "",
+    telephone: ""
   },
   sousType: SousTypeDelivrance.RDCSC,
 
   statutCourant: {
     dateEffet: 1624602323000,
     raisonStatut: "",
-    statut: StatutRequete.PRISE_EN_CHARGE,
+    statut: StatutRequete.PRISE_EN_CHARGE
   },
   titulaires: [
     {
@@ -234,12 +234,12 @@ export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
       prenoms: [
         {
           numeroOrdre: 1,
-          prenom: "Elodie",
-        },
+          prenom: "Elodie"
+        }
       ],
 
       sexe: "FEMININ",
-      villeNaissance: "Barcelone",
+      villeNaissance: "Barcelone"
     },
     {
       anneeNaissance: 1990,
@@ -255,16 +255,16 @@ export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
       prenoms: [
         {
           numeroOrdre: 1,
-          prenom: "Jack",
-        },
+          prenom: "Jack"
+        }
       ],
 
       sexe: "MASCULIN",
-      villeNaissance: "Barcelone",
-    },
+      villeNaissance: "Barcelone"
+    }
   ],
   type: TypeRequete.DELIVRANCE,
-  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE,
+  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE
 };
 
 export default requeteDelivrance;
@@ -284,12 +284,12 @@ const requerant: IRequerant = {
     ligne5: "lieu dit la martinière",
     codePostal: "310 GL24",
     ville: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
-    pays: "France",
+    pays: "France"
   },
   lienRequerant: undefined,
   qualiteRequerant: {
-    qualite: Qualite.PARTICULIER,
-  },
+    qualite: Qualite.PARTICULIER
+  }
 };
 
 export const idRequeteRDCSC = "d19650ed-012b-41ec-b7be-9e6ea9101eaa";
@@ -300,10 +300,10 @@ export const requeteRDCSC = {
   documentDemande: {
     code: "ATTESTATION_PACS",
     libelle: "Attestation PACS",
-    categorie: "categorie",
+    categorie: "categorie"
   },
   statutCourant: {
-    statut: StatutRequete.PRISE_EN_CHARGE,
+    statut: StatutRequete.PRISE_EN_CHARGE
   },
   requerant,
   titulaires: [
@@ -323,23 +323,22 @@ export const requeteRDCSC = {
         {
           id: "8ef12d35-0d01-4ed1-b026-0038f901a13e",
           numeroOrdre: 1,
-          prenom: "Alphonse",
-        },
+          prenom: "Alphonse"
+        }
       ],
-      parentsTitulaire: [],
-    },
-  ],
+      parentsTitulaire: []
+    }
+  ]
 } as any as IRequeteDelivrance;
 
-export const idRequeteRDCSCCertificatSituationRCA =
-  "d19650ed-012b-41ec-b7be-9e6ea2101eae";
+export const idRequeteRDCSCCertificatSituationRCA = "d19650ed-012b-41ec-b7be-9e6ea2101eae";
 export const requeteRDCSCCertificatSituationRCA = {
   ...requeteRDCSC,
   id: idRequeteRDCSCCertificatSituationRCA,
   documentDemande: {
     code: "CERTIFICAT_SITUATION_RCA",
     libelle: "Certificat situation RCA",
-    categorie: "categorie",
+    categorie: "categorie"
   },
   titulaires: [
     {
@@ -358,12 +357,12 @@ export const requeteRDCSCCertificatSituationRCA = {
         {
           id: "8ef12d35-0d01-4ed1-b026-0038f901a13e",
           numeroOrdre: 1,
-          prenom: "Alphonse",
-        },
+          prenom: "Alphonse"
+        }
       ],
-      parentsTitulaire: [],
-    },
-  ],
+      parentsTitulaire: []
+    }
+  ]
 } as any as IRequeteDelivrance;
 
 export const idRequeteRDC = "d19650ed-012b-41ec-b7be-9e6ea9101eaa";
@@ -376,12 +375,12 @@ export const requeteDelivranceRDC: IRequeteDelivrance = {
   documentDemande: {
     libelle: "Certificat de situation au rca",
     categorie: "DOCUMENT_DELIVRANCE",
-    code: "CERTIFICAT_SITUATION_RCA",
+    code: "CERTIFICAT_SITUATION_RCA"
   } as DocumentDelivrance,
   documentsReponses: [documentReponseCourrier117],
   evenement: {
     id: "755e30c2-2586-4a32-b2a4-8d52d4ed32e0",
-    natureActe: NatureActeRequete.MARIAGE,
+    natureActe: NatureActeRequete.MARIAGE
   },
   id: "0ad85c1f-57cf-45cc-ab66-6a17f31247df",
   idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
@@ -399,16 +398,16 @@ export const requeteDelivranceRDC: IRequeteDelivrance = {
       mimeType: "",
       nom: "Jérome",
       taille: 0,
-      typePieceJustificative: TYPE_PIECE_JUSTIFICATIVE[0],
-    },
+      typePieceJustificative: TYPE_PIECE_JUSTIFICATIVE[0]
+    }
   ],
   provenanceRequete: {
     provenance: Provenance.SERVICE_PUBLIC,
     provenancePlanete: {} as IProvenancePlanete,
     provenanceRece: {} as IProvenanceRece,
     provenanceServicePublic: {
-      referenceDila: "MEL-8701",
-    },
+      referenceDila: "MEL-8701"
+    }
   },
 
   requerant: {
@@ -419,7 +418,7 @@ export const requeteDelivranceRDC: IRequeteDelivrance = {
       ligne5: "lieu dit la martinière",
       codePostal: "310 GL24",
       ville: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
-      pays: "France",
+      pays: "France"
     },
     courriel: "ldubois@wanadoo.fr",
     dateCreation: new Date("1624615266000"),
@@ -433,16 +432,16 @@ export const requeteDelivranceRDC: IRequeteDelivrance = {
       mandataireHabilite: { type: TypeMandataireReq.AUTRE },
       particulier: undefined,
       qualite: Qualite.PARTICULIER,
-      utilisateurRece: undefined,
+      utilisateurRece: undefined
     },
-    telephone: "",
+    telephone: ""
   },
   sousType: SousTypeDelivrance.RDC,
 
   statutCourant: {
     dateEffet: 1624602323000,
     raisonStatut: "",
-    statut: StatutRequete.PRISE_EN_CHARGE,
+    statut: StatutRequete.PRISE_EN_CHARGE
   },
   titulaires: [
     {
@@ -459,12 +458,12 @@ export const requeteDelivranceRDC: IRequeteDelivrance = {
       prenoms: [
         {
           numeroOrdre: 1,
-          prenom: "Elodie",
-        },
+          prenom: "Elodie"
+        }
       ],
 
       sexe: "FEMININ",
-      villeNaissance: "Barcelone",
+      villeNaissance: "Barcelone"
     },
     {
       anneeNaissance: 1990,
@@ -480,16 +479,16 @@ export const requeteDelivranceRDC: IRequeteDelivrance = {
       prenoms: [
         {
           numeroOrdre: 1,
-          prenom: "Jack",
-        },
+          prenom: "Jack"
+        }
       ],
 
       sexe: "MASCULIN",
-      villeNaissance: "Barcelone",
-    },
+      villeNaissance: "Barcelone"
+    }
   ],
   type: TypeRequete.DELIVRANCE,
-  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION,
+  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION
 };
 
 export const requeteRDC = {
@@ -497,7 +496,7 @@ export const requeteRDC = {
   type: TypeRequete.DELIVRANCE,
   sousType: SousTypeDelivrance.RDC,
   statutCourant: {
-    statut: StatutRequete.PRISE_EN_CHARGE,
+    statut: StatutRequete.PRISE_EN_CHARGE
   },
   requerant,
   titulaires: [
@@ -517,26 +516,25 @@ export const requeteRDC = {
         {
           id: "8ef12d35-0d01-4ed1-b026-0038f901a13e",
           numeroOrdre: 1,
-          prenom: "Alphonse",
-        },
+          prenom: "Alphonse"
+        }
       ],
-      parentsTitulaire: [],
-    },
-  ],
+      parentsTitulaire: []
+    }
+  ]
 } as any as IRequeteDelivrance;
 
 export const requeteRDD = {
   type: TypeRequete.DELIVRANCE,
   sousType: SousTypeDelivrance.RDC,
   statutCourant: {
-    statut: StatutRequete.PRISE_EN_CHARGE,
-  },
+    statut: StatutRequete.PRISE_EN_CHARGE
+  }
 } as IRequeteDelivrance;
 
-export const idRequeteRDCPourModification =
-  "9d00fe88-9d21-482e-bb02-223636f78386";
-export const idRequeteRDCPourModificationMaCorbeille =
-  "8f00fe88-9d21-482e-bb02-223636f78386";
+export const idRequeteRDCPourModification = "9d00fe88-9d21-482e-bb02-223636f78386";
+export const idRequeteRDCPourModificationMaCorbeille = "8f00fe88-9d21-482e-bb02-223636f78386";
+
 export const requeteRDCPourModification = {
   id: "9d00fe88-9d21-482e-bb02-223636f78386",
   numeroFonctionnel: "SIE5G4",
@@ -554,7 +552,7 @@ export const requeteRDCPourModification = {
       idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162",
       nomUtilisateur: null,
       prenomUtilisateur: null,
-      courrielUtilisateur: null,
+      courrielUtilisateur: null
     },
     {
       id: "9d006f4d-cc7a-488d-b710-8527fe4bd19b",
@@ -564,7 +562,7 @@ export const requeteRDCPourModification = {
       idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162",
       nomUtilisateur: null,
       prenomUtilisateur: null,
-      courrielUtilisateur: null,
+      courrielUtilisateur: null
     },
     {
       id: "9d0057b4-ed50-414e-b19c-2fb41c15f923",
@@ -574,8 +572,8 @@ export const requeteRDCPourModification = {
       idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162",
       nomUtilisateur: null,
       prenomUtilisateur: null,
-      courrielUtilisateur: null,
-    },
+      courrielUtilisateur: null
+    }
   ],
   titulaires: [
     {
@@ -599,15 +597,15 @@ export const requeteRDCPourModification = {
           id: "9d00beb9-8106-4ddb-812b-c31b92dc6534",
           numeroOrdre: 1,
           prenom: "PrenomRDCModifiée",
-          estPrenomFrRetenuSdanf: null,
-        },
+          estPrenomFrRetenuSdanf: null
+        }
       ],
       parentsTitulaire: [],
       deces: null,
       domiciliation: null,
       evenementUnions: [],
-      typeObjetTitulaire: null,
-    },
+      typeObjetTitulaire: null
+    }
   ],
   piecesJustificatives: [],
   requerant: {
@@ -626,15 +624,15 @@ export const requeteRDCPourModification = {
       type: "GENEALOGISTE",
       raisonSociale: "raisonSocialeRDC",
       nature: null,
-      crpcen: null,
+      crpcen: null
     },
     detailQualiteInstitutionnel: null,
     detailQualiteAutreProfessionnel: null,
     lienRequerant: {
       id: "9d009a3d-a07f-4c7d-860b-52ac64f77bb1",
       typeLienRequerant: "GRAND_PARENT",
-      nature: null,
-    },
+      nature: null
+    }
   },
   mandant: {
     id: "9d00c2c5-cd7d-4c2e-ab02-83d88634137f",
@@ -643,19 +641,19 @@ export const requeteRDCPourModification = {
     prenom: "PrenomRDCModifiée2",
     raisonSociale: null,
     lienMandant: "GRAND_PARENT",
-    natureLien: null,
+    natureLien: null
   },
   observations: [],
   statut: {
     id: "9d002653-710b-4a78-b651-e5c8cce92ed8",
     statutRequete: "PRISE_EN_CHARGE",
     dateEffet: 1669647394274,
-    raisonStatut: null,
+    raisonStatut: null
   },
   lienRequerant: {
     id: "9d009a3d-a07f-4c7d-860b-52ac64f77bb1",
     typeLienRequerant: "GRAND_PARENT",
-    nature: null,
+    nature: null
   },
   doublons: null,
   origines: null,
@@ -680,12 +678,25 @@ export const requeteRDCPourModification = {
     mois: 10,
     annee: 2000,
     ville: "Ville",
-    pays: "Pays",
+    pays: "Pays"
   },
-  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION,
+  choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
 } as any;
 export const requeteRDCPourModificationMaCorbeille = {
   ...requeteRDCPourModification,
   id: "8f00fe88-9d21-482e-bb02-223636f78386",
-  documentDemande: "5f1e909f-f74c-4b16-9c03-b3733354cxyz",
+  documentDemande: "5f1e909f-f74c-4b16-9c03-b3733354cxyz"
 } as any;
+
+export const idRequeteRDDASigner = "8f00fe88-9d21-482e-bb02-223636f78385";
+export const requeteRDDASigner = {
+  ...requeteRDCPourModification,
+  id: idRequeteRDDASigner,
+  sousType: SousTypeDelivrance.RDD,
+  statut: {
+    id: "9d002653-710b-4a78-b651-e5c8cce92ed8",
+    statutRequete: "A_SIGNER",
+    dateEffet: 1669647394274,
+    raisonStatut: null
+  }
+};
