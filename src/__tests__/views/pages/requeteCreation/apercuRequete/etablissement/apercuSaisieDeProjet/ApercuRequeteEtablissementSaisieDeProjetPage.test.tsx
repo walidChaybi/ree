@@ -128,7 +128,7 @@ test("DOIT rediriger l'utilisateur vers l'apercuSimple QUAND la requete ne nous 
 
   await waitFor(() => {
     expect(router.state.location.pathname).toBe(
-      `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}/er5ez456-354v-461z-c5fd-162md289m75v/a272ec8a-1351-4edd-99b8-03004292a9d2`
+      `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}/er5ez456-354v-461z-c5fd-162md289m75v`
     );
   });
 });

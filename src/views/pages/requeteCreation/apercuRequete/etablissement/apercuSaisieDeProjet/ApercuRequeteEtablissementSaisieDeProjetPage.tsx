@@ -130,7 +130,8 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
   useEffect(() => {
     if (detailRequeteState) {
       if (!appartientAUtilisateurConnecte(utilisateurConnecte, detailRequeteState.idUtilisateur)) {
-        navigate(location.pathname.replace(PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET, PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE));
+        const url = getApercuSimpleUrl(location.pathname, detailRequeteState.id);
+        navigate(url);
         messageManager.showWarningAndClose("Ouverture impossible. Vous n'êtes pas en charge de ce dossier");
         return;
       }
@@ -376,4 +377,8 @@ const getTextePopinValiderProjetActe = (formIsDirty: boolean): string[] => {
   return formIsDirty
     ? [`Des modifications du projet d'acte ne sont pas enregistrées.`, `Veuillez actualiser le projet d'acte avant sa validation.`]
     : [`Confirmez-vous la validation du projet pour envoi du BI à la SDANF ?`];
+};
+
+const getApercuSimpleUrl = (pathname: string, idRequete: string): string => {
+  return `${pathname.split(PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET)[0]}${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}/${idRequete}`;
 };
