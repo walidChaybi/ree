@@ -582,12 +582,14 @@ export const routesRece: IRoute[] = [
   {
     url: URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID,
     component: PageEditionRequeteMiseAJour,
+    props: { estMiseAJourAvecMentions: true },
     auMoinsUnDesDroits: [Droit.METTRE_A_JOUR_ACTE],
     libelle: LIBELLE_APERCU_MISE_A_JOUR_
   },
   {
     url: URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE_ID,
     component: PageEditionRequeteMiseAJour,
+    props: { estMiseAJourAvecMentions: true },
     auMoinsUnDesDroits: [Droit.METTRE_A_JOUR_ACTE],
     libelle: LIBELLE_APERCU_MISE_A_JOUR_
   },

@@ -89,7 +89,8 @@ const EditionMiseAJourContextProvider: React.FC<React.PropsWithChildren<IEdition
         parametres: {
           idActe: idActe,
           idRequete: idRequete,
-          miseAJourEffectuee: miseAJourEffectuee
+          miseAJourEffectuee: miseAJourEffectuee,
+          estMiseAJourAvecMentions: estMiseAJourAvecMentions
         },
         finalement: debloquer
       }),
@@ -98,7 +99,8 @@ const EditionMiseAJourContextProvider: React.FC<React.PropsWithChildren<IEdition
         parametres: {
           idActe: idActe,
           idRequete: idRequete,
-          miseAJourEffectuee: miseAJourEffectuee
+          miseAJourEffectuee: miseAJourEffectuee,
+          estMiseAJourAvecMentions: estMiseAJourAvecMentions
         },
         finalement: debloquer
       })

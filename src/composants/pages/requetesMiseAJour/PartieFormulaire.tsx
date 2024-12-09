@@ -154,7 +154,7 @@ export const PartieFormulaire: React.FC = () => {
   const estTerminerEtSignerDisabled =
     listeMentions.length < 1 ||
     estMentionEnCoursDeSaisie ||
-    !analyseMarginaleFormRef.current?.isValid ||
+    !(analyseMarginaleFormRef.current ? analyseMarginaleFormRef.current?.isValid : true) ||
     analyseMarginaleFormRef.current?.dirty ||
     !estActualiserEtVisualiserdisabled;
 
@@ -190,44 +190,46 @@ export const PartieFormulaire: React.FC = () => {
         cleOngletActif={ongletsActifs.formulaires}
         changerOnglet={(valeur: string) => changerOnglet(null, valeur as ECleOngletsMiseAJour)}
       />
-      <>
-        {(enAttenteMiseAJourAnalyseMarginale || enAttenteMiseAJourAnalyseMarginaleEtMention) && <PageChargeur />}
-        {afficherAnalyseMarginale && (
-          <OngletAnalyseMarginale
-            estActif={ongletsActifs.formulaires === ECleOngletsMiseAJour.ANALYSE_MARGINALE}
-            refFormulaire={analyseMarginaleFormRef}
-          />
-        )}
-        <OngletMention
-          estActif={ongletsActifs.formulaires === ECleOngletsMiseAJour.MENTIONS}
-          refFormulaire={mentionsFormRef}
+
+      {(enAttenteMiseAJourAnalyseMarginale || enAttenteMiseAJourAnalyseMarginaleEtMention) && <PageChargeur />}
+
+      <OngletMention
+        estActif={ongletsActifs.formulaires === ECleOngletsMiseAJour.MENTIONS}
+        refFormulaire={mentionsFormRef}
+      />
+
+      {afficherAnalyseMarginale && (
+        <OngletAnalyseMarginale
+          estActif={ongletsActifs.formulaires === ECleOngletsMiseAJour.ANALYSE_MARGINALE}
+          refFormulaire={analyseMarginaleFormRef}
         />
-        <ConteneurBoutonBasDePage position="droite">
-          <BoutonActualiserEtVisualiser
-            onClick={actualiserEtVisualiser}
-            disabled={estActualiserEtVisualiserdisabled}
-          />
-          {estMiseAJourAvecMentions ? (
-            estOfficierHabiliterPourTousLesDroits(utilisateurConnecte, [Droit.SIGNER_MENTION, Droit.METTRE_A_JOUR_ACTE]) && (
-              <>
-                <Bouton
-                  disabled={estTerminerEtSignerDisabled}
-                  onClick={() => setEstPopinSignatureOuverte(true)}
-                >
-                  Terminer et Signer
-                </Bouton>
-                <PopinSignatureMiseAJourMentions
-                  estOuvert={estPopinSignatureOuverte}
-                  setEstOuvert={setEstPopinSignatureOuverte}
-                  actionApresSignatureReussie={onSignatureValidee}
-                />
-              </>
-            )
-          ) : (
-            <BoutonValiderEtTerminer disabled={analyseMarginaleFormRef.current?.dirty || !miseAJourEffectuee} />
-          )}
-        </ConteneurBoutonBasDePage>
-      </>
+      )}
+
+      <ConteneurBoutonBasDePage position="droite">
+        <BoutonActualiserEtVisualiser
+          onClick={actualiserEtVisualiser}
+          disabled={estActualiserEtVisualiserdisabled}
+        />
+        {estMiseAJourAvecMentions ? (
+          estOfficierHabiliterPourTousLesDroits(utilisateurConnecte, [Droit.SIGNER_MENTION, Droit.METTRE_A_JOUR_ACTE]) && (
+            <>
+              <Bouton
+                disabled={estTerminerEtSignerDisabled}
+                onClick={() => setEstPopinSignatureOuverte(true)}
+              >
+                Terminer et Signer
+              </Bouton>
+              <PopinSignatureMiseAJourMentions
+                estOuvert={estPopinSignatureOuverte}
+                setEstOuvert={setEstPopinSignatureOuverte}
+                actionApresSignatureReussie={onSignatureValidee}
+              />
+            </>
+          )
+        ) : (
+          <BoutonValiderEtTerminer disabled={analyseMarginaleFormRef.current?.dirty || !miseAJourEffectuee} />
+        )}
+      </ConteneurBoutonBasDePage>
     </div>
   );
 };

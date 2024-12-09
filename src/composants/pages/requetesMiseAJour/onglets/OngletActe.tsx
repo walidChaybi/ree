@@ -11,11 +11,11 @@ interface IOngletActeProps {
 }
 
 const OngletActe: React.FC<IOngletActeProps> = ({ estActif }) => {
-  const { idActe } = useContext(EditionMiseAJourContext.Valeurs);
+  const { idActe, estActeSigne } = useContext(EditionMiseAJourContext.Valeurs);
   const [contenuActe, setContenuActe] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!idActe) {
+    if (!idActe || (contenuActe !== null && !estActeSigne)) {
       return;
     }
 
@@ -63,7 +63,7 @@ const OngletActe: React.FC<IOngletActeProps> = ({ estActif }) => {
     getDonneesPourCompositionActeTexte(idActe).then(data =>
       compositionApi.getCompositionActeTexte(data.body).then(dataComposition => setContenuActe(dataComposition.body.data.contenu ?? ""))
     );
-  }, [idActe]);
+  }, [idActe, estActeSigne]);
 
   return (
     <OngletsContenu estActif={estActif}>

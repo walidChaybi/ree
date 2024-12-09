@@ -10,6 +10,7 @@ describe("Test du traitement Abondon d'une requête de mise à jour", () => {
   const BOUTON_SANS_PARAM_REQUETE = "sans-param-requete";
   const BOUTON_SANS_AM_ENREGISTREE = "sans-am-enregistree";
   const BOUTON_AVEC_AM_ENREGISTREE = "avec-am-enregistree";
+  const BOUTON_AVEC_MENTIONS_ENREGISTREE = "avec-mentions-enregistree";
 
   const ComposantTest = () => {
     const { lancerTraitement, traitementEnCours } = useTraitementApi(TRAITEMENT_ABANDONNER_MISE_A_JOUR);
@@ -20,14 +21,18 @@ describe("Test du traitement Abondon d'une requête de mise à jour", () => {
 
         <button
           type="button"
-          onClick={() => lancerTraitement({ parametres: { idActe: "", idRequete: "test", miseAJourEffectuee: false } })}
+          onClick={() =>
+            lancerTraitement({ parametres: { idActe: "", idRequete: "test", miseAJourEffectuee: false, estMiseAJourAvecMentions: false } })
+          }
         >
           {BOUTON_SANS_PARAM_ACTE}
         </button>
 
         <button
           type="button"
-          onClick={() => lancerTraitement({ parametres: { idActe: "test", idRequete: "", miseAJourEffectuee: false } })}
+          onClick={() =>
+            lancerTraitement({ parametres: { idActe: "test", idRequete: "", miseAJourEffectuee: false, estMiseAJourAvecMentions: false } })
+          }
         >
           {BOUTON_SANS_PARAM_REQUETE}
         </button>
@@ -35,7 +40,14 @@ describe("Test du traitement Abondon d'une requête de mise à jour", () => {
         <button
           type="button"
           onClick={() =>
-            lancerTraitement({ parametres: { idActe: "test-id-acte", idRequete: "test-id-requete", miseAJourEffectuee: false } })
+            lancerTraitement({
+              parametres: {
+                idActe: "test-id-acte",
+                idRequete: "test-id-requete",
+                miseAJourEffectuee: false,
+                estMiseAJourAvecMentions: false
+              }
+            })
           }
         >
           {BOUTON_SANS_AM_ENREGISTREE}
@@ -44,10 +56,33 @@ describe("Test du traitement Abondon d'une requête de mise à jour", () => {
         <button
           type="button"
           onClick={() =>
-            lancerTraitement({ parametres: { idActe: "test-id-acte", idRequete: "test-id-requete", miseAJourEffectuee: true } })
+            lancerTraitement({
+              parametres: {
+                idActe: "test-id-acte",
+                idRequete: "test-id-requete",
+                miseAJourEffectuee: true,
+                estMiseAJourAvecMentions: false
+              }
+            })
           }
         >
           {BOUTON_AVEC_AM_ENREGISTREE}
+        </button>
+
+        <button
+          type="button"
+          onClick={() =>
+            lancerTraitement({
+              parametres: {
+                idActe: "test-id-acte",
+                idRequete: "test-id-requete",
+                miseAJourEffectuee: true,
+                estMiseAJourAvecMentions: true
+              }
+            })
+          }
+        >
+          {BOUTON_AVEC_MENTIONS_ENREGISTREE}
         </button>
       </>
     );
@@ -71,6 +106,12 @@ describe("Test du traitement Abondon d'une requête de mise à jour", () => {
     });
 
     fireEvent.click(screen.getByText(BOUTON_AVEC_AM_ENREGISTREE));
+    expect(screen.getByText(EN_COURS)).toBeDefined();
+    await waitFor(() => {
+      expect(screen.getByText(PAS_EN_COURS)).toBeDefined();
+    });
+
+    fireEvent.click(screen.getByText(BOUTON_AVEC_MENTIONS_ENREGISTREE));
     expect(screen.getByText(EN_COURS)).toBeDefined();
     await waitFor(() => {
       expect(screen.getByText(PAS_EN_COURS)).toBeDefined();

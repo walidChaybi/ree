@@ -37,22 +37,17 @@ export const PartieActeRequete: React.FC = () => {
 
       <OngletActe estActif={ongletsActifs.actes === ECleOngletsMiseAJour.ACTE} />
 
-      {estActeSigne ? (
-        <Bouton onClick={() => navigate(URL_RECHERCHE_ACTE_INSCRIPTION)}>{"Retour rechercher un acte"}</Bouton>
-      ) : (
-        <>
-          <OngletActeMisAJour estActif={ongletsActifs.actes === ECleOngletsMiseAJour.ACTE_MIS_A_JOUR} />
-          <ConteneurBoutonBasDePage position="gauche">
-            <Bouton
-              title="Abandonner"
-              type="button"
-              onClick={() => navigate(URL_RECHERCHE_ACTE_INSCRIPTION)}
-            >
-              {"Abandonner"}
-            </Bouton>
-          </ConteneurBoutonBasDePage>
-        </>
-      )}
+      {!estActeSigne && <OngletActeMisAJour estActif={ongletsActifs.actes === ECleOngletsMiseAJour.ACTE_MIS_A_JOUR} />}
+
+      <ConteneurBoutonBasDePage position="gauche">
+        <Bouton
+          title={estActeSigne ? "Retour rechercher un acte" : "Abandonner"}
+          type="button"
+          onClick={() => navigate(URL_RECHERCHE_ACTE_INSCRIPTION, { replace: true })}
+        >
+          {estActeSigne ? "Retour rechercher un acte" : "Abandonner"}
+        </Bouton>
+      </ConteneurBoutonBasDePage>
     </div>
   );
 };
