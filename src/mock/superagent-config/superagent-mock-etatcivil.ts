@@ -50,7 +50,7 @@ import { fichePacs, idFichePacs } from "../data/fichePacs";
 import { inscriptionsRc } from "../data/ficheRC";
 import { FicheRcaDecisionJuridictionEtrangere, ficheRca, idFicheRca } from "../data/ficheRCA";
 import { listeDeuxPersonnes } from "../data/listePersonnes";
-import { EnregistrerMentionsResultat, mentions, mentionsPlurilingues } from "../data/mentions";
+import { EnregistrerMentionsResultat, MetamodeleAideSaisie, mentions, mentionsPlurilingues } from "../data/mentions";
 import {
   ReponseAppelNomenclatureMandataire,
   ReponseAppelNomenclatureNatureMention,
@@ -232,6 +232,10 @@ export const configEtatcivil = [
         context.method === "put"
       ) {
         return EnregistrerMentionsResultat;
+      }
+
+      if (match[1] === "/types-mentions/b03c1503-d452-4751-8bb3-94d082db1e5e/metamodele-aide-a-saisie") {
+        return MetamodeleAideSaisie;
       }
 
       /////////////////////////////////////////////////////////////////////

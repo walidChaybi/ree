@@ -1,6 +1,9 @@
+import { CONFIG_GET_METAMODELE_TYPE_MENTION } from "@api/configurations/requete/miseAJour/GetMetamodeleTypeMentionConfigApi";
 import { MENTION_NIVEAU_DEUX, MENTION_NIVEAU_TROIS, MENTION_NIVEAU_UN, TEXTE_MENTION } from "@composant/formulaire/ConstantesNomsForm";
+import { IMetamodeleTypeMention } from "@model/etatcivil/acte/mention/IMetaModeleTypeMention";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { logError } from "@util/LogManager";
 import { Options } from "@util/Type";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
@@ -8,8 +11,9 @@ import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { OptionVide, SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { ISubForm, SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { EditionMiseAJourContext } from "../../../../../contexts/EditionMiseAJourContextProvider";
+import useFetchApi from "../../../../../hooks/api/FetchApiHook";
 import "./scss/MiseAJourMentionsForm.scss";
 
 interface IListesTypesMentionForm {
@@ -27,17 +31,28 @@ const ListesTypesMentionForm: React.FC<IListesTypesMentionForm & SubFormProps> =
   const [listeNiveau2, setListeNiveau2] = useState<Options>();
   const [listeNiveau3, setListeNiveau3] = useState<Options>();
   const [afficherTexteMention, setAfficherTexteMention] = useState<boolean>(false);
-  const [estMentionTypeInformatise, setEstMentionTypeInformatise] = useState<boolean>(false);
+  const [idMentionTypeInformatise, setIdMentionTypeInformatise] = useState<string | null>(null);
+  const [metamodeleTypeMention, setMetamodeleTypeMention] = useState<IMetamodeleTypeMention>();
 
   const { indexMentionModifiee } = useContext(EditionMiseAJourContext.Valeurs);
+  const { appelApi: appelApiGetMetamodeleTypeMention } = useFetchApi(CONFIG_GET_METAMODELE_TYPE_MENTION);
 
   const NOM_CHAMP_MENTION_NIVEAU_UN = withNamespace(nom, MENTION_NIVEAU_UN);
   const NOM_CHAMP_MENTION_NIVEAU_DEUX = withNamespace(nom, MENTION_NIVEAU_DEUX);
   const NOM_CHAMP_MENTION_NIVEAU_TROIS = withNamespace(nom, MENTION_NIVEAU_TROIS);
 
-  const formikValueInputUn = formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_UN).value;
-  const formikValueInputDeux = formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_DEUX).value;
-  const formikValueInputTrois = formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_TROIS).value;
+  const formikValueInputUn = useMemo(
+    () => formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_UN).value,
+    [formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_UN).value]
+  );
+  const formikValueInputDeux = useMemo(
+    () => formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_DEUX).value,
+    [formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_DEUX).value]
+  );
+  const formikValueInputTrois = useMemo(
+    () => formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_TROIS).value,
+    [formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_TROIS).value]
+  );
 
   useEffect(() => {
     if (indexMentionModifiee !== undefined) {
@@ -50,9 +65,26 @@ const ListesTypesMentionForm: React.FC<IListesTypesMentionForm & SubFormProps> =
     namespaceToReset.forEach(namespace => {
       formik.setFieldValue(namespace, "");
     });
-    setListeNiveau2(undefined);
-    setListeNiveau3(undefined);
+    if (namespaceToReset.includes(NOM_CHAMP_MENTION_NIVEAU_DEUX)) setListeNiveau2(undefined);
+    if (namespaceToReset.includes(NOM_CHAMP_MENTION_NIVEAU_TROIS)) setListeNiveau3(undefined);
   };
+
+  const idTypeMentionInformatiseSelectionne = useMemo(() => {
+    if (!gestionnaireFeatureFlag.estActif(FeatureFlag.FF_AIDE_A_LA_SAISIE_MENTION)) return null;
+
+    const typeMentionUn = TypeMention.getTypesMention().find(mention => mention.id === formikValueInputUn);
+    const typeMentionDeux = typeMentionUn?.sousTypes?.find(mention => mention.id === formikValueInputDeux);
+    const typeMentionTrois = typeMentionDeux?.sousTypes?.find(mention => mention.id === formikValueInputTrois);
+    if (typeMentionTrois?.estSaisieAssistee) {
+      return typeMentionTrois.id;
+    } else if (typeMentionDeux?.estSaisieAssistee) {
+      return typeMentionDeux.id;
+    } else if (typeMentionUn?.estSaisieAssistee) {
+      return typeMentionUn.id;
+    } else {
+      return null;
+    }
+  }, [formikValueInputUn, formikValueInputDeux, formikValueInputTrois]);
 
   useEffect(() => {
     if (formikValueInputUn) {
@@ -64,10 +96,8 @@ const ListesTypesMentionForm: React.FC<IListesTypesMentionForm & SubFormProps> =
     } else {
       setEstTypeMentionSelectionne(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formik]);
+  }, [formikValueInputUn]);
 
-  // change les valeurs de la liste de 3eme niveau quand le sous-type mentions est selectionné
   useEffect(() => {
     if (formikValueInputDeux !== "") {
       const mentionSelectionneNiveauUn = TypeMention.getTypesMention().find(mention => mention.id === formikValueInputUn);
@@ -76,8 +106,7 @@ const ListesTypesMentionForm: React.FC<IListesTypesMentionForm & SubFormProps> =
         setListeNiveau3(TypeMention.getTypeMentionAsOptions(mentionSelectionneNiveauDeux?.sousTypes));
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formik]);
+  }, [formikValueInputDeux]);
 
   useEffect(() => {
     setAfficherTexteMention(() => {
@@ -89,16 +118,39 @@ const ListesTypesMentionForm: React.FC<IListesTypesMentionForm & SubFormProps> =
         return Boolean(formikValueInputUn);
       }
     });
-    setEstMentionTypeInformatise(() => {
-      if (!gestionnaireFeatureFlag.estActif(FeatureFlag.FF_AIDE_A_LA_SAISIE_MENTION)) return false;
+    setIdMentionTypeInformatise(idTypeMentionInformatiseSelectionne);
+  }, [formikValueInputUn, formikValueInputDeux, formikValueInputTrois, listeNiveau1, listeNiveau2, listeNiveau3, idMentionTypeInformatise]);
 
-      const typeMentionUn = TypeMention.getTypesMention().find(mention => mention.id === formikValueInputUn);
-      const typeMentionDeux = typeMentionUn?.sousTypes?.find(mention => mention.id === formikValueInputDeux);
-      const typeMentionTrois = typeMentionDeux?.sousTypes?.find(mention => mention.id === formikValueInputTrois);
-
-      return Boolean(typeMentionUn?.estSaisieAssistee || typeMentionDeux?.estSaisieAssistee || typeMentionTrois?.estSaisieAssistee);
-    });
-  }, [formikValueInputUn, formikValueInputDeux, formikValueInputTrois, listeNiveau1, listeNiveau2, listeNiveau3]);
+  useEffect(() => {
+    if (idMentionTypeInformatise) {
+      let idTypeMention = null;
+      switch (true) {
+        case Boolean(formikValueInputTrois):
+          idTypeMention = formikValueInputTrois as string;
+          break;
+        case Boolean(formikValueInputDeux) && listeNiveau3 === undefined:
+          idTypeMention = formikValueInputDeux as string;
+          break;
+        case Boolean(formikValueInputUn) && listeNiveau2 === undefined:
+          idTypeMention = formikValueInputUn as string;
+          break;
+      }
+      idTypeMention &&
+        appelApiGetMetamodeleTypeMention({
+          parametres: { path: { idTypeMention } },
+          apresSucces: (metamodele: IMetamodeleTypeMention) => {
+            setMetamodeleTypeMention(metamodele);
+          },
+          apresErreur: erreurs => {
+            setMetamodeleTypeMention(undefined);
+            logError({
+              messageUtilisateur: "Impossible de récupérer les metamodeles",
+              error: erreurs[0]
+            });
+          }
+        });
+    }
+  }, [idMentionTypeInformatise, listeNiveau2, listeNiveau3]);
 
   return (
     <div className="ListesTypesMentionForm">
@@ -137,7 +189,7 @@ const ListesTypesMentionForm: React.FC<IListesTypesMentionForm & SubFormProps> =
       ) : undefined}
 
       {afficherTexteMention &&
-        (estMentionTypeInformatise ? (
+        (idMentionTypeInformatise && metamodeleTypeMention ? (
           <p className="py-12 text-center text-red-500">Aide à la saisie en cours de développement</p>
         ) : (
           <div className="selectFieldMentions">

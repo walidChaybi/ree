@@ -1400,3 +1400,103 @@ export const EnregistrerMentionsResultat = JSON.stringify({
     "Nom                : GREENWALD\nPrénoms            : marie-paulita, zaria, léna\nsexe               : féminin\ndate de naissance  : cinq mars mille huit cent trente-huit\nlieu de naissance  : Milan, Lombardie (Italie)\n\nNom du père        : Sacken\nPrénoms            : Carmela, Linzy\nâgé de             : 55 ans\nlieu de naissance  : Milan, Lombardie (Italie)\nqui déclare la reconnaître\n\nNom de la mère     : Sacken\nPrénoms            : Carmela, Linzy\nâgée de            : 55 ans\nlieu de naissance  : Milan, Lombardie (Italie)\n                     son épouse\n\nDéclarant          : le père\n\nAdresse            : Bruxelles (Flandre)\nFrançaise par      : décret de naturalisation du 23 septembre 3515\n\nActe établi par Nous, Antoine EVAIN, officier de l'état civil du service central d'état civil du ministère des affaires étrangères (loi n°78-731 du 12 juillet 1978 modifiée).\n\n                     Nantes, le 8 février 2024",
   mentions: "texteMention"
 });
+
+export const MetamodeleAideSaisie = JSON.stringify({
+  errors: [],
+  data: {
+    idTypeMention: "b03c1503-d452-4751-8bb3-94d082db1e5e",
+    estSaisieAssistee: true,
+    modeleHandleBars:
+      "/e1/Marié{{#if (eq titulaire.sexe 'feminin')}}e{{/if} à /e{{valeur 'evenementEtranger.ville'}}{{#if evenementEtranger.pays}} ({{valeur 'evenementEtranger.pays'}}){{/if}}/e2/ /e{{valeur 'evenementEtranger.date'}}/e3/ avec /e{{valeur 'lienMentionConjoint.prenoms'}}/e4/ /e{{valeur 'lienMentionConjoint.nom'}}/e5.Acte /e{{valeur 'decisionValidationEnregistrement.modeCreation'}}/e6 /e{{valeur 'autoriteValidationRegistre.etablissement'}}/e7/ à /e{{valeur 'autoriteValidationRegistre.ville'}}{{#if (eq decisionValidationEnregistrement.acteRECE 'true')}}/e8/ RECE./e{{valeur 'decisionValidationEnregistrement.annee'}}/e9/./e{{valeur 'decisionValidationEnregistrement.numeroActe'}{{else}}/e10/ CSL./e{{valeur 'decisionValidationEnregistrement.poste'}}/e11/./e{{valeur 'decisionValidationEnregistrement.annee'}}/e12/./e{{valeur 'decisionValidationEnregistrement.Support'}}/e13/./e{{valeur 'decisionValidationEnregistrement.numeroActe'}}{{/if}}/e14/./e",
+    metamodelsBlocs: [
+      {
+        id: "evenementEtranger",
+        titre: "EVENEMENT (A L'ETRANGER)",
+        typeBloc: "BLOC_EVENEMENT_ETRANGER",
+        position: 1,
+        champs: [
+          { id: "ville", libelle: "Ville", position: 1, type: "text", obligatoire: true, exigencesPourValorisation: [] },
+          {
+            id: "pays",
+            libelle: "Pays",
+            position: 2,
+            type: "text",
+            obligatoire: false,
+            exigencesPourValorisation: [{ idChampReference: "ville", operateur: "<>", valeurs: ["Jérusalem"] }]
+          },
+          { id: "date", libelle: "Date", position: 3, type: "dateIncomplete", obligatoire: true, exigencesPourValorisation: [] }
+        ]
+      },
+      {
+        id: "lienMentionConjoint",
+        titre: "CONJOINT",
+        typeBloc: "BLOC_LIEN_MENTION_CONJOINT",
+        position: 2,
+        champs: [
+          { id: "prenoms", libelle: "Prénom(s)", position: 1, type: "text", obligatoire: false, exigencesPourValorisation: [] },
+          { id: "nom", libelle: "Nom", position: 2, type: "text", obligatoire: false, exigencesPourValorisation: [] }
+        ]
+      },
+      {
+        id: "decisionValidationEnregistrement",
+        titre: "DECISION",
+        typeBloc: "BLOC_DECISION_VALIDATION_ENREGISTREMENT",
+        position: 3,
+        champs: [
+          {
+            id: "modeCreation",
+            libelle: "Mode création",
+            position: 1,
+            type: "select",
+            obligatoire: true,
+            exigencesPourValorisation: [],
+            options: ["transcrit", "établi"]
+          },
+          { id: "acteRECE", libelle: "Acte RECE", position: 2, type: "boolean", obligatoire: true, exigencesPourValorisation: [] },
+          {
+            id: "poste",
+            libelle: "Poste",
+            position: 3,
+            type: "text",
+            obligatoire: false,
+            exigencesPourValorisation: [{ idChampReference: "acteRECE", operateur: "=", valeurs: ["true"] }]
+          },
+          { id: "annee", libelle: "Année", position: 4, type: "int", obligatoire: true, exigencesPourValorisation: [] },
+          {
+            id: "support",
+            libelle: "Support",
+            position: 5,
+            type: "text",
+            obligatoire: false,
+            exigencesPourValorisation: [{ idChampReference: "acteRECE", operateur: "=", valeurs: ["true"] }]
+          },
+          { id: "numeroActe", libelle: "N° acte", position: 6, type: "text", obligatoire: true, exigencesPourValorisation: [] }
+        ]
+      },
+      {
+        id: "autoriteValidationRegistre",
+        titre: "Autorité",
+        typeBloc: "BLOC_AUTORITE_VALIDATION_REGISTRE",
+        position: 4,
+        champs: [
+          {
+            id: "etablissement",
+            libelle: "Etablissement",
+            position: 1,
+            type: "select",
+            obligatoire: true,
+            exigencesPourValorisation: [],
+            options: [
+              "à l'ambassade de France",
+              "à la chancellerie détachée de France",
+              "au consulat de France",
+              "au consulat général de France",
+              "au service central d'état civil"
+            ]
+          },
+          { id: "ville", libelle: "Ville", position: 2, type: "text", obligatoire: true, exigencesPourValorisation: [] }
+        ]
+      }
+    ]
+  }
+});

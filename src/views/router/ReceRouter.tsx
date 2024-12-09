@@ -3,12 +3,7 @@ import { Body } from "@core/body/Body";
 import { Header } from "@core/header/Header";
 import { PageMessage } from "@core/login/PageMessage";
 import { IRoute } from "@util/route/IRoute";
-import {
-  Navigate,
-  Route,
-  createBrowserRouter,
-  createRoutesFromElements
-} from "react-router-dom";
+import { Navigate, Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 import ReceRoute from "./ReceRoute";
 import { routesRece } from "./ReceRoutes";
 import { URL_CONTEXT_APP, URL_DECONNEXION } from "./ReceUrls";
@@ -39,9 +34,15 @@ export const receRouter = createBrowserRouter(
           );
         })}
       </Route>
-      <Route path={URL_DECONNEXION} element={<PageMessage />} />
-      <Route path="*" element={<Navigate to={URL_CONTEXT_APP} />} />
+      <Route
+        path={URL_DECONNEXION}
+        element={<PageMessage />}
+      />
+      <Route
+        path="*"
+        element={<Navigate to={URL_CONTEXT_APP} />}
+      />
     </>
   )
 );
-/* v8 ignore start */
+/* v8 ignore end */

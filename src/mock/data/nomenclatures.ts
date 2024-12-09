@@ -351,8 +351,7 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance:
-        "Courrier sans délivrance E/C - Acte non détenu au SCEC",
+      categorieDocumentDelivrance: "Courrier sans délivrance E/C - Acte non détenu au SCEC",
       correspondanceDila: true,
       texteLibre: true
     },
@@ -364,8 +363,7 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance:
-        "Courrier sans délivrance E/C - Acte non détenu au SCEC",
+      categorieDocumentDelivrance: "Courrier sans délivrance E/C - Acte non détenu au SCEC",
       correspondanceDila: true,
       texteLibre: true
     },
@@ -377,8 +375,7 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance:
-        "Courrier sans délivrance E/C - Acte non détenu au SCEC",
+      categorieDocumentDelivrance: "Courrier sans délivrance E/C - Acte non détenu au SCEC",
       correspondanceDila: true,
       texteLibre: true
     },
@@ -390,8 +387,7 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance:
-        "Courrier sans délivrance E/C - Acte non détenu au SCEC",
+      categorieDocumentDelivrance: "Courrier sans délivrance E/C - Acte non détenu au SCEC",
       correspondanceDila: true,
       texteLibre: true
     },
@@ -403,8 +399,7 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance:
-        "Courrier sans délivrance E/C - Acte non détenu au SCEC",
+      categorieDocumentDelivrance: "Courrier sans délivrance E/C - Acte non détenu au SCEC",
       correspondanceDila: true,
       texteLibre: true
     },
@@ -416,8 +411,7 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance:
-        "Courrier sans délivrance E/C - Requête incomplète",
+      categorieDocumentDelivrance: "Courrier sans délivrance E/C - Requête incomplète",
       correspondanceDila: true,
       texteLibre: true
     },
@@ -429,8 +423,7 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance:
-        "Courrier sans délivrance E/C - Requête incomplète",
+      categorieDocumentDelivrance: "Courrier sans délivrance E/C - Requête incomplète",
       correspondanceDila: true,
       texteLibre: false
     },
@@ -442,8 +435,7 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance:
-        "Courrier sans délivrance E/C - Requête incomplète",
+      categorieDocumentDelivrance: "Courrier sans délivrance E/C - Requête incomplète",
       correspondanceDila: true,
       texteLibre: true
     },
@@ -479,8 +471,7 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
-      categorieDocumentDelivrance:
-        "Courrier avec délivrance E/C - Copie archive",
+      categorieDocumentDelivrance: "Courrier avec délivrance E/C - Copie archive",
       correspondanceDila: true,
       texteLibre: false
     },
@@ -524,8 +515,7 @@ export const ReponseAppelNomenclatureDocummentDelivrance = {
       id: "5ce13f3a-d98c-401a-a2fe-8fde23878b4c",
       categorie: "DOCUMENT_DELIVRANCE",
       code: "CARN_CS_01",
-      libelle:
-        "Courrier de non délivrance certificat de situation - mariage actif",
+      libelle: "Courrier de non délivrance certificat de situation - mariage actif",
       estActif: null,
       usageTeleprocedure: null,
       usageRECE: null,
@@ -758,8 +748,7 @@ export const ReponseAppelNomenclatureTypeAlerte = {
       libelle: "Transcription pour annulation, dossier au Parquet en cours",
       type: "A ne pas délivrer",
       sousType: "Annulation",
-      description:
-        "A ne pas délivrer - Annulation - Transcription pour annulation, dossier au Parquet en cours"
+      description: "A ne pas délivrer - Annulation - Transcription pour annulation, dossier au Parquet en cours"
     },
     {
       id: "058a436b-330d-4c3c-83e0-d49c27390aa5",
@@ -777,8 +766,7 @@ export const ReponseAppelNomenclatureTypeAlerte = {
       libelle: "Procès-verbal d'abandon qui tient lieu d'acte de naissance",
       type: "A délivrer sous conditions",
       sousType: "Extrait à privilégier",
-      description:
-        "A délivrer sous conditions - Extrait à privilégier - Procès-verbal d'abandon qui tient lieu d'acte de naissance"
+      description: "A délivrer sous conditions - Extrait à privilégier - Procès-verbal d'abandon qui tient lieu d'acte de naissance"
     },
     {
       id: "058a436b-330d-4c3c-83e0-d49c27390aaf",
@@ -787,8 +775,7 @@ export const ReponseAppelNomenclatureTypeAlerte = {
       libelle: "Acte comportant une mention de désaveu de paternité",
       type: "A délivrer sous conditions",
       sousType: "Extrait à privilégier",
-      description:
-        "A délivrer sous conditions - Extrait à privilégier - Acte comportant une mention de désaveu de paternité"
+      description: "A délivrer sous conditions - Extrait à privilégier - Acte comportant une mention de désaveu de paternité"
     },
     {
       id: "058a436b-330d-4c3c-83e0-d49c27390ab1",
@@ -797,8 +784,7 @@ export const ReponseAppelNomenclatureTypeAlerte = {
       libelle: "Actes comportant une mention de changement de sexe",
       type: "A délivrer sous conditions",
       sousType: "Extrait à privilégier",
-      description:
-        "A délivrer sous conditions - Extrait à privilégier - Actes comportant une mention de changement de sexe"
+      description: "A délivrer sous conditions - Extrait à privilégier - Actes comportant une mention de changement de sexe"
     },
     {
       id: "058a436b-330d-4c3c-83e0-d49c27390ab2",
@@ -807,19 +793,16 @@ export const ReponseAppelNomenclatureTypeAlerte = {
       libelle: "Rectification en cours",
       type: "A délivrer sous conditions",
       sousType: "Divers - délivrer sous conditions ",
-      description:
-        "A délivrer sous conditions - Divers - Rectification en cours"
+      description: "A délivrer sous conditions - Divers - Rectification en cours"
     },
     {
       id: "058a436b-330d-4c3c-83e0-d49c27390ab3",
       nom: "TYPE_ALERTE",
       code: "PRECISER_CONDITIONS",
-      libelle:
-        "Préciser les conditions d'exploitation, les instructions du Parquet",
+      libelle: "Préciser les conditions d'exploitation, les instructions du Parquet",
       type: "A délivrer sous conditions",
       sousType: "Divers - délivrer sous conditions ",
-      description:
-        "A délivrer sous conditions - Divers - Préciser les conditions d'exploitation, les instructions du Parquet"
+      description: "A délivrer sous conditions - Divers - Préciser les conditions d'exploitation, les instructions du Parquet"
     },
     {
       id: "058a436b-330d-4c3c-83e0-d49c27390ab4",
@@ -828,15 +811,13 @@ export const ReponseAppelNomenclatureTypeAlerte = {
       libelle: "Consulter le dossier n°",
       type: "A délivrer sous conditions",
       sousType: "Divers - délivrer sous conditions ",
-      description:
-        "A délivrer sous conditions - Divers - Consulter le dossier n°"
+      description: "A délivrer sous conditions - Divers - Consulter le dossier n°"
     },
     {
       id: "058a436b-330d-4c3c-83e0-d49c27390ab5",
       nom: "TYPE_ALERTE",
       code: "DELIVRANCE_RESERVE_PREUVE",
-      libelle:
-        "Délivrance sous réserve de la preuve de la nationalité française de l'autre conjoint",
+      libelle: "Délivrance sous réserve de la preuve de la nationalité française de l'autre conjoint",
       type: "A délivrer sous conditions",
       sousType: "Divers - délivrer sous conditions ",
       description:
@@ -849,8 +830,7 @@ export const ReponseAppelNomenclatureTypeAlerte = {
       libelle: "Homonymie, voir acte n°",
       type: "A délivrer sous conditions",
       sousType: "Divers - délivrer sous conditions ",
-      description:
-        "A délivrer sous conditions - Divers - Homonymie, voir acte n°"
+      description: "A délivrer sous conditions - Divers - Homonymie, voir acte n°"
     },
     {
       id: "058a436b-330d-4c3c-83e0-d49c27390ab7",
@@ -859,8 +839,7 @@ export const ReponseAppelNomenclatureTypeAlerte = {
       libelle: "Ne délivrer qu'à une autorité judiciaire",
       type: "A délivrer sous conditions",
       sousType: "Divers - délivrer sous conditions ",
-      description:
-        "A délivrer sous conditions - Divers - Ne délivrer qu'à une autorité judiciaire"
+      description: "A délivrer sous conditions - Divers - Ne délivrer qu'à une autorité judiciaire"
     },
     {
       id: "058a436b-330d-4c3c-83e0-d49c27390ab8",
@@ -869,8 +848,7 @@ export const ReponseAppelNomenclatureTypeAlerte = {
       libelle: "En attente de vérification",
       type: "A délivrer sous conditions",
       sousType: "Divers - délivrer sous conditions ",
-      description:
-        "A délivrer sous conditions - Divers - En attente de vérification"
+      description: "A délivrer sous conditions - Divers - En attente de vérification"
     },
     {
       id: "058a436b-330d-4c3c-83e0-d49c27390ab9",
@@ -897,8 +875,7 @@ export const ReponseAppelNomenclatureTypeAlerte = {
       libelle: "Mariage inopposable en France",
       type: "A ne pas délivrer",
       sousType: "Annulation",
-      description:
-        "A ne pas délivrer - Annulation - Mariage inopposable en France"
+      description: "A ne pas délivrer - Annulation - Mariage inopposable en France"
     },
     {
       id: "058a436b-330d-4c3c-83e0-d49c27390aa7",
@@ -907,8 +884,7 @@ export const ReponseAppelNomenclatureTypeAlerte = {
       libelle: "Extraénité des époux, dossier au Parquet en cours",
       type: "A ne pas délivrer",
       sousType: "Nationalité",
-      description:
-        "A ne pas délivrer - Nationalité - Extraénité des époux, dossier au Parquet en cours"
+      description: "A ne pas délivrer - Nationalité - Extraénité des époux, dossier au Parquet en cours"
     },
     {
       id: "058a436b-330d-4c3c-83e0-d49c27390aa8",
@@ -917,8 +893,7 @@ export const ReponseAppelNomenclatureTypeAlerte = {
       libelle: "Sursis à exploitation, instructions au Parquet",
       type: "A ne pas délivrer",
       sousType: "Divers - ne pas délivrer",
-      description:
-        "A ne pas délivrer - Divers - Sursis à exploitation, instructions au Parquet"
+      description: "A ne pas délivrer - Divers - Sursis à exploitation, instructions au Parquet"
     },
     {
       id: "058a436b-330d-4c3c-83e0-d49c27390aa9",
@@ -945,8 +920,7 @@ export const ReponseAppelNomenclatureTypeAlerte = {
       libelle: "En attente de nouvelle numérisation",
       type: "A ne pas délivrer",
       sousType: "Divers - ne pas délivrer",
-      description:
-        "A ne pas délivrer - Divers - En attente de nouvelle numérisation"
+      description: "A ne pas délivrer - Divers - En attente de nouvelle numérisation"
     },
     {
       id: "058a436b-330d-4c3c-83e0-d49c27390aab",
@@ -955,15 +929,13 @@ export const ReponseAppelNomenclatureTypeAlerte = {
       libelle: "Délivrance en copie intégrale à privilégier",
       type: "A délivrer sous conditions",
       sousType: "Copie intégrale à privilégier",
-      description:
-        "A délivrer sous conditions - Délivrance en copie intégrale à privilégier"
+      description: "A délivrer sous conditions - Délivrance en copie intégrale à privilégier"
     },
     {
       id: "058a436b-330d-4c3c-83e0-d49c27390aac",
       nom: "TYPE_ALERTE",
       code: "ENONCIATION_PROHIBEES",
-      libelle:
-        "Enonciations prohibées, à délivrer en extrait ou masquer les énonciations avant délivrance de copie intégrale",
+      libelle: "Enonciations prohibées, à délivrer en extrait ou masquer les énonciations avant délivrance de copie intégrale",
       type: "A délivrer sous conditions",
       sousType: "Extrait à privilégier",
       description:
@@ -973,8 +945,7 @@ export const ReponseAppelNomenclatureTypeAlerte = {
       id: "058a436b-330d-4c3c-83e0-d49c27390aad",
       nom: "TYPE_ALERTE",
       code: "LEGITIMATION_ADOPTIVE",
-      libelle:
-        "Légitimation adoptive, délivrance d'extrait à privilégier, délivrance de copie intégrale dans certaines conditions",
+      libelle: "Légitimation adoptive, délivrance d'extrait à privilégier, délivrance de copie intégrale dans certaines conditions",
       type: "A délivrer sous conditions",
       sousType: "Extrait à privilégier",
       description:
@@ -1023,8 +994,7 @@ export const ReponseAppelNomenclatureTypeAlerte = {
       libelle: "Acte annulé, adoption plénière",
       type: "A ne pas délivrer",
       sousType: "Annulation",
-      description:
-        "A ne pas délivrer - Annulation - acte annulé, adoption plénière"
+      description: "A ne pas délivrer - Annulation - acte annulé, adoption plénière"
     },
     {
       id: "f844b79d-e8c4-4eaf-bdf2-76c2af51f7eb",
@@ -1194,8 +1164,7 @@ export const ReponseAppelNomenclatureNatureMention = {
       id: "b03cfc41-1821-496d-891c-87f963149600",
       nom: "NATURE_MENTION",
       code: "17",
-      libelle:
-        "Annulation/révocation d'une décision (absence, adoption simple)",
+      libelle: "Annulation/révocation d'une décision (absence, adoption simple)",
       estActif: true,
       opposableAuTiers: false
     },
@@ -1219,8 +1188,7 @@ export const ReponseAppelNomenclatureNatureMention = {
       id: "b03cc823-a7c2-4ae9-8925-d336f8eaa62f",
       nom: "NATURE_MENTION",
       code: "25",
-      libelle:
-        "Mort pour la France, Mort en déportation, Victime du terrorisme",
+      libelle: "Mort pour la France, Mort en déportation, Victime du terrorisme",
       estActif: true,
       opposableAuTiers: false
     },
@@ -1311,7 +1279,8 @@ export const ReponseAppelNomenclatureTypeMention = {
           natureActe: "NAISSANCE",
           affecteAnalyseMarginale: false,
           idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-          estPresentListeDeroulante: true
+          estPresentListeDeroulante: true,
+          estSaisieAssistee: true
         },
         {
           idTypeMention: "b03c6b4e-e028-4676-96fe-81fc9028b6fd",
@@ -1319,7 +1288,8 @@ export const ReponseAppelNomenclatureTypeMention = {
           natureActe: "NAISSANCE",
           affecteAnalyseMarginale: false,
           idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-          estPresentListeDeroulante: true
+          estPresentListeDeroulante: true,
+          estSaisieAssistee: true
         },
         {
           idTypeMention: "b03c1503-d452-4751-8bb3-94d082db1e5e",
@@ -1327,7 +1297,8 @@ export const ReponseAppelNomenclatureTypeMention = {
           natureActe: "NAISSANCE",
           affecteAnalyseMarginale: false,
           idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-          estPresentListeDeroulante: true
+          estPresentListeDeroulante: true,
+          estSaisieAssistee: true
         },
         {
           idTypeMention: "b03c18ba-bb6c-4461-b96c-09b90a99468f",
@@ -1335,7 +1306,8 @@ export const ReponseAppelNomenclatureTypeMention = {
           natureActe: "NAISSANCE",
           affecteAnalyseMarginale: false,
           idNatureMention: "56ab85e8-eb8b-4ec1-b800-88be22871f1b",
-          estPresentListeDeroulante: true
+          estPresentListeDeroulante: true,
+          estSaisieAssistee: true
         },
         {
           idTypeMention: "b03c883a-b23e-4a59-a4c6-3630f87bbf58",
@@ -1972,8 +1944,7 @@ export const ReponseAppelNomenclatureTypeMention = {
       typeMentionEnfantList: [
         {
           idTypeMention: "ce60cec5-8977-43ba-99eb-0f386c6d3e80",
-          libelleType:
-            "26-1 à 26-4 naturalisation/réintégration/effet collectif",
+          libelleType: "26-1 à 26-4 naturalisation/réintégration/effet collectif",
           natureActe: "NAISSANCE",
           affecteAnalyseMarginale: false,
           estPresentListeDeroulante: true,
@@ -2229,8 +2200,7 @@ export const ReponseAppelNomenclatureTypeMention = {
         },
         {
           idTypeMention: "b04b2e27-2e95-4515-9e43-c9106232992c",
-          libelleType:
-            "déclaration tendant à perdre ou à décliner de la nationalité - autres",
+          libelleType: "déclaration tendant à perdre ou à décliner de la nationalité - autres",
           natureActe: "NAISSANCE",
           affecteAnalyseMarginale: false,
           idNatureMention: "b03c848a-af74-483b-ace9-aec7f7ea3c1b",
@@ -2346,8 +2316,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b03cca54-ee3f-411e-9b75-04e900657ad0",
-      libelleType:
-        "2-1-b Séparation de corps par consentement mutuel en France",
+      libelleType: "2-1-b Séparation de corps par consentement mutuel en France",
       natureActe: "NAISSANCE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
@@ -2363,8 +2332,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b03c23ef-e893-4659-8c6d-416ffb60bf82",
-      libelleType:
-        "2-6-b Séparation de corps à l'étranger dans le cadre du règlement du conseil de l'union européenne",
+      libelleType: "2-6-b Séparation de corps à l'étranger dans le cadre du règlement du conseil de l'union européenne",
       natureActe: "NAISSANCE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
@@ -2396,8 +2364,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "eac6d665-ef10-4ed0-b617-e4b507f947d7",
-      libelleType:
-        "2-7-b Séparation de corps prononcée par une décision étrangère hors U.E",
+      libelleType: "2-7-b Séparation de corps prononcée par une décision étrangère hors U.E",
       natureActe: "NAISSANCE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
@@ -2405,8 +2372,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b0487801-b7b6-41db-ad88-381e06a97d46",
-      libelleType:
-        "9-1 Etablissement de la filiation en application de l’article 311-14 C. civ.",
+      libelleType: "9-1 Etablissement de la filiation en application de l’article 311-14 C. civ.",
       natureActe: "NAISSANCE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03c04c5-a17e-4b75-b61e-8158b029da15",
@@ -2414,8 +2380,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b0482d5d-b32e-4099-a4f3-9bf65499bccb",
-      libelleType:
-        "9-2 Etablissement de la filiation en application de l’article 311-17 C. civ.",
+      libelleType: "9-2 Etablissement de la filiation en application de l’article 311-17 C. civ.",
       natureActe: "NAISSANCE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03c04c5-a17e-4b75-b61e-8158b029da15",
@@ -2431,8 +2396,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "f2ee4afa-3fe3-4646-bcf5-611a2c5be963",
-      libelleType:
-        "26-6 Décret d'opposition à l'acquisition de la nationalité française",
+      libelleType: "26-6 Décret d'opposition à l'acquisition de la nationalité française",
       natureActe: "NAISSANCE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03c848a-af74-483b-ace9-aec7f7ea3c1b",
@@ -2448,8 +2412,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04b9e9b-4774-4c63-957f-2307b9c43ec7",
-      libelleType:
-        "27-2-a Acquisition nationalité autres articles (en France ou à l'étranger)",
+      libelleType: "27-2-a Acquisition nationalité autres articles (en France ou à l'étranger)",
       natureActe: "NAISSANCE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
@@ -2457,8 +2420,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04bfdc3-7a49-4358-9587-6a87ebe3c6c7",
-      libelleType:
-        "27-2-b Effet collectif acquisition nationalité autres articles (en France ou à l'étranger)",
+      libelleType: "27-2-b Effet collectif acquisition nationalité autres articles (en France ou à l'étranger)",
       natureActe: "NAISSANCE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
@@ -2466,8 +2428,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04b3973-fe20-4852-b9d6-9feea0b1b2e6",
-      libelleType:
-        "28-1 Déclaration de réintégration (en France ou à l'étranger)",
+      libelleType: "28-1 Déclaration de réintégration (en France ou à l'étranger)",
       natureActe: "NAISSANCE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
@@ -2475,8 +2436,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04bb99d-a46b-4a08-b9ef-a2e1cccd4622",
-      libelleType:
-        "28-2 Effet collectif de la réintégration dans la nationalité française (en France ou à l'étranger)",
+      libelleType: "28-2 Effet collectif de la réintégration dans la nationalité française (en France ou à l'étranger)",
       natureActe: "NAISSANCE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
@@ -2484,8 +2444,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04bef13-8432-4b14-81b3-086f8b3504ff",
-      libelleType:
-        "29-1 Déclaration tendant à répudier la nationalité française (en France ou à l'étranger)",
+      libelleType: "29-1 Déclaration tendant à répudier la nationalité française (en France ou à l'étranger)",
       natureActe: "NAISSANCE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03c848a-af74-483b-ace9-aec7f7ea3c1b",
@@ -2493,8 +2452,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04b0ec2-eaa8-4bf6-8c85-32e2f91186be",
-      libelleType:
-        "30 Renonciation faculté de répudier la nationalité française (en France ou à l'étranger)",
+      libelleType: "30 Renonciation faculté de répudier la nationalité française (en France ou à l'étranger)",
       natureActe: "NAISSANCE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
@@ -2543,8 +2501,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04b48c9-5106-4559-ac8b-85d145bbb9eb",
-      libelleType:
-        '21-99 Rectification judiciaire, hors annulation d\'une mention "réputée non écrite" - Autres',
+      libelleType: '21-99 Rectification judiciaire, hors annulation d\'une mention "réputée non écrite" - Autres',
       natureActe: "NAISSANCE",
       affecteAnalyseMarginale: true,
       idNatureMention: "b03cf4c0-d452-45f8-b284-c585a7a47fb8",
@@ -2552,8 +2509,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04b9003-b32b-4aa3-a0b7-90ffe684e12c",
-      libelleType:
-        '21-98 Rectification judiciaire, annulation d\'une mention "réputée non écrite" - Autres',
+      libelleType: '21-98 Rectification judiciaire, annulation d\'une mention "réputée non écrite" - Autres',
       natureActe: "NAISSANCE",
       affecteAnalyseMarginale: true,
       idNatureMention: "b03c2ae6-1ae8-40b8-a9e8-6259af6d3afc",
@@ -2561,8 +2517,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b048a937-2f7c-4e54-9b7f-675953d68fe9",
-      libelleType:
-        "17 Déclaration conjointe d'adjonction de nom (art. 23 de la loi n°2002-304)",
+      libelleType: "17 Déclaration conjointe d'adjonction de nom (art. 23 de la loi n°2002-304)",
       natureActe: "NAISSANCE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
@@ -2578,8 +2533,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04b33b4-ffa3-4330-b301-7ea46febeb23",
-      libelleType:
-        "39-1-b Séparation de corps par consentement mutuel en France",
+      libelleType: "39-1-b Séparation de corps par consentement mutuel en France",
       natureActe: "MARIAGE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
@@ -2603,8 +2557,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04bdcc3-de81-4df6-a238-fa44b5ff2791",
-      libelleType:
-        "39-4-a Divorce prononcé à l'étranger avec jugement d'exequatur ",
+      libelleType: "39-4-a Divorce prononcé à l'étranger avec jugement d'exequatur ",
       natureActe: "MARIAGE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9",
@@ -2612,8 +2565,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04b5876-e83d-40ce-8ca5-0378b0ce791f",
-      libelleType:
-        "39-4-b Séparation de corps prononcée à l'étranger avec jugement d'exequatur ",
+      libelleType: "39-4-b Séparation de corps prononcée à l'étranger avec jugement d'exequatur ",
       natureActe: "MARIAGE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
@@ -2621,8 +2573,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04bd773-c179-48b3-b82f-2e4efe8b7d14",
-      libelleType:
-        "39-4-c Annulation de mariage prononcée à l'étranger avec jugement d'exequatur ",
+      libelleType: "39-4-c Annulation de mariage prononcée à l'étranger avec jugement d'exequatur ",
       natureActe: "MARIAGE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03cd289-503f-4c98-8d12-0dffd9c51178",
@@ -2734,8 +2685,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04b03dd-815d-433b-bda0-08e6f1947bdf",
-      libelleType:
-        "40-1 Changement ou modification de régime matrimonial par décision judiciaire en France",
+      libelleType: "40-1 Changement ou modification de régime matrimonial par décision judiciaire en France",
       natureActe: "MARIAGE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03c5368-01a5-4027-981d-bfd165b358ae",
@@ -2743,8 +2693,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04b2e85-49c6-4dfd-a21f-9a95f8d667e2",
-      libelleType:
-        "40-2 Changement ou modification de régime matrimonial par acte notarié en France (loi française)",
+      libelleType: "40-2 Changement ou modification de régime matrimonial par acte notarié en France (loi française)",
       natureActe: "MARIAGE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03c5368-01a5-4027-981d-bfd165b358ae",
@@ -2752,8 +2701,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04befed-3263-4e47-9aea-74af30c99a87",
-      libelleType:
-        "40-3 Changement de régime matrimonial par acte (loi étrangère)",
+      libelleType: "40-3 Changement de régime matrimonial par acte (loi étrangère)",
       natureActe: "MARIAGE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03c5368-01a5-4027-981d-bfd165b358ae",
@@ -2761,8 +2709,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04b3164-2d4d-4b93-9529-f2f891f676cc",
-      libelleType:
-        "40-4 Changement de régime matrimonial par décision judiciaire à l'étranger",
+      libelleType: "40-4 Changement de régime matrimonial par décision judiciaire à l'étranger",
       natureActe: "MARIAGE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03c5368-01a5-4027-981d-bfd165b358ae",
@@ -2778,8 +2725,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04b33d7-b2cf-4797-9c67-0520e3b258e3",
-      libelleType:
-        "41-1 Désignation de la loi applicable au régime matrimonial",
+      libelleType: "41-1 Désignation de la loi applicable au régime matrimonial",
       natureActe: "MARIAGE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03c5368-01a5-4027-981d-bfd165b358ae",
@@ -2787,8 +2733,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04bce7c-0800-44cf-83ee-2359f35802db",
-      libelleType:
-        "41-99 Déclarations relatives au régime matrimonial - Autres",
+      libelleType: "41-99 Déclarations relatives au régime matrimonial - Autres",
       natureActe: "MARIAGE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03c5368-01a5-4027-981d-bfd165b358ae",
@@ -2812,8 +2757,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04b2eb0-3ef4-4c3f-ad9e-a9fb1817a80d",
-      libelleType:
-        "43-1 Changement de prénom(s) par décision de l'officier de l'état civil",
+      libelleType: "43-1 Changement de prénom(s) par décision de l'officier de l'état civil",
       natureActe: "MARIAGE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
@@ -2853,8 +2797,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04bb8fd-dede-4d97-b37f-d9454c841036",
-      libelleType:
-        "44-3 Changement de nom et/ou prénom(s) prononcé à l'étranger (V.O)",
+      libelleType: "44-3 Changement de nom et/ou prénom(s) prononcé à l'étranger (V.O)",
       natureActe: "MARIAGE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
@@ -2862,8 +2805,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04b8206-46f8-49c7-9c40-ea6d5dfba5df",
-      libelleType:
-        "44-99 Changement de nom (art. 61 et 61-3-1 C.civ.) - Autres ",
+      libelleType: "44-99 Changement de nom (art. 61 et 61-3-1 C.civ.) - Autres ",
       natureActe: "MARIAGE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
@@ -2933,8 +2875,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04b3d99-06de-4378-956d-7b1d728b8bbe",
-      libelleType:
-        '47-98 Rectification judiciaire, annulation d\'une mention "réputée non écrite" - Autres',
+      libelleType: '47-98 Rectification judiciaire, annulation d\'une mention "réputée non écrite" - Autres',
       natureActe: "MARIAGE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03c2ae6-1ae8-40b8-a9e8-6259af6d3afc",
@@ -2942,8 +2883,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04b6ccd-c758-448b-8a92-52a195d85d2c",
-      libelleType:
-        '47-99 Rectification judiciaire, hors annulation d\'une mention "réputée non écrite" - Autres',
+      libelleType: '47-99 Rectification judiciaire, hors annulation d\'une mention "réputée non écrite" - Autres',
       natureActe: "MARIAGE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03cf4c0-d452-45f8-b284-c585a7a47fb8",
@@ -2951,8 +2891,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04b6caa-f975-4f6d-bd7f-5f6a59af31ee",
-      libelleType:
-        "47-a Rectification judiciaire d'un acte - Annulation d'une mention \"réputée non écrite\"",
+      libelleType: "47-a Rectification judiciaire d'un acte - Annulation d'une mention \"réputée non écrite\"",
       natureActe: "MARIAGE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03c2ae6-1ae8-40b8-a9e8-6259af6d3afc",
@@ -2960,8 +2899,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04b6ba8-ab38-4e86-a1b2-e09e009cee08",
-      libelleType:
-        "47-b Rectification judiciaire d'un acte - Hors annulation d'une mention \"réputée non écrite\"",
+      libelleType: "47-b Rectification judiciaire d'un acte - Hors annulation d'une mention \"réputée non écrite\"",
       natureActe: "MARIAGE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03cf4c0-d452-45f8-b284-c585a7a47fb8",
@@ -2969,8 +2907,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04b577d-8070-4a2c-9525-0c3ebf3a1516",
-      libelleType:
-        "48-1 Annulation de l'acte par le procureur de la république",
+      libelleType: "48-1 Annulation de l'acte par le procureur de la république",
       natureActe: "MARIAGE",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03c0e11-54d4-4fd6-87f2-a08d2b2d4a22",
@@ -3062,8 +2999,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04be753-4cad-470f-b09e-c4fd1d2f4412",
-      libelleType:
-        "57-a Rectification judiciaire d'un acte - Annulation d'une mention \"réputée non écrite\"",
+      libelleType: "57-a Rectification judiciaire d'un acte - Annulation d'une mention \"réputée non écrite\"",
       natureActe: "DECES",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03c2ae6-1ae8-40b8-a9e8-6259af6d3afc",
@@ -3071,8 +3007,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04ba3d6-879d-49df-a12a-ecc9885bc5a3",
-      libelleType:
-        "57-b Rectification judiciaire d'un acte - Hors annulation d'une mention \"réputée non écrite\"",
+      libelleType: "57-b Rectification judiciaire d'un acte - Hors annulation d'une mention \"réputée non écrite\"",
       natureActe: "DECES",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03cf4c0-d452-45f8-b284-c585a7a47fb8",
@@ -3080,8 +3015,7 @@ export const ReponseAppelNomenclatureTypeMention = {
     },
     {
       idTypeMention: "b04bda57-d7c5-4b60-8555-8b61502ee9d8",
-      libelleType:
-        "58-1 Annulation de l'acte par le procureur de la république",
+      libelleType: "58-1 Annulation de l'acte par le procureur de la république",
       natureActe: "DECES",
       affecteAnalyseMarginale: false,
       idNatureMention: "b03c0e11-54d4-4fd6-87f2-a08d2b2d4a22",
