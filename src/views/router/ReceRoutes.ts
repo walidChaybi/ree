@@ -27,10 +27,13 @@ import EspaceInformationPage from "@pages/requeteInformation/espaceInformation/E
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { IRoute } from "@util/route/IRoute";
+import PageMesRequetesConsulaires from "../../pages/requetesConsulaire/PageMesRequetesConsulaires";
+import PageRequetesServiceConsulaire from "../../pages/requetesConsulaire/PageRequetesServiceConsulaire";
 import PageEditionRequeteDelivrance from "../../pages/requetesDelivrance/PageEditionRequeteDelivrance";
 import PageEditionRequeteMiseAJour from "../../pages/requetesMiseAJour/PageEditionRequeteMiseAJour";
 import {
   URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+  URL_MES_REQUETES_CONSULAIRE,
   URL_MES_REQUETES_CREATION,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
@@ -67,6 +70,7 @@ import {
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
   URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID,
   URL_RECHERCHE_REQUETE_EDITION_ID,
+  URL_REQUETES_CONSULAIRE_SERVICE,
   URL_REQUETES_CREATION_SERVICE,
   URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID,
   URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
@@ -574,6 +578,30 @@ export const routesRece: IRoute[] = [
     component: ApercuReqCreationTranscriptionSaisieProjetPage,
     auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: LIBELLE_APERCU_SAISIE_PROJET
+  },
+
+  /////////////////////////////////////////////////////////
+  ///////// MES REQUETES CONSULAIRES  /////////////////////
+  /////////////////////////////////////////////////////////
+
+  {
+    url: URL_MES_REQUETES_CONSULAIRE,
+    component: PageMesRequetesConsulaires,
+    auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT, Droit.CREER_ACTE_DRESSE],
+    libelle: "Mes requetes consulaires",
+    canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_ACCES_ESPACE_CONSULAIRE)
+  },
+
+  ////////////////////////////////////////////////////////
+  ///////// REQUETES CONSULAIRES DE MON SERVICE //////////
+  ////////////////////////////////////////////////////////
+
+  {
+    url: URL_REQUETES_CONSULAIRE_SERVICE,
+    component: PageRequetesServiceConsulaire,
+    auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT, Droit.CREER_ACTE_DRESSE],
+    libelle: "Les requetes consulaires de mon service",
+    canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_ACCES_ESPACE_CONSULAIRE)
   },
 
   ////////////////////////////////////////////////////////

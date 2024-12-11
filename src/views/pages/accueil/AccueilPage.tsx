@@ -1,7 +1,7 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
-import { faChartBar, faGavel, faPlusCircle, faSearch, faSync } from "@fortawesome/free-solid-svg-icons";
+import { faChartBar, faGavel, faLandmark, faPlusCircle, faSearch, faSync } from "@fortawesome/free-solid-svg-icons";
 import { IOfficier } from "@model/agent/IOfficier";
 import { getCodesHierarchieService } from "@model/agent/IUtilisateur";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -14,6 +14,7 @@ import "../accueil/scss/AccueilPage.scss";
 import { useCompteurRequeteHook } from "../requeteDelivrance/espaceDelivrance/hook/CompteurRequeteHook";
 import {
   BoutonAccueilCommunication,
+  BoutonAccueilEspaceConsulaire,
   BoutonAccueilEspaceCreation,
   BoutonAccueilEspaceDelivrance,
   BoutonAccueilEspaceMiseAjour,
@@ -23,7 +24,6 @@ import {
   BoutonAccueilTableau
 } from "./BoutonAccueil";
 import { useNbReqInfoHook } from "./hook/NbReqInfoHook";
-
 export const AccueilPage: React.FC = () => {
   const [nbReqInfo, setNbReqInfo] = useState<number>();
   const [nbReqTraiteRepondu, setNbReqTraiteRepondu] = useState<number>();
@@ -75,6 +75,15 @@ export const AccueilPage: React.FC = () => {
           iconFA={faPlusCircle}
           title={getLibelle("Bouton pour accèder à l'espace création")}
         ></BoutonAccueilEspaceCreation>
+
+        {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_ACCES_ESPACE_CONSULAIRE) && (
+          <BoutonAccueilEspaceConsulaire
+            libelle={"Consulaire"}
+            pageUrl={"mes-requetes-consulaire"}
+            iconFA={faLandmark}
+            title={"Bouton pour accèder à l'espace consulaire"}
+          ></BoutonAccueilEspaceConsulaire>
+        )}
 
         {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION) && (
           <BoutonAccueilCommunication

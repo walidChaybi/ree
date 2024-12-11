@@ -21,6 +21,7 @@ export type NomComposant =
   | "LinkTabRequetesCreationService"
   | "BoutonAccueilEspaceMiseAjour"
   | "BoutonAccueilEspaceCreation"
+  | "BoutonAccueilEspaceConsulaire"
   | "BoutonAccueilCommunication"
   | "BoutonAccueilRechercheRequete"
   | "BoutonAccueilRechercheActeOuInscription"
@@ -84,11 +85,13 @@ export const habilitationsDescription: IHabiliationDescription[] = [
   },
   {
     nomComposant: "BoutonAccueilEspaceCreation",
-    unDesDroits: [
-      Droit.CREER_ACTE_TRANSCRIT,
-      Droit.CREER_ACTE_DRESSE,
-      Droit.CREER_ACTE_ETABLI
-    ],
+    unDesDroits: [Droit.CREER_ACTE_TRANSCRIT, Droit.CREER_ACTE_DRESSE, Droit.CREER_ACTE_ETABLI],
+    comportementSiNonAutorise: { disabled: true },
+    visiblePourLesDroits: droitsSaufConsulterArchives
+  },
+  {
+    nomComposant: "BoutonAccueilEspaceConsulaire",
+    unDesDroits: [Droit.CREER_ACTE_TRANSCRIT, Droit.CREER_ACTE_DRESSE],
     comportementSiNonAutorise: { disabled: true },
     visiblePourLesDroits: droitsSaufConsulterArchives
   },
@@ -162,11 +165,7 @@ export const habilitationsDescription: IHabiliationDescription[] = [
   },
   {
     nomComposant: "BoutonPrendreEnChargePlusAncienneCreation",
-    unDesDroits: [
-      Droit.CREER_ACTE_DRESSE,
-      Droit.CREER_ACTE_TRANSCRIT,
-      Droit.CREER_ACTE_ETABLI
-    ],
+    unDesDroits: [Droit.CREER_ACTE_DRESSE, Droit.CREER_ACTE_TRANSCRIT, Droit.CREER_ACTE_ETABLI],
     comportementSiNonAutorise: { disabled: true }
   }
 ];

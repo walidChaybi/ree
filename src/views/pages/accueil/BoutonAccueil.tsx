@@ -29,12 +29,12 @@ export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
   const navigate = useNavigate();
 
   function onClickDefaultHandler(event: React.MouseEvent, paramURL: string) {
-        if (!disabled) {
-          if (onClickHandler) {
-            onClickHandler(event, paramURL);
-          }
-          navigate(`${paramURL}`);
-        }
+    if (!disabled) {
+      if (onClickHandler) {
+        onClickHandler(event, paramURL);
+      }
+      navigate(`${paramURL}`);
+    }
   }
 
   return (
@@ -43,7 +43,10 @@ export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
       onClick={event => onClickDefaultHandler(event, pageUrl)}
       data-testid="BtnAccueil"
     >
-      <Badge invisible={disabled || badge === 0} badgeContent={badge}>
+      <Badge
+        invisible={disabled || badge === 0}
+        badgeContent={badge}
+      >
         {iconFA && (
           <FontAwesomeIcon
             className={"IconeBouton" + (disabled ? " Disabled" : "")}
@@ -53,7 +56,10 @@ export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
             aria-labelledby={title}
           />
         )}
-        <BoutonDoubleSubmit disabled={disabled} title={title}>
+        <BoutonDoubleSubmit
+          disabled={disabled}
+          title={title}
+        >
           {libelle}
         </BoutonDoubleSubmit>
       </Badge>
@@ -61,35 +67,12 @@ export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
   );
 };
 
-export const BoutonAccueilEspaceDelivrance = WithHabilitation(
-  BoutonAccueil,
-  "BoutonAccueilEspaceDelivrance"
-);
-export const BoutonAccueilEspaceMiseAjour = WithHabilitation(
-  BoutonAccueil,
-  "BoutonAccueilEspaceMiseAjour"
-);
-export const BoutonAccueilEspaceCreation = WithHabilitation(
-  BoutonAccueil,
-  "BoutonAccueilEspaceCreation"
-);
-export const BoutonAccueilCommunication = WithHabilitation(
-  BoutonAccueil,
-  "BoutonAccueilCommunication"
-);
-export const BoutonAccueilRechercheRequete = WithHabilitation(
-  BoutonAccueil,
-  "BoutonAccueilRechercheRequete"
-);
-export const BoutonAccueilRechercheActeOuInscription = WithHabilitation(
-  BoutonAccueil,
-  "BoutonAccueilRechercheActeOuInscription"
-);
-export const BoutonAccueilRechercheActe = WithHabilitation(
-  BoutonAccueil,
-  "BoutonAccueilRechercheActe"
-);
-export const BoutonAccueilTableau = WithHabilitation(
-  BoutonAccueil,
-  "BoutonAccueilTableau"
-);
+export const BoutonAccueilEspaceDelivrance = WithHabilitation(BoutonAccueil, "BoutonAccueilEspaceDelivrance");
+export const BoutonAccueilEspaceMiseAjour = WithHabilitation(BoutonAccueil, "BoutonAccueilEspaceMiseAjour");
+export const BoutonAccueilEspaceCreation = WithHabilitation(BoutonAccueil, "BoutonAccueilEspaceCreation");
+export const BoutonAccueilEspaceConsulaire = WithHabilitation(BoutonAccueil, "BoutonAccueilEspaceConsulaire");
+export const BoutonAccueilCommunication = WithHabilitation(BoutonAccueil, "BoutonAccueilCommunication");
+export const BoutonAccueilRechercheRequete = WithHabilitation(BoutonAccueil, "BoutonAccueilRechercheRequete");
+export const BoutonAccueilRechercheActeOuInscription = WithHabilitation(BoutonAccueil, "BoutonAccueilRechercheActeOuInscription");
+export const BoutonAccueilRechercheActe = WithHabilitation(BoutonAccueil, "BoutonAccueilRechercheActe");
+export const BoutonAccueilTableau = WithHabilitation(BoutonAccueil, "BoutonAccueilTableau");

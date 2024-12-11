@@ -1,9 +1,5 @@
 import { logInfoDansLaConsole } from "@util/Console";
-import {
-  getUrlParamId,
-  getUrlPrecedente,
-  URL_SEPARATEUR
-} from "@util/route/UrlUtil";
+import { getUrlParamId, getUrlPrecedente, URL_SEPARATEUR } from "@util/route/UrlUtil";
 
 export interface IUrlData {
   url: string;
@@ -19,20 +15,13 @@ export const PATH_APERCU_REQ_DEL = "apercurequetedelivrance";
 export const PATH_APERCU_REQ_PRISE = "apercurequetepriseencharge";
 export const PATH_APERCU_REQ_TRAITEMENT = "apercurequetetraitement";
 export const PATH_APERCU_REQ_INFO = "apercurequeteinformation";
-export const PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE =
-  "apercurequetecreationetablissementsimple";
-export const PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER =
-  "apercurequetecreationetablissementsuividossier";
-export const PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET =
-  "apercurequetecreationetablissementsaisieprojet";
-export const PATH_APERCU_REQUETE_CREATION_ETABLISSEMENT_ACTE_REGISTRE =
-  "apercurequetecreationetablissementacteregistre";
-export const PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE =
-  "apercurequetetranscriptionsimple";
-export const PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE =
-  "apercurequetetranscriptionenpriseencharge";
-export const PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET =
-  "apercurequetetranscriptionensaisieprojet";
+export const PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE = "apercurequetecreationetablissementsimple";
+export const PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER = "apercurequetecreationetablissementsuividossier";
+export const PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET = "apercurequetecreationetablissementsaisieprojet";
+export const PATH_APERCU_REQUETE_CREATION_ETABLISSEMENT_ACTE_REGISTRE = "apercurequetecreationetablissementacteregistre";
+export const PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE = "apercurequetetranscriptionsimple";
+export const PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE = "apercurequetetranscriptionenpriseencharge";
+export const PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET = "apercurequetetranscriptionensaisieprojet";
 export const PATH_EDITION = "Edition";
 export const PATH_SAISIR_RDCSC = "saisircertificatsituation";
 export const PATH_SAISIR_RDC = "saisirextraitcopie";
@@ -41,11 +30,9 @@ export const PATH_SAISIR_RDLFC = "saisirlivretfamille";
 export const PATH_MODIFIER_RDC = "modifierextraitcopie";
 export const PATH_MODIFIER_RDCSC = "modifiercertificatsituation";
 export const PATH_MODIFIER_RCTC = "modifiercreation";
-export const PATH_APERCU_REQ_MISE_A_JOUR_SUITE_AVIS =
-  "requetemiseajoursuiteavis";
+export const PATH_APERCU_REQ_MISE_A_JOUR_SUITE_AVIS = "requetemiseajoursuiteavis";
 export const PATH_APERCU_REQ_MISE_A_JOUR_AUTRE = "requetemiseajourautre";
-export const PATH_APERCU_REQ_MISE_A_JOUR_ANALYSE_MARGINALE =
-  "requete-mise-a-jour-analyse-marginale";
+export const PATH_APERCU_REQ_MISE_A_JOUR_ANALYSE_MARGINALE = "requete-mise-a-jour-analyse-marginale";
 
 ///////////// URLs    //////////////
 export const GO_BACK = "goBack";
@@ -114,10 +101,9 @@ export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_TRAITEMENT_ID = `${URL_RECHERC
 export const URL_RECHERCHE_REQUETE_EDITION_ID = `${URL_RECHERCHE_REQUETE}/${PATH_EDITION}/${ID}/${ID_ACTE}?`;
 export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ETABLISSEMENT_APERCU_SIMPLE_ID = `${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}/${ID}`;
 export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ETABLISSEMENT_SUIVI_DOSSIER_ID = `${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER}/${ID}`;
-export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ETABLISSEMENT_SAISIE_PROJET_ID =
-  getUrlLongue(
-    "URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ETABLISSEMENT_SAISIE_PROJET_ID"
-  );
+export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ETABLISSEMENT_SAISIE_PROJET_ID = getUrlLongue(
+  "URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_ETABLISSEMENT_SAISIE_PROJET_ID"
+);
 export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_APERCU_SIMPLE_ID = `${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE}/${ID}`;
 export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_PRISE_CHARGE_ID = `${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE}/${ID}`;
 export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_EN_TRAITEMENT_ID = `${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET}/${ID}`;
@@ -156,14 +142,12 @@ export const URL_MES_REQUETES_CREATION_SAISIR_RCTC = `${URL_MES_REQUETES_CREATIO
 export const URL_REQUETES_CREATION_SERVICE_SAISIR_RCTC = `${URL_REQUETES_CREATION_SERVICE}/${PATH_SAISIR_RCTC}`;
 export const URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID = `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}/${ID}`;
 export const URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID = `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER}/${ID}`;
-export const URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID =
-  getUrlLongue(
-    "URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID"
-  );
-export const URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID =
-  getUrlLongue(
-    "URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID"
-  );
+export const URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID = getUrlLongue(
+  "URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID"
+);
+export const URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID = getUrlLongue(
+  "URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID"
+);
 export const URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID = `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE}/${ID}`;
 export const URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID = `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE}/${ID}`;
 export const URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID = `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET}/${ID}`;
@@ -176,20 +160,29 @@ export const URL_MES_REQUETES_CREATION_MODIFIER_RCTC_ID = `${URL_MES_REQUETES_CR
 ////////////////////////////////////////////////////////
 export const URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID = `${URL_REQUETES_CREATION_SERVICE}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}/${ID}`;
 export const URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID = `${URL_REQUETES_CREATION_SERVICE}/${PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER}/${ID}`;
-export const URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID =
-  getUrlLongue(
-    "URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID"
-  );
-export const URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID =
-  getUrlLongue(
-    "URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID"
-  );
+export const URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID = getUrlLongue(
+  "URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID"
+);
+export const URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID = getUrlLongue(
+  "URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID"
+);
 export const URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID = `${URL_REQUETES_CREATION_SERVICE}/${PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE}/${ID}`;
 export const URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID = `${URL_REQUETES_CREATION_SERVICE}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE}/${ID}`;
-export const URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID =
-  getUrlLongue(
-    "URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID"
-  );
+export const URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID = getUrlLongue(
+  "URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID"
+);
+
+/////////////////////////////////////////////////////////
+///////// MES REQUETES CONSULAIRES  /////////////////////
+/////////////////////////////////////////////////////////
+
+export const URL_MES_REQUETES_CONSULAIRE = `${URL_CONTEXT_APP}/mes-requetes-consulaire`;
+
+/////////////////////////////////////////////////////////
+///////// MES REQUETES CONSULAIRES  /////////////////////
+/////////////////////////////////////////////////////////
+
+export const URL_REQUETES_CONSULAIRE_SERVICE = `${URL_CONTEXT_APP}/requetes-consulaire-service`;
 
 ////////////////////////////////////////////////////////
 ///////// REQUETES DE MISE A JOUR //////////////////////
@@ -233,16 +226,8 @@ type urlApercuParamsAvecPathApercu = urlApercuParams & {
   pathApercu: string;
 };
 
-const getUrlApercuAvecIdRequete = ({
-  url,
-  pathApercu,
-  idRequete
-}: urlApercuParamsAvecPathApercu) => {
-  return [
-    getUrlPrecedente(url),
-    pathApercu,
-    idRequete ?? getUrlParamId(url)
-  ].join(URL_SEPARATEUR);
+const getUrlApercuAvecIdRequete = ({ url, pathApercu, idRequete }: urlApercuParamsAvecPathApercu) => {
+  return [getUrlPrecedente(url), pathApercu, idRequete ?? getUrlParamId(url)].join(URL_SEPARATEUR);
 };
 
 const getUrlApercuTraitementAPartirDe = (params: urlApercuParams) =>
@@ -251,9 +236,7 @@ const getUrlApercuTraitementAPartirDe = (params: urlApercuParams) =>
     pathApercu: PATH_APERCU_REQ_TRAITEMENT
   });
 
-const getUrlApercuPriseEnChargeCreationTranscriptionAPartirDe = (
-  params: urlApercuParams
-) =>
+const getUrlApercuPriseEnChargeCreationTranscriptionAPartirDe = (params: urlApercuParams) =>
   getUrlApercuAvecIdRequete({
     ...params,
     pathApercu: PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE
