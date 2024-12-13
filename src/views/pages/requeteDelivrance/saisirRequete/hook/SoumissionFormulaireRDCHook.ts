@@ -4,9 +4,9 @@ import {
   SaisieRequeteRDC,
   UpdateRequeteRDC
 } from "@model/form/delivrance/ISaisirRDCPageForm";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { useEffect, useState } from "react";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { useEffect, useRef, useState } from "react";
 import { verifierDonneesObligatoires } from "../contenu/SaisirRDCPageFonctions";
 import { useCreationRequeteDelivranceRDC } from "./CreerRDCApiHook";
 import { useUpdateRequeteDelivranceRDC } from "./UpdateRDCApiHook";
@@ -18,30 +18,22 @@ export interface ICreationOuMiseAJourRDCResultat {
 }
 
 export const useSoumissionFormulaireRDCHook = (
-  setSaisieRequeteRDC: React.Dispatch<
-    React.SetStateAction<SaisieRequeteRDC | undefined>
-  >,
+  setSaisieRequeteRDC: React.Dispatch<React.SetStateAction<SaisieRequeteRDC | undefined>>,
   setSaisieIncomplete: React.Dispatch<React.SetStateAction<boolean>>,
   saisieRequeteRDC?: SaisieRequeteRDC,
   idRequete?: string
 ) => {
   // States
   const [estBrouillon, setEstBrouillon] = useState<boolean>(false);
-  const [creationRDCParams, setCreationRDCParams] = useState<
-    CreationRequeteRDC & IComplementCreationUpdateRequete
-  >();
-  const [miseAJourRDCParams, setMiseAJourRDCParams] = useState<
-    UpdateRequeteRDC & IComplementCreationUpdateRequete
-  >();
-  const [requeteRDCResultat, setRequeteRDCResultat] =
-    useState<ICreationOuMiseAJourRDCResultat>();
+  const [creationRDCParams, setCreationRDCParams] = useState<CreationRequeteRDC & IComplementCreationUpdateRequete>();
+  const [miseAJourRDCParams, setMiseAJourRDCParams] = useState<UpdateRequeteRDC & IComplementCreationUpdateRequete>();
+  const [requeteRDCResultat, setRequeteRDCResultat] = useState<ICreationOuMiseAJourRDCResultat>();
 
   // Hooks
-  const creationRDCResultat =
-    useCreationRequeteDelivranceRDC(creationRDCParams);
-  const miseAJourRDCResultat =
-    useUpdateRequeteDelivranceRDC(miseAJourRDCParams);
+  const creationRDCResultat = useCreationRequeteDelivranceRDC(creationRDCParams);
+  const miseAJourRDCResultat = useUpdateRequeteDelivranceRDC(miseAJourRDCParams);
 
+  const prevValueRDC = useRef({ saisieRequeteRDC }).current;
   useEffect(() => {
     if (miseAJourRDCResultat) {
       setRequeteRDCResultat(miseAJourRDCResultat);
@@ -50,9 +42,12 @@ export const useSoumissionFormulaireRDCHook = (
     }
   }, [creationRDCResultat, miseAJourRDCResultat]);
 
-  const setCreationOuMiseAJourRequeteRDC = (
-    requeteRDC: CreationRequeteRDC | UpdateRequeteRDC
-  ): void => {
+  // Update previousValue de requête RDC si différente
+  useEffect(() => {
+    if (prevValueRDC.saisieRequeteRDC !== saisieRequeteRDC) prevValueRDC.saisieRequeteRDC = saisieRequeteRDC;
+  }, [saisieRequeteRDC]);
+
+  const setCreationOuMiseAJourRequeteRDC = (requeteRDC: CreationRequeteRDC | UpdateRequeteRDC): void => {
     idRequete
       ? setMiseAJourRDCParams({
           idRequete,
@@ -64,13 +59,14 @@ export const useSoumissionFormulaireRDCHook = (
   const onSubmitSaisieRequeteRDC = (valeurs: SaisieRequeteRDC): void => {
     setSaisieRequeteRDC(valeurs);
     if (verifierDonneesObligatoires(valeurs)) {
-      setCreationOuMiseAJourRequeteRDC({
-        saisie: valeurs,
-        refus: false,
-        futurStatut: estBrouillon
-          ? StatutRequete.BROUILLON
-          : StatutRequete.PRISE_EN_CHARGE
-      });
+      //Evite le double submit de même valeurs
+      if (prevValueRDC.saisieRequeteRDC !== valeurs) {
+        setCreationOuMiseAJourRequeteRDC({
+          saisie: valeurs,
+          refus: false,
+          futurStatut: estBrouillon ? StatutRequete.BROUILLON : StatutRequete.PRISE_EN_CHARGE
+        });
+      }
     } else {
       setSaisieIncomplete(true);
     }
