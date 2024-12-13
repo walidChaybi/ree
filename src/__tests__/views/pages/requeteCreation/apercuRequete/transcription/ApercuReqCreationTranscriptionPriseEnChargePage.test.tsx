@@ -1,47 +1,33 @@
 import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
-import { URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID } from "@router/ReceUrls";
+import { ApercuReqCreationTranscriptionSaisieProjetPage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSaisieProjetPage";
 import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID
+} from "@router/ReceUrls";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
-import {
-  createTestingRouter,
-  elementAvecContexte
-} from "../../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
 
-describe.skip("Test de la page Aperçu requête transcription en prise en charge", () => {
+describe("Test de la page Aperçu requête transcription en prise en charge", () => {
   test("DOIT rendre le composant ApercuReqCreationTranscriptionPriseEnChargePage correctement", async () => {
-    await act(async () => {
-      const router = createTestingRouter(
-        [
-          {
-            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-            element: <ApercuReqCreationTranscriptionPriseEnChargePage />
-          }
-        ],
-        [
-          getUrlWithParam(
-            URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-            "dd96cc3a-9865-4c83-b634-37fad2680f41"
-          )
-        ]
-      );
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+          element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+        }
+      ],
+      [getUrlWithParam(URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID, "dd96cc3a-9865-4c83-b634-37fad2680f41")]
+    );
 
-      const { container } = render(
-        elementAvecContexte(<RouterProvider router={router} />)
-      );
+    render(elementAvecContexte(<RouterProvider router={router} />));
 
-      expect(
-        container.getElementsByClassName(
-          "ApercuReqCreationTranscriptionPriseEnChargePage"
-        ).length
-      ).toBe(1);
+    await waitFor(() => {
+      expect(screen.getByText("RMC")).toBeDefined();
+      expect(screen.getByText("Pièces justificatives / Annexes")).toBeDefined();
+      expect(screen.getByText("Analyse du dossier")).toBeDefined();
     });
   });
 
@@ -54,12 +40,7 @@ describe.skip("Test de la page Aperçu requête transcription en prise en charge
             element: <ApercuReqCreationTranscriptionPriseEnChargePage />
           }
         ],
-        [
-          getUrlWithParam(
-            URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-            "dd96cc3a-9865-4c83-b634-37fad2680f41"
-          )
-        ]
+        [getUrlWithParam(URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID, "dd96cc3a-9865-4c83-b634-37fad2680f41")]
       );
 
       render(elementAvecContexte(<RouterProvider router={router} />));
@@ -81,12 +62,7 @@ describe.skip("Test de la page Aperçu requête transcription en prise en charge
             element: <ApercuReqCreationTranscriptionPriseEnChargePage />
           }
         ],
-        [
-          getUrlWithParam(
-            URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-            "dd96cc3a-9865-4c83-b634-37fad2680f41"
-          )
-        ]
+        [getUrlWithParam(URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID, "dd96cc3a-9865-4c83-b634-37fad2680f41")]
       );
 
       render(elementAvecContexte(<RouterProvider router={router} />));
@@ -116,12 +92,7 @@ describe.skip("Test de la page Aperçu requête transcription en prise en charge
             element: <ApercuReqCreationTranscriptionPriseEnChargePage />
           }
         ],
-        [
-          getUrlWithParam(
-            URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-            "dd96cc3a-9865-4c83-b634-37fad2680f41"
-          )
-        ]
+        [getUrlWithParam(URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID, "dd96cc3a-9865-4c83-b634-37fad2680f41")]
       );
 
       render(elementAvecContexte(<RouterProvider router={router} />));
@@ -142,9 +113,40 @@ describe.skip("Test de la page Aperçu requête transcription en prise en charge
       expect(ongletPJ.getAttribute("aria-selected")).toBe("true");
     });
   });
+
+  test("DOIT naviguer vers 'l'apercu saisie de projet' QUAND on clique sur le bouton 'Créer le projet d'acte'", async () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+          element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+        },
+        {
+          path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
+          element: <ApercuReqCreationTranscriptionSaisieProjetPage />
+        }
+      ],
+      [getUrlWithParam(URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID, "dd96cc3a-9865-4c83-b634-37fad2680f41")]
+    );
+
+    render(elementAvecContexte(<RouterProvider router={router} />));
+
+    await waitFor(() => {
+      expect(screen.getByText("Créer le projet d'acte")).toBeDefined();
+    });
+
+    fireEvent.click(screen.getByText("Créer le projet d'acte"));
+
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe(
+        // l'idRequete attendu dans le retour de la navigation change car on renvoi la meme requete pour deux mock differents (voir requeteCreationTranscription.ts)
+        getUrlWithParam(URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID, "3ed9aa4e-921b-489f-b8fe-531dd703c60c")
+      );
+    });
+  });
 });
 
-describe.skip("Test du rendu du composant RMCRequeteAssociees", () => {
+describe("Test du rendu du composant RMCRequeteAssociees", () => {
   test("DOIT afficher le composant RMCRequeteAssociees QUAND l'ID de la requête est présent dans l'URL", async () => {
     await act(async () => {
       const router = createTestingRouter(
@@ -154,49 +156,31 @@ describe.skip("Test du rendu du composant RMCRequeteAssociees", () => {
             element: <ApercuReqCreationTranscriptionPriseEnChargePage />
           }
         ],
-        [
-          getUrlWithParam(
-            URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-            "dd96cc3a-9865-4c83-b634-37fad2680f41"
-          )
-        ]
+        [getUrlWithParam(URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID, "dd96cc3a-9865-4c83-b634-37fad2680f41")]
       );
 
       render(elementAvecContexte(<RouterProvider router={router} />));
     });
 
     await waitFor(() => {
-      expect(
-        screen.getByText("Autres requêtes associées au titulaire")
-      ).toBeDefined();
+      expect(screen.getByText("Autres requêtes associées au titulaire")).toBeDefined();
     });
   });
   test("NE DOIT PAS afficher le composant RMCRequeteAssociees QUAND l'ID de la requête est est founi en props", async () => {
-    await act(async () => {
-      const router = createTestingRouter(
-        [
-          {
-            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-            element: (
-              <ApercuReqCreationTranscriptionPriseEnChargePage idRequeteAAfficher="dd96cc3a-9865-4c83-b634-37fad2680f41" />
-            )
-          }
-        ],
-        [
-          getUrlWithParam(
-            URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-            "dd96cc3a-9865-4c83-b634-37fad2680f41"
-          )
-        ]
-      );
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+          element: <ApercuReqCreationTranscriptionPriseEnChargePage idRequeteAAfficher="dd96cc3a-9865-4c83-b634-37fad2680f41" />
+        }
+      ],
+      [getUrlWithParam(URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID, "dd96cc3a-9865-4c83-b634-37fad2680f41")]
+    );
 
-      render(elementAvecContexte(<RouterProvider router={router} />));
-    });
+    render(elementAvecContexte(<RouterProvider router={router} />));
 
     await waitFor(() => {
-      expect(
-        screen.queryByText("Autres requêtes associées au titulaire")
-      ).not.toBeDefined();
+      expect(screen.queryByText("Autres requêtes associées au titulaire")).toBeNull();
     });
   });
 });

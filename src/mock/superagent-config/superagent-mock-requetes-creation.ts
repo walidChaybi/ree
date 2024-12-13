@@ -1,21 +1,12 @@
 import { NOMENCLATURE_OPTION_COURRIER } from "../data/NomenclatureOptionCourrier";
-import {
-  ReponseAppelNomenclatureDocummentDelivrance,
-  ReponseAppelNomenclatureTypePiecesJustificative
-} from "../data/nomenclatures";
-import {
-  requeteCreationATraiter,
-  requetesCreationAlimentationTableau
-} from "../data/requeteCreation";
+import { ReponseAppelNomenclatureDocummentDelivrance, ReponseAppelNomenclatureTypePiecesJustificative } from "../data/nomenclatures";
+import { requeteCreationATraiter, requetesCreationAlimentationTableau } from "../data/requeteCreation";
 import {
   creationRequeteRCTCResultat,
   requeteCreationTranscription,
   requeteCreationTranscriptionStatutATraiter
 } from "../data/requeteCreationTranscription";
-import {
-  requeteServiceCreationRechercheNatali,
-  requetesServiceCreationTableauResultatQuery
-} from "../data/requetesServiceCreation";
+import { requeteServiceCreationRechercheNatali, requetesServiceCreationTableauResultatQuery } from "../data/requetesServiceCreation";
 import { ReponseAppelRMCRequete } from "../data/RMCRequete";
 
 export const configRequetesCreation = [
@@ -48,10 +39,7 @@ export const configRequetesCreation = [
         };
       }
 
-      if (
-        url ===
-        "/requetes/de96cc3n-9865-4c83-b634-37fad2680f41?isConsultation=true"
-      ) {
+      if (url === "/requetes/de96cc3n-9865-4c83-b634-37fad2680f41?isConsultation=true") {
         return {
           data: requeteCreationTranscriptionStatutATraiter
         };
@@ -60,7 +48,11 @@ export const configRequetesCreation = [
       // Création d'une action et maj statut de la requête
       if (
         url ===
-        "/requetes/action/majStatut?idRequete=3ed9aa4e-921b-489f-b8fe-531dd703c60c&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE"
+          "/requetes/action/majStatut?idRequete=3ed9aa4e-921b-489f-b8fe-531dd703c60c&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" ||
+        url ===
+          "/requetes/action/majStatut?idRequete=dd96cc3a-9865-4c83-b634-37fad2680f41&libelleAction=Saisie%20du%20projet&statutRequete=EN_TRAITEMENT" ||
+        url ===
+          "/requetes/action/majStatut?idRequete=3ed9aa4e-921b-489f-b8fe-531dd703c60c&libelleAction=Saisie%20du%20projet&statutRequete=EN_TRAITEMENT"
       ) {
         return { data: "123456789" };
       }
@@ -69,10 +61,7 @@ export const configRequetesCreation = [
           data: requeteCreationATraiter
         };
       }
-      if (
-        url ===
-        "/requetes/creation/54ddf213-d9b7-4747-8e92-68c220f66de3/statut?statut=PRISE_EN_CHARGE"
-      ) {
+      if (url === "/requetes/creation/54ddf213-d9b7-4747-8e92-68c220f66de3/statut?statut=PRISE_EN_CHARGE") {
         return {
           data: null
         };
@@ -111,14 +100,10 @@ export const configRequetesCreation = [
       ////////////////////////////
 
       if (
-        url ===
-          "/requetes/creation/requetesService?tri=dateCreation&sens=ASC&range=0-105" ||
-        url ===
-          "/requetes/creation/requetesService?tri=statut&sens=ASC&range=0-105" ||
-        url ===
-          "/requetes/creation/requetesService?tri=alerte&sens=ASC&range=0-105" ||
-        url ===
-          "/requetes/creation/requetesService?tri=alerte&sens=DESC&range=0-105"
+        url === "/requetes/creation/requetesService?tri=dateCreation&sens=ASC&range=0-105" ||
+        url === "/requetes/creation/requetesService?tri=statut&sens=ASC&range=0-105" ||
+        url === "/requetes/creation/requetesService?tri=alerte&sens=ASC&range=0-105" ||
+        url === "/requetes/creation/requetesService?tri=alerte&sens=DESC&range=0-105"
       ) {
         return requetesServiceCreationTableauResultatQuery;
       }
@@ -127,9 +112,7 @@ export const configRequetesCreation = [
       // Recherche requete Natali //
       /////////////////////////////////
 
-      if (
-        url === "/requetes/creation/natali/numeroDossierNational/2022X 200178"
-      ) {
+      if (url === "/requetes/creation/natali/numeroDossierNational/2022X 200178") {
         return requeteServiceCreationRechercheNatali;
       }
 
@@ -157,8 +140,7 @@ export const configRequetesCreation = [
 
       // Création d'une requête de transcription RCTC et transmission a un service
       if (
-        match[1] ===
-          "/requetes/creationsTransmissionService?idService=6737c8a6-9d23-4fd0-97ec-1ebe3d079373" &&
+        match[1] === "/requetes/creationsTransmissionService?idService=6737c8a6-9d23-4fd0-97ec-1ebe3d079373" &&
         context.method === "post"
       ) {
         return { data: creationRequeteRCTCResultat };
@@ -170,8 +152,7 @@ export const configRequetesCreation = [
       if (match[1] === "/requetes/rmcauto?range=0-105") {
         return {
           headers: {
-            "content-range":
-              "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
+            "content-range": "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
             link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
           },
           data: ReponseAppelRMCRequete.data

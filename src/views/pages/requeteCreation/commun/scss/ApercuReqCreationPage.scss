@@ -23,7 +23,6 @@ $height: calc($spacing * 2.5);
     padding-bottom: calc($spacing / 1.5);
   }
 
-
   .labelAccordion {
     color: $application-color;
     white-space: nowrap;
@@ -40,22 +39,22 @@ $height: calc($spacing * 2.5);
   .contenuAccordion {
     display: flex;
     .contenuBlocAccordion {
-      width: 50%; 
+      width: 50%;
 
       .LigneAccordion {
         max-width: 100%;
         .texteAccordion {
           white-space: nowrap;
           text-overflow: ellipsis;
-          overflow: hidden;      
+          overflow: hidden;
         }
       }
-      }
+    }
 
-      .contenuAccordionUnSeulElement {
-        flex-basis: 100%;  
-      }
-  }  
+    .contenuAccordionUnSeulElement {
+      flex-basis: 100%;
+    }
+  }
 
   .adressRequerant {
     .LigneAccordion {
@@ -73,11 +72,9 @@ $height: calc($spacing * 2.5);
       .labelAccordion {
         min-width: 70px !important;
       }
-     }
+    }
   }
 }
-
-
 
 .ApercuReqCreationEtablissementSimplePage,
 .ApercuReqCreationEtablissementSuiviDossierPage,
@@ -95,9 +92,7 @@ $height: calc($spacing * 2.5);
   }
 }
 
-
-.ApercuReqCreationTranscriptionSimplePage
- {
+.ApercuReqCreationTranscriptionSimplePage {
   display: flex;
 
   .boutons {
@@ -115,7 +110,7 @@ $height: calc($spacing * 2.5);
         border-radius: 0.4rem;
       }
     }
-    
+
     .MuiTabPanel-root .ContenuVolet {
       padding: 5px 0px;
     }
@@ -126,7 +121,8 @@ $height: calc($spacing * 2.5);
   }
 }
 
-.ApercuReqCreationTranscriptionPriseEnChargePage, .ApercuReqCreationTranscriptionSaisieProjetPage {
+.ApercuReqCreationTranscriptionPriseEnChargePage,
+.ApercuReqCreationTranscriptionSaisieProjetPage {
   display: flex;
 
   .VoletAvecOnglet {
@@ -134,7 +130,7 @@ $height: calc($spacing * 2.5);
     flex: 1;
 
     .BarreOnglet {
-      border-radius: 0.4rem;      
+      border-radius: 0.4rem;
       .MuiTabs-flexContainer .MuiButtonBase-root:last-child {
         border-top-right-radius: 0.4rem;
         border-bottom-right-radius: 0.4rem;
@@ -143,6 +139,10 @@ $height: calc($spacing * 2.5);
 
     .ContenuVolet {
       padding: 5px 0px;
+    }
+
+    .CreationProjetActeBoutton {
+      align-self: flex-end;
     }
   }
 }
