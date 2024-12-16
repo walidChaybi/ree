@@ -1,26 +1,14 @@
 import { ErrorMessage, useField } from "formik";
 import "./ChampsCaseACocher.scss";
 
-type TChampscaseACocherProps = Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  "type"
-> & { libelle: string };
+type TChampsCaseACocherProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> & { libelle: string };
 
-const ChampsCaseACocher: React.FC<TChampscaseACocherProps> = ({
-  name,
-  libelle,
-  disabled,
-  ...props
-}) => {
+const ChampsCaseACocher: React.FC<TChampsCaseACocherProps> = ({ name, libelle, disabled, ...props }) => {
   const [field, meta] = useField(name as string);
 
   return (
     <>
-      <label
-        className={`champs-case-a-cocher-rece ${
-          disabled ? "inactif" : ""
-        }`.trim()}
-      >
+      <label className={`champs-case-a-cocher-rece ${disabled ? "inactif" : ""}`.trim()}>
         <input
           type="checkbox"
           {...props}

@@ -22,7 +22,7 @@ const AjoutMentionsMiseAJour: React.FC<IAjoutMentionsMiseAJourProps> = ({ libell
   const { listeMentions, indexMentionModifiee } = useContext(EditionMiseAJourContext.Valeurs);
   const { setEstMentionEnCoursDeSaisie, setIndexMentionModifiee } = useContext(EditionMiseAJourContext.Actions);
 
-  const { dirty, isValid, setFieldValue, resetForm } = useFormikContext<IMiseAJourMentionsForm>();
+  const { dirty, setFieldValue, resetForm, isValid } = useFormikContext<IMiseAJourMentionsForm>();
 
   const [estTypeMentionSelectionne, setEstTypeMentionSelectionne] = useState(false);
 
@@ -51,8 +51,6 @@ const AjoutMentionsMiseAJour: React.FC<IAjoutMentionsMiseAJourProps> = ({ libell
       <h3>{libelleTitreFormulaire}</h3>
       <ListesTypesMentionForm
         natureActe={NatureActe.NAISSANCE}
-        nom={LISTES_TYPES_MENTION}
-        estTypeMentionSelectionne={estTypeMentionSelectionne}
         setEstTypeMentionSelectionne={setEstTypeMentionSelectionne}
       />
       {estTypeMentionSelectionne && (

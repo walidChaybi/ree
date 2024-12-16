@@ -1,5 +1,11 @@
 import { CONFIG_GET_METAMODELE_TYPE_MENTION } from "@api/configurations/requete/miseAJour/GetMetamodeleTypeMentionConfigApi";
-import { MENTION_NIVEAU_DEUX, MENTION_NIVEAU_TROIS, MENTION_NIVEAU_UN, TEXTE_MENTION } from "@composant/formulaire/ConstantesNomsForm";
+import {
+  LISTES_TYPES_MENTION,
+  MENTION_NIVEAU_DEUX,
+  MENTION_NIVEAU_TROIS,
+  MENTION_NIVEAU_UN,
+  TEXTE_MENTION
+} from "@composant/formulaire/ConstantesNomsForm";
 import { IMetamodeleTypeMention } from "@model/etatcivil/acte/mention/IMetaModeleTypeMention";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
@@ -9,49 +15,47 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { OptionVide, SelectField } from "@widget/formulaire/champsSaisie/SelectField";
-import { ISubForm, SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
-import { connect } from "formik";
+import { withNamespace } from "@widget/formulaire/utils/FormUtil";
+import { useFormikContext } from "formik";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { EditionMiseAJourContext } from "../../../../../contexts/EditionMiseAJourContextProvider";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
+import AideALaSaisieMention from "./AideALaSaisieMentionForm";
 import "./scss/MiseAJourMentionsForm.scss";
 
-interface IListesTypesMentionForm {
+export interface IListesTypesMentionForm {
   natureActe: NatureActe;
   setEstTypeMentionSelectionne: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ListesTypesMentionForm: React.FC<IListesTypesMentionForm & SubFormProps> = ({
-  formik,
-  nom,
-  natureActe,
-  setEstTypeMentionSelectionne
-}) => {
+const ListesTypesMentionForm: React.FC<IListesTypesMentionForm> = ({ natureActe, setEstTypeMentionSelectionne }) => {
   const listeNiveau1 = TypeMention.getTypeMentionAsOptions([...TypeMention.getTypeMentionParNatureActe(natureActe)]);
   const [listeNiveau2, setListeNiveau2] = useState<Options>();
   const [listeNiveau3, setListeNiveau3] = useState<Options>();
   const [afficherTexteMention, setAfficherTexteMention] = useState<boolean>(false);
   const [idMentionTypeInformatise, setIdMentionTypeInformatise] = useState<string | null>(null);
-  const [metamodeleTypeMention, setMetamodeleTypeMention] = useState<IMetamodeleTypeMention>();
 
-  const { indexMentionModifiee } = useContext(EditionMiseAJourContext.Valeurs);
+  const { indexMentionModifiee, metamodeleTypeMention } = useContext(EditionMiseAJourContext.Valeurs);
+  const { setMetamodeleTypeMention } = useContext(EditionMiseAJourContext.Actions);
+
+  const { getFieldMeta, setFieldTouched, setFieldValue } = useFormikContext<IListesTypesMentionForm>();
   const { appelApi: appelApiGetMetamodeleTypeMention } = useFetchApi(CONFIG_GET_METAMODELE_TYPE_MENTION);
 
-  const NOM_CHAMP_MENTION_NIVEAU_UN = withNamespace(nom, MENTION_NIVEAU_UN);
-  const NOM_CHAMP_MENTION_NIVEAU_DEUX = withNamespace(nom, MENTION_NIVEAU_DEUX);
-  const NOM_CHAMP_MENTION_NIVEAU_TROIS = withNamespace(nom, MENTION_NIVEAU_TROIS);
+  const NOM_CHAMP_MENTION_NIVEAU_UN = withNamespace(LISTES_TYPES_MENTION, MENTION_NIVEAU_UN);
+  const NOM_CHAMP_MENTION_NIVEAU_DEUX = withNamespace(LISTES_TYPES_MENTION, MENTION_NIVEAU_DEUX);
+  const NOM_CHAMP_MENTION_NIVEAU_TROIS = withNamespace(LISTES_TYPES_MENTION, MENTION_NIVEAU_TROIS);
 
   const formikValueInputUn = useMemo(
-    () => formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_UN).value,
-    [formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_UN).value]
+    () => getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_UN).value,
+    [getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_UN).value]
   );
   const formikValueInputDeux = useMemo(
-    () => formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_DEUX).value,
-    [formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_DEUX).value]
+    () => getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_DEUX).value,
+    [getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_DEUX).value]
   );
   const formikValueInputTrois = useMemo(
-    () => formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_TROIS).value,
-    [formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_TROIS).value]
+    () => getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_TROIS).value,
+    [getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_TROIS).value]
   );
 
   useEffect(() => {
@@ -63,7 +67,7 @@ const ListesTypesMentionForm: React.FC<IListesTypesMentionForm & SubFormProps> =
 
   const resetFormikInput = (namespaceToReset: string[]) => {
     namespaceToReset.forEach(namespace => {
-      formik.setFieldValue(namespace, "");
+      setFieldValue(namespace, "");
     });
     if (namespaceToReset.includes(NOM_CHAMP_MENTION_NIVEAU_DEUX)) setListeNiveau2(undefined);
     if (namespaceToReset.includes(NOM_CHAMP_MENTION_NIVEAU_TROIS)) setListeNiveau3(undefined);
@@ -165,7 +169,7 @@ const ListesTypesMentionForm: React.FC<IListesTypesMentionForm & SubFormProps> =
         />
       </div>
 
-      {listeNiveau2 && listeNiveau2.length > 0 && formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_UN).value !== "" ? (
+      {listeNiveau2 && listeNiveau2.length > 0 && getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_UN).value !== "" ? (
         <div className="selectFieldMentions">
           <SelectField
             name={NOM_CHAMP_MENTION_NIVEAU_DEUX}
@@ -177,7 +181,7 @@ const ListesTypesMentionForm: React.FC<IListesTypesMentionForm & SubFormProps> =
         </div>
       ) : undefined}
 
-      {listeNiveau3 && listeNiveau3.length > 0 && formik.getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_DEUX).value !== "" ? (
+      {listeNiveau3 && listeNiveau3.length > 0 && getFieldMeta(NOM_CHAMP_MENTION_NIVEAU_DEUX).value !== "" ? (
         <div className="selectFieldMentions">
           <SelectField
             name={NOM_CHAMP_MENTION_NIVEAU_TROIS}
@@ -190,7 +194,7 @@ const ListesTypesMentionForm: React.FC<IListesTypesMentionForm & SubFormProps> =
 
       {afficherTexteMention &&
         (idMentionTypeInformatise && metamodeleTypeMention ? (
-          <p className="py-12 text-center text-red-500">Aide à la saisie en cours de développement</p>
+          <AideALaSaisieMention />
         ) : (
           <div className="selectFieldMentions">
             <InputField
@@ -199,8 +203,8 @@ const ListesTypesMentionForm: React.FC<IListesTypesMentionForm & SubFormProps> =
               component="textarea"
               placeholder={"Texte mention à ajouter"}
               onChange={event => {
-                formik.setFieldTouched(TEXTE_MENTION);
-                formik.setFieldValue(TEXTE_MENTION, event.target.value, true);
+                setFieldTouched(TEXTE_MENTION);
+                setFieldValue(TEXTE_MENTION, event.target.value, true);
               }}
             />
           </div>
@@ -209,4 +213,4 @@ const ListesTypesMentionForm: React.FC<IListesTypesMentionForm & SubFormProps> =
   );
 };
 
-export default connect<IListesTypesMentionForm & ISubForm>(ListesTypesMentionForm);
+export default ListesTypesMentionForm;

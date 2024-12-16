@@ -1401,7 +1401,7 @@ export const EnregistrerMentionsResultat = JSON.stringify({
   mentions: "texteMention"
 });
 
-export const MetamodeleAideSaisie = JSON.stringify({
+export const MetamodeleAideSaisie = {
   errors: [],
   data: {
     idTypeMention: "b03c1503-d452-4751-8bb3-94d082db1e5e",
@@ -1499,4 +1499,4 @@ export const MetamodeleAideSaisie = JSON.stringify({
       }
     ]
   }
-});
+};

@@ -1,5 +1,6 @@
 import TRAITEMENT_ABANDONNER_MISE_A_JOUR from "@api/traitements/TraitementAbandonnerMiseAJour";
 import { IMajAnalyseMarginale } from "@hook/acte/EnregistrerMentionsApiHook";
+import { IMetamodeleTypeMention } from "@model/etatcivil/acte/mention/IMetaModeleTypeMention";
 import { IMajMention } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
 import React, { createContext, useEffect, useMemo, useState } from "react";
 import PageChargeur from "../composants/commun/chargeurs/PageChargeur";
@@ -30,6 +31,7 @@ interface IEditionMiseAJourContext {
   listeMentionsEnregistrees: IMajMention[];
   estActeSigne: boolean;
   indexMentionModifiee?: number;
+  metamodeleTypeMention?: IMetamodeleTypeMention;
 }
 
 interface IEditionMiseAJourContextActions {
@@ -45,6 +47,7 @@ interface IEditionMiseAJourContextActions {
   setListeMentionsEnregistrees: React.Dispatch<React.SetStateAction<IMajMention[]>>;
   setEstActeSigne: React.Dispatch<React.SetStateAction<boolean>>;
   setIndexMentionModifiee: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setMetamodeleTypeMention: React.Dispatch<React.SetStateAction<IMetamodeleTypeMention | undefined>>;
 }
 
 export const EditionMiseAJourContext = {
@@ -77,6 +80,7 @@ const EditionMiseAJourContextProvider: React.FC<React.PropsWithChildren<IEdition
   const [listeMentionsEnregistrees, setListeMentionsEnregistrees] = useState<IMajMention[]>([]);
   const [estActeSigne, setEstActeSigne] = useState<boolean>(false);
   const [indexMentionModifiee, setIndexMentionModifiee] = useState<number>();
+  const [metamodeleTypeMention, setMetamodeleTypeMention] = useState<IMetamodeleTypeMention>();
 
   const { lancerTraitement: lancerTraitementAbandonner, traitementEnCours: abandonEnCours } =
     useTraitementApi(TRAITEMENT_ABANDONNER_MISE_A_JOUR);
@@ -120,7 +124,8 @@ const EditionMiseAJourContextProvider: React.FC<React.PropsWithChildren<IEdition
       estMentionEnCoursDeSaisie,
       listeMentionsEnregistrees,
       estActeSigne,
-      indexMentionModifiee
+      indexMentionModifiee,
+      metamodeleTypeMention
     }),
     [
       idActe,
@@ -135,7 +140,8 @@ const EditionMiseAJourContextProvider: React.FC<React.PropsWithChildren<IEdition
       estMentionEnCoursDeSaisie,
       listeMentionsEnregistrees,
       estActeSigne,
-      indexMentionModifiee
+      indexMentionModifiee,
+      metamodeleTypeMention
     ]
   );
 
@@ -160,7 +166,8 @@ const EditionMiseAJourContextProvider: React.FC<React.PropsWithChildren<IEdition
       setEstMentionEnCoursDeSaisie,
       setListeMentionsEnregistrees,
       setEstActeSigne,
-      setIndexMentionModifiee
+      setIndexMentionModifiee,
+      setMetamodeleTypeMention
     }),
     []
   );

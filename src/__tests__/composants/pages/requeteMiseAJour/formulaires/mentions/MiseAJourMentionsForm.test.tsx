@@ -129,55 +129,6 @@ test("Le formulaire fonctionne et le bouton Valider reset le formulaire", async 
   });
 });
 
-test("L'aide à la saisie s'affiche correctement lorsqu'un type mention est informatisé", async () => {
-  const router = createTestingRouter(
-    [
-      {
-        path: "/",
-        element: (
-          <EditionMiseAJourContextProvider
-            idActe={idActe}
-            idRequete={idRequete}
-            estMiseAJourAvecMentions={true}
-          >
-            <MiseAJourMentionsForm libelleTitreFormulaire={"mock titre"} />
-          </EditionMiseAJourContextProvider>
-        )
-      }
-    ],
-    ["/"]
-  );
-
-  render(<RouterProvider router={router} />);
-  const menuType = screen.getByTestId("listesTypesMention.mentionNiveauUn");
-  fireEvent.change(menuType, {
-    target: {
-      value: "0185f3c8-5f4c-4ea9-89e1-fb65fcb7b17f"
-    }
-  });
-
-  const menuTypeDeux = screen.getByTestId("listesTypesMention.mentionNiveauDeux");
-  fireEvent.change(menuTypeDeux, {
-    target: {
-      value: "7adaa7f8-6228-4e25-87a1-d99f3b98371a"
-    }
-  });
-
-  const menuTypeTrois = screen.getByTestId("listesTypesMention.mentionNiveauTrois");
-  fireEvent.change(menuTypeTrois, {
-    target: {
-      value: "b03c54ae-5130-4062-b7e4-34bed2de7989"
-    }
-  });
-
-  await waitFor(() => {
-    expect(screen.getByText("2 Divorce/Séparation/Annulation mariage")).toBeDefined();
-    expect(screen.getByText("2-1 & 2-2 divorce/séparation de corps en France")).toBeDefined();
-    expect(screen.getByText("2-1 notarié")).toBeDefined();
-    expect(screen.queryByText("Aide à la saisie en cours de développement")).toBeDefined();
-  });
-});
-
 test("Le formulaire mentions n'est pas affichés en arrivant sur la page", async () => {
   const router = createTestingRouter(
     [
@@ -208,7 +159,7 @@ test("Le formulaire mentions n'est pas affichés en arrivant sur la page", async
   });
 });
 
-test("La récupération du metamodele de type mention informatise fonctionne correctement", async () => {
+test("La récupération du metamodele de type mention informatise fonctionne correctement et l'aide à la saisie s'affiche", async () => {
   const router = createTestingRouter(
     [
       {
@@ -243,6 +194,13 @@ test("La récupération du metamodele de type mention informatise fonctionne cor
   });
 
   await waitFor(() => {
-    expect(screen.getByText("Aide à la saisie en cours de développement")).toBeDefined();
+    expect(screen.getByText("EVENEMENT (A L'ETRANGER)")).toBeDefined();
+    expect(screen.getByText("CONJOINT")).toBeDefined();
+    expect(screen.getByText("N° acte")).toBeDefined();
+    expect(screen.queryByText("Poste")).toBeNull();
+
+    expect(screen.getByText("Texte mention")).toBeDefined();
   });
 });
+
+// Créer les tests pour l'aide à la saisie ici
