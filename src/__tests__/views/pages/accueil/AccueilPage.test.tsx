@@ -39,6 +39,6 @@ test("renders page d'accueil", async () => {
     expect(screen.getByText("Délivrance")).toBeDefined();
     expect(screen.getByText("Création")).toBeDefined();
     expect(screen.getByText("Consulaire")).toBeDefined();
-    expect(screen.getByText("Tableau de bord")).toBeDefined();
+    expect(screen.getAllByText("Tableau de bord")[0]).toBeDefined();
   });
 });

@@ -5,7 +5,6 @@ import { faChartBar, faGavel, faLandmark, faPlusCircle, faSearch, faSync } from 
 import { IOfficier } from "@model/agent/IOfficier";
 import { getCodesHierarchieService } from "@model/agent/IUtilisateur";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import React, { useContext, useEffect, useState } from "react";
@@ -51,29 +50,29 @@ export const AccueilPage: React.FC = () => {
     <div className="AccueilPage">
       <img
         src={logoRece}
-        alt={getLibelle("Logo RECE")}
+        alt="Logo RECE"
       />
       <div className="Titre">{getBienvenueOfficier(utilisateurConnecte)}</div>
       <div className="Affectation">{getAffectation(utilisateurConnecte)}</div>
       <div className="MenuAccueil">
         <BoutonAccueilEspaceDelivrance
-          libelle={getLibelle("Délivrance")}
+          libelle="Délivrance"
           pageUrl="mesrequetes"
           iconFA={faGavel}
           badge={nbReqTraiteRepondu}
-          title={getLibelle("Bouton pour accèder à l'espace délivrance")}
+          title="Espace délivrance"
         ></BoutonAccueilEspaceDelivrance>
         <BoutonAccueilEspaceMiseAjour
-          libelle={getLibelle("Mise à jour")}
+          libelle="Mise à jour"
           pageUrl="miseAJour"
           iconFA={faSync}
-          title={getLibelle("Bouton pour accèder à l'espace mise à jour")}
+          title="Espace mise à jour"
         ></BoutonAccueilEspaceMiseAjour>
         <BoutonAccueilEspaceCreation
-          libelle={getLibelle("Création")}
+          libelle="Création"
           pageUrl="mesrequetescreation"
           iconFA={faPlusCircle}
-          title={getLibelle("Bouton pour accèder à l'espace création")}
+          title="Espace création"
         ></BoutonAccueilEspaceCreation>
 
         {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_ACCES_ESPACE_CONSULAIRE) && (
@@ -81,47 +80,47 @@ export const AccueilPage: React.FC = () => {
             libelle={"Consulaire"}
             pageUrl={"mes-requetes-consulaire"}
             iconFA={faLandmark}
-            title={"Bouton pour accèder à l'espace consulaire"}
+            title="Espace consulaire"
           ></BoutonAccueilEspaceConsulaire>
         )}
 
         {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION) && (
           <BoutonAccueilCommunication
-            libelle={getLibelle("Communication avec les usagers")}
+            libelle="Communication avec les usagers"
             pageUrl="mesrequetesinformation"
             iconFA={faEnvelope}
-            title={getLibelle("Bouton pour accèder à la communication avec les usagers")}
+            title="Communication avec les usagers"
             badge={nbReqInfo}
           ></BoutonAccueilCommunication>
         )}
         {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_CONSULT_ACTE_RQT) && (
           <>
             <BoutonAccueilRechercheRequete
-              libelle={getLibelle("Rechercher une requête")}
+              libelle="Rechercher une requête"
               pageUrl="rechercherequete"
               iconFA={faSearch}
-              title={getLibelle("Bouton pour accèder à la recherche d'une requête")}
+              title="Recherche d'une requête"
             ></BoutonAccueilRechercheRequete>
 
             <BoutonAccueilRechercheActeOuInscription
-              libelle={getLibelle("Rechercher un acte et une inscription")}
+              libelle="Rechercher un acte et une inscription"
               pageUrl="rechercheacteinscription"
               iconFA={faSearch}
-              title={getLibelle("Bouton pour accèder à la recherche d'un acte et d'une inscription")}
+              title="Recherche d'un acte et d'une inscription"
             ></BoutonAccueilRechercheActeOuInscription>
           </>
         )}
         <BoutonAccueilRechercheActe
-          libelle={getLibelle("Rechercher un acte")}
+          libelle="Rechercher un acte"
           pageUrl="rechercheacte"
           iconFA={faSearch}
-          title={getLibelle("Bouton pour accèder à la recherche d'un acte")}
+          title="Recherche d'un acte"
         ></BoutonAccueilRechercheActe>
         <BoutonAccueilTableau
-          libelle={getLibelle("Tableau de bord")}
+          libelle="Tableau de bord"
           pageUrl="tableau"
           iconFA={faChartBar}
-          title={getLibelle("Bouton pour accèder au tableau de bord")}
+          title="Tableau de bord"
         ></BoutonAccueilTableau>
       </div>
     </div>
@@ -133,7 +132,7 @@ const getBienvenueOfficier = (officier?: IOfficier): string => {
   if (officier) {
     msgBienvenue = `${msgBienvenue} ${officier.prenom} ${officier.nom}`;
   }
-  return getLibelle(msgBienvenue);
+  return msgBienvenue;
 };
 
 const getAffectation = (utilisateurConnecte?: IOfficier): string => {
@@ -142,7 +141,7 @@ const getAffectation = (utilisateurConnecte?: IOfficier): string => {
   if (hierarchie.length > 0) {
     buildHierarchie = hierarchie.join(" - ");
   }
-  return getLibelle(buildHierarchie);
+  return buildHierarchie;
 };
 
 const getHierarchie = (utilisateurConnecte?: IOfficier): string[] => {

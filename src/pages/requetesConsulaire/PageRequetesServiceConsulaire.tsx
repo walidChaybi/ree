@@ -23,7 +23,7 @@ const PageRequetesServiceConsulaire: React.FC<IPageRequetesServiceConsulaireProp
                 url: URL_MES_REQUETES_CONSULAIRE
               },
               {
-                libelle: "Mes requêtes services consulaires"
+                libelle: "Les requêtes consulaires de mon service"
               }
             ]}
           />

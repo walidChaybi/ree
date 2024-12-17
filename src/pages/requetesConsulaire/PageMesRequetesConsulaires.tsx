@@ -22,7 +22,7 @@ const PageMesRequetesConsulaires: React.FC<IPageMesRequetesConsulairesProps> = (
                 libelle: "Mes requêtes consulaires"
               },
               {
-                libelle: "Mes requêtes services consulaires",
+                libelle: "Les requêtes consulaires de mon service",
                 url: URL_REQUETES_CONSULAIRE_SERVICE
               }
             ]}
