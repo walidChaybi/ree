@@ -1,22 +1,8 @@
-import {
-  MARIAGE,
-  PARENTS,
-  PIECES_JOINTES,
-  RECONNAISSANCE,
-  REQUERANT,
-  REQUETE,
-  TITULAIRE
-} from "@composant/formulaire/ConstantesNomsForm";
+import { MARIAGE, PARENTS, PIECES_JOINTES, RECONNAISSANCE, REQUERANT, REQUETE, TITULAIRE } from "@composant/formulaire/ConstantesNomsForm";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
-import {
-  IDetailRequeteParams,
-  useDetailRequeteApiHook
-} from "@hook/requete/DetailRequeteHook";
-import {
-  IUpdateRequeteCreationParams,
-  useUpdateRequeteCreation
-} from "@hook/requete/UpdateRequeteCreationApiHook";
+import { IDetailRequeteParams, useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
+import { IUpdateRequeteCreationParams, useUpdateRequeteCreation } from "@hook/requete/UpdateRequeteCreationApiHook";
 import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import { ISaisieRequeteRCTC } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
@@ -24,11 +10,7 @@ import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { TitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
-import {
-  PATH_MODIFIER_RCTC,
-  URL_RECHERCHE_REQUETE,
-  receUrl
-} from "@router/ReceUrls";
+import { PATH_MODIFIER_RCTC, URL_RECHERCHE_REQUETE, receUrl } from "@router/ReceUrls";
 import { PieceJointe, getPiecesJointesNonVides } from "@util/FileUtils";
 import { UN } from "@util/Utils";
 import { replaceUrl } from "@util/route/UrlUtil";
@@ -39,17 +21,8 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import SaisirRequeteBoutons from "../../../common/composant/formulaire/boutons/SaisirRequeteBoutons";
-import {
-  ICreationRequeteCreationParams,
-  useCreationRequeteCreation
-} from "../../../common/hook/requete/CreationRequeteCreationApiHook";
-import {
-  getParentsForm,
-  getPiecesJointesForm,
-  getRequerantForm,
-  getRequeteForm,
-  getTitulaireForm
-} from "./contenu/SaisirRCTCPageForms";
+import { ICreationRequeteCreationParams, useCreationRequeteCreation } from "../../../common/hook/requete/CreationRequeteCreationApiHook";
+import { getParentsForm, getPiecesJointesForm, getRequerantForm, getRequeteForm, getTitulaireForm } from "./contenu/SaisirRCTCPageForms";
 import { mappingSaisieRequeteRCTCVersRequetesAEnvoyer } from "./mapping/mappingFormulaireSaisirRCTCVersRequeteTranscription";
 import { mappingRequeteTranscriptionVersForumlaireRCTC } from "./mapping/mappingRequeteTranscriptionVersFormulaireRCTC";
 import "./scss/SaisirRCTCPage.scss";
@@ -61,22 +34,10 @@ import {
   EvenementReconnaissanceTitulaireFormDefaultValues,
   EvenementReconnaissanceTitulaireFormValidationSchema
 } from "./sousForm/evenement/EvenementReconnaissanceTitulaireForm";
-import {
-  IdentiteFormDefaultValues,
-  IdentiteFormValidationSchema
-} from "./sousForm/identite/IdentiteTitulaireForm";
-import {
-  ParentFormDefaultValues,
-  ParentFormValidationSchema
-} from "./sousForm/parent/ParentsForm";
-import {
-  RequerantFormDefaultValue,
-  RequerantFormValidationSchema
-} from "./sousForm/requerant/RequerantForm";
-import {
-  RequeteFormDefaultValues,
-  RequeteFormValidationSchema
-} from "./sousForm/requete/RequeteForm";
+import { IdentiteFormDefaultValues, IdentiteFormValidationSchema } from "./sousForm/identite/IdentiteTitulaireForm";
+import { ParentFormDefaultValues, ParentFormValidationSchema } from "./sousForm/parent/ParentsForm";
+import { RequerantFormDefaultValue, RequerantFormValidationSchema } from "./sousForm/requerant/RequerantForm";
+import { RequeteFormDefaultValues, RequeteFormValidationSchema } from "./sousForm/requete/RequeteForm";
 import TransmissionPopin from "./sousForm/transmissionPopin/TransmissionPopin";
 
 export const enum limitesParents {
@@ -119,21 +80,14 @@ export const SaisirRCTCPage: React.FC = () => {
   const [idRequete, setIdRequete] = useState<string>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [modeModification, setModeModification] = useState(false);
-  const [transmissionPopinOuverte, setTransmissionPopinOuverte] =
-    useState(false);
-  const [creationRequeteRCTCParams, setCreationRequeteRCTCParams] =
-    useState<ICreationRequeteCreationParams>();
-  const [piecesjointesAMettreAJour, setPiecesjointesAMettreAJour] =
-    useState<PieceJointe[]>();
-  const [saisieRequeteRCTC, setSaisieRequeteRCTC] =
-    useState<ISaisieRequeteRCTC>();
+  const [transmissionPopinOuverte, setTransmissionPopinOuverte] = useState(false);
+  const [creationRequeteRCTCParams, setCreationRequeteRCTCParams] = useState<ICreationRequeteCreationParams>();
+  const [piecesjointesAMettreAJour, setPiecesjointesAMettreAJour] = useState<PieceJointe[]>();
+  const [saisieRequeteRCTC, setSaisieRequeteRCTC] = useState<ISaisieRequeteRCTC>();
   const [requeteForm, setRequeteForm] = useState<ISaisieRequeteRCTC>();
-  const [idRequeteCreerEtTransmise, setIdRequeteCreerEtTransmise] =
-    useState<string>();
-  const [updateRequeteCreation, setUpdateRequeteCreation] =
-    useState<IUpdateRequeteCreationParams>();
-  const [detailRequeteParams, setDetailRequeteParams] =
-    useState<IDetailRequeteParams>();
+  const [idRequeteCreerEtTransmise, setIdRequeteCreerEtTransmise] = useState<string>();
+  const [updateRequeteCreation, setUpdateRequeteCreation] = useState<IUpdateRequeteCreationParams>();
+  const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>();
 
   const { services } = useContext(RECEContextData);
 
@@ -141,10 +95,7 @@ export const SaisirRCTCPage: React.FC = () => {
   //////////////////////////////////////////////////////////////////////////
   const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
   const idRequeteCreee = useCreationRequeteCreation(creationRequeteRCTCParams);
-  const idRequeteUpdate = useUpdateRequeteCreation(
-    idRequete,
-    updateRequeteCreation
-  );
+  const idRequeteUpdate = useUpdateRequeteCreation(idRequete, updateRequeteCreation);
 
   const getIdRequeteCreee = useCallback(() => {
     if (idRequeteUpdate) {
@@ -177,9 +128,7 @@ export const SaisirRCTCPage: React.FC = () => {
   }, [idRequete, location.pathname, idRequeteParam]);
   useEffect(() => {
     if (detailRequeteState) {
-      const requeteFormMap = mappingRequeteTranscriptionVersForumlaireRCTC(
-        detailRequeteState as IRequeteCreation
-      );
+      const requeteFormMap = mappingRequeteTranscriptionVersForumlaireRCTC(detailRequeteState as IRequeteCreation);
       setRequeteForm(requeteFormMap);
     }
   }, [detailRequeteState]);
@@ -188,9 +137,7 @@ export const SaisirRCTCPage: React.FC = () => {
     if (uneRequeteAEteCreeeOuTransmiseOuUpdate() && saisieRequeteRCTC) {
       // On ne prend que les pjs dont le contenu est renseigné,
       //   en effet si le contenu est vide c'est qu'il a été écrasé par la requête lors de la sauvegarde (la requête ramène ses pièces jointes mais sans le contenu)
-      const pjAMettreAjour = getPiecesJointesNonVides(
-        saisieRequeteRCTC?.[PIECES_JOINTES]
-      );
+      const pjAMettreAjour = getPiecesJointesNonVides(saisieRequeteRCTC?.[PIECES_JOINTES]);
       if (pjAMettreAjour && pjAMettreAjour.length > 0) {
         setPiecesjointesAMettreAJour(pjAMettreAjour);
       } else {
@@ -198,12 +145,7 @@ export const SaisirRCTCPage: React.FC = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    idRequeteCreee,
-    saisieRequeteRCTC,
-    idRequeteCreerEtTransmise,
-    idRequeteUpdate
-  ]);
+  }, [idRequeteCreee, saisieRequeteRCTC, idRequeteCreerEtTransmise, idRequeteUpdate]);
 
   useEffect(() => {
     // Une fois les pièces jointes mises à jour, la maj du bon statut de la requête puis la redirection sont effectuées
@@ -227,16 +169,16 @@ export const SaisirRCTCPage: React.FC = () => {
 
   // Evenements & fonctions
   //////////////////////////////////////////////////////////////////////////
-  function onSubmitSaisirRequete(values: ISaisieRequeteRCTC) {
+  const onSubmitSaisirRequete = (values: ISaisieRequeteRCTC) => {
     setOperationEnCours(true);
-    setSaisieRequeteRCTC(values);
+    setSaisieRequeteRCTC(precedentEtat => ({ ...precedentEtat, ...values }));
     const requeteMap = mappingSaisieRequeteRCTCVersRequetesAEnvoyer(values);
     if (idRequete) {
-      setUpdateRequeteCreation({ requete: requeteMap });
+      setUpdateRequeteCreation(precedentEtat => ({ ...precedentEtat, requete: requeteMap }));
     } else {
-      setCreationRequeteRCTCParams({ requete: requeteMap });
+      setCreationRequeteRCTCParams(precedentEtat => ({ ...precedentEtat, requete: requeteMap }));
     }
-  }
+  };
 
   function fermePopin() {
     setTransmissionPopinOuverte(false);
@@ -246,14 +188,8 @@ export const SaisirRCTCPage: React.FC = () => {
   //////////////////////////////////////////////////////////////////////////
   const blocsForm: JSX.Element[] = [
     getRequeteForm(),
-    getTitulaireForm(
-      TitulaireRequeteCreation.getTitulairesTries(
-        detailRequeteState?.titulaires
-      )?.[0]
-    ),
-    getParentsForm(
-      TitulaireRequeteCreation.getParentsTries(detailRequeteState?.titulaires)
-    ),
+    getTitulaireForm(TitulaireRequeteCreation.getTitulairesTries(detailRequeteState?.titulaires)?.[0]),
+    getParentsForm(TitulaireRequeteCreation.getParentsTries(detailRequeteState?.titulaires)),
     getRequerantForm(),
     getPiecesJointesForm()
   ];
@@ -277,10 +213,7 @@ export const SaisirRCTCPage: React.FC = () => {
         <div>{blocsForm}</div>
         <TransmissionPopin
           ouverte={transmissionPopinOuverte}
-          onTransmissionEffectuee={(
-            idRequeteApresCreationEtTransmission: string,
-            formikValues: FormikValues
-          ) => {
+          onTransmissionEffectuee={(idRequeteApresCreationEtTransmission: string, formikValues: FormikValues) => {
             fermePopin();
             setSaisieRequeteRCTC(formikValues as ISaisieRequeteRCTC);
             setIdRequeteCreerEtTransmise(idRequeteApresCreationEtTransmission);
@@ -309,17 +242,13 @@ export const SaisirRCTCPage: React.FC = () => {
   function finEtRedirection() {
     setOperationEnCours(false);
     if (idRequeteCreee || idRequeteUpdate) {
-      const url =
-        receUrl.getUrlApercuPriseEnChargeCreationTranscriptionAPartirDe({
-          url: location.pathname,
-          idRequete: idRequeteCreee || idRequeteUpdate
-        });
+      const url = receUrl.getUrlApercuPriseEnChargeCreationTranscriptionAPartirDe({
+        url: location.pathname,
+        idRequete: idRequeteCreee || idRequeteUpdate
+      });
       replaceUrl(navigate, url);
     } else if (idRequeteCreerEtTransmise) {
       navigate(-UN);
     }
   }
 };
-
-
-

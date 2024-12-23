@@ -1,14 +1,7 @@
-import {
-  PARENTS,
-  PIECES_JOINTES,
-  REQUERANT,
-  REQUETE,
-  TITULAIRE
-} from "@composant/formulaire/ConstantesNomsForm";
+import { PARENTS, PIECES_JOINTES, REQUERANT, REQUETE, TITULAIRE } from "@composant/formulaire/ConstantesNomsForm";
 import { TypeRedactionActe } from "@model/etatcivil/enum/TypeRedactionActe";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { getLibelle } from "@util/Utils";
 import PiecesJointesForm from "@widget/formulaire/piecesJointes/PiecesJointesForm";
 import IdentiteTitulaireForm from "../sousForm/identite/IdentiteTitulaireForm";
 import ParentsForm from "../sousForm/parent/ParentsForm";
@@ -22,28 +15,30 @@ export function getRequeteForm(): JSX.Element {
     <RequeteForm
       key={REQUETE}
       nom={REQUETE}
-      titre={getLibelle("Acte à transcrire")}
+      titre={"Acte à transcrire"}
     />
   );
 }
 
-export function getTitulaireForm(
-  titulaire?: ITitulaireRequeteCreation
-): JSX.Element {
+export function getTitulaireForm(titulaire?: ITitulaireRequeteCreation): JSX.Element {
   return (
     <IdentiteTitulaireForm
       nom={TITULAIRE}
       key={TITULAIRE}
-      titre={getLibelle("Titulaire 1")}
+      titre={"Titulaire 1"}
       titulaire={titulaire}
     />
   );
 }
 
-export function getParentsForm(
-  parents?: ITitulaireRequeteCreation[]
-): JSX.Element {
-  return <ParentsForm key={PARENTS} nom={PARENTS} parents={parents} />;
+export function getParentsForm(parents?: ITitulaireRequeteCreation[]): JSX.Element {
+  return (
+    <ParentsForm
+      key={PARENTS}
+      nom={PARENTS}
+      parents={parents}
+    />
+  );
 }
 
 export function getRequerantForm(): JSX.Element {
@@ -51,7 +46,7 @@ export function getRequerantForm(): JSX.Element {
     <RequerantForm
       nom={REQUERANT}
       key={REQUERANT}
-      titre={getLibelle("Requérant")}
+      titre={"Requérant"}
     />
   );
 }
@@ -63,7 +58,7 @@ export function getPiecesJointesForm(): JSX.Element {
       nom={PIECES_JOINTES}
       typeRequete={TypeRequete.CREATION}
       typeRedactionActe={TypeRedactionActe.TRANSCRIT}
-      titre={getLibelle("Pièces justificatives")}
+      titre={"Pièces justificatives"}
       maxPiecesJointes={MAX_PIECES_JOINTES}
     />
   );
