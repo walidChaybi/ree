@@ -67,6 +67,7 @@ export function useTableauSuiviDossierHook(
             titulaireCourant.suiviDossiers?.map(suiviDossier => {
               return {
                 id: titulaireCourant.id,
+                idActe: idActes[0],
                 idSuiviDossier: suiviDossier.idSuiviDossier,
                 prenoms: "",
                 nom: "",

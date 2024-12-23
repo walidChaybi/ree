@@ -2,15 +2,23 @@ import { RECEContextData } from "@core/contexts/RECEContext";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { appartientAUtilisateurConnecte } from "@model/agent/IOfficier";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
+import { FenetreFiche } from "@pages/fiche/FenetreFiche";
+import { IFenetreFicheActe } from "@pages/rechercheMultiCriteres/common/IFenetreFicheActeInscription";
 import { PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET } from "@router/ReceUrls";
 import DateUtils from "@util/DateUtils";
-import { getValeurOuVide } from "@util/Utils";
+import { getValeurOuVide, supprimeElement } from "@util/Utils";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { getLigneTableauVide } from "@widget/tableau/TableUtils";
-import { NB_LIGNES_PAR_APPEL_PERSONNE, NB_LIGNES_PAR_PAGE_PERSONNE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import {
+  NB_LIGNES_PAR_APPEL_PERSONNE,
+  NB_LIGNES_PAR_PAGE_ACTE,
+  NB_LIGNES_PAR_PAGE_PERSONNE
+} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import { ICelluleFontAwesomeIconeProps } from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/CelluleFontAwesomeIcone";
@@ -31,6 +39,7 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
   const [idBIAAfficher, setIdBIAAfficher] = useState<string>("");
   const [isModalOuverte, setIsModalOuverte] = useState<boolean>(false);
   const [dataFromRequete, setDataFromRequete] = useState<IDataBulletinIdentificationResultat>();
+  const [etatFenetres, setEtatFenetres] = useState<IFenetreFicheActe[]>([]);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -83,8 +92,29 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
       setIdBIAAfficher(ligneSelectionnee.idActe || "");
       setIsModalOuverte(true);
     } else if (NatureProjetEtablissement.estNaissance(NatureProjetEtablissement.getEnumFromLibelle(ligneSelectionnee?.evenement || ""))) {
+      /* v8 ignore start */
+      // on ignore les lignes ci dessous du coverage car elle nous obligerait a tester la fenetre externe
+      // la fenetre externe etant compliqué a tester via le portal + fonction global.document a mocker
       const ligneTitulaire = data.find(ligne => ligne.id === ligneSelectionnee.id);
-      if (QualiteFamille.estPostulant(QualiteFamille.getEnumFromLibelle(ligneTitulaire?.qualite || ""))) {
+
+      if (AvancementProjetActe.estSigne(AvancementProjetActe.getEnumFromLibelle(ligneSelectionnee.avancement))) {
+        const etatFenetreTrouve = etatFenetres.find(etatFenetre => etatFenetre.idActe === ligneSelectionnee.idActe);
+
+        if (!etatFenetreTrouve) {
+          const nouvelEtatFenetre: IFenetreFicheActe = {
+            index: { value: idxGlobal },
+            idActe: ligneSelectionnee.idActe || "",
+            datasFiches: [
+              {
+                identifiant: ligneSelectionnee.idActe || "",
+                categorie: TypeFiche.ACTE
+              }
+            ]
+          };
+          setEtatFenetres([...etatFenetres, nouvelEtatFenetre]);
+        }
+      } else if (QualiteFamille.estPostulant(QualiteFamille.getEnumFromLibelle(ligneTitulaire?.qualite || ""))) {
+        /* v8 ignore end */
         replaceUrl(
           navigate,
           `${getUrlPrecedente(location.pathname)}/${PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET}/${props.requete.id}/${id}`
@@ -93,11 +123,18 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
     }
   }
 
-  function onClose() {
+  const onClose = () => {
     setIsModalOuverte(false);
     setIdBIAAfficher("");
     setDataFromRequete(undefined);
-  }
+  };
+
+  /* v8 ignore start */
+  const closeFenetre = (idActe: string, idx: number) => {
+    const nouvelEtatFenetres = supprimeElement(etatFenetres, (etatFenetre: IFenetreFicheActe) => etatFenetre.idActe === idActe);
+    setEtatFenetres(nouvelEtatFenetres);
+  };
+  /* v8 ignore end */
 
   return (
     <div className="TableauSuiviDossier">
@@ -118,6 +155,33 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
         onClose={onClose}
         idActe={idBIAAfficher}
       />
+
+      {
+        /* v8 ignore start */
+        etatFenetres && etatFenetres.length > 0 && (
+          <>
+            {etatFenetres.map((fenetreFicheActe: IFenetreFicheActe) => {
+              return (
+                fenetreFicheActe && (
+                  <FenetreFiche
+                    estConsultation={true}
+                    key={`fiche${fenetreFicheActe.idActe}${fenetreFicheActe.index}`}
+                    identifiant={fenetreFicheActe.idActe}
+                    categorie={TypeFiche.ACTE}
+                    datasFiches={fenetreFicheActe.datasFiches}
+                    numeroRequete={fenetreFicheActe.numeroRequete}
+                    onClose={closeFenetre}
+                    index={fenetreFicheActe.index}
+                    nbLignesTotales={NB_LIGNES_PAR_PAGE_ACTE || 0}
+                    nbLignesParAppel={1}
+                  />
+                )
+              );
+            })}
+          </>
+        )
+        /* v8 ignore end */
+      }
     </div>
   );
 };

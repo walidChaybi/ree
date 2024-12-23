@@ -16,7 +16,7 @@ import {
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID
 } from "@router/ReceUrls";
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { MemoryRouter, RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
@@ -62,7 +62,7 @@ const requeteAvecTitulaires: IRequeteCreation = {
   ]
 };
 
-test("DOIT afficher le tableau de SuiviDossier QUAND les conditions sont remplies.", () => {
+test("DOIT afficher le tableau de SuiviDossier QUAND les conditions sont remplies.", async () => {
   render(
     <HookConsumerSuiviDossier
       idUtilisateurConnecte="7a091a3b-6835-4824-94fb-527d68926d55"
@@ -70,7 +70,7 @@ test("DOIT afficher le tableau de SuiviDossier QUAND les conditions sont remplie
     />
   );
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(screen.getByText("Nom")).toBeDefined();
     expect(screen.getByText("Prénoms")).toBeDefined();
     expect(screen.getByText("Décret")).toBeDefined();
@@ -222,10 +222,28 @@ test("NE DOIT PAS afficher le tableau de SuiviDossier QUAND le FF est inactif.",
   });
 });*/
 
-test.skip("DOIT afficher le Bulletin d'idenfication lors du clique sur une ligne.", () => {
-  render(<HookConsumerSuiviDossier requete={requeteAvecTitulaires} />);
+test.skip("DOIT afficher le Bulletin d'idenfication lors du clique sur une ligne.", async () => {
+  render(
+    <HookConsumerSuiviDossier
+      idUtilisateurConnecte="7a091a3b-6835-4824-94fb-527d68926d55"
+      requete={requeteAvecTitulaires}
+    />
+  );
 
-  waitFor(() => {
+  await waitFor(() => {
+    expect(screen.getByText("Nom")).toBeDefined();
+    expect(screen.getByText("Prénoms")).toBeDefined();
+    expect(screen.getByText("Décret")).toBeDefined();
+    expect(screen.getByText("Evénement")).toBeDefined();
+    expect(screen.getByText("Date évenement")).toBeDefined();
+    expect(screen.getByText("Avancement")).toBeDefined();
+    expect(screen.getByText("PLAGNE")).toBeDefined();
+    expect(screen.getByText("Sylvie")).toBeDefined();
+  });
+
+  fireEvent.click(screen.getByText("PLAGNE"));
+
+  await waitFor(() => {
     expect(screen.getByText("Nom :")).toBeDefined();
     expect(screen.getByText("Prénoms :")).toBeDefined();
     expect(screen.getByText("Sexe :")).toBeDefined();

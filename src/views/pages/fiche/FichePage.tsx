@@ -1,22 +1,10 @@
 import { CONFIG_POST_REQUETE_MISE_A_JOUR } from "@api/configurations/requete/miseAJour/PostRequeteMiseAJourApiConfig";
 import { RECEContextData } from "@core/contexts/RECEContext";
-import {
-  AddAlerteActeApiHookParameters,
-  useAddAlerteActeApiHook
-} from "@hook/alertes/AddAlerteActeHookApi";
-import {
-  DeleteAlerteActeApiHookParameters,
-  useDeleteAlerteActeApiHook
-} from "@hook/alertes/DeleteAlerteActeHookApi";
-import {
-  officierDroitConsulterSurLeTypeRegistreOuDroitMAE,
-  officierHabiliterPourLeDroit
-} from "@model/agent/IOfficier";
+import { AddAlerteActeApiHookParameters, useAddAlerteActeApiHook } from "@hook/alertes/AddAlerteActeHookApi";
+import { DeleteAlerteActeApiHookParameters, useDeleteAlerteActeApiHook } from "@hook/alertes/DeleteAlerteActeHookApi";
+import { officierDroitConsulterSurLeTypeRegistreOuDroitMAE, officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
-import {
-  EOptionMiseAJourActe,
-  OptionMiseAJourActe
-} from "@model/etatcivil/enum/OptionMiseAJourActe";
+import { EOptionMiseAJourActe, OptionMiseAJourActe } from "@model/etatcivil/enum/OptionMiseAJourActe";
 import { OrigineActe } from "@model/etatcivil/enum/OrigineActe";
 import { TitulaireRequeteMiseAJour } from "@model/requete/ITitulaireRequeteMiseAJour";
 import { SousTypeMiseAJour } from "@model/requete/enum/SousTypeMiseAJour";
@@ -359,10 +347,7 @@ function passageALaPlageSuivante(idxLocal: number, indexCourant: number) {
 /**
  *  Passage à la plage précédente si l'index local précédent était 0
  */
-function passageALaPlagePrecedente(
-  indexCourant: number,
-  nbLignesParAppel: number
-) {
+function passageALaPlagePrecedente(indexCourant: number, nbLignesParAppel: number) {
   return getIndexLocal(indexCourant + 1, nbLignesParAppel) === 0;
 }
 

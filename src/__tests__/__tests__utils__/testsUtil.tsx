@@ -52,7 +52,8 @@ export function mockFenetreFicheTestFunctions() {
       ...window,
       addEventListener: vi.fn(),
       removeEventListener: vi.fn(),
-      dispatchEvent: vi.fn()
+      dispatchEvent: vi.fn(),
+      close: vi.fn()
     };
   };
   globalAny.close = vi.fn();

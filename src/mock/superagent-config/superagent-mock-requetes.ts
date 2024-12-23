@@ -43,6 +43,7 @@ import {
 } from "../data/requeteCreation";
 import {
   requeteCreationEtablissement as reqEtablissement,
+  requeteCreationEtablissementProjetSigne,
   requeteCreationEtablissementSaisieProjet,
   requeteCreationEtablissementSaisieProjetEnCours
 } from "../data/requeteCreationEtablissement";
@@ -286,6 +287,14 @@ export const configRequetes = [
       ) {
         return {
           data: deepCopie(requeteCreationEtablissement)
+        };
+      }
+      if (
+        match[1] === "/requetes/3ed9aa4e-921b-489f-b8fe-531dd703c60z" ||
+        match[1] === "/requetes/3ed9aa4e-921b-489f-b8fe-531dd703c60z?isConsultationHistoriqueAction=true"
+      ) {
+        return {
+          data: deepCopie(requeteCreationEtablissementProjetSigne)
         };
       }
       if (match[1] === "/requetes/a2724cc9-450c-4e50-9d05-a44a28717954" || match[1] === "/requetes/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee") {
