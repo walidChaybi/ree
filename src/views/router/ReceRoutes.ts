@@ -588,7 +588,7 @@ export const routesRece: IRoute[] = [
     url: URL_MES_REQUETES_CONSULAIRE,
     component: PageMesRequetesConsulaires,
     auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT, Droit.CREER_ACTE_DRESSE],
-    libelle: "Mes requetes consulaires",
+    libelle: "Mes requêtes consulaires",
     canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_ACCES_ESPACE_CONSULAIRE)
   },
 
@@ -600,7 +600,7 @@ export const routesRece: IRoute[] = [
     url: URL_REQUETES_CONSULAIRE_SERVICE,
     component: PageRequetesServiceConsulaire,
     auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT, Droit.CREER_ACTE_DRESSE],
-    libelle: "Les requetes consulaires de mon service",
+    libelle: "Les requêtes consulaires de mon service",
     canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_ACCES_ESPACE_CONSULAIRE)
   },
 

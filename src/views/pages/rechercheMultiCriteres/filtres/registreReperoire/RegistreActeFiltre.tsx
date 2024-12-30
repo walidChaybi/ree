@@ -5,6 +5,7 @@ import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
 import { IRMCRegistre } from "@model/rmc/acteInscription/rechercheForm/IRMCRegistre";
 import { getLibelle } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
+import { MAX_ANNEE_MESSAGE, MIN_LENGTH_ANNEE_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import NumeroActeForm, {
   NUMERO_BIS_TER,
   NumeroActeDefaultValues,
@@ -19,19 +20,8 @@ import RegistreSupportForm, {
 } from "@widget/formulaire/champRegistreSupport/RegistreSupportForm";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
-import {
-  MAX_ANNEE_MESSAGE,
-  MIN_LENGTH_ANNEE_MESSAGE
-} from "@widget/formulaire/FormulaireMessages";
-import {
-  digitSeulement,
-  traiteCarAutorises
-} from "@widget/formulaire/utils/ControlesUtil";
-import {
-  ComponentFiltreProps,
-  FormikComponentProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { digitSeulement, traiteCarAutorises } from "@widget/formulaire/utils/ControlesUtil";
+import { ComponentFiltreProps, FormikComponentProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
@@ -69,38 +59,24 @@ const CHAMPS_VERROUILLES_VALEURS_PAR_DEFAUT = {
 export const RegistreActeValidationSchema = Yup.object({
   [NATURE_ACTE]: Yup.string(),
   [FAMILLE_REGISTRE]: Yup.string(),
-  [ANNEE]: Yup.number()
-    .min(MIN_LENGTH_ANNEE, MIN_LENGTH_ANNEE_MESSAGE)
-    .max(new Date().getFullYear(), MAX_ANNEE_MESSAGE),
+  [ANNEE]: Yup.number().min(MIN_LENGTH_ANNEE, MIN_LENGTH_ANNEE_MESSAGE).max(new Date().getFullYear(), MAX_ANNEE_MESSAGE),
   [NUMERO_ACTE]: NumeroActeValidationSchema
 });
 
-export type RegistreActeFiltreProps = ComponentFiltreProps &
-  FormikComponentProps;
+export type RegistreActeFiltreProps = ComponentFiltreProps & FormikComponentProps;
 
 const NOMBRE_RESULTAT_MAX = 15;
 const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
   const [familleRegistre, setFamilleRegistre] = useState<string>("");
-  const [champsVerrouilles, setChampsVerrouilles] = useState(
-    CHAMPS_VERROUILLES_VALEURS_PAR_DEFAUT
-  );
+  const [champsVerrouilles, setChampsVerrouilles] = useState(CHAMPS_VERROUILLES_VALEURS_PAR_DEFAUT);
 
   // Namespace champs
-  const familleRegistreWithNamespace = withNamespace(
-    props.nomFiltre,
-    FAMILLE_REGISTRE
-  );
-  const anneeRegistreAvecNamespace = withNamespace(
-    props.nomFiltre,
-    ANNEE_REGISTRE
-  );
+  const familleRegistreWithNamespace = withNamespace(props.nomFiltre, FAMILLE_REGISTRE);
+  const anneeRegistreAvecNamespace = withNamespace(props.nomFiltre, ANNEE_REGISTRE);
   const pocopaWithNamespace = withNamespace(props.nomFiltre, POCOPA);
   const natureActeAvecNamespace = withNamespace(props.nomFiltre, NATURE_ACTE);
   const numeroActeAvecNamespace = withNamespace(props.nomFiltre, NUMERO_ACTE);
-  const registreSupportAvecNamespace = withNamespace(
-    props.nomFiltre,
-    REGISTRE_SUPPORT
-  );
+  const registreSupportAvecNamespace = withNamespace(props.nomFiltre, REGISTRE_SUPPORT);
 
   const registreSupportProps: RegistreSupportFormProps = {
     nomFiltre: registreSupportAvecNamespace,
@@ -126,13 +102,13 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
   // On place ce code dans ce useEffect (et non la fonction onFamilleRegistreChange())
   // afin que les champs se mettent à jour dès que 'familleRegistre' est mis à jour,
   // ce qui survient suite au clic de réinitialisation des champs ou du rappel des critères.
+
   useEffect(() => {
     const enumTypeFamille = TypeFamille.getEnumFor(familleRegistre);
 
     const estCPNOuPAC = estTypeFamilleCPNOuPAC(enumTypeFamille);
     const estOP2OuOP3 = estTypeFamilleOP2OuOP3(enumTypeFamille);
-    const estACQOuCOLOuVide =
-      estTypeFamilleACQOuCOL(enumTypeFamille) || enumTypeFamille === "";
+    const estACQOuCOLOuVide = estTypeFamilleACQOuCOL(enumTypeFamille) || enumTypeFamille === "";
 
     // Réinitialiser les champs.
     props.formik.setFieldValue(
@@ -147,23 +123,14 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
 
     if (estCPNOuPAC) {
       props.formik.setFieldValue(natureActeAvecNamespace, "");
-      props.formik.setFieldValue(
-        withNamespace(registreSupportAvecNamespace, SUPPORT_UN),
-        ""
-      );
-      props.formik.setFieldValue(
-        withNamespace(numeroActeAvecNamespace, NUMERO_BIS_TER),
-        ""
-      );
+      props.formik.setFieldValue(withNamespace(registreSupportAvecNamespace, SUPPORT_UN), "");
+      props.formik.setFieldValue(withNamespace(numeroActeAvecNamespace, NUMERO_BIS_TER), "");
     } else if (estOP2OuOP3) {
       props.formik.setFieldValue(anneeRegistreAvecNamespace, "");
     }
 
     if (!estACQOuCOLOuVide) {
-      props.formik.setFieldValue(
-        withNamespace(registreSupportAvecNamespace, SUPPORT_DEUX),
-        ""
-      );
+      props.formik.setFieldValue(withNamespace(registreSupportAvecNamespace, SUPPORT_DEUX), "");
     }
 
     // (Dé)Verrouiller les champs.
@@ -175,15 +142,11 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
       supportDeux: !estACQOuCOLOuVide,
       numeroBisTer: estCPNOuPAC
     });
+
+    setFamilleRegistre(props.formik.getFieldProps(familleRegistreWithNamespace).value);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [familleRegistre]);
-
-  useEffect(() => {
-    setFamilleRegistre(
-      props.formik.getFieldProps(familleRegistreWithNamespace).value
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.formik.values]);
 
   return (
     <Fieldset titre={getLibelle("Filtre registre")}>
@@ -208,9 +171,7 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
           familleRegistre={familleRegistre}
           estOuvert={undefined}
           disabled={champsVerrouilles.pocopa}
-          optionsValidesNonAffichees={[
-            { cle: "TR-ACTES", libelle: "TR-ACTES" }
-          ]}
+          optionsValidesNonAffichees={[{ cle: "TR-ACTES", libelle: "TR-ACTES" }]}
         />
         <InputField
           name={anneeRegistreAvecNamespace}
@@ -230,21 +191,15 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
 export default connect(RegistreActeFiltre);
 
 function estTypeFamilleCPNOuPAC(familleRegistre: TypeFamille): boolean {
-  return (
-    TypeFamille.estCPN(familleRegistre) || TypeFamille.estPAC(familleRegistre)
-  );
+  return TypeFamille.estCPN(familleRegistre) || TypeFamille.estPAC(familleRegistre);
 }
 
 function estTypeFamilleOP2OuOP3(familleRegistre: TypeFamille): boolean {
-  return (
-    TypeFamille.estOP2(familleRegistre) || TypeFamille.estOP3(familleRegistre)
-  );
+  return TypeFamille.estOP2(familleRegistre) || TypeFamille.estOP3(familleRegistre);
 }
 
 function estTypeFamilleACQOuCOL(familleRegistre: TypeFamille): boolean {
-  return (
-    TypeFamille.estACQ(familleRegistre) || TypeFamille.estCOL(familleRegistre)
-  );
+  return TypeFamille.estACQ(familleRegistre) || TypeFamille.estCOL(familleRegistre);
 }
 
 export function registreFormEstModifie(valeurs: IRMCRegistre) {
