@@ -1,4 +1,4 @@
-import { ErrorMessage, useField, useFormikContext } from "formik";
+import { useField } from "formik";
 import { useEffect, useMemo, useRef } from "react";
 
 type TChampDateProps = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -14,20 +14,19 @@ const ChampDate: React.FC<TChampDateProps> = ({ name, libelle }) => {
     }),
     [name]
   );
-  const { setFieldValue } = useFormikContext();
-  const [fieldJour, metaJour] = useField(champsDate.jour);
-  const [fieldMois, metaMois] = useField(champsDate.mois);
-  const [fieldAnnee, metaAnnee] = useField(champsDate.annee);
+  const [fieldJour, metaJour, helpersJour] = useField(champsDate.jour);
+  const [fieldMois, metaMois, helpersMois] = useField(champsDate.mois);
+  const [fieldAnnee, metaAnnee, helpersAnnee] = useField(champsDate.annee);
   const refMois = useRef<HTMLInputElement | null>(null);
   const refAnnee = useRef<HTMLInputElement | null>(null);
-  const erreurs = useMemo(
-    () => [
-      ...(metaJour?.error ? [champsDate.jour] : []),
-      ...(metaMois?.error ? [champsDate.mois] : []),
-      ...(metaAnnee?.error ? [champsDate.annee] : [])
-    ],
-    [metaJour, metaMois, metaAnnee]
-  );
+  const erreurs = useMemo(() => {
+    const dateEnCompletion =
+      [champsDate.jour, champsDate.mois].includes(document.activeElement?.getAttribute("id") ?? "") || !metaAnnee.touched;
+
+    return dateEnCompletion
+      ? []
+      : [metaJour.error ?? "", metaMois.error ?? "", metaAnnee.error ?? ""].filter(erreur => Boolean(erreur.length));
+  }, [metaJour.error, metaMois.error, metaAnnee]);
 
   useEffect(() => {
     metaJour?.value?.length === 2 && refMois.current?.focus();
@@ -48,25 +47,21 @@ const ChampDate: React.FC<TChampDateProps> = ({ name, libelle }) => {
       <div className="flex flex-nowrap gap-1">
         <input
           id={champsDate.jour}
-          className={`border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${metaJour?.error ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
+          className={`border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${metaJour?.error && erreurs.length ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
           maxLength={2}
           value={fieldJour.value}
           placeholder="JJ"
           onChange={event => {
-            const valeurJour = event.target.value.replace(/\D/, "");
-            event.target.value = Number(valeurJour) > 31 ? "31" : valeurJour;
+            event.target.value = event.target.value.replace(/\D/, "");
             fieldJour.onChange(event);
           }}
           onBlur={() => {
             const jour = String(fieldJour.value);
-            if (["0", "00"].includes(jour)) {
-              setFieldValue(champsDate.jour, "");
 
-              return;
-            }
-
-            let valeurJour;
+            let valeurJour = "";
             switch (true) {
+              case ["0", "00"].includes(jour):
+                break;
               case jour.length === 1:
                 valeurJour = `0${jour}`;
                 break;
@@ -78,32 +73,28 @@ const ChampDate: React.FC<TChampDateProps> = ({ name, libelle }) => {
                 break;
             }
 
-            setFieldValue(champsDate.jour, valeurJour);
+            helpersJour.setValue(valeurJour);
           }}
         />
         <span className="mx-1 text-xl">{"/"}</span>
         <input
           id={champsDate.mois}
           ref={refMois}
-          className={`border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${metaMois?.error ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
+          className={`border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${metaMois?.error && erreurs.length ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
           maxLength={2}
           value={fieldMois.value}
           placeholder="MM"
           onChange={event => {
-            const valeurMois = event.target.value.replace(/\D/, "");
-            event.target.value = Number(valeurMois) > 12 ? "12" : valeurMois;
+            event.target.value = event.target.value.replace(/\D/, "");
             fieldMois.onChange(event);
           }}
           onBlur={() => {
             const mois = String(fieldMois.value);
-            if (["0", "00"].includes(mois)) {
-              setFieldValue(champsDate.mois, "");
 
-              return;
-            }
-
-            let valeurMois;
+            let valeurMois = "";
             switch (true) {
+              case ["0", "00"].includes(mois):
+                break;
               case mois.length === 1:
                 valeurMois = `0${mois}`;
                 break;
@@ -115,28 +106,26 @@ const ChampDate: React.FC<TChampDateProps> = ({ name, libelle }) => {
                 break;
             }
 
-            setFieldValue(champsDate.mois, valeurMois);
+            helpersMois.setValue(valeurMois);
           }}
         />
         <span className="mx-1 text-xl">{"/"}</span>
         <input
           id={champsDate.annee}
           ref={refAnnee}
-          className={`border-1 w-11 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${metaAnnee.error ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
+          className={`border-1 w-11 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${metaAnnee.error && erreurs.length ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
           placeholder="AAAA"
+          maxLength={4}
           value={fieldAnnee.value}
           onChange={event => {
             event.target.value = event.target.value.replace(/\D/, "");
             fieldAnnee.onChange(event);
           }}
+          onBlur={() => helpersAnnee.setTouched(true)}
         />
       </div>
 
-      {Boolean(erreurs.length) && (
-        <div className="text-start text-sm text-rouge">
-          <ErrorMessage name={erreurs[0]} />
-        </div>
-      )}
+      {Boolean(erreurs.length) && <div className="text-start text-sm text-rouge">{erreurs[0]}</div>}
     </div>
   );
 };

@@ -50,6 +50,11 @@ interface IEditionMiseAJourContextActions {
   setMetamodeleTypeMention: React.Dispatch<React.SetStateAction<IMetamodeleTypeMention | undefined>>;
 }
 
+interface ITypeMentionsSelectionnes {
+  listesTypesMention: { mentionNiveauUn: string; mentionNiveauDeux: string; mentionNiveauTrois: string };
+  texteMention: string;
+}
+
 export const EditionMiseAJourContext = {
   Valeurs: createContext<IEditionMiseAJourContext>({} as IEditionMiseAJourContext),
   Actions: createContext<IEditionMiseAJourContextActions>({} as IEditionMiseAJourContextActions)

@@ -3,105 +3,39 @@ import { IChamp, IMetaModelBloc } from "@model/etatcivil/acte/mention/IMetaModel
 import { useFormikContext } from "formik";
 import React, { Suspense, lazy, useContext } from "react";
 import { EditionMiseAJourContext } from "../../../../../contexts/EditionMiseAJourContextProvider";
-import ChampDate from "../../../../commun/champs/ChampDate";
-import ChampListeDeroulante from "../../../../commun/champs/ChampListeDeroulante";
 import PageChargeur from "../../../../commun/chargeurs/PageChargeur";
+
 const ChampsCaseACocher = lazy(() => import("../../../../commun/champs/ChampsCaseACocher"));
+const ChampDate = lazy(() => import("../../../../commun/champs/ChampDate"));
+const ChampListeDeroulante = lazy(() => import("../../../../commun/champs/ChampListeDeroulante"));
 const ChampsZoneTexte = lazy(() => import("../../../../commun/champs/ChampsZoneTexte"));
 const ChampsTexte = lazy(() => import("../../../../commun/champs/ChampsTexte"));
 
-const renderChampFormulaire = (champ: IChamp, idBlock: string, values: Record<string, any>) => {
-  const masquerChamp = champ.exigencesPourValorisation.some(exigence => {
-    return exigence.operateur === "="
-      ? !exigence.valeurs.includes(values[idBlock]?.[exigence.idChampReference]?.toString())
-      : exigence.valeurs.includes(values[idBlock]?.[exigence.idChampReference]?.toString());
-  });
-  if (masquerChamp) return;
-
-  switch (champ.type) {
+const getClassesChamp = (typeChamp: string) => {
+  switch (typeChamp) {
     case "text":
-      return (
-        <div
-          className="w-[42.5%] px-[2.5%] pb-4"
-          key={`${idBlock}.${champ.id}`}
-        >
-          <Suspense fallback={<PageChargeur />}>
-            <ChampsTexte
-              name={`${idBlock}.${champ.id}`}
-              type="text"
-              libelle={champ.libelle}
-            />
-          </Suspense>
-        </div>
-      );
     case "select":
-      return (
-        <div
-          className="w-[42.5%] px-[2.5%] pb-4"
-          key={`${idBlock}.${champ.id}`}
-        >
-          <Suspense fallback={<PageChargeur />}>
-            <ChampListeDeroulante
-              libelle={champ.libelle}
-              name={`${idBlock}.${champ.id}`}
-              options={champ.options}
-            />
-          </Suspense>
-        </div>
-      );
-    case "boolean":
-      return (
-        <div
-          className="w-full px-[2.5%] pb-6 pt-4 text-left"
-          key={`${idBlock}.${champ.id}`}
-        >
-          <Suspense fallback={<PageChargeur />}>
-            <ChampsCaseACocher
-              name={`${idBlock}.${champ.id}`}
-              libelle={champ.libelle}
-            />
-          </Suspense>
-        </div>
-      );
     case "dateComplete":
     case "dateIncomplete":
-      return (
-        <div
-          className="w-[42.5%] px-[2.5%] pb-4"
-          key={`${idBlock}.${champ.id}`}
-        >
-          <Suspense fallback={<PageChargeur />}>
-            <ChampDate
-              name={`${idBlock}.${champ.id}`}
-              libelle={champ.libelle}
-            />
-          </Suspense>
-        </div>
-      );
     case "int":
-      return (
-        <div
-          className="w-[42.5%] px-[2.5%] pb-4"
-          key={`${idBlock}.${champ.id}`}
-        >
-          <Suspense fallback={<PageChargeur />}>
-            <ChampsTexte
-              name={`${idBlock}.${champ.id}`}
-              type="text"
-              libelle={champ.libelle}
-            />
-          </Suspense>
-        </div>
-      );
+      return "w-[42.5%] px-[2.5%] pb-4";
+    case "boolean":
+      return "w-full px-[2.5%] pb-6 pt-4 text-left";
     default:
-      return <></>;
+      return "";
   }
 };
 
+const estChampMasque = (champ: IChamp, idBloc: string, valeurs: Record<string, any>) =>
+  champ.exigencesPourValorisation.some(exigence => {
+    const valeurPourExigencePresente = exigence.valeurs.includes(valeurs[idBloc]?.[exigence.idChampReference]?.toString());
+
+    return exigence.operateur === "=" ? !valeurPourExigencePresente : valeurPourExigencePresente;
+  });
+
 const AideALaSaisieMention: React.FC = () => {
   const { metamodeleTypeMention } = useContext(EditionMiseAJourContext.Valeurs);
-
-  const { setFieldTouched, setFieldValue, values } = useFormikContext<Record<string, any>>();
+  const { values } = useFormikContext<Record<string, any>>();
 
   return (
     <div className="ml-14 mt-10 grid gap-6">
@@ -118,26 +52,79 @@ const AideALaSaisieMention: React.FC = () => {
             <div className="mt-3 flex flex-wrap">
               {bloc.champs
                 .sort((champA, champB) => champA.position - champB.position)
-                .map((champ: IChamp) => {
-                  return renderChampFormulaire(champ, bloc.id, values);
-                })}
+                .map((champ: IChamp) =>
+                  estChampMasque(champ, bloc.id, values) ? (
+                    <></>
+                  ) : (
+                    <div
+                      className={getClassesChamp(champ.type)}
+                      key={`${bloc.id}.${champ.id}`}
+                    >
+                      <Suspense fallback={<></>}>
+                        {(() => {
+                          switch (champ.type) {
+                            case "text":
+                              return (
+                                <ChampsTexte
+                                  name={`${bloc.id}.${champ.id}`}
+                                  type="text"
+                                  libelle={champ.libelle}
+                                />
+                              );
+                            case "select":
+                              return (
+                                <ChampListeDeroulante
+                                  libelle={champ.libelle}
+                                  name={`${bloc.id}.${champ.id}`}
+                                  options={champ.options.map(option => ({ cle: option, libelle: option }))}
+                                />
+                              );
+                            case "boolean":
+                              return (
+                                <ChampsCaseACocher
+                                  name={`${bloc.id}.${champ.id}`}
+                                  libelle={champ.libelle}
+                                />
+                              );
+                            case "dateComplete":
+                            case "dateIncomplete":
+                              return (
+                                <ChampDate
+                                  name={`${bloc.id}.${champ.id}`}
+                                  libelle={champ.libelle}
+                                />
+                              );
+                            case "int":
+                              return (
+                                <ChampsTexte
+                                  name={`${bloc.id}.${champ.id}`}
+                                  libelle={champ.libelle}
+                                  numerique
+                                />
+                              );
+                            default:
+                              return <></>;
+                          }
+                        })()}
+                      </Suspense>
+                    </div>
+                  )
+                )}
             </div>
           </div>
         ))}
 
-      <div className="w-full border-0 border-t border-solid border-gris-clair pt-6">
-        <h3 className="text-left">Texte mention</h3>
-        <Suspense fallback={<PageChargeur />}>
-          <ChampsZoneTexte
-            name={TEXTE_MENTION}
-            className="mr-14 h-48 w-11/12 pb-4"
-            value={metamodeleTypeMention?.modeleHandleBars}
-            onChange={event => {
-              setFieldTouched(TEXTE_MENTION);
-              setFieldValue(TEXTE_MENTION, event.target.value, true);
-            }}
-          />
-        </Suspense>
+      <div className="flex w-full justify-center pt-4">
+        <div className="w-full pr-5">
+          <Suspense fallback={<PageChargeur />}>
+            <ChampsZoneTexte
+              libelle="Texte mention"
+              name={TEXTE_MENTION}
+              className="h-48 w-full pb-4"
+              value={metamodeleTypeMention?.modeleHandleBars}
+            />
+          </Suspense>
+        </div>
       </div>
     </div>
   );

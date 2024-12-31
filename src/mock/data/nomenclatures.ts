@@ -1773,7 +1773,7 @@ export const ReponseAppelNomenclatureTypeMention = {
           idTypeMention: "b048e05c-ff6f-44fd-89dc-d07aa9b5fc80",
           libelleType: "18-1 décision OEC",
           natureActe: "NAISSANCE",
-          affecteAnalyseMarginale: true,
+          affecteAnalyseMarginale: false,
           idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
           estPresentListeDeroulante: true
         },

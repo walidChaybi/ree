@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { expect, test, vi } from "vitest";
-import { MiseAJourMentionsForm } from "../../../../../../composants/pages/requetesMiseAJour/formulaires/mentions/MiseAJourMentionsForm";
+import MiseAJourMentions from "../../../../../../composants/pages/requetesMiseAJour/formulaires/mentions/MiseAJourMentions";
 import EditionMiseAJourContextProvider from "../../../../../../contexts/EditionMiseAJourContextProvider";
 import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 
@@ -28,7 +28,7 @@ test("Le formulaire fonctionne et le bouton Annuler reset le formulaire", async 
             idRequete={idRequete}
             estMiseAJourAvecMentions={true}
           >
-            <MiseAJourMentionsForm libelleTitreFormulaire={"mock titre"} />
+            <MiseAJourMentions />
           </EditionMiseAJourContextProvider>
         )
       }
@@ -84,7 +84,7 @@ test("Le formulaire fonctionne et le bouton Valider reset le formulaire", async 
             idRequete={idRequete}
             estMiseAJourAvecMentions={true}
           >
-            <MiseAJourMentionsForm libelleTitreFormulaire={"mock titre"} />
+            <MiseAJourMentions />
           </EditionMiseAJourContextProvider>
         )
       }
@@ -140,7 +140,7 @@ test("Le formulaire mentions n'est pas affichés en arrivant sur la page", async
             idRequete={idRequete}
             estMiseAJourAvecMentions={true}
           >
-            <MiseAJourMentionsForm libelleTitreFormulaire={"mock titre"} />
+            <MiseAJourMentions />
           </EditionMiseAJourContextProvider>
         )
       }
@@ -170,14 +170,13 @@ test("La récupération du metamodele de type mention informatise fonctionne cor
             idRequete={idRequete}
             estMiseAJourAvecMentions={true}
           >
-            <MiseAJourMentionsForm libelleTitreFormulaire={"mock titre"} />
+            <MiseAJourMentions />
           </EditionMiseAJourContextProvider>
         )
       }
     ],
     ["/"]
   );
-
   render(<RouterProvider router={router} />);
   const menuType = screen.getByTestId("listesTypesMention.mentionNiveauUn");
   fireEvent.change(menuType, {

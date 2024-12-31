@@ -217,7 +217,7 @@ describe("PartieFormulaire", () => {
     const menyTypeDeux = screen.getByTestId("listesTypesMention.mentionNiveauDeux");
     fireEvent.change(menyTypeDeux, {
       target: {
-        value: "b048e05c-ff6f-44fd-89dc-d07aa9b5fc80"
+        value: "b0485f4e-5d29-4f03-956b-0a53d02ae617"
       }
     });
 

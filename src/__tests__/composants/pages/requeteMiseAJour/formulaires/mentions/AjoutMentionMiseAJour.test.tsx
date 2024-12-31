@@ -1,4 +1,5 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { ITypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
+import { render, screen, waitFor } from "@testing-library/react";
 import { Formik } from "formik";
 import { RouterProvider } from "react-router-dom";
 import { expect, test, vi } from "vitest";
@@ -9,6 +10,16 @@ import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 const idActe = "b41079a5-9e8d-478c-b04c-c4c4ey86537g";
 const idRequete = "931c715b-ede1-4895-ad70-931f2ac4e43d";
 const mockSubmit = vi.fn();
+
+const mockTyeMention = {
+  id: "b03c1503-d452-4751-8bb3-94d082db1e5e",
+  libelle: "ocypemention",
+  natureMention: {},
+  affecteAnalyseMarginale: false,
+  estPresentListeDeroulante: true,
+  estSousType: false,
+  estSaisieAssistee: true
+} as ITypeMention | null;
 
 const renderWithFormik = (composant: any) => {
   return render(
@@ -31,7 +42,7 @@ test("La page s'affiche et les champs sous-type mentions et texte sont masqués"
             idRequete={idRequete}
             estMiseAJourAvecMentions={true}
           >
-            <AjoutMentionsMiseAJour libelleTitreFormulaire={"mock test titre"} />
+            <AjoutMentionsMiseAJour typeMentionSelectionne={null} />
           </EditionMiseAJourContextProvider>
         )
       }
@@ -40,9 +51,6 @@ test("La page s'affiche et les champs sous-type mentions et texte sont masqués"
   );
 
   renderWithFormik(<RouterProvider router={router} />);
-  expect(screen.getByText("mock test titre")).toBeDefined();
-  expect(screen.getByTestId("listesTypesMention.mentionNiveauUn")).toBeDefined();
-  expect(screen.queryByTestId("listesTypesMention.mentionNiveauDeux")).toBeNull();
   expect(screen.queryByText("Ajouter mention")).toBeNull();
   expect(screen.queryByText("Annuler")).toBeNull();
 });
@@ -58,7 +66,7 @@ test("Les éléments du formulaire s'affichent lorsque le Type est selectionné"
             idRequete={idRequete}
             estMiseAJourAvecMentions={true}
           >
-            <AjoutMentionsMiseAJour libelleTitreFormulaire={"mock test titre"} />
+            <AjoutMentionsMiseAJour typeMentionSelectionne={mockTyeMention} />
           </EditionMiseAJourContextProvider>
         )
       }
@@ -67,77 +75,9 @@ test("Les éléments du formulaire s'affichent lorsque le Type est selectionné"
   );
 
   renderWithFormik(<RouterProvider router={router} />);
-  expect(screen.getByText("mock test titre")).toBeDefined();
-  const menyType = screen.getByTestId("listesTypesMention.mentionNiveauUn");
-
-  fireEvent.change(menyType, {
-    target: {
-      value: "126ad458-fd77-4c8c-bd88-db0b818f7d91"
-    }
-  });
 
   await waitFor(() => {
     expect(screen.getByText("Ajouter mention")).toBeDefined();
     expect(screen.getByText("Annuler")).toBeDefined();
-  });
-});
-
-test("Le formulaire fonctionne, et le champ texte n'apparait que lorsque tout les types sont selectionnes", async () => {
-  const router = createTestingRouter(
-    [
-      {
-        path: "/",
-        element: (
-          <EditionMiseAJourContextProvider
-            idActe={idActe}
-            idRequete={idRequete}
-            estMiseAJourAvecMentions={true}
-          >
-            <AjoutMentionsMiseAJour libelleTitreFormulaire={"mock test titre"} />
-          </EditionMiseAJourContextProvider>
-        )
-      }
-    ],
-    ["/"]
-  );
-
-  renderWithFormik(<RouterProvider router={router} />);
-  const menyType = screen.getByTestId("listesTypesMention.mentionNiveauUn");
-  fireEvent.change(menyType, {
-    target: {
-      value: "b0aa20ad-9bf3-4cbd-99f1-a54c8f6598a4"
-    }
-  });
-
-  await waitFor(() => {
-    expect(screen.getByTestId("listesTypesMention.mentionNiveauDeux")).toBeDefined();
-    expect(screen.queryByPlaceholderText("Texte mention à ajouter")).toBeNull();
-  });
-
-  const menyTypeDeux = screen.getByTestId("listesTypesMention.mentionNiveauDeux");
-  fireEvent.change(menyTypeDeux, {
-    target: {
-      value: "b048e05c-ff6f-44fd-89dc-d07aa9b5fc80"
-    }
-  });
-
-  await waitFor(() => {
-    expect(screen.getByPlaceholderText("Texte mention à ajouter")).toBeDefined();
-  });
-
-  const texteMention = screen.getByPlaceholderText("Texte mention à ajouter");
-  fireEvent.change(texteMention, {
-    target: {
-      value: "TEST"
-    }
-  });
-
-  await waitFor(() => {
-    expect(screen.getByText("14 & 15 Changement de nom")).toBeDefined();
-    expect(screen.getByText("18-1 décision OEC")).toBeDefined();
-    expect(screen.getByText("TEST")).toBeDefined();
-
-    expect((screen.getByText("Ajouter mention") as HTMLButtonElement).disabled).toBeFalsy();
-    expect((screen.getByText("Annuler") as HTMLButtonElement).disabled).toBeFalsy();
   });
 });

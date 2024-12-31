@@ -1,116 +1,135 @@
-import {
-  LISTES_TYPES_MENTION,
-  MENTION_NIVEAU_DEUX,
-  MENTION_NIVEAU_TROIS,
-  MENTION_NIVEAU_UN,
-  TEXTE_MENTION
-} from "@composant/formulaire/ConstantesNomsForm";
-import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
+import { TEXTE_MENTION } from "@composant/formulaire/ConstantesNomsForm";
+import { IMetamodeleTypeMention } from "@model/etatcivil/acte/mention/IMetaModeleTypeMention";
+import { ITypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { IMiseAJourMentionsForm } from "@model/form/miseAJour/IMiseAJourMentionsForm";
-import { UN, triListeObjetsSurPropriete } from "@util/Utils";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { FormikProps, FormikValues } from "formik";
-import { useContext } from "react";
-import { T } from "vitest/dist/chunks/environment.0M5R1SX_";
+import { useContext, useMemo } from "react";
 import * as Yup from "yup";
 import { EditionMiseAJourContext } from "../../../../../contexts/EditionMiseAJourContextProvider";
+import SchemaValidation from "../../../../../utils/SchemaValidation";
 import AjoutMentionsMiseAJour from "./AjoutMentionsMiseAJour";
 import "./scss/MiseAJourMentionsForm.scss";
 
-const MISE_A_JOUR_MENTIONS_VALEURS_DEFAUT: IMiseAJourMentionsForm = {
-  [LISTES_TYPES_MENTION]: {
-    [MENTION_NIVEAU_UN]: "",
-    [MENTION_NIVEAU_DEUX]: "",
-    [MENTION_NIVEAU_TROIS]: ""
-  },
-  [TEXTE_MENTION]: ""
+const SCHEMA_VALIDATION_MENTIONS = {
+  [TEXTE_MENTION]: Yup.string().required("Veuillez saisir le texte de la mention")
 };
 
-const ValidationSchema = Yup.object({
-  [LISTES_TYPES_MENTION]: Yup.object({
-    [MENTION_NIVEAU_UN]: Yup.string().required("Selectionnez le type de la mention"),
-    [MENTION_NIVEAU_DEUX]: Yup.string().when(MENTION_NIVEAU_UN, {
-      is: (mentionNiveauUn: string) => TypeMention.getTypeMentionById(mentionNiveauUn)?.sousTypes,
-      then: Yup.string().required("Selectionnez le sous-type de la mention")
-    }),
-    [MENTION_NIVEAU_TROIS]: Yup.string().when(MENTION_NIVEAU_DEUX, {
-      is: (mentionNiveauDeux: string) => TypeMention.getTypeMentionById(mentionNiveauDeux)?.sousTypes,
-      then: Yup.string().required("Selectionnez le sous-type de la mention")
-    })
-  }),
-  [TEXTE_MENTION]: Yup.string().required("Veuillez saisir le texte de la mention")
-});
+const genererSchemaValidationAideALaSaisie = (metamodeleTypeMention?: IMetamodeleTypeMention) => {
+  return metamodeleTypeMention?.metamodelsBlocs.reduce((schemaValidationBlocs, bloc) => {
+    const schemaValidationBloc = bloc.champs.reduce((champs, champ) => {
+      const validationChamp = (() => {
+        switch (champ.type) {
+          case "text":
+            return SchemaValidation.texte({ libelle: champ.libelle, obligatoire: champ.obligatoire });
+          case "int":
+            return SchemaValidation.entier({ libelle: champ.libelle, obligatoire: champ.obligatoire });
+          case "boolean":
+            return SchemaValidation.booleen({ libelle: champ.libelle, obligatoire: champ.obligatoire });
+          case "select":
+            return SchemaValidation.listeDeroulante({ libelle: champ.libelle, options: champ.options, obligatoire: champ.obligatoire });
+          case "dateComplete":
+            return SchemaValidation.dateComplete({ libelle: champ.libelle, obligatoire: champ.obligatoire });
+          case "dateIncomplete":
+            return SchemaValidation.dateIncomplete({ obligatoire: champ.obligatoire });
+          default:
+            return SchemaValidation.inconnu();
+        }
+      })();
+
+      return { ...champs, [champ.id]: validationChamp };
+    }, {});
+
+    schemaValidationBlocs = { ...schemaValidationBlocs, [bloc.id]: Yup.object(schemaValidationBloc) };
+    return schemaValidationBlocs;
+  }, {});
+};
+
+const genererValeursInitialesAideALaSaisie = (metamodeleTypeMention?: IMetamodeleTypeMention) => {
+  return metamodeleTypeMention?.metamodelsBlocs.reduce((valeursInitialesBlocs, bloc) => {
+    const valeursInitialesBloc = bloc.champs.reduce((champs, champ) => {
+      const valeurInitaleChamp = (() => {
+        switch (champ.type) {
+          case "text":
+          case "int":
+            return "";
+          case "dateComplete":
+          case "dateIncomplete":
+            return {
+              jour: "",
+              mois: "",
+              annee: ""
+            };
+          case "boolean":
+            return false;
+          case "select":
+            return champ.options[0];
+          default:
+            return "";
+        }
+      })();
+
+      return { ...champs, [champ.id]: valeurInitaleChamp };
+    }, {});
+
+    return { ...valeursInitialesBlocs, [bloc.id]: valeursInitialesBloc };
+  }, {});
+};
 
 interface IMiseAJourMentionsFormProps {
-  libelleTitreFormulaire: string;
-  refFormulaire?: React.MutableRefObject<FormikProps<T & FormikValues> | null>;
+  typeMentionSelectionne: ITypeMention;
+  onValidationMention: (values: IMiseAJourMentionsForm | Record<string, any>) => void;
+  onResetFormulaire: () => void;
+  refFormulaire?: React.MutableRefObject<FormikProps<FormikValues> | null>;
 }
 
-export const MiseAJourMentionsForm: React.FC<IMiseAJourMentionsFormProps> = ({ libelleTitreFormulaire, refFormulaire }) => {
-  const { listeMentions, indexMentionModifiee } = useContext(EditionMiseAJourContext.Valeurs);
-  const { setListeMentions, setIndexMentionModifiee } = useContext(EditionMiseAJourContext.Actions);
-  const ajouterOuModifierMention = (values: IMiseAJourMentionsForm) => {
-    indexMentionModifiee !== undefined ? modifierMention(values, indexMentionModifiee + UN) : ajouterMention(values);
+export const MiseAJourMentionsForm: React.FC<IMiseAJourMentionsFormProps> = ({
+  typeMentionSelectionne,
+  onValidationMention,
+  onResetFormulaire,
+  refFormulaire
+}) => {
+  const { indexMentionModifiee, metamodeleTypeMention, listeMentions } = useContext(EditionMiseAJourContext.Valeurs);
 
-    const mentionSelectionne = TypeMention.getTypeMentionById(
-      values.listesTypesMention.mentionNiveauTrois ||
-        values.listesTypesMention.mentionNiveauDeux ||
-        values.listesTypesMention.mentionNiveauUn
-    );
-    if (mentionSelectionne?.affecteAnalyseMarginale) {
-      window.alert(
-        "Veuillez vérifier s'il y a lieu de mettre à jour l'analyse marginale" // TOREFACTO: CHANGER DE MODALE POUR DEGAGER WINDOW.ALERT
-      );
-    }
-  };
+  const schemaValidation = useMemo(() => {
+    return Yup.object({
+      ...SCHEMA_VALIDATION_MENTIONS,
+      ...(genererSchemaValidationAideALaSaisie(metamodeleTypeMention) ?? {})
+    });
+  }, [metamodeleTypeMention]);
 
-  const ajouterMention = (values: IMiseAJourMentionsForm) => {
-    setListeMentions([
-      ...listeMentions,
-      {
-        texte: values.texteMention.trim().endsWith(".") ? values.texteMention.trim() : `${values.texteMention.trim()}.`,
-        typeMention: {
-          idMentionNiveauUn: values.listesTypesMention.mentionNiveauUn,
-          idMentionNiveauDeux: values.listesTypesMention.mentionNiveauDeux,
-          idMentionNiveauTrois: values.listesTypesMention.mentionNiveauTrois
-        },
-        numeroOrdre: Number(listeMentions.length) + UN
+  const valeursInitiales = useMemo(() => {
+    const valeurParDefautTexte = (() => {
+      switch (true) {
+        case indexMentionModifiee !== undefined && listeMentions[indexMentionModifiee]?.texte !== undefined:
+          return { [TEXTE_MENTION]: indexMentionModifiee ? listeMentions[indexMentionModifiee].texte : "" };
+        case Boolean(metamodeleTypeMention):
+          return { [TEXTE_MENTION]: metamodeleTypeMention?.modeleHandleBars };
+        default:
+          return { [TEXTE_MENTION]: "" };
       }
-    ]);
-  };
+    })();
 
-  const modifierMention = (values: IMiseAJourMentionsForm, idAModifier: number) => {
-    setListeMentions(
-      triListeObjetsSurPropriete(
-        [
-          ...listeMentions.filter(mention => mention.numeroOrdre !== idAModifier),
-          {
-            numeroOrdre: idAModifier,
-            typeMention: {
-              idMentionNiveauUn: values.listesTypesMention.mentionNiveauUn,
-              idMentionNiveauDeux: values.listesTypesMention.mentionNiveauDeux,
-              idMentionNiveauTrois: values.listesTypesMention.mentionNiveauTrois
-            },
-            texte: values.texteMention.trim().endsWith(".") ? values.texteMention.trim() : `${values.texteMention.trim()}.`
-          }
-        ],
-        "numeroOrdre"
-      )
-    );
-    setIndexMentionModifiee(undefined);
-  };
+    return {
+      ...(genererValeursInitialesAideALaSaisie(metamodeleTypeMention) ?? {}),
+      ...valeurParDefautTexte
+    };
+  }, [metamodeleTypeMention]);
 
   return (
     <Formulaire
-      formDefaultValues={MISE_A_JOUR_MENTIONS_VALEURS_DEFAUT}
-      formValidationSchema={ValidationSchema}
+      formDefaultValues={valeursInitiales}
+      formValidationSchema={schemaValidation}
       onSubmit={(values, formik) => {
-        ajouterOuModifierMention(values as unknown as IMiseAJourMentionsForm);
+        onValidationMention(values as unknown as IMiseAJourMentionsForm); // | Record<string, any> pour récupérer dynamiquement les nouveaux champs, pas forcément dans le scope c'est en bonus
         formik?.resetForm();
       }}
       refFormulaire={refFormulaire}
     >
-      <AjoutMentionsMiseAJour libelleTitreFormulaire={libelleTitreFormulaire} />
+      <AjoutMentionsMiseAJour
+        typeMentionSelectionne={typeMentionSelectionne}
+        onResetFormulaire={onResetFormulaire}
+      />
     </Formulaire>
   );
 };

@@ -14,7 +14,6 @@ import messageManager from "@util/messageManager";
 import { PopinSignatureMiseAJourMentions } from "@widget/signature/PopinSignatureMiseAJourMentions";
 import { FormikProps, FormikValues } from "formik";
 import { useContext, useEffect, useRef, useState } from "react";
-import { T } from "vitest/dist/chunks/environment.0M5R1SX_";
 import { ECleOngletsMiseAJour, EditionMiseAJourContext } from "../../../contexts/EditionMiseAJourContextProvider";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import Bouton from "../../commun/bouton/Bouton";
@@ -55,8 +54,8 @@ export const PartieFormulaire: React.FC = () => {
   const [afficherAnalyseMarginale, setAfficherAnalyseMarginale] = useState(!estMiseAJourAvecMentions);
   const [estPopinSignatureOuverte, setEstPopinSignatureOuverte] = useState<boolean>(false);
 
-  const mentionsFormRef = useRef<FormikProps<T & FormikValues> | null>(null);
-  const analyseMarginaleFormRef = useRef<FormikProps<T & FormikValues> | null>(null);
+  const mentionsFormRef = useRef<FormikProps<FormikValues> | null>(null);
+  const analyseMarginaleFormRef = useRef<FormikProps<FormikValues> | null>(null);
 
   useEffect(() => {
     if (!estMiseAJourAvecMentions) {
@@ -101,7 +100,7 @@ export const PartieFormulaire: React.FC = () => {
         break;
       case estMiseAJourAvecMentions &&
         (!afficherAnalyseMarginale || analyseMarginaleFormRef.current?.isValid) &&
-        mentionsFormRef.current?.isValid:
+        (mentionsFormRef.current?.isValid === undefined || mentionsFormRef.current?.isValid):
         appelApiMiseAJourAnalyseMarginaleEtMentions({
           parametres: {
             path: { idActe },
@@ -136,7 +135,7 @@ export const PartieFormulaire: React.FC = () => {
 
               return;
             }
-            messageManager.showError("Impossible de mettre à jour l'analyse marginale");
+            messageManager.showError("Impossible de mettre à jour l'acte");
           }
         });
         break;

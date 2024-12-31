@@ -1,72 +1,64 @@
-import {
-  LISTES_TYPES_MENTION,
-  MENTION_NIVEAU_DEUX,
-  MENTION_NIVEAU_TROIS,
-  MENTION_NIVEAU_UN,
-  TEXTE_MENTION
-} from "@composant/formulaire/ConstantesNomsForm";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { ITypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { IMiseAJourMentionsForm } from "@model/form/miseAJour/IMiseAJourMentionsForm";
-import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
-import { withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { useFormikContext } from "formik";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { EditionMiseAJourContext } from "../../../../../contexts/EditionMiseAJourContextProvider";
-import ListesTypesMentionForm from "./ListesTypesMentionForm";
+import Bouton from "../../../../commun/bouton/Bouton";
+import SaisieMentionForm from "./SaisieMentionForm";
 
 interface IAjoutMentionsMiseAJourProps {
-  libelleTitreFormulaire: string;
+  typeMentionSelectionne: ITypeMention | null;
+  typeMentionAModifier?: IListeTypeMentionSelectionne;
+  onResetFormulaire?: () => void;
 }
 
-const AjoutMentionsMiseAJour: React.FC<IAjoutMentionsMiseAJourProps> = ({ libelleTitreFormulaire }) => {
-  const { listeMentions, indexMentionModifiee } = useContext(EditionMiseAJourContext.Valeurs);
-  const { setEstMentionEnCoursDeSaisie, setIndexMentionModifiee } = useContext(EditionMiseAJourContext.Actions);
+export interface IListeTypeMentionSelectionne {
+  niveau1: ITypeMention | null;
+  niveau2: ITypeMention | null;
+  niveau3: ITypeMention | null;
+}
 
-  const { dirty, setFieldValue, resetForm, isValid } = useFormikContext<IMiseAJourMentionsForm>();
+const AjoutMentionsMiseAJour: React.FC<IAjoutMentionsMiseAJourProps> = ({
+  typeMentionSelectionne,
+  typeMentionAModifier,
+  onResetFormulaire
+}) => {
+  const { indexMentionModifiee } = useContext(EditionMiseAJourContext.Valeurs);
+  const { setIndexMentionModifiee } = useContext(EditionMiseAJourContext.Actions);
 
-  const [estTypeMentionSelectionne, setEstTypeMentionSelectionne] = useState(false);
-
-  useEffect(() => setEstMentionEnCoursDeSaisie(dirty), [dirty]);
+  const { dirty, resetForm, isValid } = useFormikContext<IMiseAJourMentionsForm>();
 
   useEffect(() => {
-    if (indexMentionModifiee !== undefined) {
-      const { texte, typeMention } = listeMentions[indexMentionModifiee];
-      setFieldValue(withNamespace(LISTES_TYPES_MENTION, MENTION_NIVEAU_UN), typeMention.idMentionNiveauUn);
-      setFieldValue(withNamespace(LISTES_TYPES_MENTION, MENTION_NIVEAU_DEUX), typeMention.idMentionNiveauDeux);
-      setFieldValue(withNamespace(LISTES_TYPES_MENTION, MENTION_NIVEAU_TROIS), typeMention.idMentionNiveauTrois);
-      setFieldValue(TEXTE_MENTION, texte);
-    }
-  }, [indexMentionModifiee]);
+    !typeMentionSelectionne && resetFormulaireMention();
+  }, [typeMentionSelectionne]);
 
-  const annulerEnAjoutOuModification = () => {
+  const resetFormulaireMention = () => {
     resetForm();
     setIndexMentionModifiee(undefined);
-    setEstTypeMentionSelectionne(false);
+    onResetFormulaire?.();
   };
-
-  const boutonAJouterModifier = indexMentionModifiee !== undefined ? "Modifier mention" : "Ajouter mention";
 
   return (
     <div>
-      <h3>{libelleTitreFormulaire}</h3>
-      <ListesTypesMentionForm
-        natureActe={NatureActe.NAISSANCE}
-        setEstTypeMentionSelectionne={setEstTypeMentionSelectionne}
+      <SaisieMentionForm
+        typeMentionSelectionne={typeMentionSelectionne}
+        typesMentionsAModifier={typeMentionAModifier}
       />
-      {estTypeMentionSelectionne && (
-        <div className="boutons-mention">
-          <BoutonDoubleSubmit
+      {typeMentionSelectionne && (
+        <div className="boutons-mention mt-8 gap-5 pr-8">
+          <Bouton
+            styleBouton="principal"
             disabled={!dirty || !isValid}
             type="submit"
           >
-            {boutonAJouterModifier}
-          </BoutonDoubleSubmit>
-          <BoutonDoubleSubmit
-            disabled={!dirty}
-            onClick={annulerEnAjoutOuModification}
+            {indexMentionModifiee !== undefined ? "Modifier mention" : "Ajouter mention"}
+          </Bouton>
+          <Bouton
+            styleBouton="secondaire"
+            onClick={resetFormulaireMention}
           >
             Annuler
-          </BoutonDoubleSubmit>
+          </Bouton>
         </div>
       )}
     </div>

@@ -1,9 +1,10 @@
+import { Option } from "@util/Type";
 import { ErrorMessage, useField } from "formik";
 import { useMemo } from "react";
 
 type TChampListeDeroulanteProps = React.InputHTMLAttributes<HTMLSelectElement> & {
   libelle: string;
-  options: string[];
+  options: Option[];
 };
 
 const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({ name, libelle, className, options, ...props }) => {
@@ -11,9 +12,7 @@ const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({ name, libe
   const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
 
   return (
-    <div
-      className={`relative flex w-full flex-col text-start ${className ?? ""} ${meta.error && meta.touched ? "champs-en-erreur" : ""}`.trim()}
-    >
+    <div className={`relative flex w-full flex-col text-start ${className ?? ""}`.trim()}>
       <label
         className={`m-0 mb-1 ml-1 block w-fit text-start transition-colors ${enErreur ? "text-rouge" : "text-bleu-sombre"}`}
         htmlFor={name as string}
@@ -26,16 +25,14 @@ const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({ name, libe
         {...props}
         {...field}
       >
-        {options?.map(option => {
-          return (
-            <option
-              key={option}
-              value={option}
-            >
-              {option}
-            </option>
-          );
-        })}
+        {options?.map(option => (
+          <option
+            key={option.cle}
+            value={option.cle}
+          >
+            {option.libelle.length ? `${option.libelle.charAt(0).toUpperCase()}${option.libelle.substring(1)}` : ""}
+          </option>
+        ))}
       </select>
 
       {meta.error && (

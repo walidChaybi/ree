@@ -7,14 +7,13 @@ import { IDerniereAnalyseMarginalResultat } from "@hook/requete/miseajour/Dernie
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { FormikProps, FormikValues } from "formik";
 import { useContext, useState } from "react";
-import { T } from "vitest/dist/chunks/environment.0M5R1SX_";
 import { EditionMiseAJourContext } from "../../../../../contexts/EditionMiseAJourContextProvider";
 import ChampsFormulaireAnalyseMarginale from "./ChampsFormulaireAnalyseMarginale";
 import "./FormulaireAnalyseMarginale.scss";
 
 interface IFormulaireAnalyseMarginaleProps {
   derniereAnalyseMarginale: IDerniereAnalyseMarginalResultat;
-  refFormulaire?: React.MutableRefObject<FormikProps<T & FormikValues> | null>;
+  refFormulaire?: React.MutableRefObject<FormikProps<FormikValues> | null>;
 }
 
 const FormulaireAnalyseMarginale: React.FC<IFormulaireAnalyseMarginaleProps> = ({ derniereAnalyseMarginale, refFormulaire }) => {
