@@ -12,10 +12,9 @@ import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { CODE_COPIE_INTEGRALE } from "@model/requete/enum/DocumentDelivranceConstante";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { estTableauNonVide } from "@util/Utils";
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { ECleOngletDocumentDelivre } from "../../../../../../../composants/pages/requetesDelivrance/editionRequete/partieDocument/voletDocuments/VoletDocumentDelivre";
 import { EditionDelivranceContext } from "../../../../../../../contexts/EditionDelivranceContextProvider";
-import { EditionExtraitCopiePageContext } from "../../../EditionExtraitCopiePage";
 import { boutonReinitialiserEstDisabled, getValeurEstdeverrouillerCommencement, validerMentions } from "./GestionMentionsUtil";
 import { MentionsCopie } from "./contenu/MentionsCopie";
 import { MentionsExtrait } from "./contenu/MentionsExtrait";
@@ -29,9 +28,9 @@ export interface GestionMentionsProps {
 }
 
 export const GestionMentions: React.FC<GestionMentionsProps> = props => {
+  const idActe = useMemo(() => props.acte?.id, [props.acte]);
   const { setIsDirty } = useContext(RECEContextActions);
 
-  const { setOperationEnCours, rafraichirRequete } = useContext(EditionExtraitCopiePageContext);
   const { rechargerRequete } = useContext(EditionDelivranceContext);
 
   const [mentionSelect, setMentionSelect] = useState<IMentionAffichage>();
@@ -48,26 +47,23 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
 
   useEffect(() => {
     if (props.document && resultatSauvegarde) {
-      rechargerRequete();
-      rafraichirRequete();
-      props.setOngletDocumentDelivre?.(ECleOngletDocumentDelivre.DOCUMENT_EDITE);
+      rechargerRequete("requete", () => props.setOngletDocumentDelivre?.(ECleOngletDocumentDelivre.DOCUMENT_EDITE));
     }
   }, [resultatSauvegarde]);
 
   useEffect(() => {
-    if (props.acte) {
+    if (idActe) {
       setMentionsParams({
-        idActe: props.acte.id,
+        idActe: idActe,
         statutMention: StatutMention.SIGNEE
       });
     }
-  }, [props.acte]);
+  }, [idActe]);
 
   useEffect(() => {
     if (mentions) {
       setIsDirtySiModificationEffectuee(mentions);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mentions]);
 
   const setIsDirtySiModificationEffectuee = useCallback(
@@ -97,7 +93,6 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
 
   const sauvegarderMentions = useCallback(() => {
     if (mentionsApi && mentions && props.acte?.id && props.document) {
-      setOperationEnCours(true);
       setSauvegarderMentionsParams({
         mentionsApi,
         mentions,
@@ -106,7 +101,7 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
         requete: props.requete
       });
     }
-  }, [mentions, mentionsApi, props, setOperationEnCours]);
+  }, [mentions, mentionsApi, props]);
 
   const valider = useCallback(() => {
     validerMentions(mentions, sauvegarderMentions, mentionsApi?.mentions, props.acte, props.document);

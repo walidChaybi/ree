@@ -85,8 +85,7 @@ const BoutonAjoutSuppressionDocument: React.FC<IBoutonAjoutSuppressionDocumentPr
 
     setCreationECParams(undefined);
     setOperationEnCours(false);
-    rechargerRequete();
-    naviguerVersOngletAjoute();
+    rechargerRequete("requete", naviguerVersOngletAjoute);
   }, [resulatEC]);
 
   const ajouterDocument = (typeDocument: string) => {
@@ -101,7 +100,7 @@ const BoutonAjoutSuppressionDocument: React.FC<IBoutonAjoutSuppressionDocumentPr
 
     setOperationEnCours(true);
     deleteDocumentComplementaire(documentsDelivrance.secondaire.id, requete.id)
-      .then(() => rechargerRequete())
+      .then(() => rechargerRequete("requete"))
       .finally(() => setOperationEnCours(false));
   };
 

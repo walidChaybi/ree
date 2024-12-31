@@ -4,7 +4,6 @@ import { DataRMCActeAvecResultat, DataTableauActe } from "@mock/data/RMCActe";
 import { DataRMCInscriptionAvecResultat, DataTableauInscription } from "@mock/data/RMCInscription";
 import { ApercuRequetePriseEnChargePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { MOTIF_IGNORE } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/IgnoreRequetePopin";
-import { EditionExtraitCopiePage } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import {
   URL_MES_REQUETES_DELIVRANCE,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
@@ -14,6 +13,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { Navigate, RouterProvider } from "react-router-dom";
 import { beforeAll, expect, test } from "vitest";
+import PageEditionRequeteDelivrance from "../../../../../../pages/requetesDelivrance/PageEditionRequeteDelivrance";
 import { createTestingRouter, mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 
 beforeAll(() => {
@@ -135,7 +135,7 @@ test.skip("redirection requete RDD", async () => {
       },
       {
         path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
-        element: <EditionExtraitCopiePage />
+        element: <PageEditionRequeteDelivrance />
       },
       {
         path: "/",
@@ -187,7 +187,7 @@ test.skip("redirection requete RDC", async () => {
 
       {
         path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
-        element: <EditionExtraitCopiePage />
+        element: <PageEditionRequeteDelivrance />
       },
       {
         path: "/",
@@ -238,7 +238,7 @@ test.skip("ignorer requete", async () => {
       },
       {
         path: URL_MES_REQUETES_DELIVRANCE,
-        element: <EditionExtraitCopiePage />
+        element: <PageEditionRequeteDelivrance />
       },
       {
         path: "/",

@@ -15,7 +15,6 @@ import {
 } from "@model/requete/enum/DocumentDelivranceConstante";
 import { Validation } from "@model/requete/enum/Validation";
 import { GestionMentions } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentions";
-import { ModifierCorpsExtrait } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/modifierCorpsExtrait/ModifierCorpsExtrait";
 import { SaisirExtraitForm } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitForm";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { EditionDelivranceContext } from "../../../../../../contexts/EditionDelivranceContextProvider";
@@ -23,6 +22,7 @@ import useFetchApi from "../../../../../../hooks/api/FetchApiHook";
 import AffichagePDF from "../../../../../commun/affichageDocument/AffichagePDF";
 import OngletsBouton from "../../../../../commun/onglets/OngletsBouton";
 import ConteneurVoletEdition from "../../ConteneurVoletEdition";
+import ModifierCorpsExtrait from "./ModifierCorpsExtrait";
 
 interface IVoletDocumentDelivreProps {
   documentDelivre: IDocumentReponse;
@@ -55,6 +55,7 @@ const aOngletSaisirCorps = (typeDelivrance: DocumentDelivrance, validation: Vali
   [CODE_EXTRAIT_AVEC_FILIATION, CODE_EXTRAIT_SANS_FILIATION].includes(typeDelivrance.code) && validation !== Validation.E;
 
 const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDelivre, resetOngletActif }) => {
+  const idDocumentDelivre = useMemo(() => documentDelivre.id, [documentDelivre]);
   const { requete, acte } = useContext(EditionDelivranceContext);
   const [contenuDocument, setContenuDocument] = useState<string | null>(null);
   const [ongletActif, setOngletActif] = useState<ECleOngletDocumentDelivre>(ECleOngletDocumentDelivre.DOCUMENT_EDITE);
@@ -66,8 +67,7 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
       mention: aOngletMention(typeDocument, requete, acte),
       saisieCorps: aOngletSaisirCorps(typeDocument, documentDelivre.validation)
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [documentDelivre]);
+  }, [idDocumentDelivre]);
   const { appelApi: getDocumentsReponse } = useFetchApi(CONFIG_GET_DOCUMENTS_REPONSE_DELIVRANCE);
 
   useEffect(() => {
@@ -76,10 +76,10 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
 
   useEffect(() => {
     getDocumentsReponse({
-      parametres: { path: { idDcumentReponse: documentDelivre.id } },
+      parametres: { path: { idDcumentReponse: idDocumentDelivre } },
       apresSucces: document => setContenuDocument(document.contenu)
     });
-  }, [documentDelivre]);
+  }, [idDocumentDelivre]);
 
   return (
     <>
@@ -155,10 +155,8 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
           estSousOnglet
         >
           <ModifierCorpsExtrait
-            acte={acte as IFicheActe}
-            requete={requete}
-            document={documentDelivre}
-            setOngletDocumentDelivre={(nouvelOnglet: ECleOngletDocumentDelivre) => setOngletActif(nouvelOnglet)}
+            documentReponse={documentDelivre}
+            versOngletDocumentEdite={() => setOngletActif(ECleOngletDocumentDelivre.DOCUMENT_EDITE)}
           />
         </ConteneurVoletEdition>
       )}

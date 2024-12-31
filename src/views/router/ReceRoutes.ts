@@ -18,7 +18,6 @@ import { SaisirRCTCPage } from "@pages/requeteCreation/saisirRequete/SaisirRCTCP
 import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
 import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
 import { ApercuRequetePriseEnChargePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
-import { EditionExtraitCopiePage } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
 import { SaisirRDCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCPage";
 import { SaisirRDCSCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
@@ -190,12 +189,9 @@ export const routesRece: IRoute[] = [
     auMoinsUnDesDroits: [Droit.CONSULTER, Droit.SAISIR_REQUETE],
     libelle: "Modifier un brouillon d'une requête de délivrance extrait/copie depuis mes requêtes"
   },
-  //TOREFACTOR : Retirer l'ancienne page de Délivrance une fois la nouvelle page terminée et validée
   {
     url: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
-    component: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_AFFICHAGE_NOUVELLE_PAGE_DELIVRANCE)
-      ? PageEditionRequeteDelivrance
-      : EditionExtraitCopiePage,
+    component: PageEditionRequeteDelivrance,
     auMoinsUnDesDroits: [Droit.DELIVRER],
     canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES),
     libelle: "Édition"
@@ -271,9 +267,7 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_REQUETES_DELIVRANCE_SERVICE_EDITION_ID,
-    component: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_AFFICHAGE_NOUVELLE_PAGE_DELIVRANCE)
-      ? PageEditionRequeteDelivrance
-      : EditionExtraitCopiePage,
+    component: PageEditionRequeteDelivrance,
     auMoinsUnDesDroits: [Droit.DELIVRER],
     canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES),
     libelle: "Édition"
@@ -332,9 +326,7 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_RECHERCHE_REQUETE_EDITION_ID,
-    component: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_AFFICHAGE_NOUVELLE_PAGE_DELIVRANCE)
-      ? PageEditionRequeteDelivrance
-      : EditionExtraitCopiePage,
+    component: PageEditionRequeteDelivrance,
     auMoinsUnDesDroits: [Droit.DELIVRER],
     canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES),
     libelle: "Édition"

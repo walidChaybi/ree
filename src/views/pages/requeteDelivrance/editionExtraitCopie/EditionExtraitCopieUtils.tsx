@@ -49,7 +49,6 @@ import { VisionneuseEdition } from "./contenu/onglets/VisionneuseDocumentEdite";
 import { VoletEdition } from "./contenu/onglets/VoletEdition";
 import { VoletVisualisation } from "./contenu/onglets/VoletVisualisation";
 import { GestionMentions } from "./contenu/onglets/mentions/GestionMentions";
-import { ModifierCorpsExtrait } from "./contenu/onglets/modifierCorpsExtrait/ModifierCorpsExtrait";
 import { SaisirExtraitForm } from "./contenu/onglets/saisirExtrait/SaisirExtraitForm";
 
 const DOCUMENT_EDITE = "Document édité";
@@ -226,11 +225,7 @@ export const ajoutOngletsExtraitFilliation = (
     res.liste.push({
       titre: getLibelle("Modifier le corps de l'extrait"),
       component: (
-        <ModifierCorpsExtrait
-          acte={acte}
-          requete={requete}
-          document={document}
-        />
+        <div>{"Modifier corps extrait"}</div>
       ),
     });
   }

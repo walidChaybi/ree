@@ -21,7 +21,6 @@ import { FormikProps, FormikValues } from "formik";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { ECleOngletDocumentDelivre } from "../../../../../../../composants/pages/requetesDelivrance/editionRequete/partieDocument/voletDocuments/VoletDocumentDelivre";
 import { EditionDelivranceContext } from "../../../../../../../contexts/EditionDelivranceContextProvider";
-import { EditionExtraitCopiePageContext } from "../../../EditionExtraitCopiePage";
 import {
   IProprietesFormulaire,
   getTitulairesEvenementsEtParentsForm,
@@ -58,7 +57,6 @@ interface IPopinMessageErreur {
 }
 
 export const SaisirExtraitForm: React.FC<ISaisirExtraitFormProps> = props => {
-  const { setOperationEnCours, rafraichirRequete } = useContext(EditionExtraitCopiePageContext);
   const { setIsDirty } = useContext(RECEContextActions);
   const { mapPrenomAffiche } = useContext(SaisirExtraitFormContext);
   const { rechargerRequete } = useContext(EditionDelivranceContext);
@@ -101,7 +99,6 @@ export const SaisirExtraitForm: React.FC<ISaisirExtraitFormProps> = props => {
         problemePlurilingueActeMariage
       });
     } else {
-      setOperationEnCours(true);
       setSauvegarderSaisieParams({
         requete: props.requete,
         acte: props.acte,
@@ -114,16 +111,12 @@ export const SaisirExtraitForm: React.FC<ISaisirExtraitFormProps> = props => {
   };
 
   const fermerOngletApresValidation = useCallback(() => {
-    setOperationEnCours(false);
     setSaisieVerrouillee(true);
-    rechargerRequete?.();
-    rafraichirRequete?.();
-    props.setOngletDocumentDelivre?.(ECleOngletDocumentDelivre.DOCUMENT_EDITE);
+    rechargerRequete?.("les-deux", () => props.setOngletDocumentDelivre?.(ECleOngletDocumentDelivre.DOCUMENT_EDITE));
   }, []);
 
   const handlePopinOui = useCallback(() => {
     if (extraitSaisiAEnvoyer) {
-      setOperationEnCours(true);
       setSauvegarderSaisieParams({
         requete: props.requete,
         acte: props.acte,
@@ -138,8 +131,6 @@ export const SaisirExtraitForm: React.FC<ISaisirExtraitFormProps> = props => {
     popinMessageErreur.problemePlurilingueActeMariage,
     popinMessageErreur.problemePlurilingueActeNaissanceOuDeces,
     props,
-    setOperationEnCours,
-    rafraichirRequete,
     rechargerRequete
   ]);
 

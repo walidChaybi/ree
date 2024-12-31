@@ -8,18 +8,9 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Validation } from "@model/requete/enum/Validation";
 import { useCallback, useEffect, useState } from "react";
 import { MimeType } from "../../../../../ressources/MimeType";
-import {
-  IActeApiHookParams,
-  useInformationsActeApiHook
-} from "../../acte/ActeApiHook";
-import {
-  IExtraitCopieApiHookParams,
-  useExtraitCopieApiHook
-} from "../../composition/CompositionExtraitCopieHook";
-import {
-  ISauvegarderDocumentsParams,
-  useSauvegarderDocument
-} from "../../requete/SauvegarderDocumentApiHook";
+import { IActeApiHookParams, useInformationsActeApiHook } from "../../acte/ActeApiHook";
+import { IExtraitCopieApiHookParams, useExtraitCopieApiHook } from "../../composition/CompositionExtraitCopieHook";
+import { ISauvegarderDocumentsParams, useSauvegarderDocument } from "../../requete/SauvegarderDocumentApiHook";
 import {
   IStockerDocumentCreerActionMajStatutRequeteParams,
   useStockerDocumentCreerActionMajStatutRequete
@@ -35,10 +26,7 @@ import {
   toutesLesDonneesSontPresentes
 } from "./generationECHookUtil";
 import { useRecupererCTV } from "./televerification/recupererCtvApiHook";
-import {
-  IStockeCTVParams,
-  useStockeCTV
-} from "./televerification/stockeCtvApiHook";
+import { IStockeCTVParams, useStockeCTV } from "./televerification/stockeCtvApiHook";
 
 export interface IGenerationECParams {
   idActe?: string;
@@ -55,27 +43,18 @@ export interface IGenerationECResultat {
   erreur?: any;
 }
 
-export function useGenerationEC(
-  params?: IGenerationECParams
-): IGenerationECResultat | undefined {
+export function useGenerationEC(params?: IGenerationECParams): IGenerationECResultat | undefined {
   const [resultat, setResultat] = useState<IGenerationECResultat>();
 
-  const [extraitCopieApiHookParams, setExtraitCopieApiHookParams] =
-    useState<IExtraitCopieApiHookParams>();
-  const [sauvegarderDocumentParams, setSauvegarderDocumentParams] =
-    useState<ISauvegarderDocumentsParams>();
-  const [
-    stockerDocumentCreerActionMajStatutRequeteParams,
-    setStockerDocumentCreerActionMajStatutRequeteParams
-  ] = useState<IStockerDocumentCreerActionMajStatutRequeteParams>();
-  const [acteApiHookParams, setActeApiHookParams] =
-    useState<IActeApiHookParams>();
+  const [extraitCopieApiHookParams, setExtraitCopieApiHookParams] = useState<IExtraitCopieApiHookParams>();
+  const [sauvegarderDocumentParams, setSauvegarderDocumentParams] = useState<ISauvegarderDocumentsParams>();
+  const [stockerDocumentCreerActionMajStatutRequeteParams, setStockerDocumentCreerActionMajStatutRequeteParams] =
+    useState<IStockerDocumentCreerActionMajStatutRequeteParams>();
+  const [acteApiHookParams, setActeApiHookParams] = useState<IActeApiHookParams>();
   const [acteDejaPresent, setActeDejaPresent] = useState<IFicheActe>();
   const [validation, setValidation] = useState<Validation>();
-  const [recupererCtvApiHookParam, setRecupererCtvApiHookParam] =
-    useState<{}>();
-  const [stockeCtvApiHookParam, setStockeCtvApiHookParam] =
-    useState<IStockeCTVParams>();
+  const [recupererCtvApiHookParam, setRecupererCtvApiHookParam] = useState<{}>();
+  const [stockeCtvApiHookParam, setStockeCtvApiHookParam] = useState<IStockeCTVParams>();
 
   useEffect(() => {
     if (estPresentIdActeEtChoixDelivrance(params)) {
@@ -99,44 +78,22 @@ export function useGenerationEC(
 
   useEffect(() => {
     if (acteApiHookResultat) {
-      if (
-        estDocumentAvecCTV(
-          DocumentDelivrance.getTypeDocument(params?.choixDelivrance),
-          params?.requete.sousType
-        )
-      ) {
+      if (estDocumentAvecCTV(DocumentDelivrance.getTypeDocument(params?.choixDelivrance), params?.requete.sousType)) {
         setRecupererCtvApiHookParam({});
       } else {
-        creationECSansCTV(
-          acteApiHookResultat?.acte || acteDejaPresent,
-          params,
-          setValidation,
-          setExtraitCopieApiHookParams
-        );
+        creationECSansCTV(acteApiHookResultat?.acte || acteDejaPresent, params, setValidation, setExtraitCopieApiHookParams);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [acteApiHookResultat]);
 
   useEffect(() => {
     if (acteDejaPresent) {
-      if (
-        estDocumentAvecCTV(
-          DocumentDelivrance.getTypeDocument(params?.choixDelivrance),
-          params?.requete.sousType
-        )
-      ) {
+      if (estDocumentAvecCTV(DocumentDelivrance.getTypeDocument(params?.choixDelivrance), params?.requete.sousType)) {
         setRecupererCtvApiHookParam({});
       } else {
-        creationECSansCTV(
-          acteApiHookResultat?.acte || acteDejaPresent,
-          params,
-          setValidation,
-          setExtraitCopieApiHookParams
-        );
+        creationECSansCTV(acteApiHookResultat?.acte || acteDejaPresent, params, setValidation, setExtraitCopieApiHookParams);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [acteDejaPresent]);
 
   // 2- Création du bon EC composition suivant le choix de délivrance
@@ -148,26 +105,19 @@ export function useGenerationEC(
       setExtraitCopieApiHookParams,
       recupererCtvResultat?.ctv
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [recupererCtvResultat]);
 
   // 3 - Création de l'EC PDF pour un acte: appel api composition
   // récupération du document en base64
-  const extraitCopieApiHookResultat = useExtraitCopieApiHook(
-    extraitCopieApiHookParams
-  );
+  const extraitCopieApiHookResultat = useExtraitCopieApiHook(extraitCopieApiHookParams);
 
   // 4 - Création du document réponse pour stockage dans la BDD et Swift
   const creationDocumentReponseOuResultat = useCallback(
     (requete: IRequeteDelivrance, contenu: string, nbPages: number) => {
       if (requete.choixDelivrance && params?.choixDelivrance) {
-        const typeDocument = DocumentDelivrance.getTypeDocument(
-          params.choixDelivrance
-        );
+        const typeDocument = DocumentDelivrance.getTypeDocument(params.choixDelivrance);
         const avecCtv = estDocumentAvecCTV(typeDocument, requete.sousType);
-        const futurStatutRequete = avecCtv
-          ? StatutRequete.A_SIGNER
-          : StatutRequete.A_VALIDER;
+        const futurStatutRequete = avecCtv ? StatutRequete.A_SIGNER : StatutRequete.A_VALIDER;
 
         const documentReponsePourStockage = {
           contenu,
@@ -216,67 +166,43 @@ export function useGenerationEC(
         erreur: extraitCopieApiHookResultat.erreur
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [extraitCopieApiHookResultat]);
 
   // 5- Stockage du document réponse une fois celui-ci créé
-  const uuidDocumentReponse = useStockerDocumentCreerActionMajStatutRequete(
-    stockerDocumentCreerActionMajStatutRequeteParams
-  );
+  const uuidDocumentReponse = useStockerDocumentCreerActionMajStatutRequete(stockerDocumentCreerActionMajStatutRequeteParams);
 
   // 5.1 - Stockage du document sans Maj statut
-  const uuidDocumentReponseSansAction = useSauvegarderDocument(
-    sauvegarderDocumentParams
-  );
+  const uuidDocumentReponseSansAction = useSauvegarderDocument(sauvegarderDocumentParams);
 
   // 6- Stocke CTV dans téléverification
   const stockeCtvApiHookResultat = useStockeCTV(stockeCtvApiHookParam);
 
   useEffect(() => {
-    if (
-      toutesLesDonneesSontPresentes(
-        uuidDocumentReponse,
-        uuidDocumentReponseSansAction,
-        extraitCopieApiHookResultat
-      )
-    ) {
+    if (toutesLesDonneesSontPresentes(uuidDocumentReponse, uuidDocumentReponseSansAction, extraitCopieApiHookResultat)) {
       setStockeCtvApiHookParam({
         ctv: recupererCtvResultat?.ctv ?? "",
         //@ts-ignore
         idDocument: uuidDocumentReponse ?? uuidDocumentReponseSansAction
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uuidDocumentReponse, uuidDocumentReponseSansAction]);
 
   // 7- Maj du résultat
   useEffect(() => {
     if (
       stockeCtvApiHookResultat &&
-      toutesLesDonneesSontPresentes(
-        uuidDocumentReponse,
-        uuidDocumentReponseSansAction,
-        extraitCopieApiHookResultat
-      )
+      toutesLesDonneesSontPresentes(uuidDocumentReponse, uuidDocumentReponseSansAction, extraitCopieApiHookResultat)
     ) {
       setResultat({
         resultGenerationUnDocument: {
-          idDocumentReponse:
-            uuidDocumentReponse ?? uuidDocumentReponseSansAction,
+          idDocumentReponse: uuidDocumentReponse ?? uuidDocumentReponseSansAction,
           contenuDocumentReponse:
             //@ts-ignore
             extraitCopieApiHookResultat.donneesComposition.contenu
         }
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    stockeCtvApiHookResultat,
-    uuidDocumentReponse,
-    uuidDocumentReponseSansAction
-  ]);
+  }, [stockeCtvApiHookResultat, uuidDocumentReponse, uuidDocumentReponseSansAction]);
 
   return resultat;
 }
-
-

@@ -12,8 +12,6 @@ import {
   aucuneMentionsNationalite,
   getNaturesMentions
 } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
-import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { useContext, useEffect, useMemo, useState } from "react";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import useTraitementApi from "../../../hooks/api/TraitementApiHook";
@@ -231,7 +229,6 @@ const SignatureDelivrance: React.FC<ISignatureDelivranceProps> = ({
         type="button"
         title={titreBouton}
         onClick={() => setInformationsSignature(prec => ({ ...prec, modaleOuverte: true }))}
-        styleBouton={gestionnaireFeatureFlag.estActif(FeatureFlag.FF_AFFICHAGE_NOUVELLE_PAGE_DELIVRANCE) ? "principal" : "old"}
         disabled={!aDroitSigner || !(informationsSignature.total || chargerDocumentsAuClic) || enRecuperationDocuments}
       >
         {titreBouton}

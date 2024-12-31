@@ -1,5 +1,6 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { TUuidActeParams } from "@model/params/TUuidActeParams";
-import React from "react";
+import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
 import EditionRequeteDelivrance from "../../composants/pages/requetesDelivrance/editionRequete/EditionRequeteDelivrance";
 import BoutonsEditionRequeteDelivrance from "../../composants/pages/requetesDelivrance/editionRequete/boutons/BoutonsEditionRequeteDelivrance";
@@ -13,7 +14,9 @@ export interface IDocumentsDelivrance {
 
 const PageEditionRequeteDelivrance: React.FC = () => {
   const { idRequeteParam, idActeParam } = useParams<TUuidActeParams>();
-  return (
+  const { utilisateurs } = useContext(RECEContextData);
+
+  return utilisateurs.length ? (
     <EditionDelivranceContextProvider
       idRequeteParam={idRequeteParam as string}
       idActeParam={idActeParam}
@@ -23,6 +26,8 @@ const PageEditionRequeteDelivrance: React.FC = () => {
         <BoutonsEditionRequeteDelivrance />
       </div>
     </EditionDelivranceContextProvider>
+  ) : (
+    <></>
   );
 };
 

@@ -19,7 +19,7 @@ export function useModifierCorpsExtrait(params?: IModifierCorpsExtraitParams) {
   useEffect(() => {
     if (params) {
       postCorpsTexte(params.idActe, params.corpsTexteModifie, params.type)
-        .then(result => {
+        .then(() => {
           setResultat({ resultat: true });
         })
         .catch(error => {

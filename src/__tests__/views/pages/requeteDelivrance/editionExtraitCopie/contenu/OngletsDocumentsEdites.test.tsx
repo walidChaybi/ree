@@ -1,18 +1,10 @@
 import { userDroitCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
-import { EditionExtraitCopiePage } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
-import {
-  PATH_EDITION,
-  URL_MES_REQUETES_DELIVRANCE,
-  URL_MES_REQUETES_DELIVRANCE_EDITION_ID
-} from "@router/ReceUrls";
+import { PATH_EDITION, URL_MES_REQUETES_DELIVRANCE, URL_MES_REQUETES_DELIVRANCE_EDITION_ID } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { beforeAll, describe, expect, test } from "vitest";
-import {
-  createTestingRouter,
-  elementAvecContexte,
-  mockFenetreFicheTestFunctions
-} from "../../../../../__tests__utils__/testsUtil";
+import PageEditionRequeteDelivrance from "../../../../../../pages/requetesDelivrance/PageEditionRequeteDelivrance";
+import { createTestingRouter, elementAvecContexte, mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 
 beforeAll(() => {
   mockFenetreFicheTestFunctions();
@@ -24,7 +16,7 @@ describe("Test onglets documents édites", () => {
       [
         {
           path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
-          element: <EditionExtraitCopiePage />
+          element: <PageEditionRequeteDelivrance />
         }
       ],
       [
@@ -33,14 +25,10 @@ describe("Test onglets documents édites", () => {
       ]
     );
 
-    render(
-      elementAvecContexte(<RouterProvider router={router} />, userDroitCOMEDEC)
-    );
+    render(elementAvecContexte(<RouterProvider router={router} />, userDroitCOMEDEC));
 
     waitFor(() => {
-      expect(
-        screen.getByTitle("Ajout d'un document complémentaire")
-      ).toBeDefined();
+      expect(screen.getByTitle("Ajout d'un document complémentaire")).toBeDefined();
     });
   });
 
@@ -49,22 +37,16 @@ describe("Test onglets documents édites", () => {
       [
         {
           path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
-          element: <EditionExtraitCopiePage />
+          element: <PageEditionRequeteDelivrance />
         }
       ],
-      [
-        `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f`
-      ]
+      [`${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f0f`]
     );
 
-    render(
-      elementAvecContexte(<RouterProvider router={router} />, userDroitCOMEDEC)
-    );
+    render(elementAvecContexte(<RouterProvider router={router} />, userDroitCOMEDEC));
 
     waitFor(() => {
-      expect(
-        screen.getByTitle("Suppression du document complémentaire")
-      ).toBeDefined();
+      expect(screen.getByTitle("Suppression du document complémentaire")).toBeDefined();
     });
   });
 
@@ -73,22 +55,16 @@ describe("Test onglets documents édites", () => {
       [
         {
           path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
-          element: <EditionExtraitCopiePage />
+          element: <PageEditionRequeteDelivrance />
         }
       ],
-      [
-        `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f77/19c0d767-64e5-4376-aa1f-6d781a2a235a`
-      ]
+      [`${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b242-b9de4f683f77/19c0d767-64e5-4376-aa1f-6d781a2a235a`]
     );
 
-    render(
-      elementAvecContexte(<RouterProvider router={router} />, userDroitCOMEDEC)
-    );
+    render(elementAvecContexte(<RouterProvider router={router} />, userDroitCOMEDEC));
 
     waitFor(() => {
-      expect(
-        screen.getByTitle("Ajout d'un document complémentaire")
-      ).toBeDefined();
+      expect(screen.getByTitle("Ajout d'un document complémentaire")).toBeDefined();
     });
 
     fireEvent.click(screen.getByTitle("Ajout d'un document complémentaire"));
@@ -105,29 +81,21 @@ describe("Test onglets documents édites", () => {
       [
         {
           path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
-          element: <EditionExtraitCopiePage />
+          element: <PageEditionRequeteDelivrance />
         }
       ],
-      [
-        `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b272-b9de4g683aaf/19c0d767-64e5-4376-aa1f-6d781a2a235a`
-      ]
+      [`${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4538-b272-b9de4g683aaf/19c0d767-64e5-4376-aa1f-6d781a2a235a`]
     );
 
-    render(
-      elementAvecContexte(<RouterProvider router={router} />, userDroitCOMEDEC)
-    );
+    render(elementAvecContexte(<RouterProvider router={router} />, userDroitCOMEDEC));
 
     waitFor(() => {
-      expect(
-        screen.getByTitle("Ajout d'un document complémentaire")
-      ).toBeDefined();
+      expect(screen.getByTitle("Ajout d'un document complémentaire")).toBeDefined();
     });
 
     fireEvent.click(screen.getByTitle("Ajout d'un document complémentaire"));
 
-    let boutonAjouterDocument = screen.getAllByText(
-      "Extrait avec filiation"
-    )[0] as HTMLElement;
+    let boutonAjouterDocument = screen.getAllByText("Extrait avec filiation")[0] as HTMLElement;
 
     waitFor(() => {
       expect(boutonAjouterDocument).toBeDefined();
@@ -145,29 +113,21 @@ describe("Test onglets documents édites", () => {
       [
         {
           path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
-          element: <EditionExtraitCopiePage />
+          element: <PageEditionRequeteDelivrance />
         }
       ],
-      [
-        `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4038-b271-b9de48283a8f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
-      ]
+      [`${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4038-b271-b9de48283a8f/19c0d767-64e5-4376-aa1f-6d781a2a235a`]
     );
 
-    render(
-      elementAvecContexte(<RouterProvider router={router} />, userDroitCOMEDEC)
-    );
+    render(elementAvecContexte(<RouterProvider router={router} />, userDroitCOMEDEC));
 
     waitFor(() => {
-      expect(
-        screen.getByTitle("Ajout d'un document complémentaire")
-      ).toBeDefined();
+      expect(screen.getByTitle("Ajout d'un document complémentaire")).toBeDefined();
     });
 
     fireEvent.click(screen.getByTitle("Ajout d'un document complémentaire"));
 
-    let boutonAjouterDocument = screen.getByText(
-      "Extrait plurilingue"
-    ) as HTMLElement;
+    let boutonAjouterDocument = screen.getByText("Extrait plurilingue") as HTMLElement;
 
     waitFor(() => {
       expect(boutonAjouterDocument).toBeDefined();
@@ -176,11 +136,7 @@ describe("Test onglets documents édites", () => {
     fireEvent.click(boutonAjouterDocument);
 
     waitFor(() => {
-      expect(
-        screen.getByText(
-          "Pas de délivrance d'extrait sur la base d'un acte à titulaires multiples."
-        )
-      ).toBeDefined();
+      expect(screen.getByText("Pas de délivrance d'extrait sur la base d'un acte à titulaires multiples.")).toBeDefined();
     });
   });
 
@@ -189,29 +145,21 @@ describe("Test onglets documents édites", () => {
       [
         {
           path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
-          element: <EditionExtraitCopiePage />
+          element: <PageEditionRequeteDelivrance />
         }
       ],
-      [
-        `${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4038-b272-b9de48683a8f/19c0d767-64e5-4376-aa1f-6d781a2a235a`
-      ]
+      [`${URL_MES_REQUETES_DELIVRANCE}/${PATH_EDITION}/9bfa282d-1e66-4038-b272-b9de48683a8f/19c0d767-64e5-4376-aa1f-6d781a2a235a`]
     );
 
-    render(
-      elementAvecContexte(<RouterProvider router={router} />, userDroitCOMEDEC)
-    );
+    render(elementAvecContexte(<RouterProvider router={router} />, userDroitCOMEDEC));
 
     waitFor(() => {
-      expect(
-        screen.getByTitle("Ajout d'un document complémentaire")
-      ).toBeDefined();
+      expect(screen.getByTitle("Ajout d'un document complémentaire")).toBeDefined();
     });
 
     fireEvent.click(screen.getByTitle("Ajout d'un document complémentaire"));
 
-    let boutonAjouterDocument = screen.getByText(
-      "Extrait plurilingue"
-    ) as HTMLElement;
+    let boutonAjouterDocument = screen.getByText("Extrait plurilingue") as HTMLElement;
 
     waitFor(() => {
       expect(boutonAjouterDocument).toBeDefined();

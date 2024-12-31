@@ -20,7 +20,7 @@ const BoutonsValiderEtReinitialiser: React.FC<BoutonsValiderEtReinitialiserProps
   const formik = useFormikContext();
 
   return (
-    <div className="flex gap-4">
+    <div className="flex justify-end gap-4 pr-4">
       <Bouton
         styleBouton="secondaire"
         type="reset"
@@ -34,7 +34,6 @@ const BoutonsValiderEtReinitialiser: React.FC<BoutonsValiderEtReinitialiserProps
         styleBouton={styleBoutonValider}
         className={`${styleBoutonValider === "secondaire" && "hover:bg-bleu hover:text-white"}`}
         type="submit"
-        onClick={formik.submitForm}
         disabled={desactiverBoutonValider || !officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER)}
         aria-label="Valider"
       >

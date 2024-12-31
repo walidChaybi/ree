@@ -34,7 +34,6 @@ import {
 import { ValidationSchemaChoixCourrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/ChoixCourrierForm";
 import { texteOptionCourrierModifie } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/GestionOptionsCourrier";
 import { ValidationSchemaOptionCourrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/OptionsCourrierForm";
-import { EditionExtraitCopiePageContext } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import { EditionDelivranceContext } from "../../../../../../contexts/EditionDelivranceContextProvider";
 import BoutonsValiderEtReinitialiser from "../../boutons/BoutonsValiderEtReinitialiser";
 import { ECleOngletRequete } from "../../partieActeRequete/PartieActeRequete";
@@ -49,9 +48,6 @@ interface ModificationCourrierProps {
 export const Courrier: React.FC<ModificationCourrierProps> = ({ requete, idActe, natureActe, estNouvelEcranCourrier }) => {
   const typesCourrier = getTypesCourrier(requete);
   const { rechargerRequete } = useContext(EditionDelivranceContext);
-
-  // TOREFACTO : retirer lorsque l'ancien écran de délivrance sera remplacé par le nouveau
-  const { rafraichirRequete } = useContext(EditionExtraitCopiePageContext);
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [idTypeCourrier, setIdTypeCourrier] = useState<string>();
@@ -96,17 +92,15 @@ export const Courrier: React.FC<ModificationCourrierProps> = ({ requete, idActe,
         requete: requete,
         idActe: idActe,
         natureActe: natureActe,
-        handleDocumentEnregistre: estNouvelEcranCourrier
-          ? () => {
-              rechargerRequete(() =>
-                document.dispatchEvent(
-                  new CustomEvent("changerOngletActifPartieActeRequete", {
-                    detail: ECleOngletRequete.COURRIER_EDITE
-                  })
-                )
-              );
-            }
-          : rafraichirRequete,
+        handleDocumentEnregistre: () => {
+          rechargerRequete("requete", () =>
+            document.dispatchEvent(
+              new CustomEvent("changerOngletActifPartieActeRequete", {
+                detail: ECleOngletRequete.COURRIER_EDITE
+              })
+            )
+          );
+        },
         saisieCourrier: { ...values },
         setOperationEnCours
       });

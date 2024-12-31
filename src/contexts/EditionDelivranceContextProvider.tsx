@@ -1,17 +1,20 @@
-import { getInformationsFicheActe } from "@api/appels/etatcivilApi";
-import { getDetailRequete } from "@api/appels/requeteApi";
+import TRAITEMENT_CHARGER_REQUETE_ET_ACTE from "@api/traitements/requeteDelivrance/edition/TraitementChargerRequeteEtActe";
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { mapActe } from "@hook/repertoires/MappingRepertoires";
-import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import PageChargeur from "../composants/commun/chargeurs/PageChargeur";
+import useTraitementApi from "../hooks/api/TraitementApiHook";
+
+interface IRequeteActe {
+  requete: IRequeteDelivrance;
+  acte: IFicheActe | null;
+}
 
 interface IEditionDelivranceContext {
   requete: IRequeteDelivrance;
   acte: IFicheActe | null;
-  rechargerRequete: (onRechargementTermine?: () => void) => void;
+  rechargerRequete: (charger: "les-deux" | "requete" | "acte", onRechargementTermine?: () => void) => void;
 }
 
 export const EditionDelivranceContext = React.createContext<IEditionDelivranceContext>({} as IEditionDelivranceContext);
@@ -23,68 +26,44 @@ const EditionDelivranceContextProvider: React.FC<
   }>
 > = ({ idRequeteParam, idActeParam, children }) => {
   const { utilisateurs } = useContext(RECEContextData);
-  const [requete, setRequete] = useState<IRequeteDelivrance>();
-  const [acte, setActe] = useState<IFicheActe | null>();
-  const [doitChargerRequete, setDoitChargerRequete] = useState<boolean>(true);
-  const [onRechargementTermine, setOnRechargementTermine] = useState<(() => void) | null>(null);
+  const [requeteActe, setRequeteActe] = useState<IRequeteActe | null>(null);
+  const { lancerTraitement: lancerChargementRequeteActe, traitementEnCours: chargementRequeteActeEnCours } =
+    useTraitementApi(TRAITEMENT_CHARGER_REQUETE_ET_ACTE);
   const valeursContext = useMemo(
     () => ({
-      requete: requete ?? ({} as IRequeteDelivrance),
-      acte: acte ?? null,
-      rechargerRequete: (callbackOnRechargementTermine?: () => void) => {
-        setDoitChargerRequete(true);
-        callbackOnRechargementTermine && setOnRechargementTermine(() => callbackOnRechargementTermine);
+      requete: requeteActe?.requete ?? ({} as IRequeteDelivrance),
+      acte: requeteActe?.acte ?? null,
+      rechargerRequete: (charger: "les-deux" | "requete" | "acte", callbackOnRechargementTermine?: () => void) => {
+        lancerChargementRequeteActe({
+          parametres: { idRequete: idRequeteParam, idActe: idActeParam, chargement: charger },
+          apresSucces: resultat =>
+            setRequeteActe(prec => ({
+              ...(prec as IRequeteActe),
+              ...(resultat.requete ? { requete: resultat.requete } : {}),
+              ...(resultat.acte ? { acte: resultat.acte } : {})
+            })),
+          finalement: () => callbackOnRechargementTermine?.()
+        });
       }
     }),
-    [requete, acte]
+    [requeteActe]
   );
 
-  //TOREFACTOR : passer en useFetch
-  const [enRecuperation, setEnRecuperation] = useState<boolean>(false);
   useEffect(() => {
-    if (enRecuperation || !doitChargerRequete || !idRequeteParam || !utilisateurs?.length) {
-      setDoitChargerRequete(false);
+    if (requeteActe || !utilisateurs?.length) {
       return;
     }
 
-    setDoitChargerRequete(false);
-    setEnRecuperation(true);
-    //TOREFACTOR : remplacer par useFetch
-    getDetailRequete(idRequeteParam)
-      .then(res => setRequete(mappingRequeteDelivrance(res.body.data, utilisateurs)))
-      .finally(() => {
-        setEnRecuperation(false);
-        onRechargementTermine && onRechargementTermine();
-        setOnRechargementTermine(null);
-      });
-  }, [idRequeteParam, doitChargerRequete, utilisateurs]);
-
-  //TOREFACTOR : passer en useFetch
-  const [enRecuperationActe, setEnRecuperationActe] = useState<boolean>(false);
-  useEffect(() => {
-    if (enRecuperationActe || !requete) {
-      return;
-    }
-    //
-    let idActe = idActeParam ?? requete?.documentsReponses.find(documentReponse => documentReponse.idActe)?.idActe;
-
-    if (!idActe) {
-      setActe(null);
-
-      return;
-    }
-
-    setEnRecuperationActe(true);
-    //TOREFACTOR : remplacer par useFetch
-    getInformationsFicheActe(idActe)
-      .then(data => setActe(mapActe(data.body.data)))
-      .finally(() => setEnRecuperationActe(false));
-  }, [idActeParam, requete]);
+    lancerChargementRequeteActe({
+      parametres: { idRequete: idRequeteParam, idActe: idActeParam, chargement: "les-deux" },
+      apresSucces: resultat => setRequeteActe({ requete: resultat.requete as IRequeteDelivrance, acte: resultat.acte })
+    });
+  }, [utilisateurs]);
 
   return (
     <EditionDelivranceContext.Provider value={valeursContext}>
-      {(enRecuperation || enRecuperationActe) && <PageChargeur />}
-      {requete && (acte || acte === null) && children}
+      {chargementRequeteActeEnCours && <PageChargeur />}
+      {requeteActe && children}
     </EditionDelivranceContext.Provider>
   );
 };

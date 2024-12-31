@@ -119,7 +119,7 @@ export const elementAvecEditionDelivranceContexte = (
   const valeursContext = {
     requete: requete ?? requeteDelivrance,
     acte: acte ?? (acteMock as IFicheActe),
-    rechargerRequete: () => {}
+    rechargerRequete: (charger: "les-deux" | "requete" | "acte", apresRechargement?: () => void) => apresRechargement?.()
   };
 
   return <EditionDelivranceContext.Provider value={valeursContext}>{children}</EditionDelivranceContext.Provider>;

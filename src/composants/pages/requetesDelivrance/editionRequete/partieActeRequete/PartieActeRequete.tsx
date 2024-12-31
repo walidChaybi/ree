@@ -26,18 +26,18 @@ const PartieActeRequete: React.FC<IPartieActeRequeteProps> = React.memo(({ ongle
 
   const [contenuActe, setContenuActe] = useState<string | null>(null);
   const [contenuCourrier, setContenuCourrier] = useState<string | null>(null);
-  const documentCourrier = useMemo(
-    () => requete.documentsReponses.filter(doc => DocumentDelivrance.estCourrierDelivranceEC(doc.typeDocument)).shift(),
+  const idDocumentCourrier = useMemo(
+    () => requete.documentsReponses.filter(doc => DocumentDelivrance.estCourrierDelivranceEC(doc.typeDocument)).shift()?.id,
     [requete]
   );
 
   useEffect(() => {
-    if (!documentCourrier) {
+    if (!idDocumentCourrier) {
       return;
     }
 
-    getDocumentReponseById(documentCourrier.id).then(data => setContenuCourrier(data.body.data.contenu ?? ""));
-  }, [documentCourrier]);
+    getDocumentReponseById(idDocumentCourrier).then(data => setContenuCourrier(data.body.data.contenu ?? ""));
+  }, [idDocumentCourrier]);
 
   useEffect(() => {
     if (contenuActe !== null || !acte) {
@@ -67,7 +67,7 @@ const PartieActeRequete: React.FC<IPartieActeRequeteProps> = React.memo(({ ongle
             cle: ECleOngletRequete.REQUETE,
             libelle: "Requête"
           },
-          ...(documentCourrier
+          ...(idDocumentCourrier
             ? [
                 {
                   cle: ECleOngletRequete.COURRIER_EDITE,
@@ -102,7 +102,7 @@ const PartieActeRequete: React.FC<IPartieActeRequeteProps> = React.memo(({ ongle
         <VoletRequete requete={requete} />
       </ConteneurVoletEdition>
 
-      {documentCourrier && (
+      {idDocumentCourrier && (
         <ConteneurVoletEdition estActif={ongletActif === ECleOngletRequete.COURRIER_EDITE}>
           <AffichagePDF
             contenuBase64={contenuCourrier}

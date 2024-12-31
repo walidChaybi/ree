@@ -1,29 +1,18 @@
-import {
-  ITransfertPopinForm,
-  TransfertPopin,
-} from "@composant/menuTransfert/TransfertPopin";
+import { ITransfertPopinForm, TransfertPopin } from "@composant/menuTransfert/TransfertPopin";
 import {
   ICreationActionMiseAjourStatutHookParams,
-  useCreationActionMiseAjourStatut,
+  useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
-import {
-  IRegenerationDocumentsParams,
-  useRegenerationDocumentsHook,
-} from "@hook/requete/RegenerationDocumentsHook";
-import {
-  IRetourValideurParams,
-  useRetourValideurApiHook,
-} from "@hook/requete/RetourValideur";
+import { IRegenerationDocumentsParams, useRegenerationDocumentsHook } from "@hook/requete/RegenerationDocumentsHook";
+import { IRetourValideurParams, useRetourValideurApiHook } from "@hook/requete/RetourValideur";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { getDefaultValuesCourrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
-import { EditionExtraitCopiePageContext } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
-import { getValeurOuVide } from "@util/Utils";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import Bouton from "../../../../commun/bouton/Bouton";
@@ -35,20 +24,13 @@ interface BoutonsTerminerOuRelectureProps {
   acte?: IFicheActe;
 }
 
-export const BoutonsTerminerOuRelecture: React.FC<
-  BoutonsTerminerOuRelectureProps
-> = ({ requete, acte }) => {
+export const BoutonsTerminerOuRelecture: React.FC<BoutonsTerminerOuRelectureProps> = ({ requete, acte }) => {
   const [retourParams, setRetourParams] = useState<IRetourValideurParams>();
-  const [majStatutParams, setMajStatutParams] =
-    useState<ICreationActionMiseAjourStatutHookParams>();
-  const [regenerationParams, setRegenerationParams] =
-    useState<IRegenerationDocumentsParams>();
+  const [majStatutParams, setMajStatutParams] = useState<ICreationActionMiseAjourStatutHookParams>();
+  const [regenerationParams, setRegenerationParams] = useState<IRegenerationDocumentsParams>();
   const [open, setOpen] = useState<boolean>(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { rafraichirRequete, setOperationEnCours } = useContext(
-    EditionExtraitCopiePageContext,
-  );
 
   useRegenerationDocumentsHook(regenerationParams);
 
@@ -56,16 +38,10 @@ export const BoutonsTerminerOuRelecture: React.FC<
 
   function onClickValidate(statut: StatutRequete, texte?: string) {
     setRetourParams({
-      libelleAction:
-        statut === StatutRequete.A_REVOIR
-          ? statut.libelle
-          : `Requête approuvée - ${statut.libelle}`,
+      libelleAction: statut === StatutRequete.A_REVOIR ? statut.libelle : `Requête approuvée - ${statut.libelle}`,
       statutDemande: statut.nom,
       requeteId: requete.id,
-      texteObservation:
-        statut === StatutRequete.A_REVOIR
-          ? `Requête relue - ${getValeurOuVide(texte)}`
-          : "Requête approuvée",
+      texteObservation: statut === StatutRequete.A_REVOIR ? `Requête relue - ${texte ?? ""}` : "Requête approuvée"
     });
   }
 
@@ -78,7 +54,6 @@ export const BoutonsTerminerOuRelecture: React.FC<
   }, [idActionRetour]);
 
   function onClickReprise(statut: StatutRequete) {
-    setOperationEnCours(true);
     setRegenerationParams({
       requete: requete,
       regenererCourrier: true,
@@ -88,9 +63,8 @@ export const BoutonsTerminerOuRelecture: React.FC<
         setMajStatutParams({
           libelleAction: "Requête reprise",
           statutRequete: statut,
-          requete: mappingRequeteDelivranceToRequeteTableau(requete),
-          callback: rafraichirRequete,
-        }),
+          requete: mappingRequeteDelivranceToRequeteTableau(requete)
+        })
     });
   }
 
@@ -103,22 +77,21 @@ export const BoutonsTerminerOuRelecture: React.FC<
               styleBouton="secondaire"
               onClick={() =>
                 onClickReprise(
-                  requete.documentsReponses.some((document) => document.avecCtv)
-                    ? StatutRequete.A_SIGNER
-                    : StatutRequete.A_VALIDER,
+                  requete.documentsReponses.some(document => document.avecCtv) ? StatutRequete.A_SIGNER : StatutRequete.A_VALIDER
                 )
               }
             >
               Reprendre le traitement
             </Bouton>
           )}
-          <BoutonListeDeroulante titre="Relecture" pointAncrageMenu="droite">
+          <BoutonListeDeroulante
+            titre="Relecture"
+            pointAncrageMenu="droite"
+          >
             <Bouton
               onClick={() =>
                 onClickValidate(
-                  requete.documentsReponses.some((document) => document.avecCtv)
-                    ? StatutRequete.A_SIGNER
-                    : StatutRequete.A_VALIDER,
+                  requete.documentsReponses.some(document => document.avecCtv) ? StatutRequete.A_SIGNER : StatutRequete.A_VALIDER
                 )
               }
             >
@@ -128,12 +101,13 @@ export const BoutonsTerminerOuRelecture: React.FC<
           </BoutonListeDeroulante>
         </>
       ) : (
-        <BoutonsTerminer requete={requete} acte={acte} />
+        <BoutonsTerminer
+          requete={requete}
+          acte={acte}
+        />
       )}
       <TransfertPopin
-        onValidate={(valeurs: ITransfertPopinForm) =>
-          onClickValidate(StatutRequete.A_REVOIR, valeurs.texte)
-        }
+        onValidate={(valeurs: ITransfertPopinForm) => onClickValidate(StatutRequete.A_REVOIR, valeurs.texte)}
         open={open}
         onClose={() => setOpen(false)}
         titre={"Commentaire pour agent requérant"}

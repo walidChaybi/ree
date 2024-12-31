@@ -9,10 +9,9 @@ import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { EditionExtraitCopiePageContext } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopiePage";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getDefaultValuesCourrier } from "../../apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
@@ -30,7 +29,6 @@ export const BoutonsTerminerOuRelecture: React.FC<BoutonsTerminerOuRelectureProp
   const [open, setOpen] = useState<boolean>(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { rafraichirRequete, setOperationEnCours } = useContext(EditionExtraitCopiePageContext);
 
   useRegenerationDocumentsHook(regenerationParams);
 
@@ -55,7 +53,6 @@ export const BoutonsTerminerOuRelecture: React.FC<BoutonsTerminerOuRelectureProp
   }, [idActionRetour]);
 
   function onClickReprise(statut: StatutRequete) {
-    setOperationEnCours(true);
     setRegenerationParams({
       requete: props.requete,
       regenererCourrier: true,
@@ -65,8 +62,7 @@ export const BoutonsTerminerOuRelecture: React.FC<BoutonsTerminerOuRelectureProp
         setMajStatutParams({
           libelleAction: "Requête reprise",
           statutRequete: statut,
-          requete: mappingRequeteDelivranceToRequeteTableau(props.requete),
-          callback: rafraichirRequete
+          requete: mappingRequeteDelivranceToRequeteTableau(props.requete)
         })
     });
   }
@@ -98,7 +94,10 @@ export const BoutonsTerminerOuRelecture: React.FC<BoutonsTerminerOuRelectureProp
           <BoutonDoubleSubmit onClick={() => setOpen(true)}>{"Relecture commentée"}</BoutonDoubleSubmit>
         </>
       ) : (
-        <BoutonsTerminer requete={props.requete} acte={props.acte} />
+        <BoutonsTerminer
+          requete={props.requete}
+          acte={props.acte}
+        />
       )}
       <TransfertPopin
         onValidate={(valeurs: ITransfertPopinForm) => onClickValidate(StatutRequete.A_REVOIR, valeurs.texte)}
