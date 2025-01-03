@@ -1,8 +1,9 @@
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import DateUtils from "@util/DateUtils";
-import { DEUX, getValeurOuVide, UN } from "@util/Utils";
+import { DEUX, UN } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import {
+  INatureMention,
   MARIAGE,
   NATIONALITE,
   NatureMention,
@@ -38,12 +39,12 @@ export interface IMention {
 export const Mention = {
   getTexteExtrait(mention: IMention): string {
     let texte = "";
-    const texteMention = getValeurOuVide(mention.textes.texteMention);
+    const texteMention = mention.textes.texteMention ?? "";
 
     if (mention.textes) {
       if (mention.textes.texteMentionDelivrance) {
         texte = mention.textes.texteMentionDelivrance;
-      } else if (NatureMention.estOpposableAuTiers(mention.typeMention.natureMention)) {
+      } else if (mention.typeMention.natureMention?.opposableAuTiers) {
         const texteApposition = mention.textes.texteApposition ? ` ${mention.textes.texteApposition}` : "";
         texte = `${texteMention}${texteApposition}`;
       } else {
@@ -73,8 +74,8 @@ export const Mention = {
     }
     return "";
   },
-  getPlurilingueAPartirTexte(texte?: string, nature?: NatureMention): string {
-    return `${NatureMention.getCodePourNature(nature?.code)} ${texte}`;
+  getPlurilingueAPartirTexte(texte?: string, nature?: INatureMention | null): string {
+    return `${nature?.code} ${texte}`;
   },
   trierMentionsNumeroOrdreApposition(mentions: IMention[]) {
     mentions.sort((mention1, mentions2) => mention1.numeroOrdre - mentions2.numeroOrdre);
@@ -82,7 +83,7 @@ export const Mention = {
     return mentions;
   },
   mentionNationalitePresente(mentions: IMention[] | undefined): boolean {
-    return Boolean(mentions?.find(mention => mention.typeMention.natureMention.code === NATIONALITE));
+    return Boolean(mentions?.find(mention => mention.typeMention.natureMention?.code === NATIONALITE));
   },
   trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentions: IMention[]) {
     const toutesLesMentionsOntUnNumeroOrdreExtrait: boolean = mentions.every(mention => mention.numeroOrdreExtrait != null);
@@ -102,7 +103,7 @@ export const Mention = {
     return mentions
       ? mentions.filter(
           mention =>
-            Boolean(mention.textes?.texteMentionPlurilingue) || tableauNatureFiltrer.includes(mention.typeMention.natureMention.code)
+            Boolean(mention.textes?.texteMentionPlurilingue) || tableauNatureFiltrer.includes(mention.typeMention.natureMention?.code ?? "")
         )
       : [];
   },
@@ -118,7 +119,7 @@ export const Mention = {
     );
   },
   getTextePlurilingueAPartirMention(mention: IMention): string {
-    const nature = NatureMention.getCodePourNature(mention.typeMention.natureMention.code);
+    const nature = NatureMention.getCodePourNature(mention.typeMention.natureMention?.code);
 
     let lieu;
     let date;
@@ -147,7 +148,7 @@ export const Mention = {
     }
 
     let texteMention = `${nature} ${date} ${lieu}`;
-    if (mention.typeMention.natureMention === NatureMention.getEnumFromCode(NatureMention, MARIAGE)) {
+    if (mention.typeMention.natureMention === NatureMention.depuisCode(MARIAGE)) {
       const conjoint = getConjoint(mention);
       if (conjoint) {
         texteMention += ` ${conjoint}`;
@@ -197,9 +198,7 @@ export function mappingVersMentionApi(mention: IMention) {
     },
     typeMention: {
       idTypeMention: mention.typeMention.id,
-      idNatureMention: NatureMention.getUuidFromNature(
-        mention.typeMention.natureMention
-      )
+      idNatureMention: mention.typeMention.natureMention?.id
     },
     id: mention.id
   };

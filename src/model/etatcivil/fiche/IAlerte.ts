@@ -1,14 +1,6 @@
-import {
-  IUtilisateur,
-  getNomPrenomUtilisateurAPartirId
-} from "@model/agent/IUtilisateur";
+import { IUtilisateur, getNomPrenomUtilisateurAPartirId } from "@model/agent/IUtilisateur";
 import { compactObject } from "@util/Utils";
-import {
-  A_NE_PAS_DELIVRER,
-  DESCRIPTION_SAGA,
-  TypeAlerte,
-  TypeCodeCouleur
-} from "../enum/TypeAlerte";
+import { A_NE_PAS_DELIVRER, DESCRIPTION_SAGA, ITypeAlerte, TypeCodeCouleur } from "../enum/TypeAlerte";
 
 export interface IAlerte {
   id?: string;
@@ -28,7 +20,7 @@ export interface IAlerte {
   dateCreation?: number;
   dateCreationStr?: string;
   codeCouleur?: TypeCodeCouleur;
-  type?: TypeAlerte;
+  type?: ITypeAlerte;
 }
 
 const dotCharacter = "\u2022";
@@ -47,32 +39,20 @@ export const Alerte = {
     };
     const trigramme =
       alerte.idUtilisateur && alerte.trigrammeUtilisateur !== RECE
-        ? ` - ${getNomPrenomUtilisateurAPartirId(
-            alerte?.idUtilisateur,
-            utilisateurs
-          )}`
+        ? ` - ${getNomPrenomUtilisateurAPartirId(alerte?.idUtilisateur, utilisateurs)}`
         : "";
-    const complementDescription = alerte.complementDescription
-      ? ` - ${alerte?.complementDescription}`
-      : "";
+    const complementDescription = alerte.complementDescription ? ` - ${alerte?.complementDescription}` : "";
     return `${dotCharacter} ${Object.values(compactObject(registre)).join(
       "."
-    )} - ${alerte.description}${complementDescription}${trigramme} - ${
-      alerte?.dateCreationStr
-    }`;
+    )} - ${alerte.description}${complementDescription}${trigramme} - ${alerte?.dateCreationStr}`;
   },
 
   toAlertString(alerte: IAlerte, utilisateurs: IUtilisateur[]): string {
     const trigramme =
       alerte.idUtilisateur && alerte.trigrammeUtilisateur !== RECE
-        ? ` - ${getNomPrenomUtilisateurAPartirId(
-            alerte?.idUtilisateur,
-            utilisateurs
-          )}`
+        ? ` - ${getNomPrenomUtilisateurAPartirId(alerte?.idUtilisateur, utilisateurs)}`
         : "";
-    const complementDescription = alerte.complementDescription
-      ? ` - ${alerte?.complementDescription}`
-      : "";
+    const complementDescription = alerte.complementDescription ? ` - ${alerte?.complementDescription}` : "";
     return `${dotCharacter} ${alerte?.description}${complementDescription}${trigramme} - ${alerte?.dateCreationStr}`;
   },
 

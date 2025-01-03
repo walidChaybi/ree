@@ -43,7 +43,6 @@ import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificat
 import { IPieceJustificativeCreation, PieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
 import DateUtils from "@util/DateUtils";
 import { logError } from "@util/LogManager";
-import { getValeurOuUndefined } from "@util/Utils";
 import { useContext, useEffect, useState } from "react";
 import { AvancementProjetActe } from "./../../../../model/requete/enum/AvancementProjetActe";
 import { NatureProjetEtablissement } from "./../../../../model/requete/enum/NatureProjetEtablissement";
@@ -152,7 +151,7 @@ export function mappingRequeteDelivrance(data: any, utilisateurs?: IUtilisateur[
 
     //Partie Requête Delivrance
     sousType: SousTypeDelivrance.getEnumFor(data?.sousType),
-    documentDemande: DocumentDelivrance.getEnumForUUID(data?.documentDemande),
+    documentDemande: DocumentDelivrance.depuisId(data?.documentDemande),
     nbExemplaireImpression: data?.nombreExemplairesDemandes,
     provenanceRequete: getProvenance(data),
     motif: MotifDelivrance.getEnumFor(data?.motif),
@@ -166,15 +165,15 @@ export function mappingRequeteDelivrance(data: any, utilisateurs?: IUtilisateur[
 
 function mapUnePieceJustificative(piece?: any): IPieceJustificative {
   return {
-    id: getValeurOuUndefined(piece.id),
-    nom: getValeurOuUndefined(piece.nom),
-    mimeType: getValeurOuUndefined(piece.mimeType),
-    extension: getValeurOuUndefined(piece.extension),
-    taille: getValeurOuUndefined(piece.taille),
-    referenceSwift: getValeurOuUndefined(piece.referenceSwift),
-    conteneurSwift: getValeurOuUndefined(piece.conteneurSwift),
-    contenu: getValeurOuUndefined(piece.contenu),
-    typePieceJustificative: TypePieceJustificative?.getEnumFor(piece.typePieceJustificative) // pj.typePieceJustificative est un UUID car il vient du back,
+    id: piece.id || undefined,
+    nom: piece.nom || undefined,
+    mimeType: piece.mimeType || undefined,
+    extension: piece.extension || undefined,
+    taille: piece.taille || undefined,
+    referenceSwift: piece.referenceSwift || undefined,
+    conteneurSwift: piece.conteneurSwift || undefined,
+    contenu: piece.contenu || undefined,
+    typePieceJustificative: TypePieceJustificative?.depuisId(piece.typePieceJustificative) // pj.typePieceJustificative est un UUID car il vient du back,
   };
 }
 
@@ -300,17 +299,17 @@ export function mappingRequeteInformation(data: any, utilisateurs?: IUtilisateur
 function mapUnePieceJustificativeCreation(piece?: any): IPieceJustificativeCreation {
   return {
     ...mapUnePieceJustificative(piece),
-    idFichierNatali: getValeurOuUndefined(piece.idFichierNatali),
-    ordreNatali: getValeurOuUndefined(piece.ordreNatali),
-    libelle: getValeurOuUndefined(piece.libelle),
-    estPieceAnnexe: getValeurOuUndefined(piece.estPieceAnnexe),
-    idRc: getValeurOuUndefined(piece.idRC),
-    idRca: getValeurOuUndefined(piece.idRCA),
-    idPacs: getValeurOuUndefined(piece.idPACS),
-    idActe: getValeurOuUndefined(piece.idActe),
-    idPersonne: getValeurOuUndefined(piece.idPersonne),
-    documentPj: mapUnDocumentPJ(getValeurOuUndefined(piece.documentPj)),
-    nouveauLibelleFichierPJ: getValeurOuUndefined(piece.nouveauLibelleFichierPJ)
+    idFichierNatali: piece.idFichierNatali || undefined,
+    ordreNatali: piece.ordreNatali || undefined,
+    libelle: piece.libelle || undefined,
+    estPieceAnnexe: piece.estPieceAnnexe || undefined,
+    idRc: piece.idRC || undefined,
+    idRca: piece.idRCA || undefined,
+    idPacs: piece.idPACS || undefined,
+    idActe: piece.idActe || undefined,
+    idPersonne: piece.idPersonne || undefined,
+    documentPj: mapUnDocumentPJ(piece.documentPj || undefined),
+    nouveauLibelleFichierPJ: piece.nouveauLibelleFichierPJ || undefined
   };
 }
 
@@ -374,12 +373,12 @@ export function mappingRequeteCreation(data: any, utilisateurs?: IUtilisateur[])
       echanges: mapEchangesRetourSDANF(data.provenanceNatali?.echanges)
     },
     provenanceServicePublic: data.provenanceServicePublic,
-    documentsPj: mapDocumentPJ(getValeurOuUndefined(data.documentsPj)),
+    documentsPj: mapDocumentPJ(data.documentsPj || undefined),
     provenance: Provenance.getEnumFor(data.provenance),
     titulaires: mapTitulairesCreation(requete.titulaires),
     natureActeTranscrit,
     personnesSauvegardees: mapPersonnesSauvegardees(
-      getValeurOuUndefined(data.personnesSauvegardees),
+      data.personnesSauvegardees || undefined,
       NatureActeTranscription.estMariage(natureActeTranscrit)
     )
   };
@@ -394,7 +393,7 @@ export function mapTitulairesCreation(titulaires: any[]): ITitulaireRequeteCreat
       dateSignature: DateUtils.getDateComposeFromTimestamp(titulaire.decret.dateSignature),
       datePublication: DateUtils.getDateComposeFromTimestamp(titulaire.decret.datePublication)
     },
-    suiviDossiers: mapSuiviDossiers(getValeurOuUndefined(titulaire.suiviDossiers))
+    suiviDossiers: mapSuiviDossiers(titulaire.suiviDossiers || undefined)
   }));
 }
 
@@ -415,14 +414,14 @@ function mapPersonnesSauvegardees(data?: any[], estRequeteMariage = false): IPer
 function mapSuiviDossiers(suiviDossiers?: any[]): ISuiviDossier[] | undefined {
   return suiviDossiers?.map(suiviDossier => ({
     idSuiviDossier: suiviDossier.id,
-    idActe: getValeurOuUndefined(suiviDossier.idActe),
-    dateEtablissement: getValeurOuUndefined(suiviDossier.dateEtablissement),
-    jourEvenement: getValeurOuUndefined(suiviDossier.jourEvenement),
-    moisEvenement: getValeurOuUndefined(suiviDossier.moisEvenement),
-    anneeEvenement: getValeurOuUndefined(suiviDossier.anneeEvenement),
-    natureProjet: NatureProjetEtablissement.getEnumFor(getValeurOuUndefined(suiviDossier.natureProjet)),
-    referenceActe: getValeurOuUndefined(suiviDossier.referenceActe),
-    avancement: AvancementProjetActe.getEnumFor(getValeurOuUndefined(suiviDossier.avancement)),
-    unionActuelle: UnionActuelle.getEnumFor(getValeurOuUndefined(suiviDossier.unionActuelle))
+    idActe: suiviDossier.idActe || undefined,
+    dateEtablissement: suiviDossier.dateEtablissement || undefined,
+    jourEvenement: suiviDossier.jourEvenement || undefined,
+    moisEvenement: suiviDossier.moisEvenement || undefined,
+    anneeEvenement: suiviDossier.anneeEvenement || undefined,
+    natureProjet: NatureProjetEtablissement.getEnumFor(suiviDossier.natureProjet || undefined),
+    referenceActe: suiviDossier.referenceActe || undefined,
+    avancement: AvancementProjetActe.getEnumFor(suiviDossier.avancement || undefined),
+    unionActuelle: UnionActuelle.getEnumFor(suiviDossier.unionActuelle || undefined)
   }));
 }

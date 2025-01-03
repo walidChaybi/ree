@@ -1,3 +1,4 @@
+import { TYPE_PIECE_JUSTIFICATIVE } from "@mock/data/NomenclatureTypePieceJustificative";
 import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { NORESULT } from "@mock/superagent-config/superagent-mock-requetes";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
@@ -7,7 +8,7 @@ import { MemoryRouter } from "react-router-dom";
 import { beforeEach, expect, test } from "vitest";
 
 beforeEach(() => {
-  TypePieceJustificative.init();
+  TypePieceJustificative.init(TYPE_PIECE_JUSTIFICATIVE);
 });
 
 test.skip("render ApercuRequetePartieGauche", () => {
@@ -17,9 +18,7 @@ test.skip("render ApercuRequetePartieGauche", () => {
     </MemoryRouter>
   );
 
-  const boutonNouvelleRMC = screen.getByLabelText(
-    "NouvelleRMCRequete"
-  ) as HTMLButtonElement;
+  const boutonNouvelleRMC: HTMLButtonElement = screen.getByLabelText("NouvelleRMCRequete");
   expect(boutonNouvelleRMC).toBeDefined();
 
   fireEvent.click(boutonNouvelleRMC);
@@ -27,15 +26,11 @@ test.skip("render ApercuRequetePartieGauche", () => {
   const popinNouvelleRMC = screen.getByRole("dialog", {
     hidden: true
   });
-  const nomTitulaire = screen.getByLabelText(
-    "titulaire.nom"
-  ) as HTMLInputElement;
+  const nomTitulaire: HTMLInputElement = screen.getByLabelText("titulaire.nom");
 
-  const anneeNaissanceTitulaire = screen.getByLabelText(
-    "titulaire.dateNaissance.annee"
-  ) as HTMLInputElement;
+  const anneeNaissanceTitulaire: HTMLInputElement = screen.getByLabelText("titulaire.dateNaissance.annee");
 
-  const boutonRechercher = screen.getByText("Rechercher") as HTMLButtonElement;
+  const boutonRechercher: HTMLButtonElement = screen.getByText("Rechercher");
 
   waitFor(() => {
     expect(popinNouvelleRMC).toBeDefined();

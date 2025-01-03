@@ -21,7 +21,7 @@ import {
 } from "@api/appels/requeteApi";
 import { IEchange } from "@model/requete/IEchange";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
+import { ITypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { describe, expect, test, vi } from "vitest";
 
 describe("Test des appels API requête", () => {
@@ -94,7 +94,7 @@ describe("Test des appels API requête", () => {
       mimeType: "",
       taille: 0,
       contenu: "",
-      typePieceJustificative: {} as TypePieceJustificative
+      typePieceJustificative: {} as ITypePieceJustificative
     });
     expect(spyFetch).toHaveBeenCalled();
 

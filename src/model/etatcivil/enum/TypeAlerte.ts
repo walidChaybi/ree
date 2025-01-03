@@ -1,8 +1,6 @@
-/* istanbul ignore file */
+/* v8 ignore start */
 
-import { peupleTypeAlerte } from "@api/nomenclature/NomenclatureEtatcivil";
-import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
-import { Options } from "@util/Type";
+import { Option } from "@util/Type";
 import { chainesEgalesIgnoreCasseEtAccent } from "@util/Utils";
 
 const CODE_COULEUR_ALERTE_ROUGE = "CodeCouleurAlerteRouge";
@@ -36,101 +34,53 @@ const mapTypesAlerteCodeCouleur: any = {
   [DESCRIPTION_SAGA]: CODE_COULEUR_ALERTE_NOIR
 };
 
-export class TypeAlerte extends EnumWithLibelle {
-  constructor(
-    private readonly _code: string,
-    private readonly _type: string,
-    private readonly _sousType: string,
-    private readonly _description: string,
-    libelle: string
-  ) {
-    super(libelle);
+export interface ITypeAlerte {
+  id: string;
+  nom: string;
+  code: string;
+  type: string;
+  sousType: string;
+  description: string;
+  libelle: string;
+}
+
+export class TypeAlerte {
+  private static liste: ITypeAlerte[] | null = null;
+
+  public static init(typesAlerte: ITypeAlerte[]) {
+    if (TypeAlerte.liste !== null) {
+      return;
+    }
+
+    TypeAlerte.liste = typesAlerte;
   }
 
-  get code() {
-    return this._code;
+  public static depuisId(id: string): ITypeAlerte | null {
+    return TypeAlerte.liste?.find(typeAlerte => typeAlerte.id === id) ?? null;
   }
 
-  get description() {
-    return this._description;
-  }
+  public static versOptions(avecRetourSaga: boolean = true): Option[] {
+    return (
+      TypeAlerte.liste?.reduce((options: Option[], typeAlerte: ITypeAlerte) => {
+        if (avecRetourSaga || typeAlerte.sousType !== "repris SAGA") {
+          options.push({ cle: typeAlerte.id, libelle: typeAlerte.libelle });
+        }
 
-  get type() {
-    return this._type;
-  }
-
-  get sousType() {
-    return this._sousType;
-  }
-
-  public static async init() {
-    await peupleTypeAlerte();
-  }
-
-  //AddEnum specifique aux nomenclatures !
-  public static addEnum(key: string, obj: TypeAlerte) {
-    EnumWithLibelle.addEnum(key, obj, TypeAlerte);
-  }
-
-  public static clean() {
-    return EnumWithLibelle.clean(TypeAlerte);
-  }
-
-  public static contientEnums() {
-    return EnumWithLibelle.contientEnums(TypeAlerte);
-  }
-
-  public static getEnumFor(str: string): TypeAlerte {
-    return EnumWithLibelle.getEnumFor(str, TypeAlerte);
-  }
-
-  public static getAllEnumsAsOptions(): Options {
-    return EnumWithLibelle.getAllLibellesAsOptions(TypeAlerte);
-  }
-
-  public static getAllEnumsAsOptionsSansRetourSaga(): Options {
-    return EnumWithLibelle.getAllLibellesAsOptions(
-      TypeAlerte,
-      false,
-      true,
-      true,
-      TypeAlerte.getEnumsAPartirSousType("repris SAGA")
+        return options;
+      }, []) ?? []
     );
   }
 
-  public static getEnumsAPartirSousType(sousType: string): TypeAlerte[] {
-    const enumsAvecSousType = [];
-    for (const key in TypeAlerte) {
-      //@ts-ignore
-      const typeAlerteCourant = TypeAlerte[key];
-      const sousTypeCourant = typeAlerteCourant["_sousType"];
-      if (
-        TypeAlerte.hasOwnProperty(key) &&
-        chainesEgalesIgnoreCasseEtAccent(sousTypeCourant, sousType)
-      ) {
-        enumsAvecSousType.push(typeAlerteCourant);
-      }
-    }
-    return enumsAvecSousType;
+  public static listeDepuisType(type: string): ITypeAlerte[] {
+    return TypeAlerte.liste?.filter(typeAlerte => chainesEgalesIgnoreCasseEtAccent(typeAlerte.type, type)) ?? [];
   }
 
-  public static getCodeCouleurAlerte(typeAlerte: string): string {
-    return typeAlerte && mapTypesAlerteCodeCouleur[typeAlerte];
+  public static listeDepuisSousType(sousType: string): ITypeAlerte[] {
+    return TypeAlerte.liste?.filter(typeAlerte => chainesEgalesIgnoreCasseEtAccent(typeAlerte.sousType, sousType)) ?? [];
   }
 
-  public static getEnumsAPartirType(type: string): TypeAlerte[] {
-    const enumsAvecType = [];
-    for (const key in TypeAlerte) {
-      //@ts-ignore
-      const typeAlerteCourant = TypeAlerte[key];
-      const typeCourant = typeAlerteCourant["_type"];
-      if (
-        TypeAlerte.hasOwnProperty(key) &&
-        chainesEgalesIgnoreCasseEtAccent(typeCourant, type)
-      ) {
-        enumsAvecType.push(typeAlerteCourant);
-      }
-    }
-    return enumsAvecType;
+  public static codeCouleurAlerte(typeAlerte: ITypeAlerte): string {
+    return mapTypesAlerteCodeCouleur[typeAlerte.type];
   }
 }
+/* v8 ignore end */

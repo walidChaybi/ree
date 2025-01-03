@@ -6,17 +6,10 @@ import { appartientAUtilisateurConnecte } from "@model/agent/IOfficier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import {
-  IPieceJointe,
-  TypePieceJointe
-} from "@model/requete/pieceJointe/IPieceJointe";
+import { IPieceJointe, TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
-import {
-  URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDCSC_ID,
-  URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID
-} from "@router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDCSC_ID, URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID } from "@router/ReceUrls";
 import { FenetreExterne } from "@util/FenetreExterne";
-import { getLibelle } from "@util/Utils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useContext, useState } from "react";
@@ -64,10 +57,7 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
   };
 
   const afficherBoutonModifierRequete =
-    appartientAUtilisateurConnecte(
-      utilisateurConnecte,
-      props.requete.idUtilisateur
-    ) &&
+    appartientAUtilisateurConnecte(utilisateurConnecte, props.requete.idUtilisateur) &&
     SousTypeDelivrance.estRDCouRDCSC(props.requete.sousType) &&
     StatutRequete.estPriseEnCharge(props.requete.statutCourant.statut) &&
     !props.disabledActions;
@@ -78,7 +68,10 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
         <div className="ResumeRequeteTitle">
           <span>
             {`Description requête `}
-            <span className="LinkNumeroRequete" onClick={onClickNumero}>
+            <span
+              className="LinkNumeroRequete"
+              onClick={onClickNumero}
+            >
               {props.requete.numero}
             </span>
           </span>
@@ -90,9 +83,7 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
             <hr className={"separation"} />
 
             <ListePiecesJointes
-              pieces={mapPiecesJustificatives(
-                props.requete.piecesJustificatives
-              )}
+              pieces={mapPiecesJustificatives(props.requete.piecesJustificatives)}
               numRequete={props.requete.numero}
               titre="Pièces Justificatives"
             />
@@ -107,7 +98,7 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
                   icon={faEdit}
                   className="iconModifierRequete"
                 />
-                {getLibelle("Modifier la requête")}
+                {"Modifier la requête"}
               </BoutonDoubleSubmit>
             )}
           </div>
@@ -132,13 +123,11 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
   );
 };
 
-function mapPiecesJustificatives(
-  pieces?: IPieceJustificative[]
-): IPieceJointe[] {
+function mapPiecesJustificatives(pieces?: IPieceJustificative[]): IPieceJointe[] {
   return pieces
     ? pieces.map(piece => ({
         id: piece.id,
-        libelle: piece.typePieceJustificative.libelle,
+        libelle: piece.typePieceJustificative?.libelle,
         nom: piece.nom,
         typePiece: TypePieceJointe.PIECE_JUSTIFICATIVE
       }))

@@ -1,4 +1,5 @@
 import { LienPieceJointe } from "@composant/piecesJointes/LienPieceJointe";
+import { TYPE_PIECE_JUSTIFICATIVE } from "@mock/data/NomenclatureTypePieceJustificative";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { fireEvent, render, waitFor } from "@testing-library/react";
@@ -6,7 +7,7 @@ import { beforeAll, expect, test } from "vitest";
 import { mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
 
 beforeAll(() => {
-  TypePieceJustificative.init();
+  TypePieceJustificative.init(TYPE_PIECE_JUSTIFICATIVE);
 });
 
 beforeAll(async () => {
@@ -45,5 +46,3 @@ test.skip("renders Lien Pièces Jointes fonctionne correctement", () => {
     expect(document.title).toStrictEqual("CARN_CSPAC_01 - Req N°69");
   });
 });
-
-

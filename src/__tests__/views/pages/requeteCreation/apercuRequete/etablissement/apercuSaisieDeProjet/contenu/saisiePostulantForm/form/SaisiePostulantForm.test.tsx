@@ -1,9 +1,15 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
+import { PAYS_SECABILITE } from "@mock/data/NomenclaturePaysSecabilite";
+import { TYPE_PIECE_JUSTIFICATIVE } from "@mock/data/NomenclatureTypePieceJustificative";
 import { requeteCreationEtablissementSaisieProjet } from "@mock/data/requeteCreationEtablissement";
 import "@mock/element/IntersectionObserver";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { PaysSecabilite } from "@model/requete/enum/PaysSecabilite";
+import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { SaisiePostulantForm } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/SaisiePostulantForm";
 import { mappingTitulairesVersFormulairePostulant } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
 import {
@@ -11,42 +17,46 @@ import {
   URL_MES_REQUETES_CREATION,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID
 } from "@router/ReceUrls";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { DEUX, UN, ZERO } from "@util/Utils";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../../../../../__tests__utils__/testsUtil";
 
-function afficheComposantSaisiePostulantForm(titulaires: ITitulaireRequeteCreation[], avancement?: AvancementProjetActe): void {
-  const router = createTestingRouter(
-    [
-      {
-        path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID,
-        element: (
-          <SaisiePostulantForm
-            postulant={titulaires[ZERO]}
-            estProjetExistant={false}
-            onSubmitSaisieProjetForm={() => {}}
-            avancementProjet={avancement}
-            valeursForm={mappingTitulairesVersFormulairePostulant(titulaires[ZERO], titulaires[UN], titulaires[DEUX], "NAISSANCE")}
-            affichageActualiserEtVisualiser={true}
-          />
-        )
-      }
-    ],
-    [
-      `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET}/er5ez456-354v-461z-c5fd-162md289m74h/a272ec8a-1351-4edd-99b8-03004292a9d2`
-    ]
-  );
-
-  render(
-    <MockRECEContextProvider>
-      <RouterProvider router={router} />
-    </MockRECEContextProvider>
-  );
-}
-
 describe("Test du bloc Postulant de l'onglet Postulant", () => {
+  PaysSecabilite.init(PAYS_SECABILITE);
+  DocumentDelivrance.init(DOCUMENT_DELIVRANCE);
+  TypePieceJustificative.init(TYPE_PIECE_JUSTIFICATIVE);
+
+  const afficheComposantSaisiePostulantForm = (titulaires: ITitulaireRequeteCreation[], avancement?: AvancementProjetActe): void => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID,
+          element: (
+            <SaisiePostulantForm
+              postulant={titulaires[ZERO]}
+              estProjetExistant={false}
+              onSubmitSaisieProjetForm={() => {}}
+              avancementProjet={avancement}
+              valeursForm={mappingTitulairesVersFormulairePostulant(titulaires[ZERO], titulaires[UN], titulaires[DEUX], "NAISSANCE")}
+              affichageActualiserEtVisualiser={true}
+            />
+          )
+        }
+      ],
+      [
+        `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET}/er5ez456-354v-461z-c5fd-162md289m74h/a272ec8a-1351-4edd-99b8-03004292a9d2`
+      ]
+    );
+
+    render(
+      <MockRECEContextProvider>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
+  };
+
   test("DOIT afficher et renseigner les champs du bloc postulant QUAND le formulaire est affiché", () => {
     const requete = mappingRequeteCreation(requeteCreationEtablissementSaisieProjet);
     afficheComposantSaisiePostulantForm(requete.titulaires!);
@@ -112,21 +122,23 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
     expect(screen.queryByText("Jour et mois valorisés par défaut")).toBeNull();
   });
 
-  test("DOIT rendre la sécabilité du nom sans message d'attention QUAND il y a seulement 2 vocables", () => {
+  test("DOIT rendre la sécabilité du nom sans message d'attention QUAND il y a seulement 2 vocables", async () => {
     const requete = mappingRequeteCreation(requeteCreationEtablissementSaisieProjet);
     requete.titulaires![0].retenueSdanf!.nomNaissance = "Test1 Test2";
     requete.titulaires![0].retenueSdanf!.paysNaissance = "Cuba";
     afficheComposantSaisiePostulantForm(requete.titulaires!);
 
-    const champNomPartie1: HTMLInputElement = screen.getByLabelText("1re partie");
-    const champNomPartie2: HTMLInputElement = screen.getByLabelText("2nde partie");
+    await waitFor(() => {
+      const champNomPartie1: HTMLInputElement = screen.getByLabelText("1re partie");
+      const champNomPartie2: HTMLInputElement = screen.getByLabelText("2nde partie");
 
-    expect(champNomPartie1.value).toBe("TEST1");
-    expect(champNomPartie2.value).toBe("TEST2");
-    expect(screen.queryByText("Nom avec plus de deux vocables")).toBeNull();
+      expect(champNomPartie1.value).toBe("TEST1");
+      expect(champNomPartie2.value).toBe("TEST2");
+      expect(screen.queryByText("Nom avec plus de deux vocables")).toBeNull();
+    });
   });
 
-  test("DOIT afficher un message d'attention QUAND le pays de naissance est sécable et que le nom a plus de 2 vocables", () => {
+  test("DOIT afficher un message d'attention QUAND le pays de naissance est sécable et que le nom a plus de 2 vocables", async () => {
     const requete = mappingRequeteCreation(requeteCreationEtablissementSaisieProjet);
     requete.titulaires![0].retenueSdanf!.nomNaissance = "Test1 Test2 Test3";
     requete.titulaires![0].retenueSdanf!.paysNaissance = "Cuba";
@@ -135,9 +147,11 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
     const champNomPartie1: HTMLInputElement = screen.getByLabelText("1re partie");
     const champNomPartie2: HTMLInputElement = screen.getByLabelText("2nde partie");
 
-    expect(champNomPartie1.value).toBe("TEST1");
-    expect(champNomPartie2.value).toBe("TEST2 TEST3");
-    expect(screen.getByText("Nom avec plus de deux vocables")).toBeDefined();
+    await waitFor(() => {
+      expect(champNomPartie1.value).toBe("TEST1");
+      expect(champNomPartie2.value).toBe("TEST2 TEST3");
+      expect(screen.getByText("Nom avec plus de deux vocables")).toBeDefined();
+    });
   });
 
   test("DOIT afficher le formulaire d'acquisition QUAND l'avancement est a signer'.", () => {

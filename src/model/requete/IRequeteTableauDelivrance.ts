@@ -1,16 +1,7 @@
 import { IService, Service } from "@model/agent/IService";
-import {
-  IUtilisateur,
-  getNomUtilisateurAPartirID,
-  getPrenomUtilisateurAPartirID
-} from "@model/agent/IUtilisateur";
+import { IUtilisateur, getNomUtilisateurAPartirID, getPrenomUtilisateurAPartirID } from "@model/agent/IUtilisateur";
 import DateUtils from "@util/DateUtils";
-import {
-  formatNom,
-  formatPrenom,
-  getValeurOuUndefined,
-  getValeurOuVide
-} from "@util/Utils";
+import { formatNom, formatPrenom } from "@util/Utils";
 import { NatureActe } from "../etatcivil/enum/NatureActe";
 import { IDocumentReponse } from "./IDocumentReponse";
 import { IRequerant, Requerant } from "./IRequerant";
@@ -58,12 +49,7 @@ export function mappingRequetesTableauDelivrance(
   services: IService[]
 ): IRequeteTableauDelivrance[] {
   return resultatsRecherche?.map((requete: any) => {
-    return mappingUneRequeteTableauDelivrance(
-      requete,
-      mappingSupplementaire,
-      utilisateurs,
-      services
-    );
+    return mappingUneRequeteTableauDelivrance(requete, mappingSupplementaire, utilisateurs, services);
   });
 }
 
@@ -73,20 +59,18 @@ export function mappingUneRequeteTableauDelivrance(
   utilisateurs: IUtilisateur[],
   services: IService[]
 ): IRequeteTableauDelivrance {
-  const requerant = requete?.requerant
-    ? Requerant.mappingRequerant(requete?.requerant)
-    : undefined;
+  const requerant = requete?.requerant ? Requerant.mappingRequerant(requete?.requerant) : undefined;
   return {
-    idRequete: getValeurOuUndefined(requete?.id),
-    numero: getValeurOuVide(requete?.numero),
-    numeroTeledossier: getValeurOuVide(requete?.numeroTeledossier),
-    idSagaDila: getValeurOuVide(requete?.idSagaDila),
+    idRequete: requete?.id,
+    numero: requete?.numero ?? "",
+    numeroTeledossier: requete?.numeroTeledossier ?? "",
+    idSagaDila: requete?.idSagaDila ?? "",
     type: TypeRequete.getEnumFor(requete?.type)?.libelle,
     sousType: getSousType(requete?.type, requete?.sousType),
     provenance: Provenance.getEnumFor(requete?.provenance)?.libelle,
     nature: requete?.nature ? NatureActe.getEnumFor(requete?.nature)?.libelle : "",
     document: requete?.document, // id du type de document demandé
-    documentLibelle: DocumentDelivrance.getDocumentDelivrance(requete?.document).libelle, // libellé du type de document demandé
+    documentLibelle: DocumentDelivrance.depuisId(requete?.document)?.libelle, // libellé du type de document demandé
     titulaires: mapTitulaires(requete?.titulaires, mappingSupplementaire),
     requerant,
     nomCompletRequerant: requete?.nomCompletRequerant ? requete?.nomCompletRequerant : requerant,
@@ -95,11 +79,11 @@ export function mappingUneRequeteTableauDelivrance(
     dateCreation: DateUtils.getFormatDateFromTimestamp(requete?.dateCreation),
     dateDerniereMaj: DateUtils.getFormatDateFromTimestamp(requete?.dateDernierMAJ),
     statut: StatutRequete.getEnumFor(requete?.statut)?.libelle,
-    priorite: getValeurOuVide(requete?.priorite),
+    priorite: requete?.priorite ?? "",
     observations: mappingSupplementaire === true ? mapObservations(requete?.observations) : requete?.observations,
-    idUtilisateur: getValeurOuUndefined(requete?.idUtilisateur),
-    idCorbeilleAgent: getValeurOuUndefined(requete?.idCorbeilleAgent),
-    idService: getValeurOuUndefined(requete?.idService),
+    idUtilisateur: requete?.idUtilisateur,
+    idCorbeilleAgent: requete?.idCorbeilleAgent,
+    idService: requete?.idService,
     canal: TypeCanal.getEnumFor(requete.canal),
     documentsReponses: requete.documentsReponses,
     tagPriorisation: TagPriorisation.getEnumFor(requete.tagPriorisation).libelle
@@ -121,16 +105,10 @@ function getSousType(type: string, sousType: string) {
   }
 }
 
-export function mapAttribueA(
-  requete: any,
-  utilisateurs: IUtilisateur[],
-  services: IService[]
-): string | null {
+export function mapAttribueA(requete: any, utilisateurs: IUtilisateur[], services: IService[]): string | null {
   let attribueA: string | null = null;
   if (requete?.idUtilisateur) {
-    attribueA = `${formatPrenom(
-      getPrenomUtilisateurAPartirID(requete?.idUtilisateur, utilisateurs)
-    )} ${formatNom(
+    attribueA = `${formatPrenom(getPrenomUtilisateurAPartirID(requete?.idUtilisateur, utilisateurs))} ${formatNom(
       getNomUtilisateurAPartirID(requete?.idUtilisateur, utilisateurs)
     )}`;
   } else if (requete?.idService) {

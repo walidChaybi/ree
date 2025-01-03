@@ -1,31 +1,26 @@
-import { peuplePaysSecabilite } from "@api/nomenclature/NomenclatureRequete";
 import { formatPremieresLettresMajusculesNomCompose } from "@util/Utils";
-import { EnumNomemclature } from "@util/enum/EnumNomenclature";
-import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 
-export class PaysSecabilite extends EnumNomemclature {
-  public static async init() {
-    await peuplePaysSecabilite();
-  }
+export interface IPaysSecabilite {
+  id: string;
+  categorie: string;
+  code: string;
+  libelle: string;
+}
 
-  public static clean(): void {
-    EnumWithLibelle.clean(PaysSecabilite);
-  }
+export class PaysSecabilite {
+  private static liste: IPaysSecabilite[] | null = null;
 
-  public static addEnum(key: string, obj: PaysSecabilite): void {
-    EnumWithLibelle.addEnum(key, obj, PaysSecabilite);
-  }
+  public static init(paysSecabilite: IPaysSecabilite[]) {
+    if (PaysSecabilite.liste !== null) {
+      return;
+    }
 
-  public static contientEnums(): boolean {
-    return EnumWithLibelle.contientEnums(PaysSecabilite);
+    PaysSecabilite.liste = paysSecabilite;
   }
 
   public static estSecable(libelle: string): boolean {
-    return (
-      EnumWithLibelle.getEnumFromLibelle(
-        PaysSecabilite,
-        formatPremieresLettresMajusculesNomCompose(libelle)
-      ) != null
+    return Boolean(
+      PaysSecabilite.liste?.find(paysSecabilite => formatPremieresLettresMajusculesNomCompose(paysSecabilite.libelle) === libelle)
     );
   }
 }

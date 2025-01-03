@@ -234,7 +234,11 @@ export const configEtatcivil = [
         return EnregistrerMentionsResultat;
       }
 
-      if (match[1] === "/types-mentions/b03c1503-d452-4751-8bb3-94d082db1e5e/metamodele-aide-a-saisie") {
+      if (
+        match[1] === "/types-mentions/b03c1503-d452-4751-8bb3-94d082db1e5e/metamodele-aide-a-saisie" ||
+        match[1] === "/types-mentions/b048e05c-ff6f-44fd-89dc-d07aa9b5fc80/metamodele-aide-a-saisie" ||
+        match[1] === "/types-mentions/b0485f4e-5d29-4f03-956b-0a53d02ae617/metamodele-aide-a-saisie"
+      ) {
         return MetamodeleAideSaisie;
       }
 
@@ -528,28 +532,18 @@ export const configEtatcivil = [
 
       ////////////////////////////////////////////////////////////////////////
 
-      if (match[1] === "/nomenclature/NATURE_RC") {
-        return { data: ReponseAppelNomenclatureNatureRC.data };
-      }
-
-      if (match[1] === "/nomenclature/NATURE_RCA") {
-        return { data: ReponseAppelNomenclatureNatureRCA.data };
-      }
-
-      if (match[1] === "/nomenclature/MANDATAIRE") {
-        return { data: ReponseAppelNomenclatureMandataire.data };
-      }
-
-      if (match[1] === "/nomenclature/TYPE_ALERTE") {
-        return { data: ReponseAppelNomenclatureTypeAlerte.data };
-      }
-
-      if (match[1] === "/nomenclature/NATURE_MENTION") {
-        return { data: ReponseAppelNomenclatureNatureMention.data };
-      }
-
-      if (match[1] === "/nomenclature/POPIN_SIGNATURE") {
-        return { data: ReponseAppelNomenclaturePopinSignature.data };
+      if (match[1] === "/nomenclature/NATURE_RC,NATURE_RCA,NATURE_MENTION,MANDATAIRE,TYPE_ALERTE,POPIN_SIGNATURE") {
+        return {
+          data: (ReponseAppelNomenclatureNatureRC.data as any).concat(
+            (ReponseAppelNomenclatureNatureRCA.data as any).concat(
+              (ReponseAppelNomenclatureMandataire.data as any).concat(
+                (ReponseAppelNomenclatureTypeAlerte.data as any).concat(
+                  (ReponseAppelNomenclatureNatureMention.data as any).concat(ReponseAppelNomenclaturePopinSignature.data)
+                )
+              )
+            )
+          )
+        };
       }
 
       if (match[1] === "/nomenclature/typemention") {

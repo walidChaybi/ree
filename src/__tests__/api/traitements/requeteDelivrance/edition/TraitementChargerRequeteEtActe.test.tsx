@@ -24,7 +24,6 @@ describe("Test du traitement chargement requête et acte édition délivrance", 
     {
       pattern: "http://localhost/rece/(rece-requete-api/v2/requetes|rece-etatcivil-api/v1/acte)/(.*)",
       fixtures: (match: any) => {
-        console.log(match);
         switch (match[2]) {
           case donneesTest.ID_REQUETE_DOC:
             return {

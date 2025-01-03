@@ -26,51 +26,31 @@ import {
   TYPE_MANDANT,
   VILLE_EVENEMENT
 } from "@composant/formulaire/ConstantesNomsForm";
-import {
-  Evenement,
-  LienTitulaire,
-  Mandant,
-  Requete
-} from "@model/form/delivrance/ISaisirRequetePageForm";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { Evenement, LienTitulaire, Mandant, Requete } from "@model/form/delivrance/ISaisirRequetePageForm";
+import { IEvenementRequete } from "@model/requete/IEvenementRequete";
+import { IMandant } from "@model/requete/IMandant";
+import { IRequerant } from "@model/requete/IRequerant";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { ITitulaireRequete, TitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { TypeLienMandant } from "@model/requete/enum/TypeLienMandant";
 import { TypeLienRequerant } from "@model/requete/enum/TypeLienRequerant";
 import { TypeMandant } from "@model/requete/enum/TypeMandant";
-import { IEvenementRequete } from "@model/requete/IEvenementRequete";
-import { IMandant } from "@model/requete/IMandant";
-import { IRequerant } from "@model/requete/IRequerant";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import {
-  ITitulaireRequete,
-  TitulaireRequete
-} from "@model/requete/ITitulaireRequete";
-import { DEUX, getValeurOuVide, UN } from "@util/Utils";
+import { DEUX, UN } from "@util/Utils";
 import { SaisieRequeteRDC } from "../../../../../model/form/delivrance/ISaisirRDCPageForm";
 import { IdentiteFormDefaultValues } from "../sousFormulaires/identite/IdentiteForm";
-import {
-  saisieAdresse,
-  saisiePJ,
-  saisieRequerant,
-  saisieTitulaire
-} from "./mappingCommun";
+import { saisieAdresse, saisiePJ, saisieRequerant, saisieTitulaire } from "./mappingCommun";
 
-export function mappingRequeteDelivranceVersFormulaireRDC(
-  requete: IRequeteDelivrance
-): SaisieRequeteRDC {
+export function mappingRequeteDelivranceVersFormulaireRDC(requete: IRequeteDelivrance): SaisieRequeteRDC {
   const { titulaires, piecesJustificatives } = requete;
 
   const saisie = {
     [REQUETE]: saisieRequete(requete),
     [EVENEMENT]: saisieEvenement(requete.evenement),
-    [TITULAIRE1]: saisieTitulaireRDC(
-      TitulaireRequete.getTitulaireParPosition(titulaires || [], UN)
-    ),
-    [TITULAIRE2]: saisieTitulaireRDC(
-      TitulaireRequete.getTitulaireParPosition(titulaires || [], DEUX)
-    ),
+    [TITULAIRE1]: saisieTitulaireRDC(TitulaireRequete.getTitulaireParPosition(titulaires || [], UN)),
+    [TITULAIRE2]: saisieTitulaireRDC(TitulaireRequete.getTitulaireParPosition(titulaires || [], DEUX)),
     [REQUERANT]: saisieRequerant(requete),
     [MANDANT]: saisieMandant(requete.mandant),
     [LIEN_TITULAIRE]: saisieLienTitulaire(requete.requerant, requete.mandant),
@@ -92,58 +72,49 @@ export const saisieTitulaireRDC = (titulaire?: ITitulaireRequete) => {
 
 const saisieRequete = (requete?: IRequeteDelivrance): Requete => {
   return {
-    [NATURE_ACTE]: getValeurOuVide(
-      NatureActeRequete.getKey(requete?.evenement?.natureActe)
-    ),
-    [DOCUMENT_DEMANDE]: getValeurOuVide(
-      DocumentDelivrance.getKey(requete?.documentDemande)
-    ),
-    [NB_EXEMPLAIRE]: getValeurOuVide(requete?.nbExemplaireImpression),
-    [MOTIF]: getValeurOuVide(MotifDelivrance.getKey(requete?.motif)),
-    [COMPLEMENT_MOTIF]: getValeurOuVide(requete?.complementMotif)
+    [NATURE_ACTE]: NatureActeRequete.getKey(requete?.evenement?.natureActe),
+    [DOCUMENT_DEMANDE]: requete?.documentDemande?.id ?? "",
+    [NB_EXEMPLAIRE]: requete?.nbExemplaireImpression ?? 0,
+    [MOTIF]: MotifDelivrance.getKey(requete?.motif),
+    [COMPLEMENT_MOTIF]: requete?.complementMotif ?? ""
   };
 };
 
 const saisieEvenement = (evenement?: IEvenementRequete): Evenement => {
   return {
     [DATE_EVENEMENT]: {
-      [JOUR]: getValeurOuVide(evenement?.jour),
-      [MOIS]: getValeurOuVide(evenement?.mois),
-      [ANNEE]: getValeurOuVide(evenement?.annee)
+      [JOUR]: evenement?.jour?.toString() ?? "",
+      [MOIS]: evenement?.mois?.toString() ?? "",
+      [ANNEE]: evenement?.annee?.toString() ?? ""
     },
-    [VILLE_EVENEMENT]: getValeurOuVide(evenement?.ville),
-    [PAYS_EVENEMENT]: getValeurOuVide(evenement?.pays)
+    [VILLE_EVENEMENT]: evenement?.ville ?? "",
+    [PAYS_EVENEMENT]: evenement?.pays ?? ""
   };
 };
 
 const saisieMandant = (mandant?: IMandant): Mandant => {
   return {
-    [TYPE_MANDANT]: getValeurOuVide(TypeMandant.getKey(mandant?.type)),
-    [NOM]: getValeurOuVide(mandant?.nom),
-    [PRENOM]: getValeurOuVide(mandant?.prenom),
-    [RAISON_SOCIALE]: getValeurOuVide(mandant?.raisonSociale)
+    [TYPE_MANDANT]: TypeMandant.getKey(mandant?.type) ?? "",
+    [NOM]: mandant?.nom ?? "",
+    [PRENOM]: mandant?.prenom ?? "",
+    [RAISON_SOCIALE]: mandant?.raisonSociale ?? ""
   };
 };
 
-const saisieLienTitulaire = (
-  requerant: IRequerant,
-  mandant?: IMandant
-): LienTitulaire => {
+const saisieLienTitulaire = (requerant: IRequerant, mandant?: IMandant): LienTitulaire => {
   switch (requerant.qualiteRequerant.qualite) {
     case Qualite.MANDATAIRE_HABILITE:
       return {
-        [LIEN]: getValeurOuVide(TypeLienMandant.getKey(mandant?.typeLien)),
-        [NATURE_LIEN]: getValeurOuVide(mandant?.natureLien)
+        [LIEN]: TypeLienMandant.getKey(mandant?.typeLien) ?? "",
+        [NATURE_LIEN]: mandant?.natureLien ?? ""
       };
     case Qualite.INSTITUTIONNEL:
     case Qualite.AUTRE_PROFESSIONNEL:
     case Qualite.PARTICULIER:
     default:
       return {
-        [LIEN]: getValeurOuVide(
-          TypeLienRequerant.getKey(requerant.lienRequerant?.lien)
-        ),
-        [NATURE_LIEN]: getValeurOuVide(requerant.lienRequerant?.natureLien)
+        [LIEN]: TypeLienRequerant.getKey(requerant.lienRequerant?.lien) ?? "",
+        [NATURE_LIEN]: requerant.lienRequerant?.natureLien ?? ""
       };
   }
 };

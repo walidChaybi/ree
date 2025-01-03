@@ -78,7 +78,7 @@ const genererMessagesMentions = (acte?: IFicheActe, documents?: IDocumentReponse
             acte?.mentions
           ),
           acte?.nature,
-          DocumentDelivrance.getEnumForUUID(document.typeDocument)
+          DocumentDelivrance.depuisId(document.typeDocument)
         ) &&
         messages.push(`Vous allez délivrer un extrait avec une mention à intégrer ou à ne pas reporter pour le document ${document.nom}`);
 

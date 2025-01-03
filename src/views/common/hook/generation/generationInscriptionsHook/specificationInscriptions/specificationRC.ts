@@ -2,10 +2,7 @@ import { IElementsJasperCertificatRC } from "@model/composition/ICertificatRCCom
 import { IDecret } from "@model/etatcivil/commun/IDecret";
 import { NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { TypeAutoriteUtil } from "@model/etatcivil/enum/TypeAutorite";
-import {
-  InscriptionRcUtil,
-  TypeInscriptionRc
-} from "@model/etatcivil/enum/TypeInscriptionRc";
+import { InscriptionRcUtil, TypeInscriptionRc } from "@model/etatcivil/enum/TypeInscriptionRc";
 import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import DateUtils from "@util/DateUtils";
@@ -32,15 +29,11 @@ function getParagrapheDecisionRecue1(infosRC: IFicheRcRca) {
       infosRC.decision?.autorite.arrondissement
     );
     // Si la décision au RC est une décision de Juridiction
-    if (
-      TypeAutoriteUtil.isJuridiction(infosRC.decision?.autorite.typeAutorite)
-    ) {
+    if (TypeAutoriteUtil.isJuridiction(infosRC.decision?.autorite.typeAutorite)) {
       decisionRecue = getDecisionJuridiction(infosRC, dateDecision, localite);
     }
     // Si la décision au RC est une décision de Notaire
-    else if (
-      TypeAutoriteUtil.isNotaire(infosRC.decision?.autorite.typeAutorite)
-    ) {
+    else if (TypeAutoriteUtil.isNotaire(infosRC.decision?.autorite.typeAutorite)) {
       decisionRecue = getDecisionNotaire(infosRC, dateDecision, localite);
     }
   }
@@ -50,10 +43,7 @@ function getParagrapheDecisionRecue1(infosRC: IFicheRcRca) {
 function getParagrapheDecisionRecue2(infosRC: IFicheRcRca) {
   let decisionRecue = "";
   if (infosRC.decision) {
-    if (
-      infosRC.typeInscription === TypeInscriptionRc.RENOUVELLEMENT ||
-      infosRC.typeInscription === TypeInscriptionRc.MODIFICATION
-    ) {
+    if (infosRC.typeInscription === TypeInscriptionRc.RENOUVELLEMENT || infosRC.typeInscription === TypeInscriptionRc.MODIFICATION) {
       decisionRecue = "concernant : ";
     } else if (infosRC.typeInscription === TypeInscriptionRc.INSCRIPTION) {
       if (infosRC.nature.type === "Protection des majeurs") {
@@ -71,34 +61,18 @@ function getParagrapheDecisionRecue2(infosRC: IFicheRcRca) {
 
 export function getResume(data: IFicheRcRca) {
   let resume = undefined;
-  if (
-    data.typeInscription === TypeInscriptionRc.INSCRIPTION &&
-    data.nature.type === "Protection des majeurs"
-  ) {
-    resume = `sous le régime ${formatDe(data.nature.libelle)}${
-      data.nature.libelle
-    }`;
+  if (data.typeInscription === TypeInscriptionRc.INSCRIPTION && data.nature.type === "Protection des majeurs") {
+    resume = `sous le régime ${formatDe(data.nature.libelle)}${data.nature.libelle}`;
   }
   return resume;
 }
 
-export function getRenouvellementModification(
-  data?: IFicheRcRca,
-  inscriptionsRcRadiation?: IInscriptionRc
-): string | undefined {
+export function getRenouvellementModification(data?: IFicheRcRca, inscriptionsRcRadiation?: IInscriptionRc): string | undefined {
   let renouvellementModification;
   if (data) {
-    if (
-      inscriptionsRcRadiation &&
-      InscriptionRcUtil.estDeTypeModification(data.typeInscription)
-    ) {
-      renouvellementModification = getModificationJasper(
-        data,
-        inscriptionsRcRadiation
-      );
-    } else if (
-      InscriptionRcUtil.estDeTypeRenouvellement(data.typeInscription)
-    ) {
+    if (inscriptionsRcRadiation && InscriptionRcUtil.estDeTypeModification(data.typeInscription)) {
+      renouvellementModification = getModificationJasper(data, inscriptionsRcRadiation);
+    } else if (InscriptionRcUtil.estDeTypeRenouvellement(data.typeInscription)) {
       renouvellementModification = getRenouvellementJasper(data);
     }
   }
@@ -106,10 +80,7 @@ export function getRenouvellementModification(
   return renouvellementModification;
 }
 
-export function getModificationJasper(
-  data: IFicheRcRca,
-  inscriptionRcRadiation: IInscriptionRc
-): string {
+export function getModificationJasper(data: IFicheRcRca, inscriptionRcRadiation: IInscriptionRc): string {
   const typeInscription = InscriptionRcUtil.getLibelle(data.typeInscription);
   let modificationTexte = `prononçant la ${typeInscription.toLocaleLowerCase()}`;
 
@@ -121,12 +92,8 @@ export function getModificationJasper(
 }
 
 export function getRenouvellementJasper(inscription: IFicheRcRca) {
-  const typeInscription = InscriptionRcUtil.getLibelle(
-    inscription.typeInscription
-  );
-  const natureInscriptionImpactee = NatureRc.getEnumFor(
-    inscription.inscriptionsImpactees[0].nature
-  ).libelle as string;
+  const typeInscription = InscriptionRcUtil.getLibelle(inscription.typeInscription);
+  const natureInscriptionImpactee = NatureRc.depuisId(inscription.inscriptionsImpactees[0].nature)?.libelle ?? "";
 
   let renouvellementTexte = `prononçant le ${typeInscription.toLocaleLowerCase()}`;
   renouvellementTexte += ` de la mesure ${formatDe(
@@ -147,11 +114,7 @@ export function getDuree(data: IFicheRcRca) {
 
 /////////////////////////////////////////////////////////////////////
 export const SpecificationRC = {
-  getElementsJasper: (
-    infosRC: IFicheRcRca,
-    decrets: IDecret[],
-    inscriptionsRcRadiation?: IInscriptionRc
-  ) => {
+  getElementsJasper: (infosRC: IFicheRcRca, decrets: IDecret[], inscriptionsRcRadiation?: IInscriptionRc) => {
     const elementsJasper = {} as IElementsJasperCertificatRC;
 
     if (infosRC) {
@@ -161,10 +124,7 @@ export const SpecificationRC = {
       elementsJasper.decisionRecue2 = getParagrapheDecisionRecue2(infosRC);
       elementsJasper.interesseDecision = getInteressesDecision(infosRC);
       elementsJasper.regime = getResume(infosRC);
-      elementsJasper.renouvellementModification = getRenouvellementModification(
-        infosRC,
-        inscriptionsRcRadiation
-      );
+      elementsJasper.renouvellementModification = getRenouvellementModification(infosRC, inscriptionsRcRadiation);
       elementsJasper.decisionExequatur = getDecisionExequatur(infosRC);
       elementsJasper.duree = getDuree(infosRC);
       elementsJasper.paragrapheFin = getParagrapheFin(infosRC, decrets);
@@ -173,4 +133,3 @@ export const SpecificationRC = {
     return elementsJasper;
   }
 };
-

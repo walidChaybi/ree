@@ -1,14 +1,5 @@
 import { Decret, IDecret } from "@model/etatcivil/commun/IDecret";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import {
-  CODE_CERTIFICAT_SITUATION_PACS,
-  CODE_CERTIFICAT_SITUATION_PACS_RC,
-  CODE_CERTIFICAT_SITUATION_PACS_RCA,
-  CODE_CERTIFICAT_SITUATION_PACS_RC_RCA,
-  CODE_CERTIFICAT_SITUATION_RC,
-  CODE_CERTIFICAT_SITUATION_RCA,
-  CODE_CERTIFICAT_SITUATION_RC_RCA
-} from "@model/requete/enum/DocumentDelivranceConstante";
+import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Specifications pour les décrêts à renvoyer en fonction du document demandé
@@ -20,39 +11,31 @@ class SpecificationDecret {
     const DECRETS_PACS = Decret.getDecretsCertificatSituationPacs(decrets);
     const DECRETS_RC = Decret.getDecretsCertificatSituationRC(decrets);
     const DECRETS_RCA = Decret.getDecretsCertificatSituationRCA(decrets);
-    this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_PACS),
-      DECRETS_PACS
-    );
+    this.MAP_SPECIFICATION.set(DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS), DECRETS_PACS);
 
-    this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_PACS_RC),
-      [...DECRETS_PACS, ...DECRETS_RC]
-    );
+    this.MAP_SPECIFICATION.set(DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS_RC), [
+      ...DECRETS_PACS,
+      ...DECRETS_RC
+    ]);
 
-    this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_PACS_RCA),
-      [...DECRETS_PACS, ...DECRETS_RCA]
-    );
+    this.MAP_SPECIFICATION.set(DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS_RCA), [
+      ...DECRETS_PACS,
+      ...DECRETS_RCA
+    ]);
 
-    this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_PACS_RC_RCA),
-      [...DECRETS_PACS, ...DECRETS_RC, ...DECRETS_RCA]
-    );
+    this.MAP_SPECIFICATION.set(DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS_RC_RCA), [
+      ...DECRETS_PACS,
+      ...DECRETS_RC,
+      ...DECRETS_RCA
+    ]);
 
-    this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_RC_RCA),
-      [...DECRETS_RC, ...DECRETS_RCA]
-    );
+    this.MAP_SPECIFICATION.set(DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_RC_RCA), [
+      ...DECRETS_RC,
+      ...DECRETS_RCA
+    ]);
 
-    this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_RC),
-      DECRETS_RC
-    );
-    this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_RCA),
-      DECRETS_RCA
-    );
+    this.MAP_SPECIFICATION.set(DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_RC), DECRETS_RC);
+    this.MAP_SPECIFICATION.set(DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_RCA), DECRETS_RCA);
   }
   getDecret(idDocumentDemande: string, decrets: IDecret[]): IDecret[] {
     if (this.MAP_SPECIFICATION.size === 0) {

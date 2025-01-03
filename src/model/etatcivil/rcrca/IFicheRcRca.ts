@@ -1,7 +1,7 @@
 import { IPersonne } from "../commun/IPersonne";
-import { MandataireRc } from "../enum/MandataireRc";
-import { NatureRc } from "../enum/NatureRc";
-import { NatureRca } from "../enum/NatureRca";
+import { IMandataire } from "../enum/MandataireRc";
+import { INatureRc } from "../enum/NatureRc";
+import { INatureRca } from "../enum/NatureRca";
 import { TypeFiche } from "../enum/TypeFiche";
 import { TypeInscriptionRc } from "../enum/TypeInscriptionRc";
 import { IAlerte } from "../fiche/IAlerte";
@@ -26,9 +26,9 @@ export interface IFicheRcRca {
   mariageInteresses?: IMariageInteresse;
   interesses: IInteresse[];
   statutsFiche: IStatutFiche[];
-  nature: NatureRc | NatureRca;
+  nature: INatureRc | INatureRca;
   typeInscription?: TypeInscriptionRc;
-  mandataires: MandataireRc[];
+  mandataires: IMandataire[];
   duree?: IDureeInscription;
   inscriptionsImpactees: IInscriptionsImpactees[];
   inscriptionsLiees: IInscriptionLiee[];

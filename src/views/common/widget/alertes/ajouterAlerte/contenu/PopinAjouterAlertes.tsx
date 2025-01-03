@@ -1,7 +1,6 @@
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import { getLibelle } from "@util/Utils";
 import React from "react";
 import * as Yup from "yup";
 import { Formulaire } from "../../../formulaire/Formulaire";
@@ -35,10 +34,7 @@ const COMPLEMENT_DESCRIPTION_LIMITE_TAILLE = `La description ne peut pas dépass
 // Schéma de validation en sortie de champs
 const ValidationSchema = Yup.object({
   [ID_TYPE_ALERTE]: Yup.string().required(ALERTE_OBLIGATOIRE),
-  [COMPLEMENT_DESCRIPTION]: Yup.string().max(
-    COMPLEMENT_DESCRIPTION_MAX_LENGTH,
-    COMPLEMENT_DESCRIPTION_LIMITE_TAILLE
-  )
+  [COMPLEMENT_DESCRIPTION]: Yup.string().max(COMPLEMENT_DESCRIPTION_MAX_LENGTH, COMPLEMENT_DESCRIPTION_LIMITE_TAILLE)
 });
 
 export interface PopinAjouterAlertesProps {
@@ -48,12 +44,7 @@ export interface PopinAjouterAlertesProps {
   disableScrollLock?: boolean;
 }
 
-export const PopinAjouterAlertes: React.FC<PopinAjouterAlertesProps> = ({
-  open,
-  onClosePopin,
-  onSubmit,
-  disableScrollLock
-}) => {
+export const PopinAjouterAlertes: React.FC<PopinAjouterAlertesProps> = ({ open, onClosePopin, onSubmit, disableScrollLock }) => {
   const boutonsProps = {
     onClosePopin
   } as FormBoutonsProps;
@@ -76,16 +67,14 @@ export const PopinAjouterAlertes: React.FC<PopinAjouterAlertesProps> = ({
           >
             <SelectField
               name={ID_TYPE_ALERTE}
-              label={getLibelle("Sélectionner l'alerte à ajouter :")}
-              options={TypeAlerte.getAllEnumsAsOptionsSansRetourSaga()}
+              label={"Sélectionner l'alerte à ajouter :"}
+              options={TypeAlerte.versOptions(false)}
             />
             <InputField
               name={COMPLEMENT_DESCRIPTION}
               component="textarea"
-              label={getLibelle(
-                "Compléter l'alerte avec votre description (si nécessaire) :"
-              )}
-              placeholder={getLibelle("Description")}
+              label={"Compléter l'alerte avec votre description (si nécessaire) :"}
+              placeholder={"Description"}
               rows={NB_LIGNE_COMPLEMENT_DESCRIPTION}
               maxLength={"150"}
             />

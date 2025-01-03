@@ -1,3 +1,7 @@
+import { NATURE_MENTION } from "@mock/data/NomenclatureNatureMention";
+import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
+import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
+import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import {
   ID,
   ID_ACTE,
@@ -15,6 +19,9 @@ const idActe = "b41079a5-9e8d-478c-b04c-c4c4ey86537g";
 const idRequete = "931c715b-ede1-4895-ad70-931f2ac4e43d";
 
 describe("Test de la page aperçu requête mise à jour analyse marginale", () => {
+  NatureMention.init(NATURE_MENTION);
+  TypeMention.init(TYPE_MENTION);
+
   test("La page s'affiche correctement", () => {
     const router = createTestingRouter(
       [

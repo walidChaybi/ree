@@ -1,23 +1,11 @@
-import {
-  InscriptionRcUtil,
-  TypeInscriptionRc
-} from "@model/etatcivil/enum/TypeInscriptionRc";
+import { InscriptionRcUtil, TypeInscriptionRc } from "@model/etatcivil/enum/TypeInscriptionRc";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
-import {
-  CODE_ATTESTATION_PACS,
-  CODE_CERTIFICAT_SITUATION_PACS,
-  CODE_CERTIFICAT_SITUATION_PACS_RC,
-  CODE_CERTIFICAT_SITUATION_PACS_RC_RCA,
-  CODE_CERTIFICAT_SITUATION_PACS_RCA,
-  CODE_CERTIFICAT_SITUATION_RC,
-  CODE_CERTIFICAT_SITUATION_RC_RCA,
-  CODE_CERTIFICAT_SITUATION_RCA
-} from "@model/requete/enum/DocumentDelivranceConstante";
+import { ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { IActionOption } from "@model/requete/IActionOption";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { getLibelle } from "@util/Utils";
 
 export enum INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE {
   REQUETE_INCOMPLETE_ILLISIBLE,
@@ -32,10 +20,7 @@ export enum INDEX_CHOIX_ACTION_MENU_DELIVRER {
   ATTESTATION_PACS
 }
 
-export function getListeDocumentsAutorise(
-  listeDocumentDemandeUn: string[],
-  listeDocumentDemandeDeux?: string[]
-) {
+export function getListeDocumentsAutorise(listeDocumentDemandeUn: string[], listeDocumentDemandeDeux?: string[]) {
   if (listeDocumentDemandeDeux) {
     return listeDocumentDemandeUn.concat(listeDocumentDemandeDeux);
   } else {
@@ -44,78 +29,58 @@ export function getListeDocumentsAutorise(
 }
 
 export const listeDocumentsDemandeAutreQueAttestationPACS = [
-  CODE_CERTIFICAT_SITUATION_PACS,
-  CODE_CERTIFICAT_SITUATION_PACS_RC,
-  CODE_CERTIFICAT_SITUATION_PACS_RCA,
-  CODE_CERTIFICAT_SITUATION_PACS_RC_RCA,
-  CODE_CERTIFICAT_SITUATION_RC,
-  CODE_CERTIFICAT_SITUATION_RCA,
-  CODE_CERTIFICAT_SITUATION_RC_RCA
+  ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS,
+  ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS_RC,
+  ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS_RCA,
+  ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS_RC_RCA,
+  ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_RC,
+  ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_RCA,
+  ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_RC_RCA
 ];
 
-export const documentsDemandeAttestationPACS = [CODE_ATTESTATION_PACS];
+export const documentsDemandeAttestationPACS = [ECodeDocumentDelivrance.CODE_ATTESTATION_PACS];
 
 export const menuSansDelivranceActions: IActionOption[] = [
   {
-    value:
-      INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.REQUETE_INCOMPLETE_ILLISIBLE,
-    label: getLibelle("Requête incomplète ou difficilement lisible"),
+    value: INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.REQUETE_INCOMPLETE_ILLISIBLE,
+    label: "Requête incomplète ou difficilement lisible",
     sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
-    listeDocumentsDemandeAutorise: getListeDocumentsAutorise(
-      listeDocumentsDemandeAutreQueAttestationPACS,
-      documentsDemandeAttestationPACS
-    )
+    listeDocumentsDemandeAutorise: getListeDocumentsAutorise(listeDocumentsDemandeAutreQueAttestationPACS, documentsDemandeAttestationPACS)
   },
   {
     value: INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.PACS_NON_INSCRIT,
-    label: getLibelle("PACS non inscrit"),
+    label: "PACS non inscrit",
     sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
-    listeDocumentsDemandeAutorise: getListeDocumentsAutorise(
-      documentsDemandeAttestationPACS
-    )
+    listeDocumentsDemandeAutorise: getListeDocumentsAutorise(documentsDemandeAttestationPACS)
   },
   {
-    value:
-      INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.MARIAGE_EN_COURS_DE_VALIDITE,
-    label: getLibelle("Mariage en cours de validité"),
+    value: INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.MARIAGE_EN_COURS_DE_VALIDITE,
+    label: "Mariage en cours de validité",
     sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
-    listeDocumentsDemandeAutorise: getListeDocumentsAutorise(
-      listeDocumentsDemandeAutreQueAttestationPACS
-    )
+    listeDocumentsDemandeAutorise: getListeDocumentsAutorise(listeDocumentsDemandeAutreQueAttestationPACS)
   },
   {
-    value:
-      INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.NATIONALITE_OU_NAISSANCE_FRANCAIS,
-    label: getLibelle("Nationalité française ou naissance en France"),
+    value: INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.NATIONALITE_OU_NAISSANCE_FRANCAIS,
+    label: "Nationalité française ou naissance en France",
     sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
-    listeDocumentsDemandeAutorise: getListeDocumentsAutorise(
-      listeDocumentsDemandeAutreQueAttestationPACS,
-      documentsDemandeAttestationPACS
-    )
+    listeDocumentsDemandeAutorise: getListeDocumentsAutorise(listeDocumentsDemandeAutreQueAttestationPACS, documentsDemandeAttestationPACS)
   },
   {
     value: INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.IGNORER_REQUETE,
-    label: getLibelle("Ignorer la requête"),
+    label: "Ignorer la requête",
     sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
-    listeDocumentsDemandeAutorise: getListeDocumentsAutorise(
-      listeDocumentsDemandeAutreQueAttestationPACS,
-      documentsDemandeAttestationPACS
-    )
+    listeDocumentsDemandeAutorise: getListeDocumentsAutorise(listeDocumentsDemandeAutreQueAttestationPACS, documentsDemandeAttestationPACS)
   }
 ];
 
-export function filtrerListeActionsParDocumentDemande(
-  listeActions: IActionOption[],
-  requete: IRequeteDelivrance
-): IActionOption[] {
+export function filtrerListeActionsParDocumentDemande(listeActions: IActionOption[], requete: IRequeteDelivrance): IActionOption[] {
   const listeActionAutorise: IActionOption[] = [];
-  const documentDemandeRequeteCode = requete.documentDemande.code;
+  const documentDemandeRequeteCode = requete.documentDemande?.code;
 
   listeActions.forEach(action => {
-    const documentDemandeEstPresentDansListeAction =
-      action.listeDocumentsDemandeAutorise?.find((documentDemande: string) => {
-        return documentDemande === documentDemandeRequeteCode;
-      });
+    const documentDemandeEstPresentDansListeAction = action.listeDocumentsDemandeAutorise?.find((documentDemande: string) => {
+      return documentDemande === documentDemandeRequeteCode;
+    });
 
     if (documentDemandeEstPresentDansListeAction) {
       listeActionAutorise.push(action);
@@ -128,19 +93,15 @@ export function filtrerListeActionsParDocumentDemande(
 export const menuDelivrerActions: IActionOption[] = [
   {
     value: INDEX_CHOIX_ACTION_MENU_DELIVRER.CERTIFICAT_SITUATION,
-    label: getLibelle("Certificat de situation"),
+    label: "Certificat de situation",
     sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
-    listeDocumentsDemandeAutorise: getListeDocumentsAutorise(
-      listeDocumentsDemandeAutreQueAttestationPACS
-    )
+    listeDocumentsDemandeAutorise: getListeDocumentsAutorise(listeDocumentsDemandeAutreQueAttestationPACS)
   },
   {
     value: INDEX_CHOIX_ACTION_MENU_DELIVRER.ATTESTATION_PACS,
-    label: getLibelle("Attestation PACS"),
+    label: "Attestation PACS",
     sousTypes: [SousTypeDelivrance.RDCSC, SousTypeDelivrance.RDCSD],
-    listeDocumentsDemandeAutorise: getListeDocumentsAutorise(
-      documentsDemandeAttestationPACS
-    )
+    listeDocumentsDemandeAutorise: getListeDocumentsAutorise(documentsDemandeAttestationPACS)
   }
 ];
 
@@ -148,14 +109,10 @@ export const estMemeNombreDeRCModificationEtRadiation = (
   inscriptionTypeRadiation?: IInscriptionRc[],
   inscriptionTypeModification?: IInscriptionRc[]
 ): boolean => {
-  return (
-    inscriptionTypeRadiation?.length === inscriptionTypeModification?.length
-  );
+  return inscriptionTypeRadiation?.length === inscriptionTypeModification?.length;
 };
 
-export function getInscriptionsRCDeTypeRadiation(
-  inscriptionsRC?: IInscriptionRc[]
-): IInscriptionRc[] {
+export function getInscriptionsRCDeTypeRadiation(inscriptionsRC?: IInscriptionRc[]): IInscriptionRc[] {
   let inscriptionRC: IInscriptionRc[] = [];
   if (inscriptionsRC) {
     inscriptionRC = inscriptionsRC.filter(inscription => {
@@ -166,9 +123,7 @@ export function getInscriptionsRCDeTypeRadiation(
   return inscriptionRC;
 }
 
-export function getInscriptionsRCDeTypeModification(
-  inscriptionsRC?: IInscriptionRc[]
-): IInscriptionRc[] {
+export function getInscriptionsRCDeTypeModification(inscriptionsRC?: IInscriptionRc[]): IInscriptionRc[] {
   let inscriptionRC: IInscriptionRc[] = [];
   if (inscriptionsRC) {
     inscriptionRC = inscriptionsRC.filter(inscription => {
@@ -179,41 +134,26 @@ export function getInscriptionsRCDeTypeModification(
   return inscriptionRC;
 }
 
-export const estPresentRcTypeModification = (
-  inscriptions?: IResultatRMCInscription[]
-): IResultatRMCInscription | undefined => {
+export const estPresentRcTypeModification = (inscriptions?: IResultatRMCInscription[]): IResultatRMCInscription | undefined => {
   if (inscriptions) {
-    return inscriptions.find(inscription =>
-      InscriptionRcUtil.estDeTypeModificationViaLibelle(
-        inscription.typeInscription
-      )
-    );
+    return inscriptions.find(inscription => InscriptionRcUtil.estDeTypeModificationViaLibelle(inscription.typeInscription));
   }
 };
 
-export function getInscriptionsDeTypeModificationEtRadiation(
-  inscriptionsRC?: IInscriptionRc[]
-) {
-  const inscrptionsRCModification =
-    getInscriptionsRCDeTypeModification(inscriptionsRC);
-  const inscriptionsRCRadiation =
-    getInscriptionsRCDeTypeRadiation(inscriptionsRC);
+export function getInscriptionsDeTypeModificationEtRadiation(inscriptionsRC?: IInscriptionRc[]) {
+  const inscrptionsRCModification = getInscriptionsRCDeTypeModification(inscriptionsRC);
+  const inscriptionsRCRadiation = getInscriptionsRCDeTypeRadiation(inscriptionsRC);
 
   return { inscrptionsRCModification, inscriptionsRCRadiation };
 }
 
-export function triTableauRCRadiationParDate(
-  inscriptionsRC?: IInscriptionRc[]
-): IInscriptionRc[] {
+export function triTableauRCRadiationParDate(inscriptionsRC?: IInscriptionRc[]): IInscriptionRc[] {
   let inscriptionsRcTriees: IInscriptionRc[] = [];
 
   if (inscriptionsRC) {
     inscriptionsRcTriees = [...inscriptionsRC];
     inscriptionsRcTriees?.sort((inscriptionRc1, inscriptionRc2) => {
-      return (
-        inscriptionRc1.dateInscription.getTime() -
-        inscriptionRc2.dateInscription.getTime()
-      );
+      return inscriptionRc1.dateInscription.getTime() - inscriptionRc2.dateInscription.getTime();
     });
   }
 

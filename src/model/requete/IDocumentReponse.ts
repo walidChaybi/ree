@@ -1,12 +1,12 @@
 import { DEUX } from "@util/Utils";
 import { Orientation } from "../composition/enum/Orientation";
 import { IMention } from "../etatcivil/acte/mention/IMention";
-import { ChoixDelivrance } from "./enum/ChoixDelivrance";
-import { COURRIER, DocumentDelivrance } from "./enum/DocumentDelivrance";
-import { MentionsRetirees } from "./enum/MentionsRetirees";
-import { Validation } from "./enum/Validation";
 import { IOptionCourrierDocumentReponse } from "./IOptionCourrierDocumentReponse";
 import { ITexteLibreCourrier } from "./ITexteLibreCourrier";
+import { ChoixDelivrance } from "./enum/ChoixDelivrance";
+import { DocumentDelivrance, ECodeDocumentDelivrance } from "./enum/DocumentDelivrance";
+import { MentionsRetirees } from "./enum/MentionsRetirees";
+import { Validation } from "./enum/Validation";
 
 export interface IDocumentReponse {
   id: string;
@@ -37,28 +37,16 @@ export interface IDocumentReponse {
 }
 
 export const DocumentReponse = {
-  getDocumentsDeDelivrance(
-    documentsReponse: IDocumentReponse[]
-  ): IDocumentReponse[] {
-    return documentsReponse.filter(d =>
-      DocumentDelivrance.estDocumentDelivrance(d.typeDocument)
-    );
+  getDocumentsDeDelivrance(documentsReponse: IDocumentReponse[]): IDocumentReponse[] {
+    return documentsReponse.filter(d => DocumentDelivrance.estDocumentDelivrance(d.typeDocument));
   },
 
-  getCopieIntegrale(
-    documentsReponse?: IDocumentReponse[]
-  ): IDocumentReponse | undefined {
-    return documentsReponse?.find(d =>
-      DocumentDelivrance.estCopieIntegrale(d.typeDocument)
-    );
+  getCopieIntegrale(documentsReponse?: IDocumentReponse[]): IDocumentReponse | undefined {
+    return documentsReponse?.find(d => DocumentDelivrance.estCopieIntegrale(d.typeDocument));
   },
 
-  getExtraitPlurilingue(
-    documentsReponse?: IDocumentReponse[]
-  ): IDocumentReponse | undefined {
-    return documentsReponse?.find(d =>
-      DocumentDelivrance.estExtraitPlurilingue(d.typeDocument)
-    );
+  getExtraitPlurilingue(documentsReponse?: IDocumentReponse[]): IDocumentReponse | undefined {
+    return documentsReponse?.find(d => DocumentDelivrance.estExtraitPlurilingue(d.typeDocument));
   },
 
   estExtraitCopie(document: IDocumentReponse) {
@@ -68,32 +56,21 @@ export const DocumentReponse = {
   triDocumentsDelivrance(documents: IDocumentReponse[]): IDocumentReponse[] {
     const documentsSansDoublonSansCtv = this.enleverDoublonSansCtv(documents);
     return documentsSansDoublonSansCtv.sort(
-      (doc1, doc2) =>
-        DocumentDelivrance.getNumeroOrdre(doc1.typeDocument) -
-        DocumentDelivrance.getNumeroOrdre(doc2.typeDocument)
+      (doc1, doc2) => DocumentDelivrance.getNumeroOrdre(doc1.typeDocument) - DocumentDelivrance.getNumeroOrdre(doc2.typeDocument)
     );
   },
 
   getLibelle(document: IDocumentReponse) {
-    let libelle: string;
-    const documentDelivrance = DocumentDelivrance.getEnumForUUID(
-      document.typeDocument
-    );
-    if (DocumentDelivrance.estCourrierDAccompagnement(documentDelivrance)) {
-      libelle = COURRIER;
-    } else {
-      libelle = documentDelivrance.libelle;
-    }
+    const documentDelivrance = DocumentDelivrance.depuisId(document.typeDocument);
 
-    return libelle;
+    return DocumentDelivrance.estCourrierDAccompagnement(documentDelivrance)
+      ? ECodeDocumentDelivrance.COURRIER
+      : (documentDelivrance?.libelle ?? "");
   },
 
   verifierDocumentsValides(documents?: IDocumentReponse[]): boolean {
     if (documents) {
-      return documents.every(
-        (el: IDocumentReponse) =>
-          el.validation === undefined || el.validation === Validation.O
-      );
+      return documents.every((el: IDocumentReponse) => el.validation === undefined || el.validation === Validation.O);
     } else return false;
   },
 
@@ -115,9 +92,7 @@ export const DocumentReponse = {
     resulatDocumentsSansDoublons = [...documentsAvecCtvs];
 
     documentsSansCtvs.forEach(documentSansCtv => {
-      if (
-        !documentSansCtvExisteDejaAvecCtv(documentSansCtv, documentsAvecCtvs)
-      ) {
+      if (!documentSansCtvExisteDejaAvecCtv(documentSansCtv, documentsAvecCtvs)) {
         resulatDocumentsSansDoublons.push(documentSansCtv);
       }
     });
@@ -125,21 +100,13 @@ export const DocumentReponse = {
     return resulatDocumentsSansDoublons;
   },
 
-  attribuerOrdreDocuments(
-    documents: IDocumentReponse[],
-    choixDelivrance: ChoixDelivrance
-  ) {
+  attribuerOrdreDocuments(documents: IDocumentReponse[], choixDelivrance: ChoixDelivrance) {
     documents.forEach(doc => {
-      const docDelivrance = DocumentDelivrance.getEnumForUUID(doc.typeDocument);
+      const docDelivrance = DocumentDelivrance.depuisId(doc.typeDocument);
       if (DocumentDelivrance.estCourrierDAccompagnement(docDelivrance)) {
         doc.ordre = 0;
       } else if (
-        docDelivrance ===
-        DocumentDelivrance.getEnumForCode(
-          ChoixDelivrance.getCodeDocumentDelivranceFromChoixDelivrance(
-            choixDelivrance
-          )
-        )
+        docDelivrance === DocumentDelivrance.depuisCode(ChoixDelivrance.getCodeDocumentDelivranceFromChoixDelivrance(choixDelivrance))
       ) {
         doc.ordre = 1;
       } else {
@@ -150,52 +117,26 @@ export const DocumentReponse = {
   },
 
   estMentionRetiree(document: IDocumentReponse, mention: IMention): boolean {
-    return (
-      document.mentionsRetirees != null &&
-      document.mentionsRetirees.find(
-        mentionRetiree => mentionRetiree.idMention === mention.id
-      ) != null
-    );
+    return document.mentionsRetirees?.find(mentionRetiree => mentionRetiree.idMention === mention.id) != null;
   },
 
-  nEstPasMentionRetiree(
-    document: IDocumentReponse,
-    mention: IMention
-  ): boolean {
+  nEstPasMentionRetiree(document: IDocumentReponse, mention: IMention): boolean {
     return !this.estMentionRetiree(document, mention);
   },
 
   getIdsMentionsRetiree(document: IDocumentReponse): string[] {
-    return document.mentionsRetirees
-      ? document.mentionsRetirees.map(
-          mentionRetiree => mentionRetiree.idMention
-        )
-      : [];
+    return document.mentionsRetirees ? document.mentionsRetirees.map(mentionRetiree => mentionRetiree.idMention) : [];
   }
 };
 
-function documentSansCtvExisteDejaAvecCtv(
-  documentSansCtv: IDocumentReponse,
-  documentsAvecCtvs: IDocumentReponse[]
-): boolean {
-  return (
-    documentsAvecCtvs.find(
-      documentAvecCtv =>
-        documentSansCtv.typeDocument === documentAvecCtv.typeDocument
-    ) !== undefined
-  );
+function documentSansCtvExisteDejaAvecCtv(documentSansCtv: IDocumentReponse, documentsAvecCtvs: IDocumentReponse[]): boolean {
+  return documentsAvecCtvs.find(documentAvecCtv => documentSansCtv.typeDocument === documentAvecCtv.typeDocument) !== undefined;
 }
 
-export function documentDejaCreer(
-  documents: IDocumentReponse[],
-  choixDelivrance?: ChoixDelivrance
-) {
+export function documentDejaCreer(documents: IDocumentReponse[], choixDelivrance?: ChoixDelivrance) {
   return documents.some(
     el =>
-      DocumentDelivrance.getEnumForCode(
-        ChoixDelivrance.getCodeDocumentDelivranceFromChoixDelivrance(
-          choixDelivrance
-        )
-      ) === DocumentDelivrance.getEnumForUUID(el.typeDocument)
+      DocumentDelivrance.depuisCode(ChoixDelivrance.getCodeDocumentDelivranceFromChoixDelivrance(choixDelivrance)) ===
+      DocumentDelivrance.depuisId(el.typeDocument)
   );
 }

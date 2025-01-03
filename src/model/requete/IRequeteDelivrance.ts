@@ -1,5 +1,5 @@
 import { ChoixDelivrance } from "./enum/ChoixDelivrance";
-import { DocumentDelivrance } from "./enum/DocumentDelivrance";
+import { DocumentDelivrance, IDocumentDelivrance } from "./enum/DocumentDelivrance";
 import { MotifDelivrance } from "./enum/MotifDelivrance";
 import { SousTypeDelivrance } from "./enum/SousTypeDelivrance";
 import { StatutRequete } from "./enum/StatutRequete";
@@ -12,7 +12,7 @@ import { IPieceJustificative } from "./pieceJointe/IPieceJustificative";
 
 export interface IRequeteDelivrance extends IRequete {
   sousType: SousTypeDelivrance;
-  documentDemande: DocumentDelivrance;
+  documentDemande: IDocumentDelivrance | null;
   nbExemplaireImpression?: number;
   provenanceRequete: IProvenanceRequete;
   motif?: MotifDelivrance;

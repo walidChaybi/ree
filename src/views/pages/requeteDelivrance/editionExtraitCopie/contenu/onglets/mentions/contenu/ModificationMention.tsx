@@ -1,11 +1,6 @@
 import { IMentionAffichage } from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { NatureMention } from "@model/etatcivil/enum/NatureMention";
-import { getLibelle, getValeurOuVide } from "@util/Utils";
-import {
-  OptionVide,
-  SelectRece
-} from "@widget/formulaire/champsSaisie/SelectField";
+import { OptionVide, SelectRece } from "@widget/formulaire/champsSaisie/SelectField";
 import React from "react";
 import { getOptionsMentions } from "../GestionMentionsUtil";
 
@@ -28,15 +23,15 @@ export const ModificationMention: React.FC<ModificationMentionProps> = ({
 }) => {
   return (
     <div className="FormMention Modification">
-      <h3>{getLibelle("Modification d'une mention")}</h3>
+      <h3>{"Modification d'une mention"}</h3>
       <div className="SelectModif">
         <span className="SelectNature">
-          <label>{getLibelle("Nature mention")}</label>
+          <label>{"Nature mention"}</label>
           <SelectRece
             optionVide={OptionVide.NON_PRESENTE}
             options={getOptionsMentions(estExtraitPlurilingue, natureActe)}
             placeholder="Nature sélectionnée"
-            value={NatureMention.getUuidFromNature(mentionSelect?.nature)}
+            value={mentionSelect?.nature?.id ?? ""}
             onChange={handleChangeSelect}
             ariaLabel="Nature sélectionnée"
             onBlur={handleOnBlur}
@@ -44,7 +39,7 @@ export const ModificationMention: React.FC<ModificationMentionProps> = ({
         </span>
       </div>
       <textarea
-        value={getValeurOuVide(mentionSelect?.texte)}
+        value={mentionSelect?.texte ?? ""}
         onChange={handleChangeTexte}
         aria-label="Texte sélectionné"
         onBlur={handleOnBlur}

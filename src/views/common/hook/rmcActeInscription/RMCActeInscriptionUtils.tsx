@@ -8,13 +8,7 @@ import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IR
 import { RMCRepertoire } from "@model/rmc/acteInscription/rechercheForm/IRMCRepertoire";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import DateUtils from "@util/DateUtils";
-import {
-  formatNom,
-  formatNoms,
-  formatPrenoms,
-  getValeurOuUndefined,
-  getValeurOuVide
-} from "@util/Utils";
+import { formatNom, formatNoms, formatPrenoms, getValeurOuUndefined, getValeurOuVide } from "@util/Utils";
 import { getCriteresTitulaire } from "./mapping/RMCMappingUtil";
 
 export interface ICriteresRechercheActeInscription {
@@ -27,9 +21,7 @@ export interface ICriteresRechercheActeInscription {
 }
 
 /** Critères de recherche: mapping avant appel d'api */
-export function mappingCriteres(
-  criteres: IRMCActeInscription
-): IRMCRequestActesInscriptions {
+export function mappingCriteres(criteres: IRMCActeInscription): IRMCRequestActesInscriptions {
   return {
     // Filtre Titulaire
     ...getCriteresTitulaire(criteres),
@@ -83,45 +75,21 @@ export function mappingInscriptions(data: any): IResultatRMCInscription[] {
   });
 }
 
-export function rechercherRepertoireAutorise(
-  criteres: IRMCRequestActesInscriptions
-): boolean {
-  return !(
-    criteres.natureActe ||
-    criteres.familleRegistre ||
-    criteres.posteOuPocopa ||
-    criteres.numeroActe ||
-    criteres.anneeRegistre
-  );
+export function rechercherRepertoireAutorise(criteres: IRMCRequestActesInscriptions): boolean {
+  return !(criteres.natureActe || criteres.familleRegistre || criteres.posteOuPocopa || criteres.numeroActe || criteres.anneeRegistre);
 }
 
-export function rechercherActeAutorise(
-  criteres: IRMCRequestActesInscriptions
-): boolean {
-  return !(
-    criteres.typeRepertoire ||
-    criteres.natureRcRca ||
-    criteres.numeroInscription
-  );
+export function rechercherActeAutorise(criteres: IRMCRequestActesInscriptions): boolean {
+  return !(criteres.typeRepertoire || criteres.natureRcRca || criteres.numeroInscription);
 }
 
-export function getNatureInscription(
-  categorie: string,
-  nature: string
-): string {
-  let natureInscription = "";
-  if (categorie) {
-    const categorieToUpper = categorie?.toUpperCase();
-    switch (categorieToUpper) {
-      case TypeRepertoire.RC.libelle:
-        natureInscription = NatureRc.getEnumFor(nature)?.libelle;
-        break;
-      case TypeRepertoire.RCA.libelle:
-        natureInscription = NatureRca.getEnumFor(nature)?.libelle;
-        break;
-      default:
-        break;
-    }
+export function getNatureInscription(categorie: string, nature: string): string {
+  switch (categorie?.toUpperCase()) {
+    case TypeRepertoire.RC.libelle:
+      return NatureRc.depuisId(nature)?.libelle ?? "";
+    case TypeRepertoire.RCA.libelle:
+      return NatureRca.depuisId(nature)?.libelle ?? "";
+    default:
+      return "";
   }
-  return natureInscription;
 }

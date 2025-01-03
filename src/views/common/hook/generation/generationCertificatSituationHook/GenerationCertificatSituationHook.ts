@@ -36,38 +36,26 @@ export interface IPhrasesJasperCertificatSituation {
   phrasesPiecesJointes?: string;
 }
 
-export function useGenerationCertificatSituationHook(
-  params?: IGenerationCertificatSituationParams
-) {
-  const [
-    resultGenerationCertificatSituation,
-    setResultGenerationCertificatSituation
-  ] = useState<IResultGenerationUnDocument>();
+export function useGenerationCertificatSituationHook(params?: IGenerationCertificatSituationParams) {
+  const [resultGenerationCertificatSituation, setResultGenerationCertificatSituation] = useState<IResultGenerationUnDocument>();
 
-  const [certificatSituationComposition, setCertificatSituationComposition] =
-    useState<ICertificatSituationComposition>();
+  const [certificatSituationComposition, setCertificatSituationComposition] = useState<ICertificatSituationComposition>();
 
-  const [
-    stockerDocumentCreerActionMajStatutRequeteParams,
-    setStockerDocumentCreerActionMajStatutRequeteParams
-  ] = useState<IStockerDocumentCreerActionMajStatutRequeteParams>();
+  const [stockerDocumentCreerActionMajStatutRequeteParams, setStockerDocumentCreerActionMajStatutRequeteParams] =
+    useState<IStockerDocumentCreerActionMajStatutRequeteParams>();
 
   const { decrets } = useContext(RECEContextData);
 
   // 1 - Construction du Certificat de situation
   useEffect(() => {
-    if (
-      params?.requete?.document &&
-      (params.nbInscriptionsInfos || params.infosInscription)
-    ) {
+    if (params?.requete?.document && (params.nbInscriptionsInfos || params.infosInscription)) {
       if (params?.requete.titulaires && params.requete.titulaires.length > 0) {
-        const phrases: IPhrasesJasperCertificatSituation =
-          params.specificationPhrase.getPhrasesJasper(
-            params.requete.document, // id du type de document demandé
-            params.requete.titulaires[0].sexe,
-            params.nbInscriptionsInfos,
-            params.infosInscription
-          );
+        const phrases: IPhrasesJasperCertificatSituation = params.specificationPhrase.getPhrasesJasper(
+          params.requete.document, // id du type de document demandé
+          params.requete.titulaires[0].sexe,
+          params.nbInscriptionsInfos,
+          params.infosInscription
+        );
         construitCertificatSituation(
           phrases.phrasesLiees,
           params.requete,
@@ -85,8 +73,7 @@ export function useGenerationCertificatSituationHook(
 
   // 2 - Création du certificat de situation: appel api composition
   // récupération du document en base64
-  const donneesComposition: IDonneesComposition | undefined =
-    useCertificatSituationApiHook(certificatSituationComposition);
+  const donneesComposition: IDonneesComposition | undefined = useCertificatSituationApiHook(certificatSituationComposition);
 
   // 3 - Création du document réponse (après appel 'useCertificatSituationRmcAutoVideApi') pour stockage dans la BDD et Swift
   useEffect(() => {
@@ -96,9 +83,7 @@ export function useGenerationCertificatSituationHook(
           contenu: donneesComposition.contenu,
           nom: NOM_DOCUMENT_CERTIFICAT_SITUATION,
           mimeType: MimeType.APPLI_PDF,
-          typeDocument: DocumentDelivrance.getKeyForCode(
-            "CERTIFICAT_SITUATION"
-          ), // UUID du type de document demandé (nomenclature)
+          typeDocument: DocumentDelivrance.idDepuisCode("CERTIFICAT_SITUATION"), // UUID du type de document demandé (nomenclature)
           nbPages: donneesComposition.nbPages,
           orientation: Orientation.PORTRAIT
         } as IDocumentReponse,
@@ -111,9 +96,7 @@ export function useGenerationCertificatSituationHook(
   }, [donneesComposition]);
 
   // 4- Stockage du document réponse une fois celui-ci créé
-  const uuidDocumentReponse = useStockerDocumentCreerActionMajStatutRequete(
-    stockerDocumentCreerActionMajStatutRequeteParams
-  );
+  const uuidDocumentReponse = useStockerDocumentCreerActionMajStatutRequete(stockerDocumentCreerActionMajStatutRequeteParams);
 
   // 5 - Une fois le document stocker, création du résultat
   useEffect(() => {
@@ -142,13 +125,7 @@ function construitCertificatSituation(
     const titre = getTitre(requete.document ? requete.document : "");
     const decretsCertificat = getDecrets(requete.document, decrets);
 
-    const composition = creerCertificatSituationComposition(
-      titre,
-      decretsCertificat,
-      phrasesLiees,
-      phrasesPiecesJointes,
-      requete
-    );
+    const composition = creerCertificatSituationComposition(titre, decretsCertificat, phrasesLiees, phrasesPiecesJointes, requete);
     setCertificatSituationComposition(composition);
   } else {
     setResultGenerationCertificatSituation(RESULTAT_VIDE);
@@ -174,12 +151,5 @@ function creerCertificatSituationComposition(
   if (requete?.titulaires) {
     titulaire = requete.titulaires[0];
   }
-  return CertificatSituationComposition.creerCertificatSituation(
-    titre,
-    decrets,
-    phrasesLiees,
-    requete,
-    phrasesPiecesJointes,
-    titulaire
-  );
+  return CertificatSituationComposition.creerCertificatSituation(titre, decrets, phrasesLiees, requete, phrasesPiecesJointes, titulaire);
 }

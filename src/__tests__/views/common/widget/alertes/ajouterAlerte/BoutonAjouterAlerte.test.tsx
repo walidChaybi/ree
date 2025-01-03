@@ -1,4 +1,5 @@
 import { userDroitCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
+import { ReponseAppelNomenclatureTypeAlerte } from "@mock/data/nomenclatures";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BoutonAjouterAlerte } from "@widget/alertes/ajouterAlerte/BoutonAjouterAlerte";
@@ -7,7 +8,7 @@ import { beforeEach, expect, test, vi } from "vitest";
 import { elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
 
 beforeEach(() => {
-  TypeAlerte.init();
+  TypeAlerte.init(ReponseAppelNomenclatureTypeAlerte.data);
 });
 
 test("render BoutonAjouterAlerte avec ajout alerte possible : test ouverture / fermeture popin", async () => {

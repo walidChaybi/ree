@@ -4,8 +4,7 @@ import { IGenerationECParams, useGenerationEC } from "@hook/generation/generatio
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { CODE_EXTRAIT_AVEC_FILIATION, CODE_EXTRAIT_SANS_FILIATION } from "@model/requete/enum/DocumentDelivranceConstante";
+import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
 import { Form, Formik } from "formik";
 import React, { useContext, useEffect, useMemo, useState } from "react";
@@ -70,9 +69,9 @@ const ModifierCorpsExtrait: React.FC<IModifierCorpsExtraitProps> = ({ documentRe
           setModifierCorpsExtraitParams({
             idActe: acte?.id ?? "",
             corpsTexteModifie: values.corpsTexte,
-            type: DocumentDelivrance.typeDocumentCorrespondACode(documentReponse.typeDocument, CODE_EXTRAIT_AVEC_FILIATION)
-              ? TypeExtrait.getEnumFor(CODE_EXTRAIT_AVEC_FILIATION)
-              : TypeExtrait.getEnumFor(CODE_EXTRAIT_SANS_FILIATION)
+            type: DocumentDelivrance.estExtraitAvecFilliation(documentReponse.typeDocument)
+              ? TypeExtrait.getEnumFor(ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION)
+              : TypeExtrait.getEnumFor(ECodeDocumentDelivrance.CODE_EXTRAIT_SANS_FILIATION)
           });
         }}
       >

@@ -10,11 +10,8 @@ import { IParent, Parent } from "@model/requete/IParents";
 import { IRequerant, Requerant } from "@model/requete/IRequerant";
 import { Requete } from "@model/requete/IRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import {
-  ITitulaireRequete,
-  TitulaireRequete
-} from "@model/requete/ITitulaireRequete";
-import { getLibelle, triListeObjetsSurPropriete } from "@util/Utils";
+import { ITitulaireRequete, TitulaireRequete } from "@model/requete/ITitulaireRequete";
+import { triListeObjetsSurPropriete } from "@util/Utils";
 import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPartProps } from "@widget/section/SectionPart";
@@ -25,66 +22,40 @@ import {
   ajouterPanelAreasAuPanel
 } from "@widget/section/SectionUtils";
 
-export function getPanelsDetailRequete(detailRequete?: IRequeteDelivrance) {
+export const getPanelsDetailRequete = (detailRequete?: IRequeteDelivrance) => {
   const panels: SectionPanelProps[] = [];
-  if (detailRequete && detailRequete.type === TypeRequete.DELIVRANCE) {
+
+  if (detailRequete?.type === TypeRequete.DELIVRANCE) {
     panels[0] = getPanelDetailRequeteDelivrance(detailRequete);
     panels[1] = getRequeteDelivrance(detailRequete);
   }
-  return panels;
-}
 
-function getPanelDetailRequeteDelivrance(
-  detailRequete: IRequeteDelivrance
-): SectionPanelProps {
+  return panels;
+};
+
+const getPanelDetailRequeteDelivrance = (detailRequete: IRequeteDelivrance): SectionPanelProps => {
   const deuxColonnes = 2;
 
   const panel = {
     panelAreas: [],
-    title: getLibelle("Detail requête délivrance")
+    title: "Detail requête délivrance"
   } as SectionPanelProps;
 
-  ajouterPanelAreasAuPanel(
-    panel,
-    detailRequete.titulaires,
-    getTitulaires,
-    deuxColonnes,
-    getLibelle("Titulaires")
-  );
+  ajouterPanelAreasAuPanel(panel, detailRequete.titulaires, getTitulaires, deuxColonnes, "Titulaires");
 
   if (parentsPresents(detailRequete.titulaires)) {
-    ajouterPanelAreasAuPanel(
-      panel,
-      detailRequete.titulaires,
-      getParentsDesTitulaires,
-      deuxColonnes
-    );
+    ajouterPanelAreasAuPanel(panel, detailRequete.titulaires, getParentsDesTitulaires, deuxColonnes);
   }
 
-  ajouterPanelAreasAuPanel(
-    panel,
-    detailRequete.requerant,
-    getRequerant,
-    deuxColonnes,
-    getLibelle("Requérant")
-  );
+  ajouterPanelAreasAuPanel(panel, detailRequete.requerant, getRequerant, deuxColonnes, "Requérant");
 
-  ajouterPanelAreasAuPanel(
-    panel,
-    detailRequete.mandant,
-    getMandant,
-    deuxColonnes,
-    getLibelle("Mandant")
-  );
+  ajouterPanelAreasAuPanel(panel, detailRequete.mandant, getMandant, deuxColonnes, "Mandant");
 
   return panel;
-}
+};
 
-function getTitulaires(titulaires: ITitulaireRequete[]): SectionPartProps[] {
-  const sortedTitulaires = triListeObjetsSurPropriete(
-    [...titulaires],
-    "position"
-  );
+const getTitulaires = (titulaires: ITitulaireRequete[]): SectionPartProps[] => {
+  const sortedTitulaires = triListeObjetsSurPropriete([...titulaires], "position");
 
   return sortedTitulaires.map((titulaire, index) => {
     return {
@@ -93,54 +64,26 @@ function getTitulaires(titulaires: ITitulaireRequete[]): SectionPartProps[] {
       }
     };
   });
-}
+};
 
-function getTitulairesInfo(
-  titulaire: ITitulaireRequete,
-  index: number
-): SectionContentProps[] {
+const getTitulairesInfo = (titulaire: ITitulaireRequete, index: number): SectionContentProps[] => {
   const infosTitulaire = [] as SectionContentProps[];
 
-  ajouterContentPartAuPartUneValeur(
-    infosTitulaire,
-    getLibelle(`Nom Titulaire ${index}`),
-    TitulaireRequete.getNom(titulaire)
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosTitulaire,
-    getLibelle("Prénom 1"),
-    TitulaireRequete.getPrenom1(titulaire)
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosTitulaire,
-    getLibelle("Prénom 2"),
-    TitulaireRequete.getPrenom2(titulaire)
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosTitulaire,
-    getLibelle("Prénom 3"),
-    TitulaireRequete.getPrenom3(titulaire)
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosTitulaire,
-    getLibelle("Né(e) le"),
-    TitulaireRequete.getDateNaissance(titulaire)
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosTitulaire,
-    getLibelle("Sexe"),
-    TitulaireRequete.getSexe(titulaire)
-  );
-  ajouterContentPartAuPartMultiValeurs(
-    infosTitulaire,
-    getLibelle("Lieu de naissance"),
-    [TitulaireRequete.getVille(titulaire), TitulaireRequete.getPays(titulaire)]
-  );
+  ajouterContentPartAuPartUneValeur(infosTitulaire, `Nom Titulaire ${index}`, TitulaireRequete.getNom(titulaire));
+  ajouterContentPartAuPartUneValeur(infosTitulaire, "Prénom 1", TitulaireRequete.getPrenom1(titulaire));
+  ajouterContentPartAuPartUneValeur(infosTitulaire, "Prénom 2", TitulaireRequete.getPrenom2(titulaire));
+  ajouterContentPartAuPartUneValeur(infosTitulaire, "Prénom 3", TitulaireRequete.getPrenom3(titulaire));
+  ajouterContentPartAuPartUneValeur(infosTitulaire, "Né(e) le", TitulaireRequete.getDateNaissance(titulaire));
+  ajouterContentPartAuPartUneValeur(infosTitulaire, "Sexe", TitulaireRequete.getSexe(titulaire));
+  ajouterContentPartAuPartMultiValeurs(infosTitulaire, "Lieu de naissance", [
+    TitulaireRequete.getVille(titulaire),
+    TitulaireRequete.getPays(titulaire)
+  ]);
 
   return infosTitulaire;
-}
+};
 
-function parentsPresents(titulaires?: ITitulaireRequete[]) {
+const parentsPresents = (titulaires?: ITitulaireRequete[]) => {
   let parentsPresent = false;
 
   if (titulaires) {
@@ -152,15 +95,10 @@ function parentsPresents(titulaires?: ITitulaireRequete[]) {
   }
 
   return parentsPresent;
-}
+};
 
-function getParentsDesTitulaires(
-  titulaires: ITitulaireRequete[]
-): SectionPartProps[] {
-  const sortedTitulaires = triListeObjetsSurPropriete(
-    [...titulaires],
-    "position"
-  );
+const getParentsDesTitulaires = (titulaires: ITitulaireRequete[]): SectionPartProps[] => {
+  const sortedTitulaires = triListeObjetsSurPropriete([...titulaires], "position");
 
   return sortedTitulaires.map((titulaire: ITitulaireRequete, index: number) => {
     let sectionParents = {} as SectionPartProps;
@@ -171,51 +109,29 @@ function getParentsDesTitulaires(
     }
     return sectionParents;
   });
-}
+};
 
-function getParentsDuTitulaire(
-  parents: IParent[],
-  index: number
-): SectionPartContentProps {
-  const sortedParents = triListeObjetsSurPropriete(
-    [...parents],
-    "position"
-  ) as IParent[];
+const getParentsDuTitulaire = (parents: IParent[], index: number): SectionPartContentProps => {
+  const sortedParents = triListeObjetsSurPropriete([...parents], "position") as IParent[];
 
   return {
     contents: getParentsInfo(sortedParents),
-    title: getLibelle(`Parent titulaire ${index + 1}`)
+    title: `Parent titulaire ${index + 1}`
   };
-}
+};
 
-function getParentsInfo(parents: IParent[]): SectionContentProps[] {
+const getParentsInfo = (parents: IParent[]): SectionContentProps[] => {
   const infosParent = [] as SectionContentProps[];
 
-  ajouterContentPartAuPartUneValeur(
-    infosParent,
-    getLibelle("Nom parent 1"),
-    Parent.getNom(parents[0])
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosParent,
-    getLibelle("Prénom parent 1"),
-    Parent.getPrenoms(parents[0])
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosParent,
-    getLibelle("Nom parent 2"),
-    Parent.getNom(parents[1])
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosParent,
-    getLibelle("Prénom parent 2"),
-    Parent.getPrenoms(parents[1])
-  );
+  ajouterContentPartAuPartUneValeur(infosParent, "Nom parent 1", Parent.getNom(parents[0]));
+  ajouterContentPartAuPartUneValeur(infosParent, "Prénom parent 1", Parent.getPrenoms(parents[0]));
+  ajouterContentPartAuPartUneValeur(infosParent, "Nom parent 2", Parent.getNom(parents[1]));
+  ajouterContentPartAuPartUneValeur(infosParent, "Prénom parent 2", Parent.getPrenoms(parents[1]));
 
   return infosParent;
-}
+};
 
-function getRequerant(requerant: IRequerant): SectionPartProps[] {
+const getRequerant = (requerant: IRequerant): SectionPartProps[] => {
   return [
     {
       partContent: {
@@ -233,50 +149,30 @@ function getRequerant(requerant: IRequerant): SectionPartProps[] {
       }
     }
   ];
-}
+};
 
-function getRequerantInfo1(requerant: IRequerant): SectionContentProps[] {
+const getRequerantInfo1 = (requerant: IRequerant): SectionContentProps[] => {
   const infosRequerant = [] as SectionContentProps[];
 
-  ajouterContentPartAuPartUneValeur(
-    infosRequerant,
-    getLibelle("Qualité"),
-    requerant.qualiteRequerant.qualite?.libelle
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosRequerant,
-    getLibelle("Nom (ou raison sociale)"),
-    getNomOuRaisonSociale(requerant)
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosRequerant,
-    getLibelle("Nom d'usage"),
-    Requerant.getNomFamille(requerant)
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosRequerant,
-    getLibelle("Prénom"),
-    Requerant.getPrenom(requerant)
-  );
+  ajouterContentPartAuPartUneValeur(infosRequerant, "Qualité", requerant.qualiteRequerant.qualite?.libelle);
+  ajouterContentPartAuPartUneValeur(infosRequerant, "Nom (ou raison sociale)", getNomOuRaisonSociale(requerant));
+  ajouterContentPartAuPartUneValeur(infosRequerant, "Nom d'usage", Requerant.getNomFamille(requerant));
+  ajouterContentPartAuPartUneValeur(infosRequerant, "Prénom", Requerant.getPrenom(requerant));
   if (requerant.adresse != null) {
-    ajouterContentPartAuPartMultiValeurs(
-      infosRequerant,
-      getLibelle("Adresse"),
-      [
-        requerant.adresse?.ligne2,
-        requerant.adresse?.ligne3,
-        requerant.adresse?.ligne4,
-        requerant.adresse?.ligne5,
-        `${requerant.adresse?.codePostal} ${requerant.adresse?.ville}`,
-        requerant.adresse?.pays
-      ]
-    );
+    ajouterContentPartAuPartMultiValeurs(infosRequerant, "Adresse", [
+      requerant.adresse?.ligne2,
+      requerant.adresse?.ligne3,
+      requerant.adresse?.ligne4,
+      requerant.adresse?.ligne5,
+      `${requerant.adresse?.codePostal} ${requerant.adresse?.ville}`,
+      requerant.adresse?.pays
+    ]);
   }
 
   return infosRequerant;
-}
+};
 
-function getNomOuRaisonSociale(requerant: IRequerant) {
+const getNomOuRaisonSociale = (requerant: IRequerant) => {
   let nom: string | undefined;
   switch (requerant?.qualiteRequerant.qualite) {
     case Qualite.MANDATAIRE_HABILITE:
@@ -295,10 +191,10 @@ function getNomOuRaisonSociale(requerant: IRequerant) {
       nom = "";
       break;
   }
-  return nom ? nom : "";
-}
+  return nom ?? "";
+};
 
-function getRequerantInfo2(requerant: IRequerant): SectionContentProps[] {
+const getRequerantInfo2 = (requerant: IRequerant): SectionContentProps[] => {
   const infosRequerant = [] as SectionContentProps[];
 
   const lienTitulaire =
@@ -306,38 +202,22 @@ function getRequerantInfo2(requerant: IRequerant): SectionContentProps[] {
       ? requerant?.lienRequerant?.natureLien
       : requerant?.lienRequerant?.lien.libelle;
 
-  ajouterContentPartAuPartUneValeur(
-    infosRequerant,
-    getLibelle("Type (si Mandataire ou Institutionnel"),
-    getTypeRequerant(requerant)
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosRequerant,
-    getLibelle("N° de téléphone"),
-    requerant.telephone
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosRequerant,
-    getLibelle("Lien avec le titulaire"),
-    lienTitulaire
-  );
+  ajouterContentPartAuPartUneValeur(infosRequerant, "Type (si Mandataire ou Institutionnel", getTypeRequerant(requerant));
+  ajouterContentPartAuPartUneValeur(infosRequerant, "N° de téléphone", requerant.telephone);
+  ajouterContentPartAuPartUneValeur(infosRequerant, "Lien avec le titulaire", lienTitulaire);
 
   return infosRequerant;
-}
+};
 
-function getRequerantInfo3(requerant: IRequerant): SectionContentProps[] {
+const getRequerantInfo3 = (requerant: IRequerant): SectionContentProps[] => {
   const infosRequerant = [] as SectionContentProps[];
 
-  ajouterContentPartAuPartUneValeur(
-    infosRequerant,
-    getLibelle("Adresse email"),
-    requerant.courriel
-  );
+  ajouterContentPartAuPartUneValeur(infosRequerant, "Adresse email", requerant.courriel);
 
   return infosRequerant;
-}
+};
 
-function getTypeRequerant(requerant: IRequerant) {
+const getTypeRequerant = (requerant: IRequerant) => {
   let type: string | undefined;
   const qualiteRequerant = requerant.qualiteRequerant;
 
@@ -352,10 +232,10 @@ function getTypeRequerant(requerant: IRequerant) {
         ? qualiteRequerant.institutionnel?.nature
         : qualiteRequerant.institutionnel?.type.libelle;
   }
-  return type ? type : "";
-}
+  return type ?? "";
+};
 
-function getMandant(mandant: IMandant): SectionPartProps[] {
+const getMandant = (mandant: IMandant): SectionPartProps[] => {
   return [
     {
       partContent: {
@@ -368,55 +248,29 @@ function getMandant(mandant: IMandant): SectionPartProps[] {
       }
     }
   ];
-}
+};
 
-function getMandantInfo1(mandant: IMandant): SectionContentProps[] {
+const getMandantInfo1 = (mandant: IMandant): SectionContentProps[] => {
   const infosMandant = [] as SectionContentProps[];
 
-  const lienTitulaire =
-    mandant?.typeLien === TypeLienMandant.AUTRE
-      ? mandant?.natureLien
-      : mandant?.typeLien?.libelle;
+  const lienTitulaire = mandant?.typeLien === TypeLienMandant.AUTRE ? mandant?.natureLien : mandant?.typeLien?.libelle;
 
-  ajouterContentPartAuPartUneValeur(
-    infosMandant,
-    getLibelle("Type"),
-    mandant.type.libelle
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosMandant,
-    getLibelle("Lien avec titulaire"),
-    lienTitulaire
-  );
+  ajouterContentPartAuPartUneValeur(infosMandant, "Type", mandant.type.libelle);
+  ajouterContentPartAuPartUneValeur(infosMandant, "Lien avec titulaire", lienTitulaire);
 
   return infosMandant;
-}
+};
 
-function getMandantInfo2(mandant: IMandant): SectionContentProps[] {
+const getMandantInfo2 = (mandant: IMandant): SectionContentProps[] => {
   const infosMandant = [] as SectionContentProps[];
-
-  ajouterContentPartAuPartUneValeur(
-    infosMandant,
-    getLibelle("Nom"),
-    Mandant.getNom(mandant)
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosMandant,
-    getLibelle("Prénom"),
-    Mandant.getPrenom(mandant)
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosMandant,
-    getLibelle("Raison sociale"),
-    mandant.raisonSociale
-  );
+  ajouterContentPartAuPartUneValeur(infosMandant, "Nom", Mandant.getNom(mandant));
+  ajouterContentPartAuPartUneValeur(infosMandant, "Prénom", Mandant.getPrenom(mandant));
+  ajouterContentPartAuPartUneValeur(infosMandant, "Raison sociale", mandant.raisonSociale);
 
   return infosMandant;
-}
+};
 
-function getRequeteDelivrance(
-  detailRequete: IRequeteDelivrance
-): SectionPanelProps {
+const getRequeteDelivrance = (detailRequete: IRequeteDelivrance): SectionPanelProps => {
   return {
     panelAreas: [
       {
@@ -427,87 +281,35 @@ function getRequeteDelivrance(
             }
           }
         ],
-        title: getLibelle("Requête")
+        title: "Requête"
       }
     ],
     title: ""
   };
-}
+};
 
-function getRequeteDelivranceInfo(
-  requete: IRequeteDelivrance
-): SectionContentProps[] {
+const getRequeteDelivranceInfo = (requete: IRequeteDelivrance): SectionContentProps[] => {
   const infosRequete = [] as SectionContentProps[];
   ajouterContentPartAuPartUneValeur(
     infosRequete,
-    getLibelle("N° télédossier"),
-    requete.provenanceRequete.provenanceServicePublic
-      ? requete.provenanceRequete.provenanceServicePublic.referenceDila
-      : ""
+    "N° télédossier",
+    requete.provenanceRequete.provenanceServicePublic ? requete.provenanceRequete.provenanceServicePublic.referenceDila : ""
   );
-  ajouterContentPartAuPartUneValeur(
-    infosRequete,
-    getLibelle("Sous-type"),
-    requete.sousType.libelle
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosRequete,
-    getLibelle("Statut"),
-    requete.statutCourant.statut.libelle
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosRequete,
-    getLibelle("Nature"),
-    requete.evenement?.natureActe.libelle
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosRequete,
-    getLibelle("Date de l'évènement"),
-    EvenementRequete.getDate(requete.evenement)
-  );
-  ajouterContentPartAuPartMultiValeurs(
-    infosRequete,
-    getLibelle("Lieu de l'évènement"),
-    [
-      EvenementRequete.getVille(requete.evenement),
-      EvenementRequete.getPays(requete.evenement)
-    ]
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosRequete,
-    getLibelle("Document"),
-    requete.documentDemande.libelle
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosRequete,
-    getLibelle("Motif"),
-    requete.motif?.libelle
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosRequete,
-    getLibelle("Complément motif"),
-    requete.complementMotif
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosRequete,
-    getLibelle("Nb exemplaire"),
-    requete.nbExemplaireImpression?.toString()
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosRequete,
-    getLibelle("Canal"),
-    requete.canal.libelle
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosRequete,
-    getLibelle("Provenance"),
-    requete.provenanceRequete.provenance.libelle
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosRequete,
-    getLibelle("Date de création de la requête"),
-    Requete.getDateCreation(requete)
-  );
+  ajouterContentPartAuPartUneValeur(infosRequete, "Sous-type", requete.sousType.libelle);
+  ajouterContentPartAuPartUneValeur(infosRequete, "Statut", requete.statutCourant.statut.libelle);
+  ajouterContentPartAuPartUneValeur(infosRequete, "Nature", requete.evenement?.natureActe.libelle);
+  ajouterContentPartAuPartUneValeur(infosRequete, "Date de l'évènement", EvenementRequete.getDate(requete.evenement));
+  ajouterContentPartAuPartMultiValeurs(infosRequete, "Lieu de l'évènement", [
+    EvenementRequete.getVille(requete.evenement),
+    EvenementRequete.getPays(requete.evenement)
+  ]);
+  ajouterContentPartAuPartUneValeur(infosRequete, "Document", requete.documentDemande?.libelle);
+  ajouterContentPartAuPartUneValeur(infosRequete, "Motif", requete.motif?.libelle);
+  ajouterContentPartAuPartUneValeur(infosRequete, "Complément motif", requete.complementMotif);
+  ajouterContentPartAuPartUneValeur(infosRequete, "Nb exemplaire", requete.nbExemplaireImpression?.toString());
+  ajouterContentPartAuPartUneValeur(infosRequete, "Canal", requete.canal.libelle);
+  ajouterContentPartAuPartUneValeur(infosRequete, "Provenance", requete.provenanceRequete.provenance.libelle);
+  ajouterContentPartAuPartUneValeur(infosRequete, "Date de création de la requête", Requete.getDateCreation(requete));
 
   return infosRequete;
-}
+};

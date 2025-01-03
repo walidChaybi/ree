@@ -1,6 +1,6 @@
 import { pacsModificationNotaireMap } from "@mock/data/PACS";
 import { IOfficier } from "@model/agent/IOfficier";
-import { NatureRca } from "@model/etatcivil/enum/NatureRca";
+import { INatureRca } from "@model/etatcivil/enum/NatureRca";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
 import { IDataFicheProps } from "@pages/fiche/FichePage";
@@ -20,13 +20,7 @@ test("ficheUtils getFicheTitle works", () => {
   );
   expect(title).toBe("CATEGORIE - nom1 et nom2");
 
-  const title2 = getFicheTitle(
-    "categorie",
-    "2020",
-    "numero",
-    [{ nom: "nom1", prenom: "prenom" }],
-    TypeFiche.PACS
-  );
+  const title2 = getFicheTitle("categorie", "2020", "numero", [{ nom: "nom1", prenom: "prenom" }], TypeFiche.PACS);
   expect(title2).toBe("CATEGORIE - nom1 prenom - N° 2020 - numero");
 });
 
@@ -36,15 +30,9 @@ test("ficheUtils setFiche PACS works", () => {
     categorie: TypeFiche.PACS
   };
 
-  const fiche = setFiche(
-    {} as IOfficier,
-    dataFiche,
-    pacsModificationNotaireMap
-  );
+  const fiche = setFiche({} as IOfficier, dataFiche, pacsModificationNotaireMap);
 
-  expect(fiche.bandeauFiche.titreFenetre).toBe(
-    "PACS - DUREL Marie Charlotte et DUPE Louis-Philippe - N° 2018 - 123456"
-  );
+  expect(fiche.bandeauFiche.titreFenetre).toBe("PACS - DUREL Marie Charlotte et DUPE Louis-Philippe - N° 2018 - 123456");
   expect(fiche.bandeauFiche.statutsFiche).toStrictEqual([
     {
       statut: "Actif",
@@ -75,7 +63,7 @@ test("ficheUtils setFiche RCA works", () => {
     alertes: [{ alerte: "ouhou", dateCreation: 1 }],
     interesses: [],
     statutsFiche: [],
-    nature: "hi" as unknown as NatureRca,
+    nature: "hi" as unknown as INatureRca,
     mandataires: [],
     inscriptionsImpactees: [],
     inscriptionsLiees: [],

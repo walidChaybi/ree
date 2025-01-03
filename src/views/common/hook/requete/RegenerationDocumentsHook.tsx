@@ -1,27 +1,13 @@
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { CODE_EXTRAIT_PLURILINGUE } from "@model/requete/enum/DocumentDelivranceConstante";
-import { Validation } from "@model/requete/enum/Validation";
-import {
-  documentDejaCreer,
-  DocumentReponse,
-  IDocumentReponse
-} from "@model/requete/IDocumentReponse";
+import { DocumentReponse, IDocumentReponse, documentDejaCreer } from "@model/requete/IDocumentReponse";
 import { OptionsCourrier } from "@model/requete/IOptionCourrier";
-import {
-  IRequeteDelivrance,
-  RequeteDelivrance
-} from "@model/requete/IRequeteDelivrance";
+import { IRequeteDelivrance, RequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { Validation } from "@model/requete/enum/Validation";
 import { useEffect, useState } from "react";
-import {
-  IGenerationECParams,
-  useGenerationEC
-} from "../generation/generationECHook/generationECHook";
-import {
-  IGenerationCourrierParams,
-  useGenerationCourrierHook
-} from "./GenerationCourrierHook";
+import { IGenerationECParams, useGenerationEC } from "../generation/generationECHook/generationECHook";
+import { IGenerationCourrierParams, useGenerationCourrierHook } from "./GenerationCourrierHook";
 
 export interface IRegenerationDocumentsParams {
   requete: IRequeteDelivrance;
@@ -32,30 +18,21 @@ export interface IRegenerationDocumentsParams {
   valeursCourrierParDefaut: SaisieCourrier;
 }
 
-export function useRegenerationDocumentsHook(
-  params?: IRegenerationDocumentsParams
-) {
-  const [generationECParams, setGenerationECParams] =
-    useState<IGenerationECParams>();
+export function useRegenerationDocumentsHook(params?: IRegenerationDocumentsParams) {
+  const [generationECParams, setGenerationECParams] = useState<IGenerationECParams>();
 
-  const [documentsARegenerer, setDocumentsARegenerer] =
-    useState<IDocumentReponse[]>();
+  const [documentsARegenerer, setDocumentsARegenerer] = useState<IDocumentReponse[]>();
 
-  const [generationCourrierParams, setGenerationCourrierParams] =
-    useState<IGenerationCourrierParams>();
+  const [generationCourrierParams, setGenerationCourrierParams] = useState<IGenerationCourrierParams>();
 
   const resultatGenerationEC = useGenerationEC(generationECParams);
 
-  const resultatGenerationCourrier = useGenerationCourrierHook(
-    generationCourrierParams
-  );
+  const resultatGenerationCourrier = useGenerationCourrierHook(generationCourrierParams);
 
   // 1 - Regénérer tous les documents
   useEffect(() => {
     if (params) {
-      const docsARegenerer = RequeteDelivrance.getExtraitsCopies(
-        params.requete
-      );
+      const docsARegenerer = RequeteDelivrance.getExtraitsCopies(params.requete);
       ajouteCourrierSiDemande(params, docsARegenerer);
       if (docsARegenerer.length) {
         setDocumentsARegenerer([...docsARegenerer]);
@@ -69,12 +46,7 @@ export function useRegenerationDocumentsHook(
   useEffect(() => {
     if (documentsARegenerer?.length && params) {
       const document = documentsARegenerer[0];
-      genereECOuCourrier(
-        document,
-        setGenerationECParams,
-        params,
-        setGenerationCourrierParams
-      );
+      genereECOuCourrier(document, setGenerationECParams, params, setGenerationCourrierParams);
     } else if (documentsARegenerer?.length === 0 && params?.callBack) {
       params.callBack();
     }
@@ -82,10 +54,7 @@ export function useRegenerationDocumentsHook(
   }, [documentsARegenerer]);
 
   useEffect(() => {
-    if (
-      (resultatGenerationEC || resultatGenerationCourrier) &&
-      documentsARegenerer
-    ) {
+    if ((resultatGenerationEC || resultatGenerationCourrier) && documentsARegenerer) {
       documentsARegenerer.shift();
       setDocumentsARegenerer([...documentsARegenerer]);
     }
@@ -106,10 +75,7 @@ function genereECOuCourrier(
   }
 }
 
-function ajouteCourrierSiDemande(
-  params: IRegenerationDocumentsParams,
-  docsARegenerer: IDocumentReponse[]
-) {
+function ajouteCourrierSiDemande(params: IRegenerationDocumentsParams, docsARegenerer: IDocumentReponse[]) {
   if (params.regenererCourrier) {
     const courrier = RequeteDelivrance.getCourrier(params.requete);
     if (courrier) {
@@ -118,11 +84,7 @@ function ajouteCourrierSiDemande(
   }
 }
 
-function genereCourrier(
-  setGenerationCourrierParams: any,
-  document: IDocumentReponse,
-  params: IRegenerationDocumentsParams
-) {
+function genereCourrier(setGenerationCourrierParams: any, document: IDocumentReponse, params: IRegenerationDocumentsParams) {
   setGenerationCourrierParams({
     mettreAJourStatut: false,
     requete: params.requete,
@@ -138,46 +100,22 @@ function genereCourrier(
   });
 }
 
-function genereEC(
-  setGenerationECParams: any,
-  document: IDocumentReponse,
-  params: IRegenerationDocumentsParams
-) {
+function genereEC(setGenerationECParams: any, document: IDocumentReponse, params: IRegenerationDocumentsParams) {
   setGenerationECParams({
     idActe: document.idActe,
     acte: params.acte,
     requete: params.requete,
-    validation:
-      params.problemePlurilingue === undefined
-        ? document.validation
-        : getValidation(document, params.problemePlurilingue),
-    mentionsRetirees: document.mentionsRetirees
-      ? document.mentionsRetirees?.map(el => el.idMention)
-      : [],
-    pasDAction: documentDejaCreer(
-      params.requete.documentsReponses,
-      params.requete.choixDelivrance
-    ),
-    choixDelivrance: DocumentDelivrance.getChoixDelivranceFromUUID(
-      document.typeDocument
-    )
+    validation: params.problemePlurilingue === undefined ? document.validation : getValidation(document, params.problemePlurilingue),
+    mentionsRetirees: document.mentionsRetirees ? document.mentionsRetirees?.map(el => el.idMention) : [],
+    pasDAction: documentDejaCreer(params.requete.documentsReponses, params.requete.choixDelivrance),
+    choixDelivrance: DocumentDelivrance.getChoixDelivranceFromUUID(document.typeDocument)
   });
 }
 
-function getValidation(
-  document: IDocumentReponse,
-  problemePlurilingue: boolean
-) {
-  if (
-    document.typeDocument ===
-      DocumentDelivrance.getKeyForCode(CODE_EXTRAIT_PLURILINGUE) &&
-    problemePlurilingue
-  ) {
+function getValidation(document: IDocumentReponse, problemePlurilingue: boolean) {
+  if (document.typeDocument === DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_PLURILINGUE) && problemePlurilingue) {
     return Validation.E;
-  } else if (
-    DocumentDelivrance.estExtraitAvecOuSansFilliation(document.typeDocument) &&
-    document.validation === Validation.E
-  ) {
+  } else if (DocumentDelivrance.estExtraitAvecOuSansFilliation(document.typeDocument) && document.validation === Validation.E) {
     return Validation.N;
   }
   return document.validation ? document.validation : Validation.N;

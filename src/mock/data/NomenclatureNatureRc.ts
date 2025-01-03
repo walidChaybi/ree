@@ -1,0 +1,311 @@
+import { INatureRc } from "@model/etatcivil/enum/NatureRc";
+
+export const NATURE_RC = [
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d27390122",
+    nom: "NATURE_RC",
+    code: "CO_CURATELLE_RENFORCEE",
+    libelle: "co-curatelle renforcée",
+    estActif: false,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "CURATELLE"
+  },
+  {
+    id: "bba162ee-4685-4e2e-b31b-dc7a0dece833",
+    nom: "NATURE_RC",
+    code: "INCONNUE",
+    libelle: "Inconnue",
+    estActif: false,
+    type: "Inconnu",
+    article: "",
+    categorieRCRCA: "INCONNUE"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d27390131",
+    nom: "NATURE_RC",
+    code: "INTERDICTION",
+    libelle: "interdiction",
+    estActif: false,
+    type: "Requête",
+    decisionCouple: false,
+    article: "l'",
+    categorieRCRCA: "INTERDICTION"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d27390123",
+    nom: "NATURE_RC",
+    code: "CURATELLE_512",
+    libelle: "curatelle 512",
+    estActif: false,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "CURATELLE"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d27390124",
+    nom: "NATURE_RC",
+    code: "CURATELLE_AGGRAVEE",
+    libelle: "curatelle aggravée",
+    estActif: false,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "CURATELLE"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d27390125",
+    nom: "NATURE_RC",
+    code: "CURATELLE_AGGRAVEE_512",
+    libelle: "curatelle aggravée 512",
+    estActif: false,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "CURATELLE"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d27390126",
+    nom: "NATURE_RC",
+    code: "CURATELLE_ALLEGEE",
+    libelle: "curatelle allégée",
+    estActif: true,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "CURATELLE"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d27390127",
+    nom: "NATURE_RC",
+    code: "CURATELLE_AMENAGEE",
+    libelle: "curatelle aménagée",
+    estActif: true,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "CURATELLE"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d27390128",
+    nom: "NATURE_RC",
+    code: "CURATELLE_RENFORCEE",
+    libelle: "curatelle renforcée",
+    estActif: true,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "CURATELLE"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d27390129",
+    nom: "NATURE_RC",
+    code: "CURATELLE_RENFORCEE_512",
+    libelle: "curatelle renforcée 512",
+    estActif: false,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "CURATELLE"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d2739012a",
+    nom: "NATURE_RC",
+    code: "CURATELLE_RENFORCEE_AMENAGEE",
+    libelle: "curatelle renforcée aménagée",
+    estActif: true,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "CURATELLE"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d2739012b",
+    nom: "NATURE_RC",
+    code: "CURATELLE_RENFORCEE_BIENS",
+    libelle: "curatelle renforcée aux biens",
+    estActif: true,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "CURATELLE"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d2739012c",
+    nom: "NATURE_RC",
+    code: "CURATELLE_RENFORCEE_BIENS_PERSONNE",
+    libelle: "curatelle renforcée aux biens et à la personne",
+    estActif: true,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "CURATELLE"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d2739012d",
+    nom: "NATURE_RC",
+    code: "CURATELLE_SIMPLE",
+    libelle: "curatelle simple",
+    estActif: true,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "CURATELLE"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d2739012e",
+    nom: "NATURE_RC",
+    code: "CURATELLE",
+    libelle: "curatelle",
+    estActif: false,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "CURATELLE"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d27390130",
+    nom: "NATURE_RC",
+    code: "HABILITATION_FAMILIALE_GENERALE",
+    libelle: "habilitation familiale générale",
+    estActif: true,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "l'",
+    categorieRCRCA: "HABILITATION "
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d27390132",
+    nom: "NATURE_RC",
+    code: "HOMOLOGATION_JUDICIAIRE",
+    libelle: "homologation judiciaire d'un acte de changement de régime matrimonial",
+    estActif: true,
+    type: "Requête",
+    decisionCouple: true,
+    article: "l'",
+    categorieRCRCA: "REGIME MATRIMONIAL"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d27390133",
+    nom: "NATURE_RC",
+    code: "RADIATION_REQUETE_HOMOLOGATION_JUDICIAIRE",
+    libelle: "radiation d'une requête en homologation judiciaire d'un acte de changement de régime matrimonial",
+    estActif: true,
+    type: "Requête",
+    decisionCouple: true,
+    article: "la",
+    categorieRCRCA: "REGIME MATRIMONIAL"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d27390134",
+    nom: "NATURE_RC",
+    code: "SEPARATION_JUDICIAIRE_BIENS",
+    libelle: "séparation judiciaire de biens",
+    estActif: true,
+    type: "Requête",
+    decisionCouple: true,
+    article: "la",
+    categorieRCRCA: "REGIME MATRIMONIAL"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d27390135",
+    nom: "NATURE_RC",
+    code: "TRANSFERT_POUVOIRS",
+    libelle: "transfert de pouvoirs",
+    estActif: true,
+    type: "Requête",
+    decisionCouple: true,
+    article: "le",
+    categorieRCRCA: "REGIME MATRIMONIAL"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d27390136",
+    nom: "NATURE_RC",
+    code: "TUTELLE",
+    libelle: "tutelle",
+    estActif: true,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "TUTELLE"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d27390137",
+    nom: "NATURE_RC",
+    code: "TUTELLE_ALLEGEE",
+    libelle: "tutelle allégée",
+    estActif: true,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "TUTELLE"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d27390138",
+    nom: "NATURE_RC",
+    code: "TUTELLE_AMENAGEE",
+    libelle: "tutelle aménagée",
+    estActif: true,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "TUTELLE"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d27390139",
+    nom: "NATURE_RC",
+    code: "TUTELLE_BIENS",
+    libelle: "tutelle aux biens",
+    estActif: true,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "TUTELLE"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d2739013a",
+    nom: "NATURE_RC",
+    code: "TUTELLE_BIENS_PERSONNE",
+    libelle: "tutelle aux biens et à la personne",
+    estActif: true,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "TUTELLE"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d2739013b",
+    nom: "NATURE_RC",
+    code: "TUTELLE_BIENS_PERSONNE_ASSISTANCE",
+    libelle: "tutelle aux biens et à la personne (avec assistance)",
+    estActif: true,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "TUTELLE"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d2739013c",
+    nom: "NATURE_RC",
+    code: "TUTELLE_BIENS_PERSONNE_REPRESENTATION",
+    libelle: "tutelle aux biens et à la personne (avec représentation)",
+    estActif: true,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "TUTELLE"
+  },
+  {
+    id: "058a436b-330d-4c3c-83e0-e49d27390121",
+    nom: "NATURE_RC",
+    code: "PRESOMPTION_ABSENCE",
+    libelle: "présomption d'absence",
+    estActif: true,
+    type: "Requête",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "ABSENCE"
+  }
+] as INatureRc[];

@@ -1,7 +1,7 @@
 import { CONTENU, LIBELLE_OPTION } from "@composant/formulaire/ConstantesNomsForm";
 import { OptionCourrier } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { IDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import SettingsBackupRestore from "@mui/icons-material/SettingsBackupRestore";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
@@ -27,7 +27,7 @@ interface OptionsCourrierFormProps {
   optionsChoisies: OptionCourrier[];
   setOptionsChoisies: (options: OptionCourrier[]) => void;
   setCheckOptions: () => void;
-  documentDelivranceChoisi?: DocumentDelivrance;
+  documentDelivranceChoisi?: IDocumentDelivrance | null;
 }
 
 export type OptionsCourrierSubFormProps = SubFormProps & OptionsCourrierFormProps;

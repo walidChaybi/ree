@@ -1,12 +1,15 @@
 import { getOptionsCourriers } from "@api/appels/requeteApi";
 import { OptionsCourrier } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { IDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 import { recupererLesOptionsDisponiblesPourLeCourrier } from "../contenuForm/sousFormulaires/GestionOptionsCourrier";
 
-export function useOptionsCourriersApiHook(documentDelivranceChoisi?: DocumentDelivrance, requete?: IRequeteDelivrance): OptionsCourrier {
+export function useOptionsCourriersApiHook(
+  documentDelivranceChoisi?: IDocumentDelivrance | null,
+  requete?: IRequeteDelivrance
+): OptionsCourrier {
   const [optionsCourrierDisponibles, setOptionsCourrierDisponibles] = useState<OptionsCourrier>([]);
 
   useEffect(() => {

@@ -38,14 +38,10 @@ export class PieceJustificativeCreation {
     }
   };
 
-  public static getNumeroOrdre(
-    pjCreation: IPieceJustificativeCreation
-  ): number {
+  public static getNumeroOrdre(pjCreation: IPieceJustificativeCreation): number {
     const spec =
       //@ts-ignore
-      PieceJustificativeCreation.pieceJustificativeCreationSpec[
-        pjCreation.typePieceJustificative.code
-      ];
+      PieceJustificativeCreation.pieceJustificativeCreationSpec[pjCreation.typePieceJustificative?.code ?? null];
     return spec ? spec.ordre : 0;
   }
 
@@ -60,39 +56,26 @@ export class PieceJustificativeCreation {
       });
   }
 
-  public static tri(
-    piecesJustificatives?: IPieceJustificativeCreation[]
-  ): IPieceJustificativeCreation[] {
-    return (
-      piecesJustificatives?.sort(
-        (pj1, pj2) => pj1.ordreNatali - pj2.ordreNatali
-      ) || []
-    );
+  public static tri(piecesJustificatives?: IPieceJustificativeCreation[]): IPieceJustificativeCreation[] {
+    return piecesJustificatives?.sort((pj1, pj2) => pj1.ordreNatali - pj2.ordreNatali) || [];
   }
 
-  public static getIdActeInscription(
-    pieceJustificative: IPieceJustificativeCreation
-  ): string {
-    return (
-      pieceJustificative.idRc ||
-      pieceJustificative.idRca ||
-      pieceJustificative.idPacs ||
-      pieceJustificative.idActe ||
-      ""
-    );
+  public static getIdActeInscription(pieceJustificative: IPieceJustificativeCreation): string {
+    return pieceJustificative.idRc ?? pieceJustificative.idRca ?? pieceJustificative.idPacs ?? pieceJustificative.idActe ?? "";
   }
 
-  public static getTypeActeInscription(
-    pieceJustificative: IPieceJustificativeCreation
-  ): string | undefined {
-    return pieceJustificative.idRc
-      ? "INSCRIPTION_RC"
-      : pieceJustificative.idRca
-      ? "INSCRIPTION_RCA"
-      : pieceJustificative.idPacs
-      ? "PACS"
-      : pieceJustificative.idActe
-      ? "ACTE"
-      : undefined;
+  public static getTypeActeInscription(pieceJustificative: IPieceJustificativeCreation): string | undefined {
+    switch (true) {
+      case Boolean(pieceJustificative.idRc):
+        return "INSCRIPTION_RC";
+      case Boolean(pieceJustificative.idRca):
+        return "INSCRIPTION_RCA";
+      case Boolean(pieceJustificative.idPacs):
+        return "PACS";
+      case Boolean(pieceJustificative.idActe):
+        return "ACTE";
+      default:
+        return undefined;
+    }
   }
 }

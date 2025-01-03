@@ -1,9 +1,6 @@
 import { actions } from "@mock/data/Actions";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
-import {
-  IRequeteDelivrance,
-  RequeteDelivrance
-} from "@model/requete/IRequeteDelivrance";
+import { IRequeteDelivrance, RequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { waitFor } from "@testing-library/react";
@@ -13,10 +10,11 @@ test("Attendu: RequeteDelivrance.getDocumentsDeDelivrance fonctionne correctemen
   let documentDelivrance: IDocumentReponse;
   let requete: IRequeteDelivrance;
 
+  const CARN_PAC_01 = "CARN_PAC_01";
+
   documentDelivrance = {
     nom: "test",
-    typeDocument:
-      DocumentDelivrance.getCourrierNonDelivranceAttestationPacsUUID()
+    typeDocument: DocumentDelivrance.idDepuisCode(CARN_PAC_01)
   } as IDocumentReponse;
 
   const autreDocument = {
@@ -29,9 +27,7 @@ test("Attendu: RequeteDelivrance.getDocumentsDeDelivrance fonctionne correctemen
   } as IRequeteDelivrance;
 
   waitFor(() => {
-    expect(RequeteDelivrance.getDocumentsDeDelivrance(requete)).toEqual([
-      documentDelivrance
-    ]);
+    expect(RequeteDelivrance.getDocumentsDeDelivrance(requete)).toEqual([documentDelivrance]);
   });
 });
 
@@ -41,9 +37,7 @@ test("estAuStatut", () => {
       statut: StatutRequete.A_TRAITER
     }
   } as IRequeteDelivrance;
-  expect(
-    RequeteDelivrance.estAuStatut(requete, StatutRequete.A_TRAITER)
-  ).toBeTruthy();
+  expect(RequeteDelivrance.estAuStatut(requete, StatutRequete.A_TRAITER)).toBeTruthy();
 });
 
 test("estAuStatutASigner", () => {
@@ -56,13 +50,9 @@ test("estAuStatutASigner", () => {
 });
 
 test("RequeteDelivrance.estARevoir DOIT retourner VRAI QUAND une action à revoir est présente en dernier ou avant des actions 'a signer sinon FAUX'", () => {
-  expect(
-    RequeteDelivrance.estARevoir({ actions: [] } as any as IRequeteDelivrance)
-  ).toBeFalsy();
+  expect(RequeteDelivrance.estARevoir({ actions: [] } as any as IRequeteDelivrance)).toBeFalsy();
 
-  expect(
-    RequeteDelivrance.estARevoir({ actions } as IRequeteDelivrance)
-  ).toBeTruthy();
+  expect(RequeteDelivrance.estARevoir({ actions } as IRequeteDelivrance)).toBeTruthy();
 
   expect(
     RequeteDelivrance.estARevoir({

@@ -1,10 +1,6 @@
 import { PaysSecabilite } from "@model/requete/enum/PaysSecabilite";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
-import {
-  formatPremieresLettresMajusculesNomCompose,
-  getValeurOuVide
-} from "@util/Utils";
 import { EtatCivilUtil } from "@utilMetier/EtatCivilUtil";
 
 export interface INomSecablePostulant {
@@ -14,13 +10,9 @@ export interface INomSecablePostulant {
   nomPartie2: string;
 }
 
-export function getNomSecable(
-  retenueSdanf?: IRetenueSdanf
-): INomSecablePostulant {
-  const nom = getValeurOuVide(retenueSdanf?.nomNaissance);
-  const estPaysSecable = PaysSecabilite.estSecable(
-    formatPremieresLettresMajusculesNomCompose(retenueSdanf?.paysNaissance)
-  );
+export function getNomSecable(retenueSdanf?: IRetenueSdanf): INomSecablePostulant {
+  const nom = retenueSdanf?.nomNaissance ?? "";
+  const estPaysSecable = PaysSecabilite.estSecable(retenueSdanf?.paysNaissance ?? "");
   const vocables = EtatCivilUtil.getVocables(nom);
   const estSecable = estPaysSecable && vocables.length > 1;
   return {
@@ -32,21 +24,13 @@ export function getNomSecable(
 }
 
 export function estJourMoisVide(retenueSdanf?: IRetenueSdanf): boolean {
-  return (
-    !retenueSdanf?.jourNaissance &&
-    !retenueSdanf?.moisNaissance &&
-    !!retenueSdanf?.anneeNaissance
-  );
+  return !retenueSdanf?.jourNaissance && !retenueSdanf?.moisNaissance && !!retenueSdanf?.anneeNaissance;
 }
 
-export function filtrePrenomsNonFrancises(
-  prenoms: IPrenomOrdonnes[] = []
-): IPrenomOrdonnes[] {
+export function filtrePrenomsNonFrancises(prenoms: IPrenomOrdonnes[] = []): IPrenomOrdonnes[] {
   return prenoms.filter(prenom => !prenom.estPrenomFrRetenuSdanf);
 }
 
-export function filtrePrenomsFrancises(
-  prenoms: IPrenomOrdonnes[] = []
-): IPrenomOrdonnes[] {
+export function filtrePrenomsFrancises(prenoms: IPrenomOrdonnes[] = []): IPrenomOrdonnes[] {
   return prenoms.filter(prenom => prenom.estPrenomFrRetenuSdanf);
 }

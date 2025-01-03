@@ -1,17 +1,10 @@
 /* istanbul ignore file */
 
-import { MandataireRc } from "@model/etatcivil/enum/MandataireRc";
-import { NatureRc } from "@model/etatcivil/enum/NatureRc";
-
 export const ficheInscriptionRepertoireCivil = {
-  nature: new NatureRc("la", "Protection des majeurs", "CURATELLE_AMENAGEE"),
+  nature: { article: "la", libelle: "Protection des majeurs", code: "CURATELLE_AMENAGEE" },
   mandataires: [
-    new MandataireRc(
-      "Mandataire judiciaire à la protection des majeurs association"
-    ),
-    new MandataireRc(
-      "Mandataire judiciaire à la protection des majeurs  individuel"
-    )
+    { libelle: "Mandataire judiciaire à la protection des majeurs association" },
+    { libelle: "Mandataire judiciaire à la protection des majeurs  individuel" }
   ],
   typeInscription: "RENOUVELLEMENT",
   inscriptionsImpactees: [
@@ -53,30 +46,23 @@ export const ficheInscriptionRepertoireCivil = {
   ]
 };
 
-export const ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImpactes =
-  {
-    nature: new NatureRc("la", "Protection des majeurs", "CURATELLE_AMENAGEE"),
-    mandataires: [
-      "Mandataire judiciaire à la protection des majeurs association",
-      "Préposé d'établissement"
-    ],
-    typeInscription: "RENOUVELLEMENT",
-    inscriptionsImpactees: [],
-    inscriptionsLiees: [],
-    dateInscription: new Date(1518652800000),
-    duree: {
-      nombreDuree: 2,
-      uniteDuree: "années",
-      dateFinDeMesure: 1581724800000
-    }
-  };
+export const ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImpactes = {
+  nature: { article: "la", libelle: "Protection des majeurs", code: "CURATELLE_AMENAGEE" },
+  mandataires: ["Mandataire judiciaire à la protection des majeurs association", "Préposé d'établissement"],
+  typeInscription: "RENOUVELLEMENT",
+  inscriptionsImpactees: [],
+  inscriptionsLiees: [],
+  dateInscription: new Date(1518652800000),
+  duree: {
+    nombreDuree: 2,
+    uniteDuree: "années",
+    dateFinDeMesure: 1581724800000
+  }
+};
 
 export const ficheInscriptionRepertoireCivilSansUniteDureeInscription = {
-  nature: new NatureRc("la", "Protection des majeurs", "CURATELLE_AMENAGEE"),
-  mandataires: [
-    "Mandataire judiciaire à la protection des majeurs association",
-    "Préposé d'établissement"
-  ],
+  nature: { article: "la", libelle: "Protection des majeurs", code: "CURATELLE_AMENAGEE" },
+  mandataires: ["Mandataire judiciaire à la protection des majeurs association", "Préposé d'établissement"],
   typeInscription: "RENOUVELLEMENT",
   inscriptionsImpactees: [],
   inscriptionsLiees: [],

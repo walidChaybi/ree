@@ -1,7 +1,9 @@
 import { DATE_MES } from "@util/DateUtils";
+import { logError } from "@util/LogManager";
 import {
   DEUX,
   premiereLettreEnMinuscule,
+  rechercheExpressionReguliereAvecTimeout,
   SNP,
   SPC,
   supprimeSautDeLigneEtEspaceInutiles,
@@ -79,11 +81,7 @@ export const FicheActe = {
     return this.estActeDeces(acte) || this.estActeMariage(acte);
   },
   acteEstACQouOP2ouOP3(acte?: IFicheActe): boolean {
-    return (
-      acte?.registre.famille === "ACQ" ||
-      acte?.registre.famille === "OP2" ||
-      acte?.registre.famille === "OP3"
-    );
+    return acte?.registre.famille === "ACQ" || acte?.registre.famille === "OP2" || acte?.registre.famille === "OP3";
   },
 
   getReference(acte?: IFicheActe): string {
@@ -99,23 +97,12 @@ export const FicheActe = {
   },
 
   estActeImageReecrit(acte: IFicheActe): boolean {
-    return (
-      acte.type === TypeActe.IMAGE &&
-      Boolean(acte.estReecrit) &&
-      Boolean(acte.corpsTexte?.texte)
-    );
+    return acte.type === TypeActe.IMAGE && Boolean(acte.estReecrit) && Boolean(acte.corpsTexte?.texte);
   },
 
-  getCorpsExtraitRectificationTexte(
-    acte: IFicheActe,
-    typeExtrait: TypeExtrait
-  ): string | undefined {
-    const corpsExtraitRectification = acte.corpsExtraitRectifications.find(
-      cer => cer.type === typeExtrait
-    );
-    return corpsExtraitRectification
-      ? corpsExtraitRectification.texte
-      : undefined;
+  getCorpsExtraitRectificationTexte(acte: IFicheActe, typeExtrait: TypeExtrait): string | undefined {
+    const corpsExtraitRectification = acte.corpsExtraitRectifications.find(cer => cer.type === typeExtrait);
+    return corpsExtraitRectification ? corpsExtraitRectification.texte : undefined;
   },
 
   getTitulairesActeTabDansLOrdre(acte: IFicheActe): ITitulaireActe[] {
@@ -134,10 +121,7 @@ export const FicheActe = {
   getTitulairesActeDansLOrdre(acte: IFicheActe): ITitulairesActe {
     let resultatTitulairesActe: any = {};
     if (acte) {
-      const titulaires = triListeObjetsSurPropriete(
-        [...acte.titulaires],
-        "ordre"
-      );
+      const titulaires = triListeObjetsSurPropriete([...acte.titulaires], "ordre");
       resultatTitulairesActe = {
         titulaireActe1: titulaires[0],
         titulaireActe2: titulaires[1]
@@ -147,9 +131,7 @@ export const FicheActe = {
   },
 
   getAnalyseMarginaleLaPlusRecente(acte: IFicheActe) {
-    return AnalyseMarginale.getAnalyseMarginaleLaPlusRecente(
-      acte.analyseMarginales
-    );
+    return AnalyseMarginale.getAnalyseMarginaleLaPlusRecente(acte.analyseMarginales);
   },
 
   getTitulairesAMDansLOrdreAvecMajDonneesTitulaireActe(acte: IFicheActe) {
@@ -159,39 +141,23 @@ export const FicheActe = {
     const analyseMarginale = this.getAnalyseMarginaleLaPlusRecente(acte);
 
     if (analyseMarginale) {
-      const titulairesAMDansLOrdre =
-        AnalyseMarginale.getTitulairesDansLOrdre(analyseMarginale);
+      const titulairesAMDansLOrdre = AnalyseMarginale.getTitulairesDansLOrdre(analyseMarginale);
 
       if (titulairesAMDansLOrdre.titulaireAM1) {
         titulairesAMs[0] = { ...titulairesAMDansLOrdre.titulaireAM1 };
 
-        majDeclarationConjointe(
-          titulairesAMs[0],
-          titulairesActeDansLOrdre.titulaireActe1
-        );
-        majNomSecable(
-          titulairesAMs[0],
-          titulairesActeDansLOrdre.titulaireActe1
-        );
+        majDeclarationConjointe(titulairesAMs[0], titulairesActeDansLOrdre.titulaireActe1);
+        majNomSecable(titulairesAMs[0], titulairesActeDansLOrdre.titulaireActe1);
 
-        majSexeAgeNaissanceEtFiliattion(
-          titulairesAMs[0],
-          titulairesActeDansLOrdre.titulaireActe1
-        );
+        majSexeAgeNaissanceEtFiliattion(titulairesAMs[0], titulairesActeDansLOrdre.titulaireActe1);
       }
 
       if (titulairesAMDansLOrdre.titulaireAM2) {
         titulairesAMs[1] = { ...titulairesAMDansLOrdre.titulaireAM2 };
-        majNomSecable(
-          titulairesAMs[1],
-          titulairesActeDansLOrdre.titulaireActe2
-        );
+        majNomSecable(titulairesAMs[1], titulairesActeDansLOrdre.titulaireActe2);
 
         if (titulairesActeDansLOrdre.titulaireActe2) {
-          majSexeAgeNaissanceEtFiliattion(
-            titulairesAMs[1],
-            titulairesActeDansLOrdre.titulaireActe2
-          );
+          majSexeAgeNaissanceEtFiliattion(titulairesAMs[1], titulairesActeDansLOrdre.titulaireActe2);
         }
       }
     }
@@ -199,18 +165,13 @@ export const FicheActe = {
   },
 
   estPremiereDelivrance(acte: IFicheActe) {
-    return (
-      !acte.dateDerniereDelivrance ||
-      acte.dateDerniereDelivrance.getTime() < DATE_MES.getTime()
-    );
+    return !acte.dateDerniereDelivrance || acte.dateDerniereDelivrance.getTime() < DATE_MES.getTime();
   },
 
   getImages(acte?: IFicheActe): string[] {
     const imagesDeLActe: string[] = [];
 
-    acte?.corpsImage?.images.forEach(image =>
-      imagesDeLActe.push(image.contenu)
-    );
+    acte?.corpsImage?.images.forEach(image => imagesDeLActe.push(image.contenu));
 
     return imagesDeLActe;
   },
@@ -236,17 +197,11 @@ export const FicheActe = {
         {
           numeroOrdreExtrait: max + 1,
           textes: {
-            texteMentionDelivrance: extraireMentionNationalite(
-              acte.corpsTexte?.texte
-            )
+            texteMentionDelivrance: extraireMentionNationalite(acte.corpsTexte?.texte)
           },
           typeMention: {
-            idTypeMention:
-              TypeMention.getIdTypeMentionNationalitePourAjoutMentionDelivrance(),
-            idNatureMention: NatureMention.getKeyForCode(
-              NatureMention,
-              NATIONALITE
-            )
+            idTypeMention: TypeMention.getIdTypeMentionNationalitePourAjoutMentionDelivrance(),
+            idNatureMention: NatureMention.depuisCode(NATIONALITE)?.id
           }
         }
       ];
@@ -283,16 +238,12 @@ export const FicheActe = {
   },
 
   aNomEtPrenomTitulaireAbsentsAnalyseMarginale(acte: IFicheActe): boolean {
-    const analyseMarginale = AnalyseMarginale.getAnalyseMarginaleLaPlusRecente(
-      acte.analyseMarginales
-    );
+    const analyseMarginale = AnalyseMarginale.getAnalyseMarginaleLaPlusRecente(acte.analyseMarginales);
 
     if (analyseMarginale) {
       return Boolean(
         analyseMarginale.titulaires?.find(
-          titulaire =>
-            (!titulaire.nom && titulaire.prenoms?.length === 0) ||
-            (titulaire.nom === SNP && titulaire.prenoms?.[0] === SPC)
+          titulaire => (!titulaire.nom && titulaire.prenoms?.length === 0) || (titulaire.nom === SNP && titulaire.prenoms?.[0] === SPC)
         )
       );
     }
@@ -302,33 +253,23 @@ export const FicheActe = {
   aTitulaireGenreIndetermine(acte: IFicheActe): boolean {
     const titulaires = acte.titulaires;
 
-    return Boolean(
-      titulaires?.find(titulaire => Sexe.estIndetermine(titulaire.sexe))
-    );
+    return Boolean(titulaires?.find(titulaire => Sexe.estIndetermine(titulaire.sexe)));
   },
 
   aGenreTitulaireInconnu(acte: IFicheActe): boolean {
     const titulaires = acte.titulaires;
 
-    return Boolean(
-      titulaires?.find(titulaire => titulaire.sexe === Sexe.INCONNU)
-    );
+    return Boolean(titulaires?.find(titulaire => titulaire.sexe === Sexe.INCONNU));
   },
 
   aDonneesLieuOuAnneeEvenementAbsentes(acte: IFicheActe) {
     return (
-      !acte.evenement?.annee ||
-      (!acte.evenement?.lieuReprise &&
-        !acte.evenement?.ville &&
-        !acte.evenement?.region &&
-        !acte.evenement?.pays)
+      !acte.evenement?.annee || (!acte.evenement?.lieuReprise && !acte.evenement?.ville && !acte.evenement?.region && !acte.evenement?.pays)
     );
   },
 
   aGenreParentsTitulaireInconnu(acte: IFicheActe): boolean {
-    const parents = TitulaireActe.getAuMoinsDeuxParentsDirects(
-      acte.titulaires[0]
-    );
+    const parents = TitulaireActe.getAuMoinsDeuxParentsDirects(acte.titulaires[0]);
 
     return Boolean(parents.find(parent => parent.sexe === Sexe.INCONNU));
   },
@@ -355,15 +296,12 @@ export const FicheActe = {
   },
 
   estEnErreur(acte: IFicheActe): boolean {
-    const titulaire =
-      FicheActe.getTitulairesActeDansLOrdre(acte).titulaireActe1;
+    const titulaire = FicheActe.getTitulairesActeDansLOrdre(acte).titulaireActe1;
 
     switch (acte.nature) {
       case NatureActe.MARIAGE:
         return (
-          this.aTitulairesDeMemeSexe(acte) ||
-          this.aTitulaireGenreIndetermine(acte) ||
-          this.tousLesTitulairesInconnusOuIndetermines(acte)
+          this.aTitulairesDeMemeSexe(acte) || this.aTitulaireGenreIndetermine(acte) || this.tousLesTitulairesInconnusOuIndetermines(acte)
         );
       case NatureActe.NAISSANCE:
       case NatureActe.DECES:
@@ -378,27 +316,20 @@ export const FicheActe = {
   },
 
   aGenreParentsTitulaireIndetermine(acte: IFicheActe): boolean {
-    const parents = TitulaireActe.getAuMoinsDeuxParentsDirects(
-      acte.titulaires[0]
-    );
+    const parents = TitulaireActe.getAuMoinsDeuxParentsDirects(acte.titulaires[0]);
 
     return Boolean(parents.find(parent => parent.sexe === Sexe.INDETERMINE));
   },
 
   aTitulairesDeMemeSexe(acte: IFicheActe): boolean {
     const titulaires = acte.titulaires;
-    return titulaires.length > 1
-      ? titulaires[0]?.sexe === titulaires[1]?.sexe
-      : false;
+    return titulaires.length > 1 ? titulaires[0]?.sexe === titulaires[1]?.sexe : false;
   },
 
   tousLesTitulairesInconnusOuIndetermines(acte: IFicheActe): boolean {
     const titulaires = acte.titulaires;
 
-    return (
-      titulaires.some(el => el.sexe === Sexe.INDETERMINE) ||
-      titulaires.some(el => el.sexe === Sexe.INCONNU)
-    );
+    return titulaires.some(el => el.sexe === Sexe.INDETERMINE) || titulaires.some(el => el.sexe === Sexe.INCONNU);
   },
 
   getTitulaireMasculin(acte: IFicheActe): ITitulaireActe | undefined {
@@ -410,10 +341,7 @@ export const FicheActe = {
   }
 };
 
-function majSexeAgeNaissanceEtFiliattion(
-  titulairesAM: ITitulaireActe,
-  titulaireActe: ITitulaireActe
-) {
+function majSexeAgeNaissanceEtFiliattion(titulairesAM: ITitulaireActe, titulaireActe: ITitulaireActe) {
   titulairesAM.sexe = titulaireActe.sexe;
   titulairesAM.filiations = titulaireActe.filiations;
   titulairesAM.age = titulaireActe.age;
@@ -421,34 +349,22 @@ function majSexeAgeNaissanceEtFiliattion(
 }
 
 /** Mise à jour des informations de "déclaration conjointe" à partir du titulaire de l'acte si besoin */
-function majDeclarationConjointe(
-  titulaireAM: ITitulaireActe,
-  titulaireActe: ITitulaireActe
-) {
-  if (
-    titulaireAM.typeDeclarationConjointe ===
-    TypeDeclarationConjointe.ABSENCE_DECLARATION_VALIDEE
-  ) {
+function majDeclarationConjointe(titulaireAM: ITitulaireActe, titulaireActe: ITitulaireActe) {
+  if (titulaireAM.typeDeclarationConjointe === TypeDeclarationConjointe.ABSENCE_DECLARATION_VALIDEE) {
     titulaireAM.dateDeclarationConjointe = undefined;
     // Remarque on ne change pas le type ABSENCE_DECLARATION_VALIDEE en ABSENCE_DECLARATION car ils ont tous les deux le même libellé
   } else if (
     !titulaireAM.typeDeclarationConjointe ||
-    titulaireAM.typeDeclarationConjointe ===
-      TypeDeclarationConjointe.ABSENCE_DECLARATION
+    titulaireAM.typeDeclarationConjointe === TypeDeclarationConjointe.ABSENCE_DECLARATION
   ) {
-    titulaireAM.typeDeclarationConjointe =
-      titulaireActe.typeDeclarationConjointe;
-    titulaireAM.dateDeclarationConjointe =
-      titulaireActe.dateDeclarationConjointe;
+    titulaireAM.typeDeclarationConjointe = titulaireActe.typeDeclarationConjointe;
+    titulaireAM.dateDeclarationConjointe = titulaireActe.dateDeclarationConjointe;
     titulaireAM.origineDeclarationConjointeTitulaireActe = true;
   }
 }
 
 /** Mise à jour des informations de "nom sécable" à partir du titulaire de l'acte si besoin */
-function majNomSecable(
-  titulaireAM?: ITitulaireActe,
-  titulaireActe?: ITitulaireActe
-) {
+function majNomSecable(titulaireAM?: ITitulaireActe, titulaireActe?: ITitulaireActe) {
   // Si titulaireAM.nomPartie1 est égal à "ABSENCE_VALIDEE" alors il reste à "ABSENCE_VALIDEE" (c'est le code par la suite qui gère cette valeur)
   if (titulaireAM && !titulaireAM.nomPartie1 && titulaireActe) {
     titulaireAM.origineNomPartiesTitulaireActe = true;
@@ -458,37 +374,46 @@ function majNomSecable(
   }
 }
 
-const SOUS_LE_NOM = "sous le nom de";
-const SOUS_L_IDENTITE = "sous l'identité de";
-function extraireMentionNationalite(texte?: string) {
-  if (texte) {
-    let regex;
-    if (texte.indexOf(SOUS_LE_NOM) !== -1) {
-      regex =
-        /(Français par|Française par)[:\s]+([\s\w\W]*)sous le nom de[^(]*([\s\w\W]*?)\r?\n\r?\n/gm;
-    } else if (texte.indexOf(SOUS_L_IDENTITE) !== -1) {
-      regex =
-        /(Français par|Française par)[:\s]+([\s\w\W]*)sous l'identité de[^(]*([\s\w\W]*?)\r?\n\r?\n/gm;
-    } else {
-      regex = /(Français par|Française par)[:\s]+([\s\w\W]*?)\r?\n\r?\n/gm;
-    }
+const extraireMentionNationalite = (texte?: string): string => {
+  if (!texte) return "Nationalite";
 
-    const matches = new RegExp(regex).exec(texte);
-    const partieMilieu = supprimeSautDeLigneEtEspaceInutiles(
-      premiereLettreEnMinuscule(matches?.[DEUX])
-    );
-    const entreParenthese = supprimeSautDeLigneEtEspaceInutiles(
-      matches?.[TROIS]
-    );
-    return `${matches?.[1]} ${partieMilieu} ${entreParenthese}`;
+  const SOUS_LE_NOM = "sous le nom de";
+  const SOUS_L_IDENTITE = "sous l'identité de";
+
+  let regex;
+  switch (true) {
+    case texte.indexOf(SOUS_LE_NOM) !== -1:
+      regex = /(Français par|Française par)[:\s]+(.*?)sous le nom de[^(]*(.*?)\r?\n\r?\n/gm; // NOSONAR  problème géré par rechercheExpressionReguliereAvecTimeout
+      break;
+    case texte.indexOf(SOUS_L_IDENTITE) !== -1:
+      regex = /(Français par|Française par)[:\s]+(.*?)sous l'identité de[^(]*(.*?)\r?\n\r?\n/gm; // NOSONAR  problème géré par rechercheExpressionReguliereAvecTimeout
+      break;
+    default:
+      regex = /(Français par|Française par)[:\s]+(.*?)\r?\n\r?\n/gm; // NOSONAR  problème géré par rechercheExpressionReguliereAvecTimeout
+      break;
   }
-  return "Nationalite";
-}
 
-export function necessiteMentionNationalite(
-  acte: IFicheActe,
-  choixDelivrance?: ChoixDelivrance
-): boolean {
+  const TIMEOUT = 2000;
+  let mentionNationalite: string = "";
+
+  rechercheExpressionReguliereAvecTimeout(regex, texte, TIMEOUT)
+    .then(matches => {
+      const partieMilieu = supprimeSautDeLigneEtEspaceInutiles(premiereLettreEnMinuscule(matches?.[DEUX]));
+      const entreParenthese = supprimeSautDeLigneEtEspaceInutiles(matches?.[TROIS]);
+
+      mentionNationalite = `${matches?.[UN]} ${partieMilieu} ${entreParenthese}`;
+    })
+    .catch(error => {
+      logError({
+        messageUtilisateur: "Le temps alloué à la recherche d'expression régulière a expiré.",
+        error
+      });
+    });
+
+  return mentionNationalite;
+};
+
+export function necessiteMentionNationalite(acte: IFicheActe, choixDelivrance?: ChoixDelivrance): boolean {
   return (
     FicheActe.estActeNaissance(acte) &&
     FicheActe.acteEstACQouOP2ouOP3(acte) &&

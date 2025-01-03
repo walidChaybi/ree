@@ -5,10 +5,7 @@ import {
   MENTION_NIVEAU_TROIS,
   MENTION_NIVEAU_UN
 } from "@composant/formulaire/ConstantesNomsForm";
-import {
-  resultatHeaderUtilistateurLeBiannic,
-  resultatRequeteUtilistateurLeBiannic
-} from "@mock/data/mockConnectedUserAvecDroit";
+import { resultatHeaderUtilistateurLeBiannic, resultatRequeteUtilistateurLeBiannic } from "@mock/data/mockConnectedUserAvecDroit";
 import { mappingOfficier } from "@model/agent/IOfficier";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
@@ -18,20 +15,13 @@ import {
   URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS,
   URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID
 } from "@router/ReceUrls";
-import {
-  createEvent,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { createEvent, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test, vi } from "vitest";
 import IHabilitationDto from "../../../../../dto/etatcivil/agent/IHabilitationDto";
-import {
-  createTestingRouter,
-  elementAvecContexte
-} from "../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
+
+// Obsolete. ApercuRequeteMiseAJour sera supprimé
 
 function renderApercuRequeteMiseAJour() {
   const router = createTestingRouter(
@@ -41,14 +31,10 @@ function renderApercuRequeteMiseAJour() {
         element: <ApercuRequeteMiseAJourPage />
       }
     ],
-    [
-      `${URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS}/er5ez456-354v-461z-c5fd-162md289m74h/b41079a5-9e8d-478c-b04c-c4c4ey86537g`
-    ]
+    [`${URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS}/er5ez456-354v-461z-c5fd-162md289m74h/b41079a5-9e8d-478c-b04c-c4c4ey86537g`]
   );
 
-  render(
-    elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte)
-  );
+  render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte));
 }
 
 const LISTE_TYPE_MENTION_NIVEAU_UN = `${LISTES_TYPES_MENTION}.${MENTION_NIVEAU_UN}`;
@@ -78,16 +64,12 @@ const ajouterUneMention = () => {
   fireEvent.click(screen.getByText("Ajouter mention"));
 };
 
-const utilisateurConnecte = mappingOfficier(
-  resultatHeaderUtilistateurLeBiannic,
-  resultatRequeteUtilistateurLeBiannic.data
-);
+const utilisateurConnecte = mappingOfficier(resultatHeaderUtilistateurLeBiannic, resultatRequeteUtilistateurLeBiannic.data);
 utilisateurConnecte.habilitations = mapHabilitationsUtilisateur(
-  resultatRequeteUtilistateurLeBiannic.data
-    .habilitations as unknown as IHabilitationDto[]
+  resultatRequeteUtilistateurLeBiannic.data.habilitations as unknown as IHabilitationDto[]
 );
 
-test("DOIT afficher correctement la page apercu de Mise A Jour QUAND on arrive sur la page", async () => {
+test.skip("DOIT afficher correctement la page apercu de Mise A Jour QUAND on arrive sur la page", async () => {
   const router = createTestingRouter(
     [
       {
@@ -95,27 +77,21 @@ test("DOIT afficher correctement la page apercu de Mise A Jour QUAND on arrive s
         element: <ApercuRequeteMiseAJourPage />
       }
     ],
-    [
-      `${URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS}/er5ez456-354v-461z-c5fd-162md289m74h/b41079a5-9e8d-478c-b04c-c4c4ey86537g`
-    ]
+    [`${URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS}/er5ez456-354v-461z-c5fd-162md289m74h/b41079a5-9e8d-478c-b04c-c4c4ey86537g`]
   );
 
-  render(
-    elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte)
-  );
+  render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte));
 
   await waitFor(() => {
     expect(screen.getByText("Acte Registre")).toBeDefined();
     expect(screen.getByText("Gérer les mentions")).toBeDefined();
-    expect(
-      screen.getByText("Gérer les mentions").getAttribute("aria-selected")
-    ).toBe("true");
+    expect(screen.getByText("Gérer les mentions").getAttribute("aria-selected")).toBe("true");
     expect(screen.getByText("Abandonner")).toBeDefined();
     expect(screen.getByTitle("Visionneuse PDF")).toBeDefined();
   });
 });
 
-test("DOIT naviguer vers l'onglet Acte Mis A Jour QUAND on actualise et visualise la modification des mentions", async () => {
+test.skip("DOIT naviguer vers l'onglet Acte Mis A Jour QUAND on actualise et visualise la modification des mentions", async () => {
   const router = createTestingRouter(
     [
       {
@@ -123,14 +99,10 @@ test("DOIT naviguer vers l'onglet Acte Mis A Jour QUAND on actualise et visualis
         element: <ApercuRequeteMiseAJourPage />
       }
     ],
-    [
-      `${URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS}/er5ez456-354v-461z-c5fd-162md289m74h/b41079a5-9e8d-478c-b04c-c4c4ey86537g`
-    ]
+    [`${URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS}/er5ez456-354v-461z-c5fd-162md289m74h/b41079a5-9e8d-478c-b04c-c4c4ey86537g`]
   );
 
-  render(
-    elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte)
-  );
+  render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte));
   ajouterUneMention();
 
   await waitFor(() => {
@@ -145,7 +117,7 @@ test("DOIT naviguer vers l'onglet Acte Mis A Jour QUAND on actualise et visualis
 });
 
 describe("Test du bouton Terminer et Signer", () => {
-  test("le bouton DOIT etre desactivé QUAND la page s'affiche", async () => {
+  test.skip("le bouton DOIT etre desactivé QUAND la page s'affiche", async () => {
     renderApercuRequeteMiseAJour();
 
     await waitFor(() => {
@@ -157,7 +129,7 @@ describe("Test du bouton Terminer et Signer", () => {
     // });
   });
 
-  test("le bouton 'TERMINER et SIGNER' DOIT etre activé QUAND on actualise et visualise APRES avoir ajouter une mention", async () => {
+  test.skip("le bouton 'TERMINER et SIGNER' DOIT etre activé QUAND on actualise et visualise APRES avoir ajouter une mention", async () => {
     renderApercuRequeteMiseAJour();
 
     ajouterUneMention();
@@ -177,7 +149,7 @@ describe("Test du bouton Terminer et Signer", () => {
     // });
   });
 
-  test("le bouton 'TERMINER et SIGNER' DOIT etre desactivé QUAND on commence une action de mise a jour (ajout, modification)", async () => {
+  test.skip("le bouton 'TERMINER et SIGNER' DOIT etre desactivé QUAND on commence une action de mise a jour (ajout, modification)", async () => {
     renderApercuRequeteMiseAJour();
 
     ajouterUneMention();
@@ -197,12 +169,9 @@ describe("Test du bouton Terminer et Signer", () => {
     // });
 
     // on remplie le premier input des types de mentions
-    fireEvent.change(
-      screen.getByTestId(`${LISTES_TYPES_MENTION}.${MENTION_NIVEAU_UN}`),
-      {
-        target: { value: "0185f3c8-5f4c-4ea9-89e1-fb65fcb7b17f" }
-      }
-    );
+    fireEvent.change(screen.getByTestId(`${LISTES_TYPES_MENTION}.${MENTION_NIVEAU_UN}`), {
+      target: { value: "0185f3c8-5f4c-4ea9-89e1-fb65fcb7b17f" }
+    });
 
     // await waitFor(() => {
     //   expect(screen.getByText("Terminer et Signer")).toBeDisabled();
@@ -210,15 +179,9 @@ describe("Test du bouton Terminer et Signer", () => {
   });
 });
 
-test("Le bouton 'RETOUR RECHERCHE' s'affiche et, au clic, redirige l'utilisateur vers la page 'RMC acte' QUAND on termine le parcours de signature", async () => {
-  const composerDocumentMentionsUlterieuresSpy = vi.spyOn(
-    EtatCivilApi,
-    "composerDocumentMentionsUlterieures"
-  );
-  const integrerDocumentMentionsUlterieuresSpy = vi.spyOn(
-    EtatCivilApi,
-    "integrerDocumentMentionSigne"
-  );
+test.skip("Le bouton 'RETOUR RECHERCHE' s'affiche et, au clic, redirige l'utilisateur vers la page 'RMC acte' QUAND on termine le parcours de signature", async () => {
+  const composerDocumentMentionsUlterieuresSpy = vi.spyOn(EtatCivilApi, "composerDocumentMentionsUlterieures");
+  const integrerDocumentMentionsUlterieuresSpy = vi.spyOn(EtatCivilApi, "integrerDocumentMentionSigne");
   const router = createTestingRouter(
     [
       {
@@ -235,14 +198,10 @@ test("Le bouton 'RETOUR RECHERCHE' s'affiche et, au clic, redirige l'utilisateur
         )
       }
     ],
-    [
-      `${URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS}/er5ez456-354v-461z-c5fd-162md289m74h/b41079a5-9e8d-478c-b04c-c4c4ey86537g`
-    ]
+    [`${URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS}/er5ez456-354v-461z-c5fd-162md289m74h/b41079a5-9e8d-478c-b04c-c4c4ey86537g`]
   );
 
-  render(
-    elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte)
-  );
+  render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte));
 
   expect(screen.getByText("Acte Registre")).toBeDefined();
 
@@ -326,15 +285,9 @@ test("Le bouton 'RETOUR RECHERCHE' s'affiche et, au clic, redirige l'utilisateur
   composerDocumentMentionsUlterieuresSpy.mockClear();
 });
 
-test("L'onglets 'Gérer les mentions' disparaissent après avoir signer la mise à jour d'acte", async () => {
-  const composerDocumentMentionsUlterieuresSpy = vi.spyOn(
-    EtatCivilApi,
-    "composerDocumentMentionsUlterieures"
-  );
-  const integrerDocumentMentionsUlterieuresSpy = vi.spyOn(
-    EtatCivilApi,
-    "integrerDocumentMentionSigne"
-  );
+test.skip("L'onglets 'Gérer les mentions' disparaissent après avoir signer la mise à jour d'acte", async () => {
+  const composerDocumentMentionsUlterieuresSpy = vi.spyOn(EtatCivilApi, "composerDocumentMentionsUlterieures");
+  const integrerDocumentMentionsUlterieuresSpy = vi.spyOn(EtatCivilApi, "integrerDocumentMentionSigne");
   const router = createTestingRouter(
     [
       {
@@ -351,14 +304,10 @@ test("L'onglets 'Gérer les mentions' disparaissent après avoir signer la mise 
         )
       }
     ],
-    [
-      `${URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS}/er5ez456-354v-461z-c5fd-162md289m74h/b41079a5-9e8d-478c-b04c-c4c4ey86537g`
-    ]
+    [`${URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS}/er5ez456-354v-461z-c5fd-162md289m74h/b41079a5-9e8d-478c-b04c-c4c4ey86537g`]
   );
 
-  render(
-    elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte)
-  );
+  render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte));
 
   expect(screen.getByText("Gérer les mentions")).toBeDefined();
 

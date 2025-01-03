@@ -20,425 +20,394 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
-import { expect, test } from "vitest";
+import { describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
-const listeUtilisateurs = [
-  {
-    service: { estDansScec: true, idService: "123" } as IService,
-    prenom: "",
-    nom: "str1",
-    habilitations: [
-      {
-        profil: {
-          droits: [{ nom: Droit.DELIVRER } as IDroit]
-        } as IProfil
-      } as IHabilitation
-    ],
-    idUtilisateur: "1234"
-  } as IUtilisateur,
-  {
-    service: { estDansScec: true, idService: "1234" } as IService,
-    prenom: "",
-    nom: "str2",
-    habilitations: [
-      {
-        profil: {
-          droits: [{ nom: Droit.DELIVRER } as IDroit]
-        } as IProfil
-      } as IHabilitation
-    ],
-    idUtilisateur: "12345"
-  } as IUtilisateur,
-  {
-    service: { estDansScec: true, idService: "1234" } as IService,
-    prenom: "",
-    nom: "str3",
-    habilitations: [
-      {
-        profil: {
-          droits: [{ nom: Droit.INFORMER_USAGER } as IDroit]
-        } as IProfil
-      } as IHabilitation
-    ],
-    idUtilisateur: "12345"
-  } as IUtilisateur
-];
+describe("Test MenuTransfert", () => {
+  const listeUtilisateurs = [
+    {
+      service: { estDansScec: true, idService: "123" } as IService,
+      prenom: "",
+      nom: "str1",
+      habilitations: [
+        {
+          profil: {
+            droits: [{ nom: Droit.DELIVRER } as IDroit]
+          } as IProfil
+        } as IHabilitation
+      ],
+      idUtilisateur: "1234"
+    } as IUtilisateur,
+    {
+      service: { estDansScec: true, idService: "1234" } as IService,
+      prenom: "",
+      nom: "str2",
+      habilitations: [
+        {
+          profil: {
+            droits: [{ nom: Droit.DELIVRER } as IDroit]
+          } as IProfil
+        } as IHabilitation
+      ],
+      idUtilisateur: "12345"
+    } as IUtilisateur,
+    {
+      service: { estDansScec: true, idService: "1234" } as IService,
+      prenom: "",
+      nom: "str3",
+      habilitations: [
+        {
+          profil: {
+            droits: [{ nom: Droit.INFORMER_USAGER } as IDroit]
+          } as IProfil
+        } as IHabilitation
+      ],
+      idUtilisateur: "12345"
+    } as IUtilisateur
+  ];
 
-const listeServices = [
-  {
-    idService: "1234",
-    type: ETypeService.BUREAU,
-    code: "1234",
-    libelleService: "str1",
-    estDansScec: true
-  },
-  {
-    idService: "12345",
-    type: ETypeService.DEPARTEMENT,
-    code: "12345",
-    libelleService: "str2",
-    estDansScec: true
-  }
-];
-
-const routerAvecContexte = (
-  router: any,
-  utilisateurs?: IUtilisateur[],
-  services?: IService[]
-): any => {
-  return (
-    <MockRECEContextProvider utilisateurs={utilisateurs} services={services}>
-      <RouterProvider router={router} />
-    </MockRECEContextProvider>
-  );
-};
-
-function afficheComposant(
-  utilisateurs?: IUtilisateur[],
-  services?: IService[]
-) {
-  const router = createTestingRouter(
-    [
-      {
-        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-        element: (
-          <MenuTransfert
-            idRequete={requeteRDCSC.id}
-            typeRequete={requeteRDCSC.type}
-            idUtilisateurRequete="111"
-            sousTypeRequete={requeteRDCSC.sousType}
-            estTransfert={true}
-          />
-        )
-      }
-    ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-        idRequeteRDCSC
-      )
-    ]
-  );
-
-  render(routerAvecContexte(router, utilisateurs, services));
-}
-
-test.skip("renders du bloc Menu Transfert ouvert ", () => {
-  afficheComposant(listeUtilisateurs);
-
-  waitFor(() => {
-    expect(
-      gestionnaireFeatureFlag.estActif(
-        FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
-      )
-    ).toBeTruthy();
-  });
-
-  const menuTransfert = screen.getByText("Transférer");
-  const choixService = screen.getByText(/À un service+/);
-  const choixOEC = screen.getByText(/À un officier de l'état civil+/);
-
-  waitFor(() => {
-    expect(menuTransfert).toBeDefined();
-    expect(choixService).toBeDefined();
-    expect(choixOEC).toBeDefined();
-  });
-});
-
-test.skip("check popin service", () => {
-  afficheComposant(listeUtilisateurs);
-
-  let choixService: HTMLElement;
-
-  const menuTransfert = screen.getByText("Transférer");
-  fireEvent.click(menuTransfert);
-
-  choixService = screen.getByText(/À un service+/);
-  fireEvent.click(choixService);
-
-  const valider = screen.getByText(/Valider+/) as HTMLButtonElement;
-  const annuler = screen.getByText(/Annuler+/) as HTMLButtonElement;
-  const title = screen.getByText(/Transfert à un service+/);
-
-  waitFor(() => {
-    expect(valider).toBeDefined();
-    expect(valider.disabled).toBeTruthy();
-    expect(title).toBeDefined();
-  });
-
-  const autocomplete = screen.getByLabelText(
-    /TransfertPopin+/
-  ) as HTMLInputElement;
-
-  waitFor(() => {
-    expect(autocomplete).toBeDefined();
-  });
-
-  fireEvent.click(annuler);
-});
-
-test.skip("check popin agent", () => {
-  afficheComposant(listeUtilisateurs);
-
-  let choixService: HTMLElement;
-
-  const menuTransfert = screen.getByText("Transférer");
-  fireEvent.click(menuTransfert);
-
-  choixService = screen.getByText(/À un officier de l'état civil+/);
-  fireEvent.click(choixService);
-
-  const valider = screen.getByText(/Valider+/) as HTMLButtonElement;
-  const title = screen.getByText("Transfert à un officier de l'état civil");
-
-  waitFor(() => {
-    expect(valider).toBeDefined();
-    expect(valider.disabled).toBeTruthy();
-    expect(title).toBeDefined();
-  });
-
-  const autocomplete = screen.getByLabelText(
-    /TransfertPopin+/
-  ) as HTMLInputElement;
-
-  waitFor(() => {
-    expect(autocomplete).toBeDefined();
-  });
-});
-
-test.skip("check autocomplete service", () => {
-  afficheComposant(undefined, listeServices);
-  const menuTransfert = screen.getByText("Transférer");
-
-  waitFor(() => {
-    expect(menuTransfert).toBeDefined();
-  });
-
-  fireEvent.click(menuTransfert);
-
-  const choixService = screen.getByText(/À un service+/);
-  waitFor(() => {
-    expect(choixService).toBeDefined();
-  });
-
-  fireEvent.click(choixService);
-
-  const autocomplete = screen.getByTestId("autocomplete");
-  const inputChampRecherche = screen.getByLabelText(
-    "TransfertPopin"
-  ) as HTMLInputElement;
-
-  waitFor(() => {
-    expect(autocomplete).toBeDefined();
-    expect(inputChampRecherche).toBeDefined();
-  });
-
-  autocomplete.focus();
-
-  fireEvent.change(inputChampRecherche, {
-    target: {
-      value: "s"
+  const listeServices = [
+    {
+      idService: "1234",
+      type: ETypeService.BUREAU,
+      code: "1234",
+      libelleService: "str1",
+      estDansScec: true
+    },
+    {
+      idService: "12345",
+      type: ETypeService.DEPARTEMENT,
+      code: "12345",
+      libelleService: "str2",
+      estDansScec: true
     }
+  ];
+
+  const routerAvecContexte = (router: any, utilisateurs?: IUtilisateur[], services?: IService[]): any => {
+    return (
+      <MockRECEContextProvider
+        utilisateurs={utilisateurs}
+        services={services}
+      >
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
+  };
+
+  const afficheComposant = (utilisateurs?: IUtilisateur[], services?: IService[]) => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+          element: (
+            <MenuTransfert
+              idRequete={requeteRDCSC.id}
+              typeRequete={requeteRDCSC.type}
+              idUtilisateurRequete="111"
+              sousTypeRequete={requeteRDCSC.sousType}
+              estTransfert={true}
+            />
+          )
+        }
+      ],
+      [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID, idRequeteRDCSC)]
+    );
+
+    render(routerAvecContexte(router, utilisateurs, services));
+  };
+
+  test("renders du bloc Menu Transfert ouvert", () => {
+    afficheComposant(listeUtilisateurs);
+
+    waitFor(() => {
+      expect(gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES)).toBeTruthy();
+    });
+
+    const menuTransfert = screen.getByText("Transférer");
+    const choixService = screen.getByText(/À un service+/);
+    const choixOEC = screen.getByText(/À un officier de l'état civil+/);
+
+    waitFor(() => {
+      expect(menuTransfert).toBeDefined();
+      expect(choixService).toBeDefined();
+      expect(choixOEC).toBeDefined();
+    });
   });
-  const str1 = screen.getByText("str1");
 
-  waitFor(() => {
-    expect(str1).toBeDefined();
-    expect(screen.getByText("str2")).toBeDefined();
+  test("check popin service", () => {
+    afficheComposant(listeUtilisateurs);
+
+    let choixService: HTMLElement;
+
+    const menuTransfert = screen.getByText("Transférer");
+    fireEvent.click(menuTransfert);
+
+    choixService = screen.getByText(/À un service+/);
+    fireEvent.click(choixService);
+
+    const valider: HTMLButtonElement = screen.getByText(/Valider+/);
+    const annuler: HTMLButtonElement = screen.getByText(/Annuler+/);
+    const title = screen.getByText(/Transfert à un service+/);
+
+    waitFor(() => {
+      expect(valider).toBeDefined();
+      expect(valider.disabled).toBeTruthy();
+      expect(title).toBeDefined();
+    });
+
+    const autocomplete: HTMLInputElement = screen.getByTestId("optionChoisie");
+
+    waitFor(() => {
+      expect(autocomplete).toBeDefined();
+    });
+
+    fireEvent.click(annuler);
   });
 
-  fireEvent.click(str1);
+  test("check popin agent", () => {
+    afficheComposant(listeUtilisateurs);
 
-  const valider = screen.getByText("Valider") as HTMLButtonElement;
+    let choixService: HTMLElement;
 
-  waitFor(() => {
-    expect(inputChampRecherche.value).toStrictEqual("str1");
-    expect(valider.disabled).toBeFalsy();
+    const menuTransfert = screen.getByText("Transférer");
+    fireEvent.click(menuTransfert);
+
+    choixService = screen.getByText(/À un officier de l'état civil+/);
+    fireEvent.click(choixService);
+
+    const valider: HTMLButtonElement = screen.getByText(/Valider+/);
+    const title = screen.getByText("Transfert à un officier de l'état civil");
+
+    waitFor(() => {
+      expect(valider).toBeDefined();
+      expect(valider.disabled).toBeTruthy();
+      expect(title).toBeDefined();
+    });
+
+    const autocomplete: HTMLInputElement = screen.getByTestId("optionChoisie");
+
+    waitFor(() => {
+      expect(autocomplete).toBeDefined();
+    });
   });
 
-  const reset = screen.getByTitle("Vider le champ");
+  test("check autocomplete service", () => {
+    afficheComposant(undefined, listeServices);
+    const menuTransfert = screen.getByText("Transférer");
 
-  waitFor(() => {
-    expect(reset).toBeDefined();
-  });
+    waitFor(() => {
+      expect(menuTransfert).toBeDefined();
+    });
 
-  fireEvent.click(reset);
+    fireEvent.click(menuTransfert);
 
-  waitFor(() => {
-    expect(valider.disabled).toBeTruthy();
-  });
-});
+    const choixService = screen.getByText(/À un service+/);
+    waitFor(() => {
+      expect(choixService).toBeDefined();
+    });
 
-test.skip("check autocomplete agent", () => {
-  const router = createTestingRouter(
-    [
-      {
-        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-        element: (
-          <MenuTransfert
-            idRequete={requeteRDCSC.id}
-            typeRequete={requeteRDCSC.type}
-            idUtilisateurRequete="111"
-            sousTypeRequete={requeteRDCSC.sousType}
-            estTransfert={true}
-          />
-        )
-      },
-      {
-        path: URL_MES_REQUETES_DELIVRANCE,
-        element: <EspaceDelivrancePage />
+    fireEvent.click(choixService);
+
+    const autocomplete = screen.getByTestId("optionChoisie");
+    const inputChampRecherche: HTMLInputElement = screen.getByTestId("inputChampRecherche");
+
+    waitFor(() => {
+      expect(autocomplete).toBeDefined();
+      expect(inputChampRecherche).toBeDefined();
+    });
+
+    autocomplete.focus();
+
+    fireEvent.change(inputChampRecherche, {
+      target: {
+        value: "s"
       }
-    ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-        idRequeteRDCSC
-      )
-    ]
-  );
+    });
+    const str1 = screen.getByText("str1");
 
-  render(routerAvecContexte(router, listeUtilisateurs));
+    waitFor(() => {
+      expect(str1).toBeDefined();
+      expect(screen.getByText("str2")).toBeDefined();
+    });
 
-  const menuTransfert = screen.getByText("Transférer");
+    fireEvent.click(str1);
 
-  waitFor(() => {
-    expect(menuTransfert).toBeDefined();
+    const valider: HTMLButtonElement = screen.getByText("Valider");
+
+    waitFor(() => {
+      expect(inputChampRecherche.value).toStrictEqual("str1");
+      expect(valider.disabled).toBeFalsy();
+    });
+
+    const reset = screen.getByTitle("Vider le champ");
+
+    waitFor(() => {
+      expect(reset).toBeDefined();
+    });
+
+    fireEvent.click(reset);
+
+    waitFor(() => {
+      expect(valider.disabled).toBeTruthy();
+    });
   });
 
-  fireEvent.click(menuTransfert);
+  test("check autocomplete agent", () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
+          element: (
+            <MenuTransfert
+              idRequete={requeteRDCSC.id}
+              typeRequete={requeteRDCSC.type}
+              idUtilisateurRequete="111"
+              sousTypeRequete={requeteRDCSC.sousType}
+              estTransfert={true}
+            />
+          )
+        },
+        {
+          path: URL_MES_REQUETES_DELIVRANCE,
+          element: <EspaceDelivrancePage />
+        }
+      ],
+      [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID, idRequeteRDCSC)]
+    );
 
-  const choixService = screen.getByText(/À un officier de l'état civil+/);
+    render(routerAvecContexte(router, listeUtilisateurs));
 
-  waitFor(() => {
-    expect(choixService).toBeDefined();
-  });
+    const menuTransfert = screen.getByText("Transférer");
 
-  fireEvent.click(choixService);
+    waitFor(() => {
+      expect(menuTransfert).toBeDefined();
+    });
 
-  const autocomplete = screen.getByTestId("autocomplete");
-  const inputChampRecherche = screen.getByLabelText(
-    "TransfertPopin"
-  ) as HTMLInputElement;
+    fireEvent.click(menuTransfert);
 
-  waitFor(() => {
-    expect(autocomplete).toBeDefined();
-    expect(inputChampRecherche).toBeDefined();
-  });
+    const choixService = screen.getByText(/À un officier de l'état civil+/);
 
-  autocomplete.focus();
-  fireEvent.change(inputChampRecherche, {
-    target: {
-      value: "s"
-    }
-  });
+    waitFor(() => {
+      expect(choixService).toBeDefined();
+    });
 
-  const str1 = screen.getByText("str1");
-  waitFor(() => {
-    expect(str1).toBeDefined();
-    expect(screen.getByText("str2")).toBeDefined();
-  });
+    fireEvent.click(choixService);
 
-  fireEvent.click(str1);
+    const autocomplete = screen.getByTestId("optionChoisie");
+    const inputChampRecherche: HTMLInputElement = screen.getByTestId("inputChampRecherche");
 
-  const valider = screen.getByText("Valider") as HTMLButtonElement;
+    waitFor(() => {
+      expect(autocomplete).toBeDefined();
+      expect(inputChampRecherche).toBeDefined();
+    });
 
-  waitFor(() => {
-    expect(inputChampRecherche.value).toStrictEqual("str1 ");
-    expect(valider.disabled).toBeFalsy();
-  });
-
-  fireEvent.click(valider);
-
-  waitFor(() => {
-    expect(router.state.location.pathname).toBe(URL_MES_REQUETES_DELIVRANCE);
-  });
-});
-
-test.skip("renders du bloc Menu Transfert fermer ", () => {
-  const router = createTestingRouter(
-    [
-      {
-        path: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-        element: (
-          <MenuTransfert
-            idRequete={requeteInformation.id}
-            typeRequete={requeteInformation.type}
-            idUtilisateurRequete="111"
-            sousTypeRequete={requeteInformation.sousType}
-            estTransfert={true}
-            menuFermer={false}
-          />
-        )
-      },
-      {
-        path: URL_MES_REQUETES_INFORMATION,
-        element: <EspaceInformationPage />
+    autocomplete.focus();
+    fireEvent.change(inputChampRecherche, {
+      target: {
+        value: "s"
       }
-    ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-        requeteInformation.id
-      )
-    ]
-  );
+    });
 
-  render(routerAvecContexte(router, listeUtilisateurs));
+    const str1 = screen.getByText("str1");
+    waitFor(() => {
+      expect(str1).toBeDefined();
+      expect(screen.getByText("str2")).toBeDefined();
+    });
 
-  let menuTransfert = screen.getByText("Transférer");
+    fireEvent.click(str1);
 
-  waitFor(() => {
-    expect(menuTransfert).toBeDefined();
+    const valider: HTMLButtonElement = screen.getByText("Valider");
+
+    waitFor(() => {
+      expect(inputChampRecherche.value).toStrictEqual("str1 ");
+      expect(valider.disabled).toBeFalsy();
+    });
+
+    fireEvent.click(valider);
+
+    waitFor(() => {
+      expect(router.state.location.pathname).toBe(URL_MES_REQUETES_DELIVRANCE);
+    });
   });
 
-  fireEvent.click(menuTransfert);
+  test("renders du bloc Menu Transfert fermer ", () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
+          element: (
+            <MenuTransfert
+              idRequete={requeteInformation.id}
+              typeRequete={requeteInformation.type}
+              idUtilisateurRequete="111"
+              sousTypeRequete={requeteInformation.sousType}
+              estTransfert={true}
+              menuFermer={false}
+            />
+          )
+        },
+        {
+          path: URL_MES_REQUETES_INFORMATION,
+          element: <EspaceInformationPage />
+        }
+      ],
+      [getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, requeteInformation.id)]
+    );
 
-  let choixService = screen.getByText(/À un service+/);
-  let choixOEC = screen.getByText(/À un officier de l'état civil+/);
+    render(routerAvecContexte(router, listeUtilisateurs));
 
-  waitFor(() => {
-    expect(choixService).toBeDefined();
-    expect(choixOEC).toBeDefined();
-  });
+    let menuTransfert = screen.getByText("Transférer");
 
-  fireEvent.click(choixOEC);
+    waitFor(() => {
+      expect(menuTransfert).toBeDefined();
+    });
 
-  const autocomplete = screen.getByTestId("autocomplete");
-  const inputChampRecherche = screen.getByLabelText(
-    "TransfertPopin"
-  ) as HTMLInputElement;
+    fireEvent.click(menuTransfert);
 
-  waitFor(() => {
-    expect(autocomplete).toBeDefined();
-    expect(inputChampRecherche).toBeDefined();
-  });
+    let choixService = screen.getByText(/À un service+/);
+    let choixOEC = screen.getByText(/À un officier de l'état civil+/);
 
-  autocomplete.focus();
+    waitFor(() => {
+      expect(choixService).toBeDefined();
+      expect(choixOEC).toBeDefined();
+    });
 
-  fireEvent.change(inputChampRecherche, {
-    target: {
-      value: "s"
-    }
-  });
+    fireEvent.click(choixOEC);
 
-  const OEC = screen.getByText("str3");
+    const autocomplete = screen.getByTestId("optionChoisie");
+    const inputChampRecherche: HTMLInputElement = screen.getByTestId("inputChampRecherche");
 
-  waitFor(() => {
-    expect(OEC).toBeDefined();
-  });
+    waitFor(() => {
+      expect(autocomplete).toBeDefined();
+      expect(inputChampRecherche).toBeDefined();
+    });
 
-  fireEvent.click(OEC);
+    autocomplete.focus();
 
-  const valider = screen.getByText("Valider") as HTMLButtonElement;
+    fireEvent.change(inputChampRecherche, {
+      target: {
+        value: "s"
+      }
+    });
 
-  waitFor(() => {
-    expect(valider).toBeDefined();
-  });
+    const OEC = screen.getByText("str3");
 
-  fireEvent.click(valider);
+    waitFor(() => {
+      expect(OEC).toBeDefined();
+    });
 
-  waitFor(() => {
-    expect(router.state.location.pathname).toBe(URL_MES_REQUETES_INFORMATION);
+    fireEvent.click(OEC);
+
+    const valider: HTMLButtonElement = screen.getByText("Valider");
+
+    waitFor(() => {
+      expect(valider).toBeDefined();
+    });
+
+    fireEvent.click(valider);
+
+    waitFor(() => {
+      expect(router.state.location.pathname).toBe(URL_MES_REQUETES_INFORMATION);
+    });
   });
 });

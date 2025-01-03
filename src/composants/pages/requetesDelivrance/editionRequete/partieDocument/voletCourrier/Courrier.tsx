@@ -4,7 +4,7 @@ import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { OptionCourrier, OptionsCourrier } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { DocumentDelivrance, IDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { RequerantCourrierFormValidationSchema } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/RequerantCourrierForm";
@@ -54,7 +54,7 @@ export const Courrier: React.FC<ModificationCourrierProps> = ({ requete, idActe,
   const [messagesBloquant, setMessagesBloquant] = useState<string>();
   const [optionsChoisies, setOptionsChoisies] = useState<OptionsCourrier>([]);
   const [courrierEcParams, setCourrierEcParams] = useState<ICreerCourrierECParams>();
-  const [documentDelivranceChoisi, setDocumentDelivranceChoisi] = useState<DocumentDelivrance>();
+  const [documentDelivranceChoisi, setDocumentDelivranceChoisi] = useState<IDocumentDelivrance | null>();
   const { cleReinitialisation, reinitialisation } = useReinitialisationComposant();
 
   const ValidationSchemaCourrier = Yup.object({
@@ -109,7 +109,7 @@ export const Courrier: React.FC<ModificationCourrierProps> = ({ requete, idActe,
 
   useEffect(() => {
     if (idTypeCourrier) {
-      setDocumentDelivranceChoisi(DocumentDelivrance.getDocumentDelivrance(idTypeCourrier));
+      setDocumentDelivranceChoisi(DocumentDelivrance.depuisId(idTypeCourrier));
     }
   }, [idTypeCourrier]);
 

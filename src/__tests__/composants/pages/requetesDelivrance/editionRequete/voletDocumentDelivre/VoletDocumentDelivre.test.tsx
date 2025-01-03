@@ -1,17 +1,17 @@
+import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
+import { NATURE_MENTION } from "@mock/data/NomenclatureNatureMention";
+import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
 import { acte, acteNaissance } from "@mock/data/ficheEtBandeau/ficheActe";
 import { userDroitDelivrer } from "@mock/data/mockConnectedUserAvecDroit";
 import requeteDelivrance from "@mock/data/requeteDelivrance";
+import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IProvenanceRece } from "@model/requete/IProvenanceRece";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import {
-  CODE_COPIE_INTEGRALE,
-  CODE_EXTRAIT_AVEC_FILIATION,
-  CODE_EXTRAIT_PLURILINGUE
-} from "@model/requete/enum/DocumentDelivranceConstante";
+import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -23,10 +23,14 @@ import VoletDocumentDelivre from "../../../../../../composants/pages/requetesDel
 import { elementAvecContexte, elementAvecEditionDelivranceContexte } from "../../../../../__tests__utils__/testsUtil";
 
 describe("VoletDocumentDelivre", () => {
+  DocumentDelivrance.init(DOCUMENT_DELIVRANCE);
+  NatureMention.init(NATURE_MENTION);
+  TypeMention.init(TYPE_MENTION);
+
   const documentReponse = {
     id: "f63223ce-f425-441e-846c-114b0f36936d",
     nom: "test",
-    typeDocument: DocumentDelivrance.getUuidFromCode(CODE_EXTRAIT_PLURILINGUE),
+    typeDocument: DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_PLURILINGUE),
     idActe: acteNaissance.id
   } as IDocumentReponse;
 
@@ -54,7 +58,7 @@ describe("VoletDocumentDelivre", () => {
           <VoletDocumentDelivre
             documentDelivre={{
               ...documentReponse,
-              typeDocument: DocumentDelivrance.getUuidFromCode(CODE_EXTRAIT_AVEC_FILIATION),
+              typeDocument: DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION),
               contenu: "Coucou"
             }}
             resetOngletActif={false}
@@ -81,7 +85,10 @@ describe("VoletDocumentDelivre", () => {
       elementAvecContexte(
         elementAvecEditionDelivranceContexte(
           <VoletDocumentDelivre
-            documentDelivre={{ ...documentReponse, typeDocument: DocumentDelivrance.getUuidFromCode(CODE_COPIE_INTEGRALE) }}
+            documentDelivre={{
+              ...documentReponse,
+              typeDocument: DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE)
+            }}
             resetOngletActif={false}
           />,
           mockRequete,
@@ -97,7 +104,10 @@ describe("VoletDocumentDelivre", () => {
       elementAvecContexte(
         elementAvecEditionDelivranceContexte(
           <VoletDocumentDelivre
-            documentDelivre={{ ...documentReponse, typeDocument: DocumentDelivrance.getUuidFromCode(CODE_COPIE_INTEGRALE) }}
+            documentDelivre={{
+              ...documentReponse,
+              typeDocument: DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE)
+            }}
             resetOngletActif={true}
           />,
           mockRequete,
@@ -114,7 +124,7 @@ describe("VoletDocumentDelivre", () => {
     });
   });
 
-  // TOREFACTO : Test de composants legacy, à supprimer in fine
+  // TOREFACTOR : Test de composants legacy, à supprimer in fine
   test("Reset l'onglet actif à 'Document édité' quand modification de mention validée", async () => {
     render(
       elementAvecContexte(

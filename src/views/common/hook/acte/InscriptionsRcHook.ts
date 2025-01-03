@@ -1,5 +1,5 @@
 import { getInscriptionsRC } from "@api/appels/etatcivilApi";
-import { NatureRc } from "@model/etatcivil/enum/NatureRc";
+import { INatureRc, NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
@@ -18,8 +18,7 @@ export function useGetInscriptionsRCApiHook(id?: string): IInscriptionRc[] {
         })
         .catch((error: any) => {
           logError({
-            messageUtilisateur:
-              "Impossible de récupérer les inscriptions liées à une personne",
+            messageUtilisateur: "Impossible de récupérer les inscriptions liées à une personne",
             error
           });
         });
@@ -32,7 +31,7 @@ export function mappingInscriptionsRC(data: any): IInscriptionRc[] {
   return data?.map((inscription: any) => {
     return {
       idInscription: inscription?.id,
-      nature: NatureRc.getEnumFor(inscription?.nature.id),
+      nature: NatureRc.depuisId(inscription?.nature.id) as INatureRc,
       typeInscription: inscription?.typeInscription,
       dateInscription: new Date(inscription?.dateInscription)
     };

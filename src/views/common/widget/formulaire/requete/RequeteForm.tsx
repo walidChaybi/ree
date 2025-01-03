@@ -1,22 +1,8 @@
-import {
-  COMPLEMENT_MOTIF,
-  DOCUMENT_DEMANDE,
-  MOTIF,
-  NATURE_ACTE,
-  NB_EXEMPLAIRE,
-} from "@composant/formulaire/ConstantesNomsForm";
-import {
-  CodesExtraitCopie,
-  DocumentDelivrance,
-} from "@model/requete/enum/DocumentDelivrance";
-import {
-  CODE_COPIE_INTEGRALE,
-  CODE_EXTRAIT_PLURILINGUE,
-} from "@model/requete/enum/DocumentDelivranceConstante";
+import { COMPLEMENT_MOTIF, DOCUMENT_DEMANDE, MOTIF, NATURE_ACTE, NB_EXEMPLAIRE } from "@composant/formulaire/ConstantesNomsForm";
+import { CodesExtraitCopie, DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { Options } from "@util/Type";
-import { getLibelle } from "@util/Utils";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
@@ -25,16 +11,12 @@ import {
   NATURE_ACTE_OBLIGATOIRE,
   NB_EXEMPLAIRE_MAXIMUM,
   NB_EXEMPLAIRE_MINIMUM,
-  NB_EXEMPLAIRE_OBLIGATOIRE,
+  NB_EXEMPLAIRE_OBLIGATOIRE
 } from "../FormulaireMessages";
 import { SousFormulaire } from "../SousFormulaire";
 import { InputField } from "../champsSaisie/InputField";
 import { OptionVide, SelectField } from "../champsSaisie/SelectField";
-import {
-  NB_CARACT_MAX_SAISIE,
-  SubFormProps,
-  withNamespace,
-} from "../utils/FormUtil";
+import { NB_CARACT_MAX_SAISIE, SubFormProps, withNamespace } from "../utils/FormUtil";
 import "./scss/RequeteForm.scss";
 
 // Valeurs par défaut des champs
@@ -43,14 +25,14 @@ export const RequeteFormDefaultValues = {
   [DOCUMENT_DEMANDE]: "",
   [NB_EXEMPLAIRE]: "1",
   [MOTIF]: MotifDelivrance.getKey(MotifDelivrance.NON_PRECISE_PAR_REQUERANT),
-  [COMPLEMENT_MOTIF]: "",
+  [COMPLEMENT_MOTIF]: ""
 };
 
 const NB_EXEMPLAIRE_MAX = 5;
 
 export const LISTE_DOCUMENT_DEMANDE_DECES = [
-  CODE_COPIE_INTEGRALE,
-  CODE_EXTRAIT_PLURILINGUE,
+  ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE,
+  ECodeDocumentDelivrance.CODE_EXTRAIT_PLURILINGUE
 ];
 
 // Schéma de validation des champs
@@ -63,7 +45,7 @@ export const RequeteFormValidationSchema = Yup.object()
       .max(NB_EXEMPLAIRE_MAX, NB_EXEMPLAIRE_MAXIMUM)
       .required(NB_EXEMPLAIRE_OBLIGATOIRE),
     [MOTIF]: Yup.string().notRequired(),
-    [COMPLEMENT_MOTIF]: Yup.string(),
+    [COMPLEMENT_MOTIF]: Yup.string()
   })
   .test("complementMotifObligatoire", function (value, error) {
     const motif = value[MOTIF] as string;
@@ -71,53 +53,34 @@ export const RequeteFormValidationSchema = Yup.object()
 
     const paramsError = {
       path: `${error.path}.complementMotif`,
-      message: getLibelle(
-        'La saisie d\'un complement motif est obligatoire pour un motif "Autre"',
-      ),
+      message: 'La saisie d\'un complement motif est obligatoire pour un motif "Autre"'
     };
-    return motif === "AUTRE" && complementMotif == null
-      ? this.createError(paramsError)
-      : true;
+    return motif === "AUTRE" && complementMotif == null ? this.createError(paramsError) : true;
   });
 
-const RequeteForm: React.FC<
-  SubFormProps & { champDocumentDemandeCharge: boolean }
-> = (props) => {
+const RequeteForm: React.FC<SubFormProps & { champDocumentDemandeCharge: boolean }> = props => {
   const [documentDemandeOptions, setDocumentDemandeOptions] = useState<Options>(
-    DocumentDelivrance.getCodesAsOptions(CodesExtraitCopie),
+    DocumentDelivrance.versOptionsDepuisCodes(CodesExtraitCopie)
   );
 
-  const [complementMotifInactif, setComplementMotifInactif] =
-    useState<boolean>(true);
+  const [complementMotifInactif, setComplementMotifInactif] = useState<boolean>(true);
 
-  const onChangeNatureActeRequete = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const onChangeNatureActeRequete = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (props.onChange) {
       props.onChange(e.target.value);
     }
-    props.formik.setFieldValue(
-      withNamespace(props.nom, NATURE_ACTE),
-      e.target.value,
-    );
+    props.formik.setFieldValue(withNamespace(props.nom, NATURE_ACTE), e.target.value);
     if (e.target.value === "DECES") {
-      setDocumentDemandeOptions(
-        DocumentDelivrance.getCodesAsOptions(LISTE_DOCUMENT_DEMANDE_DECES),
-      );
+      setDocumentDemandeOptions(DocumentDelivrance.versOptionsDepuisCodes(LISTE_DOCUMENT_DEMANDE_DECES));
     } else {
-      setDocumentDemandeOptions(
-        DocumentDelivrance.getCodesAsOptions(CodesExtraitCopie),
-      );
+      setDocumentDemandeOptions(DocumentDelivrance.versOptionsDepuisCodes(CodesExtraitCopie));
     }
   };
 
   const onChangeMotif = (e: React.ChangeEvent<HTMLInputElement>) => {
     setComplementMotifInactif(e.target.value !== "AUTRE");
     if (e.target.value !== "AUTRE") {
-      props.formik.setFieldValue(
-        withNamespace(props.nom, MOTIF),
-        RequeteFormDefaultValues[MOTIF],
-      );
+      props.formik.setFieldValue(withNamespace(props.nom, MOTIF), RequeteFormDefaultValues[MOTIF]);
     }
     props.formik.handleChange(e);
   };
@@ -125,10 +88,7 @@ const RequeteForm: React.FC<
   // initialiser dynamiquement le document demandé par défaut
   useEffect(() => {
     if (!props.champDocumentDemandeCharge)
-      props.formik.setFieldValue(
-        withNamespace(props.nom, DOCUMENT_DEMANDE),
-        DocumentDelivrance.getCopieIntegraleUUID(),
-      );
+      props.formik.setFieldValue(withNamespace(props.nom, DOCUMENT_DEMANDE), DocumentDelivrance.getCopieIntegraleUUID());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -139,7 +99,7 @@ const RequeteForm: React.FC<
           <>
             <SelectField
               name={withNamespace(props.nom, NATURE_ACTE)}
-              label={getLibelle("Nature d'acte concerné")}
+              label={"Nature d'acte concerné"}
               options={NatureActeRequete.getAllEnumsAsOptions()}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 onChangeNatureActeRequete(e);
@@ -148,7 +108,7 @@ const RequeteForm: React.FC<
             />
             <SelectField
               name={withNamespace(props.nom, DOCUMENT_DEMANDE)}
-              label={getLibelle("Document demandé")}
+              label={"Document demandé"}
               options={documentDemandeOptions}
               optionVide={OptionVide.NON_PRESENTE}
             />
@@ -156,12 +116,12 @@ const RequeteForm: React.FC<
         )}
         <InputField
           name={withNamespace(props.nom, NB_EXEMPLAIRE)}
-          label={getLibelle("Nombre d'exemplaires")}
+          label={"Nombre d'exemplaires"}
           typeInput={{ type: "number", min: 1, max: 5 }}
         />
         <SelectField
           name={withNamespace(props.nom, MOTIF)}
-          label={getLibelle("Motif")}
+          label={"Motif"}
           options={MotifDelivrance.getAllEnumsAsOptions()}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             onChangeMotif(e);
@@ -171,7 +131,7 @@ const RequeteForm: React.FC<
         {!complementMotifInactif && (
           <InputField
             name={withNamespace(props.nom, COMPLEMENT_MOTIF)}
-            label={getLibelle("Complément motif")}
+            label={"Complément motif"}
             maxLength={NB_CARACT_MAX_SAISIE}
             disabled={complementMotifInactif}
           />

@@ -5,14 +5,7 @@ import { TypeActe } from "@model/etatcivil/enum/TypeActe";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import {
-  CODE_COPIE_INTEGRALE,
-  CODE_COPIE_NON_SIGNEE,
-  CODE_EXTRAIT_AVEC_FILIATION,
-  CODE_EXTRAIT_PLURILINGUE,
-  CODE_EXTRAIT_SANS_FILIATION
-} from "@model/requete/enum/DocumentDelivranceConstante";
+import { DocumentDelivrance, ECodeDocumentDelivrance, IDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
 import { GestionMentions } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentions";
 import { SaisirExtraitForm } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitForm";
@@ -36,23 +29,27 @@ export enum ECleOngletDocumentDelivre {
   DOCUMENT_EDITE = "document-edite"
 }
 
-const aOngletSaisirExtrait = (typeDelivrance: DocumentDelivrance): boolean =>
-  ![CODE_COPIE_INTEGRALE, CODE_COPIE_NON_SIGNEE].includes(typeDelivrance.code);
+const aOngletSaisirExtrait = (typeDelivrance: IDocumentDelivrance | null): boolean =>
+  ![ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE, ECodeDocumentDelivrance.CODE_COPIE_NON_SIGNEE].includes(
+    (typeDelivrance?.code ?? "") as ECodeDocumentDelivrance
+  );
 
-const aOngletMention = (typeDelivrance: DocumentDelivrance, requete: IRequeteDelivrance, acte: IFicheActe | null) => {
-  switch (typeDelivrance.code) {
-    case CODE_EXTRAIT_PLURILINGUE:
+const aOngletMention = (typeDelivrance: IDocumentDelivrance | null, requete: IRequeteDelivrance, acte: IFicheActe | null) => {
+  switch (typeDelivrance?.code) {
+    case ECodeDocumentDelivrance.CODE_EXTRAIT_PLURILINGUE:
       return acte && [NatureActe.NAISSANCE, NatureActe.MARIAGE].includes(acte.nature);
-    case CODE_COPIE_INTEGRALE:
-    case CODE_COPIE_NON_SIGNEE:
+    case ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE:
+    case ECodeDocumentDelivrance.CODE_COPIE_NON_SIGNEE:
       return acte?.type === TypeActe.TEXTE && requete.choixDelivrance !== ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE;
     default:
       return true;
   }
 };
 
-const aOngletSaisirCorps = (typeDelivrance: DocumentDelivrance, validation: Validation | undefined) =>
-  [CODE_EXTRAIT_AVEC_FILIATION, CODE_EXTRAIT_SANS_FILIATION].includes(typeDelivrance.code) && validation !== Validation.E;
+const aOngletSaisirCorps = (typeDelivrance: IDocumentDelivrance | null, validation: Validation | undefined): boolean =>
+  [ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION, ECodeDocumentDelivrance.CODE_EXTRAIT_SANS_FILIATION].includes(
+    typeDelivrance?.code as ECodeDocumentDelivrance
+  ) && validation !== Validation.E;
 
 const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDelivre, resetOngletActif }) => {
   const idDocumentDelivre = useMemo(() => documentDelivre.id, [documentDelivre]);
@@ -60,7 +57,7 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
   const [contenuDocument, setContenuDocument] = useState<string | null>(null);
   const [ongletActif, setOngletActif] = useState<ECleOngletDocumentDelivre>(ECleOngletDocumentDelivre.DOCUMENT_EDITE);
   const ongletsDisponible = useMemo(() => {
-    const typeDocument = DocumentDelivrance.getEnumForUUID(documentDelivre.typeDocument);
+    const typeDocument = DocumentDelivrance.depuisId(documentDelivre.typeDocument);
 
     return {
       saisie: aOngletSaisirExtrait(typeDocument),

@@ -1,9 +1,11 @@
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import { TYPE_ALERTE } from "@mock/data/NomenclatureTypeAlerte";
 import { idRequeteRDDASigner } from "@mock/data/requeteDelivrance";
 import { IDroit } from "@model/agent/Habilitation";
 import { IOfficier } from "@model/agent/IOfficier";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
+import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { ID, ID_ACTE, URL_CONTEXT_APP, URL_MES_REQUETES_DELIVRANCE_EDITION_ID } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
@@ -11,7 +13,9 @@ import { describe, expect, test } from "vitest";
 import PageEditionRequeteDelivrance from "../../../pages/requetesDelivrance/PageEditionRequeteDelivrance";
 import { createTestingRouter } from "../../__tests__utils__/testsUtil";
 
-describe("Test de la page aperçu requête edition analyse marginale", async () => {
+describe("Test de la page aperçu requête edition analyse marginale", () => {
+  TypeAlerte.init(TYPE_ALERTE);
+
   const idActe = "b41079a5-9e8f-478a-b04c-c4c2ac671123";
   const idRequete = "9d00fe88-9d21-482e-bb02-223636f78386";
   test("La page s'affiche correctement", async () => {

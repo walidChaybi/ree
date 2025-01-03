@@ -4,7 +4,6 @@ import { RolePersonneSauvegardee } from "@model/requete/enum/RolePersonneSauvega
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { logError } from "@util/LogManager";
 import messageManager from "@util/messageManager";
-import { getValeurOuUndefined } from "@util/Utils";
 import { useEffect, useState } from "react";
 import { IDataTableauActeInscriptionSelectionne } from "../../tableauActesInscriptionsSelectionnes/IDataTableauActeInscriptionSelectionne";
 import { IDataTableauPersonneSelectionnee } from "../IDataTableauPersonneSelectionne";
@@ -31,8 +30,8 @@ interface IDetailsPersonnesSauvegardeesDto {
 
 interface IPiecesJustificativesSauvegardeesDto {
   idPersonne: string;
-  nom: string;
-  prenom: string;
+  nom: string | null;
+  prenom: string | null;
   idNomenclature: string;
   idActe: string | null;
   idRC: string | null;
@@ -52,26 +51,18 @@ interface ISauvegardeRMCApiHookResultat {
   estValide: boolean;
 }
 
-export function useSauvegardeRMCApiHook(
-  params?: ISauvegardeRMCApiHookParams
-): ISauvegardeRMCApiHookResultat | undefined {
+export function useSauvegardeRMCApiHook(params?: ISauvegardeRMCApiHookParams): ISauvegardeRMCApiHookResultat | undefined {
   const [resultat, setResultat] = useState<ISauvegardeRMCApiHookResultat>();
   useEffect(() => {
     if (params) {
-      postSauvegardePersonneEtActeSelectionne(
-        params.idRequete,
-        mapPersonneEtActeSelectionne(params)
-      )
+      postSauvegardePersonneEtActeSelectionne(params.idRequete, mapPersonneEtActeSelectionne(params))
         .then(res => {
           setResultat({ estValide: true });
-          messageManager.showSuccessAndClose(
-            "Enregistrement effectué avec succès !"
-          );
+          messageManager.showSuccessAndClose("Enregistrement effectué avec succès !");
         })
         .catch(error => {
           logError({
-            messageUtilisateur:
-              "Impossible de sauvegarder la selection des actes et des personnes",
+            messageUtilisateur: "Impossible de sauvegarder la selection des actes et des personnes",
             error
           });
           setResultat({ estValide: false });
@@ -83,12 +74,8 @@ export function useSauvegardeRMCApiHook(
   return resultat;
 }
 
-function mapPersonneEtActeSelectionne(
-  params: ISauvegardeRMCApiHookParams
-): ISauvegardePersonneEtActeSelectionneDto {
-  const personnes = params.dataPersonnesSelectionnees.reduce<
-    IDetailsPersonnesSauvegardeesDto[]
-  >((res, personne) => {
+function mapPersonneEtActeSelectionne(params: ISauvegardeRMCApiHookParams): ISauvegardePersonneEtActeSelectionneDto {
+  const personnes = params.dataPersonnesSelectionnees.reduce<IDetailsPersonnesSauvegardeesDto[]>((res, personne) => {
     const role = RolePersonneSauvegardee.getEnumFromLibelle(personne.role);
     if (role) {
       res.push({
@@ -103,39 +90,15 @@ function mapPersonneEtActeSelectionne(
     (acteOuInscription, index): IPiecesJustificativesSauvegardeesDto => {
       return {
         idPersonne: acteOuInscription.idPersonne,
-        nom: getValeurOuUndefined(acteOuInscription.nom),
-        prenom: getValeurOuUndefined(acteOuInscription.prenoms?.split(",")[0]),
-        idNomenclature: TypePieceJustificative.getKeyForLibelle(
-          getValeurOuUndefined(acteOuInscription.typePJ)
-        ),
-        idActe: estActeFromNatureActe(
-          getValeurOuUndefined(acteOuInscription.nature)
-        )
-          ? acteOuInscription.idActeInscription
-          : null,
-        idRCA:
-          getRCAOuRCOuPACS(
-            getValeurOuUndefined(acteOuInscription.reference)
-          ) === "RCA"
-            ? acteOuInscription.idActeInscription
-            : null,
-        idRC:
-          getRCAOuRCOuPACS(
-            getValeurOuUndefined(acteOuInscription.reference)
-          ) === "RC"
-            ? acteOuInscription.idActeInscription
-            : null,
-        idPACS:
-          getRCAOuRCOuPACS(
-            getValeurOuUndefined(acteOuInscription.reference)
-          ) === "PACS"
-            ? acteOuInscription.idActeInscription
-            : null,
-        nature: mapNatureActeOuInscription(
-          acteOuInscription.nature,
-          acteOuInscription.reference
-        ),
-        reference: acteOuInscription.reference || ""
+        nom: acteOuInscription.nom ?? null,
+        prenom: acteOuInscription.prenoms?.split(",")[0] ?? null,
+        idNomenclature: TypePieceJustificative.depuisLibelle(acteOuInscription.typePJ ?? "")?.id ?? "",
+        idActe: estActeFromNatureActe(acteOuInscription.nature) ? acteOuInscription.idActeInscription : null,
+        idRCA: getRCAOuRCOuPACS(acteOuInscription.reference) === "RCA" ? acteOuInscription.idActeInscription : null,
+        idRC: getRCAOuRCOuPACS(acteOuInscription.reference) === "RC" ? acteOuInscription.idActeInscription : null,
+        idPACS: getRCAOuRCOuPACS(acteOuInscription.reference) === "PACS" ? acteOuInscription.idActeInscription : null,
+        nature: mapNatureActeOuInscription(acteOuInscription.nature, acteOuInscription.reference),
+        reference: acteOuInscription.reference ?? ""
       };
     }
   );
@@ -161,9 +124,7 @@ function mapNatureActeOuInscription(nature?: string, reference?: string) {
   }
 }
 
-const getRCAOuRCOuPACS = (
-  reference?: string
-): NatureActeEtinscription | undefined => {
+const getRCAOuRCOuPACS = (reference?: string): NatureActeEtinscription | undefined => {
   let rCAOuRCOuPACS;
 
   if (reference) {

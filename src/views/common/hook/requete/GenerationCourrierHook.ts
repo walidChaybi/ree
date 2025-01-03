@@ -30,10 +30,9 @@ import { IRequerant } from "@model/requete/IRequerant";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ISauvegardeCourrier } from "@model/requete/ISauvegardeCourrier";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { DocumentDelivrance, IDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { getValeurOuVide } from "@util/Utils";
 import { useEffect, useState } from "react";
 import { MimeType } from "../../../../ressources/MimeType";
 import { IActeApiHookParams, useInformationsActeApiHook } from "../acte/ActeApiHook";
@@ -61,7 +60,7 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
 
   const [courrierParams, setCourrierParams] = useState<ICourrierParams>();
 
-  const [courrier, setCourrier] = useState<{ doc?: DocumentDelivrance }>();
+  const [courrier, setCourrier] = useState<{ doc?: IDocumentDelivrance | null }>();
 
   const [acteApiHookParams, setActeApiHookParams] = useState<IActeApiHookParams>();
 
@@ -76,7 +75,7 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
       // @ts-ignore params.saisieCourrier n'est pas null
       const uuidCourrier = params.saisieCourrier.choixCourrier.courrier;
       setCourrier({
-        doc: DocumentDelivrance.getDocumentDelivrance(uuidCourrier)
+        doc: DocumentDelivrance.depuisId(uuidCourrier)
       });
       setActApiHookParamsOuBasculerConstructionCourrier(
         setActeApiHookParams,
@@ -190,7 +189,7 @@ function setActApiHookParamsOuBasculerConstructionCourrier(
 }
 
 function uuidCourrierPresent(generationCourrierParams?: IGenerationCourrierParams): boolean {
-  return generationCourrierParams?.saisieCourrier != null && generationCourrierParams.saisieCourrier.choixCourrier.courrier != null;
+  return generationCourrierParams?.saisieCourrier?.choixCourrier.courrier != null;
 }
 
 function uuidDocumentReponseEtDonneesCompositionPresents(
@@ -204,7 +203,7 @@ function presenceDeLaRequeteDuDocEtSaisieCourrier(params: IGenerationCourrierPar
   return basculerConstructionCourrier && params?.requete?.documentDemande && params.saisieCourrier;
 }
 
-function verificationElementPourLaGeneration(params: IGenerationCourrierParams | undefined, courrier: DocumentDelivrance | undefined) {
+function verificationElementPourLaGeneration(params?: IGenerationCourrierParams, courrier?: IDocumentDelivrance | null) {
   return (
     params?.requete?.titulaires &&
     params.requete.titulaires.length > 0 &&
@@ -226,7 +225,7 @@ function construitCourrier(
   requete: IRequeteDelivrance,
   setCourrierParams: any,
   setResultGenerationCourrier: any,
-  courrier: DocumentDelivrance
+  courrier: IDocumentDelivrance
 ) {
   if (elements && requete?.documentDemande) {
     const composition = creerCourrierComposition(elements, requete);
@@ -250,17 +249,17 @@ function mapCourrierPourSauvegarde(
   courrier: any
 ): ISauvegardeCourrier {
   return {
-    nomRequerant: getValeurOuVide(saisieCourrier?.[REQUERANT][NOM]),
-    prenomRequerant: getValeurOuVide(saisieCourrier?.[REQUERANT][PRENOM]),
-    raisonSocialeRequerant: getValeurOuVide(saisieCourrier?.[REQUERANT][RAISON_SOCIALE]),
+    nomRequerant: saisieCourrier?.[REQUERANT][NOM] ?? "",
+    prenomRequerant: saisieCourrier?.[REQUERANT][PRENOM] ?? "",
+    raisonSocialeRequerant: saisieCourrier?.[REQUERANT][RAISON_SOCIALE] ?? "",
     adresseRequerant: mappingSaisieAdresseVersAdresseRequerant(saisieCourrier),
-    motif: getValeurOuVide(saisieCourrier?.[REQUETE][MOTIF]),
-    nombreExemplairesDemandes: parseInt(getValeurOuVide(saisieCourrier?.[REQUETE][NB_EXEMPLAIRE])),
+    motif: saisieCourrier?.[REQUETE][MOTIF] ?? "",
+    nombreExemplairesDemandes: parseInt(saisieCourrier?.[REQUETE][NB_EXEMPLAIRE].toString() ?? ""),
     documentReponse: {
       contenu: donneesComposition.contenu,
       nom: courrier.libelle,
       mimeType: MimeType.APPLI_PDF,
-      typeDocument: DocumentDelivrance.getUuidFromDocument(courrier), // UUID du courrier (nomenclature)
+      typeDocument: courrier.id, // UUID du courrier (nomenclature)
       nbPages: donneesComposition.nbPages,
       orientation: Orientation.PORTRAIT,
       optionsCourrier: optionsChoisies?.map(optionChoisie => {
@@ -289,13 +288,13 @@ function requeteAvecSaisieRequerant(requete: IRequeteDelivrance, saisieCourrier:
 
 function mappingSaisieAdresseVersAdresseRequerant(saisieCourrier: SaisieCourrier | undefined): IAdresseRequerant {
   return {
-    ligne2: getValeurOuVide(saisieCourrier?.[ADRESSE]?.[COMPLEMENT_DESTINATAIRE]),
-    ligne3: getValeurOuVide(saisieCourrier?.[ADRESSE]?.[COMPLEMENT_POINT_GEO]),
-    ligne4: getValeurOuVide(saisieCourrier?.[ADRESSE]?.[VOIE]),
-    ligne5: getValeurOuVide(saisieCourrier?.[ADRESSE]?.[LIEU_DIT]),
-    codePostal: getValeurOuVide(saisieCourrier?.[ADRESSE]?.[CODE_POSTAL]),
-    ville: getValeurOuVide(saisieCourrier?.[ADRESSE]?.[COMMUNE]),
-    pays: getValeurOuVide(saisieCourrier?.[ADRESSE]?.[PAYS])
+    ligne2: saisieCourrier?.[ADRESSE]?.[COMPLEMENT_DESTINATAIRE] ?? "",
+    ligne3: saisieCourrier?.[ADRESSE]?.[COMPLEMENT_POINT_GEO] ?? "",
+    ligne4: saisieCourrier?.[ADRESSE]?.[VOIE] ?? "",
+    ligne5: saisieCourrier?.[ADRESSE]?.[LIEU_DIT] ?? "",
+    codePostal: saisieCourrier?.[ADRESSE]?.[CODE_POSTAL] ?? "",
+    ville: saisieCourrier?.[ADRESSE]?.[COMMUNE] ?? "",
+    pays: saisieCourrier?.[ADRESSE]?.[PAYS] ?? ""
   };
 }
 

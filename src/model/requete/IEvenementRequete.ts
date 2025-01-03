@@ -1,6 +1,5 @@
 /* istanbul ignore file */
 import DateUtils from "@util/DateUtils";
-import { getValeurOuVide, numberToString } from "@util/Utils";
 import { NatureActeRequete } from "./enum/NatureActeRequete";
 
 export interface IEvenementRequete {
@@ -17,16 +16,16 @@ export const EvenementRequete = {
   getDate(event?: IEvenementRequete): string {
     return event?.annee
       ? DateUtils.getDateStringFromDateCompose({
-          jour: numberToString(event.jour),
-          mois: numberToString(event.mois),
-          annee: numberToString(event.annee)
+          jour: event.jour?.toString() ?? "",
+          mois: event.mois?.toString() ?? "",
+          annee: event.annee?.toString() ?? ""
         })
       : "";
   },
   getVille(event?: IEvenementRequete): string {
-    return getValeurOuVide(event?.ville);
+    return event?.ville ?? "";
   },
   getPays(event?: IEvenementRequete): string {
-    return getValeurOuVide(event?.pays);
+    return event?.pays ?? "";
   }
 };

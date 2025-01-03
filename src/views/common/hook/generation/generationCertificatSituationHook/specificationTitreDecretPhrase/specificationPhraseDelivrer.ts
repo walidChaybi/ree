@@ -3,16 +3,7 @@ import { StatutPacesUtil } from "@model/etatcivil/enum/StatutPacs";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { IFichePacs } from "@model/etatcivil/pacs/IFichePacs";
 import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import {
-  CODE_CERTIFICAT_SITUATION_PACS,
-  CODE_CERTIFICAT_SITUATION_PACS_RC,
-  CODE_CERTIFICAT_SITUATION_PACS_RCA,
-  CODE_CERTIFICAT_SITUATION_PACS_RC_RCA,
-  CODE_CERTIFICAT_SITUATION_RC,
-  CODE_CERTIFICAT_SITUATION_RCA,
-  CODE_CERTIFICAT_SITUATION_RC_RCA
-} from "@model/requete/enum/DocumentDelivranceConstante";
+import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import DateUtils from "@util/DateUtils";
 import { replaceIndexByValue } from "@util/Utils";
 import { IPhrasesJasperCertificatSituation } from "../GenerationCertificatSituationHook";
@@ -24,7 +15,11 @@ export interface IInfosInscriptions {
 }
 
 class DemandeDeliver {
-  constructor(public pacs = false, public rc = false, public rca = false) {}
+  constructor(
+    public pacs = false,
+    public rc = false,
+    public rca = false
+  ) {}
 }
 
 class SpecificationDeliver {
@@ -178,42 +173,42 @@ class SpecificationDeliverPhrase {
   MAP_SPECIFICATION: Map<string, SpecificationDeliver> = new Map();
   private init() {
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_PACS),
+      DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS),
       new SpecificationDeliver(
         //                 Pacs, Rc, Rca
         new DemandeDeliver(true, false, false)
       )
     );
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_RC),
+      DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_RC),
       new SpecificationDeliver(
         //                 Pacs, Rc, Rca
         new DemandeDeliver(false, true, false)
       )
     );
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_RCA),
+      DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_RCA),
       new SpecificationDeliver(
         //                 Pacs, Rc, Rca
         new DemandeDeliver(false, false, true)
       )
     );
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_RC_RCA),
+      DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_RC_RCA),
       new SpecificationDeliver(
         //                 Pacs, Rc, Rca
         new DemandeDeliver(false, true, true)
       )
     );
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_PACS_RC_RCA),
+      DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS_RC_RCA),
       new SpecificationDeliver(
         //                 Pacs, Rc, Rca
         new DemandeDeliver(true, true, true)
       )
     );
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_PACS_RC),
+      DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS_RC),
       new SpecificationDeliver(
         //                 Pacs, Rc, Rca
         new DemandeDeliver(true, true, false)
@@ -221,7 +216,7 @@ class SpecificationDeliverPhrase {
     );
 
     this.MAP_SPECIFICATION.set(
-      DocumentDelivrance.getKeyForCode(CODE_CERTIFICAT_SITUATION_PACS_RCA),
+      DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS_RCA),
       new SpecificationDeliver(
         //                 Pacs, Rc, Rca
         new DemandeDeliver(true, false, true)
@@ -229,12 +224,7 @@ class SpecificationDeliverPhrase {
     );
   }
 
-  getPhrasesJasper(
-    idDocumentDemande: string,
-    sexe: Sexe,
-    nbInscriptionsInfos: INbInscriptionsInfos,
-    infosInscription: IInfosInscriptions
-  ) {
+  getPhrasesJasper(idDocumentDemande: string, sexe: Sexe, nbInscriptionsInfos: INbInscriptionsInfos, infosInscription: IInfosInscriptions) {
     let phrasesJasper = {} as IPhrasesJasperCertificatSituation;
 
     if (this.MAP_SPECIFICATION.size === 0) {
@@ -243,10 +233,7 @@ class SpecificationDeliverPhrase {
 
     const specification = this.MAP_SPECIFICATION.get(idDocumentDemande);
     if (specification) {
-      phrasesJasper = specification.getPhraseEtPiecesJointes(
-        sexe,
-        infosInscription
-      );
+      phrasesJasper = specification.getPhraseEtPiecesJointes(sexe, infosInscription);
     }
     return phrasesJasper;
   }

@@ -1,52 +1,33 @@
 /* istanbul ignore file */
 import { EnumWithComplete } from "@util/enum/EnumWithComplete";
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
-import {
-  CODE_COPIE_INTEGRALE,
-  CODE_COPIE_NON_SIGNEE,
-  CODE_EXTRAIT_AVEC_FILIATION,
-  CODE_EXTRAIT_PLURILINGUE,
-  CODE_EXTRAIT_SANS_FILIATION
-} from "./DocumentDelivranceConstante";
+import { ECodeDocumentDelivrance } from "./DocumentDelivrance";
 import { StatutRequete } from "./StatutRequete";
 
 export class ChoixDelivrance extends EnumWithComplete {
-  public static readonly DELIVRER_EC_COPIE_INTEGRALE = new ChoixDelivrance(
-    "DELIVRER_EC_COPIE_INTEGRALE",
-    "Délivrer E/C - Copie intégrale"
+  public static readonly DELIVRER_EC_COPIE_INTEGRALE = new ChoixDelivrance("DELIVRER_EC_COPIE_INTEGRALE", "Délivrer E/C - Copie intégrale");
+  public static readonly DELIVRER_EC_EXTRAIT_AVEC_FILIATION = new ChoixDelivrance(
+    "DELIVRER_EC_EXTRAIT_AVEC_FILIATION",
+    "Délivrer E/C - Extrait avec filiation"
   );
-  public static readonly DELIVRER_EC_EXTRAIT_AVEC_FILIATION =
-    new ChoixDelivrance(
-      "DELIVRER_EC_EXTRAIT_AVEC_FILIATION",
-      "Délivrer E/C - Extrait avec filiation"
-    );
-  public static readonly DELIVRER_EC_EXTRAIT_SANS_FILIATION =
-    new ChoixDelivrance(
-      "DELIVRER_EC_EXTRAIT_SANS_FILIATION",
-      "Délivrer E/C - Extrait sans filiation"
-    );
+  public static readonly DELIVRER_EC_EXTRAIT_SANS_FILIATION = new ChoixDelivrance(
+    "DELIVRER_EC_EXTRAIT_SANS_FILIATION",
+    "Délivrer E/C - Extrait sans filiation"
+  );
   public static readonly DELIVRER_EC_EXTRAIT_PLURILINGUE = new ChoixDelivrance(
     "DELIVRER_EC_EXTRAIT_PLURILINGUE",
     "Délivrer E/C - Extrait plurilingue"
   );
-  public static readonly DELIVRER_EC_COPIE_ARCHIVE = new ChoixDelivrance(
-    "DELIVRER_EC_COPIE_ARCHIVE",
-    "Délivrer E/C - Copie archive"
+  public static readonly DELIVRER_EC_COPIE_ARCHIVE = new ChoixDelivrance("DELIVRER_EC_COPIE_ARCHIVE", "Délivrer E/C - Copie archive");
+  public static readonly REP_SANS_DEL_EC_REQUETE_INCOMPLETE = new ChoixDelivrance(
+    "REP_SANS_DEL_EC_REQUETE_INCOMPLETE",
+    "Réponse sans délivrance E/C - Requête incomplète"
   );
-  public static readonly REP_SANS_DEL_EC_REQUETE_INCOMPLETE =
-    new ChoixDelivrance(
-      "REP_SANS_DEL_EC_REQUETE_INCOMPLETE",
-      "Réponse sans délivrance E/C - Requête incomplète"
-    );
-  public static readonly REP_SANS_DEL_EC_ACTE_NON_DETENU_AU_SCEC =
-    new ChoixDelivrance(
-      "REP_SANS_DEL_EC_ACTE_NON_DETENU_AU_SCEC",
-      "Réponse sans délivrance E/C - Acte non détenu au SCEC"
-    );
-  public static readonly REP_SANS_DEL_EC_DIVERS = new ChoixDelivrance(
-    "REP_SANS_DEL_EC_DIVERS",
-    "Réponse sans délivrance E/C - Divers"
+  public static readonly REP_SANS_DEL_EC_ACTE_NON_DETENU_AU_SCEC = new ChoixDelivrance(
+    "REP_SANS_DEL_EC_ACTE_NON_DETENU_AU_SCEC",
+    "Réponse sans délivrance E/C - Acte non détenu au SCEC"
   );
+  public static readonly REP_SANS_DEL_EC_DIVERS = new ChoixDelivrance("REP_SANS_DEL_EC_DIVERS", "Réponse sans délivrance E/C - Divers");
 
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, ChoixDelivrance);
@@ -65,10 +46,7 @@ export class ChoixDelivrance extends EnumWithComplete {
   }
 
   public static estCopieIntegraleOuArchive(choix: ChoixDelivrance) {
-    return (
-      ChoixDelivrance.estCopieIntegrale(choix) ||
-      ChoixDelivrance.estCopieArchive(choix)
-    );
+    return ChoixDelivrance.estCopieIntegrale(choix) || ChoixDelivrance.estCopieArchive(choix);
   }
 
   public static estCopieArchive(choix?: ChoixDelivrance) {
@@ -80,79 +58,53 @@ export class ChoixDelivrance extends EnumWithComplete {
   }
 
   public static estAvecFiliation(choix?: ChoixDelivrance): boolean {
-    return choix
-      ? choix === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
-      : false;
+    return choix ? choix === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION : false;
   }
   public static estSansFiliation(choix: ChoixDelivrance) {
     return choix === ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION;
   }
 
   public static estAvecOuSansFiliation(choix?: ChoixDelivrance) {
-    return (
-      choix === ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION ||
-      choix === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
-    );
+    return choix === ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION || choix === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION;
   }
   public static estPlurilingue(choix?: ChoixDelivrance) {
     return choix === ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE;
   }
 
   public static estExtrait(choix?: ChoixDelivrance) {
-    return (
-      ChoixDelivrance.estAvecOuSansFiliation(choix) ||
-      ChoixDelivrance.estPlurilingue(choix)
-    );
+    return ChoixDelivrance.estAvecOuSansFiliation(choix) || ChoixDelivrance.estPlurilingue(choix);
   }
 
   public static estExtraitOuCopieIntegrale(choix?: ChoixDelivrance) {
-    return (
-      ChoixDelivrance.estCopieIntegrale(choix) ||
-      ChoixDelivrance.estExtrait(choix)
-    );
+    return ChoixDelivrance.estCopieIntegrale(choix) || ChoixDelivrance.estExtrait(choix);
   }
 
-  public static getCodeDocumentDelivranceFromChoixDelivrance(
-    choixDelivrance?: ChoixDelivrance
-  ) {
+  public static getCodeDocumentDelivranceFromChoixDelivrance(choixDelivrance?: ChoixDelivrance) {
     switch (choixDelivrance) {
       case ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE:
-        return CODE_COPIE_INTEGRALE;
+        return ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE;
       case ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION:
-        return CODE_EXTRAIT_AVEC_FILIATION;
+        return ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION;
       case ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE:
-        return CODE_EXTRAIT_PLURILINGUE;
+        return ECodeDocumentDelivrance.CODE_EXTRAIT_PLURILINGUE;
       case ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION:
-        return CODE_EXTRAIT_SANS_FILIATION;
+        return ECodeDocumentDelivrance.CODE_EXTRAIT_SANS_FILIATION;
       case ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE:
-        return CODE_COPIE_NON_SIGNEE;
+        return ECodeDocumentDelivrance.CODE_COPIE_NON_SIGNEE;
       default:
         return "";
     }
   }
 
-  public static choixDelivranceCoherentAvecCode(
-    choixDelivrance: ChoixDelivrance,
-    code: string
-  ) {
-    return (
-      code ===
-      ChoixDelivrance.getCodeDocumentDelivranceFromChoixDelivrance(
-        choixDelivrance
-      )
-    );
+  public static choixDelivranceCoherentAvecCode(choixDelivrance: ChoixDelivrance, code: string) {
+    return code === ChoixDelivrance.getCodeDocumentDelivranceFromChoixDelivrance(choixDelivrance);
   }
 
-  public static getStatutApresChoixDelivrance(
-    choixDelivrance?: ChoixDelivrance
-  ): StatutRequete {
+  public static getStatutApresChoixDelivrance(choixDelivrance?: ChoixDelivrance): StatutRequete {
     let statutRequete: StatutRequete;
     if (ChoixDelivrance.estExtraitOuCopieIntegrale(choixDelivrance)) {
       statutRequete = StatutRequete.A_SIGNER;
-    } else if (
-      ChoixDelivrance.estReponseSansDelivrance(choixDelivrance) ||
-      ChoixDelivrance.estCopieArchive(choixDelivrance)
-    ) {
+    } else if (ChoixDelivrance.estReponseSansDelivrance(choixDelivrance) || ChoixDelivrance.estCopieArchive(choixDelivrance)) {
       statutRequete = StatutRequete.A_VALIDER;
     } else {
       statutRequete = StatutRequete.A_TRAITER;

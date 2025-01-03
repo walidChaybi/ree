@@ -22,7 +22,7 @@ interface IPartieDocumentsProps {
 }
 
 const documentsDelivranceTries = (documents: IDocumentReponse[], choixDelivrance: ChoixDelivrance): IDocumentReponse[] => {
-  const enumDocumentPrincipal = DocumentDelivrance.getEnumForCode(
+  const enumDocumentPrincipal = DocumentDelivrance.depuisCode(
     ChoixDelivrance.getCodeDocumentDelivranceFromChoixDelivrance(choixDelivrance)
   );
 
@@ -30,7 +30,7 @@ const documentsDelivranceTries = (documents: IDocumentReponse[], choixDelivrance
     .filter(doc => !DocumentDelivrance.estCourrierDelivranceEC(doc.typeDocument))
     .map(doc => ({
       ...doc,
-      ordre: DocumentDelivrance.getEnumForUUID(doc.typeDocument) === enumDocumentPrincipal ? UN : DEUX
+      ordre: DocumentDelivrance.depuisId(doc.typeDocument) === enumDocumentPrincipal ? UN : DEUX
     }))
     .sort((docA, docB) => (docA.ordre > docB.ordre ? UN : -UN));
 };

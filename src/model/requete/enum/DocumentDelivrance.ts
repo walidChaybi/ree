@@ -1,59 +1,64 @@
-import { Options } from "@util/Type";
-/* istanbul ignore file */
-import { peupleDocumentDelivrance } from "@api/nomenclature/NomenclatureRequete";
-import { EnumNomemclature } from "@util/enum/EnumNomenclature";
-import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
+/* v8 ignore start */
+import { Option } from "@util/Type";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { Option } from "@util/Type";
-import { getValeurOuVide } from "@util/Utils";
 import { TypeRepertoire } from "../../etatcivil/enum/TypeRepertoire";
 import { ChoixDelivrance } from "./ChoixDelivrance";
-import {
-  CODE_ATTESTATION_PACS,
-  CODE_CERTIFICAT_INSCRIPTION_RC,
-  CODE_CERTIFICAT_INSCRIPTION_RCA,
-  CODE_CERTIFICAT_SITUATION_PACS,
-  CODE_CERTIFICAT_SITUATION_PACS_RC,
-  CODE_CERTIFICAT_SITUATION_PACS_RCA,
-  CODE_CERTIFICAT_SITUATION_PACS_RC_RCA,
-  CODE_CERTIFICAT_SITUATION_RC,
-  CODE_CERTIFICAT_SITUATION_RCA,
-  CODE_CERTIFICAT_SITUATION_RC_RCA,
-  CODE_COPIE_INTEGRALE,
-  CODE_COPIE_NON_SIGNEE,
-  CODE_EXTRAIT_AVEC_FILIATION,
-  CODE_EXTRAIT_PLURILINGUE,
-  CODE_EXTRAIT_SANS_FILIATION
-} from "./DocumentDelivranceConstante";
 
-const CARN_PAC_01 = "CARN_PAC_01";
 const CATEGORIE_DOCUMENT_DELIVRANCE = "DOCUMENT_DELIVRANCE";
-const CERTIFICAT_SITUATION_PREFIX = "CERTIFICAT_SITUATION";
+
+export enum ECodeDocumentDelivrance {
+  CODE_CERTIFICAT_SITUATION_PACS = "CERTIFICAT_SITUATION_PACS",
+  CODE_CERTIFICAT_SITUATION_PACS_RC = "CERTIFICAT_SITUATION_PACS_RC",
+  CODE_CERTIFICAT_SITUATION_PACS_RCA = "CERTIFICAT_SITUATION_PACS_RCA",
+  CODE_CERTIFICAT_SITUATION_PACS_RC_RCA = "CERTIFICAT_SITUATION_PACS_RC_RCA",
+  CODE_CERTIFICAT_SITUATION_RC = "CERTIFICAT_SITUATION_RC",
+  CODE_CERTIFICAT_SITUATION_RCA = "CERTIFICAT_SITUATION_RCA",
+  CODE_CERTIFICAT_SITUATION_RC_RCA = "CERTIFICAT_SITUATION_RC_RCA",
+  CODE_ATTESTATION_PACS = "ATTESTATION_PACS",
+  CODE_CERTIFICAT_INSCRIPTION_RC = "CERTIFICAT_INSCRIPTION_RC",
+  CODE_CERTIFICAT_INSCRIPTION_RCA = "CERTIFICAT_INSCRIPTION_RCA",
+  INFORMATION_DIVERSES_MANQUANTE = "CARN_EC_117",
+  MANDAT_GENEALOGIQUE = "CARN_EC_18",
+  JUSTIFICATIF_REPRESENTANT_MANQUANT = "CARN_EC_19",
+  ACTE_NON_TROUVE = "CARN_EC_115",
+  ACTE_NON_TROUVE_ALGERIE = "CARN_EC_64",
+  ACTE_NAISSANCE_NON_TROUVE_MARIAGE = "CARN_EC_24",
+  ATTESTATION_PENSION = "CARN_EC_APR",
+  PROPOSITION_TRANSCRIPTION = "CARN_EC_PTA",
+  DIVERS = "CARN_EC_17",
+  REFUS_DELIVRANCE_MARIAGE = "CARN_EC_RDM",
+  DELIVRANCE_ACTE_NON_ANTHENTIQUE = "CAD_ARCH_118",
+  DELIVRANCE_ACTE = "CAD_EC_116",
+  DELIVRANCE_ACTE_INCOMPLET = "CAD_EC_50",
+  CODE_COPIE_INTEGRALE = "COPIE_INTEGRALE",
+  CODE_COPIE_NON_SIGNEE = "COPIE_NON_SIGNEE",
+  CODE_DECISION_PROTECTION = "DECISION_PROTECTION",
+  CODE_EXTRAIT_AVEC_FILIATION = "EXTRAIT_AVEC_FILIATION",
+  CODE_EXTRAIT_PLURILINGUE = "EXTRAIT_PLURILINGUE",
+  CODE_EXTRAIT_SANS_FILIATION = "EXTRAIT_SANS_FILIATION",
+  COURRIER = "Courrier"
+}
 
 const CodesExtraitCopieASigner = [
-  CODE_COPIE_INTEGRALE,
-  CODE_EXTRAIT_AVEC_FILIATION,
-  CODE_EXTRAIT_PLURILINGUE,
-  CODE_EXTRAIT_SANS_FILIATION
+  ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE,
+  ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION,
+  ECodeDocumentDelivrance.CODE_EXTRAIT_PLURILINGUE,
+  ECodeDocumentDelivrance.CODE_EXTRAIT_SANS_FILIATION
 ];
 
 const CodesRC = [
-  CODE_CERTIFICAT_SITUATION_PACS_RC,
-  CODE_CERTIFICAT_INSCRIPTION_RC,
-  CODE_CERTIFICAT_SITUATION_PACS_RC_RCA,
-  CODE_CERTIFICAT_SITUATION_RC,
-  CODE_CERTIFICAT_SITUATION_RC_RCA
+  ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS_RC,
+  ECodeDocumentDelivrance.CODE_CERTIFICAT_INSCRIPTION_RC,
+  ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS_RC_RCA,
+  ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_RC,
+  ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_RC_RCA
 ];
 
-export const CodesExtraitCopie = [
-  ...CodesExtraitCopieASigner,
-  CODE_COPIE_NON_SIGNEE
-];
+export const CodesExtraitCopie = [...CodesExtraitCopieASigner, ECodeDocumentDelivrance.CODE_COPIE_NON_SIGNEE];
 
 const ORDRE_MAX = 999;
 
-export const COURRIER = "Courrier";
 const ORDRE_DOCUMENTS_DELIVRANCE = {
   "Copie intégrale": 10,
   "Extrait avec filiation": 20,
@@ -69,23 +74,25 @@ const ORDRE_DOCUMENTS_DELIVRANCE = {
   COURRIER: 130
 };
 
-export class DocumentDelivrance extends EnumNomemclature {
-  constructor(
-    code: string,
-    libelle: string,
-    categorie: string,
-    private readonly _texteLibre: boolean,
-    private readonly _categorieDocumentDelivrance: string
-  ) {
-    super(code, libelle, categorie);
-  }
+export interface IDocumentDelivrance {
+  id: string;
+  categorie: string;
+  code: string;
+  libelle: string;
+  categorieDocumentDelivrance: string;
+  texteLibre: boolean;
+  correspondanceDila: boolean;
+}
 
-  get texteLibre() {
-    return this._texteLibre;
-  }
+export class DocumentDelivrance {
+  private static liste: IDocumentDelivrance[] | null = null;
 
-  get categorieDocumentDelivrance() {
-    return this._categorieDocumentDelivrance;
+  public static init(documentDelivrance: IDocumentDelivrance[]) {
+    if (DocumentDelivrance.liste !== null) {
+      return;
+    }
+
+    DocumentDelivrance.liste = documentDelivrance;
   }
 
   /**
@@ -95,374 +102,181 @@ export class DocumentDelivrance extends EnumNomemclature {
    * @param codeDocumentDemande
    * @param categorieInscription
    */
-  private static controleDocumentDelivranceSelonTypeRepertoire(
-    codeDocumentDemande: string,
-    categorieInscription: string
-  ): boolean {
-    /* Switch / Case */
-    const switchCase: any = {
-      [CODE_ATTESTATION_PACS]: (type: string): boolean =>
-        TypeRepertoire.PACS.libelle === type,
-      [CODE_CERTIFICAT_SITUATION_PACS]: (type: string): boolean =>
-        TypeRepertoire.PACS.libelle === type,
-      [CODE_CERTIFICAT_SITUATION_PACS_RC]: (type: string): boolean =>
-        TypeRepertoire.PACS.libelle === type ||
-        TypeRepertoire.RC.libelle === type,
-      [CODE_CERTIFICAT_SITUATION_PACS_RCA]: (type: string): boolean =>
-        TypeRepertoire.PACS.libelle === type ||
-        TypeRepertoire.RCA.libelle === type,
-      [CODE_CERTIFICAT_SITUATION_PACS_RC_RCA]: (): boolean => true,
-      [CODE_CERTIFICAT_SITUATION_RC]: (type: string): boolean =>
-        TypeRepertoire.RC.libelle === type,
-      [CODE_CERTIFICAT_SITUATION_RC_RCA]: (type: string): boolean =>
-        TypeRepertoire.RC.libelle === type ||
-        TypeRepertoire.RCA.libelle === type,
-      [CODE_CERTIFICAT_SITUATION_RCA]: (type: string): boolean =>
-        TypeRepertoire.RCA.libelle === type
-    };
-    return codeDocumentDemande && switchCase[codeDocumentDemande]
-      ? switchCase[codeDocumentDemande](categorieInscription)
-      : false;
+  private static controleDocumentDelivranceSelonTypeRepertoire(codeDocumentDemande: string, categorieInscription: string): boolean {
+    switch (codeDocumentDemande) {
+      case ECodeDocumentDelivrance.CODE_ATTESTATION_PACS:
+        return TypeRepertoire.PACS.libelle === categorieInscription;
+
+      case ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS:
+        return TypeRepertoire.PACS.libelle === categorieInscription;
+
+      case ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS_RC:
+        return TypeRepertoire.PACS.libelle === categorieInscription || TypeRepertoire.RC.libelle === categorieInscription;
+
+      case ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS_RCA:
+        return TypeRepertoire.PACS.libelle === categorieInscription || TypeRepertoire.RCA.libelle === categorieInscription;
+
+      case ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS_RC_RCA:
+        return true;
+
+      case ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_RC:
+        return TypeRepertoire.RC.libelle === categorieInscription;
+
+      case ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_RCA:
+        return TypeRepertoire.RCA.libelle === categorieInscription;
+
+      case ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_RC_RCA:
+        return TypeRepertoire.RC.libelle === categorieInscription || TypeRepertoire.RCA.libelle === categorieInscription;
+
+      default:
+        return false;
+    }
   }
 
-  public static async init() {
-    await peupleDocumentDelivrance();
+  public static depuisId(id?: string | null): IDocumentDelivrance | null {
+    return DocumentDelivrance.liste?.find(documentDelivrance => documentDelivrance.id === id) ?? null;
   }
 
-  //AddEnum specifique aux nomenclatures !
-  public static addEnum(key: string, obj: DocumentDelivrance) {
-    EnumWithLibelle.addEnum(key, obj, DocumentDelivrance);
+  public static depuisCode(code: string): IDocumentDelivrance | null {
+    return DocumentDelivrance.liste?.find(documentDelivrance => documentDelivrance.code === code) ?? null;
   }
 
-  public static clean() {
-    EnumWithLibelle.clean(DocumentDelivrance);
-  }
-
-  public static contientEnums() {
-    return EnumWithLibelle.contientEnums(DocumentDelivrance);
-  }
-
-  public static getEnumForUUID(key?: string): DocumentDelivrance {
-    return EnumWithLibelle.getEnumFor(key, DocumentDelivrance);
-  }
-
-  public static getEnumForCode(code: string): DocumentDelivrance {
-    return DocumentDelivrance.getEnumForUUID(
-      DocumentDelivrance.getKeyForCode(code)
-    );
-  }
-
-  public static getKeyForCode(code: string) {
-    return EnumNomemclature.getKeyForCode(DocumentDelivrance, code);
-  }
-
-  public static getAllEnumsAsOptions(): Options {
-    return EnumWithLibelle.getAllLibellesAsOptions(DocumentDelivrance);
-  }
-
-  public static getAllCertificatSituationAsOptions(): Options {
-    const options = DocumentDelivrance.getAllEnumsAsOptions();
-
-    return options.filter(opt =>
-      DocumentDelivrance.getEnumForUUID(opt.cle).code.startsWith(
-        CERTIFICAT_SITUATION_PREFIX
-      )
-    );
+  public static idDepuisCode(code: string): string {
+    return DocumentDelivrance.depuisCode(code)?.id ?? "";
   }
 
   public static getCopieIntegraleUUID(): string {
-    const uuid = EnumNomemclature.getKeyForCode(
-      DocumentDelivrance,
-      CODE_COPIE_INTEGRALE
-    );
-    return getValeurOuVide(uuid);
-  }
-
-  public static typeDocumentCorrespondACode(
-    typeDocument: string,
-    code: string
-  ) {
-    return (
-      DocumentDelivrance.getEnumForUUID(typeDocument).code ===
-      DocumentDelivrance.getEnumForCode(code).code
-    );
-  }
-
-  public static getCourrierNonDelivranceAttestationPacsUUID(): string {
-    const uuid = EnumNomemclature.getKeyForCode(
-      DocumentDelivrance,
-      CARN_PAC_01
-    );
-    return getValeurOuVide(uuid);
-  }
-
-  public static getAttestationPacsUUID(): string {
-    const uuid = EnumNomemclature.getKeyForCode(
-      DocumentDelivrance,
-      CODE_ATTESTATION_PACS
-    );
-    return getValeurOuVide(uuid);
-  }
-
-  public static getCertificatInscriptionRcUUID(): string {
-    const uuid = EnumNomemclature.getKeyForCode(
-      DocumentDelivrance,
-      CODE_CERTIFICAT_INSCRIPTION_RC
-    );
-    return getValeurOuVide(uuid);
-  }
-
-  public static getCertificatInscriptionRcaUUID(): string {
-    const uuid = EnumNomemclature.getKeyForCode(
-      DocumentDelivrance,
-      CODE_CERTIFICAT_INSCRIPTION_RCA
-    );
-    return getValeurOuVide(uuid);
-  }
-
-  public static getUuidFromDocument(document: DocumentDelivrance): string {
-    const uuid = EnumNomemclature.getKeyForCode(
-      DocumentDelivrance,
-      document.code
-    );
-    return getValeurOuVide(uuid);
-  }
-
-  public static getUuidFromCode(code: string): string {
-    const uuid = EnumNomemclature.getKeyForCode(DocumentDelivrance, code);
-    return getValeurOuVide(uuid);
+    return DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE);
   }
 
   public static getChoixDelivranceFromUUID(uuid: string) {
     switch (uuid) {
-      case DocumentDelivrance.getUuidFromCode(CODE_COPIE_INTEGRALE):
+      case DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE):
         return ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE;
-      case DocumentDelivrance.getUuidFromCode(CODE_EXTRAIT_AVEC_FILIATION):
+      case DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION):
         return ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION;
-      case DocumentDelivrance.getUuidFromCode(CODE_EXTRAIT_SANS_FILIATION):
+      case DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_SANS_FILIATION):
         return ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION;
-      case DocumentDelivrance.getUuidFromCode(CODE_EXTRAIT_PLURILINGUE):
+      case DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_PLURILINGUE):
         return ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE;
-      case DocumentDelivrance.getUuidFromCode(CODE_COPIE_NON_SIGNEE):
+      case DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_COPIE_NON_SIGNEE):
         return ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE;
       default:
         return ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION;
     }
   }
 
-  public static estDocumentDelivrance(typeDocumentUUID: string): boolean {
-    const doc = DocumentDelivrance.getEnumForUUID(typeDocumentUUID);
-    // _libelle_court correspond à la catégorie
-    return doc.categorie === CATEGORIE_DOCUMENT_DELIVRANCE;
+  public static estDocumentDelivrance(uuid: string): boolean {
+    return DocumentDelivrance.depuisId(uuid)?.categorie === CATEGORIE_DOCUMENT_DELIVRANCE;
   }
 
-  public static estDocumentDelivranceValide(
-    categorieInscription: string,
-    documentDemande: DocumentDelivrance
-  ): boolean {
-    const codeDocumentDemande: string = documentDemande?.code;
-    const categorie: string = categorieInscription?.toUpperCase();
-    return DocumentDelivrance.controleDocumentDelivranceSelonTypeRepertoire(
-      codeDocumentDemande,
-      categorie
-    );
+  public static estDocumentDelivranceValide(categorieInscription: string, documentDemande: IDocumentDelivrance | null): boolean {
+    const codeDocumentDemande: string = documentDemande?.code ?? "";
+    const categorie: string = categorieInscription.toUpperCase();
+    return DocumentDelivrance.controleDocumentDelivranceSelonTypeRepertoire(codeDocumentDemande, categorie);
   }
 
   public static estExtraitCopieViaCode(code: string): boolean {
-    return CodesExtraitCopie.includes(code);
+    return CodesExtraitCopie.includes(code as ECodeDocumentDelivrance);
   }
 
   public static estExtraitCopieViaUUID(uuid: string): boolean {
-    return CodesExtraitCopie.includes(
-      DocumentDelivrance.getEnumForUUID(uuid).code
-    );
+    return CodesExtraitCopie.includes((DocumentDelivrance.depuisId(uuid)?.code ?? "") as ECodeDocumentDelivrance);
   }
 
-  public static getCodeForKey(key: string): string {
-    return DocumentDelivrance.getCodeForLibelle(
-      DocumentDelivrance,
-      DocumentDelivrance.getEnumForUUID(key).libelle
-    );
+  public static estExtraitCopieAsigner(uuid?: string | null): boolean {
+    return CodesExtraitCopieASigner.includes((DocumentDelivrance.depuisId(uuid)?.code ?? "") as ECodeDocumentDelivrance);
   }
 
-  public static estExtraitAvecOuSansFilliation(key?: string): boolean {
-    const code = key ? DocumentDelivrance.getCodeForKey(key) : undefined;
-    return (
-      code === CODE_EXTRAIT_SANS_FILIATION ||
-      code === CODE_EXTRAIT_AVEC_FILIATION
-    );
+  public static estExtraitAvecOuSansFilliation(uuid?: string): boolean {
+    const code = DocumentDelivrance.depuisId(uuid)?.code;
+    return code === ECodeDocumentDelivrance.CODE_EXTRAIT_SANS_FILIATION || code === ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION;
   }
 
-  public static estExtraitAvecFilliation(key?: string): boolean {
-    const code = key ? DocumentDelivrance.getCodeForKey(key) : undefined;
-    return code === CODE_EXTRAIT_AVEC_FILIATION;
+  public static estExtraitAvecFilliation(uuid?: string): boolean {
+    return DocumentDelivrance.depuisId(uuid)?.code === ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION;
   }
 
-  public static estExtraitSansFilliation(key?: string): boolean {
-    const code = key ? DocumentDelivrance.getCodeForKey(key) : undefined;
-    return code === CODE_EXTRAIT_SANS_FILIATION;
-  }
-
-  public static estExtraitPlurilingue(key?: string): boolean {
-    const code = key ? DocumentDelivrance.getCodeForKey(key) : undefined;
-    return code === CODE_EXTRAIT_PLURILINGUE;
+  public static estExtraitPlurilingue(uuid?: string): boolean {
+    return DocumentDelivrance.depuisId(uuid)?.code === ECodeDocumentDelivrance.CODE_EXTRAIT_PLURILINGUE;
   }
 
   public static estCopieIntegrale(uuid?: string): boolean {
-    return uuid
-      ? DocumentDelivrance.getDocumentDelivrance(uuid).code ===
-          CODE_COPIE_INTEGRALE
-      : false;
-  }
-
-  public static estExtraitCopieAsignerViaCode(code: string): boolean {
-    return CodesExtraitCopieASigner.includes(code);
-  }
-
-  public static estExtraitCopieAsigner(uuidTypeDocument?: string): boolean {
-    const documentDelivrance =
-      DocumentDelivrance.getEnumForUUID(uuidTypeDocument);
-    return DocumentDelivrance.estExtraitCopieAsignerViaCode(
-      documentDelivrance.code
-    );
+    return DocumentDelivrance.depuisId(uuid)?.code === ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE;
   }
 
   public static estAttestationPacs(uuid?: string): boolean {
-    return uuid
-      ? DocumentDelivrance.getDocumentDelivrance(uuid).code ===
-          CODE_ATTESTATION_PACS
-      : false;
+    return DocumentDelivrance.depuisId(uuid)?.code === ECodeDocumentDelivrance.CODE_ATTESTATION_PACS;
   }
 
-  public static getCodesAsOptions(codes: string[]): Options {
-    const res = [];
-    for (const document of codes) {
-      res.push(this.getOptionFromCode(document));
-    }
-    return res;
+  public static versOptionsDepuisCodes(codes: string[]): Option[] {
+    return codes.map(code => DocumentDelivrance.versOptionDepuisCode(code));
   }
 
-  public static getDocumentDelivrance(
-    documentDemandeUUID: string
-  ): DocumentDelivrance {
-    return DocumentDelivrance.getEnumForUUID(documentDemandeUUID);
-  }
-
-  public static getOptionFromCode(code: string): Option {
-    const key = this.getKeyForCode(code);
+  public static versOptionDepuisCode(code: string): Option {
+    const document = DocumentDelivrance.depuisCode(code);
     return {
-      cle: this.getKeyForCode(code),
-      libelle: this.getEnumForUUID(key).libelle
+      cle: document?.id ?? "",
+      libelle: document?.libelle ?? ""
     };
   }
 
   public static estCourrierDelivranceEC(typeDocumentUUID: string): boolean {
-    const doc = DocumentDelivrance.getEnumForUUID(typeDocumentUUID);
+    const categorieDocument = DocumentDelivrance.depuisId(typeDocumentUUID)?.categorieDocumentDelivrance;
+    return Boolean(categorieDocument?.startsWith("Courrier") && categorieDocument?.includes("délivrance E/C"));
+  }
+
+  public static getAllCertificatSituationDemandeEtAttestationAsOptions(): Option[] {
     return (
-      doc.categorieDocumentDelivrance != null &&
-      doc.categorieDocumentDelivrance.startsWith("Courrier") &&
-      doc.categorieDocumentDelivrance.includes("délivrance E/C")
+      DocumentDelivrance.liste
+        ?.filter(
+          documentDelivrance =>
+            documentDelivrance.categorieDocumentDelivrance === "Certificat de situation demandé" ||
+            (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) &&
+              documentDelivrance.categorieDocumentDelivrance === "Attestation")
+        )
+        .map(documentDelivrance => ({ cle: documentDelivrance.id, libelle: documentDelivrance.libelle })) ?? []
     );
   }
 
-  public static getAllCertificatSituationDemandeAsOptions(): Options {
-    const options = DocumentDelivrance.getAllEnumsAsOptions();
-    return options.filter(
-      opt =>
-        DocumentDelivrance.getEnumForUUID(opt.cle)
-          .categorieDocumentDelivrance === "Certificat de situation demandé"
-    );
+  public static getNumeroOrdre(uuid: string) {
+    const documentDelivrance = DocumentDelivrance.depuisId(uuid);
+
+    return DocumentDelivrance.estCourrierDAccompagnement(documentDelivrance)
+      ? //@ts-ignore
+        ORDRE_DOCUMENTS_DELIVRANCE[ECodeDocumentDelivrance.COURRIER]
+      : // Recherche spécifique par code puis recherche plus générale par categorieDocumentDelivrance
+        //@ts-ignore
+        ORDRE_DOCUMENTS_DELIVRANCE[documentDelivrance.code] ||
+          //@ts-ignore
+          ORDRE_DOCUMENTS_DELIVRANCE[documentDelivrance.categorieDocumentDelivrance] ||
+          ORDRE_MAX;
   }
 
-  public static getAllCertificatSituationDemandeEtAttestationAsOptions(): Options {
-    const options = DocumentDelivrance.getAllEnumsAsOptions();
-    return options.filter(
-      opt =>
-        DocumentDelivrance.getEnumForUUID(opt.cle)
-          .categorieDocumentDelivrance === "Certificat de situation demandé" ||
-        (gestionnaireFeatureFlag.estActif(
-          FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
-        ) &&
-          DocumentDelivrance.getEnumForUUID(opt.cle)
-            .categorieDocumentDelivrance === "Attestation")
-    );
+  public static estCourrierDAccompagnement(documentDelivrance: IDocumentDelivrance | null): boolean {
+    return Boolean(documentDelivrance?.categorieDocumentDelivrance?.startsWith(ECodeDocumentDelivrance.COURRIER));
   }
 
-  public static getNumeroOrdre(uuidTypeDocument: string) {
-    let ordre;
-    const documentDelivrance =
-      DocumentDelivrance.getEnumForUUID(uuidTypeDocument);
-
-    if (DocumentDelivrance.estCourrierDAccompagnement(documentDelivrance)) {
-      //@ts-ignore
-      ordre = ORDRE_DOCUMENTS_DELIVRANCE[COURRIER];
-    } else {
-      // Recherche spécifique par code
-      //@ts-ignore
-      ordre = ORDRE_DOCUMENTS_DELIVRANCE[documentDelivrance.code];
-      if (!ordre) {
-        // Puis recherche plus générale par categorieDocumentDelivrance
-        ordre =
-          //@ts-ignore{
-          ORDRE_DOCUMENTS_DELIVRANCE[
-            documentDelivrance.categorieDocumentDelivrance
-          ];
-      }
-    }
-
-    return ordre ? ordre : ORDRE_MAX;
+  public static estDocumentDemandeDeTypeRc(document: IDocumentDelivrance | null): boolean {
+    return CodesRC.includes(document?.code as ECodeDocumentDelivrance);
   }
 
-  public static estCourrierDAccompagnement(
-    documentDelivrance: DocumentDelivrance
-  ) {
-    return (
-      documentDelivrance.categorieDocumentDelivrance &&
-      documentDelivrance.categorieDocumentDelivrance.startsWith(COURRIER)
-    );
-  }
-
-  public static getKey(document?: DocumentDelivrance): string {
-    return EnumWithLibelle.getKey(DocumentDelivrance, document);
-  }
-
-  public static estDocumentDemandeDeTypeRc(
-    document: DocumentDelivrance
-  ): boolean {
-    return CodesRC.includes(document.code);
-  }
-
-  public static getTypeDocument(choixDelivrance?: ChoixDelivrance) {
-    let uuidTypeDocument = "";
+  public static getTypeDocument(choixDelivrance?: ChoixDelivrance): string | null {
     switch (choixDelivrance) {
       case ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION:
-        uuidTypeDocument = DocumentDelivrance.getKeyForCode(
-          CODE_EXTRAIT_SANS_FILIATION
-        );
-        break;
+        return DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_SANS_FILIATION);
       case ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION:
-        uuidTypeDocument = DocumentDelivrance.getKeyForCode(
-          CODE_EXTRAIT_AVEC_FILIATION
-        );
-        break;
+        return DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION);
       case ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE:
-        uuidTypeDocument = DocumentDelivrance.getKeyForCode(
-          CODE_EXTRAIT_PLURILINGUE
-        );
-        break;
+        return DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_PLURILINGUE);
       case ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE:
-        uuidTypeDocument =
-          DocumentDelivrance.getKeyForCode(CODE_COPIE_INTEGRALE);
-        break;
+        return DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE);
       case ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE:
-        uuidTypeDocument = DocumentDelivrance.getKeyForCode(
-          CODE_COPIE_NON_SIGNEE
-        );
-        break;
-      // FIXME A Complèter
+        return DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_COPIE_NON_SIGNEE);
+      // FIXME A Compléter
       default:
-        break;
+        return null;
     }
-    return uuidTypeDocument;
   }
 }
+/* v8 ignore end */

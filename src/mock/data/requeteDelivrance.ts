@@ -4,7 +4,7 @@ import { IProvenanceRece } from "@model/requete/IProvenanceRece";
 import { IRequerant } from "@model/requete/IRequerant";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { IDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { Provenance } from "@model/requete/enum/Provenance";
@@ -14,7 +14,7 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
-import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
+import { ITypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { documentReponseCourrier117 } from "./DocumentReponse";
 import { TYPE_PIECE_JUSTIFICATIVE } from "./NomenclatureTypePieceJustificative";
@@ -25,10 +25,11 @@ const requeteDelivrance: IRequeteDelivrance = {
   complementMotif: "",
   dateCreation: 1624603295000,
   documentDemande: {
+    id: "9a51eeaa-df69-46bc-b03b-735eb84197f8",
     libelle: "Certificat de situation au rca",
     categorie: "DOCUMENT_DELIVRANCE",
     code: "CERTIFICAT_SITUATION_RCA"
-  } as DocumentDelivrance,
+  } as IDocumentDelivrance,
   documentsReponses: [documentReponseCourrier117],
   evenement: {
     id: "755e30c2-2586-4a32-b2a4-8d52d4ed32e0",
@@ -149,10 +150,11 @@ export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
   complementMotif: "",
   dateCreation: 1624603295000,
   documentDemande: {
+    id: "9a51eeaa-df69-46bc-b03b-735eb84197f8",
     libelle: "Certificat de situation au rca",
     categorie: "DOCUMENT_DELIVRANCE",
     code: "CERTIFICAT_SITUATION_RCA"
-  } as DocumentDelivrance,
+  } as IDocumentDelivrance,
   documentsReponses: [],
   evenement: undefined,
   id: "0ad85c1f-57cf-45cc-ab66-6a17f31247df",
@@ -171,7 +173,7 @@ export const requeteDelivranceInstitutionnel: IRequeteDelivrance = {
       mimeType: "",
       nom: "Jérome",
       taille: 0,
-      typePieceJustificative: "Carte" as unknown as TypePieceJustificative
+      typePieceJustificative: "Carte" as unknown as ITypePieceJustificative
     }
   ],
   provenanceRequete: {
@@ -376,7 +378,7 @@ export const requeteDelivranceRDC: IRequeteDelivrance = {
     libelle: "Certificat de situation au rca",
     categorie: "DOCUMENT_DELIVRANCE",
     code: "CERTIFICAT_SITUATION_RCA"
-  } as DocumentDelivrance,
+  } as IDocumentDelivrance,
   documentsReponses: [documentReponseCourrier117],
   evenement: {
     id: "755e30c2-2586-4a32-b2a4-8d52d4ed32e0",
@@ -686,7 +688,7 @@ export const requeteRDCPourModificationMaCorbeille = {
   ...requeteRDCPourModification,
   id: "8f00fe88-9d21-482e-bb02-223636f78386",
   documentDemande: "5f1e909f-f74c-4b16-9c03-b3733354cxyz"
-} as any;
+};
 
 export const idRequeteRDDASigner = "8f00fe88-9d21-482e-bb02-223636f78385";
 export const requeteRDDASigner = {

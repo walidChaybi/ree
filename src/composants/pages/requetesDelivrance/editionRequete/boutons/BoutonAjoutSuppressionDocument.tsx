@@ -3,13 +3,7 @@ import { IGenerationECParams, useGenerationEC } from "@hook/generation/generatio
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import {
-  CODE_COPIE_INTEGRALE,
-  CODE_EXTRAIT_AVEC_FILIATION,
-  CODE_EXTRAIT_PLURILINGUE,
-  CODE_EXTRAIT_SANS_FILIATION
-} from "@model/requete/enum/DocumentDelivranceConstante";
+import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import Add from "@mui/icons-material/Add";
@@ -50,23 +44,23 @@ const BoutonAjoutSuppressionDocument: React.FC<IBoutonAjoutSuppressionDocumentPr
     () =>
       [
         {
-          cle: DocumentDelivrance.getKeyForCode(CODE_COPIE_INTEGRALE),
+          cle: DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE),
           libelle: "Copie intégrale"
         },
         ...(acte?.nature !== NatureActe.DECES
           ? [
               {
-                cle: DocumentDelivrance.getKeyForCode(CODE_EXTRAIT_AVEC_FILIATION),
+                cle: DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION),
                 libelle: "Extrait avec filiation"
               },
               {
-                cle: DocumentDelivrance.getKeyForCode(CODE_EXTRAIT_SANS_FILIATION),
+                cle: DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_SANS_FILIATION),
                 libelle: "Extrait sans filiation"
               }
             ]
           : []),
         {
-          cle: DocumentDelivrance.getKeyForCode(CODE_EXTRAIT_PLURILINGUE),
+          cle: DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_PLURILINGUE),
           libelle: "Extrait plurilingue"
         }
       ].filter(item => item.cle !== documentsDelivrance.principal?.typeDocument),

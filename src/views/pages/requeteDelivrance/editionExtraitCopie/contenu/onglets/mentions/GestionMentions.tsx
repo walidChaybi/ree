@@ -8,8 +8,7 @@ import { IMentionAffichage, mappingVersMentionAffichage, modificationEffectue } 
 import { StatutMention } from "@model/etatcivil/enum/StatutMention";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { CODE_COPIE_INTEGRALE } from "@model/requete/enum/DocumentDelivranceConstante";
+import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { estTableauNonVide } from "@util/Utils";
 import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
@@ -121,7 +120,7 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
           </div>
         </div>
       )}
-      {DocumentDelivrance.getEnumForUUID(props.document?.typeDocument ?? "").code === CODE_COPIE_INTEGRALE ? (
+      {DocumentDelivrance.depuisId(props.document?.typeDocument)?.code === ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE ? (
         <MentionsCopie
           estDeverrouille={estDeverrouille}
           setEstdeverrouille={setEstDeverrouille}

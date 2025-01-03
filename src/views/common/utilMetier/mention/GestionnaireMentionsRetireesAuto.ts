@@ -13,15 +13,15 @@ import {
   MARIAGE,
   MODIFICATION_PACS,
   NATIONALITE,
+  PACS,
+  REPRISE_VIE_COMMUNE,
+  SEPARATION_CORPS,
   natureRetireesMariageAvecFilliation,
   natureRetireesMariagePlurilingue,
   natureRetireesMariageSansFilliation,
   natureRetireesNaissanceAvecFillation,
   natureRetireesNaissancePlurilingue,
-  natureRetireesNaissanceSansFillation,
-  PACS,
-  REPRISE_VIE_COMMUNE,
-  SEPARATION_CORPS
+  natureRetireesNaissanceSansFillation
 } from "@model/etatcivil/enum/NatureMention";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DEUX } from "@util/Utils";
@@ -29,57 +29,30 @@ import { DEUX } from "@util/Utils";
 export type IMentionAvecRetiree = IMention & { retiree?: boolean };
 
 export class GestionnaireMentionsRetireesAuto {
-  public getIdsMentionsRetirees(
-    mentions: IMentionAvecRetiree[],
-    choixDelivrance?: ChoixDelivrance,
-    natureActe?: NatureActe
-  ): string[] {
+  public getIdsMentionsRetirees(mentions: IMentionAvecRetiree[], choixDelivrance?: ChoixDelivrance, natureActe?: NatureActe): string[] {
     Mention.trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentions);
-    if (
-      choixDelivrance &&
-      natureActe &&
-      !ChoixDelivrance.estCopieIntegrale(choixDelivrance)
-    ) {
+    if (choixDelivrance && natureActe && !ChoixDelivrance.estCopieIntegrale(choixDelivrance)) {
       if (ChoixDelivrance.estAvecOuSansFiliation(choixDelivrance)) {
         switch (natureActe) {
           case NatureActe.NAISSANCE:
-            this.deselectionnerRadieParPaire(
-              this.garderMentionsNonRetiree(mentions)
-            );
-            this.deselectionnerAnnulationParPaire(
-              this.garderMentionsNonRetiree(mentions)
-            );
-            this.deselectionneSituationFamilialePassee(
-              this.garderMentionsNonRetiree(mentions)
-            );
+            this.deselectionnerRadieParPaire(this.garderMentionsNonRetiree(mentions));
+            this.deselectionnerAnnulationParPaire(this.garderMentionsNonRetiree(mentions));
+            this.deselectionneSituationFamilialePassee(this.garderMentionsNonRetiree(mentions));
 
-            this.deselectionneExtraneite(
-              this.garderMentionsNonRetiree(mentions)
-            );
+            this.deselectionneExtraneite(this.garderMentionsNonRetiree(mentions));
             break;
           case NatureActe.MARIAGE:
-            this.deselectionnerAnnulationParPaire(
-              this.garderMentionsNonRetiree(mentions)
-            );
+            this.deselectionnerAnnulationParPaire(this.garderMentionsNonRetiree(mentions));
             break;
         }
       } else {
         this.deselectionnerAnnulationParPaire(mentions);
         if (natureActe === NatureActe.NAISSANCE) {
-          this.deselectionneSituationFamilialePassee(
-            this.garderMentionsNonRetiree(mentions)
-          );
+          this.deselectionneSituationFamilialePassee(this.garderMentionsNonRetiree(mentions));
         }
       }
-      this.deselectionneMentionsSpecifiques(
-        this.garderMentionsNonRetiree(mentions),
-        choixDelivrance,
-        natureActe
-      );
-      this.deselectionneMentionsIncompatibleAvecActe(
-        this.garderMentionsNonRetiree(mentions),
-        natureActe
-      );
+      this.deselectionneMentionsSpecifiques(this.garderMentionsNonRetiree(mentions), choixDelivrance, natureActe);
+      this.deselectionneMentionsIncompatibleAvecActe(this.garderMentionsNonRetiree(mentions), natureActe);
     }
 
     return this.formaterMentionsRetirees(mentions);
@@ -90,22 +63,20 @@ export class GestionnaireMentionsRetireesAuto {
   }
 
   public formaterMentionsRetirees(mentions: IMentionAvecRetiree[]) {
-    return mentions
-      .filter(mention => mention.retiree)
-      .map(mention => mention.id);
+    return mentions.filter(mention => mention.retiree).map(mention => mention.id);
   }
 
   public deselectionnerRadieParPaire(mentionsTriees: IMentionAvecRetiree[]) {
     let indexRCTrouve: number | undefined;
     let i = 0;
     while (i < mentionsTriees.length) {
-      if (mentionsTriees[i].typeMention.natureMention.code === CODE_RC) {
+      if (mentionsTriees[i].typeMention.natureMention?.code === CODE_RC) {
         if (indexRCTrouve) {
           break;
         }
         indexRCTrouve = i;
       }
-      if (mentionsTriees[i].typeMention.natureMention.code === CODE_RC_RADIE) {
+      if (mentionsTriees[i].typeMention.natureMention?.code === CODE_RC_RADIE) {
         if (indexRCTrouve !== undefined) {
           mentionsTriees[i].retiree = true;
           mentionsTriees[indexRCTrouve].retiree = true;
@@ -116,16 +87,12 @@ export class GestionnaireMentionsRetireesAuto {
     }
   }
 
-  public deselectionnerAnnulationParPaire(
-    mentionsTriees: IMentionAvecRetiree[]
-  ) {
+  public deselectionnerAnnulationParPaire(mentionsTriees: IMentionAvecRetiree[]) {
     let index = 0;
     while (
       mentionsTriees[index + 1] &&
-      (mentionsTriees[index + 1].typeMention.natureMention.code ===
-        ANNULATION_EVENEMENT ||
-        mentionsTriees[index + 1].typeMention.natureMention.code ===
-          ANNULATION_MENTION)
+      (mentionsTriees[index + 1].typeMention.natureMention?.code === ANNULATION_EVENEMENT ||
+        mentionsTriees[index + 1].typeMention.natureMention?.code === ANNULATION_MENTION)
     ) {
       mentionsTriees[index].retiree = true;
       mentionsTriees[index + 1].retiree = true;
@@ -133,11 +100,7 @@ export class GestionnaireMentionsRetireesAuto {
     }
   }
 
-  public deselectionneMentionsSpecifiques(
-    mentions: IMentionAvecRetiree[],
-    choixDelivrance: ChoixDelivrance,
-    natureActe: NatureActe
-  ) {
+  public deselectionneMentionsSpecifiques(mentions: IMentionAvecRetiree[], choixDelivrance: ChoixDelivrance, natureActe: NatureActe) {
     let mentionsRetirees: string[] = [];
     switch (natureActe) {
       case NatureActe.NAISSANCE:
@@ -160,40 +123,32 @@ export class GestionnaireMentionsRetireesAuto {
         break;
     }
     mentions.forEach(mention => {
-      if (mentionsRetirees.includes(mention.typeMention.natureMention.code)) {
+      if (mentionsRetirees.includes(mention.typeMention.natureMention?.code ?? "")) {
         mention.retiree = true;
       }
     });
   }
 
-  public deselectionneMentionsIncompatibleAvecActe(
-    mentions: IMentionAvecRetiree[],
-    natureActe: NatureActe
-  ) {
+  public deselectionneMentionsIncompatibleAvecActe(mentions: IMentionAvecRetiree[], natureActe: NatureActe) {
     mentions.forEach(mention => {
-      if (
-        mention.typeMention.natureActe !== natureActe &&
-        mention.typeMention.natureActe !== NatureActe.INCONNUE
-      ) {
+      if (mention.typeMention.natureActe !== natureActe && mention.typeMention.natureActe !== NatureActe.INCONNUE) {
         mention.retiree = true;
       }
     });
   }
 
   public deselectionneExtraneite(mentions: IMentionAvecRetiree[]) {
-    const indexExtraRecente = mentions
-      .map(mention => mention.typeMention.natureMention.code)
-      .lastIndexOf(EXTRANEITE);
+    const indexExtraRecente = mentions.map(mention => mention.typeMention.natureMention?.code).lastIndexOf(EXTRANEITE);
     if (indexExtraRecente >= 0) {
       let index = 0;
       while (index < indexExtraRecente) {
-        if (mentions[index].typeMention.natureMention.code === EXTRANEITE) {
+        if (mentions[index].typeMention.natureMention?.code === EXTRANEITE) {
           mentions[index].retiree = true;
         }
         index++;
       }
       while (index < mentions.length) {
-        if (mentions[index].typeMention.natureMention.code === NATIONALITE) {
+        if (mentions[index].typeMention.natureMention?.code === NATIONALITE) {
           mentions[indexExtraRecente].retiree = true;
         }
         index++;
@@ -201,106 +156,58 @@ export class GestionnaireMentionsRetireesAuto {
     }
   }
 
-  private trouveDernierEvenementFamiliale(
-    mentions: IMentionAvecRetiree[],
-    mentionsContexte: string[]
-  ) {
+  private trouveDernierEvenementFamiliale(mentions: IMentionAvecRetiree[], mentionsContexte: string[]) {
     let lastIndex = -1;
     mentions.forEach((el, index) => {
-      if (mentionsContexte.includes(el.typeMention.natureMention.code)) {
+      if (mentionsContexte.includes(el.typeMention.natureMention?.code ?? "")) {
         lastIndex = index;
       }
     });
     return lastIndex;
   }
 
-  public deselectionneSituationFamilialePassee(
-    mentions: IMentionAvecRetiree[]
-  ) {
-    const mentionsContexte = [
-      PACS,
-      MODIFICATION_PACS,
-      DISSOLUTION_PACS,
-      MARIAGE,
-      SEPARATION_CORPS,
-      DIVORCE
-    ];
+  public deselectionneSituationFamilialePassee(mentions: IMentionAvecRetiree[]) {
+    const mentionsContexte = [PACS, MODIFICATION_PACS, DISSOLUTION_PACS, MARIAGE, SEPARATION_CORPS, DIVORCE];
 
     const mentionsFiltrees = mentions.filter(mention => !mention.retiree);
 
-    const indexDernierEvenementFamiliale = this.trouveDernierEvenementFamiliale(
-      mentionsFiltrees,
-      mentionsContexte
-    );
+    const indexDernierEvenementFamiliale = this.trouveDernierEvenementFamiliale(mentionsFiltrees, mentionsContexte);
 
     if (indexDernierEvenementFamiliale !== -1) {
-      switch (
-        mentions[indexDernierEvenementFamiliale].typeMention.natureMention.code
-      ) {
+      switch (mentions[indexDernierEvenementFamiliale].typeMention.natureMention?.code) {
         case DIVORCE:
-          this.derniereMentionDivorce(
-            mentionsFiltrees,
-            indexDernierEvenementFamiliale,
-            mentionsContexte
-          );
+          this.derniereMentionDivorce(mentionsFiltrees, indexDernierEvenementFamiliale, mentionsContexte);
           break;
         case PACS:
-          this.derniereMentionPACS(
-            mentionsFiltrees,
-            indexDernierEvenementFamiliale,
-            mentionsContexte
-          );
+          this.derniereMentionPACS(mentionsFiltrees, indexDernierEvenementFamiliale, mentionsContexte);
           break;
         case DISSOLUTION_PACS:
-          this.derniereMentionDissolutionPACS(
-            mentionsFiltrees,
-            indexDernierEvenementFamiliale,
-            mentionsContexte
-          );
+          this.derniereMentionDissolutionPACS(mentionsFiltrees, indexDernierEvenementFamiliale, mentionsContexte);
           break;
         case MODIFICATION_PACS:
-          this.derniereMentionModificationPACS(
-            mentionsFiltrees,
-            indexDernierEvenementFamiliale,
-            mentionsContexte
-          );
+          this.derniereMentionModificationPACS(mentionsFiltrees, indexDernierEvenementFamiliale, mentionsContexte);
           break;
         case MARIAGE:
-          this.derniereMentionMariage(
-            mentionsFiltrees,
-            indexDernierEvenementFamiliale,
-            mentionsContexte
-          );
+          this.derniereMentionMariage(mentionsFiltrees, indexDernierEvenementFamiliale, mentionsContexte);
           break;
         case SEPARATION_CORPS:
-          this.derniereMentionSeparationCorps(
-            mentionsFiltrees,
-            indexDernierEvenementFamiliale,
-            mentionsContexte
-          );
+          this.derniereMentionSeparationCorps(mentionsFiltrees, indexDernierEvenementFamiliale, mentionsContexte);
           break;
       }
     }
   }
 
-  private derniereMentionDivorce(
-    mentions: IMentionAvecRetiree[],
-    indexDernierEvenementFamiliale: number,
-    mentionsContexte: string[]
-  ) {
+  private derniereMentionDivorce(mentions: IMentionAvecRetiree[], indexDernierEvenementFamiliale: number, mentionsContexte: string[]) {
     let index = indexDernierEvenementFamiliale - 1;
     let mariagePassee = false;
     while (index >= 0) {
       if (
-        (mentions[index].typeMention.natureMention.code !== MARIAGE ||
-          mariagePassee) &&
-        mentionsContexte.includes(
-          mentions[index].typeMention.natureMention.code
-        )
+        (mentions[index].typeMention.natureMention?.code !== MARIAGE || mariagePassee) &&
+        mentionsContexte.includes(mentions[index].typeMention.natureMention?.code ?? "")
       ) {
         mentions[index].retiree = true;
       }
-      if (mentions[index].typeMention.natureMention.code === MARIAGE) {
+      if (mentions[index].typeMention.natureMention?.code === MARIAGE) {
         mariagePassee = true;
       }
       index--;
@@ -317,23 +224,16 @@ export class GestionnaireMentionsRetireesAuto {
     let PacsPasee = false;
     while (index >= 0) {
       if (
-        (mentions[index].typeMention.natureMention.code !== MODIFICATION_PACS ||
-          modificationPACSPassee ||
-          PacsPasee) &&
-        (mentions[index].typeMention.natureMention.code !== PACS ||
-          PacsPasee) &&
-        mentionsContexte.includes(
-          mentions[index].typeMention.natureMention.code
-        )
+        (mentions[index].typeMention.natureMention?.code !== MODIFICATION_PACS || modificationPACSPassee || PacsPasee) &&
+        (mentions[index].typeMention.natureMention?.code !== PACS || PacsPasee) &&
+        mentionsContexte.includes(mentions[index].typeMention.natureMention?.code ?? "")
       ) {
         mentions[index].retiree = true;
       }
-      if (
-        mentions[index].typeMention.natureMention.code === MODIFICATION_PACS
-      ) {
+      if (mentions[index].typeMention.natureMention?.code === MODIFICATION_PACS) {
         modificationPACSPassee = true;
       }
-      if (mentions[index].typeMention.natureMention.code === PACS) {
+      if (mentions[index].typeMention.natureMention?.code === PACS) {
         PacsPasee = true;
       }
       index--;
@@ -349,30 +249,23 @@ export class GestionnaireMentionsRetireesAuto {
     let PacsPasee = false;
     while (index >= 0) {
       if (
-        (mentions[index].typeMention.natureMention.code !== PACS ||
-          PacsPasee) &&
-        mentionsContexte.includes(
-          mentions[index].typeMention.natureMention.code
-        )
+        (mentions[index].typeMention.natureMention?.code !== PACS || PacsPasee) &&
+        mentionsContexte.includes(mentions[index].typeMention.natureMention?.code ?? "")
       ) {
         mentions[index].retiree = true;
       }
-      if (mentions[index].typeMention.natureMention.code === PACS) {
+      if (mentions[index].typeMention.natureMention?.code === PACS) {
         PacsPasee = true;
       }
       index--;
     }
   }
 
-  private derniereMentionPACS(
-    mentions: IMentionAvecRetiree[],
-    indexDernierEvenementFamiliale: number,
-    mentionsContexte: string[]
-  ) {
+  private derniereMentionPACS(mentions: IMentionAvecRetiree[], indexDernierEvenementFamiliale: number, mentionsContexte: string[]) {
     let index = indexDernierEvenementFamiliale;
     let trouve = false;
     while (index < mentions.length && !trouve) {
-      if (mentions[index].typeMention.natureMention.code === ANNULATION_PACS) {
+      if (mentions[index].typeMention.natureMention?.code === ANNULATION_PACS) {
         trouve = true;
       } else {
         index++;
@@ -385,11 +278,7 @@ export class GestionnaireMentionsRetireesAuto {
     } else {
       index = indexDernierEvenementFamiliale - 1;
       while (index >= 0) {
-        if (
-          mentionsContexte.includes(
-            mentions[index].typeMention.natureMention.code
-          )
-        ) {
+        if (mentionsContexte.includes(mentions[index].typeMention.natureMention?.code ?? "")) {
           mentions[index].retiree = true;
         }
         index--;
@@ -397,17 +286,11 @@ export class GestionnaireMentionsRetireesAuto {
     }
   }
 
-  private derniereMentionMariage(
-    mentions: IMentionAvecRetiree[],
-    indexDernierEvenementFamiliale: number,
-    mentionsContexte: string[]
-  ) {
+  private derniereMentionMariage(mentions: IMentionAvecRetiree[], indexDernierEvenementFamiliale: number, mentionsContexte: string[]) {
     let index = indexDernierEvenementFamiliale;
     let trouve = false;
     while (index < mentions.length && !trouve) {
-      if (
-        mentions[index].typeMention.natureMention.code === ANNULATION_MARIAGE
-      ) {
+      if (mentions[index].typeMention.natureMention?.code === ANNULATION_MARIAGE) {
         trouve = true;
       } else {
         index++;
@@ -420,11 +303,7 @@ export class GestionnaireMentionsRetireesAuto {
     } else {
       index = indexDernierEvenementFamiliale - 1;
       while (index >= 0) {
-        if (
-          mentionsContexte.includes(
-            mentions[index].typeMention.natureMention.code
-          )
-        ) {
+        if (mentionsContexte.includes(mentions[index].typeMention.natureMention?.code ?? "")) {
           mentions[index].retiree = true;
         }
         index--;
@@ -440,21 +319,13 @@ export class GestionnaireMentionsRetireesAuto {
     let index = indexDernierEvenementFamiliale;
     let trouve = false;
     while (index < mentions.length && !trouve) {
-      if (
-        mentions[index].typeMention.natureMention.code === REPRISE_VIE_COMMUNE
-      ) {
+      if (mentions[index].typeMention.natureMention?.code === REPRISE_VIE_COMMUNE) {
         trouve = true;
       } else {
         index++;
       }
     }
-    this.suiteSeparationCorps(
-      trouve,
-      mentions,
-      index,
-      indexDernierEvenementFamiliale,
-      mentionsContexte
-    );
+    this.suiteSeparationCorps(trouve, mentions, index, indexDernierEvenementFamiliale, mentionsContexte);
   }
 
   private suiteSeparationCorps(
@@ -473,15 +344,12 @@ export class GestionnaireMentionsRetireesAuto {
       index = indexDernierEvenementFamiliale - 1;
       while (index >= 0) {
         if (
-          (mentions[index].typeMention.natureMention.code !== MARIAGE ||
-            mariagePassee) &&
-          mentionsContexte.includes(
-            mentions[index].typeMention.natureMention.code
-          )
+          (mentions[index].typeMention.natureMention?.code !== MARIAGE || mariagePassee) &&
+          mentionsContexte.includes(mentions[index].typeMention.natureMention?.code ?? "")
         ) {
           mentions[index].retiree = true;
         }
-        if (mentions[index].typeMention.natureMention.code === MARIAGE) {
+        if (mentions[index].typeMention.natureMention?.code === MARIAGE) {
           mariagePassee = true;
         }
         index--;
@@ -491,5 +359,4 @@ export class GestionnaireMentionsRetireesAuto {
   }
 }
 
-export const gestionnaireMentionsRetireesAuto =
-  new GestionnaireMentionsRetireesAuto();
+export const gestionnaireMentionsRetireesAuto = new GestionnaireMentionsRetireesAuto();

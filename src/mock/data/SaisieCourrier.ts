@@ -140,7 +140,7 @@ export const RequeteRDDCourrier17 = {
   observations: [],
   piecesJustificatives: [],
   sousType: SousTypeDelivrance.RDD,
-  documentDemande: DocumentDelivrance.getDocumentDelivrance("fce55a9f-4f4b-4996-a60b-59332bc10565"),
+  documentDemande: DocumentDelivrance.depuisId("fce55a9f-4f4b-4996-a60b-59332bc10565"),
   nbExemplaireImpression: 2,
   provenanceRequete: {
     provenance: Provenance.SERVICE_PUBLIC,

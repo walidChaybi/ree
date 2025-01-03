@@ -1,10 +1,10 @@
-import { NatureRc } from "../enum/NatureRc";
-import { NatureRca } from "../enum/NatureRca";
+import { INatureRc } from "../enum/NatureRc";
+import { INatureRca } from "../enum/NatureRca";
 import { TypeInscriptionRc } from "../enum/TypeInscriptionRc";
 
 export interface IInscriptionRc {
   idInscription: string;
-  nature: NatureRc | NatureRca;
+  nature: INatureRc | INatureRca;
   typeInscription?: TypeInscriptionRc;
   dateInscription: Date;
 }

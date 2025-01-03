@@ -2,13 +2,7 @@
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
-import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
-import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { PaysSecabilite } from "@model/requete/enum/PaysSecabilite";
-import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
-import { TypePopinSignature } from "@model/signature/ITypePopinSignature";
 import { Request, Response, fetch } from "@remix-run/web-fetch";
 import { storeRece } from "@util/storeRece";
 import React from "react";
@@ -103,12 +97,6 @@ const superagentMock = require("superagent-mock")(request, [
 ]);
 
 beforeAll(async () => {
-  await DocumentDelivrance.init();
-  await NatureMention.init();
-  await TypeMention.init();
-  await TypePopinSignature.init();
-  await TypePieceJustificative.init();
-  await PaysSecabilite.init();
   await ParametreBaseRequete.init();
 });
 

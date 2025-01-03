@@ -1,48 +1,36 @@
-/* istanbul ignore file */
+/* v8 ignore start */
 
-import { peupleNatureRc } from "@api/nomenclature/NomenclatureEtatcivil";
-import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
-import { Options } from "@util/Type";
+import { Option } from "@util/Type";
 
-export class NatureRc extends EnumWithLibelle {
-  constructor(
-    private readonly _article: string,
-    private readonly _type: string,
-    libelle: string
-  ) {
-    super(libelle);
+export interface INatureRc {
+  id: string;
+  nom: string;
+  code: string;
+  libelle: string;
+  article: string;
+  type: string;
+  categorieRCRCA: string;
+  decisionCouple: boolean;
+  estActif: boolean;
+}
+
+export class NatureRc {
+  private static liste: INatureRc[] | null = null;
+
+  public static init(naturesRca: INatureRc[]) {
+    if (NatureRc.liste !== null) {
+      return;
+    }
+
+    NatureRc.liste = naturesRca;
   }
 
-  get article() {
-    return this._article;
+  public static depuisId(id: string): INatureRc | null {
+    return NatureRc.liste?.find(natureRc => natureRc.id === id) ?? null;
   }
 
-  get type() {
-    return this._type;
-  }
-
-  public static async init() {
-    await peupleNatureRc();
-  }
-
-  //AddEnum specifique aux nomenclatures !
-  public static addEnum(key: string, obj: NatureRc) {
-    EnumWithLibelle.addEnum(key, obj, NatureRc);
-  }
-
-  public static clean() {
-    return EnumWithLibelle.clean(NatureRc);
-  }
-
-  public static contientEnums() {
-    return EnumWithLibelle.contientEnums(NatureRc);
-  }
-
-  public static getEnumFor(str: string) {
-    return EnumWithLibelle.getEnumFor(str, NatureRc);
-  }
-
-  public static getAllEnumsAsOptions(): Options {
-    return EnumWithLibelle.getAllLibellesAsOptions(NatureRc);
+  public static versOptions(): Option[] {
+    return NatureRc.liste?.map(natureRc => ({ cle: natureRc.id, libelle: natureRc.libelle })) ?? [];
   }
 }
+/* v8 ignore end */

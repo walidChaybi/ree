@@ -21,19 +21,14 @@ export type PiecesJointesSubFormProps = SubFormProps & PiecesJointesFormProps;
 const PiecesJointesForm: React.FC<PiecesJointesSubFormProps> = props => {
   const [menuItemsState, setMenuItemsState] = React.useState<Options>([]);
 
-  const piecesJointes: PieceJointe[] =
-    props.formik.getFieldProps(props.nom).value || [];
+  const piecesJointes: PieceJointe[] = props.formik.getFieldProps(props.nom).value || [];
 
   const setPiecesJointes = (nouvellesPiecesJointes: PieceJointe[]) => {
     props.formik.setFieldValue(props.nom, nouvellesPiecesJointes);
   };
 
   const getPiecesJustificatives = async () => {
-    const piecesJustificatives =
-      TypePieceJustificative.getAllEnumsByTypeRequeteAsOptions(
-        props.typeRequete,
-        props.typeRedactionActe
-      );
+    const piecesJustificatives = TypePieceJustificative.versOptions(props.typeRequete, props.typeRedactionActe);
     setMenuItemsState(piecesJustificatives);
   };
 

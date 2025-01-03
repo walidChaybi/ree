@@ -2,7 +2,7 @@ import { getMentions } from "@api/appels/etatcivilApi";
 import { IMention } from "@model/etatcivil/acte/mention/IMention";
 import { ITypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { NatureMention } from "@model/etatcivil/enum/NatureMention";
+import { INatureMention, NatureMention } from "@model/etatcivil/enum/NatureMention";
 import DateUtils from "@util/DateUtils";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
@@ -73,7 +73,7 @@ export function mappingTypeMention(typeMention: any): ITypeMention {
   return {
     id: typeMention.idTypeMention,
     libelle: typeMention.libelleType,
-    natureMention: NatureMention.getEnumFor(typeMention.idNatureMention),
+    natureMention: NatureMention.depuisId(typeMention.idNatureMention) as INatureMention,
     natureActe: NatureActe.getEnumFor(typeMention.natureActe),
     affecteAnalyseMarginale: typeMention.affecteAnalyseMarginale,
     sousTypes: typeMention.typeMentionEnfantList

@@ -1,32 +1,32 @@
-/* istanbul ignore file */
+/* v8 ignore start */
 
-import { peupleMandataireRc } from "@api/nomenclature/NomenclatureEtatcivil";
-import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
-import { Options } from "@util/Type";
+import { Option } from "@util/Type";
 
-export class MandataireRc extends EnumWithLibelle {
-  public static async init() {
-    await peupleMandataireRc();
+export interface IMandataire {
+  id: string;
+  nom: string;
+  code: string;
+  libelle: string;
+  estActif: boolean;
+}
+
+export class MandataireRc {
+  private static liste: IMandataire[] | null = null;
+
+  public static init(mandataires: IMandataire[]) {
+    if (MandataireRc.liste !== null) {
+      return;
+    }
+
+    MandataireRc.liste = mandataires;
   }
 
-  //AddEnum specifique aux nomenclatures !
-  public static addEnum(key: string, obj: MandataireRc) {
-    (MandataireRc as any)[key] = obj;
+  public static depuisId(id: string): IMandataire | null {
+    return MandataireRc.liste?.find(mandataire => mandataire.id === id) ?? null;
   }
 
-  public static clean() {
-    return EnumWithLibelle.clean(MandataireRc);
-  }
-
-  public static contientEnums() {
-    return EnumWithLibelle.contientEnums(MandataireRc);
-  }
-
-  public static getEnumFor(str: string) {
-    return EnumWithLibelle.getEnumFor(str, MandataireRc);
-  }
-
-  public static getAllEnumsAsOptions(): Options {
-    return EnumWithLibelle.getAllLibellesAsOptions(MandataireRc);
+  public static versOptions(): Option[] {
+    return MandataireRc.liste?.map(mandataire => ({ cle: mandataire.id, libelle: mandataire.libelle })) ?? [];
   }
 }
+/* v8 ignore start */

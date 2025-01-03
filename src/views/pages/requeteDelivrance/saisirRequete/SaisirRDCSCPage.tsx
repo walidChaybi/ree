@@ -1,10 +1,4 @@
-import {
-  ADRESSE,
-  DOCUMENT,
-  PIECES_JOINTES,
-  REQUERANT,
-  TITULAIRES
-} from "@composant/formulaire/ConstantesNomsForm";
+import { ADRESSE, DOCUMENT, PIECES_JOINTES, REQUERANT, TITULAIRES } from "@composant/formulaire/ConstantesNomsForm";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { useReponseSansDelivranceCS } from "@hook/reponseSansDelivrance/ChoixReponseSansDelivranceCSHook";
@@ -19,17 +13,13 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { PATH_MODIFIER_RDCSC } from "@router/ReceUrls";
 import { PieceJointe } from "@util/FileUtils";
-import { getLibelle } from "@util/Utils";
 import messageManager from "@util/messageManager";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import { goBack } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { DOCUMENT_OBLIGATOIRE } from "@widget/formulaire/FormulaireMessages";
-import {
-  AdresseFormDefaultValues,
-  AdresseFormValidationSchema
-} from "@widget/formulaire/adresse/AdresseForm";
+import { AdresseFormDefaultValues, AdresseFormValidationSchema } from "@widget/formulaire/adresse/AdresseForm";
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import { FormikProps, FormikValues } from "formik";
@@ -61,10 +51,7 @@ import {
   IdentiteFormValidationSchemaRDCSC,
   IdentiteSubFormProps
 } from "./sousFormulaires/identite/IdentiteForm";
-import {
-  RequerantFormDefaultValues,
-  RequerantFormValidationSchema
-} from "./sousFormulaires/requerant/RequerantForm";
+import { RequerantFormDefaultValues, RequerantFormValidationSchema } from "./sousFormulaires/requerant/RequerantForm";
 
 // Valeurs par défaut des champs
 const DefaultValuesSaisirRDCSC = {
@@ -107,19 +94,15 @@ export const SaisirRDCSCPage: React.FC = () => {
 
   /** Informations de la requête */
   const [idRequete, setIdRequete] = useState<string>();
-  const [saisieRequeteRDCSC, setSaisieRequeteRDCSC] =
-    useState<SaisieRequeteRDCSC>();
+  const [saisieRequeteRDCSC, setSaisieRequeteRDCSC] = useState<SaisieRequeteRDCSC>();
   const { detailRequeteState } = useDetailRequeteApiHook({ idRequete });
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [modeModification, setModeModification] = useState(false);
-  const [saisieIncomplete, setSaisieIncomplete] =
-    React.useState<boolean>(false);
-  const [reponseSansDelivranceCS, setReponseSansDelivranceCS] =
-    useState<IReponseSansDelivranceCS>();
+  const [saisieIncomplete, setSaisieIncomplete] = React.useState<boolean>(false);
+  const [reponseSansDelivranceCS, setReponseSansDelivranceCS] = useState<IReponseSansDelivranceCS>();
 
-  const [piecesjointesAMettreAJour, setPiecesjointesAMettreAJour] =
-    useState<PieceJointe[]>();
+  const [piecesjointesAMettreAJour, setPiecesjointesAMettreAJour] = useState<PieceJointe[]>();
 
   const [titulairesState, setTitulairesState] = useState<TitulairesStateType>({
     titulaires: [creerTitulaire()],
@@ -128,26 +111,17 @@ export const SaisirRDCSCPage: React.FC = () => {
 
   const { decrets } = useContext(RECEContextData);
 
-  const {
-    creationRDCSCParams,
-    miseAJourRDCSCParams,
-    requeteRDCSCResultat,
-    onSubmitSaisieRequeteRDCSC,
-    validerRefus,
-    setEstBrouillon
-  } = useSoumissionFormulaireRDCSCHook(
-    setSaisieRequeteRDCSC,
-    setSaisieIncomplete,
-    setOperationEnCours,
-    titulairesState,
-    saisieRequeteRDCSC,
-    idRequete
-  );
+  const { creationRDCSCParams, miseAJourRDCSCParams, requeteRDCSCResultat, onSubmitSaisieRequeteRDCSC, validerRefus, setEstBrouillon } =
+    useSoumissionFormulaireRDCSCHook(
+      setSaisieRequeteRDCSC,
+      setSaisieIncomplete,
+      setOperationEnCours,
+      titulairesState,
+      saisieRequeteRDCSC,
+      idRequete
+    );
 
-  const {
-    miseAJourStatutRequetePuisRedirection,
-    miseAJourActionPuisRedirection
-  } = useRedirectionApresSoumissionRDCSCHook(
+  const { miseAJourStatutRequetePuisRedirection, miseAJourActionPuisRedirection } = useRedirectionApresSoumissionRDCSCHook(
     location.pathname,
     modeModification,
     setOperationEnCours,
@@ -179,16 +153,11 @@ export const SaisirRDCSCPage: React.FC = () => {
 
   useEffect(() => {
     if (detailRequeteState) {
-      setSaisieRequeteRDCSC(
-        mappingRequeteDelivranceVersFormulaireRDCSC(
-          detailRequeteState as IRequeteDelivrance
-        )
-      );
+      setSaisieRequeteRDCSC(mappingRequeteDelivranceVersFormulaireRDCSC(detailRequeteState as IRequeteDelivrance));
 
       // ↴ Initialiser titulairesState lorsque detailRequeteState a été rempli par l'API
       if (detailRequeteState.titulaires) {
-        const { titulaires, documentDemande } =
-          detailRequeteState as IRequeteDelivrance;
+        const { titulaires, documentDemande } = detailRequeteState as IRequeteDelivrance;
 
         setTitulairesState({
           titulaires: initialiserTitulaires(titulaires?.length),
@@ -206,9 +175,7 @@ export const SaisirRDCSCPage: React.FC = () => {
   useEffect(() => {
     if (requeteRDCSCResultat?.requete) {
       // Une fois la requête créée ou mise à jour, la mise à jour des pièces jointes peut se faire
-      const pjAMettreAjour = getPiecesJointesAMettreAJour(
-        saisieRequeteRDCSC?.[PIECES_JOINTES]
-      );
+      const pjAMettreAjour = getPiecesJointesAMettreAJour(saisieRequeteRDCSC?.[PIECES_JOINTES]);
       if (pjAMettreAjour && pjAMettreAjour.length > 0) {
         setPiecesjointesAMettreAJour(pjAMettreAjour);
       } else if (modeModification) {
@@ -236,30 +203,16 @@ export const SaisirRDCSCPage: React.FC = () => {
 
   useEffect(() => {
     if (resultatReponseSansDelivranceCS) {
-      messageManager.showSuccessAndClose(
-        getLibelle("Le refus a bien été enregistré")
-      );
+      messageManager.showSuccessAndClose("Le refus a bien été enregistré");
 
       goBack(navigate);
     }
   }, [resultatReponseSansDelivranceCS, navigate]);
 
-  const onChangeTitulaires = (
-    titulaires: IdentiteSubFormProps[],
-    formik: FormikProps<FormikValues>
-  ) => {
-    formik.setFieldValue(
-      withNamespace(TITULAIRES, "titulaire2"),
-      DefaultValuesSaisirRDCSC[TITULAIRES].titulaire2
-    );
-    if (
-      formik.getFieldProps(withNamespace(REQUERANT, "typeRequerant")).value ===
-      "TITULAIRE2"
-    ) {
-      formik.setFieldValue(
-        withNamespace(REQUERANT, "typeRequerant"),
-        DefaultValuesSaisirRDCSC[REQUERANT].typeRequerant
-      );
+  const onChangeTitulaires = (titulaires: IdentiteSubFormProps[], formik: FormikProps<FormikValues>) => {
+    formik.setFieldValue(withNamespace(TITULAIRES, "titulaire2"), DefaultValuesSaisirRDCSC[TITULAIRES].titulaire2);
+    if (formik.getFieldProps(withNamespace(REQUERANT, "typeRequerant")).value === "TITULAIRE2") {
+      formik.setFieldValue(withNamespace(REQUERANT, "typeRequerant"), DefaultValuesSaisirRDCSC[REQUERANT].typeRequerant);
     }
 
     setTitulairesState(precTitulaires => ({
@@ -269,23 +222,14 @@ export const SaisirRDCSCPage: React.FC = () => {
   };
 
   const onAjoutTitulaire = (formik: FormikProps<FormikValues>) => {
-    onChangeTitulaires(
-      [
-        ...titulairesState.titulaires,
-        creerTitulaire(titulairesState.titulaires.length + 1)
-      ],
-      formik
-    );
+    onChangeTitulaires([...titulairesState.titulaires, creerTitulaire(titulairesState.titulaires.length + 1)], formik);
   };
 
   const onRetraitTitulaire = (formik: FormikProps<FormikValues>) => {
     onChangeTitulaires(titulairesState.titulaires.slice(0, -1), formik);
   };
 
-  const onChangeMaxTitulaires = (
-    maxTitulaires: number,
-    formik: FormikProps<FormikValues>
-  ) => {
+  const onChangeMaxTitulaires = (maxTitulaires: number, formik: FormikProps<FormikValues>) => {
     setTitulairesState(precTitulaires => ({
       ...precTitulaires,
       maxTitulaires
@@ -299,12 +243,7 @@ export const SaisirRDCSCPage: React.FC = () => {
   // Eléments du formulaire:
   const blocForms = [
     getDocumentDemandeForm(onChangeMaxTitulaires),
-    getTitulairesForm(
-      titulairesState,
-      onAjoutTitulaire,
-      onRetraitTitulaire,
-      detailRequeteState
-    ),
+    getTitulairesForm(titulairesState, onAjoutTitulaire, onRetraitTitulaire, detailRequeteState),
     getRequerantForm(titulairesState.titulaires.length, detailRequeteState),
     getAdresseForm(),
     getPiecesJointesForm()
@@ -320,13 +259,7 @@ export const SaisirRDCSCPage: React.FC = () => {
         onTimeoutEnd={() => setOperationEnCours(false)}
         onClick={() => setOperationEnCours(false)}
       />
-      {getFormulaireRDCSC(
-        blocForms,
-        onSubmitSaisieRequeteRDCSC,
-        setEstBrouillon,
-        modeModification,
-        saisieRequeteRDCSC
-      )}
+      {getFormulaireRDCSC(blocForms, onSubmitSaisieRequeteRDCSC, setEstBrouillon, modeModification, saisieRequeteRDCSC)}
       <ConfirmationPopin
         estOuvert={saisieIncomplete}
         messages={getMessagesPopin()}

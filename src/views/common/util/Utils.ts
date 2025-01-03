@@ -107,7 +107,7 @@ export const formatPrenom = (prenom?: string, prenomParDefaut = SANS_PRENOM_CONN
   if (prenom === SPC) {
     prenomFormate = prenomParDefaut;
   } else {
-    prenomFormate = enMajuscules ? formatMajusculesMinusculesMotCompose(prenom) : prenom ?? "";
+    prenomFormate = enMajuscules ? formatMajusculesMinusculesMotCompose(prenom) : (prenom ?? "");
   }
 
   return prenomFormate;
@@ -129,7 +129,7 @@ export const formatNom = (nom?: string, nomParDefaut = SANS_NOM_PATRONYMIQUE, en
   if (nom === SNP) {
     nomFormate = nomParDefaut;
   } else {
-    nomFormate = enMajuscules ? enMajuscule(nom) : nomFormate;
+    nomFormate = enMajuscules ? (nom?.toLocaleUpperCase() ?? "") : nomFormate;
   }
 
   return nomFormate;
@@ -151,14 +151,14 @@ export const getTableauOuVide = (arr?: any[]) => {
 };
 
 export const getPremierElemOuVide = (tab?: string[]): string => {
-  return tab && tab[0] ? tab[0] : "";
+  return tab?.[0] ? tab[0] : "";
 };
 
 export const jointAvec = (tab: string[], sep: string) => {
   let res = "";
   if (tab) {
     tab.forEach(elem => {
-      if (elem && elem.trim()) {
+      if (elem?.trim()) {
         if (res) {
           res = res + sep + elem.trim();
         } else {
@@ -217,7 +217,7 @@ export const premiereLettreEnMajuscule = (str?: string) => {
 
 // Tous les autre(s) nom(s) sont affichés en majuscule et sont séparés par une ","
 export const formatNoms = (noms?: string[]): string => {
-  return noms ? joint(noms.map(n => enMajuscule(n))) : "";
+  return noms ? joint(noms.map(n => n?.toLocaleUpperCase() ?? "")) : "";
 };
 
 // Tous les prénom(s)/autre(s) prénom(s) sont affichés dans l'ordre et séparés par une ","
@@ -230,6 +230,7 @@ export const jointPrenoms = (prenoms?: IPrenom[]): string => {
   return prenoms ? joint(prenoms.sort((p1, p2) => compareNombre(p1.numeroOrdre, p2.numeroOrdre)).map(p => formatPrenom(p.valeur))) : "";
 };
 
+/**  @deprecated fonction inutile */
 export const numberToString = (nb?: number): string => {
   return nb ? nb.toString() : "";
 };
@@ -417,12 +418,12 @@ export const checkDirty = (isDirty: boolean, setIsDirty: any) => {
 };
 
 export const getNombreOuUndefined = (nombreStr?: string): number | undefined => {
-  const nombre = parseInt(nombreStr || "", DIX);
+  const nombre = parseInt(nombreStr ?? "", DIX);
   return isNaN(nombre) ? undefined : nombre;
 };
 
 export const getNombreOuNull = (nombreStr?: string): number | null => {
-  const nombre = parseInt(nombreStr || "", DIX);
+  const nombre = parseInt(nombreStr ?? "", DIX);
   return isNaN(nombre) ? null : nombre;
 };
 
@@ -451,7 +452,7 @@ export const getTableauAPartirElementsNonVides = (...args: any[]) => {
 };
 
 export const executeEnDiffere = (fct: any, tempsMs?: number) => {
-  setTimeout(fct, tempsMs || TIME_OUT_MS);
+  setTimeout(fct, tempsMs ?? TIME_OUT_MS);
 };
 
 /** @deprecated méthode inutile, opération trop simple pour justifier une fonction  */
@@ -670,4 +671,27 @@ export const isObject = (object: any): boolean => {
 
 export const triAlphanumerique = (texteA: string, texteB: string) => {
   return texteA.localeCompare(texteB);
+};
+
+export const rechercheExpressionReguliereAvecTimeout = (
+  pattern: RegExp,
+  input: string,
+  timeout: number
+): Promise<RegExpExecArray | null> => {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      reject(new Error("La recherche d'expression régulière a dépassé la limite de temps alloué"));
+    }, timeout);
+
+    setImmediate(() => {
+      try {
+        const result = pattern.exec(input);
+        clearTimeout(timer);
+        resolve(result);
+      } catch (error) {
+        clearTimeout(timer);
+        reject(error as Error);
+      }
+    });
+  });
 };

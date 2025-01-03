@@ -1,17 +1,12 @@
 import { IMention, Mention } from "@model/etatcivil/acte/mention/IMention";
 import { IMentionAffichage } from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { MARIAGE, NatureMention } from "@model/etatcivil/enum/NatureMention";
+import { INatureMention, MARIAGE, NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { Generateur } from "@util/generateur/Generateur";
 import { ListeGlisserDeposer } from "@widget/listeGlisserDeposer/ListeGlisserDeposer";
 import React, { useCallback } from "react";
 import { mappingMentionAffichageVersListeItem } from "../../../../../../../common/mapping/mappingMentions";
-import {
-  handleBlur,
-  handleCheckBox,
-  handleReorga,
-  selectionneEtMiseAJour
-} from "../GestionMentionsUtil";
+import { handleBlur, handleCheckBox, handleReorga, selectionneEtMiseAJour } from "../GestionMentionsUtil";
 import { AjoutMention } from "./AjoutMention";
 import { ModificationMention } from "./ModificationMention";
 
@@ -39,49 +34,26 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
   estExtraitPlurilingue
 }) => {
   const handleOnBlur = useCallback(() => {
-    handleBlur(
-      mentions,
-      mentionSelect,
-      mentionsApi,
-      setMentionSelect,
-      setMentions,
-      estExtraitPlurilingue
-    );
-  }, [
-    mentions,
-    mentionSelect,
-    mentionsApi,
-    setMentionSelect,
-    setMentions,
-    estExtraitPlurilingue
-  ]);
+    handleBlur(mentions, mentionSelect, mentionsApi, setMentionSelect, setMentions, estExtraitPlurilingue);
+  }, [mentions, mentionSelect, mentionsApi, setMentionSelect, setMentions, estExtraitPlurilingue]);
 
   const handleChangeSelect = useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
       if (mentionSelect) {
-        const nature = NatureMention.getEnumFor(event.target.value);
+        const nature = NatureMention.depuisId(event.target.value) as INatureMention;
         const nouvelleMention = { ...mentionSelect, nature };
         setMentionSelect(nouvelleMention);
 
         const mentionsMiseAJour = [...mentions];
-        const indexMention = mentions?.findIndex(
-          el => el.id === mentionSelect?.id
-        );
+        const indexMention = mentions?.findIndex(el => el.id === mentionSelect?.id);
         mentionsMiseAJour[indexMention].nature = nature;
         if (estExtraitPlurilingue) {
-          mentionsMiseAJour[indexMention].texte =
-            Mention.getPlurilingueAPartirTexte(nouvelleMention?.texte, nature);
+          mentionsMiseAJour[indexMention].texte = Mention.getPlurilingueAPartirTexte(nouvelleMention?.texte, nature);
         }
         setMentions(mentionsMiseAJour);
       }
     },
-    [
-      mentionSelect,
-      setMentionSelect,
-      mentions,
-      setMentions,
-      estExtraitPlurilingue
-    ]
+    [mentionSelect, setMentionSelect, mentions, setMentions, estExtraitPlurilingue]
   );
 
   const handleChangeTexte = useCallback(
@@ -108,30 +80,26 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
 
   const handleAjoutSelect = useCallback(
     (event: any) => {
-      const nature = NatureMention.getEnumFor(event.target.value);
+      const nature = NatureMention.depuisId(event.target.value) as INatureMention;
       if (!event.target.value) {
         setMentionAjout(undefined);
-      } else {
-        if (mentionAjout) {
-          const temp = { ...mentionAjout };
-          temp.nature = nature;
-          if (estExtraitPlurilingue) {
-            temp.texte = texteParDefautPlurilingue(nature);
-          }
-          setMentionAjout(temp);
-        } else {
-          setMentionAjout({
-            id: Generateur.genereCleUnique(),
-            texte: estExtraitPlurilingue
-              ? texteParDefautPlurilingue(nature)
-              : "",
-            nature: NatureMention.getEnumFor(event.target.value),
-            numeroOrdre: getNumeroOrdreMention(mentions),
-            estPresent: true,
-            estSupprimable: true,
-            nouveau: true
-          } as IMentionAffichage);
+      } else if (mentionAjout) {
+        const temp = { ...mentionAjout };
+        temp.nature = nature;
+        if (estExtraitPlurilingue) {
+          temp.texte = texteParDefautPlurilingue(nature);
         }
+        setMentionAjout(temp);
+      } else {
+        setMentionAjout({
+          id: Generateur.genereCleUnique(),
+          texte: estExtraitPlurilingue ? texteParDefautPlurilingue(nature) : "",
+          nature: nature,
+          numeroOrdre: getNumeroOrdreMention(mentions),
+          estPresent: true,
+          estSupprimable: true,
+          nouveau: true
+        } as IMentionAffichage);
       }
     },
     [mentionAjout, mentions, setMentionAjout, estExtraitPlurilingue]
@@ -146,7 +114,7 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
         setMentionAjout({
           id: Generateur.genereCleUnique(),
           texte: event.target.value,
-          nature: NatureMention.getEnumFor(""),
+          nature: { id: null } as unknown as INatureMention,
           numeroOrdre: getNumeroOrdreMention(mentions),
           estPresent: true,
           estSupprimable: true,
@@ -161,31 +129,19 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
     if (mentionAjout) {
       const futurMentionSelect = { ...mentionAjout };
       if (estExtraitPlurilingue) {
-        mentionAjout.texte = Mention.getPlurilingueAPartirTexte(
-          mentionAjout.texte,
-          mentionAjout.nature
-        );
+        mentionAjout.texte = Mention.getPlurilingueAPartirTexte(mentionAjout.texte, mentionAjout.nature);
       }
       let nouvellesMentions: IMentionAffichage[] = [];
       if (mentions) {
         nouvellesMentions = [...mentions];
       }
       nouvellesMentions.push(mentionAjout);
-      nouvellesMentions.forEach(
-        (mention, index) => (mention.numeroOrdre = index + 1)
-      );
+      nouvellesMentions.forEach((mention, index) => (mention.numeroOrdre = index + 1));
       setMentions(nouvellesMentions);
       setMentionSelect(futurMentionSelect);
       setMentionAjout(undefined);
     }
-  }, [
-    mentionAjout,
-    mentions,
-    setMentionSelect,
-    setMentionAjout,
-    setMentions,
-    estExtraitPlurilingue
-  ]);
+  }, [mentionAjout, mentions, setMentionSelect, setMentionAjout, setMentions, estExtraitPlurilingue]);
 
   return (
     <>
@@ -195,19 +151,9 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
             elementSelect={mentionSelect?.id}
             setElementSelect={(
               id // @ts-ignore
-            ) =>
-              selectionneEtMiseAJour(
-                mentions,
-                mentionSelect,
-                setMentionSelect,
-                id,
-                estExtraitPlurilingue
-              )
-            }
+            ) => selectionneEtMiseAJour(mentions, mentionSelect, setMentionSelect, id, estExtraitPlurilingue)}
             liste={mappingMentionAffichageVersListeItem(mentions)}
-            handleReorga={(oldIndex: number, newIndex: number) =>
-              handleReorga(mentions, setMentions, oldIndex, newIndex)
-            }
+            handleReorga={(oldIndex: number, newIndex: number) => handleReorga(mentions, setMentions, oldIndex, newIndex)}
             handleCheckbox={id => handleCheckBox(mentions, setMentions, id)}
             onClickSupprimer={onClickSupprimer}
             deverrouille={true}
@@ -237,14 +183,12 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
   );
 };
 
-function getNumeroOrdreMention(
-  mentions: IMentionAffichage[] | undefined
-): number {
+function getNumeroOrdreMention(mentions: IMentionAffichage[] | undefined): number {
   return mentions ? mentions.length + 1 : 0;
 }
 
 function texteParDefautPlurilingue(natureMention?: NatureMention) {
-  if (natureMention === NatureMention.getEnumFromCode(NatureMention, MARIAGE)) {
+  if (natureMention === NatureMention.depuisCode(MARIAGE)) {
     return "JJ-MM-AAAA <Lieu événement> <NOM du conjoint> <Prénoms du conjoint>";
   } else {
     return "JJ-MM-AAAA <Lieu événement>";

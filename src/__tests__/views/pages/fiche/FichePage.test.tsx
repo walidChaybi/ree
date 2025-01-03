@@ -5,6 +5,7 @@ import {
   userDroitCOMEDEC,
   userDroitConsulterPerimetreTUNIS
 } from "@mock/data/mockConnectedUserAvecDroit";
+import { ReponseAppelNomenclatureTypeAlerte } from "@mock/data/nomenclatures";
 import { mappingOfficier } from "@model/agent/IOfficier";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
@@ -12,23 +13,14 @@ import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { FichePage } from "@pages/fiche/FichePage";
 import ApercuRequeteMiseAJourPage from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
 import { URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS } from "@router/ReceUrls";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { DEUX, UN, ZERO } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { RouterProvider } from "react-router-dom";
 import { beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
 import IHabilitationDto from "../../../../dto/etatcivil/agent/IHabilitationDto";
-import {
-  createTestingRouter,
-  elementAvecContexte
-} from "../../../__tests__utils__/testsUtil";
+import { createTestingRouter, elementAvecContexte } from "../../../__tests__utils__/testsUtil";
 
 describe("Test du composant Fiche page", () => {
   const fct = vi.fn();
@@ -38,11 +30,7 @@ describe("Test du composant Fiche page", () => {
   });
 
   beforeEach(() => {
-    expect(
-      gestionnaireFeatureFlag.estActif(
-        FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
-      )
-    ).toBeTruthy();
+    expect(gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES)).toBeTruthy();
   });
 
   test("Le render d'une RC via fichePage se fait correctement", async () => {
@@ -76,17 +64,13 @@ describe("Test du composant Fiche page", () => {
   });
 
   test("Le render d'un ACTE via fichePage se fait correctement", async () => {
-    const utilisateurConnecte = mappingOfficier(
-      resultatHeaderUtilistateurLeBiannic,
-      resultatRequeteUtilistateurLeBiannic.data
-    );
+    const utilisateurConnecte = mappingOfficier(resultatHeaderUtilistateurLeBiannic, resultatRequeteUtilistateurLeBiannic.data);
 
     utilisateurConnecte.habilitations = mapHabilitationsUtilisateur(
-      resultatRequeteUtilistateurLeBiannic.data
-        .habilitations as unknown as IHabilitationDto[]
+      resultatRequeteUtilistateurLeBiannic.data.habilitations as unknown as IHabilitationDto[]
     );
 
-    await TypeAlerte.init();
+    TypeAlerte.init(ReponseAppelNomenclatureTypeAlerte.data);
     const router = createTestingRouter(
       [
         {
@@ -114,12 +98,7 @@ describe("Test du composant Fiche page", () => {
       ["/"]
     );
 
-    render(
-      elementAvecContexte(
-        <RouterProvider router={router} />,
-        utilisateurConnecte
-      )
-    );
+    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte));
 
     await waitFor(() => {
       // fct est appelé une fois quand le test est lancé tt seul
@@ -165,16 +144,9 @@ describe("Test du composant Fiche page", () => {
       ["/"]
     );
 
-    render(
-      elementAvecContexte(
-        <RouterProvider router={router} />,
-        utilisateurConnecte
-      )
-    );
+    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte));
 
-    await expect
-      .poll(() => screen.getByLabelText("Demander la délivrance"))
-      .toBeDefined();
+    await expect.poll(() => screen.getByLabelText("Demander la délivrance")).toBeDefined();
     fireEvent.click(screen.getByLabelText("Demander la délivrance"));
 
     let okButton: HTMLElement | null;
@@ -217,16 +189,9 @@ describe("Test du composant Fiche page", () => {
       ["/"]
     );
 
-    render(
-      elementAvecContexte(
-        <RouterProvider router={router} />,
-        utilisateurConnecte
-      )
-    );
+    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte));
 
-    const boutonDemanderDelivrance = screen.queryByLabelText(
-      "Demander la délivrance"
-    ) as HTMLButtonElement;
+    const boutonDemanderDelivrance = screen.queryByLabelText("Demander la délivrance") as HTMLButtonElement;
 
     waitFor(() => {
       expect(boutonDemanderDelivrance).toBeNull();

@@ -2,8 +2,10 @@ import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
 import {
   detailRequeteDelivranceAvecRequerantQualiteAutreProfessionnel,
   detailRequeteDelivranceAvecRequerantQualiteInstitutionnel,
-  detailRequeteDelivranceAvecRequerantQualiteUtilisateurRece, ReponseAppelDetailRequeteDelivrance
+  detailRequeteDelivranceAvecRequerantQualiteUtilisateurRece,
+  ReponseAppelDetailRequeteDelivrance
 } from "@mock/data/DetailRequeteDelivrance";
+import { TYPE_PIECE_JUSTIFICATIVE } from "@mock/data/NomenclatureTypePieceJustificative";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { ResumeRequete } from "@pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequete";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
@@ -11,18 +13,14 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { beforeAll, describe, expect, test } from "vitest";
-import {
-  createTestingRouter,
-  elementAvecContexte,
-  mockFenetreFicheTestFunctions
-} from "../../../../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, elementAvecContexte, mockFenetreFicheTestFunctions } from "../../../../../../../__tests__utils__/testsUtil";
 
 beforeAll(() => {
   mockFenetreFicheTestFunctions();
 });
 
 beforeAll(() => {
-  TypePieceJustificative.init();
+  TypePieceJustificative.init(TYPE_PIECE_JUSTIFICATIVE);
 });
 
 describe("ResumeRequetePartieHaute", () => {
@@ -31,22 +29,10 @@ describe("ResumeRequetePartieHaute", () => {
       [
         {
           path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-          element: (
-            <ResumeRequete
-              requete={mappingRequeteDelivrance(
-                ReponseAppelDetailRequeteDelivrance.data,
-                []
-              )}
-            />
-          )
+          element: <ResumeRequete requete={mappingRequeteDelivrance(ReponseAppelDetailRequeteDelivrance.data, [])} />
         }
       ],
-      [
-        getUrlWithParam(
-          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-          "a4cefb71-8457-4f6b-937e-34b49335d404"
-        )
-      ]
+      [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID, "a4cefb71-8457-4f6b-937e-34b49335d404")]
     );
 
     render(elementAvecContexte(<RouterProvider router={router} />));
@@ -63,22 +49,10 @@ describe("ResumeRequetePartieHaute", () => {
       [
         {
           path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-          element: (
-            <ResumeRequete
-              requete={mappingRequeteDelivrance(
-                detailRequeteDelivranceAvecRequerantQualiteInstitutionnel.data,
-                []
-              )}
-            />
-          )
+          element: <ResumeRequete requete={mappingRequeteDelivrance(detailRequeteDelivranceAvecRequerantQualiteInstitutionnel.data, [])} />
         }
       ],
-      [
-        getUrlWithParam(
-          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-          "a4cefb71-8457-4f6b-937e-34b49335d423"
-        )
-      ]
+      [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID, "a4cefb71-8457-4f6b-937e-34b49335d423")]
     );
 
     render(elementAvecContexte(<RouterProvider router={router} />));
@@ -96,21 +70,11 @@ describe("ResumeRequetePartieHaute", () => {
         {
           path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
           element: (
-            <ResumeRequete
-              requete={mappingRequeteDelivrance(
-                detailRequeteDelivranceAvecRequerantQualiteAutreProfessionnel.data,
-                []
-              )}
-            />
+            <ResumeRequete requete={mappingRequeteDelivrance(detailRequeteDelivranceAvecRequerantQualiteAutreProfessionnel.data, [])} />
           )
         }
       ],
-      [
-        getUrlWithParam(
-          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-          "a4cefb71-8457-4f6b-937e-34b49335d412"
-        )
-      ]
+      [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID, "a4cefb71-8457-4f6b-937e-34b49335d412")]
     );
 
     render(elementAvecContexte(<RouterProvider router={router} />));
@@ -127,22 +91,10 @@ describe("ResumeRequetePartieHaute", () => {
       [
         {
           path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-          element: (
-            <ResumeRequete
-              requete={mappingRequeteDelivrance(
-                detailRequeteDelivranceAvecRequerantQualiteUtilisateurRece.data,
-                []
-              )}
-            />
-          )
+          element: <ResumeRequete requete={mappingRequeteDelivrance(detailRequeteDelivranceAvecRequerantQualiteUtilisateurRece.data, [])} />
         }
       ],
-      [
-        getUrlWithParam(
-          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-          "a4cefb71-8457-4f6b-937e-34b49335d412"
-        )
-      ]
+      [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID, "a4cefb71-8457-4f6b-937e-34b49335d412")]
     );
 
     render(elementAvecContexte(<RouterProvider router={router} />));

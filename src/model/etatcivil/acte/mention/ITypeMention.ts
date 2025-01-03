@@ -1,46 +1,55 @@
-import { peupleTypeMention } from "@api/nomenclature/NomenclatureEtatcivil";
+import { ITypeMentionDto } from "@api/configurations/etatCivil/nomenclature/GetTypesMentionConfigApi";
 import { Options } from "@util/Type";
 import { ZERO } from "@util/Utils";
 import { NatureActe } from "../../enum/NatureActe";
-import { NATIONALITE, NatureMention } from "../../enum/NatureMention";
+import { INatureMention, NATIONALITE, NatureMention } from "../../enum/NatureMention";
 
 export interface ITypeMention {
   id: string;
   libelle: string;
-  natureMention: NatureMention;
+  natureMention: INatureMention | null;
   natureActe?: NatureActe;
-  affecteAnalyseMarginale: boolean;
   sousTypes?: ITypeMention[];
+  affecteAnalyseMarginale: boolean;
   estPresentListeDeroulante: boolean;
   estSousType: boolean;
   estSaisieAssistee: boolean;
 }
 
 export class TypeMention {
-  private static typesMentions: ITypeMention[] = [];
+  private static liste: ITypeMention[] | null = null;
 
-  public static async init() {
-    await peupleTypeMention();
+  private static depuisDto(typeMentionDto: ITypeMentionDto): ITypeMention {
+    const natureMention = typeMentionDto.idNatureMention ? NatureMention.depuisId(typeMentionDto.idNatureMention) : null;
+    const sousTypes = typeMentionDto.typeMentionEnfantList?.map(dtoEnfant => TypeMention.depuisDto(dtoEnfant)) ?? [];
+
+    return {
+      id: typeMentionDto.idTypeMention,
+      libelle: typeMentionDto.libelleType,
+      natureActe: NatureActe.getEnumFor(typeMentionDto.natureActe),
+      ...{ natureMention: natureMention },
+      ...(sousTypes.length ? { sousTypes: sousTypes } : {}),
+      affecteAnalyseMarginale: typeMentionDto.affecteAnalyseMarginale,
+      estPresentListeDeroulante: typeMentionDto.estPresentListeDeroulante,
+      estSousType: typeMentionDto.estSousType,
+      estSaisieAssistee: typeMentionDto.estSaisieAssistee
+    };
   }
 
-  public static clean() {
-    this.typesMentions = [];
-  }
+  public static init(typeMentionDtos: ITypeMentionDto[]) {
+    if (TypeMention.liste !== null) {
+      return;
+    }
 
-  public static contientEnums() {
-    return this.typesMentions.length > 0;
+    TypeMention.liste = typeMentionDtos.map(typeMentionDto => TypeMention.depuisDto(typeMentionDto));
   }
 
   public static getTypesMention(formatListe = false) {
-    return formatListe ? this.mapArborescenceVersListe(this.typesMentions) : this.typesMentions;
+    return formatListe ? TypeMention.mapArborescenceVersListe(TypeMention.liste ?? []) : (TypeMention.liste ?? []);
   }
 
-  public static ajouteTypeMention(typeMention: ITypeMention) {
-    this.typesMentions.push(typeMention);
-  }
-
-  public static getNatureMention(typesMention: ITypeMention[]): NatureMention[] {
-    const natures = new Set<NatureMention>();
+  public static getNatureMention(typesMention: ITypeMention[]): INatureMention[] {
+    const natures = new Set<INatureMention>();
     const mapRecursifMentions = (mentions: ITypeMention[]) =>
       mentions.forEach(mention => {
         if (mention.natureMention) {
@@ -61,7 +70,7 @@ export class TypeMention {
   }
 
   public static getIdTypeMentionDepuisIdNature(idNature: string): string | undefined {
-    const nature = NatureMention.getEnumFor(idNature);
+    const nature = NatureMention.depuisId(idNature);
 
     let idMention: string;
     let idMentionTrouve: string | undefined;
@@ -89,7 +98,7 @@ export class TypeMention {
       });
     };
 
-    mapRecursifMention(this.typesMentions, true);
+    mapRecursifMention(this.liste ?? [], true);
 
     return idMentionTrouve;
   }
@@ -135,9 +144,7 @@ export class TypeMention {
 
   public static getIdTypeMentionNationalitePourAjoutMentionDelivrance() {
     return this.getTypesMention().filter(
-      typeMention =>
-        typeMention.natureMention === NatureMention.getEnumFor(NatureMention.getKeyForCode(NatureMention, NATIONALITE)) &&
-        typeMention.estSousType
+      typeMention => typeMention.natureMention === NatureMention.depuisCode(NATIONALITE) && typeMention.estSousType
     )?.[ZERO].id;
   }
 }

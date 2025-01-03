@@ -1,7 +1,11 @@
+import { TYPE_PIECE_JUSTIFICATIVE } from "@mock/data/NomenclatureTypePieceJustificative";
+import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { mapPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import { expect, test } from "vitest";
 
 test("DOIT mapper correctement une PJ venant du serveur en IPieceJustificative", () => {
+  TypePieceJustificative.init(TYPE_PIECE_JUSTIFICATIVE);
+
   const pjDuServeur = {
     base64File: {
       fileName: "AN_plurinlingue_v2.png",
@@ -19,7 +23,5 @@ test("DOIT mapper correctement une PJ venant du serveur en IPieceJustificative",
 
   const pjFront = mapPieceJustificative(pjDuServeur);
 
-  expect(pjFront.typePieceJustificative).toBe(
-    "0f1f9eba-a0a7-47ea-bfb2-f473f88beb9a"
-  );
+  expect(pjFront.typePieceJustificative).toBe("0f1f9eba-a0a7-47ea-bfb2-f473f88beb9a");
 });

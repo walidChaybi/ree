@@ -1,11 +1,5 @@
 import { GestionnaireApi } from "@api/GestionnaireApi";
-import {
-  TAppelApi,
-  TBaseUri,
-  TConfigurationApi,
-  TReponseApiEchec,
-  TReponseApiSucces
-} from "@model/api/Api";
+import { TAppelApi, TBaseUri, TConfigurationApi, TReponseApiEchec, TReponseApiSucces } from "@model/api/Api";
 
 import { useState } from "react";
 
@@ -19,20 +13,12 @@ const useFetchApi = <
 ) => {
   const [enAttenteDeReponseApi, setEnAttenteDeReponseApi] = useState(false);
 
-  const appelApi = ({
-    parametres,
-    apresSucces,
-    apresErreur,
-    finalement
-  }: TAppelApi<TUri, TBody, TQuery, TResultat>) => {
+  const appelApi = ({ parametres, apresSucces, apresErreur, finalement }: TAppelApi<TUri, TBody, TQuery, TResultat>) => {
     if (enAttenteDeReponseApi) {
       return;
     }
     setEnAttenteDeReponseApi(true);
-    GestionnaireApi.getInstance(
-      configuration.api.nom,
-      configuration.api.version
-    )
+    GestionnaireApi.getInstance(configuration.api.nom, configuration.api.version)
       .fetch({
         methode: configuration.methode,
         uri: configuration.uri,

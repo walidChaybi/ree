@@ -5,13 +5,10 @@ import {
 import { specificationPhraseDelivrer } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseDelivrer";
 import { INbInscriptionsInfos } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
 import { useGenerationInscriptionsHook } from "@hook/generation/generationInscriptionsHook/GenerationInscriptionsHook";
-import {
-  ICreationActionEtMiseAjourStatutParams,
-  usePostCreationActionEtMiseAjourStatutApi
-} from "@hook/requete/ActionHook";
+import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import { CODE_ATTESTATION_PACS } from "@model/requete/enum/DocumentDelivranceConstante";
+import { ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
@@ -36,21 +33,13 @@ export function useDelivrerCertificatSituationHook(
   dataRMCAutoActe?: IResultatRMCActe[],
   inscriptionsRcRadiation?: IInscriptionRc
 ) {
-  const [
-    resultDelivrerCertificatSituation,
-    setResultDelivrerCertificatSituation
-  ] = useState<IResultDelivrerCertificatSituation>();
+  const [resultDelivrerCertificatSituation, setResultDelivrerCertificatSituation] = useState<IResultDelivrerCertificatSituation>();
 
-  const [paramsCertificatSituation, setParamsCertificatSituation] =
-    useState<IGenerationCertificatSituationParams>();
-  const [paramsMajStatut, setParamsMajStatut] =
-    useState<ICreationActionEtMiseAjourStatutParams>();
+  const [paramsCertificatSituation, setParamsCertificatSituation] = useState<IGenerationCertificatSituationParams>();
+  const [paramsMajStatut, setParamsMajStatut] = useState<ICreationActionEtMiseAjourStatutParams>();
 
   // 0 - Suppression des eventuels documents générés au préalable
-  const isOldDocumentsDeleted = useSupprimerAnciensDocumentsReponseHook(
-    requete?.idRequete,
-    dataRMCAutoInscription
-  );
+  const isOldDocumentsDeleted = useSupprimerAnciensDocumentsReponseHook(requete?.idRequete, dataRMCAutoInscription);
 
   const idAction = usePostCreationActionEtMiseAjourStatutApi(paramsMajStatut);
 
@@ -64,7 +53,7 @@ export function useDelivrerCertificatSituationHook(
 
   useEffect(() => {
     if (resultGenerationInscription) {
-      if (codeDocumentDemande === CODE_ATTESTATION_PACS) {
+      if (codeDocumentDemande === ECodeDocumentDelivrance.CODE_ATTESTATION_PACS) {
         setParamsMajStatut({
           libelleAction: StatutRequete.A_VALIDER.libelle,
           statutRequete: StatutRequete.A_VALIDER,
@@ -87,8 +76,7 @@ export function useDelivrerCertificatSituationHook(
   }, [resultGenerationInscription]);
 
   // 2 - Génération du certificat de situation
-  const resultGenerationCertificatSituation =
-    useGenerationCertificatSituationHook(paramsCertificatSituation);
+  const resultGenerationCertificatSituation = useGenerationCertificatSituationHook(paramsCertificatSituation);
 
   // 5 - une fois l'action créée, création du résultat
   useEffect(() => {

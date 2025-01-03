@@ -27,7 +27,7 @@ const SaisieMentionForm: React.FC<IListesTypesMentionForm> = ({ typeMentionSelec
   const { setFieldValue } = useFormikContext<IListesTypesMentionForm>();
   const { appelApi: appelApiGetMetamodeleTypeMention } = useFetchApi(CONFIG_GET_METAMODELE_TYPE_MENTION);
 
-  const [aideALaSaisieDisponible, setaideALaSaisieDisponible] = useState<boolean>(); // TODO-REFACTO : à retirer lorsque les aides à la saisies sans metamodeles auront la valeur aideSaisieAssistee = false
+  const [aideALaSaisieDisponible, setAideALaSaisieDisponible] = useState<boolean>(); // TODO-REFACTO : à retirer lorsque les aides à la saisies sans metamodeles auront la valeur aideSaisieAssistee = false
 
   useEffect(() => {
     setMetamodeleTypeMention(undefined);
@@ -36,10 +36,10 @@ const SaisieMentionForm: React.FC<IListesTypesMentionForm> = ({ typeMentionSelec
         parametres: { path: { idTypeMention: typeMentionSelectionne.id } },
         apresSucces: (metamodele: IMetamodeleTypeMention) => {
           setMetamodeleTypeMention(metamodele);
-          setaideALaSaisieDisponible(false); // TODO-REFACTO : à retirer lorsque les aides à la saisies sans metamodeles auront la valeur aideSaisieAssistee = false
+          setAideALaSaisieDisponible(false); // TODO-REFACTO : à retirer lorsque les aides à la saisies sans metamodeles auront la valeur aideSaisieAssistee = false
         },
         apresErreur: erreurs => {
-          setaideALaSaisieDisponible(true); // TODO-REFACTO : à retirer lorsque les aides à la saisies sans metamodeles auront la valeur aideSaisieAssistee = false
+          setAideALaSaisieDisponible(true); // TODO-REFACTO : à retirer lorsque les aides à la saisies sans metamodeles auront la valeur aideSaisieAssistee = false
           logError({
             messageUtilisateur: "Impossible de récupérer les metamodeles",
             error: erreurs[0]

@@ -4,6 +4,7 @@ import { IMentionAffichage, modificationEffectue } from "@model/etatcivil/acte/m
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import {
+  INatureMention,
   NatureMention,
   natureMentionExtraitPlurilingueMariage,
   natureMentionExtraitPlurilingueNaissance
@@ -12,7 +13,6 @@ import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { Options } from "@util/Type";
-import { getLibelle, getValeurOuVide } from "@util/Utils";
 import messageManager from "@util/messageManager";
 import { fournisseurDonneesBandeauFactory } from "../../../../../fiche/contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
 
@@ -26,14 +26,14 @@ export function miseAJourMention(
 ) {
   // Si le texte est vide, on remet le texte de la liste
   if (mentionSelect?.texte === "") {
-    messageManager.showWarningAndClose(getLibelle("Le texte de la mention est obligatoire"));
+    messageManager.showWarningAndClose("Le texte de la mention est obligatoire");
     const temp = { ...mentionSelect };
     temp.texte = mentions[index].texte;
     setMentionSelect(temp);
   } else {
     const temp = [...mentions];
-    temp[index].nature = NatureMention.getEnumOrEmpty(mentionSelect?.nature);
-    let texte = getValeurOuVide(mentionSelect?.texte);
+    temp[index].nature = mentionSelect?.nature as INatureMention;
+    let texte = mentionSelect?.texte ?? "";
     if (estExtraitPlurilingue) {
       texte = Mention.getPlurilingueAPartirTexte(mentionSelect?.texte, mentionSelect?.nature);
     }
@@ -63,26 +63,24 @@ export function handleCheckBox(mentions: IMentionAffichage[] | undefined, setMen
   }
 }
 
-export function selectionneEtMiseAJour(
+export const selectionneEtMiseAJour = (
   mentions: IMentionAffichage[] | undefined,
   mentionSelect: IMentionAffichage | undefined,
   setMentionSelect: React.Dispatch<React.SetStateAction<IMentionAffichage | undefined>>,
   index: number,
   estExtraitPlurilingue: boolean
-) {
+) => {
   // Sélection de la mention
   if (mentionSelect?.numeroOrdre === index + 1) {
     setMentionSelect(undefined);
-  } else {
-    if (mentions?.[index]) {
-      const mention = { ...mentions?.[index] };
-      if (estExtraitPlurilingue) {
-        mention.texte = getValeurOuVide(Mention.getTexteAPartirPlurilingue(mention.texte));
-      }
-      setMentionSelect(mention);
+  } else if (mentions?.[index]) {
+    const mention = { ...mentions?.[index] };
+    if (estExtraitPlurilingue) {
+      mention.texte = Mention.getTexteAPartirPlurilingue(mention.texte);
     }
+    setMentionSelect(mention);
   }
-}
+};
 
 export function handleBlur(
   mentions: IMentionAffichage[] | undefined,
@@ -111,7 +109,7 @@ export function handleBlur(
   }
 }
 
-export function miseAjourEnFonctionNature(
+export const miseAjourEnFonctionNature = (
   mentions: IMentionAffichage[],
   indexMention: number,
   mentionSelect: IMentionAffichage,
@@ -119,31 +117,31 @@ export function miseAjourEnFonctionNature(
   indexMentionApi: number,
   setMentionSelect: any,
   setMentions: any
-) {
+) => {
   const newMentions = [...mentions];
   const texte = texteEnFonctionOpposableAuTiers(mentions[indexMention], mentionSelect, mentionsApi[indexMentionApi]);
-  newMentions[indexMention].texte = getValeurOuVide(texte);
+  newMentions[indexMention].texte = texte ?? "";
   const newSelect = { ...mentionSelect };
-  newSelect.texte = getValeurOuVide(texte);
+  newSelect.texte = texte ?? "";
   setMentionSelect(newSelect);
   setMentions(newMentions);
-}
+};
 
-export function texteEnFonctionOpposableAuTiers(mention?: IMentionAffichage, mentionSelect?: IMentionAffichage, mentionApi?: IMention) {
+export const texteEnFonctionOpposableAuTiers = (mention?: IMentionAffichage, mentionSelect?: IMentionAffichage, mentionApi?: IMention) => {
   let res = mention?.texte;
-  if (mentionSelect?.nature.opposableAuTiers && !mention?.nature.opposableAuTiers) {
+  if (mentionSelect?.nature?.opposableAuTiers && !mention?.nature?.opposableAuTiers) {
     res = `${mentionApi?.textes.texteMention} ${mentionApi?.textes.texteApposition}`;
-  } else if (!mentionSelect?.nature.opposableAuTiers && mention?.nature.opposableAuTiers) {
+  } else if (!mentionSelect?.nature?.opposableAuTiers && mention?.nature?.opposableAuTiers) {
     res = mentionApi?.textes.texteMention;
   }
   return res;
-}
+};
 
-export function texteNonModifieNatureChangePasDeTexteDelivrance(
+export const texteNonModifieNatureChangePasDeTexteDelivrance = (
   mention?: IMentionAffichage,
   mentionSelect?: IMentionAffichage,
   mentionApi?: IMention
-) {
+) => {
   return (
     mention &&
     mentionApi &&
@@ -152,23 +150,20 @@ export function texteNonModifieNatureChangePasDeTexteDelivrance(
     mentionSelect?.nature !== mention.nature &&
     !mentionApi.textes.texteMentionDelivrance
   );
-}
+};
 
-export function getRegistreActe(acte: IFicheActe) {
+export const getRegistreActe = (acte: IFicheActe) => {
   const fournisseurDonneesBandeau = fournisseurDonneesBandeauFactory.createFournisseur(TypeFiche.ACTE, acte);
+
   return fournisseurDonneesBandeau.getRegistre();
-}
+};
 
 export function aucuneMentionsAffichageNationalite(mentions?: IMentionAffichage[]) {
-  return mentions
-    ?.filter(el => el.estPresent)
-    .every(mention => mention.nature !== NatureMention.getEnumFromLibelle(NatureMention, "Nationalité"));
+  return mentions?.filter(el => el.estPresent).every(mention => mention.nature?.libelle !== "Nationalité");
 }
 
 export function aucuneMentionsNationalite(mentionsRetirees?: string[], mentions?: IMention[]) {
-  return mentions
-    ?.filter(el => !mentionsRetirees?.includes(el.id))
-    .every(el => el.typeMention.natureMention !== NatureMention.getEnumFromLibelle(NatureMention, "Nationalité"));
+  return mentions?.filter(el => !mentionsRetirees?.includes(el.id)).every(el => el.typeMention.natureMention?.libelle !== "Nationalité");
 }
 
 export function boutonReinitialiserEstDisabled(
@@ -233,7 +228,7 @@ function controleMentions(mentions?: IMentionAffichage[], acte?: IFicheActe, doc
     FicheActe.estActeNaissance(acte) &&
     aucuneMentionsAffichageNationalite(mentions)
   ) {
-    message = getLibelle(`Aucune mention de nationalité n'a été cochée.\n\n`);
+    message = `Aucune mention de nationalité n'a été cochée.\n\n`;
   }
   if (
     document?.typeDocument &&
@@ -241,13 +236,13 @@ function controleMentions(mentions?: IMentionAffichage[], acte?: IFicheActe, doc
     NatureMention.ilExisteUneMentionInterdite(
       getNaturesMentionsAffichage(mentions),
       acte?.nature,
-      DocumentDelivrance.getEnumForUUID(document.typeDocument)
+      DocumentDelivrance.depuisId(document.typeDocument)
     )
   ) {
-    message += getLibelle(`Vous allez délivrer un extrait avec une mention à intégrer ou à ne pas reporter.\n\n`);
+    message += `Vous allez délivrer un extrait avec une mention à intégrer ou à ne pas reporter.\n\n`;
   }
   if (message) {
-    message += getLibelle(`Voulez-vous continuer ?`);
+    message += `Voulez-vous continuer ?`;
   }
   return message;
 }
@@ -278,7 +273,7 @@ export function controleMentionsPlusieursDocs(acte?: IFicheActe, documents?: IDo
         acte?.mentions
       )
     ) {
-      message = `${getLibelle("Aucune mention de nationalité n'a été cochée pour le document")} ${document.nom}\n\n`;
+      message = `Aucune mention de nationalité n'a été cochée pour le document ${document.nom}\n\n`;
     }
     if (
       document?.typeDocument &&
@@ -289,49 +284,54 @@ export function controleMentionsPlusieursDocs(acte?: IFicheActe, documents?: IDo
           acte?.mentions
         ),
         acte?.nature,
-        DocumentDelivrance.getEnumForUUID(document.typeDocument)
+        DocumentDelivrance.depuisId(document.typeDocument)
       )
     ) {
-      message += `${getLibelle(
-        "Vous allez délivrer un extrait avec une mention à intégrer ou à ne pas reporter pour le document"
-      )} ${document.nom}\n\n`;
+      message += `
+        Vous allez délivrer un extrait avec une mention à intégrer ou à ne pas reporter pour le document ${document.nom}\n\n`;
     }
   });
   if (message) {
-    message += getLibelle(`Voulez-vous continuer ?`);
+    message += `Voulez-vous continuer ?`;
   }
   return message;
 }
 
-export function getNaturesMentionsAffichage(mentionsAffichage?: IMentionAffichage[]): NatureMention[] {
-  return mentionsAffichage
-    ? mentionsAffichage.filter(mentionAffichage => mentionAffichage.estPresent).map(mentionAffichage => mentionAffichage.nature)
-    : [];
+export function getNaturesMentionsAffichage(mentionsAffichage?: IMentionAffichage[]): (INatureMention | null)[] {
+  return mentionsAffichage?.filter(mentionAffichage => mentionAffichage.estPresent).map(mentionAffichage => mentionAffichage.nature) ?? [];
 }
 
-export function getNaturesMentions(mentionsRetirees?: string[], mentions?: IMention[]): NatureMention[] {
-  return mentions
-    ? mentions.filter(mention => !mentionsRetirees?.includes(mention.id)).map(mention => mention.typeMention.natureMention)
-    : [];
+export function getNaturesMentions(mentionsRetirees?: string[], mentions?: IMention[]): (INatureMention | null)[] {
+  return mentions?.filter(mention => !mentionsRetirees?.includes(mention.id)).map(mention => mention.typeMention.natureMention) ?? [];
 }
 
-export function getOptionsMentions(estExtraitPlurilingue: boolean, natureActe?: NatureActe): Options {
-  if (estExtraitPlurilingue) {
-    switch (natureActe) {
-      case NatureActe.NAISSANCE:
-        return NatureMention.getEnumsAsOptions(
-          natureMentionExtraitPlurilingueNaissance.map(el => NatureMention.getEnumFromCode(NatureMention, el))
-        );
-      case NatureActe.MARIAGE:
-        return NatureMention.getEnumsAsOptions(
-          natureMentionExtraitPlurilingueMariage.map(el => NatureMention.getEnumFromCode(NatureMention, el))
-        );
-      default:
-        return [];
-    }
+export const getOptionsMentions = (estExtraitPlurilingue: boolean, natureActe?: NatureActe): Options => {
+  if (!estExtraitPlurilingue) {
+    return natureActe
+      ? NatureMention.versOptions(TypeMention.getNatureMention(TypeMention.getTypeMentionParNatureActe(natureActe)))
+      : NatureMention.versOptions();
   }
-  // Un TypeMention est lié à une nature d'acte. Ce qui permet de récuperer les Nature
-  return natureActe
-    ? NatureMention.getEnumsAsOptions(TypeMention.getNatureMention(TypeMention.getTypeMentionParNatureActe(natureActe)))
-    : NatureMention.getAllEnumsAsOptions();
-}
+
+  let codesNaturesPourOptions: string[] = [];
+  switch (natureActe) {
+    case NatureActe.NAISSANCE:
+      codesNaturesPourOptions = natureMentionExtraitPlurilingueNaissance;
+      break;
+    case NatureActe.MARIAGE:
+      codesNaturesPourOptions = natureMentionExtraitPlurilingueMariage;
+      break;
+    default:
+      break;
+  }
+
+  return NatureMention.versOptions(
+    codesNaturesPourOptions.reduce((natures: INatureMention[], codeNature: string) => {
+      const natureMention = NatureMention.depuisCode(codeNature);
+      if (natureMention) {
+        natures.push(natureMention);
+      }
+
+      return natures;
+    }, [])
+  );
+};

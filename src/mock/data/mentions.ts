@@ -1,5 +1,5 @@
 import { IMentionAffichage } from "@model/etatcivil/acte/mention/IMentionAffichage";
-import { NatureMention } from "@model/etatcivil/enum/NatureMention";
+import { INatureMention } from "@model/etatcivil/enum/NatureMention";
 
 export const mentions = [
   {
@@ -207,18 +207,16 @@ export const mentions = [
 const natureChangementDeSexe = {
   libelle: "Changement de sexe",
   code: "11",
-  categorie: "",
   estActif: true,
   opposableAuTiers: false
-} as NatureMention;
+} as INatureMention;
 
 const natureAnnulationmariage = {
   libelle: "Annulation de mariage",
   code: "15",
-  categorie: "",
   estActif: true,
   opposableAuTiers: false
-} as NatureMention;
+} as INatureMention;
 
 export const mentionsAffichage: IMentionAffichage[] = [
   {

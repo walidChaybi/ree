@@ -1,9 +1,6 @@
+import { ReponseAppelNomenclatureTypeAlerte } from "@mock/data/nomenclatures";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import {
-  A_NE_PAS_DELIVRER,
-  DESCRIPTION_SAGA,
-  TypeAlerte
-} from "@model/etatcivil/enum/TypeAlerte";
+import { A_NE_PAS_DELIVRER, DESCRIPTION_SAGA, TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
@@ -22,28 +19,12 @@ import {
 } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuUtilEC";
 import { expect, test } from "vitest";
 
-const testsCasMultiples = <T>({
-  casOK,
-  casKO,
-  fonction
-}: {
-  casOK: T[];
-  casKO: T[];
-  fonction: (props: T) => boolean;
-}) => {
+const testsCasMultiples = <T>({ casOK, casKO, fonction }: { casOK: T[]; casKO: T[]; fonction: (props: T) => boolean }) => {
   casOK.forEach(cas => expect(fonction(cas)).toBe(true));
   casKO.forEach(cas => expect(fonction(cas)).toBe(false));
 };
 
-const testsConditionsCasMultiples = <T>({
-  casOK,
-  casKO,
-  fonction
-}: {
-  casOK: T[];
-  casKO: T[];
-  fonction: (props: T) => ErreurResult;
-}) => {
+const testsConditionsCasMultiples = <T>({ casOK, casKO, fonction }: { casOK: T[]; casKO: T[]; fonction: (props: T) => ErreurResult }) => {
   casOK.forEach(cas => {
     const { enErreur } = fonction(cas);
     expect(enErreur).toBe(true);
@@ -92,9 +73,7 @@ test("estChoixIgnorerRequete", () => {
 // Utils -----------------------------------------------------------------
 
 test("aNombreTitulairesIncoherent", () => {
-  expect(aNombreTitulairesIncoherent(NatureActe.NAISSANCE.libelle, 2)).toBe(
-    true
-  );
+  expect(aNombreTitulairesIncoherent(NatureActe.NAISSANCE.libelle, 2)).toBe(true);
   expect(aNombreTitulairesIncoherent(NatureActe.DECES.libelle, 2)).toBe(true);
   expect(aNombreTitulairesIncoherent(NatureActe.MARIAGE.libelle, 3)).toBe(true);
 });
@@ -204,17 +183,16 @@ test("choixDifferentNonDetenuEtnombreActesSelectionnesDifferentDeUnOuZero", () =
   testsConditionsCasMultiples({
     casOK,
     casKO,
-    fonction:
-      choixDifferentNonDetenuEtnombreActesSelectionnesDifferentDeUnOuZero
+    fonction: choixDifferentNonDetenuEtnombreActesSelectionnesDifferentDeUnOuZero
   });
 });
 
 test("acteAvecAlerteDeTypeANePasDelivrer OK", async () => {
-  await TypeAlerte.init();
+  TypeAlerte.init(ReponseAppelNomenclatureTypeAlerte.data);
 
   const alertes = [
     {
-      type: TypeAlerte.getEnumsAPartirType(DESCRIPTION_SAGA)[0]
+      type: TypeAlerte.listeDepuisType(DESCRIPTION_SAGA)[0]
     } as IAlerte
   ] as IAlerte[];
 
@@ -228,7 +206,7 @@ test("acteAvecAlerteDeTypeANePasDelivrer OK", async () => {
 
   const alertesANePasDelivrer = [
     {
-      type: TypeAlerte.getEnumsAPartirType(A_NE_PAS_DELIVRER)[0]
+      type: TypeAlerte.listeDepuisType(A_NE_PAS_DELIVRER)[0]
     } as IAlerte
   ] as IAlerte[];
 
@@ -240,4 +218,3 @@ test("acteAvecAlerteDeTypeANePasDelivrer OK", async () => {
     }
   });
 });
-

@@ -1,4 +1,4 @@
-import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
+import { ITypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 
 export const ReponseAppelGetAlertesActe = {
@@ -14,6 +14,7 @@ export const ReponseAppelGetAlertesActe = {
         idActe: "b41079a5-9e8d-478c-b04c-c4c2ac67134f",
         numeroActe: "737",
         numeroBisTerActe: "55",
+        idTypeAlerte: "058a436b-330d-4c3c-83e0-d49c27390aaf",
         famille: "AR3",
         pocopa: "SEOUL",
         annee: 1986,
@@ -34,8 +35,7 @@ export const ReponseAppelGetAlertesActe = {
         annee: 1986,
         support1: "support 1",
         support2: "support 2",
-        complementDescription:
-          "alerte générée automatiquement par l'outil RECE",
+        complementDescription: "alerte générée automatiquement par l'outil RECE",
         dateCreation: 1552863600000,
         idUtilisateur: "RECE"
       }
@@ -71,7 +71,7 @@ export const Alertes: IAlerte[] = [
   {
     id: "ee63de49-0a32-4086-9a98-03a846a790e4",
     idActe: "ee63e3c9-3636-4071-a511-e9e599580606",
-    type: { type: "A ne pas délivrer" } as TypeAlerte,
+    type: { type: "A ne pas délivrer" } as ITypeAlerte,
     famille: "AR3",
     pocopa: "SEOUL",
     annee: "1986",
@@ -79,8 +79,7 @@ export const Alertes: IAlerte[] = [
     support2: "support 2",
     numeroActe: "737",
     numeroBisTerActe: "55",
-    description:
-      "A ne pas délivrer Extraénité des époux, dossier au parquet en cours",
+    description: "A ne pas délivrer Extraénité des époux, dossier au parquet en cours",
     complementDescription: "alerte générée par l'utilisateur",
     idUtilisateur: "trigrammeConnectedUser",
     dateCreationStr: "18/03/2021",
@@ -89,7 +88,7 @@ export const Alertes: IAlerte[] = [
   {
     id: "ee737531-a7ed-4218-aba9-d8fc54bf5376",
     idActe: "ee63e3c9-3636-4071-a511-e9e599580606",
-    type: { type: "A délivrer sous conditions" } as TypeAlerte,
+    type: { type: "A délivrer sous conditions" } as ITypeAlerte,
     famille: "AR3",
     pocopa: "SEOUL",
     annee: "1986",
@@ -97,8 +96,7 @@ export const Alertes: IAlerte[] = [
     support2: "support 2",
     numeroActe: "737",
     numeroBisTerActe: "55",
-    description:
-      "A délivrer sous conditions Acte comportant une mention de désaveu de paternité",
+    description: "A délivrer sous conditions Acte comportant une mention de désaveu de paternité",
     complementDescription: "alerte générée automatiquement par l'outil RECE",
     idUtilisateur: "MLA",
     dateCreationStr: "18/03/2019",

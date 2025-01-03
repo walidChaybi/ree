@@ -1,5 +1,3 @@
-import { peuplePopinSignature } from "@api/nomenclature/NomenclatureEtatcivil";
-
 const POPIN_SIGNATURE_MENTION = "POPIN_SIGNATURE_MENTION";
 const POPIN_SIGNATURE_ACTE = "POPIN_SIGNATURE_ACTE";
 
@@ -15,35 +13,21 @@ export interface ITypePopinSignature {
 }
 
 export class TypePopinSignature {
-  private static typePopinsSignature: ITypePopinSignature[] = [];
+  private static liste: ITypePopinSignature[] | null = null;
 
-  public static contientEnums() {
-    return this.typePopinsSignature.length > 0;
-  }
+  public static init(popinsSignature: ITypePopinSignature[]) {
+    if (TypePopinSignature.liste !== null) {
+      return;
+    }
 
-  public static async init() {
-    await peuplePopinSignature();
-  }
-
-  public static ajouteTypePopinSignature(
-    typePopinSignature: ITypePopinSignature
-  ) {
-    this.typePopinsSignature.push(typePopinSignature);
-  }
-
-  public static clean() {
-    this.typePopinsSignature = [];
+    TypePopinSignature.liste = popinsSignature;
   }
 
   public static getTextePopinSignatureActe(): string | undefined {
-    return this.typePopinsSignature.find(
-      el => el.sousType === POPIN_SIGNATURE_ACTE
-    )?.description;
+    return TypePopinSignature.liste?.find(el => el.sousType === POPIN_SIGNATURE_ACTE)?.description;
   }
 
   public static getTextePopinSignatureMentions(): string | undefined {
-    return this.typePopinsSignature.find(
-      el => el.sousType === POPIN_SIGNATURE_MENTION
-    )?.description;
+    return TypePopinSignature.liste?.find(el => el.sousType === POPIN_SIGNATURE_MENTION)?.description;
   }
 }

@@ -1,7 +1,5 @@
 import { IMentionAffichage } from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { NatureMention } from "@model/etatcivil/enum/NatureMention";
-import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { SelectRece } from "@widget/formulaire/champsSaisie/SelectField";
 import React from "react";
 import { getOptionsMentions } from "../GestionMentionsUtil";
@@ -25,25 +23,21 @@ export const AjoutMention: React.FC<AjoutMentionProps> = ({
 }) => {
   return (
     <div className="FormMention Ajout">
-      <h3>{getLibelle("Ajout d'une mention")}</h3>
+      <h3>{"Ajout d'une mention"}</h3>
       <div className="SelectAjout">
         <span className="SelectNature">
-          <label>{getLibelle("Nature mention")}</label>
+          <label>{"Nature mention"}</label>
           <SelectRece
             options={getOptionsMentions(estExtraitPlurilingue, natureActe)}
             placeholder="Nature ajoutée"
-            value={NatureMention.getUuidFromNature(mentionAjout?.nature)}
+            value={mentionAjout?.nature?.id ?? ""}
             onChange={handleAjoutSelect}
             ariaLabel="Nature ajoutée"
           />
         </span>
         <span className="ConteneurBouton">
           <button
-            disabled={
-              !mentionAjout ||
-              mentionAjout.texte === "" ||
-              mentionAjout.nature === NatureMention.getEnumFor("")
-            }
+            disabled={!mentionAjout || mentionAjout.texte === "" || !mentionAjout.nature?.id}
             onClick={handleAjoutMention}
             title="Ajouter la mention"
           >
@@ -52,10 +46,10 @@ export const AjoutMention: React.FC<AjoutMentionProps> = ({
         </span>
       </div>
       <textarea
-        value={getValeurOuVide(mentionAjout?.texte)}
+        value={mentionAjout?.texte ?? ""}
         onChange={handleAjoutTexte}
         placeholder="Texte mention à ajouter"
-        disabled={estExtraitPlurilingue && !Boolean(mentionAjout?.nature)}
+        disabled={estExtraitPlurilingue && !mentionAjout?.nature}
       />
     </div>
   );

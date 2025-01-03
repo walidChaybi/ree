@@ -1,141 +1,141 @@
+import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
+import { NATURE_MENTION } from "@mock/data/NomenclatureNatureMention";
+import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
 import { IMention, Mention } from "@model/etatcivil/acte/mention/IMention";
+import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { NatureMention } from "@model/etatcivil/enum/NatureMention";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import {
-  CODE_EXTRAIT_AVEC_FILIATION,
-  CODE_EXTRAIT_SANS_FILIATION
-} from "@model/requete/enum/DocumentDelivranceConstante";
-import { expect, test } from "vitest";
+import { INatureMention, NatureMention } from "@model/etatcivil/enum/NatureMention";
+import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { describe, expect, test } from "vitest";
 
+describe("Test de IMention", () => {
+  DocumentDelivrance.init(DOCUMENT_DELIVRANCE);
+  NatureMention.init(NATURE_MENTION);
+  TypeMention.init(TYPE_MENTION);
 
+  test("test getTexte", () => {
+    const mention = {
+      textes: {
+        texteMention: "texteMention",
+        texteApposition: "texteApposition"
+      },
+      typeMention: {
+        natureMention: {
+          code: "5",
+          libelle: "Divorce",
+          estActif: true,
+          opposableAuTiers: true
+        } as INatureMention
+      }
+    } as IMention;
 
+    expect(Mention.getTexteExtrait(mention)).toBe("texteMention texteApposition");
 
-test("test getTexte", () => {
-  const mention = {
-    textes: {
-      texteMention: "texteMention",
-      texteApposition: "texteApposition"
-    },
-    typeMention: {
-      natureMention: {
+    mention.textes.texteMentionDelivrance = "texteMentionDelivrance";
+
+    expect(Mention.getTexteExtrait(mention)).toBe("texteMentionDelivrance");
+  });
+
+  test("Attendu: ilExisteUneMentionInterdite fonctionne correctement", () => {
+    const mentionsAutorisees: INatureMention[] = [
+      {
         code: "5",
-        libelle: "Divorce",
-        estActif: true,
-        opposableAuTiers: true,
-        categorie: undefined
-      } as NatureMention
-    }
-  } as IMention;
+        libelle: "Divorce"
+      } as INatureMention,
+      {
+        code: "14",
+        libelle: "Pupille"
+      } as INatureMention,
+      {
+        code: "26",
+        libelle: "Acte héritier"
+      } as INatureMention
+    ];
 
-  expect(Mention.getTexteExtrait(mention)).toBe("texteMention texteApposition");
+    const mentionsAvecUneMentionAnnulationMariage: INatureMention[] = [
+      {
+        code: "5",
+        libelle: "Divorce"
+      } as INatureMention,
+      {
+        code: "15",
+        libelle: "Annulation mariage"
+      } as INatureMention,
+      {
+        code: "26",
+        libelle: "Acte héritier"
+      } as INatureMention
+    ];
 
-  mention.textes.texteMentionDelivrance = "texteMentionDelivrance";
+    const mentionsAvecUneMentionNationalite: INatureMention[] = [
+      {
+        code: "5",
+        libelle: "Divorce"
+      } as INatureMention,
+      {
+        code: "8",
+        libelle: "Nationalité"
+      } as INatureMention,
+      {
+        code: "26",
+        libelle: "Acte héritier"
+      } as INatureMention
+    ];
 
-  expect(Mention.getTexteExtrait(mention)).toBe("texteMentionDelivrance");
+    expect(
+      NatureMention.ilExisteUneMentionInterdite(
+        mentionsAutorisees,
+        NatureActe.MARIAGE,
+        DocumentDelivrance.depuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION)
+      )
+    ).toBeFalsy();
+
+    expect(
+      NatureMention.ilExisteUneMentionInterdite(
+        mentionsAvecUneMentionAnnulationMariage,
+        NatureActe.MARIAGE,
+        DocumentDelivrance.depuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION)
+      )
+    ).toBeTruthy();
+
+    expect(
+      NatureMention.ilExisteUneMentionInterdite(
+        mentionsAvecUneMentionAnnulationMariage,
+        NatureActe.MARIAGE,
+        DocumentDelivrance.depuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_SANS_FILIATION)
+      )
+    ).toBeTruthy();
+
+    expect(
+      NatureMention.ilExisteUneMentionInterdite(
+        mentionsAvecUneMentionAnnulationMariage,
+        NatureActe.NAISSANCE,
+        DocumentDelivrance.depuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION)
+      )
+    ).toBeTruthy();
+
+    expect(
+      NatureMention.ilExisteUneMentionInterdite(
+        mentionsAvecUneMentionAnnulationMariage,
+        NatureActe.NAISSANCE,
+        DocumentDelivrance.depuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_SANS_FILIATION)
+      )
+    ).toBeTruthy();
+
+    expect(
+      NatureMention.ilExisteUneMentionInterdite(
+        mentionsAvecUneMentionNationalite,
+        NatureActe.NAISSANCE,
+        DocumentDelivrance.depuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION)
+      )
+    ).toBeFalsy();
+
+    expect(
+      NatureMention.ilExisteUneMentionInterdite(
+        mentionsAvecUneMentionNationalite,
+        NatureActe.NAISSANCE,
+        DocumentDelivrance.depuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_SANS_FILIATION)
+      )
+    ).toBeTruthy();
+  });
 });
-
-test("Attendu: ilExisteUneMentionInterdite fonctionne correctement", () => {
-  const mentionsAutorisees: NatureMention[] = [
-    {
-      code: "5",
-      libelle: "Divorce"
-    } as NatureMention,
-    {
-      code: "14",
-      libelle: "Pupille"
-    } as NatureMention,
-    {
-      code: "26",
-      libelle: "Acte héritier"
-    } as NatureMention
-  ];
-
-  const mentionsAvecUneMentionAnnulationMariage: NatureMention[] = [
-    {
-      code: "5",
-      libelle: "Divorce"
-    } as NatureMention,
-    {
-      code: "15",
-      libelle: "Annulation mariage"
-    } as NatureMention,
-    {
-      code: "26",
-      libelle: "Acte héritier"
-    } as NatureMention
-  ];
-
-  const mentionsAvecUneMentionNationalite: NatureMention[] = [
-    {
-      code: "5",
-      libelle: "Divorce"
-    } as NatureMention,
-    {
-      code: "8",
-      libelle: "Nationalité"
-    } as NatureMention,
-    {
-      code: "26",
-      libelle: "Acte héritier"
-    } as NatureMention
-  ];
-
-  expect(
-    NatureMention.ilExisteUneMentionInterdite(
-      mentionsAutorisees,
-      NatureActe.MARIAGE,
-      DocumentDelivrance.getEnumForCode(CODE_EXTRAIT_AVEC_FILIATION)
-    )
-  ).toBeFalsy();
-
-  expect(
-    NatureMention.ilExisteUneMentionInterdite(
-      mentionsAvecUneMentionAnnulationMariage,
-      NatureActe.MARIAGE,
-      DocumentDelivrance.getEnumForCode(CODE_EXTRAIT_AVEC_FILIATION)
-    )
-  ).toBeTruthy();
-
-  expect(
-    NatureMention.ilExisteUneMentionInterdite(
-      mentionsAvecUneMentionAnnulationMariage,
-      NatureActe.MARIAGE,
-      DocumentDelivrance.getEnumForCode(CODE_EXTRAIT_SANS_FILIATION)
-    )
-  ).toBeTruthy();
-
-  expect(
-    NatureMention.ilExisteUneMentionInterdite(
-      mentionsAvecUneMentionAnnulationMariage,
-      NatureActe.NAISSANCE,
-      DocumentDelivrance.getEnumForCode(CODE_EXTRAIT_AVEC_FILIATION)
-    )
-  ).toBeTruthy();
-
-  expect(
-    NatureMention.ilExisteUneMentionInterdite(
-      mentionsAvecUneMentionAnnulationMariage,
-      NatureActe.NAISSANCE,
-      DocumentDelivrance.getEnumForCode(CODE_EXTRAIT_SANS_FILIATION)
-    )
-  ).toBeTruthy();
-
-  expect(
-    NatureMention.ilExisteUneMentionInterdite(
-      mentionsAvecUneMentionNationalite,
-      NatureActe.NAISSANCE,
-      DocumentDelivrance.getEnumForCode(CODE_EXTRAIT_AVEC_FILIATION)
-    )
-  ).toBeFalsy();
-
-  expect(
-    NatureMention.ilExisteUneMentionInterdite(
-      mentionsAvecUneMentionNationalite,
-      NatureActe.NAISSANCE,
-      DocumentDelivrance.getEnumForCode(CODE_EXTRAIT_SANS_FILIATION)
-    )
-  ).toBeTruthy();
-});
-
-

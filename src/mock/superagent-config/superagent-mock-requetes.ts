@@ -264,16 +264,12 @@ export const configRequetes = [
       }
 
       // Nomenclatures requetes
-      if (match[1] === "/nomenclature/DOCUMENT_DELIVRANCE") {
-        return { data: ReponseAppelNomenclatureDocummentDelivrance.data };
-      }
-
-      if (match[1] === "/nomenclature/TYPE_PIECE_JUSTIFICATIVE") {
-        return { data: ReponseAppelNomenclatureTypePiecesJustificative.data };
-      }
-
-      if (match[1] === "/nomenclature/PAYS_SECABILITE") {
-        return { data: ReponseAppelNomenclaturePaysSecabilite.data };
+      if (match[1] === "/nomenclature/DOCUMENT_DELIVRANCE,TYPE_PIECE_JUSTIFICATIVE,PAYS_SECABILITE") {
+        return {
+          data: (ReponseAppelNomenclatureDocummentDelivrance.data as any).concat(
+            (ReponseAppelNomenclatureTypePiecesJustificative.data as any).concat(ReponseAppelNomenclaturePaysSecabilite.data)
+          )
+        };
       }
 
       if (match[1] === "/nomenclature/optioncourrier") {
@@ -689,7 +685,10 @@ export const configRequetes = [
       }
 
       // update mentions retiré et validé document
-      if (match[1] === "/documentsreponses/bbac2335-562c-4b14-96aa-4386814c02a2/mentions") {
+      if (
+        match[1] === "/documentsreponses/bbac2335-562c-4b14-96aa-4386814c02a2/mentions" ||
+        match[1] === "/documentsreponses/f63223ce-f425-441e-846c-114b0f36936d/mentions"
+      ) {
         return { data: true };
       }
 

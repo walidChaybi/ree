@@ -24,7 +24,7 @@ import {
   REQUETE,
   TEXTE,
   TEXTE_LIBRE,
-  VOIE,
+  VOIE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
@@ -32,28 +32,13 @@ import { OptionsCourrier } from "@model/requete/IOptionCourrier";
 import { Requerant } from "@model/requete/IRequerant";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import {
-  ACTE_NAISSANCE_NON_TROUVE_MARIAGE,
-  ACTE_NON_TROUVE,
-  ACTE_NON_TROUVE_ALGERIE,
-  ATTESTATION_PENSION,
-  DELIVRANCE_ACTE,
-  DELIVRANCE_ACTE_INCOMPLET,
-  DELIVRANCE_ACTE_NON_ANTHENTIQUE,
-  DIVERS,
-  INFORMATION_DIVERSES_MANQUANTE,
-  JUSTIFICATIF_REPRESENTANT_MANQUANT,
-  MANDAT_GENEALOGIQUE,
-  PROPOSITION_TRANSCRIPTION,
-  REFUS_DELIVRANCE_MARIAGE,
-} from "@model/requete/enum/DocumentDelivranceConstante";
+import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { Options } from "@util/Type";
-import { getValeurOuVide } from "@util/Utils";
 import { OptionCourrierFormDefaultValues } from "./sousFormulaires/OptionsCourrierForm";
 
 const LIMIT_ORDRE_EDITION_STANTARD = 900;
@@ -61,14 +46,14 @@ const LIMIT_ORDRE_EDITION_STANTARD = 900;
 function getTypesCourrierRequeteIncomplete(sousType: SousTypeDelivrance) {
   let typesCourrier;
   typesCourrier = [
-    DocumentDelivrance.getOptionFromCode(INFORMATION_DIVERSES_MANQUANTE), // Courrier 117
+    DocumentDelivrance.versOptionDepuisCode(ECodeDocumentDelivrance.INFORMATION_DIVERSES_MANQUANTE) // Courrier 117
   ];
 
   if (!SousTypeDelivrance.estRDDP(sousType)) {
     typesCourrier = [
       ...typesCourrier,
-      DocumentDelivrance.getOptionFromCode(MANDAT_GENEALOGIQUE), // Courrier 18
-      DocumentDelivrance.getOptionFromCode(JUSTIFICATIF_REPRESENTANT_MANQUANT), // Courrier 19]
+      DocumentDelivrance.versOptionDepuisCode(ECodeDocumentDelivrance.MANDAT_GENEALOGIQUE), // Courrier 18
+      DocumentDelivrance.versOptionDepuisCode(ECodeDocumentDelivrance.JUSTIFICATIF_REPRESENTANT_MANQUANT) // Courrier 19]
     ];
   }
 
@@ -78,26 +63,23 @@ function getTypesCourrierRequeteIncomplete(sousType: SousTypeDelivrance) {
 function getTypesCourrierActeNonDetenuAuScec(sousType: SousTypeDelivrance) {
   let typesCourrier;
   typesCourrier = [
-    DocumentDelivrance.getOptionFromCode(ACTE_NON_TROUVE), // Courrier 115
-    DocumentDelivrance.getOptionFromCode(ACTE_NON_TROUVE_ALGERIE), // Courrier 64
-    DocumentDelivrance.getOptionFromCode(ACTE_NAISSANCE_NON_TROUVE_MARIAGE), // Courrier 24
+    DocumentDelivrance.versOptionDepuisCode(ECodeDocumentDelivrance.ACTE_NON_TROUVE), // Courrier 115
+    DocumentDelivrance.versOptionDepuisCode(ECodeDocumentDelivrance.ACTE_NON_TROUVE_ALGERIE), // Courrier 64
+    DocumentDelivrance.versOptionDepuisCode(ECodeDocumentDelivrance.ACTE_NAISSANCE_NON_TROUVE_MARIAGE) // Courrier 24
   ];
 
   if (!SousTypeDelivrance.estRDDP(sousType)) {
     typesCourrier = [
       ...typesCourrier,
-      DocumentDelivrance.getOptionFromCode(ATTESTATION_PENSION), // Courrier ??
-      DocumentDelivrance.getOptionFromCode(PROPOSITION_TRANSCRIPTION), // Courrier ??
+      DocumentDelivrance.versOptionDepuisCode(ECodeDocumentDelivrance.ATTESTATION_PENSION), // Courrier ??
+      DocumentDelivrance.versOptionDepuisCode(ECodeDocumentDelivrance.PROPOSITION_TRANSCRIPTION) // Courrier ??
     ];
   }
 
   return typesCourrier;
 }
 
-export const getTypesCourrier = (
-  requete: IRequeteDelivrance,
-  acteSelected?: IResultatRMCActe[],
-): Options => {
+export const getTypesCourrier = (requete: IRequeteDelivrance, acteSelected?: IResultatRMCActe[]): Options => {
   let typesCourrier: Options = [];
   switch (requete.choixDelivrance) {
     case ChoixDelivrance.REP_SANS_DEL_EC_REQUETE_INCOMPLETE:
@@ -108,16 +90,13 @@ export const getTypesCourrier = (
       break;
     case ChoixDelivrance.REP_SANS_DEL_EC_DIVERS:
       typesCourrier = [
-        DocumentDelivrance.getOptionFromCode(DIVERS), // Courrier 17
+        DocumentDelivrance.versOptionDepuisCode(ECodeDocumentDelivrance.DIVERS) // Courrier 17
       ];
-      majOptionsPourActeNaissaneOuDecesDemande(
-        typesCourrier,
-        requete.evenement?.natureActe,
-      );
+      majOptionsPourActeNaissaneOuDecesDemande(typesCourrier, requete.evenement?.natureActe);
       break;
     case ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE:
       typesCourrier = [
-        DocumentDelivrance.getOptionFromCode(DELIVRANCE_ACTE_NON_ANTHENTIQUE), // Courrier ???
+        DocumentDelivrance.versOptionDepuisCode(ECodeDocumentDelivrance.DELIVRANCE_ACTE_NON_ANTHENTIQUE) // Courrier ???
       ];
       break;
     case ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE:
@@ -125,8 +104,8 @@ export const getTypesCourrier = (
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION:
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE:
       typesCourrier = [
-        DocumentDelivrance.getOptionFromCode(DELIVRANCE_ACTE), // Courrier 116
-        DocumentDelivrance.getOptionFromCode(DELIVRANCE_ACTE_INCOMPLET), // Courrier 50
+        DocumentDelivrance.versOptionDepuisCode(ECodeDocumentDelivrance.DELIVRANCE_ACTE), // Courrier 116
+        DocumentDelivrance.versOptionDepuisCode(ECodeDocumentDelivrance.DELIVRANCE_ACTE_INCOMPLET) // Courrier 50
       ];
       break;
     default:
@@ -135,65 +114,53 @@ export const getTypesCourrier = (
   return typesCourrier;
 };
 
-export const getDefaultValuesCourrier = (
-  requete: IRequeteDelivrance,
-): SaisieCourrier => {
+export const getDefaultValuesCourrier = (requete: IRequeteDelivrance): SaisieCourrier => {
   const documentReponse = getDocumentReponseAModifier(requete);
 
   return {
     [CHOIX_COURRIER]: {
-      [DELIVRANCE]: getValeurOuVide(requete.choixDelivrance?.libelle),
-      [COURRIER]: documentReponse?.typeDocument
-        ? documentReponse?.typeDocument
-        : getTypesCourrier(requete)[0].cle,
+      [DELIVRANCE]: requete.choixDelivrance?.libelle ?? "",
+      [COURRIER]: documentReponse?.typeDocument ? documentReponse?.typeDocument : getTypesCourrier(requete)[0].cle
     },
     [REQUERANT]: {
       [RAISON_SOCIALE]: Requerant.getRaisonSociale(requete.requerant) ?? "",
       [NOM]: Requerant.getNomUsageOuNomFamille(requete.requerant) ?? "",
-      [PRENOM]: Requerant.getPrenom(requete.requerant),
+      [PRENOM]: Requerant.getPrenom(requete.requerant)
     },
     [OPTION]: OptionCourrierFormDefaultValues,
     [TEXTE_LIBRE]: {
-      [TEXTE]: documentReponse?.texteLibreCourrier?.texte
-        ? documentReponse?.texteLibreCourrier?.texte
-        : "",
+      [TEXTE]: documentReponse?.texteLibreCourrier?.texte ? documentReponse?.texteLibreCourrier?.texte : ""
     },
     [ADRESSE]: {
-      [VOIE]: getValeurOuVide(requete.requerant.adresse?.ligne4),
-      [LIEU_DIT]: getValeurOuVide(requete.requerant.adresse?.ligne5),
-      [COMPLEMENT_DESTINATAIRE]: getValeurOuVide(
-        requete.requerant.adresse?.ligne2,
-      ),
-      [COMPLEMENT_POINT_GEO]: getValeurOuVide(
-        requete.requerant.adresse?.ligne3,
-      ),
-      [CODE_POSTAL]: getValeurOuVide(requete.requerant.adresse?.codePostal),
-      [COMMUNE]: getValeurOuVide(requete.requerant.adresse?.ville),
-      [PAYS]: getValeurOuVide(requete.requerant.adresse?.pays),
+      [VOIE]: requete.requerant.adresse?.ligne4 ?? "",
+      [LIEU_DIT]: requete.requerant.adresse?.ligne5 ?? "",
+      [COMPLEMENT_DESTINATAIRE]: requete.requerant.adresse?.ligne2 ?? "",
+      [COMPLEMENT_POINT_GEO]: requete.requerant.adresse?.ligne3 ?? "",
+      [CODE_POSTAL]: requete.requerant.adresse?.codePostal ?? "",
+      [COMMUNE]: requete.requerant.adresse?.ville ?? "",
+      [PAYS]: requete.requerant.adresse?.pays ?? "",
       [ADRESSE_COURRIEL]: "",
-      [NUMERO_TELEPHONE]: "",
+      [NUMERO_TELEPHONE]: ""
     },
     [REQUETE]: {
       [MOTIF]: requete.motif ? MotifDelivrance.getKey(requete.motif) : "",
-      [COMPLEMENT_MOTIF]: getValeurOuVide(requete.complementMotif),
-      [NB_EXEMPLAIRE]: getValeurOuVide(requete.nbExemplaireImpression),
+      [COMPLEMENT_MOTIF]: requete.complementMotif ?? "",
+      [NB_EXEMPLAIRE]: requete.nbExemplaireImpression ?? 0,
       [NATURE_ACTE]: "",
-      [DOCUMENT_DEMANDE]: DocumentDelivrance.getCopieIntegraleUUID(),
-    },
+      [DOCUMENT_DEMANDE]: DocumentDelivrance.getCopieIntegraleUUID()
+    }
   };
 };
 
 export function courrierExiste(requete: IRequeteDelivrance): boolean {
-  return requete.documentsReponses.some((element) => {
+  return requete.documentsReponses.some(element => {
     return DocumentDelivrance.estCourrierDelivranceEC(element.typeDocument);
   });
 }
 
-export function getDocumentReponseAModifier(
-  requete: IRequeteDelivrance,
-): IDocumentReponse | undefined {
+export function getDocumentReponseAModifier(requete: IRequeteDelivrance): IDocumentReponse | undefined {
   let doc: IDocumentReponse | undefined = undefined;
-  requete.documentsReponses.forEach((element) => {
+  requete.documentsReponses.forEach(element => {
     if (DocumentDelivrance.estCourrierDelivranceEC(element.typeDocument)) {
       doc = element;
     }
@@ -201,17 +168,10 @@ export function getDocumentReponseAModifier(
   return doc;
 }
 
-function majOptionsPourActeNaissaneOuDecesDemande(
-  typesCourrier: Options,
-  natureActeRequete?: NatureActeRequete,
-) {
-  if (
-    natureActeRequete &&
-    natureActeRequete !== NatureActeRequete.NAISSANCE &&
-    natureActeRequete !== NatureActeRequete.DECES
-  ) {
+function majOptionsPourActeNaissaneOuDecesDemande(typesCourrier: Options, natureActeRequete?: NatureActeRequete) {
+  if (natureActeRequete && natureActeRequete !== NatureActeRequete.NAISSANCE && natureActeRequete !== NatureActeRequete.DECES) {
     typesCourrier.push(
-      DocumentDelivrance.getOptionFromCode(REFUS_DELIVRANCE_MARIAGE), // ???
+      DocumentDelivrance.versOptionDepuisCode(ECodeDocumentDelivrance.REFUS_DELIVRANCE_MARIAGE) // ???
     );
   }
 }
@@ -219,27 +179,19 @@ function majOptionsPourActeNaissaneOuDecesDemande(
 export function controleFormulaire(
   saisieCourrier: SaisieCourrier | undefined,
   optionsChoisies: OptionsCourrier,
-  setMessageBloquant: (message: string) => void,
+  setMessageBloquant: (message: string) => void
 ) {
   switch (saisieCourrier?.[CHOIX_COURRIER][COURRIER]) {
-    case DocumentDelivrance.getKeyForCode(DELIVRANCE_ACTE_INCOMPLET):
-    case DocumentDelivrance.getKeyForCode(INFORMATION_DIVERSES_MANQUANTE):
-    case DocumentDelivrance.getKeyForCode(ACTE_NON_TROUVE_ALGERIE):
-    case DocumentDelivrance.getKeyForCode(PROPOSITION_TRANSCRIPTION):
-    case DocumentDelivrance.getKeyForCode(REFUS_DELIVRANCE_MARIAGE):
-    case DocumentDelivrance.getKeyForCode(ATTESTATION_PENSION):
-    case DocumentDelivrance.getKeyForCode(ACTE_NON_TROUVE):
-      return controleActeNonTrouve(
-        saisieCourrier,
-        optionsChoisies,
-        setMessageBloquant,
-      );
-    case DocumentDelivrance.getKeyForCode(DIVERS):
-      return controleDivers(
-        saisieCourrier,
-        optionsChoisies,
-        setMessageBloquant,
-      );
+    case DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.DELIVRANCE_ACTE_INCOMPLET):
+    case DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.INFORMATION_DIVERSES_MANQUANTE):
+    case DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.ACTE_NON_TROUVE_ALGERIE):
+    case DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.PROPOSITION_TRANSCRIPTION):
+    case DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.REFUS_DELIVRANCE_MARIAGE):
+    case DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.ATTESTATION_PENSION):
+    case DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.ACTE_NON_TROUVE):
+      return controleActeNonTrouve(saisieCourrier, optionsChoisies, setMessageBloquant);
+    case DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.DIVERS):
+      return controleDivers(saisieCourrier, optionsChoisies, setMessageBloquant);
     default:
       return true;
   }
@@ -248,35 +200,27 @@ export function controleFormulaire(
 function controleActeNonTrouve(
   saisieCourrier: SaisieCourrier,
   optionsChoisies: OptionsCourrier,
-  setMessageBloquant: (message: string) => void,
+  setMessageBloquant: (message: string) => void
 ) {
   if (
-    optionsChoisies.filter((option) => {
+    optionsChoisies.filter(option => {
       return option.ordreEdition < LIMIT_ORDRE_EDITION_STANTARD;
     }).length === 0
   ) {
-    setMessageBloquant(
-      "Le choix d'une option standard est obligatoire pour ce courrier",
-    );
+    setMessageBloquant("Le choix d'une option standard est obligatoire pour ce courrier");
     return false;
   }
   return true;
 }
 
-function controleDivers(
-  saisieCourrier: SaisieCourrier,
-  optionsChoisies: OptionsCourrier,
-  setMessageBloquant: (message: string) => void,
-) {
+function controleDivers(saisieCourrier: SaisieCourrier, optionsChoisies: OptionsCourrier, setMessageBloquant: (message: string) => void) {
   if (
-    optionsChoisies.filter((option) => {
+    optionsChoisies.filter(option => {
       return option.ordreEdition < LIMIT_ORDRE_EDITION_STANTARD;
     }).length === 0 &&
     saisieCourrier[TEXTE_LIBRE][TEXTE].length === 0
   ) {
-    setMessageBloquant(
-      "Le choix d'une option standard ou la saisie d'un texte libre est obligatoire pour ce courrier",
-    );
+    setMessageBloquant("Le choix d'une option standard ou la saisie d'un texte libre est obligatoire pour ce courrier");
     return false;
   }
   return true;

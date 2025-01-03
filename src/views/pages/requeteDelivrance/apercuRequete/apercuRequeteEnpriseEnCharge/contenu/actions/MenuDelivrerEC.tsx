@@ -1,7 +1,4 @@
-import {
-  ICreerCourrierECParams,
-  useCreerCourrierEC
-} from "@hook/requete/creerCourrierECHook";
+import { ICreerCourrierECParams, useCreerCourrierEC } from "@hook/requete/creerCourrierECHook";
 import { IActionOption } from "@model/requete/IActionOption";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
@@ -9,13 +6,10 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
-import { estRenseigne, getLibelle } from "@util/Utils";
+import { estRenseigne } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
-import {
-  ConfirmationPopin,
-  IBoutonPopin
-} from "@widget/popin/ConfirmationPopin";
+import { ConfirmationPopin, IBoutonPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DocumentEC } from "../../../../../../../model/requete/enum/DocumentEC";
@@ -28,10 +22,7 @@ import {
   getOptionsMenuDelivrer,
   redirection
 } from "./MenuUtilEC";
-import {
-  UpdateChoixDelivranceProps,
-  useUpdateChoixDelivrance
-} from "./hook/UpdateChoixDelivranceApiHook";
+import { UpdateChoixDelivranceProps, useUpdateChoixDelivrance } from "./hook/UpdateChoixDelivranceApiHook";
 
 export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
   const navigate = useNavigate();
@@ -40,16 +31,12 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [actes, setActes] = useState<IResultatRMCActe[] | undefined>();
-  const [inscriptions, setInscriptions] = useState<
-    IResultatRMCInscription[] | undefined
-  >();
+  const [inscriptions, setInscriptions] = useState<IResultatRMCInscription[] | undefined>();
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
   const [choixDelivrance, setChoixDelivrance] = useState<ChoixDelivrance>();
-  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] =
-    useState<UpdateChoixDelivranceProps>();
-  const [courrierEcParams, setCourrierEcParams] =
-    useState<ICreerCourrierECParams>();
+  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] = useState<UpdateChoixDelivranceProps>();
+  const [courrierEcParams, setCourrierEcParams] = useState<ICreerCourrierECParams>();
 
   useCreerCourrierEC(courrierEcParams);
 
@@ -59,9 +46,7 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
   }, [props.actes, props.inscriptions]);
 
   // 1 - Mise à jour du choix delivrance
-  const updateChoixDelivranceResultat = useUpdateChoixDelivrance(
-    paramUpdateChoixDelivrance
-  );
+  const updateChoixDelivranceResultat = useUpdateChoixDelivrance(paramUpdateChoixDelivrance);
 
   const redirectionCallback = useCallback(
     (index: DocumentEC) => {
@@ -77,12 +62,7 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
   );
 
   // 2 - Récuperer les options pour la génération du courrier auto
-  const options = useOptionsCourriersApiHook(
-    DocumentDelivrance.getDocumentDelivrance(
-      getIdCourrierAuto(choixDelivrance)
-    ),
-    props.requete
-  );
+  const options = useOptionsCourriersApiHook(DocumentDelivrance.depuisId(getIdCourrierAuto(choixDelivrance)), props.requete);
 
   // 2bis - Création des paramètre pour la génération du courrier auto
   useEffect(() => {
@@ -91,9 +71,7 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
       updateChoixDelivranceResultat?.idRequete &&
       choixDelivrance &&
       options &&
-      SousTypeDelivrance.estSousTypeCreationCourrierAutomatique(
-        props.requete.sousType
-      )
+      SousTypeDelivrance.estSousTypeCreationCourrierAutomatique(props.requete.sousType)
     ) {
       const requeteAvecChoixDelivrance = {
         ...props.requete,
@@ -101,11 +79,7 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
       };
       setOperationEnCours(true);
       setCourrierEcParams({
-        ...compositionCourrierAutomatique(
-          choixDelivrance,
-          options,
-          props.requete
-        ),
+        ...compositionCourrierAutomatique(choixDelivrance, options, props.requete),
         requete: requeteAvecChoixDelivrance,
         idActe: actes[0]?.idActe,
         handleDocumentEnregistre: redirectionCallback,
@@ -148,22 +122,12 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
 
   // La mise à jour du choix de délivrance et du statut ont été effectués
   useEffect(() => {
-    if (
-      updateChoixDelivranceResultat?.idRequete &&
-      props.requete.sousType === SousTypeDelivrance.RDC
-    ) {
+    if (updateChoixDelivranceResultat?.idRequete && props.requete.sousType === SousTypeDelivrance.RDC) {
       redirectionCallback(DocumentEC.Courrier);
     }
-  }, [
-    updateChoixDelivranceResultat,
-    redirectionCallback,
-    props.requete.sousType
-  ]);
+  }, [updateChoixDelivranceResultat, redirectionCallback, props.requete.sousType]);
 
-  const actions = filtrerListeActionsParSousTypes(
-    props.requete,
-    delivrerOptions
-  );
+  const actions = filtrerListeActionsParSousTypes(props.requete, delivrerOptions);
 
   return (
     <>
@@ -173,7 +137,7 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
         onClick={() => setOperationEnCours(false)}
       />
       <GroupeBouton
-        titre={getLibelle("Délivrer")}
+        titre={"Délivrer"}
         listeActions={actions}
         onSelect={handleDelivrerMenu}
         refs={refs}

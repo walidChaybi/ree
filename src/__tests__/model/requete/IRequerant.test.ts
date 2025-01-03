@@ -4,286 +4,31 @@ import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
 import { Requerant } from "@model/requete/IRequerant";
 import { mappingRequeteDelivranceVersFormulaireRDCSC } from "@pages/requeteDelivrance/saisirRequete/hook/mappingRequeteDelivranceVersFormulaireRDCSC";
-import { expect, test } from "vitest";
-test("Attendu: Requerant.setRequerant mandataire", () => {
-  const qualiteMandataire = {
-    qualite: Qualite.MANDATAIRE_HABILITE,
-    mandataireHabilite: {
-      type: TypeMandataireReq.NOTAIRE,
-      raisonSociale: "Maître Duflan",
-      nature: ""
-    }
-  };
-  requeteDelivrance.requerant.qualiteRequerant = qualiteMandataire;
-  const saisieRequeteRdcsc =
-    mappingRequeteDelivranceVersFormulaireRDCSC(requeteDelivrance);
+import { describe, expect, test } from "vitest";
 
-  const attendu = {
-    document: "9a51eeaa-df69-46bc-b03b-735eb84197f8",
-    titulaires: {
-      titulaire1: {
-        noms: {
-          nomNaissance: "Prodesk",
-          nomUsage: ""
-        },
-        prenoms: {
-          prenom1: "Elodie",
-          prenom2: "",
-          prenom3: "",
-          prenom4: "",
-          prenom5: "",
-          prenom6: "",
-          prenom7: "",
-          prenom8: "",
-          prenom9: "",
-          prenom10: "",
-          prenom11: "",
-          prenom12: "",
-          prenom13: "",
-          prenom14: "",
-          prenom15: ""
-        },
-        sexe: "FEMININ",
-        naissance: {
-          dateEvenement: {
-            jour: 25,
-            mois: 6,
-            annee: 1990
-          },
-          villeEvenement: "Barcelone",
-          paysEvenement: "Espagne"
-        },
-        nationalite: "ETRANGERE",
-        parent1: {
-          nomNaissance: "",
-          prenoms: {
-            prenom1: "",
-            prenom2: "",
-            prenom3: "",
-            prenom4: "",
-            prenom5: "",
-            prenom6: "",
-            prenom7: "",
-            prenom8: "",
-            prenom9: "",
-            prenom10: "",
-            prenom11: "",
-            prenom12: "",
-            prenom13: "",
-            prenom14: "",
-            prenom15: ""
-          }
-        },
-        parent2: {
-          nomNaissance: "",
-          prenoms: {
-            prenom1: "",
-            prenom2: "",
-            prenom3: "",
-            prenom4: "",
-            prenom5: "",
-            prenom6: "",
-            prenom7: "",
-            prenom8: "",
-            prenom9: "",
-            prenom10: "",
-            prenom11: "",
-            prenom12: "",
-            prenom13: "",
-            prenom14: "",
-            prenom15: ""
-          }
-        }
-      },
-      titulaire2: {
-        noms: {
-          nomNaissance: "",
-          nomUsage: ""
-        },
-        prenoms: {
-          prenom1: "",
-          prenom2: "",
-          prenom3: "",
-          prenom4: "",
-          prenom5: "",
-          prenom6: "",
-          prenom7: "",
-          prenom8: "",
-          prenom9: "",
-          prenom10: "",
-          prenom11: "",
-          prenom12: "",
-          prenom13: "",
-          prenom14: "",
-          prenom15: ""
-        },
-        sexe: "INCONNU",
-        naissance: {
-          dateEvenement: {
-            jour: "",
-            mois: "",
-            annee: ""
-          },
-          villeEvenement: "",
-          paysEvenement: ""
-        },
-        nationalite: "ETRANGERE",
-        parent1: {
-          nomNaissance: "",
-          prenoms: {
-            prenom1: "",
-            prenom2: "",
-            prenom3: "",
-            prenom4: "",
-            prenom5: "",
-            prenom6: "",
-            prenom7: "",
-            prenom8: "",
-            prenom9: "",
-            prenom10: "",
-            prenom11: "",
-            prenom12: "",
-            prenom13: "",
-            prenom14: "",
-            prenom15: ""
-          }
-        },
-        parent2: {
-          nomNaissance: "",
-          prenoms: {
-            prenom1: "",
-            prenom2: "",
-            prenom3: "",
-            prenom4: "",
-            prenom5: "",
-            prenom6: "",
-            prenom7: "",
-            prenom8: "",
-            prenom9: "",
-            prenom10: "",
-            prenom11: "",
-            prenom12: "",
-            prenom13: "",
-            prenom14: "",
-            prenom15: ""
-          }
-        }
-      }
-    },
-    requerant: {
-      typeRequerant: "MANDATAIRE",
-      mandataire: {
-        type: "NOTAIRE",
-        nature: "",
+describe("Test du bloc Postulant de l'onglet Postulant", () => {
+  test("Attendu: Requerant.setRequerant mandataire", () => {
+    const qualiteMandataire = {
+      qualite: Qualite.MANDATAIRE_HABILITE,
+      mandataireHabilite: {
+        type: TypeMandataireReq.NOTAIRE,
         raisonSociale: "Maître Duflan",
-        nom: "RUIZ",
-        prenom: "Paul"
-      },
-      institutionnel: {
-        type: "",
-        nature: "",
-        nomInstitution: "",
-        nom: "",
-        prenom: ""
-      },
-      autreProfessionnel: {
-        nature: "",
-        nom: "",
-        prenom: "",
-        raisonSociale: ""
-      },
-      particulier: {
-        nomNaissance: "",
-        nomUsage: "",
-        prenom: ""
+        nature: ""
       }
-    },
-    adresse: {
-      voie: "61 avenue Foch",
-      lieuDit: "lieu dit la martinière",
-      complementDestinataire: "Appartement 258",
-      complementPointGeo: "Batiment Z",
-      codePostal: "310 GL24",
-      commune: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
-      pays: "France",
-      adresseCourriel: "ldubois@wanadoo.fr",
-      numeroTelephone: ""
-    },
-    piecesJointes: [
-      {
-        base64File: {
-          fileName: "Jérome",
-          base64String: "",
-          taille: 0,
-          conteneurSwift: undefined,
-          identifiantSwift: undefined,
-          mimeType: "",
-          extension: undefined
-        },
-        type: {
-          cle: "00c885c9-2918-46fe-b743-798b1b90e5dd",
-          libelle: "Carte professionnelle"
-        }
-      }
-    ]
-  };
+    };
+    requeteDelivrance.requerant.qualiteRequerant = qualiteMandataire;
+    const saisieRequeteRdcsc = mappingRequeteDelivranceVersFormulaireRDCSC(requeteDelivrance);
 
-  expect(saisieRequeteRdcsc).toEqual(attendu);
-});
-
-test("Attendu: Requerant.setRequerant institutionnel", () => {
-  const qualiteInstitutionnel = {
-    qualite: Qualite.INSTITUTIONNEL,
-    institutionnel: {
-      type: TypeInstitutionnel.AMBASSADE,
-      nomInstitution: "Ambassade de France",
-      nature: ""
-    }
-  };
-  requeteDelivrance.requerant.qualiteRequerant = qualiteInstitutionnel;
-  const saisieRequeteRdcsc =
-    mappingRequeteDelivranceVersFormulaireRDCSC(requeteDelivrance);
-
-  const attendu = {
-    document: "9a51eeaa-df69-46bc-b03b-735eb84197f8",
-    titulaires: {
-      titulaire1: {
-        noms: {
-          nomNaissance: "Prodesk",
-          nomUsage: ""
-        },
-        prenoms: {
-          prenom1: "Elodie",
-          prenom2: "",
-          prenom3: "",
-          prenom4: "",
-          prenom5: "",
-          prenom6: "",
-          prenom7: "",
-          prenom8: "",
-          prenom9: "",
-          prenom10: "",
-          prenom11: "",
-          prenom12: "",
-          prenom13: "",
-          prenom14: "",
-          prenom15: ""
-        },
-        sexe: "FEMININ",
-        naissance: {
-          dateEvenement: {
-            jour: 25,
-            mois: 6,
-            annee: 1990
+    const attendu = {
+      document: "9a51eeaa-df69-46bc-b03b-735eb84197f8",
+      titulaires: {
+        titulaire1: {
+          noms: {
+            nomNaissance: "Prodesk",
+            nomUsage: ""
           },
-          villeEvenement: "Barcelone",
-          paysEvenement: "Espagne"
-        },
-        nationalite: "ETRANGERE",
-        parent1: {
-          nomNaissance: "",
           prenoms: {
-            prenom1: "",
+            prenom1: "Elodie",
             prenom2: "",
             prenom3: "",
             prenom4: "",
@@ -298,84 +43,64 @@ test("Attendu: Requerant.setRequerant institutionnel", () => {
             prenom13: "",
             prenom14: "",
             prenom15: ""
-          }
-        },
-        parent2: {
-          nomNaissance: "",
-          prenoms: {
-            prenom1: "",
-            prenom2: "",
-            prenom3: "",
-            prenom4: "",
-            prenom5: "",
-            prenom6: "",
-            prenom7: "",
-            prenom8: "",
-            prenom9: "",
-            prenom10: "",
-            prenom11: "",
-            prenom12: "",
-            prenom13: "",
-            prenom14: "",
-            prenom15: ""
-          }
-        }
-      },
-      titulaire2: {
-        noms: {
-          nomNaissance: "",
-          nomUsage: ""
-        },
-        prenoms: {
-          prenom1: "",
-          prenom2: "",
-          prenom3: "",
-          prenom4: "",
-          prenom5: "",
-          prenom6: "",
-          prenom7: "",
-          prenom8: "",
-          prenom9: "",
-          prenom10: "",
-          prenom11: "",
-          prenom12: "",
-          prenom13: "",
-          prenom14: "",
-          prenom15: ""
-        },
-        sexe: "INCONNU",
-        naissance: {
-          dateEvenement: {
-            jour: "",
-            mois: "",
-            annee: ""
           },
-          villeEvenement: "",
-          paysEvenement: ""
-        },
-        nationalite: "ETRANGERE",
-        parent1: {
-          nomNaissance: "",
-          prenoms: {
-            prenom1: "",
-            prenom2: "",
-            prenom3: "",
-            prenom4: "",
-            prenom5: "",
-            prenom6: "",
-            prenom7: "",
-            prenom8: "",
-            prenom9: "",
-            prenom10: "",
-            prenom11: "",
-            prenom12: "",
-            prenom13: "",
-            prenom14: "",
-            prenom15: ""
+          sexe: "FEMININ",
+          naissance: {
+            dateEvenement: {
+              jour: "25",
+              mois: "6",
+              annee: "1990"
+            },
+            villeEvenement: "Barcelone",
+            paysEvenement: "Espagne"
+          },
+          nationalite: "ETRANGERE",
+          parent1: {
+            nomNaissance: "",
+            prenoms: {
+              prenom1: "",
+              prenom2: "",
+              prenom3: "",
+              prenom4: "",
+              prenom5: "",
+              prenom6: "",
+              prenom7: "",
+              prenom8: "",
+              prenom9: "",
+              prenom10: "",
+              prenom11: "",
+              prenom12: "",
+              prenom13: "",
+              prenom14: "",
+              prenom15: ""
+            }
+          },
+          parent2: {
+            nomNaissance: "",
+            prenoms: {
+              prenom1: "",
+              prenom2: "",
+              prenom3: "",
+              prenom4: "",
+              prenom5: "",
+              prenom6: "",
+              prenom7: "",
+              prenom8: "",
+              prenom9: "",
+              prenom10: "",
+              prenom11: "",
+              prenom12: "",
+              prenom13: "",
+              prenom14: "",
+              prenom15: ""
+            }
           }
         },
-        parent2: {
-          nomNaissance: "",
+        titulaire2: {
+          noms: {
+            nomNaissance: "",
+            nomUsage: ""
+          },
           prenoms: {
             prenom1: "",
             prenom2: "",
@@ -392,122 +117,366 @@ test("Attendu: Requerant.setRequerant institutionnel", () => {
             prenom13: "",
             prenom14: "",
             prenom15: ""
+          },
+          sexe: "INCONNU",
+          naissance: {
+            dateEvenement: {
+              jour: "",
+              mois: "",
+              annee: ""
+            },
+            villeEvenement: "",
+            paysEvenement: ""
+          },
+          nationalite: "ETRANGERE",
+          parent1: {
+            nomNaissance: "",
+            prenoms: {
+              prenom1: "",
+              prenom2: "",
+              prenom3: "",
+              prenom4: "",
+              prenom5: "",
+              prenom6: "",
+              prenom7: "",
+              prenom8: "",
+              prenom9: "",
+              prenom10: "",
+              prenom11: "",
+              prenom12: "",
+              prenom13: "",
+              prenom14: "",
+              prenom15: ""
+            }
+          },
+          parent2: {
+            nomNaissance: "",
+            prenoms: {
+              prenom1: "",
+              prenom2: "",
+              prenom3: "",
+              prenom4: "",
+              prenom5: "",
+              prenom6: "",
+              prenom7: "",
+              prenom8: "",
+              prenom9: "",
+              prenom10: "",
+              prenom11: "",
+              prenom12: "",
+              prenom13: "",
+              prenom14: "",
+              prenom15: ""
+            }
           }
         }
-      }
-    },
-    requerant: {
-      typeRequerant: "INSTITUTIONNEL",
-      mandataire: {
-        type: "",
-        nature: "",
-        raisonSociale: "",
-        nom: "",
-        prenom: ""
       },
+      requerant: {
+        typeRequerant: "MANDATAIRE",
+        mandataire: {
+          type: "NOTAIRE",
+          nature: "",
+          raisonSociale: "Maître Duflan",
+          nom: "RUIZ",
+          prenom: "Paul"
+        },
+        institutionnel: {
+          type: "",
+          nature: "",
+          nomInstitution: "",
+          nom: "",
+          prenom: ""
+        },
+        autreProfessionnel: {
+          nature: "",
+          nom: "",
+          prenom: "",
+          raisonSociale: ""
+        },
+        particulier: {
+          nomNaissance: "",
+          nomUsage: "",
+          prenom: ""
+        }
+      },
+      adresse: {
+        voie: "61 avenue Foch",
+        lieuDit: "lieu dit la martinière",
+        complementDestinataire: "Appartement 258",
+        complementPointGeo: "Batiment Z",
+        codePostal: "310 GL24",
+        commune: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
+        pays: "France",
+        adresseCourriel: "ldubois@wanadoo.fr",
+        numeroTelephone: ""
+      },
+      piecesJointes: [
+        {
+          base64File: {
+            fileName: "Jérome",
+            base64String: "",
+            taille: 0,
+            conteneurSwift: undefined,
+            identifiantSwift: undefined,
+            mimeType: "",
+            extension: undefined
+          },
+          type: {
+            cle: "877300ab-555a-418f-ab0d-9963610c36e2",
+            libelle: "Autorisation de consultation"
+          }
+        }
+      ]
+    };
+
+    expect(saisieRequeteRdcsc).toEqual(attendu);
+  });
+
+  test("Attendu: Requerant.setRequerant institutionnel", () => {
+    const qualiteInstitutionnel = {
+      qualite: Qualite.INSTITUTIONNEL,
       institutionnel: {
-        type: "AMBASSADE",
-        nature: "",
+        type: TypeInstitutionnel.AMBASSADE,
         nomInstitution: "Ambassade de France",
-        nom: "RUIZ",
-        prenom: "Paul"
+        nature: ""
+      }
+    };
+    requeteDelivrance.requerant.qualiteRequerant = qualiteInstitutionnel;
+    const saisieRequeteRdcsc = mappingRequeteDelivranceVersFormulaireRDCSC(requeteDelivrance);
+
+    const attendu = {
+      document: "9a51eeaa-df69-46bc-b03b-735eb84197f8",
+      titulaires: {
+        titulaire1: {
+          noms: {
+            nomNaissance: "Prodesk",
+            nomUsage: ""
+          },
+          prenoms: {
+            prenom1: "Elodie",
+            prenom2: "",
+            prenom3: "",
+            prenom4: "",
+            prenom5: "",
+            prenom6: "",
+            prenom7: "",
+            prenom8: "",
+            prenom9: "",
+            prenom10: "",
+            prenom11: "",
+            prenom12: "",
+            prenom13: "",
+            prenom14: "",
+            prenom15: ""
+          },
+          sexe: "FEMININ",
+          naissance: {
+            dateEvenement: {
+              jour: "25",
+              mois: "6",
+              annee: "1990"
+            },
+            villeEvenement: "Barcelone",
+            paysEvenement: "Espagne"
+          },
+          nationalite: "ETRANGERE",
+          parent1: {
+            nomNaissance: "",
+            prenoms: {
+              prenom1: "",
+              prenom2: "",
+              prenom3: "",
+              prenom4: "",
+              prenom5: "",
+              prenom6: "",
+              prenom7: "",
+              prenom8: "",
+              prenom9: "",
+              prenom10: "",
+              prenom11: "",
+              prenom12: "",
+              prenom13: "",
+              prenom14: "",
+              prenom15: ""
+            }
+          },
+          parent2: {
+            nomNaissance: "",
+            prenoms: {
+              prenom1: "",
+              prenom2: "",
+              prenom3: "",
+              prenom4: "",
+              prenom5: "",
+              prenom6: "",
+              prenom7: "",
+              prenom8: "",
+              prenom9: "",
+              prenom10: "",
+              prenom11: "",
+              prenom12: "",
+              prenom13: "",
+              prenom14: "",
+              prenom15: ""
+            }
+          }
+        },
+        titulaire2: {
+          noms: {
+            nomNaissance: "",
+            nomUsage: ""
+          },
+          prenoms: {
+            prenom1: "",
+            prenom2: "",
+            prenom3: "",
+            prenom4: "",
+            prenom5: "",
+            prenom6: "",
+            prenom7: "",
+            prenom8: "",
+            prenom9: "",
+            prenom10: "",
+            prenom11: "",
+            prenom12: "",
+            prenom13: "",
+            prenom14: "",
+            prenom15: ""
+          },
+          sexe: "INCONNU",
+          naissance: {
+            dateEvenement: {
+              jour: "",
+              mois: "",
+              annee: ""
+            },
+            villeEvenement: "",
+            paysEvenement: ""
+          },
+          nationalite: "ETRANGERE",
+          parent1: {
+            nomNaissance: "",
+            prenoms: {
+              prenom1: "",
+              prenom2: "",
+              prenom3: "",
+              prenom4: "",
+              prenom5: "",
+              prenom6: "",
+              prenom7: "",
+              prenom8: "",
+              prenom9: "",
+              prenom10: "",
+              prenom11: "",
+              prenom12: "",
+              prenom13: "",
+              prenom14: "",
+              prenom15: ""
+            }
+          },
+          parent2: {
+            nomNaissance: "",
+            prenoms: {
+              prenom1: "",
+              prenom2: "",
+              prenom3: "",
+              prenom4: "",
+              prenom5: "",
+              prenom6: "",
+              prenom7: "",
+              prenom8: "",
+              prenom9: "",
+              prenom10: "",
+              prenom11: "",
+              prenom12: "",
+              prenom13: "",
+              prenom14: "",
+              prenom15: ""
+            }
+          }
+        }
       },
-      autreProfessionnel: {
-        nature: "",
-        nom: "",
-        prenom: "",
-        raisonSociale: ""
+      requerant: {
+        typeRequerant: "INSTITUTIONNEL",
+        mandataire: {
+          type: "",
+          nature: "",
+          raisonSociale: "",
+          nom: "",
+          prenom: ""
+        },
+        institutionnel: {
+          type: "AMBASSADE",
+          nature: "",
+          nomInstitution: "Ambassade de France",
+          nom: "RUIZ",
+          prenom: "Paul"
+        },
+        autreProfessionnel: {
+          nature: "",
+          nom: "",
+          prenom: "",
+          raisonSociale: ""
+        },
+        particulier: {
+          nomNaissance: "",
+          nomUsage: "",
+          prenom: ""
+        }
       },
+      adresse: {
+        voie: "61 avenue Foch",
+        lieuDit: "lieu dit la martinière",
+        complementDestinataire: "Appartement 258",
+        complementPointGeo: "Batiment Z",
+        codePostal: "310 GL24",
+        commune: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
+        pays: "France",
+        adresseCourriel: "ldubois@wanadoo.fr",
+        numeroTelephone: ""
+      },
+      piecesJointes: [
+        {
+          base64File: {
+            fileName: "Jérome",
+            base64String: "",
+            taille: 0,
+            conteneurSwift: undefined,
+            identifiantSwift: undefined,
+            mimeType: "",
+            extension: undefined
+          },
+          type: {
+            cle: "877300ab-555a-418f-ab0d-9963610c36e2",
+            libelle: "Autorisation de consultation"
+          }
+        }
+      ]
+    };
+
+    expect(saisieRequeteRdcsc).toEqual(attendu);
+  });
+
+  test("Attendu: Requerant.setRequerant interessé", () => {
+    const qualiteParticulier = {
+      qualite: Qualite.PARTICULIER,
       particulier: {
-        nomNaissance: "",
-        nomUsage: "",
-        prenom: ""
+        nomUsage: ""
       }
-    },
-    adresse: {
-      voie: "61 avenue Foch",
-      lieuDit: "lieu dit la martinière",
-      complementDestinataire: "Appartement 258",
-      complementPointGeo: "Batiment Z",
-      codePostal: "310 GL24",
-      commune: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
-      pays: "France",
-      adresseCourriel: "ldubois@wanadoo.fr",
-      numeroTelephone: ""
-    },
-    piecesJointes: [
-      {
-        base64File: {
-          fileName: "Jérome",
-          base64String: "",
-          taille: 0,
-          conteneurSwift: undefined,
-          identifiantSwift: undefined,
-          mimeType: "",
-          extension: undefined
-        },
-        type: {
-          cle: "00c885c9-2918-46fe-b743-798b1b90e5dd",
-          libelle: "Carte professionnelle"
-        }
-      }
-    ]
-  };
+    };
+    requeteDelivrance.requerant.qualiteRequerant = qualiteParticulier;
+    const saisieRequeteRdcsc = mappingRequeteDelivranceVersFormulaireRDCSC(requeteDelivrance);
 
-  expect(saisieRequeteRdcsc).toEqual(attendu);
-});
-
-test("Attendu: Requerant.setRequerant interessé", () => {
-  const qualiteParticulier = {
-    qualite: Qualite.PARTICULIER,
-    particulier: {
-      nomUsage: ""
-    }
-  };
-  requeteDelivrance.requerant.qualiteRequerant = qualiteParticulier;
-  const saisieRequeteRdcsc =
-    mappingRequeteDelivranceVersFormulaireRDCSC(requeteDelivrance);
-
-  const attendu = {
-    document: "9a51eeaa-df69-46bc-b03b-735eb84197f8",
-    titulaires: {
-      titulaire1: {
-        noms: {
-          nomNaissance: "Prodesk",
-          nomUsage: ""
-        },
-        prenoms: {
-          prenom1: "Elodie",
-          prenom2: "",
-          prenom3: "",
-          prenom4: "",
-          prenom5: "",
-          prenom6: "",
-          prenom7: "",
-          prenom8: "",
-          prenom9: "",
-          prenom10: "",
-          prenom11: "",
-          prenom12: "",
-          prenom13: "",
-          prenom14: "",
-          prenom15: ""
-        },
-        sexe: "FEMININ",
-        naissance: {
-          dateEvenement: {
-            jour: 25,
-            mois: 6,
-            annee: 1990
+    const attendu = {
+      document: "9a51eeaa-df69-46bc-b03b-735eb84197f8",
+      titulaires: {
+        titulaire1: {
+          noms: {
+            nomNaissance: "Prodesk",
+            nomUsage: ""
           },
-          villeEvenement: "Barcelone",
-          paysEvenement: "Espagne"
-        },
-        nationalite: "ETRANGERE",
-        parent1: {
-          nomNaissance: "",
           prenoms: {
-            prenom1: "",
+            prenom1: "Elodie",
             prenom2: "",
             prenom3: "",
             prenom4: "",
@@ -522,10 +491,64 @@ test("Attendu: Requerant.setRequerant interessé", () => {
             prenom13: "",
             prenom14: "",
             prenom15: ""
+          },
+          sexe: "FEMININ",
+          naissance: {
+            dateEvenement: {
+              jour: "25",
+              mois: "6",
+              annee: "1990"
+            },
+            villeEvenement: "Barcelone",
+            paysEvenement: "Espagne"
+          },
+          nationalite: "ETRANGERE",
+          parent1: {
+            nomNaissance: "",
+            prenoms: {
+              prenom1: "",
+              prenom2: "",
+              prenom3: "",
+              prenom4: "",
+              prenom5: "",
+              prenom6: "",
+              prenom7: "",
+              prenom8: "",
+              prenom9: "",
+              prenom10: "",
+              prenom11: "",
+              prenom12: "",
+              prenom13: "",
+              prenom14: "",
+              prenom15: ""
+            }
+          },
+          parent2: {
+            nomNaissance: "",
+            prenoms: {
+              prenom1: "",
+              prenom2: "",
+              prenom3: "",
+              prenom4: "",
+              prenom5: "",
+              prenom6: "",
+              prenom7: "",
+              prenom8: "",
+              prenom9: "",
+              prenom10: "",
+              prenom11: "",
+              prenom12: "",
+              prenom13: "",
+              prenom14: "",
+              prenom15: ""
+            }
           }
         },
-        parent2: {
-          nomNaissance: "",
+        titulaire2: {
+          noms: {
+            nomNaissance: "",
+            nomUsage: ""
+          },
           prenoms: {
             prenom1: "",
             prenom2: "",
@@ -542,258 +565,235 @@ test("Attendu: Requerant.setRequerant interessé", () => {
             prenom13: "",
             prenom14: "",
             prenom15: ""
+          },
+          sexe: "INCONNU",
+          naissance: {
+            dateEvenement: {
+              jour: "",
+              mois: "",
+              annee: ""
+            },
+            villeEvenement: "",
+            paysEvenement: ""
+          },
+          nationalite: "ETRANGERE",
+          parent1: {
+            nomNaissance: "",
+            prenoms: {
+              prenom1: "",
+              prenom2: "",
+              prenom3: "",
+              prenom4: "",
+              prenom5: "",
+              prenom6: "",
+              prenom7: "",
+              prenom8: "",
+              prenom9: "",
+              prenom10: "",
+              prenom11: "",
+              prenom12: "",
+              prenom13: "",
+              prenom14: "",
+              prenom15: ""
+            }
+          },
+          parent2: {
+            nomNaissance: "",
+            prenoms: {
+              prenom1: "",
+              prenom2: "",
+              prenom3: "",
+              prenom4: "",
+              prenom5: "",
+              prenom6: "",
+              prenom7: "",
+              prenom8: "",
+              prenom9: "",
+              prenom10: "",
+              prenom11: "",
+              prenom12: "",
+              prenom13: "",
+              prenom14: "",
+              prenom15: ""
+            }
           }
         }
       },
-      titulaire2: {
-        noms: {
-          nomNaissance: "",
-          nomUsage: ""
+      requerant: {
+        typeRequerant: "PARTICULIER",
+        mandataire: {
+          type: "",
+          nature: "",
+          raisonSociale: "",
+          nom: "",
+          prenom: ""
         },
-        prenoms: {
-          prenom1: "",
-          prenom2: "",
-          prenom3: "",
-          prenom4: "",
-          prenom5: "",
-          prenom6: "",
-          prenom7: "",
-          prenom8: "",
-          prenom9: "",
-          prenom10: "",
-          prenom11: "",
-          prenom12: "",
-          prenom13: "",
-          prenom14: "",
-          prenom15: ""
+        institutionnel: {
+          type: "",
+          nature: "",
+          nomInstitution: "",
+          nom: "",
+          prenom: ""
         },
-        sexe: "INCONNU",
-        naissance: {
-          dateEvenement: {
-            jour: "",
-            mois: "",
-            annee: ""
+        autreProfessionnel: {
+          nature: "",
+          nom: "",
+          prenom: "",
+          raisonSociale: ""
+        },
+        particulier: {
+          nomNaissance: "RUIZ",
+          nomUsage: "",
+          prenom: "Paul"
+        }
+      },
+      adresse: {
+        voie: "61 avenue Foch",
+        lieuDit: "lieu dit la martinière",
+        complementDestinataire: "Appartement 258",
+        complementPointGeo: "Batiment Z",
+        codePostal: "310 GL24",
+        commune: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
+        pays: "France",
+        adresseCourriel: "ldubois@wanadoo.fr",
+        numeroTelephone: ""
+      },
+      piecesJointes: [
+        {
+          base64File: {
+            fileName: "Jérome",
+            base64String: "",
+            taille: 0,
+            conteneurSwift: undefined,
+            identifiantSwift: undefined,
+            mimeType: "",
+            extension: undefined
           },
-          villeEvenement: "",
-          paysEvenement: ""
-        },
-        nationalite: "ETRANGERE",
-        parent1: {
-          nomNaissance: "",
-          prenoms: {
-            prenom1: "",
-            prenom2: "",
-            prenom3: "",
-            prenom4: "",
-            prenom5: "",
-            prenom6: "",
-            prenom7: "",
-            prenom8: "",
-            prenom9: "",
-            prenom10: "",
-            prenom11: "",
-            prenom12: "",
-            prenom13: "",
-            prenom14: "",
-            prenom15: ""
-          }
-        },
-        parent2: {
-          nomNaissance: "",
-          prenoms: {
-            prenom1: "",
-            prenom2: "",
-            prenom3: "",
-            prenom4: "",
-            prenom5: "",
-            prenom6: "",
-            prenom7: "",
-            prenom8: "",
-            prenom9: "",
-            prenom10: "",
-            prenom11: "",
-            prenom12: "",
-            prenom13: "",
-            prenom14: "",
-            prenom15: ""
+          type: {
+            cle: "877300ab-555a-418f-ab0d-9963610c36e2",
+            libelle: "Autorisation de consultation"
           }
         }
+      ]
+    };
+
+    expect(saisieRequeteRdcsc).toEqual(attendu);
+  });
+
+  test("Attendu: Requerant.organiserRequerant autreProfessionnel", () => {
+    const qualiteAutreProfessionnel = {
+      qualite: Qualite.AUTRE_PROFESSIONNEL,
+      autreProfessionnel: {
+        raisonSociale: "otherPro",
+        nature: ""
       }
-    },
-    requerant: {
-      typeRequerant: "PARTICULIER",
-      mandataire: {
-        type: "",
-        nature: "",
-        raisonSociale: "",
-        nom: "",
-        prenom: ""
-      },
+    };
+    requeteDelivrance.requerant.qualiteRequerant = qualiteAutreProfessionnel;
+
+    const identiteAttendue = {
+      ligne1: "OTHERPRO",
+      ligne2: "PAUL RUIZ"
+    };
+
+    const requerant = Requerant.composerIdentite(requeteDelivrance.requerant);
+
+    expect(requerant).toEqual(identiteAttendue);
+  });
+
+  test("Attendu: Requerant.organiserRequerant autreProfessionnel sans raison sociale", () => {
+    const qualiteAutreProfessionnel = {
+      qualite: Qualite.AUTRE_PROFESSIONNEL,
+      autreProfessionnel: {
+        nature: ""
+      }
+    };
+    requeteDelivrance.requerant.qualiteRequerant = qualiteAutreProfessionnel;
+
+    const identiteAttendue = {
+      ligne1: "PAUL RUIZ",
+      ligne2: undefined
+    };
+
+    const requerant = Requerant.composerIdentite(requeteDelivrance.requerant);
+
+    expect(requerant).toEqual(identiteAttendue);
+  });
+
+  test("Attendu: Requerant.organiserRequerant mandataireHabilite", () => {
+    const qualiteMandataireHabilite = {
+      qualite: Qualite.MANDATAIRE_HABILITE,
+      mandataireHabilite: {
+        type: TypeMandataireReq.NOTAIRE,
+        raisonSociale: "NotaireAndCo"
+      }
+    };
+    requeteDelivrance.requerant.qualiteRequerant = qualiteMandataireHabilite;
+
+    const identiteAttendue = {
+      ligne1: "NOTAIREANDCO",
+      ligne2: "PAUL RUIZ"
+    };
+
+    const requerant = Requerant.composerIdentite(requeteDelivrance.requerant);
+
+    expect(requerant).toEqual(identiteAttendue);
+  });
+
+  test("Attendu: Requerant.organiserRequerant mandataireHabilite sans raison sociale", () => {
+    const qualiteMandataireHabilite = {
+      qualite: Qualite.MANDATAIRE_HABILITE,
+      mandataireHabilite: {
+        type: TypeMandataireReq.NOTAIRE
+      }
+    };
+    requeteDelivrance.requerant.qualiteRequerant = qualiteMandataireHabilite;
+
+    const identiteAttendue = {
+      ligne1: "PAUL RUIZ",
+      ligne2: undefined
+    };
+
+    const requerant = Requerant.composerIdentite(requeteDelivrance.requerant);
+
+    expect(requerant).toEqual(identiteAttendue);
+  });
+
+  test("Attendu: Requerant.organiserRequerant institutionnel", () => {
+    const qualiteInstitutionnel = {
+      qualite: Qualite.INSTITUTIONNEL,
       institutionnel: {
-        type: "",
-        nature: "",
-        nomInstitution: "",
-        nom: "",
-        prenom: ""
-      },
-      autreProfessionnel: {
-        nature: "",
-        nom: "",
-        prenom: "",
-        raisonSociale: ""
-      },
-      particulier: {
-        nomNaissance: "RUIZ",
-        nomUsage: "",
-        prenom: "Paul"
+        type: TypeInstitutionnel.AMBASSADE,
+        nomInstitution: "Ambassade de France"
       }
-    },
-    adresse: {
-      voie: "61 avenue Foch",
-      lieuDit: "lieu dit la martinière",
-      complementDestinataire: "Appartement 258",
-      complementPointGeo: "Batiment Z",
-      codePostal: "310 GL24",
-      commune: "Saint-Germain-de-Tallevende-la-Lande-Vaumont",
-      pays: "France",
-      adresseCourriel: "ldubois@wanadoo.fr",
-      numeroTelephone: ""
-    },
-    piecesJointes: [
-      {
-        base64File: {
-          fileName: "Jérome",
-          base64String: "",
-          taille: 0,
-          conteneurSwift: undefined,
-          identifiantSwift: undefined,
-          mimeType: "",
-          extension: undefined
-        },
-        type: {
-          cle: "00c885c9-2918-46fe-b743-798b1b90e5dd",
-          libelle: "Carte professionnelle"
-        }
+    };
+    requeteDelivrance.requerant.qualiteRequerant = qualiteInstitutionnel;
+
+    const identiteAttendue = {
+      ligne1: "AMBASSADE DE FRANCE",
+      ligne2: "PAUL RUIZ"
+    };
+
+    const requerant = Requerant.composerIdentite(requeteDelivrance.requerant);
+
+    expect(requerant).toEqual(identiteAttendue);
+  });
+
+  test("Attendu: Requerant.organiserRequerant institutionnel sans nomInstitution", () => {
+    const qualiteInstitutionnel = {
+      qualite: Qualite.INSTITUTIONNEL,
+      institutionnel: {
+        type: TypeInstitutionnel.AMBASSADE
       }
-    ]
-  };
+    };
+    requeteDelivrance.requerant.qualiteRequerant = qualiteInstitutionnel;
 
-  expect(saisieRequeteRdcsc).toEqual(attendu);
-});
+    const identiteAttendue = {
+      ligne1: "PAUL RUIZ",
+      ligne2: undefined
+    };
 
-test("Attendu: Requerant.organiserRequerant autreProfessionnel", () => {
-  const qualiteAutreProfessionnel = {
-    qualite: Qualite.AUTRE_PROFESSIONNEL,
-    autreProfessionnel: {
-      raisonSociale: "otherPro",
-      nature: ""
-    }
-  };
-  requeteDelivrance.requerant.qualiteRequerant = qualiteAutreProfessionnel;
+    const requerant = Requerant.composerIdentite(requeteDelivrance.requerant);
 
-  const identiteAttendue = {
-    ligne1: "OTHERPRO",
-    ligne2: "PAUL RUIZ"
-  };
-
-  const requerant = Requerant.composerIdentite(requeteDelivrance.requerant);
-
-  expect(requerant).toEqual(identiteAttendue);
-});
-
-test("Attendu: Requerant.organiserRequerant autreProfessionnel sans raison sociale", () => {
-  const qualiteAutreProfessionnel = {
-    qualite: Qualite.AUTRE_PROFESSIONNEL,
-    autreProfessionnel: {
-      nature: ""
-    }
-  };
-  requeteDelivrance.requerant.qualiteRequerant = qualiteAutreProfessionnel;
-
-  const identiteAttendue = {
-    ligne1: "PAUL RUIZ",
-    ligne2: undefined
-  };
-
-  const requerant = Requerant.composerIdentite(requeteDelivrance.requerant);
-
-  expect(requerant).toEqual(identiteAttendue);
-});
-
-test("Attendu: Requerant.organiserRequerant mandataireHabilite", () => {
-  const qualiteMandataireHabilite = {
-    qualite: Qualite.MANDATAIRE_HABILITE,
-    mandataireHabilite: {
-      type: TypeMandataireReq.NOTAIRE,
-      raisonSociale: "NotaireAndCo"
-    }
-  };
-  requeteDelivrance.requerant.qualiteRequerant = qualiteMandataireHabilite;
-
-  const identiteAttendue = {
-    ligne1: "NOTAIREANDCO",
-    ligne2: "PAUL RUIZ"
-  };
-
-  const requerant = Requerant.composerIdentite(requeteDelivrance.requerant);
-
-  expect(requerant).toEqual(identiteAttendue);
-});
-
-test("Attendu: Requerant.organiserRequerant mandataireHabilite sans raison sociale", () => {
-  const qualiteMandataireHabilite = {
-    qualite: Qualite.MANDATAIRE_HABILITE,
-    mandataireHabilite: {
-      type: TypeMandataireReq.NOTAIRE
-    }
-  };
-  requeteDelivrance.requerant.qualiteRequerant = qualiteMandataireHabilite;
-
-  const identiteAttendue = {
-    ligne1: "PAUL RUIZ",
-    ligne2: undefined
-  };
-
-  const requerant = Requerant.composerIdentite(requeteDelivrance.requerant);
-
-  expect(requerant).toEqual(identiteAttendue);
-});
-
-test("Attendu: Requerant.organiserRequerant institutionnel", () => {
-  const qualiteInstitutionnel = {
-    qualite: Qualite.INSTITUTIONNEL,
-    institutionnel: {
-      type: TypeInstitutionnel.AMBASSADE,
-      nomInstitution: "Ambassade de France"
-    }
-  };
-  requeteDelivrance.requerant.qualiteRequerant = qualiteInstitutionnel;
-
-  const identiteAttendue = {
-    ligne1: "AMBASSADE DE FRANCE",
-    ligne2: "PAUL RUIZ"
-  };
-
-  const requerant = Requerant.composerIdentite(requeteDelivrance.requerant);
-
-  expect(requerant).toEqual(identiteAttendue);
-});
-
-test("Attendu: Requerant.organiserRequerant institutionnel sans nomInstitution", () => {
-  const qualiteInstitutionnel = {
-    qualite: Qualite.INSTITUTIONNEL,
-    institutionnel: {
-      type: TypeInstitutionnel.AMBASSADE
-    }
-  };
-  requeteDelivrance.requerant.qualiteRequerant = qualiteInstitutionnel;
-
-  const identiteAttendue = {
-    ligne1: "PAUL RUIZ",
-    ligne2: undefined
-  };
-
-  const requerant = Requerant.composerIdentite(requeteDelivrance.requerant);
-
-  expect(requerant).toEqual(identiteAttendue);
+    expect(requerant).toEqual(identiteAttendue);
+  });
 });

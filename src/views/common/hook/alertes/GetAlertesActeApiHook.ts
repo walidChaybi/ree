@@ -12,9 +12,7 @@ export interface IGetAlertesActeApiHookResultat {
   alertes: IAlerte[];
 }
 
-export function useGetAlertesActeApiHook(
-  parameters?: IGetAlertesActeApiHookParameters
-) {
+export function useGetAlertesActeApiHook(parameters?: IGetAlertesActeApiHookParameters) {
   const [resultat, setResultat] = useState<IGetAlertesActeApiHookResultat>();
   useEffect(() => {
     if (parameters?.idActe && parameters?.isChecked) {
@@ -27,8 +25,7 @@ export function useGetAlertesActeApiHook(
         })
         .catch((error: any) => {
           logError({
-            messageUtilisateur:
-              "Impossible de récupérer les alertes associées à l'acte",
+            messageUtilisateur: "Impossible de récupérer les alertes associées à l'acte",
             error
           });
         });

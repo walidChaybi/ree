@@ -1,4 +1,5 @@
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
 import { IHabilitation, IProfil } from "@model/agent/Habilitation";
 import { IOfficier } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
@@ -7,8 +8,9 @@ import { IRegistre } from "@model/etatcivil/acte/IRegistre";
 import { IMention } from "@model/etatcivil/acte/mention/IMention";
 import { ITypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { NatureMention } from "@model/etatcivil/enum/NatureMention";
+import { INatureMention } from "@model/etatcivil/enum/NatureMention";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import request from "superagent";
@@ -17,6 +19,8 @@ import SignatureDelivrance from "../../../../composants/commun/signature/Signatu
 import { CODES_ERREUR_BLOQUANTS, CODE_PIN_INVALIDE, IDocumentASigner } from "../../../../utils/Signature";
 
 describe("Test du composant Signature délivrance", () => {
+  DocumentDelivrance.init(DOCUMENT_DELIVRANCE);
+
   const listenerSignature = (valeurRetour: any) => {
     const retourSignature = (() => {
       dispatchEvent(new CustomEvent("signWebextResponse", { detail: valeurRetour }));
@@ -240,7 +244,7 @@ describe("Test du composant Signature délivrance", () => {
       nature: NatureActe.NAISSANCE,
       mentions: [
         {
-          typeMention: { natureMention: { code: "4" } as NatureMention } as ITypeMention
+          typeMention: { natureMention: { code: "4" } as INatureMention } as ITypeMention
         } as IMention
       ]
     } as IFicheActe;

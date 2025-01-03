@@ -2,7 +2,7 @@ import { OptionCourrier, OptionCourrierDto, depuisOptionCourrierDtoVersOptionCou
 import { IOptionCourrierDocumentReponse } from "@model/requete/IOptionCourrierDocumentReponse";
 import { TRequete } from "@model/requete/IRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { DocumentDelivrance, IDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { getDocumentReponseAModifier } from "../CourrierFonctions";
 import "./scss/OptionsCourrierForm.scss";
@@ -104,10 +104,10 @@ const mappingOptionCourrierDocumentReponse = (
 
 export const recupererLesOptionsDisponiblesPourLeCourrier = (
   options: OptionCourrierDto[],
-  documentDelivranceChoisi: DocumentDelivrance,
+  documentDelivranceChoisi: IDocumentDelivrance,
   natureActe?: NatureActeRequete
 ): OptionCourrier[] => {
-  const idDocumentDelivrance = DocumentDelivrance.getKeyForCode(documentDelivranceChoisi.code);
+  const idDocumentDelivrance = DocumentDelivrance.idDepuisCode(documentDelivranceChoisi.code);
   const filtreNatureActe: keyof OptionCourrier | undefined = (() => {
     switch (natureActe) {
       case NatureActeRequete.NAISSANCE:

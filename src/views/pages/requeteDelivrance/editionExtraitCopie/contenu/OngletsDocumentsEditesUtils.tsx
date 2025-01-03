@@ -1,12 +1,6 @@
 import { IFicheActe } from "../../../../../model/etatcivil/acte/IFicheActe";
 import { NatureActe } from "../../../../../model/etatcivil/enum/NatureActe";
-import { DocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
-import {
-  CODE_COPIE_INTEGRALE,
-  CODE_EXTRAIT_AVEC_FILIATION,
-  CODE_EXTRAIT_PLURILINGUE,
-  CODE_EXTRAIT_SANS_FILIATION
-} from "../../../../../model/requete/enum/DocumentDelivranceConstante";
+import { DocumentDelivrance, ECodeDocumentDelivrance } from "../../../../../model/requete/enum/DocumentDelivrance";
 import { IDocumentReponse } from "../../../../../model/requete/IDocumentReponse";
 
 export enum INDEX_PLUS {
@@ -37,10 +31,7 @@ export const listePlus = [
   }
 ];
 
-export function genererListeAjoutComplementaire(
-  documents: IDocumentReponse[],
-  acte: IFicheActe
-): ItemListe[] {
+export function genererListeAjoutComplementaire(documents: IDocumentReponse[], acte: IFicheActe): ItemListe[] {
   let listeMapped: ItemListe[] = [];
   const index = 0;
   if (acte.nature === NatureActe.DECES) {
@@ -68,23 +59,19 @@ export function getTypeDocument(indexChoix: number): string | undefined {
   let typeDocument: string | undefined;
   switch (indexChoix) {
     case INDEX_PLUS.INDEX_EXTRAIT_PLURILINGUE:
-      typeDocument = DocumentDelivrance.getKeyForCode(CODE_EXTRAIT_PLURILINGUE);
+      typeDocument = DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_PLURILINGUE);
 
       break;
     case INDEX_PLUS.INDEX_EXTRAIT_SANS_FILIATION:
-      typeDocument = DocumentDelivrance.getKeyForCode(
-        CODE_EXTRAIT_SANS_FILIATION
-      );
+      typeDocument = DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_SANS_FILIATION);
 
       break;
     case INDEX_PLUS.INDEX_EXTRAIT_AVEC_FILIATION:
-      typeDocument = DocumentDelivrance.getKeyForCode(
-        CODE_EXTRAIT_AVEC_FILIATION
-      );
+      typeDocument = DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION);
 
       break;
     case INDEX_PLUS.INDEX_COPIE_INTEGRALE:
-      typeDocument = DocumentDelivrance.getKeyForCode(CODE_COPIE_INTEGRALE);
+      typeDocument = DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE);
       break;
     default:
       typeDocument = "";

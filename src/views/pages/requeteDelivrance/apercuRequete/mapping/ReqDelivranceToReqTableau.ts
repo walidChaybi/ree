@@ -5,11 +5,8 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
-import { getValeurOuVide } from "@util/Utils";
 
-export function mappingRequeteDelivranceToRequeteTableau(
-  requete: IRequeteDelivrance
-): IRequeteTableauDelivrance {
+export function mappingRequeteDelivranceToRequeteTableau(requete: IRequeteDelivrance): IRequeteTableauDelivrance {
   return {
     idRequete: requete.id,
     numero: requete.numero,
@@ -19,15 +16,13 @@ export function mappingRequeteDelivranceToRequeteTableau(
     idUtilisateur: requete.idUtilisateur,
     type: requete.type?.libelle,
     statut: requete.statutCourant.statut.libelle,
-    document: DocumentDelivrance.getKeyForCode(requete.documentDemande?.code), // getKey ?,
-    sousType: getValeurOuVide(requete.sousType.libelleCourt),
+    document: DocumentDelivrance.idDepuisCode(requete.documentDemande?.code ?? ""), // getKey ?,
+    sousType: requete.sousType.libelleCourt ?? "",
     documentsReponses: requete.documentsReponses
   };
 }
 
-const getTitulaires = (
-  titulaires: ITitulaireRequete[]
-): ITitulaireRequeteTableau[] => {
+const getTitulaires = (titulaires: ITitulaireRequete[]): ITitulaireRequeteTableau[] => {
   return titulaires.map((t: ITitulaireRequete) => {
     const titulaire = {} as ITitulaireRequeteTableau;
     titulaire.nom = t.nomNaissance;
@@ -49,9 +44,7 @@ const getTitulaires = (
 };
 
 const getPrenoms = (prenoms: IPrenomOrdonnes[]): string[] => {
-  prenoms.sort((a: IPrenomOrdonnes, b: IPrenomOrdonnes) =>
-    a.numeroOrdre > b.numeroOrdre ? 1 : -1
-  );
+  prenoms.sort((a: IPrenomOrdonnes, b: IPrenomOrdonnes) => (a.numeroOrdre > b.numeroOrdre ? 1 : -1));
   return prenoms.map((p: IPrenomOrdonnes) => {
     return p.prenom;
   });

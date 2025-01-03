@@ -1,13 +1,13 @@
+import { TYPE_ALERTE } from "@mock/data/NomenclatureTypeAlerte";
+import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act } from "react";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test, vi } from "vitest";
 import { PartieActeRequete } from "../../../../composants/pages/requetesMiseAJour/PartieActeRequete";
 import EditionMiseAJourContextProvider from "../../../../contexts/EditionMiseAJourContextProvider";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
-
-const idActe = "b41079a5-9e8f-478a-b04c-c4c2ac671123";
-const idRequete = "9d00fe88-9d21-482e-bb02-223636f78386";
 
 const mockedUseNavigate = vi.fn();
 vi.mock("react-router-dom", async () => {
@@ -19,6 +19,10 @@ vi.mock("react-router-dom", async () => {
 });
 
 describe("PartieActeRequete", () => {
+  TypeAlerte.init(TYPE_ALERTE);
+
+  const idActe = "b41079a5-9e8f-478a-b04c-c4c2ac671123";
+
   test("render correctement avec un id", async () => {
     const router = createTestingRouter(
       [
@@ -75,7 +79,7 @@ describe("PartieActeRequete", () => {
       expect(screen.getByText("Acte registre")).toBeDefined();
     });
 
-    fireEvent.click(screen.getByText("Abandonner"));
+    act(() => fireEvent.click(screen.getByText("Abandonner")));
 
     await waitFor(() => {
       expect(mockedUseNavigate).toHaveBeenCalled();

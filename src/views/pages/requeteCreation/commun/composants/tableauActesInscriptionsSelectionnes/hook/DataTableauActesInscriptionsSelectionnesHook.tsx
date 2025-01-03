@@ -1,8 +1,8 @@
 import { useActesInscriptionsSauvegardesApiHook } from "@hook/acte/ActesInscriptionsSauvegardesApiHook";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
+import { ZERO } from "@util/Utils";
 import messageManager from "@util/messageManager";
-import { getValeurOuUndefined, ZERO } from "@util/Utils";
 import React, { useEffect, useState } from "react";
 import {
   ActeInscriptionSauvegardeDto,
@@ -12,33 +12,19 @@ import { IDataTableauActeInscriptionSelectionne } from "../IDataTableauActeInscr
 
 interface IDataTableauActesInscriptionsSelectionnesHook {
   dataActesInscriptionsSelectionnes?: IDataTableauActeInscriptionSelectionne[];
-  setDataActesInscriptionsSelectionnes: React.Dispatch<
-    React.SetStateAction<IDataTableauActeInscriptionSelectionne[] | undefined>
-  >;
+  setDataActesInscriptionsSelectionnes: React.Dispatch<React.SetStateAction<IDataTableauActeInscriptionSelectionne[] | undefined>>;
 }
 
 export function useDataTableauActesInscriptionsSelectionnesHook(
   piecesJustificatives?: IPieceJustificativeCreation[]
 ): IDataTableauActesInscriptionsSelectionnesHook {
-  const [
-    piecesJustificativesActesInscriptions,
-    setPiecesJustificativesActesInscriptions
-  ] = useState<IPieceJustificativeCreation[]>([]);
-  const [
-    dataActesInscriptionsSelectionnes,
-    setDataActesInscriptionsSelectionnes
-  ] = useState<IDataTableauActeInscriptionSelectionne[]>();
-  const [
-    actesInscriptionsSauvegardesParams,
-    setActesInscriptionsSauvegardesParams
-  ] = useState<IActeInscriptionSauvegardeDto[]>();
-  const resultatActesInscriptionsSauvegardes =
-    useActesInscriptionsSauvegardesApiHook(actesInscriptionsSauvegardesParams);
+  const [piecesJustificativesActesInscriptions, setPiecesJustificativesActesInscriptions] = useState<IPieceJustificativeCreation[]>([]);
+  const [dataActesInscriptionsSelectionnes, setDataActesInscriptionsSelectionnes] = useState<IDataTableauActeInscriptionSelectionne[]>();
+  const [actesInscriptionsSauvegardesParams, setActesInscriptionsSauvegardesParams] = useState<IActeInscriptionSauvegardeDto[]>();
+  const resultatActesInscriptionsSauvegardes = useActesInscriptionsSauvegardesApiHook(actesInscriptionsSauvegardesParams);
 
   useEffect(() => {
-    const pieces = piecesJustificatives?.filter(piece =>
-      estActeInscriptionSauvegarde(piece)
-    );
+    const pieces = piecesJustificatives?.filter(piece => estActeInscriptionSauvegarde(piece));
     if (pieces?.length) {
       setPiecesJustificativesActesInscriptions(pieces);
     }
@@ -46,9 +32,7 @@ export function useDataTableauActesInscriptionsSelectionnesHook(
 
   useEffect(() => {
     setActesInscriptionsSauvegardesParams(
-      ActeInscriptionSauvegardeDto.mapParamsGetActesInscriptionsSauvegardes(
-        piecesJustificativesActesInscriptions
-      )
+      ActeInscriptionSauvegardeDto.mapParamsGetActesInscriptionsSauvegardes(piecesJustificativesActesInscriptions)
     );
   }, [piecesJustificativesActesInscriptions]);
 
@@ -57,20 +41,12 @@ export function useDataTableauActesInscriptionsSelectionnesHook(
       if (actesInscriptionsSauvegardesParams) {
         const data: IDataTableauActeInscriptionSelectionne[] = [
           ...resultatActesInscriptionsSauvegardes.map(resultatCourant =>
-            mapDataTableauActeInscriptionSelectionne(
-              resultatCourant,
-              piecesJustificativesActesInscriptions
-            )
+            mapDataTableauActeInscriptionSelectionne(resultatCourant, piecesJustificativesActesInscriptions)
           )
         ];
         setDataActesInscriptionsSelectionnes(data);
 
-        if (
-          auMoinsUnParametreActeInscriptionSauvegardeManque(
-            actesInscriptionsSauvegardesParams,
-            resultatActesInscriptionsSauvegardes
-          )
-        ) {
+        if (auMoinsUnParametreActeInscriptionSauvegardeManque(actesInscriptionsSauvegardesParams, resultatActesInscriptionsSauvegardes)) {
           messageManager.showWarningAndClose(
             "Au moins une des lignes du tableau des actes et des inscriptions sauvegardés pour le projet n'a pu être retrouvée suite à une modification de l'élément correspondant."
           );
@@ -93,42 +69,30 @@ function mapDataTableauActeInscriptionSelectionne(
   piecesActesInscriptionsSauvegardees: IPieceJustificativeCreation[]
 ): IDataTableauActeInscriptionSelectionne {
   return {
-    idPersonne: getValeurOuUndefined(data.personne.idPersonne),
-    idActeInscription: getValeurOuUndefined(data.idActeOuInscription),
-    nature: NatureActeRequete.getEnumFor(getValeurOuUndefined(data.nature))
-      .libelle,
-    reference: getValeurOuUndefined(data.reference),
+    idPersonne: data.personne.idPersonne,
+    idActeInscription: data.idActeOuInscription,
+    nature: NatureActeRequete.getEnumFor(data.nature).libelle,
+    reference: data.reference,
     typePJ: piecesActesInscriptionsSauvegardees.find(
-      piece =>
-        getIdActeInscriptionFromPieceJustificativeCreation(piece) ===
-        data.idActeOuInscription
-    )?.typePieceJustificative.libelle,
-    nom: getValeurOuUndefined(data.personne.nom),
-    autresNoms: getValeurOuUndefined(data.personne.autresNoms),
-    prenoms: getValeurOuUndefined(data.personne.prenoms),
-    dateNaissance: getValeurOuUndefined(data.personne.dateNaissance),
-    lieuNaissance: getValeurOuUndefined(data.personne.lieuNaissance),
-    sexe: getValeurOuUndefined(data.personne.sexe).libelle.charAt(0)
+      piece => getIdActeInscriptionFromPieceJustificativeCreation(piece) === data.idActeOuInscription
+    )?.typePieceJustificative?.libelle,
+    nom: data.personne.nom,
+    autresNoms: data.personne.autresNoms,
+    prenoms: data.personne.prenoms,
+    dateNaissance: data.personne.dateNaissance,
+    lieuNaissance: data.personne.lieuNaissance,
+    sexe: data.personne.sexe?.libelle.charAt(0)
   };
 }
 
-function estActeInscriptionSauvegarde(
-  pieceJustificative: IPieceJustificativeCreation
-): boolean | undefined {
+function estActeInscriptionSauvegarde(pieceJustificative: IPieceJustificativeCreation): boolean | undefined {
   return (
     Boolean(pieceJustificative.idPersonne) &&
-    Boolean(
-      pieceJustificative.idRc ||
-        pieceJustificative.idRca ||
-        pieceJustificative.idPacs ||
-        pieceJustificative.idActe
-    )
+    Boolean(pieceJustificative.idRc ?? pieceJustificative.idRca ?? pieceJustificative.idPacs ?? pieceJustificative.idActe)
   );
 }
 
-function getIdActeInscriptionFromPieceJustificativeCreation(
-  piece: IPieceJustificativeCreation
-): string | undefined {
+function getIdActeInscriptionFromPieceJustificativeCreation(piece: IPieceJustificativeCreation): string | undefined {
   return piece.idActe ?? piece.idRc ?? piece.idRca ?? piece.idPacs;
 }
 
@@ -139,11 +103,7 @@ function auMoinsUnParametreActeInscriptionSauvegardeManque(
   return (
     params?.length > ZERO &&
     !params?.some(acteInscriptionParam =>
-      resultats.some(
-        resultat =>
-          resultat.idActeOuInscription ===
-          acteInscriptionParam.idActeOuInscription
-      )
+      resultats.some(resultat => resultat.idActeOuInscription === acteInscriptionParam.idActeOuInscription)
     )
   );
 }

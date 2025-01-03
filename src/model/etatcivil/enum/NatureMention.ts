@@ -1,13 +1,6 @@
-/* istanbul ignore file */
-import { peupleNatureMention } from "@api/nomenclature/NomenclatureEtatcivil";
-import { Options } from "@util/Type";
-import { EnumNomemclature } from "@util/enum/EnumNomenclature";
-import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
-import { DocumentDelivrance } from "../../requete/enum/DocumentDelivrance";
-import {
-  CODE_EXTRAIT_AVEC_FILIATION,
-  CODE_EXTRAIT_SANS_FILIATION
-} from "../../requete/enum/DocumentDelivranceConstante";
+/* v8 ignore start */
+import { ECodeDocumentDelivrance, IDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { Option } from "@util/Type";
 import { NatureActe } from "./NatureActe";
 
 export const CODE_RC = "21";
@@ -49,25 +42,11 @@ export const natureRetireesMariageAvecFilliation = [
   LIEN_FILIATION_HORS_ADOPTION
 ];
 
-export const natureRetireesMariageSansFilliation = [
-  ...natureRetireesMariageAvecFilliation,
-  ADOPTION
-];
+export const natureRetireesMariageSansFilliation = [...natureRetireesMariageAvecFilliation, ADOPTION];
 
-export const natureMentionExtraitPlurilingueMariage = [
-  SEPARATION_CORPS,
-  DIVORCE,
-  ANNULATION_MARIAGE,
-  ANNULATION_ACTE
-];
+export const natureMentionExtraitPlurilingueMariage = [SEPARATION_CORPS, DIVORCE, ANNULATION_MARIAGE, ANNULATION_ACTE];
 
-export const natureMentionExtraitPlurilingueNaissance = [
-  MARIAGE,
-  SEPARATION_CORPS,
-  DIVORCE,
-  DECES,
-  ANNULATION_ACTE
-];
+export const natureMentionExtraitPlurilingueNaissance = [MARIAGE, SEPARATION_CORPS, DIVORCE, DECES, ANNULATION_ACTE];
 
 export const natureRetireesNaissanceAvecFillation = [
   REPRISE_VIE_COMMUNE,
@@ -118,11 +97,7 @@ export const natureRetireesNaissancePlurilingue = [
   AUTRES
 ];
 
-export const natureRetireesNaissanceSansFillation = [
-  ...natureRetireesNaissanceAvecFillation,
-  NATIONALITE,
-  ADOPTION
-];
+export const natureRetireesNaissanceSansFillation = [...natureRetireesNaissanceAvecFillation, NATIONALITE, ADOPTION];
 
 const natureNaissanceInterditePourExtraitAvecFiliation = [
   REPRISE_VIE_COMMUNE,
@@ -151,115 +126,56 @@ const natureMariageInterdites = [
 
 const naturesInterdites = {
   Naissance: {
-    [CODE_EXTRAIT_AVEC_FILIATION]:
-      natureNaissanceInterditePourExtraitAvecFiliation,
-    [CODE_EXTRAIT_SANS_FILIATION]: [
-      ...natureNaissanceInterditePourExtraitAvecFiliation,
-      NATIONALITE,
-      ADOPTION
-    ]
+    [ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION]: natureNaissanceInterditePourExtraitAvecFiliation,
+    [ECodeDocumentDelivrance.CODE_EXTRAIT_SANS_FILIATION]: [...natureNaissanceInterditePourExtraitAvecFiliation, NATIONALITE, ADOPTION]
   },
   Mariage: {
-    [CODE_EXTRAIT_SANS_FILIATION]: [...natureMariageInterdites, ADOPTION],
-    [CODE_EXTRAIT_AVEC_FILIATION]: natureMariageInterdites
+    [ECodeDocumentDelivrance.CODE_EXTRAIT_SANS_FILIATION]: [...natureMariageInterdites, ADOPTION],
+    [ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION]: natureMariageInterdites
   }
 };
 
-export class NatureMention extends EnumNomemclature {
-  constructor(
-    code: string,
-    libelle: string,
-    categorie: string,
-    private readonly _estActif: boolean,
-    private readonly _opposableAuTiers: boolean
-  ) {
-    super(code, libelle, categorie);
-  }
+export interface INatureMention {
+  id: string;
+  nom: string;
+  code: string;
+  libelle: string;
+  opposableAuTiers: boolean;
+  estActif: boolean;
+}
 
-  get estActif() {
-    return this._estActif;
-  }
+export class NatureMention {
+  private static liste: INatureMention[] | null = null;
 
-  get opposableAuTiers() {
-    return this._opposableAuTiers;
-  }
-
-  public static async init() {
-    await peupleNatureMention();
-  }
-
-  //AddEnum specifique aux nomenclatures !
-  public static addEnum(key: string, obj: NatureMention) {
-    EnumWithLibelle.addEnum(key, obj, NatureMention);
-  }
-
-  public static clean() {
-    return EnumWithLibelle.clean(NatureMention);
-  }
-
-  public static contientEnums() {
-    return EnumWithLibelle.contientEnums(NatureMention);
-  }
-
-  public static getEnumFor(str: string) {
-    return EnumWithLibelle.getEnumFor(str, NatureMention);
-  }
-
-  public static getAllEnumsAsOptions(): Options {
-    return EnumWithLibelle.getAllLibellesAsOptions(NatureMention);
-  }
-
-  public static getEnumsAsOptions(natureMention: NatureMention[]) {
-    const options: Options = [];
-    natureMention.forEach(nature => {
-      options.push({
-        cle: NatureMention.getUuidFromNature(nature),
-        libelle: nature.libelle
-      });
-    });
-    return options;
-  }
-
-  public static getKey(nature?: NatureMention) {
-    if (nature) {
-      return EnumWithLibelle.getKey(NatureMention, nature);
-    } else {
-      return "";
+  public static init(naturesMention: INatureMention[]) {
+    if (NatureMention.liste !== null) {
+      return;
     }
+
+    NatureMention.liste = naturesMention;
   }
 
-  public static getEnumOrEmpty(nature?: NatureMention) {
-    if (nature) {
-      return nature;
-    } else {
-      return NatureMention.getEnumFor("");
-    }
+  public static depuisId(id: string): INatureMention | null {
+    return NatureMention.liste?.find(natureMention => natureMention.id === id) ?? null;
   }
 
-  public static estOpposableAuTiers(natureMention: NatureMention) {
-    return natureMention.opposableAuTiers;
+  public static depuisCode(code: string): INatureMention | null {
+    return NatureMention.liste?.find(natureMention => natureMention.code === code) ?? null;
   }
 
-  public static getUuidFromNature(nature?: NatureMention): string {
-    let uuid = "";
-    if (nature) {
-      uuid = EnumNomemclature.getKeyForCode(NatureMention, nature.code);
-    }
-    return uuid ? uuid : "";
+  public static versOptions(naturesMention?: INatureMention[]): Option[] {
+    return (naturesMention ?? NatureMention.liste)?.map(natureMention => ({ cle: natureMention.id, libelle: natureMention.libelle })) ?? [];
   }
 
   public static ilExisteUneMentionInterdite(
-    naturesMentions: NatureMention[],
+    naturesMentions: (INatureMention | null)[],
     natureActe?: NatureActe,
-    document?: DocumentDelivrance
+    document?: IDocumentDelivrance | null
   ): boolean {
     return (
       //@ts-ignore
-      naturesInterdites[`${natureActe?.libelle}`]?.[document?.code]?.find(
-        (codeMention: string) =>
-          naturesMentions.find(
-            natureMention => natureMention.code === codeMention
-          )
+      naturesInterdites[`${natureActe?.libelle}`]?.[document?.code]?.find((codeMention: string) =>
+        naturesMentions.find(natureMention => natureMention?.code === codeMention)
       ) != null
     );
   }
@@ -282,3 +198,4 @@ export class NatureMention extends EnumNomemclature {
     }
   }
 }
+/* v8 ignore end */

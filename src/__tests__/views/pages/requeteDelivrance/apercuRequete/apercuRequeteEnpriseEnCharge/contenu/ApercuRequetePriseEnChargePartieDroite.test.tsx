@@ -1,19 +1,14 @@
 import { DataRMCActeAvecResultat, DataTableauActe } from "@mock/data/RMCActe";
-import {
-  DataRMCInscriptionAvecResultat,
-  DataTableauInscription
-} from "@mock/data/RMCInscription";
+import { DataRMCInscriptionAvecResultat, DataTableauInscription } from "@mock/data/RMCInscription";
 import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
+import { ReponseAppelNomenclatureTypeAlerte } from "@mock/data/nomenclatures";
 import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { NORESULT } from "@mock/superagent-config/superagent-mock-etatcivil";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { DataRMCAuto } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { ApercuRequetePriseEnChargePartieDroite } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/ApercuRequetePriseEnChargePartieDroite";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import {
-  COMPLEMENT_DESCRIPTION,
-  ID_TYPE_ALERTE
-} from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
+import { COMPLEMENT_DESCRIPTION, ID_TYPE_ALERTE } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import { MemoryRouter } from "react-router-dom";
 import { beforeEach, expect, test } from "vitest";
 import { elementAvecContexte } from "../../../../../../__tests__utils__/testsUtil";
@@ -26,7 +21,7 @@ const dataHistory: DataRMCAuto = {
 };
 
 beforeEach(() => {
-  TypeAlerte.init();
+  TypeAlerte.init(ReponseAppelNomenclatureTypeAlerte.data);
 });
 
 test.skip("render ApercuRequetePriseEnChargePartieDroite : RMC état civil manuelle ", () => {
@@ -46,10 +41,8 @@ test.skip("render ApercuRequetePriseEnChargePartieDroite : RMC état civil manue
   fireEvent.click(linkElement);
 
   const dialog = screen.getByRole("dialog");
-  const nomTitulaire = screen.getByLabelText(
-    "titulaire.nom"
-  ) as HTMLInputElement;
-  const boutonRechercher = screen.getByText("Rechercher") as HTMLButtonElement;
+  const nomTitulaire: HTMLInputElement = screen.getByLabelText("titulaire.nom");
+  const boutonRechercher: HTMLButtonElement = screen.getByText("Rechercher");
 
   waitFor(() => {
     expect(dialog).toBeDefined();
@@ -94,9 +87,7 @@ test.skip("render ApercuRequetePriseEnChargePartieDroite : gestion des alertes a
   );
 
   const checkboxColumns: HTMLElement[] = screen.getAllByRole("checkbox");
-  const accordionAlertes: HTMLElement = screen.getByTitle(
-    "Alertes et informations"
-  );
+  const accordionAlertes: HTMLElement = screen.getByTitle("Alertes et informations");
 
   waitFor(() => {
     expect(accordionAlertes).toBeDefined();
@@ -111,9 +102,7 @@ test.skip("render ApercuRequetePriseEnChargePartieDroite : gestion des alertes a
 
     expect(accordionAlertes.classList.contains("Mui-expanded")).toBeTruthy();
 
-    const boutonsSupprimerAlerte = screen.getAllByTitle(
-      "Supprimer l'alerte"
-    ) as HTMLButtonElement[];
+    const boutonsSupprimerAlerte = screen.getAllByTitle("Supprimer l'alerte");
 
     expect(boutonsSupprimerAlerte).toBeDefined();
     expect(boutonsSupprimerAlerte).toHaveLength(2);
@@ -133,15 +122,9 @@ test.skip("render ApercuRequetePriseEnChargePartieDroite : gestion des alertes a
     expect(popinAjouterAlertes).toBeDefined();
   });
 
-  const boutonValiderAjoutAlerte = screen.getByText(
-    "Valider"
-  ) as HTMLButtonElement;
-  const selectTypeAlerte = screen.getByTestId(
-    ID_TYPE_ALERTE
-  ) as HTMLSelectElement;
-  const textareaComplementDescription = screen.getByLabelText(
-    COMPLEMENT_DESCRIPTION
-  ) as HTMLInputElement;
+  const boutonValiderAjoutAlerte: HTMLButtonElement = screen.getByText("Valider");
+  const selectTypeAlerte: HTMLSelectElement = screen.getByTestId(ID_TYPE_ALERTE);
+  const textareaComplementDescription: HTMLInputElement = screen.getByLabelText(COMPLEMENT_DESCRIPTION);
 
   fireEvent.change(textareaComplementDescription, {
     target: { value: "Test saisie complément description" }
@@ -151,12 +134,8 @@ test.skip("render ApercuRequetePriseEnChargePartieDroite : gestion des alertes a
   });
 
   waitFor(() => {
-    expect(textareaComplementDescription.value).toEqual(
-      "Test saisie complément description"
-    );
-    expect(selectTypeAlerte.value).toEqual(
-      "058a436b-330d-4c3c-83e0-d49c27390aa1"
-    );
+    expect(textareaComplementDescription.value).toEqual("Test saisie complément description");
+    expect(selectTypeAlerte.value).toEqual("058a436b-330d-4c3c-83e0-d49c27390aa1");
   });
 
   waitFor(() => {
@@ -168,15 +147,11 @@ test.skip("render ApercuRequetePriseEnChargePartieDroite : gestion des alertes a
   waitFor(() => {
     expect(popinAjouterAlertes).not.toBeDefined();
 
-    const boutonsSupprimerAlerte = screen.getAllByTitle(
-      "Supprimer l'alerte"
-    ) as HTMLButtonElement[];
+    const boutonsSupprimerAlerte: HTMLButtonElement[] = screen.getAllByTitle("Supprimer l'alerte");
     expect(boutonsSupprimerAlerte).toHaveLength(3);
   });
 
-  const boutonsSupprimerAlerte = screen.getAllByTitle(
-    "Supprimer l'alerte"
-  ) as HTMLButtonElement[];
+  const boutonsSupprimerAlerte: HTMLButtonElement[] = screen.getAllByTitle("Supprimer l'alerte");
   fireEvent.click(boutonsSupprimerAlerte[0]);
 
   const popinSupprimerAlerte = screen.getByRole("dialog", {
@@ -185,23 +160,17 @@ test.skip("render ApercuRequetePriseEnChargePartieDroite : gestion des alertes a
 
   waitFor(() => {
     expect(popinSupprimerAlerte).toBeDefined();
-    expect(popinSupprimerAlerte.textContent).toContain(
-      "Etes-vous sur de vouloir supprimer cette alerte ?"
-    );
+    expect(popinSupprimerAlerte.textContent).toContain("Etes-vous sur de vouloir supprimer cette alerte ?");
   });
 
-  const boutonValiderSuppressionAlerte = screen.getByText(
-    "Valider"
-  ) as HTMLButtonElement;
+  const boutonValiderSuppressionAlerte: HTMLButtonElement = screen.getByText("Valider");
 
   fireEvent.click(boutonValiderSuppressionAlerte);
 
   waitFor(() => {
     expect(popinSupprimerAlerte).not.toBeDefined();
 
-    const boutonsSupprimerAlerte = screen.getAllByTitle(
-      "Supprimer l'alerte"
-    ) as HTMLButtonElement[];
+    const boutonsSupprimerAlerte: HTMLButtonElement[] = screen.getAllByTitle("Supprimer l'alerte");
     expect(boutonsSupprimerAlerte).toHaveLength(2);
   });
 });
@@ -209,16 +178,12 @@ test.skip("render ApercuRequetePriseEnChargePartieDroite : gestion des alertes a
 test("render ApercuRequetePriseEnChargePartieDroite : relance RMC Auto ", () => {
   render(
     <MemoryRouter>
-      <ApercuRequetePriseEnChargePartieDroite
-        detailRequete={requeteDelivrance}
-      />
+      <ApercuRequetePriseEnChargePartieDroite detailRequete={requeteDelivrance} />
     </MemoryRouter>
   );
 
   const resultatRMCActe = screen.queryByText("Aucun acte n'a été trouvé.");
-  const resultatRMCInscription = screen.queryByText(
-    "Aucune inscription n'a été trouvée."
-  );
+  const resultatRMCInscription = screen.queryByText("Aucune inscription n'a été trouvée.");
   waitFor(() => {
     expect(resultatRMCActe).toBeNull();
     expect(resultatRMCInscription).toBeNull();

@@ -11,7 +11,7 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
-import { getLibelle, getValeurOuVide, supprimeElement } from "@util/Utils";
+import { supprimeElement } from "@util/Utils";
 import { getLigneTableauVide } from "@widget/tableau/TableUtils";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
@@ -34,17 +34,11 @@ export interface RMCResultatInscriptionProps {
   dataTableauRMCInscription: IParamsTableau;
   setRangeInscription?: (range: string) => void;
   resetTableauInscription?: boolean;
-  onClickCheckboxCallBack?: (
-    event: TChangeEventSurHTMLInputElement,
-    data: IResultatRMCInscription
-  ) => void;
+  onClickCheckboxCallBack?: (event: TChangeEventSurHTMLInputElement, data: IResultatRMCInscription) => void;
   nbLignesParPage: number;
   nbLignesParAppel: number;
   // Données propre à une fiche Inscription pour sa pagination/navigation
-  getLignesSuivantesOuPrecedentesInscription?: (
-    ficheIdentifiant: string,
-    lien: string
-  ) => void;
+  getLignesSuivantesOuPrecedentesInscription?: (ficheIdentifiant: string, lien: string) => void;
   idFicheInscription?: string;
   dataRMCFicheInscription?: IResultatRMCInscription[];
   dataTableauRMCFicheInscription?: IParamsTableau;
@@ -78,34 +72,22 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
   );
 
   // Gestion des fenêtre fiche inscription
-  const [etatFenetres, setEtatFenetres] = useState<IFenetreFicheInscription[]>(
-    []
-  );
+  const [etatFenetres, setEtatFenetres] = useState<IFenetreFicheInscription[]>([]);
 
   // Plage de fiche courante dans le tableau de résultat (suite à une RMC Inscription)
-  const [datasFichesCourantes, setDatasFichesCourante] =
-    useState<IDataFicheProps[]>();
+  const [datasFichesCourantes, setDatasFichesCourantes] = useState<IDataFicheProps[]>();
 
   function closeFenetre(idInscription: string, idx: number): void {
     const nouvelEtatFenetres = supprimeElement(
       etatFenetres,
-      (etatFenetre: IFenetreFicheInscription) =>
-        etatFenetre.idInscription === idInscription
+      (etatFenetre: IFenetreFicheInscription) => etatFenetre.idInscription === idInscription
     );
     setEtatFenetres(nouvelEtatFenetres);
   }
 
   const onClickOnLine = (idInscription: string, data: any, index: number) => {
-    if (
-      officierALeDroitSurLePerimetre(
-        Droit.CONSULTER,
-        Perimetre.TOUS_REGISTRES,
-        utilisateurConnecte
-      )
-    ) {
-      const etatFenetreTrouve = etatFenetres.find(
-        etatFenetre => etatFenetre.idInscription === idInscription
-      );
+    if (officierALeDroitSurLePerimetre(Droit.CONSULTER, Perimetre.TOUS_REGISTRES, utilisateurConnecte)) {
+      const etatFenetreTrouve = etatFenetres.find(etatFenetre => etatFenetre.idInscription === idInscription);
       if (datasFichesCourantes) {
         if (!etatFenetreTrouve) {
           const nouvelEtatFenetre: IFenetreFicheInscription = {
@@ -127,16 +109,11 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
 
   useEffect(() => {
     if (dataRMCFicheInscription) {
-      const etatFenetreTrouve = etatFenetres.find(
-        etatFenetre => etatFenetre.idInscription === idFicheInscription
-      );
+      const etatFenetreTrouve = etatFenetres.find(etatFenetre => etatFenetre.idInscription === idFicheInscription);
       if (etatFenetreTrouve) {
         const datasFiches = dataRMCFicheInscription.map(data => ({
-          identifiant: getValeurOuVide(data.idInscription),
-          categorie: getCategorieFiche(
-            data.idInscription,
-            dataRMCFicheInscription
-          ),
+          identifiant: data.idInscription,
+          categorie: getCategorieFiche(data.idInscription, dataRMCFicheInscription),
           lienSuivant: dataTableauRMCFicheInscription?.nextDataLinkState,
           lienPrecedent: dataTableauRMCFicheInscription?.previousDataLinkState
         }));
@@ -145,11 +122,7 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    idFicheInscription,
-    dataRMCFicheInscription,
-    dataTableauRMCFicheInscription
-  ]);
+  }, [idFicheInscription, dataRMCFicheInscription, dataTableauRMCFicheInscription]);
 
   useEffect(() => {
     const datasFiches = dataRMCInscription.map(data => ({
@@ -158,13 +131,11 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
       lienSuivant: dataTableauRMCInscription?.nextDataLinkState,
       lienPrecedent: dataTableauRMCInscription?.previousDataLinkState
     }));
-    setDatasFichesCourante(datasFiches);
+    setDatasFichesCourantes(datasFiches);
   }, [dataRMCInscription, dataTableauRMCInscription]);
 
   // Gestion du clic sur une colonne de type checkbox.
-  const [idInscriptionSelectionnees, setIdInscriptionSelectionnees] = useState<
-    string[]
-  >([]);
+  const [idInscriptionSelectionnees, setIdInscriptionSelectionnees] = useState<string[]>([]);
 
   const handleCaseACocherInscriptionEstDesactive = useCallback(
     (data: IResultatRMCInscription): boolean => {
@@ -179,10 +150,7 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
         ) {
           return true;
         }
-        return !DocumentDelivrance.estDocumentDelivranceValide(
-          data?.categorie,
-          requeteDelivrance?.documentDemande
-        );
+        return !DocumentDelivrance.estDocumentDelivranceValide(data?.categorie, requeteDelivrance?.documentDemande);
       }
       return false;
     },
@@ -204,9 +172,7 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
     {
       handleInteractionUtilisateur: onClickCheckboxCallBack,
       handleEstDesactive: handleCaseACocherInscriptionEstDesactive,
-      messageInfoBulleEstDesactive: getLibelle(
-        "Ce résultat ne correspond pas au document demandé par le requérant"
-      )
+      messageInfoBulleEstDesactive: "Ce résultat ne correspond pas au document demandé par le requérant"
     },
     dataRequete?.type
   );
@@ -227,51 +193,38 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
       />
 
       {typeRMC === "Auto" && dataRequete?.type === TypeRequete.DELIVRANCE && (
-        <div className="ElementsCoches">
-          {getLibelle(
-            `${idInscriptionSelectionnees.length} élément(s) coché(s)`
-          )}
-        </div>
+        <div className="ElementsCoches">{`${idInscriptionSelectionnees.length} élément(s) coché(s)`}</div>
       )}
 
       {etatFenetres && etatFenetres.length > 0 && (
         <>
-          {etatFenetres.map(
-            (fenetreFicheInscription: IFenetreFicheInscription) => {
-              return (
-                fenetreFicheInscription && (
-                  <FenetreFiche
-                    key={`fiche${fenetreFicheInscription.idInscription}${fenetreFicheInscription.index}`}
-                    identifiant={fenetreFicheInscription.idInscription}
-                    categorie={getCategorieFicheAPartirDatasFiches(
-                      fenetreFicheInscription.idInscription,
-                      fenetreFicheInscription.datasFiches
-                    )}
-                    onClose={closeFenetre}
-                    datasFiches={fenetreFicheInscription.datasFiches}
-                    index={fenetreFicheInscription.index}
-                    nbLignesTotales={
-                      dataTableauRMCInscription.rowsNumberState || 0
-                    }
-                    getLignesSuivantesOuPrecedentes={
-                      getLignesSuivantesOuPrecedentesInscription
-                    }
-                    nbLignesParAppel={nbLignesParAppel}
-                  />
-                )
-              );
-            }
-          )}
+          {etatFenetres.map((fenetreFicheInscription: IFenetreFicheInscription) => {
+            return (
+              fenetreFicheInscription && (
+                <FenetreFiche
+                  key={`fiche${fenetreFicheInscription.idInscription}${fenetreFicheInscription.index}`}
+                  identifiant={fenetreFicheInscription.idInscription}
+                  categorie={getCategorieFicheAPartirDatasFiches(
+                    fenetreFicheInscription.idInscription,
+                    fenetreFicheInscription.datasFiches
+                  )}
+                  onClose={closeFenetre}
+                  datasFiches={fenetreFicheInscription.datasFiches}
+                  index={fenetreFicheInscription.index}
+                  nbLignesTotales={dataTableauRMCInscription.rowsNumberState ?? 0}
+                  getLignesSuivantesOuPrecedentes={getLignesSuivantesOuPrecedentesInscription}
+                  nbLignesParAppel={nbLignesParAppel}
+                />
+              )
+            );
+          })}
         </>
       )}
     </>
   );
 };
 
-function getCategorieFicheAPartirDatasFiches(
-  id: string,
-  datas: IDataFicheProps[]
-): TypeFiche {
+function getCategorieFicheAPartirDatasFiches(id: string, datas: IDataFicheProps[]): TypeFiche {
   let categorie = "";
   datas.forEach(data => {
     if (data.categorie && data.identifiant === id) {
@@ -281,10 +234,7 @@ function getCategorieFicheAPartirDatasFiches(
   return FicheUtil.getTypeFicheFromString(categorie);
 }
 
-function getCategorieFiche(
-  id: string,
-  data: IResultatRMCInscription[]
-): TypeFiche {
+function getCategorieFiche(id: string, data: IResultatRMCInscription[]): TypeFiche {
   let categorie = "";
   data.forEach(repertoire => {
     if (repertoire.categorie && repertoire.idInscription === id) {

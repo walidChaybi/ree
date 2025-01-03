@@ -13,8 +13,8 @@ import { AutresNoms } from "@model/etatcivil/enum/AutresNoms";
 import { ExistenceContratMariage } from "@model/etatcivil/enum/ExistenceContratMariage";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { NatureRc } from "@model/etatcivil/enum/NatureRc";
-import { NatureRca } from "@model/etatcivil/enum/NatureRca";
+import { INatureRc, NatureRc } from "@model/etatcivil/enum/NatureRc";
+import { INatureRca, NatureRca } from "@model/etatcivil/enum/NatureRca";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { StatutFiche } from "@model/etatcivil/enum/StatutFiche";
 import { TypeActe } from "@model/etatcivil/enum/TypeActe";
@@ -45,7 +45,8 @@ export function mapRcRca(data: any): IFicheRcRca {
 
   dataRcRca.personnes = mapPersonnes(data.personnes, data.numero);
 
-  dataRcRca.nature = data.categorie === "rc" ? NatureRc.getEnumFor(data.nature) : NatureRca.getEnumFor(data.nature);
+  dataRcRca.nature =
+    data.categorie === "rc" ? (NatureRc.depuisId(data.nature) as INatureRc) : (NatureRca.depuisId(data.nature) as INatureRca);
 
   dataRcRca.statutsFiche = mapStatutFiche(data);
 
@@ -143,9 +144,7 @@ function mapDetailMariage(dm: any): IDetailMariage | undefined {
   if (dm) {
     detailMariage = { ...dm };
     //@ts-ignore (dataActe.detailMariage ne peut pas être nul du fait du test ci-dessus)
-    detailMariage.existenceContrat = ExistenceContratMariage.getEnumFor(
-      dm.existenceContrat
-    );
+    detailMariage.existenceContrat = ExistenceContratMariage.getEnumFor(dm.existenceContrat);
   }
   return detailMariage;
 }
@@ -184,15 +183,9 @@ function mapPersonnes(personnes: any, numero: any): IPersonne[] {
               nature: NatureActe.getEnumFor(acte.nature)
             };
           }),
-      pacss:
-        personne.pacss &&
-        personne.pacss.filter((pacs: IFicheLien) => pacs.numero !== numero),
-      rcas:
-        personne.rcas &&
-        personne.rcas.filter((rca: IFicheLien) => rca.numero !== numero),
-      rcs:
-        personne.rcs &&
-        personne.rcs.filter((rc: IFicheLien) => rc.numero !== numero)
+      pacss: personne.pacss && personne.pacss.filter((pacs: IFicheLien) => pacs.numero !== numero),
+      rcas: personne.rcas && personne.rcas.filter((rca: IFicheLien) => rca.numero !== numero),
+      rcs: personne.rcs && personne.rcs.filter((rc: IFicheLien) => rc.numero !== numero)
     };
   });
 }
@@ -240,9 +233,7 @@ export function mapRegistre(data: any) {
 }
 
 function harmoniserNomPrenomsInteresse(interesse: IInteresse) {
-  interesse.nomFamille = interesse.nomFamille
-    ? formatNom(interesse.nomFamille)
-    : interesse.nomFamille;
+  interesse.nomFamille = interesse.nomFamille ? formatNom(interesse.nomFamille) : interesse.nomFamille;
   if (interesse.autreNoms !== undefined) {
     interesse.autreNoms.forEach(autreNom => formatNom(autreNom));
   }
