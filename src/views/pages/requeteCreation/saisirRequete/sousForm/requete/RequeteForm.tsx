@@ -1,20 +1,8 @@
-import {
-  LIEN_REQUERANT,
-  NATURE_ACTE,
-  REGISTRE
-} from "@composant/formulaire/ConstantesNomsForm";
+import { LIEN_REQUERANT, NATURE_ACTE, REGISTRE } from "@composant/formulaire/ConstantesNomsForm";
 import RecherchePocopas from "@composant/recherchePocopas/RecherchePocopas";
 import { getLibelle } from "@util/Utils";
-import {
-  LIEN_REQUERANT_OBLIGATOIRE,
-  NATURE_ACTE_OBLIGATOIRE,
-  REGISTRE_OBLIGATOIRE
-} from "@widget/formulaire/FormulaireMessages";
-import {
-  ISubForm,
-  SubFormProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { LIEN_REQUERANT_OBLIGATOIRE, NATURE_ACTE_OBLIGATOIRE, REGISTRE_OBLIGATOIRE } from "@widget/formulaire/FormulaireMessages";
+import { ISubForm, SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
 import * as Yup from "yup";

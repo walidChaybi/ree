@@ -66,17 +66,9 @@ const ItemRequete: React.FC<ItemRequeteProps> = props => {
     )
   ]);
 
-  const texteSpecificite = formatLigneSpecificite(
-    [props.natureDANF, specificite],
-    " • "
-  );
+  const texteSpecificite = formatLigneSpecificite([props.natureDANF, specificite], " • ");
 
-  const getFormatLigneHistoriqueSdanf = (
-    libelle: string,
-    date?: string,
-    nomUtilisateur?: string,
-    prenomUtilisateur?: string
-  ) => {
+  const getFormatLigneHistoriqueSdanf = (libelle: string, date?: string, nomUtilisateur?: string, prenomUtilisateur?: string) => {
     if (estUtilisateurSysteme(nomUtilisateur, prenomUtilisateur)) {
       return `${libelle} - ${date}`;
     }
@@ -102,25 +94,49 @@ const ItemRequete: React.FC<ItemRequeteProps> = props => {
       }}
       tag={<TitreTag />}
     >
-      <ItemLigne label={Labels.resume.requete.sousType} texte={props.sousType} />
+      <ItemLigne
+        label={Labels.resume.requete.sousType}
+        texte={props.sousType}
+      />
       <ItemLigne
         label={Labels.resume.requete.liee}
         texte={`N° ${props.numeros.requeteLiee}`}
         visible={estRenseigne(props.numeros.requeteLiee)}
       />
-      <Item titre={Labels.resume.infos.specifiques} className={{ title: "bg-clair" }} etendu={false}>
-        <ItemLigne classNameTexte="bold" texte={texteSpecificite} visible={estRenseigne(props.natureDANF)} />
-        <ItemLigne label={Labels.resume.SDANF.statut} texte={props.SDANF.statut} />
-        <ItemLigne texte={`Déposée le ${props.SDANF.dateDepot}`} visible={estRenseigne(props.SDANF.dateDepot)} />
+      <Item
+        titre={Labels.resume.infos.specifiques}
+        className={{ title: "bg-clair" }}
+        etendu={false}
+      >
+        <ItemLigne
+          classNameTexte="bold"
+          texte={texteSpecificite}
+          visible={estRenseigne(props.natureDANF)}
+        />
+        <ItemLigne
+          label={Labels.resume.SDANF.statut}
+          texte={props.SDANF.statut}
+        />
+        <ItemLigne
+          texte={`Déposée le ${props.SDANF.dateDepot}`}
+          visible={estRenseigne(props.SDANF.dateDepot)}
+        />
         <ItemLigne
           texte={`Prise en charge ${SDANF} le ${props.SDANF.datePriseEnCharge}`}
           visible={estRenseigne(props.SDANF.datePriseEnCharge)}
         />
         <ItemLigne texte={props.SDANF.mailAgent} />
-        <ItemLigne label={Labels.resume.SDANF.decision} texte={props.SDANF.decision} />
+        <ItemLigne
+          label={Labels.resume.SDANF.decision}
+          texte={props.SDANF.decision}
+        />
       </Item>
       {props.actions.length > 0 ? (
-        <Item titre={Labels.resume.historique.scecSdanf} className={{ title: "bg-clair" }} etendu={false}>
+        <Item
+          titre={Labels.resume.historique.scecSdanf}
+          className={{ title: "bg-clair" }}
+          etendu={false}
+        >
           <div className="ligneSdanfContainer">
             {props.actions.map(action => (
               <ItemLigne
@@ -136,8 +152,16 @@ const ItemRequete: React.FC<ItemRequeteProps> = props => {
         </Item>
       ) : undefined}
 
-      <Item titre={Labels.resume.requerant} className={{ title: "bg-clair" }} etendu={false} visible={estRenseigne(props.nomInstitution)}>
-        <ItemLigne label={Labels.resume.institutionnel} texte={props.nomInstitution} />
+      <Item
+        titre={Labels.resume.requerant}
+        className={{ title: "bg-clair" }}
+        etendu={false}
+        visible={estRenseigne(props.nomInstitution)}
+      >
+        <ItemLigne
+          label={Labels.resume.institutionnel}
+          texte={props.nomInstitution}
+        />
       </Item>
     </AccordionRece>
   ) : (

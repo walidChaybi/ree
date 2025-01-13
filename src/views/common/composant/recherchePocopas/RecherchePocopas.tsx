@@ -1,10 +1,10 @@
 import { useRecherchePocopa } from "@hook/pocopa/RecherchePocopaApiHook";
 import { Option } from "@util/Type";
-import { enMajuscule, premiereLettreEnMajusculeLeResteEnMinuscule } from "@util/Utils";
+import { premiereLettreEnMajusculeLeResteEnMinuscule } from "@util/Utils";
 import { ChampRechercheField } from "@widget/formulaire/champRecherche/ChampRechercheField";
 import { INomForm, SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import React, { useCallback, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 
 interface RecherchePocopasProps {
   label: string;
@@ -12,69 +12,68 @@ interface RecherchePocopasProps {
   familleRegistre: string;
   estOuvert?: boolean;
   optionsValidesNonAffichees?: Option[];
+  delai?: number;
 }
 
 type RecherchePocopasSubForm = RecherchePocopasProps & SubFormProps;
 
-const RecherchePocopas: React.FC<RecherchePocopasSubForm> = props => {
-  const [valeurChampAutocomplete, setValeurChampAutocomplete] = useState<string>("");
+const useDelai = <T,>(defaut: T, delai: number = 300): [T, Dispatch<SetStateAction<T>>] => {
+  const [valeur, setValeur] = useState<T>(defaut);
+  const [valeurDelai, setValeurDelai] = useState<T>(defaut);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setValeurDelai(valeur);
+    }, delai);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [valeur, delai]);
+
+  return [valeurDelai, setValeur];
+};
+
+const RecherchePocopas: React.FC<RecherchePocopasSubForm> = ({
+  familleRegistre,
+  nombreResultatsMax,
+  estOuvert,
+  nom,
+  label,
+  optionsValidesNonAffichees,
+  disabled,
+  delai
+}) => {
+  const [valeurChampAutocomplete, setValeurChampAutocomplete] = useDelai("", delai);
   const [lastPocopaSelected, setLastPocopaSelected] = useState<string | undefined>(undefined);
 
-  const pocopas = useRecherchePocopa(valeurChampAutocomplete, props.familleRegistre, props.nombreResultatsMax, props.estOuvert);
+  const pocopas = useRecherchePocopa(valeurChampAutocomplete, familleRegistre, nombreResultatsMax, estOuvert);
 
-  /**
-   * Ajoute le dernier pocopa sélectionné à la liste de pocopas ramenée par l'api
-   * Permet de résoudre un warning lorsque l'utilisateur commence à taper une lettre après une première sélection.
-   *   Pour reproduire le warning:
-   *    -choisir un pocopa ("TUNIS" par exemple)
-   *    -sélectionner le pocopa choisi (cliquer dans le champs de recherche)
-   *    -taper une lettre ne se trouvant pas dans la liste à la place ("x" par exemple)
-   *   Exemple de warning:
-   *   Material-UI: The value provided to Autocomplete is invalid.
-   *   None of the options match with `{"key":"TUNIS","value":"TUNIS"}`.
-   *   You can use the `getOptionSelected` prop to customize the equality test.
-   */
-  const getPocopasAsOptions = useCallback(() => {
-    let pocopasAsOptions: Option[] = [];
-    if (pocopas?.length) {
-      pocopasAsOptions = pocopas.map(
-        p =>
-          ({
-            cle: enMajuscule(p),
-            libelle: p
-          } as Option)
-      );
-    }
+  const optionsPocopa = useMemo(() => {
+    const options = (pocopas ?? []).map(pocopa => ({
+      cle: pocopa.toUpperCase(),
+      libelle: pocopa
+    }));
 
-    if (lastPocopaSelected && pocopas?.indexOf(lastPocopaSelected) === -1) {
-      pocopasAsOptions.push({
-        cle: enMajuscule(lastPocopaSelected),
+    if (lastPocopaSelected && !pocopas?.includes(lastPocopaSelected)) {
+      options.push({
+        cle: lastPocopaSelected.toUpperCase(),
         libelle: premiereLettreEnMajusculeLeResteEnMinuscule(lastPocopaSelected)
       });
     }
-
-    return pocopasAsOptions;
+    return options;
   }, [pocopas, lastPocopaSelected]);
-
-  function onChampRechercheChange(option?: Option) {
-    setLastPocopaSelected(option ? option.libelle : undefined);
-  }
-
-  function onChampRechercheInput(value: string | null) {
-    setValeurChampAutocomplete(value ?? "");
-  }
 
   return (
     <ChampRechercheField
-      name={props.nom}
+      name={nom}
       componentName="SaisirRegistre"
-      label={props.label ?? ""}
-      onChange={onChampRechercheChange}
-      onInput={onChampRechercheInput}
-      options={getPocopasAsOptions()}
-      disabled={props.disabled}
-      optionsValidesNonAffichees={props.optionsValidesNonAffichees}
+      label={label ?? ""}
+      onChange={option => setLastPocopaSelected(option ? option.libelle : undefined)}
+      onInput={value => setValeurChampAutocomplete(value ?? "")}
+      options={optionsPocopa}
+      disabled={disabled}
+      optionsValidesNonAffichees={optionsValidesNonAffichees}
     />
   );
 };

@@ -11,24 +11,11 @@ interface TitreProps {
   estADroite?: boolean;
 }
 
-const ConteneurRetractable: React.FC<React.PropsWithChildren<TitreProps>> = ({
-  initConteneurFerme = true,
-  ...props
-}) => {
-  const [conteneurFerme, setConteneurFerme] =
-    useState<boolean>(initConteneurFerme);
+const ConteneurRetractable: React.FC<React.PropsWithChildren<TitreProps>> = ({ initConteneurFerme = true, ...props }) => {
+  const [conteneurFerme, setConteneurFerme] = useState<boolean>(initConteneurFerme);
 
   const className = useMemo(
-    () =>
-      formatLigne(
-        [
-          props.className,
-          "component",
-          conteneurFerme ? "is-closed" : "is-open",
-          props.estADroite && "a-droite"
-        ],
-        " "
-      ),
+    () => formatLigne([props.className, "component", conteneurFerme ? "is-closed" : "is-open", props.estADroite && "a-droite"], " "),
     [props.className, props.estADroite, conteneurFerme]
   );
 
@@ -39,9 +26,7 @@ const ConteneurRetractable: React.FC<React.PropsWithChildren<TitreProps>> = ({
         onClick={() => setConteneurFerme(!conteneurFerme)}
       >
         <span className={conteneurFerme ? "vertical" : ""}>{props.titre}</span>
-        <div className="icon">
-          {props.estADroite ? <ArrowBackIos /> : <ArrowForwardIos />}
-        </div>
+        <div className="icon">{props.estADroite ? <ArrowBackIos /> : <ArrowForwardIos />}</div>
       </div>
       <div className="body">{!conteneurFerme ? props.children : null}</div>
     </div>
