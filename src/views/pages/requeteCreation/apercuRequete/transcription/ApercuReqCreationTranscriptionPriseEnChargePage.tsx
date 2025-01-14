@@ -206,7 +206,7 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<ApercuReq
             ongletParDefault={UN}
           >
             <BoutonDoubleSubmit
-              className="CreationProjetActeBoutton"
+              className="shrink-0 self-end"
               title="Créer le projet d'acte"
               onClick={onClickOnCreerProjetActe}
               disabled={enAttenteMajStatutEtAction}
