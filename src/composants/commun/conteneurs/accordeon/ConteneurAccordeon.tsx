@@ -1,6 +1,5 @@
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import React, { useState } from "react";
-import "./ConteneurAccordeon.scss";
 
 interface IConteneurAccordeonProps {
   titre: string | React.ReactNode;
@@ -8,36 +7,33 @@ interface IConteneurAccordeonProps {
   nonControllable?: boolean;
 }
 
-const ConteneurAccordeon: React.FC<
-  React.PropsWithChildren<IConteneurAccordeonProps>
-> = ({ children, titre, ouvertParDefaut = false, nonControllable = false }) => {
-  const [estOuvert, setEstOuvert] = useState<boolean>(
-    ouvertParDefaut || nonControllable
-  );
+const ConteneurAccordeon: React.FC<React.PropsWithChildren<IConteneurAccordeonProps>> = ({
+  children,
+  titre,
+  ouvertParDefaut = false,
+  nonControllable = false
+}) => {
+  const [estOuvert, setEstOuvert] = useState<boolean>(ouvertParDefaut || nonControllable);
 
   return (
-    <div className="conteneur-accordeon">
+    <div className="mb-3 overflow-hidden rounded-xl border-2 border-solid border-bleu shadow-xl">
       {nonControllable ? (
-        <div className="titre-conteneur-accordeon">{titre}</div>
+        <div className="text-blanc-rece font-family: noto-sans-ui relative m-0 rounded-none bg-bleu px-4 py-2 normal-case">{titre}</div>
       ) : (
         <button
-          className="titre-conteneur-accordeon"
+          className="text-blanc-rece font-family: noto-sans-ui relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus:border-2 focus:border-solid focus:border-bleu-sombre focus:bg-bleu-sombre"
           type="button"
           onClick={() => setEstOuvert(!estOuvert)}
         >
           {titre}
-          <ExpandMore
-            className={`icon-accordeon${estOuvert ? " accordeon-ouvert" : ""}`}
-          />
+          <ExpandMore className={`absolute right-2 transition-transform duration-[0.2s] ease-[ease-in] ${estOuvert ? "rotate-180" : ""}`} />
         </button>
       )}
 
       <div
-        className={`contenu-conteneur-accordeon${
-          estOuvert ? " accordeon-ouvert" : ""
-        }`}
+        className={`grid grid-rows-[0fr] overflow-hidden transition-[grid-template-rows] duration-[0.2s] ease-[ease-in] ${estOuvert ? "grid grid-rows-[1fr]" : ""}`}
       >
-        <div className="wrapper-contenu-accordeon">{children}</div>
+        <div className="min-h-0">{children}</div>
       </div>
     </div>
   );

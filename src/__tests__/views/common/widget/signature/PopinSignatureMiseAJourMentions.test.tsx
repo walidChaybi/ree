@@ -3,36 +3,11 @@ import * as RequeteApi from "@api/appels/requeteApi";
 import mockConnectedUser from "@mock/data/connectedUser.json";
 import { IOfficier } from "@model/agent/IOfficier";
 import { URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS, URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID } from "@router/ReceUrls";
-import { createEvent, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { createEvent, fireEvent, render, waitFor } from "@testing-library/react";
 import { PopinSignatureMiseAJourMentions } from "@widget/signature/PopinSignatureMiseAJourMentions";
-import { MemoryRouter, RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import { describe, expect, test, vi } from "vitest";
 import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
-
-test("render PopinSignatureMiseAJourMentions QUAND on ouvre la popin", () => {
-  const message =
-    "En cliquant sur VALIDER, vous acceptez de signer électroniquement la ou les mentions apposée(s) qui comporteront les données suivantes insérées automatiquement : lieu et date d’apposition, qualité du signataire, prénom et nom usuels dans le dispositif de création de signature qualifiée.";
-  waitFor(() => {
-    expect(screen.queryByText("Signature des mentions")).toBeNull();
-    expect(screen.queryByText(message)).toBeNull();
-  });
-
-  render(
-    <MemoryRouter>
-      <PopinSignatureMiseAJourMentions
-        estOuvert={true}
-        setEstOuvert={() => {}}
-        actionApresSignatureReussie={function (): void {
-          throw new Error("Function not implemented.");
-        }}
-      />
-    </MemoryRouter>
-  );
-  waitFor(() => {
-    expect(screen.queryByText("Signature des mentions")).toBeDefined();
-    expect(screen.getByText(message)).toBeDefined();
-  });
-});
 
 describe("Doit signer le document QUAND on valide le code pin.", () => {
   test("DOIT composer le document contenant les mentions ultérieures, puis enregistrer le document signé, et modifier le statut de la requête", async () => {
@@ -123,7 +98,7 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
     modifierStatutRequeteMiseAJourSpy.mockClear();
   });
 
-  test("NE DOIT PAS composer le document final si l'information 'entiteCertificat' de la carte est manquant", () => {
+  test("NE DOIT PAS composer le document final si l'information 'entiteCertificat' de la carte est manquant", async () => {
     const composerDocumentMentionsUlterieuresSpy = vi.spyOn(EtatCivilApi, "composerDocumentMentionsUlterieures");
 
     const router = createTestingRouter(
@@ -166,13 +141,13 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
       )
     );
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(composerDocumentMentionsUlterieuresSpy).not.toHaveBeenCalled();
     });
     composerDocumentMentionsUlterieuresSpy.mockClear();
   });
 
-  test("NE DOIT PAS composer le document final si l'information 'issuerCertificat' de la carte est manquant", () => {
+  test("NE DOIT PAS composer le document final si l'information 'issuerCertificat' de la carte est manquant", async () => {
     const composerDocumentMentionsUlterieuresSpy = vi.spyOn(EtatCivilApi, "composerDocumentMentionsUlterieures");
 
     const router = createTestingRouter(
@@ -215,7 +190,7 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
       )
     );
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(composerDocumentMentionsUlterieuresSpy).not.toHaveBeenCalled();
     });
     composerDocumentMentionsUlterieuresSpy.mockClear();

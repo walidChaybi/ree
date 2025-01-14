@@ -1,5 +1,4 @@
 import React from "react";
-import "./ConteneurSousFormulaire.scss";
 
 interface IConteneurSousFormulaireProps {
   titreSousFormulaire?: string;
@@ -9,38 +8,29 @@ interface IConteneurSousFormulaireProps {
     boutons?: JSX.Element;
   }[];
   className?: string;
+  avecBordure?: boolean;
 }
 
-const ConteneurSousFormulaire: React.FC<
-  React.PropsWithChildren<IConteneurSousFormulaireProps>
-> = ({
+const ConteneurSousFormulaire: React.FC<React.PropsWithChildren<IConteneurSousFormulaireProps>> = ({
   titreSousFormulaire,
   champsSousFormulaire = [],
   className,
-  children
+  children,
+  avecBordure = false
 }) => (
-  <div className="conteneur-sous-formulaire">
-    {titreSousFormulaire && (
-      <h2 className="titre-conteneur-sous-formulaire">{titreSousFormulaire}</h2>
-    )}
-    <div
-      className={`contenu-conteneur-sous-formulaire ${className ?? ""}`.trim()}
-    >
+  <div className={`pb-2 text-start ${avecBordure ? "rounded-b-md border-2 border-solid border-bleu" : ""}`}>
+    {titreSousFormulaire && <h2 className="m-0 bg-gris px-4 py-1 text-base font-bold uppercase">{titreSousFormulaire}</h2>}
+    <div className={`p-8 text-start ${className ?? ""}`.trim()}>
       {Boolean(champsSousFormulaire.length) && (
-        <div className="affichage-tableau">
+        <div className="table">
           {champsSousFormulaire.map(champs => (
-            <div key={champs.libelle} className="affichage-ligne-tableau">
-              <span className="affichage-cellule-tableau tableau-libelle">
-                {champs.libelle}
-              </span>
-              <div className="affichage-cellule-tableau tableau-champs">
-                {champs.element}
-              </div>
-              {champs.boutons && (
-                <div className="affichage-cellule-tableau">
-                  {champs.boutons}
-                </div>
-              )}
+            <div
+              key={champs.libelle}
+              className="table-row gap-4"
+            >
+              <span className="table-cell min-w-40 px-0 py-4 text-bleu-sombre">{champs.libelle}</span>
+              <div className="table-cell min-w-96">{champs.element}</div>
+              {champs.boutons && <div className="affichage-cellule-tableau">{champs.boutons}</div>}
             </div>
           ))}
         </div>

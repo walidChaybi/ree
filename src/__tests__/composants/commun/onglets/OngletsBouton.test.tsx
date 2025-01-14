@@ -1,16 +1,14 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, test, vi } from "vitest";
-import OngletsBouton, {
-  IOngletBouton,
-} from "../../../../composants/commun/onglets/OngletsBouton";
+import OngletsBouton, { IOngletBouton } from "../../../../composants/commun/onglets/OngletsBouton";
 
 describe("OngletsBouton Component", () => {
   const mockChangerOnglet = vi.fn();
 
-  const onglets: IOngletBouton[] = [
+  const onglets: IOngletBouton<any>[] = [
     { cle: "onglet1", libelle: "Onglet 1" },
     { cle: "onglet2", libelle: "Onglet 2" },
-    { cle: "onglet3", libelle: "Onglet 3", inactif: true },
+    { cle: "onglet3", libelle: "Onglet 3", inactif: true }
   ];
 
   const renderComponent = (cleOngletActif = "onglet1") => {
@@ -19,8 +17,8 @@ describe("OngletsBouton Component", () => {
         onglets={onglets}
         cleOngletActif={cleOngletActif}
         changerOnglet={mockChangerOnglet}
-        renderBoutonAjout={(style) => <button className={style}>Add</button>}
-      />,
+        renderBoutonAjout={style => <button className={style}>Add</button>}
+      />
     );
   };
 
@@ -31,7 +29,7 @@ describe("OngletsBouton Component", () => {
   test("Render correctement tout les onglets", () => {
     renderComponent();
 
-    onglets.forEach((onglet) => {
+    onglets.forEach(onglet => {
       expect(screen.getByText(onglet.libelle)).toBeDefined();
     });
   });
@@ -39,16 +37,10 @@ describe("OngletsBouton Component", () => {
   test("Disable l'onglet actif actuel ainsi que tout les onglets inactifs", () => {
     renderComponent("onglet1");
 
-    expect(
-      (screen.getByText("Onglet 1") as HTMLButtonElement).disabled,
-    ).toBeTruthy();
+    expect((screen.getByText("Onglet 1") as HTMLButtonElement).disabled).toBeTruthy();
 
-    expect(
-      (screen.getByText("Onglet 2") as HTMLButtonElement).disabled,
-    ).toBeFalsy();
-    expect(
-      (screen.getByText("Onglet 3") as HTMLButtonElement).disabled,
-    ).toBeTruthy();
+    expect((screen.getByText("Onglet 2") as HTMLButtonElement).disabled).toBeFalsy();
+    expect((screen.getByText("Onglet 3") as HTMLButtonElement).disabled).toBeTruthy();
   });
 
   test("Change d'onglet lorsque celui-ci est cliqué", () => {
@@ -83,7 +75,7 @@ describe("OngletsBouton Component", () => {
         onglets={onglets}
         cleOngletActif="onglet1"
         changerOnglet={mockChangerOnglet}
-      />,
+      />
     );
 
     expect(screen.queryByText("Add")).toBeNull();
