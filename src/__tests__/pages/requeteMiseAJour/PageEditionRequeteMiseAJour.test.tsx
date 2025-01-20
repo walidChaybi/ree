@@ -22,7 +22,7 @@ describe("Test de la page aperçu requête mise à jour analyse marginale", () =
   NatureMention.init(NATURE_MENTION);
   TypeMention.init(TYPE_MENTION);
 
-  test("La page s'affiche correctement", () => {
+  test("La page s'affiche correctement", async () => {
     const router = createTestingRouter(
       [
         {
@@ -34,8 +34,10 @@ describe("Test de la page aperçu requête mise à jour analyse marginale", () =
     );
 
     render(<RouterProvider router={router} />);
-    expect(screen.getByText("Acte registre")).toBeDefined();
-    expect(screen.getByText("Analyse Marginale")).toBeDefined();
+    await waitFor(() => {
+      expect(screen.getByText("Acte registre")).toBeDefined();
+      expect(screen.getByText("Analyse Marginale")).toBeDefined();
+    });
   });
 
   test("La page est redirigé sans confirmation si aucun changement", async () => {

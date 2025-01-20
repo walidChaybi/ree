@@ -14,7 +14,7 @@ export const PartieActeRequete: React.FC = () => {
   const { changerOnglet } = useContext(EditionMiseAJourContext.Actions);
 
   return (
-    <div className="partie-acte-requete">
+    <div className={estActeSigne ? "w-full" : "w-1/2"}>
       <OngletsBouton
         onglets={[
           {
@@ -39,7 +39,10 @@ export const PartieActeRequete: React.FC = () => {
 
       {!estActeSigne && <OngletActeMisAJour estActif={ongletsActifs.actes === ECleOngletsMiseAJour.ACTE_MIS_A_JOUR} />}
 
-      <ConteneurBoutonBasDePage position="gauche">
+      <ConteneurBoutonBasDePage
+        position="gauche"
+        afficherDegrade
+      >
         <Bouton
           title={estActeSigne ? "Retour rechercher un acte" : "Abandonner"}
           type="button"

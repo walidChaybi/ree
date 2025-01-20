@@ -5,9 +5,10 @@ import { useMemo } from "react";
 type TChampListeDeroulanteProps = React.InputHTMLAttributes<HTMLSelectElement> & {
   libelle: string;
   options: Option[];
+  pendantChangement?: () => void;
 };
 
-const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({ name, libelle, className, options, ...props }) => {
+const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({ name, libelle, className, options, pendantChangement, ...props }) => {
   const [field, meta] = useField(name as string);
   const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
 
@@ -21,14 +22,20 @@ const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({ name, libe
       </label>
       <select
         id={name}
-        className={`select-rece border-1 flex flex-grow rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
+        className={`select-rece border-1 flex flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
         {...props}
         {...field}
+        onChange={e => {
+          field.onChange(e);
+          pendantChangement?.();
+        }}
       >
-        {options?.map(option => (
+        {[{ cle: "", libelle: "" }, ...options]?.map(option => (
           <option
             key={option.cle}
             value={option.cle}
+            selected={field.value === option.cle}
+            hidden={option.cle === ""}
           >
             {option.libelle.length ? `${option.libelle.charAt(0).toUpperCase()}${option.libelle.substring(1)}` : ""}
           </option>

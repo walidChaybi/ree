@@ -1,5 +1,5 @@
-import { composerDocumentFinal } from "@api/appels/etatcivilApi";
 import { IErreurTraitementApi } from "@api/IErreurTraitementApi";
+import { composerDocumentFinal } from "@api/appels/etatcivilApi";
 import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
@@ -14,24 +14,15 @@ export interface IComposerDocumentFinalApiHookParams {
 export const useComposerDocumentFinalApiHook = (
   params?: IComposerDocumentFinalApiHookParams
 ): [IComposerDocumentFinalApiHookResultat | undefined, () => void] => {
-  const [resultat, setResultat] =
-    useState<IComposerDocumentFinalApiHookResultat>();
+  const [resultat, setResultat] = useState<IComposerDocumentFinalApiHookResultat>();
 
   const reinitialiserResultatApi = () => {
     setResultat(undefined);
   };
 
   useEffect(() => {
-    if (
-      params?.idActe &&
-      params?.issuerCertificat &&
-      params?.entiteCertificat
-    ) {
-      composerDocumentFinal(
-        params.idActe,
-        params.issuerCertificat,
-        params.entiteCertificat
-      )
+    if (params?.idActe && params?.issuerCertificat && params?.entiteCertificat) {
+      composerDocumentFinal(params.idActe, params.issuerCertificat, params.entiteCertificat)
         .then(reponse => {
           setResultat({
             documentRecomposeASigner: reponse.body.data,
@@ -52,8 +43,7 @@ export const useComposerDocumentFinalApiHook = (
           erreur.code !== CodeErreurFonctionnelle.FCT_PLAGE_HORAIRE_SIGNATURE &&
             logError({
               error: errors,
-              messageUtilisateur:
-                "Impossible de composer le document final du projet d'acte."
+              messageUtilisateur: "Impossible de composer le document final du projet d'acte."
             });
         });
     }

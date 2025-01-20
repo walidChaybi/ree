@@ -1,15 +1,16 @@
-import { TEXTE_MENTION } from "@composant/formulaire/ConstantesNomsForm";
-import { IChamp, IMetaModelBloc } from "@model/etatcivil/acte/mention/IMetaModeleTypeMention";
+import { IChamp, IMetaModelBloc, IMetamodeleTypeMention } from "@model/etatcivil/acte/mention/IMetaModeleTypeMention";
 import { useFormikContext } from "formik";
-import React, { Suspense, lazy, useContext } from "react";
-import { EditionMiseAJourContext } from "../../../../../contexts/EditionMiseAJourContextProvider";
-import PageChargeur from "../../../../commun/chargeurs/PageChargeur";
+import React, { Suspense, lazy } from "react";
 
 const ChampsCaseACocher = lazy(() => import("../../../../commun/champs/ChampsCaseACocher"));
 const ChampDate = lazy(() => import("../../../../commun/champs/ChampDate"));
 const ChampListeDeroulante = lazy(() => import("../../../../commun/champs/ChampListeDeroulante"));
 const ChampsZoneTexte = lazy(() => import("../../../../commun/champs/ChampsZoneTexte"));
 const ChampsTexte = lazy(() => import("../../../../commun/champs/ChampsTexte"));
+
+interface IAideALaSaisieMention {
+  metamodeleTypeMention: IMetamodeleTypeMention | null;
+}
 
 const getClassesChamp = (typeChamp: string) => {
   switch (typeChamp) {
@@ -33,12 +34,27 @@ const estChampMasque = (champ: IChamp, idBloc: string, valeurs: Record<string, a
     return exigence.operateur === "=" ? !valeurPourExigencePresente : valeurPourExigencePresente;
   });
 
-const AideALaSaisieMention: React.FC = () => {
-  const { metamodeleTypeMention } = useContext(EditionMiseAJourContext.Valeurs);
+const placeholdersValeursNonRenseignees = (blocs: IMetaModelBloc[]) =>
+  blocs.reduce((placeholders, bloc) => {
+    const libelleBloc = bloc.titre.replace(/\(.{1,50}\)/, "").toUpperCase();
+
+    return {
+      ...placeholders,
+      [bloc.id]: bloc.champs.reduce(
+        (placeholdersChamps, champ) => ({
+          ...placeholdersChamps,
+          [champ.id]: `${champ.libelle.toUpperCase()} (${libelleBloc})`
+        }),
+        {}
+      )
+    };
+  }, {});
+
+const AideALaSaisieMention: React.FC<IAideALaSaisieMention> = ({ metamodeleTypeMention }) => {
   const { values } = useFormikContext<Record<string, any>>();
 
   return (
-    <div className="ml-14 mt-10 grid gap-6">
+    <div className="mt-10 grid gap-6 pb-6 pl-8 pr-5">
       {metamodeleTypeMention?.metamodelsBlocs
         .sort((blocA, blocB) => blocA.position - blocB.position)
         .map((bloc: IMetaModelBloc) => (
@@ -113,19 +129,6 @@ const AideALaSaisieMention: React.FC = () => {
             </div>
           </div>
         ))}
-
-      <div className="flex w-full justify-center pt-4">
-        <div className="w-full pr-5">
-          <Suspense fallback={<PageChargeur />}>
-            <ChampsZoneTexte
-              libelle="Texte mention"
-              name={TEXTE_MENTION}
-              className="h-48 w-full pb-4"
-              value={metamodeleTypeMention?.modeleHandleBars}
-            />
-          </Suspense>
-        </div>
-      </div>
     </div>
   );
 };

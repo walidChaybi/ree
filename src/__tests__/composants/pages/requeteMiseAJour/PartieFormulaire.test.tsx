@@ -39,8 +39,10 @@ describe("Test PartieFormulaire", () => {
 
     render(<RouterProvider router={router} />);
 
-    expect(screen.getByText("Mentions")).toBeDefined();
-    expect(screen.queryByText("Analyse Marginale")).toBeNull();
+    await waitFor(() => {
+      expect(screen.getByText("Mentions")).toBeDefined();
+      expect(screen.queryByText("Analyse Marginale")).toBeNull();
+    });
   });
 
   test("affiche les bons onglets si l'utilisateur est en mise a jour analyse marginale uniquement", async () => {
@@ -64,8 +66,10 @@ describe("Test PartieFormulaire", () => {
 
     render(<RouterProvider router={router} />);
 
-    expect(screen.queryByText("Mentions")).toBeNull();
-    expect(screen.getByText("Analyse Marginale")).toBeDefined();
+    await waitFor(() => {
+      expect(screen.queryByText("Mentions")).toBeNull();
+      expect(screen.getByText("Analyse Marginale")).toBeDefined();
+    });
   });
 
   test("Les boutons de validation et d'actualisation apparaissent avec les bons droits", async () => {
@@ -162,12 +166,12 @@ describe("Test PartieFormulaire", () => {
       ["/"]
     );
 
-    const { container } = render(<RouterProvider router={router} />);
+    render(<RouterProvider router={router} />);
 
-    expect(container.firstElementChild?.classList).toContain("partie-formulaire");
-
-    expect(screen.getByText("Analyse Marginale")).toBeDefined();
-    await waitFor(() => expect(screen.getByText("Nom")).toBeDefined());
+    await waitFor(() => {
+      expect(screen.getByText("Analyse Marginale")).toBeDefined();
+      expect(screen.getByText("Nom")).toBeDefined();
+    });
   });
 
   test("La page chargeur ne s'affiche que lors d'un appel API", async () => {

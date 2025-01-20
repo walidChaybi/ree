@@ -110,6 +110,7 @@ export const configEtatcivil = [
 
       if (
         match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134a/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true" ||
+        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true" ||
         match[1] ===
           "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134a/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&recupereImagesEtTexte=true" ||
         match[1] ===

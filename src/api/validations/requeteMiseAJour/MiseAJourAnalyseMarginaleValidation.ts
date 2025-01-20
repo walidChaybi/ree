@@ -4,6 +4,7 @@ import { IMajMention } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequete
 import { getMotif } from "@pages/requeteMiseAJour/apercuRequete/contenu/MiseAJourAnalyseMarginale/MiseAJourAnalyseMarginale";
 import { getPremiereOuSecondeValeur } from "@util/Utils";
 import * as Yup from "yup";
+import { IAnalyseMarginaleMiseAJour } from "../../../composants/pages/requetesMiseAJour/PartieFormulaire";
 
 export interface IMiseAJourAnalyseMarginaleValeursForm {
   analyseMarginale: {
@@ -56,11 +57,11 @@ export const MiseAJourAnalyseMarginaleValeursForm = {
     };
   },
 
-  versDto: (valeurs: IMiseAJourAnalyseMarginaleValeursForm): IMiseAJourAnalyseMarginaleDto => {
-    const secable = valeurs.nomSecable.secable;
-    const nomPartie1 = secable ? valeurs.nomSecable.nomPartie1 : null;
-    const nomPartie2 = secable ? valeurs.nomSecable.nomPartie2 : null;
-    const prenomsFormulaire = valeurs.analyseMarginale.prenoms;
+  versDto: (valeurs: IAnalyseMarginaleMiseAJour): IMiseAJourAnalyseMarginaleDto => {
+    const secable = valeurs.nomSecable;
+    const nomPartie1 = secable ? valeurs.nomPartie1 : null;
+    const nomPartie2 = secable ? valeurs.nomPartie2 : null;
+    const prenomsFormulaire = valeurs.prenoms;
     const prenoms = Object.keys(prenomsFormulaire)
       .map((clePrenom: string) => ({
         ordre: parseInt(clePrenom.replace("prenom", "")) ?? 0,
@@ -71,11 +72,11 @@ export const MiseAJourAnalyseMarginaleValeursForm = {
       .filter(prenom => Boolean(prenom));
 
     return {
-      motifModification: valeurs.analyseMarginale.motif,
+      motifModification: valeurs.motif,
       titulaires: [
         {
           ordre: 1,
-          nom: valeurs.analyseMarginale.nom.trim(),
+          nom: valeurs.nom.trim(),
           prenoms: prenoms,
           nomPartie1: nomPartie1?.trim() ?? null,
           nomPartie2: nomPartie2?.trim() ?? null

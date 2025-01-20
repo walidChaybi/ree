@@ -1,17 +1,5 @@
-import {
-  closestCenter,
-  DndContext,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors
-} from "@dnd-kit/core";
-import {
-  SortableContext,
-  sortableKeyboardCoordinates,
-  useSortable,
-  verticalListSortingStrategy
-} from "@dnd-kit/sortable";
+import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import DeleteOutlined from "@mui/icons-material/DeleteOutlined";
 import DragHandle from "@mui/icons-material/DragHandle";
@@ -52,9 +40,7 @@ export interface ListeItem {
 
 type ListeItemAvecIndex = ListeItem & { index: number };
 
-export const ListeGlisserDeposer: React.FC<
-  ListeGlisserDeposerProps
-> = props => {
+export const ListeGlisserDeposer: React.FC<ListeGlisserDeposerProps> = props => {
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -63,14 +49,7 @@ export const ListeGlisserDeposer: React.FC<
   );
 
   const SortableItem: React.FC<ListeItemAvecIndex> = item => {
-    const {
-      attributes,
-      listeners,
-      setNodeRef,
-      transform,
-      transition,
-      setActivatorNodeRef
-    } = useSortable({
+    const { attributes, listeners, setNodeRef, transform, transition, setActivatorNodeRef } = useSortable({
       id: item.id
     });
 
@@ -141,20 +120,18 @@ export const ListeGlisserDeposer: React.FC<
             />
           )}
           {props.libellesSontTitres ? (
-            <h2 className="titre" title={item.libelle}>
-              {props.nombreCaracteresMaximum &&
-                finirAvec3petitsPoints(
-                  item.libelle,
-                  props.nombreCaracteresMaximum
-                )}
+            <h2
+              className="titre"
+              title={item.libelle}
+            >
+              {props.nombreCaracteresMaximum && finirAvec3petitsPoints(item.libelle, props.nombreCaracteresMaximum)}
             </h2>
           ) : (
-            <p className="titre" title={item.libelle}>
-              {props.nombreCaracteresMaximum &&
-                finirAvec3petitsPoints(
-                  item.libelle,
-                  props.nombreCaracteresMaximum
-                )}
+            <p
+              className="titre"
+              title={item.libelle}
+            >
+              {props.nombreCaracteresMaximum && finirAvec3petitsPoints(item.libelle, props.nombreCaracteresMaximum)}
             </p>
           )}
         </span>
@@ -167,15 +144,8 @@ export const ListeGlisserDeposer: React.FC<
     (event: any) => {
       const { active, over } = event;
 
-      if (
-        active.data.current.sortable.index !==
-          over.data.current.sortable.index &&
-        props.handleReorga
-      ) {
-        props.handleReorga(
-          active.data.current.sortable.index,
-          over.data.current.sortable.index
-        );
+      if (active.data.current.sortable.index !== over.data.current.sortable.index && props.handleReorga) {
+        props.handleReorga(active.data.current.sortable.index, over.data.current.sortable.index);
       }
     },
     [props]
@@ -198,7 +168,10 @@ export const ListeGlisserDeposer: React.FC<
 
     if (props.afficheInfoBulle) {
       return (
-        <Tooltip key={`tooltip-${el.id}`} title={el.libelle}>
+        <Tooltip
+          key={`tooltip-${el.id}`}
+          title={el.libelle}
+        >
           {component}
         </Tooltip>
       );
@@ -224,12 +197,8 @@ export const ListeGlisserDeposer: React.FC<
     </DndContext>
   );
 };
-function afficherHandle(
-  props: React.PropsWithChildren<ListeGlisserDeposerProps>
-) {
-  return (
-    props.handleReorga && props.liste?.length !== 1 && props.afficheDragHandle
-  );
+function afficherHandle(props: React.PropsWithChildren<ListeGlisserDeposerProps>) {
+  return props.handleReorga && props.liste?.length !== 1 && props.afficheDragHandle;
 }
 
 ListeGlisserDeposer.defaultProps = {

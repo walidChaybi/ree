@@ -1,7 +1,4 @@
 import TRAITEMENT_ABANDONNER_MISE_A_JOUR from "@api/traitements/TraitementAbandonnerMiseAJour";
-import { IMajAnalyseMarginale } from "@hook/acte/EnregistrerMentionsApiHook";
-import { IMetamodeleTypeMention } from "@model/etatcivil/acte/mention/IMetaModeleTypeMention";
-import { IMajMention } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
 import React, { createContext, useEffect, useMemo, useState } from "react";
 import PageChargeur from "../composants/commun/chargeurs/PageChargeur";
 import { useCreateBlocker } from "../hooks/CreateBlocker";
@@ -18,20 +15,13 @@ interface IEditionMiseAJourContext {
   idActe: string;
   idRequete: string;
   ongletsActifs: {
-    actes: string;
-    formulaires: string;
+    actes: ECleOngletsMiseAJour;
+    formulaires: ECleOngletsMiseAJour;
   };
   miseAJourEffectuee: boolean;
   composerActeMisAJour: boolean;
   estMiseAJourAvecMentions: boolean;
-  listeMentions: IMajMention[];
-  analyseMarginale: IMajAnalyseMarginale | null;
-  estFormulaireAnalyseMarginaleModifie: boolean;
-  estMentionEnCoursDeSaisie: boolean;
-  listeMentionsEnregistrees: IMajMention[];
   estActeSigne: boolean;
-  indexMentionModifiee?: number;
-  metamodeleTypeMention?: IMetamodeleTypeMention;
 }
 
 interface IEditionMiseAJourContextActions {
@@ -39,20 +29,7 @@ interface IEditionMiseAJourContextActions {
   activerOngletActeMisAJour: () => void;
   setComposerActeMisAJour: React.Dispatch<React.SetStateAction<boolean>>;
   desactiverBlocker: () => void;
-  setListeMentions: React.Dispatch<React.SetStateAction<IMajMention[]>>;
-  setAnalyseMarginale: React.Dispatch<React.SetStateAction<IMajAnalyseMarginale | null>>;
-  setEstFormulaireAnalyseMarginaleModifie: React.Dispatch<React.SetStateAction<boolean>>;
-  setEstMentionEnCoursDeSaisie: React.Dispatch<React.SetStateAction<boolean>>;
-
-  setListeMentionsEnregistrees: React.Dispatch<React.SetStateAction<IMajMention[]>>;
   setEstActeSigne: React.Dispatch<React.SetStateAction<boolean>>;
-  setIndexMentionModifiee: React.Dispatch<React.SetStateAction<number | undefined>>;
-  setMetamodeleTypeMention: React.Dispatch<React.SetStateAction<IMetamodeleTypeMention | undefined>>;
-}
-
-interface ITypeMentionsSelectionnes {
-  listesTypesMention: { mentionNiveauUn: string; mentionNiveauDeux: string; mentionNiveauTrois: string };
-  texteMention: string;
 }
 
 export const EditionMiseAJourContext = {
@@ -72,20 +49,13 @@ const EditionMiseAJourContextProvider: React.FC<React.PropsWithChildren<IEdition
   estMiseAJourAvecMentions,
   children
 }) => {
-  const [ongletsActifs, setOngletsActifs] = useState({
+  const [ongletsActifs, setOngletsActifs] = useState<{ actes: ECleOngletsMiseAJour; formulaires: ECleOngletsMiseAJour }>({
     actes: ECleOngletsMiseAJour.ACTE,
     formulaires: estMiseAJourAvecMentions ? ECleOngletsMiseAJour.MENTIONS : ECleOngletsMiseAJour.ANALYSE_MARGINALE
   });
   const [miseAJourEffectuee, setMiseAJourEffectuee] = useState<boolean>(false);
   const [composerActeMisAJour, setComposerActeMisAJour] = useState<boolean>(false);
-  const [listeMentions, setListeMentions] = useState<IMajMention[]>([]);
-  const [analyseMarginale, setAnalyseMarginale] = useState<IMajAnalyseMarginale | null>(null);
-  const [estFormulaireAnalyseMarginaleModifie, setEstFormulaireAnalyseMarginaleModifie] = useState<boolean>(false);
-  const [estMentionEnCoursDeSaisie, setEstMentionEnCoursDeSaisie] = useState<boolean>(false);
-  const [listeMentionsEnregistrees, setListeMentionsEnregistrees] = useState<IMajMention[]>([]);
   const [estActeSigne, setEstActeSigne] = useState<boolean>(false);
-  const [indexMentionModifiee, setIndexMentionModifiee] = useState<number>();
-  const [metamodeleTypeMention, setMetamodeleTypeMention] = useState<IMetamodeleTypeMention>();
 
   const { lancerTraitement: lancerTraitementAbandonner, traitementEnCours: abandonEnCours } =
     useTraitementApi(TRAITEMENT_ABANDONNER_MISE_A_JOUR);
@@ -123,31 +93,9 @@ const EditionMiseAJourContextProvider: React.FC<React.PropsWithChildren<IEdition
       miseAJourEffectuee,
       composerActeMisAJour,
       estMiseAJourAvecMentions,
-      listeMentions,
-      analyseMarginale,
-      estFormulaireAnalyseMarginaleModifie,
-      estMentionEnCoursDeSaisie,
-      listeMentionsEnregistrees,
-      estActeSigne,
-      indexMentionModifiee,
-      metamodeleTypeMention
+      estActeSigne
     }),
-    [
-      idActe,
-      idRequete,
-      ongletsActifs,
-      miseAJourEffectuee,
-      composerActeMisAJour,
-      estMiseAJourAvecMentions,
-      listeMentions,
-      analyseMarginale,
-      estFormulaireAnalyseMarginaleModifie,
-      estMentionEnCoursDeSaisie,
-      listeMentionsEnregistrees,
-      estActeSigne,
-      indexMentionModifiee,
-      metamodeleTypeMention
-    ]
+    [idActe, idRequete, ongletsActifs, miseAJourEffectuee, composerActeMisAJour, estMiseAJourAvecMentions, estActeSigne]
   );
 
   const actionsContext = useMemo<IEditionMiseAJourContextActions>(
@@ -165,14 +113,7 @@ const EditionMiseAJourContextProvider: React.FC<React.PropsWithChildren<IEdition
       },
       setComposerActeMisAJour,
       desactiverBlocker: gestionBlocker.desactiverBlocker,
-      setListeMentions,
-      setAnalyseMarginale,
-      setEstFormulaireAnalyseMarginaleModifie,
-      setEstMentionEnCoursDeSaisie,
-      setListeMentionsEnregistrees,
-      setEstActeSigne,
-      setIndexMentionModifiee,
-      setMetamodeleTypeMention
+      setEstActeSigne
     }),
     []
   );
