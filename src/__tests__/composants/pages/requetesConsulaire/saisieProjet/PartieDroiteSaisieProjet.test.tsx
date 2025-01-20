@@ -19,7 +19,6 @@ describe("PartieDroiteSaisieProjet - Tests du composant", () => {
     expect(boutonMentions).toBeDefined();
     fireEvent.click(screen.getByTitle("Gérer les mentions"));
     await waitFor(() => {
-      screen.debug();
       expect(screen.getByText("GestionMention")).toBeDefined();
     });
   });

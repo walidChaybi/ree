@@ -70,4 +70,80 @@ describe("ChampDate", () => {
     await act(() => fireEvent.blur(moisInput));
     expect(moisInput.value).toBe("12");
   });
+  test("Le champ heure n'est pas présent", async () => {
+    renderComponent();
+    expect(screen?.queryByPlaceholderText("HH")).toBeNull();
+  });
+  test("Le champ Minute n'est pas présent", async () => {
+    renderComponent();
+    expect(screen.queryByPlaceholderText("MIN")).toBeNull();
+  });
+});
+describe("ChampHeure", () => {
+  const renderComponent = (name = "test", libelle = "Date de naissance") => {
+    return render(
+      <Formik
+        initialValues={{ test: { jour: "", mois: "", annee: "", heure: "", minutes: "" } }}
+        onSubmit={() => {}}
+      >
+        <ChampDate
+          name={name}
+          libelle={libelle}
+          avecHeure={true}
+        />
+      </Formik>
+    );
+  };
+
+  test("render le composant correctement", () => {
+    renderComponent();
+    expect(screen.getByLabelText("Date de naissance")).toBeDefined();
+  });
+
+  test("L'heure est remplissable correctement", async () => {
+    renderComponent();
+    const heureInput: HTMLInputElement = screen.getByPlaceholderText("HH");
+    await act(() => fireEvent.change(heureInput, { target: { value: "12" } }));
+    await act(() => fireEvent.blur(heureInput));
+    expect(heureInput.value).toBe("12");
+  });
+
+  test("Le champ minutes est remplissable correctement", async () => {
+    renderComponent();
+    const minutesInput: HTMLInputElement = screen.getByPlaceholderText("MIN");
+    await act(() => fireEvent.change(minutesInput, { target: { value: "5" } }));
+    await act(() => fireEvent.blur(minutesInput));
+    expect(minutesInput.value).toBe("05");
+  });
+
+  test("Change le focus du champ année lorsque les 4 chiffres sont entrés", async () => {
+    renderComponent();
+    const anneeInput = screen.getByPlaceholderText("AAAA");
+    const heureInput = screen.getByPlaceholderText("HH");
+    await act(() => fireEvent.change(anneeInput, { target: { value: "1991" } }));
+    expect(document.activeElement).toBe(heureInput);
+  });
+  test("Change le focus du champ heure lorsque les deux chiffres sont entrés", async () => {
+    renderComponent();
+    const heureInput = screen.getByPlaceholderText("HH");
+    const minutesInput = screen.getByPlaceholderText("MIN");
+    await act(() => fireEvent.change(heureInput, { target: { value: "11" } }));
+    expect(document.activeElement).toBe(minutesInput);
+  });
+
+  test("Empêche de dépasser le nombre d'heures maximal", async () => {
+    renderComponent();
+    const heureInput: HTMLInputElement = screen.getByPlaceholderText("HH");
+    await act(() => fireEvent.change(heureInput, { target: { value: "33" } }));
+    await act(() => fireEvent.blur(heureInput));
+    expect(heureInput.value).toBe("23");
+  });
+
+  test("Empêche de dépasser le nombre de minutes maximal", async () => {
+    renderComponent();
+    const minutesInput: HTMLInputElement = screen.getByPlaceholderText("MIN");
+    await act(() => fireEvent.change(minutesInput, { target: { value: "78" } }));
+    await act(() => fireEvent.blur(minutesInput));
+    expect(minutesInput.value).toBe("59");
+  });
 });

@@ -68,7 +68,7 @@ const LieuForm: React.FC<LieuFormProps> = props => {
   }
 
   function getValeur(champ: JSX.Element): string {
-    return props.formik.getFieldProps(champ.props.name).value;
+    return props.formik.getFieldProps(champ?.props.name).value;
   }
 
   function reinitialiserErreurs() {

@@ -5,9 +5,19 @@ import { useMemo } from "react";
 type TChampsTexteProps = React.InputHTMLAttributes<HTMLInputElement> & {
   libelle: string;
   numerique?: boolean;
+  optionFormatage?: TFormatChampsTexte;
 };
 
-const ChampsTexte: React.FC<TChampsTexteProps> = ({ name, libelle, className, maxLength, numerique = false, ...props }) => {
+type TFormatChampsTexte = "PREMIER_MAJUSCULE" | "NOMS_PROPRES" | "MAJUSCULES" | "SANS_ESPACES";
+const ChampsTexte: React.FC<TChampsTexteProps> = ({
+  name,
+  libelle,
+  className,
+  maxLength,
+  numerique = false,
+  optionFormatage,
+  ...props
+}) => {
   const [field, meta] = useField(name as string);
   const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
 
@@ -24,11 +34,29 @@ const ChampsTexte: React.FC<TChampsTexteProps> = ({ name, libelle, className, ma
         className={`border-1 flex flex-grow rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
         maxLength={maxLength ?? CENT}
         onChange={event => {
-          if (numerique) event.target.value = event.target.value.replace(/\D/, "");
+          switch (true) {
+            case numerique:
+              event.target.value = event.target.value.replace(/\D/, "");
+              break;
+            case optionFormatage === "PREMIER_MAJUSCULE":
+              event.target.value = `${event.target.value?.charAt(0).toUpperCase()}${event.target.value?.substring(1)}`;
+              break;
+            case optionFormatage === "NOMS_PROPRES":
+              event.target.value = "";
+              break;
+            case optionFormatage === "MAJUSCULES":
+              event.target.value = event.target.value?.toUpperCase();
+              break;
+            case optionFormatage === "SANS_ESPACES":
+              event.target.value = event.target.value?.replace(/\s/g, "");
+              break;
+            default:
+              break;
+          }
           field.onChange(event);
         }}
         {...(() => {
-          const { onChange: _, ...propsFormik } = field;
+          const { onChange, onBlur, ...propsFormik } = field;
 
           return propsFormik;
         })()}

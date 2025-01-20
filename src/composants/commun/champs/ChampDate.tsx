@@ -3,22 +3,31 @@ import { useEffect, useMemo, useRef } from "react";
 
 type TChampDateProps = React.InputHTMLAttributes<HTMLInputElement> & {
   libelle: string;
+  avecHeure?: boolean;
+  className?: string;
 };
 
-const ChampDate: React.FC<TChampDateProps> = ({ name, libelle }) => {
+const ChampDate: React.FC<TChampDateProps> = ({ name, libelle, avecHeure = false, className = "" }) => {
   const champsDate = useMemo(
     () => ({
       jour: `${name}.jour`,
       mois: `${name}.mois`,
-      annee: `${name}.annee`
+      annee: `${name}.annee`,
+      heure: `${name}.heure`,
+      minutes: `${name}.minutes`
     }),
     [name]
   );
   const [fieldJour, metaJour, helpersJour] = useField(champsDate.jour);
   const [fieldMois, metaMois, helpersMois] = useField(champsDate.mois);
   const [fieldAnnee, metaAnnee, helpersAnnee] = useField(champsDate.annee);
+  const [fieldHeure, metaHeure, helpersHeure] = useField(champsDate.heure);
+  const [fieldMinutes, metaMinutes, helpersMinutes] = useField(champsDate.minutes);
   const refMois = useRef<HTMLInputElement | null>(null);
   const refAnnee = useRef<HTMLInputElement | null>(null);
+  const refHeure = useRef<HTMLInputElement | null>(null);
+  const refMinutes = useRef<HTMLInputElement | null>(null);
+
   const erreurs = useMemo(() => {
     const dateEnCompletion =
       [champsDate.jour, champsDate.mois].includes(document.activeElement?.getAttribute("id") ?? "") || !metaAnnee.touched;
@@ -35,9 +44,16 @@ const ChampDate: React.FC<TChampDateProps> = ({ name, libelle }) => {
   useEffect(() => {
     metaMois?.value?.length === 2 && refAnnee.current?.focus();
   }, [metaMois?.value]);
+  useEffect(() => {
+    metaAnnee?.value?.length === 4 && avecHeure && refHeure.current?.focus();
+  }, [metaAnnee?.value]);
+
+  useEffect(() => {
+    metaHeure?.value?.length === 2 && refMinutes.current?.focus();
+  }, [metaHeure?.value]);
 
   return (
-    <div className="w-full flex-wrap justify-between">
+    <div className={`${className} w-full flex-wrap justify-between`}>
       <label
         className={`m-0 mb-1 ml-1 block w-fit text-start transition-colors ${erreurs.length ? "text-rouge" : "text-bleu-sombre"}`}
         htmlFor={`${name}.jour`}
@@ -56,7 +72,7 @@ const ChampDate: React.FC<TChampDateProps> = ({ name, libelle }) => {
             fieldJour.onChange(event);
           }}
           onBlur={() => {
-            const jour = String(fieldJour.value);
+            const jour = String(fieldJour.value ?? "");
 
             let valeurJour = "";
             switch (true) {
@@ -89,7 +105,7 @@ const ChampDate: React.FC<TChampDateProps> = ({ name, libelle }) => {
             fieldMois.onChange(event);
           }}
           onBlur={() => {
-            const mois = String(fieldMois.value);
+            const mois = String(fieldMois.value ?? "");
 
             let valeurMois = "";
             switch (true) {
@@ -123,8 +139,74 @@ const ChampDate: React.FC<TChampDateProps> = ({ name, libelle }) => {
           }}
           onBlur={() => helpersAnnee.setTouched(true)}
         />
-      </div>
 
+        {avecHeure && (
+          <>
+            <span className="mx-1 text-xl">{"à"}</span>
+            <input
+              id={champsDate.heure}
+              ref={refHeure}
+              className={`border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${metaAnnee.error && erreurs.length ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
+              placeholder="HH"
+              maxLength={2}
+              value={fieldHeure.value}
+              onChange={event => {
+                event.target.value = event.target.value.replace(/\D/, "");
+                fieldHeure.onChange(event);
+              }}
+              onBlur={() => {
+                const heure = String(fieldHeure.value ?? "");
+
+                let valeurHeure = "";
+                switch (true) {
+                  case heure.length === 1:
+                    valeurHeure = `0${heure}`;
+                    break;
+                  case Number(heure) > 23:
+                    valeurHeure = "23";
+                    break;
+                  default:
+                    valeurHeure = heure;
+                    break;
+                }
+
+                helpersHeure.setValue(valeurHeure);
+              }}
+            />
+            <span className="mx-1 text-xl">{"h"}</span>
+            <input
+              id={champsDate.minutes}
+              ref={refMinutes}
+              className={`border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${metaAnnee.error && erreurs.length ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
+              placeholder="MIN"
+              maxLength={2}
+              value={fieldMinutes.value}
+              onChange={event => {
+                event.target.value = event.target.value.replace(/\D/, "");
+                fieldMinutes.onChange(event);
+              }}
+              onBlur={() => {
+                const minutes = String(fieldMinutes.value ?? "");
+
+                let valeurMinutes = "";
+                switch (true) {
+                  case minutes.length === 1:
+                    valeurMinutes = `0${minutes}`;
+                    break;
+                  case Number(minutes) > 60:
+                    valeurMinutes = "59";
+                    break;
+                  default:
+                    valeurMinutes = minutes;
+                    break;
+                }
+                helpersMinutes.setValue(valeurMinutes);
+              }}
+            />
+            <span className="mx-1 text-xl">{"min"}</span>
+          </>
+        )}
+      </div>
       {Boolean(erreurs.length) && <div className="text-start text-sm text-rouge">{erreurs[0]}</div>}
     </div>
   );
