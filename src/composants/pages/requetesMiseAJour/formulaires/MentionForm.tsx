@@ -117,7 +117,7 @@ const genererValeursInitialesAideALaSaisie = (metamodeleTypeMention: IMetamodele
           case "boolean":
             return false;
           case "select":
-            return champ.options[0];
+            return champ.valeurParDefaut ?? "";
           default:
             return "";
         }
@@ -136,17 +136,21 @@ const genererSchemaValidationAideALaSaisie = (metamodeleTypeMention?: IMetamodel
       const validationChamp = (() => {
         switch (champ.type) {
           case "text":
-            return SchemaValidation.texte({ libelle: champ.libelle, obligatoire: champ.obligatoire });
+            return SchemaValidation.texte({ libelle: champ.libelle, obligatoire: champ.estObligatoire });
           case "int":
-            return SchemaValidation.entier({ libelle: champ.libelle, obligatoire: champ.obligatoire });
+            return SchemaValidation.entier({ libelle: champ.libelle, obligatoire: champ.estObligatoire });
           case "boolean":
-            return SchemaValidation.booleen({ libelle: champ.libelle, obligatoire: champ.obligatoire });
+            return SchemaValidation.booleen({ libelle: champ.libelle, obligatoire: champ.estObligatoire });
           case "select":
-            return SchemaValidation.listeDeroulante({ libelle: champ.libelle, options: champ.options, obligatoire: champ.obligatoire });
+            return SchemaValidation.listeDeroulante({
+              libelle: champ.libelle,
+              valeursPossibles: champ.valeursPossibles,
+              obligatoire: champ.estObligatoire
+            });
           case "dateComplete":
-            return SchemaValidation.dateComplete({ libelle: champ.libelle, obligatoire: champ.obligatoire });
+            return SchemaValidation.dateComplete({ libelle: champ.libelle, obligatoire: champ.estObligatoire });
           case "dateIncomplete":
-            return SchemaValidation.dateIncomplete({ obligatoire: champ.obligatoire });
+            return SchemaValidation.dateIncomplete({ obligatoire: champ.estObligatoire });
           default:
             return SchemaValidation.inconnu();
         }
@@ -212,7 +216,7 @@ const MentionForm: React.FC<IMentionFormProps> = ({ onFormDirty, infoTitulaire }
         apresErreur: erreurs => {
           logError({
             messageUtilisateur: "Impossible de récupérer les metamodeles",
-            error: erreurs[0]
+            error: erreurs?.[0]
           });
           setValeurDefaut((prec: any) => ({ ...prec, texteMention: "" }));
         }
@@ -251,22 +255,21 @@ const MentionForm: React.FC<IMentionFormProps> = ({ onFormDirty, infoTitulaire }
             setIdTypeMentionChoisi={id => setTypeMentionChoisi(typesMentionDisponibles.find(mention => mention.id === id) ?? null)}
           />
 
-          {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_AIDE_A_LA_SAISIE_MENTION) && metamodeleTypeMention && (
-            <AideALaSaisieMention metamodeleTypeMention={metamodeleTypeMention} />
-          )}
-
-          {typeMentionChoisi && (
-            <div className="flex w-full justify-center pt-4">
-              <div className="w-11/12">
-                <ChampsZoneTexte
-                  libelle="Texte mention"
-                  name={TEXTE_MENTION}
-                  className="h-48 w-full pb-4"
-                  value={metamodeleTypeMention ? metamodeleTypeMention?.modeleHandleBars : ""}
-                />
+          {typeMentionChoisi &&
+            (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_AIDE_A_LA_SAISIE_MENTION) && metamodeleTypeMention ? (
+              <AideALaSaisieMention metamodeleTypeMention={metamodeleTypeMention} />
+            ) : (
+              <div className="flex w-full justify-center pt-4">
+                <div className="w-11/12">
+                  <ChampsZoneTexte
+                    libelle="Texte mention"
+                    name={TEXTE_MENTION}
+                    className="h-48 w-full pb-4"
+                    value={metamodeleTypeMention ? metamodeleTypeMention?.modeleHandleBars : ""}
+                  />
+                </div>
               </div>
-            </div>
-          )}
+            ))}
 
           <div className="mr-6 mt-4 flex justify-end gap-6">
             {typeMentionChoisi && (

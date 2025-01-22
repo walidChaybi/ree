@@ -25,7 +25,8 @@ module.exports = {
         gris: {
           DEFAULT: "#cccccc",
           sombre: "#888888",
-          clair: "#f5f5f5"
+          clair: "#f5f5f5",
+          transparent: "#cccccc60"
         },
         bordure: {
           DEFAULT: "#8080805c"

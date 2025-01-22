@@ -12,14 +12,20 @@ export interface IMetaModelBloc {
   champs: IChamp[];
 }
 
+export interface IValeursPossibles {
+  valeurs: string[];
+  conditions: IExigence[];
+}
+
 export interface IChamp {
   id: string;
   libelle: string;
   position: number;
   type: string;
-  obligatoire: boolean | IExigence[];
-  exigencesPourValorisation: IExigence[];
-  options: string[];
+  estObligatoire: IExigence[];
+  estAffiche: IExigence[];
+  valeursPossibles: IValeursPossibles[];
+  valeurParDefaut?: string;
 }
 
 export interface IExigence {
