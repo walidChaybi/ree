@@ -56,7 +56,7 @@ const ChampsTexte: React.FC<TChampsTexteProps> = ({
           field.onChange(event);
         }}
         {...(() => {
-          const { onChange, onBlur, ...propsFormik } = field;
+          const { onChange, ...propsFormik } = field;
 
           return propsFormik;
         })()}

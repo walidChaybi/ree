@@ -20,21 +20,22 @@ const gestionObligation = (schema: Yup.AnySchema, libelle: string, obligatoire: 
   }
 
   obligatoire.some((obligation: IExigence) => {
-    if (obligation.operateur === "AlwaysTrue") {
-      schema = schema.required(messageObligatoire);
-
-      return true;
+    switch (obligation.operateur) {
+      case "AlwaysTrue":
+        schema = schema.required(messageObligatoire);
+        return true;
+      case "AlwaysFalse":
+        return true;
+      default:
+        schema = schema.when(`$${obligation.idChampReference}`, {
+          is: (valeurChamp: TValeurChamp) =>
+            obligation.operateur === "=="
+              ? obligation.valeurs?.includes((valeurChamp ?? "").toString())
+              : !obligation.valeurs?.includes((valeurChamp ?? "").toString()),
+          then: schema.required(messageObligatoire)
+        });
+        return false;
     }
-
-    if (obligation.operateur === "AlwaysFalse") return true;
-
-    schema = schema.when(`$${obligation.idChampReference}`, {
-      is: (valeurChamp: TValeurChamp) =>
-        obligation.operateur === "=="
-          ? obligation.valeurs?.includes((valeurChamp ?? "").toString())
-          : !obligation.valeurs?.includes((valeurChamp ?? "").toString()),
-      then: schema.required(messageObligatoire)
-    });
   });
 
   return schema;
@@ -70,21 +71,22 @@ const SchemaValidation = {
     if (schemaParams.valeursPossibles) {
       schemaParams.valeursPossibles.forEach((valeurPossible: IValeursPossibles) => {
         valeurPossible.conditions.some((obligation: IExigence) => {
-          if (obligation.operateur === "AlwaysTrue") {
-            schema = schema.oneOf(valeurPossible.valeurs, messageObligatoire);
-
-            return true;
+          switch (obligation.operateur) {
+            case "AlwaysTrue":
+              schema = schema.oneOf(valeurPossible.valeurs, messageObligatoire);
+              return true;
+            case "AlwaysFalse":
+              return true;
+            default:
+              schema = schema.when(`$${obligation.idChampReference}`, {
+                is: (valeurChamp: TValeurChamp) =>
+                  obligation.operateur === "=="
+                    ? obligation.valeurs?.includes((valeurChamp ?? "").toString())
+                    : !obligation.valeurs?.includes((valeurChamp ?? "").toString()),
+                then: schema.oneOf(valeurPossible.valeurs, messageObligatoire)
+              });
+              return false;
           }
-
-          if (obligation.operateur === "AlwaysFalse") return true;
-
-          schema = schema.when(`$${obligation.idChampReference}`, {
-            is: (valeurChamp: TValeurChamp) =>
-              obligation.operateur === "=="
-                ? obligation.valeurs?.includes((valeurChamp ?? "").toString())
-                : !obligation.valeurs?.includes((valeurChamp ?? "").toString()),
-            then: schema.oneOf(valeurPossible.valeurs, messageObligatoire)
-          });
         });
       });
     }

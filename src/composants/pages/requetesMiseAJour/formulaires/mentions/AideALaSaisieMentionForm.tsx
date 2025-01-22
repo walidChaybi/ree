@@ -1,7 +1,8 @@
+import { TEXTE_MENTION } from "@composant/formulaire/ConstantesNomsForm";
 import { IChamp, IMetaModelBloc, IMetamodeleTypeMention, IValeursPossibles } from "@model/etatcivil/acte/mention/IMetaModeleTypeMention";
 import { useField, useFormikContext } from "formik";
 import React, { Suspense, lazy, useMemo } from "react";
-import { TexteMentionAideALaSaisie } from "./GenerateurTexteSaisieMention";
+import ChampsZoneTexte from "../../../../commun/champs/ChampsZoneTexte";
 
 // A tester Alexandre 22/01/25
 /* v8 ignore start */
@@ -162,10 +163,23 @@ const AideALaSaisieMention: React.FC<IAideALaSaisieMention> = ({ metamodeleTypeM
           </div>
         ))}
       {metamodeleTypeMention !== null && metamodeleTypeMention.modeleHandleBars && (
-        <TexteMentionAideALaSaisie
+        //! --- START --- A modifier une fois HandleBar remplacé
+        <div className="flex w-full justify-center pt-4">
+          <div className="w-full pr-4">
+            <ChampsZoneTexte
+              libelle="Texte mention"
+              name={TEXTE_MENTION}
+              className="h-48 w-full pb-4"
+              value={metamodeleTypeMention ? metamodeleTypeMention?.modeleHandleBars : ""}
+            />
+          </div>
+        </div>
+        //* A remplacer avec la librairie fait maison de remplacement de text
+        /* <TexteMentionAideALaSaisie
           blocs={metamodeleTypeMention.metamodelsBlocs}
           templateTexteMention={metamodeleTypeMention.modeleHandleBars}
-        />
+        />*/
+        //! --- STOP ---
       )}
     </div>
   );

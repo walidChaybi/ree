@@ -14,13 +14,14 @@ interface IDate {
 
 const MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
 
-const formaterDate = ({ jour, mois, annee }: IDate): string => {
-  if (jour && mois && annee) return `le ${jour.replace(/^0/, "")}${jour === "01" ? "er" : ""} ${MOIS[parseInt(mois, 10) - 1]} ${annee}`;
-
-  return `en ${mois ? MOIS[parseInt(mois, 10) - 1] : ""} ${annee}`;
+const FormaterTexteHelper = {
+  formaterDate: ({ jour, mois, annee }: IDate): string => {
+    return jour && mois && annee
+      ? `le ${jour.replace(/^0/, "")}${jour === "01" ? "er" : ""} ${MOIS[parseInt(mois, 10) - 1]} ${annee}`
+      : `en ${mois ? MOIS[parseInt(mois, 10) - 1] : ""} ${annee}`;
+  },
+  decoder: (str: string) => str.replace(/&#x27;/g, "'").replace(/&#39;/g, "'")
 };
-
-const decoder = (str: string) => str.replace(/&#x27;/g, "'").replace(/&#39;/g, "'");
 
 const GenerateurMention = {
   ajouterHelpers: (valeurs: any, valeurDefaut: any) => {
@@ -29,11 +30,12 @@ const GenerateurMention = {
       const estValeurDate = typeof valeurRenseignee === "object";
 
       if (valeurRenseignee && (!estValeurDate || valeurRenseignee.annee)) {
-        return estValeurDate ? formaterDate(valeurRenseignee) : valeurRenseignee;
+        return estValeurDate ? FormaterTexteHelper.formaterDate(valeurRenseignee) : valeurRenseignee;
       }
 
       return `${recupererValeurAttribut(valeurDefaut, nomAttribut) ?? nomAttribut}`.toUpperCase();
     });
+
     Handlebars.registerHelper("eq", (valeur: string, comparaison: string) => valeur?.toString() === comparaison);
   },
 
@@ -66,13 +68,12 @@ export const TexteMentionAideALaSaisie: React.FC<{ blocs: IMetaModelBloc[]; temp
   templateTexteMention
 }) => {
   const valeursParDefaut = useMemo(() => genererValeursParDefaut(blocs), [blocs]);
-  console.log("Valeuers par defaut :  ", valeursParDefaut);
-  const { values } = useFormikContext<any>();
+  const { values, setFieldValue } = useFormikContext<any>();
   const [texteSaisie, setTexteSaisie] = useState("");
   const [textesEditables, setTextesEditables] = useState<{ [index: number]: any }>([]);
 
   const decouperTexteEditable = (texte: string) =>
-    decoder(texte)
+    FormaterTexteHelper.decoder(texte)
       .split(/\[\[|\]\]/)
       .filter(partieTexte => partieTexte)
       .map(texte => {
@@ -101,21 +102,25 @@ export const TexteMentionAideALaSaisie: React.FC<{ blocs: IMetaModelBloc[]; temp
         };
       });
 
-  const genererTexteFinal = () =>
-    decoder(texteSaisie)
-      .split(/\[\[|\]\]/)
-      .filter(partieTexte => partieTexte)
-      .map(texte => {
-        const donneesEditables = /^(\d+)@(.*)/.exec(texte);
-        if (!donneesEditables) {
-          return texte;
-        }
+  useEffect(() => {
+    setFieldValue(
+      "texteMention",
+      FormaterTexteHelper.decoder(texteSaisie)
+        .split(/\[\[|\]\]/)
+        .filter(partieTexte => partieTexte)
+        .map(texte => {
+          const donneesEditables = /^(\d+)@(.*)/.exec(texte);
+          if (!donneesEditables) {
+            return texte;
+          }
 
-        const indexEditable = parseInt(donneesEditables[1]);
+          const indexEditable = parseInt(donneesEditables[1]);
 
-        return textesEditables[indexEditable]?.edite ?? "";
-      })
-      .join("");
+          return textesEditables[indexEditable]?.edite ?? "";
+        })
+        .join("")
+    );
+  }, [texteSaisie, textesEditables]);
 
   useEffect(() => {
     setTexteSaisie(GenerateurMention.genererPourSaisie(templateTexteMention, values, valeursParDefaut));
