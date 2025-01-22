@@ -1,7 +1,4 @@
-import {
-  IQueryParametersPourRequetes,
-  TypeAppelRequete
-} from "@api/appels/requeteApi";
+import { IQueryParametersPourRequetes, TypeAppelRequete } from "@api/appels/requeteApi";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   NavigationApercuReqCreationParams,
@@ -15,10 +12,7 @@ import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUti
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { SortOrder } from "@widget/tableau/TableUtils";
-import {
-  NB_LIGNES_PAR_APPEL_DEFAUT,
-  NB_LIGNES_PAR_PAGE_DEFAUT
-} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import { NB_LIGNES_PAR_APPEL_DEFAUT, NB_LIGNES_PAR_PAGE_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useContext, useState } from "react";
 import { useRequeteCreationApiHook } from "../../../common/hook/requete/creation/RequeteCreationApiHook";
@@ -31,28 +25,17 @@ interface MesRequetesCreationProps {
   queryParametersPourRequetes: IQueryParametersPourRequetes;
 }
 
-export const MesRequetesCreation: React.FC<
-  MesRequetesCreationProps
-> = props => {
+export const MesRequetesCreation: React.FC<MesRequetesCreationProps> = props => {
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [paramsMiseAJour, setParamsMiseAJour] = useState<
-    ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
-  >();
-  const [paramsCreation, setParamsCreation] = useState<
-    NavigationApercuReqCreationParams | undefined
-  >();
+  const [paramsMiseAJour, setParamsMiseAJour] = useState<ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
+  const [paramsCreation, setParamsCreation] = useState<NavigationApercuReqCreationParams | undefined>();
 
-  const [linkParameters, setLinkParameters] =
-    useState<IQueryParametersPourRequetes>(props.queryParametersPourRequetes);
+  const [linkParameters, setLinkParameters] = useState<IQueryParametersPourRequetes>(props.queryParametersPourRequetes);
   const [enChargement, setEnChargement] = useState(true);
 
   const { decrets, utilisateurConnecte } = useContext(RECEContextData);
 
-  const { dataState, paramsTableau } = useRequeteCreationApiHook(
-    TypeAppelRequete.MES_REQUETES_CREATION,
-    setEnChargement,
-    linkParameters
-  );
+  const { dataState, paramsTableau } = useRequeteCreationApiHook(TypeAppelRequete.MES_REQUETES_CREATION, setEnChargement, linkParameters);
 
   useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
   useNavigationApercuCreation(paramsCreation);

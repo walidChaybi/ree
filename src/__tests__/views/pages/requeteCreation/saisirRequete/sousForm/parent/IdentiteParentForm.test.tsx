@@ -107,35 +107,3 @@ test.skip("DOIT rendre le composant d'identite du parent correctement", async ()
 
   fireEvent.click(boutonsCheckboxPasDePrenomConnu);
 });
-
-test("DOIT formater correctement", async () => {
-  render(<HookParentForm />);
-
-  const inputPaysStatutRefugie = screen.getByRole("textbox", {
-    name: /parents.parent1.paysStatutRefugie/i
-  });
-
-  const inputPaysOrigine = screen.getByRole("textbox", {
-    name: /parents.parent1.paysOrigine/i
-  });
-
-  fireEvent.blur(inputPaysStatutRefugie, {
-    target: {
-      value: "algérie"
-    }
-  });
-
-  fireEvent.blur(inputPaysOrigine, {
-    target: {
-      value: "tunisie"
-    }
-  });
-
-  const paysStatut: HTMLInputElement = screen.getByLabelText("Pays du statut de réfugié");
-  const paysOrigine: HTMLInputElement = screen.getByLabelText("Pays d'origine du réfugié");
-
-  await waitFor(() => {
-    expect(paysStatut.value).toBe("Algérie");
-    expect(paysOrigine.value).toBe("Tunisie");
-  });
-});

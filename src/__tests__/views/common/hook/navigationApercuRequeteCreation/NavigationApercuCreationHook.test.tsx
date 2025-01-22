@@ -10,6 +10,7 @@ import { ApercuRequeteEtablissementSimplePage } from "@pages/requeteCreation/ape
 import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
 import { ApercuReqCreationTranscriptionSaisieProjetPage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSaisieProjetPage";
 import {
+  URL_MES_REQUETES_CONSULAIRE,
   URL_MES_REQUETES_CREATION,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
@@ -71,12 +72,7 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
 
     render(routerAvecContexte(router));
 
-    expect(router.state.location.pathname).toBe(
-      apercuRequeteURL(
-        "apercurequetetranscriptionenpriseencharge",
-        paramsCreation.idRequete
-      )
-    );
+    expect(router.state.location.pathname).toBe(apercuRequeteURL("apercurequetetranscriptionenpriseencharge", paramsCreation.idRequete));
   });
 
   test("Doit rediriger sur l'aperçu de requête création transcription prise en charge quand le sousType est RCTC et que le statut est A_TRAITER", () => {
@@ -102,12 +98,7 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
 
     render(routerAvecContexte(router));
 
-    expect(router.state.location.pathname).toBe(
-      apercuRequeteURL(
-        "apercurequetetranscriptionenpriseencharge",
-        paramsCreation.idRequete
-      )
-    );
+    expect(router.state.location.pathname).toBe(apercuRequeteURL("apercurequetetranscriptionenpriseencharge", paramsCreation.idRequete));
   });
 
   test("Doit rediriger sur l'aperçu de requête création transcription prise en charge quand le sousType est RCTD et que le statut est PRISE_EN_CHARGE", () => {
@@ -132,12 +123,7 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
 
     render(routerAvecContexte(router));
 
-    expect(router.state.location.pathname).toBe(
-      apercuRequeteURL(
-        "apercurequetetranscriptionenpriseencharge",
-        paramsCreation.idRequete
-      )
-    );
+    expect(router.state.location.pathname).toBe(apercuRequeteURL("apercurequetetranscriptionenpriseencharge", paramsCreation.idRequete));
   });
 
   test("Doit rediriger sur l'aperçu de requête création transcription en traitement quand le sousType est RCTD et que le statut est EN_TRAITEMENT", () => {
@@ -169,12 +155,7 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
 
     render(routerAvecContexte(router));
 
-    expect(router.state.location.pathname).toBe(
-      apercuRequeteURL(
-        "apercurequetetranscriptionensaisieprojet",
-        paramsCreation.idRequete
-      )
-    );
+    expect(router.state.location.pathname).toBe(apercuRequeteURL("apercurequetetranscriptionensaisieprojet", paramsCreation.idRequete));
   });
 });
 
@@ -203,10 +184,7 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
     render(routerAvecContexte(router));
 
     expect(router.state.location.pathname).toBe(
-      apercuRequeteURL(
-        "apercurequetecreationetablissementsuividossier",
-        paramsCreation.idRequete
-      )
+      apercuRequeteURL("apercurequetecreationetablissementsuividossier", paramsCreation.idRequete)
     );
   });
 
@@ -234,10 +212,7 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
     render(routerAvecContexte(router));
 
     expect(router.state.location.pathname).toBe(
-      apercuRequeteURL(
-        "apercurequetecreationetablissementsuividossier",
-        paramsCreation.idRequete
-      )
+      apercuRequeteURL("apercurequetecreationetablissementsuividossier", paramsCreation.idRequete)
     );
   });
 
@@ -263,12 +238,7 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
 
     render(routerAvecContexte(router));
 
-    expect(router.state.location.pathname).toBe(
-      apercuRequeteURL(
-        "apercurequetecreationetablissementsimple",
-        paramsCreation.idRequete
-      )
-    );
+    expect(router.state.location.pathname).toBe(apercuRequeteURL("apercurequetecreationetablissementsimple", paramsCreation.idRequete));
   });
 
   test("Doit rediriger sur l'aperçu de requête de création suivi dossier QUAND le sousType est RCEXR et au statut Projet Validé", () => {
@@ -294,10 +264,7 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
     render(routerAvecContexte(router));
 
     expect(router.state.location.pathname).toBe(
-      apercuRequeteURL(
-        "apercurequetecreationetablissementsuividossier",
-        paramsCreation.idRequete
-      )
+      apercuRequeteURL("apercurequetecreationetablissementsuividossier", paramsCreation.idRequete)
     );
   });
 
@@ -324,10 +291,7 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
     render(routerAvecContexte(router));
 
     expect(router.state.location.pathname).toBe(
-      apercuRequeteURL(
-        "apercurequetecreationetablissementsuividossier",
-        paramsCreation.idRequete
-      )
+      apercuRequeteURL("apercurequetecreationetablissementsuividossier", paramsCreation.idRequete)
     );
   });
 
@@ -354,10 +318,7 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
     render(routerAvecContexte(router));
 
     expect(router.state.location.pathname).toBe(
-      apercuRequeteURL(
-        "apercurequetecreationetablissementsuividossier",
-        paramsCreation.idRequete
-      )
+      apercuRequeteURL("apercurequetecreationetablissementsuividossier", paramsCreation.idRequete)
     );
   });
 
@@ -384,16 +345,14 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
     render(routerAvecContexte(router));
 
     expect(router.state.location.pathname).toBe(
-      apercuRequeteURL(
-        "apercurequetecreationetablissementsuividossier",
-        paramsCreation.idRequete
-      )
+      apercuRequeteURL("apercurequetecreationetablissementsuividossier", paramsCreation.idRequete)
     );
   });
-
 });
 
 function apercuRequeteURL(apercuRequete: string, idRequete: string) {
-  return `${URL_MES_REQUETES_CREATION}/${apercuRequete}/${idRequete}`;
+  if (apercuRequete.includes("etablissement")) {
+    return `${URL_MES_REQUETES_CREATION}/${apercuRequete}/${idRequete}`;
+  }
+  return `${URL_MES_REQUETES_CONSULAIRE}/${apercuRequete}/${idRequete}`;
 }
-

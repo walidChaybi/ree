@@ -52,12 +52,12 @@
     text-align: end;
     margin: 0 1rem;
     line-height: 4rem;
-    
+
     button {
       color: white;
       text-transform: initial;
       font-family: $application-font-family;
-      font-size: 1.2rem;      
+      font-size: 1.2rem;
 
       &:focus,
       &:hover {
@@ -77,8 +77,9 @@
   ul {
     background-color: $button-application-color;
     color: white;
+
     li svg {
-      margin-right: 0.3rem;
+      padding: 0.5rem;
     }
   }
   li:hover {

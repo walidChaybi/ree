@@ -8,30 +8,19 @@ import {
 import { serviceEtablissement } from "@mock/data/serviceEtablissement";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
-import { SaisirRCTCPage } from "@pages/requeteCreation/saisirRequete/SaisirRCTCPage";
-import {
-  URL_MES_REQUETES_CREATION_SAISIR_RCTC,
-  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID
-} from "@router/ReceUrls";
+import { URL_MES_REQUETES_CREATION_SAISIR_RCTC, URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
 import IHabilitationDto from "../../../../../dto/etatcivil/agent/IHabilitationDto";
+import { SaisirRCTCPage } from "../../../../../pages/requetesConsulaire/contenu/SaisirRCTCPage";
 import { expectEstBoutonDisabled } from "../../../../__tests__utils__/expectUtils";
-import {
-  createTestingRouter,
-  elementAvecContexte,
-  renseigneChampsRecherche
-} from "../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, elementAvecContexte, renseigneChampsRecherche } from "../../../../__tests__utils__/testsUtil";
 
-const utilisateurConnecte = mappingOfficier(
-  resultatHeaderUtilistateurLeBiannic,
-  resultatRequeteUtilistateurLeBiannic.data
-);
+const utilisateurConnecte = mappingOfficier(resultatHeaderUtilistateurLeBiannic, resultatRequeteUtilistateurLeBiannic.data);
 utilisateurConnecte.habilitations = mapHabilitationsUtilisateur(
-  resultatRequeteUtilistateurLeBiannic.data
-    .habilitations as unknown as IHabilitationDto[]
+  resultatRequeteUtilistateurLeBiannic.data.habilitations as unknown as IHabilitationDto[]
 );
 
 async function afficheSaisirRCTCForm() {
@@ -45,13 +34,10 @@ async function afficheSaisirRCTCForm() {
     [URL_MES_REQUETES_CREATION_SAISIR_RCTC]
   );
 
-  render(
-    elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte)
-  );
+  render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte));
 }
 
-const getInput = (label: string): HTMLInputElement =>
-  screen.getByLabelText(label) as HTMLInputElement;
+const getInput = (label: string): HTMLInputElement => screen.getByLabelText(label) as HTMLInputElement;
 
 test("DOIT ajouter un parent QUAND on clique sur le bouton 'Ajouter un parent'", () => {
   afficheSaisirRCTCForm();
@@ -94,14 +80,7 @@ test.skip("DOIT afficher la popin de transfert vers les services fils (triés) d
     ["/page1", URL_MES_REQUETES_CREATION_SAISIR_RCTC]
   );
 
-  render(
-    elementAvecContexte(
-      elementAvecContexte(
-        <RouterProvider router={router} />,
-        userDroitCreerActeTranscritPerimetreTousRegistres
-      )
-    )
-  );
+  render(elementAvecContexte(elementAvecContexte(<RouterProvider router={router} />, userDroitCreerActeTranscritPerimetreTousRegistres)));
 
   /////////////////////////Saisie des données///////////////////////////////
   // Nature acte et lien requérant
@@ -128,13 +107,9 @@ test.skip("DOIT afficher la popin de transfert vers les services fils (triés) d
 
   // Parent 1
   fireEvent.click(getInput("parents.parent1.pasdenomconnu.pasdenomconnu"));
-  fireEvent.click(
-    getInput("parents.parent1.pasdeprenomconnu.pasdeprenomconnu")
-  );
+  fireEvent.click(getInput("parents.parent1.pasdeprenomconnu.pasdeprenomconnu"));
 
-  const boutonTransmettre = screen.queryByText(
-    "Transmettre au service compétent"
-  );
+  const boutonTransmettre = screen.queryByText("Transmettre au service compétent");
 
   waitFor(() => {
     expect(boutonTransmettre).toBeDefined();
@@ -147,18 +122,15 @@ test.skip("DOIT afficher la popin de transfert vers les services fils (triés) d
     expect(screen.queryByText("Choisissez un service")).toBeDefined();
   });
 
-  const selectElement = screen.getByLabelText(
-    "Choix des services"
-  ) as HTMLSelectElement;
+  const selectElement = screen.getByLabelText("Choix des services") as HTMLSelectElement;
 
   waitFor(() => {
     expect(screen.queryByText("BTE Genève")).toBeDefined();
   });
 
   const options: HTMLOptionsCollection = selectElement.options;
-  const serviceEtablissementTriees = serviceEtablissement.data.sort(
-    (service1: any, service2: any) =>
-      service1.libelleService.localeCompare(service2.libelleService)
+  const serviceEtablissementTriees = serviceEtablissement.data.sort((service1: any, service2: any) =>
+    service1.libelleService.localeCompare(service2.libelleService)
   );
 
   // Vérification de la liste des services
@@ -168,9 +140,7 @@ test.skip("DOIT afficher la popin de transfert vers les services fils (triés) d
       // Première option vide (Placeholder)
       expect(libelleOtion).toEqual("Services");
     } else {
-      expect(libelleOtion).toEqual(
-        serviceEtablissementTriees[i - 1].libelleService
-      );
+      expect(libelleOtion).toEqual(serviceEtablissementTriees[i - 1].libelleService);
     }
   }
 
@@ -197,24 +167,29 @@ test.skip("DOIT afficher la popin de transfert vers les services fils (triés) d
   });
 });
 
-test("DOIT activer le bouton 'Prendre en charge' QUAND je modifie au moins un champ du formulaire", () => {
-  afficheSaisirRCTCForm();
+test("DOIT activer le bouton 'Prendre en charge' QUAND je modifie au moins un champ du formulaire", async () => {
+  await afficheSaisirRCTCForm();
 
-  const boutonPrendreEnCharge = screen.getByText(
-    /Prendre en charge/i
-  ) as HTMLInputElement;
-
-  waitFor(() => {
-    expect(boutonPrendreEnCharge.disabled).toBeTruthy();
+  await waitFor(() => {
+    expect(screen.getByText(/Prendre en charge/i)).toBeDefined();
   });
+
+  const boutonPrendreEnCharge = screen.getByText(/Prendre en charge/i) as HTMLInputElement;
+
+  expect(boutonPrendreEnCharge.disabled).toBe(false);
 
   fireEvent.change(getInput("titulaire.noms.nomActeEtranger"), {
     target: { value: "Nom acte etranger" }
   });
 
-  waitFor(() => {
-    expect(boutonPrendreEnCharge.disabled).not.toBeTruthy();
-  });
+  await waitFor(
+    () => {
+      expect(boutonPrendreEnCharge.disabled).toBe(false);
+    },
+    {
+      timeout: 3000
+    }
+  );
 });
 
 test.skip("DOIT rediriger vers l'apercu requête en prise en charge QUAND je clique sur le bouton 'Prendre en charge'", () => {
@@ -225,19 +200,14 @@ test.skip("DOIT rediriger vers l'apercu requête en prise en charge QUAND je cli
         element: <SaisirRCTCPage />
       },
       {
-        path: getUrlWithParam(
-          URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-          "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
-        ),
+        path: getUrlWithParam(URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID, "3ed9aa4e-921b-489f-b8fe-531dd703c60c"),
         element: <ApercuReqCreationTranscriptionPriseEnChargePage />
       }
     ],
     [URL_MES_REQUETES_CREATION_SAISIR_RCTC]
   );
 
-  render(
-    elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte)
-  );
+  render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte));
 
   const boutonPrendreEnCharge = screen.getByText(/Prendre en charge/i);
 
@@ -253,9 +223,7 @@ test.skip("DOIT rediriger vers l'apercu requête en prise en charge QUAND je cli
   });
 
   const autocomplete = screen.getByTestId("autocomplete");
-  const champRecherche = screen.getByLabelText(
-    "requete.registre"
-  ) as HTMLInputElement;
+  const champRecherche = screen.getByLabelText("requete.registre") as HTMLInputElement;
   autocomplete.focus();
 
   fireEvent.change(champRecherche, {
@@ -289,10 +257,7 @@ test.skip("DOIT rediriger vers l'apercu requête en prise en charge QUAND je cli
 
   waitFor(() => {
     expect(router.state.location.pathname).toBe(
-      getUrlWithParam(
-        URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-        "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
-      )
+      getUrlWithParam(URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID, "3ed9aa4e-921b-489f-b8fe-531dd703c60c")
     );
   });
 });

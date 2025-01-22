@@ -1,28 +1,25 @@
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import AddIcon from "@mui/icons-material/Add";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import {
-  PATH_SAISIR_RCTC,
-  URL_REQUETES_CREATION_SERVICE_SAISIR_RCTC
-} from "@router/ReceUrls";
+import { PATH_SAISIR_RCTC, URL_MES_REQUETES_CONSULAIRE_SAISIR_RCTC } from "@router/ReceUrls";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
-import { getLibelle } from "@util/Utils";
-import React from "react";
+import { useState, type FC, type MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 const DUREE_OUVERTURE_POPIN = 100;
 
-interface MenuSaisirRequeteCreationProps {
+interface IMenuSaisirRequeteCreationProps {
   indexTabPanel: number;
   disabled?: boolean;
 }
 
-const MenuSaisirRequeteCreation: React.FC<
-  MenuSaisirRequeteCreationProps
-> = props => {
-  const [menu, setMenu] = React.useState<null | HTMLElement>(null);
+const MenuSaisirRequeteCreation: FC<IMenuSaisirRequeteCreationProps> = ({ indexTabPanel, disabled = false }) => {
+  const [menu, setMenu] = useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
 
-  const handleOpenMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleOpenMenu = (e: MouseEvent<HTMLButtonElement>) => {
     setMenu(e.currentTarget);
   };
 
@@ -30,38 +27,24 @@ const MenuSaisirRequeteCreation: React.FC<
     setMenu(null);
   };
 
-  const navigate = useNavigate();
-
   const clickMenuItem = (nomRequete: string) => {
-    if (props.indexTabPanel === 1) {
-      switch (nomRequete) {
-        case "RCTC":
-          navigate(URL_REQUETES_CREATION_SERVICE_SAISIR_RCTC);
-          break;
-
-        default:
-          break;
-      }
-    } else {
-      switch (nomRequete) {
-        case "RCTC":
-          navigate(PATH_SAISIR_RCTC);
-          break;
-
-        default:
-          break;
-      }
+    if (nomRequete === "RCTC") {
+      navigate(indexTabPanel === 1 ? URL_MES_REQUETES_CONSULAIRE_SAISIR_RCTC : PATH_SAISIR_RCTC);
     }
   };
 
   const listeRequeteCourrier = getListeDesRequetesCourrierCreation();
 
   return (
-    <div className="MenuSaisirRequeteCreation">
-      <button onMouseEnter={handleOpenMenu} disabled={props.disabled}>
-        {getLibelle("Saisir requête courrier")}
+    <div>
+      <button
+        onMouseEnter={handleOpenMenu}
+        disabled={disabled}
+        className="flex items-center justify-center rounded-xl rounded-b-none bg-bleu-sombre p-3 shadow-xl"
+      >
+        <ArrowDropDownIcon />
+        <span>Saisir requête courrier</span>
       </button>
-
       <Menu
         className="Menu"
         anchorEl={menu}
@@ -87,6 +70,7 @@ const MenuSaisirRequeteCreation: React.FC<
               onClick={() => clickMenuItem(sousTypeCreation.nom)}
               key={sousTypeCreation.nom}
             >
+              <AddIcon />
               {sousTypeCreation.libelle}
             </MenuItem>
           );
@@ -98,13 +82,8 @@ const MenuSaisirRequeteCreation: React.FC<
 
 function getListeDesRequetesCourrierCreation(): SousTypeCreation[] {
   let listeRequeteCourrier: SousTypeCreation[] = [];
-
   listeRequeteCourrier = listeRequeteCourrier.concat(SousTypeCreation.RCTC);
-
   return listeRequeteCourrier;
 }
 
-export default WithHabilitation(
-  MenuSaisirRequeteCreation,
-  "MenuSaisirRequeteCreation"
-);
+export default WithHabilitation(MenuSaisirRequeteCreation, "MenuSaisirRequeteCreation");

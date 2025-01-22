@@ -14,7 +14,6 @@ import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteC
 import { ApercuReqCreationTranscriptionSaisieProjetPage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSaisieProjetPage";
 import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
 import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
-import { SaisirRCTCPage } from "@pages/requeteCreation/saisirRequete/SaisirRCTCPage";
 import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
 import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
 import { ApercuRequetePriseEnChargePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
@@ -28,20 +27,22 @@ import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFl
 import { IRoute } from "@util/route/IRoute";
 import PageMesRequetesConsulaires from "../../pages/requetesConsulaire/PageMesRequetesConsulaires";
 import PageRequetesServiceConsulaire from "../../pages/requetesConsulaire/PageRequetesServiceConsulaire";
+import { SaisirRCTCPage } from "../../pages/requetesConsulaire/contenu/SaisirRCTCPage";
 import PageEditionRequeteDelivrance from "../../pages/requetesDelivrance/PageEditionRequeteDelivrance";
 import PageEditionRequeteMiseAJour from "../../pages/requetesMiseAJour/PageEditionRequeteMiseAJour";
 import {
   URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
   URL_MES_REQUETES_CONSULAIRE,
+  URL_MES_REQUETES_CONSULAIRE_MODIFIER_RCTC_ID,
+  URL_MES_REQUETES_CONSULAIRE_SAISIR_RCTC,
+  URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+  URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
   URL_MES_REQUETES_CREATION,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
-  URL_MES_REQUETES_CREATION_MODIFIER_RCTC_ID,
   URL_MES_REQUETES_CREATION_SAISIR_RCTC,
-  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
   URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SIMPLE_ID,
   URL_MES_REQUETES_DELIVRANCE,
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
@@ -481,19 +482,19 @@ export const routesRece: IRoute[] = [
     libelle: LIBELLE_APERCU_REQUETE
   },
   {
-    url: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+    url: URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
     component: ApercuReqCreationTranscriptionPriseEnChargePage,
     auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: LIBELLE_APERCU_PRISE_EN_CHARGE
   },
   {
-    url: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
+    url: URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
     component: ApercuReqCreationTranscriptionSaisieProjetPage,
     auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: LIBELLE_APERCU_SAISIE_PROJET
   },
   {
-    url: URL_MES_REQUETES_CREATION_MODIFIER_RCTC_ID,
+    url: URL_MES_REQUETES_CONSULAIRE_MODIFIER_RCTC_ID,
     component: SaisirRCTCPage,
     droits: [Droit.SAISIR_REQUETE],
     auMoinsUnDesDroits: [Droit.CREER_ACTE_DRESSE, Droit.CREER_ACTE_ETABLI, Droit.CREER_ACTE_TRANSCRIT],
@@ -582,6 +583,12 @@ export const routesRece: IRoute[] = [
     auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT, Droit.CREER_ACTE_DRESSE],
     libelle: "Mes requêtes consulaires",
     canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_ACCES_ESPACE_CONSULAIRE)
+  },
+  {
+    url: URL_MES_REQUETES_CONSULAIRE_SAISIR_RCTC,
+    component: SaisirRCTCPage,
+    droits: [Droit.CREER_ACTE_TRANSCRIT],
+    libelle: `Saisir une requête de transcription`
   },
 
   ////////////////////////////////////////////////////////

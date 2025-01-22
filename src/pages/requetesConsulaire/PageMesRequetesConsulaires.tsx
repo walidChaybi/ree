@@ -1,4 +1,5 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
+import MenuSaisirRequeteCreation from "@pages/requeteCreation/espaceCreation/contenu/MenuSaisirRequeteCreation";
 import { URL_REQUETES_CONSULAIRE_SERVICE } from "@router/ReceUrls";
 import { useContext } from "react";
 import PageChargeur from "../../composants/commun/chargeurs/PageChargeur";
@@ -27,6 +28,9 @@ const PageMesRequetesConsulaires: React.FC<IPageMesRequetesConsulairesProps> = (
               }
             ]}
           />
+          <div className="BlocBoutons">
+            <MenuSaisirRequeteCreation indexTabPanel={1} />
+          </div>
           <div>MesRequetesConsulaires</div>
         </>
       )}

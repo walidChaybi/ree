@@ -20,25 +20,46 @@ import { FormikValues } from "formik";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
-import SaisirRequeteBoutons from "../../../common/composant/formulaire/boutons/SaisirRequeteBoutons";
-import { ICreationRequeteCreationParams, useCreationRequeteCreation } from "../../../common/hook/requete/CreationRequeteCreationApiHook";
-import { getParentsForm, getPiecesJointesForm, getRequerantForm, getRequeteForm, getTitulaireForm } from "./contenu/SaisirRCTCPageForms";
-import { mappingSaisieRequeteRCTCVersRequetesAEnvoyer } from "./mapping/mappingFormulaireSaisirRCTCVersRequeteTranscription";
-import { mappingRequeteTranscriptionVersForumlaireRCTC } from "./mapping/mappingRequeteTranscriptionVersFormulaireRCTC";
-import "./scss/SaisirRCTCPage.scss";
+import SaisirRequeteBoutons from "../../../views/common/composant/formulaire/boutons/SaisirRequeteBoutons";
+import {
+  ICreationRequeteCreationParams,
+  useCreationRequeteCreation
+} from "../../../views/common/hook/requete/CreationRequeteCreationApiHook";
+import {
+  getParentsForm,
+  getPiecesJointesForm,
+  getRequerantForm,
+  getRequeteForm,
+  getTitulaireForm
+} from "../../../views/pages/requeteCreation/saisirRequete/contenu/SaisirRCTCPageForms";
+import { mappingSaisieRequeteRCTCVersRequetesAEnvoyer } from "../../../views/pages/requeteCreation/saisirRequete/mapping/mappingFormulaireSaisirRCTCVersRequeteTranscription";
+import { mappingRequeteTranscriptionVersForumlaireRCTC } from "../../../views/pages/requeteCreation/saisirRequete/mapping/mappingRequeteTranscriptionVersFormulaireRCTC";
 import {
   EvenementMariageParentsFormDefaultValues,
   EvenementMariageParentsFormValidationSchema
-} from "./sousForm/evenement/EvenementMariageParentsForm";
+} from "../../../views/pages/requeteCreation/saisirRequete/sousForm/evenement/EvenementMariageParentsForm";
 import {
   EvenementReconnaissanceTitulaireFormDefaultValues,
   EvenementReconnaissanceTitulaireFormValidationSchema
-} from "./sousForm/evenement/EvenementReconnaissanceTitulaireForm";
-import { IdentiteFormDefaultValues, IdentiteFormValidationSchema } from "./sousForm/identite/IdentiteTitulaireForm";
-import { ParentFormDefaultValues, ParentFormValidationSchema } from "./sousForm/parent/ParentsForm";
-import { RequerantFormDefaultValue, RequerantFormValidationSchema } from "./sousForm/requerant/RequerantForm";
-import { RequeteFormDefaultValues, RequeteFormValidationSchema } from "./sousForm/requete/RequeteForm";
-import TransmissionPopin from "./sousForm/transmissionPopin/TransmissionPopin";
+} from "../../../views/pages/requeteCreation/saisirRequete/sousForm/evenement/EvenementReconnaissanceTitulaireForm";
+import {
+  IdentiteFormDefaultValues,
+  IdentiteFormValidationSchema
+} from "../../../views/pages/requeteCreation/saisirRequete/sousForm/identite/IdentiteTitulaireForm";
+import {
+  ParentFormDefaultValues,
+  ParentFormValidationSchema
+} from "../../../views/pages/requeteCreation/saisirRequete/sousForm/parent/ParentsForm";
+import {
+  RequerantFormDefaultValue,
+  RequerantFormValidationSchema
+} from "../../../views/pages/requeteCreation/saisirRequete/sousForm/requerant/RequerantForm";
+import {
+  RequeteFormDefaultValues,
+  RequeteFormValidationSchema
+} from "../../../views/pages/requeteCreation/saisirRequete/sousForm/requete/RequeteForm";
+import TransmissionPopin from "../../../views/pages/requeteCreation/saisirRequete/sousForm/transmissionPopin/TransmissionPopin";
+import "./scss/SaisirRCTCPage.scss";
 
 export const enum limitesParents {
   MIN = 1,

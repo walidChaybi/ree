@@ -20,7 +20,7 @@ import { OngletProps } from "@pages/requeteCreation/commun/requeteCreationUtils"
 import {
   PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE,
   PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET,
-  URL_MES_REQUETES_CREATION_MODIFIER_RCTC_ID,
+  URL_MES_REQUETES_CONSULAIRE_MODIFIER_RCTC_ID,
   URL_RECHERCHE_REQUETE
 } from "@router/ReceUrls";
 import { logError } from "@util/LogManager";
@@ -105,10 +105,11 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<ApercuReq
           statutRequete: StatutRequete.getKey(StatutRequete.EN_TRAITEMENT)
         }
       },
-      apresSucces: () =>
+      apresSucces: () => {
         navigate(
           `${location.pathname.split(PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE)[0]}${PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET}/${idRequete}`
-        ),
+        );
+      },
       apresErreur: erreurs =>
         logError({
           error: erreurs[0],
@@ -167,7 +168,7 @@ export const ApercuReqCreationTranscriptionPriseEnChargePage: React.FC<ApercuReq
 
   function onModificationRequete() {
     if (requete) {
-      navigate(getUrlWithParam(URL_MES_REQUETES_CREATION_MODIFIER_RCTC_ID, requete.id));
+      navigate(getUrlWithParam(URL_MES_REQUETES_CONSULAIRE_MODIFIER_RCTC_ID, requete.id));
     }
   }
 

@@ -1,38 +1,18 @@
-import {
-  NAISSANCE,
-  NATIONALITES,
-  NOM,
-  SEXE
-} from "@composant/formulaire/ConstantesNomsForm";
+import { NAISSANCE, NATIONALITES, NOM, SEXE } from "@composant/formulaire/ConstantesNomsForm";
 import PrenomsConnusForm from "@composant/formulaire/nomsPrenoms/PrenomsConnusForm";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { SNP, SPC, getLibelle } from "@util/Utils";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
-import DateComposeForm, {
-  DateComposeFormProps
-} from "@widget/formulaire/champsDate/DateComposeForm";
+import DateComposeForm, { DateComposeFormProps } from "@widget/formulaire/champsDate/DateComposeForm";
 import { CheckboxField } from "@widget/formulaire/champsSaisie/CheckBoxField";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
-import NationalitesForm, {
-  NationalitesFormProps
-} from "@widget/formulaire/nationalites/NationalitesForm";
-import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
-import {
-  ISubForm,
-  NB_CARACT_MAX_SAISIE,
-  SubFormProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import NationalitesForm, { NationalitesFormProps } from "@widget/formulaire/nationalites/NationalitesForm";
+import { ISubForm, NB_CARACT_MAX_SAISIE, SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
-import {
-  DATE_NAISSANCE,
-  PAS_DE_NOM_CONNU,
-  PAYS_ORIGINE,
-  PAYS_STATUT_REFUGIE
-} from "../../../../../common/composant/formulaire/ConstantesNomsForm";
+import { DATE_NAISSANCE, PAS_DE_NOM_CONNU } from "../../../../../common/composant/formulaire/ConstantesNomsForm";
 import EvenementParentForm from "../evenement/EvenementParentsForm";
 import "./scss/ParentsForm.scss";
 interface ComponentFormProps {
@@ -44,16 +24,6 @@ export type ParentSubFormProps = SubFormProps & ComponentFormProps;
 
 const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
   const [pasDeNomConnu, setPasDeNomConnu] = useState(false);
-
-  const paysStatutRefugieWithNamespace = withNamespace(
-    props.nom,
-    PAYS_STATUT_REFUGIE
-  );
-
-  const paysOrigineRefugieWithNamespace = withNamespace(
-    props.nom,
-    PAYS_ORIGINE
-  );
 
   const pasDeNomConnuWithNamespace = withNamespace(props.nom, PAS_DE_NOM_CONNU);
 
@@ -121,47 +91,17 @@ const IdentiteParentForm: React.FC<ParentSubFormProps> = props => {
 
           <div className="Date">
             <div className="DateEvenement">
-              <DateComposeForm
-                {...dateEvenementComposeFormProps}
-              ></DateComposeForm>
+              <DateComposeForm {...dateEvenementComposeFormProps}></DateComposeForm>
             </div>
           </div>
 
           <EvenementParentForm nom={withNamespace(props.nom, NAISSANCE)} />
 
           <NationalitesForm {...nationaliteFormProps} />
-
-          <InputField
-            name={paysStatutRefugieWithNamespace}
-            label={getLibelle("Pays du statut de réfugié")}
-            maxLength={NB_CARACT_MAX_SAISIE}
-            onBlur={e =>
-              sortieChampPremiereLettreEnMajuscule(
-                e,
-                props.formik,
-                paysStatutRefugieWithNamespace
-              )
-            }
-          />
-
-          <InputField
-            name={paysOrigineRefugieWithNamespace}
-            label={getLibelle("Pays d'origine du réfugié")}
-            maxLength={NB_CARACT_MAX_SAISIE}
-            onBlur={e =>
-              sortieChampPremiereLettreEnMajuscule(
-                e,
-                props.formik,
-                paysOrigineRefugieWithNamespace
-              )
-            }
-          />
         </div>
       </SousFormulaire>
     </>
   );
 };
 
-export default connect<ComponentFormProps & ISubForm>(
-  IdentiteParentForm
-);
+export default connect<ComponentFormProps & ISubForm>(IdentiteParentForm);

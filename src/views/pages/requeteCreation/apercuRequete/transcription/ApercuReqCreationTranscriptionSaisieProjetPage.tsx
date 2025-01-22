@@ -14,7 +14,8 @@ import { PiecesAnnexes } from "@pages/requeteCreation/commun/composants/PiecesAn
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { OngletProps } from "@pages/requeteCreation/commun/requeteCreationUtils";
-import { URL_MES_REQUETES_CREATION_MODIFIER_RCTC_ID, URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
+import { URL_MES_REQUETES_CONSULAIRE_MODIFIER_RCTC_ID, URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
+import { getLibelle } from "@util/Utils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
@@ -37,6 +38,7 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<ApercuReqC
   // States
   const [requete, setRequete] = useState<IRequeteCreationTranscription>();
   const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>();
+
   // Hooks
   const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
 
@@ -61,6 +63,7 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<ApercuReqC
 
   const afficherBoutonModifierRequete =
     SousTypeCreation.estRCTC(requete?.sousType) && appartientAUtilisateurConnecte(utilisateurConnecte, requete?.idUtilisateur);
+  SousTypeCreation.estRCTC(requete?.sousType) && appartientAUtilisateurConnecte(utilisateurConnecte, requete?.idUtilisateur);
 
   useEffect(() => {
     if (detailRequeteState) {
@@ -83,7 +86,7 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<ApercuReqC
               icon={faEdit}
               className="iconModifierRequete"
             />
-            {"Modifier la requête"}
+            {getLibelle("Modifier la requête")}
           </BoutonDoubleSubmit>
         )}
 
@@ -136,7 +139,7 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<ApercuReqC
 
   function onModificationRequete() {
     if (requete) {
-      navigate(getUrlWithParam(URL_MES_REQUETES_CREATION_MODIFIER_RCTC_ID, requete.id));
+      navigate(getUrlWithParam(URL_MES_REQUETES_CONSULAIRE_MODIFIER_RCTC_ID, requete.id));
     }
   }
 

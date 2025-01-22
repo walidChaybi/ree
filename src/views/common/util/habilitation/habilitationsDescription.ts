@@ -38,7 +38,6 @@ export type NomComposant =
   | "BoutonPrendreEnChargePlusAncienneCreation"
   | "BoutonSignerLeLot"
   | "MenuSaisirRequeteCreation";
-
 export type NomComposantOuFonction = NomComposant | NomFonction;
 
 const droitsSaufConsulterArchives = [

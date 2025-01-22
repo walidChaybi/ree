@@ -199,6 +199,10 @@ describe("Test de la page saisie RDCSC", () => {
         {
           path: URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC,
           element: <SaisirRDCSCPage />
+        },
+        {
+          path: `${URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC}/:id`,
+          element: <SaisirRDCSCPage />
         }
       ],
       [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
@@ -247,7 +251,8 @@ describe("Test de la page saisie RDCSC", () => {
     fireEvent.click(submit);
 
     await waitFor(() => {
-      expect(getLastPathElem(router.state.location.pathname)).toEqual("saisircertificatsituation");
+      const currentPath = router.state.location.pathname;
+      expect(currentPath.endsWith("saisircertificatsituation")).toBeTruthy();
     });
   });
 

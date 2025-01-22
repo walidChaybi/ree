@@ -1,34 +1,16 @@
-import {
-  IDENTIFIANT,
-  NAISSANCE,
-  NATIONALITES,
-  NOM,
-  PARENTS,
-  PRENOMS,
-  SEXE
-} from "@composant/formulaire/ConstantesNomsForm";
-import {
-  creerValidationSchemaPrenom,
-  genererDefaultValuesPrenoms
-} from "@composant/formulaire/nomsPrenoms/PrenomsForm";
+import { IDENTIFIANT, NAISSANCE, NATIONALITES, NOM, PARENTS, PRENOMS, SEXE } from "@composant/formulaire/ConstantesNomsForm";
+import { creerValidationSchemaPrenom, genererDefaultValuesPrenoms } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { QUINZE, getLibelle } from "@util/Utils";
 import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { DateDefaultValues } from "@widget/formulaire/champsDate/DateComposeForm";
 import { DateValidationSchemaSansTestFormat } from "@widget/formulaire/champsDate/DateComposeFormValidation";
-import {
-  NationalitesFormDefaultValues,
-  NationalitesFormValidationSchema
-} from "@widget/formulaire/nationalites/NationalitesForm";
-import {
-  FormikComponentProps,
-  INomForm,
-  SubFormProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { NationalitesFormDefaultValues, NationalitesFormValidationSchema } from "@widget/formulaire/nationalites/NationalitesForm";
+import { FormikComponentProps, INomForm, SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useMemo, useState } from "react";
 import * as Yup from "yup";
+import { limitesParents } from "../../../../../../pages/requetesConsulaire/contenu/SaisirRCTCPage";
 import { CaracteresAutorises } from "../../../../../../ressources/Regex";
 import {
   DATE_NAISSANCE,
@@ -39,12 +21,8 @@ import {
   PAYS_STATUT_REFUGIE,
   RECONNAISSANCE
 } from "../../../../../common/composant/formulaire/ConstantesNomsForm";
-import { limitesParents } from "../../SaisirRCTCPage";
 import EvenementMariageParentsForm from "../evenement/EvenementMariageParentsForm";
-import {
-  EvenementParentsFormDefaultValues,
-  EvenementParentsFormValidationSchema
-} from "../evenement/EvenementParentsForm";
+import { EvenementParentsFormDefaultValues, EvenementParentsFormValidationSchema } from "../evenement/EvenementParentsForm";
 import EvenementReconnaissanceTitulaireForm from "../evenement/EvenementReconnaissanceTitulaireForm";
 import IdentiteParentForm from "./IdentiteParentForm";
 import "./scss/ParentsForm.scss";
@@ -72,14 +50,8 @@ export const ParentFormValidationSchema = Yup.object()
     [DATE_NAISSANCE]: DateValidationSchemaSansTestFormat,
     [NAISSANCE]: EvenementParentsFormValidationSchema,
     [NATIONALITES]: NationalitesFormValidationSchema,
-    [PAYS_STATUT_REFUGIE]: Yup.string().matches(
-      CaracteresAutorises,
-      CARACTERES_AUTORISES_MESSAGE
-    ),
-    [PAYS_ORIGINE]: Yup.string().matches(
-      CaracteresAutorises,
-      CARACTERES_AUTORISES_MESSAGE
-    )
+    [PAYS_STATUT_REFUGIE]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
+    [PAYS_ORIGINE]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
   })
   .test("parent.pasDePrenomConnu", function (value, error) {
     const prenom1 = value[PRENOMS].prenom1 as string;
@@ -89,9 +61,7 @@ export const ParentFormValidationSchema = Yup.object()
       path: `${error.path}.prenoms.prenom1`,
       message: getLibelle("La saisie d'un prénom est obligatoire")
     };
-    return pasDePrenomConnuCoche === "false" && !prenom1
-      ? this.createError(paramsError)
-      : true;
+    return pasDePrenomConnuCoche === "false" && !prenom1 ? this.createError(paramsError) : true;
   })
   .test("pasDeNom", function (value, error) {
     const nom = value[NOM] as string;
@@ -101,9 +71,7 @@ export const ParentFormValidationSchema = Yup.object()
       path: `${error.path}.nom`,
       message: getLibelle("La saisie d'un nom est obligatoire")
     };
-    return pasDeNomConnuCoche === "false" && !nom
-      ? this.createError(paramsError)
-      : true;
+    return pasDeNomConnuCoche === "false" && !nom ? this.createError(paramsError) : true;
   });
 
 interface ComponentParentsFormProps {
@@ -112,12 +80,8 @@ interface ComponentParentsFormProps {
 
 export type ParentSubFormProps = SubFormProps & ComponentParentsFormProps;
 
-const ParentsForm: React.FC<
-  ParentSubFormProps & FormikComponentProps
-> = props => {
-  const [parents, setParents] = useState<ITitulaireRequeteCreation[]>([
-    {} as ITitulaireRequeteCreation
-  ]);
+const ParentsForm: React.FC<ParentSubFormProps & FormikComponentProps> = props => {
+  const [parents, setParents] = useState<ITitulaireRequeteCreation[]>([{} as ITitulaireRequeteCreation]);
 
   useEffect(() => {
     if (props.parents) {
@@ -128,7 +92,11 @@ const ParentsForm: React.FC<
   const boutonAjouterParent = useMemo(() => {
     const libelle = getLibelle("Ajouter un parent");
     return parents.length < limitesParents.MAX ? (
-      <button aria-label={libelle} type="button" onClick={onAjoutParent}>
+      <button
+        aria-label={libelle}
+        type="button"
+        onClick={onAjoutParent}
+      >
         {libelle}
       </button>
     ) : (
@@ -186,9 +154,7 @@ const ParentsForm: React.FC<
           {boutonSupprimerParent}
         </div>
         <EvenementMariageParentsForm nom={withNamespace(props.nom, MARIAGE)} />
-        <EvenementReconnaissanceTitulaireForm
-          nom={withNamespace(props.nom, RECONNAISSANCE)}
-        />
+        <EvenementReconnaissanceTitulaireForm nom={withNamespace(props.nom, RECONNAISSANCE)} />
       </div>
     </>
   );
