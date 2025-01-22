@@ -181,7 +181,7 @@ export function controleFormulaire(
   optionsChoisies: OptionsCourrier,
   setMessageBloquant: (message: string) => void
 ) {
-  switch (saisieCourrier?.[CHOIX_COURRIER][COURRIER]) {
+  switch (saisieCourrier?.[CHOIX_COURRIER]?.[COURRIER]) {
     case DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.DELIVRANCE_ACTE_INCOMPLET):
     case DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.INFORMATION_DIVERSES_MANQUANTE):
     case DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.ACTE_NON_TROUVE_ALGERIE):
@@ -218,7 +218,7 @@ function controleDivers(saisieCourrier: SaisieCourrier, optionsChoisies: Options
     optionsChoisies.filter(option => {
       return option.ordreEdition < LIMIT_ORDRE_EDITION_STANTARD;
     }).length === 0 &&
-    saisieCourrier[TEXTE_LIBRE][TEXTE].length === 0
+    saisieCourrier[TEXTE_LIBRE]?.[TEXTE]?.length === 0
   ) {
     setMessageBloquant("Le choix d'une option standard ou la saisie d'un texte libre est obligatoire pour ce courrier");
     return false;

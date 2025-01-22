@@ -37,7 +37,7 @@ import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { getPrenomsTableauStringVersPrenomsOrdonnes } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
-import { ZERO, getLibelle } from "@util/Utils";
+import { ZERO } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import {
   CARACTERES_AUTORISES_AVEC_VIRGULE_MESSAGE,
@@ -114,24 +114,24 @@ function validationSchemaParent() {
   })
     .test("sexeDefiniObligatoire", function (value, error) {
       const sexe = value[SEXE] as string;
-      const nomOuPrenomRenseigne = value[NOM] || getPrenomsTableauStringVersPrenomsOrdonnes(value[PRENOM][PRENOMS]).length > ZERO;
+      const nomOuPrenomRenseigne = value[NOM] ?? getPrenomsTableauStringVersPrenomsOrdonnes(value[PRENOM]?.[PRENOMS]).length > ZERO;
 
       const paramsError = {
         path: `${error?.path}.${SEXE}`,
-        message: getLibelle(DEFINITION_SEXE_OBLIGATOIRE)
+        message: DEFINITION_SEXE_OBLIGATOIRE
       };
 
       return nomOuPrenomRenseigne && (!sexe || Sexe.estIndetermine(sexe)) ? this.createError(paramsError) : true;
     })
     .test("departementObligatoire", function (value, error) {
-      const nomOuPrenomRenseigne = value[NOM] || getPrenomsTableauStringVersPrenomsOrdonnes(value[PRENOM][PRENOMS]).length > ZERO;
+      const nomOuPrenomRenseigne = value[NOM] ?? getPrenomsTableauStringVersPrenomsOrdonnes(value[PRENOM]?.[PRENOMS]).length > ZERO;
       const departementObligatoire =
-        LieuxUtils.estPaysFrance(value[LIEU_DE_NAISSANCE][LIEU_DE_NAISSANCE]) &&
-        !LieuxUtils.estVilleParis(value[LIEU_DE_NAISSANCE][VILLE_NAISSANCE]);
-      const departement = value[LIEU_DE_NAISSANCE][DEPARTEMENT_NAISSANCE];
+        LieuxUtils.estPaysFrance(value[LIEU_DE_NAISSANCE]?.[LIEU_DE_NAISSANCE]) &&
+        !LieuxUtils.estVilleParis(value[LIEU_DE_NAISSANCE]?.[VILLE_NAISSANCE]);
+      const departement = value[LIEU_DE_NAISSANCE]?.[DEPARTEMENT_NAISSANCE];
       const paramsError = {
         path: `${error?.path}.${LIEU_DE_NAISSANCE}.${DEPARTEMENT_NAISSANCE}`,
-        message: getLibelle(DEPARTEMENT_OBLIGATOIRE)
+        message: DEPARTEMENT_OBLIGATOIRE
       };
 
       return nomOuPrenomRenseigne && departementObligatoire && !departement ? this.createError(paramsError) : true;

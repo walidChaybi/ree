@@ -242,19 +242,19 @@ function creerCourrierComposition(elements: IElementsJasperCourrier, requete: IR
   return CourrierComposition.creerCourrier(requete, elements);
 }
 
-function mapCourrierPourSauvegarde(
+export const mapCourrierPourSauvegarde = (
   saisieCourrier: SaisieCourrier | undefined,
   donneesComposition: IDonneesComposition,
   optionsChoisies: OptionsCourrier | undefined,
   courrier: any
-): ISauvegardeCourrier {
+): ISauvegardeCourrier => {
   return {
-    nomRequerant: saisieCourrier?.[REQUERANT][NOM] ?? "",
-    prenomRequerant: saisieCourrier?.[REQUERANT][PRENOM] ?? "",
-    raisonSocialeRequerant: saisieCourrier?.[REQUERANT][RAISON_SOCIALE] ?? "",
+    nomRequerant: saisieCourrier?.[REQUERANT]?.[NOM] ?? "",
+    prenomRequerant: saisieCourrier?.[REQUERANT]?.[PRENOM] ?? "",
+    raisonSocialeRequerant: saisieCourrier?.[REQUERANT]?.[RAISON_SOCIALE] ?? "",
     adresseRequerant: mappingSaisieAdresseVersAdresseRequerant(saisieCourrier),
-    motif: saisieCourrier?.[REQUETE][MOTIF] ?? "",
-    nombreExemplairesDemandes: parseInt(saisieCourrier?.[REQUETE][NB_EXEMPLAIRE].toString() ?? ""),
+    motif: saisieCourrier?.[REQUETE]?.[MOTIF] ?? "",
+    nombreExemplairesDemandes: parseInt(saisieCourrier?.[REQUETE]?.[NB_EXEMPLAIRE]?.toString() ?? ""),
     documentReponse: {
       contenu: donneesComposition.contenu,
       nom: courrier.libelle,
@@ -270,11 +270,11 @@ function mapCourrierPourSauvegarde(
         };
       }),
       texteLibreCourrier: {
-        texte: saisieCourrier?.[TEXTE_LIBRE][TEXTE]
+        texte: saisieCourrier?.[TEXTE_LIBRE]?.[TEXTE] ?? ""
       }
     } as IDocumentReponse
   };
-}
+};
 
 function requeteAvecSaisieRequerant(requete: IRequeteDelivrance, saisieCourrier: SaisieCourrier) {
   if (saisieCourrier[REQUERANT]) {
@@ -286,7 +286,7 @@ function requeteAvecSaisieRequerant(requete: IRequeteDelivrance, saisieCourrier:
   return requete;
 }
 
-function mappingSaisieAdresseVersAdresseRequerant(saisieCourrier: SaisieCourrier | undefined): IAdresseRequerant {
+export const mappingSaisieAdresseVersAdresseRequerant = (saisieCourrier: SaisieCourrier | undefined): IAdresseRequerant => {
   return {
     ligne2: saisieCourrier?.[ADRESSE]?.[COMPLEMENT_DESTINATAIRE] ?? "",
     ligne3: saisieCourrier?.[ADRESSE]?.[COMPLEMENT_POINT_GEO] ?? "",
@@ -296,16 +296,16 @@ function mappingSaisieAdresseVersAdresseRequerant(saisieCourrier: SaisieCourrier
     ville: saisieCourrier?.[ADRESSE]?.[COMMUNE] ?? "",
     pays: saisieCourrier?.[ADRESSE]?.[PAYS] ?? ""
   };
-}
+};
 
 function ajoutSaisieIdentiteRequerantVersRequerantRequete(saisieCourrier: SaisieCourrier, requerantRequete: IRequerant): IRequerant {
   const requerant: IRequerant = { ...requerantRequete };
 
-  const nomRequerant = saisieCourrier[REQUERANT][NOM];
-  const raisonSocialeRequerant = saisieCourrier[REQUERANT][RAISON_SOCIALE];
+  const nomRequerant = saisieCourrier[REQUERANT]?.[NOM];
+  const raisonSocialeRequerant = saisieCourrier[REQUERANT]?.[RAISON_SOCIALE];
 
   requerant.nomFamille = nomRequerant;
-  requerant.prenom = saisieCourrier[REQUERANT][PRENOM];
+  requerant.prenom = saisieCourrier[REQUERANT]?.[PRENOM];
 
   switch (requerantRequete.qualiteRequerant.qualite) {
     case Qualite.PARTICULIER:

@@ -48,7 +48,7 @@ const ValidationSchema = Yup.object({
       })
   })
 }).test("nomsConformes", "Le nomSecable ne peut être vide", function (value) {
-  const nom = (value as any)[ANALYSE_MARGINALE][NOM];
+  const nom = (value as any)?.[ANALYSE_MARGINALE]?.[NOM];
   const { nomPartie1, nomPartie2, secable } = value[NOM_SECABLE];
   if (secable && nom?.trim() !== `${nomPartie1?.trim()} ${nomPartie2?.trim()}`) {
     return this.createError({
