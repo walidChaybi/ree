@@ -108,21 +108,16 @@ function mapPersonneEtActeSelectionne(params: ISauvegardeRMCApiHookParams): ISau
   };
 }
 
-const estActeFromNatureActe = (nature?: string): boolean => {
-  if (NatureActeRequete.getEnumFor(nature)) {
-    return true;
-  } else {
-    return false;
-  }
-};
+const estActeFromNatureActe = (nature?: string): boolean => (nature ? Boolean(NatureActeRequete.getEnumFor(nature)) : false);
 
-function mapNatureActeOuInscription(nature?: string, reference?: string) {
-  if (estActeFromNatureActe(nature)) {
-    return NatureActeRequete.getEnumFromLibelle("Décès").nom;
-  } else {
-    return getRCAOuRCOuPACS(reference);
+const mapNatureActeOuInscription = (nature?: string, reference?: string): string | NatureActeEtinscription | undefined => {
+  if (nature && estActeFromNatureActe(nature)) {
+    const natureEnum = NatureActeRequete.getEnumFromLibelle(nature);
+    return natureEnum?.nom;
   }
-}
+
+  return getRCAOuRCOuPACS(reference);
+};
 
 const getRCAOuRCOuPACS = (reference?: string): NatureActeEtinscription | undefined => {
   let rCAOuRCOuPACS;
