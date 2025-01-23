@@ -93,7 +93,7 @@ function mapPersonneEtActeSelectionne(params: ISauvegardeRMCApiHookParams): ISau
         nom: acteOuInscription.nom ?? null,
         prenom: acteOuInscription.prenoms?.split(",")[0] ?? null,
         idNomenclature: TypePieceJustificative.depuisLibelle(acteOuInscription.typePJ ?? "")?.id ?? "",
-        idActe: estActeFromNatureActe(acteOuInscription.nature) ? acteOuInscription.idActeInscription : null,
+        idActe: estActe(acteOuInscription.nature) ? acteOuInscription.idActeInscription : null,
         idRCA: getRCAOuRCOuPACS(acteOuInscription.reference) === "RCA" ? acteOuInscription.idActeInscription : null,
         idRC: getRCAOuRCOuPACS(acteOuInscription.reference) === "RC" ? acteOuInscription.idActeInscription : null,
         idPACS: getRCAOuRCOuPACS(acteOuInscription.reference) === "PACS" ? acteOuInscription.idActeInscription : null,
@@ -108,15 +108,22 @@ function mapPersonneEtActeSelectionne(params: ISauvegardeRMCApiHookParams): ISau
   };
 }
 
-const estActeFromNatureActe = (nature?: string): boolean => (nature ? Boolean(NatureActeRequete.getEnumFor(nature)) : false);
-
 const mapNatureActeOuInscription = (nature?: string, reference?: string): string | NatureActeEtinscription | undefined => {
-  if (nature && estActeFromNatureActe(nature)) {
+  if (nature && estActe(nature)) {
     const natureEnum = NatureActeRequete.getEnumFromLibelle(nature);
     return natureEnum?.nom;
   }
 
   return getRCAOuRCOuPACS(reference);
+};
+
+const estActe = (nature?: string): boolean => {
+  if (!nature) return false;
+  const natureActe = nature
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+  return ["naissance", "deces", "mariage"].includes(natureActe);
 };
 
 const getRCAOuRCOuPACS = (reference?: string): NatureActeEtinscription | undefined => {
