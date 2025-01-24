@@ -1,11 +1,10 @@
+/* v8 ignore start */
 import { IMetaModelBloc } from "@model/etatcivil/acte/mention/IMetaModeleTypeMention";
 import { useFormikContext } from "formik";
 import Handlebars from "handlebars";
 import React, { useEffect, useMemo, useState } from "react";
 import { recupererValeurAttribut } from "./AideALaSaisieMentionForm";
 
-// A tester Alexandre 22/01/25
-/* v8 ignore start */
 interface IDate {
   jour: string;
   mois: string;
