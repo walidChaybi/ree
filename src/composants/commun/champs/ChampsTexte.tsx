@@ -6,6 +6,7 @@ type TChampsTexteProps = React.InputHTMLAttributes<HTMLInputElement> & {
   libelle: string;
   numerique?: boolean;
   optionFormatage?: TFormatChampsTexte;
+  estObligatoire?: boolean;
 };
 
 type TFormatChampsTexte = "PREMIER_MAJUSCULE" | "NOMS_PROPRES" | "MAJUSCULES" | "SANS_ESPACES";
@@ -16,6 +17,7 @@ const ChampsTexte: React.FC<TChampsTexteProps> = ({
   maxLength,
   numerique = false,
   optionFormatage,
+  estObligatoire,
   ...props
 }) => {
   const [field, meta] = useField(name as string);
@@ -28,6 +30,7 @@ const ChampsTexte: React.FC<TChampsTexteProps> = ({
         htmlFor={name as string}
       >
         {libelle}
+        {estObligatoire && <span className="ml-1 text-rouge">*</span>}
       </label>
       <input
         id={name}

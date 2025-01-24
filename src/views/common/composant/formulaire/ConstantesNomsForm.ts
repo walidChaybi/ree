@@ -27,6 +27,7 @@ export const PAS_DE_NOM_ACTE_ETRANGER = "pasDeNomActeEtranger";
 export const NOM_ACTE_ETRANGER = "nomActeEtranger";
 export const NOM_SOUHAITE_ACTE_FR = "nomSouhaiteActeFR";
 export const PAS_DE_NOM_CONNU = "pasDeNomConnu";
+export const PAS_DE_NOM_OEC = "pasDeNomOEC";
 export const PAS_DE_PRENOM_CONNU = "pasDePrenomConnu";
 export const ANALYSE_MARGINALE = "analyseMarginale";
 export const FRANCISATION_POSTULANT = "francisationPostulant";
@@ -45,6 +46,7 @@ export const PRENOM_9 = "prenom9";
 export const PRENOM_10 = "prenom10";
 export const SEXE = "sexe";
 export const IDENTITE = "identite";
+export const NOM_OEC = "nomOEC";
 
 // Titulaire: Date evt
 export const DATE_EVENEMENT = "dateEvenement";
@@ -85,6 +87,7 @@ export const REGION_NAISSANCE = "regionNaissance";
 export const PAYS_NAISSANCE = "paysNaissance";
 export const DEPARTEMENT_NAISSANCE = "departementNaissance";
 export const LIEU_DE_NAISSANCE = "lieuNaissance";
+export const ADRESSE_DE_NAISSANCE = "adresseNaissance";
 
 // Parents : lieu naissance
 export const ARRONDISSEMENT = "arrondissement";
@@ -120,8 +123,7 @@ export const TEXTE = "texte";
 export const ADOPTE_PAR = "adoptePar";
 
 // Données complémentaires plurilingue
-export const DONNEES_COMPLEMENTAIRES_PLURILINGUE =
-  "donneesComplementairesPlurilingues";
+export const DONNEES_COMPLEMENTAIRES_PLURILINGUE = "donneesComplementairesPlurilingues";
 export const NOM_APRES_MARIAGE_EPOUX = "nomApresMariageEpoux";
 export const NOM_APRES_MARIAGE_EPOUSE = "nomApresMariageEpouse";
 

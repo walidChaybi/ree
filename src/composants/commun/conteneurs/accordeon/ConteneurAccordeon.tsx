@@ -16,12 +16,12 @@ const ConteneurAccordeon: React.FC<React.PropsWithChildren<IConteneurAccordeonPr
   const [estOuvert, setEstOuvert] = useState<boolean>(ouvertParDefaut || nonControllable);
 
   return (
-    <div className="mb-3 overflow-hidden rounded-xl border-2 border-solid border-bleu shadow-xl">
+    <div className="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl">
       {nonControllable ? (
-        <div className="text-blanc-rece font-family: noto-sans-ui relative m-0 rounded-none bg-bleu px-4 py-2 normal-case">{titre}</div>
+        <div className="text-blanc-rece relative m-0 bg-bleu px-4 py-2 font-noto-sans-ui">{titre}</div>
       ) : (
         <button
-          className="text-blanc-rece font-family: noto-sans-ui relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus:border-2 focus:border-solid focus:border-bleu-sombre focus:bg-bleu-sombre"
+          className="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
           type="button"
           onClick={() => setEstOuvert(!estOuvert)}
         >

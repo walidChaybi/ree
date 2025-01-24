@@ -17,6 +17,8 @@ interface IChampsNomSecableProps {
   secable: IChamps;
   nomPartie1: IChamps;
   nomPartie2: IChamps;
+  estObligatoire?: boolean;
+  afficherInfo?: boolean;
 }
 
 const valeurChamps = (valeurs: FormikValues, chemin: string) =>
@@ -37,7 +39,14 @@ const mettreAJourChamps = (
 
 const boutonPresent = (valeur: string): boolean => valeur.split(" ").length > UN;
 
-const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({ nom, secable, nomPartie1, nomPartie2 }) => {
+const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
+  nom,
+  secable,
+  nomPartie1,
+  nomPartie2,
+  estObligatoire,
+  afficherInfo = true
+}) => {
   const { values, setFieldValue } = useFormikContext<FormikValues>();
   const [secablePossible, setSecablePossible] = useState<boolean>(false);
 
@@ -94,6 +103,7 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({ nom, secable, nomP
       <ChampsTexte
         name={nom.name}
         libelle={nom.libelle}
+        estObligatoire={estObligatoire}
       />
       <div className="champs-secable-et-info">
         <ChampsCaseACocher
@@ -101,12 +111,14 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({ nom, secable, nomP
           libelle={secable.libelle}
           disabled={!secablePossible}
         />
-        <span
-          className="info-nom-secable"
-          title="Gestion du nom sécable pour la délivrance des extraits"
-        >
-          {"?"}
-        </span>
+        {afficherInfo && (
+          <span
+            className="info-nom-secable"
+            title="Gestion du nom sécable pour la délivrance des extraits"
+          >
+            {"?"}
+          </span>
+        )}
       </div>
 
       {valeurChamps(values, secable.name) && (

@@ -1,8 +1,6 @@
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { DateCoordonneesType } from "@model/requete/DateCoordonneesType";
 import { SANS_NOM_CONNU, SANS_PRENOM_CONNU, SNP, SPC } from "@util/Utils";
-import { QualiteFamille } from "./enum/QualiteFamille";
-import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
 import { IDecret } from "./IDecret";
 import { IDomiciliation } from "./IDomiciliation";
 import { IEnfantTitulaireActeTranscritDresse } from "./IEnfantTitulaireActeTranscritDresse";
@@ -12,6 +10,8 @@ import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
 import { IRetenueSdanf } from "./IRetenueSdanf";
 import { ISuiviDossier } from "./ISuiviDossier";
 import { ITitulaireRequete, TitulaireRequete } from "./ITitulaireRequete";
+import { QualiteFamille } from "./enum/QualiteFamille";
+import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
 
 export interface ITitulaireRequeteCreation extends ITitulaireRequete {
   villeEtrangereNaissance?: string;
@@ -48,29 +48,17 @@ const MARIAGE = "MARIAGE";
 
 export const TitulaireRequeteCreation = {
   getSexe(titulaire?: ITitulaireRequeteCreation): string {
-    return titulaire && titulaire.sexe
-      ? Sexe.getEnumFor(titulaire.sexe).libelle
-      : "";
+    return titulaire && titulaire.sexe ? Sexe.getEnumFor(titulaire.sexe).libelle : "";
   },
-  getEvenementUnionTypeReconnaissance(
-    titulaire?: ITitulaireRequeteCreation
-  ): IEvenementUnion | undefined {
+  getEvenementUnionTypeReconnaissance(titulaire?: ITitulaireRequeteCreation): IEvenementUnion | undefined {
     const evenementUnions = titulaire?.evenementUnions;
 
-    return evenementUnions
-      ? evenementUnions?.find(
-          evenementUnion => evenementUnion.type === RECONNAISSANCE
-        )
-      : undefined;
+    return evenementUnions ? evenementUnions?.find(evenementUnion => evenementUnion.type === RECONNAISSANCE) : undefined;
   },
-  getEvenementUnionTypeMariage(
-    titulaire?: ITitulaireRequeteCreation
-  ): IEvenementUnion | undefined {
+  getEvenementUnionTypeMariage(titulaire?: ITitulaireRequeteCreation): IEvenementUnion | undefined {
     const evenementUnions = titulaire?.evenementUnions;
 
-    return evenementUnions
-      ? evenementUnions?.find(evenementUnion => evenementUnion.type === MARIAGE)
-      : undefined;
+    return evenementUnions ? evenementUnions?.find(evenementUnion => evenementUnion.type === MARIAGE) : undefined;
   },
   getTableauDeNationalites(titulaire?: ITitulaireRequete): string[] {
     const nationalites: string[] = [];
@@ -80,14 +68,10 @@ export const TitulaireRequeteCreation = {
 
     return nationalites;
   },
-  getParents(
-    titulaires?: ITitulaireRequeteCreation[]
-  ): ITitulaireRequeteCreation[] | undefined {
+  getParents(titulaires?: ITitulaireRequeteCreation[]): ITitulaireRequeteCreation[] | undefined {
     return titulaires?.filter(filtreTitulairesCreationParQualiteFamilleParent);
   },
-  getParentsTries(
-    titulaires?: ITitulaireRequeteCreation[]
-  ): ITitulaireRequeteCreation[] | undefined {
+  getParentsTries(titulaires?: ITitulaireRequeteCreation[]): ITitulaireRequeteCreation[] | undefined {
     return this.getParents(titulaires)?.sort(triTitulairesCreationParPosition);
   },
   getParentParSexeEtOuParPosition(
@@ -99,9 +83,7 @@ export const TitulaireRequeteCreation = {
 
     const parents = this.getParents(titulaires);
     if (parents?.length) {
-      const parentsParSexe = parents.filter(
-        parent => Sexe.getEnumFromLibelle(parent.sexe) === sexe
-      );
+      const parentsParSexe = parents.filter(parent => Sexe.getEnumFromLibelle(parent.sexe) === sexe);
 
       if (parentsParSexe?.length) {
         parentResultat = this.getTitulaireParPosition(parentsParSexe, position);
@@ -113,15 +95,9 @@ export const TitulaireRequeteCreation = {
 
     return parentResultat;
   },
-  getTitulairesTries(
-    titulaires?: ITitulaireRequeteCreation[]
-  ): ITitulaireRequeteCreation[] | undefined {
+  getTitulairesTries(titulaires?: ITitulaireRequeteCreation[]): ITitulaireRequeteCreation[] | undefined {
     return titulaires
-      ?.filter(
-        titulaire =>
-          titulaire.typeObjetTitulaire ===
-          TypeObjetTitulaire.TITULAIRE_ACTE_TRANSCRIT_DRESSE
-      )
+      ?.filter(titulaire => titulaire.typeObjetTitulaire === TypeObjetTitulaire.TITULAIRE_ACTE_TRANSCRIT_DRESSE)
       .sort(triTitulairesCreationParPosition);
   },
   getNomNaissanceOuSNP(titulaire?: ITitulaireRequeteCreation): string {
@@ -152,28 +128,17 @@ export const TitulaireRequeteCreation = {
 
     return lignePrenomsFormates;
   },
-  getTitulaireParPosition(
-    titulaires: ITitulaireRequeteCreation[],
-    position: number
-  ): ITitulaireRequeteCreation | undefined {
+  getTitulaireParPosition(titulaires: ITitulaireRequeteCreation[], position: number): ITitulaireRequeteCreation | undefined {
     return titulaires.find(titulaire => {
       return titulaire.position === position;
     });
   }
 };
 
-const filtreTitulairesCreationParQualiteFamilleParent = (
-  titulaire: ITitulaireRequeteCreation
-): boolean => {
-  return (
-    titulaire.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE &&
-    titulaire.qualite === QualiteFamille.PARENT
-  );
+const filtreTitulairesCreationParQualiteFamilleParent = (titulaire: ITitulaireRequeteCreation): boolean => {
+  return titulaire.typeObjetTitulaire === TypeObjetTitulaire.FAMILLE && titulaire.qualite === QualiteFamille.PARENT;
 };
 
-const triTitulairesCreationParPosition = (
-  titulaire1: ITitulaireRequeteCreation,
-  titulaire2: ITitulaireRequeteCreation
-): number => {
+const triTitulairesCreationParPosition = (titulaire1: ITitulaireRequeteCreation, titulaire2: ITitulaireRequeteCreation): number => {
   return titulaire1.position - titulaire2.position;
 };

@@ -60,7 +60,7 @@ const genererPourSaisie = (modeleTexte: string, valeurs: any, valeursDefaut: any
     switch (true) {
       case typeof valeurRenseignee === "object" && valeurRenseignee.annee:
         return FormaterTexteHelper.formaterDate(valeurRenseignee as unknown as IDate);
-      case valeurRenseignee !== undefined && typeof valeurRenseignee !== "object":
+      case valeurRenseignee && typeof valeurRenseignee !== "object":
         return `${valeurRenseignee}`;
     }
 

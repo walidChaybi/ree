@@ -1,4 +1,5 @@
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
+import { TitulaireRequeteConsulaire } from "@model/requete/ITitulaireRequeteConsulaire";
 import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { GestionMentions } from "@pages/requeteCreation/commun/composants/GestionMentions";
 import React, { useState } from "react";
@@ -46,7 +47,7 @@ const PartieDroiteSaisieProjet: React.FC<IPartieDroiteSaisieProjetProps> = ({ re
           estScrollable
         >
           <div className="m-4">
-            <FormulaireSaisirProjet />
+            <FormulaireSaisirProjet titulaire={TitulaireRequeteConsulaire.getTitulaireTranscription(requete.titulaires)} />
           </div>
         </ConteneurVoletEdition>
       )}

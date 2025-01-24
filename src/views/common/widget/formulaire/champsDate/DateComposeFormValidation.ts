@@ -1,10 +1,4 @@
-import {
-  ANNEE,
-  JOUR,
-  MOIS,
-  NB_HEURE,
-  NB_MINUTE
-} from "@composant/formulaire/ConstantesNomsForm";
+import { ANNEE, JOUR, MOIS, NB_HEURE, NB_MINUTE } from "@composant/formulaire/ConstantesNomsForm";
 import DateUtils, { IDateCompose, MEP_YEAR, MIN_LENGTH_ANNEE, MIN_YEAR } from "@util/DateUtils";
 import { estHeureValide } from "@util/Utils";
 import * as Yup from "yup";
@@ -110,7 +104,7 @@ export const DateValidationSchemaSansTestFormat = Yup.object().shape({
   [ANNEE]: Yup.number()
 });
 
-export const DateValidationSchemaSansTestFormatRequired = Yup.object().shape({
+export const DateValidationSchemaAnneeObligatoire = Yup.object().shape({
   [JOUR]: Yup.number(),
   [MOIS]: Yup.number(),
   [ANNEE]: Yup.number().required("La saisie de l'année de naissance est obligatoire")

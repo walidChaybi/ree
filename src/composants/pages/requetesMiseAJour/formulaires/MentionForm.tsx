@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import { CONFIG_GET_METAMODELE_TYPE_MENTION } from "@api/configurations/requete/miseAJour/GetMetamodeleTypeMentionConfigApi";
 import { TEXTE_MENTION } from "@composant/formulaire/ConstantesNomsForm";
 import { IMetamodeleTypeMention } from "@model/etatcivil/acte/mention/IMetaModeleTypeMention";
@@ -310,3 +311,4 @@ const MentionForm: React.FC<IMentionFormProps> = ({ onFormDirty, infoTitulaire }
 };
 
 export default MentionForm;
+/* v8 ignore end */

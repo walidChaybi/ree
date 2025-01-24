@@ -20,7 +20,7 @@ const ChampsRadio: React.FC<TChampsRadioProps> = ({ name, libelle, className, op
       >
         {libelle}
         {/* </label> */}
-        <div className="justify mt-2 flex w-full flex-wrap gap-4 text-start">
+        <div className="justify mt-2.5 flex w-full flex-wrap gap-4 text-start">
           {...options.map((option: Option) => {
             return (
               <>
@@ -35,7 +35,8 @@ const ChampsRadio: React.FC<TChampsRadioProps> = ({ name, libelle, className, op
                   })()}
                   {...field}
                   disabled={desactive}
-                  value={option.libelle}
+                  value={option.cle}
+                  checked={option.cle === field.value}
                   {...props}
                 />
                 <label htmlFor={`${name}-${option.cle}`}>{option.libelle}</label>

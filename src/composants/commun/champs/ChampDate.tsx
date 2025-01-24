@@ -5,9 +5,11 @@ type TChampDateProps = React.InputHTMLAttributes<HTMLInputElement> & {
   libelle: string;
   avecHeure?: boolean;
   className?: string;
+  estObligatoire?: boolean;
 };
 
-const ChampDate: React.FC<TChampDateProps> = ({ name, libelle, avecHeure = false, className = "" }) => {
+const idElementActif = () => document.activeElement?.getAttribute("id");
+const ChampDate: React.FC<TChampDateProps> = ({ name, libelle, avecHeure = false, className = "", estObligatoire }) => {
   const champsDate = useMemo(
     () => ({
       jour: `${name}.jour`,
@@ -29,27 +31,29 @@ const ChampDate: React.FC<TChampDateProps> = ({ name, libelle, avecHeure = false
   const refMinutes = useRef<HTMLInputElement | null>(null);
 
   const erreurs = useMemo(() => {
-    const dateEnCompletion =
-      [champsDate.jour, champsDate.mois].includes(document.activeElement?.getAttribute("id") ?? "") || !metaAnnee.touched;
+    const dateEnCompletion = [champsDate.jour, champsDate.mois].includes(idElementActif() ?? "") || !metaAnnee.touched;
 
     return dateEnCompletion
       ? []
-      : [metaJour.error ?? "", metaMois.error ?? "", metaAnnee.error ?? ""].filter(erreur => Boolean(erreur.length));
+      : [metaJour.error ?? "", metaMois.error ?? "", metaAnnee.error ?? "", metaHeure.error ?? "", metaMinutes.error ?? ""].filter(erreur =>
+          Boolean(erreur.length)
+        );
   }, [metaJour.error, metaMois.error, metaAnnee]);
 
   useEffect(() => {
-    metaJour?.value?.length === 2 && refMois.current?.focus();
+    metaJour?.value?.length === 2 && idElementActif() === champsDate.jour && refMois.current?.focus();
   }, [metaJour?.value]);
 
   useEffect(() => {
-    metaMois?.value?.length === 2 && refAnnee.current?.focus();
+    metaMois?.value?.length === 2 && idElementActif() === champsDate.mois && refAnnee.current?.focus();
   }, [metaMois?.value]);
+
   useEffect(() => {
-    metaAnnee?.value?.length === 4 && avecHeure && refHeure.current?.focus();
+    metaAnnee?.value?.length === 4 && idElementActif() === champsDate.annee && refHeure.current?.focus();
   }, [metaAnnee?.value]);
 
   useEffect(() => {
-    metaHeure?.value?.length === 2 && refMinutes.current?.focus();
+    metaHeure?.value?.length === 2 && idElementActif() === champsDate.heure && refMinutes.current?.focus();
   }, [metaHeure?.value]);
 
   return (
@@ -59,6 +63,7 @@ const ChampDate: React.FC<TChampDateProps> = ({ name, libelle, avecHeure = false
         htmlFor={`${name}.jour`}
       >
         {libelle}
+        {estObligatoire && <span className="ml-1 text-rouge">*</span>}
       </label>
       <div className="flex flex-nowrap gap-1">
         <input
@@ -178,7 +183,7 @@ const ChampDate: React.FC<TChampDateProps> = ({ name, libelle, avecHeure = false
               id={champsDate.minutes}
               ref={refMinutes}
               className={`border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${metaAnnee.error && erreurs.length ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
-              placeholder="MIN"
+              placeholder="MN"
               maxLength={2}
               value={fieldMinutes.value}
               onChange={event => {
