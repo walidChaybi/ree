@@ -476,7 +476,7 @@ export const configEtatcivil = [
         return { data: actesInscriptionsSauvegardes };
       }
 
-      if (match[1] === "/personnes/listePersonne?ids=e7114c54-d00d-48ad-bbee-af2b01e2da7a&ids=e7114c54-d00d-48ad-bbee-af2b01e2da7c") {
+      if (match[1] === "/personnes") {
         return listeDeuxPersonnes;
       }
 

@@ -54,7 +54,6 @@ export const URL_PERSONNES = "/personnes";
 export const URL_RC = "/rc";
 export const URL_PERSONNES_RMC_AUTO = "/personnes/rmcauto";
 export const URL_POCOPAS = "/mespocopas";
-export const URL_LISTE_PERSONNES = "/personnes/listePersonne";
 export const URL_PROJET_ACTE = "/projetacte";
 export const URL_PROJET_ACTE_INSCRIPTION_LISTE = "/projetacte/actesinscriptionssauvegardes";
 export const URL_ANALYSE_MARGINALE = "/analyseMarginale";
@@ -338,9 +337,9 @@ export function rechercheMultiCriteresPersonne(criteres: IRMCAutoPersonneRequest
 export function getPersonnesSauvegardees(idPersonnes: string[]): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
-      method: HttpMethod.GET,
-      uri: `${URL_LISTE_PERSONNES}`,
-      parameters: { ids: idPersonnes }
+      method: HttpMethod.POST,
+      uri: `${URL_PERSONNES}`,
+      data: idPersonnes
     })
   );
 }
