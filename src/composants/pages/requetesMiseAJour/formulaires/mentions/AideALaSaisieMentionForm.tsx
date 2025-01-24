@@ -4,8 +4,6 @@ import { useField, useFormikContext } from "formik";
 import React, { Suspense, lazy, useMemo } from "react";
 import ChampsZoneTexte from "../../../../commun/champs/ChampsZoneTexte";
 
-// A tester Alexandre 22/01/25
-/* v8 ignore start */
 const ChampsCaseACocher = lazy(() => import("../../../../commun/champs/ChampsCaseACocher"));
 const ChampDate = lazy(() => import("../../../../commun/champs/ChampDate"));
 const ChampListeDeroulante = lazy(() => import("../../../../commun/champs/ChampListeDeroulante"));
@@ -186,4 +184,3 @@ const AideALaSaisieMention: React.FC<IAideALaSaisieMention> = ({ metamodeleTypeM
 };
 
 export default AideALaSaisieMention;
-/* v8 ignore end */

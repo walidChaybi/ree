@@ -18,8 +18,7 @@ import ChampsZoneTexte from "../../../commun/champs/ChampsZoneTexte";
 import { IMentionEnCours } from "../PartieFormulaire";
 import AideALaSaisieMention from "./mentions/AideALaSaisieMentionForm";
 import ChampTypeMention from "./mentions/ChampTypeMention";
-// A tester Alexandre 15/01/2025
-/* v8 ignore start */
+
 interface IInfoTitulaire {
   sexe: Sexe | null;
 }
@@ -305,4 +304,3 @@ const MentionForm: React.FC<IMentionFormProps> = ({ onFormDirty, infoTitulaire }
 };
 
 export default MentionForm;
-/* v8 ignore end */
