@@ -1,7 +1,6 @@
 /* v8 ignore start */
 import { IMetaModelBloc } from "@model/etatcivil/acte/mention/IMetaModeleTypeMention";
 import { useFormikContext } from "formik";
-import Handlebars from "handlebars";
 import React, { useEffect, useMemo, useState } from "react";
 import { recupererValeurAttribut } from "./AideALaSaisieMentionForm";
 
@@ -11,39 +10,151 @@ interface IDate {
   annee: string;
 }
 
+type TCondition = {
+  si: string;
+  alors: (string | TCondition)[];
+  sinon: (string | TCondition)[];
+};
+
+interface IConditionEncours {
+  index: number;
+  estSinon: boolean;
+}
+
 const MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
 
 const FormaterTexteHelper = {
   formaterDate: ({ jour, mois, annee }: IDate): string => {
-    return jour && mois && annee
-      ? `le ${jour.replace(/^0/, "")}${jour === "01" ? "er" : ""} ${MOIS[parseInt(mois, 10) - 1]} ${annee}`
-      : `en ${mois ? MOIS[parseInt(mois, 10) - 1] : ""} ${annee}`;
-  },
-  decoder: (str: string) => str.replace(/&#x27;/g, "'").replace(/&#39;/g, "'")
+    const moisFormate = mois ? MOIS[parseInt(mois, 10) - 1] : null;
+    let jourFormate = jour ? jour.replace(/^0/, "") : null;
+    if (jourFormate) {
+      jourFormate += jourFormate === "01" ? "er" : "";
+    }
+
+    switch (true) {
+      case Boolean(jourFormate && moisFormate):
+        return `le ${jourFormate} ${moisFormate} ${annee}`;
+      case Boolean(moisFormate):
+        return `en ${moisFormate} ${annee}`;
+      default:
+        return `en ${annee}`;
+    }
+  }
 };
 
-const GenerateurMention = {
-  ajouterHelpers: (valeurs: any, valeurDefaut: any) => {
-    Handlebars.registerHelper("valeur", (nomAttribut: string) => {
-      const valeurRenseignee = recupererValeurAttribut(valeurs, nomAttribut);
-      const estValeurDate = typeof valeurRenseignee === "object";
+const genererPourSaisie = (modeleTexte: string, valeurs: any, valeursDefaut: any) => {
+  const texteParConditions =
+    modeleTexte.match(/({{#if[a-zA-Z0-9 .'()]{0,200}}})|({{else}})|({{\/if}})|({{valeur[a-zA-Z0-9 .']{0,200}}})|[^{}]{0,500}/g) ?? [];
 
-      if (valeurRenseignee && (!estValeurDate || valeurRenseignee.annee)) {
-        return estValeurDate ? FormaterTexteHelper.formaterDate(valeurRenseignee) : valeurRenseignee;
-      }
+  const valeursEtConditions: (string | TCondition)[] = [];
+  const conditionsEnCours: IConditionEncours[] = [];
 
-      return `${recupererValeurAttribut(valeurDefaut, nomAttribut) ?? nomAttribut}`.toUpperCase();
-    });
+  const insererValeur = (valeur: string): string => {
+    if (!valeur.startsWith("{{valeur '")) {
+      return valeur;
+    }
 
-    Handlebars.registerHelper("eq", (valeur: string, comparaison: string) => valeur?.toString() === comparaison);
-  },
+    const cle = valeur.replace(/({{valeur '|'|}})/g, "");
+    const valeurRenseignee = recupererValeurAttribut(valeurs, cle);
 
-  genererPourSaisie: (modeleTexte: string, valeurs: any, valeurDefaut: any) => {
-    GenerateurMention.ajouterHelpers(valeurs, valeurDefaut);
-    const generateur = Handlebars.compile(modeleTexte);
+    switch (true) {
+      case typeof valeurRenseignee === "object" && valeurRenseignee.annee:
+        return FormaterTexteHelper.formaterDate(valeurRenseignee as unknown as IDate);
+      case valeurRenseignee !== undefined && typeof valeurRenseignee !== "object":
+        return `${valeurRenseignee}`;
+    }
 
-    return generateur(valeurs);
-  }
+    const valeurDefaut = recupererValeurAttribut(valeursDefaut, cle);
+
+    return `${valeurDefaut !== undefined && typeof valeurDefaut !== "object" ? valeurDefaut : cle}`.toUpperCase();
+  };
+
+  const ajouterCondition = (
+    tableauPourAjout: (string | TCondition)[],
+    listeConditionsEnCours: IConditionEncours[],
+    condition: TCondition
+  ) => {
+    if (!listeConditionsEnCours.length) {
+      const indexCondition = tableauPourAjout.push(condition) - 1;
+      conditionsEnCours.push({ index: indexCondition, estSinon: false });
+
+      return;
+    }
+
+    const conditionSuivante = listeConditionsEnCours.shift() as IConditionEncours;
+    ajouterCondition(
+      (tableauPourAjout[conditionSuivante.index] as TCondition)?.[conditionSuivante.estSinon ? "sinon" : "alors"],
+      listeConditionsEnCours,
+      condition
+    );
+  };
+
+  const ajouterValeurACondition = (
+    tableauPourAjout: (string | TCondition)[],
+    listeConditionsEnCours: IConditionEncours[],
+    valeur: string
+  ) => {
+    if (!listeConditionsEnCours.length) {
+      tableauPourAjout.push(valeur);
+
+      return;
+    }
+
+    const conditionSuivante = listeConditionsEnCours.shift() as IConditionEncours;
+    ajouterValeurACondition(
+      (tableauPourAjout[conditionSuivante.index] as TCondition)?.[conditionSuivante.estSinon ? "sinon" : "alors"],
+      listeConditionsEnCours,
+      valeur
+    );
+  };
+
+  texteParConditions.forEach(valeur => {
+    switch (true) {
+      case valeur.startsWith("{{#if "):
+        ajouterCondition(valeursEtConditions, [...conditionsEnCours], {
+          si: valeur.replace(/{{#if|}}|\(eq|'|\)/g, "").trim(),
+          alors: [],
+          sinon: []
+        });
+        break;
+      case valeur === "{{else}}":
+        conditionsEnCours[conditionsEnCours.length - 1].estSinon = true;
+        break;
+      case valeur === "{{/if}}":
+        conditionsEnCours.pop();
+        break;
+      case Boolean(conditionsEnCours.length):
+        ajouterValeurACondition(valeursEtConditions, [...conditionsEnCours], insererValeur(valeur));
+        break;
+      default:
+        valeursEtConditions.push(insererValeur(valeur));
+        break;
+    }
+  });
+
+  const gererConditon = (condition: TCondition): string[] => {
+    const [cle, valeur] = condition.si.split(" ");
+    const valeurSaisie = recupererValeurAttribut(valeurs, cle);
+    const conditionValide = valeur !== undefined ? valeurSaisie?.toString() === valeur : Boolean(valeurSaisie);
+
+    return (conditionValide ? condition.alors : condition.sinon).reduce(
+      (valeursCondition: string[], valeur: string | TCondition) => [
+        ...valeursCondition,
+        ...(typeof valeur === "string" ? [valeur] : gererConditon(valeur))
+      ],
+      []
+    );
+  };
+
+  return valeursEtConditions
+    .reduce(
+      (partiesTexte: string[], valeurOuCondition: string | TCondition) => [
+        ...partiesTexte,
+        ...(typeof valeurOuCondition === "string" ? [valeurOuCondition] : gererConditon(valeurOuCondition))
+      ],
+      []
+    )
+    .join("");
 };
 
 const genererValeursParDefaut = (blocs: IMetaModelBloc[]) =>
@@ -72,7 +183,7 @@ export const TexteMentionAideALaSaisie: React.FC<{ blocs: IMetaModelBloc[]; temp
   const [textesEditables, setTextesEditables] = useState<{ [index: number]: any }>([]);
 
   const decouperTexteEditable = (texte: string) =>
-    FormaterTexteHelper.decoder(texte)
+    texte
       .split(/\[\[|\]\]/)
       .filter(partieTexte => partieTexte)
       .map(texte => {
@@ -104,7 +215,7 @@ export const TexteMentionAideALaSaisie: React.FC<{ blocs: IMetaModelBloc[]; temp
   useEffect(() => {
     setFieldValue(
       "texteMention",
-      FormaterTexteHelper.decoder(texteSaisie)
+      texteSaisie
         .split(/\[\[|\]\]/)
         .filter(partieTexte => partieTexte)
         .map(texte => {
@@ -122,7 +233,7 @@ export const TexteMentionAideALaSaisie: React.FC<{ blocs: IMetaModelBloc[]; temp
   }, [texteSaisie, textesEditables]);
 
   useEffect(() => {
-    setTexteSaisie(GenerateurMention.genererPourSaisie(templateTexteMention, values, valeursParDefaut));
+    setTexteSaisie(genererPourSaisie(templateTexteMention, values, valeursParDefaut));
   }, [values]);
 
   return (

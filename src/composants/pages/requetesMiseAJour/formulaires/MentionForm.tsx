@@ -39,7 +39,13 @@ export interface IMentionForm {
   texteMention: string;
 }
 
-type TMentionForm = IMentionForm & { [cle: string]: object | string | number | boolean };
+export type TObjetAideSaise = { [cle: string]: TValeurAideSaisie };
+export type TValeurAideSaisie = string | boolean | TObjetAideSaise | undefined;
+
+export type TMentionForm = {
+  idTypeMention: string;
+  texteMention: string;
+} & TObjetAideSaise;
 
 interface IMentionFormProps {
   onFormDirty: (isDirty: boolean) => void;
@@ -163,7 +169,7 @@ const genererSchemaValidationAideALaSaisie = (metamodeleTypeMention?: IMetamodel
   }, {});
 };
 
-const DEFAUT_CREATION: IMentionForm = { idTypeMention: "", texteMention: "" };
+const DEFAUT_CREATION: TMentionForm = { idTypeMention: "", texteMention: "" };
 
 const MentionForm: React.FC<IMentionFormProps> = ({ onFormDirty, infoTitulaire }) => {
   const typesMentionDisponibles = useMemo(() => getTypesMentionDisponibles(NatureActe.NAISSANCE), []);

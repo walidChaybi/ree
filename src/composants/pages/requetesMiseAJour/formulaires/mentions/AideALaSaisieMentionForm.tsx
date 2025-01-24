@@ -1,8 +1,9 @@
-import { TEXTE_MENTION } from "@composant/formulaire/ConstantesNomsForm";
+/* v8 ignore start */
 import { IChamp, IMetaModelBloc, IMetamodeleTypeMention, IValeursPossibles } from "@model/etatcivil/acte/mention/IMetaModeleTypeMention";
 import { useField, useFormikContext } from "formik";
 import React, { Suspense, lazy, useMemo } from "react";
-import ChampsZoneTexte from "../../../../commun/champs/ChampsZoneTexte";
+import { TMentionForm, TValeurAideSaisie } from "../MentionForm";
+import { TexteMentionAideALaSaisie } from "./GenerateurTexteSaisieMention";
 
 const ChampsCaseACocher = lazy(() => import("../../../../commun/champs/ChampsCaseACocher"));
 const ChampDate = lazy(() => import("../../../../commun/champs/ChampDate"));
@@ -28,10 +29,12 @@ const getClassesChamp = (typeChamp: string) => {
   }
 };
 
-export const recupererValeurAttribut = (valeurs: any, nomAttribut: string) =>
-  nomAttribut.split(".").reduce((valeur, cle) => valeur?.[cle] ?? undefined, valeurs);
+export const recupererValeurAttribut = (valeurs: TMentionForm, nomAttribut: string) =>
+  nomAttribut
+    .split(".")
+    .reduce((valeur: TValeurAideSaisie, cle) => (typeof valeur === "object" ? (valeur[cle] ?? undefined) : undefined), valeurs);
 
-const estChampAffiche = (champ: IChamp, valeurs: Record<string, any>) =>
+const estChampAffiche = (champ: IChamp, valeurs: TMentionForm) =>
   champ.estAffiche.filter(exigence => {
     switch (exigence.operateur) {
       case "AlwaysTrue":
@@ -55,16 +58,16 @@ const ChampListeDeroulateConditionnee: React.FC<{ libelle: string; name: string;
   valeursPossibles
 }) => {
   const [field] = useField(name);
-  const { values, setFieldValue } = useFormikContext();
+  const { values, setFieldValue } = useFormikContext<TMentionForm>();
   const options = useMemo(() => {
     const valeursOption =
       valeursPossibles.filter(valeurPossible => {
         return valeurPossible.conditions.filter(exigence => {
           if (exigence.operateur === "AlwaysTrue") return true;
 
-          return exigence.operateur === "=="
-            ? exigence.valeurs.includes(recupererValeurAttribut(values, exigence.idChampReference)?.toString())
-            : !exigence.valeurs.includes(recupererValeurAttribut(values, exigence.idChampReference)?.toString());
+          const exigenceRespectee = exigence.valeurs.includes(recupererValeurAttribut(values, exigence.idChampReference)?.toString() ?? "");
+
+          return exigence.operateur === "==" ? exigenceRespectee : !exigenceRespectee;
         }).length;
       })[0]?.valeurs ?? [];
     if (!valeursOption.includes(field.value)) {
@@ -82,7 +85,7 @@ const ChampListeDeroulateConditionnee: React.FC<{ libelle: string; name: string;
 };
 
 const AideALaSaisieMention: React.FC<IAideALaSaisieMention> = ({ metamodeleTypeMention }) => {
-  const { values } = useFormikContext<Record<string, any>>();
+  const { values } = useFormikContext<TMentionForm>();
 
   return (
     <div className="mt-10 grid gap-6 pb-6 pl-8 pr-5">
@@ -160,27 +163,16 @@ const AideALaSaisieMention: React.FC<IAideALaSaisieMention> = ({ metamodeleTypeM
             </div>
           </div>
         ))}
-      {metamodeleTypeMention !== null && metamodeleTypeMention.modeleHandleBars && (
-        //! --- START --- A modifier une fois HandleBar remplacé
-        <div className="flex w-full justify-center pt-4">
-          <div className="w-full pr-4">
-            <ChampsZoneTexte
-              libelle="Texte mention"
-              name={TEXTE_MENTION}
-              className="h-48 w-full pb-4"
-              value={metamodeleTypeMention ? metamodeleTypeMention?.modeleHandleBars : ""}
-            />
-          </div>
-        </div>
-        //* A remplacer avec la librairie fait maison de remplacement de text
-        /* <TexteMentionAideALaSaisie
+
+      {metamodeleTypeMention?.modeleHandleBars && (
+        <TexteMentionAideALaSaisie
           blocs={metamodeleTypeMention.metamodelsBlocs}
           templateTexteMention={metamodeleTypeMention.modeleHandleBars}
-        />*/
-        //! --- STOP ---
+        />
       )}
     </div>
   );
 };
 
 export default AideALaSaisieMention;
+/* v8 ignore end */
