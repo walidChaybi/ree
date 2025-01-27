@@ -502,7 +502,46 @@ export const creationRequeteTranscriptionParams: ICreationRequeteCreationParams 
     requerant: { adresse: {}, qualite: "PARTICULIER" }
   }
 };
-
+export const mesRequetesConsulaire = [
+  {
+    id: "91d13aad-c023-4a6d-b88c-18f277061ca2",
+    idUtilisateur: "80fb7690-58a1-11ef-8a47-0800276b552b",
+    idService: "95878007-0256-49a7-9d61-1bd506baa82f",
+    numeroDossier: "99999",
+    natureActe: "NAISSANCE_MINEUR",
+    numeroFonctionnel: "PT2TNC",
+    sousType: "RCTC",
+    dateCreation: 1736322320884,
+    dateDerniereAction: 1736322321049,
+    statut: "PRISE_EN_CHARGE",
+    nomCompletRequerant: "Greenwald Ambassadeur",
+    titulaires: [
+      {
+        nom: "Patamob",
+        prenoms: ["Julie"]
+      }
+    ]
+  },
+  {
+    id: "933cac90-d452-49a3-952d-3db41998a5dd",
+    idUtilisateur: "80fb7690-58a1-11ef-8a47-0800276b552b",
+    idService: "95878007-0256-49a7-9d61-1bd506baa82f",
+    numeroFonctionnel: "3GRAJN",
+    sousType: "RCTC",
+    dateCreation: 1736344128573,
+    dateDerniereAction: 1736344128607,
+    statut: "PRISE_EN_CHARGE",
+    nomCompletRequerant: "Greenwald",
+    titulaires: [
+      {
+        nom: "greenwald",
+        prenoms: ["alger"]
+      }
+    ],
+    numeroDossier: "888888",
+    natureActe: "NAISSANCE_MINEUR"
+  }
+];
 export const creationRequeteRCTCResultat = [
   {
     id: "3ed9aa4e-921b-489f-b8fe-531dd703c60c",

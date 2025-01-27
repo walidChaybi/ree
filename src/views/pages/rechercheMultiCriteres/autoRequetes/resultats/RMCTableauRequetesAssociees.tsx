@@ -35,9 +35,7 @@ export interface RMCTableauRequetesAssocieesProps {
   setRangeRequete: (range: string) => void;
   setNouvelleRMCRequete: React.Dispatch<React.SetStateAction<boolean>>;
   setValuesRMCRequete: React.Dispatch<React.SetStateAction<IRMCRequete>>;
-  setCriteresRechercheRequete: React.Dispatch<
-    React.SetStateAction<ICriteresRMCRequete | undefined>
-  >;
+  setCriteresRechercheRequete: React.Dispatch<React.SetStateAction<ICriteresRMCRequete | undefined>>;
   resetTableauRequete: boolean;
 }
 
@@ -48,9 +46,7 @@ export interface IInfoRequeteSelectionnee {
   sousType: string;
 }
 
-export const RMCTableauRequetesAssociees: React.FC<
-  RMCTableauRequetesAssocieesProps
-> = ({
+export const RMCTableauRequetesAssociees: React.FC<RMCTableauRequetesAssocieesProps> = ({
   dataRMCRequete,
   dataTableauRMCRequete,
   setRangeRequete,
@@ -61,8 +57,7 @@ export const RMCTableauRequetesAssociees: React.FC<
 }) => {
   const { utilisateurConnecte } = useContext(RECEContextData);
   // Gestion du tableau
-  const [requeteSelectionnee, setRequeteSelectionnee] =
-    useState<IInfoRequeteSelectionnee>();
+  const [requeteSelectionnee, setRequeteSelectionnee] = useState<IInfoRequeteSelectionnee>();
 
   const goToLink = useCallback(
     (link: string) => {
@@ -78,14 +73,10 @@ export const RMCTableauRequetesAssociees: React.FC<
     setRequeteSelectionnee(undefined);
   };
 
-  const onClickOnLine = (
-    idRequete: string,
-    data: IRequeteTableauDelivrance[],
-    idx: number
-  ) => {
+  const onClickOnLine = (idRequete: string, data: IRequeteTableauDelivrance[], idx: number) => {
     const requeteCliquee = data[idx];
     const utilisateurPeutOuvrirLaRequete = utilisateurADroitOuvrirRequete(
-      requeteCliquee.type,
+      requeteCliquee.type ?? "",
       requeteCliquee.sousType,
       utilisateurConnecte
     );
@@ -93,7 +84,7 @@ export const RMCTableauRequetesAssociees: React.FC<
       setRequeteSelectionnee({
         idRequete: requeteCliquee.idRequete,
         numeroFonctionnel: requeteCliquee.numero,
-        type: requeteCliquee.type,
+        type: requeteCliquee.type ?? "",
         sousType: requeteCliquee.sousType
       });
     }
@@ -133,11 +124,7 @@ export const RMCTableauRequetesAssociees: React.FC<
   );
 };
 
-export const utilisateurADroitOuvrirRequete = (
-  typeRequete: string,
-  sousTypeRequete: string,
-  utilisateurConnecte: IOfficier
-) => {
+export const utilisateurADroitOuvrirRequete = (typeRequete: string, sousTypeRequete: string, utilisateurConnecte: IOfficier) => {
   let aLeDroit = false;
   if (utilisateurConnecte) {
     switch (typeRequete) {
@@ -145,10 +132,7 @@ export const utilisateurADroitOuvrirRequete = (
         aLeDroit = aDroitConsulterRequeteDelivrance(utilisateurConnecte);
         break;
       case TypeRequete.CREATION.libelle:
-        aLeDroit = aDroitConsulterRequeteCreation(
-          sousTypeRequete,
-          utilisateurConnecte
-        );
+        aLeDroit = aDroitConsulterRequeteCreation(sousTypeRequete, utilisateurConnecte);
         break;
       case TypeRequete.INFORMATION.libelle:
         aLeDroit = aDroitConsulterApercuRequeteInformation(utilisateurConnecte);
@@ -160,28 +144,17 @@ export const utilisateurADroitOuvrirRequete = (
   return aLeDroit;
 };
 
-export const getApercuRequeteSimple = (
-  requeteSelectionnee: IInfoRequeteSelectionnee
-): JSX.Element => {
+export const getApercuRequeteSimple = (requeteSelectionnee: IInfoRequeteSelectionnee): JSX.Element => {
   let apercuRequete: JSX.Element = <></>;
   switch (requeteSelectionnee.type) {
     case TypeRequete.DELIVRANCE.libelle:
-      apercuRequete = (
-        <ApercuRequetePage
-          idRequeteAAfficher={requeteSelectionnee?.idRequete}
-        />
-      );
+      apercuRequete = <ApercuRequetePage idRequeteAAfficher={requeteSelectionnee?.idRequete} />;
       break;
     case TypeRequete.CREATION.libelle:
-      apercuRequete =
-        getApercuRequeteEtablissementOuTranscription(requeteSelectionnee);
+      apercuRequete = getApercuRequeteEtablissementOuTranscription(requeteSelectionnee);
       break;
     case TypeRequete.INFORMATION.libelle:
-      apercuRequete = (
-        <ApercuReqInfoPage
-          idRequeteAAfficher={requeteSelectionnee?.idRequete}
-        />
-      );
+      apercuRequete = <ApercuReqInfoPage idRequeteAAfficher={requeteSelectionnee?.idRequete} />;
       break;
     default:
       break;
@@ -190,25 +163,13 @@ export const getApercuRequeteSimple = (
   return apercuRequete;
 };
 
-export const getApercuRequeteEtablissementOuTranscription = (
-  requeteSelectionnee: IInfoRequeteSelectionnee
-): JSX.Element => {
+export const getApercuRequeteEtablissementOuTranscription = (requeteSelectionnee: IInfoRequeteSelectionnee): JSX.Element => {
   let apercuSimpleCreation: JSX.Element = <></>;
-  const sousTypeCreation = SousTypeCreation.getEnumFromLibelleCourt(
-    requeteSelectionnee.sousType
-  );
+  const sousTypeCreation = SousTypeCreation.getEnumFromLibelleCourt(requeteSelectionnee.sousType);
   if (SousTypeCreation.estRCEXR(sousTypeCreation)) {
-    apercuSimpleCreation = (
-      <ApercuRequeteEtablissementSimplePage
-        idRequeteAAfficher={requeteSelectionnee.idRequete}
-      />
-    );
+    apercuSimpleCreation = <ApercuRequeteEtablissementSimplePage idRequeteAAfficher={requeteSelectionnee.idRequete} />;
   } else if (SousTypeCreation.estRCTDOuRCTC(sousTypeCreation)) {
-    apercuSimpleCreation = (
-      <ApercuReqCreationTranscriptionSimplePage
-        idRequeteAAfficher={requeteSelectionnee.idRequete}
-      />
-    );
+    apercuSimpleCreation = <ApercuReqCreationTranscriptionSimplePage idRequeteAAfficher={requeteSelectionnee.idRequete} />;
   }
 
   return apercuSimpleCreation;

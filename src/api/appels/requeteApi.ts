@@ -8,23 +8,18 @@ import { IFiltresServiceRequeteInformationFormValues } from "@model/requete/IFil
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
-import {
-  ICriteresRMCAutoRequete,
-  IRMCRequestRequete
-} from "@model/rmc/requete/IRMCRequestRequete";
+import { ICriteresRMCAutoRequete, IRMCRequestRequete } from "@model/rmc/requete/IRMCRequestRequete";
 import { SortOrder } from "@widget/tableau/TableUtils";
 import { HttpMethod } from "../ApiManager";
 import { URL_MENTION } from "./etatcivilApi";
 
 export const URL_REQUETES_DELIVRANCE_SERVICE = "/requetes/requetesService";
-export const URL_REQUETES_INFO_SERVICE =
-  "/requetes/information/requetes-de-mon-service";
-export const URL_REQUETES_CREATION_SERVICE =
-  "/requetes/creation/requetesService";
+export const URL_REQUETES_INFO_SERVICE = "/requetes/information/requetes-de-mon-service";
+export const URL_REQUETES_CREATION_SERVICE = "/requetes/creation/requetesService";
 export const URL_REQUETES = "/requetes";
 export const URL_MES_REQUETES_DELIVRANCE = "/requetes/mesrequetes";
 export const URL_MES_REQUETES_INFO = "/requetes/information/mesrequetes";
-export const URL_MES_REQUETES_CREATION = "/requetes/creation/mesrequetes";
+export const URL_MES_REQUETES_CREATION = "/requetes/creation/mes-requetes";
 export const URL_CREATION = "/requetes/creation/";
 export const URL_SAUVEGARDER_REPONSE_REQINFO = "/requetes/information/reponse";
 export const URL_INFORMATION_STATUT = "/requetes/information/statut";
@@ -35,19 +30,16 @@ export const URL_NOMENCLATURE = "/nomenclature";
 export const URL_REQUETES_DELIVRANCE = "/requetes/delivrance";
 export const URL_REQUETES_CREATIONS = "/requetes/creations";
 export const URL_REQUETES_CREATION = "/requetes/creation";
-export const URL_REQUETES_CREATION_TRANSMISSION_SERVICE =
-  "/requetes/creationsTransmissionService";
+export const URL_REQUETES_CREATION_TRANSMISSION_SERVICE = "/requetes/creationsTransmissionService";
 export const URL_CHOIX_DELIVRANCE = "/choixdelivrance";
 export const URL_COURRIER = "/courrier";
 export const URL_DOCUMENT = "/document";
 export const URL_DOCUMENT_REPONSE = "/documentsreponses";
-export const URL_PIECES_COMPLEMENT_INFORMATION =
-  "/piecescomplementinformations";
+export const URL_PIECES_COMPLEMENT_INFORMATION = "/piecescomplementinformations";
 export const URL_PIECE_COMPLEMENT_INFORMATION = "/piececomplementinformation";
 export const URL_PIECES_JUSTIFICATIVES = "/piecesjustificatives";
 export const URL_PIECE_JUSTIFICATIVE = "/piecejustificative";
-export const URL_FICHIER_PIECE_JUSTIFICATIVE =
-  "/requetes/fichierpiecejustificative/";
+export const URL_FICHIER_PIECE_JUSTIFICATIVE = "/requetes/fichierpiecejustificative/";
 export const URL_LIBELLE = "/libelle";
 export const URL_PARAMETRE = "/parametres";
 export const URL_ACTION = "/requetes/action";
@@ -63,21 +55,16 @@ export const URL_REPONSE_REQ_INFO = "/reponse";
 export const URL_NB_REQ_INFO = "/requetes/information/count";
 export const URL_ECHANGE = "/echange";
 export const URL_ECHANGE_STATUT = "/requetes/action/retourSdanf";
-export const URL_DOCUMENT_COMPLEMENTAIRE =
-  "/documentsreponses/documentComplementaire";
-export const URL_RECHERCHE_REQ_NATALI =
-  "/requetes/creation/natali/numeroDossierNational";
-export const URL_SAUVEGARDE_PERSONNE_ACTE_RMC =
-  "/requetes/creation/sauvegardeDetailsRMC";
+export const URL_DOCUMENT_COMPLEMENTAIRE = "/documentsreponses/documentComplementaire";
+export const URL_RECHERCHE_REQ_NATALI = "/requetes/creation/natali/numeroDossierNational";
+export const URL_SAUVEGARDE_PERSONNE_ACTE_RMC = "/requetes/creation/sauvegardeDetailsRMC";
 export const URL_MISE_A_JOUR_SUIVI_DOSSIER = "/requetes/creation/suiviDossier";
 export const URL_AVANCEMENT_PROJET = "/avancement";
 export const URL_PIECE_JUSTIFICATIVES_CREATION = "/pieceJustificative";
 export const URL_STATUT = "/statut";
 const URL_SUIVI_DOSSIER = "/suivi-dossier";
-const URL_METTRE_AJOUR_STATUT_APRES_SIGNATURE =
-  "/mettre-a-jour-statut-apres-signature";
-export const URL_PRENDRE_EN_CHARGE_REQUETE_SUIVANTE =
-  "/requetes/creation/requete-a-prendre-en-charge";
+const URL_METTRE_AJOUR_STATUT_APRES_SIGNATURE = "/mettre-a-jour-statut-apres-signature";
+export const URL_PRENDRE_EN_CHARGE_REQUETE_SUIVANTE = "/requetes/creation/requete-a-prendre-en-charge";
 export const URL_REQUETE_MISE_A_JOUR = "/mise-a-jour";
 
 const URL_REPONSES = "/reponses";
@@ -142,16 +129,10 @@ export function getTableauRequetesDelivrance(
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
-      uri:
-        typeRequete === TypeAppelRequete.REQUETE_DELIVRANCE_SERVICE
-          ? URL_REQUETES_DELIVRANCE_SERVICE
-          : URL_MES_REQUETES_DELIVRANCE,
+      uri: typeRequete === TypeAppelRequete.REQUETE_DELIVRANCE_SERVICE ? URL_REQUETES_DELIVRANCE_SERVICE : URL_MES_REQUETES_DELIVRANCE,
       parameters: {
         statuts: listeStatuts,
-        tri:
-          queryParameters.tri !== "prioriteRequete"
-            ? queryParameters.tri
-            : "dateStatut",
+        tri: queryParameters.tri !== "prioriteRequete" ? queryParameters.tri : "dateStatut",
         sens: queryParameters.sens,
         range: queryParameters.range
       }
@@ -168,10 +149,7 @@ export function postTableauRequetesDelivranceService(
       method: HttpMethod.POST,
       uri: URL_REQUETES_DELIVRANCE_SERVICE,
       parameters: {
-        tri:
-          queryParameters.tri !== "prioriteRequete"
-            ? queryParameters.tri
-            : "dateStatut",
+        tri: queryParameters.tri !== "prioriteRequete" ? queryParameters.tri : "dateStatut",
         sens: queryParameters.sens,
         range: queryParameters.range
       },
@@ -179,10 +157,28 @@ export function postTableauRequetesDelivranceService(
     })
   );
 }
-
-export function getRequetesInformation(
+export const getTableauRequetesConsulaires = (
+  typeRequete: TypeAppelRequete,
+  listeStatuts: string,
+  listeSousType: string,
   queryParameters: IQueryParametersPourRequetes
-): Promise<any> {
+): Promise<any> => {
+  return getApiManager().then(api =>
+    api.fetch({
+      method: HttpMethod.GET,
+      uri: URL_MES_REQUETES_CREATION,
+      parameters: {
+        statuts: listeStatuts,
+        sousType: listeSousType,
+        tri: queryParameters.tri !== "prioriteRequete" ? queryParameters.tri : "dateCreation",
+        sens: queryParameters.sens,
+        range: queryParameters.range
+      }
+    })
+  );
+};
+
+export function getRequetesInformation(queryParameters: IQueryParametersPourRequetes): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
@@ -213,31 +209,23 @@ export function postRequetesInformation(
       data: {
         sousType: filtresRequetes.sousType,
         objet: filtresRequetes.objet,
-        idAgent: filtresRequetes.agent?.cle || "",
-        idService: filtresRequetes.service?.cle || "",
+        idAgent: filtresRequetes.agent?.cle ?? "",
+        idService: filtresRequetes.service?.cle ?? "",
         typeRequerant: filtresRequetes.typeRequerant,
-        statuts: filtresRequetes.statut
-          ? [filtresRequetes.statut]
-          : queryParameters.statuts
+        statuts: filtresRequetes.statut ? [filtresRequetes.statut] : queryParameters.statuts
       }
     })
   );
 }
 
-export function getRequetesCreation(
-  listeStatuts: string,
-  queryParameters: IQueryParametersPourRequetes
-): Promise<any> {
+export function getRequetesCreation(listeStatuts: string, queryParameters: IQueryParametersPourRequetes): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
       uri: URL_MES_REQUETES_CREATION,
       parameters: {
         statuts: listeStatuts,
-        tri:
-          queryParameters.tri !== "prioriteRequete"
-            ? queryParameters.tri
-            : "dateStatut",
+        tri: queryParameters.tri !== "prioriteRequete" ? queryParameters.tri : "dateStatut",
         sens: queryParameters.sens,
         range: queryParameters.range
       }
@@ -254,10 +242,7 @@ export function postRequetesServiceCreation(
       method: HttpMethod.POST,
       uri: URL_REQUETES_CREATION_SERVICE,
       parameters: {
-        tri:
-          queryParameters.tri !== "prioriteRequete"
-            ? queryParameters.tri
-            : "dateStatut",
+        tri: queryParameters.tri !== "prioriteRequete" ? queryParameters.tri : "dateStatut",
         sens: queryParameters.sens,
         range: queryParameters.range
       },
@@ -266,11 +251,7 @@ export function postRequetesServiceCreation(
   );
 }
 
-export function getDetailRequete(
-  idRequete: string,
-  estConsultation = false,
-  estConsultationHistoriqueAction = false
-): Promise<any> {
+export function getDetailRequete(idRequete: string, estConsultation = false, estConsultationHistoriqueAction = false): Promise<any> {
   let config: any = {
     method: HttpMethod.GET,
     uri: `${URL_REQUETES}/${idRequete}`
@@ -303,10 +284,7 @@ export async function getNomenclatureRequete(nom: string): Promise<any> {
   );
 }
 
-export function rechercheMultiCriteresRequetes(
-  criteres: IRMCRequestRequete,
-  range?: string
-): Promise<any> {
+export function rechercheMultiCriteresRequetes(criteres: IRMCRequestRequete, range?: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -319,9 +297,7 @@ export function rechercheMultiCriteresRequetes(
   );
 }
 
-export function patchUtilisateurAssigneRequete(
-  queryParameters: IQueryParametersAssigneRequetes
-): Promise<any> {
+export function patchUtilisateurAssigneRequete(queryParameters: IQueryParametersAssigneRequetes): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -393,10 +369,7 @@ export async function updateRequeteDelivrance({
   );
 }
 
-export async function updateChoixDelivrance(
-  idRequete: string,
-  choixDelivrance: string | null
-) {
+export async function updateChoixDelivrance(idRequete: string, choixDelivrance: string | null) {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -416,10 +389,7 @@ export async function creationRequeteCreation(requete: ISaisieRequeteAEnvoyer) {
   );
 }
 
-export async function updateRequeteCreation(
-  idRequete: string,
-  requete: ISaisieRequeteAEnvoyer
-) {
+export async function updateRequeteCreation(idRequete: string, requete: ISaisieRequeteAEnvoyer) {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -429,10 +399,7 @@ export async function updateRequeteCreation(
   );
 }
 
-export async function mettreAJourStatutApresSignature(
-  idRequete: string,
-  idSuiviDossier: string
-): Promise<any> {
+export async function mettreAJourStatutApresSignature(idRequete: string, idSuiviDossier: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -441,10 +408,7 @@ export async function mettreAJourStatutApresSignature(
   );
 }
 
-export async function creationRequeteCreationEtTransmissionService(
-  requete: ISaisieRequeteAEnvoyer,
-  idService: string
-) {
+export async function creationRequeteCreationEtTransmissionService(requete: ISaisieRequeteAEnvoyer, idService: string) {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -493,10 +457,7 @@ export async function postSauvDocumentCreerActionMajStatutRequete(
   );
 }
 
-export async function postSauvegarderDocument(
-  idRequete: string,
-  documents: IDocumentReponse[]
-) {
+export async function postSauvegarderDocument(idRequete: string, documents: IDocumentReponse[]) {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -506,9 +467,7 @@ export async function postSauvegarderDocument(
   );
 }
 
-export function patchDocumentsReponsesAvecSignature(
-  miseAJourDocumentParams: IMiseAJourDocumentParams[]
-): Promise<any> {
+export function patchDocumentsReponsesAvecSignature(miseAJourDocumentParams: IMiseAJourDocumentParams[]): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -537,10 +496,7 @@ export function getDocumentReponseById(idDcumentReponse: string): Promise<any> {
   );
 }
 
-export function postDocumentReponseApi(
-  idRequete: string,
-  documentsReponse: IDocumentReponse[]
-) {
+export function postDocumentReponseApi(idRequete: string, documentsReponse: IDocumentReponse[]) {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -552,9 +508,7 @@ export function postDocumentReponseApi(
     })
   );
 }
-export function getPieceComplementInformationById(
-  idPiece: string
-): Promise<any> {
+export function getPieceComplementInformationById(idPiece: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
@@ -563,10 +517,7 @@ export function getPieceComplementInformationById(
   );
 }
 
-export function postPieceComplementInformationApi(
-  idRequete: string,
-  pieceComplementInformation: any
-) {
+export function postPieceComplementInformationApi(idRequete: string, pieceComplementInformation: any) {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -585,10 +536,7 @@ export function getPieceJustificativeById(idPiece: string): Promise<any> {
   );
 }
 
-export function postPieceJustificative(
-  idRequete: string,
-  pieceJustificative: IPieceJustificative
-) {
+export function postPieceJustificative(idRequete: string, pieceJustificative: IPieceJustificative) {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -611,11 +559,7 @@ export function postCreationAction(idRequete: string, libelleAction: string) {
   );
 }
 
-export function postCreationActionEtMiseAjourStatut(
-  idRequete: string,
-  libelleAction: string,
-  statutRequete: StatutRequete
-) {
+export function postCreationActionEtMiseAjourStatut(idRequete: string, libelleAction: string, statutRequete: StatutRequete) {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -653,12 +597,7 @@ export function postTransfertRequete(
   );
 }
 
-export function postTransfertValideur(
-  idRequete: string,
-  idUtilisateurValideur: string,
-  libelleAction: string,
-  texteObservation: string
-) {
+export function postTransfertValideur(idRequete: string, idUtilisateurValideur: string, libelleAction: string, texteObservation: string) {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -673,12 +612,7 @@ export function postTransfertValideur(
   );
 }
 
-export function postRetourValideur(
-  idRequete: string,
-  statutDemande: string,
-  libelleAction: string,
-  texteObservation: string
-) {
+export function postRetourValideur(idRequete: string, statutDemande: string, libelleAction: string, texteObservation: string) {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -693,10 +627,7 @@ export function postRetourValideur(
   );
 }
 
-export function postIgnorerRequete(
-  idRequete: string,
-  texteObservation: string
-) {
+export function postIgnorerRequete(idRequete: string, texteObservation: string) {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -709,10 +640,7 @@ export function postIgnorerRequete(
   );
 }
 
-export function rechercheMultiCriteresAutoRequetes(
-  criteres: ICriteresRMCAutoRequete,
-  range?: string
-): Promise<any> {
+export function rechercheMultiCriteresAutoRequetes(criteres: ICriteresRMCAutoRequete, range?: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -764,11 +692,7 @@ export async function getReponsesReqInfo(): Promise<any> {
   );
 }
 
-export async function sauvegarderReponseReqInfo(
-  idRequete: string,
-  corpsMailReponse: string,
-  idReponse?: string
-): Promise<any> {
+export async function sauvegarderReponseReqInfo(idRequete: string, corpsMailReponse: string, idReponse?: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -778,10 +702,7 @@ export async function sauvegarderReponseReqInfo(
   );
 }
 
-export async function updateStatutRequeteInformation(
-  idRequete: string,
-  statutDemande: StatutRequete
-): Promise<any> {
+export async function updateStatutRequeteInformation(idRequete: string, statutDemande: StatutRequete): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -793,10 +714,7 @@ export async function updateStatutRequeteInformation(
   );
 }
 
-export async function updateStatutRequeteCreation(
-  idRequete: string,
-  statutDemande: StatutRequete
-): Promise<any> {
+export async function updateStatutRequeteCreation(idRequete: string, statutDemande: StatutRequete): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -820,11 +738,7 @@ export function getNbReqInfo(listeStatuts: string): Promise<any> {
   );
 }
 
-export function postObservation(
-  idRequete: string,
-  texteObservation: string,
-  idObservation?: string
-): Promise<any> {
+export function postObservation(idRequete: string, texteObservation: string, idObservation?: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -850,10 +764,7 @@ export function deleteObservation(idObservation: string): Promise<any> {
   );
 }
 
-export function updateDocumentMention(
-  id: string,
-  mentionsRetirees?: string[]
-): Promise<any> {
+export function updateDocumentMention(id: string, mentionsRetirees?: string[]): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -863,10 +774,7 @@ export function updateDocumentMention(
   );
 }
 
-export function deleteDocumentComplementaire(
-  idDocumentReponse: string,
-  idRequete: string
-): Promise<any> {
+export function deleteDocumentComplementaire(idDocumentReponse: string, idRequete: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.DELETE,
@@ -888,10 +796,7 @@ export function postMessageRetourSDANF(idRequete: string, message: IEchange) {
   );
 }
 
-export function postMessageRetourSDANFEtUpdateStatutRequete(
-  idRequete: string,
-  message: IEchange
-) {
+export function postMessageRetourSDANFEtUpdateStatutRequete(idRequete: string, message: IEchange) {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -904,10 +809,7 @@ export function postMessageRetourSDANFEtUpdateStatutRequete(
   );
 }
 
-export const patchMiseAJourLibellePJ = (
-  idPJ: string,
-  nouveauLibelle: string
-): Promise<any> =>
+export const patchMiseAJourLibellePJ = (idPJ: string, nouveauLibelle: string): Promise<any> =>
   getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -918,19 +820,7 @@ export const patchMiseAJourLibellePJ = (
     })
   );
 
-export const getReqNataliById = (id: string): Promise<any> => {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.GET,
-      uri: `${URL_RECHERCHE_REQ_NATALI}/${id}`
-    })
-  );
-};
-
-export const postSauvegardePersonneEtActeSelectionne = (
-  id: string,
-  data: any
-): Promise<any> => {
+export const postSauvegardePersonneEtActeSelectionne = (id: string, data: any): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -940,10 +830,7 @@ export const postSauvegardePersonneEtActeSelectionne = (
   );
 };
 
-export const patchModificationAvancementProjet = (
-  id: string,
-  data: any
-): Promise<any> => {
+export const patchModificationAvancementProjet = (id: string, data: any): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -955,10 +842,7 @@ export const patchModificationAvancementProjet = (
   );
 };
 
-export const postAjoutPieceJustificativeAUneRequeteCreation = (
-  idRequete: string,
-  data: any
-): Promise<any> => {
+export const postAjoutPieceJustificativeAUneRequeteCreation = (idRequete: string, data: any): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -968,10 +852,7 @@ export const postAjoutPieceJustificativeAUneRequeteCreation = (
   );
 };
 
-export const patchMiseAJourIdSuiviDossier = (
-  idSuiviDossier: string,
-  idActe: string
-): Promise<any> => {
+export const patchMiseAJourIdSuiviDossier = (idSuiviDossier: string, idActe: string): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
@@ -984,10 +865,7 @@ export const patchMiseAJourIdSuiviDossier = (
   );
 };
 
-export const postValiderProjetActe = (
-  idRequete: string,
-  idSuiviDossier: string
-) => {
+export const postValiderProjetActe = (idRequete: string, idSuiviDossier: string) => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -997,16 +875,11 @@ export const postValiderProjetActe = (
 };
 
 // A remplacer par PatchStatutRequereMiseAJour (useFetch)
-export const modifierStatutRequeteMiseAJour = (
-  idRequete: string,
-  statutDemande: StatutRequete
-): Promise<any> => {
+export const modifierStatutRequeteMiseAJour = (idRequete: string, statutDemande: StatutRequete): Promise<any> => {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
-      uri: `${URL_REQUETES}${URL_REQUETE_MISE_A_JOUR}/${idRequete}/update-statut-requete-mise-a-jour/${StatutRequete.getKey(
-        statutDemande
-      )}`
+      uri: `${URL_REQUETES}${URL_REQUETE_MISE_A_JOUR}/${idRequete}/update-statut-requete-mise-a-jour/${StatutRequete.getKey(statutDemande)}`
     })
   );
 };

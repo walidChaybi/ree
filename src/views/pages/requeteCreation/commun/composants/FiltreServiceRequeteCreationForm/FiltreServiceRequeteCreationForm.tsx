@@ -9,7 +9,6 @@ import { TagPriorisation } from "@model/requete/enum/TagPriorisation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import Button from "@mui/material/Button";
 import { Options } from "@util/Type";
-import { getLibelle } from "@util/Utils";
 import { ChampRechercheField } from "@widget/formulaire/champRecherche/ChampRechercheField";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
@@ -27,7 +26,8 @@ export const FiltreServiceRequeteCreationFormDefaultValues: IFiltreServiceRequet
   priorisation: "",
   attribueA: { cle: "", libelle: "" },
   attribueAuService: { cle: "", libelle: "" },
-  statut: ""
+  statut: "",
+  numeroDossierNational: ""
 };
 
 export const FiltreServiceRequeteCreationForm: React.FC<FiltreServiceRequeteCreationFormProps> = props => {
@@ -69,41 +69,41 @@ export const FiltreServiceRequeteCreationForm: React.FC<FiltreServiceRequeteCrea
               <InputField
                 data-testid="inputRechercheReqNatali"
                 className="inputField"
-                name="numeroRequete"
-                label={getLibelle("Rechercher un dossier Natali")}
+                name="numeroDossierNational"
+                label={"Rechercher un dossier Natali"}
               />
             </form>
             <SelectField
-              label={getLibelle("Sous-Type")}
+              label={"Sous-Type"}
               name="sousType"
               options={filtreSousTypeCreation}
-              disabled={Boolean(values.numeroRequete)}
+              disabled={Boolean(values.numeroDossierNational)}
             />
             <SelectField
               name="priorisation"
-              label={getLibelle("Priorisation")}
+              label={"Priorisation"}
               options={filtrePriorisation}
-              disabled={Boolean(values.numeroRequete)}
+              disabled={Boolean(values.numeroDossierNational)}
             />
             <ChampRechercheField
               componentName="filtreAttribuerAAgent"
               name="attribueA"
-              label={getLibelle("Attribué à un agent")}
+              label={"Attribué à un agent"}
               options={optionsUtilisateurs}
-              disabled={Boolean(values.numeroRequete)}
+              disabled={Boolean(values.numeroDossierNational)}
             />
             <ChampRechercheField
               componentName="filtreAttribuerAuService"
               name="attribueAuService"
-              label={getLibelle("Attribué à un service")}
+              label={"Attribué à un service"}
               options={getServicesAsOptions(utilisateurConnecte)}
-              disabled={Boolean(values.numeroRequete)}
+              disabled={Boolean(values.numeroDossierNational)}
             />
             <SelectField
               name="statut"
-              label={getLibelle("Statut")}
+              label={"Statut"}
               options={filtreStatutRequete}
-              disabled={Boolean(values.numeroRequete)}
+              disabled={Boolean(values.numeroDossierNational)}
             />
             <Button
               data-testid="loupeButton"

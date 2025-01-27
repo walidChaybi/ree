@@ -1,10 +1,4 @@
-import {
-  getReqNataliById,
-  getRequetesCreation,
-  IQueryParametersPourRequetes,
-  postRequetesServiceCreation,
-  TypeAppelRequete
-} from "@api/appels/requeteApi";
+import { getRequetesCreation, IQueryParametersPourRequetes, postRequetesServiceCreation, TypeAppelRequete } from "@api/appels/requeteApi";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { IService } from "@model/agent/IService";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
@@ -13,10 +7,7 @@ import {
   IFiltresServiceRequeteCreation,
   mappingFiltreServiceCreationVersFiltreDto
 } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
-import {
-  IRequeteTableauCreation,
-  mappingUneRequeteTableauCreation
-} from "@model/requete/IRequeteTableauCreation";
+import { IRequeteTableauCreation, mappingUneRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
@@ -26,17 +17,12 @@ export function useRequeteCreationApiHook(
   typeRequete: TypeAppelRequete,
   setEnChargement: (enChargement: boolean) => void,
   parametresLienRequete?: IQueryParametersPourRequetes,
-  setParametresLienRequete?: React.Dispatch<
-    React.SetStateAction<IQueryParametersPourRequetes | undefined>
-  >
+  setParametresLienRequete?: React.Dispatch<React.SetStateAction<IQueryParametersPourRequetes | undefined>>
 ) {
   const { utilisateurs, services } = useContext(RECEContextData);
   const [dataState, setDataState] = useState<IRequeteTableauCreation[]>([]);
   const [paramsTableau, setParamsTableau] = useState<IParamsTableau>({});
-  const [numeroReqNatali, setNumeroReqNatali] = useState<string>();
-  const [filtresReq, setFiltresReq] = useState<IFiltresServiceRequeteCreation>(
-    {} as IFiltresServiceRequeteCreation
-  );
+  const [filtresReq, setFiltresReq] = useState<IFiltresServiceRequeteCreation>({} as IFiltresServiceRequeteCreation);
 
   useEffect(() => {
     async function fetchMesRequetes() {
@@ -46,24 +32,15 @@ export function useRequeteCreationApiHook(
           const result =
             typeRequete === TypeAppelRequete.MES_REQUETES_CREATION
               ? await getRequetesCreation(listeStatuts, parametresLienRequete)
-              : await postRequetesServiceCreation(
-                  parametresLienRequete,
-                  mappingFiltreServiceCreationVersFiltreDto(filtresReq)
-                );
-          const mesRequetes = mappingRequetesTableauCreation(
-            result?.body?.data,
-            false,
-            utilisateurs,
-            services
-          );
+              : await postRequetesServiceCreation(parametresLienRequete, mappingFiltreServiceCreationVersFiltreDto(filtresReq));
+          const mesRequetes = mappingRequetesTableauCreation(result?.body?.data, false, utilisateurs, services);
           setDataState(mesRequetes);
           setParamsTableau(getParamsTableau(result));
           setEnChargement(false);
         }
       } catch (error) {
         logError({
-          messageUtilisateur:
-            "Impossible de récupérer les requêtes de création",
+          messageUtilisateur: "Impossible de récupérer les requêtes de création",
           error
         });
       }
@@ -72,41 +49,13 @@ export function useRequeteCreationApiHook(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [parametresLienRequete, typeRequete, setEnChargement, filtresReq]);
 
-  useEffect(() => {
-    if (numeroReqNatali) {
-      getReqNataliById(numeroReqNatali)
-        .then(res => {
-          if (res) {
-            setDataState(
-              mappingRequetesTableauCreation(
-                res.body.data,
-                false,
-                utilisateurs,
-                services
-              )
-            );
-            setParamsTableau(getParamsTableau(res));
-          }
-        })
-        .catch((error: any) => {
-          logError({
-            messageUtilisateur: `Impossible de récupérer la requête Natali associée au dossier ${numeroReqNatali}`,
-            error
-          });
-        });
-    }
-  }, [numeroReqNatali]);
-
   function onSubmit(values: IFiltreServiceRequeteCreationFormValues) {
-    setNumeroReqNatali(values.numeroRequete);
-    if (!values.numeroRequete) {
-      setFiltresReq({ ...values });
-      if (setParametresLienRequete && parametresLienRequete) {
-        setParametresLienRequete({
-          ...parametresLienRequete,
-          range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
-        });
-      }
+    setFiltresReq({ ...values });
+    if (setParametresLienRequete && parametresLienRequete) {
+      setParametresLienRequete({
+        ...parametresLienRequete,
+        range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
+      });
     }
   }
 
@@ -124,11 +73,6 @@ function mappingRequetesTableauCreation(
   services: IService[]
 ): IRequeteTableauCreation[] {
   return resultatsRecherche?.map((requete: any) => {
-    return mappingUneRequeteTableauCreation(
-      requete,
-      mappingSupplementaire,
-      utilisateurs,
-      services
-    );
+    return mappingUneRequeteTableauCreation(requete, mappingSupplementaire, utilisateurs, services);
   });
 }

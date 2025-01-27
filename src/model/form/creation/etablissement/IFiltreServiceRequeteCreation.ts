@@ -9,6 +9,7 @@ export interface IFiltreServiceRequeteCreationFormValues {
   attribueA: Option | null;
   attribueAuService: Option | null;
   statut: string;
+  numeroDossierNational: string | null;
 }
 
 export interface IFiltreServiceRequeteCreationDto {
@@ -17,24 +18,17 @@ export interface IFiltreServiceRequeteCreationDto {
   idAgent: string | null;
   idService: string | null;
   statuts: string[] | null;
+  numeroDossierNational?: string | null;
 }
-export type IFiltresServiceRequeteCreation = Omit<
-  IFiltreServiceRequeteCreationFormValues,
-  "numeroRequete"
->;
+export type IFiltresServiceRequeteCreation = Omit<IFiltreServiceRequeteCreationFormValues, "numeroRequete">;
 
-export function mappingFiltreServiceCreationVersFiltreDto(
-  filtre: IFiltresServiceRequeteCreation
-): IFiltreServiceRequeteCreationDto {
+export function mappingFiltreServiceCreationVersFiltreDto(filtre: IFiltresServiceRequeteCreation): IFiltreServiceRequeteCreationDto {
   return {
-    sousType: filtre.sousType || null,
-    tagPriorisation: filtre.priorisation || null,
-    idAgent: filtre.attribueA?.cle || null,
-    idService: filtre.attribueAuService?.cle || null,
-    statuts: filtre.statut
-      ? [filtre.statut]
-      : StatutRequete.getOptionsAPartirTypeRequete(TypeRequete.CREATION).map(
-          st => st.cle
-        )
+    sousType: filtre.sousType ?? null,
+    tagPriorisation: filtre.priorisation ?? null,
+    idAgent: filtre.attribueA?.cle ?? null,
+    idService: filtre.attribueAuService?.cle ?? null,
+    statuts: filtre.statut ? [filtre.statut] : StatutRequete.getOptionsAPartirTypeRequete(TypeRequete.CREATION).map(st => st.cle),
+    numeroDossierNational: filtre.numeroDossierNational ?? null
   };
 }

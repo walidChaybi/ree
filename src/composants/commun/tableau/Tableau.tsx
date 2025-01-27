@@ -23,13 +23,8 @@ export interface IEnTeteTableau {
 interface ITableauProps {
   enTetes: IEnTeteTableau[];
   lignes:
-    | ({ cle: string } & {
-        [cleCollone: string]:
-          | string
-          | number
-          | boolean
-          | JSX.Element
-          | undefined;
+    | ({ cle: string; onClick?: () => void } & {
+        [cleCollone: string]: string | number | boolean | React.JSX.Element | undefined;
       })[]
     | undefined;
   messageAucuneLigne?: string;
@@ -45,30 +40,18 @@ interface ITableauProps {
 }
 
 const libellePagination = (infoPagination: IParametresPagination) => {
-  const premiereLigne =
-    infoPagination.pageActuelle * infoPagination.lignesParPage + UN;
-  const derniereLigne =
-    (infoPagination.pageActuelle + UN) * infoPagination.lignesParPage;
+  const premiereLigne = infoPagination.pageActuelle * infoPagination.lignesParPage + UN;
+  const derniereLigne = (infoPagination.pageActuelle + UN) * infoPagination.lignesParPage;
 
   return `${premiereLigne}-${
-    derniereLigne > infoPagination.totalLignes
-      ? infoPagination.totalLignes
-      : derniereLigne
+    derniereLigne > infoPagination.totalLignes ? infoPagination.totalLignes : derniereLigne
   } sur ${infoPagination.totalLignes}`;
 };
 
 const pasDePageSuivante = (infoPagination: IParametresPagination) =>
-  (infoPagination.pageActuelle + UN) * infoPagination.lignesParPage >=
-  infoPagination.totalLignes;
+  (infoPagination.pageActuelle + UN) * infoPagination.lignesParPage >= infoPagination.totalLignes;
 
-const Tableau: React.FC<ITableauProps> = ({
-  enTetes,
-  lignes,
-  messageAucuneLigne,
-  onClickLigne,
-  parametresTri,
-  parametresPagination
-}) =>
+const Tableau: React.FC<ITableauProps> = ({ enTetes, lignes, messageAucuneLigne, onClickLigne, parametresTri, parametresPagination }) =>
   lignes ? (
     <>
       <table className="tableau">
@@ -88,20 +71,13 @@ const Tableau: React.FC<ITableauProps> = ({
 
                       parametresTri.onChangeTri(
                         enTete.cle,
-                        enTete.cle === parametresTri.cle &&
-                          parametresTri.sens === "ASC"
-                          ? "DESC"
-                          : "ASC"
+                        enTete.cle === parametresTri.cle && parametresTri.sens === "ASC" ? "DESC" : "ASC"
                       );
                     }}
                   >
                     <span>{enTete.libelle}</span>
                     {enTete.cle === parametresTri?.cle && (
-                      <ArrowUpward
-                        {...(parametresTri.sens === "DESC"
-                          ? { className: "sens-desc" }
-                          : {})}
-                      />
+                      <ArrowUpward {...(parametresTri.sens === "DESC" ? { className: "sens-desc" } : {})} />
                     )}
                   </button>
                 ) : (
@@ -116,17 +92,15 @@ const Tableau: React.FC<ITableauProps> = ({
             ? lignes.map(ligne => (
                 <tr
                   key={ligne.cle}
-                  {...(onClickLigne
+                  {...(ligne.onClick
                     ? {
                         className: "ligne-clickable",
-                        onClick: () => onClickLigne(ligne.cle)
+                        onClick: () => ligne.onClick?.()
                       }
                     : {})}
                 >
                   {enTetes.map(enTete => (
-                    <td key={`${ligne.cle}-${enTete.cle}`}>
-                      {ligne[enTete.cle]}
-                    </td>
+                    <td key={`${ligne.cle}-${enTete.cle}`}>{ligne[enTete.cle]}</td>
                   ))}
                 </tr>
               ))

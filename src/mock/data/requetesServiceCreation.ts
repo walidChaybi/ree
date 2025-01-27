@@ -6,7 +6,7 @@ export const requetesServiceCreationTableauResultatQuery = {
   hasTechnicalError: false,
   hasBusinessError: false,
   status: 200,
-  url: "/rece-requete-api/v2/requetes/creation/requetesService",
+  url: "/rece-requete-api/v2/requetes/creation/requetes-service",
   data: [
     {
       id: "c9b817ca-1899-450e-9f04-979541946011",
@@ -130,4 +130,3 @@ export const requeteServiceCreationRechercheNatali = {
     link: 'rel="next"'
   }
 };
-

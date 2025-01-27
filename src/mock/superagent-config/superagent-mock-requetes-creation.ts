@@ -3,10 +3,11 @@ import { ReponseAppelNomenclatureDocummentDelivrance, ReponseAppelNomenclatureTy
 import { requeteCreationATraiter, requetesCreationAlimentationTableau } from "../data/requeteCreation";
 import {
   creationRequeteRCTCResultat,
+  mesRequetesConsulaire,
   requeteCreationTranscription,
   requeteCreationTranscriptionStatutATraiter
 } from "../data/requeteCreationTranscription";
-import { requeteServiceCreationRechercheNatali, requetesServiceCreationTableauResultatQuery } from "../data/requetesServiceCreation";
+import { requetesServiceCreationTableauResultatQuery } from "../data/requetesServiceCreation";
 import { ReponseAppelRMCRequete } from "../data/RMCRequete";
 
 export const configRequetesCreation = [
@@ -72,11 +73,11 @@ export const configRequetesCreation = [
       ////////////////////////////
       if (
         url ===
-          "/requetes/creation/mesrequetes?statuts=A_SIGNER%2CA_TRAITER%2CBI_A_ENVOYER%2CBI_VALIDE%2CEN_TRAITEMENT%2CPRISE_EN_CHARGE%2CPROJET_VALIDE%2CRETOUR_SDANF%2CTRAITE&tri=dateCreation&sens=ASC&range=0-105" ||
+          "/requetes/creation/mes-requetes?statuts=A_SIGNER%2CA_TRAITER%2CBI_A_ENVOYER%2CBI_VALIDE%2CEN_TRAITEMENT%2CPRISE_EN_CHARGE%2CPROJET_VALIDE%2CRETOUR_SDANF%2CTRAITE&tri=dateCreation&sens=ASC&range=0-105" ||
         url ===
-          "/requetes/creation/mesrequetes?statuts=A_SIGNER%2CA_TRAITER%2CBI_A_ENVOYER%2CBI_VALIDE%2CEN_TRAITEMENT%2CPRISE_EN_CHARGE%2CPROJET_VALIDE%2CRETOUR_SDANF%2CTRAITE&tri=alerte&sens=ASC&range=0-105" ||
+          "/requetes/creation/mes-requetes?statuts=A_SIGNER%2CA_TRAITER%2CBI_A_ENVOYER%2CBI_VALIDE%2CEN_TRAITEMENT%2CPRISE_EN_CHARGE%2CPROJET_VALIDE%2CRETOUR_SDANF%2CTRAITE&tri=alerte&sens=ASC&range=0-105" ||
         url ===
-          "/requetes/creation/mesrequetes?statuts=A_SIGNER%2CA_TRAITER%2CBI_A_ENVOYER%2CBI_VALIDE%2CEN_TRAITEMENT%2CPRISE_EN_CHARGE%2CPROJET_VALIDE%2CRETOUR_SDANF%2CTRAITE&tri=alerte&sens=DESC&range=0-105"
+          "/requetes/creation/mes-requetes?statuts=A_SIGNER%2CA_TRAITER%2CBI_A_ENVOYER%2CBI_VALIDE%2CEN_TRAITEMENT%2CPRISE_EN_CHARGE%2CPROJET_VALIDE%2CRETOUR_SDANF%2CTRAITE&tri=alerte&sens=DESC&range=0-105"
       ) {
         return {
           headers: {
@@ -100,20 +101,12 @@ export const configRequetesCreation = [
       ////////////////////////////
 
       if (
-        url === "/requetes/creation/requetesService?tri=dateCreation&sens=ASC&range=0-105" ||
-        url === "/requetes/creation/requetesService?tri=statut&sens=ASC&range=0-105" ||
-        url === "/requetes/creation/requetesService?tri=alerte&sens=ASC&range=0-105" ||
-        url === "/requetes/creation/requetesService?tri=alerte&sens=DESC&range=0-105"
+        url === "/requetes/creation/requetes-service?tri=dateCreation&sens=ASC&range=0-105" ||
+        url === "/requetes/creation/requetes-service?tri=statut&sens=ASC&range=0-105" ||
+        url === "/requetes/creation/requetes-service?tri=alerte&sens=ASC&range=0-105" ||
+        url === "/requetes/creation/requetes-service?tri=alerte&sens=DESC&range=0-105"
       ) {
         return requetesServiceCreationTableauResultatQuery;
-      }
-
-      /////////////////////////////////
-      // Recherche requete Natali //
-      /////////////////////////////////
-
-      if (url === "/requetes/creation/natali/numeroDossierNational/2022X 200178") {
-        return requeteServiceCreationRechercheNatali;
       }
 
       /////////////////////////////////
@@ -130,7 +123,7 @@ export const configRequetesCreation = [
       }
 
       ///////////////////////////////
-      // Requêtes de transcription //
+      // Requêtes de consulaires    //
       ///////////////////////////////
 
       // Création d'une requête de transcription RCTC
@@ -146,6 +139,18 @@ export const configRequetesCreation = [
         return { data: creationRequeteRCTCResultat };
       }
 
+      // Appel des requêtes de création pour "Mes requêtes consulaires"
+      if (
+        match[1] ===
+        "/requetes/creation/mes-requetes?statuts=A_TRAITER%2CPRISE_EN_CHARGE%2CEN_TRAITEMENT&sousType=RCTC%2CRCTD%2CRCADC&tri=dateCreation&sens=ASC&range=0-100"
+      ) {
+        return {
+          headers: {
+            "content-range": "0-100/2"
+          },
+          data: mesRequetesConsulaire
+        };
+      }
       ///////////////////////////////
       // RMC Auto Requete //
       ///////////////////////////////

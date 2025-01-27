@@ -10,23 +10,11 @@ import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { IActionOption } from "@model/requete/IActionOption";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
-import {
-  IRequeteDelivrance,
-  RequeteDelivrance
-} from "@model/requete/IRequeteDelivrance";
+import { IRequeteDelivrance, RequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { TRequeteTableau } from "@model/requete/IRequeteTableau";
-import {
-  IRequeteTableauCreation,
-  mappingUneRequeteTableauCreation
-} from "@model/requete/IRequeteTableauCreation";
-import {
-  IRequeteTableauDelivrance,
-  mappingUneRequeteTableauDelivrance
-} from "@model/requete/IRequeteTableauDelivrance";
-import {
-  IRequeteTableauInformation,
-  mappingUneRequeteTableauInformation
-} from "@model/requete/IRequeteTableauInformation";
+import { IRequeteTableauCreation, mappingUneRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
+import { IRequeteTableauDelivrance, mappingUneRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { IRequeteTableauInformation, mappingUneRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -80,7 +68,7 @@ export const autorisePrendreEnChargeReqTableauDelivrance = (
   utilisateurConnecte: IOfficier,
   requete: IRequeteTableauDelivrance
 ): boolean => {
-  const type = TypeRequete.getEnumFromLibelle(requete.type);
+  const type = requete.type ? TypeRequete.getEnumFromLibelle(requete.type) : "";
   const sousType = SousTypeDelivrance.getEnumFromLibelleCourt(requete.sousType);
   const statut = StatutRequete.getEnumFromLibelle(requete.statut);
 
@@ -95,7 +83,7 @@ export const autorisePrendreEnChargeReqTableauDelivrance = (
 };
 
 export const autorisePrendreEnChargeReqTableauInformation = (utilisateurConnecte: IOfficier, requete: IRequeteTableauInformation) => {
-  const type = TypeRequete.getEnumFromLibelle(requete.type);
+  const type = requete.type ? TypeRequete.getEnumFromLibelle(requete.type) : "";
   const statut = StatutRequete.getEnumFromLibelle(requete.statut);
 
   return (
@@ -121,7 +109,7 @@ export const autorisePrendreEnChargeDepuisPageCreation = (utilisateurConnecte: I
 };
 
 export const autorisePrendreEnChargeReqTableauCreation = (requete: IRequeteTableauCreation, utilisateurConnecte: IOfficier): boolean => {
-  const type = TypeRequete.getEnumFromLibelle(requete.type);
+  const type = requete.type ? TypeRequete.getEnumFromLibelle(requete.type) : "";
   const sousType = SousTypeCreation.getEnumFromLibelleCourt(requete.sousType);
   const statut = StatutRequete.getEnumFromLibelle(requete.statut);
 
@@ -159,30 +147,13 @@ export function mappingRequetesTableau(
   services: IService[]
 ): TRequeteTableau[] {
   return resultatsRecherche?.map((requete: TRequeteTableau) => {
-    if (TypeRequete.getEnumFor(requete.type) === TypeRequete.DELIVRANCE) {
-      return mappingUneRequeteTableauDelivrance(
-        requete,
-        mappingSupplementaire,
-        utilisateurs,
-        services
-      );
-    } else if (
-      TypeRequete.getEnumFor(requete.type) === TypeRequete.INFORMATION
-    ) {
-      return mappingUneRequeteTableauInformation(
-        requete,
-        mappingSupplementaire,
-        utilisateurs,
-        services
-      );
+    if (requete.type && TypeRequete.getEnumFor(requete.type ?? "") === TypeRequete.DELIVRANCE) {
+      return mappingUneRequeteTableauDelivrance(requete, mappingSupplementaire, utilisateurs, services);
+    } else if (requete.type && TypeRequete.getEnumFor(requete.type) === TypeRequete.INFORMATION) {
+      return mappingUneRequeteTableauInformation(requete, mappingSupplementaire, utilisateurs, services);
     } else {
       // TODO Mapping provisoire pour les autres Type Requete ( CREATION et MISE_A_JOUR )
-      return mappingUneRequeteTableauCreation(
-        requete,
-        mappingSupplementaire,
-        utilisateurs,
-        services
-      );
+      return mappingUneRequeteTableauCreation(requete, mappingSupplementaire, utilisateurs, services);
     }
   });
 }

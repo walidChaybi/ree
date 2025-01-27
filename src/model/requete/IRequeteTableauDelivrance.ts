@@ -65,11 +65,11 @@ export function mappingUneRequeteTableauDelivrance(
     numero: requete?.numero ?? "",
     numeroTeledossier: requete?.numeroTeledossier ?? "",
     idSagaDila: requete?.idSagaDila ?? "",
-    type: TypeRequete.getEnumFor(requete?.type)?.libelle,
-    sousType: getSousType(requete?.type, requete?.sousType),
-    provenance: Provenance.getEnumFor(requete?.provenance)?.libelle,
+    type: TypeRequete.getEnumFor(requete?.type)?.libelle ?? "",
+    sousType: getSousType(requete?.type, requete?.sousType) ?? "",
+    provenance: Provenance.getEnumFor(requete?.provenance)?.libelle ?? "",
     nature: requete?.nature ? NatureActe.getEnumFor(requete?.nature)?.libelle : "",
-    document: requete?.document, // id du type de document demandé
+    document: requete?.document ?? "", // id du type de document demandé
     documentLibelle: DocumentDelivrance.depuisId(requete?.document)?.libelle, // libellé du type de document demandé
     titulaires: mapTitulaires(requete?.titulaires, mappingSupplementaire),
     requerant,
