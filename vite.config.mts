@@ -24,9 +24,18 @@ export default defineConfig({
     maxWorkers: 4,
     testTimeout: 10000,
     include: ["src/__tests__/**/?(*.)test.ts?(x)"],
+    exclude: ["src/__tests__/views/**"],
     coverage: {
       include: ["src/*"],
-      exclude: ["src/App.tsx", "src/index.tsx", "src/ressources/*", "src/__tests__/*", "src/mock/*", "src/api/configuration/*"]
+      exclude: [
+        "src/App.tsx",
+        "src/index.tsx",
+        "src/ressources/**",
+        "src/views/**",
+        "src/__tests__/*",
+        "src/mock/**",
+        "src/api/configuration/**"
+      ]
     }
   },
   define: {

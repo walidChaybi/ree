@@ -673,6 +673,12 @@ export const triAlphanumerique = (texteA: string, texteB: string) => {
   return texteA.localeCompare(texteB);
 };
 
+export const genererArrondissements = (length: number) =>
+  Array.from({ length }, (_, i) => ({
+    cle: `${i + 1}`,
+    libelle: `${i + 1}`
+  }));
+
 export const rechercheExpressionReguliereAvecTimeout = (
   pattern: RegExp,
   input: string,
