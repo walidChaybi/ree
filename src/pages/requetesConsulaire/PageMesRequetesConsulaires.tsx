@@ -27,7 +27,7 @@ const PageMesRequetesConsulaires: React.FC<IPageMesRequetesConsulaireProps> = ()
             ]}
           />
           <div className="BlocBoutons">
-            <MenuSaisirRequeteCreation indexTabPanel={1} />
+            <MenuSaisirRequeteCreation indexTabPanel={0} />
           </div>
           <TableauMesRequetesConsulaire />
         </>
