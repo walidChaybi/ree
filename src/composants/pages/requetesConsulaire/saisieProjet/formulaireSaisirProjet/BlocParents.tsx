@@ -79,6 +79,7 @@ const FormulaireAdresse: React.FC<IFormulaireAdresseProps> = memo(({ prefix, cat
                 name={`${prefix}.arrondissement`}
                 libelle="Arrondissement"
                 options={arrondissementsOptions[ville as keyof typeof arrondissementsOptions]}
+                premiereLettreMajuscule
               />
             </div>
           )}

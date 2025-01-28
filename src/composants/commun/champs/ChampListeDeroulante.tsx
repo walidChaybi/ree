@@ -6,9 +6,18 @@ type TChampListeDeroulanteProps = React.InputHTMLAttributes<HTMLSelectElement> &
   libelle: string;
   options: Option[];
   pendantChangement?: () => void;
+  premiereLettreMajuscule?: boolean;
 };
 
-const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({ name, libelle, className, options, pendantChangement, ...props }) => {
+const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({
+  name,
+  libelle,
+  className,
+  options,
+  pendantChangement,
+  premiereLettreMajuscule,
+  ...props
+}) => {
   const [field, meta] = useField(name as string);
   const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
 
@@ -37,7 +46,11 @@ const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({ name, libe
             selected={field.value === option.cle}
             hidden={option.cle === ""}
           >
-            {option.libelle.length ? `${option.libelle.charAt(0).toUpperCase()}${option.libelle.substring(1)}` : ""}
+            {option.libelle.length
+              ? premiereLettreMajuscule
+                ? `${option.libelle.charAt(0).toUpperCase()}${option.libelle.substring(1)}`
+                : option.libelle
+              : ""}
           </option>
         ))}
       </select>
