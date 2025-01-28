@@ -2,7 +2,7 @@ import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IParents } from "@model/requete/IParent";
 import { genererArrondissements, premiereLettreEnMajusculeLeResteEnMinuscule } from "@util/Utils";
 import { Form, Formik, useFormikContext } from "formik";
-import React, { memo, useCallback, useMemo } from "react";
+import React, { memo, useCallback, useEffect, useMemo } from "react";
 import ChampDate from "../../../../commun/champs/ChampDate";
 import ChampListeDeroulante from "../../../../commun/champs/ChampListeDeroulante";
 import ChampsCaseACocher from "../../../../commun/champs/ChampsCaseACocher";
@@ -133,6 +133,12 @@ const ParentForm: React.FC<IParentFormProps> = memo(({ parentIndex }) => {
   const prefix = `parent${parentIndex}`;
   const parent = values[`parent${parentIndex}` as keyof Pick<IParents, "parent1" | "parent2">];
 
+  useEffect(() => {
+    if (parent.sansProfession) {
+      setFieldValue(`${prefix}.profession`, "");
+    }
+  }, [parent.sansProfession]);
+
   const optionsSexe = useMemo(() => Sexe.getAllEnumsAsOptionsSansInconnu(), []);
 
   const handleVilleChange = useCallback(
@@ -148,15 +154,6 @@ const ParentForm: React.FC<IParentFormProps> = memo(({ parentIndex }) => {
       }
     },
     [setFieldValue]
-  );
-
-  const handleSansProfessionChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.checked) {
-        setFieldValue(`${prefix}.profession`, "");
-      }
-    },
-    [prefix, setFieldValue]
   );
 
   return (
@@ -208,7 +205,7 @@ const ParentForm: React.FC<IParentFormProps> = memo(({ parentIndex }) => {
       </div>
 
       <div className="mb-8 flex w-full border-0 border-b-2 border-solid border-bleu text-start">
-        <h3 className="-mb-3 ml-6 bg-blanc px-1.5 uppercase text-bleu-sombre">Lieu de naissance</h3>
+        <h3 className="-mb-3 ml-6 bg-blanc px-1.5 text-bleu-sombre">Lieu de naissance</h3>
       </div>
 
       <ChampsRadio
@@ -225,7 +222,7 @@ const ParentForm: React.FC<IParentFormProps> = memo(({ parentIndex }) => {
       />
 
       <div className="mb-8 flex border-0 border-b-2 border-solid border-bleu text-start">
-        <h3 className="-mb-3 ml-6 bg-blanc px-1.5 uppercase text-bleu-sombre">Profession</h3>
+        <h3 className="-mb-3 ml-6 bg-blanc px-1.5 text-bleu-sombre">Profession</h3>
       </div>
 
       <div className="grid grid-cols-2 items-center gap-4">
@@ -238,12 +235,11 @@ const ParentForm: React.FC<IParentFormProps> = memo(({ parentIndex }) => {
         <ChampsCaseACocher
           name={`${prefix}.sansProfession`}
           libelle="Sans profession"
-          onChange={handleSansProfessionChange}
         />
       </div>
 
       <div className="mb-8 flex w-full border-0 border-b-2 border-solid border-bleu text-start">
-        <h3 className="-mb-3 ml-6 bg-blanc px-1.5 uppercase text-bleu-sombre">Domicile</h3>
+        <h3 className="-mb-3 ml-6 bg-blanc px-1.5 text-bleu-sombre">Domicile</h3>
       </div>
 
       {parentIndex === 2 && (
