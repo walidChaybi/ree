@@ -26,14 +26,11 @@ const MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", 
 const FormaterTexteHelper = {
   formaterDate: ({ jour, mois, annee }: IDate): string => {
     const moisFormate = mois ? MOIS[parseInt(mois, 10) - 1] : null;
-    let jourFormate = jour ? jour.replace(/^0/, "") : null;
-    if (jourFormate) {
-      jourFormate += jourFormate === "01" ? "er" : "";
-    }
+    const jourFormate = jour ? jour.replace(/^0/, "") : null;
 
     switch (true) {
       case Boolean(jourFormate && moisFormate):
-        return `le ${jourFormate} ${moisFormate} ${annee}`;
+        return `le ${jourFormate === "1" ? "1er" : jourFormate} ${moisFormate} ${annee}`;
       case Boolean(moisFormate):
         return `en ${moisFormate} ${annee}`;
       default:
@@ -159,14 +156,17 @@ const genererPourSaisie = (modeleTexte: string, valeurs: any, valeursDefaut: any
 
 const genererValeursParDefaut = (blocs: IMetaModelBloc[]) =>
   blocs.reduce((placeholders, bloc) => {
-    const libelleBloc = bloc.titre.replace(/\(.{1,50}\)/, "").toUpperCase();
+    const libelleBloc = bloc.titre
+      .replace(/\(.{1,50}\)/, "")
+      .trim()
+      .toUpperCase();
 
     return {
       ...placeholders,
       [bloc.id]: bloc.champs.reduce(
         (placeholdersChamps, champ) => ({
           ...placeholdersChamps,
-          [champ.id]: `${champ.libelle.toUpperCase()} (${libelleBloc})`
+          [champ.id]: `${champ.libelle.toUpperCase()} <${libelleBloc}>`
         }),
         {}
       )
