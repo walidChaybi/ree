@@ -6,10 +6,18 @@ type TChampDateProps = React.InputHTMLAttributes<HTMLInputElement> & {
   avecHeure?: boolean;
   className?: string;
   estObligatoire?: boolean;
+  desactiverCorrectionAutomatique?: boolean;
 };
 
 const idElementActif = () => document.activeElement?.getAttribute("id");
-const ChampDate: React.FC<TChampDateProps> = ({ name, libelle, avecHeure = false, className = "", estObligatoire }) => {
+const ChampDate: React.FC<TChampDateProps> = ({
+  name,
+  libelle,
+  avecHeure = false,
+  className = "",
+  estObligatoire,
+  desactiverCorrectionAutomatique = false
+}) => {
   const champsDate = useMemo(
     () => ({
       jour: `${name}.jour`,
@@ -86,7 +94,7 @@ const ChampDate: React.FC<TChampDateProps> = ({ name, libelle, avecHeure = false
               case jour.length === 1:
                 valeurJour = `0${jour}`;
                 break;
-              case Number(jour) > 31:
+              case !desactiverCorrectionAutomatique && Number(jour) > 31:
                 valeurJour = "31";
                 break;
               default:
@@ -119,7 +127,7 @@ const ChampDate: React.FC<TChampDateProps> = ({ name, libelle, avecHeure = false
               case mois.length === 1:
                 valeurMois = `0${mois}`;
                 break;
-              case Number(mois) > 12:
+              case !desactiverCorrectionAutomatique && Number(mois) > 12:
                 valeurMois = "12";
                 break;
               default:
@@ -167,7 +175,7 @@ const ChampDate: React.FC<TChampDateProps> = ({ name, libelle, avecHeure = false
                   case heure.length === 1:
                     valeurHeure = `0${heure}`;
                     break;
-                  case Number(heure) > 23:
+                  case !desactiverCorrectionAutomatique && Number(heure) > 23:
                     valeurHeure = "23";
                     break;
                   default:
@@ -198,7 +206,7 @@ const ChampDate: React.FC<TChampDateProps> = ({ name, libelle, avecHeure = false
                   case minutes.length === 1:
                     valeurMinutes = `0${minutes}`;
                     break;
-                  case Number(minutes) > 60:
+                  case !desactiverCorrectionAutomatique && Number(minutes) > 60:
                     valeurMinutes = "59";
                     break;
                   default:

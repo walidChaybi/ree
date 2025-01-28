@@ -142,6 +142,7 @@ const AideALaSaisieMention: React.FC<IAideALaSaisieMention> = ({ metamodeleTypeM
                                   <ChampDate
                                     name={`${bloc.id}.${champ.id}`}
                                     libelle={champ.libelle}
+                                    desactiverCorrectionAutomatique
                                   />
                                 );
                               case "int":

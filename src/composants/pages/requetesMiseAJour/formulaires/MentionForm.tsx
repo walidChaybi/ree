@@ -58,6 +58,8 @@ const SCHEMA_VALIDATION_MENTIONS = {
   texteMention: Yup.string().required("Veuillez saisir le texte de la mention")
 };
 
+const BLOQUER_DATE_FUTUR = true;
+
 const getTypesMentionDisponibles = (natureActe: NatureActe): ITypeMentionDisponible[] => {
   const typesMentionDisponibles: ITypeMentionDisponible[] = [];
   const ajouterTypesMention = (
@@ -154,9 +156,9 @@ const genererSchemaValidationAideALaSaisie = (metamodeleTypeMention?: IMetamodel
               obligatoire: champ.estObligatoire
             });
           case "dateComplete":
-            return SchemaValidation.dateComplete({ libelle: champ.libelle, obligatoire: champ.estObligatoire });
+            return SchemaValidation.dateComplete({ libelle: champ.libelle, obligatoire: champ.estObligatoire }, BLOQUER_DATE_FUTUR);
           case "dateIncomplete":
-            return SchemaValidation.dateIncomplete({ obligatoire: champ.estObligatoire });
+            return SchemaValidation.dateIncomplete({ obligatoire: champ.estObligatoire }, BLOQUER_DATE_FUTUR);
           default:
             return SchemaValidation.inconnu();
         }
