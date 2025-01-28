@@ -217,6 +217,7 @@ const MentionForm: React.FC<IMentionFormProps> = ({ onFormDirty, infoTitulaire }
           setMetamodeleTypeMention(metamodele);
           setValeurDefaut({
             ...genererValeursInitialesAideALaSaisie(metamodele),
+            titulaire: { sexe: infoTitulaire.sexe?.toString() ?? "" },
             idTypeMention: typeMentionChoisi.id,
             texteMention: mentionModifiee?.mention.texte ?? ""
           });
