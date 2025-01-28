@@ -59,7 +59,7 @@ interface IParentFormProps {
   parentIndex: 1 | 2;
 }
 
-const FormulaireAdresse: React.FC<IFormulaireAdresseProps> = memo(({ prefix, categorieLieu: categorieLieu, ville, onVilleChange }) => {
+const FormulaireAdresse: React.FC<IFormulaireAdresseProps> = memo(({ prefix, categorieLieu, ville, onVilleChange }) => {
   const estVilleSpeciale = useMemo(() => ville && ["Paris", "Marseille", "Lyon"].includes(ville), [ville]);
 
   if (categorieLieu === "France") {

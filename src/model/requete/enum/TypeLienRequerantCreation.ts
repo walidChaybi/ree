@@ -18,7 +18,7 @@ export class TypeLienRequerantCreation extends EnumWithLibelle {
   }
 
   public static getAllEnumsAsOptions(): Options {
-    return EnumWithLibelle.getAllLibellesAsOptions(TypeLienRequerantCreation);
+    return EnumWithLibelle.getAllLibellesAsOptions(TypeLienRequerantCreation, false, false);
   }
 
   public static getListEnumsAsOptions(keys: string[]): Options {
