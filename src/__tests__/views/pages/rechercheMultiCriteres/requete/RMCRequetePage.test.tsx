@@ -4,44 +4,33 @@ import { RMCRequetePage } from "@pages/rechercheMultiCriteres/requete/RMCRequete
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { beforeAll, expect, test } from "vitest";
-import {
-  createTestingRouter,
-  mockFenetreFicheTestFunctions
-} from "../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
 
 beforeAll(() => {
   mockFenetreFicheTestFunctions();
 });
 
-test("renders formulaire Recherche Multi Critères Actes et Inscriptions", () => {
+test("renders formulaire Recherche Multi Critères Actes et Inscriptions", async () => {
   render(<RMCRequetePage />);
-  waitFor(() => {
+
+  await waitFor(() => {
     expect(document.title).toBe(titreForm);
     expect(screen.getByText(titreForm)).toBeDefined();
   });
 });
 
-test("Bouton réinitialisation des champs", () => {
+test("Bouton réinitialisation des champs", async () => {
   render(<RMCRequetePage />);
 
-  const numeroRequete = screen.getByLabelText(
-    "requete.numeroRequete"
-  ) as HTMLInputElement;
-  const typeRequete = screen.getByTestId(
-    "requete.typeRequete"
-  ) as HTMLSelectElement;
+  const numeroRequete: HTMLInputElement = screen.getByLabelText("requete.numeroRequete");
 
-  const sousTypeRequete = screen.getByTestId(
-    "requete.sousTypeRequete"
-  ) as HTMLSelectElement;
-
-  const statutRequete = screen.getByTestId(
-    "requete.statutRequete"
-  ) as HTMLSelectElement;
+  const typeRequete: HTMLSelectElement = screen.getByTestId("requete.typeRequete");
+  const sousTypeRequete: HTMLSelectElement = screen.getByTestId("requete.sousTypeRequete");
+  const statutRequete: HTMLSelectElement = screen.getByTestId("requete.statutRequete");
 
   const reset = screen.getByText(/Réinitialiser les critères/i);
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(numeroRequete).toBeDefined();
     expect(typeRequete).toBeDefined();
     expect(sousTypeRequete).toBeDefined();
@@ -53,6 +42,7 @@ test("Bouton réinitialisation des champs", () => {
       value: "1234ABCD"
     }
   });
+
   fireEvent.change(typeRequete, {
     target: {
       value: "INFORMATION"
@@ -71,7 +61,7 @@ test("Bouton réinitialisation des champs", () => {
     }
   });
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(numeroRequete.value).toBe("1234ABCD");
     expect(typeRequete.value).toBe("INFORMATION");
     expect(sousTypeRequete.value).toBe("COMPLETION_REQUETE_EN_COURS");
@@ -80,7 +70,7 @@ test("Bouton réinitialisation des champs", () => {
 
   fireEvent.click(reset);
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(numeroRequete.value).toBe("");
     expect(typeRequete.value).toBe("");
     expect(sousTypeRequete.value).toBe("");
@@ -88,7 +78,7 @@ test("Bouton réinitialisation des champs", () => {
   });
 });
 
-test("DOIT pouvoir rechercher une requete par son N° SDANF / numeroDossierNational", () => {
+test("DOIT pouvoir rechercher une requete par son N° SDANF / numeroDossierNational", async () => {
   const router = createTestingRouter(
     [
       {
@@ -105,9 +95,7 @@ test("DOIT pouvoir rechercher une requete par son N° SDANF / numeroDossierNatio
     </MockRECEContextProvider>
   );
 
-  const numeroDossierNational = screen.getByLabelText(
-    "requete.numeroDossierNational"
-  ) as HTMLInputElement;
+  const numeroDossierNational: HTMLInputElement = screen.getByLabelText("requete.numeroDossierNational");
   fireEvent.change(numeroDossierNational, {
     target: {
       value: "2022X 200156"
@@ -116,7 +104,7 @@ test("DOIT pouvoir rechercher une requete par son N° SDANF / numeroDossierNatio
 
   fireEvent.click(screen.getByText("Rechercher"));
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(numeroDossierNational.value).toBe("2022X 200156");
     expect(screen.getByText("2022X 200156")).toBeDefined();
   });

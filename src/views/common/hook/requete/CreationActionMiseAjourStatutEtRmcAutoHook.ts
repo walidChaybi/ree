@@ -2,20 +2,15 @@ import {
   NavigationApercuReqCreationParams,
   useNavigationApercuCreation
 } from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
+import { IRMCAutoParams } from "@hook/rmcAuto/RMCAutoHook";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { useCallback, useEffect, useState } from "react";
-import {
-  INavigationApercuRMCAutoParams,
-  useNavigationApercuRMCAutoDelivrance
-} from "../navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
-import {
-  ICreationActionMiseAjourStatutHookParams,
-  useCreationActionMiseAjourStatut
-} from "./CreationActionMiseAjourStatutHook";
+import { useNavigationApercuRMCAutoDelivrance } from "../navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
+import { ICreationActionMiseAjourStatutHookParams, useCreationActionMiseAjourStatut } from "./CreationActionMiseAjourStatutHook";
 
 export interface ICreationActionMiseAjourStatutEtRmcAutoHookParams {
   statutRequete: StatutRequete;
@@ -27,18 +22,10 @@ export interface ICreationActionMiseAjourStatutEtRmcAutoHookParams {
   handleTraitementTermine?: () => void;
 }
 
-export function useCreationActionMiseAjourStatutEtRmcAuto(
-  params: ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
-) {
-  const [paramsMiseAjourStatut, setParamsMiseAjourStatut] = useState<
-    ICreationActionMiseAjourStatutHookParams | undefined
-  >();
-  const [paramsRMCAutoDelivrance, setParamsRMCAutoDelivrance] = useState<
-    INavigationApercuRMCAutoParams | undefined
-  >();
-  const [paramsCreation, setParamsCreation] = useState<
-    NavigationApercuReqCreationParams | undefined
-  >();
+export function useCreationActionMiseAjourStatutEtRmcAuto(params: ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined) {
+  const [paramsMiseAjourStatut, setParamsMiseAjourStatut] = useState<ICreationActionMiseAjourStatutHookParams | undefined>();
+  const [paramsRMCAutoDelivrance, setParamsRMCAutoDelivrance] = useState<IRMCAutoParams | undefined>();
+  const [paramsCreation, setParamsCreation] = useState<NavigationApercuReqCreationParams | undefined>();
 
   // 1)
   useCreationActionMiseAjourStatut(paramsMiseAjourStatut);
@@ -58,10 +45,8 @@ export function useCreationActionMiseAjourStatutEtRmcAuto(
   }, [params]);
 
   const callback = useCallback(() => {
-    if (params && params.requete) {
-      const sousType = SousTypeCreation.getEnumFromLibelleCourt(
-        params.requete?.sousType
-      );
+    if (params?.requete) {
+      const sousType = SousTypeCreation.getEnumFromLibelleCourt(params.requete?.sousType);
       const statut = StatutRequete.getEnumFromLibelle(params?.requete?.statut);
       if (params.typeRequete === TypeRequete.CREATION) {
         setParamsCreation({

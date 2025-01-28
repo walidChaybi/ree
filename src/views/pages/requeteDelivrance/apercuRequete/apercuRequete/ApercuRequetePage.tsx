@@ -8,7 +8,6 @@ import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { getLibelle } from "@util/Utils";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
@@ -23,17 +22,14 @@ interface ApercuRequetePageProps {
   idRequeteAAfficher?: string;
 }
 
-export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
-  idRequeteAAfficher
-}) => {
+export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({ idRequeteAAfficher }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { utilisateurConnecte } = useContext(RECEContextData);
   const [documentAffiche, setDocumentAffiche] = useState<IDocumentReponse>();
 
   const [requete, setRequete] = useState<IRequeteDelivrance>();
-  const [lancerMajRequete, setLancerMajRequete] =
-    useState<ICreationActionMiseAjourStatutHookParams>();
+  const [lancerMajRequete, setLancerMajRequete] = useState<ICreationActionMiseAjourStatutHookParams>();
 
   useCreationActionMiseAjourStatut(lancerMajRequete);
 
@@ -70,8 +66,8 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
 
   return (
     <ApercuRequeteTemplate
-      title={getLibelle("Aperçu de la requête")}
-      setRequeteCallback={setRequeteCallback}
+      title={"Aperçu de la requête"}
+      setRequete={setRequeteCallback}
       setDocumentAfficheCallback={setDocumentAfficheCallback}
       idRequeteAAfficher={idRequeteAAfficher}
     >
@@ -79,19 +75,13 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
         <>
           {documentAffiche && (
             <VisionneuseAvecTitre
-              titre={getLibelle("Aperçu des documents")}
+              titre={"Aperçu des documents"}
               contenuBase64={documentAffiche.contenu}
               typeMime={documentAffiche.mimeType}
             />
           )}
-          {afficherBoutonFinConsultation(
-            requete.statutCourant.statut,
-            requete.idUtilisateur,
-            utilisateurConnecte
-          ) && (
-            <BoutonDoubleSubmit onClick={finDeConsultation}>
-              {getLibelle("Fin consultation")}
-            </BoutonDoubleSubmit>
+          {afficherBoutonFinConsultation(requete.statutCourant.statut, requete.idUtilisateur, utilisateurConnecte) && (
+            <BoutonDoubleSubmit onClick={finDeConsultation}>{"Fin consultation"}</BoutonDoubleSubmit>
           )}
           {!idRequeteAAfficher && <BoutonRetour />}
           {estPresentBoutonPriseEnCharge && (
@@ -106,13 +96,6 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({
   );
 };
 
-function afficherBoutonFinConsultation(
-  statut: StatutRequete,
-  idUtilisateur: string,
-  utilisateurConnecte: IOfficier
-) {
-  return (
-    statut === StatutRequete.TRAITE_REPONDU &&
-    utilisateurConnecte?.idUtilisateur === idUtilisateur
-  );
+function afficherBoutonFinConsultation(statut: StatutRequete, idUtilisateur: string, utilisateurConnecte: IOfficier) {
+  return statut === StatutRequete.TRAITE_REPONDU && utilisateurConnecte?.idUtilisateur === idUtilisateur;
 }

@@ -1,26 +1,16 @@
-import {
-  INavigationApercuRMCAutoParams,
-  useNavigationApercuRMCAutoDelivrance
-} from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
-import {
-  CreationActionHookParams,
-  useCreationAction
-} from "@hook/requete/CreationAction";
+import { useNavigationApercuRMCAutoDelivrance } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
+import { CreationActionHookParams, useCreationAction } from "@hook/requete/CreationAction";
 import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
-import {
-  CreationRequeteRDC,
-  IComplementCreationUpdateRequete,
-  UpdateRequeteRDC
-} from "@model/form/delivrance/ISaisirRDCPageForm";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IRMCAutoParams } from "@hook/rmcAuto/RMCAutoHook";
+import { CreationRequeteRDC, IComplementCreationUpdateRequete, UpdateRequeteRDC } from "@model/form/delivrance/ISaisirRDCPageForm";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import messageManager from "@util/messageManager";
-import { getLibelle } from "@util/Utils";
 import { useState } from "react";
 import { ICreationOuMiseAJourRDCResultat } from "./SoumissionFormulaireRDCHook";
 
@@ -31,26 +21,20 @@ export const useRedirectionApresSoumissionRDCHook = (
   miseAJourRDCParams?: UpdateRequeteRDC & IComplementCreationUpdateRequete,
   requeteRDCResultat?: ICreationOuMiseAJourRDCResultat
 ) => {
-  const [creationActionParams, setCreationActionParams] =
-    useState<CreationActionHookParams>();
-  const [
-    creationActionMiseAjourStatutParams,
-    setCreationActionMiseAjourStatutParams
-  ] = useState<ICreationActionMiseAjourStatutHookParams>();
-  const [RMCAutoParams, setRMCAutoParams] =
-    useState<INavigationApercuRMCAutoParams>();
+  const [creationActionParams, setCreationActionParams] = useState<CreationActionHookParams>();
+  const [creationActionMiseAjourStatutParams, setCreationActionMiseAjourStatutParams] =
+    useState<ICreationActionMiseAjourStatutHookParams>();
+  const [paramsRMCAuto, setParamsRMCAuto] = useState<IRMCAutoParams>();
 
   useCreationActionMiseAjourStatut(creationActionMiseAjourStatutParams);
   useCreationAction(creationActionParams);
-  useNavigationApercuRMCAutoDelivrance(RMCAutoParams);
+  useNavigationApercuRMCAutoDelivrance(paramsRMCAuto);
 
   const redirectionPage = async (requeteSauvegardee: IRequeteDelivrance) => {
     // Si l'appel s'est terminé sans erreur
     if (requeteSauvegardee) {
-      messageManager.showSuccessAndClose(
-        getLibelle("La requête a bien été enregistrée")
-      );
-      setRMCAutoParams({
+      messageManager.showSuccessAndClose("La requête a bien été enregistrée");
+      setParamsRMCAuto({
         requete: mappingRequeteDelivranceToRequeteTableau(requeteSauvegardee),
         urlCourante
       });
@@ -67,10 +51,8 @@ export const useRedirectionApresSoumissionRDCHook = (
   };
 
   const miseAJourStatutRequetePuisRedirection = () => {
-    const statutFinal: StatutRequete | undefined =
-      miseAJourRDCParams?.statutFinal || creationRDCParams?.statutFinal;
-    const futurStatut: StatutRequete | undefined =
-      miseAJourRDCParams?.futurStatut || creationRDCParams?.futurStatut;
+    const statutFinal: StatutRequete | undefined = miseAJourRDCParams?.statutFinal || creationRDCParams?.statutFinal;
+    const futurStatut: StatutRequete | undefined = miseAJourRDCParams?.futurStatut || creationRDCParams?.futurStatut;
     if (statutFinal && statutFinal !== futurStatut) {
       setCreationActionMiseAjourStatutParams({
         libelleAction: statutFinal.libelle,
@@ -88,7 +70,7 @@ export const useRedirectionApresSoumissionRDCHook = (
 
   const miseAJourActionPuisRedirection = async (requeteSauvegardee: any) => {
     setCreationActionParams({
-      libelleAction: getLibelle("Requête modifiée"),
+      libelleAction: "Requête modifiée",
       requete: {
         idRequete: requeteSauvegardee.requete.id
       } as IRequeteTableauDelivrance,

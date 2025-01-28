@@ -19,13 +19,9 @@ const TITULAIRE: ITitulaireRequeteCreation = {
   nationalite: Nationalite.ETRANGERE
 };
 
-const parentsPourMapping = mappingRequeteCreation(
-  requeteCreationEtablissementSaisieProjet
-).titulaires;
+const parentsPourMapping = mappingRequeteCreation(requeteCreationEtablissementSaisieProjet).titulaires;
 
-function afficheComposantFrancisationPostulant(
-  retenueSdanf: IRetenueSdanf
-): void {
+function afficheComposantFrancisationPostulant(retenueSdanf: IRetenueSdanf): void {
   const titulaire: ITitulaireRequeteCreation = {
     ...TITULAIRE,
     retenueSdanf
@@ -33,11 +29,7 @@ function afficheComposantFrancisationPostulant(
 
   render(
     <Formulaire
-      formDefaultValues={mappingTitulairesVersFormulairePostulant(
-        titulaire,
-        parentsPourMapping![1],
-        parentsPourMapping![2]
-      )}
+      formDefaultValues={mappingTitulairesVersFormulairePostulant(titulaire, parentsPourMapping![1], parentsPourMapping![2])}
       formValidationSchema={getPostulantValidationSchema}
       onSubmit={() => {}}
       className="FormulairePostulant"
@@ -51,7 +43,7 @@ function afficheComposantFrancisationPostulant(
 }
 
 describe("Test le rendu du composant et des champs en fonction des informations du postulant", () => {
-  test("DOIT afficher le composant et tous ses champs QUAND le nom et les prénoms francisés sont disponibles.", () => {
+  test("DOIT afficher le composant et tous ses champs QUAND le nom et les prénoms francisés sont disponibles.", async () => {
     const retenueSdanf: IRetenueSdanf = {
       nomDemandeFrancisation: "nomDemandeFrancisation",
       prenomsRetenu: [
@@ -62,30 +54,28 @@ describe("Test le rendu du composant et des champs en fonction des informations 
 
     afficheComposantFrancisationPostulant(retenueSdanf);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(screen.queryByText("Francisation postulant")).toBeDefined();
       expect(screen.queryByText("Nom francisé")).toBeDefined();
       expect(screen.queryByText("Prénoms francisés")).toBeDefined();
-      expect(
-        screen.queryByDisplayValue("nomDemandeFrancisation")
-      ).toBeDefined();
+      expect(screen.queryByDisplayValue("nomDemandeFrancisation")).toBeDefined();
       expect(screen.queryByDisplayValue("Jean")).toBeDefined();
     });
   });
 
-  test("NE DOIT PAS afficher le composant QUAND aucun nom et prénoms francisés ne sont disponibles.", () => {
+  test("NE DOIT PAS afficher le composant QUAND aucun nom et prénoms francisés ne sont disponibles.", async () => {
     const retenueSdanf: IRetenueSdanf = {};
 
     afficheComposantFrancisationPostulant(retenueSdanf);
 
-    waitFor(() => {
-      expect(screen.queryByText("Francisation postulant")).not.toBeDefined();
-      expect(screen.queryByText("Nom francisé")).not.toBeDefined();
-      expect(screen.queryByText("Prénoms francisés")).not.toBeDefined();
+    await waitFor(() => {
+      expect(screen.queryByText("Francisation postulant")).toBeNull();
+      expect(screen.queryByText("Nom francisé")).toBeNull();
+      expect(screen.queryByText("Prénoms francisés")).toBeNull();
     });
   });
 
-  test("NE DOIT PAS afficher le champ 'Nom francisé' QUAND le nom francisés n'est pas disponible.", () => {
+  test("NE DOIT PAS afficher le champ 'Nom francisé' QUAND le nom francisés n'est pas disponible.", async () => {
     const retenueSdanf: IRetenueSdanf = {
       prenomsRetenu: [
         { prenom: "Juan", numeroOrdre: 1, estPrenomFrRetenuSdanf: false },
@@ -95,37 +85,31 @@ describe("Test le rendu du composant et des champs en fonction des informations 
 
     afficheComposantFrancisationPostulant(retenueSdanf);
 
-    waitFor(() => {
-      expect(screen.queryByText("Nom francisé")).not.toBeDefined();
+    await waitFor(() => {
+      expect(screen.queryByText("Nom francisé")).toBeNull();
       expect(screen.queryByText("Prénoms francisés")).toBeDefined();
-      expect(
-        screen.queryByDisplayValue("nomDemandeFrancisation")
-      ).not.toBeDefined();
+      expect(screen.queryByDisplayValue("nomDemandeFrancisation")).toBeNull();
       expect(screen.queryByDisplayValue("Jean")).toBeDefined();
     });
   });
 
-  test("NE DOIT PAS afficher le champ 'Prénoms francisés' QUAND les prénoms francisés ne sont pas disponibles.", () => {
+  test("NE DOIT PAS afficher le champ 'Prénoms francisés' QUAND les prénoms francisés ne sont pas disponibles.", async () => {
     const retenueSdanf: IRetenueSdanf = {
       nomDemandeFrancisation: "nomDemandeFrancisation",
-      prenomsRetenu: [
-        { prenom: "Juan", numeroOrdre: 1, estPrenomFrRetenuSdanf: false }
-      ]
+      prenomsRetenu: [{ prenom: "Juan", numeroOrdre: 1, estPrenomFrRetenuSdanf: false }]
     };
 
     afficheComposantFrancisationPostulant(retenueSdanf);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(screen.queryByText("Nom francisé")).toBeDefined();
-      expect(screen.queryByText("Prénoms francisés")).not.toBeDefined();
-      expect(
-        screen.queryByDisplayValue("nomDemandeFrancisation")
-      ).toBeDefined();
-      expect(screen.queryByDisplayValue("Jean")).not.toBeDefined();
+      expect(screen.queryByText("Prénoms francisés")).toBeNull();
+      expect(screen.queryByDisplayValue("nomDemandeFrancisation")).toBeDefined();
+      expect(screen.queryByDisplayValue("Jean")).toBeNull();
     });
   });
 
-  test("DOIT afficher dans l'ordre de la liste le prénom francisé QUAND il existe sinon le prénom non francisé.", () => {
+  test("DOIT afficher dans l'ordre de la liste le prénom francisé QUAND il existe sinon le prénom non francisé.", async () => {
     const retenueSdanf: IRetenueSdanf = {
       prenomsRetenu: [
         { prenom: "Carlos", numeroOrdre: 2, estPrenomFrRetenuSdanf: false },
@@ -136,7 +120,7 @@ describe("Test le rendu du composant et des champs en fonction des informations 
 
     afficheComposantFrancisationPostulant(retenueSdanf);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(screen.queryByText("Prénoms francisés")).toBeDefined();
       expect(screen.queryByDisplayValue("Charles, Juan")).toBeDefined();
     });

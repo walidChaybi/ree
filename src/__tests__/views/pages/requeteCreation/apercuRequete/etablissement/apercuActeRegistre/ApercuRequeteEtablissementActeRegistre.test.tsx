@@ -6,7 +6,7 @@ import { describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
 
 describe("Test de la page Aperçu requête etablissement Acte Registre", () => {
-  test("DOIT afficher les onglet RMC, PJ et ActeRegistre QUAND on arrive sur la page", () => {
+  test("DOIT afficher les onglet RMC, PJ et ActeRegistre QUAND on arrive sur la page", async () => {
     const router = createTestingRouter(
       [
         {
@@ -24,13 +24,11 @@ describe("Test de la page Aperçu requête etablissement Acte Registre", () => {
 
     render(<RouterProvider router={router} />);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(screen.getByText("RMC")).toBeDefined();
       expect(screen.getByText("Pièces justificatives / Annexes")).toBeDefined();
       expect(screen.getByText("Acte Registre")).toBeDefined();
-      expect(
-        screen.getByText("Acte Registre").getAttribute("aria-selected")
-      ).toBe("true");
+      expect(screen.getByText("Acte Registre").getAttribute("aria-selected")).toBe("true");
     });
   });
 });

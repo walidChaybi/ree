@@ -1,30 +1,20 @@
-import {
-  INavigationApercuRMCAutoParams,
-  useNavigationApercuRMCAutoDelivrance
-} from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
-import {
-  CreationActionHookParams,
-  useCreationAction
-} from "@hook/requete/CreationAction";
+import { useNavigationApercuRMCAutoDelivrance } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
+import { CreationActionHookParams, useCreationAction } from "@hook/requete/CreationAction";
 import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
+import { IRMCAutoParams } from "@hook/rmcAuto/RMCAutoHook";
 import { IReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
 import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "@model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
-import {
-  CreationRequeteRDCSC,
-  IComplementCreationUpdateRequete,
-  UpdateRequeteRDCSC
-} from "@model/form/delivrance/ISaisirRDCSCPageForm";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { CreationRequeteRDCSC, IComplementCreationUpdateRequete, UpdateRequeteRDCSC } from "@model/form/delivrance/ISaisirRDCSCPageForm";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { ADonneesTitulaireRequeteAbsentes } from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import messageManager from "@util/messageManager";
-import { getLibelle } from "@util/Utils";
 import { useCallback, useState } from "react";
 import { createReponseSansDelivranceCS } from "../contenu/SaisirRDCSCPageFonctions";
 import { ICreationOuMiseAJourRDCSCResultat } from "./SoumissionFormulaireRDCSCHook";
@@ -33,32 +23,22 @@ export const useRedirectionApresSoumissionRDCSCHook = (
   urlCourante: string,
   modeModification: boolean,
   setOperationEnCours: React.Dispatch<React.SetStateAction<boolean>>,
-  setReponseSansDelivranceCS: React.Dispatch<
-    React.SetStateAction<IReponseSansDelivranceCS | undefined>
-  >,
+  setReponseSansDelivranceCS: React.Dispatch<React.SetStateAction<IReponseSansDelivranceCS | undefined>>,
   creationRDCSCParams?: CreationRequeteRDCSC & IComplementCreationUpdateRequete,
   miseAJourRDCSCParams?: UpdateRequeteRDCSC & IComplementCreationUpdateRequete,
   requeteRDCSCResultat?: ICreationOuMiseAJourRDCSCResultat
 ) => {
-  const [paramsCreationAction, setParamsCreationAction] =
-    useState<CreationActionHookParams>();
-  const [
-    creationActionMiseAjourStatutParams,
-    setCreationActionMiseAjourStatutParams
-  ] = useState<ICreationActionMiseAjourStatutHookParams>();
-  const [paramsRMCAuto, setParamsRMCAuto] =
-    useState<INavigationApercuRMCAutoParams>();
+  const [paramsCreationAction, setParamsCreationAction] = useState<CreationActionHookParams>();
+  const [creationActionMiseAjourStatutParams, setCreationActionMiseAjourStatutParams] =
+    useState<ICreationActionMiseAjourStatutHookParams>();
+  const [paramsRMCAuto, setParamsRMCAuto] = useState<IRMCAutoParams>();
 
   useCreationActionMiseAjourStatut(creationActionMiseAjourStatutParams);
   useCreationAction(paramsCreationAction);
   useNavigationApercuRMCAutoDelivrance(paramsRMCAuto);
 
   const redirectionPage = useCallback(
-    async (
-      requeteSauvegardee: IRequeteDelivrance,
-      statutFinal: StatutRequete,
-      refus = false
-    ) => {
+    async (requeteSauvegardee: IRequeteDelivrance, statutFinal: StatutRequete, refus = false) => {
       // Si l'appel c'est terminé sans erreur
       if (requeteSauvegardee && !StatutRequete.estBrouillon(statutFinal)) {
         // Redirection si l'enregistrement n'est pas un brouillon
@@ -71,18 +51,13 @@ export const useRedirectionApresSoumissionRDCSCHook = (
         } else {
           let pasDeTraitementAuto;
 
-          messageManager.showSuccessAndClose(
-            getLibelle("La requête a bien été enregistrée")
-          );
+          messageManager.showSuccessAndClose("La requête a bien été enregistrée");
 
           if (SousTypeDelivrance.estRDCSC(requeteSauvegardee.sousType)) {
-            pasDeTraitementAuto =
-              ADonneesTitulaireRequeteAbsentes(requeteSauvegardee) ||
-              modeModification;
+            pasDeTraitementAuto = ADonneesTitulaireRequeteAbsentes(requeteSauvegardee) || modeModification;
           }
           setParamsRMCAuto({
-            requete:
-              mappingRequeteDelivranceToRequeteTableau(requeteSauvegardee),
+            requete: mappingRequeteDelivranceToRequeteTableau(requeteSauvegardee),
             urlCourante,
             pasDeTraitementAuto
           });
@@ -98,11 +73,7 @@ export const useRedirectionApresSoumissionRDCSCHook = (
   const redirectionApresCreationOuModificationRequete = useCallback(
     (statutFinal: StatutRequete) => {
       const redirection = () => {
-        redirectionPage(
-          requeteRDCSCResultat?.requete || ({} as IRequeteDelivrance),
-          statutFinal,
-          requeteRDCSCResultat?.refus
-        );
+        redirectionPage(requeteRDCSCResultat?.requete || ({} as IRequeteDelivrance), statutFinal, requeteRDCSCResultat?.refus);
       };
       if (requeteRDCSCResultat) {
         requeteRDCSCResultat.requete.statutCourant.statut = statutFinal;
@@ -113,19 +84,12 @@ export const useRedirectionApresSoumissionRDCSCHook = (
         }
       }
     },
-    [
-      requeteRDCSCResultat,
-      redirectionPage,
-      creationRDCSCParams,
-      miseAJourRDCSCParams
-    ]
+    [requeteRDCSCResultat, redirectionPage, creationRDCSCParams, miseAJourRDCSCParams]
   );
 
   const miseAJourStatutRequetePuisRedirection = () => {
-    const statutFinal: StatutRequete | undefined =
-      miseAJourRDCSCParams?.statutFinal || creationRDCSCParams?.statutFinal;
-    const futurStatut: StatutRequete | undefined =
-      miseAJourRDCSCParams?.futurStatut || creationRDCSCParams?.futurStatut;
+    const statutFinal: StatutRequete | undefined = miseAJourRDCSCParams?.statutFinal || creationRDCSCParams?.statutFinal;
+    const futurStatut: StatutRequete | undefined = miseAJourRDCSCParams?.futurStatut || creationRDCSCParams?.futurStatut;
     if (statutFinal && statutFinal !== futurStatut) {
       setCreationActionMiseAjourStatutParams({
         libelleAction: statutFinal.libelle,
@@ -134,8 +98,7 @@ export const useRedirectionApresSoumissionRDCSCHook = (
           idRequete: requeteRDCSCResultat?.requete.id
         } as IRequeteTableauDelivrance,
         // redirection ensuite
-        callback: () =>
-          redirectionApresCreationOuModificationRequete(statutFinal)
+        callback: () => redirectionApresCreationOuModificationRequete(statutFinal)
       });
     } else if (statutFinal) {
       redirectionApresCreationOuModificationRequete(statutFinal);
@@ -143,8 +106,7 @@ export const useRedirectionApresSoumissionRDCSCHook = (
   };
 
   const miseAJourActionPuisRedirection = () => {
-    const statutFinal: StatutRequete | undefined =
-      miseAJourRDCSCParams?.statutFinal;
+    const statutFinal: StatutRequete | undefined = miseAJourRDCSCParams?.statutFinal;
     if (statutFinal) {
       setParamsCreationAction({
         libelleAction: "Requête modifiée",
@@ -153,9 +115,7 @@ export const useRedirectionApresSoumissionRDCSCHook = (
         } as IRequeteTableauDelivrance,
         // redirection ensuite
         callback: () =>
-          miseAJourRDCSCParams?.refus
-            ? miseAJourStatutRequetePuisRedirection()
-            : redirectionApresCreationOuModificationRequete(statutFinal)
+          miseAJourRDCSCParams?.refus ? miseAJourStatutRequetePuisRedirection() : redirectionApresCreationOuModificationRequete(statutFinal)
       });
     }
   };

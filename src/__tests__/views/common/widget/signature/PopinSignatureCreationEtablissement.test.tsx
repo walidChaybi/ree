@@ -1,7 +1,9 @@
 import * as EtatCivilApi from "@api/appels/etatcivilApi";
 import * as RequeteApi from "@api/appels/requeteApi";
+import { TYPE_POPIN_SIGNATURE } from "@mock/data/NomenclatureTypePopinSignature";
 import mockConnectedUser from "@mock/data/connectedUser.json";
 import { IOfficier } from "@model/agent/IOfficier";
+import { TypePopinSignature } from "@model/signature/ITypePopinSignature";
 import { ApercuRequeteEtablissementActeRegistrePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuActeRegistre/ApercuRequeteEtablissementActeRegistrePage";
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET,
@@ -9,23 +11,16 @@ import {
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SAISIE_PROJET_ID,
   URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID
 } from "@router/ReceUrls";
-import {
-  createEvent,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { createEvent, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { PopinSignatureCreationEtablissement } from "@widget/signature/PopinSignatureCreationEtablissement";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test, vi } from "vitest";
-import {
-  createTestingRouter,
-  elementAvecContexte
-} from "../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
 
 describe("Doit afficher la popin de signature lors de la création d'un acte", () => {
-  test("DOIT afficher la popin de signature basique", () => {
+  TypePopinSignature.init(TYPE_POPIN_SIGNATURE);
+
+  test("DOIT afficher la popin de signature basique", async () => {
     const router = createTestingRouter(
       [
         {
@@ -46,14 +41,12 @@ describe("Doit afficher la popin de signature lors de la création d'un acte", (
 
     render(<RouterProvider router={router} />);
 
-    waitFor(() => {
-      expect(
-        screen.getAllByRole("presentation")[0].getAttribute("class")
-      ).toContain("popin-signature");
+    await waitFor(() => {
+      expect(screen.getAllByRole("presentation")[0].getAttribute("class")).toContain("popin-signature");
     });
   });
 
-  test("DOIT afficher le titre de la popin de signature de création", () => {
+  test("DOIT afficher le titre de la popin de signature de création", async () => {
     const router = createTestingRouter(
       [
         {
@@ -74,12 +67,12 @@ describe("Doit afficher la popin de signature lors de la création d'un acte", (
 
     render(<RouterProvider router={router} />);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(screen.getByText("Signature du document")).toBeDefined();
     });
   });
 
-  test("DOIT afficher le texte indicatif de la popin de signature de création", () => {
+  test("DOIT afficher le texte indicatif de la popin de signature de création", async () => {
     const router = createTestingRouter(
       [
         {
@@ -99,8 +92,7 @@ describe("Doit afficher la popin de signature lors de la création d'un acte", (
     );
 
     render(<RouterProvider router={router} />);
-
-    waitFor(() => {
+    await waitFor(() => {
       expect(
         screen.getByText(
           "Après validation, les données suivantes seront générées automatiquement et inscrites sur le document final: référence de l’acte ; formule finale, comprenant le nom et le prénom figurant sur le certificat électronique servant à la signature ; date et lieu de signature."
@@ -111,17 +103,11 @@ describe("Doit afficher la popin de signature lors de la création d'un acte", (
 });
 
 describe("Doit signer le document QUAND on valide le code pin.", () => {
-  test.skip("DOIT composer le document final, puis enregistrer le document final signé, puis modifier le statut de la requete et l'avancement du projet d'acte", () => {
+  test.skip("DOIT composer le document final, puis enregistrer le document final signé, puis modifier le statut de la requete et l'avancement du projet d'acte", async () => {
     const utilisateurCourant = mockConnectedUser as any as IOfficier;
-    const composerDocumentFinalSpy = vi.spyOn(
-      EtatCivilApi,
-      "composerDocumentFinal"
-    );
+    const composerDocumentFinalSpy = vi.spyOn(EtatCivilApi, "composerDocumentFinal");
     const integrerActeSigneSpy = vi.spyOn(EtatCivilApi, "integrerActeSigne");
-    const mettreAJourStatutApresSignatureSpy = vi.spyOn(
-      RequeteApi,
-      "mettreAJourStatutApresSignature"
-    );
+    const mettreAJourStatutApresSignatureSpy = vi.spyOn(RequeteApi, "mettreAJourStatutApresSignature");
 
     const router = createTestingRouter(
       [
@@ -145,12 +131,7 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
       ]
     );
 
-    render(
-      elementAvecContexte(
-        <RouterProvider router={router} />,
-        utilisateurCourant
-      )
-    );
+    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurCourant));
 
     // Simulation d'une signature réussie.
     fireEvent(
@@ -176,12 +157,8 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
     );
 
     // Test la composition du document final
-    waitFor(() => {
-      expect(composerDocumentFinalSpy).toHaveBeenCalledWith(
-        "d4cb23fa-31e9-4ffc-9fd4-d313ec7dc2ca",
-        "issuerCertificat",
-        "entiteCertificat"
-      );
+    await waitFor(() => {
+      expect(composerDocumentFinalSpy).toHaveBeenCalledWith("d4cb23fa-31e9-4ffc-9fd4-d313ec7dc2ca", "issuerCertificat", "entiteCertificat");
     });
 
     fireEvent(
@@ -207,12 +184,12 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
     );
 
     // Test l'intégration du document final signé
-    waitFor(() => {
+    await waitFor(() => {
       expect(integrerActeSigneSpy).toHaveBeenCalledTimes(1);
     });
 
     // Test la modification du statut de la requete et de l'avancement du projet d'acte
-    waitFor(() => {
+    await waitFor(() => {
       expect(mettreAJourStatutApresSignatureSpy).toHaveBeenCalledWith(
         "e5fdfe01-655b-44b9-a1fd-86c1169bb2ee",
         "a5187320-d722-4673-abd7-a73ed41ad8c1"
@@ -225,11 +202,8 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
     composerDocumentFinalSpy.mockClear();
   });
 
-  test("NE DOIT PAS composer le document final si l'information 'entiteCertificat' de la carte est manquant", () => {
-    const composerDocumentFinalSpy = vi.spyOn(
-      EtatCivilApi,
-      "composerDocumentFinal"
-    );
+  test("NE DOIT PAS composer le document final si l'information 'entiteCertificat' de la carte est manquant", async () => {
+    const composerDocumentFinalSpy = vi.spyOn(EtatCivilApi, "composerDocumentFinal");
 
     const router = createTestingRouter(
       [
@@ -273,17 +247,14 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
       )
     );
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(composerDocumentFinalSpy).not.toHaveBeenCalled();
     });
     composerDocumentFinalSpy.mockClear();
   });
 
-  test("NE DOIT PAS composer le document final si l'information 'issuerCertificat' de la carte est manquant", () => {
-    const composerDocumentFinalSpy = vi.spyOn(
-      EtatCivilApi,
-      "composerDocumentFinal"
-    );
+  test("NE DOIT PAS composer le document final si l'information 'issuerCertificat' de la carte est manquant", async () => {
+    const composerDocumentFinalSpy = vi.spyOn(EtatCivilApi, "composerDocumentFinal");
 
     const router = createTestingRouter(
       [
@@ -327,7 +298,7 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
       )
     );
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(composerDocumentFinalSpy).not.toHaveBeenCalled();
     });
     composerDocumentFinalSpy.mockClear();

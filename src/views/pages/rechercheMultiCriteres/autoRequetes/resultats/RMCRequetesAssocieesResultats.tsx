@@ -3,7 +3,6 @@ import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivra
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
 import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
-import { getLibelle } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useEffect, useState } from "react";
@@ -16,29 +15,22 @@ export interface RMCRequetesAssocieesResultatsProps {
   requete: IRequete;
 }
 
-export const RMCRequetesAssocieesResultats: React.FC<
-  RMCRequetesAssocieesResultatsProps
-> = props => {
+export const RMCRequetesAssocieesResultats: React.FC<RMCRequetesAssocieesResultatsProps> = props => {
   /* Etats RMC */
-  const [requetesTableau, setRequetesTableau] =
-    useState<IRequeteTableauDelivrance[]>();
+  const [requetesTableau, setRequetesTableau] = useState<IRequeteTableauDelivrance[]>();
   const [paramsTableau, setParamsTableau] = useState<IParamsTableau>();
 
   /* Etats RMC manuelle*/
   const [nouvelleRMCRequete, setNouvelleRMCRequete] = useState<boolean>(false);
   const [valuesRMCRequete, setValuesRMCRequete] = useState<IRMCRequete>({});
 
-  const [criteresRechercheRequete, setCriteresRechercheRequete] =
-    useState<ICriteresRMCRequete>();
+  const [criteresRechercheRequete, setCriteresRechercheRequete] = useState<ICriteresRMCRequete>();
 
   /* Hook d'appel de l'API RMC Auto requêtes */
-  const { dataRMCAutoRequete, dataTableauRMCAutoRequete } =
-    useRMCAutoRequeteApiHook(props.requete, `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`);
+  const { dataRMCAutoRequete, dataTableauRMCAutoRequete } = useRMCAutoRequeteApiHook(props.requete, `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`);
 
   /* Hook d'appel de l'API RMC manuelle requêtes */
-  const { dataRMCRequete, dataTableauRMCRequete } = useRMCRequeteApiHook(
-    criteresRechercheRequete
-  );
+  const { dataRMCRequete, dataTableauRMCRequete } = useRMCRequeteApiHook(criteresRechercheRequete);
 
   /* Actualisation des résultats de la RMC */
   useEffect(() => {
@@ -68,7 +60,7 @@ export const RMCRequetesAssocieesResultats: React.FC<
   return (
     <>
       {requetesTableau && paramsTableau && (
-        <Fieldset titre={getLibelle("Autres requêtes associées au titulaire")}>
+        <Fieldset titre={"Autres requêtes associées au titulaire"}>
           <div className="RMCRequetesAssocieesResultats">
             <RMCTableauRequetesAssociees
               dataRMCRequete={requetesTableau}

@@ -8,30 +8,22 @@ import { useEffect, useState } from "react";
 import { mappingInscriptions } from "../rmcActeInscription/RMCActeInscriptionUtils";
 import { determinerCriteresRMCAuto } from "./RMCAutoActesInscriptionsUtils";
 
-export function useRMCAutoInscriptionApiHook(
-  requete?: IRequeteTableauDelivrance | TRequete,
-  range?: string
-) {
-  const [dataRMCAutoInscription, setDataRMCAutoInscription] =
-    useState<IResultatRMCInscription[]>();
+export function useRMCAutoInscriptionApiHook(requete?: IRequeteTableauDelivrance | TRequete, range?: string) {
+  const [dataRMCAutoInscription, setDataRMCAutoInscription] = useState<IResultatRMCInscription[]>();
 
-  const [dataTableauRMCAutoInscription, setDataTableauRMCAutoInscription] =
-    useState<IParamsTableau>();
+  const [dataTableauRMCAutoInscription, setDataTableauRMCAutoInscription] = useState<IParamsTableau>();
 
   useEffect(() => {
     if (requete) {
       const criteresRequest = determinerCriteresRMCAuto(requete);
       rechercheMultiCriteresAutoInscription(criteresRequest, range)
         .then(result => {
-          setDataRMCAutoInscription(
-            mappingInscriptions(result?.body?.data?.repertoiresCiviles)
-          );
+          setDataRMCAutoInscription(mappingInscriptions(result?.body?.data?.repertoiresCiviles));
           setDataTableauRMCAutoInscription(getParamsTableau(result));
         })
         .catch(error => {
           logError({
-            messageUtilisateur:
-              "Impossible de récupérer les inscriptions de la recherche multi-critères automatique",
+            messageUtilisateur: "Impossible de récupérer les inscriptions de la recherche multi-critères automatique",
             error
           });
         });

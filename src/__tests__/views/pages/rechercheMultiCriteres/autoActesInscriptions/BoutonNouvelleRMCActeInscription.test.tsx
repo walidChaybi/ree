@@ -3,24 +3,24 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React, { useState } from "react";
 import { expect, test, vi } from "vitest";
 
-const ConteneurBouton: React.FC = () => {
-  const [popinAffichee, setPopinAffichee] = useState<boolean>(false);
+test("renders titre bouton ajouter RMC", async () => {
+  const ConteneurBouton: React.FC = () => {
+    const [popinAffichee, setPopinAffichee] = useState<boolean>(false);
 
-  return (
-    <BoutonNouvelleRMCActeInscription
-      nouvelleRMCActeInscription={vi.fn()}
-      setPopinAffichee={setPopinAffichee}
-      popinAffichee={popinAffichee}
-    />
-  );
-};
+    return (
+      <BoutonNouvelleRMCActeInscription
+        nouvelleRMCActeInscription={vi.fn()}
+        setPopinAffichee={setPopinAffichee}
+        popinAffichee={popinAffichee}
+      />
+    );
+  };
 
-test("renders titre bouton ajouter RMC", () => {
   render(<ConteneurBouton />);
 
   const linkElement = screen.getByText("Nouvelle recherche multi-critères");
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(linkElement).toBeDefined();
   });
 
@@ -28,21 +28,19 @@ test("renders titre bouton ajouter RMC", () => {
 
   const dialog = screen.getByRole("dialog");
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(dialog).toBeDefined();
   });
 
-  const closeElement = screen.getByLabelText(
-    "CloseButtonNouvelleRMCActeInscription"
-  );
+  const closeElement = screen.getByLabelText("CloseButtonNouvelleRMCActeInscription");
 
-  waitFor(() => {
+  await waitFor(() => {
     expect(closeElement).toBeDefined();
   });
 
   fireEvent.click(closeElement);
 
-  waitFor(() => {
-    expect(dialog).not.toBeDefined();
+  await waitFor(() => {
+    expect(screen.queryByRole("dialog")).toBeNull();
   });
 });

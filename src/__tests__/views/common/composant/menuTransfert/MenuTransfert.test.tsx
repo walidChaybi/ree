@@ -116,10 +116,10 @@ describe("Test MenuTransfert", () => {
     render(routerAvecContexte(router, utilisateurs, services));
   };
 
-  test("renders du bloc Menu Transfert ouvert", () => {
+  test("renders du bloc Menu Transfert ouvert", async () => {
     afficheComposant(listeUtilisateurs);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES)).toBeTruthy();
     });
 
@@ -127,14 +127,14 @@ describe("Test MenuTransfert", () => {
     const choixService = screen.getByText(/À un service+/);
     const choixOEC = screen.getByText(/À un officier de l'état civil+/);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(menuTransfert).toBeDefined();
       expect(choixService).toBeDefined();
       expect(choixOEC).toBeDefined();
     });
   });
 
-  test("check popin service", () => {
+  test("check popin service", async () => {
     afficheComposant(listeUtilisateurs);
 
     let choixService: HTMLElement;
@@ -149,7 +149,7 @@ describe("Test MenuTransfert", () => {
     const annuler: HTMLButtonElement = screen.getByText(/Annuler+/);
     const title = screen.getByText(/Transfert à un service+/);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(valider).toBeDefined();
       expect(valider.disabled).toBeTruthy();
       expect(title).toBeDefined();
@@ -157,14 +157,14 @@ describe("Test MenuTransfert", () => {
 
     const autocomplete: HTMLInputElement = screen.getByTestId("optionChoisie");
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(autocomplete).toBeDefined();
     });
 
     fireEvent.click(annuler);
   });
 
-  test("check popin agent", () => {
+  test("check popin agent", async () => {
     afficheComposant(listeUtilisateurs);
 
     let choixService: HTMLElement;
@@ -178,7 +178,7 @@ describe("Test MenuTransfert", () => {
     const valider: HTMLButtonElement = screen.getByText(/Valider+/);
     const title = screen.getByText("Transfert à un officier de l'état civil");
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(valider).toBeDefined();
       expect(valider.disabled).toBeTruthy();
       expect(title).toBeDefined();
@@ -186,23 +186,23 @@ describe("Test MenuTransfert", () => {
 
     const autocomplete: HTMLInputElement = screen.getByTestId("optionChoisie");
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(autocomplete).toBeDefined();
     });
   });
 
-  test("check autocomplete service", () => {
+  test("check autocomplete service", async () => {
     afficheComposant(undefined, listeServices);
     const menuTransfert = screen.getByText("Transférer");
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(menuTransfert).toBeDefined();
     });
 
     fireEvent.click(menuTransfert);
 
     const choixService = screen.getByText(/À un service+/);
-    waitFor(() => {
+    await waitFor(() => {
       expect(choixService).toBeDefined();
     });
 
@@ -211,7 +211,7 @@ describe("Test MenuTransfert", () => {
     const autocomplete = screen.getByTestId("optionChoisie");
     const inputChampRecherche: HTMLInputElement = screen.getByTestId("inputChampRecherche");
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(autocomplete).toBeDefined();
       expect(inputChampRecherche).toBeDefined();
     });
@@ -225,7 +225,7 @@ describe("Test MenuTransfert", () => {
     });
     const str1 = screen.getByText("str1");
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(str1).toBeDefined();
       expect(screen.getByText("str2")).toBeDefined();
     });
@@ -234,25 +234,25 @@ describe("Test MenuTransfert", () => {
 
     const valider: HTMLButtonElement = screen.getByText("Valider");
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(inputChampRecherche.value).toStrictEqual("str1");
       expect(valider.disabled).toBeFalsy();
     });
 
     const reset = screen.getByTitle("Vider le champ");
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(reset).toBeDefined();
     });
 
     fireEvent.click(reset);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(valider.disabled).toBeTruthy();
     });
   });
 
-  test("check autocomplete agent", () => {
+  test("check autocomplete agent", async () => {
     const router = createTestingRouter(
       [
         {
@@ -279,7 +279,7 @@ describe("Test MenuTransfert", () => {
 
     const menuTransfert = screen.getByText("Transférer");
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(menuTransfert).toBeDefined();
     });
 
@@ -287,7 +287,7 @@ describe("Test MenuTransfert", () => {
 
     const choixService = screen.getByText(/À un officier de l'état civil+/);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(choixService).toBeDefined();
     });
 
@@ -296,7 +296,7 @@ describe("Test MenuTransfert", () => {
     const autocomplete = screen.getByTestId("optionChoisie");
     const inputChampRecherche: HTMLInputElement = screen.getByTestId("inputChampRecherche");
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(autocomplete).toBeDefined();
       expect(inputChampRecherche).toBeDefined();
     });
@@ -309,7 +309,7 @@ describe("Test MenuTransfert", () => {
     });
 
     const str1 = screen.getByText("str1");
-    waitFor(() => {
+    await waitFor(() => {
       expect(str1).toBeDefined();
       expect(screen.getByText("str2")).toBeDefined();
     });
@@ -318,19 +318,19 @@ describe("Test MenuTransfert", () => {
 
     const valider: HTMLButtonElement = screen.getByText("Valider");
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(inputChampRecherche.value).toStrictEqual("str1 ");
       expect(valider.disabled).toBeFalsy();
     });
 
     fireEvent.click(valider);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(router.state.location.pathname).toBe(URL_MES_REQUETES_DELIVRANCE);
     });
   });
 
-  test("renders du bloc Menu Transfert fermer ", () => {
+  test("renders du bloc Menu Transfert fermer ", async () => {
     const router = createTestingRouter(
       [
         {
@@ -358,7 +358,7 @@ describe("Test MenuTransfert", () => {
 
     let menuTransfert = screen.getByText("Transférer");
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(menuTransfert).toBeDefined();
     });
 
@@ -367,7 +367,7 @@ describe("Test MenuTransfert", () => {
     let choixService = screen.getByText(/À un service+/);
     let choixOEC = screen.getByText(/À un officier de l'état civil+/);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(choixService).toBeDefined();
       expect(choixOEC).toBeDefined();
     });
@@ -377,7 +377,7 @@ describe("Test MenuTransfert", () => {
     const autocomplete = screen.getByTestId("optionChoisie");
     const inputChampRecherche: HTMLInputElement = screen.getByTestId("inputChampRecherche");
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(autocomplete).toBeDefined();
       expect(inputChampRecherche).toBeDefined();
     });
@@ -392,7 +392,7 @@ describe("Test MenuTransfert", () => {
 
     const OEC = screen.getByText("str3");
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(OEC).toBeDefined();
     });
 
@@ -400,13 +400,13 @@ describe("Test MenuTransfert", () => {
 
     const valider: HTMLButtonElement = screen.getByText("Valider");
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(valider).toBeDefined();
     });
 
     fireEvent.click(valider);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(router.state.location.pathname).toBe(URL_MES_REQUETES_INFORMATION);
     });
   });

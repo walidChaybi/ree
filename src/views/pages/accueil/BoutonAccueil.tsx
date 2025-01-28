@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Badge from "@mui/material/Badge";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
-import React from "react";
+import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "../accueil/scss/BoutonAccueil.scss";
 
@@ -28,14 +28,15 @@ export const BoutonAccueil: React.FC<BoutonAccueilProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  function onClickDefaultHandler(event: React.MouseEvent, paramURL: string) {
-    if (!disabled) {
-      if (onClickHandler) {
-        onClickHandler(event, paramURL);
+  const onClickDefaultHandler = useCallback(
+    (event: React.MouseEvent, paramURL: string) => {
+      if (!disabled) {
+        onClickHandler?.(event, paramURL);
+        navigate(paramURL);
       }
-      navigate(`${paramURL}`);
-    }
-  }
+    },
+    [disabled, navigate]
+  );
 
   return (
     <div

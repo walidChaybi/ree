@@ -1,11 +1,11 @@
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { GestionnaireARetraiterDansSaga } from "@util/migration/GestionnaireARetraiterDansSaga";
-import { getLibelle } from "@util/Utils";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { VisionneuseAvecTitre } from "@widget/visionneuseDocument/VisionneuseAvecTitre";
 import React, { useCallback, useState } from "react";
@@ -41,14 +41,12 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
   return (
     <ApercuRequeteTemplate
       title={getLibelle("Aperçu de la requête en traitement")}
-      setRequeteCallback={setRequeteCallback}
+      setRequete={setRequeteCallback}
       setDocumentAfficheCallback={setDocumentAfficheCallback}
     >
       {requete && (
         <div className="ApercuRequeteTraitement">
-          {dataHistory && dataHistory.info && (
-            <div className="MessageInfo">{dataHistory.info}</div>
-          )}
+          {dataHistory && dataHistory.info && <div className="MessageInfo">{dataHistory.info}</div>}
           {documentAffiche && (
             <VisionneuseAvecTitre
               titre="Aperçu des documents"
@@ -61,15 +59,11 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
           <div className="BoutonsAction">
             {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS) &&
               SousTypeDelivrance.estRDCSDouRDCSC(requete?.sousType) &&
-              requete.statutCourant.statut !==
-                StatutRequete.TRANSMISE_A_VALIDEUR && (
-                <BoutonModifierTraitement requete={requete} />
-              )}
+              requete.statutCourant.statut !== StatutRequete.TRANSMISE_A_VALIDEUR && <BoutonModifierTraitement requete={requete} />}
 
-            {GestionnaireARetraiterDansSaga.estARetraiterSaga(requete) &&
-              !GestionnaireARetraiterDansSaga.possedeDocumentSigne(requete) && (
-                <BoutonARetraiterSaga idRequete={requete.id} />
-              )}
+            {GestionnaireARetraiterDansSaga.estARetraiterSaga(requete) && !GestionnaireARetraiterDansSaga.possedeDocumentSigne(requete) && (
+              <BoutonARetraiterSaga idRequete={requete.id} />
+            )}
           </div>
         </div>
       )}

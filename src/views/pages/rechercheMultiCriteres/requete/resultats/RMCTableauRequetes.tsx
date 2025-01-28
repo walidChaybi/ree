@@ -3,10 +3,7 @@ import {
   NavigationApercuReqCreationParams,
   useNavigationApercuCreation
 } from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
-import {
-  INavigationApercuRMCAutoParams,
-  useNavigationApercuRMCAutoDelivrance
-} from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
+import { useNavigationApercuRMCAutoDelivrance } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
 import {
   INavigationApercuReqInfoParams,
   useNavigationApercuInformation
@@ -15,11 +12,8 @@ import {
   ICreationActionMiseAjourStatutEtRmcAutoHookParams,
   useCreationActionMiseAjourStatutEtRmcAuto
 } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
-import {
-  IOfficier,
-  officierALeDroitSurUnDesPerimetres,
-  officierHabiliterPourLeDroit
-} from "@model/agent/IOfficier";
+import { IRMCAutoParams } from "@hook/rmcAuto/RMCAutoHook";
+import { IOfficier, officierALeDroitSurUnDesPerimetres, officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { TRequeteTableau } from "@model/requete/IRequeteTableau";
@@ -33,16 +27,10 @@ import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { setParamsUseApercuCreation } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
-import {
-  autorisePrendreEnChargeReqTableauCreation,
-  autorisePrendreEnChargeReqTableauDelivrance
-} from "@util/RequetesUtils";
+import { autorisePrendreEnChargeReqTableauCreation, autorisePrendreEnChargeReqTableauDelivrance } from "@util/RequetesUtils";
 import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
-import {
-  NB_LIGNES_PAR_APPEL_REQUETE,
-  NB_LIGNES_PAR_PAGE_REQUETE
-} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import { NB_LIGNES_PAR_APPEL_REQUETE, NB_LIGNES_PAR_PAGE_REQUETE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useContext, useState } from "react";
 import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";
@@ -65,27 +53,18 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
   //**** RMC AUTO ****//
-  const [paramsMiseAJour, setParamsMiseAJour] = useState<
-    ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
-  >();
-  const [paramsRMCAuto, setParamsRMCAuto] = useState<
-    INavigationApercuRMCAutoParams | undefined
-  >();
-  const [paramsCreation, setParamsCreation] = useState<
-    NavigationApercuReqCreationParams | undefined
-  >();
+  const [paramsMiseAJour, setParamsMiseAJour] = useState<ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
+  const [paramsRMCAuto, setParamsRMCAuto] = useState<IRMCAutoParams | undefined>();
+  const [paramsCreation, setParamsCreation] = useState<NavigationApercuReqCreationParams | undefined>();
 
-  const { services, decrets, utilisateurConnecte } =
-    useContext(RECEContextData);
+  const { services, decrets, utilisateurConnecte } = useContext(RECEContextData);
 
   useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
   useNavigationApercuRMCAutoDelivrance(paramsRMCAuto);
   useNavigationApercuCreation(paramsCreation);
 
   /**** Navigation vers Apercu Information ****/
-  const [paramsNavReqInfo, setParamsNavReqInfo] = useState<
-    INavigationApercuReqInfoParams | undefined
-  >();
+  const [paramsNavReqInfo, setParamsNavReqInfo] = useState<INavigationApercuReqInfoParams | undefined>();
 
   useNavigationApercuInformation(paramsNavReqInfo);
 
@@ -103,11 +82,7 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
     setOperationEnCours(false);
   };
 
-  const onClickOnLine = (
-    idRequete: string,
-    data: TRequeteTableau[],
-    idx: number
-  ) => {
+  const onClickOnLine = (idRequete: string, data: TRequeteTableau[], idx: number) => {
     const requeteSelect = data[idx];
     switch (requeteSelect.type) {
       case TypeRequete.DELIVRANCE.libelle:
@@ -117,10 +92,7 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
         onClickReqInformation(requeteSelect as IRequeteTableauInformation);
         break;
       case TypeRequete.CREATION.libelle:
-        onClickReqCreation(
-          requeteSelect as IRequeteTableauCreation,
-          utilisateurConnecte
-        );
+        onClickReqCreation(requeteSelect as IRequeteTableauCreation, utilisateurConnecte);
         break;
     }
   };
@@ -129,9 +101,7 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
 
   const onClickReqDelivrance = (requete: IRequeteTableauDelivrance) => {
     setOperationEnCours(true);
-    if (
-      autorisePrendreEnChargeReqTableauDelivrance(utilisateurConnecte, requete)
-    ) {
+    if (autorisePrendreEnChargeReqTableauDelivrance(utilisateurConnecte, requete)) {
       setParamsMiseAJour({
         libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
         statutRequete: StatutRequete.PRISE_EN_CHARGE,
@@ -144,9 +114,7 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
         requete,
         urlCourante,
         // La RMC ne remonte pas les informations suffisantes pour générer un certificat de situation automatique
-        pasDeTraitementAuto: SousTypeDelivrance.estRDCSDouRDCSC(
-          SousTypeDelivrance.getEnumFromLibelleCourt(requete.sousType)
-        )
+        pasDeTraitementAuto: SousTypeDelivrance.estRDCSDouRDCSC(SousTypeDelivrance.getEnumFromLibelleCourt(requete.sousType))
       });
     }
   };
@@ -160,42 +128,22 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
     });
   };
 
-  function estRequeteRCTDOuRCTCEtALeDroitActeTranscrit(
-    sousType: SousTypeCreation
-  ) {
-    return (
-      SousTypeCreation.estRCTDOuRCTC(sousType) &&
-      officierHabiliterPourLeDroit(
-        utilisateurConnecte,
-        Droit.CREER_ACTE_TRANSCRIT
-      )
-    );
+  function estRequeteRCTDOuRCTCEtALeDroitActeTranscrit(sousType: SousTypeCreation) {
+    return SousTypeCreation.estRCTDOuRCTC(sousType) && officierHabiliterPourLeDroit(utilisateurConnecte, Droit.CREER_ACTE_TRANSCRIT);
   }
 
   function estRequeteRCEXREtALeDroitActeEtabli(sousType: SousTypeCreation) {
     return (
       SousTypeCreation.estRCEXR(sousType) &&
-      officierALeDroitSurUnDesPerimetres(
-        Droit.CREER_ACTE_ETABLI,
-        [Perimetre.TOUS_REGISTRES, Perimetre.ETAX],
-        utilisateurConnecte
-      )
+      officierALeDroitSurUnDesPerimetres(Droit.CREER_ACTE_ETABLI, [Perimetre.TOUS_REGISTRES, Perimetre.ETAX], utilisateurConnecte)
     );
   }
 
-  const onClickReqCreation = (
-    requete: IRequeteTableauCreation,
-    utilisateurConnecte: IOfficier
-  ) => {
+  const onClickReqCreation = (requete: IRequeteTableauCreation, utilisateurConnecte: IOfficier) => {
     const sousType = SousTypeCreation.getEnumFromLibelleCourt(requete.sousType);
-    if (
-      estRequeteRCTDOuRCTCEtALeDroitActeTranscrit(sousType) ||
-      estRequeteRCEXREtALeDroitActeEtabli(sousType)
-    ) {
+    if (estRequeteRCTDOuRCTCEtALeDroitActeTranscrit(sousType) || estRequeteRCEXREtALeDroitActeEtabli(sousType)) {
       setOperationEnCours(true);
-      if (
-        autorisePrendreEnChargeReqTableauCreation(requete, utilisateurConnecte)
-      ) {
+      if (autorisePrendreEnChargeReqTableauCreation(requete, utilisateurConnecte)) {
         setParamsMiseAJour({
           libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
           statutRequete: StatutRequete.PRISE_EN_CHARGE,
@@ -204,13 +152,7 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
           typeRequete: TypeRequete.CREATION
         });
       } else {
-        setParamsUseApercuCreation(
-          requete.idRequete,
-          setParamsCreation,
-          requete.sousType,
-          requete.statut,
-          requete.idUtilisateur
-        );
+        setParamsUseApercuCreation(requete.idRequete, setParamsCreation, requete.sousType, requete.statut, requete.idUtilisateur);
       }
     }
   };

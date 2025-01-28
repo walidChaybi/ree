@@ -8,13 +8,9 @@ import { useEffect, useState } from "react";
 import { mappingActes } from "../rmcActeInscription/mapping/RMCMappingUtil";
 import { determinerCriteresRMCAuto } from "./RMCAutoActesInscriptionsUtils";
 
-export function useRMCAutoActeApiHook(
-  requete?: IRequeteTableauDelivrance | TRequete,
-  range?: string
-) {
+export function useRMCAutoActeApiHook(requete?: IRequeteTableauDelivrance | TRequete, range?: string) {
   const [dataRMCAutoActe, setDataRMCAutoActe] = useState<IResultatRMCActe[]>();
-  const [dataTableauRMCAutoActe, setDataTableauRMCAutoActe] =
-    useState<IParamsTableau>();
+  const [dataTableauRMCAutoActe, setDataTableauRMCAutoActe] = useState<IParamsTableau>();
 
   useEffect(() => {
     if (requete) {
@@ -27,8 +23,7 @@ export function useRMCAutoActeApiHook(
         })
         .catch((error: any) => {
           logError({
-            messageUtilisateur:
-              "Impossible de récupérer les actes de la recherche multi-critères automatique",
+            messageUtilisateur: "Impossible de récupérer les actes de la recherche multi-critères automatique",
             error
           });
         });

@@ -5,19 +5,16 @@ import { IReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivra
 import { NOM_DOCUMENT_REFUS_PACS_NON_INSCRIT } from "@model/composition/IReponseSansDelivranceCSPACSNonInscritComposition";
 import { StatutFiche } from "@model/etatcivil/enum/StatutFiche";
 import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { IUrlData } from "@router/ReceUrls";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
-import { getLibelle, mapPrenomsVersPrenomsOrdonnes } from "@util/Utils";
-import {
-  NB_LIGNES_PAR_APPEL_ACTE,
-  NB_LIGNES_PAR_APPEL_DEFAUT
-} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import { mapPrenomsVersPrenomsOrdonnes } from "@util/Utils";
+import { NB_LIGNES_PAR_APPEL_ACTE, NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { useEffect, useState } from "react";
 import {
   IGenerationCertificatSituationParams,
@@ -28,15 +25,11 @@ import {
   specificationPhraseRMCAutoVide
 } from "../generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
 import { IResultGenerationUnDocument } from "../generation/generationUtils";
-import {
-  redirectionRMCAuto,
-  redirectionRMCAutoApercuTraitement
-} from "./RMCAutoActesInscriptionsUtils";
+import { redirectionRMCAuto, redirectionRMCAutoApercuTraitement } from "./RMCAutoActesInscriptionsUtils";
 import { useRMCAutoInscriptionApiHook } from "./RMCAutoInscriptionApiHook";
 
-const INFO_CS_RMC_AUTO_VIDE = getLibelle(
-  "La recherche multi-critères sur les actes RC/RCA et PACS n'ayant donné aucun résultat, il vous est proposé de délivrer le certificat ci-dessous."
-);
+const INFO_CS_RMC_AUTO_VIDE =
+  "La recherche multi-critères sur les actes RC/RCA et PACS n'ayant donné aucun résultat, il vous est proposé de délivrer le certificat ci-dessous.";
 export interface IRMCAutoParams {
   requete: IRequeteTableauDelivrance;
   urlCourante: string;
@@ -46,23 +39,16 @@ export interface IRMCAutoParams {
 export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
   const [urlDataRMCAuto, setUrlDataRMCAuto] = useState<IUrlData | undefined>();
 
-  const { dataRMCAutoActe, dataTableauRMCAutoActe } = useRMCAutoActeApiHook(
+  const { dataRMCAutoActe, dataTableauRMCAutoActe } = useRMCAutoActeApiHook(params?.requete, `0-${NB_LIGNES_PAR_APPEL_ACTE}`);
+
+  const [reponseSansDelivranceCS, setReponseSansDelivranceCS] = useState<IReponseSansDelivranceCS | undefined>();
+
+  const { dataRMCAutoInscription, dataTableauRMCAutoInscription } = useRMCAutoInscriptionApiHook(
     params?.requete,
-    `0-${NB_LIGNES_PAR_APPEL_ACTE}`
+    `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
   );
 
-  const [reponseSansDelivranceCS, setReponseSansDelivranceCS] = useState<
-    IReponseSansDelivranceCS | undefined
-  >();
-
-  const { dataRMCAutoInscription, dataTableauRMCAutoInscription } =
-    useRMCAutoInscriptionApiHook(
-      params?.requete,
-      `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
-    );
-
-  const [paramsCertificatSituation, setParamsCertificatSituation] =
-    useState<IGenerationCertificatSituationParams>();
+  const [paramsCertificatSituation, setParamsCertificatSituation] = useState<IGenerationCertificatSituationParams>();
 
   const resultatReponseSansDelivranceCS = useReponseSansDelivranceCS(
     StatutRequete.A_VALIDER.libelle,
@@ -73,18 +59,10 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
 
   useEffect(() => {
     // si pasDeTraitementAuto=true alors pas de génération de certificat de situation automatiquement en fonction des résultats de la RMC auto
-    if (
-      params &&
-      !params.pasDeTraitementAuto &&
-      dataRMCAutoInscription &&
-      dataRMCAutoActe
-    ) {
+    if (params && !params.pasDeTraitementAuto && dataRMCAutoInscription && dataRMCAutoActe) {
       setParamsCertificatSituation({
         requete: params.requete,
-        nbInscriptionsInfos: getNbInscriptionsInfos(
-          dataRMCAutoActe,
-          dataRMCAutoInscription
-        ),
+        nbInscriptionsInfos: getNbInscriptionsInfos(dataRMCAutoActe, dataRMCAutoInscription),
         specificationPhrase: specificationPhraseRMCAutoVide
       });
     }
@@ -92,8 +70,7 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
   }, [dataRMCAutoInscription, dataRMCAutoActe]);
 
   // Génération du certificat de situation
-  const resultGenerationCertificatSituationRMCAutoVide =
-    useGenerationCertificatSituationHook(paramsCertificatSituation);
+  const resultGenerationCertificatSituationRMCAutoVide = useGenerationCertificatSituationHook(paramsCertificatSituation);
 
   useEffect(() => {
     if (
@@ -130,10 +107,9 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
         !params?.requete.documentsReponses?.length
       ) {
         data.info = INFO_CS_RMC_AUTO_VIDE;
-        const contenuReponseSansDelivranceCSPACSNonInscrit =
-          createReponseSansDelivranceCSPourCompositionApiPACSNonInscrit(
-            mappingRequeteTableauVersRequeteDelivrance(params?.requete)
-          );
+        const contenuReponseSansDelivranceCSPACSNonInscrit = createReponseSansDelivranceCSPourCompositionApiPACSNonInscrit(
+          mappingRequeteTableauVersRequeteDelivrance(params?.requete)
+        );
 
         setReponseSansDelivranceCS({
           contenu: contenuReponseSansDelivranceCSPACSNonInscrit,
@@ -176,10 +152,7 @@ export function useRMCAutoHook(params?: IRMCAutoParams): IUrlData | undefined {
   return urlDataRMCAuto;
 }
 
-function getNbInscriptionsInfos(
-  dataRMCAutoActe?: IResultatRMCActe[],
-  dataRMCAutoInscription?: IResultatRMCInscription[]
-) {
+function getNbInscriptionsInfos(dataRMCAutoActe?: IResultatRMCActe[], dataRMCAutoInscription?: IResultatRMCInscription[]) {
   const infos: INbInscriptionsInfos = {
     nbActe: 0,
     nbRc: 0,
@@ -193,9 +166,7 @@ function getNbInscriptionsInfos(
 
   if (dataRMCAutoInscription) {
     dataRMCAutoInscription.forEach(data => {
-      const typeFiche: TypeFiche = FicheUtil.getTypeFicheFromString(
-        data.categorie
-      );
+      const typeFiche: TypeFiche = FicheUtil.getTypeFicheFromString(data.categorie);
       switch (typeFiche) {
         case TypeFiche.RC:
           infos.nbRc++;
@@ -213,25 +184,14 @@ function getNbInscriptionsInfos(
   return infos;
 }
 
-function getPacsAuStatutActif(
-  resulatatInscriptionPacs?: IResultatRMCInscription[]
-): IResultatRMCInscription[] {
+function getPacsAuStatutActif(resulatatInscriptionPacs?: IResultatRMCInscription[]): IResultatRMCInscription[] {
   const pacs = getPacs(resulatatInscriptionPacs);
 
-  return pacs.filter(
-    inscription => inscription.statutInscription === StatutFiche.ACTIF.libelle
-  );
+  return pacs.filter(inscription => inscription.statutInscription === StatutFiche.ACTIF.libelle);
 }
 
-function getPacs(
-  tableauPacs?: IResultatRMCInscription[]
-): IResultatRMCInscription[] {
-  return tableauPacs
-    ? tableauPacs.filter(
-        pacs =>
-          FicheUtil.getTypeFicheFromString(pacs.categorie) === TypeFiche.PACS
-      )
-    : [];
+function getPacs(tableauPacs?: IResultatRMCInscription[]): IResultatRMCInscription[] {
+  return tableauPacs ? tableauPacs.filter(pacs => FicheUtil.getTypeFicheFromString(pacs.categorie) === TypeFiche.PACS) : [];
 }
 
 function toutLesTraitementAmontOntEteEffectues(
@@ -240,18 +200,10 @@ function toutLesTraitementAmontOntEteEffectues(
   dataTableauRMCAutoActe: IParamsTableau | undefined,
   dataRMCAutoInscription: IResultatRMCInscription[] | undefined,
   dataTableauRMCAutoInscription: IParamsTableau | undefined,
-  resultGenerationCertificatSituationRMCAutoVide:
-    | IResultGenerationUnDocument
-    | undefined
+  resultGenerationCertificatSituationRMCAutoVide: IResultGenerationUnDocument | undefined
 ) {
   return (
-    estNonVide(
-      params,
-      dataRMCAutoActe,
-      dataTableauRMCAutoActe,
-      dataRMCAutoInscription,
-      dataTableauRMCAutoInscription
-    ) &&
+    estNonVide(params, dataRMCAutoActe, dataTableauRMCAutoActe, dataRMCAutoInscription, dataTableauRMCAutoInscription) &&
     // Si la génération automatique de certificat de situation n'a pas été faite mais que pasDeTraitementAuto=true alors on continue le traitement
     (resultGenerationCertificatSituationRMCAutoVide ||
       //@ts-ignore (param est forcément non vide)
@@ -276,9 +228,7 @@ function estNonVide(
   );
 }
 
-function mappingRequeteTableauVersRequeteDelivrance(
-  requeteTableauDelivrance?: IRequeteTableauDelivrance
-): IRequeteDelivrance {
+function mappingRequeteTableauVersRequeteDelivrance(requeteTableauDelivrance?: IRequeteTableauDelivrance): IRequeteDelivrance {
   return requeteTableauDelivrance?.titulaires
     ? ({
         ...requeteTableauDelivrance,
@@ -286,9 +236,7 @@ function mappingRequeteTableauVersRequeteDelivrance(
         titulaires: [
           {
             ...requeteTableauDelivrance.titulaires[0],
-            prenoms: mapPrenomsVersPrenomsOrdonnes(
-              requeteTableauDelivrance.titulaires[0].prenoms
-            ),
+            prenoms: mapPrenomsVersPrenomsOrdonnes(requeteTableauDelivrance.titulaires[0].prenoms),
             nomNaissance: requeteTableauDelivrance.titulaires[0].nom
           }
         ]

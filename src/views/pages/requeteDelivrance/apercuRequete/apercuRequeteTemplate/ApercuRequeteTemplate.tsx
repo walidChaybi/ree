@@ -1,9 +1,6 @@
 import { BandeauRequete } from "@composant/bandeauApercuRequete/BandeauApercuRequete";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
-import {
-  IDetailRequeteParams,
-  useDetailRequeteApiHook
-} from "@hook/requete/DetailRequeteHook";
+import { IDetailRequeteParams, useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -18,27 +15,24 @@ import "./scss/ApercuRequeteTemplate.scss";
 interface TemplateProps {
   idRequeteAAfficher?: string;
   title: string;
-  setRequeteCallback: (req: IRequeteDelivrance) => void;
+  setRequete: (req: IRequeteDelivrance) => void;
   setDocumentAfficheCallback?: (docReponse: IDocumentReponse) => void;
 }
 
-export const ApercuRequeteTemplate: React.FC<
-  React.PropsWithChildren<TemplateProps>
-> = props => {
+export const ApercuRequeteTemplate: React.FC<React.PropsWithChildren<TemplateProps>> = props => {
   const [idRequete, setIdRequete] = useState<string>();
   const { idRequeteParam } = useParams<TUuidRequeteParams>();
   const location = useLocation();
-  const [detailRequeteParams, setDetailRequeteParams] =
-    useState<IDetailRequeteParams>();
+  const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>();
   const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
   const [requete, setRequete] = useState<IRequeteDelivrance>();
 
   useEffect(() => {
     setDetailRequeteParams({
-      idRequete: idRequete ?? idRequeteParam,
+      idRequete: idRequete,
       estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE)
     });
-  }, [idRequete, location.pathname, idRequeteParam]);
+  }, [idRequete, location.pathname]);
 
   useEffect(() => {
     // L'idRequete peut venir de l'URL ou bien être une props dans le cas d'une requete liée
@@ -57,9 +51,9 @@ export const ApercuRequeteTemplate: React.FC<
 
   useEffect(() => {
     if (requete) {
-      props.setRequeteCallback(requete);
+      props.setRequete(requete);
     }
-  }, [requete, props]);
+  }, [requete, props.setRequete]);
 
   useTitreDeLaFenetre(props.title);
 

@@ -4,7 +4,7 @@ import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
 import { IOfficier } from "@model/agent/IOfficier";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import PartieFormulaire from "../../../../composants/pages/requetesMiseAJour/PartieFormulaire";
@@ -18,35 +18,35 @@ describe("Test PartieFormulaire", () => {
   const idActe = "b41079a5-9e8d-478c-b04c-c4c4ey86537g";
   const idRequete = "931c715b-ede1-4895-ad70-931f2ac4e43d";
 
+  const routerPartieFormulaireAvecMentions = createTestingRouter(
+    [
+      {
+        path: "/",
+        element: (
+          <EditionMiseAJourContextProvider
+            idActe={idActe}
+            idRequete={idRequete}
+            estMiseAJourAvecMentions={true}
+          >
+            <PartieFormulaire />
+          </EditionMiseAJourContextProvider>
+        )
+      }
+    ],
+    ["/"]
+  );
+
   test("affiche les bons onglets si l'utilisateur est en mise a jour mention", async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: "/",
-          element: (
-            <EditionMiseAJourContextProvider
-              idActe={idActe}
-              idRequete={idRequete}
-              estMiseAJourAvecMentions={true}
-            >
-              <PartieFormulaire />
-            </EditionMiseAJourContextProvider>
-          )
-        }
-      ],
-      ["/"]
-    );
-
-    render(<RouterProvider router={router} />);
-
-    await waitFor(() => {
-      expect(screen.getByText("Mentions")).toBeDefined();
-      expect(screen.queryByText("Analyse Marginale")).toBeNull();
+    await act(async () => {
+      render(<RouterProvider router={routerPartieFormulaireAvecMentions} />);
     });
+
+    expect(screen.getByText("Mentions")).toBeDefined();
+    expect(screen.queryByText("Analyse Marginale")).toBeNull();
   });
 
-  test("affiche les bons onglets si l'utilisateur est en mise a jour analyse marginale uniquement", async () => {
-    const router = createTestingRouter(
+  test("La partie formulaire sans mentions apparait correctement", async () => {
+    const routerPartieFormulaireSansMentions = createTestingRouter(
       [
         {
           path: "/",
@@ -64,44 +64,28 @@ describe("Test PartieFormulaire", () => {
       ["/"]
     );
 
-    render(<RouterProvider router={router} />);
-
-    await waitFor(() => {
-      expect(screen.queryByText("Mentions")).toBeNull();
-      expect(screen.getByText("Analyse Marginale")).toBeDefined();
+    await act(async () => {
+      render(<RouterProvider router={routerPartieFormulaireSansMentions} />);
     });
-  });
 
-  test("Les boutons de validation et d'actualisation apparaissent avec les bons droits", async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: "/",
-          element: (
-            <EditionMiseAJourContextProvider
-              idActe={idActe}
-              idRequete={idRequete}
-              estMiseAJourAvecMentions={false}
-            >
-              <PartieFormulaire />
-            </EditionMiseAJourContextProvider>
-          )
-        }
-      ],
-      ["/"]
-    );
+    // Les boutons de validation et d'actualisation apparaissent avec les bons droits
+    const button = screen.getAllByRole("button", { name: /Actualiser et Visualiser/i })[0];
+    expect((button as HTMLButtonElement).disabled).toBeTruthy();
 
-    render(<RouterProvider router={router} />);
-    await waitFor(() => {
-      const button = screen.getAllByRole("button", { name: /Actualiser et Visualiser/i })[0];
-      expect((button as HTMLButtonElement).disabled).toBeTruthy();
-
-      const boutonValiderEtTerminer = screen.getByText("Valider et terminer");
-      expect(boutonValiderEtTerminer).toBeDefined();
-    });
+    const boutonValiderEtTerminer = screen.getByText("Valider et terminer");
+    expect(boutonValiderEtTerminer).toBeDefined();
 
     const terminerEtSignerButton = screen.queryByText("Terminer et Signer");
     expect(terminerEtSignerButton).toBeNull();
+
+    // affiche les bons onglets si l'utilisateur est en mise a jour analyse marginale uniquement
+    expect(screen.queryByText("Mentions")).toBeNull();
+    expect(screen.getByText("Analyse Marginale")).toBeDefined();
+
+    expect(screen.getByText("Nom")).toBeDefined();
+
+    // Le chargeur n'est affiché que pendant les appels API
+    expect(screen.queryByTestId("page-chargeur")).toBeNull();
   });
 
   test("Les boutons de signature et d'actualisation apparaissent avec les bons droits", async () => {
@@ -114,6 +98,7 @@ describe("Test PartieFormulaire", () => {
         }
       ] as IHabilitation[]
     } as IOfficier;
+
     const router = createTestingRouter(
       [
         {
@@ -147,86 +132,18 @@ describe("Test PartieFormulaire", () => {
     });
   });
 
-  test("La partier formulaire apparait correctement", async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: "/",
-          element: (
-            <EditionMiseAJourContextProvider
-              idActe={idActe}
-              idRequete={idRequete}
-              estMiseAJourAvecMentions={false}
-            >
-              <PartieFormulaire />
-            </EditionMiseAJourContextProvider>
-          )
-        }
-      ],
-      ["/"]
-    );
-
-    render(<RouterProvider router={router} />);
-
-    await waitFor(() => {
-      expect(screen.getByText("Analyse Marginale")).toBeDefined();
-      expect(screen.getByText("Nom")).toBeDefined();
-    });
-  });
-
-  test("La page chargeur ne s'affiche que lors d'un appel API", async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: "/",
-          element: (
-            <EditionMiseAJourContextProvider
-              idActe={idActe}
-              idRequete={idRequete}
-              estMiseAJourAvecMentions={true}
-            >
-              <PartieFormulaire />
-            </EditionMiseAJourContextProvider>
-          )
-        }
-      ],
-      ["/"]
-    );
-
-    render(<RouterProvider router={router} />);
-
-    expect(screen.queryByTestId("page-chargeur")).toBeNull();
-  });
-
   test.skip("L'ajout d'une mention l'ajoute à la liste mention, et ouvre l'analyse marginale si besoin", async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: "/",
-          element: (
-            <EditionMiseAJourContextProvider
-              idActe={idActe}
-              idRequete={idRequete}
-              estMiseAJourAvecMentions={true}
-            >
-              <PartieFormulaire />
-            </EditionMiseAJourContextProvider>
-          )
-        }
-      ],
-      ["/"]
-    );
+    render(<RouterProvider router={routerPartieFormulaireAvecMentions} />);
 
-    render(<RouterProvider router={router} />);
-    const menyType = screen.getByTestId("listesTypesMention.mentionNiveauUn");
-    fireEvent.change(menyType, {
+    await screen.findByTestId("listesTypesMention.mentionNiveauUn");
+    fireEvent.change(screen.getByTestId("listesTypesMention.mentionNiveauUn"), {
       target: {
         value: "b0aa20ad-9bf3-4cbd-99f1-a54c8f6598a4"
       }
     });
 
-    const menyTypeDeux = screen.getByTestId("listesTypesMention.mentionNiveauDeux");
-    fireEvent.change(menyTypeDeux, {
+    const menuTypeDeux = screen.getByTestId("listesTypesMention.mentionNiveauDeux");
+    fireEvent.change(menuTypeDeux, {
       target: {
         value: "b0485f4e-5d29-4f03-956b-0a53d02ae617"
       }
@@ -244,10 +161,10 @@ describe("Test PartieFormulaire", () => {
       expect(screen.getByText("18-1 décision OEC")).toBeDefined();
       expect(screen.getByText("TEST")).toBeDefined();
 
-      expect((screen.getByText("Ajouter mention") as HTMLButtonElement).disabled).toBeFalsy();
-      expect((screen.getByText("Annuler") as HTMLButtonElement).disabled).toBeFalsy();
+      expect(screen.getByText<HTMLButtonElement>("Ajouter mention").disabled).toBeFalsy();
+      expect(screen.getByText<HTMLButtonElement>("Annuler").disabled).toBeFalsy();
     });
-    fireEvent.click(screen.getByText("Ajouter mention") as HTMLButtonElement);
+    fireEvent.click(screen.getByText<HTMLButtonElement>("Ajouter mention"));
 
     await waitFor(() => {
       expect(screen.getByTitle("TEST.")).toBeDefined();
@@ -256,25 +173,8 @@ describe("Test PartieFormulaire", () => {
   });
 
   test.skip("La suppression d'une mention fonctionne", async () => {
-    const router = createTestingRouter(
-      [
-        {
-          path: "/",
-          element: (
-            <EditionMiseAJourContextProvider
-              idActe={idActe}
-              idRequete={idRequete}
-              estMiseAJourAvecMentions={true}
-            >
-              <PartieFormulaire />
-            </EditionMiseAJourContextProvider>
-          )
-        }
-      ],
-      ["/"]
-    );
+    render(<RouterProvider router={routerPartieFormulaireAvecMentions} />);
 
-    render(<RouterProvider router={router} />);
     const menyType = screen.getByTestId("listesTypesMention.mentionNiveauUn");
     fireEvent.change(menyType, {
       target: {
@@ -296,7 +196,7 @@ describe("Test PartieFormulaire", () => {
       }
     });
 
-    fireEvent.click(screen.getByText("Ajouter mention") as HTMLButtonElement);
+    fireEvent.click(screen.getByText<HTMLButtonElement>("Ajouter mention"));
 
     await waitFor(() => {
       expect(screen.getByTitle("TEST.")).toBeDefined();

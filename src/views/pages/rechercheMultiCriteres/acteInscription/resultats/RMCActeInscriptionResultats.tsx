@@ -3,7 +3,6 @@ import { TRequete } from "@model/requete/IRequete";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
-import { getLibelle } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
 import React from "react";
@@ -23,39 +22,25 @@ export interface RMCActeInscriptionResultatsProps {
   setRangeActe?: (range: string) => void;
   setRangeInscription?: (range: string) => void;
   resetRMC?: boolean;
-  onClickCheckboxTableauActes?: (
-    event: TChangeEventSurHTMLInputElement,
-    data: IResultatRMCActe
-  ) => void;
-  onClickCheckboxTableauInscriptions?: (
-    event: TChangeEventSurHTMLInputElement,
-    data: IResultatRMCInscription
-  ) => void;
+  onClickCheckboxTableauActes?: (event: TChangeEventSurHTMLInputElement, data: IResultatRMCActe) => void;
+  onClickCheckboxTableauInscriptions?: (event: TChangeEventSurHTMLInputElement, data: IResultatRMCInscription) => void;
   nbLignesParPageActe: number;
   nbLignesParAppelActe: number;
   nbLignesParPageInscription: number;
   nbLignesParAppelInscription: number;
   // Données propre à une fiche Acte pour sa pagination/navigation
-  getLignesSuivantesOuPrecedentesActe?: (
-    ficheIdentifiant: string,
-    lien: string
-  ) => void;
+  getLignesSuivantesOuPrecedentesActe?: (ficheIdentifiant: string, lien: string) => void;
   idFicheActe?: string;
   dataRMCFicheActe?: IResultatRMCActe[];
   dataTableauRMCFicheActe?: IParamsTableau;
   // Données propre à une fiche Inscription pour sa pagination/navigation
-  getLignesSuivantesOuPrecedentesInscription?: (
-    ficheIdentifiant: string,
-    lien: string
-  ) => void;
+  getLignesSuivantesOuPrecedentesInscription?: (ficheIdentifiant: string, lien: string) => void;
   idFicheInscription?: string;
   dataRMCFicheInscription?: IResultatRMCInscription[];
   dataTableauRMCFicheInscription?: IParamsTableau;
 }
 
-export const RMCActeInscriptionResultats: React.FC<
-  RMCActeInscriptionResultatsProps
-> = ({
+export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsProps> = ({
   typeRMC,
   dataAlertes,
   dataRequete,
@@ -85,12 +70,10 @@ export const RMCActeInscriptionResultats: React.FC<
 }) => {
   return (
     <div className={`ResultatsRMC${typeRMC}`}>
-      <Fieldset titre={getLibelle("Résultats de la recherche multi-critères")}>
+      <Fieldset titre={"Résultats de la recherche multi-critères"}>
         <div className="SubResultatsRMC">
           <div className="SousTitre">
-            <span>
-              {getLibelle("Recherche dans les registres d'état civil")}
-            </span>
+            <span>{"Recherche dans les registres d'état civil"}</span>
           </div>
           <RMCTableauActes
             typeRMC={typeRMC}
@@ -103,9 +86,7 @@ export const RMCActeInscriptionResultats: React.FC<
             onClickCheckboxCallBack={onClickCheckboxTableauActes}
             nbLignesParPage={nbLignesParPageActe}
             nbLignesParAppel={nbLignesParAppelActe}
-            getLignesSuivantesOuPrecedentesActe={
-              getLignesSuivantesOuPrecedentesActe
-            }
+            getLignesSuivantesOuPrecedentesActe={getLignesSuivantesOuPrecedentesActe}
             idFicheActe={idFicheActe}
             dataRMCFicheActe={dataRMCFicheActe}
             dataTableauRMCFicheActe={dataTableauRMCFicheActe}
@@ -113,11 +94,7 @@ export const RMCActeInscriptionResultats: React.FC<
         </div>
         <div className="SubResultatsRMC">
           <div className="SousTitre">
-            <span>
-              {getLibelle(
-                "Recherche dans les répertoires de greffe et registre des PACS des étrangers nés à l'étranger"
-              )}
-            </span>
+            <span>{"Recherche dans les répertoires de greffe et registre des PACS des étrangers nés à l'étranger"}</span>
           </div>
           <RMCTableauInscriptions
             typeRMC={typeRMC}
@@ -129,9 +106,7 @@ export const RMCActeInscriptionResultats: React.FC<
             onClickCheckboxCallBack={onClickCheckboxTableauInscriptions}
             nbLignesParPage={nbLignesParPageInscription}
             nbLignesParAppel={nbLignesParAppelInscription}
-            getLignesSuivantesOuPrecedentesInscription={
-              getLignesSuivantesOuPrecedentesInscription
-            }
+            getLignesSuivantesOuPrecedentesInscription={getLignesSuivantesOuPrecedentesInscription}
             idFicheInscription={idFicheInscription}
             dataRMCFicheInscription={dataRMCFicheInscription}
             dataTableauRMCFicheInscription={dataTableauRMCFicheInscription}

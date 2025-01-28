@@ -1,16 +1,11 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
-import {
-  INavigationApercuRMCAutoParams,
-  useNavigationApercuRMCAutoDelivrance
-} from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
+import { useNavigationApercuRMCAutoDelivrance } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
+import { IRMCAutoParams } from "@hook/rmcAuto/RMCAutoHook";
 import { IOfficier } from "@model/agent/IOfficier";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import {
-  URL_MES_REQUETES_DELIVRANCE,
-  URL_REQUETES_DELIVRANCE_SERVICE
-} from "@router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE, URL_REQUETES_DELIVRANCE_SERVICE } from "@router/ReceUrls";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { NomComposant } from "@util/habilitation/habilitationsDescription";
@@ -31,15 +26,10 @@ interface LocalProps {
 const getElementEntreDeux = (selectedTabState: number, officier: IOfficier) => {
   return (
     <>
-      {gestionnaireFeatureFlag.auMoinUnEstActif(
-        FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES,
-        FeatureFlag.FF_DELIV_CS
-      ) && (
+      {gestionnaireFeatureFlag.auMoinUnEstActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES, FeatureFlag.FF_DELIV_CS) && (
         <div className="BlocBoutons">
           <MenuSaisirRequete indexTabPanel={selectedTabState} />
-          <BoutonPrendreEnChargeAleatoirement
-            typeRequete={TypeRequete.DELIVRANCE}
-          />
+          <BoutonPrendreEnChargeAleatoirement typeRequete={TypeRequete.DELIVRANCE} />
         </div>
       )}
     </>
@@ -77,9 +67,7 @@ const getOnglets = (
         nomHabilitation: "LinkTabRequetesDelivranceService" as NomComposant
       },
       corps: {
-        composant: (
-          <RequetesServicePage setParamsRMCAuto={recuperationParamsRMCAuto} />
-        ),
+        composant: <RequetesServicePage setParamsRMCAuto={recuperationParamsRMCAuto} />,
         nomHabilitation: "TabPanelRequetesDelivranceService" as NomComposant
       }
     }
@@ -87,8 +75,7 @@ const getOnglets = (
 };
 
 const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
-  const [toggleReloadCompteur, setToggleReloadCompteur] =
-    useState<boolean>(true);
+  const [toggleReloadCompteur, setToggleReloadCompteur] = useState<boolean>(true);
 
   const { utilisateurConnecte, decrets } = useContext(RECEContextData);
 
@@ -98,18 +85,11 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
   const selectedTabState = selectedTab ?? 0;
 
   //**** RMC AUTO ****//
-  const [paramsRMCAuto, setParamsRMCAuto] = useState<
-    INavigationApercuRMCAutoParams | undefined
-  >();
+  const [paramsRMCAuto, setParamsRMCAuto] = useState<IRMCAutoParams | undefined>();
   useNavigationApercuRMCAutoDelivrance(paramsRMCAuto);
 
   const recuperationParamsRMCAuto = useCallback(
-    (
-      idRequete: string,
-      requete: IRequeteTableauDelivrance,
-      urlWithParam: string,
-      pasDeTraitementAuto: boolean = false
-    ) => {
+    (idRequete: string, requete: IRequeteTableauDelivrance, urlWithParam: string, pasDeTraitementAuto: boolean = false) => {
       setParamsRMCAuto({
         requete,
         urlCourante: urlWithParam,
@@ -126,16 +106,11 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
       <OperationEnCours visible={!decrets} />
       {utilisateurConnecte && (
         <>
-          {selectedTabState === 0 && (
-            <CompteurRequete reloadCompteur={toggleReloadCompteur} />
-          )}
+          {selectedTabState === 0 && <CompteurRequete reloadCompteur={toggleReloadCompteur} />}
           <BoiteAOnglets
             selectedTab={selectedTabState}
             onglets={getOnglets(miseAJourCompteur, recuperationParamsRMCAuto)}
-            elementEntreTitreEtContenu={getElementEntreDeux(
-              selectedTabState,
-              utilisateurConnecte
-            )}
+            elementEntreTitreEtContenu={getElementEntreDeux(selectedTabState, utilisateurConnecte)}
             titre="Menu espace délivrance"
             classOnglet="ongletPageEspace"
             classOngletPrincipale="headerOngletPageEspace"
