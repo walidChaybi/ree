@@ -4,7 +4,6 @@ import { IExigence, IValeursPossibles } from "@model/etatcivil/acte/mention/IMet
 import * as Yup from "yup";
 
 interface ISchemaCommunParams {
-  libelle: string;
   obligatoire: boolean | IExigence[];
 }
 
@@ -14,15 +13,9 @@ type TDateChamp = {
   jour: Yup.StringSchema<string | undefined>;
   mois: Yup.StringSchema<string | undefined>;
   annee: Yup.StringSchema<string | undefined>;
+  heure: Yup.StringSchema<string | undefined>;
+  minutes: Yup.StringSchema<string | undefined>;
 };
-
-interface IDateCompose {
-  jour: string;
-  mois: string;
-  annee: string;
-}
-
-const MOIS_MAXIMUM = 12;
 
 const messagesErreur = {
   DATE_INVALIDE: "⚠ La date est invalide",
@@ -30,101 +23,97 @@ const messagesErreur = {
   CHAMP_OBLIGATOIRE: "⚠ La saisie du champ est obligatoire"
 };
 
+const erreurSurDateEntiere = (message: string, baseChemin: string) =>
+  new Yup.ValidationError([
+    new Yup.ValidationError(message, {}, `${baseChemin}.jour`),
+    new Yup.ValidationError(message, {}, `${baseChemin}.mois`),
+    new Yup.ValidationError(message, {}, `${baseChemin}.annee`)
+  ]);
+
 const getSchemaValidationDate = (bloquerDateFutur?: boolean): Yup.ObjectSchema<TDateChamp> =>
   Yup.object()
     .shape({
       jour: Yup.string(),
       mois: Yup.string(),
-      annee: Yup.string()
+      annee: Yup.string().length(4, "⚠ L'année doit être sur 4 chiffres"),
+      heure: Yup.string(),
+      minutes: Yup.string()
     })
-    .test("dateValide", (date, error) => {
-      return !DateUtils.estDateValide({
-        jour: date.jour ?? "",
-        mois: date.mois ?? "",
-        annee: date.annee ?? ""
-      })
+    .test("jourValide", (date, error) => {
+      if (!date.jour || !date.mois || !date.annee) {
+        return true;
+      }
+
+      return new Date(Number(date.annee), Number(date.mois) - 1, Number(date.jour)).getDate() !== Number(date.jour)
         ? error.createError({
-            path: `${error.path}.annee`,
+            path: `${error.path}.jour`,
             message: messagesErreur.DATE_INVALIDE
           })
         : true;
     })
-    .test("dateFutur", (date, error) =>
-      bloquerDateFutur &&
-      DateUtils.estDateFutur({
-        jour: date.jour ?? "",
-        mois: date.mois ?? "",
-        annee: date.annee ?? ""
-      })
+    .test("moisValide", (date, error) => {
+      if (!date.mois || !date.annee) {
+        return true;
+      }
+
+      return isNaN(Date.parse(`${date.annee?.padStart(4, "0")}-${date.mois?.padStart(2, "0")}-01`))
         ? error.createError({
-            path: `${error.path}.annee`,
+            path: `${error.path}.mois`,
             message: messagesErreur.DATE_INVALIDE
           })
-        : true
-    );
-
-const getValidationDateEntiereObligatoire = (schema: Yup.ObjectSchema<TDateChamp>) => {
-  return schema
-    .test("dateEntiereObligatoireJour", (date, error) =>
-      !date.jour && !date.mois && !date.annee
-        ? error.createError({ path: `${error.path}.jour`, message: messagesErreur.CHAMP_OBLIGATOIRE })
-        : true
-    )
-    .test("dateEntiereObligatoireMois", (date, error) =>
-      !date.jour && !date.mois && !date.annee
-        ? error.createError({ path: `${error.path}.mois`, message: messagesErreur.CHAMP_OBLIGATOIRE })
-        : true
-    )
-    .test("dateEntiereObligatoireAnnee", (date, error) =>
-      !date.jour && !date.mois && !date.annee
-        ? error.createError({ path: `${error.path}.annee`, message: messagesErreur.CHAMP_OBLIGATOIRE })
-        : true
-    );
-};
-
-const DateUtils = {
-  estDateValide: (date: IDateCompose): boolean => {
-    if (!date.annee) return false;
-
-    switch (true) {
-      case !date.jour && !date.mois:
+        : true;
+    })
+    .test("heureValide", (date, error) => {
+      if (!date.heure) {
         return true;
+      }
 
-      case !date.jour && Boolean(date.mois):
-        return Number(date.mois) <= MOIS_MAXIMUM;
+      return Number(date.heure) >= 24
+        ? error.createError({
+            path: `${error.path}.heure`,
+            message: messagesErreur.DATE_INVALIDE
+          })
+        : true;
+    })
+    .test("minutesValide", (date, error) => {
+      if (!date.minutes) {
+        return true;
+      }
 
-      case Boolean(date.jour):
-        return (() => {
-          const dateObj = new Date(Number(date.annee), Number(date.mois) - 1, Number(date.jour));
-          const dateIso = `${date.annee}-${date.mois}-${date.jour}`;
-          const timestamp = Date.parse(dateIso);
+      return Number(date.minutes) >= 60
+        ? error.createError({
+            path: `${error.path}.heure`,
+            message: messagesErreur.DATE_INVALIDE
+          })
+        : true;
+    })
+    .test("dateFutur", (date, error) => {
+      if (!bloquerDateFutur) {
+        return true;
+      }
 
-          return !isNaN(timestamp) && dateObj.getDate() === Number(date.jour);
-        })();
-    }
+      const estDateFutur = (() => {
+        if (!date.annee) return false;
 
-    return true;
-  },
-  estDateFutur: (date: IDateCompose): boolean => {
-    if (!date.annee) return false;
+        const dateActuelle = new Date();
+        switch (true) {
+          case !date.mois:
+            return Number(date.annee) > dateActuelle.getFullYear();
 
-    const dateActuelle = new Date();
-    switch (true) {
-      case !date.mois:
-        return Number(date.annee) > dateActuelle.getFullYear();
+          case !date.jour:
+            return Number(date.mois) > dateActuelle.getMonth() + 1 && Number(date.annee) >= dateActuelle.getFullYear();
 
-      case !date.jour:
-        return Number(date.mois) > dateActuelle.getMonth() + 1 && Number(date.annee) >= dateActuelle.getFullYear();
+          case Boolean(date.jour):
+            return new Date(Number(date.annee), Number(date.mois) - 1, Number(date.jour)).getTime() > dateActuelle.getTime();
+        }
 
-      case Boolean(date.jour):
-        return new Date(Number(date.annee), Number(date.mois) - 1, Number(date.jour)).getTime() > dateActuelle.getTime();
-    }
+        return false;
+      })();
 
-    return false;
-  }
-};
+      return estDateFutur ? erreurSurDateEntiere("⚠ La date ne peut pas être supérieur à la date du jour", error.path) : true;
+    });
 
-const gestionObligation = (schema: Yup.AnySchema, libelle: string, obligatoire: boolean | IExigence[]): Yup.AnySchema => {
+const gestionObligation = (schema: Yup.AnySchema, obligatoire: boolean | IExigence[]): Yup.AnySchema => {
   if (typeof obligatoire === "boolean") {
     return obligatoire ? schema.required(messagesErreur.CHAMP_OBLIGATOIRE) : schema;
   }
@@ -152,30 +141,31 @@ const gestionObligation = (schema: Yup.AnySchema, libelle: string, obligatoire: 
 };
 
 const SchemaValidation = {
+  objet: (objet: { [cle: string]: Yup.AnySchema }) => Yup.object().shape(objet),
+
   texte: (schemaParams: ISchemaCommunParams) => {
     let schema = Yup.string();
 
-    return gestionObligation(schema, schemaParams.libelle, schemaParams.obligatoire) as Yup.StringSchema;
+    return gestionObligation(schema, schemaParams.obligatoire) as Yup.StringSchema;
   },
 
   entier: (schemaParams: ISchemaCommunParams) => {
     let schema = Yup.number().integer(messagesErreur.DOIT_ETRE_ENTIER);
 
-    return gestionObligation(schema, schemaParams.libelle, schemaParams.obligatoire) as Yup.NumberSchema;
+    return gestionObligation(schema, schemaParams.obligatoire) as Yup.NumberSchema;
   },
 
   booleen: (schemaParams: ISchemaCommunParams) => {
     let schema = Yup.boolean();
 
-    return gestionObligation(schema, schemaParams.libelle, schemaParams.obligatoire) as Yup.BooleanSchema;
+    return gestionObligation(schema, schemaParams.obligatoire) as Yup.BooleanSchema;
   },
 
   listeDeroulante: (schemaParams: ISchemaCommunParams & { options?: string[]; valeursPossibles?: IValeursPossibles[] }) => {
-    const messageObligatoire = `⚠ Sélectionnez une valeur valide pour ${schemaParams.libelle}`;
     let schema = Yup.string();
 
     if (schemaParams.options) {
-      schema = schema.oneOf(schemaParams.options, `⚠ Sélectionnez une valeur valide pour ${schemaParams.libelle}`);
+      schema = schema.oneOf(schemaParams.options, messagesErreur.CHAMP_OBLIGATOIRE);
     }
 
     if (schemaParams.valeursPossibles) {
@@ -183,7 +173,7 @@ const SchemaValidation = {
         valeurPossible.conditions.some((obligation: IExigence) => {
           switch (obligation.operateur) {
             case "AlwaysTrue":
-              schema = schema.oneOf(valeurPossible.valeurs, messageObligatoire);
+              schema = schema.oneOf(valeurPossible.valeurs, messagesErreur.CHAMP_OBLIGATOIRE);
               return true;
             case "AlwaysFalse":
               return true;
@@ -193,7 +183,7 @@ const SchemaValidation = {
                   obligation.operateur === "=="
                     ? obligation.valeurs?.includes((valeurChamp ?? "").toString())
                     : !obligation.valeurs?.includes((valeurChamp ?? "").toString()),
-                then: schema.oneOf(valeurPossible.valeurs, messageObligatoire)
+                then: schema.oneOf(valeurPossible.valeurs, messagesErreur.CHAMP_OBLIGATOIRE)
               });
               return false;
           }
@@ -201,7 +191,7 @@ const SchemaValidation = {
       });
     }
 
-    return gestionObligation(schema, schemaParams.libelle, schemaParams.obligatoire) as Yup.StringSchema;
+    return gestionObligation(schema, schemaParams.obligatoire) as Yup.StringSchema;
   },
 
   dateComplete: (schemaParams: ISchemaCommunParams & { bloquerDateFutur: boolean }) => {
@@ -234,7 +224,9 @@ const SchemaValidation = {
     if (schemaParams.obligatoire === false) return schema;
 
     if (schemaParams.obligatoire === true || schemaParams.obligatoire.some(obligation => obligation.operateur === "AlwaysTrue")) {
-      return getValidationDateEntiereObligatoire(schema);
+      return schema.test("dateEntiereObligatoire", (date, error) =>
+        !date.jour && !date.mois && !date.annee ? erreurSurDateEntiere(messagesErreur.CHAMP_OBLIGATOIRE, error.path) : true
+      );
     }
 
     schemaParams.obligatoire.forEach((obligation: IExigence) => {
@@ -243,9 +235,12 @@ const SchemaValidation = {
           obligation.operateur === "=="
             ? obligation.valeurs?.includes((valeurChamp ?? "").toString())
             : !obligation.valeurs?.includes((valeurChamp ?? "").toString()),
-        then: getValidationDateEntiereObligatoire(schema)
+        then: schema.test("dateEntiereObligatoire", (date, error) =>
+          !date.jour && !date.mois && !date.annee ? erreurSurDateEntiere(messagesErreur.CHAMP_OBLIGATOIRE, error.path) : true
+        )
       });
     });
+
     return schema;
   },
 
@@ -255,8 +250,6 @@ const SchemaValidation = {
         ? error.createError({ path: `${error.path}.annee`, message: messagesErreur.DATE_INVALIDE })
         : true
     );
-    schema = getValidationDateEntiereObligatoire(schema);
-    console.log("schema APRES : ", schema);
 
     if (schemaParams.obligatoire === false) return schema;
 
@@ -287,7 +280,26 @@ const SchemaValidation = {
         )
       });
     });
+
     return schema;
+  },
+
+  prenoms: () => {
+    const schemaPrenoms: { [cle: string]: Yup.StringSchema } = {};
+    Array.from({ length: 15 }).forEach((_, index) => {
+      let schema = Yup.string();
+
+      if (index < 14) {
+        schema = schema.when(`prenom${index + 2}`, {
+          is: (valeur: string) => Boolean(valeur),
+          then: schema.required(messagesErreur.CHAMP_OBLIGATOIRE)
+        });
+      }
+
+      schemaPrenoms[`prenom${index + 1}`] = schema;
+    });
+
+    return schemaPrenoms;
   },
 
   inconnu: () => Yup.mixed()

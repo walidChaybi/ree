@@ -69,10 +69,11 @@ const ContneurChampFormulaireAideSaisie: React.FC<{ champ: IChamp; children: Rea
     }
 
     switch (champ.type) {
+      case "select":
+        return;
       case "boolean":
         setFieldValue(idChamp, false);
-        return;
-      case "select":
+
         return;
       case "dateComplete":
       case "dateIncomplete":
@@ -110,8 +111,10 @@ const ChampListeDeroulateConditionnee: React.FC<{ libelle: string; name: string;
     if (!valeursOption.includes(field.value)) {
       setFieldValue(name, valeursOption[0] ?? "");
     }
+
     return valeursOption.map(valeur => ({ cle: valeur, libelle: valeur }));
   }, [values]);
+
   return (
     <ChampListeDeroulante
       libelle={libelle}
@@ -121,99 +124,95 @@ const ChampListeDeroulateConditionnee: React.FC<{ libelle: string; name: string;
   );
 };
 
-const AideALaSaisieMention: React.FC<IAideALaSaisieMention> = ({ metamodeleTypeMention }) => {
-  const { values } = useFormikContext<TMentionForm>();
-
-  return (
-    <div className="mt-10 grid gap-6 pb-6 pl-8 pr-5">
-      {metamodeleTypeMention?.metamodelsBlocs
-        .sort((blocA, blocB) => blocA.position - blocB.position)
-        .map((bloc: IMetaModelBloc) => (
-          <div
-            key={bloc.id}
-            className="mt-4 rounded-xl border-2 border-solid border-bleu pb-2 text-start"
-          >
-            <div className="-mt-3 pl-4">
-              <span className="bg-white px-2 text-start text-bleu-sombre">{bloc.titre}</span>
-            </div>
-            <div className="mt-3 flex flex-wrap">
-              {bloc.champs
-                .sort((champA, champB) => champA.position - champB.position)
-                .map((champ: IChamp) => (
-                  <ContneurChampFormulaireAideSaisie
-                    key={`${bloc.id}.${champ.id}`}
-                    champ={champ}
-                    idBloc={bloc.id}
-                  >
-                    <div
-                      className={getClassesChamp(champ.type)}
-                      key={`${bloc.id}.${champ.id}`}
-                    >
-                      <Suspense fallback={<></>}>
-                        {(() => {
-                          switch (champ.type) {
-                            case "text":
-                              return (
-                                <ChampsTexte
-                                  name={`${bloc.id}.${champ.id}`}
-                                  type="text"
-                                  libelle={champ.libelle}
-                                />
-                              );
-                            case "select":
-                              return (
-                                <ChampListeDeroulateConditionnee
-                                  libelle={champ.libelle}
-                                  name={`${bloc.id}.${champ.id}`}
-                                  valeursPossibles={champ.valeursPossibles}
-                                />
-                              );
-
-                            case "boolean":
-                              return (
-                                <ChampsCaseACocher
-                                  name={`${bloc.id}.${champ.id}`}
-                                  libelle={champ.libelle}
-                                />
-                              );
-                            case "dateComplete":
-                            case "dateIncomplete":
-                              return (
-                                <ChampDate
-                                  name={`${bloc.id}.${champ.id}`}
-                                  libelle={champ.libelle}
-                                  desactiverCorrectionAutomatique
-                                />
-                              );
-                            case "int":
-                              return (
-                                <ChampsTexte
-                                  name={`${bloc.id}.${champ.id}`}
-                                  libelle={champ.libelle}
-                                  numerique
-                                />
-                              );
-                            default:
-                              return <></>;
-                          }
-                        })()}
-                      </Suspense>
-                    </div>
-                  </ContneurChampFormulaireAideSaisie>
-                ))}
-            </div>
+const AideALaSaisieMention: React.FC<IAideALaSaisieMention> = ({ metamodeleTypeMention }) => (
+  <div className="mt-10 grid gap-6 pb-6 pl-8 pr-5">
+    {metamodeleTypeMention?.metamodelsBlocs
+      .sort((blocA, blocB) => blocA.position - blocB.position)
+      .map((bloc: IMetaModelBloc) => (
+        <div
+          key={bloc.id}
+          className="mt-4 rounded-xl border-2 border-solid border-bleu pb-2 text-start"
+        >
+          <div className="-mt-3 pl-4">
+            <span className="bg-white px-2 text-start text-bleu-sombre">{bloc.titre}</span>
           </div>
-        ))}
+          <div className="mt-3 flex flex-wrap">
+            {bloc.champs
+              .sort((champA, champB) => champA.position - champB.position)
+              .map((champ: IChamp) => (
+                <ContneurChampFormulaireAideSaisie
+                  key={`${bloc.id}.${champ.id}`}
+                  champ={champ}
+                  idBloc={bloc.id}
+                >
+                  <div
+                    className={getClassesChamp(champ.type)}
+                    key={`${bloc.id}.${champ.id}`}
+                  >
+                    <Suspense fallback={<></>}>
+                      {(() => {
+                        switch (champ.type) {
+                          case "text":
+                            return (
+                              <ChampsTexte
+                                name={`${bloc.id}.${champ.id}`}
+                                type="text"
+                                libelle={champ.libelle}
+                              />
+                            );
+                          case "select":
+                            return (
+                              <ChampListeDeroulateConditionnee
+                                libelle={champ.libelle}
+                                name={`${bloc.id}.${champ.id}`}
+                                valeursPossibles={champ.valeursPossibles}
+                              />
+                            );
 
-      {metamodeleTypeMention?.modeleHandleBars && (
-        <TexteMentionAideALaSaisie
-          blocs={metamodeleTypeMention.metamodelsBlocs}
-          templateTexteMention={metamodeleTypeMention.modeleHandleBars}
-        />
-      )}
-    </div>
-  );
-};
+                          case "boolean":
+                            return (
+                              <ChampsCaseACocher
+                                name={`${bloc.id}.${champ.id}`}
+                                libelle={champ.libelle}
+                              />
+                            );
+                          case "dateComplete":
+                          case "dateIncomplete":
+                            return (
+                              <ChampDate
+                                name={`${bloc.id}.${champ.id}`}
+                                libelle={champ.libelle}
+                                desactiverCorrectionAutomatique
+                              />
+                            );
+                          case "int":
+                            return (
+                              <ChampsTexte
+                                name={`${bloc.id}.${champ.id}`}
+                                libelle={champ.libelle}
+                                numerique
+                              />
+                            );
+                          default:
+                            return <></>;
+                        }
+                      })()}
+                    </Suspense>
+                  </div>
+                </ContneurChampFormulaireAideSaisie>
+              ))}
+          </div>
+        </div>
+      ))}
+
+    {metamodeleTypeMention?.modeleHandleBars && (
+      <TexteMentionAideALaSaisie
+        blocs={metamodeleTypeMention.metamodelsBlocs}
+        templateTexteMention={metamodeleTypeMention.modeleHandleBars}
+      />
+    )}
+  </div>
+);
 
 export default AideALaSaisieMention;
 /* v8 ignore end */

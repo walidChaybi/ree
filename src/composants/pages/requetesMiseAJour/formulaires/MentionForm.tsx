@@ -49,7 +49,6 @@ export type TMentionForm = {
 } & TObjetAideSaise;
 
 interface IMentionFormProps {
-  onFormDirty: (isDirty: boolean) => void;
   infoTitulaire: IInfoTitulaire;
 }
 
@@ -142,19 +141,18 @@ const genererSchemaValidationAideALaSaisie = (metamodeleTypeMention?: IMetamodel
       const validationChamp = (() => {
         switch (champ.type) {
           case "text":
-            return SchemaValidation.texte({ libelle: champ.libelle, obligatoire: champ.estObligatoire });
+            return SchemaValidation.texte({ obligatoire: champ.estObligatoire });
           case "int":
-            return SchemaValidation.entier({ libelle: champ.libelle, obligatoire: champ.estObligatoire });
+            return SchemaValidation.entier({ obligatoire: champ.estObligatoire });
           case "boolean":
-            return SchemaValidation.booleen({ libelle: champ.libelle, obligatoire: champ.estObligatoire });
+            return SchemaValidation.booleen({ obligatoire: champ.estObligatoire });
           case "select":
             return SchemaValidation.listeDeroulante({
-              libelle: champ.libelle,
               valeursPossibles: champ.valeursPossibles,
               obligatoire: champ.estObligatoire
             });
           case "dateComplete":
-            return SchemaValidation.dateComplete({ libelle: champ.libelle, obligatoire: champ.estObligatoire, bloquerDateFutur: true });
+            return SchemaValidation.dateComplete({ obligatoire: champ.estObligatoire, bloquerDateFutur: true });
           case "dateIncomplete":
             return SchemaValidation.dateIncomplete({ obligatoire: champ.estObligatoire, bloquerDateFutur: true });
           default:
@@ -165,14 +163,14 @@ const genererSchemaValidationAideALaSaisie = (metamodeleTypeMention?: IMetamodel
       return { ...champs, [champ.id]: validationChamp };
     }, {});
 
-    schemaValidationBlocs = { ...schemaValidationBlocs, [bloc.id]: Yup.object(schemaValidationBloc) };
+    schemaValidationBlocs = { ...schemaValidationBlocs, [bloc.id]: SchemaValidation.objet(schemaValidationBloc) };
     return schemaValidationBlocs;
   }, {});
 };
 
 const DEFAUT_CREATION: TMentionForm = { idTypeMention: "", texteMention: "" };
 
-const MentionForm: React.FC<IMentionFormProps> = ({ onFormDirty, infoTitulaire }) => {
+const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire }) => {
   const typesMentionDisponibles = useMemo(() => getTypesMentionDisponibles(NatureActe.NAISSANCE), []);
   const [valeurDefaut, setValeurDefaut] = useState<TMentionForm>({ ...DEFAUT_CREATION });
   const [typeMentionChoisi, setTypeMentionChoisi] = useState<ITypeMentionDisponible | null>(null);
@@ -181,7 +179,7 @@ const MentionForm: React.FC<IMentionFormProps> = ({ onFormDirty, infoTitulaire }
   const [mentionModifiee, setMentionModifiee] = useEventState<IMentionEnCours | null>(EEvent.MODIFIER_MENTION, null);
   const { envoyer: enregistrerMention } = useEventDispatch<IMentionEnCours | null>(EEvent.ENREGISTRER_MENTION);
   const schemaValidation = useMemo(() => {
-    return Yup.object({
+    return SchemaValidation.objet({
       ...SCHEMA_VALIDATION_MENTIONS,
       ...(metamodeleTypeMention !== null ? genererSchemaValidationAideALaSaisie(metamodeleTypeMention) : {})
     });

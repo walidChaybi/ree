@@ -290,10 +290,7 @@ export const PartieFormulaire: React.FC = () => {
 
         {estMiseAJourAvecMentions && (
           <OngletsContenu estActif={ongletsActifs.formulaires === ECleOngletsMiseAJour.MENTIONS}>
-            <MentionForm
-              infoTitulaire={{ sexe: sexeTitulaire }}
-              onFormDirty={(isDirty: boolean) => setFormulaireMentionEnCoursDeSaisie(isDirty)}
-            />
+            <MentionForm infoTitulaire={{ sexe: sexeTitulaire }} />
           </OngletsContenu>
         )}
       </div>
