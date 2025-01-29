@@ -15,7 +15,7 @@ import { URL_MENTION } from "./etatcivilApi";
 
 export const URL_REQUETES_DELIVRANCE_SERVICE = "/requetes/requetesService";
 export const URL_REQUETES_INFO_SERVICE = "/requetes/information/requetes-de-mon-service";
-export const URL_REQUETES_CREATION_SERVICE = "/requetes/creation/requetesService";
+export const URL_REQUETES_CREATION_SERVICE = "/requetes/creation/requetes-service";
 export const URL_REQUETES = "/requetes";
 export const URL_MES_REQUETES_DELIVRANCE = "/requetes/mesrequetes";
 export const URL_MES_REQUETES_INFO = "/requetes/information/mesrequetes";
