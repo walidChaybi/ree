@@ -69,11 +69,11 @@ const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
             libelle={"Date de naissance"}
             avecHeure={true}
             className="flex"
-            estObligatoire
+            estObligatoire="année"
           />
         </div>
       </div>
-      <div className="mb-5 mt-1 mt-8 flex w-full border-0 border-b-2 border-solid border-bleu text-start">
+      <div className="mb-5 mt-8 flex w-full border-0 border-b-2 border-solid border-bleu text-start">
         <h3 className="-mb-3 ml-6 bg-blanc px-1.5 text-bleu-sombre">{"Lieu de naissance"}</h3>
       </div>
 

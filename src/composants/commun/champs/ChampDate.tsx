@@ -5,7 +5,7 @@ type TChampDateProps = React.InputHTMLAttributes<HTMLInputElement> & {
   libelle: string;
   avecHeure?: boolean;
   className?: string;
-  estObligatoire?: boolean;
+  estObligatoire?: boolean | string;
   desactiverCorrectionAutomatique?: boolean;
 };
 
@@ -71,7 +71,12 @@ const ChampDate: React.FC<TChampDateProps> = ({
         htmlFor={`${name}.jour`}
       >
         {libelle}
-        {estObligatoire && <span className="ml-1 text-rouge">*</span>}
+        {estObligatoire && (
+          <span className="ml-1 text-rouge">
+            {typeof estObligatoire === "string" && <span className="text-xs">{`(${estObligatoire})`}</span>}
+            {"*"}
+          </span>
+        )}
       </label>
       <div className="flex flex-nowrap gap-1">
         <input

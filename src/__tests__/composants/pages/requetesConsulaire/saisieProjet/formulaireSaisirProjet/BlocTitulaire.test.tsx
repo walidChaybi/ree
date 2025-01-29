@@ -23,7 +23,7 @@ describe("SaisirProjet - BlocTitulaire", () => {
     expect(screen.getByLabelText("Nom souhaité")).toBeDefined();
     expect(screen.getByText("Sexe")).toBeDefined();
     expect(screen.getByLabelText("Prénom")).toBeDefined();
-    expect(screen.getByLabelText("Date de naissance*")).toBeDefined();
+    expect(screen.getByLabelText("Date de naissance(année)*")).toBeDefined();
     expect(screen.getByText("Lieu de naissance")).toBeDefined();
     expect(screen.getByLabelText("Ville")).toBeDefined();
     expect(screen.getByLabelText("État, canton, province")).toBeDefined();
