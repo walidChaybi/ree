@@ -16,7 +16,8 @@ const ChampDate: React.FC<TChampDateProps> = ({
   avecHeure = false,
   className = "",
   estObligatoire,
-  desactiverCorrectionAutomatique = false
+  desactiverCorrectionAutomatique = false,
+  ...props
 }) => {
   const champsDate = useMemo(
     () => ({
@@ -80,6 +81,7 @@ const ChampDate: React.FC<TChampDateProps> = ({
       </label>
       <div className="flex flex-nowrap gap-1">
         <input
+          {...props}
           id={champsDate.jour}
           className={`border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${metaJour?.error && erreurs.length ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
           maxLength={2}
@@ -112,6 +114,7 @@ const ChampDate: React.FC<TChampDateProps> = ({
         />
         <span className="mx-1 text-xl">{"/"}</span>
         <input
+          {...props}
           id={champsDate.mois}
           ref={refMois}
           className={`border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${metaMois?.error && erreurs.length ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
@@ -145,6 +148,7 @@ const ChampDate: React.FC<TChampDateProps> = ({
         />
         <span className="mx-1 text-xl">{"/"}</span>
         <input
+          {...props}
           id={champsDate.annee}
           ref={refAnnee}
           className={`border-1 w-11 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${metaAnnee.error && erreurs.length ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
@@ -162,6 +166,7 @@ const ChampDate: React.FC<TChampDateProps> = ({
           <>
             <span className="mx-1 text-xl">{"à"}</span>
             <input
+              {...props}
               id={champsDate.heure}
               ref={refHeure}
               className={`border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${metaHeure.error && erreurs.length ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
@@ -193,6 +198,7 @@ const ChampDate: React.FC<TChampDateProps> = ({
             />
             <span className="mx-1 text-xl">{"h"}</span>
             <input
+              {...props}
               id={champsDate.minutes}
               ref={refMinutes}
               className={`border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${metaMinutes.error && erreurs.length ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}

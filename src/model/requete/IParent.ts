@@ -2,7 +2,7 @@ import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { DateCoordonneesType } from "@model/requete/DateCoordonneesType";
 
 export interface ILocation {
-  type?: "France" | "Étranger" | "Inconnu" | "";
+  typeLieu?: "France" | "Étranger" | "Inconnu" | "";
   ville?: string;
   arrondissement?: string;
   departement?: string;
