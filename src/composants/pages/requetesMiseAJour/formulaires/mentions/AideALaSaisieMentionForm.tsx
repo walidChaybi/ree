@@ -20,6 +20,7 @@ const getClassesChamp = (typeChamp: string) => {
     case "select":
     case "dateComplete":
     case "dateIncomplete":
+    case "annee":
     case "int":
       return "w-[42.5%] px-[2.5%] pb-4";
     case "boolean":
@@ -188,6 +189,7 @@ const AideALaSaisieMention: React.FC<IAideALaSaisieMention> = ({ metamodeleTypeM
                                 desactiverCorrectionAutomatique
                               />
                             );
+                          case "annee":
                           case "int":
                             return (
                               <ChampsTexte

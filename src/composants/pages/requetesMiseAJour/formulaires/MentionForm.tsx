@@ -144,6 +144,8 @@ const genererSchemaValidationAideALaSaisie = (metamodeleTypeMention?: IMetamodel
             return SchemaValidation.texte({ obligatoire: champ.estObligatoire });
           case "int":
             return SchemaValidation.entier({ obligatoire: champ.estObligatoire });
+          case "annee":
+            return SchemaValidation.entier({ obligatoire: champ.estObligatoire, estAnnee: true });
           case "boolean":
             return SchemaValidation.booleen({ obligatoire: champ.estObligatoire });
           case "select":

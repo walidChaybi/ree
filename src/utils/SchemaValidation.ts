@@ -1,6 +1,7 @@
 // À tester
 /* v8 ignore start */
 import { IExigence, IValeursPossibles } from "@model/etatcivil/acte/mention/IMetaModeleTypeMention";
+import dayjs from "dayjs";
 import * as Yup from "yup";
 
 interface ISchemaCommunParams {
@@ -149,9 +150,16 @@ const SchemaValidation = {
     return gestionObligation(schema, schemaParams.obligatoire) as Yup.StringSchema;
   },
 
-  entier: (schemaParams: ISchemaCommunParams) => {
+  entier: (schemaParams: ISchemaCommunParams & { min?: number; max?: number; estAnnee?: boolean }) => {
     let schema = Yup.number().integer(messagesErreur.DOIT_ETRE_ENTIER);
-
+    schemaParams.min != undefined &&
+      (schema = schema.min(schemaParams.min, `⚠ La valeur ne peut pas être inférieure à ${schemaParams.min}`));
+    schemaParams.max != undefined &&
+      (schema = schema.max(schemaParams.max, `⚠ La valeur ne peut pas être supérieure à ${schemaParams.max}`));
+    schemaParams.estAnnee &&
+      (schema = schema
+        .min(1000, "⚠ L'année doit être sur 4 chiffres")
+        .max(dayjs().get("year"), `⚠ L'année ne peut pas être supérieure à l'année actuelle`));
     return gestionObligation(schema, schemaParams.obligatoire) as Yup.NumberSchema;
   },
 
