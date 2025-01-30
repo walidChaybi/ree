@@ -41,7 +41,7 @@ const FormaterTexteHelper = {
 
 const genererPourSaisie = (modeleTexte: string, valeurs: any, valeursDefaut: any) => {
   const texteParConditions =
-    modeleTexte.match(/({{#if[a-zA-Z0-9 .'()]{0,200}}})|({{else}})|({{\/if}})|({{valeur[a-zA-Z0-9 .']{0,200}}})|[^{}]{0,500}/g) ?? [];
+    modeleTexte.match(/({{#if[a-zA-Zà-úÀ-Ú0-9 .'()]{0,200}}})|({{else}})|({{\/if}})|({{valeur[a-zA-Z0-9 .']{0,200}}})|[^{}]{0,500}/g) ?? [];
 
   const valeursEtConditions: (string | TCondition)[] = [];
   const conditionsEnCours: IConditionEncours[] = [];
@@ -109,7 +109,11 @@ const genererPourSaisie = (modeleTexte: string, valeurs: any, valeursDefaut: any
     switch (true) {
       case valeur.startsWith("{{#if "):
         ajouterCondition(valeursEtConditions, [...conditionsEnCours], {
-          si: valeur.replace(/{{#if|}}|\(eq|'|\)/g, "").trim(),
+          si: valeur
+            .replace(/{{#if|}}|\(eq|\)/g, "")
+            .trim()
+            .replace("'", "")
+            .replace(/'$/, ""),
           alors: [],
           sinon: []
         });
@@ -130,9 +134,9 @@ const genererPourSaisie = (modeleTexte: string, valeurs: any, valeursDefaut: any
   });
 
   const gererConditon = (condition: TCondition): string[] => {
-    const [cle, valeur] = condition.si.split(" ");
+    const [cle, ...valeur] = condition.si.split(" ");
     const valeurSaisie = recupererValeurAttribut(valeurs, cle);
-    const conditionValide = valeur !== undefined ? valeurSaisie?.toString() === valeur : Boolean(valeurSaisie);
+    const conditionValide = valeur.length ? valeurSaisie?.toString() === valeur.join(" ") : Boolean(valeurSaisie);
 
     return (conditionValide ? condition.alors : condition.sinon).reduce(
       (valeursCondition: string[], valeur: string | TCondition) => [
