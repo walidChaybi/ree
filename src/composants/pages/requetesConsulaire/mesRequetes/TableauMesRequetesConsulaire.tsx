@@ -1,4 +1,4 @@
-import { TypeAppelRequete, getTableauRequetesConsulaires } from "@api/appels/requeteApi";
+import { getTableauRequetesConsulaires } from "@api/appels/requeteApi";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { IRequeteTableauConsulaire, mappingRequetesTableauConsulaire } from "@model/requete/IRequeteTableauConsulaire";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
@@ -67,7 +67,7 @@ const EN_TETE_MES_REQUETES_CONSULAIRES: IEnTeteTableau[] = [
   },
   {
     cle: "dateDerniereAction",
-    libelle: "Date dernière action",
+    libelle: "Dernière action",
     triable: true
   },
   {
@@ -118,7 +118,7 @@ const TableauMesRequetesConsulaire: React.FC = () => {
     //STRECE-6057 RG1
     sousType: [SousTypeCreation.RCTC.nom, SousTypeCreation.RCTD.nom, SousTypeCreation.RCADC.nom],
     //STRECE-6057 RG1
-    tri: "dateCreation",
+    tri: "statutEtDateCreation",
     sens: "ASC",
     range: `0-${PAGINATION_PLAGE_MAX}`
   });
@@ -146,12 +146,7 @@ const TableauMesRequetesConsulaire: React.FC = () => {
   const [enRecuperation, setEnRecuperation] = useState<boolean>(true);
   useEffect(() => {
     setEnRecuperation(true);
-    getTableauRequetesConsulaires(
-      TypeAppelRequete.MES_REQUETES_DELIVRANCE,
-      parametresTableau.statuts.join(","),
-      parametresTableau.sousType.join(","),
-      parametresTableau
-    )
+    getTableauRequetesConsulaires(parametresTableau.statuts.join(","), parametresTableau.sousType.join(","), parametresTableau)
       .then(res => {
         const requetes: IRequeteTableauConsulaire[] = mappingRequetesTableauConsulaire(res.body.data, false, utilisateurs, services);
         setLignesTableau(mapResultatCommeLignesTableau(requetes));
@@ -202,5 +197,4 @@ const TableauMesRequetesConsulaire: React.FC = () => {
     </div>
   );
 };
-
 export default TableauMesRequetesConsulaire;

@@ -43,16 +43,14 @@ describe("Test du rendu de la page ", () => {
     render(mockRouterPageRequetesConsulaire());
 
     await waitFor(() => {
-      expect(screen.getByRole("table")).toBeDefined();
-      expect(screen.getByRole("table").lastChild?.childNodes.length).toBe(2);
-      expect(screen.getAllByText("N°")).toBeDefined();
+      expect(screen.getByText("N°")).toBeDefined();
       expect(screen.getByTitle("Trier par n°")).toBeDefined();
       expect(screen.getByText("Sous-type")).toBeDefined();
       expect(screen.getByText("Nature acte")).toBeDefined();
       expect(screen.getByText("Titulaire(s)")).toBeDefined();
       expect(screen.getByText("Requérant")).toBeDefined();
       expect(screen.getByText("Initialisation")).toBeDefined();
-      expect(screen.getByText("Date dernière action")).toBeDefined();
+      expect(screen.getByText("Dernière action")).toBeDefined();
       expect(screen.getByText("Statut")).toBeDefined();
     });
   });

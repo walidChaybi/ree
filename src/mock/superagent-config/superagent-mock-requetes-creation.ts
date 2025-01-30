@@ -142,7 +142,7 @@ export const configRequetesCreation = [
       // Appel des requêtes de création pour "Mes requêtes consulaires"
       if (
         match[1] ===
-        "/requetes/creation/mes-requetes?statuts=A_TRAITER%2CPRISE_EN_CHARGE%2CEN_TRAITEMENT&sousType=RCTC%2CRCTD%2CRCADC&tri=dateCreation&sens=ASC&range=0-100"
+        "/requetes/creation/mes-requetes?statuts=A_TRAITER%2CPRISE_EN_CHARGE%2CEN_TRAITEMENT&sousType=RCTC%2CRCTD%2CRCADC&tri=statutEtDateCreation&sens=ASC&range=0-100"
       ) {
         return {
           headers: {

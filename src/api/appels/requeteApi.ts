@@ -158,7 +158,6 @@ export function postTableauRequetesDelivranceService(
   );
 }
 export const getTableauRequetesConsulaires = (
-  typeRequete: TypeAppelRequete,
   listeStatuts: string,
   listeSousType: string,
   queryParameters: IQueryParametersPourRequetes
@@ -170,7 +169,7 @@ export const getTableauRequetesConsulaires = (
       parameters: {
         statuts: listeStatuts,
         sousType: listeSousType,
-        tri: queryParameters.tri !== "prioriteRequete" ? queryParameters.tri : "dateCreation",
+        tri: queryParameters.tri !== "prioriteRequete" ? queryParameters.tri : "statutEtDateCreation",
         sens: queryParameters.sens,
         range: queryParameters.range
       }
