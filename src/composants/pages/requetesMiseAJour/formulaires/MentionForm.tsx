@@ -280,9 +280,7 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire }) => {
             {typeMentionChoisi && (
               <Bouton
                 title="Valider"
-                disabled={
-                  !values.texteMention || (Boolean(mentionModifiee) && mentionModifiee?.mention.idTypeMention === typeMentionChoisi.id)
-                }
+                disabled={!values.texteMention}
                 type="submit"
               >
                 {mentionModifiee ? "Modifier mention" : "Ajouter mention"}
