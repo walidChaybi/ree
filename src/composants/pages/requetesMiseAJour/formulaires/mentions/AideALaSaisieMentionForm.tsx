@@ -24,6 +24,8 @@ const getClassesChamp = (typeChamp: string) => {
       return "w-[42.5%] px-[2.5%] pb-4";
     case "boolean":
       return "w-full px-[2.5%] pb-6 pt-4 text-left";
+    case "sousTitre":
+      return "mb-4 mt-3 mx-4 flex w-full border-0 border-b-2 border-solid border-bleu text-start";
     default:
       return "";
   }
@@ -39,7 +41,7 @@ const ContneurChampFormulaireAideSaisie: React.FC<{ champ: IChamp; children: Rea
   children,
   idBloc
 }) => {
-  const { values, setFieldValue } = useFormikContext<TMentionForm>();
+  const { values, setFieldValue, setFieldTouched } = useFormikContext<TMentionForm>();
   const idChamp = useMemo(() => `${idBloc}.${champ.id}`, [champ, idBloc]);
 
   const estAffiche = useMemo(
@@ -68,6 +70,7 @@ const ContneurChampFormulaireAideSaisie: React.FC<{ champ: IChamp; children: Rea
       return;
     }
 
+    setFieldTouched(idChamp, false);
     switch (champ.type) {
       case "select":
         return;
@@ -193,6 +196,8 @@ const AideALaSaisieMention: React.FC<IAideALaSaisieMention> = ({ metamodeleTypeM
                                 numerique
                               />
                             );
+                          case "sousTitre":
+                            return <h3 className="-mb-3 ml-8 bg-blanc px-2 text-bleu-sombre">{champ.libelle}</h3>;
                           default:
                             return <></>;
                         }
