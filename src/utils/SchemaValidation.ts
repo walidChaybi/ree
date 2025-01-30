@@ -308,7 +308,7 @@ const SchemaValidation = {
       schemaPrenoms[`prenom${index + 1}`] = schema;
     });
 
-    return schemaPrenoms;
+    return SchemaValidation.objet(schemaPrenoms);
   },
 
   inconnu: () => Yup.mixed()

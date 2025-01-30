@@ -104,6 +104,7 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
         name={nom.name}
         libelle={nom.libelle}
         estObligatoire={estObligatoire}
+        optionFormatage="NOMS_PROPRES"
       />
       <div className="champs-secable-et-info">
         <ChampsCaseACocher

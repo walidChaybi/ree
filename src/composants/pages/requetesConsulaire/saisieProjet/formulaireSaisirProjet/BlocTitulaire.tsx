@@ -17,9 +17,9 @@ const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
       <div className="grid grid-cols-2 gap-4">
         <div className="flex w-full flex-col gap-4 text-start">
           <ChampsTexte
-            name={"titulaire.nomNaissance"}
-            libelle={"Nom sur l'acte étranger"}
-            optionFormatage="PREMIER_MAJUSCULE"
+            name="titulaire.nomNaissance"
+            libelle="Nom sur l'acte étranger"
+            optionFormatage="NOMS_PROPRES"
           />
 
           <ChampsNomSecable
@@ -40,21 +40,21 @@ const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
 
         <div className="flex w-full flex-col gap-4 text-start">
           <ChampsTexte
-            name={"titulaire.nomSouhaite"}
-            libelle={"Nom souhaité"}
+            name="titulaire.nomSouhaite"
+            libelle="Nom souhaité"
             optionFormatage="PREMIER_MAJUSCULE"
             disabled
           />
           <ChampsPrenoms
-            cheminPrenoms={"titulaire.prenomsChemin"}
-            prefixePrenom={"prenom"}
+            cheminPrenoms="titulaire.prenomsChemin"
+            prefixePrenom="prenom"
           />
         </div>
 
         <div className="flex w-full flex-col gap-4 text-start">
           <ChampsRadio
-            name={"titulaire.sexe"}
-            libelle={"Sexe"}
+            name="titulaire.sexe"
+            libelle="Sexe"
             options={[
               { libelle: Sexe.MASCULIN.libelle, cle: Sexe.getKey(Sexe.MASCULIN) },
               { libelle: Sexe.FEMININ.libelle, cle: Sexe.getKey(Sexe.FEMININ) },
@@ -65,9 +65,9 @@ const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
 
         <div>
           <ChampDate
-            name={"titulaire.dateNaissance"}
-            libelle={"Date de naissance"}
-            avecHeure={true}
+            name="titulaire.dateNaissance"
+            libelle="Date de naissance"
+            avecHeure
             className="flex"
             estObligatoire="année"
           />
@@ -79,23 +79,23 @@ const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
 
       <div className="grid grid-cols-2 gap-4">
         <ChampsTexte
-          name={"titulaire.villeNaissance"}
-          libelle={"Ville"}
+          name="titulaire.villeNaissance"
+          libelle="Ville"
+          optionFormatage="NOMS_PROPRES"
+        />
+        <ChampsTexte
+          name="titulaire.regionNaissance"
+          libelle="État, canton, province"
           optionFormatage="PREMIER_MAJUSCULE"
         />
         <ChampsTexte
-          name={"titulaire.regionNaissance"}
-          libelle={"État, canton, province"}
-          optionFormatage="PREMIER_MAJUSCULE"
+          name="titulaire.paysNaissance"
+          libelle="Pays"
+          optionFormatage="NOMS_PROPRES"
         />
         <ChampsTexte
-          name={"titulaire.paysNaissance"}
-          libelle={"Pays"}
-          optionFormatage="PREMIER_MAJUSCULE"
-        />
-        <ChampsTexte
-          name={"titulaire.adresseNaissance"}
-          libelle={"Adresse"}
+          name="titulaire.adresseNaissance"
+          libelle="Adresse"
         />
       </div>
     </div>

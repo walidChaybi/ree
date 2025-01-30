@@ -18,39 +18,22 @@ const compterPrenoms = (valeurs: FormikValues, cheminPrenoms: string) => {
   const objetPrenoms = cheminPrenoms
     .split(".")
     .filter(partieChemin => partieChemin)
-    .reduce(
-      (valeur: FormikValues, partieChemin: string) =>
-        valeur[partieChemin] ?? {},
-      valeurs
-    );
+    .reduce((valeur: FormikValues, partieChemin: string) => valeur[partieChemin] ?? {}, valeurs);
 
-  return Object.values(objetPrenoms).filter(
-    prenom => typeof prenom === "string"
-  ).length;
+  return Object.values(objetPrenoms).filter(prenom => typeof prenom === "string").length;
 };
 
-const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({
-  cheminPrenoms,
-  prefixePrenom
-}) => {
+const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({ cheminPrenoms, prefixePrenom }) => {
   const { values, setFieldValue } = useFormikContext<FormikValues>();
 
-  const nombrePrenoms = useMemo(
-    () => compterPrenoms(values, cheminPrenoms),
-    [values, cheminPrenoms]
-  );
+  const nombrePrenoms = useMemo(() => compterPrenoms(values, cheminPrenoms), [values, cheminPrenoms]);
 
   const ajouterChampsPrenom = () => {
     if (nombrePrenoms >= MAX_PRENOMS) {
       return;
     }
 
-    setFieldValue(
-      `${cheminPrenoms ? `${cheminPrenoms}.` : ""}${prefixePrenom}${
-        nombrePrenoms + UN
-      }`,
-      ""
-    );
+    setFieldValue(`${cheminPrenoms ? `${cheminPrenoms}.` : ""}${prefixePrenom}${nombrePrenoms + UN}`, "");
   };
 
   const supprimerChampsPrenom = () => {
@@ -58,12 +41,7 @@ const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({
       return;
     }
 
-    setFieldValue(
-      `${
-        cheminPrenoms ? `${cheminPrenoms}.` : ""
-      }${prefixePrenom}${nombrePrenoms}`,
-      undefined
-    );
+    setFieldValue(`${cheminPrenoms ? `${cheminPrenoms}.` : ""}${prefixePrenom}${nombrePrenoms}`, undefined);
   };
 
   return (
@@ -73,6 +51,7 @@ const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({
           name={`${cheminPrenoms ? `${cheminPrenoms}.` : ""}${prefixePrenom}1`}
           libelle={`Prénom ${nombrePrenoms > UN ? "1" : ""}`.trim()}
           type="text"
+          optionFormatage="NOMS_PROPRES"
         />
 
         {nombrePrenoms < DEUX && (
@@ -93,9 +72,7 @@ const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({
           className="champs-prenom"
         >
           <ChampsTexte
-            name={`${cheminPrenoms ? `${cheminPrenoms}.` : ""}${prefixePrenom}${
-              index + DEUX
-            }`}
+            name={`${cheminPrenoms ? `${cheminPrenoms}.` : ""}${prefixePrenom}${index + DEUX}`}
             libelle={`Prénom ${index + DEUX}`}
           />
 
