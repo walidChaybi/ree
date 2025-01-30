@@ -168,7 +168,7 @@ export const getTableauRequetesConsulaires = (
       uri: URL_MES_REQUETES_CREATION,
       parameters: {
         statuts: listeStatuts,
-        sousType: listeSousType,
+        sousTypes: listeSousType,
         tri: queryParameters.tri !== "prioriteRequete" ? queryParameters.tri : "statutEtDateCreation",
         sens: queryParameters.sens,
         range: queryParameters.range
