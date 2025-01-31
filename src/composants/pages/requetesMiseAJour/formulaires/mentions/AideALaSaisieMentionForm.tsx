@@ -163,10 +163,7 @@ const AideALaSaisieMention: React.FC<IAideALaSaisieMention> = ({ metamodeleTypeM
                   champ={champ}
                   idBloc={bloc.id}
                 >
-                  <div
-                    className={getClassesChamp(champ.type)}
-                    key={`${bloc.id}.${champ.id}`}
-                  >
+                  <div className={getClassesChamp(champ.type)}>
                     <Suspense fallback={<></>}>
                       {(() => {
                         switch (champ.type) {

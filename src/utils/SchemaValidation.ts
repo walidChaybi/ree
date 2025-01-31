@@ -114,31 +114,32 @@ const getSchemaValidationDate = (bloquerDateFutur?: boolean): Yup.ObjectSchema<T
       return estDateFutur ? erreurSurDateEntiere("⚠ La date ne peut pas être supérieure à la date du jour", error.path) : true;
     });
 
-const gestionObligation = (schema: Yup.AnySchema, obligatoire: boolean | IExigence[]): Yup.AnySchema => {
+const gestionObligation = (
+  schema: Yup.AnySchema,
+  obligatoire: boolean | IExigence[],
+  actionObligation: () => Yup.AnySchema
+): Yup.AnySchema => {
   if (typeof obligatoire === "boolean") {
-    return obligatoire ? schema.required(messagesErreur.CHAMP_OBLIGATOIRE) : schema;
+    return obligatoire ? actionObligation() : schema;
   }
 
-  obligatoire.some((obligation: IExigence) => {
-    switch (obligation.operateur) {
-      case "AlwaysTrue":
-        schema = schema.required(messagesErreur.CHAMP_OBLIGATOIRE);
-        return true;
-      case "AlwaysFalse":
-        return true;
-      default:
-        schema = schema.when(`$${obligation.idChampReference}`, {
-          is: (valeurChamp: TValeurChamp) =>
-            obligation.operateur === "=="
-              ? obligation.valeurs?.includes((valeurChamp ?? "").toString())
-              : !obligation.valeurs?.includes((valeurChamp ?? "").toString()),
-          then: schema.required(messagesErreur.CHAMP_OBLIGATOIRE)
-        });
-        return false;
-    }
-  });
-
-  return schema;
+  switch (true) {
+    case !obligatoire.length:
+    case obligatoire[0].operateur === "AlwaysFalse":
+      return schema;
+    case obligatoire[0].operateur === "AlwaysTrue":
+      return actionObligation();
+    default:
+      return schema.when([...obligatoire.map(condition => `$${condition.idChampReference}`)], {
+        is: (...valeurChamp: TValeurChamp[]) =>
+          obligatoire.every((condition, index) =>
+            condition.operateur === "=="
+              ? condition.valeurs?.includes((valeurChamp[index] ?? "").toString())
+              : !condition.valeurs?.includes((valeurChamp[index] ?? "").toString())
+          ),
+        then: actionObligation()
+      });
+  }
 };
 
 const SchemaValidation = {
@@ -147,7 +148,7 @@ const SchemaValidation = {
   texte: (schemaParams: ISchemaCommunParams) => {
     let schema = Yup.string();
 
-    return gestionObligation(schema, schemaParams.obligatoire) as Yup.StringSchema;
+    return gestionObligation(schema, schemaParams.obligatoire, () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE)) as Yup.StringSchema;
   },
 
   entier: (schemaParams: ISchemaCommunParams & { min?: number; max?: number; estAnnee?: boolean }) => {
@@ -160,13 +161,16 @@ const SchemaValidation = {
       (schema = schema
         .min(1000, "⚠ L'année doit être sur 4 chiffres")
         .max(dayjs().get("year"), `⚠ L'année ne peut pas être supérieure à l'année actuelle`));
-    return gestionObligation(schema, schemaParams.obligatoire) as Yup.NumberSchema;
+
+    return gestionObligation(schema, schemaParams.obligatoire, () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE)) as Yup.NumberSchema;
   },
 
   booleen: (schemaParams: ISchemaCommunParams) => {
     let schema = Yup.boolean();
 
-    return gestionObligation(schema, schemaParams.obligatoire) as Yup.BooleanSchema;
+    return gestionObligation(schema, schemaParams.obligatoire, () =>
+      schema.required(messagesErreur.CHAMP_OBLIGATOIRE)
+    ) as Yup.BooleanSchema;
   },
 
   listeDeroulante: (schemaParams: ISchemaCommunParams & { options?: string[]; valeursPossibles?: IValeursPossibles[] }) => {
@@ -199,7 +203,7 @@ const SchemaValidation = {
       });
     }
 
-    return gestionObligation(schema, schemaParams.obligatoire) as Yup.StringSchema;
+    return gestionObligation(schema, schemaParams.obligatoire, () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE)) as Yup.StringSchema;
   },
 
   dateComplete: (schemaParams: ISchemaCommunParams & { bloquerDateFutur: boolean }) => {
@@ -229,27 +233,11 @@ const SchemaValidation = {
           : true
       );
 
-    if (schemaParams.obligatoire === false) return schema;
-
-    if (schemaParams.obligatoire === true || schemaParams.obligatoire.some(obligation => obligation.operateur === "AlwaysTrue")) {
-      return schema.test("dateEntiereObligatoire", (date, error) =>
+    return gestionObligation(schema, schemaParams.obligatoire, () =>
+      schema.test("dateEntiereObligatoire", (date, error) =>
         !date.jour && !date.mois && !date.annee ? erreurSurDateEntiere(messagesErreur.DATE_OBLIGATOIRE, error.path) : true
-      );
-    }
-
-    schemaParams.obligatoire.forEach((obligation: IExigence) => {
-      schema = schema.when(`$${obligation.idChampReference}`, {
-        is: (valeurChamp: TValeurChamp) =>
-          obligation.operateur === "=="
-            ? obligation.valeurs?.includes((valeurChamp ?? "").toString())
-            : !obligation.valeurs?.includes((valeurChamp ?? "").toString()),
-        then: schema.test("dateEntiereObligatoire", (date, error) =>
-          !date.jour && !date.mois && !date.annee ? erreurSurDateEntiere(messagesErreur.DATE_OBLIGATOIRE, error.path) : true
-        )
-      });
-    });
-
-    return schema;
+      )
+    ) as Yup.ObjectSchema<TDateChamp>;
   },
 
   dateIncomplete: (schemaParams: Omit<ISchemaCommunParams, "libelle"> & { bloquerDateFutur?: boolean }) => {
@@ -268,37 +256,16 @@ const SchemaValidation = {
           : true;
       });
 
-    if (schemaParams.obligatoire === false) return schema;
-
-    if (schemaParams.obligatoire === true || schemaParams.obligatoire.some(obligation => obligation.operateur === "AlwaysTrue")) {
-      return schema.test("anneeToujoursObligatoire", (date, error) =>
+    return gestionObligation(schema, schemaParams.obligatoire, () =>
+      schema.test("anneeToujoursObligatoire", (date, error) =>
         !date.annee
           ? error.createError({
               path: `${error.path}.annee`,
               message: messagesErreur.DATE_OBLIGATOIRE
             })
           : true
-      );
-    }
-
-    schemaParams?.obligatoire?.forEach((obligation: IExigence) => {
-      schema = schema.when(`$${obligation.idChampReference}`, {
-        is: (valeurChamp: TValeurChamp) =>
-          obligation.operateur === "=="
-            ? obligation.valeurs?.includes((valeurChamp ?? "").toString())
-            : !obligation.valeurs?.includes((valeurChamp ?? "").toString()),
-        then: schema.test("anneeToujoursObligatoire", (date, error) =>
-          !date.annee
-            ? error.createError({
-                path: `${error.path}.annee`,
-                message: messagesErreur.DATE_OBLIGATOIRE
-              })
-            : true
-        )
-      });
-    });
-
-    return schema;
+      )
+    ) as Yup.ObjectSchema<TDateChamp>;
   },
 
   prenoms: () => {
