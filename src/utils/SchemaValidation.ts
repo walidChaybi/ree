@@ -111,7 +111,7 @@ const getSchemaValidationDate = (bloquerDateFutur?: boolean): Yup.ObjectSchema<T
         return false;
       })();
 
-      return estDateFutur ? erreurSurDateEntiere("⚠ La date ne peut pas être supérieur à la date du jour", error.path) : true;
+      return estDateFutur ? erreurSurDateEntiere("⚠ La date ne peut pas être supérieure à la date du jour", error.path) : true;
     });
 
 const gestionObligation = (schema: Yup.AnySchema, obligatoire: boolean | IExigence[]): Yup.AnySchema => {

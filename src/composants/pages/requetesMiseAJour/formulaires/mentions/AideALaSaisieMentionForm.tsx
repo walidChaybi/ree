@@ -1,7 +1,7 @@
 /* v8 ignore start */
 import { IChamp, IMetaModelBloc, IMetamodeleTypeMention, IValeursPossibles } from "@model/etatcivil/acte/mention/IMetaModeleTypeMention";
 import { useField, useFormikContext } from "formik";
-import React, { Suspense, lazy, useEffect, useMemo } from "react";
+import React, { Suspense, lazy, useEffect, useMemo, useState } from "react";
 import { TMentionForm, TValeurAideSaisie } from "../MentionForm";
 import { TexteMentionAideALaSaisie } from "./GenerateurTexteSaisieMention";
 
@@ -94,13 +94,15 @@ const ContneurChampFormulaireAideSaisie: React.FC<{ champ: IChamp; children: Rea
   return estAffiche ? <>{children}</> : <></>;
 };
 
-const ChampListeDeroulateConditionnee: React.FC<{ libelle: string; name: string; valeursPossibles: IValeursPossibles[] }> = ({
-  libelle,
-  name,
-  valeursPossibles
-}) => {
+const ChampListeDeroulateConditionnee: React.FC<{
+  libelle: string;
+  name: string;
+  valeursPossibles: IValeursPossibles[];
+  valeurDefaut?: string;
+}> = ({ libelle, name, valeursPossibles, valeurDefaut }) => {
   const [field] = useField(name);
   const { values, setFieldValue } = useFormikContext<TMentionForm>();
+  const [nombreOptions, setNombreOptions] = useState<number>(0);
   const options = useMemo(() => {
     const valeursOption =
       valeursPossibles.filter(valeurPossible => {
@@ -112,8 +114,20 @@ const ChampListeDeroulateConditionnee: React.FC<{ libelle: string; name: string;
           return exigence.operateur === "==" ? exigenceRespectee : !exigenceRespectee;
         }).length;
       })[0]?.valeurs ?? [];
-    if (!valeursOption.includes(field.value)) {
-      setFieldValue(name, valeursOption[0] ?? "");
+
+    if (!valeursOption.includes(field.value) || nombreOptions !== valeursOption.length) {
+      const nouvelleValeur = (() => {
+        switch (true) {
+          case valeursOption.includes(valeurDefaut ?? ""):
+            return valeurDefaut ?? "";
+          case Boolean(valeursOption[0]):
+            return valeursOption[0];
+          default:
+            return "";
+        }
+      })();
+      setFieldValue(name, nouvelleValeur);
+      setNombreOptions(valeursOption.length);
     }
 
     return valeursOption.map(valeur => ({ cle: valeur, libelle: valeur }));
@@ -170,6 +184,7 @@ const AideALaSaisieMention: React.FC<IAideALaSaisieMention> = ({ metamodeleTypeM
                                 libelle={champ.libelle}
                                 name={`${bloc.id}.${champ.id}`}
                                 valeursPossibles={champ.valeursPossibles}
+                                valeurDefaut={champ.valeurParDefaut}
                               />
                             );
 
