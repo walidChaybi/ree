@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Formik } from "formik";
 import { describe, expect, test } from "vitest";
@@ -21,50 +21,64 @@ describe("Test du composant Champs nom sécable", () => {
     );
 
   test("Affichage du composant nom sécable", async () => {
-    afficherFormulaire();
+    await act(async () => afficherFormulaire());
 
     expect(screen.getByText("Nom")).toBeDefined();
     const champsNom = screen.getByDisplayValue("Dupont");
     expect(champsNom).toBeDefined();
-    expect(
-      (screen.getByLabelText("Sécable") as HTMLInputElement).disabled // NOSONAR typage obligatoire
-    ).toBeTruthy();
+    expect(screen.getByLabelText<HTMLInputElement>("Sécable").disabled).toBeTruthy();
 
-    await userEvent.type(champsNom, " Test");
+    act(() => {
+      userEvent.type(champsNom, " Test");
+    });
 
-    expect(screen.getByDisplayValue("Dupont Test")).toBeDefined();
-    const champsSecable = screen.getByLabelText("Sécable") as HTMLInputElement; // NOSONAR typage obligatoire
-    expect(champsSecable.disabled).toBeFalsy();
+    await waitFor(() => {
+      expect(screen.getByDisplayValue("Dupont Test")).toBeDefined();
+      const champsSecable: HTMLInputElement = screen.getByLabelText("Sécable");
+      expect(champsSecable.disabled).toBeFalsy();
+    });
 
-    fireEvent.click(champsSecable);
+    await act(async () => {
+      fireEvent.click(screen.getByLabelText("Sécable"));
+    });
 
-    expect(screen.getByDisplayValue("Dupont")).toBeDefined();
-    expect(screen.getByDisplayValue("Test")).toBeDefined();
+    await waitFor(() => {
+      expect(screen.getByDisplayValue("Dupont")).toBeDefined();
+      expect(screen.getByDisplayValue("Test")).toBeDefined();
+    });
 
-    await userEvent.type(champsNom, " Test2");
+    act(() => {
+      userEvent.type(champsNom, " Test2");
+    });
 
-    expect(screen.getByDisplayValue("Dupont")).toBeDefined();
-    expect(screen.getByDisplayValue("Test Test2")).toBeDefined();
+    await waitFor(() => {
+      expect(screen.getByDisplayValue("Dupont")).toBeDefined();
+      expect(screen.getByDisplayValue("Test Test2")).toBeDefined();
 
-    expect(screen.queryByTitle("Descendre la dernière vocable")).toBeNull();
-    const boutonRemonterVocable = screen.getByTitle(
-      "Remonter la première vocable"
-    );
-    expect(boutonRemonterVocable).toBeDefined();
+      expect(screen.queryByTitle("Descendre la dernière vocable")).toBeNull();
+      const boutonRemonterVocable = screen.getByTitle("Remonter la première vocable");
+      expect(boutonRemonterVocable).toBeDefined();
+    });
 
-    fireEvent.click(boutonRemonterVocable);
+    await act(async () => {
+      fireEvent.click(screen.getByTitle("Remonter la première vocable"));
+    });
 
-    expect(screen.getByDisplayValue("Dupont Test")).toBeDefined();
-    expect(screen.getByDisplayValue("Test2")).toBeDefined();
-    expect(screen.queryByTitle("Remonter la première vocable")).toBeNull();
-    const boutonDescendreVocable = screen.getByTitle(
-      "Descendre la dernière vocable"
-    );
-    expect(boutonDescendreVocable).toBeDefined();
+    await waitFor(() => {
+      expect(screen.getByDisplayValue("Dupont Test")).toBeDefined();
+      expect(screen.getByDisplayValue("Test2")).toBeDefined();
+      expect(screen.queryByTitle("Remonter la première vocable")).toBeNull();
+      const boutonDescendreVocable = screen.getByTitle("Descendre la dernière vocable");
+      expect(boutonDescendreVocable).toBeDefined();
+    });
 
-    fireEvent.click(boutonDescendreVocable);
+    await act(async () => {
+      fireEvent.click(screen.getByTitle("Descendre la dernière vocable"));
+    });
 
-    expect(screen.getByDisplayValue("Dupont")).toBeDefined();
-    expect(screen.getByDisplayValue("Test Test2")).toBeDefined();
+    await waitFor(() => {
+      expect(screen.getByDisplayValue("Dupont")).toBeDefined();
+      expect(screen.getByDisplayValue("Test Test2")).toBeDefined();
+    });
   });
 });

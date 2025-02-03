@@ -1,4 +1,4 @@
-import { parametresBaseRequete } from "../data/NomenclatureParametresBaseRequete";
+import { PARAMETRE_BASE_REQUETE } from "../data/NomenclatureParametresBaseRequete";
 
 const REQUETE_API_URL = "rece-requete-api/v2";
 
@@ -19,11 +19,8 @@ export const configParamsBaseRequete = [
      */
     fixtures: function (match: any, params: any, headers: any, context: any) {
       // Récupération des paramètres de la base requête
-      if (
-        match[1] === REQUETE_API_URL + "/parametres" &&
-        context.method === "post"
-      ) {
-        return { data: parametresBaseRequete };
+      if (match[1] === REQUETE_API_URL + "/parametres" && context.method === "post") {
+        return { data: PARAMETRE_BASE_REQUETE };
       }
 
       const error = { msg: "url params non mockée", url: match[1] };

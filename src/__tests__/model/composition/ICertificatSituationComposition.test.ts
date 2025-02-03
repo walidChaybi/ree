@@ -1,4 +1,5 @@
 import { certificatSituation } from "@mock/data/Composition";
+import { PARAMETRE_BASE_REQUETE } from "@mock/data/NomenclatureParametresBaseRequete";
 import { CertificatSituationComposition } from "@model/composition/ICertificatSituationComposition";
 import { IDecret } from "@model/etatcivil/commun/IDecret";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
@@ -8,18 +9,15 @@ import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivra
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
-import { waitFor } from "@testing-library/react";
 import { expect, test } from "vitest";
 
 test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionne correctement", () => {
-  ParametreBaseRequete.init();
+  ParametreBaseRequete.init(PARAMETRE_BASE_REQUETE);
+
   const attendu = certificatSituation;
 
   const titre = "titre";
-  const decrets: IDecret[] = [
-    { libelle: "decret1" } as IDecret,
-    { libelle: "decret2" } as IDecret
-  ];
+  const decrets: IDecret[] = [{ libelle: "decret1" } as IDecret, { libelle: "decret2" } as IDecret];
   const phrase = "phrase";
   const phrasesPiecesJointes = "phrasesPiecesJointes";
   const requerant = {
@@ -39,6 +37,7 @@ test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionn
       qualite: Qualite.PARTICULIER
     }
   } as IRequerant;
+
   const titulaire = {
     nom: "nom",
     prenoms: ["pre1", "pre2"],
@@ -64,7 +63,6 @@ test("Attendu: CertificatSituationComposition.creerCertificatSituation fonctionn
     phrasesPiecesJointes,
     titulaire
   );
-  waitFor(() => {
-    expect(resultat).toEqual(attendu);
-  });
+
+  expect(resultat).toEqual(attendu);
 });

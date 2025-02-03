@@ -6,8 +6,13 @@ import { URL_CONTEXT_APP } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
-import { expect, test } from "vitest";
+import { afterEach, expect, test } from "vitest";
 import { createTestingRouter, elementAvecContexte } from "../../../__tests__utils__/testsUtil";
+
+afterEach(() => {
+  // Réactivation de la log après chaque test (certains tests la désactive car les erreurs logguées sont normales)
+  storeRece.logErrorDesactive = false;
+});
 
 test("renders BoutonDeconnexion", async () => {
   const router = createTestingRouter(

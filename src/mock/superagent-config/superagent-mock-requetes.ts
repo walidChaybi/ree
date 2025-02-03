@@ -28,7 +28,7 @@ import {
 import { reponseMesRequeteCreation } from "../data/EspaceCreation";
 import { ReponseAppelMesRequetes, ReponseAppelRequetesService } from "../data/EspaceDelivrance";
 import { NOMENCLATURE_OPTION_COURRIER } from "../data/NomenclatureOptionCourrier";
-import { parametresBaseRequete } from "../data/NomenclatureParametresBaseRequete";
+import { PARAMETRE_BASE_REQUETE } from "../data/NomenclatureParametresBaseRequete";
 import {
   ReponseAppelNomenclatureDocummentDelivrance,
   ReponseAppelNomenclaturePaysSecabilite,
@@ -86,7 +86,7 @@ export const configRequetes = [
     fixtures: function (match: any, params: any, headers: any, context: any) {
       // Récupération des paramètres de la base requête
       if (match[1] === "/parametres" && context.method === "post") {
-        return { data: parametresBaseRequete };
+        return { data: PARAMETRE_BASE_REQUETE };
       }
 
       // Mes requetes (espace délivrance)

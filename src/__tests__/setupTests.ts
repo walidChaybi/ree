@@ -2,12 +2,10 @@
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
-import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
 import { Request, Response, fetch } from "@remix-run/web-fetch";
-import { storeRece } from "@util/storeRece";
 import React from "react";
 import request from "superagent";
-import { afterAll, afterEach, beforeAll, beforeEach, vi } from "vitest";
+import { afterAll, beforeAll, beforeEach, vi } from "vitest";
 import { configAgent } from "../mock/superagent-config/superagent-mock-agent";
 import { configComposition } from "../mock/superagent-config/superagent-mock-composition";
 import { configEtatcivil } from "../mock/superagent-config/superagent-mock-etatcivil";
@@ -17,8 +15,45 @@ import { configParamsBaseRequete } from "../mock/superagent-config/superagent-mo
 import { configRequetes } from "../mock/superagent-config/superagent-mock-requetes";
 import { configTeleverification } from "../mock/superagent-config/superagent-mock-televerification";
 
-// @ts-expect-error
-if (!globalThis.testSetuped) {
+export const localStorageFeatureFlagMock = (() => {
+  let store: any = {
+    FF_CONSULT_ACTE_RQT: "true",
+    FF_DELIV_CS: "true",
+    FF_RQT_INFORMATION: "true",
+    FF_DELIVRANCE_EXTRAITS_COPIES: "true",
+    FF_LOG_SERVEUR: "true",
+    FF_RETOUR_SDANF: "true",
+    FF_INTEGRATION_CIBLE_REQUETE_NATURALISATION: "true",
+    FF_SIGNER_ACTE_ETABLISSEMENT: "true"
+  };
+  return {
+    getItem(key: string) {
+      return store[key];
+    },
+    setItem(key: string, value: string) {
+      store[key] = value.toString();
+    },
+    clear() {
+      store = {};
+    },
+    removeItem(key: string) {
+      delete store[key];
+    }
+  };
+})();
+
+const superagentMock = require("superagent-mock")(request, [
+  configRequetes[0],
+  configEtatcivil[0],
+  configParamsBaseRequete[0],
+  configMail[0],
+  configAgent[0],
+  configComposition[0],
+  configOutiltech[0],
+  configTeleverification[0]
+]);
+
+beforeAll(async () => {
   // Permet d'éviter de devoir importer React inutilement dans les tests
   global.React = React;
 
@@ -29,34 +64,6 @@ if (!globalThis.testSetuped) {
   globalThis.Request = Request;
   // @ts-expect-error
   globalThis.Response = Response;
-
-  // @ts-expect-error
-  globalThis.mockLocalStorageFF = () => {
-    let store: any = {
-      FF_CONSULT_ACTE_RQT: "true",
-      FF_DELIV_CS: "true",
-      FF_RQT_INFORMATION: "true",
-      FF_DELIVRANCE_EXTRAITS_COPIES: "true",
-      FF_LOG_SERVEUR: "true",
-      FF_RETOUR_SDANF: "true",
-      FF_INTEGRATION_CIBLE_REQUETE_NATURALISATION: "true",
-      FF_SIGNER_ACTE_ETABLISSEMENT: "true"
-    };
-    return {
-      getItem(key: string) {
-        return store[key];
-      },
-      setItem(key: string, value: string) {
-        store[key] = value.toString();
-      },
-      clear() {
-        store = {};
-      },
-      removeItem(key: string) {
-        delete store[key];
-      }
-    };
-  };
 
   if (window.document) {
     window.document.createRange = () => ({
@@ -77,27 +84,6 @@ if (!globalThis.testSetuped) {
   window.alert = () => {};
 
   process.env.DEBUG_PRINT_LIMIT = "1000000"; // Pour debug
-
-  // @ts-expect-error
-  globalThis.testSetuped = true;
-}
-
-// @ts-expect-error
-export const localStorageFeatureFlagMock = globalThis.mockLocalStorageFF();
-
-const superagentMock = require("superagent-mock")(request, [
-  configRequetes[0],
-  configEtatcivil[0],
-  configParamsBaseRequete[0],
-  configMail[0],
-  configAgent[0],
-  configComposition[0],
-  configOutiltech[0],
-  configTeleverification[0]
-]);
-
-beforeAll(async () => {
-  await ParametreBaseRequete.init();
 });
 
 afterAll(() => {
@@ -109,9 +95,4 @@ beforeEach(() => {
     value: localStorageFeatureFlagMock,
     writable: true
   });
-});
-
-afterEach(() => {
-  // Réactivation de la log après chaque test (certains tests la désactive car les erreurs logguées sont normales)
-  storeRece.logErrorDesactive = false;
 });

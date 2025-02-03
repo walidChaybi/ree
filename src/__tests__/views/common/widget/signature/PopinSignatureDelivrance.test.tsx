@@ -2,8 +2,13 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { createEvent, fireEvent, render, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { PopinSignatureDelivrance } from "@widget/signature/PopinSignatureDelivrance";
-import { expect, test } from "vitest";
+import { afterEach, expect, test } from "vitest";
 import { acte } from "../../../../../mock/data/ficheEtBandeau/ficheActe";
+
+afterEach(() => {
+  // Réactivation de la log après chaque test (certains tests la désactive car les erreurs logguées sont normales)
+  storeRece.logErrorDesactive = false;
+});
 
 test("renders PopinSignatureDelivrance, signature event is received and success displayed", async () => {
   const { getByText } = render(

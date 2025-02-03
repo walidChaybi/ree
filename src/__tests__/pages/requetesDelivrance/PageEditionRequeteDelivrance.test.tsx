@@ -133,7 +133,9 @@ describe("Test de la page aperçu requête edition analyse marginale", () => {
 
     render(<RouterProvider router={router} />);
 
-    await waitFor(() => expect(screen.getByText("Terminer et signer")).toBeDefined());
-    expect(screen.getByText("Terminer")).toBeDefined();
+    await waitFor(() => {
+      expect(screen.getByText("Terminer et signer")).toBeDefined();
+      expect(screen.getByText("Terminer")).toBeDefined();
+    });
   });
 });

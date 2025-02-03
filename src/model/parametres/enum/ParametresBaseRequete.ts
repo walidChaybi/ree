@@ -1,25 +1,28 @@
-import { peupleParametresBaseRequete } from "@api/nomenclature/NomenclatureParametresBaseRequete";
-import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
+export interface IParametreBaseRequeteDTO {
+  idParametre: string;
+  cle: string;
+  valeur?: string;
+  fichierB64?: string;
+}
 
-export class ParametreBaseRequete extends EnumWithLibelle {
-  public static async init() {
-    await peupleParametresBaseRequete();
+export interface IParametreBaseRequete {
+  cle: string;
+  libelle: string;
+}
+
+export class ParametreBaseRequete {
+  private static liste: IParametreBaseRequete[] | null = null;
+
+  public static init(parametresBaseRequete: IParametreBaseRequeteDTO[]): void {
+    if (ParametreBaseRequete.liste !== null) {
+      return;
+    }
+    ParametreBaseRequete.liste = parametresBaseRequete.map((parametreBaseRequete: IParametreBaseRequeteDTO): IParametreBaseRequete => {
+      return { cle: parametreBaseRequete.cle, libelle: parametreBaseRequete.fichierB64 ?? parametreBaseRequete.valeur ?? ("" as never) };
+    });
   }
 
-  //AddEnum specifique aux nomenclatures !
-  public static addEnum(key: string, obj: ParametreBaseRequete) {
-    EnumWithLibelle.addEnum(key, obj, ParametreBaseRequete);
-  }
-
-  public static clean() {
-    EnumWithLibelle.clean(ParametreBaseRequete);
-  }
-
-  public static contientEnums() {
-    return EnumWithLibelle.contientEnums(ParametreBaseRequete);
-  }
-
-  public static getEnumFor(str: string) {
-    return EnumWithLibelle.getEnumFor(str, ParametreBaseRequete);
+  public static depuisCle(cle: string): IParametreBaseRequete | null {
+    return ParametreBaseRequete.liste?.find(parametreBaseRequete => parametreBaseRequete.cle === cle) ?? null;
   }
 }

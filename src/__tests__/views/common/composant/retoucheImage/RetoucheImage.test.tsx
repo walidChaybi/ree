@@ -1,14 +1,13 @@
 import { RetoucheImage } from "@composant/retoucheImage/RetoucheImage";
-import {
-  act,
-  createEvent,
-  fireEvent,
-  render,
-  waitFor
-} from "@testing-library/react";
+import { act, createEvent, fireEvent, render, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
-import { expect, test, vi } from "vitest";
+import { afterEach, expect, test, vi } from "vitest";
 import { MimeType } from "../../../../../ressources/MimeType";
+
+afterEach(() => {
+  // Réactivation de la log après chaque test (certains tests la désactive car les erreurs logguées sont normales)
+  storeRece.logErrorDesactive = false;
+});
 
 test.skip("Attendu: Le retour de l'appel à la retouche d'image s'effectue correctement", async () => {
   const onRetoucheTerminee = vi.fn();
@@ -38,9 +37,7 @@ test.skip("Attendu: Le retour de l'appel à la retouche d'image s'effectue corre
   await waitFor(() => {
     expect(dispatchEventSpy).toHaveBeenCalledWith(expect.any(Event));
     //@ts-ignore
-    expect(dispatchEventSpy.mock.calls[0][0].type).toBe(
-      "retoucheimageWebextCall"
-    );
+    expect(dispatchEventSpy.mock.calls[0][0].type).toBe("retoucheimageWebextCall");
 
     expect(onRetoucheTerminee).toBeCalledTimes(1);
     expect(onRetoucheTerminee).toHaveBeenCalledWith(["imageBase64Modifiee"]);

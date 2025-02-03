@@ -125,7 +125,7 @@ export const certificatSituation: ICertificatSituationComposition = {
     ligne4: "11, rue de la Maison Blanche",
     ligne6: "44941 Nantes CEDEX 9"
   },
-  adresse_internet: "courrier.scec@diplomatie.gouv.fr",
+  adresse_internet: "https://etat-civil.diplomatie.gouv.fr/rece-informationusager-ui/",
   adresse_requerant: {
     ligne2: "l2",
     ligne3: "l3",
@@ -135,7 +135,7 @@ export const certificatSituation: ICertificatSituationComposition = {
     ligne7: "pays"
   },
   annee_naissance: "2000",
-  cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
+  cachet_signature: "P/la sous-directrice,\ncheffe du Service central d’état civil",
   sceau_ministere: imagePngVideBase64,
   identite_requerant: {
     ligne1: "PRENOM NOMFAMILLE"
@@ -171,7 +171,7 @@ export const certificatRCA: ICertificatRCAComposition = {
     ligne4: "11, rue de la Maison Blanche",
     ligne6: "44941 Nantes CEDEX 9"
   },
-  adresse_internet: "courrier.scec@diplomatie.gouv.fr",
+  adresse_internet: "https://etat-civil.diplomatie.gouv.fr/rece-informationusager-ui/",
   adresse_requerant: {
     ligne2: "l2",
     ligne3: "l3",
@@ -181,7 +181,7 @@ export const certificatRCA: ICertificatRCAComposition = {
     ligne7: "pays"
   },
   annee_naissance: "2000",
-  cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
+  cachet_signature: "P/la sous-directrice,\ncheffe du Service central d’état civil",
   sceau_ministere: imagePngVideBase64,
   identite_requerant: {
     ligne1: "PRENOM NOMFAMILLE"

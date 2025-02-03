@@ -1,7 +1,12 @@
 import { createEvent, fireEvent, render, screen } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { PopinSignature } from "@widget/signature/PopinSignature";
-import { expect, test, vi } from "vitest";
+import { afterEach, expect, test, vi } from "vitest";
+
+afterEach(() => {
+  // Réactivation de la log après chaque test (certains tests la désactive car les erreurs logguées sont normales)
+  storeRece.logErrorDesactive = false;
+});
 
 test("DOIT render de la PopinSignature avec succès", () => {
   render(

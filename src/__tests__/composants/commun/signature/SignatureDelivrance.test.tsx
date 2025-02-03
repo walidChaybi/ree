@@ -136,7 +136,7 @@ describe("Test du composant Signature délivrance", () => {
 
     fireEvent.click(screen.getByTitle("Annuler"));
 
-    expect(screen.queryByText(TITRE_MODALE)).toBeNull();
+    await waitFor(() => expect(screen.queryByText(TITRE_MODALE)).toBeNull());
   });
 
   test("Le pin est invalide", async () => {
@@ -144,7 +144,7 @@ describe("Test du composant Signature délivrance", () => {
 
     const boutonSigner: HTMLButtonElement = screen.getByTitle(TITRE_BOUTON);
     await waitFor(() => expect(boutonSigner.disabled).toBeFalsy());
-    await act(() => fireEvent.click(boutonSigner));
+    await act(async () => fireEvent.click(boutonSigner));
 
     const demonterListener = listenerSignature({ erreur: { code: CODE_PIN_INVALIDE } });
 
@@ -166,7 +166,7 @@ describe("Test du composant Signature délivrance", () => {
 
     const boutonSigner: HTMLButtonElement = screen.getByTitle(TITRE_BOUTON);
     await waitFor(() => expect(boutonSigner.disabled).toBeFalsy());
-    await act(() => fireEvent.click(boutonSigner));
+    await act(async () => fireEvent.click(boutonSigner));
 
     const LIBELLE_BLOQUANT = "Libelle bloquant";
     const demonterListener = listenerSignature({ erreur: { code: CODES_ERREUR_BLOQUANTS[0], libelle: LIBELLE_BLOQUANT } });
@@ -180,8 +180,11 @@ describe("Test du composant Signature délivrance", () => {
       fireEvent.click(boutonValider);
     });
 
-    await waitFor(() => expect(screen.getByText("⚠ Impossible d'effectuer la signature :")).toBeDefined());
-    expect(screen.getByText(LIBELLE_BLOQUANT)).toBeDefined();
+    await waitFor(() => {
+      expect(screen.getByText("⚠ Impossible d'effectuer la signature :")).toBeDefined();
+      expect(screen.getByText(LIBELLE_BLOQUANT)).toBeDefined();
+    });
+
     demonterListener();
   });
 
@@ -190,7 +193,7 @@ describe("Test du composant Signature délivrance", () => {
 
     const boutonSigner: HTMLButtonElement = screen.getByTitle(TITRE_BOUTON);
     await waitFor(() => expect(boutonSigner.disabled).toBeFalsy());
-    await act(() => fireEvent.click(boutonSigner));
+    await act(async () => fireEvent.click(boutonSigner));
 
     const LIBELLE_NON_BLOQUANT = "Libelle non bloquant";
     const demonterListener = listenerSignature({
@@ -201,8 +204,8 @@ describe("Test du composant Signature délivrance", () => {
     const boutonValider = screen.getByTitle("Valider");
     expect(champPin).toBeDefined();
     expect(boutonValider).toBeDefined();
-    await act(() => userEvent.type(champPin, "1234"));
-    await act(() => fireEvent.click(boutonValider));
+    await act(async () => userEvent.type(champPin, "1234"));
+    await act(async () => fireEvent.click(boutonValider));
 
     await waitFor(() => expect(() => screen.queryByText("Aucun document n'a pu être signé")).toBeDefined());
     demonterListener();

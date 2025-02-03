@@ -51,7 +51,7 @@ describe("VoletDocumentDelivre", () => {
     }
   } as unknown as IRequeteDelivrance;
 
-  test("Render correctement avec l'onglet actif de base à 'Document édité'", () => {
+  test("Render correctement avec l'onglet actif de base à 'Document édité'", async () => {
     render(
       elementAvecContexte(
         elementAvecEditionDelivranceContexte(
@@ -73,11 +73,13 @@ describe("VoletDocumentDelivre", () => {
         )
       )
     );
-    expect(screen.getByText("Saisir l'extrait")).toBeDefined();
-    expect(screen.getByText("Gérer les mentions")).toBeDefined();
-    expect(screen.getByText("Modifier le corps de l'extrait")).toBeDefined();
-    expect(screen.getByText("Document édité")).toBeDefined();
-    expect(screen.queryByText("Document édité")?.classList.contains("disabled")).toBe(false);
+    await waitFor(() => {
+      expect(screen.getByText("Saisir l'extrait")).toBeDefined();
+      expect(screen.getByText("Gérer les mentions")).toBeDefined();
+      expect(screen.getByText("Modifier le corps de l'extrait")).toBeDefined();
+      expect(screen.getByText("Document édité")).toBeDefined();
+      expect(screen.queryByText("Document édité")?.classList.contains("disabled")).toBe(false);
+    });
   });
 
   test("Reset l'onglet actif à 'Document édité' quand resetOngletActif est true", async () => {

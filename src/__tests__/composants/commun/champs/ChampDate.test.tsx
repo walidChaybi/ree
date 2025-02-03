@@ -74,7 +74,6 @@ describe("ChampDate", () => {
       expect(jourInput.value).toBe("31");
       expect(moisInput.value).toBe("12");
     });
-    console.log(jourInput.value);
   });
 });
 

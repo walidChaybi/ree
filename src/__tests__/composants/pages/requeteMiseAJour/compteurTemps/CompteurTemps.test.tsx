@@ -1,5 +1,5 @@
 import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import request from "superagent";
 import { afterAll, describe, expect, test, vi } from "vitest";
@@ -22,7 +22,6 @@ describe("Test du composant CompteurTemps", () => {
         }
       },
       get: function (_: any, data: any) {
-        console.log(data);
         return {
           body: data
         };
@@ -32,7 +31,7 @@ describe("Test du composant CompteurTemps", () => {
 
   afterAll(() => superagentMock.unset());
 
-  test("Aucun message si temps restant", () => {
+  test("Aucun message si temps restant", async () => {
     const router = createTestingRouter(
       [
         {
@@ -48,7 +47,9 @@ describe("Test du composant CompteurTemps", () => {
       ["/"]
     );
 
-    render(<RouterProvider router={router} />);
+    await act(async () => {
+      render(<RouterProvider router={router} />);
+    });
 
     expect(screen.queryByTitle("OK")).toBeNull();
   });
@@ -77,8 +78,10 @@ describe("Test du composant CompteurTemps", () => {
 
     render(<RouterProvider router={router} />);
 
-    await waitFor(() => expect(screen.getByTitle("OK")).toBeDefined());
-    expect(abandon).toHaveBeenCalledOnce();
+    await waitFor(() => {
+      expect(screen.getByTitle("OK")).toBeDefined();
+      expect(abandon).toHaveBeenCalledOnce();
+    });
 
     fireEvent.click(screen.getByTitle("OK"));
     await waitFor(() => expect(screen.getByText(REDIRIGE)).toBeDefined());

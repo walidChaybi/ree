@@ -1,19 +1,17 @@
 import { certificatRCA } from "@mock/data/Composition";
-import {
-  CertificatRCAComposition,
-  IElementsJasperCertificatRCA
-} from "@model/composition/ICertificatRCAComposition";
+import { PARAMETRE_BASE_REQUETE } from "@mock/data/NomenclatureParametresBaseRequete";
+import { CertificatRCAComposition, IElementsJasperCertificatRCA } from "@model/composition/ICertificatRCAComposition";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
 import { IRequerant } from "@model/requete/IRequerant";
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
-import { waitFor } from "@testing-library/react";
 import { expect, test } from "vitest";
 
 test("Attendu: CertificatRCAComposition.creerCertificatRCA fonctionne correctement", () => {
-  ParametreBaseRequete.init();
+  ParametreBaseRequete.init(PARAMETRE_BASE_REQUETE);
+
   const attendu = certificatRCA;
 
   const elementsJasper = {
@@ -42,6 +40,7 @@ test("Attendu: CertificatRCAComposition.creerCertificatRCA fonctionne correcteme
       qualite: Qualite.PARTICULIER
     }
   } as IRequerant;
+
   const titulaire = {
     nom: "nom",
     prenoms: ["pre1", "pre2"],
@@ -53,14 +52,7 @@ test("Attendu: CertificatRCAComposition.creerCertificatRCA fonctionne correcteme
     sexe: Sexe.MASCULIN
   } as ITitulaireRequeteTableau;
 
-  const resultat = CertificatRCAComposition.creerCertificatRCA(
-    elementsJasper,
-    TypeCanal.COURRIER,
-    requerant,
-    "012345",
-    titulaire
-  );
-  waitFor(() => {
-    expect(resultat).toEqual(attendu);
-  });
+  const resultat = CertificatRCAComposition.creerCertificatRCA(elementsJasper, TypeCanal.COURRIER, requerant, "012345", titulaire);
+
+  expect(resultat).toEqual(attendu);
 });

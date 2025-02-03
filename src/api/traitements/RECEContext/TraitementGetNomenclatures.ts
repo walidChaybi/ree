@@ -1,12 +1,14 @@
 import CONFIG_GET_NOMENCLATURES_ETAT_CIVIL from "@api/configurations/etatCivil/nomenclature/GetNomenclaturesEtatCivilConfigApi";
 import CONFIG_GET_TYPES_MENTION from "@api/configurations/etatCivil/nomenclature/GetTypesMentionConfigApi";
 import CONFIG_GET_NOMENCLATURES_REQUETE from "@api/configurations/requete/nomenclature/GetNomenclaturesRequeteConfigApi";
+import CONFIG_GET_PARAMETRES_BASE_REQUETE from "@api/configurations/requete/nomenclature/GetParametresBaseRequete";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { IMandataire, MandataireRc } from "@model/etatcivil/enum/MandataireRc";
 import { INatureMention, NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { INatureRc, NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { INatureRca, NatureRca } from "@model/etatcivil/enum/NatureRca";
 import { ITypeAlerte, TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
+import { CLES } from "@model/parametres/clesParametres";
 import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
 import { DocumentDelivrance, IDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { IPaysSecabilite, PaysSecabilite } from "@model/requete/enum/PaysSecabilite";
@@ -57,6 +59,7 @@ export const TRAITEMENT_GET_NOMENCLATURES: TTraitementApi = {
     const { appelApi: appelNomenclaturesEtatCivil } = useFetchApi(CONFIG_GET_NOMENCLATURES_ETAT_CIVIL);
     const { appelApi: appelNomenclaturesTypeMention } = useFetchApi(CONFIG_GET_TYPES_MENTION);
     const { appelApi: appelNomenclaturesRequete } = useFetchApi(CONFIG_GET_NOMENCLATURES_REQUETE);
+    const { appelApi: appelParametreBaseRequete } = useFetchApi(CONFIG_GET_PARAMETRES_BASE_REQUETE);
 
     const finAppel = (nomenclature: keyof IAppelsNomenclatures) =>
       setAppelsTermines(etatPrecedent => ({ ...etatPrecedent, [nomenclature]: true }));
@@ -148,12 +151,20 @@ export const TRAITEMENT_GET_NOMENCLATURES: TTraitementApi = {
           DocumentDelivrance.init(nomenclaturesRequete.documentsDelivrance);
           PaysSecabilite.init(nomenclaturesRequete.paysSecabilite);
         },
-        apresErreur: () => logError({ messageUtilisateur: "Erreur lors de la récupération des nomenclatures Requêtes" }),
+        apresErreur: () => logError({ messageUtilisateur: "Erreur lors de la récupération des nomenclatures Requête" }),
         finalement: () => {
           finAppel("requete");
         }
       });
-      ParametreBaseRequete.init().finally(() => finAppel("parametreBaseRequete"));
+
+      appelParametreBaseRequete({
+        parametres: { body: CLES },
+        apresSucces: ParametreBaseRequete.init,
+        apresErreur: () => logError({ messageUtilisateur: "Erreur lors de la récupération des paramètres de la base requête" }),
+        finalement: () => {
+          finAppel("parametreBaseRequete");
+        }
+      });
     };
 
     useEffect(() => {

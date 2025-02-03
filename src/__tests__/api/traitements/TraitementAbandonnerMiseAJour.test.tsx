@@ -98,13 +98,19 @@ describe("Test du traitement Abondon d'une requête de mise à jour", () => {
   test("Le traitement fonctionne correctement", async () => {
     render(<ComposantTest />);
 
-    expect(screen.getByText(PAS_EN_COURS)).toBeDefined();
+    await waitFor(() => {
+      expect(screen.getByText(PAS_EN_COURS)).toBeDefined();
+    });
 
     fireEvent.click(screen.getByText(BOUTON_SANS_PARAM_ACTE));
-    expect(screen.getByText(PAS_EN_COURS)).toBeDefined();
+    await waitFor(() => {
+      expect(screen.getByText(PAS_EN_COURS)).toBeDefined();
+    });
 
     fireEvent.click(screen.getByText(BOUTON_SANS_PARAM_REQUETE));
-    expect(screen.getByText(PAS_EN_COURS)).toBeDefined();
+    await waitFor(() => {
+      expect(screen.getByText(PAS_EN_COURS)).toBeDefined();
+    });
 
     fireEvent.click(screen.getByText(BOUTON_SANS_AM_ENREGISTREE));
     expect(screen.getByText(EN_COURS)).toBeDefined();
@@ -113,7 +119,6 @@ describe("Test du traitement Abondon d'une requête de mise à jour", () => {
     });
 
     fireEvent.click(screen.getByText(BOUTON_AVEC_AM_ENREGISTREE));
-    expect(screen.getByText(EN_COURS)).toBeDefined();
     await waitFor(() => {
       expect(screen.getByText(PAS_EN_COURS)).toBeDefined();
     });

@@ -4,12 +4,15 @@ import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFl
 import { logError } from "@util/LogManager";
 import { storeRece } from "@util/storeRece";
 import { ToastContainer } from "react-toastify";
-import { beforeEach, expect, test } from "vitest";
+import { afterEach, beforeEach, expect, test } from "vitest";
 
 beforeEach(() => {
-  expect(
-    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_LOG_SERVEUR)
-  ).toBeTruthy();
+  expect(gestionnaireFeatureFlag.estActif(FeatureFlag.FF_LOG_SERVEUR)).toBeTruthy();
+});
+
+afterEach(() => {
+  // Réactivation de la log après chaque test (certains tests la désactive car les erreurs logguées sont normales)
+  storeRece.logErrorDesactive = false;
 });
 
 test("renders error msg", () => {
@@ -41,8 +44,7 @@ test("renders error msg", () => {
   logError({
     messageUtilisateur: "Message à l'utilisateur",
     error: {
-      message:
-        '{"errors": [{"type": "BusinessException","code": "FCT_16031","message": "Message du serveur"}]}'
+      message: '{"errors": [{"type": "BusinessException","code": "FCT_16031","message": "Message du serveur"}]}'
     },
     errorInfo: "testerrorInfo (console.error LogManager)"
   });

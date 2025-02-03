@@ -3,10 +3,7 @@ import { AnalyseMarginale } from "@model/etatcivil/acte/IAnalyseMarginale";
 import { Evenement } from "@model/etatcivil/acte/IEvenement";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IFiliation } from "@model/etatcivil/acte/IFiliation";
-import {
-  ITitulaireActe,
-  TitulaireActe
-} from "@model/etatcivil/acte/ITitulaireActe";
+import { ITitulaireActe, TitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { IMention, Mention } from "@model/etatcivil/acte/mention/IMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
@@ -15,7 +12,7 @@ import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseReque
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
 import DateUtils from "@util/DateUtils";
-import { DEUX, TROIS, UN, getPremiereLettreDunMot, getValeurOuVide } from "@util/Utils";
+import { DEUX, TROIS, UN, getPremiereLettreDunMot } from "@util/Utils";
 import { IExtraitPlurilingueComposition } from "../IExtraitPlurilingueComposition";
 
 export interface IMentionsExtraitPlurilingue {
@@ -55,7 +52,7 @@ export class ExtraitPlurilingueCommunComposition {
     composition.filigrane_incomplet = FicheActe.estIncomplet(acte);
     ExtraitPlurilingueCommunComposition.ajouteCTV(sousTypeRequete, composition, ctv);
     composition.pas_de_bloc_signature = ExtraitPlurilingueCommunComposition.pasDeBlocSignature(validation);
-    composition.sceau_ministere = ParametreBaseRequete.getEnumFor(SCEAU_MINISTERE)?.libelle;
+    composition.sceau_ministere = ParametreBaseRequete.depuisCle(SCEAU_MINISTERE)?.libelle ?? "";
   }
 
   public static composerTitulairePlurilingue(compositionTitulaire: ITitulaireComposition, acte: IFicheActe, titulaire: ITitulaireActe) {
@@ -90,7 +87,7 @@ export class ExtraitPlurilingueCommunComposition {
         }
 
         const textMention = mentions[i].textes.texteMentionPlurilingue;
-        mentionExtraitPlurilingue.enonciations.push(getValeurOuVide(textMention));
+        mentionExtraitPlurilingue.enonciations.push(textMention ?? "");
         mentionExtraitPlurilingue.nombre_enonciations = i + 1;
       }
     } else {

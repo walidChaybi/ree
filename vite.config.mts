@@ -5,7 +5,6 @@ import path from "path";
 import { defineConfig } from "vite";
 import eslint from "vite-plugin-eslint";
 import packageJson from "./package.json";
-
 // https://vitejs.dev/config/
 export default defineConfig({
   base: "/rece/rece-ui",
@@ -19,8 +18,10 @@ export default defineConfig({
   },
   test: {
     globals: true,
+    pool: "threads",
     environment: "jsdom",
     setupFiles: ["src/__tests__/setupTests.ts"],
+    minWorkers: 4,
     maxWorkers: 4,
     testTimeout: 10000,
     include: ["src/__tests__/**/?(*.)test.ts?(x)"],
@@ -71,7 +72,8 @@ export default defineConfig({
       "@widget": path.resolve(__dirname, "/src/views/common/widget"),
       "@utilMetier": path.resolve(__dirname, "/src/views/common/utilMetier"),
       dsfr: path.resolve(__dirname, "/public/dsfr")
-    }
+    },
+    extensions: [".ts", ".tsx", ".mts", ".json", ".js", ".jsx", ".mjs"]
   },
   build: {
     manifest: true,

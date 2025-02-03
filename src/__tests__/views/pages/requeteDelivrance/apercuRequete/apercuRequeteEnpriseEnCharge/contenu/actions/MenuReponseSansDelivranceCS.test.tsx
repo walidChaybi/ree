@@ -11,6 +11,7 @@ import {
   reponseSansDelivranceCSMariageElectronique,
   reponseSansDelivranceCSPACSNonInscrit
 } from "@mock/data/Composition";
+import { PARAMETRE_BASE_REQUETE } from "@mock/data/NomenclatureParametresBaseRequete";
 import { acteMariage, acteMariageElectronique } from "@mock/data/ficheEtBandeau/ficheActe";
 import requeteDelivrance, {
   idRequeteRDCSC,
@@ -33,7 +34,7 @@ import {
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
-import { beforeEach, describe, expect, test } from "vitest";
+import { beforeAll, describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../../../__tests__utils__/testsUtil";
 
 describe("Menu réponse sans délivrance", () => {
@@ -97,8 +98,8 @@ describe("Menu réponse sans délivrance", () => {
     annuler: getBouton("Annuler")
   };
 
-  beforeEach(() => {
-    ParametreBaseRequete.init();
+  beforeAll(() => {
+    ParametreBaseRequete.init(PARAMETRE_BASE_REQUETE);
   });
 
   test("Doit rendre l'action - Nationalité française ou naissance & PACS non inscrit & Requête incomplete... - quand le document demandé est une attestation PACS", async () => {
