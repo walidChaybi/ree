@@ -37,6 +37,12 @@ export const recupererValeurAttribut = (valeurs: TMentionForm, nomAttribut: stri
     .split(".")
     .reduce((valeur: TValeurAideSaisie, cle) => (typeof valeur === "object" ? (valeur[cle] ?? undefined) : undefined), valeurs);
 
+export const texteNormalise = (texte: string) =>
+  texte
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
 const ContneurChampFormulaireAideSaisie: React.FC<{ champ: IChamp; children: React.ReactNode; idBloc: string }> = ({
   champ,
   children,
@@ -54,14 +60,13 @@ const ContneurChampFormulaireAideSaisie: React.FC<{ champ: IChamp; children: Rea
           case "AlwaysFalse":
             return false;
           default:
-            return exigence.operateur === "=="
-              ? exigence.valeurs.find(
-                  valeurAttendue => recupererValeurAttribut(values, exigence.idChampReference)?.toString() === valeurAttendue.toString()
-                )
-              : exigence.valeurs.find(
-                  valeurAttendue => recupererValeurAttribut(values, exigence.idChampReference)?.toString() !== valeurAttendue.toString()
-                );
+            break;
         }
+
+        const valeurSaisie = texteNormalise(recupererValeurAttribut(values, exigence.idChampReference)?.toString() ?? "");
+        const conditionRespectee = exigence.valeurs.some(valeurAttendue => texteNormalise(valeurAttendue) === valeurSaisie);
+
+        return exigence.operateur === "==" ? conditionRespectee : !conditionRespectee;
       }),
     [values]
   );
@@ -91,7 +96,7 @@ const ContneurChampFormulaireAideSaisie: React.FC<{ champ: IChamp; children: Rea
     }
   }, [estAffiche]);
 
-  return estAffiche ? <>{children}</> : <></>;
+  return estAffiche || champ.type === "select" ? <>{children}</> : <></>;
 };
 
 const ChampListeDeroulateConditionnee: React.FC<{
@@ -103,17 +108,25 @@ const ChampListeDeroulateConditionnee: React.FC<{
   const [field] = useField(name);
   const { values, setFieldValue } = useFormikContext<TMentionForm>();
   const [nombreOptions, setNombreOptions] = useState<number>(0);
-  const options = useMemo(() => {
-    const valeursOption =
-      valeursPossibles.filter(valeurPossible => {
-        return valeurPossible.conditions.filter(exigence => {
-          if (exigence.operateur === "AlwaysTrue") return true;
+  const options = useMemo(
+    () =>
+      (
+        valeursPossibles.find(valeurPossible =>
+          valeurPossible.conditions.every(condition => {
+            if (condition.operateur === "AlwaysTrue") return true;
 
-          const exigenceRespectee = exigence.valeurs.includes(recupererValeurAttribut(values, exigence.idChampReference)?.toString() ?? "");
+            const valeurSaisie = texteNormalise(recupererValeurAttribut(values, condition.idChampReference)?.toString() ?? "");
+            const conditionRespectee = condition.valeurs.some(valeur => texteNormalise(valeur) === valeurSaisie);
 
-          return exigence.operateur === "==" ? exigenceRespectee : !exigenceRespectee;
-        }).length;
-      })[0]?.valeurs ?? [];
+            return condition.operateur === "==" ? conditionRespectee : !conditionRespectee;
+          })
+        )?.valeurs ?? []
+      ).map(valeur => ({ cle: valeur, libelle: valeur })),
+    [values]
+  );
+
+  useEffect(() => {
+    const valeursOption = options.map(option => option.libelle);
 
     if (!valeursOption.includes(field.value) || nombreOptions !== valeursOption.length) {
       const nouvelleValeur = (() => {
@@ -126,19 +139,20 @@ const ChampListeDeroulateConditionnee: React.FC<{
             return "";
         }
       })();
+
       setFieldValue(name, nouvelleValeur);
       setNombreOptions(valeursOption.length);
     }
+  }, [options]);
 
-    return valeursOption.map(valeur => ({ cle: valeur, libelle: valeur }));
-  }, [values]);
-
-  return (
+  return options.length ? (
     <ChampListeDeroulante
       libelle={libelle}
       name={name}
       options={options}
     />
+  ) : (
+    <></>
   );
 };
 
@@ -224,12 +238,7 @@ const AideALaSaisieMention: React.FC<IAideALaSaisieMention> = ({ metamodeleTypeM
         </div>
       ))}
 
-    {metamodeleTypeMention?.modeleHandleBars && (
-      <TexteMentionAideALaSaisie
-        blocs={metamodeleTypeMention.metamodelsBlocs}
-        templateTexteMention={metamodeleTypeMention.modeleHandleBars}
-      />
-    )}
+    {metamodeleTypeMention?.modeleHandleBars && <TexteMentionAideALaSaisie templateTexteMention={metamodeleTypeMention.modeleHandleBars} />}
   </div>
 );
 

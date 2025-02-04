@@ -3,6 +3,7 @@
 import { IExigence, IValeursPossibles } from "@model/etatcivil/acte/mention/IMetaModeleTypeMention";
 import dayjs from "dayjs";
 import * as Yup from "yup";
+import { texteNormalise } from "../composants/pages/requetesMiseAJour/formulaires/mentions/AideALaSaisieMentionForm";
 
 interface ISchemaCommunParams {
   obligatoire: boolean | IExigence[];
@@ -132,11 +133,12 @@ const gestionObligation = (
     default:
       return schema.when([...obligatoire.map(condition => `$${condition.idChampReference}`)], {
         is: (...valeurChamp: TValeurChamp[]) =>
-          obligatoire.every((condition, index) =>
-            condition.operateur === "=="
-              ? condition.valeurs?.includes((valeurChamp[index] ?? "").toString())
-              : !condition.valeurs?.includes((valeurChamp[index] ?? "").toString())
-          ),
+          obligatoire.every((condition, index) => {
+            const valeurSaisie = texteNormalise((valeurChamp[index] ?? "").toString());
+            const conditionRespectee = condition.valeurs.some(valeur => texteNormalise(valeur) === valeurSaisie);
+
+            return condition.operateur === "==" ? conditionRespectee : !conditionRespectee;
+          }),
         then: actionObligation()
       });
   }
@@ -191,10 +193,12 @@ const SchemaValidation = {
               return true;
             default:
               schema = schema.when(`$${obligation.idChampReference}`, {
-                is: (valeurChamp: TValeurChamp) =>
-                  obligation.operateur === "=="
-                    ? obligation.valeurs?.includes((valeurChamp ?? "").toString())
-                    : !obligation.valeurs?.includes((valeurChamp ?? "").toString()),
+                is: (valeurChamp: TValeurChamp) => {
+                  const valeurSaisie = texteNormalise((valeurChamp ?? "").toString());
+                  const conditionRespectee = obligation.valeurs.some(valeur => texteNormalise(valeur) === valeurSaisie);
+
+                  return obligation.operateur === "==" ? conditionRespectee : !conditionRespectee;
+                },
                 then: schema.oneOf(valeurPossible.valeurs, messagesErreur.CHAMP_OBLIGATOIRE)
               });
               return false;

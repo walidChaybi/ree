@@ -4,6 +4,7 @@ import { describe, expect, it as test, vi } from "vitest";
 import ChampListeDeroulante from "../../../../composants/commun/champs/ChampListeDeroulante";
 
 const mockOptions = [
+  { cle: "", libelle: "" },
   { cle: "option1", libelle: "Option 1" },
   { cle: "option2", libelle: "Option 2" }
 ];
@@ -31,7 +32,7 @@ describe("ChampListeDeroulante", () => {
     const mockPendantChangement = vi.fn();
     renderAvecFormulaire(mockPendantChangement);
 
-    const selectElement = screen.getByRole("combobox") as HTMLSelectElement;
+    const selectElement: HTMLSelectElement = screen.getByRole("combobox");
 
     fireEvent.change(selectElement, { target: { value: "option1" } });
 
@@ -42,7 +43,7 @@ describe("ChampListeDeroulante", () => {
   test("Affiche un champ vide par defaut", async () => {
     renderAvecFormulaire();
 
-    const selectElement = screen.getByRole("combobox") as HTMLSelectElement;
+    const selectElement: HTMLSelectElement = screen.getByRole("combobox");
     expect(selectElement.value).toBe("");
   });
 
@@ -50,7 +51,7 @@ describe("ChampListeDeroulante", () => {
     const mockPendantChangement = vi.fn();
     renderAvecFormulaire(mockPendantChangement);
 
-    const selectElement = screen.getByRole("combobox") as HTMLSelectElement;
+    const selectElement: HTMLSelectElement = screen.getByRole("combobox");
 
     fireEvent.change(selectElement, { target: { value: "option1" } });
 

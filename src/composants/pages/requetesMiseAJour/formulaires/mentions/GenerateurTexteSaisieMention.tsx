@@ -1,8 +1,8 @@
 /* v8 ignore start */
-import { IMetaModelBloc } from "@model/etatcivil/acte/mention/IMetaModeleTypeMention";
 import { useFormikContext } from "formik";
-import React, { useEffect, useMemo, useState } from "react";
-import { recupererValeurAttribut } from "./AideALaSaisieMentionForm";
+import React, { useEffect, useState } from "react";
+import { TMentionForm } from "../MentionForm";
+import { recupererValeurAttribut, texteNormalise } from "./AideALaSaisieMentionForm";
 
 interface IDate {
   jour: string;
@@ -39,19 +39,18 @@ const FormaterTexteHelper = {
   }
 };
 
-const genererPourSaisie = (modeleTexte: string, valeurs: any, valeursDefaut: any) => {
-  const texteParConditions =
-    modeleTexte.match(/({{#if[a-zA-Zà-úÀ-Ú0-9 .'()]{0,200}}})|({{else}})|({{\/if}})|({{valeur[a-zA-Z0-9 .']{0,200}}})|[^{}]{0,500}/g) ?? [];
+const genererPourSaisie = (modeleTexte: string, valeurs: TMentionForm) => {
+  const texteParConditions = modeleTexte.match(/({{#if[^}]{0,200}}})|({{else}})|({{\/if}})|({{#valeur[^}]{0,200}}})|[^{}]{0,500}/g) ?? [];
 
   const valeursEtConditions: (string | TCondition)[] = [];
   const conditionsEnCours: IConditionEncours[] = [];
 
   const insererValeur = (valeur: string): string => {
-    if (!valeur.startsWith("{{valeur '")) {
+    if (!valeur.startsWith("{{#valeur ")) {
       return valeur;
     }
 
-    const cle = valeur.replace(/({{valeur '|'|}})/g, "");
+    const [cle, ...valeurDefaut] = valeur.replace(/({{#valeur |}})/g, "").split(" ");
     const valeurRenseignee = recupererValeurAttribut(valeurs, cle);
 
     switch (true) {
@@ -59,11 +58,9 @@ const genererPourSaisie = (modeleTexte: string, valeurs: any, valeursDefaut: any
         return FormaterTexteHelper.formaterDate(valeurRenseignee as unknown as IDate);
       case valeurRenseignee && typeof valeurRenseignee !== "object":
         return `${valeurRenseignee}`;
+      default:
+        return `${valeurDefaut.join(" ")}`.toUpperCase();
     }
-
-    const valeurDefaut = recupererValeurAttribut(valeursDefaut, cle);
-
-    return `${valeurDefaut !== undefined && typeof valeurDefaut !== "object" ? valeurDefaut : cle}`.toUpperCase();
   };
 
   const ajouterCondition = (
@@ -109,11 +106,7 @@ const genererPourSaisie = (modeleTexte: string, valeurs: any, valeursDefaut: any
     switch (true) {
       case valeur.startsWith("{{#if "):
         ajouterCondition(valeursEtConditions, [...conditionsEnCours], {
-          si: valeur
-            .replace(/{{#if|}}|\(eq|\)/g, "")
-            .trim()
-            .replace("'", "")
-            .replace(/'$/, ""),
+          si: valeur.replace(/{{#if|}}/g, "").trim(),
           alors: [],
           sinon: []
         });
@@ -134,9 +127,24 @@ const genererPourSaisie = (modeleTexte: string, valeurs: any, valeursDefaut: any
   });
 
   const gererConditon = (condition: TCondition): string[] => {
-    const [cle, ...valeur] = condition.si.split(" ");
-    const valeurSaisie = recupererValeurAttribut(valeurs, cle);
-    const conditionValide = valeur.length ? valeurSaisie?.toString() === valeur.join(" ") : Boolean(valeurSaisie);
+    const conditionValide = condition.si
+      .split("&")
+      .filter(partieCondition => Boolean(partieCondition.trim()))
+      .every(partieCondition => {
+        const [cle, ...valeurAttendue] = partieCondition.trim().split(" ");
+        const negation = cle.startsWith("!");
+        const valeurSaisie = recupererValeurAttribut(valeurs, cle.replace("!", ""));
+        const valeurComparee = (() => {
+          if (valeurSaisie === undefined || typeof valeurSaisie === "object") {
+            return "";
+          }
+
+          return texteNormalise(valeurSaisie.toString());
+        })();
+        const comparaison = valeurAttendue.length ? valeurComparee === texteNormalise(valeurAttendue.join(" ")) : Boolean(valeurComparee);
+
+        return negation ? !comparaison : comparaison;
+      });
 
     return (conditionValide ? condition.alors : condition.sinon).reduce(
       (valeursCondition: string[], valeur: string | TCondition) => [
@@ -158,31 +166,8 @@ const genererPourSaisie = (modeleTexte: string, valeurs: any, valeursDefaut: any
     .join("");
 };
 
-const genererValeursParDefaut = (blocs: IMetaModelBloc[]) =>
-  blocs.reduce((placeholders, bloc) => {
-    const libelleBloc = bloc.titre
-      .replace(/\(.{1,50}\)/, "")
-      .trim()
-      .toUpperCase();
-
-    return {
-      ...placeholders,
-      [bloc.id]: bloc.champs.reduce(
-        (placeholdersChamps, champ) => ({
-          ...placeholdersChamps,
-          [champ.id]: `${champ.libelle.toUpperCase()} <${libelleBloc}>`
-        }),
-        {}
-      )
-    };
-  }, {});
-
-export const TexteMentionAideALaSaisie: React.FC<{ blocs: IMetaModelBloc[]; templateTexteMention: string }> = ({
-  blocs,
-  templateTexteMention
-}) => {
-  const valeursParDefaut = useMemo(() => genererValeursParDefaut(blocs), [blocs]);
-  const { values, setFieldValue } = useFormikContext<any>();
+export const TexteMentionAideALaSaisie: React.FC<{ templateTexteMention: string }> = ({ templateTexteMention }) => {
+  const { values, setFieldValue } = useFormikContext<TMentionForm>();
   const [texteSaisie, setTexteSaisie] = useState("");
   const [textesEditables, setTextesEditables] = useState<{ [index: number]: any }>([]);
 
@@ -237,7 +222,7 @@ export const TexteMentionAideALaSaisie: React.FC<{ blocs: IMetaModelBloc[]; temp
   }, [texteSaisie, textesEditables]);
 
   useEffect(() => {
-    setTexteSaisie(genererPourSaisie(templateTexteMention, values, valeursParDefaut));
+    setTexteSaisie(genererPourSaisie(templateTexteMention, values));
   }, [values]);
 
   return (

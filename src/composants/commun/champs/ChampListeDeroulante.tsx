@@ -39,18 +39,12 @@ const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({
           pendantChangement?.();
         }}
       >
-        {[{ cle: "", libelle: "" }, ...options]?.map(option => (
+        {options?.map(option => (
           <option
-            key={option.cle}
+            key={option.cle ?? "option-vide"}
             value={option.cle}
-            selected={field.value === option.cle}
-            hidden={option.cle === ""}
           >
-            {option.libelle.length
-              ? premiereLettreMajuscule
-                ? `${option.libelle.charAt(0).toUpperCase()}${option.libelle.substring(1)}`
-                : option.libelle
-              : ""}
+            {premiereLettreMajuscule ? `${option.libelle.charAt(0).toUpperCase()}${option.libelle.substring(1)}` : option.libelle}
           </option>
         ))}
       </select>
