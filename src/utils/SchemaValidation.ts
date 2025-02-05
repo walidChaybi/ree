@@ -1,12 +1,12 @@
 // À tester
 /* v8 ignore start */
-import { IExigence, IValeursPossibles } from "@model/etatcivil/acte/mention/IMetaModeleTypeMention";
+import { ValeursPossiblesMetaModele } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
+import { ConditionChamp } from "@model/form/commun/ConditionChamp";
 import dayjs from "dayjs";
 import * as Yup from "yup";
-import { texteNormalise } from "../composants/pages/requetesMiseAJour/formulaires/mentions/AideALaSaisieMentionForm";
 
 interface ISchemaCommunParams {
-  obligatoire: boolean | IExigence[];
+  obligatoire: boolean | ConditionChamp[];
 }
 
 type TValeurChamp = string | boolean | number | undefined;
@@ -25,6 +25,7 @@ const messagesErreur = {
   DOIT_ETRE_ENTIER: "⚠ La valeur doit être un entier",
   CHAMP_OBLIGATOIRE: "⚠ La saisie du champ est obligatoire"
 };
+
 const erreurSurDateEntiere = (message: string, baseChemin: string) =>
   new Yup.ValidationError([
     new Yup.ValidationError(message, {}, `${baseChemin}.jour`),
@@ -117,7 +118,7 @@ const getSchemaValidationDate = (bloquerDateFutur?: boolean): Yup.ObjectSchema<T
 
 const gestionObligation = (
   schema: Yup.AnySchema,
-  obligatoire: boolean | IExigence[],
+  obligatoire: boolean | ConditionChamp[],
   actionObligation: () => Yup.AnySchema
 ): Yup.AnySchema => {
   if (typeof obligatoire === "boolean") {
@@ -133,12 +134,7 @@ const gestionObligation = (
     default:
       return schema.when([...obligatoire.map(condition => `$${condition.idChampReference}`)], {
         is: (...valeurChamp: TValeurChamp[]) =>
-          obligatoire.every((condition, index) => {
-            const valeurSaisie = texteNormalise((valeurChamp[index] ?? "").toString());
-            const conditionRespectee = condition.valeurs.some(valeur => texteNormalise(valeur) === valeurSaisie);
-
-            return condition.operateur === "==" ? conditionRespectee : !conditionRespectee;
-          }),
+          obligatoire.every((condition, index) => condition.estRespecteePourValeur(valeurChamp[index])),
         then: actionObligation()
       });
   }
@@ -155,9 +151,9 @@ const SchemaValidation = {
 
   entier: (schemaParams: ISchemaCommunParams & { min?: number; max?: number; estAnnee?: boolean }) => {
     let schema = Yup.number().integer(messagesErreur.DOIT_ETRE_ENTIER);
-    schemaParams.min != undefined &&
+    schemaParams.min !== undefined &&
       (schema = schema.min(schemaParams.min, `⚠ La valeur ne peut pas être inférieure à ${schemaParams.min}`));
-    schemaParams.max != undefined &&
+    schemaParams.max !== undefined &&
       (schema = schema.max(schemaParams.max, `⚠ La valeur ne peut pas être supérieure à ${schemaParams.max}`));
     schemaParams.estAnnee &&
       (schema = schema
@@ -175,7 +171,7 @@ const SchemaValidation = {
     ) as Yup.BooleanSchema;
   },
 
-  listeDeroulante: (schemaParams: ISchemaCommunParams & { options?: string[]; valeursPossibles?: IValeursPossibles[] }) => {
+  listeDeroulante: (schemaParams: ISchemaCommunParams & { options?: string[]; valeursPossibles?: ValeursPossiblesMetaModele[] }) => {
     let schema = Yup.string();
 
     if (schemaParams.options) {
@@ -183,8 +179,8 @@ const SchemaValidation = {
     }
 
     if (schemaParams.valeursPossibles) {
-      schemaParams.valeursPossibles.forEach((valeurPossible: IValeursPossibles) => {
-        valeurPossible.conditions.some((obligation: IExigence) => {
+      schemaParams.valeursPossibles.forEach((valeurPossible: ValeursPossiblesMetaModele) => {
+        valeurPossible.conditions.some((obligation: ConditionChamp) => {
           switch (obligation.operateur) {
             case "AlwaysTrue":
               schema = schema.oneOf(valeurPossible.valeurs, messagesErreur.CHAMP_OBLIGATOIRE);
@@ -193,12 +189,7 @@ const SchemaValidation = {
               return true;
             default:
               schema = schema.when(`$${obligation.idChampReference}`, {
-                is: (valeurChamp: TValeurChamp) => {
-                  const valeurSaisie = texteNormalise((valeurChamp ?? "").toString());
-                  const conditionRespectee = obligation.valeurs.some(valeur => texteNormalise(valeur) === valeurSaisie);
-
-                  return obligation.operateur === "==" ? conditionRespectee : !conditionRespectee;
-                },
+                is: (valeurChamp: TValeurChamp) => obligation.estRespecteePourValeur(valeurChamp),
                 then: schema.oneOf(valeurPossible.valeurs, messagesErreur.CHAMP_OBLIGATOIRE)
               });
               return false;

@@ -1,10 +1,11 @@
 /* v8 ignore start */
 import { CONFIG_GET_METAMODELE_TYPE_MENTION } from "@api/configurations/requete/miseAJour/GetMetamodeleTypeMentionConfigApi";
 import { TEXTE_MENTION } from "@composant/formulaire/ConstantesNomsForm";
-import { IMetamodeleTypeMention } from "@model/etatcivil/acte/mention/IMetaModeleTypeMention";
 import { ITypeMention, TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { IMetaModeleTypeMentionDto, MetaModeleTypeMention } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
+import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { logError } from "@util/LogManager";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
@@ -35,21 +36,14 @@ export interface ITypeMentionDisponible {
   libellesParents: string[];
 }
 
-export interface IMentionForm {
-  idTypeMention: string;
-  texteMention: string;
-}
-
-export type TObjetAideSaise = { [cle: string]: TValeurAideSaisie };
-export type TValeurAideSaisie = string | boolean | TObjetAideSaise | undefined;
-
 export type TMentionForm = {
   idTypeMention: string;
   texteMention: string;
-} & TObjetAideSaise;
+} & TObjetFormulaire;
 
 interface IMentionFormProps {
   infoTitulaire: IInfoTitulaire;
+  setEnCoursDeSaisie: (estEnCours: boolean) => void;
 }
 
 const SCHEMA_VALIDATION_MENTIONS = {
@@ -104,86 +98,20 @@ const getTypesMentionDisponibles = (natureActe: NatureActe): ITypeMentionDisponi
   return typesMentionDisponibles;
 };
 
-const genererValeursInitialesAideALaSaisie = (metamodeleTypeMention: IMetamodeleTypeMention) => {
-  return metamodeleTypeMention.metamodelsBlocs.reduce((valeursInitialesBlocs, bloc) => {
-    const valeursInitialesBloc = bloc.champs.reduce((champs, champ) => {
-      const valeurInitaleChamp = (() => {
-        switch (champ.type) {
-          case "text":
-          case "int":
-            return "";
-          case "dateComplete":
-          case "dateIncomplete":
-            return {
-              jour: "",
-              mois: "",
-              annee: ""
-            };
-          case "boolean":
-            return false;
-          case "select":
-            return champ.valeurParDefaut ?? "";
-          default:
-            return "";
-        }
-      })();
-
-      return { ...champs, [champ.id]: valeurInitaleChamp };
-    }, {});
-
-    return { ...valeursInitialesBlocs, [bloc.id]: valeursInitialesBloc };
-  }, {});
-};
-
-const genererSchemaValidationAideALaSaisie = (metamodeleTypeMention?: IMetamodeleTypeMention) => {
-  return metamodeleTypeMention?.metamodelsBlocs.reduce((schemaValidationBlocs, bloc) => {
-    const schemaValidationBloc = bloc.champs.reduce((champs, champ) => {
-      const validationChamp = (() => {
-        switch (champ.type) {
-          case "text":
-            return SchemaValidation.texte({ obligatoire: champ.estObligatoire });
-          case "int":
-            return SchemaValidation.entier({ obligatoire: champ.estObligatoire });
-          case "annee":
-            return SchemaValidation.entier({ obligatoire: champ.estObligatoire, estAnnee: true });
-          case "boolean":
-            return SchemaValidation.booleen({ obligatoire: champ.estObligatoire });
-          case "select":
-            return SchemaValidation.listeDeroulante({
-              valeursPossibles: champ.valeursPossibles,
-              obligatoire: champ.estObligatoire
-            });
-          case "dateComplete":
-            return SchemaValidation.dateComplete({ obligatoire: champ.estObligatoire, bloquerDateFutur: true });
-          case "dateIncomplete":
-            return SchemaValidation.dateIncomplete({ obligatoire: champ.estObligatoire, bloquerDateFutur: true });
-          default:
-            return SchemaValidation.inconnu();
-        }
-      })();
-
-      return { ...champs, [champ.id]: validationChamp };
-    }, {});
-
-    schemaValidationBlocs = { ...schemaValidationBlocs, [bloc.id]: SchemaValidation.objet(schemaValidationBloc) };
-    return schemaValidationBlocs;
-  }, {});
-};
-
 const DEFAUT_CREATION: TMentionForm = { idTypeMention: "", texteMention: "" };
 
-const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire }) => {
+const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeSaisie }) => {
   const typesMentionDisponibles = useMemo(() => getTypesMentionDisponibles(NatureActe.NAISSANCE), []);
   const [valeurDefaut, setValeurDefaut] = useState<TMentionForm>({ ...DEFAUT_CREATION });
   const [typeMentionChoisi, setTypeMentionChoisi] = useState<ITypeMentionDisponible | null>(null);
-  const [metamodeleTypeMention, setMetamodeleTypeMention] = useState<IMetamodeleTypeMention | null>(null);
+  const [metamodeleTypeMention, setMetamodeleTypeMention] = useState<MetaModeleTypeMention | null>(null);
   const { appelApi: appelApiGetMetamodeleTypeMention } = useFetchApi(CONFIG_GET_METAMODELE_TYPE_MENTION);
   const [mentionModifiee, setMentionModifiee] = useEventState<IMentionEnCours | null>(EEvent.MODIFIER_MENTION, null);
   const { envoyer: enregistrerMention } = useEventDispatch<IMentionEnCours | null>(EEvent.ENREGISTRER_MENTION);
   const schemaValidation = useMemo(() => {
     return SchemaValidation.objet({
       ...SCHEMA_VALIDATION_MENTIONS,
-      ...(metamodeleTypeMention !== null ? genererSchemaValidationAideALaSaisie(metamodeleTypeMention) : {})
+      ...(metamodeleTypeMention?.schemaValidation ?? {})
     });
   }, [metamodeleTypeMention]);
 
@@ -202,6 +130,8 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire }) => {
   }, [mentionModifiee]);
 
   useEffect(() => {
+    setEnCoursDeSaisie(Boolean(typeMentionChoisi));
+
     if (!typeMentionChoisi) {
       setMetamodeleTypeMention(null);
 
@@ -209,24 +139,32 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire }) => {
     }
 
     if (typeMentionChoisi?.aideSaisie) {
+      const gererErreur = () => {
+        logError({
+          messageUtilisateur: "Impossible de récupérer les metamodeles"
+        });
+        setValeurDefaut((prec: any) => ({ ...prec, texteMention: "" }));
+      };
+
       appelApiGetMetamodeleTypeMention({
         parametres: { path: { idTypeMention: typeMentionChoisi.id } },
-        apresSucces: (metamodele: IMetamodeleTypeMention) => {
-          setMetamodeleTypeMention(metamodele);
+        apresSucces: (metamodele: IMetaModeleTypeMentionDto) => {
+          const modele = MetaModeleTypeMention.depuisDto(metamodele);
+          if (!modele) {
+            gererErreur();
+
+            return;
+          }
+
+          setMetamodeleTypeMention(modele);
           setValeurDefaut({
-            ...genererValeursInitialesAideALaSaisie(metamodele),
+            ...modele.valeursInitiales(),
             titulaire: { sexe: infoTitulaire.sexe?.toString() ?? "" },
             idTypeMention: typeMentionChoisi.id,
             texteMention: mentionModifiee?.mention.texte ?? ""
           });
         },
-        apresErreur: erreurs => {
-          logError({
-            messageUtilisateur: "Impossible de récupérer les metamodeles",
-            error: erreurs?.[0]
-          });
-          setValeurDefaut((prec: any) => ({ ...prec, texteMention: "" }));
-        }
+        apresErreur: () => gererErreur()
       });
 
       return;
@@ -254,7 +192,7 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire }) => {
       }}
     >
       {({ values, dirty }) => (
-        <Form>
+        <Form className="px-4">
           <h3>{mentionModifiee ? "Modification d'une mention" : "Ajout d'une mention"}</h3>
           <ChampTypeMention
             name="idTypeMention"
@@ -272,7 +210,6 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire }) => {
                     libelle="Texte mention"
                     name={TEXTE_MENTION}
                     className="h-48 w-full pb-4"
-                    value={metamodeleTypeMention ? metamodeleTypeMention?.modeleHandleBars : ""}
                   />
                 </div>
               </div>

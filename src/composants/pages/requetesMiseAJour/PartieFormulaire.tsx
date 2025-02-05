@@ -8,6 +8,7 @@ import { Droit } from "@model/agent/enum/Droit";
 import { TErreurApi } from "@model/api/Api";
 import { FicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import messageManager from "@util/messageManager";
 import { PopinSignatureMiseAJourMentions } from "@widget/signature/PopinSignatureMiseAJourMentions";
 import { Form, Formik } from "formik";
@@ -21,7 +22,6 @@ import PageChargeur from "../../commun/chargeurs/PageChargeur";
 import OngletsBouton from "../../commun/onglets/OngletsBouton";
 import OngletsContenu from "../../commun/onglets/OngletsContenu";
 import AnalyseMarginaleForm from "./formulaires/AnalyseMarginaleForm";
-import BoutonActualiserEtVisualiser from "./formulaires/BoutonActualiserEtVisualiser";
 import BoutonValiderEtTerminer from "./formulaires/BoutonValiderEtTerminer";
 import MentionForm from "./formulaires/MentionForm";
 import TableauMentions from "./formulaires/mentions/TableauMentions";
@@ -37,7 +37,7 @@ export interface IMentionEnCours {
   mention: IMentionMiseAJour;
 }
 
-export interface IAnalyseMarginaleMiseAJour {
+export interface IAnalyseMarginaleMiseAJour extends TObjetFormulaire {
   nom: string;
   nomSecable: boolean;
   nomPartie1: string;
@@ -259,20 +259,25 @@ export const PartieFormulaire: React.FC = () => {
               )}
 
               <ConteneurBoutonBasDePage position="droite">
-                <BoutonActualiserEtVisualiser
+                <Bouton
+                  title="Actualiser et visualiser"
                   type="submit"
                   disabled={!dirty || !isValid || formulaireMentionEnCoursDeSaisie}
-                />
+                >
+                  {"Actualiser et visualiser"}
+                </Bouton>
 
                 {estMiseAJourAvecMentions ? (
                   estOfficierHabiliterPourTousLesDroits(utilisateurConnecte, [Droit.SIGNER_MENTION, Droit.METTRE_A_JOUR_ACTE]) && (
                     <>
                       <Bouton
+                        title="Terminer et Signer"
                         disabled={formulaireMentionEnCoursDeSaisie || !isValid || dirty}
                         onClick={() => setEstPopinSignatureOuverte(true)}
                       >
-                        Terminer et Signer
+                        {"Terminer et Signer"}
                       </Bouton>
+
                       <PopinSignatureMiseAJourMentions
                         estOuvert={estPopinSignatureOuverte}
                         setEstOuvert={setEstPopinSignatureOuverte}
@@ -290,7 +295,10 @@ export const PartieFormulaire: React.FC = () => {
 
         {estMiseAJourAvecMentions && (
           <OngletsContenu estActif={ongletsActifs.formulaires === ECleOngletsMiseAJour.MENTIONS}>
-            <MentionForm infoTitulaire={{ sexe: sexeTitulaire }} />
+            <MentionForm
+              infoTitulaire={{ sexe: sexeTitulaire }}
+              setEnCoursDeSaisie={estEnCours => setFormulaireMentionEnCoursDeSaisie(estEnCours)}
+            />
           </OngletsContenu>
         )}
       </div>

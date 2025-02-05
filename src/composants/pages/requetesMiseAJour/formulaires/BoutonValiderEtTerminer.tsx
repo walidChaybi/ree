@@ -19,7 +19,7 @@ const BoutonValiderEtTerminer: React.FC<IBoutonProps> = ({ ...props }) => {
     lancerValidation({
       parametres: { idActe: idActe, idRequete: idRequete },
       apresSucces: () => {
-        navigate(URL_RECHERCHE_ACTE_INSCRIPTION);
+        navigate(URL_RECHERCHE_ACTE_INSCRIPTION, { replace: true });
         messageManager.showSuccessAndClose("L'analyse marginale a été mise à jour avec succès");
       }
     });

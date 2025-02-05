@@ -1,3 +1,4 @@
+import { ObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { useFormikContext } from "formik";
 import { useEffect } from "react";
 import Bouton from "../../../commun/bouton/Bouton";
@@ -15,32 +16,11 @@ const AnalyseMarginaleForm: React.FC<IAnalyseMarginaleFormProps> = ({ analyseMar
   const { values, initialValues, setValues } = useFormikContext<IMiseAJourForm>();
 
   useEffect(() => {
-    type TObjet = {
-      [cle: string]: string | number | boolean | TObjet;
-    };
-
-    const objetModifie = (objA: TObjet, objB: TObjet) => {
-      if (Object.keys(objA).length !== Object.keys(objB).length) {
-        return true;
-      }
-
-      for (let cleObj of Object.keys(objA)) {
-        const valeurCleA = objA[cleObj];
-        const valeurCleB = objB[cleObj];
-        const modifiee =
-          typeof valeurCleA === "object" && typeof valeurCleB === "object"
-            ? objetModifie(valeurCleA, valeurCleB)
-            : valeurCleA !== valeurCleB;
-        if (modifiee) {
-          return true;
-        }
-      }
-
-      return false;
-    };
-
     setAnalyseMarginaleModifiee(
-      objetModifie(values.analyseMarginale as unknown as TObjet, initialValues.analyseMarginale as unknown as TObjet)
+      ObjetFormulaire.valeursModifiees({
+        valeurs: values.analyseMarginale,
+        valeursInitiales: initialValues.analyseMarginale
+      })
     );
   }, [values, initialValues]);
 

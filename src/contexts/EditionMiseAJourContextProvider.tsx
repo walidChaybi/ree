@@ -1,9 +1,14 @@
 import TRAITEMENT_ABANDONNER_MISE_A_JOUR from "@api/traitements/TraitementAbandonnerMiseAJour";
+import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
 import React, { createContext, useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PageChargeur from "../composants/commun/chargeurs/PageChargeur";
+import CompteurTemps from "../composants/pages/requetesMiseAJour/compteurTemps/CompteurTemps";
 import { useCreateBlocker } from "../hooks/CreateBlocker";
 import useTraitementApi from "../hooks/api/TraitementApiHook";
 
+// A tester Alex 5/02/25
+/* v8 ignore start */
 export enum ECleOngletsMiseAJour {
   ACTE = "acte",
   ACTE_MIS_A_JOUR = "acte-mis-a-jour",
@@ -49,6 +54,7 @@ const EditionMiseAJourContextProvider: React.FC<React.PropsWithChildren<IEdition
   estMiseAJourAvecMentions,
   children
 }) => {
+  const navigate = useNavigate();
   const [ongletsActifs, setOngletsActifs] = useState<{ actes: ECleOngletsMiseAJour; formulaires: ECleOngletsMiseAJour }>({
     actes: ECleOngletsMiseAJour.ACTE,
     formulaires: estMiseAJourAvecMentions ? ECleOngletsMiseAJour.MENTIONS : ECleOngletsMiseAJour.ANALYSE_MARGINALE
@@ -126,9 +132,25 @@ const EditionMiseAJourContextProvider: React.FC<React.PropsWithChildren<IEdition
         {abandonEnCours && <PageChargeur />}
         {children}
         <BlockerNavigation />
+        <CompteurTemps
+          idRequete={idRequete}
+          abandonnerRequete={() => {
+            gestionBlocker.desactiverBlocker();
+            lancerTraitementAbandonner({
+              parametres: {
+                idActe: idActe,
+                idRequete: idRequete,
+                miseAJourEffectuee: miseAJourEffectuee,
+                estMiseAJourAvecMentions: estMiseAJourAvecMentions
+              },
+              finalement: () => navigate(URL_RECHERCHE_ACTE_INSCRIPTION, { replace: true })
+            });
+          }}
+        />
       </EditionMiseAJourContext.Actions.Provider>
     </EditionMiseAJourContext.Valeurs.Provider>
   );
 };
 
 export default EditionMiseAJourContextProvider;
+/* v8 ignore start */

@@ -2,7 +2,7 @@ import { ArrowBack } from "@mui/icons-material";
 import { Autocomplete } from "@mui/material";
 import { ErrorMessage, useField, useFormikContext } from "formik";
 import { useEffect, useMemo, useState } from "react";
-import { IMentionForm, ITypeMentionDisponible } from "../MentionForm";
+import { ITypeMentionDisponible, TMentionForm } from "../MentionForm";
 
 /* v8 ignore start */
 interface IChampTypeMentionProps {
@@ -56,7 +56,7 @@ const formaterMentionSelectionne = (typeMention: ITypeMentionDisponible) => {
 
 const ChampTypeMention: React.FC<IChampTypeMentionProps> = ({ name, typesMentionDisponibles, setIdTypeMentionChoisi }) => {
   const [field, meta] = useField(name);
-  const { setFieldValue } = useFormikContext<IMentionForm>();
+  const { setFieldValue } = useFormikContext<TMentionForm>();
   const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
   const [listeOuverte, setListeOuverte] = useState<string>("");
 

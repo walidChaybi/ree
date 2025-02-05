@@ -1,8 +1,8 @@
 /* v8 ignore start */
-import { IChamp, IMetaModelBloc, IMetamodeleTypeMention, IValeursPossibles } from "@model/etatcivil/acte/mention/IMetaModeleTypeMention";
+import { BlocMetaModele, ChampMetaModele, MetaModeleTypeMention } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
 import { useField, useFormikContext } from "formik";
 import React, { Suspense, lazy, useEffect, useMemo, useState } from "react";
-import { TMentionForm, TValeurAideSaisie } from "../MentionForm";
+import { TMentionForm } from "../MentionForm";
 import { TexteMentionAideALaSaisie } from "./GenerateurTexteSaisieMention";
 
 const ChampsCaseACocher = lazy(() => import("../../../../commun/champs/ChampsCaseACocher"));
@@ -11,7 +11,7 @@ const ChampListeDeroulante = lazy(() => import("../../../../commun/champs/ChampL
 const ChampsTexte = lazy(() => import("../../../../commun/champs/ChampsTexte"));
 
 interface IAideALaSaisieMention {
-  metamodeleTypeMention: IMetamodeleTypeMention | null;
+  metamodeleTypeMention: MetaModeleTypeMention | null;
 }
 
 const getClassesChamp = (typeChamp: string) => {
@@ -32,44 +32,14 @@ const getClassesChamp = (typeChamp: string) => {
   }
 };
 
-export const recupererValeurAttribut = (valeurs: TMentionForm, nomAttribut: string) =>
-  nomAttribut
-    .split(".")
-    .reduce((valeur: TValeurAideSaisie, cle) => (typeof valeur === "object" ? (valeur[cle] ?? undefined) : undefined), valeurs);
-
-export const texteNormalise = (texte: string) =>
-  texte
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
-
-const ContneurChampFormulaireAideSaisie: React.FC<{ champ: IChamp; children: React.ReactNode; idBloc: string }> = ({
+const ContneurChampFormulaireAideSaisie: React.FC<{ champ: ChampMetaModele; children: React.ReactNode; idBloc: string }> = ({
   champ,
   children,
   idBloc
 }) => {
   const { values, setFieldValue, setFieldTouched } = useFormikContext<TMentionForm>();
   const idChamp = useMemo(() => `${idBloc}.${champ.id}`, [champ, idBloc]);
-
-  const estAffiche = useMemo(
-    () =>
-      champ.estAffiche.every(exigence => {
-        switch (exigence.operateur) {
-          case "AlwaysTrue":
-            return true;
-          case "AlwaysFalse":
-            return false;
-          default:
-            break;
-        }
-
-        const valeurSaisie = texteNormalise(recupererValeurAttribut(values, exigence.idChampReference)?.toString() ?? "");
-        const conditionRespectee = exigence.valeurs.some(valeurAttendue => texteNormalise(valeurAttendue) === valeurSaisie);
-
-        return exigence.operateur === "==" ? conditionRespectee : !conditionRespectee;
-      }),
-    [values]
-  );
+  const estAffiche = useMemo(() => champ.estAffichable(values), [values]);
 
   useEffect(() => {
     if (estAffiche) {
@@ -100,28 +70,18 @@ const ContneurChampFormulaireAideSaisie: React.FC<{ champ: IChamp; children: Rea
 };
 
 const ChampListeDeroulateConditionnee: React.FC<{
-  libelle: string;
   name: string;
-  valeursPossibles: IValeursPossibles[];
-  valeurDefaut?: string;
-}> = ({ libelle, name, valeursPossibles, valeurDefaut }) => {
+  champ: ChampMetaModele;
+}> = ({ name, champ }) => {
   const [field] = useField(name);
   const { values, setFieldValue } = useFormikContext<TMentionForm>();
   const [nombreOptions, setNombreOptions] = useState<number>(0);
   const options = useMemo(
     () =>
-      (
-        valeursPossibles.find(valeurPossible =>
-          valeurPossible.conditions.every(condition => {
-            if (condition.operateur === "AlwaysTrue") return true;
-
-            const valeurSaisie = texteNormalise(recupererValeurAttribut(values, condition.idChampReference)?.toString() ?? "");
-            const conditionRespectee = condition.valeurs.some(valeur => texteNormalise(valeur) === valeurSaisie);
-
-            return condition.operateur === "==" ? conditionRespectee : !conditionRespectee;
-          })
-        )?.valeurs ?? []
-      ).map(valeur => ({ cle: valeur, libelle: valeur })),
+      (champ.valeursPossibles.find(valeursPossibles => valeursPossibles.sontUtilisables(values))?.valeurs ?? []).map(valeur => ({
+        cle: valeur,
+        libelle: valeur
+      })),
     [values]
   );
 
@@ -131,8 +91,8 @@ const ChampListeDeroulateConditionnee: React.FC<{
     if (!valeursOption.includes(field.value) || nombreOptions !== valeursOption.length) {
       const nouvelleValeur = (() => {
         switch (true) {
-          case valeursOption.includes(valeurDefaut ?? ""):
-            return valeurDefaut ?? "";
+          case valeursOption.includes(champ.valeurParDefaut ?? ""):
+            return champ.valeurParDefaut ?? "";
           case Boolean(valeursOption[0]):
             return valeursOption[0];
           default:
@@ -147,7 +107,7 @@ const ChampListeDeroulateConditionnee: React.FC<{
 
   return options.length ? (
     <ChampListeDeroulante
-      libelle={libelle}
+      libelle={champ.libelle}
       name={name}
       options={options}
     />
@@ -158,85 +118,79 @@ const ChampListeDeroulateConditionnee: React.FC<{
 
 const AideALaSaisieMention: React.FC<IAideALaSaisieMention> = ({ metamodeleTypeMention }) => (
   <div className="mt-10 grid gap-6 pb-6 pl-8 pr-5">
-    {metamodeleTypeMention?.metamodelsBlocs
-      .sort((blocA, blocB) => blocA.position - blocB.position)
-      .map((bloc: IMetaModelBloc) => (
-        <div
-          key={bloc.id}
-          className="mt-4 rounded-xl border-2 border-solid border-bleu pb-2 text-start"
-        >
-          <div className="-mt-3 pl-4">
-            <span className="bg-white px-2 text-start text-bleu-sombre">{bloc.titre}</span>
-          </div>
-          <div className="mt-3 flex flex-wrap">
-            {bloc.champs
-              .sort((champA, champB) => champA.position - champB.position)
-              .map((champ: IChamp) => (
-                <ContneurChampFormulaireAideSaisie
-                  key={`${bloc.id}.${champ.id}`}
-                  champ={champ}
-                  idBloc={bloc.id}
-                >
-                  <div className={getClassesChamp(champ.type)}>
-                    <Suspense fallback={<></>}>
-                      {(() => {
-                        switch (champ.type) {
-                          case "text":
-                            return (
-                              <ChampsTexte
-                                name={`${bloc.id}.${champ.id}`}
-                                type="text"
-                                libelle={champ.libelle}
-                              />
-                            );
-                          case "select":
-                            return (
-                              <ChampListeDeroulateConditionnee
-                                libelle={champ.libelle}
-                                name={`${bloc.id}.${champ.id}`}
-                                valeursPossibles={champ.valeursPossibles}
-                                valeurDefaut={champ.valeurParDefaut}
-                              />
-                            );
-
-                          case "boolean":
-                            return (
-                              <ChampsCaseACocher
-                                name={`${bloc.id}.${champ.id}`}
-                                libelle={champ.libelle}
-                              />
-                            );
-                          case "dateComplete":
-                          case "dateIncomplete":
-                            return (
-                              <ChampDate
-                                name={`${bloc.id}.${champ.id}`}
-                                libelle={champ.libelle}
-                                desactiverCorrectionAutomatique
-                              />
-                            );
-                          case "annee":
-                          case "int":
-                            return (
-                              <ChampsTexte
-                                name={`${bloc.id}.${champ.id}`}
-                                libelle={champ.libelle}
-                                numerique
-                              />
-                            );
-                          case "sousTitre":
-                            return <h3 className="-mb-3 ml-8 bg-blanc px-2 text-bleu-sombre">{champ.libelle}</h3>;
-                          default:
-                            return <></>;
-                        }
-                      })()}
-                    </Suspense>
-                  </div>
-                </ContneurChampFormulaireAideSaisie>
-              ))}
-          </div>
+    {metamodeleTypeMention?.metamodelsBlocs.map((bloc: BlocMetaModele) => (
+      <div
+        key={bloc.id}
+        className="mt-4 rounded-xl border-2 border-solid border-bleu pb-2 text-start"
+      >
+        <div className="-mt-3 pl-4">
+          <span className="bg-white px-2 text-start text-bleu-sombre">{bloc.titre}</span>
         </div>
-      ))}
+        <div className="mt-3 flex flex-wrap">
+          {bloc.champs.map((champ: ChampMetaModele) => (
+            <ContneurChampFormulaireAideSaisie
+              key={`${bloc.id}.${champ.id}`}
+              champ={champ}
+              idBloc={bloc.id}
+            >
+              <div className={getClassesChamp(champ.type)}>
+                <Suspense fallback={<></>}>
+                  {(() => {
+                    switch (champ.type) {
+                      case "text":
+                        return (
+                          <ChampsTexte
+                            name={`${bloc.id}.${champ.id}`}
+                            type="text"
+                            libelle={champ.libelle}
+                          />
+                        );
+                      case "select":
+                        return (
+                          <ChampListeDeroulateConditionnee
+                            name={`${bloc.id}.${champ.id}`}
+                            champ={champ}
+                          />
+                        );
+
+                      case "boolean":
+                        return (
+                          <ChampsCaseACocher
+                            name={`${bloc.id}.${champ.id}`}
+                            libelle={champ.libelle}
+                          />
+                        );
+                      case "dateComplete":
+                      case "dateIncomplete":
+                        return (
+                          <ChampDate
+                            name={`${bloc.id}.${champ.id}`}
+                            libelle={champ.libelle}
+                            desactiverCorrectionAutomatique
+                          />
+                        );
+                      case "annee":
+                      case "int":
+                        return (
+                          <ChampsTexte
+                            name={`${bloc.id}.${champ.id}`}
+                            libelle={champ.libelle}
+                            numerique
+                          />
+                        );
+                      case "sousTitre":
+                        return <h3 className="-mb-3 ml-8 bg-blanc px-2 text-bleu-sombre">{champ.libelle}</h3>;
+                      default:
+                        return <></>;
+                    }
+                  })()}
+                </Suspense>
+              </div>
+            </ContneurChampFormulaireAideSaisie>
+          ))}
+        </div>
+      </div>
+    ))}
 
     {metamodeleTypeMention?.modeleHandleBars && <TexteMentionAideALaSaisie templateTexteMention={metamodeleTypeMention.modeleHandleBars} />}
   </div>

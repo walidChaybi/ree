@@ -1,8 +1,9 @@
 /* v8 ignore start */
+import { ObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { useFormikContext } from "formik";
 import React, { useEffect, useState } from "react";
+import Texte from "../../../../../utils/Texte";
 import { TMentionForm } from "../MentionForm";
-import { recupererValeurAttribut, texteNormalise } from "./AideALaSaisieMentionForm";
 
 interface IDate {
   jour: string;
@@ -50,16 +51,19 @@ const genererPourSaisie = (modeleTexte: string, valeurs: TMentionForm) => {
       return valeur;
     }
 
-    const [cle, ...valeurDefaut] = valeur.replace(/({{#valeur |}})/g, "").split(" ");
-    const valeurRenseignee = recupererValeurAttribut(valeurs, cle);
+    const [cle, ...partiesValeurDefaut] = valeur.replace(/({{#valeur |}})/g, "").split(" ");
+    const valeurRenseignee = ObjetFormulaire.recupererValeur({ valeurs: valeurs, cleAttribut: cle });
+    const valeurDefaut = `${partiesValeurDefaut.join(" ")}`.toUpperCase();
 
     switch (true) {
-      case typeof valeurRenseignee === "object" && Boolean(valeurRenseignee.annee):
+      case Array.isArray(valeurRenseignee):
+        return valeurDefaut;
+      case typeof valeurRenseignee === "object" && Object.keys(valeurRenseignee).includes("annee"):
         return FormaterTexteHelper.formaterDate(valeurRenseignee as unknown as IDate);
       case valeurRenseignee && typeof valeurRenseignee !== "object":
         return `${valeurRenseignee}`;
       default:
-        return `${valeurDefaut.join(" ")}`.toUpperCase();
+        return valeurDefaut;
     }
   };
 
@@ -133,15 +137,8 @@ const genererPourSaisie = (modeleTexte: string, valeurs: TMentionForm) => {
       .every(partieCondition => {
         const [cle, ...valeurAttendue] = partieCondition.trim().split(" ");
         const negation = cle.startsWith("!");
-        const valeurSaisie = recupererValeurAttribut(valeurs, cle.replace("!", ""));
-        const valeurComparee = (() => {
-          if (valeurSaisie === undefined || typeof valeurSaisie === "object") {
-            return "";
-          }
-
-          return texteNormalise(valeurSaisie.toString());
-        })();
-        const comparaison = valeurAttendue.length ? valeurComparee === texteNormalise(valeurAttendue.join(" ")) : Boolean(valeurComparee);
+        const valeurSaisie = Texte.normalise(ObjetFormulaire.recupererValeurTexte({ valeurs: valeurs, cleAttribut: cle.replace("!", "") }));
+        const comparaison = valeurAttendue.length ? valeurSaisie === Texte.normalise(valeurAttendue.join(" ")) : Boolean(valeurSaisie);
 
         return negation ? !comparaison : comparaison;
       });
