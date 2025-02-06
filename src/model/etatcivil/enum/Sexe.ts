@@ -25,25 +25,19 @@ export class Sexe extends EnumWithLibelle {
   }
 
   public static getAllEnumsAsOptionsSansInconnu(): Options {
-    return EnumWithLibelle.getAllLibellesAsOptions(Sexe, false, false, false, [
-      Sexe.INCONNU
-    ]);
+    return EnumWithLibelle.getAllLibellesAsOptions(Sexe, false, false, false, [Sexe.INCONNU]);
+  }
+
+  public static getMasculinFemininAsOptions(): Options {
+    return EnumWithLibelle.getAllLibellesAsOptions(Sexe, false, false, false, [Sexe.INCONNU, Sexe.INDETERMINE]);
   }
 
   public static estIndetermine(sexe: any) {
-    return (
-      sexe ===
-      (typeof sexe === "string"
-        ? Sexe.getKey(Sexe.INDETERMINE)
-        : Sexe.INDETERMINE)
-    );
+    return sexe === (typeof sexe === "string" ? Sexe.getKey(Sexe.INDETERMINE) : Sexe.INDETERMINE);
   }
 
   public static estInconnu(sexe: any) {
-    return (
-      sexe ===
-      (typeof sexe === "string" ? Sexe.getKey(Sexe.INCONNU) : Sexe.INCONNU)
-    );
+    return sexe === (typeof sexe === "string" ? Sexe.getKey(Sexe.INCONNU) : Sexe.INCONNU);
   }
 
   public static estIndetermineOuInconnu(sexe: any) {

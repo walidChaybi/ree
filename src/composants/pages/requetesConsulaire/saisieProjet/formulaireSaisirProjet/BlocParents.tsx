@@ -1,166 +1,23 @@
 /* istanbul ignore file */
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { ILocation, IParents } from "@model/requete/IParent";
-import { genererArrondissements } from "@util/Utils";
-import { Form, Formik, useFormikContext } from "formik";
+import { useFormikContext } from "formik";
 import React, { memo, useEffect, useMemo } from "react";
 import ChampDate from "../../../../commun/champs/ChampDate";
-import ChampListeDeroulante from "../../../../commun/champs/ChampListeDeroulante";
 import ChampsCaseACocher from "../../../../commun/champs/ChampsCaseACocher";
 import ChampsPrenoms from "../../../../commun/champs/ChampsPrenoms";
 import ChampsRadio from "../../../../commun/champs/ChampsRadio";
 import ChampsTexte from "../../../../commun/champs/ChampsTexte";
-
-interface Option {
-  cle: string;
-  libelle: string;
-}
-
-type TTypeLieu = ILocation["typeLieu"];
-
-interface IFormulaireAdresseProps {
-  prefix: string;
-  categorieLieu: TTypeLieu;
-  ville?: string;
-}
+import FormulaireAdresse from "../../../../commun/formulaire/FormulaireAdresse";
+import { ISaisieProjetActeForm } from "./FormulaireSaisirProjet";
 
 interface IParentFormProps {
   parentIndex: 1 | 2;
+  titre: string;
 }
 
 interface ITitreSectionProps {
   titre: string;
 }
-
-interface IAdresseFranceProps {
-  prefix: string;
-  ville?: string;
-  estVilleSpeciale: boolean;
-}
-
-interface IAdresseEtrangerProps {
-  prefix: string;
-}
-
-const TYPES_LIEU: Option[] = [
-  { cle: "France", libelle: "France" },
-  { cle: "Étranger", libelle: "Étranger" },
-  { cle: "Inconnu", libelle: "Inconnu" }
-];
-
-const VILLES_SPECIALES = ["paris", "marseille", "lyon"] as const;
-type TVilleSpeciale = (typeof VILLES_SPECIALES)[number];
-
-const ARRONDISSEMENTS_OPTIONS: Record<TVilleSpeciale, Option[]> = {
-  paris: [...genererArrondissements(20), { cle: "centre", libelle: "centre" }],
-  marseille: genererArrondissements(16),
-  lyon: genererArrondissements(9)
-};
-
-const initialValues: IParents = {
-  parent1: {
-    sexe: Sexe.MASCULIN,
-    nom: "",
-    prenoms: {},
-    dateNaissance: {},
-    lieuNaissance: { typeLieu: "Inconnu" },
-    sansProfession: false,
-    domicile: { typeLieu: "Inconnu" },
-    renseignerAge: false
-  },
-  parent2: {
-    sexe: Sexe.FEMININ,
-    nom: "",
-    prenoms: {},
-    dateNaissance: {},
-    lieuNaissance: { typeLieu: "Inconnu" },
-    sansProfession: false,
-    domicile: { typeLieu: "Inconnu" },
-    renseignerAge: false
-  },
-  domicileCommun: false
-};
-
-const AdresseFrance = memo<IAdresseFranceProps>(({ prefix, ville, estVilleSpeciale }) => (
-  <div className="mt-4 space-y-4">
-    <div className="flex gap-4">
-      <div className="flex-1">
-        <ChampsTexte
-          name={`${prefix}.ville`}
-          libelle="Ville"
-        />
-      </div>
-      {estVilleSpeciale && (
-        <div className="flex-1">
-          <ChampListeDeroulante
-            name={`${prefix}.arrondissement`}
-            libelle="Arrondissement"
-            options={ARRONDISSEMENTS_OPTIONS[ville?.toLowerCase() as TVilleSpeciale]}
-            premiereLettreMajuscule
-          />
-        </div>
-      )}
-      {ville?.toLowerCase() !== "paris" && (
-        <div className="flex-1">
-          <ChampsTexte
-            name={`${prefix}.departement`}
-            libelle="Département"
-          />
-        </div>
-      )}
-    </div>
-    <ChampsTexte
-      name={`${prefix}.adresse`}
-      libelle="Adresse"
-    />
-  </div>
-));
-
-const AdresseEtranger = memo<IAdresseEtrangerProps>(({ prefix }) => (
-  <div>
-    <div className="mt-4 grid grid-cols-2 gap-4">
-      <ChampsTexte
-        name={`${prefix}.ville`}
-        libelle="Ville"
-      />
-      <ChampsTexte
-        name={`${prefix}.etatProvince`}
-        libelle="État, canton, province"
-      />
-    </div>
-    <div className="mt-4">
-      <ChampsTexte
-        name={`${prefix}.pays`}
-        libelle="Pays"
-      />
-    </div>
-    <div className="mt-4">
-      <ChampsTexte
-        name={`${prefix}.adresse`}
-        libelle="Adresse"
-      />
-    </div>
-  </div>
-));
-
-const FormulaireAdresse: React.FC<IFormulaireAdresseProps> = memo(({ prefix, categorieLieu, ville }) => {
-  const estVilleSpeciale = useMemo(() => Boolean(VILLES_SPECIALES.includes(ville?.toLowerCase() as TVilleSpeciale)), [ville]);
-
-  switch (categorieLieu) {
-    case "France":
-      return (
-        <AdresseFrance
-          prefix={prefix}
-          ville={ville}
-          estVilleSpeciale={estVilleSpeciale}
-        />
-      );
-    case "Étranger":
-      return <AdresseEtranger prefix={prefix} />;
-    default:
-      return <></>;
-  }
-});
 
 const TitreSection = memo<ITitreSectionProps>(({ titre }) => (
   <div className="mb-8 flex w-full border-0 border-b-2 border-solid border-bleu text-start">
@@ -168,32 +25,38 @@ const TitreSection = memo<ITitreSectionProps>(({ titre }) => (
   </div>
 ));
 
-const ParentForm: React.FC<IParentFormProps> = memo(({ parentIndex }) => {
-  const { values, setFieldValue } = useFormikContext<IParents>();
-  const prefix = `parent${parentIndex}`;
-  const parent = useMemo(() => values[`parent${parentIndex}` as keyof Pick<IParents, "parent1" | "parent2">], [values, parentIndex]);
-  const optionsSexe = useMemo(() => Sexe.getAllEnumsAsOptionsSansInconnu(), []);
+const ParentForm: React.FC<IParentFormProps> = memo(({ parentIndex, titre }) => {
+  const { values, setFieldValue } = useFormikContext<ISaisieProjetActeForm>();
+
+  const prefix = `parents.parent${parentIndex}`;
+  const parent = useMemo(() => values.parents[`parent${parentIndex}`], [values, parentIndex]);
+
+  const optionsSexe = useMemo(() => Sexe.getMasculinFemininAsOptions(), []);
 
   useEffect(() => {
     const valeurChamp = {
-      cle: parent.renseignerAge ? "dateNaissance" : "age",
-      valeur: parent.renseignerAge ? { jour: "", mois: "", annee: "" } : ""
+      cle: parent?.renseignerAge ? "dateNaissance" : "age",
+      valeur: parent?.renseignerAge ? { jour: "", mois: "", annee: "" } : ""
     };
     setFieldValue(`${prefix}.${valeurChamp.cle}`, valeurChamp.valeur);
-  }, [parent.renseignerAge]);
+  }, [parent?.renseignerAge]);
 
   useEffect(() => {
-    if (parent.sansProfession) {
+    if (parent?.sansProfession) {
       setFieldValue(`${prefix}.profession`, "");
     }
-  }, [parent.sansProfession]);
+  }, [parent?.sansProfession]);
+
+  useEffect(() => {
+    if (parentIndex === 2 && values.parents.domicileCommun) {
+      setFieldValue("parents.parent2.domicile", values.parents.parent1.domicile);
+    }
+  }, [values.parents.domicileCommun, values.parents.parent1.domicile]);
 
   return (
     <div className="m-4 mb-10 mt-8 rounded-md border border-solid border-blue-200 bg-white p-4 shadow-md">
       <div className="relative mb-5 flex border-bleu">
-        <h2 className="absolute -top-[3.4rem] ml-8 bg-white px-2 uppercase text-bleu-sombre">
-          {"Parent "} {parentIndex}
-        </h2>
+        <h2 className="absolute -top-[3.4rem] ml-8 bg-white px-2 text-bleu-sombre">{titre}</h2>
       </div>
       <div className="space-y-4">
         <ChampsTexte
@@ -214,7 +77,7 @@ const ParentForm: React.FC<IParentFormProps> = memo(({ parentIndex }) => {
             <ChampDate
               name={`${prefix}.dateNaissance`}
               libelle="Date de naissance"
-              disabled={parent.renseignerAge}
+              disabled={parent?.renseignerAge}
             />
           </div>
           <div className="flex items-end space-x-4">
@@ -222,7 +85,7 @@ const ParentForm: React.FC<IParentFormProps> = memo(({ parentIndex }) => {
               name={`${prefix}.renseignerAge`}
               libelle="Saisir l'âge"
             />
-            {parent.renseignerAge && (
+            {parent?.renseignerAge && (
               <div className="flex-1">
                 <ChampsTexte
                   name={`${prefix}.age`}
@@ -237,16 +100,12 @@ const ParentForm: React.FC<IParentFormProps> = memo(({ parentIndex }) => {
       </div>
 
       <TitreSection titre="Lieu de naissance" />
-      <ChampsRadio
-        name={`${prefix}.lieuNaissance.typeLieu`}
-        libelle=""
-        options={TYPES_LIEU}
-      />
+
       <FormulaireAdresse
         key={`${prefix}.lieuNaissance`}
         prefix={`${prefix}.lieuNaissance`}
-        categorieLieu={parent.lieuNaissance.typeLieu as TTypeLieu}
-        ville={parent.lieuNaissance.ville}
+        categorieLieu={parent?.lieuNaissance?.typeLieu}
+        ville={parent?.lieuNaissance?.ville}
       />
 
       <TitreSection titre="Profession" />
@@ -255,7 +114,7 @@ const ParentForm: React.FC<IParentFormProps> = memo(({ parentIndex }) => {
           name={`${prefix}.profession`}
           libelle=""
           data-testid={`${prefix}-profession`}
-          disabled={parent.sansProfession}
+          disabled={parent?.sansProfession}
         />
         <ChampsCaseACocher
           name={`${prefix}.sansProfession`}
@@ -266,22 +125,17 @@ const ParentForm: React.FC<IParentFormProps> = memo(({ parentIndex }) => {
       <TitreSection titre="Domicile" />
       {parentIndex === 2 && (
         <ChampsCaseACocher
-          name="domicileCommun"
+          name="parents.domicileCommun"
           libelle="Domicile commun avec parent 1"
         />
       )}
-      {(!values.domicileCommun || parentIndex === 1) && (
+      {(!values.parents.domicileCommun || parentIndex === 1) && (
         <>
-          <ChampsRadio
-            name={`${prefix}.domicile.typeLieu`}
-            libelle=""
-            options={TYPES_LIEU}
-          />
           <FormulaireAdresse
             key={`${prefix}.domicile`}
             prefix={`${prefix}.domicile`}
-            categorieLieu={parent.domicile.typeLieu as TTypeLieu}
-            ville={parent.domicile.ville}
+            categorieLieu={parent?.domicile?.typeLieu}
+            ville={parent?.domicile?.ville}
           />
         </>
       )}
@@ -289,17 +143,45 @@ const ParentForm: React.FC<IParentFormProps> = memo(({ parentIndex }) => {
   );
 });
 
+const useTitresParents = () => {
+  const { values } = useFormikContext<ISaisieProjetActeForm>();
+  const parent = useMemo(() => values.parents, [values]);
+
+  const getTitreParent = (sexe: string, estVide: boolean, defaultTitre: string) => {
+    if (estVide) return defaultTitre;
+    if (sexe === "MASCULIN") return "Père";
+    if (sexe === "FEMININ") return "Mère";
+    return defaultTitre;
+  };
+
+  return useMemo(() => {
+    const sexeParent1 = parent?.parent1?.sexe;
+    const sexeParent2 = parent?.parent2?.sexe;
+
+    const parent1sansSexe = parent?.parent1?.sexe === "INCONNU";
+    const parent2sansSexe = parent?.parent2?.sexe === "INCONNU";
+
+    return {
+      titre1: getTitreParent(sexeParent1, parent1sansSexe, "Parent 1"),
+      titre2: getTitreParent(sexeParent2, parent2sansSexe, "Parent 2")
+    };
+  }, [parent?.parent1, parent?.parent2]);
+};
+
 const BlocParents: React.FC = () => {
+  const { titre1, titre2 } = useTitresParents();
+
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={values => {}}
-    >
-      <Form>
-        <ParentForm parentIndex={1} />
-        <ParentForm parentIndex={2} />
-      </Form>
-    </Formik>
+    <>
+      <ParentForm
+        parentIndex={1}
+        titre={titre1}
+      />
+      <ParentForm
+        parentIndex={2}
+        titre={titre2}
+      />
+    </>
   );
 };
 

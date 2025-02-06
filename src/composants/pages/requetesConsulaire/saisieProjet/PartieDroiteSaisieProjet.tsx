@@ -1,3 +1,4 @@
+import { ParentsRequeteConsulaire } from "@model/requete/IParentsRequeteConsulaire";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { TitulaireRequeteConsulaire } from "@model/requete/ITitulaireRequeteConsulaire";
 import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
@@ -47,7 +48,10 @@ const PartieDroiteSaisieProjet: React.FC<IPartieDroiteSaisieProjetProps> = ({ re
           estScrollable
         >
           <div className="m-4">
-            <FormulaireSaisirProjet titulaire={TitulaireRequeteConsulaire.getTitulaireTranscription(requete.titulaires)} />
+            <FormulaireSaisirProjet
+              titulaire={TitulaireRequeteConsulaire.getTitulaireTranscription(requete.titulaires)}
+              parents={ParentsRequeteConsulaire.getParentsDepuisTitulaires(requete.titulaires)}
+            />
           </div>
         </ConteneurVoletEdition>
       )}

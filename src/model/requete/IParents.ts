@@ -1,14 +1,41 @@
 /* istanbul ignore file */
 
+import { IDateForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
 import { DEUX, formatNom, formatPrenoms, UN } from "@util/Utils";
+import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
+
+export interface ILocation {
+  typeLieu?: "France" | "Étranger" | "Inconnu" | "";
+  ville?: string;
+  arrondissement?: string;
+  departement?: string;
+  etatProvince?: string;
+  pays?: string;
+  adresse?: string;
+}
 
 export interface IParent {
   id: string;
   position: number;
+  sexe: string;
   nomNaissance: string;
-  prenoms: IPrenomOrdonnes[];
   nom?: string;
+  prenoms?: IPrenomOrdonnes[];
+  dateNaissance?: IDateForm | null;
+  lieuNaissance?: ILocation;
+  profession?: string;
+  sansProfession?: boolean;
+  renseignerAge?: boolean;
+  age?: string;
+  domicile?: ILocation;
+  typeObjetTitulaire?: TypeObjetTitulaire;
+}
+
+export interface IParents {
+  parent1: IParent;
+  parent2: IParent;
+  domicileCommun?: boolean;
 }
 
 export const Parent = {
@@ -17,11 +44,7 @@ export const Parent = {
   },
   getPrenoms(parent?: IParent): string {
     return parent?.prenoms && parent.prenoms.length > 0
-      ? formatPrenoms([
-          parent.prenoms[0].prenom,
-          parent.prenoms[UN]?.prenom,
-          parent.prenoms[DEUX]?.prenom
-        ])
+      ? formatPrenoms([parent.prenoms[0].prenom, parent.prenoms[UN]?.prenom, parent.prenoms[DEUX]?.prenom])
       : "";
   },
   getTableauDePrenoms(parent?: IParent): string[] {
@@ -35,9 +58,7 @@ export const Parent = {
   getPrenom(numero: number, parent?: IParent): string {
     let res = "";
     if (parent?.prenoms) {
-      const prenom = parent.prenoms.find(
-        element => element.numeroOrdre === numero
-      );
+      const prenom = parent.prenoms.find(element => element.numeroOrdre === numero);
       res = prenom?.prenom ?? "";
     }
     return res;

@@ -8,29 +8,30 @@ describe("BlocParents", () => {
     return render(
       <Formik
         initialValues={{
-          parent1: {
-            sexe: "Masculin",
-            nom: "",
-            prenoms: {},
-            dateNaissance: undefined,
-            lieuNaissance: { type: "" },
-            sansProfession: false,
-            domicile: { type: "" },
-            renseignerAge: false,
-            age: ""
-          },
-          parent2: {
-            sexe: "Feminin",
-            nom: "",
-            prenoms: {},
-            dateNaissance: undefined,
-            lieuNaissance: { type: "" },
-            sansProfession: false,
-            domicile: { type: "" },
-            renseignerAge: false,
-            age: ""
-          },
-          domicileCommun: false
+          parents: {
+            parent1: {
+              sexe: "Masculin",
+              nom: "",
+              prenoms: {},
+              dateNaissance: undefined,
+              lieuNaissance: { typeLieu: "" },
+              sansProfession: false,
+              domicile: { typeLieu: "" },
+              renseignerAge: false,
+              age: ""
+            },
+            parent2: {
+              sexe: "Feminin",
+              nom: "",
+              prenoms: {},
+              dateNaissance: undefined,
+              lieuNaissance: { typeLieu: "" },
+              sansProfession: false,
+              domicile: { typeLieu: "" },
+              renseignerAge: false,
+              age: ""
+            }
+          }
         }}
         onSubmit={() => {}}
         enableReinitialize={true}
@@ -63,8 +64,8 @@ describe("BlocParents", () => {
       Object.values(dateFields2).forEach(field => expect(field).toBeDefined());
 
       // Vérification des cases à cocher "Saisir l'âge" pour chaque parent
-      expect(screen.getByLabelText("Saisir l'âge", { selector: 'input[name="parent1.renseignerAge"]' })).toBeDefined();
-      expect(screen.getByLabelText("Saisir l'âge", { selector: 'input[name="parent2.renseignerAge"]' })).toBeDefined();
+      expect(screen.getByLabelText("Saisir l'âge", { selector: 'input[name="parents.parent1.renseignerAge"]' })).toBeDefined();
+      expect(screen.getByLabelText("Saisir l'âge", { selector: 'input[name="parents.parent2.renseignerAge"]' })).toBeDefined();
     });
   });
 
@@ -180,7 +181,7 @@ describe("BlocParents", () => {
   describe("Tests de gestion de la profession", () => {
     test("doit gérer la case à cocher 'sans profession'", async () => {
       renderComponent();
-      const professionInput = screen.getByTestId("parent1-profession") as HTMLInputElement;
+      const professionInput = screen.getByTestId("parents.parent1-profession") as HTMLInputElement;
       const checkbox = screen.getAllByLabelText("Sans profession")[0] as HTMLInputElement;
 
       fireEvent.change(professionInput, { target: { value: "Ingénieur" } });

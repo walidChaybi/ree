@@ -1,11 +1,8 @@
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { ITitulaireRequeteCreation, TitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
-import {
-  ITitulaireRequeteCreation,
-  TitulaireRequeteCreation
-} from "@model/requete/ITitulaireRequeteCreation";
 import { describe, expect, test } from "vitest";
 describe("Tests sur le fonctionnement de la fonction TitulaireRequeteCreation.filtreParentParSexeEtOuParPosition().", () => {
   const varParents = {
@@ -56,15 +53,12 @@ describe("Tests sur le fonctionnement de la fonction TitulaireRequeteCreation.fi
     { sexe: "Masculin", position: 2, nomNaissance: "Beta" },
     { sexe: "Féminin", position: 1, nomNaissance: "Delta" },
     { sexe: "Féminin", position: 2, nomNaissance: "Gamma" }
-  ])(
-    "DOIT retourner le parent de nom de naissance '$nomNaissance' QUAND on filtre par sexe '$sexe' et position '$position'",
-    params => {
-      const parent = TitulaireRequeteCreation.getParentParSexeEtOuParPosition(
-        Sexe.getEnumFromLibelle(params.sexe),
-        params.position,
-        titulaires
-      );
-      expect(parent?.nomNaissance).toBe(params.nomNaissance);
-    }
-  );
+  ])("DOIT retourner le parent de nom de naissance '$nomNaissance' QUAND on filtre par sexe '$sexe' et position '$position'", params => {
+    const parent = TitulaireRequeteCreation.getParentParSexeEtOuParPosition(
+      Sexe.getEnumFromLibelle(params.sexe),
+      params.position,
+      titulaires
+    );
+    expect(parent?.nomNaissance).toBe(params.nomNaissance);
+  });
 });
