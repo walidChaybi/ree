@@ -30,6 +30,8 @@ const FormaterTexteHelper = {
     const jourFormate = jour ? jour.replace(/^0/, "") : null;
 
     switch (true) {
+      case !annee:
+        return "";
       case Boolean(jourFormate && moisFormate):
         return `le ${jourFormate === "1" ? "1er" : jourFormate} ${moisFormate} ${annee}`;
       case Boolean(moisFormate):
@@ -59,7 +61,7 @@ const genererPourSaisie = (modeleTexte: string, valeurs: TMentionForm) => {
       case Array.isArray(valeurRenseignee):
         return valeurDefaut;
       case typeof valeurRenseignee === "object" && Object.keys(valeurRenseignee).includes("annee"):
-        return FormaterTexteHelper.formaterDate(valeurRenseignee as unknown as IDate);
+        return FormaterTexteHelper.formaterDate(valeurRenseignee as unknown as IDate) || valeurDefaut;
       case valeurRenseignee && typeof valeurRenseignee !== "object":
         return `${valeurRenseignee}`;
       default:
