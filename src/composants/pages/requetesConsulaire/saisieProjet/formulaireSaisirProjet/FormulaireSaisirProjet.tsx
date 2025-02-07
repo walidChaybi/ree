@@ -248,13 +248,13 @@ const initialiseParents = (parent?: any): IParent => {
     sansProfession: parent?.sansProfession || false,
     profession: parent?.profession || "",
     domicile: {
-      typeLieu: parent?.paysNaissance ? (parent.paysNaissance.toUpperCase() === "FRANCE" ? "France" : "Étranger") : "Inconnu",
-      ville: parent?.villeNaissance || "",
-      adresse: parent?.adresseNaissance || "",
-      departement: parent?.regionNaissance || "",
-      arrondissement: parent?.arrondissementNaissance || "",
-      pays: parent?.paysNaissance || "",
-      etatProvince: parent?.regionNaissance || ""
+      typeLieu: "Inconnu",
+      ville: "",
+      adresse: "",
+      departement: "",
+      arrondissement: "",
+      pays: "",
+      etatProvince: ""
     },
     renseignerAge: parent?.renseignerAge || false,
     age: parent?.age || ""
