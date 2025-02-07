@@ -1,6 +1,6 @@
 import { Identite } from "@model/etatcivil/enum/Identite";
 import { IDateForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
-import { IParent } from "@model/requete/IParents";
+import { ILocation, IParent } from "@model/requete/IParents";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { ITitulaireRequeteConsulaire } from "@model/requete/ITitulaireRequeteConsulaire";
 import { Formik } from "formik";
@@ -9,7 +9,7 @@ import SchemaValidation from "../../../../../utils/SchemaValidation";
 import ConteneurAccordeon from "../../../../commun/conteneurs/accordeon/ConteneurAccordeon";
 import BlocActeEtranger from "./BlocActeEtranger";
 import BlocAutres from "./BlocAutres";
-import BlocDeclarants from "./BlocDeclarants";
+import BlocDeclarant from "./BlocDeclarant";
 import BlocFormuleFinale from "./BlocFormuleFinale";
 import BlocMentions from "./BlocMentions";
 import BlocParents from "./BlocParents";
@@ -57,30 +57,14 @@ interface IBlocDeclarant {
   qualite?: string | null;
   profession?: string | null;
   sansProfession?: boolean;
-  domicile?: IDomicile | null;
+  domicile?: ILocation | null;
   complement?: string | null;
-}
-
-interface IDomicile {
-  domicile?: EDomicile;
-  adresse?: string | null;
-  ville?: string | null;
-  arrondissement?: string | null;
-  departement?: string | null;
-  etat?: string | null;
-  pays?: string | null;
-}
-
-enum EDomicile {
-  FRANCE = "France",
-  ETRANGER = "Etranger",
-  INCONNUE = "Inconnue"
 }
 
 const TitulaireSchemaValidationFormulaire = SchemaValidation.objet({
   nomNaissance: SchemaValidation.texte({ obligatoire: false }),
   nomOEC: SchemaValidation.texte({ obligatoire: true }),
-  prenomsChemin: SchemaValidation.prenoms(),
+  prenomsChemin: SchemaValidation.prenoms("titulaire.prenomsChemin.prenom"),
   sexe: SchemaValidation.texte({ obligatoire: false }),
   dateNaissance: SchemaValidation.dateIncomplete({ obligatoire: true }),
   villeNaissance: SchemaValidation.texte({ obligatoire: false }),
@@ -99,28 +83,29 @@ const AdresseSchemaValidationFormulaire = SchemaValidation.objet({
   etatProvince: SchemaValidation.texte({ obligatoire: false })
 });
 
-const ParentSchemaValidationFormulaire = SchemaValidation.objet({
-  nom: SchemaValidation.texte({ obligatoire: false }),
-  prenoms: SchemaValidation.prenoms(),
-  sexe: SchemaValidation.texte({ obligatoire: false }),
-  dateNaissance: SchemaValidation.dateIncomplete({ obligatoire: false }),
-  renseignerAge: SchemaValidation.booleen({ obligatoire: false }),
-  age: SchemaValidation.texte({ obligatoire: false }),
-  lieuNaissance: AdresseSchemaValidationFormulaire,
-  profession: SchemaValidation.texte({ obligatoire: false }),
-  sansProfession: SchemaValidation.booleen({ obligatoire: false }),
-  domicile: AdresseSchemaValidationFormulaire
-});
+const ParentSchemaValidationFormulaire = (parentId: number) =>
+  SchemaValidation.objet({
+    nom: SchemaValidation.texte({ obligatoire: false }),
+    prenoms: SchemaValidation.prenoms(`parents.parent${parentId}.prenoms.prenom`),
+    sexe: SchemaValidation.texte({ obligatoire: false }),
+    dateNaissance: SchemaValidation.dateIncomplete({ obligatoire: false }),
+    renseignerAge: SchemaValidation.booleen({ obligatoire: false }),
+    age: SchemaValidation.texte({ obligatoire: false }),
+    lieuNaissance: AdresseSchemaValidationFormulaire,
+    profession: SchemaValidation.texte({ obligatoire: false }),
+    sansProfession: SchemaValidation.booleen({ obligatoire: false }),
+    domicile: AdresseSchemaValidationFormulaire
+  });
 
 const ParentsSchemaValidationFormulaire = SchemaValidation.objet({
-  parent1: ParentSchemaValidationFormulaire,
-  parent2: ParentSchemaValidationFormulaire
+  parent1: ParentSchemaValidationFormulaire(1),
+  parent2: ParentSchemaValidationFormulaire(2)
 });
 
 const DeclarantSchemaValidationFormulaire = SchemaValidation.objet({
   Identite: SchemaValidation.texte({ obligatoire: true }),
   nom: SchemaValidation.texte({ obligatoire: true }),
-  prenomsChemin: SchemaValidation.prenoms(),
+  prenomsChemin: SchemaValidation.prenoms("declarant.prenomsChemin.prenom"),
   age: SchemaValidation.entier({ obligatoire: false }),
   qualite: SchemaValidation.texte({ obligatoire: false }),
   profession: SchemaValidation.texte({ obligatoire: false }),
@@ -128,17 +113,6 @@ const DeclarantSchemaValidationFormulaire = SchemaValidation.objet({
   complement: SchemaValidation.texte({ obligatoire: false })
 });
 
-export const initialValueDeclarant: IBlocDeclarant = {
-  identite: Identite.getKey(Identite.PERE),
-  nom: "",
-  prenomsChemin: { prenom1: "" },
-  sexe: "",
-  age: null,
-  qualite: null,
-  profession: null,
-  sansProfession: false,
-  domicile: {}
-};
 const FormulaireSaisirProjet: React.FC<ISaisieProjetActeProps> = requete => {
   const initialValueParents: IBLocParents = useMemo(
     () => ({
@@ -183,7 +157,7 @@ const FormulaireSaisirProjet: React.FC<ISaisieProjetActeProps> = requete => {
           titre="Déclarant"
           ouvertParDefaut
         >
-          <BlocDeclarants />
+          <BlocDeclarant />
         </ConteneurAccordeon>
 
         <ConteneurAccordeon
@@ -217,7 +191,6 @@ const FormulaireSaisirProjet: React.FC<ISaisieProjetActeProps> = requete => {
     </Formik>
   );
 };
-
 const initialiseTitulaires = (requete: ISaisieProjetActeProps): IBlocTitulaire => {
   return {
     nomNaissance: requete.titulaire?.nomNaissance ?? "",
@@ -230,7 +203,7 @@ const initialiseTitulaires = (requete: ISaisieProjetActeProps): IBlocTitulaire =
       },
       { prenom1: "" }
     ) ?? { prenom1: "" },
-    sexe: requete.titulaire?.sexe ?? null,
+    sexe: requete.titulaire?.sexe ?? "",
     dateNaissance: {
       jour: requete.titulaire?.jourNaissance ? `${requete.titulaire?.jourNaissance}`.padStart(2, "0") : "",
       mois: requete.titulaire?.moisNaissance ? `${requete.titulaire?.moisNaissance}`.padStart(2, "0") : "",
@@ -286,5 +259,16 @@ const initialiseParents = (parent?: any): IParent => {
     renseignerAge: parent?.renseignerAge || false,
     age: parent?.age || ""
   };
+};
+export const initialValueDeclarant: IBlocDeclarant = {
+  identite: Identite.getKey(Identite.PERE),
+  nom: "",
+  prenomsChemin: { prenom1: "" },
+  sexe: "",
+  age: null,
+  qualite: "",
+  profession: "",
+  sansProfession: false,
+  domicile: { typeLieu: "Inconnu" }
 };
 export default FormulaireSaisirProjet;

@@ -7,6 +7,7 @@ type TChampListeDeroulanteProps = React.InputHTMLAttributes<HTMLSelectElement> &
   options: Option[];
   pendantChangement?: () => void;
   premiereLettreMajuscule?: boolean;
+  optionVideMasquee?: boolean;
 };
 
 const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({
@@ -16,13 +17,14 @@ const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({
   options,
   pendantChangement,
   premiereLettreMajuscule,
+  optionVideMasquee = false,
   ...props
 }) => {
   const [field, meta] = useField(name as string);
   const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
 
   return (
-    <div className={`relative flex w-full flex-col text-start ${className ?? ""}`.trim()}>
+    <div className={`text-start ${className ?? ""}`.trim()}>
       <label
         className={`m-0 mb-1 ml-1 block w-fit text-start transition-colors ${enErreur ? "text-rouge" : "text-bleu-sombre"}`}
         htmlFor={name as string}
@@ -31,7 +33,7 @@ const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({
       </label>
       <select
         id={name}
-        className={`select-rece border-1 flex flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
+        className={`select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
         {...props}
         {...field}
         onChange={e => {
@@ -43,6 +45,7 @@ const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({
           <option
             key={option.cle ?? "option-vide"}
             value={option.cle}
+            hidden={!option.cle && optionVideMasquee}
           >
             {premiereLettreMajuscule ? `${option.libelle.charAt(0).toUpperCase()}${option.libelle.substring(1)}` : option.libelle}
           </option>

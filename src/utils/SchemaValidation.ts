@@ -23,7 +23,8 @@ const messagesErreur = {
   DATE_INVALIDE: "⚠ La date est invalide",
   DATE_OBLIGATOIRE: "⚠ La saisie de la date est obligatoire",
   DOIT_ETRE_ENTIER: "⚠ La valeur doit être un entier",
-  CHAMP_OBLIGATOIRE: "⚠ La saisie du champ est obligatoire"
+  CHAMP_OBLIGATOIRE: "⚠ La saisie du champ est obligatoire",
+  PRENOM_OBLIGATOIRE: "⚠ La saisie du prénom est obligatoire"
 };
 
 const erreurSurDateEntiere = (message: string, baseChemin: string) =>
@@ -143,8 +144,12 @@ const gestionObligation = (
 const SchemaValidation = {
   objet: (objet: { [cle: string]: Yup.AnySchema }) => Yup.object().shape(objet),
 
-  texte: (schemaParams: ISchemaCommunParams) => {
+  texte: (schemaParams: ISchemaCommunParams & { regexp?: RegExp }) => {
     let schema = Yup.string();
+
+    if (schemaParams.regexp) {
+      schema = schema.matches(schemaParams.regexp, "");
+    }
 
     return gestionObligation(schema, schemaParams.obligatoire, () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE)) as Yup.StringSchema;
   },
@@ -263,15 +268,17 @@ const SchemaValidation = {
     ) as Yup.ObjectSchema<TDateChamp>;
   },
 
-  prenoms: () => {
+  prenoms: (prefix: string) => {
     const schemaPrenoms: { [cle: string]: Yup.StringSchema } = {};
     Array.from({ length: 15 }).forEach((_, index) => {
       let schema = Yup.string();
 
       if (index < 14) {
-        schema = schema.when(`prenom${index + 2}`, {
-          is: (valeur: string) => Boolean(valeur),
-          then: schema.required(messagesErreur.DATE_OBLIGATOIRE)
+        const prenomsSuivants = Array.from({ length: 14 - index }).map((_, idx) => `$${prefix}${idx + index + 2}`);
+
+        schema = schema.when(prenomsSuivants, {
+          is: (...valeur: (string | undefined)[]) => valeur.some(val => Boolean(val)),
+          then: schema.required(messagesErreur.PRENOM_OBLIGATOIRE)
         });
       }
 

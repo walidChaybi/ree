@@ -28,9 +28,9 @@ const VILLES_SPECIALES = ["paris", "marseille", "lyon"] as const;
 type TVilleSpeciale = (typeof VILLES_SPECIALES)[number];
 
 const ARRONDISSEMENTS_OPTIONS: Record<TVilleSpeciale, Option[]> = {
-  paris: [...genererArrondissements(20), { cle: "centre", libelle: "centre" }],
-  marseille: genererArrondissements(16),
-  lyon: genererArrondissements(9)
+  paris: [{ cle: "", libelle: "" }, ...genererArrondissements(20), { cle: "centre", libelle: "centre" }],
+  marseille: [{ cle: "", libelle: "" }, ...genererArrondissements(16)],
+  lyon: [{ cle: "", libelle: "" }, ...genererArrondissements(9)]
 };
 
 const AdresseFrance = memo(({ prefix, ville }: { prefix: string; ville?: string }) => {

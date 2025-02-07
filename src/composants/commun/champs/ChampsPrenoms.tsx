@@ -74,6 +74,7 @@ const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({ cheminPrenoms, prefixePr
           <ChampsTexte
             name={`${cheminPrenoms ? `${cheminPrenoms}.` : ""}${prefixePrenom}${index + DEUX}`}
             libelle={`Prénom ${index + DEUX}`}
+            optionFormatage="NOMS_PROPRES"
           />
 
           {index === nombrePrenoms - DEUX && (

@@ -95,10 +95,7 @@ export interface IIdentiteTitulaireForm {
   [NAISSANCE]: IEvenementNaissanceCommunForm;
 }
 
-export type IEvenementNaissanceCommunForm = Omit<
-  IEvenementNaissanceForm,
-  "lieuNaissance" | "departementNaissance"
->;
+export type IEvenementNaissanceCommunForm = Omit<IEvenementNaissanceForm, "lieuNaissance" | "departementNaissance">;
 
 export interface INomsForm {
   [PAS_DE_NOM_ACTE_ETRANGER]: string | string[];

@@ -130,14 +130,12 @@ const ParentForm: React.FC<IParentFormProps> = memo(({ parentIndex, titre }) => 
         />
       )}
       {(!values.parents.domicileCommun || parentIndex === 1) && (
-        <>
-          <FormulaireAdresse
-            key={`${prefix}.domicile`}
-            prefix={`${prefix}.domicile`}
-            categorieLieu={parent?.domicile?.typeLieu}
-            ville={parent?.domicile?.ville}
-          />
-        </>
+        <FormulaireAdresse
+          key={`${prefix}.domicile`}
+          prefix={`${prefix}.domicile`}
+          categorieLieu={parent?.domicile?.typeLieu}
+          ville={parent?.domicile?.ville}
+        />
       )}
     </div>
   );

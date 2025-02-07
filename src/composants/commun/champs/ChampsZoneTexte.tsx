@@ -17,6 +17,7 @@ const ChampsZoneTexte: React.FC<TChampsZoneTexteProps> = ({ name, libelle, ...pr
         {libelle}
       </label>
       <textarea
+        className="font-noto-sans-ui text-base"
         {...props}
         {...field}
       />
