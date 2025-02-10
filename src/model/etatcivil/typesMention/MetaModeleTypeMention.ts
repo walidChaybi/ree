@@ -180,6 +180,7 @@ export class MetaModeleTypeMention {
         const validationChamp = (() => {
           switch (champ.type) {
             case "text":
+            case "pocopa":
               return SchemaValidation.texte({ obligatoire: champ.estObligatoire });
             case "int":
               return SchemaValidation.entier({ obligatoire: champ.estObligatoire });
@@ -187,6 +188,7 @@ export class MetaModeleTypeMention {
               return SchemaValidation.entier({ obligatoire: champ.estObligatoire, estAnnee: true });
             case "boolean":
               return SchemaValidation.booleen({ obligatoire: champ.estObligatoire });
+
             case "select":
               return SchemaValidation.listeDeroulante({
                 valeursPossibles: champ.valeursPossibles,
@@ -215,6 +217,7 @@ export class MetaModeleTypeMention {
           switch (champ.type) {
             case "text":
             case "int":
+            case "pocopa":
               return "";
             case "dateComplete":
             case "dateIncomplete":

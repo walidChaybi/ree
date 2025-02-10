@@ -2,6 +2,7 @@
 import { BlocMetaModele, ChampMetaModele, MetaModeleTypeMention } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
 import { useField, useFormikContext } from "formik";
 import React, { Suspense, lazy, useEffect, useMemo, useState } from "react";
+import ChampRecherchePocopas from "../../../../commun/champs/ChampRecherchePocopas";
 import { TMentionForm } from "../MentionForm";
 import { TexteMentionAideALaSaisie } from "./GenerateurTexteSaisieMention";
 
@@ -22,6 +23,7 @@ const getClassesChamp = (typeChamp: string) => {
     case "dateIncomplete":
     case "annee":
     case "int":
+    case "pocopa":
       return "w-[42.5%] px-[2.5%] pb-4";
     case "boolean":
       return "w-full px-[2.5%] pb-6 pt-4 text-left";
@@ -152,7 +154,14 @@ const AideALaSaisieMention: React.FC<IAideALaSaisieMention> = ({ metamodeleTypeM
                             champ={champ}
                           />
                         );
-
+                      case "pocopa":
+                        return (
+                          <ChampRecherchePocopas
+                            name={`${bloc.id}.${champ.id}`}
+                            libelle={champ.libelle}
+                            optionsRecherchePocopa={{ nombreResultatsMax: 15, familleRegistre: "CSL" }}
+                          />
+                        );
                       case "boolean":
                         return (
                           <ChampsCaseACocher
