@@ -224,7 +224,7 @@ export class MetaModeleTypeMention {
                 annee: ""
               };
             case "boolean":
-              return false;
+              return champ.valeurParDefaut === "true";
             case "select":
               return champ.valeurParDefaut ?? "";
             default:
