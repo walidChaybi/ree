@@ -8,16 +8,11 @@ import {
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
-import { getLibelle } from "@util/Utils";
 import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { SortOrder } from "@widget/tableau/TableUtils";
-import {
-  NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE,
-  NB_LIGNES_PAR_PAGE_ESPACE_DELIVRANCE
-} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import SignatureDelivrance from "../../../../composants/commun/signature/SignatureDelivrance";
@@ -27,6 +22,11 @@ import { useRequeteDelivranceApiHook } from "./hook/DonneesRequeteDelivranceApiH
 import "./scss/RequeteTableau.scss";
 
 const columnsMesRequestes = [...requeteColumnHeaders, ...dateStatutColumnHeaders];
+
+const NOMBRE_REQUETES = {
+  parPage: 30,
+  parAppel: 90
+};
 
 interface MesRequetesPageProps {
   miseAJourCompteur: () => void;
@@ -45,7 +45,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
     statuts: StatutRequete.getStatutsMesRequetes(),
     tri: "dateStatut",
     sens: "ASC",
-    range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
+    range: `0-${NOMBRE_REQUETES.parAppel}`
   });
   const [enChargement, setEnChargement] = React.useState(true);
   const { dataState, paramsTableau } = useRequeteDelivranceApiHook(
@@ -68,7 +68,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
       statuts: StatutRequete.getStatutsMesRequetes(),
       tri,
       sens,
-      range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
+      range: `0-${NOMBRE_REQUETES.parAppel}`
     };
 
     setLinkParameters(queryParameters);
@@ -119,7 +119,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
         statuts: StatutRequete.getStatutsMesRequetes(),
         tri: "dateStatut",
         sens: "ASC",
-        range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
+        range: `0-${NOMBRE_REQUETES.parAppel}`
       });
     }
   }, [idAction]);
@@ -132,7 +132,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
             className="finConsultation"
             onClick={e => finDeConsultation(id, e)}
           >
-            {getLibelle("Fin consultation")}
+            {"Fin consultation"}
           </BoutonDoubleSubmit>
         )}
       </>
@@ -160,16 +160,16 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
         noRows={RenderMessageZeroRequete()}
         enChargement={enChargement}
         icone={{ keyColonne: "actions", getIcone: getBoutonFinConsultation }}
-        nbLignesParPage={NB_LIGNES_PAR_PAGE_ESPACE_DELIVRANCE}
-        nbLignesParAppel={NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}
+        nbLignesParPage={NOMBRE_REQUETES.parPage}
+        nbLignesParAppel={NOMBRE_REQUETES.parAppel}
       >
         <SignatureDelivrance
           titreBouton="Signer le lot"
           titreModale="Signature des documents"
           numerosFonctionnel={dataState
+            .slice(0, NOMBRE_REQUETES.parPage)
             .filter(requete => requete.numero && requete.statut === StatutRequete.A_SIGNER.libelle)
-            .map(requete => requete.numero as string)
-            .slice(0, 10)}
+            .map(requete => requete.numero as string)}
           apreSignature={() => handleReload()}
         />
       </TableauRece>
