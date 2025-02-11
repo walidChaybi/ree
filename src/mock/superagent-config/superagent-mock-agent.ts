@@ -31,39 +31,26 @@ export const configAgent = [
         return { data: DONNEES_UTILISATEURS.data };
       }
 
-      if (
-        match[1] === "/utilisateurs/referentiel?range=0-100" ||
-        match[1] === "/utilisateurs/referentiel?range=0-200"
-      ) {
+      if (match[1] === "/utilisateurs/referentiel?range=0-100" || match[1] === "/utilisateurs/referentiel?range=0-200") {
         return { ...DONNEES_UTILISATEURS };
       }
 
       if (match[1] === "/utilisateurs/referentiel?range=1-100") {
         return { ...DONNEES_UTILISATEURS_PAGE2 };
       }
-      if (
-        match[1] === "/service/referentiel" ||
-        match[1].startsWith("/service/referentiel?range=0-100")
-      ) {
+      if (match[1] === "/services/referentiel" || match[1].startsWith("/services/referentiel?range=0-100")) {
         return { ...DONNEES_SERVICES };
       }
 
-      if (match[1].startsWith("/service/referentiel?range=1-100")) {
+      if (match[1].startsWith("/services/referentiel?range=1-100")) {
         return { ...DONNEES_SERVICES_PAGE2 };
       }
 
-      if (
-        match[1] ===
-        "/utilisateurs/infos?ids=204b8563-c7f8-4748-9daa-f26558985895&ids=204b8563-c7f8-4748-9daa-f26558985894"
-      ) {
+      if (match[1] === "/utilisateurs/infos?ids=204b8563-c7f8-4748-9daa-f26558985895&ids=204b8563-c7f8-4748-9daa-f26558985894") {
         return { data: INFOS_UTILISATEURS.data };
       }
 
-      if (
-        match[1].startsWith(
-          "/service?idService=6737566d-0f25-45dc-8443-97b444e6753a"
-        )
-      ) {
+      if (match[1].startsWith("/services?idService=6737566d-0f25-45dc-8443-97b444e6753a")) {
         return { ...serviceEtablissement };
       }
 

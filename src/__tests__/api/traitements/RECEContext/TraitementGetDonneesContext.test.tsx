@@ -14,9 +14,9 @@ describe("Test du traitement de récupération des données du context RECE", ()
             return { data: [{ idUtilisateur: "test-id-utilisateur" }] };
           case "/utilisateurs/referentiel?range=1-100":
             return { data: [{ idUtilisateur: "test-id-utilisateur-2" }] };
-          case "/service/referentiel?range=0-100":
+          case "/services/referentiel?range=0-100":
             return { data: [{ idService: "test-id-service" }] };
-          case "/service/referentiel?range=1-100":
+          case "/services/referentiel?range=1-100":
             return { data: [{ idService: "test-id-service-2" }] };
           default:
             return;

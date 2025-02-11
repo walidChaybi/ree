@@ -2,7 +2,7 @@ import { AGENT_API } from "@api/ApiDisponibles";
 import { TConfigurationApi } from "@model/api/Api";
 import IServiceDto from "../../../../dto/etatcivil/agent/IServiceDto";
 
-const URI = "/service";
+const URI = "/services";
 
 export interface IServiceParent {
   idService?: string;
