@@ -157,9 +157,9 @@ export const PartieFormulaire: React.FC = () => {
           parametres: {
             path: { idActe },
             body: {
-              mentionCreationList: mentions.map((mention, key) => ({
+              mentionCreationList: mentions.map((mention, index) => ({
                 idTypeMention: mention.idTypeMention,
-                numeroOrdre: key,
+                numeroOrdre: index + 1,
                 texteMention: mention.texte
               })),
               analyseMarginale:
