@@ -11,7 +11,7 @@ import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
 export interface ITitulaireRequete {
   id: string;
   position: number;
-  nomNaissance: string;
+  nomNaissance?: string;
   nomUsage?: string;
   prenoms?: IPrenomOrdonnes[];
   jourNaissance?: number;
@@ -102,7 +102,7 @@ export const TitulaireRequete = {
     return lieuNaissance;
   },
   getParentsTries(parents?: IParent[]) {
-    return parents?.sort((a, b) => a.position - b.position);
+    return parents?.filter(parent => parent.position !== undefined).sort((a, b) => (a.position as number) - (b.position as number));
   },
   getTitulaireParPosition(titulaires: ITitulaireRequete[], position: number): ITitulaireRequete | undefined {
     return titulaires.find(titulaire => titulaire.position === position);

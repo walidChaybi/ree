@@ -1,10 +1,7 @@
 import { EvenementUnion } from "@model/requete/IEvenementUnion";
-import {
-  ITitulaireRequeteCreation,
-  TitulaireRequeteCreation
-} from "@model/requete/ITitulaireRequeteCreation";
+import { ITitulaireRequeteCreation, TitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { resume } from "@pages/requeteCreation/commun/Labels";
-import { DEUX, estRenseigne, getLibelle, UN } from "@util/Utils";
+import { DEUX, UN, estRenseigne, getLibelle } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import React from "react";
 import { LigneAccordion } from "./LigneAccordion";
@@ -13,25 +10,15 @@ export interface AccordionTranscriptionParentsProps {
   parents?: ITitulaireRequeteCreation[];
 }
 
-export const AccordionTranscriptionParents: React.FC<
-  AccordionTranscriptionParentsProps
-> = props => {
-  const estPresentUnParent =
-    props.parents && props.parents?.length < DEUX
-      ? "contenuAccordionUnSeulElement"
-      : "";
+export const AccordionTranscriptionParents: React.FC<AccordionTranscriptionParentsProps> = props => {
+  const estPresentUnParent = props.parents && props.parents?.length < DEUX ? "contenuAccordionUnSeulElement" : "";
 
   function getTitreAccordionParents(): string {
-    return `${getLibelle(resume.parent)}${
-      props.parents && props.parents?.length > UN ? "s" : ""
-    }`;
+    return `${getLibelle(resume.parent)}${props.parents && props.parents?.length > UN ? "s" : ""}`;
   }
 
-  function getDateLieuMariage(
-    titulaire?: ITitulaireRequeteCreation
-  ): string | undefined {
-    const evenementReconnaissance =
-      TitulaireRequeteCreation.getEvenementUnionTypeMariage(titulaire);
+  function getDateLieuMariage(titulaire?: ITitulaireRequeteCreation): string | undefined {
+    const evenementReconnaissance = TitulaireRequeteCreation.getEvenementUnionTypeMariage(titulaire);
 
     return EvenementUnion.getDateEtLieuFormate(evenementReconnaissance);
   }
@@ -57,8 +44,8 @@ export const AccordionTranscriptionParents: React.FC<
           {props.parents?.map(parent => {
             return (
               <div
-                key={parent.nomNaissance + parent.dateNaissanceFormatee}
-                className={`contenuBlocAccordion  ${estPresentUnParent}`}
+                key={`${parent.nomNaissance ?? "inconnu"}_${parent.dateNaissanceFormatee ?? "inconnue"}`}
+                className={`contenuBlocAccordion ${estPresentUnParent}`}
               >
                 <LigneAccordion
                   texte={TitulaireRequeteCreation.getNomNaissanceOuSNP(parent)}
@@ -86,9 +73,7 @@ export const AccordionTranscriptionParents: React.FC<
                 />
 
                 <LigneAccordion
-                  texte={formatNationalites(
-                    TitulaireRequeteCreation.getTableauDeNationalites(parent)
-                  )}
+                  texte={formatNationalites(TitulaireRequeteCreation.getTableauDeNationalites(parent))}
                   ariaLabel={getLibelle("Nationalité")}
                 />
 

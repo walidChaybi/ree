@@ -1,6 +1,6 @@
 import { Identite } from "@model/etatcivil/enum/Identite";
 import { IDateForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
-import { ILocation, IParent } from "@model/requete/IParents";
+import { ILocalisation, IParent } from "@model/requete/IParents";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { ITitulaireRequeteConsulaire } from "@model/requete/ITitulaireRequeteConsulaire";
 import { Formik } from "formik";
@@ -12,7 +12,7 @@ import BlocAutres from "./BlocAutres";
 import BlocDeclarant from "./BlocDeclarant";
 import BlocFormuleFinale from "./BlocFormuleFinale";
 import BlocMentions from "./BlocMentions";
-import BlocParents from "./BlocParents";
+import BlocParent from "./BlocParent";
 import BlocTitulaire from "./BlocTitulaire";
 
 interface ISaisieProjetActeProps {
@@ -57,7 +57,7 @@ interface IBlocDeclarant {
   qualite?: string | null;
   profession?: string | null;
   sansProfession?: boolean;
-  domicile?: ILocation | null;
+  domicile?: ILocalisation | null;
   complement?: string | null;
 }
 
@@ -150,7 +150,8 @@ const FormulaireSaisirProjet: React.FC<ISaisieProjetActeProps> = requete => {
           titre="Parents"
           ouvertParDefaut
         >
-          <BlocParents />
+          <BlocParent estparent1 />
+          <BlocParent />
         </ConteneurAccordeon>
 
         <ConteneurAccordeon

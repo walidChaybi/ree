@@ -1,10 +1,7 @@
 import { EvenementUnion } from "@model/requete/IEvenementUnion";
-import {
-  ITitulaireRequeteCreation,
-  TitulaireRequeteCreation
-} from "@model/requete/ITitulaireRequeteCreation";
+import { ITitulaireRequeteCreation, TitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { resume } from "@pages/requeteCreation/commun/Labels";
-import { DEUX, getLibelle, UN } from "@util/Utils";
+import { DEUX, UN, getLibelle } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import React from "react";
 import { LigneAccordion } from "./LigneAccordion";
@@ -17,33 +14,19 @@ export function formatNomSouhaite(nomSouhaite?: string): string | undefined {
   return nomSouhaite ? `(${getLibelle("souhaité")} : ${nomSouhaite})` : "";
 }
 
-export function formatNomsEtNomSouhaite(
-  titulaire?: ITitulaireRequeteCreation
-): string {
-  return `${TitulaireRequeteCreation.getNomNaissanceOuSNP(
-    titulaire
-  )} ${formatNomSouhaite(titulaire?.nomSouhaite)}`;
+export function formatNomsEtNomSouhaite(titulaire?: ITitulaireRequeteCreation): string {
+  return `${TitulaireRequeteCreation.getNomNaissanceOuSNP(titulaire)} ${formatNomSouhaite(titulaire?.nomSouhaite)}`;
 }
 
-export const AccordionTranscriptionTitulaire: React.FC<
-  AccordionTranscriptionTitulaireProps
-> = props => {
-  const classeNameUnSeulTitulaire =
-    props.titulaires && props.titulaires?.length < DEUX
-      ? "contenuAccordionUnSeulElement"
-      : "";
+export const AccordionTranscriptionTitulaire: React.FC<AccordionTranscriptionTitulaireProps> = props => {
+  const classeNameUnSeulTitulaire = props.titulaires && props.titulaires?.length < DEUX ? "contenuAccordionUnSeulElement" : "";
 
   function getTitreAccordionTitulaire(): string {
-    return `${getLibelle(resume.titulaire)}${
-      props.titulaires && props.titulaires?.length > UN ? "s" : ""
-    }`;
+    return `${getLibelle(resume.titulaire)}${props.titulaires && props.titulaires?.length > UN ? "s" : ""}`;
   }
 
-  function getDateLieuReconnaissance(
-    titulaire: ITitulaireRequeteCreation
-  ): string | undefined {
-    const evenementReconnaissance =
-      TitulaireRequeteCreation.getEvenementUnionTypeReconnaissance(titulaire);
+  function getDateLieuReconnaissance(titulaire: ITitulaireRequeteCreation): string | undefined {
+    const evenementReconnaissance = TitulaireRequeteCreation.getEvenementUnionTypeReconnaissance(titulaire);
 
     return EvenementUnion.getDateEtLieuFormate(evenementReconnaissance);
   }
@@ -64,8 +47,8 @@ export const AccordionTranscriptionTitulaire: React.FC<
           {props.titulaires?.map(titulaire => {
             return (
               <div
-                key={titulaire.dateNaissanceFormatee + titulaire.nomNaissance}
-                className={`contenuBlocAccordion  ${classeNameUnSeulTitulaire}`}
+                key={`${titulaire.dateNaissanceFormatee ?? "inconnue"}_${titulaire.nomNaissance ?? "inconnu"}`}
+                className={`contenuBlocAccordion ${classeNameUnSeulTitulaire}`}
               >
                 <LigneAccordion
                   texte={formatNomsEtNomSouhaite(titulaire)}

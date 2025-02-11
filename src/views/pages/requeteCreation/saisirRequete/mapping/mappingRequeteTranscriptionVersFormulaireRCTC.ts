@@ -82,21 +82,10 @@ import { IEvenementUnion } from "@model/requete/IEvenementUnion";
 import { INationalite } from "@model/requete/INationalite";
 import { IRequerant } from "@model/requete/IRequerant";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
-import {
-  ITitulaireRequeteCreation,
-  TitulaireRequeteCreation
-} from "@model/requete/ITitulaireRequeteCreation";
+import { ITitulaireRequeteCreation, TitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { NatureActeTranscription } from "@model/requete/NatureActeTranscription";
 import { getPrenomsOrdonneVersPrenomsDefaultValues } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
-import {
-  DEUX,
-  estRenseigne,
-  getValeurOuVide,
-  SNP,
-  SPC,
-  UN,
-  ZERO
-} from "@util/Utils";
+import { DEUX, SNP, SPC, UN, ZERO, estRenseigne, getValeurOuVide } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { AdresseFormDefaultValues } from "@widget/formulaire/adresse/AdresseForm";
 import { DateDefaultValues } from "@widget/formulaire/champsDate/DateComposeForm";
@@ -105,15 +94,12 @@ import { IdentiteFormDefaultValues } from "../sousForm/identite/IdentiteTitulair
 import { ParentFormDefaultValues } from "../sousForm/parent/ParentsForm";
 import { RequerantFormDefaultValue } from "../sousForm/requerant/RequerantForm";
 
-export function mappingRequeteTranscriptionVersForumlaireRCTC(
-  requete?: IRequeteCreation
-): ISaisieRequeteRCTC {
+export function mappingRequeteTranscriptionVersForumlaireRCTC(requete?: IRequeteCreation): ISaisieRequeteRCTC {
   let saisie = {};
   if (requete) {
     const { titulaires, requerant, piecesJustificatives } = requete;
 
-    const titulaireActeTranscritDresse =
-      getTitulaireActeTranscitDresseEtDePositionUn(titulaires);
+    const titulaireActeTranscritDresse = getTitulaireActeTranscitDresseEtDePositionUn(titulaires);
     const parents = TitulaireRequeteCreation.getParentsTries(titulaires);
 
     saisie = {
@@ -122,13 +108,9 @@ export function mappingRequeteTranscriptionVersForumlaireRCTC(
       [PARENTS]: {
         [PARENT1]: saisieParent(parents?.[0]),
         [PARENT2]: parents?.[1] ? saisieParent(parents?.[1]) : undefined,
-        [MARIAGE]: saisieEvenementMariage(
-          TitulaireRequeteCreation.getEvenementUnionTypeMariage(parents?.[0])
-        ),
+        [MARIAGE]: saisieEvenementMariage(TitulaireRequeteCreation.getEvenementUnionTypeMariage(parents?.[0])),
         [RECONNAISSANCE]: saisieEvenementReconnaissance(
-          TitulaireRequeteCreation.getEvenementUnionTypeReconnaissance(
-            titulaireActeTranscritDresse
-          )
+          TitulaireRequeteCreation.getEvenementUnionTypeReconnaissance(titulaireActeTranscritDresse)
         )
       },
       [REQUERANT]: saisieRequerant(requerant),
@@ -140,9 +122,7 @@ export function mappingRequeteTranscriptionVersForumlaireRCTC(
 
 export function saisieRequete(requete: IRequeteCreation): IRequeteForm {
   return {
-    [NATURE_ACTE]: getValeurOuVide(
-      NatureActeTranscription.getKey(requete.natureActeTranscrit)
-    ),
+    [NATURE_ACTE]: getValeurOuVide(NatureActeTranscription.getKey(requete.natureActeTranscrit)),
     [LIEN_REQUERANT]: getValeurOuVide(requete.lienRequerant.typeLienRequerant),
     [REGISTRE]: { cle: requete.villeRegistre, libelle: requete.villeRegistre }
   };
@@ -155,12 +135,8 @@ export function saisieRequerant(requerant?: IRequerant): IRequerantForm {
         [NOM]: getValeurOuVide(requerant.nomFamille),
         [NOM_USAGE]: getValeurOuVide(requerant.nomUsage),
         [PRENOM]: getValeurOuVide(requerant.prenom),
-        [AUTRE_ADRESSE_COURRIEL]: getValeurOuVide(
-          requerant.courrielAutreContact
-        ),
-        [AUTRE_NUMERO_TELEPHONE]: getValeurOuVide(
-          requerant.telephoneAutreContact
-        )
+        [AUTRE_ADRESSE_COURRIEL]: getValeurOuVide(requerant.courrielAutreContact),
+        [AUTRE_NUMERO_TELEPHONE]: getValeurOuVide(requerant.telephoneAutreContact)
       }
     : RequerantFormDefaultValue;
 }
@@ -181,24 +157,17 @@ export function saisieAdresse(requerant?: IRequerant): IAdresseForm {
     : AdresseFormDefaultValues;
 }
 
-export function saisieTitulaire(
-  titulaire?: ITitulaireRequeteCreation
-): IIdentiteTitulaireForm {
+export function saisieTitulaire(titulaire?: ITitulaireRequeteCreation): IIdentiteTitulaireForm {
   return titulaire
     ? ({
         [IDENTIFIANT]: getValeurOuVide(titulaire.id),
         [NOMS]: {
-          [PAS_DE_NOM_ACTE_ETRANGER]: pasDeNomOuFalse(
-            titulaire.nomNaissance,
-            "pasDeNomActeEtranger"
-          ),
+          [PAS_DE_NOM_ACTE_ETRANGER]: pasDeNomOuFalse(titulaire.nomNaissance ?? "", "pasDeNomActeEtranger"),
           [NOM_ACTE_ETRANGER]: getValeurOuVide(titulaire.nomNaissance),
           [NOM_SOUHAITE_ACTE_FR]: getValeurOuVide(titulaire.nomSouhaite)
         },
         [SEXE]: getValeurOuVide(titulaire.sexe),
-        [PAS_DE_PRENOM_CONNU]: pasDePrenomOuFalse(
-          titulaire.prenoms?.[0].prenom
-        ),
+        [PAS_DE_PRENOM_CONNU]: pasDePrenomOuFalse(titulaire.prenoms?.[0].prenom),
         // TODO Prenoms a rajouter quand la MR 855 sera sur develop
         [PRENOMS]: getPrenomsOrdonneVersPrenomsDefaultValues(titulaire.prenoms),
         [DATE_NAISSANCE]: getDateNaissance(titulaire),
@@ -207,9 +176,7 @@ export function saisieTitulaire(
     : IdentiteFormDefaultValues;
 }
 
-export function saisieEvenementMariage(
-  evenementMariage?: IEvenementUnion
-): IEvenementMariageParentsForm {
+export function saisieEvenementMariage(evenementMariage?: IEvenementUnion): IEvenementMariageParentsForm {
   return {
     [IDENTIFIANT]: getValeurOuVide(evenementMariage?.id),
     [PARENTS_MARIES]: estCheckboxCochee(evenementMariage?.annee),
@@ -220,21 +187,15 @@ export function saisieEvenementMariage(
   };
 }
 
-export function saisieEvenementReconnaissance(
-  evenementReconnaissance?: IEvenementUnion
-): IEvenementReconnaissanceTitulaireForm {
+export function saisieEvenementReconnaissance(evenementReconnaissance?: IEvenementUnion): IEvenementReconnaissanceTitulaireForm {
   return {
     [IDENTIFIANT]: getValeurOuVide(evenementReconnaissance?.id),
     [TITULAIRE_RECONNU]: estCheckboxCochee(evenementReconnaissance?.annee),
     [DATE_RECONNAISSANCE]: getDateEvenement(evenementReconnaissance),
     [LIEU_ACTE_RECONNAISSANCE]: getLieuEvenement(evenementReconnaissance?.pays),
     [VILLE_RECONNAISSANCE]: getValeurOuVide(evenementReconnaissance?.ville),
-    [REGION_ETAT_RECONNAISSANCE]: getValeurOuVide(
-      evenementReconnaissance?.region
-    ),
-    [DEPARTEMENT_RECONNAISSANCE]: getValeurOuVide(
-      evenementReconnaissance?.region
-    ),
+    [REGION_ETAT_RECONNAISSANCE]: getValeurOuVide(evenementReconnaissance?.region),
+    [DEPARTEMENT_RECONNAISSANCE]: getValeurOuVide(evenementReconnaissance?.region),
     [PAYS_RECONNAISSANCE]: getValeurOuVide(evenementReconnaissance?.pays)
   };
 }
@@ -253,9 +214,7 @@ export function getDateEvenement(evenement?: IEvenementUnion): IDateForm {
     : DateDefaultValues;
 }
 
-export function getDateNaissance(
-  titulaire?: ITitulaireRequeteCreation
-): IDateForm {
+export function getDateNaissance(titulaire?: ITitulaireRequeteCreation): IDateForm {
   return titulaire
     ? {
         [JOUR]: getValeurOuVide(titulaire.jourNaissance),
@@ -269,10 +228,7 @@ export function saisieParent(parent?: ITitulaireRequeteCreation): IParentForm {
   return parent
     ? ({
         [IDENTIFIANT]: parent.id,
-        [PAS_DE_NOM_CONNU]: pasDeNomOuFalse(
-          parent.nomNaissance,
-          "pasDeNomConnu"
-        ),
+        [PAS_DE_NOM_CONNU]: pasDeNomOuFalse(parent.nomNaissance ?? "", "pasDeNomConnu"),
         [NOM]: parent.nomNaissance,
         [PAS_DE_PRENOM_CONNU]: pasDePrenomOuFalse(parent.prenoms?.[0].prenom),
         [PRENOMS]: getPrenomsOrdonneVersPrenomsDefaultValues(parent.prenoms),
@@ -293,12 +249,8 @@ export function saisieParent(parent?: ITitulaireRequeteCreation): IParentForm {
 export function getTitulaireActeTranscitDresseEtDePositionUn(
   titulairesReq?: ITitulaireRequeteCreation[]
 ): ITitulaireRequeteCreation | undefined {
-  const titulairesActeTranscritDresse =
-    TitulaireRequeteCreation.getTitulairesTries(titulairesReq);
-  return TitulaireRequeteCreation.getTitulaireParPosition(
-    titulairesActeTranscritDresse || [],
-    1
-  );
+  const titulairesActeTranscritDresse = TitulaireRequeteCreation.getTitulairesTries(titulairesReq);
+  return TitulaireRequeteCreation.getTitulaireParPosition(titulairesActeTranscritDresse || [], 1);
 }
 
 export function getLieuEvenement(pays?: string): string {
@@ -311,23 +263,16 @@ export function getLieuEvenement(pays?: string): string {
   }
 }
 
-export function getInformationsLieuNaissance(
-  titulaire: ITitulaireRequeteCreation
-): IEvenementNaissanceCommunForm {
+export function getInformationsLieuNaissance(titulaire: ITitulaireRequeteCreation): IEvenementNaissanceCommunForm {
   return {
     [VILLE_NAISSANCE]: getValeurOuVide(titulaire.villeNaissance),
-    [ARRONDISSEMENT_NAISSANCE]: getValeurOuVide(
-      titulaire.arrondissementNaissance
-    ),
+    [ARRONDISSEMENT_NAISSANCE]: getValeurOuVide(titulaire.arrondissementNaissance),
     [REGION_NAISSANCE]: getValeurOuVide(titulaire.regionNaissance),
     [PAYS_NAISSANCE]: getValeurOuVide(titulaire.paysNaissance)
   };
 }
 
-export function pasDeNomOuFalse(
-  nomNaissance: string,
-  nomCheckbox: string
-): string | string[] {
+export function pasDeNomOuFalse(nomNaissance: string, nomCheckbox: string): string | string[] {
   return nomNaissance === SNP ? [nomCheckbox] : "false";
 }
 
@@ -339,9 +284,7 @@ export function pasDePrenomOuFalse(prenom1?: string): string | string[] {
   }
 }
 
-export function getNationalites(
-  nationalites?: INationalite[]
-): INationalitesForm {
+export function getNationalites(nationalites?: INationalite[]): INationalitesForm {
   return nationalites?.length
     ? {
         [NATIONALITE_1]: getValeurOuVide(nationalites?.[ZERO])?.nationalite,

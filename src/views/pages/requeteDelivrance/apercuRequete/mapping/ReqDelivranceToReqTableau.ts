@@ -25,7 +25,7 @@ export function mappingRequeteDelivranceToRequeteTableau(requete: IRequeteDelivr
 const getTitulaires = (titulaires: ITitulaireRequete[]): ITitulaireRequeteTableau[] => {
   return titulaires.map((t: ITitulaireRequete) => {
     const titulaire = {} as ITitulaireRequeteTableau;
-    titulaire.nom = t.nomNaissance;
+    titulaire.nom = t.nomNaissance ?? "";
     if (t.jourNaissance) {
       titulaire.jourNaissance = t.jourNaissance;
     }

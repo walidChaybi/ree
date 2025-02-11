@@ -5,7 +5,7 @@ import { DEUX, formatNom, formatPrenoms, UN } from "@util/Utils";
 import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
 
-export interface ILocation {
+export interface ILocalisation {
   typeLieu?: "France" | "Étranger" | "Inconnu" | "";
   ville?: string;
   arrondissement?: string;
@@ -16,19 +16,19 @@ export interface ILocation {
 }
 
 export interface IParent {
-  id: string;
-  position: number;
-  sexe: string;
-  nomNaissance: string;
+  id?: string;
+  position?: number;
+  sexe?: string;
+  nomNaissance?: string;
   nom?: string;
   prenoms?: IPrenomOrdonnes[];
   dateNaissance?: IDateForm | null;
-  lieuNaissance?: ILocation;
+  lieuNaissance?: ILocalisation;
   profession?: string;
   sansProfession?: boolean;
   renseignerAge?: boolean;
   age?: string;
-  domicile?: ILocation;
+  domicile?: ILocalisation;
   typeObjetTitulaire?: TypeObjetTitulaire;
 }
 

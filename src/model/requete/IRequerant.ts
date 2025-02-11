@@ -45,10 +45,7 @@ export const Requerant = {
   },
   getNomUsageOuNomFamille(requerant?: IRequerant): string | undefined {
     let nom = requerant?.nomFamille;
-    if (
-      Qualite.estParticulier(requerant?.qualiteRequerant.qualite) &&
-      requerant?.qualiteRequerant.particulier?.nomUsage
-    ) {
+    if (Qualite.estParticulier(requerant?.qualiteRequerant.qualite) && requerant?.qualiteRequerant.particulier?.nomUsage) {
       nom = requerant?.qualiteRequerant.particulier?.nomUsage;
     }
     return nom;
@@ -69,16 +66,13 @@ export const Requerant = {
     let raisonSociale: string | undefined;
     switch (requerant?.qualiteRequerant.qualite) {
       case Qualite.MANDATAIRE_HABILITE:
-        raisonSociale =
-          requerant.qualiteRequerant.mandataireHabilite?.raisonSociale;
+        raisonSociale = requerant.qualiteRequerant.mandataireHabilite?.raisonSociale;
         break;
       case Qualite.INSTITUTIONNEL:
-        raisonSociale =
-          requerant.qualiteRequerant.institutionnel?.nomInstitution;
+        raisonSociale = requerant.qualiteRequerant.institutionnel?.nomInstitution;
         break;
       case Qualite.AUTRE_PROFESSIONNEL:
-        raisonSociale =
-          requerant.qualiteRequerant.autreProfessionnel?.raisonSociale;
+        raisonSociale = requerant.qualiteRequerant.autreProfessionnel?.raisonSociale;
         break;
       default:
         break;
@@ -86,56 +80,34 @@ export const Requerant = {
 
     return raisonSociale;
   },
-  estTitulaireX({
-    requerant,
-    titulaire
-  }: {
-    requerant: IRequerant;
-    titulaire?: ITitulaireRequete;
-  }) {
+  estTitulaireX({ requerant, titulaire }: { requerant: IRequerant; titulaire?: ITitulaireRequete }) {
     let titulaireResultat = { nom: "", prenom: "" };
 
     if (titulaire) {
       const { nomNaissance } = titulaire;
       titulaireResultat = {
-        nom: nomNaissance === SNP ? "" : nomNaissance,
+        nom: nomNaissance === SNP ? "" : (nomNaissance ?? ""),
         prenom: TitulaireRequete.getPrenom1(titulaire)
       };
     }
 
-    return (
-      titulaireResultat.nom === requerant.nomFamille &&
-      chainesEgalesIgnoreCasse(titulaireResultat.prenom, requerant.prenom)
-    );
+    return titulaireResultat.nom === requerant.nomFamille && chainesEgalesIgnoreCasse(titulaireResultat.prenom, requerant.prenom);
   },
-  estUnTitulaire({
-    requerant,
-    titulaires
-  }: {
-    requerant?: IRequerant;
-    titulaires?: ITitulaireRequete[];
-  }) {
+  estUnTitulaire({ requerant, titulaires }: { requerant?: IRequerant; titulaires?: ITitulaireRequete[] }) {
     return requerant
       ? Requerant.estTitulaireX({
-          titulaire: TitulaireRequete.getTitulaireParPosition(
-            titulaires || [],
-            UN
-          ),
+          titulaire: TitulaireRequete.getTitulaireParPosition(titulaires || [], UN),
           requerant
         }) ||
           Requerant.estTitulaireX({
-            titulaire: TitulaireRequete.getTitulaireParPosition(
-              titulaires || [],
-              DEUX
-            ),
+            titulaire: TitulaireRequete.getTitulaireParPosition(titulaires || [], DEUX),
             requerant
           })
       : false;
   },
   estParticulierOuUtilisateur(requerant: IRequerant): requerant is IRequerant {
     return (
-      Qualite.estParticulier(requerant.qualiteRequerant?.qualite) ||
-      Qualite.estMandataireHabilite(requerant.qualiteRequerant?.qualite)
+      Qualite.estParticulier(requerant.qualiteRequerant?.qualite) || Qualite.estMandataireHabilite(requerant.qualiteRequerant?.qualite)
     );
   },
   estRaisonSociale(requerant?: IRequerant): boolean {
@@ -147,11 +119,7 @@ export const Requerant = {
   },
   composerIdentite(requerant?: IRequerant): ICompositionIdentiteRequerant {
     // Récupération des informations selon type et données connues.
-    const raisonSociale = enMajuscule(
-      Requerant.estRaisonSociale(requerant)
-        ? Requerant.getRaisonSociale(requerant)
-        : ""
-    );
+    const raisonSociale = enMajuscule(Requerant.estRaisonSociale(requerant) ? Requerant.getRaisonSociale(requerant) : "");
     const nom = enMajuscule(Requerant.getNomUsageOuNomFamille(requerant));
     const prenom = enMajuscule(Requerant.getPrenom(requerant));
 
@@ -178,9 +146,7 @@ export const Requerant = {
       courriel: requerant.courriel,
       telephone: requerant.telephone,
       adresse: requerant.adresse as IAdresseRequerant,
-      lienRequerant: requerant.lienRequerant
-        ? getLienRequerant(requerant.lienRequerant)
-        : undefined,
+      lienRequerant: requerant.lienRequerant ? getLienRequerant(requerant.lienRequerant) : undefined,
       qualiteRequerant: getQualiteRequerant(requerant),
       telephoneAutreContact: requerant.telephoneAutreContact,
       courrielAutreContact: requerant.courrielAutreContact
@@ -202,11 +168,8 @@ function getQualiteRequerant(requerant: any): IQualiteRequerant {
     qualite: Qualite.getEnumFor(requerant.qualite),
     utilisateurRece: requerant.detailQualiteRece as IUtilisateurRece,
     particulier: requerant.detailQualiteParticulier as IParticulier,
-    mandataireHabilite: getMandataireHabilite(
-      requerant.detailQualiteMandataireHabilite
-    ),
-    autreProfessionnel:
-      requerant.detailQualiteAutreProfessionnel as IAutreProfessionnel,
+    mandataireHabilite: getMandataireHabilite(requerant.detailQualiteMandataireHabilite),
+    autreProfessionnel: requerant.detailQualiteAutreProfessionnel as IAutreProfessionnel,
     institutionnel: getInstitutionnel(requerant.detailQualiteInstitutionnel)
   };
 }

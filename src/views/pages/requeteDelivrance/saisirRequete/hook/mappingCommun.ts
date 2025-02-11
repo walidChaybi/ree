@@ -120,7 +120,7 @@ export const saisieTitulaire = (titulaire?: ITitulaireRequete): ISaisieIdentite 
   return titulaire
     ? {
         [NOMS]: {
-          [NOM_NAISSANCE]: titulaire.nomNaissance,
+          [NOM_NAISSANCE]: titulaire.nomNaissance ?? "",
           [NOM_USAGE]: titulaire.nomUsage ?? ""
         },
         [PRENOMS]: getPrenomsOrdonneVersPrenomsDefaultValues(titulaire.prenoms),
@@ -144,7 +144,7 @@ export const saisieTitulaire = (titulaire?: ITitulaireRequete): ISaisieIdentite 
 const saisieFiliation = (parent?: IParent): ISaisieParent => {
   return parent
     ? {
-        [NOM_NAISSANCE]: parent.nomNaissance,
+        [NOM_NAISSANCE]: parent.nomNaissance ?? "",
         [PRENOMS]: getPrenomsOrdonneVersPrenomsDefaultValues(parent.prenoms)
       }
     : ParentFormDefaultValues;

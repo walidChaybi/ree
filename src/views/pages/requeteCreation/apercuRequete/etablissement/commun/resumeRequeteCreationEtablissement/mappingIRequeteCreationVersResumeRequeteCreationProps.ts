@@ -429,9 +429,7 @@ const mappingEvenementUnion = (evenementUnions: IEvenementUnion[] | undefined, t
 };
 
 // Map chaque enfants de "tab" avec "mapper", ou retourne "[]" si "tab" est vide
-const mappingTableau = <IObject, ObjectType>(
-  mapper: (child: IObject) => ObjectType,
-  tab?: IObject[]
-) => (tab ? tab.map(child => mapper(child)) : []);
+const mappingTableau = <IObject, ObjectType>(mapper: (child: IObject) => ObjectType, tab?: IObject[]) =>
+  tab ? tab.map(child => mapper(child)) : [];
 
 export default mappingIRequeteCreationVersResumeRequeteCreationProps;

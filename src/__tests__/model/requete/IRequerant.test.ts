@@ -1,8 +1,10 @@
 import requeteDelivrance from "@mock/data/requeteDelivrance";
+import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
-import { Requerant } from "@model/requete/IRequerant";
+import { IRequerant, Requerant } from "@model/requete/IRequerant";
+import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { mappingRequeteDelivranceVersFormulaireRDCSC } from "@pages/requeteDelivrance/saisirRequete/hook/mappingRequeteDelivranceVersFormulaireRDCSC";
 import { describe, expect, test } from "vitest";
 
@@ -795,5 +797,56 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
     const requerant = Requerant.composerIdentite(requeteDelivrance.requerant);
 
     expect(requerant).toEqual(identiteAttendue);
+  });
+
+  test("getNomPrenom - doit gérer un nom complet", () => {
+    const requerant = {
+      nomFamille: "Dubois",
+      prenom: "Marie"
+    } as IRequerant;
+    expect(Requerant.getNomPrenom(requerant)).toBe("Dubois Marie\n");
+  });
+
+  test("getNomPrenom - doit gérer l'absence de prénom", () => {
+    const requerant = {
+      nomFamille: "Dubois"
+    } as IRequerant;
+    expect(Requerant.getNomPrenom(requerant)).toBe("Dubois \n");
+  });
+
+  test("estTitulaireX - doit vérifier l'égalité exacte des noms", () => {
+    const requerant = {
+      nomFamille: "Dubois",
+      prenom: "Marie"
+    } as IRequerant;
+
+    const titulaire = {
+      id: "123",
+      position: 1,
+      nomNaissance: "Dubois",
+      prenoms: [{ numeroOrdre: 1, prenom: "Marie" }],
+      sexe: "FEMININ",
+      nationalite: Nationalite.ETRANGERE
+    } as ITitulaireRequete;
+
+    expect(Requerant.estTitulaireX({ requerant, titulaire })).toBe(true);
+  });
+
+  test("estTitulaireX - doit vérifier les noms avec casse", () => {
+    const requerant = {
+      nomFamille: "Dubois",
+      prenom: "MARIE"
+    } as IRequerant;
+
+    const titulaire = {
+      id: "123",
+      position: 1,
+      nomNaissance: "Dubois",
+      prenoms: [{ numeroOrdre: 1, prenom: "marie" }],
+      sexe: "FEMININ",
+      nationalite: Nationalite.ETRANGERE
+    } as ITitulaireRequete;
+
+    expect(Requerant.estTitulaireX({ requerant, titulaire })).toBe(true);
   });
 });

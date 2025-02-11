@@ -1,4 +1,4 @@
-import { ILocation } from "@model/requete/IParents";
+import { ILocalisation } from "@model/requete/IParents";
 import { genererArrondissements } from "@util/Utils";
 import React, { memo, useMemo } from "react";
 import ChampListeDeroulante from "../champs/ChampListeDeroulante";
@@ -10,7 +10,7 @@ interface Option {
   libelle: string;
 }
 
-type TTypeLieu = ILocation["typeLieu"];
+type TTypeLieu = ILocalisation["typeLieu"];
 
 interface IFormulaireAdresseProps {
   prefix: string;

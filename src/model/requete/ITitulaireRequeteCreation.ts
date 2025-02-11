@@ -6,7 +6,7 @@ import { IDomiciliation } from "./IDomiciliation";
 import { IEnfantTitulaireActeTranscritDresse } from "./IEnfantTitulaireActeTranscritDresse";
 import { IEvenementUnion } from "./IEvenementUnion";
 import { INationalite } from "./INationalite";
-import { ILocation } from "./IParents";
+import { ILocalisation } from "./IParents";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
 import { IRetenueSdanf } from "./IRetenueSdanf";
 import { ISuiviDossier } from "./ISuiviDossier";
@@ -43,9 +43,9 @@ export interface ITitulaireRequeteCreation extends ITitulaireRequete {
   nomSouhaite?: string;
   suiviDossiers?: ISuiviDossier[];
   sansProfession?: boolean;
-  lieuNaissance?: ILocation;
+  lieuNaissance?: ILocalisation;
   renseignerAge?: boolean;
-  domicile?: ILocation;
+  domicile?: ILocalisation;
 }
 
 const RECONNAISSANCE = "RECONNAISSANCE";

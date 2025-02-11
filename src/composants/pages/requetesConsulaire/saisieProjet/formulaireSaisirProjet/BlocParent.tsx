@@ -10,9 +10,8 @@ import ChampsTexte from "../../../../commun/champs/ChampsTexte";
 import FormulaireAdresse from "../../../../commun/formulaire/FormulaireAdresse";
 import { ISaisieProjetActeForm } from "./FormulaireSaisirProjet";
 
-interface IParentFormProps {
-  parentIndex: 1 | 2;
-  titre: string;
+interface IBlocParentProps {
+  estparent1?: boolean;
 }
 
 interface ITitreSectionProps {
@@ -25,13 +24,21 @@ const TitreSection = memo<ITitreSectionProps>(({ titre }) => (
   </div>
 ));
 
-const ParentForm: React.FC<IParentFormProps> = memo(({ parentIndex, titre }) => {
+const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
   const { values, setFieldValue } = useFormikContext<ISaisieProjetActeForm>();
-
-  const prefix = `parents.parent${parentIndex}`;
-  const parent = useMemo(() => values.parents[`parent${parentIndex}`], [values, parentIndex]);
-
   const optionsSexe = useMemo(() => Sexe.getMasculinFemininAsOptions(), []);
+  const prefix = useMemo(() => `parents.parent${estparent1 ? "1" : "2"}`, [estparent1]);
+  const parent = useMemo(() => (estparent1 ? values.parents.parent1 : values.parents.parent2), [values, estparent1]);
+  const titre = useMemo(() => {
+    switch (parent.sexe) {
+      case "MASCULIN":
+        return "Père";
+      case "FEMININ":
+        return "Mère";
+      default:
+        return `Parent ${estparent1 ? "1" : "2"}`;
+    }
+  }, [parent, estparent1]);
 
   useEffect(() => {
     const valeurChamp = {
@@ -48,7 +55,7 @@ const ParentForm: React.FC<IParentFormProps> = memo(({ parentIndex, titre }) => 
   }, [parent?.sansProfession]);
 
   useEffect(() => {
-    if (parentIndex === 2 && values.parents.domicileCommun) {
+    if (!estparent1 && values.parents.domicileCommun) {
       setFieldValue("parents.parent2.domicile", values.parents.parent1.domicile);
     }
   }, [values.parents.domicileCommun, values.parents.parent1.domicile]);
@@ -58,6 +65,7 @@ const ParentForm: React.FC<IParentFormProps> = memo(({ parentIndex, titre }) => 
       <div className="relative mb-5 flex border-bleu">
         <h2 className="absolute -top-[3.4rem] ml-8 bg-white px-2 text-bleu-sombre">{titre}</h2>
       </div>
+
       <div className="space-y-4">
         <ChampsTexte
           name={`${prefix}.nom`}
@@ -100,7 +108,6 @@ const ParentForm: React.FC<IParentFormProps> = memo(({ parentIndex, titre }) => 
       </div>
 
       <TitreSection titre="Lieu de naissance" />
-
       <FormulaireAdresse
         key={`${prefix}.lieuNaissance`}
         prefix={`${prefix}.lieuNaissance`}
@@ -123,13 +130,14 @@ const ParentForm: React.FC<IParentFormProps> = memo(({ parentIndex, titre }) => 
       </div>
 
       <TitreSection titre="Domicile" />
-      {parentIndex === 2 && (
+      {!estparent1 && (
         <ChampsCaseACocher
           name="parents.domicileCommun"
           libelle="Domicile commun avec parent 1"
         />
       )}
-      {(!values.parents.domicileCommun || parentIndex === 1) && (
+
+      {(estparent1 || !values.parents.domicileCommun) && (
         <FormulaireAdresse
           key={`${prefix}.domicile`}
           prefix={`${prefix}.domicile`}
@@ -141,46 +149,4 @@ const ParentForm: React.FC<IParentFormProps> = memo(({ parentIndex, titre }) => 
   );
 });
 
-const useTitresParents = () => {
-  const { values } = useFormikContext<ISaisieProjetActeForm>();
-  const parent = useMemo(() => values.parents, [values]);
-
-  const getTitreParent = (sexe: string, estVide: boolean, defaultTitre: string) => {
-    if (estVide) return defaultTitre;
-    if (sexe === "MASCULIN") return "Père";
-    if (sexe === "FEMININ") return "Mère";
-    return defaultTitre;
-  };
-
-  return useMemo(() => {
-    const sexeParent1 = parent?.parent1?.sexe;
-    const sexeParent2 = parent?.parent2?.sexe;
-
-    const parent1sansSexe = parent?.parent1?.sexe === "INCONNU";
-    const parent2sansSexe = parent?.parent2?.sexe === "INCONNU";
-
-    return {
-      titre1: getTitreParent(sexeParent1, parent1sansSexe, "Parent 1"),
-      titre2: getTitreParent(sexeParent2, parent2sansSexe, "Parent 2")
-    };
-  }, [parent?.parent1, parent?.parent2]);
-};
-
-const BlocParents: React.FC = () => {
-  const { titre1, titre2 } = useTitresParents();
-
-  return (
-    <>
-      <ParentForm
-        parentIndex={1}
-        titre={titre1}
-      />
-      <ParentForm
-        parentIndex={2}
-        titre={titre2}
-      />
-    </>
-  );
-};
-
-export default memo(BlocParents);
+export default BlocParent;

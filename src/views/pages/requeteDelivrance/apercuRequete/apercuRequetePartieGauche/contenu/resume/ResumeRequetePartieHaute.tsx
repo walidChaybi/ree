@@ -1,21 +1,12 @@
 import { IAdresseRequerant } from "@model/requete/IAdresseRequerant";
-import {
-  EvenementRequete,
-  IEvenementRequete
-} from "@model/requete/IEvenementRequete";
+import { EvenementRequete, IEvenementRequete } from "@model/requete/IEvenementRequete";
 import { ILienRequerant } from "@model/requete/ILienRequerant";
 import { IMandant } from "@model/requete/IMandant";
 import { IParent } from "@model/requete/IParents";
-import {
-  IQualiteRequerant,
-  QualiteRequerant
-} from "@model/requete/IQualiteRequerant";
+import { IQualiteRequerant, QualiteRequerant } from "@model/requete/IQualiteRequerant";
 import { IRequerant } from "@model/requete/IRequerant";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import {
-  ITitulaireRequete,
-  TitulaireRequete
-} from "@model/requete/ITitulaireRequete";
+import { ITitulaireRequete, TitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { IdentiteType } from "@model/requete/IdentiteType";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { Qualite } from "@model/requete/enum/Qualite";
@@ -23,20 +14,9 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeLienMandant } from "@model/requete/enum/TypeLienMandant";
 import { TypeLienRequerant } from "@model/requete/enum/TypeLienRequerant";
 import { TypeMandant } from "@model/requete/enum/TypeMandant";
-import {
-  formatLigne,
-  getLibelle,
-  getValeurOuUndefined,
-  getValeurOuVide,
-  triListeObjetsSurPropriete
-} from "@util/Utils";
+import { formatLigne, getLibelle, getValeurOuUndefined, getValeurOuVide, triListeObjetsSurPropriete } from "@util/Utils";
 import React from "react";
-import {
-  formatLigneLieu,
-  formatLigneNomPrenoms,
-  formatLigneQualiteType,
-  formatPrenoms
-} from "./Formatages";
+import { formatLigneLieu, formatLigneNomPrenoms, formatLigneQualiteType, formatPrenoms } from "./Formatages";
 import { ItemLibelle } from "./item/ItemLibelle";
 import { ItemMultiLignes } from "./item/ItemMultiLignes";
 import "./scss/ResumeRequetePartieHaute.scss";
@@ -45,12 +25,8 @@ interface ResumeRequetePartieHauteProps {
   requete: IRequeteDelivrance;
 }
 
-export const ResumeRequetePartieHaute: React.FC<
-  ResumeRequetePartieHauteProps
-> = props => {
-  const sortedTitulaires = props.requete.titulaires
-    ? triListeObjetsSurPropriete([...props.requete.titulaires], "position")
-    : [];
+export const ResumeRequetePartieHaute: React.FC<ResumeRequetePartieHauteProps> = props => {
+  const sortedTitulaires = props.requete.titulaires ? triListeObjetsSurPropriete([...props.requete.titulaires], "position") : [];
 
   return (
     <div className="ResumeRequetePartieHaute">
@@ -80,11 +56,12 @@ export const ResumeRequetePartieHaute: React.FC<
               key={idx}
               className={sortedTitulaires.length === 1 ? "inline" : ""}
             >
-              <ItemMultiLignes key={`titulaire-${idx}`} modeColumn={true}>
+              <ItemMultiLignes
+                key={`titulaire-${idx}`}
+                modeColumn={true}
+              >
                 <ItemLibelle texte={getIdentiteTitulaire(titulaire)} />
-                <ItemLibelle
-                  texte={TitulaireRequete.getDateNaissance(titulaire)}
-                />
+                <ItemLibelle texte={TitulaireRequete.getDateNaissance(titulaire)} />
                 <ItemLibelle texte={getLieuNaissanceTitulaire(titulaire)} />
               </ItemMultiLignes>
 
@@ -93,9 +70,7 @@ export const ResumeRequetePartieHaute: React.FC<
                 modeColumn={true}
                 label={"Filiation"}
               >
-                {TitulaireRequete.getParentsTries(
-                  titulaire.parentsTitulaire
-                )?.map(parent => (
+                {TitulaireRequete.getParentsTries(titulaire.parentsTitulaire)?.map(parent => (
                   <ItemLibelle
                     key={`filiation-${parent.id}-${idx}`}
                     texte={getIdentiteParent(parent)}
@@ -115,9 +90,7 @@ export const ResumeRequetePartieHaute: React.FC<
           !NatureActeRequete.estNaissance(props.requete.evenement.natureActe)
         }
       >
-        <ItemLibelle
-          texte={EvenementRequete.getDate(props.requete.evenement)}
-        />
+        <ItemLibelle texte={EvenementRequete.getDate(props.requete.evenement)} />
         <ItemLibelle texte={getLieuEvenement(props.requete.evenement)} />
       </ItemMultiLignes>
 
@@ -126,51 +99,32 @@ export const ResumeRequetePartieHaute: React.FC<
       <div className="sectionPanel">
         <ItemLibelle
           label={"Requérant"}
-          texte={getQualiteTypeRequerant(
-            props.requete.requerant.qualiteRequerant
-          )}
+          texte={getQualiteTypeRequerant(props.requete.requerant.qualiteRequerant)}
         />
         <ItemLibelle
           label={"Mandant"}
           texte={
-            getIdentiteMandant(
-              props.requete.requerant.qualiteRequerant.qualite,
-              props.requete?.mandant
-            ) ??
-            getRaisonSocialeMandant(
-              props.requete.requerant.qualiteRequerant.qualite,
-              props.requete?.mandant
-            )
+            getIdentiteMandant(props.requete.requerant.qualiteRequerant.qualite, props.requete?.mandant) ??
+            getRaisonSocialeMandant(props.requete.requerant.qualiteRequerant.qualite, props.requete?.mandant)
           }
         />
         <ItemLibelle
           label={"Lien avec le titulaire"}
-          texte={getLienRequerant(
-            props.requete.requerant.lienRequerant,
-            props.requete.mandant
-          )}
+          texte={getLienRequerant(props.requete.requerant.lienRequerant, props.requete.mandant)}
         />
 
         <ItemMultiLignes
           label={"Coordonnées"}
           visible={props.requete.requerant != null}
         >
-          <ItemLibelle
-            texte={getRaisonSocialeRequerant(
-              props.requete.requerant.qualiteRequerant
-            )}
-          />
+          <ItemLibelle texte={getRaisonSocialeRequerant(props.requete.requerant.qualiteRequerant)} />
           <ItemLibelle texte={getIdentiteRequerant(props.requete.requerant)} />
           <ItemLibelle texte={props.requete.requerant.adresse?.ligne2} />
           <ItemLibelle texte={props.requete.requerant.adresse?.ligne3} />
           <ItemLibelle texte={props.requete.requerant.adresse?.ligne4} />
           <ItemLibelle texte={props.requete.requerant.adresse?.ligne5} />
-          <ItemLibelle
-            texte={getCodePostalVilleRequerant(props.requete.requerant.adresse)}
-          />
-          <ItemLibelle
-            texte={getPaysRequerant(props.requete.requerant.adresse)}
-          />
+          <ItemLibelle texte={getCodePostalVilleRequerant(props.requete.requerant.adresse)} />
+          <ItemLibelle texte={getPaysRequerant(props.requete.requerant.adresse)} />
           <div className="inline">
             <ItemLibelle texte={props.requete.requerant.courriel} />
             <ItemLibelle
@@ -185,9 +139,7 @@ export const ResumeRequetePartieHaute: React.FC<
   );
 };
 
-const getIdentiteTitulaire = (
-  titulaire: ITitulaireRequete
-): string | undefined => {
+const getIdentiteTitulaire = (titulaire: ITitulaireRequete): string | undefined => {
   const identiteTitulaire: IdentiteType = {
     noms: {
       naissance: titulaire.nomNaissance
@@ -232,22 +184,14 @@ const getIdentiteRequerant = (requerant: IRequerant): string | undefined => {
   return resultat;
 };
 
-const getLienRequerant = (
-  lienRequerant?: ILienRequerant,
-  mandant?: IMandant
-): string | undefined => {
+const getLienRequerant = (lienRequerant?: ILienRequerant, mandant?: IMandant): string | undefined => {
   let resultat: string | undefined = undefined;
 
   if (mandant?.typeLien) {
-    resultat =
-      TypeLienMandant.estAutre(mandant?.typeLien) && mandant.natureLien
-        ? mandant.natureLien
-        : mandant.typeLien.libelle;
+    resultat = TypeLienMandant.estAutre(mandant?.typeLien) && mandant.natureLien ? mandant.natureLien : mandant.typeLien.libelle;
   } else if (lienRequerant) {
     resultat =
-      TypeLienRequerant.estAutre(lienRequerant.lien) && lienRequerant.natureLien
-        ? lienRequerant.natureLien
-        : lienRequerant.lien.libelle;
+      TypeLienRequerant.estAutre(lienRequerant.lien) && lienRequerant.natureLien ? lienRequerant.natureLien : lienRequerant.lien.libelle;
   }
 
   return resultat;
@@ -266,16 +210,10 @@ const getRaisonSocialeRequerant = (qualiteRequerant: IQualiteRequerant) => {
   }
 };
 
-const getIdentiteMandant = (
-  qualite: Qualite,
-  mandant?: IMandant
-): string | undefined => {
+const getIdentiteMandant = (qualite: Qualite, mandant?: IMandant): string | undefined => {
   let resultat: string | undefined = undefined;
 
-  if (
-    Qualite.estMandataireHabilite(qualite) &&
-    TypeMandant.estPhysique(mandant?.type)
-  ) {
+  if (Qualite.estMandataireHabilite(qualite) && TypeMandant.estPhysique(mandant?.type)) {
     const identiteMandant: IdentiteType = {
       noms: {
         naissance: mandant?.nom ?? ""
@@ -290,47 +228,26 @@ const getIdentiteMandant = (
   return resultat;
 };
 
-const getRaisonSocialeMandant = (
-  qualite: Qualite,
-  mandant?: IMandant
-): string | undefined => {
+const getRaisonSocialeMandant = (qualite: Qualite, mandant?: IMandant): string | undefined => {
   let resultat: string | undefined = undefined;
 
-  if (
-    Qualite.estMandataireHabilite(qualite) &&
-    TypeMandant.estMorale(mandant?.type)
-  ) {
+  if (Qualite.estMandataireHabilite(qualite) && TypeMandant.estMorale(mandant?.type)) {
     resultat = mandant?.raisonSociale;
   }
 
   return resultat;
 };
 
-const getLieuNaissanceTitulaire = (
-  titulaire: ITitulaireRequete
-): string | undefined =>
-  formatLigneLieu(
-    titulaire.villeNaissance,
-    TitulaireRequete.getPays(titulaire)
-  );
+const getLieuNaissanceTitulaire = (titulaire: ITitulaireRequete): string | undefined =>
+  formatLigneLieu(titulaire.villeNaissance, TitulaireRequete.getPays(titulaire));
 
 const getLieuEvenement = (evenement?: IEvenementRequete): string | undefined =>
-  formatLigneLieu(
-    EvenementRequete.getVille(evenement),
-    EvenementRequete.getPays(evenement)
-  );
+  formatLigneLieu(EvenementRequete.getVille(evenement), EvenementRequete.getPays(evenement));
 
-const getQualiteTypeRequerant = (
-  qualiteRequerant: IQualiteRequerant
-): string | undefined =>
-  formatLigneQualiteType(
-    qualiteRequerant.qualite.libelle,
-    QualiteRequerant.getType(qualiteRequerant)
-  );
+const getQualiteTypeRequerant = (qualiteRequerant: IQualiteRequerant): string | undefined =>
+  formatLigneQualiteType(qualiteRequerant.qualite.libelle, QualiteRequerant.getType(qualiteRequerant));
 
-const getCodePostalVilleRequerant = (
-  adresse?: IAdresseRequerant
-): string | undefined =>
+const getCodePostalVilleRequerant = (adresse?: IAdresseRequerant): string | undefined =>
   formatLigne([adresse?.codePostal, adresse?.ville], " ");
 
 const getPaysRequerant = (adresse?: IAdresseRequerant): string | undefined => {

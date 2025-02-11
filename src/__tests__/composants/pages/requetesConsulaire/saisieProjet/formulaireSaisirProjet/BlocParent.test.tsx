@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Formik } from "formik";
 import { describe, expect, test } from "vitest";
-import BlocParents from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisirProjet/BlocParents";
+import BlocParent from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisirProjet/BlocParent";
 
 describe("BlocParents", () => {
   const renderComponent = () => {
@@ -36,7 +36,10 @@ describe("BlocParents", () => {
         onSubmit={() => {}}
         enableReinitialize={true}
       >
-        <BlocParents />
+        <>
+          <BlocParent estparent1 />
+          <BlocParent />
+        </>
       </Formik>
     );
   };

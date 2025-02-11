@@ -2,7 +2,7 @@ import { Sexe } from "@model/etatcivil/enum/Sexe";
 
 export type IdentiteType = {
   noms: {
-    naissance: string;
+    naissance?: string;
     actuel?: string;
     francisation?: string;
     identification?: string;
