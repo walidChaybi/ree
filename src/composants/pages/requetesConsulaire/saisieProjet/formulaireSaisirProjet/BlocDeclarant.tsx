@@ -2,15 +2,17 @@ import { Identite } from "@model/etatcivil/enum/Identite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { Option } from "@util/Type";
 import { useFormikContext } from "formik";
-import React, { memo, useEffect, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import ChampListeDeroulante from "../../../../commun/champs/ChampListeDeroulante";
 import ChampsCaseACocher from "../../../../commun/champs/ChampsCaseACocher";
 import ChampsPrenoms from "../../../../commun/champs/ChampsPrenoms";
 import ChampsRadio from "../../../../commun/champs/ChampsRadio";
 import ChampsTexte from "../../../../commun/champs/ChampsTexte";
 import ChampsZoneTexte from "../../../../commun/champs/ChampsZoneTexte";
+import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
+import SeparateurSection from "../../../../commun/conteneurs/formulaire/SeparateurSection";
 import FormulaireAdresse from "../../../../commun/formulaire/FormulaireAdresse";
-import { ISaisieProjetActeForm, initialValueDeclarant } from "./FormulaireSaisirProjet";
+import { ISaisieProjetActeForm } from "./FormulaireSaisirProjet";
 
 const optionsDeclarant: Option[] = [
   { cle: Identite.getKey(Identite.PERE), libelle: Identite.PERE.libelle },
@@ -19,38 +21,24 @@ const optionsDeclarant: Option[] = [
   { cle: Identite.getKey(Identite.TIERS), libelle: Identite.TIERS.libelle }
 ];
 
-interface ITitreSectionProps {
-  titre: string;
-}
-
-const TitreSection = memo<ITitreSectionProps>(({ titre }) => (
-  <div className="mb-8 flex w-full border-0 border-b-2 border-solid border-bleu text-start">
-    <h3 className="-mb-3 ml-6 bg-blanc px-1.5 text-bleu-sombre">{titre}</h3>
-  </div>
-));
-
 const BlocDeclarant: React.FC = () => {
-  const { values, setFieldValue } = useFormikContext<ISaisieProjetActeForm>();
-  const declarant = useMemo(() => values.declarant, [values]);
-  const estUnTier = useMemo(() => declarant.identite === Identite.getKey(Identite.TIERS), [declarant.identite]);
+  const { values, setFieldValue, initialValues } = useFormikContext<ISaisieProjetActeForm>();
+  const estUnTier = useMemo(() => values.declarant.identite === Identite.getKey(Identite.TIERS), [values.declarant.identite]);
 
   useEffect(() => {
-    if (declarant.identite !== Identite.getKey(Identite.TIERS)) {
-      setFieldValue("declarant", { ...initialValueDeclarant, identite: declarant.identite });
+    if (values.declarant.identite !== Identite.getKey(Identite.TIERS)) {
+      setFieldValue("declarant", { ...initialValues.declarant, identite: values.declarant.identite });
     }
-  }, [declarant.identite]);
+  }, [values.declarant.identite]);
 
   useEffect(() => {
-    if (declarant?.sansProfession) {
+    if (values.declarant?.sansProfession) {
       setFieldValue(`declarant.profession`, "");
     }
-  }, [declarant?.sansProfession]);
+  }, [values.declarant?.sansProfession]);
 
   return (
-    <div className="m-4 mb-10 mt-8 rounded-md border border-solid border-blue-200 bg-white p-4 shadow-md">
-      <div className="relative mb-5 flex border-bleu">
-        <h2 className="absolute -top-[3.4rem] ml-8 bg-white px-2 text-bleu-sombre">{"Identité"}</h2>
-      </div>
+    <ConteneurAvecBordure>
       <div className="grid grid-cols-2 gap-4">
         <div className="col-span-2 grid grid-cols-2 gap-x-4">
           <ChampListeDeroulante
@@ -68,7 +56,7 @@ const BlocDeclarant: React.FC = () => {
               name="declarant.nom"
               libelle="Nom"
               optionFormatage="NOMS_PROPRES"
-              estObligatoire={declarant.identite === Identite.getKey(Identite.TIERS)}
+              estObligatoire={values.declarant.identite === Identite.getKey(Identite.TIERS)}
             />
           </div>
 
@@ -108,7 +96,7 @@ const BlocDeclarant: React.FC = () => {
               name="declarant.profession"
               libelle="Profession"
               data-testid="declarant-profession"
-              disabled={declarant.sansProfession ?? false}
+              disabled={values.declarant.sansProfession ?? false}
               optionFormatage="PREMIER_MAJUSCULE"
             />
             <div className="w-full pt-[2rem] text-start">
@@ -119,14 +107,15 @@ const BlocDeclarant: React.FC = () => {
             </div>
           </div>
 
-          <TitreSection titre="Domicile" />
+          <SeparateurSection titre="Domicile" />
+
           <FormulaireAdresse
-            key={declarant.domicile?.typeLieu}
+            key={values.declarant.domicile?.typeLieu}
             prefix={"declarant.domicile"}
-            categorieLieu={declarant.domicile?.typeLieu}
-            ville={declarant?.domicile?.ville}
+            categorieLieu={values.declarant.domicile?.typeLieu}
+            ville={values.declarant?.domicile?.ville}
           />
-          <TitreSection titre="Complément" />
+          <SeparateurSection titre="Complément" />
 
           <div className="-pr-4 grid w-full">
             <ChampsZoneTexte
@@ -134,11 +123,12 @@ const BlocDeclarant: React.FC = () => {
               libelle=""
               placeholder="Ex: Chez qui l'accouchement à eu lieu"
               maxLength={250}
+              typeRedimensionnement="fixe"
             />
           </div>
         </>
       )}
-    </div>
+    </ConteneurAvecBordure>
   );
 };
 

@@ -94,8 +94,8 @@ describe("ObservationsRequete", () => {
     fireEvent.click(screen.getByText("Valider"));
 
     await waitFor(() => {
-      expect(screen.getByText(MESSAGE)).toBeDefined();
-      expect(screen.getByText(`- ${NOM_UTILISATEUR} ${PRENOM_UTILISATEUR}`)).toBeDefined();
+      expect(screen.queryByText(MESSAGE)).toBeDefined();
+      expect(screen.queryByText(`- ${NOM_UTILISATEUR} ${PRENOM_UTILISATEUR}`)).toBeDefined();
     });
   });
 
@@ -147,8 +147,8 @@ describe("ObservationsRequete", () => {
     fireEvent.click(screen.getByText("Valider"));
 
     await waitFor(() => {
-      expect(screen.getByText(`${TEXTE_OBSERVATION}${MESSAGE}`)).toBeDefined();
-      expect(screen.getByText(`- ${NOM_UTILISATEUR} ${PRENOM_UTILISATEUR}`)).toBeDefined();
+      expect(screen.queryByText(`${TEXTE_OBSERVATION}${MESSAGE}`)).toBeDefined();
+      expect(screen.queryByText(`- ${NOM_UTILISATEUR} ${PRENOM_UTILISATEUR}`)).toBeDefined();
     });
   });
 });

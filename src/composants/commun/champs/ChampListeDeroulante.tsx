@@ -8,6 +8,7 @@ type TChampListeDeroulanteProps = React.InputHTMLAttributes<HTMLSelectElement> &
   pendantChangement?: () => void;
   premiereLettreMajuscule?: boolean;
   optionVideMasquee?: boolean;
+  estObligatoire?: boolean;
 };
 
 const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({
@@ -18,6 +19,7 @@ const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({
   pendantChangement,
   premiereLettreMajuscule,
   optionVideMasquee = false,
+  estObligatoire = false,
   ...props
 }) => {
   const [field, meta] = useField(name as string);
@@ -30,6 +32,7 @@ const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({
         htmlFor={name as string}
       >
         {libelle}
+        {estObligatoire && <span className="ml-1 text-rouge">*</span>}
       </label>
       <select
         id={name}

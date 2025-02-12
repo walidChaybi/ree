@@ -18,8 +18,6 @@ import BlocTitulaire from "./BlocTitulaire";
 interface ISaisieProjetActeProps {
   titulaire?: ITitulaireRequeteConsulaire;
   parents?: IBLocParents;
-  declarant?: IBlocDeclarant;
-  mentions?: string[];
   autres?: string[];
 }
 
@@ -27,6 +25,8 @@ export interface ISaisieProjetActeForm {
   titulaire: IBlocTitulaire;
   declarant: IBlocDeclarant;
   parents: IBLocParents;
+  mentions: IBlocMentions;
+  formuleFinale: IBlocFormuleFinale;
 }
 interface IBlocTitulaire {
   nomNaissance: string | null;
@@ -59,6 +59,22 @@ interface IBlocDeclarant {
   sansProfession?: boolean;
   domicile?: ILocalisation | null;
   complement?: string | null;
+}
+
+interface IBlocMentions {
+  mentions?: string | null;
+}
+
+interface IBlocFormuleFinale {
+  identiteDemandeur: string;
+  nom?: string | null;
+  prenomsChemin?: { [prenom: string]: string };
+  qualite?: string | null;
+  piecesProduites: string;
+  legalisationApostille?: string | null;
+  autresPieces?: string | null;
+  modeDepot: string;
+  identiteTransmetteur: string;
 }
 
 const TitulaireSchemaValidationFormulaire = SchemaValidation.objet({
@@ -103,7 +119,7 @@ const ParentsSchemaValidationFormulaire = SchemaValidation.objet({
 });
 
 const DeclarantSchemaValidationFormulaire = SchemaValidation.objet({
-  Identite: SchemaValidation.texte({ obligatoire: true }),
+  identite: SchemaValidation.texte({ obligatoire: true }),
   nom: SchemaValidation.texte({ obligatoire: true }),
   prenomsChemin: SchemaValidation.prenoms("declarant.prenomsChemin.prenom"),
   age: SchemaValidation.entier({ obligatoire: false }),
@@ -111,6 +127,22 @@ const DeclarantSchemaValidationFormulaire = SchemaValidation.objet({
   profession: SchemaValidation.texte({ obligatoire: false }),
   domicile: SchemaValidation.objet({}),
   complement: SchemaValidation.texte({ obligatoire: false })
+});
+
+const MentionsSchemaValidationFormulaire = SchemaValidation.objet({
+  mentions: SchemaValidation.texte({ obligatoire: false })
+});
+
+const FormuleFinaleSchemaValidationFormulaire = SchemaValidation.objet({
+  identite: SchemaValidation.texte({ obligatoire: true }),
+  nom: SchemaValidation.texte({ obligatoire: true }),
+  prenomsChemin: SchemaValidation.prenoms("mentionsEtFormuleFinale.prenomsChemin.prenom"),
+  qualite: SchemaValidation.texte({ obligatoire: false }),
+  piecesProduites: SchemaValidation.texte({ obligatoire: true }),
+  legalisationApostille: SchemaValidation.texte({ obligatoire: false }),
+  autresPieces: SchemaValidation.texte({ obligatoire: true }),
+  modeDepot: SchemaValidation.texte({ obligatoire: true }),
+  identiteTransmetteur: SchemaValidation.texte({ obligatoire: true })
 });
 
 const FormulaireSaisirProjet: React.FC<ISaisieProjetActeProps> = requete => {
@@ -129,12 +161,16 @@ const FormulaireSaisirProjet: React.FC<ISaisieProjetActeProps> = requete => {
       validationSchema={SchemaValidation.objet({
         titulaire: TitulaireSchemaValidationFormulaire,
         declarant: DeclarantSchemaValidationFormulaire,
-        parents: ParentsSchemaValidationFormulaire
+        parents: ParentsSchemaValidationFormulaire,
+        mentions: MentionsSchemaValidationFormulaire,
+        formuleFinale: FormuleFinaleSchemaValidationFormulaire
       })}
       initialValues={{
         titulaire: { ...initialValueTitulaire },
         declarant: { ...initialValueDeclarant },
-        parents: { ...initialValueParents }
+        parents: { ...initialValueParents },
+        mentions: { ...initialValueMentions },
+        formuleFinale: { ...initialValueFormuleFinale }
       }}
       onSubmit={() => {}}
     >
@@ -261,7 +297,8 @@ const initialiseParents = (parent?: any): IParent => {
     age: parent?.age || ""
   };
 };
-export const initialValueDeclarant: IBlocDeclarant = {
+
+const initialValueDeclarant: IBlocDeclarant = {
   identite: Identite.getKey(Identite.PERE),
   nom: "",
   prenomsChemin: { prenom1: "" },
@@ -272,4 +309,21 @@ export const initialValueDeclarant: IBlocDeclarant = {
   sansProfession: false,
   domicile: { typeLieu: "Inconnu" }
 };
+
+const initialValueMentions: IBlocMentions = {
+  mentions: ""
+};
+
+const initialValueFormuleFinale: IBlocFormuleFinale = {
+  identiteDemandeur: Identite.getKey(Identite.PERE),
+  nom: "",
+  prenomsChemin: { prenom1: "" },
+  qualite: "",
+  piecesProduites: "COPIE",
+  autresPieces: "",
+  legalisationApostille: "",
+  modeDepot: "TRANSMISE",
+  identiteTransmetteur: "Identique au demandeur"
+};
+
 export default FormulaireSaisirProjet;

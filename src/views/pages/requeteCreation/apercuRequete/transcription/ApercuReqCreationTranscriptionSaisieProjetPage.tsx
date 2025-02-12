@@ -144,7 +144,7 @@ export const ApercuReqCreationTranscriptionSaisieProjetPage: React.FC<ApercuReqC
   }
 
   return (
-    <div className="ApercuReqCreationTranscriptionSaisieProjetPage">
+    <div className="ApercuReqCreationTranscriptionSaisieProjetPage gap-[2rem]">
       {requete && (
         <>
           <VoletAvecOnglet liste={getListeOngletsPartieGauche()} />

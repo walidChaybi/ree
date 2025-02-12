@@ -2,9 +2,27 @@ import { ErrorMessage, useField } from "formik";
 import { useMemo } from "react";
 import "./ChampsZoneTexte.scss";
 
-type TChampsZoneTexteProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & { libelle?: string };
+type TRedimensionnement = "fixe" | "vertical" | "horizontal";
 
-const ChampsZoneTexte: React.FC<TChampsZoneTexteProps> = ({ name, libelle, ...props }) => {
+type TChampsZoneTexteProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
+  libelle?: string;
+  typeRedimensionnement?: TRedimensionnement;
+};
+
+const getClassRedimensionnement = (typeRedimensionnement?: TRedimensionnement) => {
+  switch (typeRedimensionnement) {
+    case "fixe":
+      return "resize-none";
+    case "vertical":
+      return "resize-y";
+    case "horizontal":
+      return "resize-x";
+    default:
+      return "";
+  }
+};
+
+const ChampsZoneTexte: React.FC<TChampsZoneTexteProps> = ({ name, libelle, typeRedimensionnement, ...props }) => {
   const [field, meta] = useField(name as string);
   const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
 
@@ -17,9 +35,21 @@ const ChampsZoneTexte: React.FC<TChampsZoneTexteProps> = ({ name, libelle, ...pr
         {libelle}
       </label>
       <textarea
-        className="font-noto-sans-ui text-base"
+        className={`font-noto-sans-ui text-base ${getClassRedimensionnement(typeRedimensionnement)}`}
+        id={name}
         {...props}
-        {...field}
+        onChange={event => {
+          if (props.maxLength !== undefined) {
+            event.target.value = event.target.value.slice(0, props?.maxLength);
+          }
+
+          field.onChange(event);
+        }}
+        {...() => {
+          const { onChange, ...propsFormik } = field;
+
+          return propsFormik;
+        }}
       />
       {meta.error && (
         <div className="message-erreur-textearea">

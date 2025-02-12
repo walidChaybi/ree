@@ -42,12 +42,16 @@ const PartieDroiteSaisieProjet: React.FC<IPartieDroiteSaisieProjetProps> = ({ re
         changerOnglet={valeur => setOngletActifPartieDroite(valeur)}
       />
 
+      <p className="mb-0.5 mt-1.5 pr-2.5 text-end text-sm text-bleu-sombre">
+        Les champs obligatoires sont précédés d'une étoile<span className="ml-1 text-rouge">*</span>
+      </p>
+
       {requete && (
         <ConteneurVoletEdition
           estActif={ongletActifPartieDroite === ECleOngletPartieDroite.PROJET}
           estScrollable
         >
-          <div className="m-4">
+          <div className="mr-2">
             <FormulaireSaisirProjet
               titulaire={TitulaireRequeteConsulaire.getTitulaireTranscription(requete.titulaires)}
               parents={ParentsRequeteConsulaire.getParentsDepuisTitulaires(requete.titulaires)}

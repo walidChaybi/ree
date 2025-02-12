@@ -7,22 +7,14 @@ import ChampsCaseACocher from "../../../../commun/champs/ChampsCaseACocher";
 import ChampsPrenoms from "../../../../commun/champs/ChampsPrenoms";
 import ChampsRadio from "../../../../commun/champs/ChampsRadio";
 import ChampsTexte from "../../../../commun/champs/ChampsTexte";
+import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
+import SeparateurSection from "../../../../commun/conteneurs/formulaire/SeparateurSection";
 import FormulaireAdresse from "../../../../commun/formulaire/FormulaireAdresse";
 import { ISaisieProjetActeForm } from "./FormulaireSaisirProjet";
 
 interface IBlocParentProps {
   estparent1?: boolean;
 }
-
-interface ITitreSectionProps {
-  titre: string;
-}
-
-const TitreSection = memo<ITitreSectionProps>(({ titre }) => (
-  <div className="mb-8 flex w-full border-0 border-b-2 border-solid border-bleu text-start">
-    <h3 className="-mb-3 ml-6 bg-blanc px-1.5 text-bleu-sombre">{titre}</h3>
-  </div>
-));
 
 const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
   const { values, setFieldValue } = useFormikContext<ISaisieProjetActeForm>();
@@ -61,11 +53,7 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
   }, [values.parents.domicileCommun, values.parents.parent1.domicile]);
 
   return (
-    <div className="m-4 mb-10 mt-8 rounded-md border border-solid border-blue-200 bg-white p-4 shadow-md">
-      <div className="relative mb-5 flex border-bleu">
-        <h2 className="absolute -top-[3.4rem] ml-8 bg-white px-2 text-bleu-sombre">{titre}</h2>
-      </div>
-
+    <ConteneurAvecBordure titreEnTete={titre}>
       <div className="space-y-4">
         <ChampsTexte
           name={`${prefix}.nom`}
@@ -107,7 +95,8 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
         </div>
       </div>
 
-      <TitreSection titre="Lieu de naissance" />
+      <SeparateurSection titre="Lieu de naissance" />
+
       <FormulaireAdresse
         key={`${prefix}.lieuNaissance`}
         prefix={`${prefix}.lieuNaissance`}
@@ -115,7 +104,7 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
         ville={parent?.lieuNaissance?.ville}
       />
 
-      <TitreSection titre="Profession" />
+      <SeparateurSection titre="Profession" />
       <div className="grid grid-cols-2 items-center gap-4">
         <ChampsTexte
           name={`${prefix}.profession`}
@@ -129,7 +118,7 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
         />
       </div>
 
-      <TitreSection titre="Domicile" />
+      <SeparateurSection titre="Domicile" />
       {!estparent1 && (
         <ChampsCaseACocher
           name="parents.domicileCommun"
@@ -145,7 +134,7 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
           ville={parent?.domicile?.ville}
         />
       )}
-    </div>
+    </ConteneurAvecBordure>
   );
 });
 

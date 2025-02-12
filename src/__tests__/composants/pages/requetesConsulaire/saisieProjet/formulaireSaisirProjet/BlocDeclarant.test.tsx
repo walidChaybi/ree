@@ -55,8 +55,7 @@ describe("BlocDeclarant", () => {
   describe("Tests d'affichage initial", () => {
     test("Doit afficher le formulaire du déclarant Père sans les champs", () => {
       renderComponentVide();
-      expect(screen.getAllByText("Identité")[1]).toBeDefined();
-      const selectValue = screen.getByLabelText("Identité", { selector: 'select[name="declarant.identite"]' }) as HTMLSelectElement;
+      const selectValue: HTMLSelectElement = screen.getByLabelText("Identité", { selector: 'select[name="declarant.identite"]' });
       expect(selectValue).toBeDefined();
       expect(selectValue.value).toBe(Identite.getKey(Identite.PERE));
     });
@@ -65,7 +64,7 @@ describe("BlocDeclarant", () => {
   describe("Tests de saisie des informations de base", () => {
     test("Doit sélectionenr 'Un tiers'", async () => {
       renderComponentTiers();
-      const selectValue = screen.getByLabelText("Identité", { selector: 'select[name="declarant.identite"]' }) as HTMLSelectElement;
+      const selectValue: HTMLSelectElement = screen.getByLabelText("Identité", { selector: 'select[name="declarant.identite"]' });
       expect(selectValue).toBeDefined();
       expect(selectValue.value).toBe(Identite.getKey(Identite.TIERS));
     });
