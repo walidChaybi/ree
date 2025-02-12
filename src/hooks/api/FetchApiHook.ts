@@ -29,8 +29,8 @@ const useFetchApi = <
         apresSucces?.(data, headers);
       })
       .catch(erreur => {
-        const { erreurs } = erreur as TReponseApiEchec;
-        apresErreur?.(erreurs);
+        const { erreurs, status } = erreur as TReponseApiEchec;
+        apresErreur?.(erreurs, status);
       })
       .finally(() => {
         finalement && finalement();

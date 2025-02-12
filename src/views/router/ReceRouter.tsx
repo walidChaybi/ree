@@ -6,13 +6,13 @@ import { IRoute } from "@util/route/IRoute";
 import { Navigate, Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 import ReceRoute from "./ReceRoute";
 import { routesRece } from "./ReceRoutes";
-import { URL_CONTEXT_APP, URL_DECONNEXION } from "./ReceUrls";
+import { URL_ACCUEIL, URL_DECONNEXION } from "./ReceUrls";
 
 export const receRouter = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route
-        path={URL_CONTEXT_APP}
+        path={URL_ACCUEIL}
         element={
           <>
             <Header />
@@ -20,7 +20,7 @@ export const receRouter = createBrowserRouter(
           </>
         }
       >
-        {routesRece.map((route: IRoute, index: number) => {
+        {routesRece.map((route: IRoute) => {
           return (
             <Route
               key={route.libelle}
@@ -40,7 +40,7 @@ export const receRouter = createBrowserRouter(
       />
       <Route
         path="*"
-        element={<Navigate to={URL_CONTEXT_APP} />}
+        element={<Navigate to={URL_ACCUEIL} />}
       />
     </>
   )

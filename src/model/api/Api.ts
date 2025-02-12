@@ -23,6 +23,7 @@ type TErreurApiFct = {
 
 export type TErreurApi = {
   message: string;
+  statut?: number;
 } & (TErreurApiFct | TErreurApiTech);
 
 export type THeader = {
@@ -41,6 +42,7 @@ export type TReponseApiSucces<TResultat> = TReponseApi & {
 
 export type TReponseApiEchec = TReponseApi & {
   erreurs: TErreurApi[];
+  statut?: number;
 };
 
 export type TConfigurationRequeteHttp<TUri extends TBaseUri, TBody extends object | undefined, TQuery extends object | undefined> = {
@@ -57,12 +59,14 @@ export type TApi = { nom: TApiAutorisee; version: string };
 
 export type TBaseUri = `/${string}`;
 
-// Type non utilisés dans la déclaration mais nécéssaire lors de l'utilisation.
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// Types non utilisés dans la déclaration mais nécéssaire lors de l'utilisation.
 export type TConfigurationApi<
   TUri extends TBaseUri,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   TBody extends object | undefined = undefined,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   TQuery extends object | undefined = undefined,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   TResultat = unknown
 > = {
   api: TApi;
@@ -78,7 +82,7 @@ export type TAppelApi<
 > = Omit<TConfigurationRequeteHttp<TUri, TBody, TQuery>, "uri" | "methode" | "path" | "body" | "query"> & {
   parametres?: TParametres<TUri, TBody, TQuery>;
   apresSucces?: (data: TResultat, headers: THeader) => void;
-  apresErreur?: (erreurs: TErreurApi[]) => void;
+  apresErreur?: (erreurs: TErreurApi[], statut?: number) => void;
   finalement?: () => void;
 };
 

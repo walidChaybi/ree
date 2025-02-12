@@ -6,7 +6,7 @@ import { IOfficier } from "@model/agent/IOfficier";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
-import { ID, ID_ACTE, URL_CONTEXT_APP, URL_MES_REQUETES_DELIVRANCE_EDITION_ID } from "@router/ReceUrls";
+import { ID, ID_ACTE, URL_BASE, URL_MES_REQUETES_DELIVRANCE_EDITION_ID } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
@@ -44,15 +44,15 @@ describe("Test de la page aperçu requête edition analyse marginale", () => {
     const router = createTestingRouter(
       [
         {
-          path: `${URL_CONTEXT_APP}/test`,
+          path: `${URL_BASE}/test`,
           element: <PageEditionRequeteDelivrance />
         },
         {
-          path: URL_CONTEXT_APP,
+          path: URL_BASE,
           element: <div>Redirigé</div>
         }
       ],
-      [`${URL_CONTEXT_APP}/test`]
+      [`${URL_BASE}/test`]
     );
 
     render(<RouterProvider router={router} />);
@@ -65,7 +65,7 @@ describe("Test de la page aperçu requête edition analyse marginale", () => {
     const router = createTestingRouter(
       [
         {
-          path: `${URL_CONTEXT_APP}/:idRequeteParam`,
+          path: `${URL_BASE}/:idRequeteParam`,
           element: (
             <MockRECEContextProvider utilisateurs={[{} as IUtilisateur]}>
               <PageEditionRequeteDelivrance />
@@ -73,7 +73,7 @@ describe("Test de la page aperçu requête edition analyse marginale", () => {
           )
         }
       ],
-      [`${URL_CONTEXT_APP}/:idRequeteParam`.replace(ID, idRequete)]
+      [`${URL_BASE}/:idRequeteParam`.replace(ID, idRequete)]
     );
 
     render(<RouterProvider router={router} />);

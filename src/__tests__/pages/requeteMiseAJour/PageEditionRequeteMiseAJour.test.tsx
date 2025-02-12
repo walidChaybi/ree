@@ -2,13 +2,7 @@ import { NATURE_MENTION } from "@mock/data/NomenclatureNatureMention";
 import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
-import {
-  ID,
-  ID_ACTE,
-  URL_CONTEXT_APP,
-  URL_RECHERCHE_ACTE_INSCRIPTION,
-  URL_REQUETE_MISE_A_JOUR_ANALYSE_MARGINALE_ID
-} from "@router/ReceUrls";
+import { ID, ID_ACTE, URL_ACCUEIL, URL_RECHERCHE_ACTE_INSCRIPTION, URL_REQUETE_MISE_A_JOUR_ANALYSE_MARGINALE_ID } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
@@ -68,7 +62,7 @@ describe("Test de la page aperçu requête mise à jour analyse marginale", () =
           element: <PageEditionRequeteMiseAJour />
         },
         {
-          path: URL_CONTEXT_APP,
+          path: URL_ACCUEIL,
           element: <div>Redirigé</div>
         }
       ],
@@ -76,6 +70,6 @@ describe("Test de la page aperçu requête mise à jour analyse marginale", () =
     );
 
     render(<RouterProvider router={router} />);
-    expect(router.state.location.pathname).toBe(URL_CONTEXT_APP);
+    expect(router.state.location.pathname).toBe(URL_ACCUEIL);
   });
 });

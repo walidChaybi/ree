@@ -115,13 +115,7 @@ export const routesRece: IRoute[] = [
     component: AccueilPage,
     libelle: "Accueil"
   },
-  // TODO: fix url deconnexxion
-  // {
-  //   url: URL_DECONNEXION,
-  //   component: PageMessage,
-  //   props: { message: getLibelle("Déconnexion en cours ...") },
-  //   libelle: getLibelle("Déconnexion")
-  // },
+
   ////////////////////////////////////////////
   ///// MES REQUETES DE DELIVRANCE (MRD) /////
   ////////////////////////////////////////////

@@ -38,12 +38,13 @@ export const PATH_APERCU_REQ_MISE_A_JOUR_ANALYSE_MARGINALE = "requete-mise-a-jou
 export const GO_BACK = "goBack";
 export const URL_DECONNEXION = "/rece/Shibboleth.sso/Logout";
 
-export const URL_CONTEXT_APP = "/rece/rece-ui";
+export const URL_BASE = "/rece/rece-ui";
+export const URL_ACCUEIL = `${URL_BASE}/`;
 
 ////////////////////////////////////////////
 ///// MES REQUETES DE DELIVRANCE (MRD) /////
 ////////////////////////////////////////////
-export const URL_MES_REQUETES_DELIVRANCE = `${URL_CONTEXT_APP}/mesrequetes`;
+export const URL_MES_REQUETES_DELIVRANCE = `${URL_BASE}/mesrequetes`;
 
 // Aperçu requête ... depuis Mes Requêtes de DELIVRANCE
 export const URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID = `${URL_MES_REQUETES_DELIVRANCE}/${PATH_APERCU_REQ_DEL}/${ID}`;
@@ -68,7 +69,7 @@ export const URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDCSC_ID = `${URL_MES_REQUETES
 /////////////////////////////////////////////////////
 ///// REQUETES DE DELIVRANCE MON SERVICE (RDMS) /////
 /////////////////////////////////////////////////////
-export const URL_REQUETES_DELIVRANCE_SERVICE = `${URL_CONTEXT_APP}/requetesservice`;
+export const URL_REQUETES_DELIVRANCE_SERVICE = `${URL_BASE}/requetesservice`;
 
 // Aperçu requête ... depuis le tableau Requêtes de mon SERVICE
 export const URL_REQUETES_DELIVRANCE_SERVICE_APERCU_REQUETE_ID = `${URL_REQUETES_DELIVRANCE_SERVICE}/${PATH_APERCU_REQ_DEL}/${ID}`;
@@ -90,9 +91,9 @@ export const URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDLFC_ID = `${URL_REQUETES_D
 ///// RECHERCHE MULTI-CRITERES (RMC) /////
 //////////////////////////////////////////
 
-export const URL_RECHERCHE_ACTE_INSCRIPTION = `${URL_CONTEXT_APP}/rechercheacteinscription`;
-export const URL_RECHERCHE_ACTE = `${URL_CONTEXT_APP}/rechercheacte`;
-export const URL_RECHERCHE_REQUETE = `${URL_CONTEXT_APP}/rechercherequete`;
+export const URL_RECHERCHE_ACTE_INSCRIPTION = `${URL_BASE}/rechercheacteinscription`;
+export const URL_RECHERCHE_ACTE = `${URL_BASE}/rechercheacte`;
+export const URL_RECHERCHE_REQUETE = `${URL_BASE}/rechercherequete`;
 
 // Aperçu requête ... depuis le tableau résultats RMC Requêtes
 export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_ID = `${URL_RECHERCHE_REQUETE}/${PATH_APERCU_REQ_DEL}/${ID}`;
@@ -117,7 +118,7 @@ export const URL_SAISIR_RDLFC_RMC = `${URL_RECHERCHE_REQUETE}/${PATH_SAISIR_RDLF
 ///////// REQUETE D'INFORMATION (RI)) /////////
 /////////////////////////////////////////
 // Espace requête d'information
-export const URL_MES_REQUETES_INFORMATION = `${URL_CONTEXT_APP}/mesrequetesinformation`;
+export const URL_MES_REQUETES_INFORMATION = `${URL_BASE}/mesrequetesinformation`;
 
 // Aperçu d'une requête d'information
 export const URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID = `${URL_MES_REQUETES_INFORMATION}/${PATH_APERCU_REQ_INFO}/${ID}`;
@@ -129,15 +130,15 @@ export const URL_RECHERCHE_REQUETE_APERCU_REQUETE_INFORMATION_ID = `${URL_RECHER
 ///////// REQUETE D'INFORMATION DE MON SERVICE (RIMS) /////////
 ///////////////////////////////////////////////////////////////
 // Espace requête d'information
-export const URL_REQUETES_INFORMATION_SERVICE = `${URL_CONTEXT_APP}/requetesinformationservice`;
+export const URL_REQUETES_INFORMATION_SERVICE = `${URL_BASE}/requetesinformationservice`;
 // Aperçu d'une requête d'information
 export const URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID = `${URL_REQUETES_INFORMATION_SERVICE}/${PATH_APERCU_REQ_INFO}/${ID}`;
 
 ////////////////////////////////////////////////////////
 ///////////// MES REQUETES DE CRÉATION /////////////////
 ////////////////////////////////////////////////////////
-export const URL_MES_REQUETES_CREATION = `${URL_CONTEXT_APP}/mesrequetescreation`;
-export const URL_REQUETES_CREATION_SERVICE = `${URL_CONTEXT_APP}/requetescreationservice`;
+export const URL_MES_REQUETES_CREATION = `${URL_BASE}/mesrequetescreation`;
+export const URL_REQUETES_CREATION_SERVICE = `${URL_BASE}/requetescreationservice`;
 export const URL_MES_REQUETES_CREATION_SAISIR_RCTC = `${URL_MES_REQUETES_CREATION}/${PATH_SAISIR_RCTC}`;
 export const URL_REQUETES_CREATION_SERVICE_SAISIR_RCTC = `${URL_REQUETES_CREATION_SERVICE}/${PATH_SAISIR_RCTC}`;
 export const URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID = `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}/${ID}`;
@@ -176,7 +177,7 @@ export const URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_P
 ///////// MES REQUETES CONSULAIRES  /////////////////////
 /////////////////////////////////////////////////////////
 
-export const URL_MES_REQUETES_CONSULAIRE = `${URL_CONTEXT_APP}/mes-requetes-consulaire`;
+export const URL_MES_REQUETES_CONSULAIRE = `${URL_BASE}/mes-requetes-consulaire`;
 export const URL_MES_REQUETES_CONSULAIRE_SAISIR_RCTC = `${URL_MES_REQUETES_CONSULAIRE}/${PATH_SAISIR_RCTC}`;
 export const URL_MES_REQUETES_CONSULAIRE_MODIFIER_RCTC_ID = `${URL_MES_REQUETES_CONSULAIRE}/${PATH_MODIFIER_RCTC}/${ID}`;
 
@@ -187,14 +188,14 @@ export const URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PRO
 ///////// MES REQUETES CONSULAIRES  /////////////////////
 /////////////////////////////////////////////////////////
 
-export const URL_REQUETES_CONSULAIRE_SERVICE = `${URL_CONTEXT_APP}/requetes-consulaire-service`;
+export const URL_REQUETES_CONSULAIRE_SERVICE = `${URL_BASE}/requetes-consulaire-service`;
 
 ////////////////////////////////////////////////////////
 ///////// REQUETES DE MISE A JOUR //////////////////////
 ////////////////////////////////////////////////////////
-export const URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS = `${URL_CONTEXT_APP}/${PATH_APERCU_REQ_MISE_A_JOUR_SUITE_AVIS}`;
-export const URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE = `${URL_CONTEXT_APP}/${PATH_APERCU_REQ_MISE_A_JOUR_AUTRE}`;
-export const URL_REQUETE_MISE_A_JOUR_ANALYSE_MARGINALE = `${URL_CONTEXT_APP}/${PATH_APERCU_REQ_MISE_A_JOUR_ANALYSE_MARGINALE}`;
+export const URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS = `${URL_BASE}/${PATH_APERCU_REQ_MISE_A_JOUR_SUITE_AVIS}`;
+export const URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE = `${URL_BASE}/${PATH_APERCU_REQ_MISE_A_JOUR_AUTRE}`;
+export const URL_REQUETE_MISE_A_JOUR_ANALYSE_MARGINALE = `${URL_BASE}/${PATH_APERCU_REQ_MISE_A_JOUR_ANALYSE_MARGINALE}`;
 
 export const URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID = `${URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS}/${ID}/${ID_ACTE}`;
 export const URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE_ID = `${URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE}/${ID}/${ID_ACTE}`;

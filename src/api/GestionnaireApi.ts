@@ -28,17 +28,8 @@ export class GestionnaireApi {
     this.version = version;
   }
 
-  public static getInstance(
-    name: TApiAutorisee,
-    version: string
-  ): GestionnaireApi {
-    if (
-      !(
-        GestionnaireApi.instance &&
-        GestionnaireApi.instance.nom === name &&
-        GestionnaireApi.instance.version === version
-      )
-    ) {
+  public static getInstance(name: TApiAutorisee, version: string): GestionnaireApi {
+    if (!(GestionnaireApi.instance && GestionnaireApi.instance.nom === name && GestionnaireApi.instance.version === version)) {
       GestionnaireApi.instance = new GestionnaireApi(name, version);
     }
 
@@ -49,25 +40,14 @@ export class GestionnaireApi {
     return [this.url, this.domaine, this.nom, this.version].join("/");
   }
 
-  public async fetch<
-    TUri extends TBaseUri,
-    TBody extends object | undefined,
-    TQuery extends object | undefined,
-    TResultat extends object
-  >(
+  public async fetch<TUri extends TBaseUri, TBody extends object | undefined, TQuery extends object | undefined, TResultat extends object>(
     httpRequestConfig: TConfigurationRequeteHttp<TUri, TBody, TQuery>
   ): Promise<TReponseApiSucces<TResultat> | TReponseApiEchec> {
     const codeErreurForbidden = 403;
 
-    httpRequestConfig.uri = this.traitementParametresPath(
-      httpRequestConfig.uri,
-      httpRequestConfig.path
-    );
+    httpRequestConfig.uri = this.traitementParametresPath(httpRequestConfig.uri, httpRequestConfig.path);
 
-    const httpRequete = this.traitementMethodeHttp(
-      httpRequestConfig.methode,
-      httpRequestConfig.uri
-    );
+    const httpRequete = this.traitementMethodeHttp(httpRequestConfig.methode, httpRequestConfig.uri);
 
     this.addCsrfInfosToConfigHeader(httpRequestConfig);
     this.traitementHeaders(httpRequete, httpRequestConfig.headers);
@@ -90,38 +70,27 @@ export class GestionnaireApi {
           erreurs: response.body?.errors || []
         };
 
-        if (
-          process.env.NODE_ENV === "development" &&
-          erreur.status !== codeErreurForbidden
-        ) {
+        if (process.env.NODE_ENV === "development" && erreur.status !== codeErreurForbidden) {
           messageManager.showErrors([
             `[DEV] Une erreur ${erreur.status} est survenue`,
-            ...erreur.erreurs.map(
-              (erreur: { message: any }) => `[DEV] ${erreur.message}`
-            )
+            ...erreur.erreurs.map((erreur: { message: any }) => `[DEV] ${erreur.message}`)
           ]);
-
         }
 
         return Promise.reject<TReponseApiEchec>(erreur);
       });
   }
 
-  private addCsrfInfosToConfigHeader<
-    TUri extends TBaseUri,
-    TBody extends object | undefined,
-    TQuery extends object | undefined
-  >(config: TConfigurationRequeteHttp<TUri, TBody, TQuery>): void {
+  private addCsrfInfosToConfigHeader<TUri extends TBaseUri, TBody extends object | undefined, TQuery extends object | undefined>(
+    config: TConfigurationRequeteHttp<TUri, TBody, TQuery>
+  ): void {
     if (!config.headers) {
       config.headers = {};
     }
     config.headers[CSRF_HEADER_NAME] = getCsrfCookieValue();
   }
 
-  private traitementHeaders(
-    httpRequest: superagent.SuperAgentRequest,
-    headers?: THeader
-  ): void {
+  private traitementHeaders(httpRequest: superagent.SuperAgentRequest, headers?: THeader): void {
     if (headers) {
       Object.entries(headers).forEach(([header, value]) => {
         httpRequest.set(header, value);
@@ -132,10 +101,7 @@ export class GestionnaireApi {
     }
   }
 
-  private traitementParametresPath<TUri extends TBaseUri>(
-    uri: TUri,
-    parametres?: object
-  ): TUri {
+  private traitementParametresPath<TUri extends TBaseUri>(uri: TUri, parametres?: object): TUri {
     if (!parametres) {
       return uri;
     }
@@ -148,29 +114,19 @@ export class GestionnaireApi {
     return uriAvecPath;
   }
 
-  private traitementParametresQuery(
-    httpRequest: superagent.SuperAgentRequest,
-    parameters?: object
-  ): void {
+  private traitementParametresQuery(httpRequest: superagent.SuperAgentRequest, parameters?: object): void {
     if (parameters) {
       httpRequest.query(parameters);
     }
   }
 
-  private traitementParametresBody(
-    httpRequest: superagent.SuperAgentRequest,
-    body?: object
-  ): void {
+  private traitementParametresBody(httpRequest: superagent.SuperAgentRequest, body?: object): void {
     if (body) {
       httpRequest.send(body);
     }
   }
 
-  private traitementTypeReponse<
-    TUri extends TBaseUri,
-    TBody extends object | undefined,
-    TQuery extends object | undefined
-  >(
+  private traitementTypeReponse<TUri extends TBaseUri, TBody extends object | undefined, TQuery extends object | undefined>(
     httpRequete: superagent.SuperAgentRequest,
     config: TConfigurationRequeteHttp<TUri, TBody, TQuery>
   ): void {
@@ -179,10 +135,7 @@ export class GestionnaireApi {
     }
   }
 
-  private traitementMethodeHttp(
-    method: TMethodeHttp,
-    uri: string
-  ): superagent.SuperAgentRequest {
+  private traitementMethodeHttp(method: TMethodeHttp, uri: string): superagent.SuperAgentRequest {
     switch (method) {
       case "GET":
         return superagent.get(this.getUri() + uri);
@@ -204,5 +157,3 @@ export class GestionnaireApi {
     return res;
   }
 }
-
-

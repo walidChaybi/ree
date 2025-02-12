@@ -5,7 +5,7 @@ import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { gestionnaireDoubleOuverture } from "@util/GestionnaireDoubleOuverture";
 import { GestionnaireFermeture } from "@util/GestionnaireFermeture";
 import { logError } from "@util/LogManager";
-import { ZERO, getLibelle } from "@util/Utils";
+import { ZERO } from "@util/Utils";
 import { FilAriane } from "@widget/filAriane/FilAriane";
 import React, { useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
@@ -26,16 +26,12 @@ export const Body: React.FC = () => {
       {erreurLogin || !utilisateurConnecte?.idSSO || appliDejaOuverte ? (
         <PageMessage
           message={
-            erreurLogin || !utilisateurConnecte?.idSSO
-              ? getMessageLogin(erreurLogin)
-              : getLibelle("L'application est déjà ouverte sur cet ordinateur")
+            erreurLogin || !utilisateurConnecte?.idSSO ? getMessageLogin(erreurLogin) : "L'application est déjà ouverte sur cet ordinateur"
           }
         />
       ) : (
         <>
-          <GestionnaireFermeture
-            urlRedirection={URL_MES_REQUETES_DELIVRANCE}
-          ></GestionnaireFermeture>
+          <GestionnaireFermeture urlRedirection={URL_MES_REQUETES_DELIVRANCE}></GestionnaireFermeture>
           <FilAriane routes={routesRece} />
           <Outlet />
         </>
@@ -45,25 +41,18 @@ export const Body: React.FC = () => {
 };
 
 function getMessageLogin(erreurLogin: any) {
-  if (
-    erreurLogin?.status === HTTP_UNAUTHORIZED ||
-    erreurLogin?.status === HTTP_FORBIDDEN
-  ) {
-    return getLibelle(
-      "Vous n'avez pas les droits pour utiliser RECE, veuillez contacter le service BIMO."
-    );
+  console.log(erreurLogin);
+  if (erreurLogin?.status === HTTP_UNAUTHORIZED || erreurLogin?.status === HTTP_FORBIDDEN) {
+    return "Vous n'avez pas les droits pour utiliser RECE, veuillez contacter le service BIMO.";
   } else if (erreurLogin?.response?.body?.errors[ZERO]) {
-    return getLibelle(
-      "Votre compte utilisateur n'est pas actif - Veuillez vous adresser à votre administrateur RECE"
-    );
+    return "Votre compte utilisateur n'est pas actif - Veuillez vous adresser à votre administrateur RECE";
   } else if (erreurLogin) {
     logError({
-      messageUtilisateur:
-        "Impossible de récupérer les informations utilisateur via le service de login",
+      messageUtilisateur: "Impossible de récupérer les informations utilisateur via le service de login",
       error: erreurLogin
     });
-    return getLibelle("Erreur Système");
+    return "Erreur Système";
   } else {
-    return getLibelle("Connexion en cours ...");
+    return "Connexion en cours ...";
   }
 }

@@ -4,25 +4,20 @@ import { filesOfProject } from "tsarch";
 import "tsarch/dist/jest";
 import { describe, expect, test } from "vitest";
 
-describe("architecture", () => {
-
-  
+/** Architecture en cours de modification (remplacement du dossier "views" pour une architecture React-friendly)
+ * Ces tests seront à redéfinir lors du déplacement de l'intégralité du code
+ *
+ * Dernier passage A Lefaix (12/02/2025)
+ */
+describe.skip("architecture", () => {
   test.skip("'common' NE DOIT PAS dépendre de 'pages'", async () => {
-    const rule = filesOfProject("tsconfig-ts-arch.json")
-      .inFolder("views/common")
-      .shouldNot()
-      .dependOnFiles()
-      .inFolder("views/pages");
+    const rule = filesOfProject("tsconfig-ts-arch.json").inFolder("views/common").shouldNot().dependOnFiles().inFolder("views/pages");
 
     await expect(rule).toPassAsync();
   });
 
   test.skip("'api' NE DOIT PAS dépendre de 'pages'", async () => {
-    const rule = filesOfProject("tsconfig-ts-arch.json")
-      .inFolder("api")
-      .shouldNot()
-      .dependOnFiles()
-      .inFolder("views/pages");
+    const rule = filesOfProject("tsconfig-ts-arch.json").inFolder("api").shouldNot().dependOnFiles().inFolder("views/pages");
 
     await expect(rule).toPassAsync();
   });

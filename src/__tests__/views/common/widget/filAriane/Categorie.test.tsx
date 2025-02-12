@@ -1,12 +1,11 @@
 import { URL_REQUETES } from "@api/appels/requeteApi";
 import { AccueilPage } from "@pages/accueil/AccueilPage";
-import { URL_CONTEXT_APP } from "@router/ReceUrls";
+import { URL_BASE } from "@router/ReceUrls";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { Categorie } from "@widget/filAriane/Categorie";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
-
 
 describe.skip("Categorie - ", () => {
   test("renders pas la dernière categorie et clic sur fil ariane", () => {
@@ -16,14 +15,14 @@ describe.skip("Categorie - ", () => {
           path: URL_REQUETES,
           element: (
             <Categorie
-              url={URL_CONTEXT_APP}
+              url={URL_BASE}
               message={"accueil.test"}
               last={false}
             />
           )
         },
         {
-          path: URL_CONTEXT_APP,
+          path: URL_BASE,
           element: <AccueilPage />
         }
       ],
@@ -45,14 +44,14 @@ describe.skip("Categorie - ", () => {
           path: URL_REQUETES,
           element: (
             <Categorie
-              url={URL_CONTEXT_APP}
+              url={URL_BASE}
               message={"accueil.test"}
               last={false}
             />
           )
         },
         {
-          path: URL_CONTEXT_APP,
+          path: URL_BASE,
           element: <AccueilPage />
         }
       ],
@@ -78,14 +77,14 @@ describe.skip("Categorie - ", () => {
           path: URL_REQUETES,
           element: (
             <Categorie
-              url={URL_CONTEXT_APP}
+              url={URL_BASE}
               message={"accueilString"}
               last={true}
             />
           )
         },
         {
-          path: URL_CONTEXT_APP,
+          path: URL_BASE,
           element: <AccueilPage />
         }
       ],
@@ -105,11 +104,15 @@ describe.skip("Categorie - ", () => {
         {
           path: URL_REQUETES,
           element: (
-            <Categorie url={URL_CONTEXT_APP} message={"Accueil"} last={false} />
+            <Categorie
+              url={URL_BASE}
+              message={"Accueil"}
+              last={false}
+            />
           )
         },
         {
-          path: URL_CONTEXT_APP,
+          path: URL_BASE,
           element: <AccueilPage />
         }
       ],

@@ -42,7 +42,7 @@
     "@types/superagent": "4.1.7",
     "@types/uuid": "8.3.1",
     "@vitejs/plugin-react": "4.3.1",
-    "@vitest/coverage-v8": "2.0.5",
+    "@vitest/coverage-v8": "3.0.5",
     "autoprefixer": "10.4.20",
     "eslint-config-react-app": "7.0.1",
     "jsdom": "24.1.1",
@@ -53,9 +53,9 @@
     "tailwindcss": "3.4.14",
     "tsarch": "5.3.0",
     "typescript": "4.9.5",
-    "vite": "5.4.6",
+    "vite": "5.4.14",
     "vite-plugin-eslint": "1.8.1",
-    "vitest": "2.0.5"
+    "vitest": "3.0.5"
   },
   "scripts": {
     "start": "vite",

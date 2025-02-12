@@ -5,59 +5,43 @@ import {
   estOfficierHabiliterPourUnDesDroits,
   officierALeDroitSurUnDesPerimetres
 } from "@model/agent/IOfficier";
-import { getLibelle } from "@util/Utils";
 import messageManager from "@util/messageManager";
 import { IRoute } from "@util/route/IRoute";
 import { useContext, useMemo } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { URL_CONTEXT_APP } from "./ReceUrls";
+import { URL_ACCUEIL } from "./ReceUrls";
 
 interface IReceRouteProps {
   route: IRoute;
 }
 
-const ReceRoute: React.FC<React.PropsWithChildren<IReceRouteProps>> = ({
-  route,
-  children
-}): any => {
+const ReceRoute: React.FC<React.PropsWithChildren<IReceRouteProps>> = ({ route, children }): any => {
   const { utilisateurConnecte } = useContext(RECEContextData);
   const auth = useMemo(
     () =>
       !(
         route.canAccess?.() === false ||
         !(
-          estOfficierHabiliterPourTousLesDroits(
-            utilisateurConnecte,
-            route.droits
-          ) &&
-          estOfficierHabiliterPourUnDesDroits(
-            utilisateurConnecte,
-            route.auMoinsUnDesDroits
-          )
+          estOfficierHabiliterPourTousLesDroits(utilisateurConnecte, route.droits) &&
+          estOfficierHabiliterPourUnDesDroits(utilisateurConnecte, route.auMoinsUnDesDroits)
         ) ||
-        !estOfficierHabiliterPourSeulementLesDroits(
-          utilisateurConnecte,
-          route.uniquementLesdroits
-        ) ||
+        !estOfficierHabiliterPourSeulementLesDroits(utilisateurConnecte, route.uniquementLesdroits) ||
         !(
           !route.droitPerimetres ||
-          officierALeDroitSurUnDesPerimetres(
-            route.droitPerimetres.droit,
-            route.droitPerimetres.perimetres,
-            utilisateurConnecte
-          )
+          officierALeDroitSurUnDesPerimetres(route.droitPerimetres.droit, route.droitPerimetres.perimetres, utilisateurConnecte)
         )
       ),
     [route, utilisateurConnecte]
   );
 
   if (!auth) {
-    messageManager.showWarningAndClose(
-      getLibelle(
-        "La page demandée n'est pas autorisée, vous avez été redirigé sur la page d'accueil"
-      )
+    messageManager.showWarningAndClose("La page demandée n'est pas autorisée, vous avez été redirigé sur la page d'accueil");
+    return (
+      <Navigate
+        to={URL_ACCUEIL}
+        replace
+      />
     );
-    return <Navigate to={URL_CONTEXT_APP} replace />;
   }
   return children ?? <Outlet />;
 };

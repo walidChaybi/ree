@@ -2,7 +2,7 @@ import { Body } from "@core/body/Body";
 import officier from "@mock/data/connectedUser.json";
 import { IOfficier } from "@model/agent/IOfficier";
 import { AccueilPage } from "@pages/accueil/AccueilPage";
-import { URL_CONTEXT_APP } from "@router/ReceUrls";
+import { URL_BASE } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
@@ -18,11 +18,11 @@ test("renders BoutonDeconnexion", async () => {
   const router = createTestingRouter(
     [
       {
-        path: URL_CONTEXT_APP,
+        path: URL_BASE,
         element: <AccueilPage />
       }
     ],
-    [URL_CONTEXT_APP]
+    [URL_BASE]
   );
 
   const off = { idSSO: officier.id_sso, ...officier };
@@ -43,11 +43,11 @@ test("renders Body", async () => {
   const router = createTestingRouter(
     [
       {
-        path: URL_CONTEXT_APP,
+        path: URL_BASE,
         element: <AccueilPage />
       }
     ],
-    [URL_CONTEXT_APP]
+    [URL_BASE]
   );
 
   render(
@@ -68,11 +68,11 @@ test("renders Body Connexion en cours", async () => {
   const router = createTestingRouter(
     [
       {
-        path: URL_CONTEXT_APP,
+        path: URL_BASE,
         element: <Body />
       }
     ],
-    [URL_CONTEXT_APP]
+    [URL_BASE]
   );
 
   render(elementAvecContexte(<RouterProvider router={router} />));
@@ -90,11 +90,11 @@ test("renders Body avec erreur de login", async () => {
   const router = createTestingRouter(
     [
       {
-        path: URL_CONTEXT_APP,
+        path: URL_BASE,
         element: <Body />
       }
     ],
-    [URL_CONTEXT_APP]
+    [URL_BASE]
   );
 
   render(
@@ -114,11 +114,11 @@ test("renders Body 403", async () => {
   const router = createTestingRouter(
     [
       {
-        path: URL_CONTEXT_APP,
+        path: URL_BASE,
         element: <Body />
       }
     ],
-    [URL_CONTEXT_APP]
+    [URL_BASE]
   );
 
   render(

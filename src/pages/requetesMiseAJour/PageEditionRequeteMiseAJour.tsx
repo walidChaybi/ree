@@ -1,5 +1,5 @@
 import { TUuidActeParams } from "@model/params/TUuidActeParams";
-import { URL_CONTEXT_APP } from "@router/ReceUrls";
+import { URL_ACCUEIL } from "@router/ReceUrls";
 import { Navigate, useParams } from "react-router-dom";
 import MiseAJourRequete from "../../composants/pages/requetesMiseAJour/MiseAJourRequete";
 import EditionMiseAJourContextProvider from "../../contexts/EditionMiseAJourContextProvider";
@@ -13,7 +13,7 @@ const PageEditionRequeteMiseAJour: React.FC<IPageEditionRequeteMiseAJourProps> =
 
   return !idActeParam || !idRequeteParam ? (
     <Navigate
-      to={URL_CONTEXT_APP}
+      to={URL_ACCUEIL}
       replace
     />
   ) : (

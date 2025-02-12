@@ -1,6 +1,6 @@
 /* CE FICHIER COEXISTE AVEC GestionnaireApi.ts. UNE FOIS QUE TOUT LES APPELS DE L'APPLICATION PASSENT PAR useFetchApi (ET DONC GestionnaireApi.ts), ALORS SUPPRIMER CE FICHIER */
 
-import { URL_CONTEXT_APP } from "@router/ReceUrls";
+import { URL_BASE } from "@router/ReceUrls";
 import { logInfoDansLaConsole } from "@util/Console";
 import { getCsrfHeader } from "@util/CsrfUtil";
 import { Generateur } from "@util/generateur/Generateur";
@@ -59,10 +59,7 @@ export interface IHttpResponse {
 }
 
 const DOMAIN = "rece";
-type API_ERROR_TYPE =
-  | "erreurOffLine"
-  | "toutesErreursSaufForbidden"
-  | undefined;
+type API_ERROR_TYPE = "erreurOffLine" | "toutesErreursSaufForbidden" | undefined;
 export class ApiManager {
   private readonly url: string;
   private readonly domain: string;
@@ -80,13 +77,7 @@ export class ApiManager {
   }
 
   public static getInstance(name: ApisAutorisees, version: string): ApiManager {
-    if (
-      !(
-        ApiManager.instance &&
-        ApiManager.instance.name === name &&
-        ApiManager.instance.version === version
-      )
-    ) {
+    if (!(ApiManager.instance && ApiManager.instance.name === name && ApiManager.instance.version === version)) {
       ApiManager.instance = new ApiManager(name, version);
     }
 
@@ -114,14 +105,8 @@ export class ApiManager {
     }
   }
 
-  public fetchData(
-    httpRequestConfig: HttpRequestConfig,
-    useCache = false
-  ): Promise<any> {
-    let httpRequete = this.processRequestMethod(
-      httpRequestConfig.method,
-      httpRequestConfig.uri
-    );
+  public fetchData(httpRequestConfig: HttpRequestConfig, useCache = false): Promise<any> {
+    let httpRequete = this.processRequestMethod(httpRequestConfig.method, httpRequestConfig.uri);
 
     // Ajout de l'id de corrélation dans l'entête
     this.addIdCorrelationToConfigHeader(httpRequestConfig);
@@ -130,23 +115,14 @@ export class ApiManager {
     this.addCsrfInfosToConfigHeader(httpRequestConfig);
 
     if (httpRequestConfig.parameters) {
-      httpRequete = this.processRequestQueyParameters(
-        httpRequestConfig.parameters,
-        httpRequete
-      );
+      httpRequete = this.processRequestQueyParameters(httpRequestConfig.parameters, httpRequete);
     }
 
     if (httpRequestConfig.data) {
-      httpRequete = this.processRequestData(
-        httpRequestConfig.data,
-        httpRequete
-      );
+      httpRequete = this.processRequestData(httpRequestConfig.data, httpRequete);
     }
 
-    httpRequete = this.processRequestHeaders(
-      httpRequete,
-      httpRequestConfig.headers
-    );
+    httpRequete = this.processRequestHeaders(httpRequete, httpRequestConfig.headers);
 
     if (httpRequestConfig.responseType) {
       httpRequete = httpRequete.responseType(httpRequestConfig.responseType);
@@ -194,29 +170,17 @@ export class ApiManager {
   /* istanbul ignore next */
   private manageApiError(error: any): API_ERROR_TYPE {
     let errorType: API_ERROR_TYPE = undefined;
-    if (
-      error?.message?.indexOf("offline") !== -1 &&
-      error.crossDomain === true
-    ) {
+    if (error?.message?.indexOf("offline") !== -1 && error.crossDomain === true) {
       errorType = "erreurOffLine";
       // Force la reconnexion
-      window.location.replace(URL_CONTEXT_APP);
-    } else if (
-      process.env.NODE_ENV === "development" &&
-      error.status !== HTTP_FORBIDDEN
-    ) {
+      window.location.replace(URL_BASE);
+    } else if (process.env.NODE_ENV === "development" && error.status !== HTTP_FORBIDDEN) {
       errorType = "toutesErreursSaufForbidden";
-      messageManager.showError(
-        `Une erreur est survenue: ${error ? error.message : "inconnue"}`
-      );
+      messageManager.showError(`Une erreur est survenue: ${error ? error.message : "inconnue"}`);
     } else if (process.env.NODE_ENV === "test") {
       const message = `Erreur mock api: ${error?.uri}`;
 
-      const messageParametres = `     parameters: ${
-        error?.parameters
-          ? JSON.stringify(error?.parameters)
-          : "pas de paramètres"
-      }`;
+      const messageParametres = `     parameters: ${error?.parameters ? JSON.stringify(error?.parameters) : "pas de paramètres"}`;
 
       throw new Error(`${message}\n${messageParametres}`);
     }
@@ -249,10 +213,7 @@ export class ApiManager {
     config.headers[config.headers.length] = getCsrfHeader();
   }
 
-  public processRequestHeaders(
-    httpRequest: superagent.SuperAgentRequest,
-    headers?: HttpRequestHeader[]
-  ): superagent.SuperAgentRequest {
+  public processRequestHeaders(httpRequest: superagent.SuperAgentRequest, headers?: HttpRequestHeader[]): superagent.SuperAgentRequest {
     let res = httpRequest;
 
     res = this.desactiverCacheNavigateur(res);
@@ -264,24 +225,15 @@ export class ApiManager {
     return res;
   }
 
-  public processRequestQueyParameters(
-    parameters: any,
-    httpRequest: superagent.SuperAgentRequest
-  ) {
+  public processRequestQueyParameters(parameters: any, httpRequest: superagent.SuperAgentRequest) {
     return httpRequest.query(parameters);
   }
 
-  public processRequestData(
-    data: any,
-    httpRequest: superagent.SuperAgentRequest
-  ): superagent.SuperAgentRequest {
+  public processRequestData(data: any, httpRequest: superagent.SuperAgentRequest): superagent.SuperAgentRequest {
     return httpRequest.send(data);
   }
 
-  public processRequestMethod(
-    method: HttpMethod,
-    uri: string
-  ): superagent.SuperAgentRequest {
+  public processRequestMethod(method: HttpMethod, uri: string): superagent.SuperAgentRequest {
     let res: superagent.SuperAgentRequest;
     switch (method) {
       case HttpMethod.GET:

@@ -1,7 +1,7 @@
 import { RECEContextActions, RECEContextData } from "@core/contexts/RECEContext";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import { URL_CONTEXT_APP } from "@router/ReceUrls";
+import { URL_ACCUEIL, URL_BASE } from "@router/ReceUrls";
 import { IRoute } from "@util/route/IRoute";
 import { URL_SEPARATEUR, getUrlWithoutIdParam, getUrlWithoutParam, isPathElemId } from "@util/route/UrlUtil";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
@@ -68,10 +68,9 @@ export const FilAriane: React.FC<FilArianeProps> = ({ routes }) => {
           aria-label={fildarianeLabel}
         >
           <Categorie
-            url={URL_CONTEXT_APP}
+            url={URL_ACCUEIL}
             message={routeAccueil ? routeAccueil.libelle : "Accueil"}
             last={pagesInfos.length === 0}
-            key={URL_CONTEXT_APP}
           />
 
           {pagesInfos.map((pageInfo: IPageInfo) => {
@@ -114,7 +113,7 @@ export const FilAriane: React.FC<FilArianeProps> = ({ routes }) => {
 
 function estUnCheminReceUi(path: string) {
   // certains chemins ne commence pas par /rece/rece-ui (par exemple lors de la déconnexion: /rece/Shibboleth.sso/Logout) alors on retourne un tableau vide
-  return path.startsWith(URL_CONTEXT_APP);
+  return path.startsWith(URL_BASE);
 }
 
 interface IPageInfo {
@@ -159,7 +158,7 @@ export function buildPagesInfos(path: string, routes: IRoute[], gestNavigation: 
 }
 
 export function getUrlFromNPathElements(pathElements: string[], idx: number) {
-  return `${URL_CONTEXT_APP}/${pathElements.slice(0, idx + 1).join(URL_SEPARATEUR)}`;
+  return `${URL_BASE}/${pathElements.slice(0, idx + 1).join(URL_SEPARATEUR)}`;
 }
 
 export function getPathElements(path: string) {
@@ -167,7 +166,7 @@ export function getPathElements(path: string) {
   // /rece/rece-ui/mesrequetes/apercurequetedelivrance => "mesrequetes/apercurequetedelivrance"
   // /rece/rece-ui/ => "/""
   // /rece/rece-ui => ""
-  let cleanPath = path.replace(`${URL_CONTEXT_APP}`, "");
+  let cleanPath = path.replace(URL_BASE, "");
   let pathElements = cleanPath.split(URL_SEPARATEUR);
   // suppression des éléments vides dûs aux "/" de début et de fin potentiels
   pathElements = pathElements.filter(x => x);

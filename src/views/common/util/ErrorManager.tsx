@@ -1,6 +1,5 @@
 /* istanbul ignore file */
-import { URL_CONTEXT_APP } from "@router/ReceUrls";
-import { getLibelle } from "@util/Utils";
+import { URL_ACCUEIL } from "@router/ReceUrls";
 import * as React from "react";
 import { logError } from "./LogManager";
 
@@ -49,7 +48,7 @@ export class ErrorManager extends React.Component<LocalProps, LocalState> {
           messageUtilisateur: erreurMsgUtilisateur
         });
       };
-      window.addEventListener("unhandledrejection", (event) => {
+      window.addEventListener("unhandledrejection", event => {
         logError({
           error: event.promise,
           errorInfo: event.reason,
@@ -64,12 +63,8 @@ export class ErrorManager extends React.Component<LocalProps, LocalState> {
   public render() {
     if (this.state.hasError) {
       // Cas d'erreur ou la page n'a pas pu s'afficher à cause d'une erreur
-      alert(
-        getLibelle(
-          "Une erreur inatendue est survenue (veuillez contacter un administrateur), vous allez être redirigé vers la page d'accueil"
-        )
-      );
-      window.location.replace(URL_CONTEXT_APP);
+      alert("Une erreur inatendue est survenue (veuillez contacter un administrateur), vous allez être redirigé vers la page d'accueil");
+      window.location.replace(URL_ACCUEIL);
     }
     return this.props.children;
   }
