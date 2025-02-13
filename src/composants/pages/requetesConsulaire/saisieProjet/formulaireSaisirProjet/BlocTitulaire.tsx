@@ -21,7 +21,6 @@ const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
           <ChampsTexte
             name="titulaire.nomNaissance"
             libelle="Nom sur l'acte étranger"
-            optionFormatage="NOMS_PROPRES"
           />
 
           <ChampsNomSecable
@@ -44,7 +43,6 @@ const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
           <ChampsTexte
             name="titulaire.nomSouhaite"
             libelle="Nom souhaité"
-            optionFormatage="PREMIER_MAJUSCULE"
             disabled
           />
           <ChampsPrenoms
@@ -81,17 +79,16 @@ const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
         <ChampsTexte
           name="titulaire.villeNaissance"
           libelle="Ville"
-          optionFormatage="NOMS_PROPRES"
+          optionFormatage="PREMIER_MAJUSCULE"
         />
         <ChampsTexte
           name="titulaire.regionNaissance"
           libelle="État, canton, province"
-          optionFormatage="PREMIER_MAJUSCULE"
         />
         <ChampsTexte
           name="titulaire.paysNaissance"
           libelle="Pays"
-          optionFormatage="NOMS_PROPRES"
+          optionFormatage="PREMIER_MAJUSCULE"
         />
         <ChampsTexte
           name="titulaire.adresseNaissance"

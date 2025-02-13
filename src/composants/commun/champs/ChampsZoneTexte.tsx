@@ -1,6 +1,5 @@
 import { ErrorMessage, useField } from "formik";
 import { useMemo } from "react";
-import "./ChampsZoneTexte.scss";
 
 type TRedimensionnement = "fixe" | "vertical" | "horizontal";
 
@@ -27,7 +26,7 @@ const ChampsZoneTexte: React.FC<TChampsZoneTexteProps> = ({ name, libelle, typeR
   const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
 
   return (
-    <>
+    <div className="grid">
       <label
         className={`m-0 mb-1 ml-1 block w-fit text-start transition-colors ${enErreur ? "text-rouge" : "text-bleu-sombre"}`}
         htmlFor={name as string}
@@ -52,11 +51,11 @@ const ChampsZoneTexte: React.FC<TChampsZoneTexteProps> = ({ name, libelle, typeR
         }}
       />
       {meta.error && (
-        <div className="message-erreur-textearea">
+        <div className="text-start text-sm text-rouge">
           <ErrorMessage name={name} />
         </div>
       )}
-    </>
+    </div>
   );
 };
 

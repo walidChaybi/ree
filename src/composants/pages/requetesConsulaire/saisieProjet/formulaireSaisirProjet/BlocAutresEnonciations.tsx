@@ -1,14 +1,16 @@
+import React from "react";
 import ChampsZoneTexte from "../../../../commun/champs/ChampsZoneTexte";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 
-const BlocMentions: React.FC = () => (
+const BlocAutresEnonciations: React.FC = () => (
   <ConteneurAvecBordure>
       <ChampsZoneTexte
-        name="mentions.mentions"
-        libelle="Mention(s)"
+        name="autresEnonciations.enonciations"
+        libelle="Texte énonciations"
+        maxLength={2000}
         typeRedimensionnement="vertical"
-        maxLength={3000}
       />
   </ConteneurAvecBordure>
 );
-export default BlocMentions;
+
+export default BlocAutresEnonciations;

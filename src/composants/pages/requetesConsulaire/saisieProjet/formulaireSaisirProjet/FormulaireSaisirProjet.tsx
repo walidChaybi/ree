@@ -1,4 +1,5 @@
 import { Identite } from "@model/etatcivil/enum/Identite";
+import { ConditionChamp, EOperateurCondition } from "@model/form/commun/ConditionChamp";
 import { IDateForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
 import { ILocalisation, IParent } from "@model/requete/IParents";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
@@ -8,7 +9,7 @@ import { useMemo } from "react";
 import SchemaValidation from "../../../../../utils/SchemaValidation";
 import ConteneurAccordeon from "../../../../commun/conteneurs/accordeon/ConteneurAccordeon";
 import BlocActeEtranger from "./BlocActeEtranger";
-import BlocAutres from "./BlocAutres";
+import BlocAutresEnonciations from "./BlocAutresEnonciations";
 import BlocDeclarant from "./BlocDeclarant";
 import BlocFormuleFinale from "./BlocFormuleFinale";
 import BlocMentions from "./BlocMentions";
@@ -27,7 +28,23 @@ export interface ISaisieProjetActeForm {
   parents: IBLocParents;
   mentions: IBlocMentions;
   formuleFinale: IBlocFormuleFinale;
+  acteEtranger: IBlocActeEtranger;
+  autresEnonciations?: String;
 }
+
+export interface IBlocActeEtranger {
+  typeActe?: string;
+  typeActeAutre?: string;
+  dateEnregistrement?: IDateForm;
+  lieuEnregistrement?: {
+    ville?: string;
+    etatProvince?: string;
+    pays?: string;
+  };
+  redacteur?: string;
+  referenceComplement: string;
+}
+
 interface IBlocTitulaire {
   nomNaissance: string | null;
   nomOEC: string | null;
@@ -145,6 +162,47 @@ const FormuleFinaleSchemaValidationFormulaire = SchemaValidation.objet({
   identiteTransmetteur: SchemaValidation.texte({ obligatoire: true })
 });
 
+const LieuEnregistrementSchemaValidation = SchemaValidation.objet({
+  ville: SchemaValidation.texte({
+    obligatoire: false
+  }),
+  etatProvince: SchemaValidation.texte({
+    obligatoire: false
+  }),
+  pays: SchemaValidation.texte({
+    obligatoire: false
+  })
+});
+
+const typeActeAutreCondition = ConditionChamp.depuisTableau([
+  {
+    idChampReference: "acteEtranger.typeActe",
+    operateur: EOperateurCondition.EGAL,
+    valeurs: ["AUTRE"]
+  }
+]);
+
+const ActeEtrangerSchemaValidationFormulaire = SchemaValidation.objet({
+  typeActe: SchemaValidation.listeDeroulante({
+    obligatoire: true,
+    options: ["ACTE_DRESSE", "ACTE_TRANSCRIT", "ACTE_ENREGISTRE", "JUGEMENT_DECLARATIF", "JUGEMENT_SUPPLETIF", "AUTRE"]
+  }),
+  typeActeAutre: SchemaValidation.texte({
+    obligatoire: typeActeAutreCondition
+  }),
+  dateEnregistrement: SchemaValidation.dateIncomplete({
+    obligatoire: true,
+    bloquerDateFutur: true
+  }),
+  lieuEnregistrement: LieuEnregistrementSchemaValidation,
+  redacteur: SchemaValidation.texte({
+    obligatoire: false
+  }),
+  referenceComplement: SchemaValidation.texte({
+    obligatoire: false
+  })
+});
+
 const FormulaireSaisirProjet: React.FC<ISaisieProjetActeProps> = requete => {
   const initialValueParents: IBLocParents = useMemo(
     () => ({
@@ -163,12 +221,17 @@ const FormulaireSaisirProjet: React.FC<ISaisieProjetActeProps> = requete => {
         declarant: DeclarantSchemaValidationFormulaire,
         parents: ParentsSchemaValidationFormulaire,
         mentions: MentionsSchemaValidationFormulaire,
-        formuleFinale: FormuleFinaleSchemaValidationFormulaire
+        formuleFinale: FormuleFinaleSchemaValidationFormulaire,
+        acteEtranger: ActeEtrangerSchemaValidationFormulaire
       })}
       initialValues={{
         titulaire: { ...initialValueTitulaire },
         declarant: { ...initialValueDeclarant },
         parents: { ...initialValueParents },
+        acteEtranger: {
+          typeActe: "ACTE_DRESSE",
+          referenceComplement: ""
+        },
         mentions: { ...initialValueMentions },
         formuleFinale: { ...initialValueFormuleFinale }
       }}
@@ -201,7 +264,7 @@ const FormulaireSaisirProjet: React.FC<ISaisieProjetActeProps> = requete => {
           titre="Autres énonciations intéressant l'état civil"
           ouvertParDefaut
         >
-          <BlocAutres />
+          <BlocAutresEnonciations />
         </ConteneurAccordeon>
 
         <ConteneurAccordeon
@@ -255,6 +318,7 @@ const initialiseTitulaires = (requete: ISaisieProjetActeProps): IBlocTitulaire =
 };
 
 const initialiseParents = (parent?: any): IParent => {
+  const estFranceouEtranger = parent?.paysNaissance?.toUpperCase() === "FRANCE" ? "France" : "Étranger";
   return {
     id: parent?.id || "",
     position: parent?.position || 0,
@@ -274,7 +338,7 @@ const initialiseParents = (parent?: any): IParent => {
       annee: parent?.anneeNaissance
     },
     lieuNaissance: {
-      typeLieu: parent?.paysNaissance ? (parent.paysNaissance.toUpperCase() === "FRANCE" ? "France" : "Étranger") : "Inconnu",
+      typeLieu: parent?.paysNaissance ? estFranceouEtranger : "Inconnu",
       ville: parent?.villeNaissance || "",
       adresse: parent?.adresseNaissance || "",
       departement: parent?.regionNaissance || "",

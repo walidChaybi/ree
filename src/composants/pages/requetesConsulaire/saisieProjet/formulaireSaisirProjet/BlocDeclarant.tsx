@@ -55,8 +55,7 @@ const BlocDeclarant: React.FC = () => {
             <ChampsTexte
               name="declarant.nom"
               libelle="Nom"
-              optionFormatage="NOMS_PROPRES"
-              estObligatoire={values.declarant.identite === Identite.getKey(Identite.TIERS)}
+              estObligatoire={estUnTier}
             />
           </div>
 
@@ -88,7 +87,6 @@ const BlocDeclarant: React.FC = () => {
               name="declarant.qualite"
               libelle="Qualité"
               placeholder="Ex: la grand-mère"
-              optionFormatage="PREMIER_MAJUSCULE"
             />
           </div>
           <div className="col-span-2 grid grid-cols-2 gap-x-4 pt-4">
@@ -97,7 +95,6 @@ const BlocDeclarant: React.FC = () => {
               libelle="Profession"
               data-testid="declarant-profession"
               disabled={values.declarant.sansProfession ?? false}
-              optionFormatage="PREMIER_MAJUSCULE"
             />
             <div className="w-full pt-[2rem] text-start">
               <ChampsCaseACocher
@@ -117,15 +114,13 @@ const BlocDeclarant: React.FC = () => {
           />
           <SeparateurSection titre="Complément" />
 
-          <div className="-pr-4 grid w-full">
-            <ChampsZoneTexte
-              name="declarant.complement"
-              libelle=""
-              placeholder="Ex: Chez qui l'accouchement à eu lieu"
-              maxLength={250}
-              typeRedimensionnement="fixe"
-            />
-          </div>
+          <ChampsZoneTexte
+            name="declarant.complement"
+            libelle=""
+            placeholder="Ex: Chez qui l'accouchement à eu lieu"
+            maxLength={250}
+            typeRedimensionnement="fixe"
+          />
         </>
       )}
     </ConteneurAvecBordure>

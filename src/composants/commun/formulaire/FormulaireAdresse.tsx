@@ -43,6 +43,7 @@ const AdresseFrance = memo(({ prefix, ville }: { prefix: string; ville?: string 
           <ChampsTexte
             name={`${prefix}.ville`}
             libelle="Ville"
+            optionFormatage="PREMIER_MAJUSCULE"
           />
         </div>
         {estVilleSpeciale && (
@@ -78,6 +79,7 @@ const AdresseEtranger = memo(({ prefix }: { prefix: string }) => (
       <ChampsTexte
         name={`${prefix}.ville`}
         libelle="Ville"
+        optionFormatage="PREMIER_MAJUSCULE"
       />
       <ChampsTexte
         name={`${prefix}.etatProvince`}
@@ -88,6 +90,7 @@ const AdresseEtranger = memo(({ prefix }: { prefix: string }) => (
       <ChampsTexte
         name={`${prefix}.pays`}
         libelle="Pays"
+        optionFormatage="PREMIER_MAJUSCULE"
       />
     </div>
     <div className="mt-4">

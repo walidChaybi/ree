@@ -78,7 +78,6 @@ const BlocFormuleFinale: React.FC = () => {
             <ChampsTexte
               name="formuleFinale.nom"
               libelle="Nom"
-              optionFormatage="NOMS_PROPRES"
               estObligatoire={estUnTier}
             />
           </div>
@@ -93,7 +92,6 @@ const BlocFormuleFinale: React.FC = () => {
             <ChampsTexte
               name="formuleFinale.qualite"
               libelle="Qualité"
-              optionFormatage="NOMS_PROPRES"
             />
           </div>
         </>
@@ -118,7 +116,6 @@ const BlocFormuleFinale: React.FC = () => {
           <ChampsTexte
             name="formuleFinale.autresPieces"
             libelle="Autres pièces"
-            optionFormatage="NOMS_PROPRES"
             estObligatoire={doitAfficherAutresPieces}
           />
         </div>
