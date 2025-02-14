@@ -4,29 +4,39 @@ import { ConditionChamp, IConditionChampDto } from "@model/form/commun/Condition
 import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import SchemaValidation from "../../../utils/SchemaValidation";
 
+export enum ETypeChamp {
+  TEXT = "text",
+  SELECT = "select",
+  DATE_COMPLETE = "dateComplete",
+  DATE_INCOMPLETE = "dateIncomplete",
+  ANNEE = "annee",
+  INT = "int",
+  BOOLEAN = "boolean",
+  SOUS_TITRE = "sousTitre",
+  RADIO = "radioBouton",
+  POCOPA = "pocopa"
+}
 interface IValeursPossiblesMetaModeleDto {
   valeurs: string[];
   conditions: IConditionChampDto[];
 }
-
 interface IChampMetaModeleDto {
   id: string;
   libelle: string;
   position: number;
-  type: string;
+  type: ETypeChamp;
   estObligatoire: IConditionChampDto[];
   estAffiche: IConditionChampDto[];
   valeursPossibles: IValeursPossiblesMetaModeleDto[];
   valeurParDefaut?: string;
 }
-
 interface IBlocMetaModeleDto {
   id: string;
   titre: string;
   position: number;
+  typeBloc: string;
   champs: IChampMetaModeleDto[];
 }
-
 export interface IMetaModeleTypeMentionDto {
   idTypeMention: string;
   estSaisieAssistee: boolean;
@@ -72,7 +82,7 @@ export class ChampMetaModele {
     public readonly id: string,
     public readonly libelle: string,
     public readonly position: number,
-    public readonly type: string,
+    public readonly type: ETypeChamp,
     public readonly estObligatoire: ConditionChamp[],
     public readonly estAffiche: ConditionChamp[],
     public readonly valeursPossibles: ValeursPossiblesMetaModele[],
@@ -80,7 +90,8 @@ export class ChampMetaModele {
   ) {}
 
   public static depuisDto(dto: IChampMetaModeleDto): ChampMetaModele | null {
-    if (ChampMetaModele.champsObligatoires.some(cle => dto[cle] === undefined)) {
+    if (ChampMetaModele.champsObligatoires.some(cle => dto[cle] === undefined) && !Object.values(ETypeChamp).includes(dto.type)) {
+      console.error(`Le champ ${dto.id} du metamodele n'est pas conforme`);
       return null;
     }
 
@@ -115,12 +126,13 @@ export class ChampMetaModele {
 }
 
 export class BlocMetaModele {
-  private static readonly champsObligatoires: (keyof IBlocMetaModeleDto)[] = ["id", "titre", "position"];
+  private static readonly champsObligatoires: (keyof IBlocMetaModeleDto)[] = ["id", "titre", "position", "typeBloc"];
 
   private constructor(
     public readonly id: string,
     public readonly titre: string,
     public readonly position: number,
+    public readonly typeBloc: string,
     public readonly champs: ChampMetaModele[]
   ) {}
 
@@ -134,7 +146,7 @@ export class BlocMetaModele {
       return null;
     }
 
-    return new BlocMetaModele(dto.id, dto.titre, dto.position, champs);
+    return new BlocMetaModele(dto.id, dto.titre, dto.position, dto.typeBloc, champs);
   }
 
   public static depuisTableau(dtos: IBlocMetaModeleDto[]): BlocMetaModele[] {
@@ -180,6 +192,7 @@ export class MetaModeleTypeMention {
         const validationChamp = (() => {
           switch (champ.type) {
             case "text":
+            case "radioBouton":
             case "pocopa":
               return SchemaValidation.texte({ obligatoire: champ.estObligatoire });
             case "int":
@@ -228,6 +241,8 @@ export class MetaModeleTypeMention {
               };
             case "boolean":
               return champ.valeurParDefaut === "true";
+            case "radioBouton":
+              return champ.valeurParDefaut ?? "";
             case "select":
               return champ.valeurParDefaut ?? "";
             default:

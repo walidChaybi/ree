@@ -25,6 +25,8 @@ export class ConditionChamp {
 
   public static depuisDto(conditionDto: IConditionChampDto): ConditionChamp | null {
     if (!conditionDto.operateur || !Object.values(EOperateurCondition).includes(conditionDto.operateur)) {
+      console.error(`La condition du champ ${conditionDto.idChampReference} n'est pas conforme`);
+
       return null;
     }
 
