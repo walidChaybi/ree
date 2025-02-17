@@ -174,10 +174,10 @@ export const TexteMentionAideALaSaisie: React.FC<{ templateTexteMention: string 
     texte
       .split(/\[\[|\]\]/)
       .filter(partieTexte => partieTexte)
-      .map(texte => {
+      .map((texte, index) => {
         const donneesEditables = /^(\d+)@(.*)/.exec(texte);
         if (!donneesEditables) {
-          return texte;
+          return { index: index, texte: texte };
         }
 
         const donnees = {
@@ -196,7 +196,8 @@ export const TexteMentionAideALaSaisie: React.FC<{ templateTexteMention: string 
         }
 
         return {
-          index: parseInt(donneesEditables[1])
+          index: parseInt(donneesEditables[1]),
+          texte: null
         };
       });
 
@@ -228,17 +229,17 @@ export const TexteMentionAideALaSaisie: React.FC<{ templateTexteMention: string 
     <div className={"min-h-28 rounded border border-solid border-gris px-2 py-3"}>
       <div className={"text-left"}>
         {decouperTexteEditable(texteSaisie).map(donnees =>
-          typeof donnees === "string" ? (
+          donnees.texte !== null ? (
             <span
-              key={donnees}
+              key={`non-editable--${donnees.index}`}
               className={"select-none rounded bg-gris-transparent px-0.5"}
             >
-              {donnees}
+              {donnees.texte}
             </span>
           ) : (
             textesEditables[donnees.index] && (
               <span
-                key={donnees.index}
+                key={`editable--${donnees.index}`}
                 contentEditable
                 className={"rounded px-0.5 outline-none transition-colors hover:bg-bleu-transparent focus-visible:bg-bleu-transparent"}
                 onBlur={e => {
