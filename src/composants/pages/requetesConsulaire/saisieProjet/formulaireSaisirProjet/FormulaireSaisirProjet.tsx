@@ -70,7 +70,7 @@ interface IBlocDeclarant {
   nom: string | null;
   prenomsChemin?: { [prenom: string]: string };
   sexe: string;
-  age?: number | null;
+  age?: number | string;
   qualite?: string | null;
   profession?: string | null;
   sansProfession?: boolean;
@@ -191,7 +191,7 @@ const ActeEtrangerSchemaValidationFormulaire = SchemaValidation.objet({
     obligatoire: typeActeAutreCondition
   }),
   dateEnregistrement: SchemaValidation.dateIncomplete({
-    obligatoire: true,
+    obligatoire: false,
     bloquerDateFutur: true
   }),
   lieuEnregistrement: LieuEnregistrementSchemaValidation,
@@ -367,7 +367,7 @@ const initialValueDeclarant: IBlocDeclarant = {
   nom: "",
   prenomsChemin: { prenom1: "" },
   sexe: "",
-  age: null,
+  age: "",
   qualite: "",
   profession: "",
   sansProfession: false,

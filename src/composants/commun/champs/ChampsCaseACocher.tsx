@@ -1,5 +1,4 @@
 import { ErrorMessage, useField } from "formik";
-import "./ChampsCaseACocher.scss";
 
 type TChampsCaseACocherProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> & { libelle: string };
 
@@ -8,15 +7,16 @@ const ChampsCaseACocher: React.FC<TChampsCaseACocherProps> = ({ name, libelle, d
 
   return (
     <>
-      <label className={`champs-case-a-cocher-rece ${disabled ? "inactif" : ""}`.trim()}>
+      <label className={`flex w-fit text-start ${disabled ? "cursor-default opacity-60" : "cursor-pointer"}`.trim()}>
         <input
           type="checkbox"
           {...props}
           {...field}
           checked={field.value}
           disabled={disabled}
+          className={`${disabled ? "cursor-default" : "cursor-pointer accent-bleu-sombre"}`}
         />
-        <span>{libelle}</span>
+        <span className="ml-2 select-none text-nowrap font-semibold text-bleu-sombre">{libelle}</span>
       </label>
       {meta.error && (
         <div className="message-erreur-textearea">

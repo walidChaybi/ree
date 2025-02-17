@@ -26,7 +26,7 @@ const AnalyseMarginaleForm: React.FC<IAnalyseMarginaleFormProps> = ({ analyseMar
 
   return (
     <div className="px-4">
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid gap-6">
         <div>
           <ChampsNomSecable
             nom={{ name: "analyseMarginale.nom", libelle: "Nom" }}
@@ -42,12 +42,10 @@ const AnalyseMarginaleForm: React.FC<IAnalyseMarginaleFormProps> = ({ analyseMar
           />
         </div>
 
-        <div>
-          <ChampsPrenoms
-            cheminPrenoms={"analyseMarginale.prenoms"}
-            prefixePrenom={"prenom"}
-          />
-        </div>
+        <ChampsPrenoms
+          cheminPrenoms={"analyseMarginale.prenoms"}
+          prefixePrenom={"prenom"}
+        />
 
         <ChampsTexte
           className="champs-motif"

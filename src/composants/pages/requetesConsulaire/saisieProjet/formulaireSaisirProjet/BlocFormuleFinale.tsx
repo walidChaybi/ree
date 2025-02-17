@@ -39,7 +39,7 @@ const optionsModeDepot: Option[] = [
 const optionsIdentiteTransmetteur: Option[] = [{ cle: "IDENTIQUE_DEMANDEUR", libelle: "Identique au demandeur" }];
 
 const BlocFormuleFinale: React.FC = () => {
-  const { values, setFieldValue, initialValues } = useFormikContext<ISaisieProjetActeForm>();
+  const { values, setFieldValue, setFieldTouched, initialValues } = useFormikContext<ISaisieProjetActeForm>();
   const estUnTier = useMemo(
     () => values.formuleFinale?.identiteDemandeur === Identite.getKey(Identite.TIERS),
     [values.formuleFinale.identiteDemandeur]
@@ -58,16 +58,25 @@ const BlocFormuleFinale: React.FC = () => {
         qualite: initialValues.formuleFinale.qualite,
         identiteDemandeur: values.formuleFinale?.identiteDemandeur
       });
+      setFieldTouched("formuleFinale.nom", false);
     }
   }, [values.formuleFinale?.identiteDemandeur]);
 
+  useEffect(() => {
+    if (!doitAfficherAutresPieces) {
+      setFieldValue("formuleFinale", {
+        ...values.formuleFinale,
+        autresPieces: initialValues.formuleFinale.autresPieces
+      });
+      setFieldTouched("formuleFinale.autresPieces", false);
+    }
+  }, [doitAfficherAutresPieces]);
   return (
     <ConteneurAvecBordure sansMargeBasse>
-      <SeparateurSection titre="Identité du demandeur" />
       <div className="grid grid-cols-2 gap-4">
         <ChampListeDeroulante
           name="formuleFinale.identiteDemandeur"
-          libelle="Identité"
+          libelle="Identité du demandeur"
           options={optionsDemandeur}
           premiereLettreMajuscule
         />
@@ -120,9 +129,7 @@ const BlocFormuleFinale: React.FC = () => {
           />
         </div>
       )}
-      <div className="pt-6">
-        <SeparateurSection titre="" />
-      </div>
+      <SeparateurSection />
       <div className="grid grid-cols-2 gap-4">
         <div className="">
           <ChampsRadio

@@ -55,25 +55,25 @@ describe("Test du composant Champs nom sécable", () => {
       expect(screen.getByDisplayValue("Dupont")).toBeDefined();
       expect(screen.getByDisplayValue("Test Test2")).toBeDefined();
 
-      expect(screen.queryByTitle("Descendre la dernière vocable")).toBeNull();
-      const boutonRemonterVocable = screen.getByTitle("Remonter la première vocable");
-      expect(boutonRemonterVocable).toBeDefined();
+      expect(screen.queryByTitle("Déplacer la première vocable")).toBeNull();
+      const boutonDéplacerVocable = screen.getByTitle("Déplacer la dernière vocable");
+      expect(boutonDéplacerVocable).toBeDefined();
     });
 
     await act(async () => {
-      fireEvent.click(screen.getByTitle("Remonter la première vocable"));
+      fireEvent.click(screen.getByTitle("Déplacer la dernière vocable"));
     });
 
     await waitFor(() => {
       expect(screen.getByDisplayValue("Dupont Test")).toBeDefined();
       expect(screen.getByDisplayValue("Test2")).toBeDefined();
-      expect(screen.queryByTitle("Remonter la première vocable")).toBeNull();
-      const boutonDescendreVocable = screen.getByTitle("Descendre la dernière vocable");
-      expect(boutonDescendreVocable).toBeDefined();
+      expect(screen.queryByTitle("Déplacer la dernière vocable")).toBeNull();
+      const boutonDéplacerVocable = screen.getByTitle("Déplacer la première vocable");
+      expect(boutonDéplacerVocable).toBeDefined();
     });
 
     await act(async () => {
-      fireEvent.click(screen.getByTitle("Descendre la dernière vocable"));
+      fireEvent.click(screen.getByTitle("Déplacer la première vocable"));
     });
 
     await waitFor(() => {

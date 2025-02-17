@@ -17,7 +17,7 @@ const ChampsRadio: React.FC<TChampsRadioProps> = ({ name, libelle, className, op
       <legend className={`m-0 mb-1 block w-fit text-start text-[13.5px] transition-colors ${enErreur ? "text-rouge" : "text-bleu-sombre"}`}>
         {libelle}
       </legend>
-      <div className="ml-4 mt-2.5 flex w-full flex-wrap gap-24 text-start">
+      <div className="ml-6 mt-2.5 flex w-full flex-wrap gap-16 text-start">
         {...options.map((option: Option) => {
           return (
             <div key={`${name}-${option.cle}`}>

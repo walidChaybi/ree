@@ -104,7 +104,10 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
         ville={parent?.lieuNaissance?.ville}
       />
 
-      <SeparateurSection titre="Profession" />
+      <SeparateurSection
+        titre="Profession"
+        libellePour={`${prefix}.profession`}
+      />
       <div className="grid grid-cols-2 items-center gap-4">
         <ChampsTexte
           name={`${prefix}.profession`}

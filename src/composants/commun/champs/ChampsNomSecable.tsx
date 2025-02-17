@@ -1,10 +1,9 @@
-import { ArrowDownward, ArrowUpward } from "@mui/icons-material";
+import ArrowBack from "@mui/icons-material/ArrowBack";
 import { DEUX, UN } from "@util/Utils";
 import { FormikErrors, FormikValues, useFormikContext } from "formik";
 import { useEffect, useState } from "react";
 import BoutonIcon from "../bouton/BoutonIcon";
 import ChampsCaseACocher from "./ChampsCaseACocher";
-import "./ChampsNomSecable.scss";
 import ChampsTexte from "./ChampsTexte";
 
 interface IChamps {
@@ -99,71 +98,74 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
   }, [values]);
 
   return (
-    <div className="conteneur-champs-nom-secable">
-      <ChampsTexte
-        name={nom.name}
-        libelle={nom.libelle}
-        estObligatoire={estObligatoire}
-        optionFormatage="NOMS_PROPRES"
-      />
-      <div className="champs-secable-et-info">
-        <ChampsCaseACocher
-          name={secable.name}
-          libelle={secable.libelle}
-          disabled={!secablePossible}
-        />
-        {afficherInfo && (
-          <span
-            className="info-nom-secable"
-            title="Gestion du nom sécable pour la délivrance des extraits"
-          >
-            {"?"}
-          </span>
-        )}
+    <div className="grid gap-4">
+      <div className="flex gap-4">
+        <div className="w-full">
+          <ChampsTexte
+            name={nom.name}
+            libelle={nom.libelle}
+            estObligatoire={estObligatoire}
+          />
+        </div>
+
+        <div className="flex flex-nowrap items-end gap-4 pb-1">
+          <ChampsCaseACocher
+            name={secable.name}
+            libelle={secable.libelle}
+            disabled={!secablePossible}
+          />
+          {afficherInfo && (
+            <span
+              className="h-6 w-6 flex-none cursor-help rounded-full bg-bleu-sombre text-center font-semibold text-blanc"
+              title="Gestion du nom sécable pour la délivrance des extraits"
+            >
+              {"?"}
+            </span>
+          )}
+        </div>
       </div>
 
       {valeurChamps(values, secable.name) && (
-        <>
-          <div className="flex gap-2">
+        <div className="flex w-full gap-4">
+          <div className="w-[40%]">
             <ChampsTexte
               name={nomPartie1.name}
               libelle={nomPartie1.libelle}
               readOnly
             />
-
-            <div className="flex w-10 items-end">
-              {boutonPresent(valeurChamps(values, nomPartie1.name) as string) && (
-                <BoutonIcon
-                  type="button"
-                  title="Descendre la dernière vocable"
-                  onClick={() => deplacerVocable(false)}
-                >
-                  <ArrowDownward />
-                </BoutonIcon>
-              )}
-            </div>
           </div>
 
-          <div className="flex gap-2">
+          <div className="relative flex w-[20%] items-end justify-center">
+            {boutonPresent(valeurChamps(values, nomPartie2.name) as string) && (
+              <BoutonIcon
+                className="absolute right-0"
+                type="button"
+                title="Déplacer la dernière vocable"
+                onClick={() => deplacerVocable(true)}
+              >
+                <ArrowBack />
+              </BoutonIcon>
+            )}
+            {boutonPresent(valeurChamps(values, nomPartie1.name) as string) && (
+              <BoutonIcon
+                className="absolute left-0"
+                type="button"
+                title="Déplacer la première vocable"
+                onClick={() => deplacerVocable(false)}
+              >
+                <ArrowBack className="rotate-180" />
+              </BoutonIcon>
+            )}
+          </div>
+
+          <div className="w-[40%]">
             <ChampsTexte
               name={nomPartie2.name}
               libelle={nomPartie2.libelle}
               readOnly
             />
-
-            <div className="flex w-10 items-end">
-              {boutonPresent(valeurChamps(values, nomPartie2.name) as string) && (
-                <BoutonIcon
-                  type="button"
-                  title="Remonter la première vocable"
-                  onClick={() => deplacerVocable(true)}
-                >
-                  <ArrowUpward />
-                </BoutonIcon>
-              )}
-            </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   );

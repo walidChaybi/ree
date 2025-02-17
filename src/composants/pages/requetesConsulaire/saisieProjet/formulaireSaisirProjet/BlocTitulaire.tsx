@@ -16,65 +16,62 @@ interface IBlocTitulairetitulaireProps {
 const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
   return (
     <ConteneurAvecBordure>
-      <div className="grid grid-cols-2 gap-4">
-        <div className="flex w-full flex-col gap-4 text-start">
-          <ChampsTexte
-            name="titulaire.nomNaissance"
-            libelle="Nom sur l'acte étranger"
-          />
-
-          <ChampsNomSecable
-            nom={{ name: "titulaire.nomOEC", libelle: "Nom retenu par l'OEC" }}
-            secable={{ name: "titulaire.secable", libelle: "Nom sécable" }}
-            nomPartie1={{
-              name: "nomSecable.nomPartie1",
-              libelle: "Nom 1re partie"
-            }}
-            nomPartie2={{
-              name: "nomSecable.nomPartie2",
-              libelle: "Nom 2nde partie"
-            }}
-            estObligatoire
-            afficherInfo={false}
-          />
-        </div>
-
-        <div className="flex w-full flex-col gap-4 text-start">
+      <div className="grid grid-cols-2 gap-4 text-start">
+        <ChampsTexte
+          name="titulaire.nomNaissance"
+          libelle="Nom sur l'acte étranger"
+        />
+        <div className="grid w-full gap-4 text-start">
           <ChampsTexte
             name="titulaire.nomSouhaite"
             libelle="Nom souhaité"
             disabled
           />
-          <ChampsPrenoms
-            cheminPrenoms="titulaire.prenomsChemin"
-            prefixePrenom="prenom"
-          />
-        </div>
-
-        <div className="flex w-full flex-col gap-4 text-start">
-          <ChampsRadio
-            name="titulaire.sexe"
-            libelle="Sexe"
-            options={[
-              { libelle: Sexe.MASCULIN.libelle, cle: Sexe.getKey(Sexe.MASCULIN) },
-              { libelle: Sexe.FEMININ.libelle, cle: Sexe.getKey(Sexe.FEMININ) },
-              { libelle: Sexe.INDETERMINE.libelle, cle: Sexe.getKey(Sexe.INDETERMINE) }
-            ]}
-          />
-        </div>
-
-        <div>
-          <ChampDate
-            name="titulaire.dateNaissance"
-            libelle="Date de naissance"
-            avecHeure
-            className="flex"
-            estObligatoire="année"
-          />
         </div>
       </div>
-      <SeparateurSection titre="Lieu de naissance" />
+      <div className="grid grid-cols-1 pt-4">
+        <ChampsNomSecable
+          nom={{ name: "titulaire.nomOEC", libelle: "Nom retenu par l'OEC" }}
+          secable={{ name: "titulaire.secable", libelle: "Nom sécable" }}
+          nomPartie1={{
+            name: "nomSecable.nomPartie1",
+            libelle: "Nom 1re partie"
+          }}
+          nomPartie2={{
+            name: "nomSecable.nomPartie2",
+            libelle: "Nom 2nde partie"
+          }}
+          estObligatoire
+          afficherInfo={false}
+        />
+      </div>
 
+      <div className="pt-4">
+        <ChampsPrenoms
+          cheminPrenoms="titulaire.prenomsChemin"
+          prefixePrenom="prenom"
+        />
+      </div>
+      <div className="grid w-full grid-cols-2 gap-4 pt-4 text-start">
+        <ChampsRadio
+          name="titulaire.sexe"
+          libelle="Sexe"
+          options={[
+            { libelle: Sexe.MASCULIN.libelle, cle: Sexe.getKey(Sexe.MASCULIN) },
+            { libelle: Sexe.FEMININ.libelle, cle: Sexe.getKey(Sexe.FEMININ) },
+            { libelle: Sexe.INDETERMINE.libelle, cle: Sexe.getKey(Sexe.INDETERMINE) }
+          ]}
+        />
+        <ChampDate
+          name="titulaire.dateNaissance"
+          libelle="Date de naissance"
+          avecHeure
+          className="flex"
+          estObligatoire="année"
+        />
+      </div>
+
+      <SeparateurSection titre="Lieu de naissance" />
       <div className="grid grid-cols-2 gap-4">
         <ChampsTexte
           name="titulaire.villeNaissance"

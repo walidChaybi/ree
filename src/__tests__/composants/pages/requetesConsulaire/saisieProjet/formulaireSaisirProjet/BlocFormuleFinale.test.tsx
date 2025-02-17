@@ -55,8 +55,7 @@ describe("BlocFormuleFinale", () => {
   describe("Tests d'affichage initial", () => {
     test("Doit afficher le formulaire formule finale Père", () => {
       renderComponentPere();
-      expect(screen.getByText("Identité")).toBeDefined();
-      const selectValue: HTMLSelectElement = screen.getByLabelText("Identité", {
+      const selectValue: HTMLSelectElement = screen.getByLabelText("Identité du demandeur", {
         selector: 'select[name="formuleFinale.identiteDemandeur"]'
       });
       expect(selectValue).toBeDefined();
@@ -103,7 +102,7 @@ describe("BlocFormuleFinale", () => {
   describe("Tests de saisie des informations d'identité'", () => {
     test("Doit affficher les champs 'Idendité' pour 'Un tiers'", async () => {
       renderComponentTiers();
-      const selectValue: HTMLSelectElement = screen.getByLabelText("Identité", {
+      const selectValue: HTMLSelectElement = screen.getByLabelText("Identité du demandeur", {
         selector: 'select[name="formuleFinale.identiteDemandeur"]'
       });
       expect(selectValue).toBeDefined();

@@ -66,7 +66,7 @@ const ChampDate: React.FC<TChampDateProps> = ({
   }, [metaHeure?.value]);
 
   return (
-    <div className={`${className} w-full flex-wrap justify-between`}>
+    <div className={`${className} w-full flex-wrap justify-between gap-1`}>
       <label
         className={`m-0 mb-1 ml-1 block w-fit text-start transition-colors ${erreurs.length ? "text-rouge" : "text-bleu-sombre"}`}
         htmlFor={`${name}.jour`}

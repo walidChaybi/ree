@@ -4,7 +4,6 @@ import { DEUX, QUINZE, UN } from "@util/Utils";
 import { FormikValues, useFormikContext } from "formik";
 import { useMemo } from "react";
 import BoutonIcon from "../bouton/BoutonIcon";
-import "./ChampsPrenoms.scss";
 import ChampsTexte from "./ChampsTexte";
 
 interface IChampsPrenomsProps {
@@ -45,51 +44,36 @@ const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({ cheminPrenoms, prefixePr
   };
 
   return (
-    <div className="conteneur-champs-prenoms">
-      <div className="champs-prenom">
-        <ChampsTexte
-          name={`${cheminPrenoms ? `${cheminPrenoms}.` : ""}${prefixePrenom}1`}
-          libelle={`Prénom ${nombrePrenoms > UN ? "1" : ""}`.trim()}
-          type="text"
-          optionFormatage="NOMS_PROPRES"
-        />
-
-        {nombrePrenoms < DEUX && (
-          <BoutonIcon
-            className="bouton-prenom"
-            type="button"
-            title="Ajouter un prénom"
-            onClick={() => ajouterChampsPrenom()}
-          >
-            <Add />
-          </BoutonIcon>
-        )}
+    <div className="grid grid-cols-2 gap-4">
+      <ChampsTexte
+        name={`${cheminPrenoms ? `${cheminPrenoms}.` : ""}${prefixePrenom}1`}
+        libelle={`Prénom ${nombrePrenoms > UN ? "1" : ""}`.trim()}
+        type="text"
+        className=""
+      />
+      <div className="flex items-end">
+        <BoutonIcon
+          type="button"
+          title="Ajouter un prénom"
+          onClick={() => ajouterChampsPrenom()}
+          disabled={nombrePrenoms >= MAX_PRENOMS}
+        >
+          <Add />
+        </BoutonIcon>
       </div>
 
       {Array.from({ length: nombrePrenoms - UN }).map((_, index) => (
         <div
           key={`prenom${index}`} /** NOSONAR index non important pour le lifecycle */
-          className="champs-prenom"
+          className="flex items-end gap-4"
         >
           <ChampsTexte
             name={`${cheminPrenoms ? `${cheminPrenoms}.` : ""}${prefixePrenom}${index + DEUX}`}
             libelle={`Prénom ${index + DEUX}`}
-            optionFormatage="NOMS_PROPRES"
           />
 
           {index === nombrePrenoms - DEUX && (
             <>
-              {nombrePrenoms < MAX_PRENOMS && (
-                <BoutonIcon
-                  className="bouton-prenom"
-                  type="button"
-                  title="Ajouter un prénom"
-                  onClick={() => ajouterChampsPrenom()}
-                >
-                  <Add />
-                </BoutonIcon>
-              )}
-
               <BoutonIcon
                 className="bouton-prenom"
                 type="button"

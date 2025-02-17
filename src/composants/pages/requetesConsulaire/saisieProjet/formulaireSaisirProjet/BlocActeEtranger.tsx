@@ -18,12 +18,13 @@ const OPTIONSTYPEACTE = [
 ];
 
 const BlocActeEtranger: React.FC = () => {
-  const { values, setFieldValue } = useFormikContext<ISaisieProjetActeForm>();
+  const { values, setFieldValue, setFieldTouched } = useFormikContext<ISaisieProjetActeForm>();
   const estAutreTypeActe = useMemo(() => values.acteEtranger?.typeActe === "AUTRE", [values.acteEtranger?.typeActe]);
 
   useEffect(() => {
     if (!estAutreTypeActe) {
       setFieldValue("acteEtranger.typeActeAutre", "");
+      setFieldTouched("acteEtranger.typeActeAutre", false);
     }
   }, [estAutreTypeActe]);
 
@@ -77,8 +78,6 @@ const BlocActeEtranger: React.FC = () => {
         libelle="Référence et/ou complément"
         maxLength={2000}
         typeRedimensionnement="vertical"
-
-        // className="box-border w-full resize-y"
       />
     </ConteneurAvecBordure>
   );

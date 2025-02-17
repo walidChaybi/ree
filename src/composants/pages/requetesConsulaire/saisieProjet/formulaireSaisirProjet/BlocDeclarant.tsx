@@ -22,12 +22,13 @@ const optionsDeclarant: Option[] = [
 ];
 
 const BlocDeclarant: React.FC = () => {
-  const { values, setFieldValue, initialValues } = useFormikContext<ISaisieProjetActeForm>();
-  const estUnTier = useMemo(() => values.declarant.identite === Identite.getKey(Identite.TIERS), [values.declarant.identite]);
+  const { values, setFieldValue, setFieldTouched, initialValues } = useFormikContext<ISaisieProjetActeForm>();
+  const estDeclarantTiers = useMemo(() => values.declarant.identite === Identite.getKey(Identite.TIERS), [values.declarant.identite]);
 
   useEffect(() => {
-    if (values.declarant.identite !== Identite.getKey(Identite.TIERS)) {
+    if (!estDeclarantTiers) {
       setFieldValue("declarant", { ...initialValues.declarant, identite: values.declarant.identite });
+      setFieldTouched("declarant.nom", false);
     }
   }, [values.declarant.identite]);
 
@@ -49,13 +50,13 @@ const BlocDeclarant: React.FC = () => {
           />
         </div>
       </div>
-      {estUnTier && (
+      {estDeclarantTiers && (
         <>
           <div className="pt-4">
             <ChampsTexte
               name="declarant.nom"
               libelle="Nom"
-              estObligatoire={estUnTier}
+              estObligatoire={estDeclarantTiers}
             />
           </div>
 
@@ -104,7 +105,10 @@ const BlocDeclarant: React.FC = () => {
             </div>
           </div>
 
-          <SeparateurSection titre="Domicile" />
+          <SeparateurSection
+            titre="Domicile"
+            libellePour="declarant.domicile"
+          />
 
           <FormulaireAdresse
             key={values.declarant.domicile?.typeLieu}
@@ -112,8 +116,11 @@ const BlocDeclarant: React.FC = () => {
             categorieLieu={values.declarant.domicile?.typeLieu}
             ville={values.declarant?.domicile?.ville}
           />
-          <SeparateurSection titre="Complément" />
 
+          <SeparateurSection
+            titre="Complément"
+            libellePour="declarant.complement"
+          />
           <ChampsZoneTexte
             name="declarant.complement"
             libelle=""
