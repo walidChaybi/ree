@@ -21,12 +21,13 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
   const nomChamp = `${idBloc}.${champ.id}`;
 
   useEffect(() => {
+    setFieldTouched(nomChamp, false);
+
     setEstVisible?.(estAffiche);
     if (estAffiche || !champ.type) {
       return;
     }
 
-    setFieldTouched(nomChamp, false);
     switch (champ.type) {
       case "select":
       case "radioBouton":
