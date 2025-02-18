@@ -52,6 +52,7 @@ export function useGenerationEC(params?: IGenerationECParams): IGenerationECResu
     useState<IStockerDocumentCreerActionMajStatutRequeteParams>();
   const [acteApiHookParams, setActeApiHookParams] = useState<IActeApiHookParams>();
   const [acteDejaPresent, setActeDejaPresent] = useState<IFicheActe>();
+  const [triggerEtapeUnTer, setTriggerEtapeUnTer] = useState<boolean>(true);
   const [validation, setValidation] = useState<Validation>();
   const [recupererCtvApiHookParam, setRecupererCtvApiHookParam] = useState<{}>();
   const [stockeCtvApiHookParam, setStockeCtvApiHookParam] = useState<IStockeCTVParams>();
@@ -67,6 +68,7 @@ export function useGenerationEC(params?: IGenerationECParams): IGenerationECResu
       });
     } else if (estPresentActeEtChoixDelivrance(params)) {
       setActeDejaPresent(params?.acte);
+      setTriggerEtapeUnTer(!triggerEtapeUnTer);
     }
   }, [params]);
 
@@ -76,25 +78,16 @@ export function useGenerationEC(params?: IGenerationECParams): IGenerationECResu
   // 1bis - Récuperer code CTV
   const recupererCtvResultat = useRecupererCTV(recupererCtvApiHookParam);
 
+  // 1ter
   useEffect(() => {
-    if (acteApiHookResultat) {
+    if (acteApiHookResultat || acteDejaPresent) {
       if (estDocumentAvecCTV(DocumentDelivrance.getTypeDocument(params?.choixDelivrance), params?.requete.sousType)) {
         setRecupererCtvApiHookParam({});
       } else {
         creationECSansCTV(acteApiHookResultat?.acte || acteDejaPresent, params, setValidation, setExtraitCopieApiHookParams);
       }
     }
-  }, [acteApiHookResultat]);
-
-  useEffect(() => {
-    if (acteDejaPresent) {
-      if (estDocumentAvecCTV(DocumentDelivrance.getTypeDocument(params?.choixDelivrance), params?.requete.sousType)) {
-        setRecupererCtvApiHookParam({});
-      } else {
-        creationECSansCTV(acteApiHookResultat?.acte || acteDejaPresent, params, setValidation, setExtraitCopieApiHookParams);
-      }
-    }
-  }, [acteDejaPresent]);
+  }, [acteApiHookResultat, triggerEtapeUnTer]);
 
   // 2- Création du bon EC composition suivant le choix de délivrance
   useEffect(() => {

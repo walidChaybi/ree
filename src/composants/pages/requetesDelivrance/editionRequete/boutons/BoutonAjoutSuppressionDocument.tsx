@@ -9,7 +9,7 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import Add from "@mui/icons-material/Add";
 import Clear from "@mui/icons-material/Clear";
 import { getParamsCreationEC } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopieUtils";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { EditionDelivranceContext } from "../../../../../contexts/EditionDelivranceContextProvider";
 import Bouton from "../../../../commun/bouton/Bouton";
 import PageChargeur from "../../../../commun/chargeurs/PageChargeur";
@@ -72,6 +72,7 @@ const BoutonAjoutSuppressionDocument: React.FC<IBoutonAjoutSuppressionDocumentPr
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [creationECParams, setCreationECParams] = useState<IGenerationECParams>();
   const resulatEC = useGenerationEC(creationECParams);
+
   useEffect(() => {
     if (!resulatEC) {
       return;
@@ -82,12 +83,15 @@ const BoutonAjoutSuppressionDocument: React.FC<IBoutonAjoutSuppressionDocumentPr
     rechargerRequete("requete", naviguerVersOngletAjoute);
   }, [resulatEC]);
 
-  const ajouterDocument = (typeDocument: string) => {
-    setOperationEnCours(true);
-    setCreationECParams(getParamsCreationEC(typeDocument, requete, { acte: acte ?? undefined }));
-  };
+  const ajouterDocument = useCallback(
+    (typeDocument: string) => {
+      setOperationEnCours(true);
+      setCreationECParams(getParamsCreationEC(typeDocument, requete, { acte: acte ?? undefined }));
+    },
+    [requete, acte]
+  );
 
-  const supprimerDocument = () => {
+  const supprimerDocument = useCallback(() => {
     if (operationEnCours || !documentsDelivrance.secondaire) {
       return;
     }
@@ -96,7 +100,7 @@ const BoutonAjoutSuppressionDocument: React.FC<IBoutonAjoutSuppressionDocumentPr
     deleteDocumentComplementaire(documentsDelivrance.secondaire.id, requete.id)
       .then(() => rechargerRequete("requete"))
       .finally(() => setOperationEnCours(false));
-  };
+  }, [operationEnCours, documentsDelivrance.secondaire, requete.id, rechargerRequete]);
 
   return boutonDisponible ? (
     <>
@@ -108,7 +112,6 @@ const BoutonAjoutSuppressionDocument: React.FC<IBoutonAjoutSuppressionDocumentPr
         <Bouton
           className={`${styleBouton} flex items-center justify-center border-dashed group-hover:text-blanc ${ajoutDocument ? "group-hover:bg-bleu" : "group-hover:bg-rouge"}`}
           styleBouton={ajoutDocument ? "secondaire" : "suppression"}
-          type="button"
           title={ajoutDocument ? "Ajouter un document" : `Supprimer ${documentsDelivrance.secondaire?.nom}`}
           onClick={() => (ajoutDocument ? setMenuOuvert(!menuOuvert) : supprimerDocument())}
         >
