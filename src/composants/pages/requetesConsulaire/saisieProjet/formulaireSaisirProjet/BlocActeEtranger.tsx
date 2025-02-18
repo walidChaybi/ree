@@ -2,8 +2,8 @@ import { useFormikContext } from "formik";
 import React, { memo, useEffect, useMemo } from "react";
 import ChampDate from "../../../../commun/champs/ChampDate";
 import ChampListeDeroulante from "../../../../commun/champs/ChampListeDeroulante";
-import ChampsTexte from "../../../../commun/champs/ChampsTexte";
-import ChampsZoneTexte from "../../../../commun/champs/ChampsZoneTexte";
+import ChampTexte from "../../../../commun/champs/ChampTexte";
+import ChampZoneTexte from "../../../../commun/champs/ChampZoneTexte";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import SeparateurSection from "../../../../commun/conteneurs/formulaire/SeparateurSection";
 import { ISaisieProjetActeForm } from "./FormulaireSaisirProjet";
@@ -38,7 +38,7 @@ const BlocActeEtranger: React.FC = () => {
           optionVideMasquee
         />
         {estAutreTypeActe && (
-          <ChampsTexte
+          <ChampTexte
             name="acteEtranger.typeActeAutre"
             libelle="Précisez le type d'acte"
             estObligatoire
@@ -52,28 +52,28 @@ const BlocActeEtranger: React.FC = () => {
       />
       <SeparateurSection titre="Lieu d'enregistrement" />
       <div className="mb-4 grid grid-cols-3 gap-4">
-        <ChampsTexte
+        <ChampTexte
           name="acteEtranger.lieuEnregistrement.ville"
           libelle="Ville"
           optionFormatage="PREMIER_MAJUSCULE"
         />
-        <ChampsTexte
+        <ChampTexte
           name="acteEtranger.lieuEnregistrement.etatProvince"
           libelle="État, canton, province"
         />
-        <ChampsTexte
+        <ChampTexte
           name="acteEtranger.lieuEnregistrement.pays"
           libelle="Pays"
           optionFormatage="PREMIER_MAJUSCULE"
         />
       </div>
-      <ChampsTexte
+      <ChampTexte
         name="acteEtranger.redacteur"
         libelle="Rédacteur"
         className="mb-4"
         maxLength={300}
       />
-      <ChampsZoneTexte
+      <ChampZoneTexte
         name="acteEtranger.referenceComplement"
         libelle="Référence et/ou complément"
         maxLength={2000}

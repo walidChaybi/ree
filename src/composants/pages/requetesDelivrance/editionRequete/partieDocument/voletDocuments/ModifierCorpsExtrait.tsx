@@ -9,7 +9,7 @@ import { Validation } from "@model/requete/enum/Validation";
 import { Form, Formik } from "formik";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { EditionDelivranceContext } from "../../../../../../contexts/EditionDelivranceContextProvider";
-import ChampsZoneTexte from "../../../../../commun/champs/ChampsZoneTexte";
+import ChampZoneTexte from "../../../../../commun/champs/ChampZoneTexte";
 import BoutonsValiderEtReinitialiser from "../../boutons/BoutonsValiderEtReinitialiser";
 
 interface IModifierCorpsExtraitProps {
@@ -76,11 +76,11 @@ const ModifierCorpsExtrait: React.FC<IModifierCorpsExtraitProps> = ({ documentRe
         }}
       >
         <Form className="ml-2 mr-4">
-          <ChampsZoneTexte
-            className="w-full resize-none px-1 py-1.5"
+          <ChampZoneTexte
             name="corpsTexte"
             libelle="Corps de l'extrait"
             rows={15}
+            typeRedimensionnement="fixe"
           />
 
           <div className="mt-4">

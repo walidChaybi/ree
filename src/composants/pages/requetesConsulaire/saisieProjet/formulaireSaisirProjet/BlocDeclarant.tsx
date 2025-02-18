@@ -3,12 +3,12 @@ import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { Option } from "@util/Type";
 import { useFormikContext } from "formik";
 import React, { useEffect, useMemo } from "react";
+import ChampCaseACocher from "../../../../commun/champs/ChampCaseACocher";
 import ChampListeDeroulante from "../../../../commun/champs/ChampListeDeroulante";
-import ChampsCaseACocher from "../../../../commun/champs/ChampsCaseACocher";
+import ChampTexte from "../../../../commun/champs/ChampTexte";
+import ChampZoneTexte from "../../../../commun/champs/ChampZoneTexte";
 import ChampsPrenoms from "../../../../commun/champs/ChampsPrenoms";
 import ChampsRadio from "../../../../commun/champs/ChampsRadio";
-import ChampsTexte from "../../../../commun/champs/ChampsTexte";
-import ChampsZoneTexte from "../../../../commun/champs/ChampsZoneTexte";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import SeparateurSection from "../../../../commun/conteneurs/formulaire/SeparateurSection";
 import FormulaireAdresse from "../../../../commun/formulaire/FormulaireAdresse";
@@ -53,7 +53,7 @@ const BlocDeclarant: React.FC = () => {
       {estDeclarantTiers && (
         <>
           <div className="pt-4">
-            <ChampsTexte
+            <ChampTexte
               name="declarant.nom"
               libelle="Nom"
               estObligatoire={estDeclarantTiers}
@@ -75,7 +75,7 @@ const BlocDeclarant: React.FC = () => {
                 { libelle: Sexe.FEMININ.libelle, cle: Sexe.getKey(Sexe.FEMININ) }
               ]}
             />
-            <ChampsTexte
+            <ChampTexte
               className="w-1/2"
               name="declarant.age"
               libelle={"Âge"}
@@ -84,21 +84,21 @@ const BlocDeclarant: React.FC = () => {
             />
           </div>
           <div className="col-span-2 grid grid-cols-2 gap-x-4 pt-4">
-            <ChampsTexte
+            <ChampTexte
               name="declarant.qualite"
               libelle="Qualité"
               placeholder="Ex: la grand-mère"
             />
           </div>
           <div className="col-span-2 grid grid-cols-2 gap-x-4 pt-4">
-            <ChampsTexte
+            <ChampTexte
               name="declarant.profession"
               libelle="Profession"
               data-testid="declarant-profession"
               disabled={values.declarant.sansProfession ?? false}
             />
             <div className="w-full pt-[2rem] text-start">
-              <ChampsCaseACocher
+              <ChampCaseACocher
                 name="declarant.sansProfession"
                 libelle="Sans profession"
               />
@@ -121,7 +121,7 @@ const BlocDeclarant: React.FC = () => {
             titre="Complément"
             libellePour="declarant.complement"
           />
-          <ChampsZoneTexte
+          <ChampZoneTexte
             name="declarant.complement"
             libelle=""
             placeholder="Ex: Chez qui l'accouchement à eu lieu"

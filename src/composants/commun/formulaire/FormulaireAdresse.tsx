@@ -2,8 +2,8 @@ import { ILocalisation } from "@model/requete/IParents";
 import { genererArrondissements } from "@util/Utils";
 import React, { memo, useMemo } from "react";
 import ChampListeDeroulante from "../champs/ChampListeDeroulante";
+import ChampTexte from "../champs/ChampTexte";
 import ChampsRadio from "../champs/ChampsRadio";
-import ChampsTexte from "../champs/ChampsTexte";
 
 interface Option {
   cle: string;
@@ -40,7 +40,7 @@ const AdresseFrance = memo(({ prefix, ville }: { prefix: string; ville?: string 
     <div className="mt-4 space-y-4">
       <div className="flex gap-4">
         <div className="flex-1">
-          <ChampsTexte
+          <ChampTexte
             name={`${prefix}.ville`}
             libelle="Ville"
             optionFormatage="PREMIER_MAJUSCULE"
@@ -58,14 +58,14 @@ const AdresseFrance = memo(({ prefix, ville }: { prefix: string; ville?: string 
         )}
         {ville?.toLowerCase() !== "paris" && (
           <div className="flex-1">
-            <ChampsTexte
+            <ChampTexte
               name={`${prefix}.departement`}
               libelle="Département"
             />
           </div>
         )}
       </div>
-      <ChampsTexte
+      <ChampTexte
         name={`${prefix}.adresse`}
         libelle="Adresse"
       />
@@ -76,25 +76,25 @@ const AdresseFrance = memo(({ prefix, ville }: { prefix: string; ville?: string 
 const AdresseEtranger = memo(({ prefix }: { prefix: string }) => (
   <div>
     <div className="mt-4 grid grid-cols-2 gap-4">
-      <ChampsTexte
+      <ChampTexte
         name={`${prefix}.ville`}
         libelle="Ville"
         optionFormatage="PREMIER_MAJUSCULE"
       />
-      <ChampsTexte
+      <ChampTexte
         name={`${prefix}.etatProvince`}
         libelle="État, canton, province"
       />
     </div>
     <div className="mt-4">
-      <ChampsTexte
+      <ChampTexte
         name={`${prefix}.pays`}
         libelle="Pays"
         optionFormatage="PREMIER_MAJUSCULE"
       />
     </div>
     <div className="mt-4">
-      <ChampsTexte
+      <ChampTexte
         name={`${prefix}.adresse`}
         libelle="Adresse"
       />

@@ -2,11 +2,11 @@
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { useFormikContext } from "formik";
 import React, { memo, useEffect, useMemo } from "react";
+import ChampCaseACocher from "../../../../commun/champs/ChampCaseACocher";
 import ChampDate from "../../../../commun/champs/ChampDate";
-import ChampsCaseACocher from "../../../../commun/champs/ChampsCaseACocher";
+import ChampTexte from "../../../../commun/champs/ChampTexte";
 import ChampsPrenoms from "../../../../commun/champs/ChampsPrenoms";
 import ChampsRadio from "../../../../commun/champs/ChampsRadio";
-import ChampsTexte from "../../../../commun/champs/ChampsTexte";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import SeparateurSection from "../../../../commun/conteneurs/formulaire/SeparateurSection";
 import FormulaireAdresse from "../../../../commun/formulaire/FormulaireAdresse";
@@ -55,7 +55,7 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
   return (
     <ConteneurAvecBordure titreEnTete={titre}>
       <div className="space-y-4">
-        <ChampsTexte
+        <ChampTexte
           name={`${prefix}.nom`}
           libelle="Nom"
         />
@@ -77,13 +77,13 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
             />
           </div>
           <div className="flex items-end space-x-4">
-            <ChampsCaseACocher
+            <ChampCaseACocher
               name={`${prefix}.renseignerAge`}
               libelle="Saisir l'âge"
             />
             {parent?.renseignerAge && (
               <div className="flex-1">
-                <ChampsTexte
+                <ChampTexte
                   name={`${prefix}.age`}
                   libelle="Âge (en années)"
                   numerique={true}
@@ -109,13 +109,13 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
         libellePour={`${prefix}.profession`}
       />
       <div className="grid grid-cols-2 items-center gap-4">
-        <ChampsTexte
+        <ChampTexte
           name={`${prefix}.profession`}
           libelle=""
           data-testid={`${prefix}-profession`}
           disabled={parent?.sansProfession}
         />
-        <ChampsCaseACocher
+        <ChampCaseACocher
           name={`${prefix}.sansProfession`}
           libelle="Sans profession"
         />
@@ -123,7 +123,7 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
 
       <SeparateurSection titre="Domicile" />
       {!estparent1 && (
-        <ChampsCaseACocher
+        <ChampCaseACocher
           name="parents.domicileCommun"
           libelle="Domicile commun avec parent 1"
         />

@@ -4,7 +4,7 @@ import { DEUX, QUINZE, UN } from "@util/Utils";
 import { FormikValues, useFormikContext } from "formik";
 import { useMemo } from "react";
 import BoutonIcon from "../bouton/BoutonIcon";
-import ChampsTexte from "./ChampsTexte";
+import ChampTexte from "./ChampTexte";
 
 interface IChampsPrenomsProps {
   cheminPrenoms: string;
@@ -45,7 +45,7 @@ const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({ cheminPrenoms, prefixePr
 
   return (
     <div className="grid grid-cols-2 gap-4">
-      <ChampsTexte
+      <ChampTexte
         name={`${cheminPrenoms ? `${cheminPrenoms}.` : ""}${prefixePrenom}1`}
         libelle={`Prénom ${nombrePrenoms > UN ? "1" : ""}`.trim()}
         type="text"
@@ -67,7 +67,7 @@ const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({ cheminPrenoms, prefixePr
           key={`prenom${index}`} /** NOSONAR index non important pour le lifecycle */
           className="flex items-end gap-4"
         >
-          <ChampsTexte
+          <ChampTexte
             name={`${cheminPrenoms ? `${cheminPrenoms}.` : ""}${prefixePrenom}${index + DEUX}`}
             libelle={`Prénom ${index + DEUX}`}
           />

@@ -3,8 +3,8 @@ import { DEUX, UN } from "@util/Utils";
 import { FormikErrors, FormikValues, useFormikContext } from "formik";
 import { useEffect, useState } from "react";
 import BoutonIcon from "../bouton/BoutonIcon";
-import ChampsCaseACocher from "./ChampsCaseACocher";
-import ChampsTexte from "./ChampsTexte";
+import ChampCaseACocher from "./ChampCaseACocher";
+import ChampTexte from "./ChampTexte";
 
 interface IChamps {
   name: string;
@@ -101,7 +101,7 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
     <div className="grid gap-4">
       <div className="flex gap-4">
         <div className="w-full">
-          <ChampsTexte
+          <ChampTexte
             name={nom.name}
             libelle={nom.libelle}
             estObligatoire={estObligatoire}
@@ -109,7 +109,7 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
         </div>
 
         <div className="flex flex-nowrap items-end gap-4 pb-1">
-          <ChampsCaseACocher
+          <ChampCaseACocher
             name={secable.name}
             libelle={secable.libelle}
             disabled={!secablePossible}
@@ -128,7 +128,7 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
       {valeurChamps(values, secable.name) && (
         <div className="flex w-full gap-4">
           <div className="w-[40%]">
-            <ChampsTexte
+            <ChampTexte
               name={nomPartie1.name}
               libelle={nomPartie1.libelle}
               readOnly
@@ -159,7 +159,7 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
           </div>
 
           <div className="w-[40%]">
-            <ChampsTexte
+            <ChampTexte
               name={nomPartie2.name}
               libelle={nomPartie2.libelle}
               readOnly

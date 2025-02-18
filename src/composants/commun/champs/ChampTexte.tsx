@@ -10,7 +10,7 @@ type TChampsTexteProps = React.InputHTMLAttributes<HTMLInputElement> & {
 };
 
 type TFormatChampsTexte = "PREMIER_MAJUSCULE" | "NOMS_PROPRES" | "MAJUSCULES" | "SANS_ESPACES";
-const ChampsTexte: React.FC<TChampsTexteProps> = ({
+const ChampTexte: React.FC<TChampsTexteProps> = ({
   name,
   libelle,
   className,
@@ -86,4 +86,4 @@ const ChampsTexte: React.FC<TChampsTexteProps> = ({
   );
 };
 
-export default ChampsTexte;
+export default ChampTexte;

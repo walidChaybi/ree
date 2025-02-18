@@ -2,9 +2,9 @@ import { ObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { useFormikContext } from "formik";
 import { useEffect } from "react";
 import Bouton from "../../../commun/bouton/Bouton";
+import ChampTexte from "../../../commun/champs/ChampTexte";
 import ChampsNomSecable from "../../../commun/champs/ChampsNomSecable";
 import ChampsPrenoms from "../../../commun/champs/ChampsPrenoms";
-import ChampsTexte from "../../../commun/champs/ChampsTexte";
 import { IMiseAJourForm } from "../PartieFormulaire";
 
 interface IAnalyseMarginaleFormProps {
@@ -47,7 +47,7 @@ const AnalyseMarginaleForm: React.FC<IAnalyseMarginaleFormProps> = ({ analyseMar
           prefixePrenom={"prenom"}
         />
 
-        <ChampsTexte
+        <ChampTexte
           className="champs-motif"
           name="analyseMarginale.motif"
           libelle="Motif"

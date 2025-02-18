@@ -8,7 +8,7 @@ type TChampsZoneTexteProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> &
   typeRedimensionnement?: TRedimensionnement;
 };
 
-const getClassRedimensionnement = (typeRedimensionnement?: TRedimensionnement) => {
+const getClasseRedimensionnement = (typeRedimensionnement?: TRedimensionnement) => {
   switch (typeRedimensionnement) {
     case "fixe":
       return "resize-none";
@@ -21,7 +21,7 @@ const getClassRedimensionnement = (typeRedimensionnement?: TRedimensionnement) =
   }
 };
 
-const ChampsZoneTexte: React.FC<TChampsZoneTexteProps> = ({ name, libelle, typeRedimensionnement, ...props }) => {
+const ChampZoneTexte: React.FC<TChampsZoneTexteProps> = ({ name, libelle, typeRedimensionnement, ...props }) => {
   const [field, meta] = useField(name as string);
   const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
 
@@ -34,7 +34,7 @@ const ChampsZoneTexte: React.FC<TChampsZoneTexteProps> = ({ name, libelle, typeR
         {libelle}
       </label>
       <textarea
-        className={`font-noto-sans-ui text-base ${getClassRedimensionnement(typeRedimensionnement)}`}
+        className={`font-noto-sans-ui text-base ${getClasseRedimensionnement(typeRedimensionnement)}`}
         id={name}
         {...props}
         onChange={event => {
@@ -44,11 +44,11 @@ const ChampsZoneTexte: React.FC<TChampsZoneTexteProps> = ({ name, libelle, typeR
 
           field.onChange(event);
         }}
-        {...() => {
+        {...(() => {
           const { onChange, ...propsFormik } = field;
 
           return propsFormik;
-        }}
+        })()}
       />
       {meta.error && (
         <div className="text-start text-sm text-rouge">
@@ -59,4 +59,4 @@ const ChampsZoneTexte: React.FC<TChampsZoneTexteProps> = ({ name, libelle, typeR
   );
 };
 
-export default ChampsZoneTexte;
+export default ChampZoneTexte;

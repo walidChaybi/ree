@@ -16,7 +16,7 @@ import { EEvent, useEventDispatch, useEventState } from "../../../../hooks/Event
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
 import SchemaValidation from "../../../../utils/SchemaValidation";
 import Bouton from "../../../commun/bouton/Bouton";
-import ChampsZoneTexte from "../../../commun/champs/ChampsZoneTexte";
+import ChampZoneTexte from "../../../commun/champs/ChampZoneTexte";
 import { IMentionEnCours } from "../PartieFormulaire";
 import AideALaSaisieMention from "./mentions/AideALaSaisieMentionForm";
 import ChampTypeMention from "./mentions/ChampTypeMention";
@@ -208,7 +208,7 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
             ) : (
               <div className="flex w-full justify-center pt-4">
                 <div className="w-11/12">
-                  <ChampsZoneTexte
+                  <ChampZoneTexte
                     libelle="Texte mention"
                     name={TEXTE_MENTION}
                     className="h-48 w-full pb-4"

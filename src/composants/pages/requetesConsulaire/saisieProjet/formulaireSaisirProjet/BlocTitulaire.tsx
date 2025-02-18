@@ -2,10 +2,10 @@ import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import React from "react";
 import ChampDate from "../../../../commun/champs/ChampDate";
+import ChampTexte from "../../../../commun/champs/ChampTexte";
 import ChampsNomSecable from "../../../../commun/champs/ChampsNomSecable";
 import ChampsPrenoms from "../../../../commun/champs/ChampsPrenoms";
 import ChampsRadio from "../../../../commun/champs/ChampsRadio";
-import ChampsTexte from "../../../../commun/champs/ChampsTexte";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import SeparateurSection from "../../../../commun/conteneurs/formulaire/SeparateurSection";
 
@@ -17,12 +17,12 @@ const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
   return (
     <ConteneurAvecBordure>
       <div className="grid grid-cols-2 gap-4 text-start">
-        <ChampsTexte
+        <ChampTexte
           name="titulaire.nomNaissance"
           libelle="Nom sur l'acte étranger"
         />
         <div className="grid w-full gap-4 text-start">
-          <ChampsTexte
+          <ChampTexte
             name="titulaire.nomSouhaite"
             libelle="Nom souhaité"
             disabled
@@ -73,21 +73,21 @@ const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
 
       <SeparateurSection titre="Lieu de naissance" />
       <div className="grid grid-cols-2 gap-4">
-        <ChampsTexte
+        <ChampTexte
           name="titulaire.villeNaissance"
           libelle="Ville"
           optionFormatage="PREMIER_MAJUSCULE"
         />
-        <ChampsTexte
+        <ChampTexte
           name="titulaire.regionNaissance"
           libelle="État, canton, province"
         />
-        <ChampsTexte
+        <ChampTexte
           name="titulaire.paysNaissance"
           libelle="Pays"
           optionFormatage="PREMIER_MAJUSCULE"
         />
-        <ChampsTexte
+        <ChampTexte
           name="titulaire.adresseNaissance"
           libelle="Adresse"
         />

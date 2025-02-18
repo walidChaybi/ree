@@ -6,7 +6,7 @@ import { useEffect, useMemo } from "react";
 import ChampListeDeroulante from "../../../../commun/champs/ChampListeDeroulante";
 import ChampsPrenoms from "../../../../commun/champs/ChampsPrenoms";
 import ChampsRadio from "../../../../commun/champs/ChampsRadio";
-import ChampsTexte from "../../../../commun/champs/ChampsTexte";
+import ChampTexte from "../../../../commun/champs/ChampTexte";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import SeparateurSection from "../../../../commun/conteneurs/formulaire/SeparateurSection";
 import { ISaisieProjetActeForm } from "./FormulaireSaisirProjet";
@@ -84,7 +84,7 @@ const BlocFormuleFinale: React.FC = () => {
       {estUnTier && (
         <>
           <div className="pt-4">
-            <ChampsTexte
+            <ChampTexte
               name="formuleFinale.nom"
               libelle="Nom"
               estObligatoire={estUnTier}
@@ -98,7 +98,7 @@ const BlocFormuleFinale: React.FC = () => {
             />
           </div>
           <div className="pt-4">
-            <ChampsTexte
+            <ChampTexte
               name="formuleFinale.qualite"
               libelle="Qualité"
             />
@@ -122,7 +122,7 @@ const BlocFormuleFinale: React.FC = () => {
 
       {doitAfficherAutresPieces && (
         <div className="grid grid-cols-2 pt-4">
-          <ChampsTexte
+          <ChampTexte
             name="formuleFinale.autresPieces"
             libelle="Autres pièces"
             estObligatoire={doitAfficherAutresPieces}

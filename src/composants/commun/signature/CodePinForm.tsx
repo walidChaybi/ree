@@ -2,7 +2,7 @@ import { Form, Formik } from "formik";
 import { useEffect, useRef } from "react";
 import * as Yup from "yup";
 import Bouton from "../bouton/Bouton";
-import ChampsTexte from "../champs/ChampsTexte";
+import ChampTexte from "../champs/ChampTexte";
 
 interface ICodePinFormProps {
   onSubmit: (codePin: string) => void;
@@ -36,7 +36,7 @@ const CodePinForm: React.FC<ICodePinFormProps> = ({ onSubmit, fermerModale, erre
         {...(erreurPin ? { initialErrors: { pin: "Le code pin est incorrect" }, initialTouched: { pin: true } } : {})}
       >
         <Form>
-          <ChampsTexte
+          <ChampTexte
             name="pin"
             type="password"
             libelle={"Code pin"}

@@ -6,9 +6,9 @@ import { TMentionForm } from "../../MentionForm";
 import { ChampConditionneAideSaisie } from "./ChampConditionneAideSaisie";
 import { ChampFormAideSaisie } from "./ChampFormAideSaisie";
 
-const ChampsCaseACocher = lazy(() => import("../../../../../commun/champs/ChampsCaseACocher"));
+const ChampsCaseACocher = lazy(() => import("../../../../../commun/champs/ChampCaseACocher"));
 const ChampDate = lazy(() => import("../../../../../commun/champs/ChampDate"));
-const ChampsTexte = lazy(() => import("../../../../../commun/champs/ChampsTexte"));
+const ChampsTexte = lazy(() => import("../../../../../commun/champs/ChampTexte"));
 const ChampRecherchePocopas = lazy(() => import("../../../../../commun/champs/ChampRecherchePocopas"));
 
 export const ConteneurChampFormulaireAideSaisie: React.FC<{
