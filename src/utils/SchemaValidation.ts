@@ -2,7 +2,6 @@
 /* v8 ignore start */
 import { ValeursPossiblesMetaModele } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
 import { ConditionChamp } from "@model/form/commun/ConditionChamp";
-import dayjs from "dayjs";
 import * as Yup from "yup";
 
 interface ISchemaCommunParams {
@@ -10,6 +9,18 @@ interface ISchemaCommunParams {
 }
 
 type TValeurChamp = string | boolean | number | undefined;
+
+type TValidation = {
+  message?: string;
+};
+
+type TValidationEntier = TValidation & {
+  valeur: number;
+};
+
+type TValidationText = TValidation & {
+  valeur: RegExp;
+};
 
 type TDateChamp = {
   jour: Yup.StringSchema<string | undefined>;
@@ -144,27 +155,27 @@ const gestionObligation = (
 const SchemaValidation = {
   objet: (objet: { [cle: string]: Yup.AnySchema }) => Yup.object().shape(objet),
 
-  texte: (schemaParams: ISchemaCommunParams & { regexp?: RegExp }) => {
+  texte: (schemaParams: ISchemaCommunParams & { regexp?: TValidationText }) => {
     let schema = Yup.string();
 
-    if (schemaParams.regexp) {
-      schema = schema.matches(schemaParams.regexp, "");
-    }
+    if (schemaParams.regexp)
+      schema = schema.matches(schemaParams.regexp.valeur, schemaParams.regexp.message ?? "⚠ La valeur n'est pas conforme'");
 
     return gestionObligation(schema, schemaParams.obligatoire, () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE)) as Yup.StringSchema;
   },
 
-  entier: (schemaParams: ISchemaCommunParams & { min?: number; max?: number; estAnnee?: boolean }) => {
+  entier: (schemaParams: ISchemaCommunParams & { min?: TValidationEntier; max?: TValidationEntier }) => {
     let schema = Yup.number().integer(messagesErreur.DOIT_ETRE_ENTIER);
-    schemaParams.min !== undefined &&
-      (schema = schema.min(schemaParams.min, `⚠ La valeur ne peut pas être inférieure à ${schemaParams.min}`));
-    schemaParams.max !== undefined &&
-      (schema = schema.max(schemaParams.max, `⚠ La valeur ne peut pas être supérieure à ${schemaParams.max}`));
-    schemaParams.estAnnee &&
-      (schema = schema
-        .min(1000, "⚠ L'année doit être sur 4 chiffres")
-        .max(dayjs().get("year"), `⚠ L'année ne peut pas être supérieure à l'année actuelle`));
-
+    schemaParams.min &&
+      (schema = schema.min(
+        schemaParams.min.valeur,
+        schemaParams.min.message ?? `⚠ La valeur ne peut pas être inférieure à ${schemaParams.min.valeur}`
+      ));
+    schemaParams.max &&
+      (schema = schema.max(
+        schemaParams.max.valeur,
+        schemaParams.max.message ?? `⚠ La valeur ne peut pas être supérieure à ${schemaParams.max.valeur}`
+      ));
     return gestionObligation(schema, schemaParams.obligatoire, () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE)) as Yup.NumberSchema;
   },
 

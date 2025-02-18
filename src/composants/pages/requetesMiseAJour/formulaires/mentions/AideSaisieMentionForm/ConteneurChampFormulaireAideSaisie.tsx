@@ -90,11 +90,13 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
       );
     case champ.type === "annee" && estAffiche:
     case champ.type === "int" && estAffiche:
+    case champ.type === "crpcen" && estAffiche:
       return (
         <ChampFormAideSaisie typeChamp={champ.type}>
           <ChampsTexte
             name={nomChamp}
             libelle={champ.libelle}
+            maxLength={champ.type === "crpcen" ? 5 : undefined}
             numerique
           />
         </ChampFormAideSaisie>

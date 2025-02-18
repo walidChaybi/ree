@@ -11,6 +11,7 @@ const getClassesChamp = (typeChamp: ETypeChamp) => {
     case "annee":
     case "int":
     case "pocopa":
+    case "crpcen":
       return "w-[42.5%] px-[2.5%] pb-4";
     case "boolean":
       return "w-full px-[2.5%] pb-6 pt-4 text-left";

@@ -2,6 +2,7 @@
 /* v8 ignore start */
 import { ConditionChamp, IConditionChampDto } from "@model/form/commun/ConditionChamp";
 import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
+import dayjs from "dayjs";
 import SchemaValidation from "../../../utils/SchemaValidation";
 
 export enum ETypeChamp {
@@ -14,7 +15,8 @@ export enum ETypeChamp {
   BOOLEAN = "boolean",
   SOUS_TITRE = "sousTitre",
   RADIO = "radioBouton",
-  POCOPA = "pocopa"
+  POCOPA = "pocopa",
+  CRPCEN = "crpcen"
 }
 interface IValeursPossiblesMetaModeleDto {
   valeurs: string[];
@@ -195,10 +197,19 @@ export class MetaModeleTypeMention {
             case "radioBouton":
             case "pocopa":
               return SchemaValidation.texte({ obligatoire: champ.estObligatoire });
+            case "crpcen":
+              return SchemaValidation.texte({
+                obligatoire: champ.estObligatoire,
+                regexp: { valeur: new RegExp(/^\d{5}$/), message: "⚠ Saisir 5 caractères numériques" }
+              });
             case "int":
               return SchemaValidation.entier({ obligatoire: champ.estObligatoire });
             case "annee":
-              return SchemaValidation.entier({ obligatoire: champ.estObligatoire, estAnnee: true });
+              return SchemaValidation.entier({
+                obligatoire: champ.estObligatoire,
+                min: { valeur: 1000, message: "⚠ L'année doit être sur 4 chiffres" },
+                max: { valeur: dayjs().get("year"), message: "⚠ L'année ne peut pas être supérieure à l'année actuelle" }
+              });
             case "boolean":
               return SchemaValidation.booleen({ obligatoire: champ.estObligatoire });
 
@@ -231,6 +242,7 @@ export class MetaModeleTypeMention {
             case "text":
             case "int":
             case "pocopa":
+            case "crpcen":
               return "";
             case "dateComplete":
             case "dateIncomplete":

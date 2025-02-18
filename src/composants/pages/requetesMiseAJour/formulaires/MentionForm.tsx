@@ -115,6 +115,8 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
     });
   }, [metamodeleTypeMention]);
 
+  const estFFAideSaisieMentionActif = useMemo(() => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_AIDE_A_LA_SAISIE_MENTION), []);
+
   useEffect(() => {
     if (!mentionModifiee) {
       return;
@@ -138,7 +140,7 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
       return;
     }
 
-    if (typeMentionChoisi?.aideSaisie) {
+    if (typeMentionChoisi?.aideSaisie && estFFAideSaisieMentionActif) {
       const gererErreur = () => {
         logError({
           messageUtilisateur: "Impossible de récupérer les metamodeles"
@@ -201,7 +203,7 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
           />
 
           {typeMentionChoisi &&
-            (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_AIDE_A_LA_SAISIE_MENTION) && metamodeleTypeMention ? (
+            (estFFAideSaisieMentionActif && metamodeleTypeMention ? (
               <AideALaSaisieMention metamodeleTypeMention={metamodeleTypeMention} />
             ) : (
               <div className="flex w-full justify-center pt-4">
