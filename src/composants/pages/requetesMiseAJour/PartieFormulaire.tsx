@@ -72,7 +72,7 @@ export const PartieFormulaire: React.FC = () => {
   const { appelApi: appelApiMisAJourAnalyseMarginale, enAttenteDeReponseApi: enAttenteMiseAJourAnalyseMarginale } = useFetchApi(
     CONFIG_PUT_MISE_A_JOUR_ANALYSE_MARGINALE
   );
-  const { appelApi: appelResumeActe } = useFetchApi(CONFIG_GET_RESUME_ACTE);
+  const { appelApi: appelResumeActe, enAttenteDeReponseApi: enAttenteResumeActe } = useFetchApi(CONFIG_GET_RESUME_ACTE);
   const [afficherAnalyseMarginale, setAfficherAnalyseMarginale] = useState(!estMiseAJourAvecMentions);
   const [analyseMarginaleModifiee, setAnalyseMarginaleModifiee] = useState<boolean>(false);
   const [estPopinSignatureOuverte, setEstPopinSignatureOuverte] = useState<boolean>(false);
@@ -104,7 +104,8 @@ export const PartieFormulaire: React.FC = () => {
             motif: ""
           }
         });
-      }
+      },
+      apresErreur: () => messageManager.showError("Une erreur est survenue lors de la récupération des informations de l'acte")
     });
   }, []);
 
@@ -186,123 +187,125 @@ export const PartieFormulaire: React.FC = () => {
     });
   }, [afficherAnalyseMarginale]);
 
-  return !valeurDefautFormulaire ? (
-    <PageChargeur />
-  ) : (
-    <div className="w-1/2">
-      <OngletsBouton<ECleOngletsMiseAJour>
-        onglets={[
-          ...(estMiseAJourAvecMentions
-            ? [
-                {
-                  cle: ECleOngletsMiseAJour.MENTIONS,
-                  libelle: "Mentions"
-                }
-              ]
-            : []),
+  return (
+    <>
+      {(enAttenteResumeActe || enAttenteMiseAJourAnalyseMarginale || enAttenteMiseAJourAnalyseMarginaleEtMention) && <PageChargeur />}
 
-          ...(afficherAnalyseMarginale
-            ? [
-                {
-                  cle: ECleOngletsMiseAJour.ANALYSE_MARGINALE,
-                  libelle: "Analyse Marginale"
-                }
-              ]
-            : [])
-        ]}
-        cleOngletActif={ongletsActifs.formulaires}
-        changerOnglet={valeur => changerOnglet(null, valeur)}
-      />
+      <div className="w-1/2">
+        <OngletsBouton<ECleOngletsMiseAJour>
+          onglets={[
+            ...(estMiseAJourAvecMentions
+              ? [
+                  {
+                    cle: ECleOngletsMiseAJour.MENTIONS,
+                    libelle: "Mentions"
+                  }
+                ]
+              : []),
 
-      {(enAttenteMiseAJourAnalyseMarginale || enAttenteMiseAJourAnalyseMarginaleEtMention) && <PageChargeur />}
+            ...(afficherAnalyseMarginale
+              ? [
+                  {
+                    cle: ECleOngletsMiseAJour.ANALYSE_MARGINALE,
+                    libelle: "Analyse Marginale"
+                  }
+                ]
+              : [])
+          ]}
+          cleOngletActif={ongletsActifs.formulaires}
+          changerOnglet={valeur => changerOnglet(null, valeur)}
+        />
 
-      <div className="mt-4 flex h-[calc(100vh-16rem)] flex-col overflow-y-auto">
-        <Formik<IMiseAJourForm>
-          initialValues={valeurDefautFormulaire}
-          validationSchema={schemaValidation}
-          onSubmit={(values, helpers) => {
-            actualiserEtVisualiser(values, valeurs => {
-              helpers.resetForm({ values: valeurs });
-            });
-          }}
-        >
-          {({ values, isValid, dirty, setFieldValue, resetForm }) => (
-            <Form>
-              {estMiseAJourAvecMentions && (
-                <OngletsContenu estActif={ongletsActifs.formulaires === ECleOngletsMiseAJour.MENTIONS}>
-                  <TableauMentions
-                    setAfficherOngletAnalyseMarginale={(afficher, motifMention = "") => {
-                      setAfficherAnalyseMarginale(afficher);
+        {valeurDefautFormulaire !== null && (
+          <div className="mt-4 flex h-[calc(100vh-16rem)] flex-col overflow-y-auto">
+            <Formik<IMiseAJourForm>
+              initialValues={valeurDefautFormulaire}
+              validationSchema={schemaValidation}
+              onSubmit={(values, helpers) => {
+                actualiserEtVisualiser(values, valeurs => {
+                  helpers.resetForm({ values: valeurs });
+                });
+              }}
+            >
+              {({ values, isValid, dirty, setFieldValue, resetForm }) => (
+                <Form>
+                  {estMiseAJourAvecMentions && (
+                    <OngletsContenu estActif={ongletsActifs.formulaires === ECleOngletsMiseAJour.MENTIONS}>
+                      <TableauMentions
+                        setAfficherOngletAnalyseMarginale={(afficher, motifMention = "") => {
+                          setAfficherAnalyseMarginale(afficher);
 
-                      if (afficher && Boolean(values.analyseMarginale.motif)) {
-                        return;
-                      }
+                          if (afficher && Boolean(values.analyseMarginale.motif)) {
+                            return;
+                          }
 
-                      const valeursSaisies = { ...values };
-                      resetForm({
-                        values: { mentions: [], analyseMarginale: { ...valeurDefautFormulaire.analyseMarginale, motif: motifMention } }
-                      });
-                      setFieldValue("mentions", valeursSaisies.mentions);
-                      setFieldValue("analyseMarginale", { ...valeursSaisies.analyseMarginale, motif: motifMention });
-                    }}
-                  />
-                </OngletsContenu>
-              )}
-
-              {afficherAnalyseMarginale && (
-                <OngletsContenu estActif={ongletsActifs.formulaires === ECleOngletsMiseAJour.ANALYSE_MARGINALE}>
-                  <AnalyseMarginaleForm
-                    analyseMarginaleModifiee={analyseMarginaleModifiee}
-                    setAnalyseMarginaleModifiee={estModifiee => setAnalyseMarginaleModifiee(estModifiee)}
-                  />
-                </OngletsContenu>
-              )}
-
-              <ConteneurBoutonBasDePage position="droite">
-                <Bouton
-                  title="Actualiser et visualiser"
-                  type="submit"
-                  disabled={!dirty || !isValid || formulaireMentionEnCoursDeSaisie}
-                >
-                  {"Actualiser et visualiser"}
-                </Bouton>
-
-                {estMiseAJourAvecMentions ? (
-                  estOfficierHabiliterPourTousLesDroits(utilisateurConnecte, [Droit.SIGNER_MENTION, Droit.METTRE_A_JOUR_ACTE]) && (
-                    <>
-                      <Bouton
-                        title="Terminer et Signer"
-                        disabled={formulaireMentionEnCoursDeSaisie || !isValid || dirty}
-                        onClick={() => setEstPopinSignatureOuverte(true)}
-                      >
-                        {"Terminer et Signer"}
-                      </Bouton>
-
-                      <PopinSignatureMiseAJourMentions
-                        estOuvert={estPopinSignatureOuverte}
-                        setEstOuvert={setEstPopinSignatureOuverte}
-                        actionApresSignatureReussie={onSignatureValidee}
+                          const valeursSaisies = { ...values };
+                          resetForm({
+                            values: { mentions: [], analyseMarginale: { ...valeurDefautFormulaire.analyseMarginale, motif: motifMention } }
+                          });
+                          setFieldValue("mentions", valeursSaisies.mentions);
+                          setFieldValue("analyseMarginale", { ...valeursSaisies.analyseMarginale, motif: motifMention });
+                        }}
                       />
-                    </>
-                  )
-                ) : (
-                  <BoutonValiderEtTerminer disabled={!miseAJourEffectuee || dirty} />
-                )}
-              </ConteneurBoutonBasDePage>
-            </Form>
-          )}
-        </Formik>
+                    </OngletsContenu>
+                  )}
 
-        {estMiseAJourAvecMentions && (
-          <OngletsContenu estActif={ongletsActifs.formulaires === ECleOngletsMiseAJour.MENTIONS}>
-            <MentionForm
-              infoTitulaire={{ sexe: sexeTitulaire }}
-              setEnCoursDeSaisie={estEnCours => setFormulaireMentionEnCoursDeSaisie(estEnCours)}
-            />
-          </OngletsContenu>
+                  {afficherAnalyseMarginale && (
+                    <OngletsContenu estActif={ongletsActifs.formulaires === ECleOngletsMiseAJour.ANALYSE_MARGINALE}>
+                      <AnalyseMarginaleForm
+                        analyseMarginaleModifiee={analyseMarginaleModifiee}
+                        setAnalyseMarginaleModifiee={estModifiee => setAnalyseMarginaleModifiee(estModifiee)}
+                      />
+                    </OngletsContenu>
+                  )}
+
+                  <ConteneurBoutonBasDePage position="droite">
+                    <Bouton
+                      title="Actualiser et visualiser"
+                      type="submit"
+                      disabled={!dirty || !isValid || formulaireMentionEnCoursDeSaisie}
+                    >
+                      {"Actualiser et visualiser"}
+                    </Bouton>
+
+                    {estMiseAJourAvecMentions ? (
+                      estOfficierHabiliterPourTousLesDroits(utilisateurConnecte, [Droit.SIGNER_MENTION, Droit.METTRE_A_JOUR_ACTE]) && (
+                        <>
+                          <Bouton
+                            title="Terminer et Signer"
+                            disabled={formulaireMentionEnCoursDeSaisie || !isValid || dirty}
+                            onClick={() => setEstPopinSignatureOuverte(true)}
+                          >
+                            {"Terminer et Signer"}
+                          </Bouton>
+
+                          <PopinSignatureMiseAJourMentions
+                            estOuvert={estPopinSignatureOuverte}
+                            setEstOuvert={setEstPopinSignatureOuverte}
+                            actionApresSignatureReussie={onSignatureValidee}
+                          />
+                        </>
+                      )
+                    ) : (
+                      <BoutonValiderEtTerminer disabled={!miseAJourEffectuee || dirty} />
+                    )}
+                  </ConteneurBoutonBasDePage>
+                </Form>
+              )}
+            </Formik>
+
+            {estMiseAJourAvecMentions && (
+              <OngletsContenu estActif={ongletsActifs.formulaires === ECleOngletsMiseAJour.MENTIONS}>
+                <MentionForm
+                  infoTitulaire={{ sexe: sexeTitulaire }}
+                  setEnCoursDeSaisie={estEnCours => setFormulaireMentionEnCoursDeSaisie(estEnCours)}
+                />
+              </OngletsContenu>
+            )}
+          </div>
         )}
       </div>
-    </div>
+    </>
   );
 };
 
