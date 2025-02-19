@@ -1,34 +1,31 @@
 /* v8 ignore start */
 import { BlocMetaModele } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import ConteneurAvecBordure from "../../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 
 export const ConteneurBlocFormulaireAideSaisie: React.FC<{
   bloc: BlocMetaModele;
   children: React.ReactNode;
 }> = ({ bloc, children }) => {
-  const [listeEnfantsAffiches, setListeEnfantsAffiches] = useState<Record<string, boolean>>({});
-
-  const handleEstEnfantVisible = useCallback((cleEnfant: string, estVisible: boolean) => {
-    setListeEnfantsAffiches(prev => ({ ...prev, [cleEnfant]: estVisible }));
-  }, []);
-
-  const enfantsAvecGestionVisibilite = React.Children.map(children, (child, i) => {
-    const cleEnfant = (child as React.ReactElement).key ?? String(i);
-    return React.cloneElement(child as React.ReactElement<any>, {
-      setEstVisible: (estVisible: boolean) => handleEstEnfantVisible(cleEnfant, estVisible)
-    });
-  });
-
-  let aucunEnfantAffiche = useMemo(() => Object.values(listeEnfantsAffiches).filter(Boolean).length === 0, [listeEnfantsAffiches]);
+  const [childrenAffiches, setChildrenAffiches] = useState<Record<string, boolean>>({});
+  const aucunChildAffiche = useMemo(() => !Object.values(childrenAffiches).filter(Boolean).length, [childrenAffiches]);
 
   return (
-    <div {...(aucunEnfantAffiche ? { className: "hidden" } : {})}>
+    <div {...(aucunChildAffiche ? { className: "hidden" } : {})}>
       <ConteneurAvecBordure
         titreEnTete={bloc.titre}
         sansMargeExterne
       >
-        <div className="grid grid-cols-2 gap-x-8 gap-y-4">{enfantsAvecGestionVisibilite}</div>
+        <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+          {React.Children.map(children, (child, index) => {
+            const composantChild = child as React.ReactElement<{ setEstVisible: (estVisible: boolean) => void }>;
+
+            return React.cloneElement(composantChild, {
+              setEstVisible: (estVisible: boolean) =>
+                setChildrenAffiches(prec => ({ ...prec, [composantChild.key ?? String(index)]: estVisible }))
+            });
+          })}
+        </div>
       </ConteneurAvecBordure>
     </div>
   );

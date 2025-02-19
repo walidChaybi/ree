@@ -3,6 +3,7 @@ import { CONFIG_PUT_MISE_A_JOUR_ANALYSE_MARGINALE } from "@api/configurations/et
 import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
 import { MiseAJourAnalyseMarginaleValeursForm } from "@api/validations/requeteMiseAJour/MiseAJourAnalyseMarginaleValidation";
 import { RECEContextData } from "@core/contexts/RECEContext";
+import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { estOfficierHabiliterPourTousLesDroits } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { TErreurApi } from "@model/api/Api";
@@ -85,7 +86,8 @@ export const PartieFormulaire: React.FC = () => {
   useEffect(() => {
     appelResumeActe({
       parametres: { path: { idActe: idActe }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
-      apresSucces: acte => {
+      apresSucces: acteDto => {
+        const acte = mapActe(acteDto);
         const analyseMarginale = (FicheActe.getAnalyseMarginaleLaPlusRecente(acte) ?? acte)?.titulaires[0];
 
         setSexeTitulaire(acte.titulaires[0]?.sexe ?? null);
