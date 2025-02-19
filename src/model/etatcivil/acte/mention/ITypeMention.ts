@@ -80,17 +80,13 @@ export class TypeMention {
           return;
         }
 
-        if (premierNiveau) {
+        if (premierNiveau || typeMention.estSousType) {
           idMention = typeMention.id;
         }
 
-        if (typeMention.natureMention === nature) {
-          idMentionTrouve = idMention;
-
-          return;
-        }
-
         if (!typeMention.sousTypes?.length) {
+          idMentionTrouve = typeMention.natureMention === nature && typeMention.estSousType ? idMention : idMentionTrouve;
+
           return;
         }
 
