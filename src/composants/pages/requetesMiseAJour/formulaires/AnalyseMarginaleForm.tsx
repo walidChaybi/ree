@@ -5,6 +5,7 @@ import Bouton from "../../../commun/bouton/Bouton";
 import ChampTexte from "../../../commun/champs/ChampTexte";
 import ChampsNomSecable from "../../../commun/champs/ChampsNomSecable";
 import ChampsPrenoms from "../../../commun/champs/ChampsPrenoms";
+import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import { IMiseAJourForm } from "../PartieFormulaire";
 
 interface IAnalyseMarginaleFormProps {
@@ -25,45 +26,47 @@ const AnalyseMarginaleForm: React.FC<IAnalyseMarginaleFormProps> = ({ analyseMar
   }, [values, initialValues]);
 
   return (
-    <div className="px-4">
-      <div className="grid gap-6">
-        <div>
-          <ChampsNomSecable
-            nom={{ name: "analyseMarginale.nom", libelle: "Nom" }}
-            secable={{ name: "analyseMarginale.nomSecable", libelle: "Nom sécable" }}
-            nomPartie1={{
-              name: "analyseMarginale.nomPartie1",
-              libelle: "Nom 1re partie"
-            }}
-            nomPartie2={{
-              name: "analyseMarginale.nomPartie2",
-              libelle: "Nom 2nde partie"
-            }}
+    <ConteneurAvecBordure sansMargeBasse>
+      <div className="p-4 pt-2">
+        <div className="grid gap-6">
+          <div>
+            <ChampsNomSecable
+              nom={{ name: "analyseMarginale.nom", libelle: "Nom" }}
+              secable={{ name: "analyseMarginale.nomSecable", libelle: "Nom sécable" }}
+              nomPartie1={{
+                name: "analyseMarginale.nomPartie1",
+                libelle: "Nom 1re partie"
+              }}
+              nomPartie2={{
+                name: "analyseMarginale.nomPartie2",
+                libelle: "Nom 2nde partie"
+              }}
+            />
+          </div>
+
+          <ChampsPrenoms
+            cheminPrenoms={"analyseMarginale.prenoms"}
+            prefixePrenom={"prenom"}
+          />
+
+          <ChampTexte
+            className="champs-motif"
+            name="analyseMarginale.motif"
+            libelle="Motif"
+            type="text"
           />
         </div>
 
-        <ChampsPrenoms
-          cheminPrenoms={"analyseMarginale.prenoms"}
-          prefixePrenom={"prenom"}
-        />
-
-        <ChampTexte
-          className="champs-motif"
-          name="analyseMarginale.motif"
-          libelle="Motif"
-          type="text"
-        />
+        <div className="sticky bottom-8 mt-8 w-fit text-start">
+          <Bouton
+            disabled={!analyseMarginaleModifiee}
+            onClick={() => setValues({ mentions: values.mentions, analyseMarginale: initialValues.analyseMarginale })}
+          >
+            {"Annuler la saisie en cours"}
+          </Bouton>
+        </div>
       </div>
-
-      <div className="sticky bottom-8 mt-8 w-fit text-start">
-        <Bouton
-          disabled={!analyseMarginaleModifiee}
-          onClick={() => setValues({ mentions: values.mentions, analyseMarginale: initialValues.analyseMarginale })}
-        >
-          {"Annuler la saisie en cours"}
-        </Bouton>
-      </div>
-    </div>
+    </ConteneurAvecBordure>
   );
 };
 

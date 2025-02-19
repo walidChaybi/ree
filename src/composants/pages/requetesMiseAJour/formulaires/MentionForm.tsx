@@ -17,6 +17,8 @@ import useFetchApi from "../../../../hooks/api/FetchApiHook";
 import SchemaValidation from "../../../../utils/SchemaValidation";
 import Bouton from "../../../commun/bouton/Bouton";
 import ChampZoneTexte from "../../../commun/champs/ChampZoneTexte";
+import ComposantChargeur from "../../../commun/chargeurs/ComposantChargeur";
+import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import { IMentionEnCours } from "../PartieFormulaire";
 import AideALaSaisieMention from "./mentions/AideALaSaisieMentionForm";
 import ChampTypeMention from "./mentions/ChampTypeMention";
@@ -105,7 +107,8 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
   const [valeurDefaut, setValeurDefaut] = useState<TMentionForm>({ ...DEFAUT_CREATION });
   const [typeMentionChoisi, setTypeMentionChoisi] = useState<ITypeMentionDisponible | null>(null);
   const [metamodeleTypeMention, setMetamodeleTypeMention] = useState<MetaModeleTypeMention | null>(null);
-  const { appelApi: appelApiGetMetamodeleTypeMention } = useFetchApi(CONFIG_GET_METAMODELE_TYPE_MENTION);
+  const { appelApi: appelApiGetMetamodeleTypeMention, enAttenteDeReponseApi: enAttenteMetamodele } =
+    useFetchApi(CONFIG_GET_METAMODELE_TYPE_MENTION);
   const [mentionModifiee, setMentionModifiee] = useEventState<IMentionEnCours | null>(EEvent.MODIFIER_MENTION, null);
   const { envoyer: enregistrerMention } = useEventDispatch<IMentionEnCours | null>(EEvent.ENREGISTRER_MENTION);
   const schemaValidation = useMemo(() => {
@@ -194,55 +197,63 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
       }}
     >
       {({ values, dirty }) => (
-        <Form className="px-4">
-          <h3>{mentionModifiee ? "Modification d'une mention" : "Ajout d'une mention"}</h3>
-          <ChampTypeMention
-            name="idTypeMention"
-            typesMentionDisponibles={typesMentionDisponibles}
-            setIdTypeMentionChoisi={id => setTypeMentionChoisi(typesMentionDisponibles.find(mention => mention.id === id) ?? null)}
-          />
+        <ConteneurAvecBordure titreEnTete={mentionModifiee ? "Modification d'une mention" : "Ajout d'une mention"}>
+          <Form className="px-2">
+            <ChampTypeMention
+              name="idTypeMention"
+              typesMentionDisponibles={typesMentionDisponibles}
+              setIdTypeMentionChoisi={id => setTypeMentionChoisi(typesMentionDisponibles.find(mention => mention.id === id) ?? null)}
+            />
 
-          {typeMentionChoisi &&
-            (estFFAideSaisieMentionActif && metamodeleTypeMention ? (
-              <AideALaSaisieMention metamodeleTypeMention={metamodeleTypeMention} />
+            {enAttenteMetamodele ? (
+              <ComposantChargeur />
             ) : (
-              <div className="flex w-full justify-center pt-4">
-                <div className="w-11/12">
-                  <ChampZoneTexte
-                    libelle="Texte mention"
-                    name={TEXTE_MENTION}
-                    className="h-48 w-full pb-4"
-                  />
-                </div>
-              </div>
-            ))}
+              <>
+                {typeMentionChoisi &&
+                  (estFFAideSaisieMentionActif && metamodeleTypeMention ? (
+                    <AideALaSaisieMention metamodeleTypeMention={metamodeleTypeMention} />
+                  ) : (
+                    <ChampZoneTexte
+                      libelle="Texte mention"
+                      name={TEXTE_MENTION}
+                      rows={8}
+                      typeRedimensionnement="fixe"
+                    />
+                  ))}
+              </>
+            )}
 
-          <div className="mr-6 mt-4 flex justify-end gap-6">
-            {typeMentionChoisi && (
-              <Bouton
-                title="Valider"
-                disabled={!values.texteMention}
-                type="submit"
-              >
-                {mentionModifiee ? "Modifier mention" : "Ajouter mention"}
-              </Bouton>
+            {(typeMentionChoisi || dirty) && (
+              <div className="mr-6 mt-8 flex justify-end gap-6">
+                {typeMentionChoisi && (
+                  <Bouton
+                    title="Valider"
+                    disabled={!values.texteMention}
+                    type="submit"
+                  >
+                    {mentionModifiee ? "Modifier mention" : "Ajouter mention"}
+                  </Bouton>
+                )}
+                {(dirty || typeMentionChoisi) && (
+                  <Bouton
+                    title="Annuler"
+                    styleBouton="secondaire"
+                    onClick={() => {
+                      if (mentionModifiee) {
+                        enregistrerMention(mentionModifiee);
+                        setMentionModifiee(null);
+                      }
+                      setValeurDefaut({ ...DEFAUT_CREATION });
+                      setTypeMentionChoisi(null);
+                    }}
+                  >
+                    {"Annuler"}
+                  </Bouton>
+                )}
+              </div>
             )}
-            {(dirty || typeMentionChoisi) && (
-              <Bouton
-                title="Annuler"
-                onClick={() => {
-                  if (mentionModifiee) {
-                    enregistrerMention(mentionModifiee);
-                    setMentionModifiee(null);
-                  }
-                  setValeurDefaut({ ...DEFAUT_CREATION });
-                }}
-              >
-                {"Annuler"}
-              </Bouton>
-            )}
-          </div>
-        </Form>
+          </Form>
+        </ConteneurAvecBordure>
       )}
     </Formik>
   );

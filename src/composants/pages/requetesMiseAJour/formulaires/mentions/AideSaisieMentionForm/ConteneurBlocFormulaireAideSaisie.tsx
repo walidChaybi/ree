@@ -1,6 +1,7 @@
 /* v8 ignore start */
 import { BlocMetaModele } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
 import React, { useCallback, useMemo, useState } from "react";
+import ConteneurAvecBordure from "../../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 
 export const ConteneurBlocFormulaireAideSaisie: React.FC<{
   bloc: BlocMetaModele;
@@ -22,14 +23,13 @@ export const ConteneurBlocFormulaireAideSaisie: React.FC<{
   let aucunEnfantAffiche = useMemo(() => Object.values(listeEnfantsAffiches).filter(Boolean).length === 0, [listeEnfantsAffiches]);
 
   return (
-    <div
-      key={bloc.typeBloc}
-      className={`mt-4 rounded-xl border-2 border-solid border-bleu pb-2 text-start ${aucunEnfantAffiche ? "hidden" : ""}`}
-    >
-      <div className="-mt-3 pl-4">
-        <span className="bg-white px-2 text-start text-bleu-sombre">{bloc.titre}</span>
-      </div>
-      <div className="mt-3 flex flex-wrap">{enfantsAvecGestionVisibilite}</div>
+    <div {...(aucunEnfantAffiche ? { className: "hidden" } : {})}>
+      <ConteneurAvecBordure
+        titreEnTete={bloc.titre}
+        sansMargeExterne
+      >
+        <div className="grid grid-cols-2 gap-x-8 gap-y-4">{enfantsAvecGestionVisibilite}</div>
+      </ConteneurAvecBordure>
     </div>
   );
 };

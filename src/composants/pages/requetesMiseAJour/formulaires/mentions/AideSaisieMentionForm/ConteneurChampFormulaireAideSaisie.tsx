@@ -2,6 +2,7 @@
 import { ChampMetaModele } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
 import { useFormikContext } from "formik";
 import { lazy, useEffect, useMemo } from "react";
+import SeparateurSection from "../../../../../commun/conteneurs/formulaire/SeparateurSection";
 import { TMentionForm } from "../../MentionForm";
 import { ChampConditionneAideSaisie } from "./ChampConditionneAideSaisie";
 import { ChampFormAideSaisie } from "./ChampFormAideSaisie";
@@ -104,7 +105,10 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
     case champ.type === "sousTitre" && estAffiche:
       return (
         <ChampFormAideSaisie typeChamp={champ.type}>
-          <h3 className="-mb-3 ml-8 bg-blanc px-2 text-bleu-sombre">{champ.libelle}</h3>
+          <SeparateurSection
+            titre={champ.libelle}
+            sansMargeBasse
+          />
         </ChampFormAideSaisie>
       );
 

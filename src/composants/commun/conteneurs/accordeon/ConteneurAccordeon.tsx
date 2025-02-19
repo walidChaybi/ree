@@ -31,7 +31,7 @@ const ConteneurAccordeon: React.FC<React.PropsWithChildren<IConteneurAccordeonPr
       )}
 
       <div
-        className={`grid grid-rows-[0fr] overflow-hidden transition-[grid-template-rows] duration-[0.2s] ease-[ease-in] ${estOuvert ? "grid grid-rows-[1fr]" : ""}`}
+        className={`grid overflow-hidden transition-[grid-template-rows] duration-[0.2s] ease-[ease-in] ${estOuvert ? "grid grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
       >
         <div className="min-h-0">{children}</div>
       </div>

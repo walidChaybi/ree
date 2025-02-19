@@ -226,36 +226,39 @@ export const TexteMentionAideALaSaisie: React.FC<{ templateTexteMention: string 
   }, [values]);
 
   return (
-    <div className={"min-h-28 rounded border border-solid border-gris px-2 py-3"}>
-      <div className={"text-left"}>
-        {decouperTexteEditable(texteSaisie).map(donnees =>
-          donnees.texte !== null ? (
-            <span
-              key={`non-editable--${donnees.index}`}
-              className={"select-none rounded bg-gris-transparent px-0.5"}
-            >
-              {donnees.texte}
-            </span>
-          ) : (
-            textesEditables[donnees.index] && (
+    <div className="text-start">
+      <div className="mb-1 ml-1 text-bleu-sombre">{"Texte mention"}</div>
+      <div className={"min-h-28 rounded border border-solid border-gris px-2 py-3"}>
+        <div className={"text-left"}>
+          {decouperTexteEditable(texteSaisie).map(donnees =>
+            donnees.texte !== null ? (
               <span
-                key={`editable--${donnees.index}`}
-                contentEditable
-                className={"rounded px-0.5 outline-none transition-colors hover:bg-bleu-transparent focus-visible:bg-bleu-transparent"}
-                onBlur={e => {
-                  setTextesEditables(prec => ({
-                    ...prec,
-                    [donnees.index]: {
-                      ...prec[donnees.index],
-                      edite: e.target.innerText ?? ""
-                    }
-                  }));
-                }}
-                dangerouslySetInnerHTML={{ __html: textesEditables[donnees.index].edite }}
-              ></span>
+                key={`non-editable--${donnees.index}`}
+                className={"select-none rounded bg-gris-transparent px-0.5"}
+              >
+                {donnees.texte}
+              </span>
+            ) : (
+              textesEditables[donnees.index] && (
+                <span
+                  key={`editable--${donnees.index}`}
+                  contentEditable
+                  className={"rounded px-0.5 outline-none transition-colors hover:bg-bleu-transparent focus-visible:bg-bleu-transparent"}
+                  onBlur={e => {
+                    setTextesEditables(prec => ({
+                      ...prec,
+                      [donnees.index]: {
+                        ...prec[donnees.index],
+                        edite: e.target.innerText ?? ""
+                      }
+                    }));
+                  }}
+                  dangerouslySetInnerHTML={{ __html: textesEditables[donnees.index].edite }}
+                ></span>
+              )
             )
-          )
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

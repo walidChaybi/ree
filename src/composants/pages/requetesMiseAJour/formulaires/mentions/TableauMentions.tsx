@@ -7,6 +7,7 @@ import { List, arrayMove } from "react-movable";
 import { EEvent, useEventDispatch, useEventState } from "../../../../../hooks/EventHook";
 import Bouton from "../../../../commun/bouton/Bouton";
 import BoutonIcon from "../../../../commun/bouton/BoutonIcon";
+import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import ConteneurModale from "../../../../commun/conteneurs/modale/ConteneurModale";
 import { IMentionEnCours, IMiseAJourForm } from "../../PartieFormulaire";
 // A tester Alexandre 15/01/2025
@@ -87,13 +88,16 @@ const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAna
   }, [values.mentions]);
 
   return (
-    <div className="px-2">
+    <ConteneurAvecBordure
+      titreEnTete="Mention(s) ajoutée(s)"
+      sansMargeBasse
+    >
       <List
         values={values.mentions}
         onChange={({ oldIndex, newIndex }) => setFieldValue("mentions", arrayMove(values.mentions, oldIndex, newIndex))}
         renderList={({ children, props }) => (
           <div
-            className="grid gap-2 rounded-xl border-2 border-solid border-bleu p-3"
+            className="grid gap-2 p-3"
             {...props}
           >
             {values.mentions.length ? children : <span className="text-start text-sm italic">{"Aucune mention ajoutée"}</span>}
@@ -185,7 +189,7 @@ const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAna
           </div>
         </ConteneurModale>
       )}
-    </div>
+    </ConteneurAvecBordure>
   );
 };
 
