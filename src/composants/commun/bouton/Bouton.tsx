@@ -5,13 +5,14 @@ const getStyleBouton = (styleBouton?: TStyleBouton) => {
     case "principal":
       return "border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu disabled:bg-bleu-sombre";
     case "secondaire":
-      return "border-bleu-sombre bg-blanc text-bleu-sombre hover:text-bleu hover:border-bleu hover:border-bleu";
+      return "border-bleu-sombre bg-blanc text-bleu-sombre hover:text-bleu hover:border-bleu ";
     case "suppression":
       return "border-rouge bg-blanc text-rouge hover:border-rouge hover:bg-rouge hover:text-blanc";
     default:
-      return;
+      return "";
   }
 };
+
 export interface IBoutonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   styleBouton?: TStyleBouton;
   garderStyleSiDisabled?: boolean;

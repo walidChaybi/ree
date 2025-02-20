@@ -23,18 +23,18 @@ describe("Test du composant Champs prénoms", () => {
     expect(screen.getByText("Prénom")).toBeDefined();
     expect(screen.getByDisplayValue("John")).toBeDefined();
 
-    fireEvent.click(screen.getByTitle("Ajouter un prénom"));
+    fireEvent.click(screen.getAllByTitle("Ajouter un prénom")[0]);
 
     expect(screen.getByText("Prénom 1")).toBeDefined();
     expect(screen.getByText("Prénom 2")).toBeDefined();
 
-    fireEvent.click(screen.getByTitle("Ajouter un prénom"));
+    fireEvent.click(screen.getAllByTitle("Ajouter un prénom")[0]);
 
     expect(screen.getByText("Prénom 1")).toBeDefined();
     expect(screen.getByText("Prénom 2")).toBeDefined();
     expect(screen.getByText("Prénom 3")).toBeDefined();
 
-    fireEvent.click(screen.getByTitle("Annuler la saisie"));
+    fireEvent.click(screen.getAllByTitle("Supprimer ce prénom")[0]);
 
     expect(screen.getByText("Prénom 1")).toBeDefined();
     expect(screen.getByText("Prénom 2")).toBeDefined();
@@ -47,18 +47,18 @@ describe("Test du composant Champs prénoms", () => {
     expect(screen.getByText("Prénom")).toBeDefined();
     expect(screen.getByDisplayValue("John")).toBeDefined();
 
-    fireEvent.click(screen.getByTitle("Ajouter un prénom"));
+    fireEvent.click(screen.getAllByTitle("Ajouter un prénom")[0]);
 
     expect(screen.getByText("Prénom 1")).toBeDefined();
     expect(screen.getByText("Prénom 2")).toBeDefined();
 
-    fireEvent.click(screen.getByTitle("Ajouter un prénom"));
+    fireEvent.click(screen.getAllByTitle("Ajouter un prénom")[0]);
 
     expect(screen.getByText("Prénom 1")).toBeDefined();
     expect(screen.getByText("Prénom 2")).toBeDefined();
     expect(screen.getByText("Prénom 3")).toBeDefined();
 
-    fireEvent.click(screen.getByTitle("Annuler la saisie"));
+    fireEvent.click(screen.getAllByTitle("Supprimer ce prénom")[1]);
 
     expect(screen.getByText("Prénom 1")).toBeDefined();
     expect(screen.getByText("Prénom 2")).toBeDefined();

@@ -26,20 +26,13 @@ module.exports = {
           DEFAULT: "#cccccc",
           sombre: "#888888",
           clair: "#f5f5f5",
-          transparent: "#cccccc60"
+          transparent: "#cccccc60",
+          desactive: "#6b7280"
         },
         bordure: {
           DEFAULT: "#8080805c"
         }
       },
-
-      keyframes: {
-        apparition: {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" }
-        }
-      },
-
       fontFamily: {
         "noto-sans-ui": ["NotoSansUI-Regular", "sans-serif"]
       },

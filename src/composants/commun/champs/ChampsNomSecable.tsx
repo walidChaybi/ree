@@ -1,3 +1,4 @@
+import { ObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import { DEUX, UN } from "@util/Utils";
 import { FormikErrors, FormikValues, useFormikContext } from "formik";
@@ -36,8 +37,6 @@ const mettreAJourChamps = (
   modifierChamps: (field: string, value: any, shouldValidate?: boolean | undefined) => Promise<void | FormikErrors<FormikValues>>
 ) => ancienneValeur !== nouvelleValeur && modifierChamps(nomChamps, nouvelleValeur);
 
-const boutonPresent = (valeur: string): boolean => valeur.split(" ").length > UN;
-
 const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
   nom,
   secable,
@@ -49,9 +48,17 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
   const { values, setFieldValue } = useFormikContext<FormikValues>();
   const [secablePossible, setSecablePossible] = useState<boolean>(false);
 
+  const valeurNomPartie1 = valeurChamps(values, nomPartie1.name) as string;
+  const valeurNomPartie2 = valeurChamps(values, nomPartie2.name) as string;
+
+  const estSecable = Boolean(ObjetFormulaire.recupererValeur({ valeurs: values, cleAttribut: secable.name }));
+
+  const tailleNomPartie1 = valeurNomPartie1.split(" ").filter(Boolean).length;
+  const tailleNomPartie2 = valeurNomPartie2.split(" ").filter(Boolean).length;
+
   const deplacerVocable = (remonter: boolean = true) => {
-    const valeursNom1 = (valeurChamps(values, nomPartie1.name) as string).split(" ");
-    const valeursNom2 = (valeurChamps(values, nomPartie2.name) as string).split(" ");
+    const valeursNom1 = valeurNomPartie1.split(" ");
+    const valeursNom2 = valeurNomPartie2.split(" ");
 
     if (remonter) {
       valeursNom1.push(valeursNom2.shift() as string);
@@ -99,8 +106,8 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
 
   return (
     <div className="grid gap-4">
-      <div className="flex gap-4">
-        <div className="w-full">
+      <div className="grid grid-cols-[1fr,auto] gap-4">
+        <div>
           <ChampTexte
             name={nom.name}
             libelle={nom.libelle}
@@ -108,7 +115,7 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
           />
         </div>
 
-        <div className="flex flex-nowrap items-end gap-4 pb-1">
+        <div className="pt-8">
           <ChampCaseACocher
             name={secable.name}
             libelle={secable.libelle}
@@ -116,7 +123,7 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
           />
           {afficherInfo && (
             <span
-              className="h-6 w-6 flex-none cursor-help rounded-full bg-bleu-sombre text-center font-semibold text-blanc"
+              className="flex h-6 w-6 cursor-help items-center justify-center rounded-full bg-bleu-sombre text-center font-semibold text-blanc"
               title="Gestion du nom sécable pour la délivrance des extraits"
             >
               {"?"}
@@ -125,46 +132,50 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
         </div>
       </div>
 
-      {valeurChamps(values, secable.name) && (
-        <div className="flex w-full gap-4">
-          <div className="w-[40%]">
-            <ChampTexte
-              name={nomPartie1.name}
-              libelle={nomPartie1.libelle}
-              readOnly
-            />
-          </div>
+      {estSecable && (
+        <div className="grid grid-cols-2 gap-4">
+          <ChampTexte
+            name={nomPartie1.name}
+            libelle={nomPartie1.libelle}
+            readOnly
+            boutonChamp={{
+              composant: (
+                <BoutonIcon
+                  className={`disabled:text-gris-desactive group absolute right-0 top-0 flex h-full w-8 items-center justify-center rounded-l-none hover:text-white disabled:bg-transparent disabled:opacity-30`}
+                  type="button"
+                  title="Déplacer le dernier vocable"
+                  onClick={() => deplacerVocable(false)}
+                  disabled={tailleNomPartie1 < DEUX}
+                >
+                  <div className={`flex transform items-center transition-transform duration-200 ease-in group-hover:translate-x-1`}>
+                    <ArrowBack className="rotate-180" />
+                  </div>
+                </BoutonIcon>
+              )
+            }}
+          />
 
-          <div className="relative flex w-[20%] items-end justify-center">
-            {boutonPresent(valeurChamps(values, nomPartie2.name) as string) && (
-              <BoutonIcon
-                className="absolute right-0"
-                type="button"
-                title="Déplacer la dernière vocable"
-                onClick={() => deplacerVocable(true)}
-              >
-                <ArrowBack />
-              </BoutonIcon>
-            )}
-            {boutonPresent(valeurChamps(values, nomPartie1.name) as string) && (
-              <BoutonIcon
-                className="absolute left-0"
-                type="button"
-                title="Déplacer la première vocable"
-                onClick={() => deplacerVocable(false)}
-              >
-                <ArrowBack className="rotate-180" />
-              </BoutonIcon>
-            )}
-          </div>
-
-          <div className="w-[40%]">
-            <ChampTexte
-              name={nomPartie2.name}
-              libelle={nomPartie2.libelle}
-              readOnly
-            />
-          </div>
+          <ChampTexte
+            name={nomPartie2.name}
+            libelle={nomPartie2.libelle}
+            readOnly
+            boutonChamp={{
+              composant: (
+                <BoutonIcon
+                  className={`disabled:text-gris-desactive group absolute left-0 top-0 flex h-full w-8 items-center justify-center rounded-r-none hover:text-white disabled:bg-transparent disabled:opacity-30`}
+                  type="button"
+                  title="Déplacer le premier vocable"
+                  onClick={() => deplacerVocable(true)}
+                  disabled={tailleNomPartie2 < DEUX}
+                >
+                  <div className={`left-4 flex transform transition-transform duration-200 ease-in group-hover:-translate-x-1`}>
+                    <ArrowBack />
+                  </div>
+                </BoutonIcon>
+              ),
+              estAGauche: true
+            }}
+          />
         </div>
       )}
     </div>

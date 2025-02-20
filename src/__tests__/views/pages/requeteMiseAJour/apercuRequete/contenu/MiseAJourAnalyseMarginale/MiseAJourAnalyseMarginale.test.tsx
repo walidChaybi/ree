@@ -117,13 +117,14 @@ describe("Test MiseAJourAnalyseMarginale", () => {
     fireEvent.click(screen.getByText("Analyse marginale"));
 
     const inputMotif = screen.getByPlaceholderText("Motif") as HTMLInputElement;
+    const checkBox: HTMLInputElement = screen.getByRole("checkbox");
 
     await waitFor(() => {
       expect(screen.getByText("Gestion nom sécable pour la délivrance des extraits")).toBeDefined();
       expect(inputMotif.value).toBe("Suite à apposition de mention 14-1");
-      expect(screen.getByRole("checkbox")).toBeDefined();
-      //expect(screen.getByRole("checkbox")).not.toBeChecked();
-      //expect(screen.getByRole("checkbox")).toBeDisabled();
+      expect(checkBox).toBeDefined();
+      expect(checkBox.value).toBeTruthy();
+      expect(checkBox).toHaveProperty("disabled");
     });
   });
 
