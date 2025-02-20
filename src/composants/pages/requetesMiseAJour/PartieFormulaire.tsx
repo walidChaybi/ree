@@ -30,7 +30,7 @@ import TableauMentions from "./formulaires/mentions/TableauMentions";
 export interface IMentionMiseAJour {
   texte: string;
   idTypeMention: string;
-  donneesAideSaisie?: { champs: { [cle: string]: string | number | boolean }; partiesTexte: { [cle: number]: string } };
+  donneesAideSaisie?: { champs: TObjetFormulaire; textesEdites: { [cle: string]: { edite: string; original: string } } };
 }
 
 export interface IMentionEnCours {

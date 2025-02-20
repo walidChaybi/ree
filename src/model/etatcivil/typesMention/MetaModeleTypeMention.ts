@@ -1,7 +1,7 @@
 // A tester Alex 5/02/25
 /* v8 ignore start */
 import { ConditionChamp, IConditionChampDto } from "@model/form/commun/ConditionChamp";
-import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
+import { ObjetFormulaire, TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import dayjs from "dayjs";
 import SchemaValidation from "../../../utils/SchemaValidation";
 
@@ -234,39 +234,49 @@ export class MetaModeleTypeMention {
     }, {});
   }
 
-  public valeursInitiales() {
-    return this.metamodelsBlocs.reduce((valeursInitialesBlocs, bloc) => {
-      const valeursInitialesBloc = bloc.champs.reduce((champs, champ) => {
-        const valeurInitaleChamp = (() => {
-          switch (champ.type) {
-            case "text":
-            case "int":
-            case "pocopa":
-            case "crpcen":
-              return "";
-            case "dateComplete":
-            case "dateIncomplete":
-              return {
-                jour: "",
-                mois: "",
-                annee: ""
-              };
-            case "boolean":
-              return champ.valeurParDefaut === "true";
-            case "radioBouton":
-              return champ.valeurParDefaut ?? "";
-            case "select":
-              return champ.valeurParDefaut ?? "";
-            default:
-              return "";
-          }
-        })();
+  public valeursInitiales(valeursMiseAJour?: TObjetFormulaire) {
+    return this.metamodelsBlocs.reduce(
+      (valeursInitialesBlocs, bloc) => ({
+        ...valeursInitialesBlocs,
+        [bloc.id]: bloc.champs.reduce((champs, champ) => {
+          const valeurMiseAJour = ObjetFormulaire.recupererValeur({
+            valeurs: valeursMiseAJour ?? {},
+            cleAttribut: `${bloc.id}.${champ.id}`
+          });
 
-        return { ...champs, [champ.id]: valeurInitaleChamp };
-      }, {});
-
-      return { ...valeursInitialesBlocs, [bloc.id]: valeursInitialesBloc };
-    }, {});
+          return {
+            ...champs,
+            [champ.id]: ["string", "number", "boolean", "object"].includes(typeof valeurMiseAJour)
+              ? valeurMiseAJour
+              : (() => {
+                  switch (champ.type) {
+                    case "text":
+                    case "int":
+                    case "pocopa":
+                    case "crpcen":
+                      return "";
+                    case "dateComplete":
+                    case "dateIncomplete":
+                      return {
+                        jour: "",
+                        mois: "",
+                        annee: ""
+                      };
+                    case "boolean":
+                      return champ.valeurParDefaut === "true";
+                    case "radioBouton":
+                      return champ.valeurParDefaut ?? "";
+                    case "select":
+                      return champ.valeurParDefaut ?? "";
+                    default:
+                      return "";
+                  }
+                })()
+          };
+        }, {})
+      }),
+      {}
+    );
   }
 }
 /* v8 ignore end */

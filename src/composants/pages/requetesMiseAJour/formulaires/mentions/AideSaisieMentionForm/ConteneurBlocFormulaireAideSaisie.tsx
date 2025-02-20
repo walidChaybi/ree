@@ -16,7 +16,7 @@ export const ConteneurBlocFormulaireAideSaisie: React.FC<{
         titreEnTete={bloc.titre}
         sansMargeHorizontale
       >
-        <div className="grid grid-cols-2 gap-x-8 gap-y-4 pb-4 pt-2">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-4 pt-2">
           {React.Children.map(children, (child, index) => {
             const composantChild = child as React.ReactElement<{ setEstVisible: (estVisible: boolean) => void }>;
 

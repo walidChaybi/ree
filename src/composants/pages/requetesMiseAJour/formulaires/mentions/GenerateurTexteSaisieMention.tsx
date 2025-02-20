@@ -168,7 +168,6 @@ const genererPourSaisie = (modeleTexte: string, valeurs: TMentionForm) => {
 export const TexteMentionAideALaSaisie: React.FC<{ templateTexteMention: string }> = ({ templateTexteMention }) => {
   const { values, setFieldValue } = useFormikContext<TMentionForm>();
   const [texteSaisie, setTexteSaisie] = useState("");
-  const [textesEditables, setTextesEditables] = useState<{ [index: number]: any }>([]);
 
   const decouperTexteEditable = (texte: string) =>
     texte
@@ -185,14 +184,14 @@ export const TexteMentionAideALaSaisie: React.FC<{ templateTexteMention: string 
           original: donneesEditables[2]
         };
 
-        if (textesEditables[donnees.index]?.original !== donnees.original) {
-          setTextesEditables(prec => ({
-            ...prec,
+        if (values.textesEdites[donnees.index]?.original !== donnees.original) {
+          setFieldValue("textesEdites", {
+            ...values.textesEdites,
             [donnees.index]: {
               original: donnees.original,
               edite: donnees.original
             }
-          }));
+          });
         }
 
         return {
@@ -200,6 +199,10 @@ export const TexteMentionAideALaSaisie: React.FC<{ templateTexteMention: string 
           texte: null
         };
       });
+
+  useEffect(() => {
+    setTexteSaisie(genererPourSaisie(templateTexteMention, values));
+  }, [values]);
 
   useEffect(() => {
     setFieldValue(
@@ -215,15 +218,11 @@ export const TexteMentionAideALaSaisie: React.FC<{ templateTexteMention: string 
 
           const indexEditable = parseInt(donneesEditables[1]);
 
-          return textesEditables[indexEditable]?.edite ?? "";
+          return values.textesEdites[indexEditable]?.edite ?? "";
         })
         .join("")
     );
-  }, [texteSaisie, textesEditables]);
-
-  useEffect(() => {
-    setTexteSaisie(genererPourSaisie(templateTexteMention, values));
-  }, [values]);
+  }, [texteSaisie, values.textesEdites]);
 
   return (
     <div className="text-start">
@@ -239,21 +238,21 @@ export const TexteMentionAideALaSaisie: React.FC<{ templateTexteMention: string 
                 {donnees.texte}
               </span>
             ) : (
-              textesEditables[donnees.index] && (
+              values.textesEdites[donnees.index] && (
                 <span
                   key={`editable--${donnees.index}`}
                   contentEditable
                   className={"rounded px-0.5 outline-none transition-colors hover:bg-bleu-transparent focus-visible:bg-bleu-transparent"}
-                  onBlur={e => {
-                    setTextesEditables(prec => ({
-                      ...prec,
+                  onBlur={e =>
+                    setFieldValue("textesEdites", {
+                      ...values.textesEdites,
                       [donnees.index]: {
-                        ...prec[donnees.index],
+                        ...values.textesEdites[donnees.index],
                         edite: e.target.innerText ?? ""
                       }
-                    }));
-                  }}
-                  dangerouslySetInnerHTML={{ __html: textesEditables[donnees.index].edite }}
+                    })
+                  }
+                  dangerouslySetInnerHTML={{ __html: values.textesEdites[donnees.index].edite }}
                 ></span>
               )
             )
