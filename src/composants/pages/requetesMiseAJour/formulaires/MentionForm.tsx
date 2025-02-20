@@ -164,7 +164,7 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
           setMetamodeleTypeMention(modele);
           setValeurDefaut({
             ...modele.valeursInitiales(),
-            titulaire: { sexe: infoTitulaire.sexe?.toString() ?? "" },
+            titulaire: { sexe: infoTitulaire.sexe?.libelle ?? "" },
             idTypeMention: typeMentionChoisi.id,
             texteMention: mentionModifiee?.mention.texte ?? ""
           });
