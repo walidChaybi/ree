@@ -88,16 +88,13 @@ const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAna
   }, [values.mentions]);
 
   return (
-    <ConteneurAvecBordure
-      titreEnTete="Mention(s) ajoutée(s)"
-      sansMargeBasse
-    >
+    <ConteneurAvecBordure titreEnTete="Mention(s) ajoutée(s)">
       <List
         values={values.mentions}
         onChange={({ oldIndex, newIndex }) => setFieldValue("mentions", arrayMove(values.mentions, oldIndex, newIndex))}
         renderList={({ children, props }) => (
           <div
-            className="grid gap-2 p-3"
+            className="grid gap-2 pt-3"
             {...props}
           >
             {values.mentions.length ? children : <span className="text-start text-sm italic">{"Aucune mention ajoutée"}</span>}

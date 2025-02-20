@@ -77,7 +77,7 @@ const ChampTypeMention: React.FC<IChampTypeMentionProps> = ({ name, typesMention
   }, [field.value]);
 
   return (
-    <div className="pb-4">
+    <div>
       <label
         className={`m-0 mb-1 ml-1 block w-fit text-start transition-colors ${enErreur ? "text-rouge" : "text-bleu-sombre"}`}
         htmlFor={name}

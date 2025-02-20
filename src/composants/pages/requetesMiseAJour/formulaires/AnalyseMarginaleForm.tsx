@@ -26,8 +26,8 @@ const AnalyseMarginaleForm: React.FC<IAnalyseMarginaleFormProps> = ({ analyseMar
   }, [values, initialValues]);
 
   return (
-    <ConteneurAvecBordure sansMargeBasse>
-      <div className="p-4 pt-2">
+    <ConteneurAvecBordure>
+      <div className="pb-4 pt-3">
         <div className="grid gap-6">
           <div>
             <ChampsNomSecable

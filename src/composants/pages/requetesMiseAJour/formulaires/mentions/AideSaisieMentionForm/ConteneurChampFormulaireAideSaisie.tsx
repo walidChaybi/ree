@@ -105,10 +105,7 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
     case champ.type === "sousTitre" && estAffiche:
       return (
         <ChampFormAideSaisie typeChamp={champ.type}>
-          <SeparateurSection
-            titre={champ.libelle}
-            sansMargeBasse
-          />
+          <SeparateurSection titre={champ.libelle} />
         </ChampFormAideSaisie>
       );
 

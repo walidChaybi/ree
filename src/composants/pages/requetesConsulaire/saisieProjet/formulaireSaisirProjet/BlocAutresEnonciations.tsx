@@ -3,7 +3,7 @@ import ChampZoneTexte from "../../../../commun/champs/ChampZoneTexte";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 
 const BlocAutresEnonciations: React.FC = () => (
-  <ConteneurAvecBordure>
+  <ConteneurAvecBordure className="py-6">
     <ChampZoneTexte
       name="autresEnonciations.enonciations"
       libelle="Texte énonciations"

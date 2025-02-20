@@ -10,7 +10,7 @@ interface IAideALaSaisieMention {
 }
 
 const AideALaSaisieMention: React.FC<IAideALaSaisieMention> = ({ metamodeleTypeMention }) => (
-  <div className="mt-10 grid gap-6">
+  <div className="grid gap-8">
     {metamodeleTypeMention?.metamodelsBlocs.map((bloc: BlocMetaModele) => (
       <ConteneurBlocFormulaireAideSaisie
         bloc={bloc}

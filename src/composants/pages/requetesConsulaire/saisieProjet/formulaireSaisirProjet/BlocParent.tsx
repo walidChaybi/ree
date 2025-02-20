@@ -53,7 +53,10 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
   }, [values.parents.domicileCommun, values.parents.parent1.domicile]);
 
   return (
-    <ConteneurAvecBordure titreEnTete={titre}>
+    <ConteneurAvecBordure
+      className="py-6"
+      titreEnTete={titre}
+    >
       <div className="space-y-4">
         <ChampTexte
           name={`${prefix}.nom`}
@@ -122,21 +125,23 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
       </div>
 
       <SeparateurSection titre="Domicile" />
-      {!estparent1 && (
-        <ChampCaseACocher
-          name="parents.domicileCommun"
-          libelle="Domicile commun avec parent 1"
-        />
-      )}
+      <div className="grid gap-4">
+        {!estparent1 && (
+          <ChampCaseACocher
+            name="parents.domicileCommun"
+            libelle="Domicile commun avec parent 1"
+          />
+        )}
 
-      {(estparent1 || !values.parents.domicileCommun) && (
-        <FormulaireAdresse
-          key={`${prefix}.domicile`}
-          prefix={`${prefix}.domicile`}
-          categorieLieu={parent?.domicile?.typeLieu}
-          ville={parent?.domicile?.ville}
-        />
-      )}
+        {(estparent1 || !values.parents.domicileCommun) && (
+          <FormulaireAdresse
+            key={`${prefix}.domicile`}
+            prefix={`${prefix}.domicile`}
+            categorieLieu={parent?.domicile?.typeLieu}
+            ville={parent?.domicile?.ville}
+          />
+        )}
+      </div>
     </ConteneurAvecBordure>
   );
 });

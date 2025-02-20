@@ -71,8 +71,9 @@ const BlocFormuleFinale: React.FC = () => {
       setFieldTouched("formuleFinale.autresPieces", false);
     }
   }, [doitAfficherAutresPieces]);
+
   return (
-    <ConteneurAvecBordure sansMargeBasse>
+    <ConteneurAvecBordure className="py-6">
       <div className="grid grid-cols-2 gap-4">
         <ChampListeDeroulante
           name="formuleFinale.identiteDemandeur"

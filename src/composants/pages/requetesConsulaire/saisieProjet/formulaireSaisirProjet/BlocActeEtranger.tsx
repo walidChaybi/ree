@@ -29,7 +29,7 @@ const BlocActeEtranger: React.FC = () => {
   }, [estAutreTypeActe]);
 
   return (
-    <ConteneurAvecBordure>
+    <ConteneurAvecBordure className="py-6">
       <div className="mb-4 grid grid-cols-2 gap-4">
         <ChampListeDeroulante
           name="acteEtranger.typeActe"
@@ -48,9 +48,10 @@ const BlocActeEtranger: React.FC = () => {
       <ChampDate
         name="acteEtranger.dateEnregistrement"
         libelle="Date d'enregistrement"
-        className="mb-4"
       />
+
       <SeparateurSection titre="Lieu d'enregistrement" />
+
       <div className="mb-4 grid grid-cols-3 gap-4">
         <ChampTexte
           name="acteEtranger.lieuEnregistrement.ville"

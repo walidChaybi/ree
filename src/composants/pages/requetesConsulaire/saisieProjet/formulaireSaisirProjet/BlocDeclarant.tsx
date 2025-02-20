@@ -39,7 +39,7 @@ const BlocDeclarant: React.FC = () => {
   }, [values.declarant?.sansProfession]);
 
   return (
-    <ConteneurAvecBordure>
+    <ConteneurAvecBordure className="py-6">
       <div className="grid grid-cols-2 gap-4">
         <div className="col-span-2 grid grid-cols-2 gap-x-4">
           <ChampListeDeroulante

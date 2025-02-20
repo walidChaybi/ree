@@ -198,7 +198,7 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
     >
       {({ values, dirty }) => (
         <ConteneurAvecBordure titreEnTete={mentionModifiee ? "Modification d'une mention" : "Ajout d'une mention"}>
-          <Form className="px-2">
+          <Form className="grid gap-9 px-1 pb-4 pt-3">
             <ChampTypeMention
               name="idTypeMention"
               typesMentionDisponibles={typesMentionDisponibles}
@@ -224,7 +224,7 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
             )}
 
             {(typeMentionChoisi || dirty) && (
-              <div className="mr-6 mt-8 flex justify-end gap-6">
+              <div className="flex justify-end gap-6">
                 {typeMentionChoisi && (
                   <Bouton
                     title="Valider"

@@ -14,17 +14,19 @@ const ChampsRadio: React.FC<TChampsRadioProps> = ({ name, libelle, className, op
 
   return (
     <fieldset className={`m-0 flex w-full flex-col border-0 p-0 text-start ${className ?? ""}`.trim()}>
-      <legend className={`m-0 mb-1 block w-fit text-start text-[13.5px] transition-colors ${enErreur ? "text-rouge" : "text-bleu-sombre"}`}>
+      <legend
+        className={`m-0 mb-1 ml-1 block w-fit text-start text-base transition-colors ${enErreur ? "text-rouge" : "text-bleu-sombre"}`}
+      >
         {libelle}
       </legend>
-      <div className="ml-6 mt-2.5 flex w-full flex-wrap gap-16 text-start">
+      <div className="ml-1.5 mt-2.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start">
         {...options.map((option: Option) => {
           return (
             <div key={`${name}-${option.cle}`}>
               <input
                 id={`${name}-${option.cle}`}
                 type="radio"
-                className={`m-0 mt-0.5 cursor-pointer selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
+                className={`m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
                 {...(() => {
                   const { value, ...propsFormik } = field;
                   return propsFormik;

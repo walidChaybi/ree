@@ -15,7 +15,7 @@ interface IBlocTitulairetitulaireProps {
 
 const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
   return (
-    <ConteneurAvecBordure>
+    <ConteneurAvecBordure className="py-6">
       <div className="grid grid-cols-2 gap-4 text-start">
         <ChampTexte
           name="titulaire.nomNaissance"
@@ -66,7 +66,6 @@ const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
           name="titulaire.dateNaissance"
           libelle="Date de naissance"
           avecHeure
-          className="flex"
           estObligatoire="année"
         />
       </div>
