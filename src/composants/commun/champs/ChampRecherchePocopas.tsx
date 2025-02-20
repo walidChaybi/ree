@@ -47,7 +47,10 @@ const ChampRecherchePocopas: React.FC<IChampRecherchePocopasProps> = ({ name, li
         onChange={(_, valeurSelectionne) => {
           helpers.setValue(valeurSelectionne ?? "");
         }}
-        onBlur={e => field.onBlur(e)}
+        onBlur={e => {
+          if (pocopas?.length === 0) setValeurChampAutocomplete("");
+          field.onBlur(e);
+        }}
         onInputChange={(_, valeurSaisie) => {
           setValeurChampAutocomplete(valeurSaisie ?? "");
         }}
