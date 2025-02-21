@@ -145,21 +145,12 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
     }
 
     if (typeMentionChoisi?.aideSaisie && estFFAideSaisieMentionActif) {
-      const gererErreur = () => {
-        logError({
-          messageUtilisateur: "Impossible de récupérer les metamodeles"
-        });
-        setValeurDefaut((prec: any) => ({ ...prec, texteMention: "" }));
-      };
-
       appelApiGetMetamodeleTypeMention({
         parametres: { path: { idTypeMention: typeMentionChoisi.id } },
         apresSucces: (metamodele: IMetaModeleTypeMentionDto) => {
           const modele = MetaModeleTypeMention.depuisDto(metamodele);
           if (!modele) {
-            gererErreur();
-
-            return;
+            throw new Error();
           }
 
           setMetamodeleTypeMention(modele);
@@ -171,7 +162,12 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
             textesEdites: mentionModifiee?.mention.donneesAideSaisie?.textesEdites ?? {}
           });
         },
-        apresErreur: () => gererErreur()
+        apresErreur: () => {
+          logError({
+            messageUtilisateur: "Impossible de récupérer les metamodeles"
+          });
+          setValeurDefaut((prec: any) => ({ ...prec, texteMention: "" }));
+        }
       });
 
       return;
@@ -210,7 +206,7 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
         setValeurDefaut({ ...DEFAUT_CREATION });
       }}
     >
-      {({ values, dirty }) => (
+      {({ values, initialValues }) => (
         <ConteneurAvecBordure titreEnTete={mentionModifiee ? "Modification d'une mention" : "Ajout d'une mention"}>
           <Form className="grid gap-9 px-1 pt-3">
             <ChampTypeMention
@@ -219,27 +215,26 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
               setIdTypeMentionChoisi={id => setTypeMentionChoisi(typesMentionDisponibles.find(mention => mention.id === id) ?? null)}
             />
 
-            {enAttenteMetamodele ? (
-              <ComposantChargeur />
-            ) : (
+            {initialValues.idTypeMention && (
               <>
-                {typeMentionChoisi &&
-                  (estFFAideSaisieMentionActif && metamodeleTypeMention ? (
-                    <AideALaSaisieMention metamodeleTypeMention={metamodeleTypeMention} />
-                  ) : (
-                    <ChampZoneTexte
-                      libelle="Texte mention"
-                      name={TEXTE_MENTION}
-                      rows={8}
-                      typeRedimensionnement="fixe"
-                    />
-                  ))}
-              </>
-            )}
+                {enAttenteMetamodele ? (
+                  <ComposantChargeur />
+                ) : (
+                  <>
+                    {estFFAideSaisieMentionActif && metamodeleTypeMention ? (
+                      <AideALaSaisieMention metamodeleTypeMention={metamodeleTypeMention} />
+                    ) : (
+                      <ChampZoneTexte
+                        libelle="Texte mention"
+                        name={TEXTE_MENTION}
+                        rows={8}
+                        typeRedimensionnement="fixe"
+                      />
+                    )}
+                  </>
+                )}
 
-            {(typeMentionChoisi || dirty) && (
-              <div className="flex justify-end gap-6">
-                {typeMentionChoisi && (
+                <div className="flex justify-end gap-6">
                   <Bouton
                     title="Valider"
                     disabled={!values.texteMention}
@@ -247,8 +242,6 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
                   >
                     {mentionModifiee ? "Modifier mention" : "Ajouter mention"}
                   </Bouton>
-                )}
-                {(dirty || typeMentionChoisi) && (
                   <Bouton
                     title="Annuler"
                     styleBouton="secondaire"
@@ -263,8 +256,8 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
                   >
                     {"Annuler"}
                   </Bouton>
-                )}
-              </div>
+                </div>
+              </>
             )}
           </Form>
         </ConteneurAvecBordure>

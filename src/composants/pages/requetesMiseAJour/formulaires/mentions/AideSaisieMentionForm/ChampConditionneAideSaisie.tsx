@@ -14,7 +14,7 @@ export const ChampConditionneAideSaisie: React.FC<{
 }> = ({ name, champ, estAffiche }) => {
   const [field] = useField(name);
   const { values, setFieldValue } = useFormikContext<TMentionForm>();
-  const [nombreOptions, setNombreOptions] = useState<number>(0);
+  const [nombreOptions, setNombreOptions] = useState<number | null>(null);
   const options = useMemo(
     () =>
       (champ.valeursPossibles.find(valeursPossibles => valeursPossibles.sontUtilisables(values))?.valeurs ?? []).map(valeur => ({
@@ -27,7 +27,7 @@ export const ChampConditionneAideSaisie: React.FC<{
   useEffect(() => {
     const valeursOption = options.map(option => option.libelle);
 
-    if (!valeursOption.includes(field.value) || nombreOptions !== valeursOption.length) {
+    if (!valeursOption.includes(field.value) || ![valeursOption.length, null].includes(nombreOptions)) {
       const nouvelleValeur = (() => {
         switch (true) {
           case valeursOption.includes(champ.valeurParDefaut ?? ""):
@@ -40,8 +40,9 @@ export const ChampConditionneAideSaisie: React.FC<{
       })();
 
       setFieldValue(name, nouvelleValeur);
-      setNombreOptions(valeursOption.length);
     }
+
+    setNombreOptions(valeursOption.length);
   }, [options]);
 
   switch (true) {

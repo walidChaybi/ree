@@ -115,7 +115,7 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
           />
         </div>
 
-        <div className="pt-8">
+        <div className="flex flex-nowrap items-center gap-3 pt-8">
           <ChampCaseACocher
             name={secable.name}
             libelle={secable.libelle}
@@ -141,7 +141,7 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
             boutonChamp={{
               composant: (
                 <BoutonIcon
-                  className={`disabled:text-gris-desactive group absolute right-0 top-0 flex h-full w-8 items-center justify-center rounded-l-none hover:text-white disabled:bg-transparent disabled:opacity-30`}
+                  className={`group absolute right-0 top-0 flex h-full w-8 items-center justify-center rounded-l-none hover:text-white disabled:bg-transparent disabled:text-gris-desactive disabled:opacity-30`}
                   type="button"
                   title="Déplacer le dernier vocable"
                   onClick={() => deplacerVocable(false)}
@@ -162,7 +162,7 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
             boutonChamp={{
               composant: (
                 <BoutonIcon
-                  className={`disabled:text-gris-desactive group absolute left-0 top-0 flex h-full w-8 items-center justify-center rounded-r-none hover:text-white disabled:bg-transparent disabled:opacity-30`}
+                  className={`group absolute left-0 top-0 flex h-full w-8 items-center justify-center rounded-r-none hover:text-white disabled:bg-transparent disabled:text-gris-desactive disabled:opacity-30`}
                   type="button"
                   title="Déplacer le premier vocable"
                   onClick={() => deplacerVocable(true)}
