@@ -28,9 +28,7 @@ describe("Test du composant Champs nom sécable", () => {
     expect(champsNom).toBeDefined();
     expect(screen.getByLabelText<HTMLInputElement>("Sécable").disabled).toBeTruthy();
 
-    act(() => {
-      userEvent.type(champsNom, " Test");
-    });
+    await userEvent.type(champsNom, " Test");
 
     await waitFor(() => {
       expect(screen.getByDisplayValue("Dupont Test")).toBeDefined();
@@ -38,18 +36,14 @@ describe("Test du composant Champs nom sécable", () => {
       expect(champsSecable.disabled).toBeFalsy();
     });
 
-    await act(async () => {
-      fireEvent.click(screen.getByLabelText("Sécable"));
-    });
+    fireEvent.click(screen.getByLabelText("Sécable"));
 
     await waitFor(() => {
       expect(screen.getByDisplayValue("Dupont")).toBeDefined();
       expect(screen.getByDisplayValue("Test")).toBeDefined();
     });
 
-    act(() => {
-      userEvent.type(champsNom, " Test2");
-    });
+    await userEvent.type(champsNom, " Test2");
 
     await waitFor(() => {
       expect(screen.getByDisplayValue("Dupont")).toBeDefined();
@@ -59,13 +53,11 @@ describe("Test du composant Champs nom sécable", () => {
       expect(boutonDéplacerVocable).toBeDefined();
     });
 
-    await act(async () => {
-      fireEvent.click(screen.getByTitle("Déplacer le dernier vocable"));
-    });
+    fireEvent.click(screen.getByTitle("Déplacer le dernier vocable"));
 
     await waitFor(() => {
-      const input1 = screen.getByLabelText("Nom 1") as HTMLInputElement;
-      const input2 = screen.getByLabelText("Nom 2") as HTMLInputElement;
+      const input1: HTMLInputElement = screen.getByLabelText("Nom 1");
+      const input2: HTMLInputElement = screen.getByLabelText("Nom 2");
 
       expect(input1.value).toBe("Dupont");
       expect(input2.value).toBe("Test Test2");
@@ -75,13 +67,11 @@ describe("Test du composant Champs nom sécable", () => {
       expect(boutonDéplacerVocable).toBeDefined();
     });
 
-    await act(async () => {
-      fireEvent.click(screen.getByTitle("Déplacer le premier vocable"));
-    });
+    fireEvent.click(screen.getByTitle("Déplacer le premier vocable"));
 
     await waitFor(() => {
-      const input1 = screen.getByLabelText("Nom 1") as HTMLInputElement;
-      const input2 = screen.getByLabelText("Nom 2") as HTMLInputElement;
+      const input1: HTMLInputElement = screen.getByLabelText("Nom 1");
+      const input2: HTMLInputElement = screen.getByLabelText("Nom 2");
 
       expect(input1.value).toBe("Dupont Test");
       expect(input2.value).toBe("Test2");
@@ -97,35 +87,31 @@ describe("Test du composant Champs nom sécable", () => {
     expect(champsSecable.disabled).toBeTruthy();
 
     fireEvent.click(champsSecable);
-    expect(champsSecable.checked).toBeFalsy();
+    await waitFor(() => {
+      expect(champsSecable.checked).toBeFalsy();
+    });
   });
 
   test("Doit correctement gérer la suppression d'un mot dans le nom complet", async () => {
     await act(async () => afficherFormulaire());
 
     const champsNom = screen.getByDisplayValue("Dupont");
-    act(() => {
-      userEvent.type(champsNom, " Test");
-    });
+    await userEvent.type(champsNom, " Test");
 
     await waitFor(() => {
       const champsSecable = screen.getByLabelText<HTMLInputElement>("Sécable");
       expect(champsSecable.disabled).toBeFalsy();
     });
 
-    await act(async () => {
-      fireEvent.click(screen.getByLabelText("Sécable"));
-    });
+    fireEvent.click(screen.getByLabelText("Sécable"));
 
     await waitFor(() => {
       expect(screen.getByDisplayValue("Dupont")).toBeDefined();
       expect(screen.getByDisplayValue("Test")).toBeDefined();
     });
 
-    await act(async () => {
-      userEvent.clear(champsNom);
-      userEvent.type(champsNom, "NouveauNom");
-    });
+    await userEvent.clear(champsNom);
+    await userEvent.type(champsNom, "NouveauNom");
 
     await waitFor(() => {
       const champsSecable = screen.getByLabelText<HTMLInputElement>("Sécable");
