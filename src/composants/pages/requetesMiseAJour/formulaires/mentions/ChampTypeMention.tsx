@@ -18,7 +18,7 @@ const getClassesOption = (typeMention: ITypeMentionDisponible, estActive: boolea
 
   switch (true) {
     case typeMention.avecEnfants && !typeMention.parents.parent1:
-      classesOption = `${classesOption} pl-1 font-bold  ${CLASSES_OPTION_SELECTIONNABLE}`;
+      classesOption = `${classesOption} pl-1 font-bold ${CLASSES_OPTION_SELECTIONNABLE}`;
       break;
     case typeMention.avecEnfants && !!typeMention.parents.parent1:
       classesOption = `${classesOption} pl-10 font-bold`;
@@ -93,7 +93,7 @@ const ChampTypeMention: React.FC<IChampTypeMentionProps> = ({ name, typesMention
         renderInput={params => {
           let { value: valeur, className, ...props } = params.inputProps;
           if (valeur) {
-            const typeMentionSelectionne = typesMentionDisponibles.find(typeMention => typeMention.libelle === valeur);
+            const typeMentionSelectionne = typesMentionDisponibles.find(typeMention => typeMention.id === field.value);
             typeMentionSelectionne && (valeur = formaterMentionSelectionne(typeMentionSelectionne));
           }
 
@@ -113,7 +113,7 @@ const ChampTypeMention: React.FC<IChampTypeMentionProps> = ({ name, typesMention
                     return;
                   }
 
-                  if (event.key !== "Enter") {
+                  if (!["Enter", "ArrowRight"].includes(event.key)) {
                     return;
                   }
 
@@ -133,7 +133,7 @@ const ChampTypeMention: React.FC<IChampTypeMentionProps> = ({ name, typesMention
           );
         }}
         renderOption={(renderProps, option: ITypeMentionDisponible) => {
-          const { className, onClick, ...autresProps } = renderProps;
+          const { className, onClick, key, ...autresProps } = renderProps as React.HTMLAttributes<HTMLLIElement> & { key: string };
           const gestionClick = option.avecEnfants ? () => setListeOuverte(prec => (prec === option.id ? "" : option.id)) : onClick;
           const propsOption =
             (option.parents.parent1 && option.avecEnfants) || (listeOuverte && !option.parents.parent1 && listeOuverte !== option.id)
