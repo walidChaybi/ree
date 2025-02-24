@@ -17,7 +17,7 @@ interface IRecherchePocopa {
   estOuvert?: boolean;
 }
 
-const ChampRecherchePocopas: React.FC<IChampRecherchePocopasProps> = ({ name, libelle, optionsRecherchePocopa, delai, ...props }) => {
+const ChampRecherchePocopas: React.FC<IChampRecherchePocopasProps> = ({ name, libelle, optionsRecherchePocopa, delai }) => {
   const [valeurChampAutocomplete, setValeurChampAutocomplete] = useDelai("", delai);
 
   const [field, meta, helpers] = useField(name as string);
@@ -30,7 +30,7 @@ const ChampRecherchePocopas: React.FC<IChampRecherchePocopasProps> = ({ name, li
     optionsRecherchePocopa.estOuvert
   );
 
-  const pocopaSelectionnee = useMemo(() => pocopas?.find(pocopa => pocopa === field.value.libelle), [field.value]);
+  const pocopaSelectionnee = useMemo(() => pocopas?.find(pocopa => pocopa === field.value) ?? null, [field.value]);
 
   return (
     <>
@@ -48,7 +48,7 @@ const ChampRecherchePocopas: React.FC<IChampRecherchePocopasProps> = ({ name, li
           helpers.setValue(valeurSelectionne ?? "");
         }}
         onBlur={e => {
-          if (pocopas?.length === 0) setValeurChampAutocomplete("");
+          if (pocopas?.length === 0) helpers.setValue("");
           field.onBlur(e);
         }}
         onInputChange={(_, valeurSaisie) => {
@@ -87,8 +87,6 @@ const ChampRecherchePocopas: React.FC<IChampRecherchePocopasProps> = ({ name, li
           );
         }}
         noOptionsText={<span className="italic">{"Aucun résultat"}</span>}
-        getOptionLabel={(option: string) => option || ""}
-        isOptionEqualToValue={pocopa => pocopa === field.value}
       />
       {meta.error && (
         <div className="text-start text-sm text-rouge">
