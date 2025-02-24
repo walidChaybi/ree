@@ -44,9 +44,8 @@ export function mapRcRca(data: any): IFicheRcRca {
   dataRcRca.dateInscription = DateUtils.getDateFromTimestamp(data.dateInscription);
 
   dataRcRca.personnes = mapPersonnes(data.personnes, data.numero);
-
   dataRcRca.nature =
-    data.categorie === "rc" ? (NatureRc.depuisId(data.nature) as INatureRc) : (NatureRca.depuisId(data.nature) as INatureRca);
+    data.categorie === "RC" ? (NatureRc.depuisId(data.nature.id) as INatureRc) : (NatureRca.depuisId(data.nature.id) as INatureRca);
 
   dataRcRca.statutsFiche = mapStatutFiche(data);
 
@@ -173,33 +172,28 @@ function mapPersonnes(personnes: any, numero: any): IPersonne[] {
       lieuDeces: personne.deces && mapLieuPersonne(personne.deces),
       dateDeces: personne.deces && mapDatePersonne(personne.deces),
       sexe: personne.sexe && Sexe.getEnumFor(personne.sexe),
-      actes:
-        personne.actes &&
-        personne.actes
-          .filter((acte: any) => acte.numero !== numero)
-          .map((acte: any) => {
-            return {
-              ...acte,
-              nature: NatureActe.getEnumFor(acte.nature)
-            };
-          }),
-      pacss: personne.pacss && personne.pacss.filter((pacs: IFicheLien) => pacs.numero !== numero),
-      rcas: personne.rcas && personne.rcas.filter((rca: IFicheLien) => rca.numero !== numero),
-      rcs: personne.rcs && personne.rcs.filter((rc: IFicheLien) => rc.numero !== numero)
+      actes: personne.actes
+        ?.filter((acte: any) => acte.numero !== numero)
+        .map((acte: any) => {
+          return {
+            ...acte,
+            nature: NatureActe.getEnumFor(acte.nature)
+          };
+        }),
+      pacss: personne.pacss?.filter((pacs: IFicheLien) => pacs.numero !== numero),
+      rcas: personne.rcas?.filter((rca: IFicheLien) => rca.numero !== numero),
+      rcs: personne.rcs?.filter((rc: IFicheLien) => rc.numero !== numero)
     };
   });
 }
 
 function mapAutresNoms(autresNoms: any[]): IAutresNoms[] {
-  return (
-    autresNoms &&
-    autresNoms.map(autreNom => {
-      return {
-        ...autreNom,
-        type: AutresNoms.getEnumFor(autreNom.type)
-      };
-    })
-  );
+  return autresNoms?.map(autreNom => {
+    return {
+      ...autreNom,
+      type: AutresNoms.getEnumFor(autreNom.type)
+    };
+  });
 }
 
 function mapLieuPersonne(lieu: any): ILieuEvenement {

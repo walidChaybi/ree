@@ -10,7 +10,7 @@ export const AsterisqueRecherche = new RegExp(
   /^([0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .-]{1}|[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .-]{2,}\*?)$/
 );
 
-export const NumeroInscription = new RegExp(/^.{4}-]/);
+export const NumeroInscription = new RegExp(/^\d{4}-\d+$/);
 
 export const CaracteresAlphanumeriques = new RegExp(/^[0-9a-zA-Z]+$/);
 
