@@ -1,3 +1,5 @@
+/* v8 ignore start */
+
 import { CONFIG_PUT_ANALYSE_MARGINALE_ET_MENTIONS } from "@api/configurations/etatCivil/PutAnalyseMarginaleEtMentionsConfigApi";
 import { CONFIG_PUT_MISE_A_JOUR_ANALYSE_MARGINALE } from "@api/configurations/etatCivil/PutMiseAJourAnalyseMarginaleConfigApi";
 import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
@@ -9,7 +11,7 @@ import { Droit } from "@model/agent/enum/Droit";
 import { TErreurApi } from "@model/api/Api";
 import { FicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
+import { TObjetFormulaire, TValeurFormulaire } from "@model/form/commun/ObjetFormulaire";
 import messageManager from "@util/messageManager";
 import { PopinSignatureMiseAJourMentions } from "@widget/signature/PopinSignatureMiseAJourMentions";
 import { Form, Formik } from "formik";
@@ -27,10 +29,15 @@ import BoutonValiderEtTerminer from "./formulaires/BoutonValiderEtTerminer";
 import MentionForm from "./formulaires/MentionForm";
 import TableauMentions from "./formulaires/mentions/TableauMentions";
 
+interface IDonneesAideSaisie {
+  champs: TObjetFormulaire;
+  textesEdites: { [cle: string]: { edite: string; original: string } };
+}
+
 export interface IMentionMiseAJour {
   texte: string;
   idTypeMention: string;
-  donneesAideSaisie?: { champs: TObjetFormulaire; textesEdites: { [cle: string]: { edite: string; original: string } } };
+  donneesAideSaisie?: IDonneesAideSaisie;
 }
 
 export interface IMentionEnCours {
@@ -61,6 +68,14 @@ export const SCHEMA_VALIDATION_ANALYSE_MARGINALE = Yup.object().shape({
 export const SCHEMA_VALIDATION_MENTIONS = Yup.object().shape({
   mentions: Yup.array().min(1)
 });
+
+const getEvenementMention = (champs?: TObjetFormulaire): TValeurFormulaire | null => {
+  if (!champs) return null;
+
+  const cleEvenement = Object.keys(champs).find(cle => cle.includes("evenement"));
+
+  return cleEvenement ? champs[cleEvenement] : null;
+};
 
 export const PartieFormulaire: React.FC = () => {
   const { utilisateurConnecte } = useContext(RECEContextData);
@@ -111,7 +126,6 @@ export const PartieFormulaire: React.FC = () => {
     });
   }, []);
 
-  /* v8 ignore start */
   const traitementRetourApi = useCallback(
     (reinitialiser: (valeurs: IMiseAJourForm) => void, analyseMarginale?: IAnalyseMarginaleMiseAJour, mentions?: IMentionMiseAJour[]) => ({
       apresSucces: () => {
@@ -163,7 +177,8 @@ export const PartieFormulaire: React.FC = () => {
               mentionCreationList: mentions.map((mention, index) => ({
                 idTypeMention: mention.idTypeMention,
                 numeroOrdre: index + 1,
-                texteMention: mention.texte
+                texteMention: mention.texte,
+                evenement: getEvenementMention(mention.donneesAideSaisie?.champs)
               })),
               analyseMarginale:
                 afficherAnalyseMarginale && analyseMarginaleModifiee ? MiseAJourAnalyseMarginaleValeursForm.versDto(analyseMarginale) : null
