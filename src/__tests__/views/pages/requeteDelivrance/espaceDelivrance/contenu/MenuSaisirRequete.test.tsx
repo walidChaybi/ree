@@ -1,4 +1,3 @@
-import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import MenuSaisirRequete from "@pages/requeteDelivrance/espaceDelivrance/contenu/MenuSaisirRequete";
 import { SaisirRDCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCPage";
 import { SaisirRDCSCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
@@ -17,10 +16,8 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test, vi } from "vitest";
-import {
-  createTestingRouter,
-  elementAvecContexte
-} from "../../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
+import { userDroitnonCOMEDEC } from "../../../../../mock/data/mockConnectedUserAvecDroit";
 
 window.alert = vi.fn();
 
@@ -44,11 +41,7 @@ describe.skip("MenuSaisirRequete - ", () => {
     render(<RouterProvider router={router} />);
 
     waitFor(() => {
-      expect(
-        gestionnaireFeatureFlag.estActif(
-          FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
-        )
-      ).toBeTruthy();
+      expect(gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES)).toBeTruthy();
     });
 
     const boutonMenu = screen.getByText(/Saisir requête courrier/i);
@@ -56,9 +49,7 @@ describe.skip("MenuSaisirRequete - ", () => {
     // Open menu
     fireEvent.click(boutonMenu);
 
-    const RDCSC = screen.getByText(
-      "Délivrance Certificat & Attestation RC/RCA/PACS courrier"
-    );
+    const RDCSC = screen.getByText("Délivrance Certificat & Attestation RC/RCA/PACS courrier");
 
     waitFor(() => {
       expect(RDCSC).toBeDefined();
@@ -68,9 +59,7 @@ describe.skip("MenuSaisirRequete - ", () => {
     fireEvent.click(RDCSC);
 
     waitFor(() => {
-      expect(router.state.location.pathname).toEqual(
-        URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC
-      );
+      expect(router.state.location.pathname).toEqual(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC);
     });
   });
 
@@ -106,9 +95,7 @@ describe.skip("MenuSaisirRequete - ", () => {
     fireEvent.click(RDC);
 
     waitFor(() => {
-      expect(router.state.location.pathname).toEqual(
-        URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC
-      );
+      expect(router.state.location.pathname).toEqual(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC);
     });
   });
 
@@ -144,9 +131,7 @@ describe.skip("MenuSaisirRequete - ", () => {
     fireEvent.click(RDLFC);
 
     waitFor(() => {
-      expect(router.state.location.pathname).toEqual(
-        URL_MES_REQUETES_DELIVRANCE_SAISIR_RDLFC
-      );
+      expect(router.state.location.pathname).toEqual(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDLFC);
     });
   });
 
@@ -165,21 +150,14 @@ describe.skip("MenuSaisirRequete - ", () => {
       [URL_REQUETES_DELIVRANCE_SERVICE]
     );
 
-    render(
-      elementAvecContexte(
-        <RouterProvider router={router} />,
-        userDroitnonCOMEDEC
-      )
-    );
+    render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC));
 
     const boutonMenu = screen.getByText(/Saisir requête courrier/i);
 
     // Open menu
     fireEvent.click(boutonMenu);
 
-    const RDCSC = screen.getByText(
-      "Délivrance Certificat & Attestation RC/RCA/PACS courrier"
-    );
+    const RDCSC = screen.getByText("Délivrance Certificat & Attestation RC/RCA/PACS courrier");
 
     waitFor(() => {
       expect(RDCSC).toBeDefined();
@@ -189,9 +167,7 @@ describe.skip("MenuSaisirRequete - ", () => {
     fireEvent.click(RDCSC);
 
     waitFor(() => {
-      expect(router.state.location.pathname).toEqual(
-        URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC
-      );
+      expect(router.state.location.pathname).toEqual(URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC);
     });
   });
 
@@ -227,9 +203,7 @@ describe.skip("MenuSaisirRequete - ", () => {
     fireEvent.click(RDC);
 
     waitFor(() => {
-      expect(router.state.location.pathname).toEqual(
-        URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC
-      );
+      expect(router.state.location.pathname).toEqual(URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC);
     });
   });
 
@@ -265,9 +239,7 @@ describe.skip("MenuSaisirRequete - ", () => {
     fireEvent.click(RDLFC);
 
     waitFor(() => {
-      expect(router.state.location.pathname).toEqual(
-        URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDLFC
-      );
+      expect(router.state.location.pathname).toEqual(URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDLFC);
     });
   });
 });

@@ -1,8 +1,3 @@
-import { DataRMCActeAvecResultat, DataTableauActe } from "@mock/data/RMCActe";
-import {
-  DataRMCInscriptionAvecResultat,
-  DataTableauInscription
-} from "@mock/data/RMCInscription";
 import { RMCActeInscriptionResultats } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCActeInscriptionResultats";
 import { render, screen } from "@testing-library/react";
 import {
@@ -12,6 +7,8 @@ import {
   NB_LIGNES_PAR_PAGE_INSCRIPTION
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { expect, test } from "vitest";
+import { DataRMCActeAvecResultat, DataTableauActe } from "../../../../../mock/data/RMCActe";
+import { DataRMCInscriptionAvecResultat, DataTableauInscription } from "../../../../../mock/data/RMCInscription";
 
 test("renders Fielset Recherche Multi Critères => Seulement des actes", () => {
   const { container } = render(
@@ -28,19 +25,12 @@ test("renders Fielset Recherche Multi Critères => Seulement des actes", () => {
     />
   );
 
-  const titre = container.getElementsByClassName("Titre").item(0)
-    ?.firstElementChild?.innerHTML;
+  const titre = container.getElementsByClassName("Titre").item(0)?.firstElementChild?.innerHTML;
 
   expect(titre).toEqual("Résultats de la recherche multi-critères");
-  expect(
-    screen.getByText(/Recherche dans les registres d'état civil/i)
-  ).toBeDefined();
+  expect(screen.getByText(/Recherche dans les registres d'état civil/i)).toBeDefined();
 
-  expect(
-    screen.getByText(
-      /Recherche dans les répertoires de greffe et registre des PACS des étrangers nés à l'étranger/i
-    )
-  ).toBeDefined();
+  expect(screen.getByText(/Recherche dans les répertoires de greffe et registre des PACS des étrangers nés à l'étranger/i)).toBeDefined();
 });
 
 test("renders Fielset Recherche Multi Critères => Seulement des inscriptions", () => {
@@ -58,17 +48,10 @@ test("renders Fielset Recherche Multi Critères => Seulement des inscriptions", 
     />
   );
 
-  const titre = container.getElementsByClassName("Titre").item(0)
-    ?.firstElementChild?.innerHTML;
+  const titre = container.getElementsByClassName("Titre").item(0)?.firstElementChild?.innerHTML;
   expect(titre).toEqual("Résultats de la recherche multi-critères");
 
-  expect(
-    screen.getByText(/Recherche dans les registres d'état civil/i)
-  ).toBeDefined();
+  expect(screen.getByText(/Recherche dans les registres d'état civil/i)).toBeDefined();
 
-  expect(
-    screen.getByText(
-      /Recherche dans les répertoires de greffe et registre des PACS des étrangers nés à l'étranger/i
-    )
-  ).toBeDefined();
+  expect(screen.getByText(/Recherche dans les répertoires de greffe et registre des PACS des étrangers nés à l'étranger/i)).toBeDefined();
 });

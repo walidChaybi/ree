@@ -1,8 +1,3 @@
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
-import { DataRMCActeAvecResultat } from "@mock/data/RMCActe";
-import { DataRMCInscriptionAvecUnRCA } from "@mock/data/RMCInscription";
-import { idRequeteRDC, idRequeteRDCSC, requeteRDCSC } from "@mock/data/requeteDelivrance";
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
 import { MenuDelivrerCS } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrerCS";
@@ -16,6 +11,11 @@ import { act } from "react";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../../../__tests__utils__/testsUtil";
+import MockRECEContextProvider from "../../../../../../../mock/context/MockRECEContextProvider";
+import { DOCUMENT_DELIVRANCE } from "../../../../../../../mock/data/NomenclatureDocumentDelivrance";
+import { DataRMCActeAvecResultat } from "../../../../../../../mock/data/RMCActe";
+import { DataRMCInscriptionAvecUnRCA } from "../../../../../../../mock/data/RMCInscription";
+import { idRequeteRDC, idRequeteRDCSC, requeteRDCSC } from "../../../../../../../mock/data/requeteDelivrance";
 
 describe("Test MenuDelivrerCS", () => {
   DocumentDelivrance.init(DOCUMENT_DELIVRANCE);

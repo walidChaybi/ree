@@ -1,12 +1,12 @@
-import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
-import { NATURE_MENTION } from "@mock/data/NomenclatureNatureMention";
-import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
 import { IMention, Mention } from "@model/etatcivil/acte/mention/IMention";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { INatureMention, NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { describe, expect, test } from "vitest";
+import { DOCUMENT_DELIVRANCE } from "../../../../mock/data/NomenclatureDocumentDelivrance";
+import { NATURE_MENTION } from "../../../../mock/data/NomenclatureNatureMention";
+import { TYPE_MENTION } from "../../../../mock/data/NomenclatureTypeMention";
 
 describe("Test de IMention", () => {
   DocumentDelivrance.init(DOCUMENT_DELIVRANCE);

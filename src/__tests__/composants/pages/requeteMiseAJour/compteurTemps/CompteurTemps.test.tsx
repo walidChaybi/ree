@@ -9,6 +9,8 @@ import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 describe("Test du composant CompteurTemps", () => {
   const ID_REQUETE_VALIDE = "id-requete-valide";
   const ID_REQUETE_DEPASSEE = "id-requete-depassee";
+  const MESSAGE_REDIRECTION =
+    "Le délai de traitement de la requête de mise à jour est dépassé. Vous allez être redirigé vers la page de recherche d'un acte.";
   const superagentMock = require("superagent-mock")(request, [
     {
       pattern: `http://localhost/rece/rece-requete-api/v2/requetes/mise-a-jour/(${ID_REQUETE_DEPASSEE}|${ID_REQUETE_VALIDE})/delai-de-traitement-restant-en-minutes`,
@@ -22,6 +24,7 @@ describe("Test du composant CompteurTemps", () => {
         }
       },
       get: function (_: any, data: any) {
+        console.log(data);
         return {
           body: data
         };
@@ -30,6 +33,11 @@ describe("Test du composant CompteurTemps", () => {
   ]);
 
   afterAll(() => superagentMock.unset());
+
+  // MockApi.deployer(CONFIG_GET_DELAI_MISE_A_JOUR_RESTANT, { path: { idRequete: ID_REQUETE_VALIDE } }, { data: 50 });
+  // MockApi.deployer(CONFIG_GET_DELAI_MISE_A_JOUR_RESTANT, { path: { idRequete: ID_REQUETE_DEPASSEE } }, { codeHttp: 500 });
+
+  // afterAll(MockApi.stopMock);
 
   test("Aucun message si temps restant", async () => {
     const router = createTestingRouter(
@@ -51,7 +59,7 @@ describe("Test du composant CompteurTemps", () => {
       render(<RouterProvider router={router} />);
     });
 
-    expect(screen.queryByTitle("OK")).toBeNull();
+    await waitFor(() => expect(screen.queryByText(MESSAGE_REDIRECTION)).toBeNull());
   });
 
   test("Message si temps dépassé et redirection", async () => {
@@ -78,10 +86,8 @@ describe("Test du composant CompteurTemps", () => {
 
     render(<RouterProvider router={router} />);
 
-    await waitFor(() => {
-      expect(screen.getByTitle("OK")).toBeDefined();
-      expect(abandon).toHaveBeenCalledOnce();
-    });
+    await waitFor(() => expect(screen.getByText(MESSAGE_REDIRECTION)).toBeDefined());
+    expect(abandon).toHaveBeenCalledOnce();
 
     fireEvent.click(screen.getByTitle("OK"));
     await waitFor(() => expect(screen.getByText(REDIRIGE)).toBeDefined());

@@ -1,24 +1,15 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
 import { StatutsRequetesInformation } from "@pages/requeteInformation/espaceInformation/EspaceReqInfoParams";
 import { ReqInfoServicePage } from "@pages/requeteInformation/espaceInformation/ReqInfoServicePage";
-import {
-  URL_REQUETES_INFORMATION_SERVICE,
-  URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID
-} from "@router/ReceUrls";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { URL_REQUETES_INFORMATION_SERVICE, URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID } from "@router/ReceUrls";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
+import MockRECEContextProvider from "../../../../mock/context/MockRECEContextProvider";
 
 const parametresReqInfo = {
   statuts: StatutsRequetesInformation,
@@ -43,10 +34,7 @@ test("renders Requête Service Info, Clic requête au statut TRANSFEREE", async 
         element: <ReqInfoServicePage parametresReqInfo={parametresReqInfo} />
       },
       {
-        path: getUrlWithParam(
-          URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID,
-          "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62"
-        ),
+        path: getUrlWithParam(URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID, "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62"),
         element: <ApercuReqInfoPage />
       }
     ],
@@ -73,10 +61,7 @@ test("renders Requête Service Info, Clic requête au statut TRANSFEREE", async 
 
   await waitFor(() => {
     expect(router.state.location.pathname).toBe(
-      getUrlWithParam(
-        URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID,
-        "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62"
-      )
+      getUrlWithParam(URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID, "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62")
     );
   });
 });
@@ -89,10 +74,7 @@ test("renders Requête Service Info, Clic requête au statut PRISE_EN_CHARGE", a
         element: <ReqInfoServicePage parametresReqInfo={parametresReqInfo} />
       },
       {
-        path: getUrlWithParam(
-          URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID,
-          "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf63"
-        ),
+        path: getUrlWithParam(URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID, "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf63"),
         element: <ApercuReqInfoPage />
       }
     ],
@@ -113,10 +95,7 @@ test("renders Requête Service Info, Clic requête au statut PRISE_EN_CHARGE", a
 
   await waitFor(() => {
     expect(router.state.location.pathname).toBe(
-      getUrlWithParam(
-        URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID,
-        "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf63"
-      )
+      getUrlWithParam(URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID, "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf63")
     );
   });
 });
@@ -129,10 +108,7 @@ test("DOIT mettre a jour la liste des requetes QUAND on change le filtre 'Sous-T
         element: <ReqInfoServicePage parametresReqInfo={parametresReqInfo} />
       },
       {
-        path: getUrlWithParam(
-          URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID,
-          "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf63"
-        ),
+        path: getUrlWithParam(URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID, "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf63"),
         element: <ApercuReqInfoPage />
       }
     ],
@@ -167,10 +143,7 @@ test("DOIT mettre a jour la liste des requetes QUAND on change le filtre 'Objet'
         element: <ReqInfoServicePage parametresReqInfo={parametresReqInfo} />
       },
       {
-        path: getUrlWithParam(
-          URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID,
-          "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf63"
-        ),
+        path: getUrlWithParam(URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID, "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf63"),
         element: <ApercuReqInfoPage />
       }
     ],
@@ -206,10 +179,7 @@ test("DOIT mettre a jour la liste des requetes QUAND on change le filtre 'Statut
         element: <ReqInfoServicePage parametresReqInfo={parametresReqInfo} />
       },
       {
-        path: getUrlWithParam(
-          URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID,
-          "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf63"
-        ),
+        path: getUrlWithParam(URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID, "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf63"),
         element: <ApercuReqInfoPage />
       }
     ],
@@ -245,10 +215,7 @@ test("DOIT mettre a jour la liste des requetes QUAND on change le filtre 'typeRe
         element: <ReqInfoServicePage parametresReqInfo={parametresReqInfo} />
       },
       {
-        path: getUrlWithParam(
-          URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID,
-          "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf63"
-        ),
+        path: getUrlWithParam(URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID, "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf63"),
         element: <ApercuReqInfoPage />
       }
     ],

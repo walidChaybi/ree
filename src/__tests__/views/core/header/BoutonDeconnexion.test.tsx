@@ -1,24 +1,15 @@
 import { IRECEContext, RECEContextData } from "@core/contexts/RECEContext";
 import { BoutonDeconnexion } from "@core/header/BoutonDeconnexion";
-import officier from "@mock/data/connectedUser.json";
-import { configRequetes } from "@mock/superagent-config/superagent-mock-requetes";
 import { IHabilitation } from "@model/agent/Habilitation";
 import { IOfficier } from "@model/agent/IOfficier";
 import { IService } from "@model/agent/IService";
 import { URL_DECONNEXION, URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { expect, test, vi } from "vitest";
-import {
-  createTestingRouter,
-  elementAvecContexte
-} from "../../../__tests__utils__/testsUtil";
+import { createTestingRouter, elementAvecContexte } from "../../../__tests__utils__/testsUtil";
+import officier from "../../../mock/data/connectedUser.json";
+import { configRequetes } from "../../../mock/superagent-config/superagent-mock-requetes";
 
 let handleClickButton = vi.fn();
 let boutonElement: HTMLElement;
@@ -33,9 +24,7 @@ test.skip("renders click BoutonDeconnexion (nbRequetes = 0)", async () => {
       [
         {
           path: URL_MES_REQUETES_DELIVRANCE,
-          element: (
-            <BoutonDeconnexion onClick={handleClickButton}></BoutonDeconnexion>
-          )
+          element: <BoutonDeconnexion onClick={handleClickButton}></BoutonDeconnexion>
         }
       ],
       [URL_MES_REQUETES_DELIVRANCE]
@@ -79,9 +68,7 @@ test.skip("renders click BoutonDeconnexion (nbRequetes = 1) produit une popin de
       [
         {
           path: URL_MES_REQUETES_DELIVRANCE,
-          element: (
-            <BoutonDeconnexion onClick={handleClickButton}></BoutonDeconnexion>
-          )
+          element: <BoutonDeconnexion onClick={handleClickButton}></BoutonDeconnexion>
         }
       ],
       [URL_MES_REQUETES_DELIVRANCE]
@@ -146,9 +133,7 @@ test.skip("renders click BoutonDeconnexion (nbRequetes = 1) produit une popin de
                 } as unknown as IRECEContext
               }
             >
-              <BoutonDeconnexion
-                onClick={handleClickButton}
-              ></BoutonDeconnexion>
+              <BoutonDeconnexion onClick={handleClickButton}></BoutonDeconnexion>
             </RECEContextData.Provider>
           )
         }
@@ -161,9 +146,7 @@ test.skip("renders click BoutonDeconnexion (nbRequetes = 1) produit une popin de
     setTimeout(() => {
       act(() => {
         configRequetes[0].nbRequetes = 1;
-        boutonElement = screen.getByText(
-          /prenomConnectedUser nomConnectedUser/i
-        );
+        boutonElement = screen.getByText(/prenomConnectedUser nomConnectedUser/i);
         waitFor(() => {
           expect(boutonElement).toBeDefined();
         });
@@ -186,9 +169,7 @@ test.skip("renders click BoutonDeconnexion (nbRequetes = 1) produit une popin de
           expect(cancelElement).not.toBeDefined();
         });
         waitFor(() => {
-          expect(router.state.location.pathname).toBe(
-            URL_MES_REQUETES_DELIVRANCE
-          );
+          expect(router.state.location.pathname).toBe(URL_MES_REQUETES_DELIVRANCE);
         });
       });
     }, 1000);

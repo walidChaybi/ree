@@ -1,19 +1,13 @@
-import officier from "@mock/data/connectedUser.json";
 import { IOfficier } from "@model/agent/IOfficier";
 import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
 import EspaceInformationPage from "@pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
-import {
-  URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-  URL_MES_REQUETES_INFORMATION
-} from "@router/ReceUrls";
+import { URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, URL_MES_REQUETES_INFORMATION } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
-import {
-  createTestingRouter,
-  elementAvecContexte
-} from "../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
+import officier from "../../../../mock/data/connectedUser.json";
 
 test("renders Page requete information et clique sur une TRANSFEREE", async () => {
   const router = createTestingRouter(
@@ -23,10 +17,7 @@ test("renders Page requete information et clique sur une TRANSFEREE", async () =
         element: <EspaceInformationPage />
       },
       {
-        path: getUrlWithParam(
-          URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-          "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62"
-        ),
+        path: getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62"),
         element: <ApercuReqInfoPage />
       }
     ],
@@ -56,10 +47,7 @@ test("renders Page requete information et clique sur une TRANSFEREE", async () =
 
   await waitFor(() => {
     expect(router.state.location.pathname).toBe(
-      getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-        "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62"
-      )
+      getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62")
     );
   });
 });
@@ -96,10 +84,7 @@ test("renders Requête Service Info, Clic requête au statut PRISE_EN_CHARGE", a
 
   await waitFor(() => {
     expect(router.state.location.pathname).toBe(
-      getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-        "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf63"
-      )
+      getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, "0b7a1f7b-b4f1-4163-8a81-e5adf53cbf63")
     );
   });
 });

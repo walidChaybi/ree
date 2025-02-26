@@ -1,11 +1,11 @@
-import { userDroitCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
-import { ReponseAppelNomenclatureTypeAlerte } from "@mock/data/nomenclatures";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BoutonAjouterAlerte } from "@widget/alertes/ajouterAlerte/BoutonAjouterAlerte";
 import { COMPLEMENT_DESCRIPTION, ID_TYPE_ALERTE } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import { beforeEach, expect, test, vi } from "vitest";
 import { elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
+import { userDroitCOMEDEC } from "../../../../../mock/data/mockConnectedUserAvecDroit";
+import { ReponseAppelNomenclatureTypeAlerte } from "../../../../../mock/data/nomenclatures";
 
 beforeEach(() => {
   TypeAlerte.init(ReponseAppelNomenclatureTypeAlerte.data);

@@ -1,10 +1,3 @@
-import {
-  userDroitCreerActeEtabliPerimetreTousRegistres,
-  userDroitCreerActeTranscritPerimetreTousRegistres,
-  userDroitDelivrer,
-  userDroitInformerUsager
-} from "@mock/data/mockConnectedUserAvecDroit";
-import { requeteInformation } from "@mock/data/requeteInformation";
 import { IDroit } from "@model/agent/Habilitation";
 import { INomenclatureAgentApi } from "@model/agent/INomenclatureAgentApi";
 import {
@@ -34,6 +27,13 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter, elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
+import {
+  userDroitCreerActeEtabliPerimetreTousRegistres,
+  userDroitCreerActeTranscritPerimetreTousRegistres,
+  userDroitDelivrer,
+  userDroitInformerUsager
+} from "../../../../../mock/data/mockConnectedUserAvecDroit";
+import { requeteInformation } from "../../../../../mock/data/requeteInformation";
 
 describe("RMCRequetesAssocieesResultats", () => {
   test.skip("DOIT rendre le titre du tableau des requêtes associées aux titulaires d'une requêtes d'information", () => {

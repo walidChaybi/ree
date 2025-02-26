@@ -1,7 +1,7 @@
-import { TYPE_PIECE_JUSTIFICATIVE } from "@mock/data/NomenclatureTypePieceJustificative";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { mapPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import { expect, test } from "vitest";
+import { TYPE_PIECE_JUSTIFICATIVE } from "../../../mock/data/NomenclatureTypePieceJustificative";
 
 test("DOIT mapper correctement une PJ venant du serveur en IPieceJustificative", () => {
   TypePieceJustificative.init(TYPE_PIECE_JUSTIFICATIVE);

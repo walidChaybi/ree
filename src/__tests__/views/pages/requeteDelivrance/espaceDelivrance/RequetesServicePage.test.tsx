@@ -1,4 +1,3 @@
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { ETypeService } from "@model/agent/enum/ETypeService";
 import { RequetesServicePage } from "@pages/requeteDelivrance/espaceDelivrance/RequetesServicePage";
 import { URL_REQUETES_DELIVRANCE_SERVICE } from "@router/ReceUrls";
@@ -6,6 +5,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { expect, test, vi } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
+import MockRECEContextProvider from "../../../../mock/context/MockRECEContextProvider";
 
 const setParamsRMCAuto = vi.fn();
 
@@ -114,9 +114,7 @@ test.skip("Test Attribuée à", () => {
   });
 
   const autocomplete = screen.getAllByTestId("autocomplete")[0];
-  const inputChampRecherche = screen.getByLabelText(
-    "TransfertPopin"
-  ) as HTMLInputElement;
+  const inputChampRecherche = screen.getByLabelText("TransfertPopin") as HTMLInputElement;
 
   waitFor(() => {
     expect(autocomplete).toBeDefined();

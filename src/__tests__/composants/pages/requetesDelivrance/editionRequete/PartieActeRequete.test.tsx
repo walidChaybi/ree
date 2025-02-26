@@ -1,11 +1,11 @@
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { TYPE_ALERTE } from "@mock/data/NomenclatureTypeAlerte";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, test, vi } from "vitest";
 import PartieActeRequete from "../../../../../composants/pages/requetesDelivrance/editionRequete/partieActeRequete/PartieActeRequete";
 import EditionDelivranceContextProvider from "../../../../../contexts/EditionDelivranceContextProvider";
+import MockRECEContextProvider from "../../../../mock/context/MockRECEContextProvider";
+import { TYPE_ALERTE } from "../../../../mock/data/NomenclatureTypeAlerte";
 
 describe("PartieActeRequete", () => {
   TypeAlerte.init(TYPE_ALERTE);

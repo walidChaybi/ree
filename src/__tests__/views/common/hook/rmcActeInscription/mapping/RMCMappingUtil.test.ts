@@ -1,11 +1,8 @@
-import {
-  mappingActes,
-  mappingRequeteDelivranceToRMC
-} from "@hook/rmcActeInscription/mapping/RMCMappingUtil";
-import { ReponseAppelRMCActe } from "@mock/data/RMCActe";
-import requeteDelivrance from "@mock/data/requeteDelivrance";
+import { mappingActes, mappingRequeteDelivranceToRMC } from "@hook/rmcActeInscription/mapping/RMCMappingUtil";
 import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
 import { expect, test } from "vitest";
+import { ReponseAppelRMCActe } from "../../../../../mock/data/RMCActe";
+import requeteDelivrance from "../../../../../mock/data/requeteDelivrance";
 
 test("mappingIRMCActeArchive", () => {
   expect(mappingRequeteDelivranceToRMC(requeteDelivrance)).toStrictEqual({

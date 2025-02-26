@@ -1,15 +1,15 @@
-import {
-  RequeteRDCSCInstitutionnel,
-  RequeteRDCSCInteresse,
-  RequeteRDCSCMandataire,
-  RequeteRDCSCParticulier
-} from "@mock/data/DataRDCSC";
 import { UpdateRequeteRDCSC } from "@model/form/delivrance/ISaisirRDCSCPageForm";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useUpdateRequeteDelivranceRDCSC } from "@pages/requeteDelivrance/saisirRequete/hook/UpdateRDCSCApiHook";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { expect, test } from "vitest";
+import {
+  RequeteRDCSCInstitutionnel,
+  RequeteRDCSCInteresse,
+  RequeteRDCSCMandataire,
+  RequeteRDCSCParticulier
+} from "../../../../../mock/data/DataRDCSC";
 
 const saisieInteresse = {
   ...RequeteRDCSCInteresse,
@@ -33,9 +33,7 @@ const saisieParticulier = {
 
 const HookConsummerInteresse: React.FC = () => {
   const resultat = useUpdateRequeteDelivranceRDCSC(saisieInteresse);
-  return (
-    <>{`${resultat?.requete.id},${resultat?.futurStatut.libelle},${resultat?.refus}`}</>
-  );
+  return <>{`${resultat?.requete.id},${resultat?.futurStatut.libelle},${resultat?.refus}`}</>;
 };
 
 test("Maj requête délivrance hook intéressé", () => {
@@ -45,9 +43,7 @@ test("Maj requête délivrance hook intéressé", () => {
 
 const HookConsummerMandataire: React.FC = () => {
   const resultat = useUpdateRequeteDelivranceRDCSC(saisieMandataire);
-  return (
-    <>{`${resultat?.requete.id},${resultat?.futurStatut.libelle},${resultat?.refus}`}</>
-  );
+  return <>{`${resultat?.requete.id},${resultat?.futurStatut.libelle},${resultat?.refus}`}</>;
 };
 
 test("Maj requête délivrance hook mandataire", () => {
@@ -57,9 +53,7 @@ test("Maj requête délivrance hook mandataire", () => {
 
 const HookConsummerInstitutionnel: React.FC = () => {
   const resultat = useUpdateRequeteDelivranceRDCSC(saisieInstitution);
-  return (
-    <>{`${resultat?.requete.id},${resultat?.futurStatut.libelle},${resultat?.refus}`}</>
-  );
+  return <>{`${resultat?.requete.id},${resultat?.futurStatut.libelle},${resultat?.refus}`}</>;
 };
 
 test("Maj requête délivrance hook institution", () => {
@@ -69,9 +63,7 @@ test("Maj requête délivrance hook institution", () => {
 
 const HookConsummerParticulier: React.FC = () => {
   const resultat = useUpdateRequeteDelivranceRDCSC(saisieParticulier);
-  return (
-    <>{`${resultat?.requete.id},${resultat?.futurStatut.libelle},${resultat?.refus}`}</>
-  );
+  return <>{`${resultat?.requete.id},${resultat?.futurStatut.libelle},${resultat?.refus}`}</>;
 };
 
 test("Maj requête délivrance hook particuler", () => {
@@ -81,10 +73,6 @@ test("Maj requête délivrance hook particuler", () => {
 
 function waitForResultat(futurStatut: StatutRequete, refus: boolean) {
   waitFor(() => {
-    expect(
-      screen.getByText(
-        `1072bc37-f889-4365-8f75-912166b767dd,${futurStatut.libelle},${refus}`
-      )
-    ).toBeDefined();
+    expect(screen.getByText(`1072bc37-f889-4365-8f75-912166b767dd,${futurStatut.libelle},${refus}`)).toBeDefined();
   });
 }

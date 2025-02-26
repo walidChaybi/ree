@@ -1,5 +1,3 @@
-import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
-import { idRequeteRDCSC } from "@mock/data/requeteDelivrance";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -12,10 +10,9 @@ import { fireEvent, render, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import { BoutonModifierTraitement } from "../../../../../composants/pages/requetesDelivrance/editionRequete/boutons/BoutonModifierTraitement";
-import {
-  createTestingRouter,
-  elementAvecContexte,
-} from "../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
+import { userDroitnonCOMEDEC } from "../../../../mock/data/mockConnectedUserAvecDroit";
+import { idRequeteRDCSC } from "../../../../mock/data/requeteDelivrance";
 
 const requeteTestCOURRIER = {
   id: idRequeteRDCSC,
@@ -24,7 +21,7 @@ const requeteTestCOURRIER = {
   dateCreation: 1577836800000,
   statutCourant: {
     statut: StatutRequete.A_SIGNER,
-    dateEffet: 1577923200000,
+    dateEffet: 1577923200000
   },
   idUtilisateur: "idUtilisateurConnectedUser",
   provenanceRequete: { provenance: Provenance.COURRIER },
@@ -37,16 +34,16 @@ const requeteTestCOURRIER = {
       prenoms: [
         {
           prenom: "Hugo",
-          numeroOrdre: 1,
-        },
+          numeroOrdre: 1
+        }
       ],
       jourNaissance: 31,
       moisNaissance: 12,
       anneeNaissance: 1981,
-      sexe: Sexe.MASCULIN.libelle,
-    },
+      sexe: Sexe.MASCULIN.libelle
+    }
   ],
-  sousType: SousTypeDelivrance.RDD,
+  sousType: SousTypeDelivrance.RDD
 } as IRequeteDelivrance;
 
 describe("BoutonModifierTraitement - ", () => {
@@ -55,30 +52,19 @@ describe("BoutonModifierTraitement - ", () => {
       [
         {
           path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-          element: (
-            <BoutonModifierTraitement
-              requete={requeteTestCOURRIER}
-            ></BoutonModifierTraitement>
-          ),
+          element: <BoutonModifierTraitement requete={requeteTestCOURRIER}></BoutonModifierTraitement>
         },
         {
           path: "*",
-          element: <></>,
-        },
+          element: <></>
+        }
       ],
-      [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID],
+      [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]
     );
 
-    const { getByText } = render(
-      elementAvecContexte(
-        <RouterProvider router={router} />,
-        userDroitnonCOMEDEC,
-      ),
-    );
+    const { getByText } = render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC));
 
-    const bouttonModifierTraitement = getByText(
-      "Modifier le traitement",
-    ) as HTMLButtonElement;
+    const bouttonModifierTraitement = getByText("Modifier le traitement") as HTMLButtonElement;
 
     waitFor(() => {
       expect(bouttonModifierTraitement.disabled).toBeFalsy();
@@ -94,30 +80,19 @@ describe("BoutonModifierTraitement - ", () => {
       [
         {
           path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-          element: (
-            <BoutonModifierTraitement
-              requete={requeteTestCOURRIER}
-            ></BoutonModifierTraitement>
-          ),
+          element: <BoutonModifierTraitement requete={requeteTestCOURRIER}></BoutonModifierTraitement>
         },
         {
           path: "*",
-          element: <></>,
-        },
+          element: <></>
+        }
       ],
-      [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID],
+      [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]
     );
 
-    const { getByText } = render(
-      elementAvecContexte(
-        <RouterProvider router={router} />,
-        userDroitnonCOMEDEC,
-      ),
-    );
+    const { getByText } = render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC));
 
-    const bouttonModifierTraitement = getByText(
-      "Modifier le traitement",
-    ) as HTMLButtonElement;
+    const bouttonModifierTraitement = getByText("Modifier le traitement") as HTMLButtonElement;
 
     waitFor(() => {
       expect(bouttonModifierTraitement.disabled).toBeFalsy();

@@ -1,12 +1,12 @@
 import { getValidationExtraitPlurilingue } from "@hook/generation/generationECHook/generationECHookUtil";
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
-import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
-import { ficheActeAvecDeuxTitulaireIndetermine, ficheActeMariageAvecNomContientDesormais } from "@mock/data/ficheActe";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
 import { describe, expect, test } from "vitest";
+import { DOCUMENT_DELIVRANCE } from "../../../../../mock/data/NomenclatureDocumentDelivrance";
+import { ficheActeAvecDeuxTitulaireIndetermine, ficheActeMariageAvecNomContientDesormais } from "../../../../../mock/data/ficheActe";
 
 describe("Test de generationECHookUtil", () => {
   DocumentDelivrance.init(DOCUMENT_DELIVRANCE);

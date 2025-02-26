@@ -5,7 +5,6 @@ import {
   MENTION_NIVEAU_TROIS,
   MENTION_NIVEAU_UN
 } from "@composant/formulaire/ConstantesNomsForm";
-import { resultatHeaderUtilistateurLeBiannic, resultatRequeteUtilistateurLeBiannic } from "@mock/data/mockConnectedUserAvecDroit";
 import { mappingOfficier } from "@model/agent/IOfficier";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
@@ -20,6 +19,10 @@ import { RouterProvider } from "react-router-dom";
 import { describe, expect, test, vi } from "vitest";
 import IHabilitationDto from "../../../../../dto/etatcivil/agent/IHabilitationDto";
 import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
+import {
+  resultatHeaderUtilistateurLeBiannic,
+  resultatRequeteUtilistateurLeBiannic
+} from "../../../../mock/data/mockConnectedUserAvecDroit";
 
 // Obsolete. ApercuRequeteMiseAJour sera supprimé
 

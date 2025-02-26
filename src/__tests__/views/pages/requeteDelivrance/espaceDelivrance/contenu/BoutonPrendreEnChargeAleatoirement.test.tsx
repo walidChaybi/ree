@@ -1,30 +1,21 @@
-import { ReponseAppelMesRequetes } from "@mock/data/EspaceDelivrance";
+import { mappingOfficier } from "@model/agent/IOfficier";
+import { ReponseAppelMesRequetes } from "../../../../../mock/data/EspaceDelivrance";
 import {
   resultatHeaderUtilistateurLaurenceBourdeau,
   resultatRequeteUtilistateurLaurenceBourdeau
-} from "@mock/data/mockConnectedUserAvecDroit";
-import { mappingOfficier } from "@model/agent/IOfficier";
+} from "../../../../../mock/data/mockConnectedUserAvecDroit";
 
 import { ApercuRequeteEtablissementSuiviDossierPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/ApercuRequeteEtablissementSuiviDossierPage";
 import { BoutonPrendreEnChargeAleatoirement } from "@pages/requeteDelivrance/espaceDelivrance/contenu/BoutonPrendreEnChargeAleatoirement";
-import {
-  URL_MES_REQUETES_DELIVRANCE,
-  URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID
-} from "@router/ReceUrls";
+import { URL_MES_REQUETES_DELIVRANCE, URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
-import {
-  createTestingRouter,
-  elementAvecContexte
-} from "../../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
 
 test.skip("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement dans l'espace Délivrance", () => {
-  const utilisateurConnecte = mappingOfficier(
-    resultatHeaderUtilistateurLaurenceBourdeau,
-    resultatRequeteUtilistateurLaurenceBourdeau.data
-  );
+  const utilisateurConnecte = mappingOfficier(resultatHeaderUtilistateurLaurenceBourdeau, resultatRequeteUtilistateurLaurenceBourdeau.data);
 
   const router = createTestingRouter(
     [
@@ -33,32 +24,22 @@ test.skip("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement d
         element: <BoutonPrendreEnChargeAleatoirement />
       },
       {
-        path: getUrlWithParam(
-          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-          ReponseAppelMesRequetes[1].id
-        ),
+        path: getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID, ReponseAppelMesRequetes[1].id),
         element: <ApercuRequeteEtablissementSuiviDossierPage />
       }
     ],
     [URL_MES_REQUETES_DELIVRANCE]
   );
 
-  render(
-    elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte)
-  );
+  render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte));
 
-  const bouttonPrendreEnCharge = screen.getByText(
-    /Prendre en charge/i
-  ) as HTMLButtonElement;
+  const bouttonPrendreEnCharge = screen.getByText(/Prendre en charge/i) as HTMLButtonElement;
 
   fireEvent.click(bouttonPrendreEnCharge);
 
   waitFor(() => {
     expect(router.state.location.pathname).toBe(
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-        ReponseAppelMesRequetes[1].id
-      )
+      getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID, ReponseAppelMesRequetes[1].id)
     );
   });
 });

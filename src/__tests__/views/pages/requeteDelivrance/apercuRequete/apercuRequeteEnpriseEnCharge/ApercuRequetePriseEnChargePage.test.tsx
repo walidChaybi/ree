@@ -1,7 +1,3 @@
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
-import { DataRMCActeAvecResultat, DataTableauActe } from "@mock/data/RMCActe";
-import { DataRMCInscriptionAvecResultat, DataTableauInscription } from "@mock/data/RMCInscription";
 import { ApercuRequetePriseEnChargePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { MOTIF_IGNORE } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/IgnoreRequetePopin";
 import {
@@ -15,6 +11,10 @@ import { Navigate, RouterProvider } from "react-router-dom";
 import { beforeAll, expect, test } from "vitest";
 import PageEditionRequeteDelivrance from "../../../../../../pages/requetesDelivrance/PageEditionRequeteDelivrance";
 import { createTestingRouter, mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
+import MockRECEContextProvider from "../../../../../mock/context/MockRECEContextProvider";
+import { LISTE_UTILISATEURS } from "../../../../../mock/data/ListeUtilisateurs";
+import { DataRMCActeAvecResultat, DataTableauActe } from "../../../../../mock/data/RMCActe";
+import { DataRMCInscriptionAvecResultat, DataTableauInscription } from "../../../../../mock/data/RMCInscription";
 
 beforeAll(() => {
   mockFenetreFicheTestFunctions();

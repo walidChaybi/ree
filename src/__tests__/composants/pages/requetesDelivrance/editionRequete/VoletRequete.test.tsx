@@ -1,11 +1,11 @@
-import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { render, screen } from "@testing-library/react";
 import { expect, test } from "vitest";
 import VoletRequete from "../../../../../composants/pages/requetesDelivrance/editionRequete/partieActeRequete/VoletRequete";
+import requeteDelivrance from "../../../../mock/data/requeteDelivrance";
 
 const requeteMock = {
-  ...requeteDelivrance,
+  ...requeteDelivrance
 } as unknown as IRequeteDelivrance;
 test("renders the component and displays the request description", () => {
   render(<VoletRequete requete={requeteMock} />);

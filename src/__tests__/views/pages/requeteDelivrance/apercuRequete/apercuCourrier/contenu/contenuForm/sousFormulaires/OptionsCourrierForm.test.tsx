@@ -1,6 +1,4 @@
 import { OPTION } from "@composant/formulaire/ConstantesNomsForm";
-import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
-import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { OptionCourrier } from "@model/requete/IOptionCourrier";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import OptionsCourrierForm, {
@@ -12,6 +10,8 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
 import React, { useState } from "react";
 import { describe, expect, test, vi } from "vitest";
+import { DOCUMENT_DELIVRANCE } from "../../../../../../../../mock/data/NomenclatureDocumentDelivrance";
+import requeteDelivrance from "../../../../../../../../mock/data/requeteDelivrance";
 
 describe("Test OptionsCourrierForm", () => {
   DocumentDelivrance.init(DOCUMENT_DELIVRANCE);

@@ -6,14 +6,14 @@ import { Request, Response, fetch } from "@remix-run/web-fetch";
 import React from "react";
 import request from "superagent";
 import { afterAll, beforeAll, beforeEach, vi } from "vitest";
-import { configAgent } from "../mock/superagent-config/superagent-mock-agent";
-import { configComposition } from "../mock/superagent-config/superagent-mock-composition";
-import { configEtatcivil } from "../mock/superagent-config/superagent-mock-etatcivil";
-import { configMail } from "../mock/superagent-config/superagent-mock-mail";
-import { configOutiltech } from "../mock/superagent-config/superagent-mock-outiltech";
-import { configParamsBaseRequete } from "../mock/superagent-config/superagent-mock-params";
-import { configRequetes } from "../mock/superagent-config/superagent-mock-requetes";
-import { configTeleverification } from "../mock/superagent-config/superagent-mock-televerification";
+import { configAgent } from "./mock/superagent-config/superagent-mock-agent";
+import { configComposition } from "./mock/superagent-config/superagent-mock-composition";
+import { configEtatcivil } from "./mock/superagent-config/superagent-mock-etatcivil";
+import { configMail } from "./mock/superagent-config/superagent-mock-mail";
+import { configOutiltech } from "./mock/superagent-config/superagent-mock-outiltech";
+import { configParamsBaseRequete } from "./mock/superagent-config/superagent-mock-params";
+import { configRequetes } from "./mock/superagent-config/superagent-mock-requetes";
+import { configTeleverification } from "./mock/superagent-config/superagent-mock-televerification";
 
 export const localStorageFeatureFlagMock = (() => {
   let store: any = {

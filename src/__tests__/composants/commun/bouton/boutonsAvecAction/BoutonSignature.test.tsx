@@ -1,4 +1,3 @@
-import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
 import { Orientation } from "@model/composition/enum/Orientation";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
@@ -8,7 +7,8 @@ import { createEvent, fireEvent, screen, waitFor } from "@testing-library/dom";
 import { render } from "@testing-library/react";
 import { describe, expect, test, vi } from "vitest";
 import { BoutonSignature } from "../../../../../composants/commun/bouton/boutonsAvecAction/BoutonSignature";
-import { acte } from "../../../../../mock/data/ficheEtBandeau/ficheActe";
+import { DOCUMENT_DELIVRANCE } from "../../../../mock/data/NomenclatureDocumentDelivrance";
+import { acte } from "../../../../mock/data/ficheEtBandeau/ficheActe";
 
 describe("Test BoutonSignature", () => {
   DocumentDelivrance.init(DOCUMENT_DELIVRANCE);

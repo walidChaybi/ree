@@ -1,11 +1,5 @@
 import { mappingOfficier } from "@model/agent/IOfficier";
 
-import {
-  resultatHeaderUtilistateurLeBiannic,
-  resultatRequeteUtilistateurLeBiannic,
-  userDroitCreerActeTranscritPerimetreTousRegistres
-} from "@mock/data/mockConnectedUserAvecDroit";
-import { serviceEtablissement } from "@mock/data/serviceEtablissement";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
 import { URL_MES_REQUETES_CREATION_SAISIR_RCTC, URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID } from "@router/ReceUrls";
@@ -17,6 +11,12 @@ import IHabilitationDto from "../../../../../dto/etatcivil/agent/IHabilitationDt
 import { SaisirRCTCPage } from "../../../../../pages/requetesConsulaire/contenu/SaisirRCTCPage";
 import { expectEstBoutonDisabled } from "../../../../__tests__utils__/expectUtils";
 import { createTestingRouter, elementAvecContexte, renseigneChampsRecherche } from "../../../../__tests__utils__/testsUtil";
+import {
+  resultatHeaderUtilistateurLeBiannic,
+  resultatRequeteUtilistateurLeBiannic,
+  userDroitCreerActeTranscritPerimetreTousRegistres
+} from "../../../../mock/data/mockConnectedUserAvecDroit";
+import { serviceEtablissement } from "../../../../mock/data/serviceEtablissement";
 
 const utilisateurConnecte = mappingOfficier(resultatHeaderUtilistateurLeBiannic, resultatRequeteUtilistateurLeBiannic.data);
 utilisateurConnecte.habilitations = mapHabilitationsUtilisateur(

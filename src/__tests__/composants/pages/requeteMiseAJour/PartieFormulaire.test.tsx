@@ -1,5 +1,3 @@
-import { NATURE_MENTION } from "@mock/data/NomenclatureNatureMention";
-import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
 import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
 import { IOfficier } from "@model/agent/IOfficier";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
@@ -10,6 +8,8 @@ import { describe, expect, test } from "vitest";
 import PartieFormulaire from "../../../../composants/pages/requetesMiseAJour/PartieFormulaire";
 import EditionMiseAJourContextProvider from "../../../../contexts/EditionMiseAJourContextProvider";
 import { createTestingRouter, elementAvecContexte } from "../../../__tests__utils__/testsUtil";
+import { NATURE_MENTION } from "../../../mock/data/NomenclatureNatureMention";
+import { TYPE_MENTION } from "../../../mock/data/NomenclatureTypeMention";
 
 describe("Test PartieFormulaire", () => {
   NatureMention.init(NATURE_MENTION);

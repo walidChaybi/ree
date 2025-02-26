@@ -1,5 +1,3 @@
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import mockConnectedUser from "@mock/data/connectedUser.json";
 import { IOfficier } from "@model/agent/IOfficier";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { ApercuReqCreationTranscriptionSaisieProjetPage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSaisieProjetPage";
@@ -13,6 +11,8 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
+import MockRECEContextProvider from "../../../../../mock/context/MockRECEContextProvider";
+import mockConnectedUser from "../../../../../mock/data/connectedUser.json";
 
 let u: any = mockConnectedUser;
 const utilisateurConnecte = u as IOfficier;

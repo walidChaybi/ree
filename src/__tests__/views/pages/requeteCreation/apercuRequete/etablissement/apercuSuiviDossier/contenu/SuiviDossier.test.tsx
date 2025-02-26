@@ -1,6 +1,4 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { requeteCreationEtablissement } from "@mock/data/requeteCreationEtablissement";
 import { IOfficier } from "@model/agent/IOfficier";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { IEchange } from "@model/requete/IEchange";
@@ -21,6 +19,8 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { MemoryRouter, RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../../../__tests__utils__/testsUtil";
+import MockRECEContextProvider from "../../../../../../../mock/context/MockRECEContextProvider";
+import { requeteCreationEtablissement } from "../../../../../../../mock/data/requeteCreationEtablissement";
 import { localStorageFeatureFlagMock } from "../../../../../../../setupTests";
 
 interface HookConsumerSuiviDossierProps {

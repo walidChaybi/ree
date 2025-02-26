@@ -1,12 +1,12 @@
 import { IGenerationECParams, useGenerationEC } from "@hook/generation/generationECHook/generationECHook";
-import { ReponseAppelDetailRequeteDelivrance } from "@mock/data/DetailRequeteDelivrance";
-import { idFicheActe1, idFicheActeMariage } from "@mock/data/ficheActe";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { describe, expect, test } from "vitest";
 import { getRequeteWithChoixDelivrance } from "../../../../../__tests__utils__/testsUtil";
+import { ReponseAppelDetailRequeteDelivrance } from "../../../../../mock/data/DetailRequeteDelivrance";
+import { idFicheActe1, idFicheActeMariage } from "../../../../../mock/data/ficheActe";
 
 describe.skip("Test generationECHook", () => {
   const ecMariageSansFiliationparams: IGenerationECParams = {

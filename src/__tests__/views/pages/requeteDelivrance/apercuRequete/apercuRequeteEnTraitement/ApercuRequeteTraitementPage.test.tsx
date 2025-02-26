@@ -1,5 +1,3 @@
-import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
-import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
 import { URL_MES_REQUETES_DELIVRANCE, URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
@@ -8,6 +6,8 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { afterAll, beforeAll, beforeEach, expect, test } from "vitest";
 import { createTestingRouter, elementAvecContexte, mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
+import { LISTE_UTILISATEURS } from "../../../../../mock/data/ListeUtilisateurs";
+import { userDroitnonCOMEDEC } from "../../../../../mock/data/mockConnectedUserAvecDroit";
 
 beforeAll(() => {
   mockFenetreFicheTestFunctions();

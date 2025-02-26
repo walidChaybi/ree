@@ -1,10 +1,4 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
-import { PAYS_SECABILITE } from "@mock/data/NomenclaturePaysSecabilite";
-import { TYPE_PIECE_JUSTIFICATIVE } from "@mock/data/NomenclatureTypePieceJustificative";
-import { requeteCreationEtablissementSaisieProjet } from "@mock/data/requeteCreationEtablissement";
-import "@mock/element/IntersectionObserver";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
@@ -22,6 +16,12 @@ import { DEUX, UN, ZERO } from "@util/Utils";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../../../../../__tests__utils__/testsUtil";
+import MockRECEContextProvider from "../../../../../../../../../mock/context/MockRECEContextProvider";
+import { DOCUMENT_DELIVRANCE } from "../../../../../../../../../mock/data/NomenclatureDocumentDelivrance";
+import { PAYS_SECABILITE } from "../../../../../../../../../mock/data/NomenclaturePaysSecabilite";
+import { TYPE_PIECE_JUSTIFICATIVE } from "../../../../../../../../../mock/data/NomenclatureTypePieceJustificative";
+import { requeteCreationEtablissementSaisieProjet } from "../../../../../../../../../mock/data/requeteCreationEtablissement";
+import "../../../../../../../../../mock/element/IntersectionObserver";
 
 describe("Test du bloc Postulant de l'onglet Postulant", () => {
   PaysSecabilite.init(PAYS_SECABILITE);

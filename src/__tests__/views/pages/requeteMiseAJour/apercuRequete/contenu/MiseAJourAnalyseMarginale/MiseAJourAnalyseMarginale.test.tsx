@@ -1,8 +1,4 @@
 import { LISTES_TYPES_MENTION, MENTION_NIVEAU_DEUX, MENTION_NIVEAU_UN } from "@composant/formulaire/ConstantesNomsForm";
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { NATURE_MENTION } from "@mock/data/NomenclatureNatureMention";
-import { TYPE_ALERTE } from "@mock/data/NomenclatureTypeAlerte";
-import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
@@ -13,6 +9,10 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
+import MockRECEContextProvider from "../../../../../../mock/context/MockRECEContextProvider";
+import { NATURE_MENTION } from "../../../../../../mock/data/NomenclatureNatureMention";
+import { TYPE_ALERTE } from "../../../../../../mock/data/NomenclatureTypeAlerte";
+import { TYPE_MENTION } from "../../../../../../mock/data/NomenclatureTypeMention";
 
 describe("Test MiseAJourAnalyseMarginale", () => {
   NatureMention.init(NATURE_MENTION);

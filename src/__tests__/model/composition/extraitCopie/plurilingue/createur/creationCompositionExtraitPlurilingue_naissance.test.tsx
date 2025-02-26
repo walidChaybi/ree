@@ -1,5 +1,10 @@
 import { creationCompositionExtraitPlurilingue } from "@hook/generation/generationECHook/creationComposition/creationCompositionExtraitPlurilingue";
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { IMention } from "@model/etatcivil/acte/mention/IMention";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { Validation } from "@model/requete/enum/Validation";
+import { describe, expect, test } from "vitest";
 import {
   ficheActeAvecAnneeNaissanceTitulaireAbsente,
   ficheActeAvecTitulaireIndetermine,
@@ -7,13 +12,8 @@ import {
   ficheActeAvecUnParentTitulaireIndetermine,
   ficheActeNaissanceAvecParentsDeMemeSexe,
   ficheActeNaissanceAvecTitulaireInconnu
-} from "@mock/data/ficheActe";
-import { mentionsPlurilinguesMariageAvec6 } from "@mock/data/mentions";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { IMention } from "@model/etatcivil/acte/mention/IMention";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { Validation } from "@model/requete/enum/Validation";
-import { describe, expect, test } from "vitest";
+} from "../../../../../mock/data/ficheActe";
+import { mentionsPlurilinguesMariageAvec6 } from "../../../../../mock/data/mentions";
 
 const validation = "O";
 const mentionsRetirees: string[] = [];
@@ -123,9 +123,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
       expect(compositionCorps?.titulaire_1.nom).toBe(nom);
       expect(compositionCorps?.titulaire_1.prenoms).toBe(prenoms);
       expect(compositionCorps?.titulaire_1?.lieu_naissance).toBe(lieuNaissance);
-      expect(compositionCorps?.titulaire_1.date_naissance?.jour).toBe(
-        date_naissance.jour
-      );
+      expect(compositionCorps?.titulaire_1.date_naissance?.jour).toBe(date_naissance.jour);
       expect(compositionCorps?.titulaire_1.nom_pere).toBe(nomPere);
 
       expect(compositionCorps?.titulaire_1?.prenoms_pere).toBe(prenomPere);
@@ -145,9 +143,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
 
     const mentierAfficherUn = "Sc 31-01-92 Nantes Jenmi";
 
-    expect(compositionCorps?.autres_enonciations_acte.enonciations[0]).toBe(
-      mentierAfficherUn
-    );
+    expect(compositionCorps?.autres_enonciations_acte.enonciations[0]).toBe(mentierAfficherUn);
   });
 
   test("Ne doit pas affiché une mention sur l'extrait si elle est présente dans les mentions retirées", () => {
@@ -164,9 +160,7 @@ describe("Composition extrait plurilingue de Naissance", () => {
 
     const mentionAfficherUn = "Sc 31-12-98 Nantes Jenmi";
 
-    expect(compositionCorps?.autres_enonciations_acte.enonciations[0]).toBe(
-      mentionAfficherUn
-    );
+    expect(compositionCorps?.autres_enonciations_acte.enonciations[0]).toBe(mentionAfficherUn);
   });
 
   test("Ne doit pas éditer le nom si il est égale à SNP et prénom si égale à SPC", () => {

@@ -1,5 +1,3 @@
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
 import { IHabilitation, IProfil } from "@model/agent/Habilitation";
 import { IOfficier } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
@@ -17,6 +15,8 @@ import request from "superagent";
 import { afterAll, describe, expect, test } from "vitest";
 import SignatureDelivrance from "../../../../composants/commun/signature/SignatureDelivrance";
 import { CODES_ERREUR_BLOQUANTS, CODE_PIN_INVALIDE, IDocumentASigner } from "../../../../utils/Signature";
+import MockRECEContextProvider from "../../../mock/context/MockRECEContextProvider";
+import { DOCUMENT_DELIVRANCE } from "../../../mock/data/NomenclatureDocumentDelivrance";
 
 describe("Test du composant Signature délivrance", () => {
   DocumentDelivrance.init(DOCUMENT_DELIVRANCE);

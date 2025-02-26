@@ -1,4 +1,3 @@
-import { idRequeteRDC, requeteRDC } from "@mock/data/requeteDelivrance";
 import { MenuReponseSansDelivranceEC } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuReponseSansDelivranceEC";
 import {
   PATH_EDITION,
@@ -11,6 +10,7 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../../../__tests__utils__/testsUtil";
+import { idRequeteRDC, requeteRDC } from "../../../../../../../mock/data/requeteDelivrance";
 
 test("renders du bloc Menu Reponse sans délivrance", () => {
   const router = createTestingRouter(

@@ -1,10 +1,10 @@
 import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
-import { observations0, observations1 } from "@mock/data/Observations";
-import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
-import DONNEES_REQUETE from "@mock/data/requete";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { expect, test } from "vitest";
 import { elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
+import { observations0, observations1 } from "../../../../mock/data/Observations";
+import { userDroitnonCOMEDEC } from "../../../../mock/data/mockConnectedUserAvecDroit";
+import DONNEES_REQUETE from "../../../../mock/data/requete";
 
 test("renders suivi des observations requete", () => {
   render(

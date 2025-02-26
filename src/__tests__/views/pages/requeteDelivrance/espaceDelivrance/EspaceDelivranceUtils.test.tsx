@@ -1,17 +1,11 @@
-import {
-  requeteRDCSC,
-  requeteRDCSCCertificatSituationRCA
-} from "@mock/data/requeteDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { mappingRequetesTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import {
-  ADonneesTitulaireRequeteAbsentes,
-  goToLinkRequete
-} from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
+import { ADonneesTitulaireRequeteAbsentes, goToLinkRequete } from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { render, screen } from "@testing-library/react";
 import { RenderIconPrioriteRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { expect, test } from "vitest";
+import { requeteRDCSC, requeteRDCSCCertificatSituationRCA } from "../../../../mock/data/requeteDelivrance";
 
 test("espace delivrance utils goToLinkRequete", () => {
   const result = goToLinkRequete(
@@ -33,12 +27,7 @@ test("espace delivrance utils getIconPrioriteRequete ", () => {
 });
 
 test("Doit retourer true quand une des conditions n'est pas remplie (ex: NATIONALITE = FRANCAISE)", () => {
-  const requete = mappingRequetesTableauDelivrance(
-    [requeteRDCSC],
-    false,
-    [],
-    []
-  ) as unknown as IRequeteDelivrance[];
+  const requete = mappingRequetesTableauDelivrance([requeteRDCSC], false, [], []) as unknown as IRequeteDelivrance[];
 
   const result = ADonneesTitulaireRequeteAbsentes(requete[0]);
 
@@ -46,12 +35,7 @@ test("Doit retourer true quand une des conditions n'est pas remplie (ex: NATIONA
 });
 
 test("Doit retourer false quand toutes les données sont présente", () => {
-  const requete = mappingRequetesTableauDelivrance(
-    [requeteRDCSCCertificatSituationRCA],
-    false,
-    [],
-    []
-  ) as unknown as IRequeteDelivrance[];
+  const requete = mappingRequetesTableauDelivrance([requeteRDCSCCertificatSituationRCA], false, [], []) as unknown as IRequeteDelivrance[];
 
   const result = ADonneesTitulaireRequeteAbsentes(requete[0]);
 

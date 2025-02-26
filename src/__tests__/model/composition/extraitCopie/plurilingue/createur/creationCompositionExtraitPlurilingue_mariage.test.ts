@@ -1,5 +1,10 @@
 import { creationCompositionExtraitPlurilingue } from "@hook/generation/generationECHook/creationComposition/creationCompositionExtraitPlurilingue";
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { IMention } from "@model/etatcivil/acte/mention/IMention";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { Validation } from "@model/requete/enum/Validation";
+import { describe, expect, test } from "vitest";
 import {
   ficheActeAvecDeuxTitulaireIndetermine,
   ficheActeAvecImage,
@@ -7,16 +12,8 @@ import {
   ficheActeAvecUnTitulaireIndetermine,
   ficheActeMariage,
   ficheActeMariageAvecNomContientDesormais
-} from "@mock/data/ficheActe";
-import {
-  mentionsPlurilinguesMariageAvec6,
-  mentionsPlurilinguesMariageNombre10
-} from "@mock/data/mentions";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { IMention } from "@model/etatcivil/acte/mention/IMention";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { Validation } from "@model/requete/enum/Validation";
-import { describe, expect, test } from "vitest";
+} from "../../../../../mock/data/ficheActe";
+import { mentionsPlurilinguesMariageAvec6, mentionsPlurilinguesMariageNombre10 } from "../../../../../mock/data/mentions";
 
 const validation = "O";
 const mentionsRetirees: string[] = [];
@@ -53,31 +50,17 @@ describe("Composition extrait plurilingue de Mariage", () => {
     const lieuNaissanceT2 = "Barcelone, Catalogne (Espagne)";
 
     if (compositionCorps?.titulaire_1) {
-      expect(compositionCorps.titulaire_1.nom_apres_mariage).toBe(
-        nomApresMariageAttenduT1
-      );
-      expect(compositionCorps.titulaire_1.nom_avant_mariage).toBe(
-        nomAvantMariageAttenduT1
-      );
+      expect(compositionCorps.titulaire_1.nom_apres_mariage).toBe(nomApresMariageAttenduT1);
+      expect(compositionCorps.titulaire_1.nom_avant_mariage).toBe(nomAvantMariageAttenduT1);
       expect(compositionCorps.titulaire_1.prenoms).toBe(prenomsT1);
-      expect(compositionCorps.titulaire_1.date_naissance?.jour).toBe(
-        dateNaissanceT1.jour
-      );
-      expect(compositionCorps.titulaire_1?.lieu_naissance).toBe(
-        lieuNaissanceT1
-      );
+      expect(compositionCorps.titulaire_1.date_naissance?.jour).toBe(dateNaissanceT1.jour);
+      expect(compositionCorps.titulaire_1?.lieu_naissance).toBe(lieuNaissanceT1);
     }
 
-    expect(compositionCorps?.titulaire_2?.nom_apres_mariage).toBe(
-      nomApresMariageAttenduT2
-    );
-    expect(compositionCorps?.titulaire_2?.nom_avant_mariage).toBe(
-      nomAvantMariageAttenduT2
-    );
+    expect(compositionCorps?.titulaire_2?.nom_apres_mariage).toBe(nomApresMariageAttenduT2);
+    expect(compositionCorps?.titulaire_2?.nom_avant_mariage).toBe(nomAvantMariageAttenduT2);
     expect(compositionCorps?.titulaire_2?.prenoms).toBe(prenomsT2);
-    expect(compositionCorps?.titulaire_2?.date_naissance?.jour).toBe(
-      dateNaissanceT2.jour
-    );
+    expect(compositionCorps?.titulaire_2?.date_naissance?.jour).toBe(dateNaissanceT2.jour);
     expect(compositionCorps?.titulaire_2?.lieu_naissance).toBe(lieuNaissanceT2);
   });
 
@@ -92,9 +75,7 @@ describe("Composition extrait plurilingue de Mariage", () => {
       mentionsRetirees
     );
 
-    expect(compositionCorps?.autres_enonciations_acte.nombre_enonciations).toBe(
-      9
-    );
+    expect(compositionCorps?.autres_enonciations_acte.nombre_enonciations).toBe(9);
   });
 
   test("Doit afficher les mentions quand le nombre de mentions est en dessous ou égale de la limite", () => {
@@ -110,9 +91,7 @@ describe("Composition extrait plurilingue de Mariage", () => {
 
     const mentierAfficherUn = "Sc 31-01-92 Nantes Jenmi";
 
-    expect(compositionCorps?.autres_enonciations_acte.enonciations[0]).toBe(
-      mentierAfficherUn
-    );
+    expect(compositionCorps?.autres_enonciations_acte.enonciations[0]).toBe(mentierAfficherUn);
   });
 
   test("Doit retourner undefined quand le nom du titulaire de l'analyse marginale est égal à SNP ou prenom égale à SPC", () => {
@@ -180,9 +159,7 @@ describe("Composition extrait plurilingue de Mariage", () => {
     );
 
     expect(compositionCorps?.lieu_acte).toEqual("Lieu de reprise evenement");
-    expect(compositionCorps?.titulaire_2?.lieu_naissance).toBe(
-      "Lieu de reprise"
-    );
+    expect(compositionCorps?.titulaire_2?.lieu_naissance).toBe("Lieu de reprise");
   });
 
   test("Doit formater la date de naissance correctement quand le pays est France", () => {
@@ -222,9 +199,7 @@ describe("Composition extrait plurilingue de Mariage", () => {
       mentionsRetirees
     );
 
-    expect(compositionCorps?.titulaire_2?.lieu_naissance).toBe(
-      "Barcelone, Catalogne (Espagne)"
-    );
+    expect(compositionCorps?.titulaire_2?.lieu_naissance).toBe("Barcelone, Catalogne (Espagne)");
   });
 
   test("Doit composer correctement le lieu de naissance quand le pays est inconnu", () => {

@@ -1,13 +1,13 @@
 import { specificationPhraseDelivrer } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseDelivrer";
 import { INbInscriptionsInfos } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
-import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
-import { annulationJuridictionMap, pacsModificationNotaireMap } from "@mock/data/PACS";
-import { FicheRcDecisionNotaire, FicheRcModification } from "@mock/data/ficheRC";
-import { FicheRcaDecisionAvecInstructionProcureur, FicheRcaDecisionJuridictionEtrangere } from "@mock/data/ficheRCA";
-import { ReponseAppelNomenclatureDocummentDelivrance } from "@mock/data/nomenclatures";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { describe, expect, test } from "vitest";
+import { DOCUMENT_DELIVRANCE } from "../../../../../../mock/data/NomenclatureDocumentDelivrance";
+import { annulationJuridictionMap, pacsModificationNotaireMap } from "../../../../../../mock/data/PACS";
+import { FicheRcDecisionNotaire, FicheRcModification } from "../../../../../../mock/data/ficheRC";
+import { FicheRcaDecisionAvecInstructionProcureur, FicheRcaDecisionJuridictionEtrangere } from "../../../../../../mock/data/ficheRCA";
+import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../mock/data/nomenclatures";
 const nbInscriptionsInfos = {} as INbInscriptionsInfos;
 
 describe("Test specificationPhraseDelivrer", () => {

@@ -1,13 +1,13 @@
 import { useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook } from "@hook/requete/creation/EnvoyerMessageSdanfEtMiseAJourStatutApiHook";
-import {
-  reponseRequeteCreationMessageSdanf,
-  requeteCreationAvecMessagesRetourSDANFAvecMessages
-} from "@mock/data/requeteCreation";
 import { IEchange } from "@model/requete/IEchange";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { beforeAll, expect, test } from "vitest";
 import { mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
+import {
+  reponseRequeteCreationMessageSdanf,
+  requeteCreationAvecMessagesRetourSDANFAvecMessages
+} from "../../../../../mock/data/requeteCreation";
 
 beforeAll(() => {
   mockFenetreFicheTestFunctions();
@@ -27,8 +27,7 @@ const params = {
 };
 
 const HookConsumer: React.FC = () => {
-  const res: IEchange =
-    useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook(params);
+  const res: IEchange = useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook(params);
 
   return <div>{res ? res.message : ""}</div>;
 };
@@ -37,8 +36,6 @@ test("Attendu: useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook fonctionne c
   render(<HookConsumer />);
 
   waitFor(() => {
-    expect(
-      screen.getByText(reponseRequeteCreationMessageSdanf.message)
-    ).toBeDefined();
+    expect(screen.getByText(reponseRequeteCreationMessageSdanf.message)).toBeDefined();
   });
 });

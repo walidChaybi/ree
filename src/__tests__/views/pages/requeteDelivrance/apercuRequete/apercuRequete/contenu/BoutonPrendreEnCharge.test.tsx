@@ -1,8 +1,3 @@
-import {
-  userDroitCOMEDEC,
-  userDroitnonCOMEDEC
-} from "@mock/data/mockConnectedUserAvecDroit";
-import { idRequeteRDCSC } from "@mock/data/requeteDelivrance";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -16,10 +11,9 @@ import { fireEvent, render, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
-import {
-  createTestingRouter,
-  elementAvecContexte
-} from "../../../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, elementAvecContexte } from "../../../../../../__tests__utils__/testsUtil";
+import { userDroitCOMEDEC, userDroitnonCOMEDEC } from "../../../../../../mock/data/mockConnectedUserAvecDroit";
+import { idRequeteRDCSC } from "../../../../../../mock/data/requeteDelivrance";
 
 const requeteTestCOURRIER = {
   id: idRequeteRDCSC,
@@ -58,23 +52,15 @@ test("est à A_TRAITER ou TRANSFEREE et provient de COURRIER", () => {
     [
       {
         path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-        element: (
-          <BoutonPrendreEnCharge
-            requete={requeteTestCOURRIER}
-          ></BoutonPrendreEnCharge>
-        )
+        element: <BoutonPrendreEnCharge requete={requeteTestCOURRIER}></BoutonPrendreEnCharge>
       }
     ],
     [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]
   );
 
-  const { getByText } = render(
-    elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC)
-  );
+  const { getByText } = render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC));
 
-  const bouttonPrendreEnCharge = getByText(
-    /Prendre en charge/i
-  ) as HTMLButtonElement;
+  const bouttonPrendreEnCharge = getByText(/Prendre en charge/i) as HTMLButtonElement;
 
   waitFor(() => {
     expect(bouttonPrendreEnCharge.disabled).toBeFalsy();
@@ -120,28 +106,15 @@ test("est à A_TRAITER ou TRANSFEREE et provient de COMEDEC", () => {
     [
       {
         path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-        element: (
-          <BoutonPrendreEnCharge
-            requete={requeteTestCOMEDEC}
-          ></BoutonPrendreEnCharge>
-        )
+        element: <BoutonPrendreEnCharge requete={requeteTestCOMEDEC}></BoutonPrendreEnCharge>
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-        "a4cefb71-8457-4f6b-937e-34b49335d423"
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID, "a4cefb71-8457-4f6b-937e-34b49335d423")]
   );
 
-  const { getByText } = render(
-    elementAvecContexte(<RouterProvider router={router} />, userDroitCOMEDEC)
-  );
+  const { getByText } = render(elementAvecContexte(<RouterProvider router={router} />, userDroitCOMEDEC));
 
-  const bouttonPrendreEnCharge = getByText(
-    /Prendre en charge/i
-  ) as HTMLButtonElement;
+  const bouttonPrendreEnCharge = getByText(/Prendre en charge/i) as HTMLButtonElement;
 
   waitFor(() => {
     expect(bouttonPrendreEnCharge.disabled).toBeFalsy();

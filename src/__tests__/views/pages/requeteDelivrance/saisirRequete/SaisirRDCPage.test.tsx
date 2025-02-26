@@ -1,10 +1,3 @@
-import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
-import {
-  resultatHeaderUtilistateurLaurenceBourdeau,
-  resultatRequeteUtilistateurLaurenceBourdeau,
-  userDroitnonCOMEDEC
-} from "@mock/data/mockConnectedUserAvecDroit";
-import { idRequeteRDCPourModification, idRequeteRDCPourModificationMaCorbeille } from "@mock/data/requeteDelivrance";
 import { mappingOfficier } from "@model/agent/IOfficier";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -20,6 +13,13 @@ import { getLastPathElem, getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
+import { DOCUMENT_DELIVRANCE } from "../../../../mock/data/NomenclatureDocumentDelivrance";
+import {
+  resultatHeaderUtilistateurLaurenceBourdeau,
+  resultatRequeteUtilistateurLaurenceBourdeau,
+  userDroitnonCOMEDEC
+} from "../../../../mock/data/mockConnectedUserAvecDroit";
+import { idRequeteRDCPourModification, idRequeteRDCPourModificationMaCorbeille } from "../../../../mock/data/requeteDelivrance";
 
 describe("Test de la page EditionExtraitCopie", () => {
   DocumentDelivrance.init(DOCUMENT_DELIVRANCE);

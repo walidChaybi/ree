@@ -1,8 +1,5 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
-import { requeteAvecDocs } from "@mock/data/DetailRequeteDelivrance";
-import { ficheActeMariage, ficheActeMariage2 } from "@mock/data/ficheActe";
-import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -20,6 +17,9 @@ import {
   expectEstTextePresent
 } from "../../../../../../../__tests__utils__/expectUtils";
 import { elementAvecContexte } from "../../../../../../../__tests__utils__/testsUtil";
+import { requeteAvecDocs } from "../../../../../../../mock/data/DetailRequeteDelivrance";
+import { ficheActeMariage, ficheActeMariage2 } from "../../../../../../../mock/data/ficheActe";
+import { userDroitnonCOMEDEC } from "../../../../../../../mock/data/mockConnectedUserAvecDroit";
 
 const acteMariage = mapActe(ficheActeMariage2.data);
 const requete = {
@@ -27,12 +27,12 @@ const requete = {
   documentsReponses: [{ typeDocument: "ff7fe1fa-a2d6-4bc5-8681-deba65d9e2c6" }]
 } as IRequeteDelivrance;
 
-const saisirExtraitFormAvecContexte = (
-  acte: IFicheActe,
-  requete: IRequeteDelivrance
-): any => {
+const saisirExtraitFormAvecContexte = (acte: IFicheActe, requete: IRequeteDelivrance): any => {
   return elementAvecContexte(
-    <SaisirExtraitForm acte={acte} requete={requete} />,
+    <SaisirExtraitForm
+      acte={acte}
+      requete={requete}
+    />,
     userDroitnonCOMEDEC
   );
 };
@@ -46,15 +46,9 @@ test.skip("Attendu: le formulaire SaisirExtraitForm pour un acte de mariage s'af
     expect(screen.getByText("Evénement mariage")).toBeDefined();
 
     expect(screen.getByText("Contrat de mariage")).toBeDefined();
-    expectEstSelectPresentAvecValeur(
-      "evenement.contratMariage.existence",
-      "OUI"
-    );
+    expectEstSelectPresentAvecValeur("evenement.contratMariage.existence", "OUI");
     expect(screen.getByText("Avec contrat")).toBeDefined();
-    expectEstPresentAvecValeur(
-      "evenement.contratMariage.texte",
-      "texte du contrat de mariage"
-    );
+    expectEstPresentAvecValeur("evenement.contratMariage.texte", "texte du contrat de mariage");
 
     // Titulaire 1
     expectAbsenceDateLieuSexePourParentTitulaire(1);
@@ -66,41 +60,20 @@ test.skip("Attendu: le formulaire SaisirExtraitForm pour un acte de mariage s'af
     expectEstPresentEtChecked("titulaireevt2.adoptepar.true");
     expect(screen.getByText("Parents adoptants titulaire 2")).toBeDefined();
     expect(screen.getByText("Parent adoptant 1")).toBeDefined();
-    expectEstPresentAvecValeur(
-      "titulaireEvt2.parentAdoptantNaiss1.nomNaissance",
-      "TEST ADOPTANT"
-    );
-    expectEstPresentAvecValeur(
-      "titulaireEvt2.parentAdoptantNaiss1.prenoms.prenom1",
-      "test"
-    );
+    expectEstPresentAvecValeur("titulaireEvt2.parentAdoptantNaiss1.nomNaissance", "TEST ADOPTANT");
+    expectEstPresentAvecValeur("titulaireEvt2.parentAdoptantNaiss1.prenoms.prenom1", "test");
     expect(screen.getByText("Parent adoptant 2")).toBeDefined();
-    expectEstPresentAvecValeurVide(
-      "titulaireEvt2.parentAdoptantNaiss2.nomNaissance"
-    );
-    expectEstPresentAvecValeurVide(
-      "titulaireEvt2.parentAdoptantNaiss2.prenoms.prenom1"
-    );
+    expectEstPresentAvecValeurVide("titulaireEvt2.parentAdoptantNaiss2.nomNaissance");
+    expectEstPresentAvecValeurVide("titulaireEvt2.parentAdoptantNaiss2.prenoms.prenom1");
 
     // Données complémentaires plurilingues
-    expectEstPresentAvecValeur(
-      "donneesComplementairesPlurilingues.nomApresMariageEpoux",
-      "nomApresMariage masculin"
-    );
-    expectEstPresentAvecValeur(
-      "donneesComplementairesPlurilingues.nomApresMariageEpouse",
-      "nomApresMariage feminin"
-    );
+    expectEstPresentAvecValeur("donneesComplementairesPlurilingues.nomApresMariageEpoux", "nomApresMariage masculin");
+    expectEstPresentAvecValeur("donneesComplementairesPlurilingues.nomApresMariageEpouse", "nomApresMariage feminin");
   });
 });
 
 test("Attendu: la validation du formulaire mariage fonctionne correctement", () => {
-  render(
-    saisirExtraitFormAvecContexte(
-      acteMariage,
-      mappingRequeteDelivrance(requeteAvecDocs)
-    )
-  );
+  render(saisirExtraitFormAvecContexte(acteMariage, mappingRequeteDelivrance(requeteAvecDocs)));
 
   fireEvent.click(screen.getByLabelText("Valider"));
 
@@ -111,36 +84,22 @@ test("Attendu: la validation du formulaire mariage fonctionne correctement", () 
 
 function expectAbsenceDateLieuSexePourParentTitulaire(numeroTitulaire: number) {
   // Parent 1: Absence date,lieu de naissance et sexe
-  expectEstAbsent(
-    `titulaireEvt${numeroTitulaire}.parentNaiss1.dateNaissanceOuAgeDe.date.annee`
-  );
-  expectEstAbsent(
-    `titulaireEvt${numeroTitulaire}.parentNaiss1.dateNaissanceOuAgeDe.age`
-  );
-  expectEstAbsent(
-    `titulaireEvt${numeroTitulaire}.parentNaiss1.lieuNaissance.lieuComplet`
-  );
+  expectEstAbsent(`titulaireEvt${numeroTitulaire}.parentNaiss1.dateNaissanceOuAgeDe.date.annee`);
+  expectEstAbsent(`titulaireEvt${numeroTitulaire}.parentNaiss1.dateNaissanceOuAgeDe.age`);
+  expectEstAbsent(`titulaireEvt${numeroTitulaire}.parentNaiss1.lieuNaissance.lieuComplet`);
   expectEstAbsent(`titulaireEvt${numeroTitulaire}.parentNaiss1.sexe`);
 
   // Parent 2: Absence date, lieu de naissance et sexe
-  expectEstAbsent(
-    `titulaireEvt${numeroTitulaire}.parentNaiss2.dateNaissanceOuAgeDe.date.annee`
-  );
-  expectEstAbsent(
-    `titulaireEvt${numeroTitulaire}.parentNaiss2.dateNaissanceOuAgeDe.age`
-  );
-  expectEstAbsent(
-    `titulaireEvt${numeroTitulaire}.parentNaiss2.lieuNaissance.lieuComplet`
-  );
+  expectEstAbsent(`titulaireEvt${numeroTitulaire}.parentNaiss2.dateNaissanceOuAgeDe.date.annee`);
+  expectEstAbsent(`titulaireEvt${numeroTitulaire}.parentNaiss2.dateNaissanceOuAgeDe.age`);
+  expectEstAbsent(`titulaireEvt${numeroTitulaire}.parentNaiss2.lieuNaissance.lieuComplet`);
   expectEstAbsent(`titulaireEvt${numeroTitulaire}.parentNaiss2.sexe`);
 }
 
 test.skip('Attendu: la case à cocher "Adopté par" fonctionne correctement', () => {
   render(saisirExtraitFormAvecContexte(acteMariage, requete));
 
-  const caseACocherAdoptePar = expectEstPresentEtNonChecked(
-    "titulaireevt1.adoptepar.true"
-  );
+  const caseACocherAdoptePar = expectEstPresentEtNonChecked("titulaireevt1.adoptepar.true");
   expectEstTexteAbsent("Parents adoptants titulaire 1");
 
   fireEvent.click(caseACocherAdoptePar);
@@ -149,18 +108,10 @@ test.skip('Attendu: la case à cocher "Adopté par" fonctionne correctement', ()
     expectEstPresentEtChecked("titulaireevt1.adoptepar.true");
     expectEstTextePresent("Parents adoptants titulaire 1");
 
-    expectEstPresentAvecValeurVide(
-      "titulaireEvt1.parentAdoptantNaiss1.nomNaissance"
-    );
-    expectEstPresentAvecValeurVide(
-      "titulaireEvt1.parentAdoptantNaiss1.prenoms.prenom1"
-    );
-    expectEstPresentAvecValeurVide(
-      "titulaireEvt1.parentAdoptantNaiss2.nomNaissance"
-    );
-    expectEstPresentAvecValeurVide(
-      "titulaireEvt1.parentAdoptantNaiss2.prenoms.prenom1"
-    );
+    expectEstPresentAvecValeurVide("titulaireEvt1.parentAdoptantNaiss1.nomNaissance");
+    expectEstPresentAvecValeurVide("titulaireEvt1.parentAdoptantNaiss1.prenoms.prenom1");
+    expectEstPresentAvecValeurVide("titulaireEvt1.parentAdoptantNaiss2.nomNaissance");
+    expectEstPresentAvecValeurVide("titulaireEvt1.parentAdoptantNaiss2.prenoms.prenom1");
   });
 
   fireEvent.click(caseACocherAdoptePar);
@@ -174,53 +125,23 @@ test.skip('Attendu: la case à cocher "Adopté par" fonctionne correctement', ()
 test("Attendu: le déverrouillage des champs fonctionne correctement.", () => {
   render(saisirExtraitFormAvecContexte(acteMariage, requete));
 
-  const dateEvenementJour = screen.getByLabelText(
-    "evenement.dateEvenement.jour"
-  ) as HTMLInputElement;
-  const dateEvenementMois = screen.getByLabelText(
-    "evenement.dateEvenement.mois"
-  ) as HTMLInputElement;
-  const dateEvenementAnnee = screen.getByLabelText(
-    "evenement.dateEvenement.annee"
-  ) as HTMLInputElement;
-  const lieuEvenement = screen.getByLabelText(
-    "evenement.lieuEvenement.lieuComplet"
-  ) as HTMLInputElement;
-  const villeEvenement = screen.getByLabelText(
-    "evenement.lieuEvenement.ville"
-  ) as HTMLInputElement;
-  const nomNaissance = screen.getByLabelText(
-    "titulaireEvt2.nomNaissance"
-  ) as HTMLInputElement;
-  const prenom = screen.getByLabelText(
-    "titulaireEvt2.prenoms.prenom1"
-  ) as HTMLInputElement;
-  const sexe = screen.getByLabelText(
-    "titulaireevt2.sexe.feminin"
-  ) as HTMLInputElement;
-  const dateNaissanceTitulaireJour = screen.getByLabelText(
-    "titulaireEvt2.evenement.dateNaissanceOuAgeDe.date.jour"
-  ) as HTMLInputElement;
-  const dateNaissanceTitulaireMois = screen.getByLabelText(
-    "titulaireEvt2.evenement.dateNaissanceOuAgeDe.date.mois"
-  ) as HTMLInputElement;
-  const dateNaissanceTitulaireAnnee = screen.getByLabelText(
-    "titulaireEvt2.evenement.dateNaissanceOuAgeDe.date.annee"
-  ) as HTMLInputElement;
-  const ageDe = screen.getByLabelText(
-    "titulaireEvt2.evenement.dateNaissanceOuAgeDe.age"
-  ) as HTMLInputElement;
+  const dateEvenementJour = screen.getByLabelText("evenement.dateEvenement.jour") as HTMLInputElement;
+  const dateEvenementMois = screen.getByLabelText("evenement.dateEvenement.mois") as HTMLInputElement;
+  const dateEvenementAnnee = screen.getByLabelText("evenement.dateEvenement.annee") as HTMLInputElement;
+  const lieuEvenement = screen.getByLabelText("evenement.lieuEvenement.lieuComplet") as HTMLInputElement;
+  const villeEvenement = screen.getByLabelText("evenement.lieuEvenement.ville") as HTMLInputElement;
+  const nomNaissance = screen.getByLabelText("titulaireEvt2.nomNaissance") as HTMLInputElement;
+  const prenom = screen.getByLabelText("titulaireEvt2.prenoms.prenom1") as HTMLInputElement;
+  const sexe = screen.getByLabelText("titulaireevt2.sexe.feminin") as HTMLInputElement;
+  const dateNaissanceTitulaireJour = screen.getByLabelText("titulaireEvt2.evenement.dateNaissanceOuAgeDe.date.jour") as HTMLInputElement;
+  const dateNaissanceTitulaireMois = screen.getByLabelText("titulaireEvt2.evenement.dateNaissanceOuAgeDe.date.mois") as HTMLInputElement;
+  const dateNaissanceTitulaireAnnee = screen.getByLabelText("titulaireEvt2.evenement.dateNaissanceOuAgeDe.date.annee") as HTMLInputElement;
+  const ageDe = screen.getByLabelText("titulaireEvt2.evenement.dateNaissanceOuAgeDe.age") as HTMLInputElement;
 
-  const parentNomNaissance = screen.getByLabelText(
-    "titulaireEvt2.parentNaiss1.nomNaissance"
-  ) as HTMLInputElement;
-  const parentPrenom = screen.getByLabelText(
-    "titulaireEvt2.parentNaiss1.prenoms.prenom1"
-  ) as HTMLInputElement;
+  const parentNomNaissance = screen.getByLabelText("titulaireEvt2.parentNaiss1.nomNaissance") as HTMLInputElement;
+  const parentPrenom = screen.getByLabelText("titulaireEvt2.parentNaiss1.prenoms.prenom1") as HTMLInputElement;
 
-  const boutonDeverrouillage = screen.getByTitle(
-    "Cliquer pour déverrouiller"
-  ) as HTMLInputElement;
+  const boutonDeverrouillage = screen.getByTitle("Cliquer pour déverrouiller") as HTMLInputElement;
 
   waitFor(() => {
     expect(boutonDeverrouillage).toBeDefined();
@@ -345,13 +266,9 @@ test("Attendu: le déverrouillage des champs fonctionne correctement.", () => {
 });
 
 test("DOIT conserver les prenoms saisies QUAND le bouton 'Adopté par' est coché ou décoché", () => {
-  render(
-    saisirExtraitFormAvecContexte(mapActe(ficheActeMariage.data), requete)
-  );
+  render(saisirExtraitFormAvecContexte(mapActe(ficheActeMariage.data), requete));
   const adoptionTitulaire = screen.getByLabelText("titulaireEvt1.adoptePar");
-  const ajouterPrenomParent1 = screen.getAllByText(
-    "Ajouter prénom"
-  )[1] as HTMLAnchorElement;
+  const ajouterPrenomParent1 = screen.getAllByText("Ajouter prénom")[1] as HTMLAnchorElement;
   const prenom3 = "titulaireEvt1.parentNaiss1.prenoms.prenom3";
 
   waitFor(() => {

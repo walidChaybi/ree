@@ -1,7 +1,5 @@
 import * as EtatCivilApi from "@api/appels/etatcivilApi";
 import * as RequeteApi from "@api/appels/requeteApi";
-import { TYPE_POPIN_SIGNATURE } from "@mock/data/NomenclatureTypePopinSignature";
-import mockConnectedUser from "@mock/data/connectedUser.json";
 import { IOfficier } from "@model/agent/IOfficier";
 import { TypePopinSignature } from "@model/signature/ITypePopinSignature";
 import { ApercuRequeteEtablissementActeRegistrePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuActeRegistre/ApercuRequeteEtablissementActeRegistrePage";
@@ -16,6 +14,8 @@ import { PopinSignatureCreationEtablissement } from "@widget/signature/PopinSign
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test, vi } from "vitest";
 import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
+import { TYPE_POPIN_SIGNATURE } from "../../../../mock/data/NomenclatureTypePopinSignature";
+import mockConnectedUser from "../../../../mock/data/connectedUser.json";
 
 describe("Doit afficher la popin de signature lors de la création d'un acte", () => {
   TypePopinSignature.init(TYPE_POPIN_SIGNATURE);

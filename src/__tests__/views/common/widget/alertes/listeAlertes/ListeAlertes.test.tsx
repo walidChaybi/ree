@@ -1,9 +1,9 @@
-import { Alertes } from "@mock/data/Alertes";
-import { userDroitCOMEDEC, userDroitConsulterPerimetreTUNIS } from "@mock/data/mockConnectedUserAvecDroit";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { ListeAlertes } from "@widget/alertes/listeAlertes/ListeAlertes";
 import { expect, test, vi } from "vitest";
 import { elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
+import { Alertes } from "../../../../../mock/data/Alertes";
+import { userDroitCOMEDEC, userDroitConsulterPerimetreTUNIS } from "../../../../../mock/data/mockConnectedUserAvecDroit";
 
 test("render ListeAlertes avec droit suppression alerte : test ouverture / fermeture popin", async () => {
   render(

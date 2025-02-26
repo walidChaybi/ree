@@ -1,9 +1,9 @@
-import { TYPE_ALERTE } from "@mock/data/NomenclatureTypeAlerte";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import ActeRegistre from "@pages/requeteCreation/commun/composants/ActeRegistre";
 import { render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, test } from "vitest";
 import { elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
+import { TYPE_ALERTE } from "../../../../../mock/data/NomenclatureTypeAlerte";
 
 describe("test ActeRegistre", () => {
   TypeAlerte.init(TYPE_ALERTE);

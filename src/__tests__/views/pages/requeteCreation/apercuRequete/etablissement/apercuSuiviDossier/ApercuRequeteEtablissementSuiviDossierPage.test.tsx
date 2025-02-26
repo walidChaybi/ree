@@ -1,4 +1,3 @@
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { IOfficier } from "@model/agent/IOfficier";
 import { ApercuRequeteEtablissementSuiviDossierPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/ApercuRequeteEtablissementSuiviDossierPage";
 import {
@@ -11,6 +10,7 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter, mockFenetreFicheTestFunctions } from "../../../../../../__tests__utils__/testsUtil";
+import MockRECEContextProvider from "../../../../../../mock/context/MockRECEContextProvider";
 
 describe("Test de la page Aperçu requête etablissement suivi dossier", () => {
   mockFenetreFicheTestFunctions();

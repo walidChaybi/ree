@@ -1,10 +1,10 @@
 import { LienPieceJointe } from "@composant/piecesJointes/LienPieceJointe";
-import { TYPE_PIECE_JUSTIFICATIVE } from "@mock/data/NomenclatureTypePieceJustificative";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { beforeAll, expect, test } from "vitest";
 import { mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
+import { TYPE_PIECE_JUSTIFICATIVE } from "../../../../mock/data/NomenclatureTypePieceJustificative";
 
 beforeAll(() => {
   TypePieceJustificative.init(TYPE_PIECE_JUSTIFICATIVE);

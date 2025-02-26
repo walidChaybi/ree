@@ -1,9 +1,14 @@
-import { RequeteRDCSCInstitutionnel, RequeteRDCSCInteresse, RequeteRDCSCMandataire, RequeteRDCSCParticulier } from "@mock/data/DataRDCSC";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useCreationRequeteDelivranceRDCSC } from "@pages/requeteDelivrance/saisirRequete/hook/CreerRDCSCApiHook";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { describe, expect, test } from "vitest";
+import {
+  RequeteRDCSCInstitutionnel,
+  RequeteRDCSCInteresse,
+  RequeteRDCSCMandataire,
+  RequeteRDCSCParticulier
+} from "../../../../../mock/data/DataRDCSC";
 
 describe("Test du hook CreerRDCSCApi", () => {
   const HookConsummerInteresse: React.FC = () => {

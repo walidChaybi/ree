@@ -1,4 +1,3 @@
-import { ReponseEnregistrementProjetActe } from "@mock/data/ProjetActe";
 import {
   ActeAnalyseMarginales,
   derniereAnalyseMarginaleAvecDeuxVocableEtNomPartie1,
@@ -10,6 +9,7 @@ import { acteExtraitSaisie } from "../data/DonneesSaisieExtrait";
 import { imagePngVideBase64 } from "../data/ImagePng";
 import { decrets } from "../data/NomenclatureEtatCivilDecrets";
 import { pacsModificationNotaire } from "../data/PACS";
+import { ReponseEnregistrementProjetActe } from "../data/ProjetActe";
 import mockRC from "../data/RC.json";
 import mockRCA from "../data/RCA.json";
 import { ReponseAppelRMCActe, ReponseAppelRMCActe4DernierResultats, ReponseAppelRMCActe4PremiersResultats } from "../data/RMCActe";
@@ -20,6 +20,7 @@ import {
   ReponseAppelRMCInscription4PremiersResultats
 } from "../data/RMCInscription";
 import { getTitulairesActeAPI } from "../data/Titulaire";
+import { actesInscriptionsSauvegardes } from "../data/actesInscriptionsSauvegardes";
 import {
   ficheActe1,
   ficheActe2,
@@ -60,7 +61,6 @@ import {
   ReponseAppelNomenclatureTypeAlerte,
   ReponseAppelNomenclatureTypeMention
 } from "../data/nomenclatures";
-import { actesInscriptionsSauvegardes } from "./../data/actesInscriptionsSauvegardes";
 
 export const NORESULT = "NORESULT";
 

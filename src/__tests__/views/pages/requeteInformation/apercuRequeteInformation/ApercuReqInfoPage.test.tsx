@@ -1,8 +1,3 @@
-import { ReponseAppelDetailRequeteInformationSansCorbeilleAgent } from "@mock/data/DetailRequeteInformation";
-import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
-import { NOMENCLATURE_REPONSE } from "@mock/data/NomenclatureReponse";
-import { userDroitConsulterPerimetreTousRegistres } from "@mock/data/mockConnectedUserAvecDroit";
-import { NORESULT, configRequetesInformation } from "@mock/superagent-config/superagent-mock-requetes-information";
 import { IOfficier } from "@model/agent/IOfficier";
 import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
 import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
@@ -13,6 +8,11 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test, vi } from "vitest";
 import { createTestingRouter, elementAvecContexte, mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
+import { ReponseAppelDetailRequeteInformationSansCorbeilleAgent } from "../../../../mock/data/DetailRequeteInformation";
+import { LISTE_UTILISATEURS } from "../../../../mock/data/ListeUtilisateurs";
+import { NOMENCLATURE_REPONSE } from "../../../../mock/data/NomenclatureReponse";
+import { userDroitConsulterPerimetreTousRegistres } from "../../../../mock/data/mockConnectedUserAvecDroit";
+import { NORESULT, configRequetesInformation } from "../../../../mock/superagent-config/superagent-mock-requetes-information";
 
 describe("Test ApercuReqInfoPage", () => {
   const utilisateurConnecte = {

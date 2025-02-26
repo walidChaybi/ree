@@ -1,7 +1,4 @@
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { acte as acteMock } from "@mock/data/ficheEtBandeau/ficheActe";
-import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { IOfficier } from "@model/agent/IOfficier";
 import { IService } from "@model/agent/IService";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
@@ -13,7 +10,10 @@ import { fireEvent, waitFor } from "@testing-library/react";
 import { RouteObject, createMemoryRouter } from "react-router-dom";
 import { expect, vi } from "vitest";
 import { EditionDelivranceContext } from "../../contexts/EditionDelivranceContextProvider";
-import { urlImagePngVideBase64 } from "../../mock/data/ImagePng";
+import MockRECEContextProvider from "../mock/context/MockRECEContextProvider";
+import { urlImagePngVideBase64 } from "../mock/data/ImagePng";
+import { acte as acteMock } from "../mock/data/ficheEtBandeau/ficheActe";
+import requeteDelivrance from "../mock/data/requeteDelivrance";
 
 function dataURLtoFile(dataurl: string, filename: string): File {
   const arr = dataurl.split(",");

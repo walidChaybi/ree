@@ -1,23 +1,13 @@
-import { idFicheActe1 } from "@mock/data/ficheActe";
-import { idFichePacs } from "@mock/data/fichePacs";
-import { userDroitConsulterPerimetreTousRegistres } from "@mock/data/mockConnectedUserAvecDroit";
 import { titreForm } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
 import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import * as TableauPaginationConstantes from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { RouterProvider } from "react-router-dom";
 import { afterEach, beforeAll, expect, test } from "vitest";
-import {
-  createTestingRouter,
-  elementAvecContexte,
-  mockFenetreFicheTestFunctions
-} from "../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, elementAvecContexte, mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
+import { idFicheActe1 } from "../../../../mock/data/ficheActe";
+import { idFichePacs } from "../../../../mock/data/fichePacs";
+import { userDroitConsulterPerimetreTousRegistres } from "../../../../mock/data/mockConnectedUserAvecDroit";
 
 beforeAll(async () => {
   mockFenetreFicheTestFunctions();
@@ -26,7 +16,10 @@ beforeAll(async () => {
 test.skip("renders formulaire Recherche Multi Critères Actes et Inscriptions", async () => {
   await act(async () => {
     render(
-      <RMCActeInscriptionPage noAutoScroll={false} dansFenetreExterne={false} />
+      <RMCActeInscriptionPage
+        noAutoScroll={false}
+        dansFenetreExterne={false}
+      />
     );
   });
   await waitFor(() => {
@@ -38,14 +31,15 @@ test.skip("renders formulaire Recherche Multi Critères Actes et Inscriptions", 
 test.skip("Bouton réinitialisation des champs", async () => {
   await act(async () => {
     render(
-      <RMCActeInscriptionPage noAutoScroll={false} dansFenetreExterne={false} />
+      <RMCActeInscriptionPage
+        noAutoScroll={false}
+        dansFenetreExterne={false}
+      />
     );
   });
 
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
-  const inputJour = screen.getByLabelText(
-    "datesDebutFinAnnee.dateDebut.jour"
-  ) as HTMLInputElement;
+  const inputJour = screen.getByLabelText("datesDebutFinAnnee.dateDebut.jour") as HTMLInputElement;
 
   await waitFor(() => {
     expect(inputNom).toBeDefined();
@@ -85,7 +79,10 @@ test.skip("Bouton réinitialisation des champs", async () => {
 test.skip("Bouton Rechercher du Formulaire Recherche Multi Critères Actes et Inscriptions", async () => {
   await act(async () => {
     render(
-      <RMCActeInscriptionPage noAutoScroll={false} dansFenetreExterne={false} />
+      <RMCActeInscriptionPage
+        noAutoScroll={false}
+        dansFenetreExterne={false}
+      />
     );
   });
 
@@ -109,28 +106,20 @@ test.skip("Bouton Rechercher du Formulaire Recherche Multi Critères Actes et In
 // Changement de la pagination pour les tests ci-dessous
 ///////////////////////////////////////////////////////////////
 
-const NB_LIGNES_PAR_APPEL_INSCRIPTION_SAUVEGARDE =
-  TableauPaginationConstantes.NB_LIGNES_PAR_APPEL_INSCRIPTION;
-const NB_LIGNES_PAR_PAGE_INSCRIPTION_SAUVEGARDE =
-  TableauPaginationConstantes.NB_LIGNES_PAR_PAGE_INSCRIPTION;
-const NB_LIGNES_PAR_APPEL_ACTE_SAUVEGARDE =
-  TableauPaginationConstantes.NB_LIGNES_PAR_APPEL_ACTE;
-const NB_LIGNES_PAR_PAGE_ACTE_SAUVEGARDE =
-  TableauPaginationConstantes.NB_LIGNES_PAR_PAGE_ACTE;
+const NB_LIGNES_PAR_APPEL_INSCRIPTION_SAUVEGARDE = TableauPaginationConstantes.NB_LIGNES_PAR_APPEL_INSCRIPTION;
+const NB_LIGNES_PAR_PAGE_INSCRIPTION_SAUVEGARDE = TableauPaginationConstantes.NB_LIGNES_PAR_PAGE_INSCRIPTION;
+const NB_LIGNES_PAR_APPEL_ACTE_SAUVEGARDE = TableauPaginationConstantes.NB_LIGNES_PAR_APPEL_ACTE;
+const NB_LIGNES_PAR_PAGE_ACTE_SAUVEGARDE = TableauPaginationConstantes.NB_LIGNES_PAR_PAGE_ACTE;
 
 afterEach(() => {
   // @ts-ignore
-  TableauPaginationConstantes.NB_LIGNES_PAR_APPEL_INSCRIPTION =
-    NB_LIGNES_PAR_APPEL_INSCRIPTION_SAUVEGARDE;
+  TableauPaginationConstantes.NB_LIGNES_PAR_APPEL_INSCRIPTION = NB_LIGNES_PAR_APPEL_INSCRIPTION_SAUVEGARDE;
   // @ts-ignore
-  TableauPaginationConstantes.NB_LIGNES_PAR_PAGE_INSCRIPTION =
-    NB_LIGNES_PAR_PAGE_INSCRIPTION_SAUVEGARDE;
+  TableauPaginationConstantes.NB_LIGNES_PAR_PAGE_INSCRIPTION = NB_LIGNES_PAR_PAGE_INSCRIPTION_SAUVEGARDE;
   // @ts-ignore
-  TableauPaginationConstantes.NB_LIGNES_PAR_APPEL_ACTE =
-    NB_LIGNES_PAR_APPEL_ACTE_SAUVEGARDE;
+  TableauPaginationConstantes.NB_LIGNES_PAR_APPEL_ACTE = NB_LIGNES_PAR_APPEL_ACTE_SAUVEGARDE;
   // @ts-ignore
-  TableauPaginationConstantes.NB_LIGNES_PAR_PAGE_ACTE =
-    NB_LIGNES_PAR_PAGE_ACTE_SAUVEGARDE;
+  TableauPaginationConstantes.NB_LIGNES_PAR_PAGE_ACTE = NB_LIGNES_PAR_PAGE_ACTE_SAUVEGARDE;
 });
 
 test.skip("La pagination (avec changement de plage) entre les fiches rc/rca/pacs s'effectue correctement", async () => {
@@ -159,12 +148,7 @@ test.skip("La pagination (avec changement de plage) entre les fiches rc/rca/pacs
     ["/"]
   );
 
-  render(
-    elementAvecContexte(
-      <RouterProvider router={router} />,
-      userDroitConsulterPerimetreTousRegistres
-    )
-  );
+  render(elementAvecContexte(<RouterProvider router={router} />, userDroitConsulterPerimetreTousRegistres));
 
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
 
@@ -269,12 +253,7 @@ test.skip("La pagination (avec changement de plage) entre les fiches acte s'effe
     ["/"]
   );
 
-  render(
-    elementAvecContexte(
-      <RouterProvider router={router} />,
-      userDroitConsulterPerimetreTousRegistres
-    )
-  );
+  render(elementAvecContexte(<RouterProvider router={router} />, userDroitConsulterPerimetreTousRegistres));
 
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
 
@@ -312,9 +291,7 @@ test.skip("La pagination (avec changement de plage) entre les fiches acte s'effe
 
   // Attente affichage des actes de la page suivante
   await waitFor(() => {
-    expect(
-      screen.getByText("PAC.ORAN.2010.support 1.support 2.100.552")
-    ).toBeDefined();
+    expect(screen.getByText("PAC.ORAN.2010.support 1.support 2.100.552")).toBeDefined();
     expect(screen.getByText("DEP.IRAN.1987.254.35")).toBeDefined();
   });
 
@@ -329,9 +306,7 @@ test.skip("La pagination (avec changement de plage) entre les fiches acte s'effe
 
   // Attente de l'ouverture de la fiche
   await waitFor(() => {
-    expect(screen.getByTestId("titreBandeau").innerHTML).toBe(
-      "DEP.IRAN.1987.254.35"
-    );
+    expect(screen.getByTestId("titreBandeau").innerHTML).toBe("DEP.IRAN.1987.254.35");
   });
 
   // Clique sur suivant de la fiche acte
@@ -342,9 +317,7 @@ test.skip("La pagination (avec changement de plage) entre les fiches acte s'effe
 
   // Attente de l'ouverture de la fiche (changement de "plage")
   await waitFor(() => {
-    expect(screen.getByTestId("titreBandeau").innerHTML).toBe(
-      "ACQ.X.1951.1.483"
-    );
+    expect(screen.getByTestId("titreBandeau").innerHTML).toBe("ACQ.X.1951.1.483");
   });
 
   // Clique sur précédent de la fiche acte, retoure à la fichie d'avant (changement de "plage" à nouveau)
@@ -355,8 +328,6 @@ test.skip("La pagination (avec changement de plage) entre les fiches acte s'effe
 
   // Attente de l'ouverture de la fiche
   await waitFor(() => {
-    expect(screen.getByTestId("titreBandeau").innerHTML).toBe(
-      "DEP.IRAN.1987.254.35"
-    );
+    expect(screen.getByTestId("titreBandeau").innerHTML).toBe("DEP.IRAN.1987.254.35");
   });
 });

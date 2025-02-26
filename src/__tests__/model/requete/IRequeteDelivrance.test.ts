@@ -1,10 +1,10 @@
-import { actions } from "@mock/data/Actions";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance, RequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { waitFor } from "@testing-library/react";
 import { expect, test } from "vitest";
+import { actions } from "../../mock/data/Actions";
 
 test("Attendu: RequeteDelivrance.getDocumentsDeDelivrance fonctionne correctement", () => {
   let documentDelivrance: IDocumentReponse;

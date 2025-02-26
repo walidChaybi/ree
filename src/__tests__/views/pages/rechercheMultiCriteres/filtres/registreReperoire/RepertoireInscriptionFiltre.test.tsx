@@ -1,5 +1,3 @@
-import { NATURE_RC } from "@mock/data/NomenclatureNatureRc";
-import { NATURE_RCA } from "@mock/data/NomenclatureNatureRca";
 import { NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { NatureRca } from "@model/etatcivil/enum/NatureRca";
 import { REPERTOIRE } from "@pages/rechercheMultiCriteres/filtres/registreReperoire/RegistreRepertoireFiltre";
@@ -11,6 +9,8 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Field, Form, Formik } from "formik";
 import React, { act, useState } from "react";
 import { describe, expect, test } from "vitest";
+import { NATURE_RC } from "../../../../../mock/data/NomenclatureNatureRc";
+import { NATURE_RCA } from "../../../../../mock/data/NomenclatureNatureRca";
 
 describe("Tes RepertoireInscriptionFiltre", () => {
   const HookRepertoireInscriptionFiltre: React.FC = () => {

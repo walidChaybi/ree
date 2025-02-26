@@ -1,5 +1,3 @@
-import { TYPE_PIECE_JUSTIFICATIVE } from "@mock/data/NomenclatureTypePieceJustificative";
-import { resultatHeaderUtilistateurLeBiannic, resultatRequeteUtilistateurLeBiannic } from "@mock/data/mockConnectedUserAvecDroit";
 import { mappingOfficier } from "@model/agent/IOfficier";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
@@ -15,6 +13,8 @@ import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import IHabilitationDto from "../../../../dto/etatcivil/agent/IHabilitationDto";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
+import { TYPE_PIECE_JUSTIFICATIVE } from "../../../mock/data/NomenclatureTypePieceJustificative";
+import { resultatHeaderUtilistateurLeBiannic, resultatRequeteUtilistateurLeBiannic } from "../../../mock/data/mockConnectedUserAvecDroit";
 
 describe("Test ApercuReqCreation", () => {
   TypePieceJustificative.init(TYPE_PIECE_JUSTIFICATIVE);

@@ -1,8 +1,8 @@
-import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, test } from "vitest";
 import PartieDroiteSaisieProjet from "../../../../../composants/pages/requetesConsulaire/saisieProjet/PartieDroiteSaisieProjet";
 import { elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
+import { requeteCreationTranscription } from "../../../../mock/data/requeteCreationTranscription";
 
 describe("PartieDroiteSaisieProjet - Tests du composant", () => {
   test("PartieDroiteSaisieProjet - Doit afficher les onglets", async () => {

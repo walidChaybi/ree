@@ -1,4 +1,3 @@
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { IOfficier } from "@model/agent/IOfficier";
 import { ApercuRequeteEtablissementSaisieDeProjetPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/ApercuRequeteEtablissementSaisieDeProjetPage";
 import {
@@ -10,8 +9,9 @@ import {
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
-import "../../../../../../../mock/element/IntersectionObserver";
 import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
+import MockRECEContextProvider from "../../../../../../mock/context/MockRECEContextProvider";
+import "../../../../../../mock/element/IntersectionObserver";
 
 describe("Test de la page Aperçu requête etablissement saisie projet", () => {
   test("DOIT afficher l'onglet pièces justificatives et postulant QUAND on arrive sur la page", async () => {

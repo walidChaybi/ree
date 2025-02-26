@@ -1,5 +1,3 @@
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import mockConnectedUser from "@mock/data/connectedUser.json";
 import { IOfficier } from "@model/agent/IOfficier";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { URL_REQUETES_CONSULAIRE_SERVICE } from "@router/ReceUrls";
@@ -8,6 +6,8 @@ import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
 import PageRequetesServiceConsulaire from "../../../../pages/requetesConsulaire/PageRequetesServiceConsulaire";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
+import MockRECEContextProvider from "../../../mock/context/MockRECEContextProvider";
+import mockConnectedUser from "../../../mock/data/connectedUser.json";
 
 let u: any = mockConnectedUser;
 

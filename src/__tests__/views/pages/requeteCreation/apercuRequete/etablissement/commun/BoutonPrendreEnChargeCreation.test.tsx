@@ -1,15 +1,12 @@
-import { userDroitCreerActeEtabliPerimetreTousRegistres } from "@mock/data/mockConnectedUserAvecDroit";
-import { requeteCreationATraiter } from "@mock/data/requeteCreation";
 import { BoutonPrendreEnChargeCreation } from "@pages/requeteCreation/apercuRequete/etablissement/commun/BoutonPrendreEnChargeCreation";
 import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { expect, test, vi } from "vitest";
-import {
-  createTestingRouter,
-  elementAvecContexte
-} from "../../../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, elementAvecContexte } from "../../../../../../__tests__utils__/testsUtil";
+import { userDroitCreerActeEtabliPerimetreTousRegistres } from "../../../../../../mock/data/mockConnectedUserAvecDroit";
+import { requeteCreationATraiter } from "../../../../../../mock/data/requeteCreation";
 
 const mockedRedirection = vi.fn();
 
@@ -30,24 +27,12 @@ test("DOIT rediriger sur l'appercu prise en charge QUAND on clique sur le bouton
         )
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-        ID
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID, ID)]
   );
 
-  render(
-    elementAvecContexte(
-      <RouterProvider router={router} />,
-      userDroitCreerActeEtabliPerimetreTousRegistres
-    )
-  );
+  render(elementAvecContexte(<RouterProvider router={router} />, userDroitCreerActeEtabliPerimetreTousRegistres));
 
-  const boutonPrendreEnCharge = screen.getByText(
-    "Prendre en charge"
-  ) as HTMLButtonElement;
+  const boutonPrendreEnCharge = screen.getByText("Prendre en charge") as HTMLButtonElement;
 
   waitFor(() => {
     expect(boutonPrendreEnCharge.disabled).toBeFalsy();

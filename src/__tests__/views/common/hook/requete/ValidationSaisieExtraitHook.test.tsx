@@ -1,16 +1,9 @@
-import {
-  ISauvegardeValidationSaisieExtraitParams,
-  useSauvegardeValidationSaisieExtrait
-} from "@hook/requete/ValidationSaisieExtraitHook";
-import {
-  acteExtraitSaisie,
-  extraitSaisiAEnvoyer,
-  requeteExtraitSaisie
-} from "@mock/data/DonneesSaisieExtrait";
+import { ISauvegardeValidationSaisieExtraitParams, useSauvegardeValidationSaisieExtrait } from "@hook/requete/ValidationSaisieExtraitHook";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
 import { expect, test, vi } from "vitest";
+import { acteExtraitSaisie, extraitSaisiAEnvoyer, requeteExtraitSaisie } from "../../../../mock/data/DonneesSaisieExtrait";
 
 const callBack = vi.fn();
 

@@ -1,4 +1,3 @@
-import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { Orientation } from "@model/composition/enum/Orientation";
 import { IProvenanceRece } from "@model/requete/IProvenanceRece";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -11,6 +10,7 @@ import { RouterProvider } from "react-router-dom";
 import { describe, expect, test, vi } from "vitest";
 import BoutonAjoutSuppressionDocument from "../../../../../composants/pages/requetesDelivrance/editionRequete/boutons/BoutonAjoutSuppressionDocument";
 import { createTestingRouter, elementAvecEditionDelivranceContexte } from "../../../../__tests__utils__/testsUtil";
+import requeteDelivrance from "../../../../mock/data/requeteDelivrance";
 
 describe("Test BoutonAjoutSuppressionDocument", () => {
   const mockDocument = {

@@ -1,10 +1,10 @@
 import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
+import { IRequerant, Requerant } from "@model/requete/IRequerant";
+import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
-import { IRequerant, Requerant } from "@model/requete/IRequerant";
-import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { mappingRequeteDelivranceVersFormulaireRDCSC } from "@pages/requeteDelivrance/saisirRequete/hook/mappingRequeteDelivranceVersFormulaireRDCSC";
 import { describe, expect, test } from "vitest";
 

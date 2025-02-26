@@ -1,14 +1,12 @@
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
-import { getLibelle } from "@util/Utils";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./scss/Message.scss";
 
 const DURATION_BEFORE_CLOSE = 10000;
 
-const getDurationForAutoClose = (autoClose?: number) =>
-  autoClose ? autoClose : DURATION_BEFORE_CLOSE;
+const getDurationForAutoClose = (autoClose?: number) => autoClose ?? DURATION_BEFORE_CLOSE;
 
 const toString = (messages: string[]) => {
   return messages
@@ -17,19 +15,15 @@ const toString = (messages: string[]) => {
     .replace(/,/g, "");
 };
 
-const infoTitle = getLibelle("Information");
-const successTitle = getLibelle("Succès");
-const warnTitle = getLibelle("Attention");
-const errorTitle = getLibelle("Erreur");
+const infoTitle = "Information";
+const successTitle = "Succès";
+const warnTitle = "Attention";
+const errorTitle = "Erreur";
 
 export const TOASTCONTAINER_PRINCIPAL = "toastContainer-principal";
 
 const messageManager = {
-  showErrorAndClose: (
-    errorMessage: string,
-    containerId = TOASTCONTAINER_PRINCIPAL,
-    autoClose?: number
-  ) => {
+  showErrorAndClose: (errorMessage: string, containerId = TOASTCONTAINER_PRINCIPAL, autoClose?: number) => {
     toast(
       <div className="message-manager">
         <Alert severity="error">
@@ -66,10 +60,7 @@ const messageManager = {
     );
   },
 
-  showErrors: (
-    errorMessage: string[],
-    containerId = TOASTCONTAINER_PRINCIPAL
-  ) => {
+  showErrors: (errorMessage: string[], containerId = TOASTCONTAINER_PRINCIPAL) => {
     const htmlErrorMessage = errorMessage
       .map(message => message + "\n")
       .toString()
@@ -92,11 +83,7 @@ const messageManager = {
     );
   },
 
-  showSuccessAndClose: (
-    successMessage: string,
-    containerId = TOASTCONTAINER_PRINCIPAL,
-    autoClose?: number
-  ) => {
+  showSuccessAndClose: (successMessage: string, containerId = TOASTCONTAINER_PRINCIPAL, autoClose?: number) => {
     toast(
       <div className="message-manager">
         <Alert severity="success">
@@ -114,10 +101,7 @@ const messageManager = {
     );
   },
 
-  showSuccess: (
-    successMessage: string,
-    containerId = TOASTCONTAINER_PRINCIPAL
-  ) => {
+  showSuccess: (successMessage: string, containerId = TOASTCONTAINER_PRINCIPAL) => {
     toast(
       <div className="message-manager">
         <Alert severity="success">
@@ -135,10 +119,7 @@ const messageManager = {
     );
   },
 
-  showSuccesses: (
-    successMessage: string[],
-    containerId = TOASTCONTAINER_PRINCIPAL
-  ) => {
+  showSuccesses: (successMessage: string[], containerId = TOASTCONTAINER_PRINCIPAL) => {
     const htmlErrorMessage = successMessage
       .map(message => message + "\n")
       .toString()
@@ -161,11 +142,7 @@ const messageManager = {
     );
   },
 
-  showInfoAndClose: (
-    infoMessage: string,
-    containerId = TOASTCONTAINER_PRINCIPAL,
-    autoClose?: number
-  ) => {
+  showInfoAndClose: (infoMessage: string, containerId = TOASTCONTAINER_PRINCIPAL, autoClose?: number) => {
     toast(
       <div className="message-manager">
         <Alert severity="info">
@@ -202,10 +179,7 @@ const messageManager = {
     );
   },
 
-  showInfos: (
-    infoMessages: string[],
-    containerId = TOASTCONTAINER_PRINCIPAL
-  ) => {
+  showInfos: (infoMessages: string[], containerId = TOASTCONTAINER_PRINCIPAL) => {
     const message = toString(infoMessages);
 
     toast(
@@ -225,11 +199,7 @@ const messageManager = {
     );
   },
 
-  showWarningAndClose: (
-    warningMessage: string,
-    containerId = TOASTCONTAINER_PRINCIPAL,
-    autoClose?: number
-  ) => {
+  showWarningAndClose: (warningMessage: string, containerId = TOASTCONTAINER_PRINCIPAL, autoClose?: number) => {
     toast(
       <div className="message-manager">
         <Alert severity="warning">
@@ -248,10 +218,7 @@ const messageManager = {
     );
   },
 
-  showWarning: (
-    warningMessage: string,
-    containerId = TOASTCONTAINER_PRINCIPAL
-  ) => {
+  showWarning: (warningMessage: string, containerId = TOASTCONTAINER_PRINCIPAL) => {
     toast(
       <div className="message-manager">
         <Alert severity="warning">
@@ -269,10 +236,7 @@ const messageManager = {
     );
   },
 
-  showWarnings: (
-    warningMessages: string[],
-    containerId = TOASTCONTAINER_PRINCIPAL
-  ) => {
+  showWarnings: (warningMessages: string[], containerId = TOASTCONTAINER_PRINCIPAL) => {
     const message = toString(warningMessages);
 
     toast(

@@ -1,8 +1,8 @@
-import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { useRMCAutoRequeteApiHook } from "@pages/rechercheMultiCriteres/autoRequetes/hook/RMCAutoRequeteApiHook";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { expect, test } from "vitest";
+import requeteDelivrance from "../../../../../mock/data/requeteDelivrance";
 
 test("Test useRMCAutoRequeteApiHook", async () => {
   const params = {

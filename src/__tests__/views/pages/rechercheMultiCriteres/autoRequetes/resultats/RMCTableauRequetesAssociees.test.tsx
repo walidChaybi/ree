@@ -1,11 +1,8 @@
-import {
-  DataRMCRequeteAvecResultat,
-  DataTableauRequete
-} from "@mock/data/RMCRequete";
 import { RMCTableauRequetesAssociees } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCTableauRequetesAssociees";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { expect, test, vi } from "vitest";
+import { DataRMCRequeteAvecResultat, DataTableauRequete } from "../../../../../mock/data/RMCRequete";
 
 test("renders Resultat Recherche requêtes associées aux titulaires => Avec résultat", () => {
   const { getAllByText } = render(

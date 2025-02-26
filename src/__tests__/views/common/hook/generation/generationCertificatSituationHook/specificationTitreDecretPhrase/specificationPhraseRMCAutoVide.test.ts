@@ -1,9 +1,9 @@
 import { specificationPhraseRMCAutoVide } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
-import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
-import { ReponseAppelNomenclatureDocummentDelivrance } from "@mock/data/nomenclatures";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { describe, expect, test } from "vitest";
+import { DOCUMENT_DELIVRANCE } from "../../../../../../mock/data/NomenclatureDocumentDelivrance";
+import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../mock/data/nomenclatures";
 
 describe("Test SpecificationPhraseRMCAutoVide", () => {
   DocumentDelivrance.init(DOCUMENT_DELIVRANCE);

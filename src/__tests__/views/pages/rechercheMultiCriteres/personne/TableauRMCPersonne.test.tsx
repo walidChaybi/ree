@@ -1,8 +1,6 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { IRMCAutoPersonneParams, useRMCAutoPersonneApiAvecCacheHook } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
-import { userDroitConsulterArchive } from "@mock/data/mockConnectedUserAvecDroit";
-import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
 import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
@@ -18,6 +16,8 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React, { useEffect, useState } from "react";
 import { beforeAll, expect, test } from "vitest";
 import { mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
+import { userDroitConsulterArchive } from "../../../../mock/data/mockConnectedUserAvecDroit";
+import { requeteCreationTranscription } from "../../../../mock/data/requeteCreationTranscription";
 
 beforeAll(() => {
   mockFenetreFicheTestFunctions();

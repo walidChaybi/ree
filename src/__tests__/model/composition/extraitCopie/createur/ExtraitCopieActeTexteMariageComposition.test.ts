@@ -1,11 +1,11 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
-import { ficheActeMariage } from "@mock/data/ficheActe";
 import { ExtraitCopieActeTexteMariageComposition } from "@model/composition/extraitCopie/createur/ExtraitCopieActeTexteMariageComposition";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
 import { expect, test } from "vitest";
+import { ficheActeMariage } from "../../../../mock/data/ficheActe";
 
 test("Attendu: getCorpsTexte fonctionne correctement", () => {
   const acte = mapActe(ficheActeMariage.data);
@@ -14,18 +14,17 @@ test("Attendu: getCorpsTexte fonctionne correctement", () => {
   const validation = Validation.N;
   const ctv = "111111-222222";
 
-  const compositionCorps =
-    ExtraitCopieActeTexteMariageComposition.creerExtraitCopieActeTexteMariage({
-      acte,
-      requete: {
-        choixDelivrance,
-        sousType: sousTypeRequete
-      } as IRequeteDelivrance,
-      validation,
-      mentionsRetirees: [],
-      ctv,
-      choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
-    });
+  const compositionCorps = ExtraitCopieActeTexteMariageComposition.creerExtraitCopieActeTexteMariage({
+    acte,
+    requete: {
+      choixDelivrance,
+      sousType: sousTypeRequete
+    } as IRequeteDelivrance,
+    validation,
+    mentionsRetirees: [],
+    ctv,
+    choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
+  });
 
   const corpsTexteAttendu = `Le 25 juin 1990 à Barcelone, Catalogne (Espagne)
 a été célébré le mariage
@@ -536,18 +535,17 @@ test("Doit retourner les bonnes données pour la naissance des titulaires dans l
   const validation = Validation.N;
   const ctv = "111111-222222";
 
-  const compositionCorps =
-    ExtraitCopieActeTexteMariageComposition.creerExtraitCopieActeTexteMariage({
-      acte: mapActe(acte),
-      requete: {
-        choixDelivrance,
-        sousType: sousTypeRequete
-      } as IRequeteDelivrance,
-      validation,
-      mentionsRetirees: [],
-      ctv,
-      choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
-    });
+  const compositionCorps = ExtraitCopieActeTexteMariageComposition.creerExtraitCopieActeTexteMariage({
+    acte: mapActe(acte),
+    requete: {
+      choixDelivrance,
+      sousType: sousTypeRequete
+    } as IRequeteDelivrance,
+    validation,
+    mentionsRetirees: [],
+    ctv,
+    choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
+  });
 
   const corpsTexteAttendu = `Le 25 juin 1990 à Barcelone, Catalogne (Espagne)
 a été célébré le mariage

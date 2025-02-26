@@ -20,29 +20,22 @@ const CompteurTemps: React.FC<ICompteurTempsProps> = memo(({ idRequete, abandonn
   const { appelApi: getDelaiRestant } = useFetchApi(CONFIG_GET_DELAI_MISE_A_JOUR_RESTANT);
 
   useEffect(() => {
-    if (minutesRestantes !== null) {
-      return;
-    }
-
-    getDelaiRestant({
-      parametres: { path: { idRequete } },
-      apresSucces: delaiRestant => setMinutesRestantes(delaiRestant),
-      apresErreur: () => {
-        setMinutesRestantes(0);
-        abandonnerRequete();
-        setPrevenirRedirection(true);
-      }
-    });
-  }, []);
-
-  useEffect(() => {
     if (minutesRestantes === null) {
+      getDelaiRestant({
+        parametres: { path: { idRequete } },
+        apresSucces: delaiRestant => setMinutesRestantes(delaiRestant),
+        apresErreur: erreurs => {
+          setMinutesRestantes(0);
+        }
+      });
       return;
     }
 
     if (minutesRestantes <= 0) {
       abandonnerRequete();
       setPrevenirRedirection(true);
+
+      return;
     }
 
     setTimeout(() => setMinutesRestantes(minutesRestantes - 1), UNE_MINUTE);

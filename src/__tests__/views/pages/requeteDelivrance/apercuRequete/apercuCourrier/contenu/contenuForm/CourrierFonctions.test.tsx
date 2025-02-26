@@ -1,6 +1,4 @@
 import { CHOIX_COURRIER, COURRIER, TEXTE, TEXTE_LIBRE } from "@composant/formulaire/ConstantesNomsForm";
-import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
-import requeteDelivrance, { requeteDelivranceInstitutionnel } from "@mock/data/requeteDelivrance";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { OptionCourrier } from "@model/requete/IOptionCourrier";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
@@ -12,6 +10,8 @@ import {
   getTypesCourrier
 } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import { describe, expect, test, vi } from "vitest";
+import { DOCUMENT_DELIVRANCE } from "../../../../../../../mock/data/NomenclatureDocumentDelivrance";
+import requeteDelivrance, { requeteDelivranceInstitutionnel } from "../../../../../../../mock/data/requeteDelivrance";
 
 describe("Test CourrierFonctions", () => {
   DocumentDelivrance.init(DOCUMENT_DELIVRANCE);

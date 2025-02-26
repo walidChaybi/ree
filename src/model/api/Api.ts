@@ -86,7 +86,7 @@ export type TAppelApi<
   finalement?: () => void;
 };
 
-type TParametres<TUri extends TBaseUri, TBody extends object | undefined, TQuery extends object | undefined> = {
+export type TParametres<TUri extends TBaseUri, TBody extends object | undefined, TQuery extends object | undefined> = {
   path?: ExtraireParametresUri<TUri>;
   body?: TBody;
   query?: TQuery;

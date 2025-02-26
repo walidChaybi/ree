@@ -4,16 +4,12 @@ import { BandeauFicheActeNumero } from "@pages/fiche/contenu/BandeauFicheActeNum
 import { BandeauFicheRcRcaPacsNumero } from "@pages/fiche/contenu/BandeauFicheRcRcaPacsNumero";
 import { render } from "@testing-library/react";
 import { expect, test } from "vitest";
-import { bandeauActe } from "../../../../../mock/data/ficheEtBandeau/ficheActe";
-import DATA_FICHE from "../../../../../mock/data/ficheEtBandeau/ficheRC";
+import { bandeauActe } from "../../../../mock/data/ficheEtBandeau/ficheActe";
+import DATA_FICHE from "../../../../mock/data/ficheEtBandeau/ficheRC";
 
 test("renders du bandeau d'une fiche RC", () => {
   function getElementNumeroLigne() {
-    return (
-      <BandeauFicheRcRcaPacsNumero
-        dataBandeau={DATA_FICHE.dataBandeau}
-      ></BandeauFicheRcRcaPacsNumero>
-    );
+    return <BandeauFicheRcRcaPacsNumero dataBandeau={DATA_FICHE.dataBandeau}></BandeauFicheRcRcaPacsNumero>;
   }
   const component = render(
     <>
@@ -28,11 +24,7 @@ test("renders du bandeau d'une fiche RC", () => {
 
 test("renders du bandeau d'une fiche Acte", () => {
   function getElementNumeroLigne() {
-    return (
-      <BandeauFicheActeNumero
-        dataBandeau={DATA_FICHE.dataBandeau}
-      ></BandeauFicheActeNumero>
-    );
+    return <BandeauFicheActeNumero dataBandeau={DATA_FICHE.dataBandeau}></BandeauFicheActeNumero>;
   }
 
   const component = render(

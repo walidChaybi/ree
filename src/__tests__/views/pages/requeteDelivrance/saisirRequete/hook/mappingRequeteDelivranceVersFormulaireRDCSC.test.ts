@@ -1,7 +1,7 @@
 import { ParentFormDefaultValues } from "@composant/formulaire/ParentForm";
-import requeteDelivrance, { requeteDelivranceInstitutionnel } from "@mock/data/requeteDelivrance";
 import { mappingRequeteDelivranceVersFormulaireRDCSC } from "@pages/requeteDelivrance/saisirRequete/hook/mappingRequeteDelivranceVersFormulaireRDCSC";
 import { describe, expect, test } from "vitest";
+import requeteDelivrance, { requeteDelivranceInstitutionnel } from "../../../../../mock/data/requeteDelivrance";
 
 describe("Test mappingRequeteDelivranceVersFormulaireRDCSC", () => {
   const titulaires = {

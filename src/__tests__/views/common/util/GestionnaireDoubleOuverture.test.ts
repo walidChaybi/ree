@@ -1,10 +1,7 @@
-import { localStorageMock } from "@mock/localStorageMock";
 import { act, waitFor } from "@testing-library/react";
-import {
-  GestionnaireDoubleOuverture,
-  gestionnaireDoubleOuverture
-} from "@util/GestionnaireDoubleOuverture";
+import { GestionnaireDoubleOuverture, gestionnaireDoubleOuverture } from "@util/GestionnaireDoubleOuverture";
 import { beforeAll, expect, test, vi } from "vitest";
+import { localStorageMock } from "../../../mock/localStorageMock";
 
 const mockFunction = vi.fn();
 

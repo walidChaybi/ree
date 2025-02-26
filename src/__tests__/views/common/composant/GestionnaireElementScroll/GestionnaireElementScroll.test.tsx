@@ -3,7 +3,7 @@ import { fireEvent, waitFor } from "@testing-library/dom";
 import { render, screen } from "@testing-library/react";
 import { getLibelle } from "@util/Utils";
 import { expect, test, vi } from "vitest";
-import "../../../../../mock/element/IntersectionObserver";
+import "../../../../mock/element/IntersectionObserver";
 
 const getDiv = (index: number) => {
   return (
@@ -37,18 +37,18 @@ test("l'ensemble des elements s'affiche correctement via les props.", () => {
   render(<GestionnaireElementScroll elementListe={blocsForm} />);
 
   waitFor(() => {
-  // scrollBoutton from GestionnaireElementScroll
-  expect(screen.getByTestId("scrollBouton1")).toBeDefined();
-  expect(screen.getByTestId("scrollBouton2")).toBeDefined();
-  expect(screen.getByTestId("scrollBouton3")).toBeDefined();
-  expect(screen.getByTestId("scrollBouton4")).toBeDefined();
+    // scrollBoutton from GestionnaireElementScroll
+    expect(screen.getByTestId("scrollBouton1")).toBeDefined();
+    expect(screen.getByTestId("scrollBouton2")).toBeDefined();
+    expect(screen.getByTestId("scrollBouton3")).toBeDefined();
+    expect(screen.getByTestId("scrollBouton4")).toBeDefined();
 
-  // JSX element passed down from props
-  expect(screen.getByTestId("div1")).toBeDefined();
-  expect(screen.getByTestId("div2")).toBeDefined();
-  expect(screen.getByTestId("div3")).toBeDefined();
-  expect(screen.getByTestId("div4")).toBeDefined();
-});
+    // JSX element passed down from props
+    expect(screen.getByTestId("div1")).toBeDefined();
+    expect(screen.getByTestId("div2")).toBeDefined();
+    expect(screen.getByTestId("div3")).toBeDefined();
+    expect(screen.getByTestId("div4")).toBeDefined();
+  });
 });
 
 test("clique sur un bouton scroll vers la bonne section et change l'index du stepper", () => {
@@ -63,7 +63,7 @@ test("clique sur un bouton scroll vers la bonne section et change l'index du ste
   fireEvent.click(screen.getByTestId("scrollBouton4"));
 
   waitFor(() => {
-      expect(scrollIntoViewMock).toBeCalled();
-      expect(screen.getByTestId("div4")).toBeDefined();
-    });
+    expect(scrollIntoViewMock).toBeCalled();
+    expect(screen.getByTestId("div4")).toBeDefined();
+  });
 });

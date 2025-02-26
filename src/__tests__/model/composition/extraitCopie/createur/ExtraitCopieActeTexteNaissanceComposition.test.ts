@@ -1,5 +1,4 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
-import { ficheActeNaissance } from "@mock/data/ficheActe";
 import { ExtraitCopieActeTexteNaissanceComposition } from "@model/composition/extraitCopie/createur/ExtraitCopieActeTexteNaissanceComposition";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -7,6 +6,7 @@ import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
 import { expect, test } from "vitest";
+import { ficheActeNaissance } from "../../../../mock/data/ficheActe";
 
 test("Attendu: getCorpsTexte fonctionne correctement", () => {
   const acte = mapActe(ficheActeNaissance.data);
@@ -17,17 +17,14 @@ test("Attendu: getCorpsTexte fonctionne correctement", () => {
   const validation = Validation.N;
   const ctv = "111111-222222";
 
-  const compositionCorps =
-    ExtraitCopieActeTexteNaissanceComposition.creerExtraitCopieActeTexteNaissance(
-      {
-        acte: acte as any as IFicheActe,
-        requete,
-        validation,
-        mentionsRetirees: [],
-        ctv,
-        choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
-      }
-    );
+  const compositionCorps = ExtraitCopieActeTexteNaissanceComposition.creerExtraitCopieActeTexteNaissance({
+    acte: acte as any as IFicheActe,
+    requete,
+    validation,
+    mentionsRetirees: [],
+    ctv,
+    choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
+  });
 
   const corpsTexteAttendu = `Le 10 octobre 1901 à 13 heures 15 minutes
 est née à Paris, Paris (France)
@@ -113,17 +110,14 @@ test("Ne doit pas afficher (Inconnu) dans le document généré sur la naissance
   const validation = Validation.N;
   const ctv = "111111-222222";
 
-  const compositionCorps =
-    ExtraitCopieActeTexteNaissanceComposition.creerExtraitCopieActeTexteNaissance(
-      {
-        acte: mapActe(acte) as any as IFicheActe,
-        requete,
-        validation,
-        mentionsRetirees: [],
-        ctv,
-        choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
-      }
-    );
+  const compositionCorps = ExtraitCopieActeTexteNaissanceComposition.creerExtraitCopieActeTexteNaissance({
+    acte: mapActe(acte) as any as IFicheActe,
+    requete,
+    validation,
+    mentionsRetirees: [],
+    ctv,
+    choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
+  });
 
   const corpsTexteAttendu = `Le 10 octobre 1901 à 13 heures 15 minutes
 est née à Paris, Paris (France)
@@ -511,17 +505,14 @@ test("Doit afficher les bonne données de naissance de filiations dans le docume
   const validation = Validation.N;
   const ctv = "111111-222222";
 
-  const compositionCorps =
-    ExtraitCopieActeTexteNaissanceComposition.creerExtraitCopieActeTexteNaissance(
-      {
-        acte: mapActe(acte) as any as IFicheActe,
-        requete,
-        validation,
-        mentionsRetirees: [],
-        ctv,
-        choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
-      }
-    );
+  const compositionCorps = ExtraitCopieActeTexteNaissanceComposition.creerExtraitCopieActeTexteNaissance({
+    acte: mapActe(acte) as any as IFicheActe,
+    requete,
+    validation,
+    mentionsRetirees: [],
+    ctv,
+    choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION
+  });
 
   const corpsTexteAttendu = `Le 10 octobre 1901 à 13 heures 15 minutes
 est née à Nantes, Loire-Atlantique (Inconnu)

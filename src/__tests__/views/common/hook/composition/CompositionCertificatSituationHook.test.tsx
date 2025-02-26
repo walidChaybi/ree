@@ -1,9 +1,9 @@
 import { useCertificatSituationApiHook } from "@hook/composition/CompositionCertificatSituationHook";
-import { certificatSituation } from "@mock/data/Composition";
-import { imagePngVideBase64 } from "@mock/data/ImagePng";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { expect, test } from "vitest";
+import { certificatSituation } from "../../../../mock/data/Composition";
+import { imagePngVideBase64 } from "../../../../mock/data/ImagePng";
 const HookConsumer: React.FC = () => {
   const doc = useCertificatSituationApiHook(certificatSituation);
 

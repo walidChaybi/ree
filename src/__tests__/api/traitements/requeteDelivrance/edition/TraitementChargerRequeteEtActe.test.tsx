@@ -1,10 +1,10 @@
 import TRAITEMENT_CHARGER_REQUETE_ET_ACTE from "@api/traitements/requeteDelivrance/edition/TraitementChargerRequeteEtActe";
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useState } from "react";
 import request from "superagent";
 import { afterAll, describe, expect, test } from "vitest";
 import useTraitementApi from "../../../../../hooks/api/TraitementApiHook";
+import MockRECEContextProvider from "../../../../mock/context/MockRECEContextProvider";
 
 describe("Test du traitement chargement requête et acte édition délivrance", () => {
   const donneesTest = {

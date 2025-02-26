@@ -1,13 +1,10 @@
 import { BoutonRechercheRmc } from "@core/header/BoutonRechercheRmc";
-import officier from "@mock/data/connectedUser.json";
 import { IOfficier } from "@model/agent/IOfficier";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { beforeAll, expect, test } from "vitest";
-import {
-  elementAvecContexte,
-  mockFenetreFicheTestFunctions
-} from "../../../__tests__utils__/testsUtil";
+import { elementAvecContexte, mockFenetreFicheTestFunctions } from "../../../__tests__utils__/testsUtil";
+import officier from "../../../mock/data/connectedUser.json";
 
 let boutonElement: HTMLElement;
 

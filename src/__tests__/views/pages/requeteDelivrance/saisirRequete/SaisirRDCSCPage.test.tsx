@@ -1,5 +1,3 @@
-import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
-import { userDroitConsulterArchive, userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SaisirRDCSCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
@@ -9,6 +7,8 @@ import { getLastPathElem, getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
+import { DOCUMENT_DELIVRANCE } from "../../../../mock/data/NomenclatureDocumentDelivrance";
+import { userDroitConsulterArchive, userDroitnonCOMEDEC } from "../../../../mock/data/mockConnectedUserAvecDroit";
 
 describe("Test de la page saisie RDCSC", () => {
   DocumentDelivrance.init(DOCUMENT_DELIVRANCE);

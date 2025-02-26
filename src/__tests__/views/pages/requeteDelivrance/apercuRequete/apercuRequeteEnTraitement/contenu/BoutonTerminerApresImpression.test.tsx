@@ -1,5 +1,3 @@
-import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
-import { idRequeteRDCSC } from "@mock/data/requeteDelivrance";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -12,6 +10,8 @@ import { fireEvent, render, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { expect, test } from "vitest";
 import { elementAvecContexte } from "../../../../../../__tests__utils__/testsUtil";
+import { userDroitnonCOMEDEC } from "../../../../../../mock/data/mockConnectedUserAvecDroit";
+import { idRequeteRDCSC } from "../../../../../../mock/data/requeteDelivrance";
 
 const requeteTestCOURRIER = {
   id: idRequeteRDCSC,
@@ -42,30 +42,20 @@ const requeteTestCOURRIER = {
       sexe: Sexe.MASCULIN.libelle
     }
   ],
-  documentsReponses: [
-    { idRc: "123456789" },
-    { idRca: "123456789" },
-    { idPacs: "123456789" }
-  ]
+  documentsReponses: [{ idRc: "123456789" }, { idRca: "123456789" }, { idPacs: "123456789" }]
 } as IRequeteDelivrance;
 
 test("est à A_VALIDER et provient de COURRIER", () => {
   const { getByText } = render(
     elementAvecContexte(
-      <MemoryRouter
-        initialEntries={[URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]}
-      >
-        <BoutonTerminerApresImpression
-          requete={requeteTestCOURRIER}
-        ></BoutonTerminerApresImpression>
+      <MemoryRouter initialEntries={[URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]}>
+        <BoutonTerminerApresImpression requete={requeteTestCOURRIER}></BoutonTerminerApresImpression>
       </MemoryRouter>,
       userDroitnonCOMEDEC
     )
   );
 
-  const bouttonSigner = getByText(
-    /Terminer après impression locale/i
-  ) as HTMLButtonElement;
+  const bouttonSigner = getByText(/Terminer après impression locale/i) as HTMLButtonElement;
 
   waitFor(() => {
     expect(bouttonSigner.disabled).toBeFalsy();

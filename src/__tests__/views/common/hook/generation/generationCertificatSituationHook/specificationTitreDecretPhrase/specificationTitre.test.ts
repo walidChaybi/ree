@@ -1,7 +1,7 @@
 import { specificationTitre } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationTitre";
-import { ReponseAppelNomenclatureDocummentDelivrance } from "@mock/data/nomenclatures";
 import { waitFor } from "@testing-library/react";
 import { expect, test } from "vitest";
+import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../mock/data/nomenclatures";
 
 test("Attendu: specificationTitre.getTitre la demande est CERTIFICAT_SITUATION_PACS", () => {
   const titre = specificationTitre.getTitre(

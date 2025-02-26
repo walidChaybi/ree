@@ -1,11 +1,3 @@
-import { idFicheActe1 } from "@mock/data/ficheActe";
-import {
-  resultatHeaderUtilistateurLeBiannic,
-  resultatRequeteUtilistateurLeBiannic,
-  userDroitCOMEDEC,
-  userDroitConsulterPerimetreTUNIS
-} from "@mock/data/mockConnectedUserAvecDroit";
-import { ReponseAppelNomenclatureTypeAlerte } from "@mock/data/nomenclatures";
 import { mappingOfficier } from "@model/agent/IOfficier";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
@@ -21,6 +13,14 @@ import { RouterProvider } from "react-router-dom";
 import { beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
 import IHabilitationDto from "../../../../dto/etatcivil/agent/IHabilitationDto";
 import { createTestingRouter, elementAvecContexte } from "../../../__tests__utils__/testsUtil";
+import { idFicheActe1 } from "../../../mock/data/ficheActe";
+import {
+  resultatHeaderUtilistateurLeBiannic,
+  resultatRequeteUtilistateurLeBiannic,
+  userDroitCOMEDEC,
+  userDroitConsulterPerimetreTUNIS
+} from "../../../mock/data/mockConnectedUserAvecDroit";
+import { ReponseAppelNomenclatureTypeAlerte } from "../../../mock/data/nomenclatures";
 
 describe("Test du composant Fiche page", () => {
   const fct = vi.fn();

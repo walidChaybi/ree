@@ -1,4 +1,3 @@
-import { ReponseAppelNomenclatureTypeAlerte } from "@mock/data/nomenclatures";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { A_NE_PAS_DELIVRER, DESCRIPTION_SAGA, TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
@@ -18,6 +17,7 @@ import {
   nombreActesSelectionnesDifferentDeUn
 } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuUtilEC";
 import { expect, test } from "vitest";
+import { ReponseAppelNomenclatureTypeAlerte } from "../../../../../../../mock/data/nomenclatures";
 
 const testsCasMultiples = <T>({ casOK, casKO, fonction }: { casOK: T[]; casKO: T[]; fonction: (props: T) => boolean }) => {
   casOK.forEach(cas => expect(fonction(cas)).toBe(true));

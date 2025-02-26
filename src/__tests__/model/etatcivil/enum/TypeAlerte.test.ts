@@ -1,6 +1,6 @@
-import { ReponseAppelNomenclatureTypeAlerte } from "@mock/data/nomenclatures";
 import { A_NE_PAS_DELIVRER, TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { beforeEach, expect, test } from "vitest";
+import { ReponseAppelNomenclatureTypeAlerte } from "../../../mock/data/nomenclatures";
 
 beforeEach(() => {
   return TypeAlerte.init(ReponseAppelNomenclatureTypeAlerte.data);

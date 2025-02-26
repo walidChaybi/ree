@@ -2,9 +2,9 @@ import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { IDataFicheProps } from "@pages/fiche/FichePage";
 import { setDataBandeau } from "@pages/fiche/contenu/BandeauFicheUtils";
 import { expect, test } from "vitest";
-import DATA_FICHE_PACS from "../../../../../mock/data/ficheEtBandeau/bandeauPacs";
-import DATA_FICHE_RC from "../../../../../mock/data/ficheEtBandeau/bandeauRc";
-import { acte } from "../../../../../mock/data/ficheEtBandeau/ficheActe";
+import DATA_FICHE_PACS from "../../../../mock/data/ficheEtBandeau/bandeauPacs";
+import DATA_FICHE_RC from "../../../../mock/data/ficheEtBandeau/bandeauRc";
+import { acte } from "../../../../mock/data/ficheEtBandeau/ficheActe";
 
 test("bandeauFicheUtils setDataBandeau works RC / RCA", () => {
   const dataFiche = {
@@ -16,18 +16,11 @@ test("bandeauFicheUtils setDataBandeau works RC / RCA", () => {
 
   const bandeauFiche = setDataBandeau(dataFiche, data);
 
-  expect(bandeauFiche.titreFenetre).toBe(
-    "RC - NOM1 Prenom11 et NOM2 Prenom21 - N° 2018 - 56533"
-  );
-  expect(bandeauFiche.statutsFiche).toEqual([
-    { statut: "Actif" },
-    { statut: "Inactif" }
-  ]);
+  expect(bandeauFiche.titreFenetre).toBe("RC - NOM1 Prenom11 et NOM2 Prenom21 - N° 2018 - 56533");
+  expect(bandeauFiche.statutsFiche).toEqual([{ statut: "Actif" }, { statut: "Inactif" }]);
   expect(bandeauFiche.personnes[0].prenom).toBe("Prenom11");
   expect(bandeauFiche.personnes[1].prenom).toBe("Prenom21");
-  expect(bandeauFiche.alertes).toEqual([
-    { alerte: "Date de fin de mesure dépassée", dateCreation: 1581807600 }
-  ]);
+  expect(bandeauFiche.alertes).toEqual([{ alerte: "Date de fin de mesure dépassée", dateCreation: 1581807600 }]);
 });
 
 test("bandeauFicheUtils setDataBandeau works PACS", () => {
@@ -40,13 +33,8 @@ test("bandeauFicheUtils setDataBandeau works PACS", () => {
 
   const bandeauFiche = setDataBandeau(dataFiche, data);
 
-  expect(bandeauFiche.titreFenetre).toBe(
-    "PACS - NOM1 Prenom11 et NOM2 Prenom21 - N° 2019 - 29369"
-  );
-  expect(bandeauFiche.statutsFiche).toEqual([
-    { statut: "Actif" },
-    { statut: "Inactif" }
-  ]);
+  expect(bandeauFiche.titreFenetre).toBe("PACS - NOM1 Prenom11 et NOM2 Prenom21 - N° 2019 - 29369");
+  expect(bandeauFiche.statutsFiche).toEqual([{ statut: "Actif" }, { statut: "Inactif" }]);
   expect(bandeauFiche.personnes[0].prenom).toBe("Prenom11");
   expect(bandeauFiche.personnes[1].prenom).toBe("Prenom21");
 });
@@ -61,9 +49,7 @@ test("bandeauFicheUtils setDataBandeau works Acte", () => {
 
   const bandeauFiche = setDataBandeau(dataFiche, data);
 
-  expect(bandeauFiche.titreFenetre).toBe(
-    "ABSENCE - GREENWALD Paulita et DUPE Laurent"
-  );
+  expect(bandeauFiche.titreFenetre).toBe("ABSENCE - GREENWALD Paulita et DUPE Laurent");
   expect(bandeauFiche.personnes[0].prenom).toBe("Paulita");
   expect(bandeauFiche.registre).toBe("CSL.DX.1922.NA.T.410.681");
 });

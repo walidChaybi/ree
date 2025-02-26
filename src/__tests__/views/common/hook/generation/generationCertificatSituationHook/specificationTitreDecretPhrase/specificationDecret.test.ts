@@ -1,9 +1,9 @@
 import { specificationDecret } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationDecret";
-import { decrets as decretsMock } from "@mock/data/NomenclatureEtatCivilDecrets";
-import { ReponseAppelNomenclatureDocummentDelivrance } from "@mock/data/nomenclatures";
-import { } from "@mock/superagent-config/superagent-mock-params";
 import { waitFor } from "@testing-library/react";
 import { expect, test } from "vitest";
+import { decrets as decretsMock } from "../../../../../../mock/data/NomenclatureEtatCivilDecrets";
+import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../mock/data/nomenclatures";
+import {} from "../../../../../../mock/superagent-config/superagent-mock-params";
 
 test("Attendu: specificationDecret.getDecret la demande est CERTIFICAT_SITUATION_PACS", () => {
   const decrets = specificationDecret.getDecret(
@@ -26,9 +26,7 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
     decretsMock // CERTIFICAT_SITUATION_RC
   );
   waitFor(() => {
-    expect(decrets.map(d => d.libelle)).toEqual([
-      "Article 4 du décret 65-422 du 1er juin 1965 modifié"
-    ]);
+    expect(decrets.map(d => d.libelle)).toEqual(["Article 4 du décret 65-422 du 1er juin 1965 modifié"]);
   });
 });
 
@@ -38,9 +36,7 @@ test("Attendu: specificationPhraseDelivrer.getPhrasesJasper la demande est CERTI
     decretsMock // CERTIFICAT_SITUATION_RCA
   );
   waitFor(() => {
-    expect(decrets.map(d => d.libelle)).toEqual([
-      "Article 4-1 du décret 65-422 du 1er juin 1965 modifié"
-    ]);
+    expect(decrets.map(d => d.libelle)).toEqual(["Article 4-1 du décret 65-422 du 1er juin 1965 modifié"]);
   });
 });
 

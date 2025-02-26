@@ -1,5 +1,3 @@
-import { NATURE_MENTION } from "@mock/data/NomenclatureNatureMention";
-import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { ID, ID_ACTE, URL_ACCUEIL, URL_RECHERCHE_ACTE_INSCRIPTION, URL_REQUETE_MISE_A_JOUR_ANALYSE_MARGINALE_ID } from "@router/ReceUrls";
@@ -8,6 +6,8 @@ import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import PageEditionRequeteMiseAJour from "../../../pages/requetesMiseAJour/PageEditionRequeteMiseAJour";
 import { createTestingRouter } from "../../__tests__utils__/testsUtil";
+import { NATURE_MENTION } from "../../mock/data/NomenclatureNatureMention";
+import { TYPE_MENTION } from "../../mock/data/NomenclatureTypeMention";
 
 const idActe = "b41079a5-9e8d-478c-b04c-c4c4ey86537g";
 const idRequete = "931c715b-ede1-4895-ad70-931f2ac4e43d";

@@ -1,12 +1,12 @@
 import { specificationRCA } from "@hook/generation/generationInscriptionsHook/specificationInscriptions/specificationRCA";
+import { DocumentDecret, IDecret } from "@model/etatcivil/commun/IDecret";
+import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
+import { expect, test } from "vitest";
 import {
   FicheRcaDecisionAvecInstructionProcureur,
   FicheRcaDecisionJuridictionEtrangere,
   FicheRcaDecisionNotaireConvention
-} from "@mock/data/ficheRCA";
-import { DocumentDecret, IDecret } from "@model/etatcivil/commun/IDecret";
-import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
-import { expect, test } from "vitest";
+} from "../../../../../../mock/data/ficheRCA";
 
 const decret = [
   {
@@ -18,7 +18,6 @@ const decret = [
     type: TypePacsRcRca.RCA
   } as IDecret
 ];
-
 
 test("Attendu: specificationRCA.getElementsJasper AVEC une instruction procureur", () => {
   const data = FicheRcaDecisionAvecInstructionProcureur;
@@ -56,9 +55,7 @@ Lieu de naissance: Nantes (Loire-Atlantique)`;
     "Le Service central d'état civil a reçu le jugement du Tribunal judiciaire de Paris 18ème arrondissement, en date du 26 novembre 2020 concernant le changement de régime matrimonial par acte notarié étranger / instruction du Procureur de : "
   );
   expect(elementsJasper.interesseDecision).toBe(interesse);
-  expect(elementsJasper.decisionExequatur).toBe(
-    "prise en exequatur de la décision étrangère en date du 26 novembre 2020"
-  );
+  expect(elementsJasper.decisionExequatur).toBe("prise en exequatur de la décision étrangère en date du 26 novembre 2020");
   expect(elementsJasper.paragrapheFin).toBe(
     "Conformément à l'Article 4-1 du décret 65-422 du 1er juin 1965, une inscription a été prise au répertoire civil annexe le 23 février 2020 sous la référence : RCA n°2020 - 4013."
   );

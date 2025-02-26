@@ -1,12 +1,12 @@
 import { AlertesActes } from "@composant/alertesActe/AlertesActes";
-import { TYPE_ALERTE } from "@mock/data/NomenclatureTypeAlerte";
-import { userDroitCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
-import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { act } from "react";
 import { describe, expect, test, vi } from "vitest";
 import { elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
+import { TYPE_ALERTE } from "../../../../mock/data/NomenclatureTypeAlerte";
+import { userDroitCOMEDEC } from "../../../../mock/data/mockConnectedUserAvecDroit";
+import requeteDelivrance from "../../../../mock/data/requeteDelivrance";
 
 describe("Test de AlertesActes", () => {
   TypeAlerte.init(TYPE_ALERTE);

@@ -1,5 +1,4 @@
 import { REQUETE } from "@composant/formulaire/ConstantesNomsForm";
-import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import RequeteForm, { RequeteFormDefaultValues, RequeteFormValidationSchema } from "@widget/formulaire/requete/RequeteForm";
@@ -7,6 +6,7 @@ import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { Field, Form, Formik } from "formik";
 import React, { act, useState } from "react";
 import { describe, expect, test } from "vitest";
+import { DOCUMENT_DELIVRANCE } from "../../../../../../mock/data/NomenclatureDocumentDelivrance";
 
 describe("Test RequeteForm", () => {
   DocumentDelivrance.init(DOCUMENT_DELIVRANCE);

@@ -1,4 +1,3 @@
-import mockConnectedUser from "@mock/data/connectedUser.json";
 import { IHabilitation } from "@model/agent/Habilitation";
 import { IOfficier } from "@model/agent/IOfficier";
 import { IPerimetre } from "@model/agent/IPerimetre";
@@ -9,6 +8,7 @@ import { IHabiliationDescription } from "@util/habilitation/habilitationsDescrip
 import React from "react";
 import { expect, test } from "vitest";
 import { elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
+import mockConnectedUser from "../../../../mock/data/connectedUser.json";
 
 interface BoutonTestProps {
   disabled?: boolean;

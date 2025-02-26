@@ -1,7 +1,7 @@
-import { imagePngVideBase64, urlImagePngVideBase64 } from "@mock/data/ImagePng";
 import { render, screen, waitFor } from "@testing-library/react";
 import { VisionneuseDocument } from "@widget/visionneuseDocument/VisionneuseDocument";
 import { expect, test, vi } from "vitest";
+import { imagePngVideBase64, urlImagePngVideBase64 } from "../../../../mock/data/ImagePng";
 
 // @ts-ignore
 global.URL.createObjectURL = vi.fn(() => urlImagePngVideBase64);

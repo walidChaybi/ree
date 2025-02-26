@@ -1,4 +1,3 @@
-import { TYPE_ALERTE } from "@mock/data/NomenclatureTypeAlerte";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
@@ -8,6 +7,7 @@ import { describe, expect, test, vi } from "vitest";
 import { PartieActeRequete } from "../../../../composants/pages/requetesMiseAJour/PartieActeRequete";
 import EditionMiseAJourContextProvider from "../../../../contexts/EditionMiseAJourContextProvider";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
+import { TYPE_ALERTE } from "../../../mock/data/NomenclatureTypeAlerte";
 
 const mockedUseNavigate = vi.fn();
 vi.mock("react-router-dom", async () => {

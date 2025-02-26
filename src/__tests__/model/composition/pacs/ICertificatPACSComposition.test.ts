@@ -1,8 +1,3 @@
-import {
-  annulationJuridictionMap,
-  dissolutionJuridictionMap,
-  pacsModificationNotaireMap
-} from "@mock/data/PACS";
 import { ICertificatPACSComposition } from "@model/composition/pacs/ICertificatPACSComposition";
 import { ParagrapheComposition } from "@model/composition/pacs/IParagraphesPacsComposition";
 import { IAutorite } from "@model/etatcivil/commun/IAutorite";
@@ -12,30 +7,22 @@ import { IAnnulation } from "@model/etatcivil/pacs/IAnnulation";
 import { IDissolution } from "@model/etatcivil/pacs/IDissolution";
 import { IModification } from "@model/etatcivil/pacs/IModification";
 import { expect, test } from "vitest";
+import { annulationJuridictionMap, dissolutionJuridictionMap, pacsModificationNotaireMap } from "../../../mock/data/PACS";
 
 test("ajoutParagrapheEnregistrementPACS", () => {
   let temp = {} as ICertificatPACSComposition;
-  ParagrapheComposition.ajoutParagrapheEnregistrementPACS(
-    temp,
-    pacsModificationNotaireMap
-  );
+  ParagrapheComposition.ajoutParagrapheEnregistrementPACS(temp, pacsModificationNotaireMap);
   ParagrapheComposition.ajoutParagrapheModificationPACS(
     temp,
-    pacsModificationNotaireMap.modifications
-      ? pacsModificationNotaireMap.modifications
-      : ([] as IModification[])
+    pacsModificationNotaireMap.modifications ? pacsModificationNotaireMap.modifications : ([] as IModification[])
   );
   ParagrapheComposition.ajoutParagrapheDissolutionPACS(
     temp,
-    dissolutionJuridictionMap.dissolution
-      ? dissolutionJuridictionMap.dissolution
-      : ({} as IDissolution)
+    dissolutionJuridictionMap.dissolution ? dissolutionJuridictionMap.dissolution : ({} as IDissolution)
   );
   ParagrapheComposition.ajoutParagrapheAnnulationPACS(
     temp,
-    annulationJuridictionMap.annulation
-      ? annulationJuridictionMap.annulation
-      : ({} as IAnnulation)
+    annulationJuridictionMap.annulation ? annulationJuridictionMap.annulation : ({} as IAnnulation)
   );
 
   expect(temp).toStrictEqual({
@@ -55,14 +42,10 @@ Date d'effet de l'annulation du PACS à l'égard des tiers : 26 novembre 2020.
 });
 
 test("getLibelleJuridiction", () => {
-  expect(
-    ParagrapheComposition.getLibelleJuridiction(TypeJuridiction.COURS_APPEL)
-  ).toBe("par arrêt de la cour d'appel de");
+  expect(ParagrapheComposition.getLibelleJuridiction(TypeJuridiction.COURS_APPEL)).toBe("par arrêt de la cour d'appel de");
 });
 test("getLibelleJuridiction defaut", () => {
-  expect(
-    ParagrapheComposition.getLibelleJuridiction(TypeJuridiction.GREFFE_TRIBUNAL)
-  ).toBe("par jugement du tribunal judiciaire de");
+  expect(ParagrapheComposition.getLibelleJuridiction(TypeJuridiction.GREFFE_TRIBUNAL)).toBe("par jugement du tribunal judiciaire de");
 });
 test("getAutorite commune", () => {
   expect(

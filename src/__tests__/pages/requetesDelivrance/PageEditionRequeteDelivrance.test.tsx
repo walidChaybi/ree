@@ -1,6 +1,3 @@
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { TYPE_ALERTE } from "@mock/data/NomenclatureTypeAlerte";
-import { idRequeteRDDASigner } from "@mock/data/requeteDelivrance";
 import { IDroit } from "@model/agent/Habilitation";
 import { IOfficier } from "@model/agent/IOfficier";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
@@ -12,6 +9,9 @@ import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import PageEditionRequeteDelivrance from "../../../pages/requetesDelivrance/PageEditionRequeteDelivrance";
 import { createTestingRouter } from "../../__tests__utils__/testsUtil";
+import MockRECEContextProvider from "../../mock/context/MockRECEContextProvider";
+import { TYPE_ALERTE } from "../../mock/data/NomenclatureTypeAlerte";
+import { idRequeteRDDASigner } from "../../mock/data/requeteDelivrance";
 
 describe("Test de la page aperçu requête edition analyse marginale", () => {
   TypeAlerte.init(TYPE_ALERTE);

@@ -1,8 +1,8 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
-import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, test } from "vitest";
+import { requeteCreationTranscription } from "../../../../../../../mock/data/requeteCreationTranscription";
 
 describe("Test le fonctionnement du hook récupérant les données nécessaires pour l'onglet RMC.", () => {
   const REQUETE = mappingRequeteCreation(requeteCreationTranscription);

@@ -1,20 +1,14 @@
 import { Personne } from "@model/etatcivil/commun/IPersonne";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { expect, test } from "vitest";
-import { personneMock } from "../../../../mock/data/ficheEtBandeau/divers/PersonneMock";
+import { personneMock } from "../../../mock/data/ficheEtBandeau/divers/PersonneMock";
 test("render composant SectionPart", () => {
   expect(Personne.getNom(personneMock)).toBe("Faulkner");
   expect(Personne.getAutresNoms(personneMock)).toBe("Elisa (Pseudonyme)");
-  expect(Personne.getPrenoms(personneMock)).toBe(
-    "Elie_madelaine-henriette, Maëlla, Marie-Charlotte"
-  );
+  expect(Personne.getPrenoms(personneMock)).toBe("Elie_madelaine-henriette, Maëlla, Marie-Charlotte");
   expect(Personne.getAutresPrenom(personneMock)).toBe("Solomon");
-  expect(Personne.getLieuNaissance(personneMock)).toBe(
-    "marseille 2ème arrondissement (Provence-Aples-côte d'azur)"
-  );
-  expect(Personne.getLieuDeces(personneMock)).toBe(
-    "londres, Angleterre (Grande bretagne)"
-  );
+  expect(Personne.getLieuNaissance(personneMock)).toBe("marseille 2ème arrondissement (Provence-Aples-côte d'azur)");
+  expect(Personne.getLieuDeces(personneMock)).toBe("londres, Angleterre (Grande bretagne)");
   expect(Personne.getDateNaissance(personneMock)).toBe("26/02/1980");
   expect(Personne.getDateDeces(personneMock)).toBe("07/2020");
   expect(Personne.getNationalite(personneMock)).toBe("Française");

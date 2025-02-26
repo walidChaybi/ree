@@ -1,5 +1,4 @@
 import { Body } from "@core/body/Body";
-import officier from "@mock/data/connectedUser.json";
 import { IOfficier } from "@model/agent/IOfficier";
 import { AccueilPage } from "@pages/accueil/AccueilPage";
 import { URL_BASE } from "@router/ReceUrls";
@@ -8,6 +7,7 @@ import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router-dom";
 import { afterEach, expect, test } from "vitest";
 import { createTestingRouter, elementAvecContexte } from "../../../__tests__utils__/testsUtil";
+import officier from "../../../mock/data/connectedUser.json";
 
 afterEach(() => {
   // Réactivation de la log après chaque test (certains tests la désactive car les erreurs logguées sont normales)

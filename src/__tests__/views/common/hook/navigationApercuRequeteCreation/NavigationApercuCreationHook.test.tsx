@@ -2,7 +2,6 @@ import {
   NavigationApercuReqCreationParams,
   useNavigationApercuCreation
 } from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { ApercuRequeteEtablissementSuiviDossierPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/ApercuRequeteEtablissementSuiviDossierPage";
@@ -24,6 +23,7 @@ import React from "react";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
+import MockRECEContextProvider from "../../../../mock/context/MockRECEContextProvider";
 
 const ID_REQUETE = "b63ebccd-ba5e-443a-8837-c5e1e111e846";
 

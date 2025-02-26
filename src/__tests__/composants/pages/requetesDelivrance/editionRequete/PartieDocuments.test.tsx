@@ -1,6 +1,3 @@
-import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
-import { acte } from "@mock/data/ficheEtBandeau/ficheActe";
-import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IProvenanceRece } from "@model/requete/IProvenanceRece";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -13,6 +10,9 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, test, vi } from "vitest";
 import PartieDocuments from "../../../../../composants/pages/requetesDelivrance/editionRequete/partieDocument/PartieDocuments";
 import { elementAvecContexte, elementAvecEditionDelivranceContexte } from "../../../../__tests__utils__/testsUtil";
+import { DOCUMENT_DELIVRANCE } from "../../../../mock/data/NomenclatureDocumentDelivrance";
+import { acte } from "../../../../mock/data/ficheEtBandeau/ficheActe";
+import requeteDelivrance from "../../../../mock/data/requeteDelivrance";
 
 describe("Partie Documents", () => {
   DocumentDelivrance.init(DOCUMENT_DELIVRANCE);

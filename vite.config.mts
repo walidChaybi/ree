@@ -57,7 +57,7 @@ export default defineConfig({
     alias: {
       "@api": path.resolve(__dirname, "/src/api"),
       "@dto": path.resolve(__dirname, "/src/dto"),
-      "@mock": path.resolve(__dirname, "/src/mock"),
+      "@mock": path.resolve(__dirname, "/src/__tests__/mock"),
       "@model": path.resolve(__dirname, "/src/model"),
       "@ressources": path.resolve(__dirname, "/src/ressources"),
       "@views": path.resolve(__dirname, "/src/views"),

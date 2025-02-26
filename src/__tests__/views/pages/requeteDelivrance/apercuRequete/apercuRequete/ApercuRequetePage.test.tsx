@@ -1,6 +1,3 @@
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
-import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
@@ -9,6 +6,9 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter, mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
+import MockRECEContextProvider from "../../../../../mock/context/MockRECEContextProvider";
+import { LISTE_UTILISATEURS } from "../../../../../mock/data/ListeUtilisateurs";
+import { DOCUMENT_DELIVRANCE } from "../../../../../mock/data/NomenclatureDocumentDelivrance";
 
 describe("Test ApercuRequetePage", () => {
   DocumentDelivrance.init(DOCUMENT_DELIVRANCE);

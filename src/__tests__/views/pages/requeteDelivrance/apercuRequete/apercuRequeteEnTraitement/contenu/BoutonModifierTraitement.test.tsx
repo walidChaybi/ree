@@ -1,5 +1,3 @@
-import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
-import { idRequeteRDCSC } from "@mock/data/requeteDelivrance";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -12,10 +10,9 @@ import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls"
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
-import {
-  createTestingRouter,
-  elementAvecContexte
-} from "../../../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, elementAvecContexte } from "../../../../../../__tests__utils__/testsUtil";
+import { userDroitnonCOMEDEC } from "../../../../../../mock/data/mockConnectedUserAvecDroit";
+import { idRequeteRDCSC } from "../../../../../../mock/data/requeteDelivrance";
 
 const requeteTestCOURRIER = {
   id: idRequeteRDCSC,
@@ -55,11 +52,7 @@ describe.skip("BoutonModifierTraitement - ", () => {
       [
         {
           path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-          element: (
-            <BoutonModifierTraitement
-              requete={requeteTestCOURRIER}
-            ></BoutonModifierTraitement>
-          )
+          element: <BoutonModifierTraitement requete={requeteTestCOURRIER}></BoutonModifierTraitement>
         },
         {
           path: "*",
@@ -69,16 +62,9 @@ describe.skip("BoutonModifierTraitement - ", () => {
       [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]
     );
 
-    const { getByText } = render(
-      elementAvecContexte(
-        <RouterProvider router={router} />,
-        userDroitnonCOMEDEC
-      )
-    );
+    const { getByText } = render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC));
 
-    const bouttonModifierTraitement = getByText(
-      /Modifier le traitement/i
-    ) as HTMLButtonElement;
+    const bouttonModifierTraitement = getByText(/Modifier le traitement/i) as HTMLButtonElement;
 
     waitFor(() => {
       expect(bouttonModifierTraitement.disabled).toBeFalsy();
@@ -94,11 +80,7 @@ describe.skip("BoutonModifierTraitement - ", () => {
       [
         {
           path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-          element: (
-            <BoutonModifierTraitement
-              requete={requeteTestCOURRIER}
-            ></BoutonModifierTraitement>
-          )
+          element: <BoutonModifierTraitement requete={requeteTestCOURRIER}></BoutonModifierTraitement>
         },
         {
           path: "*",
@@ -108,16 +90,9 @@ describe.skip("BoutonModifierTraitement - ", () => {
       [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]
     );
 
-    const { getByText } = render(
-      elementAvecContexte(
-        <RouterProvider router={router} />,
-        userDroitnonCOMEDEC
-      )
-    );
+    const { getByText } = render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC));
 
-    const bouttonModifierTraitement = getByText(
-      /Modifier le traitement/i
-    ) as HTMLButtonElement;
+    const bouttonModifierTraitement = getByText(/Modifier le traitement/i) as HTMLButtonElement;
 
     waitFor(() => {
       expect(bouttonModifierTraitement.disabled).toBeFalsy();

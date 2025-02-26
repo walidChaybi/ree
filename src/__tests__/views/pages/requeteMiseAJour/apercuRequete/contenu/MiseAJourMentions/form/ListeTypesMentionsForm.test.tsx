@@ -4,8 +4,6 @@ import {
   MENTION_NIVEAU_TROIS,
   MENTION_NIVEAU_UN
 } from "@composant/formulaire/ConstantesNomsForm";
-import { NATURE_MENTION } from "@mock/data/NomenclatureNatureMention";
-import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
@@ -14,6 +12,8 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Formik } from "formik";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, test } from "vitest";
+import { NATURE_MENTION } from "../../../../../../../mock/data/NomenclatureNatureMention";
+import { TYPE_MENTION } from "../../../../../../../mock/data/NomenclatureTypeMention";
 
 describe("Test ListeTypeMentionsForm", () => {
   const LISTE_TYPE_MENTION_NIVEAU_UN = `${LISTES_TYPES_MENTION}.${MENTION_NIVEAU_UN}`;

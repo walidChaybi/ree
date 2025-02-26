@@ -1,6 +1,4 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { resultatHeaderUtilistateurLeBiannic, resultatRequeteUtilistateurLeBiannic } from "@mock/data/mockConnectedUserAvecDroit";
 import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
 import { mappingOfficier } from "@model/agent/IOfficier";
 import { IPerimetre } from "@model/agent/IPerimetre";
@@ -22,6 +20,11 @@ import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
 import IHabilitationDto from "../../../../../dto/etatcivil/agent/IHabilitationDto";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
+import MockRECEContextProvider from "../../../../mock/context/MockRECEContextProvider";
+import {
+  resultatHeaderUtilistateurLeBiannic,
+  resultatRequeteUtilistateurLeBiannic
+} from "../../../../mock/data/mockConnectedUserAvecDroit";
 
 const utilisateurs = [
   {

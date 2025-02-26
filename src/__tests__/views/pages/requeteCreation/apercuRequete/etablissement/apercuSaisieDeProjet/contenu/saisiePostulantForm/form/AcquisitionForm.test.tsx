@@ -1,19 +1,15 @@
 import { ACQUISITION } from "@composant/formulaire/ConstantesNomsForm";
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
-import { requeteCreationEtablissementSaisieProjet } from "@mock/data/requeteCreationEtablissement";
 import AcquisitionForm from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/form/AcquisitionForm";
 import { mappingTitulairesVersFormulairePostulant } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/mapping/mappingTitulaireVersFormulairePostulant";
 import { getPostulantValidationSchema } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/contenu/saisiePostulantForm/validation/PostulantValidationSchema";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { expect, test } from "vitest";
+import { requeteCreationEtablissementSaisieProjet } from "../../../../../../../../../mock/data/requeteCreationEtablissement";
 
-function afficheComposantAcquisitionSaisieDeProjet(
-  estAvancementASigner: boolean
-) {
-  const requete = mappingRequeteCreation(
-    requeteCreationEtablissementSaisieProjet
-  );
+function afficheComposantAcquisitionSaisieDeProjet(estAvancementASigner: boolean) {
+  const requete = mappingRequeteCreation(requeteCreationEtablissementSaisieProjet);
   const titulaires = requete.titulaires;
 
   render(
@@ -39,12 +35,9 @@ test("DOIT afficher la nature et la date decret QUAND l'avancement est a signer"
   afficheComposantAcquisitionSaisieDeProjet(true);
 
   const champNature = screen.getByLabelText("Nature") as HTMLInputElement;
-  const champJourDecret = screen.getByText("Date du décret")
-    .nextElementSibling as HTMLInputElement;
-  const champMoisDecret = champJourDecret.nextElementSibling
-    ?.nextElementSibling as HTMLInputElement;
-  const champAnneeDecret = champMoisDecret.nextElementSibling
-    ?.nextElementSibling as HTMLInputElement;
+  const champJourDecret = screen.getByText("Date du décret").nextElementSibling as HTMLInputElement;
+  const champMoisDecret = champJourDecret.nextElementSibling?.nextElementSibling as HTMLInputElement;
+  const champAnneeDecret = champMoisDecret.nextElementSibling?.nextElementSibling as HTMLInputElement;
 
   waitFor(() => {
     expect(champNature.value).toBe("NATURALISATION");

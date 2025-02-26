@@ -4,8 +4,6 @@ import {
   MENTION_NIVEAU_TROIS,
   MENTION_NIVEAU_UN
 } from "@composant/formulaire/ConstantesNomsForm";
-import { NATURE_MENTION } from "@mock/data/NomenclatureNatureMention";
-import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import ApercuRequeteMiseAJourPage from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
@@ -16,6 +14,8 @@ import { act } from "react";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
+import { NATURE_MENTION } from "../../../../../../mock/data/NomenclatureNatureMention";
+import { TYPE_MENTION } from "../../../../../../mock/data/NomenclatureTypeMention";
 
 // Fichier de test obsolète. À supprimer lors du nettoyage de ApercuRequeteMiseAJour
 

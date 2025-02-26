@@ -1,7 +1,7 @@
-import mockRCA from "@mock/data/RCA.json";
 import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
 import { getPanelsRca } from "@pages/fiche/hook/constructionComposants/rcrca/FicheRcaUtils";
 import { expect, test } from "vitest";
+import mockRCA from "../../../../../../mock/data/RCA.json";
 
 test("ficheUtils rca works", () => {
   const panels = getPanelsRca({

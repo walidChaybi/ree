@@ -1,4 +1,4 @@
-import { deepCopie } from "../../__tests__/__tests__utils__/testsUtil";
+import { deepCopie } from "../../__tests__utils__/testsUtil";
 import {
   detailRequeteDelivranceAvecTitulaireMultiple,
   detailRequeteDelivranceCopieArchive,

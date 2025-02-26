@@ -1,7 +1,3 @@
-import {
-  requeteCreationEtablissement,
-  requeteCreationTranscription
-} from "@mock/data/requeteCreation";
 import { IEvenementUnion } from "@model/requete/IEvenementUnion";
 import { INationalite } from "@model/requete/INationalite";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
@@ -33,6 +29,7 @@ import { AdresseFormDefaultValues } from "@widget/formulaire/adresse/AdresseForm
 import { DateDefaultValues } from "@widget/formulaire/champsDate/DateComposeForm";
 import { NationalitesFormDefaultValues } from "@widget/formulaire/nationalites/NationalitesForm";
 import { describe, expect, test } from "vitest";
+import { requeteCreationEtablissement, requeteCreationTranscription } from "../../../../../mock/data/requeteCreation";
 
 describe("Mapping d'une requête de trancsription vers le formulaire dans le cas d'un update", () => {
   test("DOIT retourner 'OUI' QUAND l'année est présente et 'NON' QUAND est n'est pas présente", () => {
@@ -199,15 +196,12 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
       paysReconnaissance: "Tunisie"
     };
 
-    expect(saisieEvenementReconnaissance(evenementReconnaissance)).toEqual(
-      evenementAttendu
-    );
+    expect(saisieEvenementReconnaissance(evenementReconnaissance)).toEqual(evenementAttendu);
   });
 
   test("DOIT retourner l'objet Formik de saisie de requête correctement", () => {
     const requete = {
-      natureActeTranscrit:
-        NatureActeTranscription.getEnumFor("NAISSANCE_MINEUR"),
+      natureActeTranscrit: NatureActeTranscription.getEnumFor("NAISSANCE_MINEUR"),
       lienRequerant: {
         typeLienRequerant: "TITULAIRE"
       },
@@ -243,9 +237,7 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
       autreNumeroTelephone: "0212456512"
     };
 
-    expect(saisieRequerant(requeteCreationEtablissement.requerant)).toEqual(
-      saisieRequerantAttendu
-    );
+    expect(saisieRequerant(requeteCreationEtablissement.requerant)).toEqual(saisieRequerantAttendu);
 
     expect(saisieRequerant(undefined)).toEqual(RequerantFormDefaultValue);
   });
@@ -290,9 +282,7 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
       }
     };
 
-    expect(
-      saisieTitulaire(requeteCreationTranscription.titulaires?.[0])
-    ).toEqual(saisieTitulaireAttendu);
+    expect(saisieTitulaire(requeteCreationTranscription.titulaires?.[0])).toEqual(saisieTitulaireAttendu);
 
     expect(saisieTitulaire(undefined)).toEqual(IdentiteFormDefaultValues);
   });
@@ -343,22 +333,15 @@ describe("Mapping d'une requête de trancsription vers le formulaire dans le cas
       }
     };
 
-    expect(saisieParent(requeteCreationTranscription.titulaires?.[1])).toEqual(
-      saisieParentAttendu
-    );
+    expect(saisieParent(requeteCreationTranscription.titulaires?.[1])).toEqual(saisieParentAttendu);
 
     expect(saisieParent(undefined)).toEqual(ParentFormDefaultValues);
   });
 
   test("DOIT retourner le titulaire acte transcrit dresse de position 1", () => {
-    const titulaireActeTranscritDressePositionUn =
-      getTitulaireActeTranscitDresseEtDePositionUn(
-        requeteCreationTranscription.titulaires
-      );
+    const titulaireActeTranscritDressePositionUn = getTitulaireActeTranscitDresseEtDePositionUn(requeteCreationTranscription.titulaires);
 
-    expect(titulaireActeTranscritDressePositionUn?.nomNaissance).toEqual(
-      "nomNaissance"
-    );
+    expect(titulaireActeTranscritDressePositionUn?.nomNaissance).toEqual("nomNaissance");
   });
 
   test("DOIT retourner l'adresse ou les DefaultValues QUAND le requerant n'est pas présent", () => {

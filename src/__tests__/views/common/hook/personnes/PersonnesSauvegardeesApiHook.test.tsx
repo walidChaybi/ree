@@ -1,15 +1,12 @@
-import {
-  IPersonnesSauvegardeesParams,
-  usePersonnesSauvegardeesApiHook
-} from "@hook/personnes/PersonnesSauvegardeesApiHook";
+import { IPersonnesSauvegardeesParams, usePersonnesSauvegardeesApiHook } from "@hook/personnes/PersonnesSauvegardeesApiHook";
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
-import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
-import { configEtatcivil } from "@mock/superagent-config/superagent-mock-etatcivil";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { render, screen, waitFor } from "@testing-library/react";
 import React, { useEffect, useState } from "react";
 import request from "superagent";
 import { afterAll, describe, expect, test } from "vitest";
+import { requeteCreationTranscription } from "../../../../mock/data/requeteCreationTranscription";
+import { configEtatcivil } from "../../../../mock/superagent-config/superagent-mock-etatcivil";
 
 const superagentMock = require("superagent-mock")(request, configEtatcivil);
 
@@ -21,20 +18,13 @@ interface HookConsumerPersonnesSauvegardeesProps {
   requete: IRequeteCreationTranscription;
 }
 
-const HookConsumerPersonnesSauvegardees: React.FC<
-  HookConsumerPersonnesSauvegardeesProps
-> = props => {
-  const [personnesSauvegardeesParams, setPersonnesSauvegardeesParams] =
-    useState<IPersonnesSauvegardeesParams>();
-  const resultatPersonnesSauvegardees = usePersonnesSauvegardeesApiHook(
-    personnesSauvegardeesParams
-  );
+const HookConsumerPersonnesSauvegardees: React.FC<HookConsumerPersonnesSauvegardeesProps> = props => {
+  const [personnesSauvegardeesParams, setPersonnesSauvegardeesParams] = useState<IPersonnesSauvegardeesParams>();
+  const resultatPersonnesSauvegardees = usePersonnesSauvegardeesApiHook(personnesSauvegardeesParams);
 
   useEffect(() => {
     setPersonnesSauvegardeesParams({
-      idPersonnes: props.requete.personnesSauvegardees.map(
-        personne => personne.idPersonne
-      )
+      idPersonnes: props.requete.personnesSauvegardees.map(personne => personne.idPersonne)
     });
   }, [props.requete]);
 
@@ -60,12 +50,8 @@ describe("Test du custom hook useRMCAutoPersonneApiAvecCacheHook", () => {
     render(<HookConsumerPersonnesSauvegardees requete={requete} />);
 
     waitFor(() => {
-      expect(
-        screen.getByTestId("test-personne-sauvegardee-alpha").textContent
-      ).toEqual("e7114c54-d00d-48ad-bbee-af2b01e2da7a");
-      expect(
-        screen.getByTestId("test-personne-sauvegardee-beta").textContent
-      ).toEqual("e7114c54-d00d-48ad-bbee-af2b01e2da7c");
+      expect(screen.getByTestId("test-personne-sauvegardee-alpha").textContent).toEqual("e7114c54-d00d-48ad-bbee-af2b01e2da7a");
+      expect(screen.getByTestId("test-personne-sauvegardee-beta").textContent).toEqual("e7114c54-d00d-48ad-bbee-af2b01e2da7c");
     });
   });
 });

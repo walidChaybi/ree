@@ -1,7 +1,7 @@
-import mockRC from "@mock/data/RC.json";
 import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
 import { getPanelsRc } from "@pages/fiche/hook/constructionComposants/rcrca/FicheRcUtils";
 import { expect, test } from "vitest";
+import mockRC from "../../../../../../mock/data/RC.json";
 
 test("ficheUtils rc works", () => {
   const panels = getPanelsRc(mockRC.data as unknown as IFicheRcRca);

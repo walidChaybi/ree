@@ -1,12 +1,12 @@
 import { RECEContextActions, RECEContextData } from "@core/contexts/RECEContext";
-import { servicesALL } from "@mock/data/servicesALL";
 import { IOfficier } from "@model/agent/IOfficier";
 import { IService } from "@model/agent/IService";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { IDecret } from "@model/etatcivil/commun/IDecret";
 import React, { useState } from "react";
+import { servicesALL } from "../data/servicesALL";
 
-interface IMockRECEContextProviderProps {
+interface MockRECEContextProvider {
   utilisateurConnecte?: IOfficier;
   utilisateurs?: IUtilisateur[];
   services?: IService[];
@@ -14,7 +14,7 @@ interface IMockRECEContextProviderProps {
   erreurLogin?: any;
 }
 
-const MockRECEContextProvider: React.FC<React.PropsWithChildren<IMockRECEContextProviderProps>> = ({
+const MockRECEContextProvider: React.FC<React.PropsWithChildren<MockRECEContextProvider>> = ({
   utilisateurConnecte = {} as IOfficier,
   utilisateurs = [] as IUtilisateur[],
   services = servicesALL.data as any as IService[],

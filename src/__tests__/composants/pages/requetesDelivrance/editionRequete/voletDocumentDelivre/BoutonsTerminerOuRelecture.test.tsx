@@ -1,6 +1,3 @@
-import { acte } from "@mock/data/ficheEtBandeau/ficheActe";
-import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
-import { idRequeteRDCSC } from "@mock/data/requeteDelivrance";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -13,6 +10,9 @@ import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import { BoutonsTerminerOuRelecture } from "../../../../../../composants/pages/requetesDelivrance/editionRequete/boutons/BoutonsTerminerOuRelecture";
 import { createTestingRouter, elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
+import { acte } from "../../../../../mock/data/ficheEtBandeau/ficheActe";
+import { userDroitnonCOMEDEC } from "../../../../../mock/data/mockConnectedUserAvecDroit";
+import { idRequeteRDCSC } from "../../../../../mock/data/requeteDelivrance";
 
 const requeteTestCOURRIER = {
   id: idRequeteRDCSC,

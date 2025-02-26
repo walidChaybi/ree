@@ -1,5 +1,3 @@
-import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
-import { idRequeteRDCSC } from "@mock/data/requeteDelivrance";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -10,10 +8,9 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
 import { BoutonValiderTerminer } from "../../../../../composants/pages/requetesDelivrance/editionRequete/boutons/BoutonValiderTerminer";
-import {
-  createTestingRouter,
-  elementAvecContexte,
-} from "../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
+import { userDroitnonCOMEDEC } from "../../../../mock/data/mockConnectedUserAvecDroit";
+import { idRequeteRDCSC } from "../../../../mock/data/requeteDelivrance";
 
 const requeteTestCOURRIER = {
   id: idRequeteRDCSC,
@@ -21,7 +18,7 @@ const requeteTestCOURRIER = {
   dateCreation: 1577836800000,
   statutCourant: {
     statut: StatutRequete.A_VALIDER,
-    dateEffet: 1577923200000,
+    dateEffet: 1577923200000
   },
   idUtilisateur: "idUtilisateurConnectedUser",
   provenanceRequete: { provenance: Provenance.COURRIER },
@@ -34,20 +31,16 @@ const requeteTestCOURRIER = {
       prenoms: [
         {
           prenom: "Hugo",
-          numeroOrdre: 1,
-        },
+          numeroOrdre: 1
+        }
       ],
       jourNaissance: 31,
       moisNaissance: 12,
       anneeNaissance: 1981,
-      sexe: Sexe.MASCULIN.libelle,
-    },
+      sexe: Sexe.MASCULIN.libelle
+    }
   ],
-  documentsReponses: [
-    { idRc: "123456789" },
-    { idRca: "123456789" },
-    { idPacs: "123456789" },
-  ],
+  documentsReponses: [{ idRc: "123456789" }, { idRca: "123456789" }, { idPacs: "123456789" }]
 } as IRequeteDelivrance;
 
 test("est à A_VALIDER et provient de COURRIER", () => {
@@ -55,29 +48,18 @@ test("est à A_VALIDER et provient de COURRIER", () => {
     [
       {
         path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-        element: (
-          <BoutonValiderTerminer
-            requete={requeteTestCOURRIER}
-          ></BoutonValiderTerminer>
-        ),
+        element: <BoutonValiderTerminer requete={requeteTestCOURRIER}></BoutonValiderTerminer>
       },
       {
         path: "*",
-        element: <></>,
-      },
+        element: <></>
+      }
     ],
-    [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID],
+    [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]
   );
 
-  render(
-    elementAvecContexte(
-      <RouterProvider router={router} />,
-      userDroitnonCOMEDEC,
-    ),
-  );
-  const bouttonSigner = screen.getByText(
-    /Valider et terminer/i,
-  ) as HTMLButtonElement;
+  render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC));
+  const bouttonSigner = screen.getByText(/Valider et terminer/i) as HTMLButtonElement;
 
   waitFor(() => {
     expect(bouttonSigner.disabled).toBeFalsy();

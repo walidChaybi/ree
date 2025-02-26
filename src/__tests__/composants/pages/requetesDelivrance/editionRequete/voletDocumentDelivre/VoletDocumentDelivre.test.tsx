@@ -1,9 +1,3 @@
-import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
-import { NATURE_MENTION } from "@mock/data/NomenclatureNatureMention";
-import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
-import { acte, acteNaissance } from "@mock/data/ficheEtBandeau/ficheActe";
-import { userDroitDelivrer } from "@mock/data/mockConnectedUserAvecDroit";
-import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
@@ -21,6 +15,12 @@ import { act } from "react";
 import { describe, expect, test } from "vitest";
 import VoletDocumentDelivre from "../../../../../../composants/pages/requetesDelivrance/editionRequete/partieDocument/voletDocuments/VoletDocumentDelivre";
 import { elementAvecContexte, elementAvecEditionDelivranceContexte } from "../../../../../__tests__utils__/testsUtil";
+import { DOCUMENT_DELIVRANCE } from "../../../../../mock/data/NomenclatureDocumentDelivrance";
+import { NATURE_MENTION } from "../../../../../mock/data/NomenclatureNatureMention";
+import { TYPE_MENTION } from "../../../../../mock/data/NomenclatureTypeMention";
+import { acte, acteNaissance } from "../../../../../mock/data/ficheEtBandeau/ficheActe";
+import { userDroitDelivrer } from "../../../../../mock/data/mockConnectedUserAvecDroit";
+import requeteDelivrance from "../../../../../mock/data/requeteDelivrance";
 
 describe("VoletDocumentDelivre", () => {
   DocumentDelivrance.init(DOCUMENT_DELIVRANCE);

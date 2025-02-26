@@ -1,7 +1,4 @@
 import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { idRequeteRDCSC, requeteRDCSC } from "@mock/data/requeteDelivrance";
-import { requeteInformation } from "@mock/data/requeteInformation";
 import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
 import { IService } from "@model/agent/IService";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
@@ -22,6 +19,9 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
+import MockRECEContextProvider from "../../../../mock/context/MockRECEContextProvider";
+import { idRequeteRDCSC, requeteRDCSC } from "../../../../mock/data/requeteDelivrance";
+import { requeteInformation } from "../../../../mock/data/requeteInformation";
 
 describe("Test MenuTransfert", () => {
   const listeUtilisateurs = [

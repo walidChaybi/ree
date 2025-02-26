@@ -9,7 +9,7 @@ import {
   RequeteRDCMandataire,
   RequeteRDCParticulier,
   RequeteRDCTitulaire
-} from "../../../../../../mock/data/DataRDC";
+} from "../../../../../mock/data/DataRDC";
 
 describe("Test du hook CreerRDCApi", () => {
   const HookConsummerTitulaire: React.FC = () => {

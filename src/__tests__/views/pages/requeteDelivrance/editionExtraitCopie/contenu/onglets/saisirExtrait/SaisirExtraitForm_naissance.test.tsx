@@ -1,25 +1,12 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
-import {
-  requeteAvecDocs,
-  requeteAvecDocsPlurilingue
-} from "@mock/data/DetailRequeteDelivrance";
-import {
-  ficheActe1,
-  ficheActe1_avecTitulaireAyantDeuxParents,
-  ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe
-} from "@mock/data/ficheActe";
-import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IFiliation } from "@model/etatcivil/acte/IFiliation";
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import {
-  ISaisieExtraitForm,
-  ITitulaireEvtForm
-} from "@model/form/delivrance/ISaisieExtraitForm";
+import { ISaisieExtraitForm, ITitulaireEvtForm } from "@model/form/delivrance/ISaisieExtraitForm";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { SaisirExtraitForm } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitForm";
@@ -42,18 +29,25 @@ import {
   expectSelectEstAbsent
 } from "../../../../../../../__tests__utils__/expectUtils";
 import { elementAvecContexte } from "../../../../../../../__tests__utils__/testsUtil";
+import { requeteAvecDocs, requeteAvecDocsPlurilingue } from "../../../../../../../mock/data/DetailRequeteDelivrance";
+import {
+  ficheActe1,
+  ficheActe1_avecTitulaireAyantDeuxParents,
+  ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe
+} from "../../../../../../../mock/data/ficheActe";
+import { userDroitnonCOMEDEC } from "../../../../../../../mock/data/mockConnectedUserAvecDroit";
 
 const acte = mapActe(ficheActe1.data);
 const requete = {
   statutCourant: { statut: StatutRequete.A_SIGNER }
 } as IRequeteDelivrance;
 
-const saisirExtraitFormAvecContexte = (
-  acte: IFicheActe,
-  requete: IRequeteDelivrance
-): any => {
+const saisirExtraitFormAvecContexte = (acte: IFicheActe, requete: IRequeteDelivrance): any => {
   return elementAvecContexte(
-    <SaisirExtraitForm acte={acte} requete={requete} />,
+    <SaisirExtraitForm
+      acte={acte}
+      requete={requete}
+    />,
     userDroitnonCOMEDEC
   );
 };
@@ -66,92 +60,58 @@ test.skip("Attendu: le formulaire SaisirExtraitForm pour un acte de naissance s'
   });
 
   waitFor(() => {
-    const widget = screen.getByLabelText(
-      "titulaireEvt1.nomNaissance"
-    ) as HTMLInputElement;
+    const widget = screen.getByLabelText("titulaireEvt1.nomNaissance") as HTMLInputElement;
     expect(widget).toBeDefined();
     expect(widget.value).toBe("Patamod eler");
     expect(widget.disabled).toBeTruthy();
   });
 
   waitFor(() => {
-    const widget = screen.getByLabelText(
-      "titulaireevt1.nomsecable.secable.true"
-    ) as HTMLInputElement;
+    const widget = screen.getByLabelText("titulaireevt1.nomsecable.secable.true") as HTMLInputElement;
     expect(widget).toBeDefined();
     expect(widget.checked).toBeFalsy();
   });
 
-  fireEvent.click(
-    screen.getByLabelText("titulaireevt1.nomsecable.secable.true")
-  );
+  fireEvent.click(screen.getByLabelText("titulaireevt1.nomsecable.secable.true"));
 
   waitFor(() => {
-    const widget = screen.getByLabelText(
-      "titulaireEvt1.nomSecable.nomPartie1"
-    ) as HTMLInputElement;
+    const widget = screen.getByLabelText("titulaireEvt1.nomSecable.nomPartie1") as HTMLInputElement;
     expect(widget).toBeDefined();
     expect(widget.value).toBe("Patamod");
   });
   waitFor(() => {
-    const widget = screen.getByLabelText(
-      "titulaireEvt1.nomSecable.nomPartie2"
-    ) as HTMLInputElement;
+    const widget = screen.getByLabelText("titulaireEvt1.nomSecable.nomPartie2") as HTMLInputElement;
     expect(widget).toBeDefined();
     expect(widget.value).toBe("eler");
   });
 
   waitFor(() => {
-    const widget = screen.getByTestId(
-      "titulaireEvt1.declarationConjointe.type"
-    ) as HTMLSelectElement;
+    const widget = screen.getByTestId("titulaireEvt1.declarationConjointe.type") as HTMLSelectElement;
     expect(widget).toBeDefined();
     expect(widget.value).toBe("ABSENCE_DECLARATION");
   });
 
   waitFor(() => {
-    expectEstPresentAvecValeurEtDisabled(
-      "titulaireEvt1.prenoms.prenom1",
-      "Alphonse"
-    );
+    expectEstPresentAvecValeurEtDisabled("titulaireEvt1.prenoms.prenom1", "Alphonse");
   });
 
   waitFor(() => {
-    const widget = screen.getByLabelText(
-      "titulaireevt1.sexe.feminin"
-    ) as HTMLInputElement;
+    const widget = screen.getByLabelText("titulaireevt1.sexe.feminin") as HTMLInputElement;
     expect(widget).toBeDefined();
     expect(widget.disabled).toBeTruthy();
     expect(widget.checked).toBeTruthy();
   });
 
   waitFor(() => {
-    expectEstPresentAvecValeurEtDisabled(
-      "titulaireEvt1.evenement.dateEvenement.jour",
-      "10"
-    );
-    expectEstPresentAvecValeurEtDisabled(
-      "titulaireEvt1.evenement.dateEvenement.mois",
-      "10"
-    );
-    expectEstPresentAvecValeurEtDisabled(
-      "titulaireEvt1.evenement.dateEvenement.annee",
-      "1901"
-    );
-    expectEstPresentAvecValeurEtDisabled(
-      "titulaireEvt1.evenement.dateEvenement.nbHeure",
-      "13"
-    );
-    expectEstPresentAvecValeurEtDisabled(
-      "titulaireEvt1.evenement.dateEvenement.nbMinute",
-      "15"
-    );
+    expectEstPresentAvecValeurEtDisabled("titulaireEvt1.evenement.dateEvenement.jour", "10");
+    expectEstPresentAvecValeurEtDisabled("titulaireEvt1.evenement.dateEvenement.mois", "10");
+    expectEstPresentAvecValeurEtDisabled("titulaireEvt1.evenement.dateEvenement.annee", "1901");
+    expectEstPresentAvecValeurEtDisabled("titulaireEvt1.evenement.dateEvenement.nbHeure", "13");
+    expectEstPresentAvecValeurEtDisabled("titulaireEvt1.evenement.dateEvenement.nbMinute", "15");
   });
 
   waitFor(() => {
-    const widget = screen.getByLabelText(
-      "titulaireEvt1.evenement.lieuEvenement.lieuComplet"
-    ) as HTMLInputElement;
+    const widget = screen.getByLabelText("titulaireEvt1.evenement.lieuEvenement.lieuComplet") as HTMLInputElement;
     expect(widget).toBeDefined();
     expect(widget.value).toBe("paris île de france");
     expect(widget.disabled).toBeFalsy();
@@ -159,9 +119,7 @@ test.skip("Attendu: le formulaire SaisirExtraitForm pour un acte de naissance s'
 
   waitFor(() => {
     expectEstAbsent("titulaireEvt1.evenement.lieuEvenement.ville");
-    expectSelectEstAbsent(
-      "titulaireEvt1.evenement.lieuEvenement.arrondissement"
-    );
+    expectSelectEstAbsent("titulaireEvt1.evenement.lieuEvenement.arrondissement");
     expectEstAbsent("titulaireEvt1.evenement.lieuEvenement.regionDepartement");
   });
 });
@@ -176,44 +134,26 @@ test("Attendu: la saisie des heures et minutes est possible lorsque les valeurs 
     }
   };
 
-  render(
-    saisirExtraitFormAvecContexte(acteAvecEvenementSansHeureNiMinute, requete)
-  );
+  render(saisirExtraitFormAvecContexte(acteAvecEvenementSansHeureNiMinute, requete));
 
   waitFor(() => {
-    expectEstPresentAvecValeurVide(
-      "titulaireEvt1.evenement.dateEvenement.nbHeure"
-    );
-    expectEstPresentAvecValeurVide(
-      "titulaireEvt1.evenement.dateEvenement.nbMinute"
-    );
+    expectEstPresentAvecValeurVide("titulaireEvt1.evenement.dateEvenement.nbHeure");
+    expectEstPresentAvecValeurVide("titulaireEvt1.evenement.dateEvenement.nbMinute");
   });
 
   changeInput("titulaireEvt1.evenement.dateEvenement.nbHeure", "10");
   changeInput("titulaireEvt1.evenement.dateEvenement.nbMinute", "15");
 
   waitFor(() => {
-    expectEstPresentAvecValeur(
-      "titulaireEvt1.evenement.dateEvenement.nbHeure",
-      "10"
-    );
-    expectEstPresentAvecValeur(
-      "titulaireEvt1.evenement.dateEvenement.nbMinute",
-      "15"
-    );
+    expectEstPresentAvecValeur("titulaireEvt1.evenement.dateEvenement.nbHeure", "10");
+    expectEstPresentAvecValeur("titulaireEvt1.evenement.dateEvenement.nbMinute", "15");
   });
 });
 
 test("Attendu: le sous formulaire DateNaissanceOuAgeDeForm se comporte correctement ", () => {
   render(saisirExtraitFormAvecContexte(acte, requete));
-  const widgetAnnee = expectEstPresentAvecValeur(
-    "titulaireEvt1.parentNaiss1.dateNaissanceOuAgeDe.date.annee",
-    ""
-  );
-  const widgetAge = expectEstPresentAvecValeur(
-    "titulaireEvt1.parentNaiss1.dateNaissanceOuAgeDe.age",
-    ""
-  );
+  const widgetAnnee = expectEstPresentAvecValeur("titulaireEvt1.parentNaiss1.dateNaissanceOuAgeDe.date.annee", "");
+  const widgetAge = expectEstPresentAvecValeur("titulaireEvt1.parentNaiss1.dateNaissanceOuAgeDe.age", "");
 
   fireEvent.input(widgetAnnee, {
     target: {
@@ -250,9 +190,7 @@ test("Attendu: le sous formulaire DateNaissanceOuAgeDeForm se comporte correctem
 test.skip("Attendu: l'alimentation du lieu complet en France s'effectue correctement", () => {
   render(saisirExtraitFormAvecContexte(acte, requete));
 
-  const widgetDecomposer = screen.getByLabelText(
-    "décomposer le lieu"
-  ) as HTMLInputElement;
+  const widgetDecomposer = screen.getByLabelText("décomposer le lieu") as HTMLInputElement;
 
   fireEvent.click(widgetDecomposer);
 
@@ -262,10 +200,7 @@ test.skip("Attendu: l'alimentation du lieu complet en France s'effectue correcte
   let widgetLieu: HTMLInputElement;
 
   waitFor(() => {
-    widgetArrondissmeent = expectEstSelectPresentAvecValeur(
-      "titulaireEvt1.evenement.lieuEvenement.arrondissement",
-      "16"
-    );
+    widgetArrondissmeent = expectEstSelectPresentAvecValeur("titulaireEvt1.evenement.lieuEvenement.arrondissement", "16");
   });
 
   fireEvent.change(widgetArrondissmeent!, {
@@ -273,29 +208,17 @@ test.skip("Attendu: l'alimentation du lieu complet en France s'effectue correcte
   });
 
   waitFor(() => {
-    widgetArrondissmeent = expectEstSelectPresentAvecValeur(
-      "titulaireEvt1.evenement.lieuEvenement.arrondissement",
-      "1"
-    );
+    widgetArrondissmeent = expectEstSelectPresentAvecValeur("titulaireEvt1.evenement.lieuEvenement.arrondissement", "1");
 
-    widgetLieu = expectEstPresentAvecValeur(
-      "titulaireEvt1.evenement.lieuEvenement.lieuComplet",
-      "Paris 1er arrondissement"
-    );
+    widgetLieu = expectEstPresentAvecValeur("titulaireEvt1.evenement.lieuEvenement.lieuComplet", "Paris 1er arrondissement");
   });
 
   waitFor(() => {
     expect(widgetDecomposer.disabled).toBeTruthy();
 
-    widgetVille = expectEstPresentAvecValeur(
-      "titulaireEvt1.evenement.lieuEvenement.ville",
-      "Paris"
-    );
+    widgetVille = expectEstPresentAvecValeur("titulaireEvt1.evenement.lieuEvenement.ville", "Paris");
 
-    widgetDepartement = expectEstPresentAvecValeur(
-      "titulaireEvt1.evenement.lieuEvenement.regionDepartement",
-      "Ile de France"
-    );
+    widgetDepartement = expectEstPresentAvecValeur("titulaireEvt1.evenement.lieuEvenement.regionDepartement", "Ile de France");
 
     expect(widgetLieu.disabled).toBeTruthy();
   });
@@ -314,32 +237,19 @@ test.skip("Attendu: l'alimentation du lieu complet en France s'effectue correcte
 
   waitFor(() => {
     expect(widgetLieu.value).toBe("Nantes (Loire Atlantique)");
-    expectSelectEstAbsent(
-      "titulaireEvt1.evenement.lieuEvenement.arrondissement"
-    );
+    expectSelectEstAbsent("titulaireEvt1.evenement.lieuEvenement.arrondissement");
   });
 });
 
 test("Attendu: l'alimentation du lieu complet à l'étranger s'effectue correctement", () => {
   render(saisirExtraitFormAvecContexte(acte, requete));
 
-  const widgetEtranger = screen.getByLabelText(
-    "titulaireevt1.parentnaiss1.lieunaissance.etrangerfrance.etranger"
-  ) as HTMLInputElement;
+  const widgetEtranger = screen.getByLabelText("titulaireevt1.parentnaiss1.lieunaissance.etrangerfrance.etranger") as HTMLInputElement;
   fireEvent.click(widgetEtranger);
 
-  const widgetVille = expectEstPresentAvecValeur(
-    "titulaireEvt1.parentNaiss1.lieuNaissance.ville",
-    ""
-  );
-  const widgetRegionDepartement = expectEstPresentAvecValeur(
-    "titulaireEvt1.parentNaiss1.lieuNaissance.regionDepartement",
-    ""
-  );
-  const widgetPays = expectEstPresentAvecValeur(
-    "titulaireEvt1.parentNaiss1.lieuNaissance.pays",
-    ""
-  );
+  const widgetVille = expectEstPresentAvecValeur("titulaireEvt1.parentNaiss1.lieuNaissance.ville", "");
+  const widgetRegionDepartement = expectEstPresentAvecValeur("titulaireEvt1.parentNaiss1.lieuNaissance.regionDepartement", "");
+  const widgetPays = expectEstPresentAvecValeur("titulaireEvt1.parentNaiss1.lieuNaissance.pays", "");
 
   fireEvent.input(widgetVille, {
     target: {
@@ -359,45 +269,26 @@ test("Attendu: l'alimentation du lieu complet à l'étranger s'effectue correcte
     }
   });
   waitFor(() => {
-    expectEstPresentAvecValeurEtDisabled(
-      "titulaireEvt1.parentNaiss1.lieuNaissance.lieuComplet",
-      "Brasilia, Région chaude (Brésil)"
-    );
+    expectEstPresentAvecValeurEtDisabled("titulaireEvt1.parentNaiss1.lieuNaissance.lieuComplet", "Brasilia, Région chaude (Brésil)");
   });
 
-  const widgetFrance = screen.getByLabelText(
-    "titulaireevt1.parentnaiss1.lieunaissance.etrangerfrance.france"
-  ) as HTMLInputElement;
+  const widgetFrance = screen.getByLabelText("titulaireevt1.parentnaiss1.lieunaissance.etrangerfrance.france") as HTMLInputElement;
   fireEvent.click(widgetFrance);
 
   waitFor(() => {
-    expectEstPresentAvecValeurEtDisabled(
-      "titulaireEvt1.parentNaiss1.lieuNaissance.lieuComplet",
-      "Brasilia (Région chaude)"
-    );
+    expectEstPresentAvecValeurEtDisabled("titulaireEvt1.parentNaiss1.lieuNaissance.lieuComplet", "Brasilia (Région chaude)");
   });
 });
 
 test("Attendu: l'alimentation du lieu complet en mode 'inconnu' s'effectue correctement", () => {
   render(saisirExtraitFormAvecContexte(acte, requete));
 
-  const widgetEtranger = screen.getByLabelText(
-    "titulaireevt1.parentnaiss1.lieunaissance.etrangerfrance.etranger"
-  ) as HTMLInputElement;
+  const widgetEtranger = screen.getByLabelText("titulaireevt1.parentnaiss1.lieunaissance.etrangerfrance.etranger") as HTMLInputElement;
   fireEvent.click(widgetEtranger);
 
-  const widgetVille = expectEstPresentAvecValeur(
-    "titulaireEvt1.parentNaiss1.lieuNaissance.ville",
-    ""
-  );
-  const widgetRegionDepartement = expectEstPresentAvecValeur(
-    "titulaireEvt1.parentNaiss1.lieuNaissance.regionDepartement",
-    ""
-  );
-  const widgetPays = expectEstPresentAvecValeur(
-    "titulaireEvt1.parentNaiss1.lieuNaissance.pays",
-    ""
-  );
+  const widgetVille = expectEstPresentAvecValeur("titulaireEvt1.parentNaiss1.lieuNaissance.ville", "");
+  const widgetRegionDepartement = expectEstPresentAvecValeur("titulaireEvt1.parentNaiss1.lieuNaissance.regionDepartement", "");
+  const widgetPays = expectEstPresentAvecValeur("titulaireEvt1.parentNaiss1.lieuNaissance.pays", "");
 
   fireEvent.input(widgetVille, {
     target: {
@@ -417,31 +308,21 @@ test("Attendu: l'alimentation du lieu complet en mode 'inconnu' s'effectue corre
     }
   });
   waitFor(() => {
-    expectEstPresentAvecValeurEtDisabled(
-      "titulaireEvt1.parentNaiss1.lieuNaissance.lieuComplet",
-      "Brasilia, Région chaude (Brésil)"
-    );
+    expectEstPresentAvecValeurEtDisabled("titulaireEvt1.parentNaiss1.lieuNaissance.lieuComplet", "Brasilia, Région chaude (Brésil)");
   });
 
-  const widgetInconnu = screen.getByLabelText(
-    "titulaireevt1.parentnaiss1.lieunaissance.etrangerfrance.inconnu"
-  ) as HTMLInputElement;
+  const widgetInconnu = screen.getByLabelText("titulaireevt1.parentnaiss1.lieunaissance.etrangerfrance.inconnu") as HTMLInputElement;
   fireEvent.click(widgetInconnu);
 
   waitFor(() => {
-    expectEstPresentAvecValeurEtDisabled(
-      "titulaireEvt1.parentNaiss1.lieuNaissance.lieuComplet",
-      ""
-    );
+    expectEstPresentAvecValeurEtDisabled("titulaireEvt1.parentNaiss1.lieuNaissance.lieuComplet", "");
   });
 });
 
 test.skip("Attendu: la case à cocher 'nom sécable' se comporte correctement", () => {
   render(saisirExtraitFormAvecContexte(acte, requete));
 
-  const caseACocherNomSecable = expectEstPresentEtNonChecked(
-    "titulaireevt1.nomsecable.secable.true"
-  );
+  const caseACocherNomSecable = expectEstPresentEtNonChecked("titulaireevt1.nomsecable.secable.true");
 
   waitFor(() => {
     expectEstAbsent("titulaireEvt1.nomSecable.nomPartie1");
@@ -451,10 +332,7 @@ test.skip("Attendu: la case à cocher 'nom sécable' se comporte correctement", 
   fireEvent.click(caseACocherNomSecable!);
 
   waitFor(() => {
-    expectEstPresentAvecValeur(
-      "titulaireEvt1.nomSecable.nomPartie1",
-      "Patamod"
-    );
+    expectEstPresentAvecValeur("titulaireEvt1.nomSecable.nomPartie1", "Patamod");
     expectEstPresentAvecValeur("titulaireEvt1.nomSecable.nomPartie2", "eler");
   });
 });
@@ -462,10 +340,7 @@ test.skip("Attendu: la case à cocher 'nom sécable' se comporte correctement", 
 test.skip("Attendu: le changement de type de déclaration conjointe s'effectue correctement", () => {
   render(saisirExtraitFormAvecContexte(acte, requete));
 
-  const typeDeclConjointe = expectEstSelectPresentAvecValeur(
-    "titulaireEvt1.declarationConjointe.type",
-    "ABSENCE_DECLARATION"
-  );
+  const typeDeclConjointe = expectEstSelectPresentAvecValeur("titulaireEvt1.declarationConjointe.type", "ABSENCE_DECLARATION");
 
   expectEstAbsent("titulaireEvt1.declarationConjointe.date.annee");
 
@@ -474,9 +349,7 @@ test.skip("Attendu: le changement de type de déclaration conjointe s'effectue c
   });
 
   waitFor(() => {
-    expectEstPresentAvecValeurVide(
-      "titulaireEvt1.declarationConjointe.date.annee"
-    );
+    expectEstPresentAvecValeurVide("titulaireEvt1.declarationConjointe.date.annee");
   });
 
   changeInput("titulaireEvt1.declarationConjointe.date.annee", "2000");
@@ -490,9 +363,7 @@ test.skip("Attendu: le changement de type de déclaration conjointe s'effectue c
   });
 
   waitFor(() => {
-    expectEstPresentAvecValeurVide(
-      "titulaireEvt1.declarationConjointe.date.annee"
-    );
+    expectEstPresentAvecValeurVide("titulaireEvt1.declarationConjointe.date.annee");
   });
 });
 
@@ -502,10 +373,7 @@ test("Attendu: la réinitialisation du formulaire fonctionne correctement", () =
   const boutonReinitialiser = expectEstBoutonDisabled("Réinitialiser");
 
   // On effectue un changement dans le formulaire
-  const widgetAnnee = changeInput(
-    "titulaireEvt1.parentNaiss1.dateNaissanceOuAgeDe.date.annee",
-    "2000"
-  );
+  const widgetAnnee = changeInput("titulaireEvt1.parentNaiss1.dateNaissanceOuAgeDe.date.annee", "2000");
 
   waitFor(() => {
     expect(widgetAnnee.value).toBe("2000");
@@ -515,19 +383,12 @@ test("Attendu: la réinitialisation du formulaire fonctionne correctement", () =
   fireEvent.click(boutonReinitialiser);
 
   waitFor(() => {
-    expectEstPresentAvecValeurVide(
-      "titulaireEvt1.parentNaiss1.dateNaissanceOuAgeDe.date.annee"
-    );
+    expectEstPresentAvecValeurVide("titulaireEvt1.parentNaiss1.dateNaissanceOuAgeDe.date.annee");
   });
 });
 
 test("Attendu: la validation du formulaire naissance fonctionne correctement", () => {
-  render(
-    saisirExtraitFormAvecContexte(
-      mapActe(ficheActe1_avecTitulaireAyantDeuxParents.data),
-      mappingRequeteDelivrance(requeteAvecDocs)
-    )
-  );
+  render(saisirExtraitFormAvecContexte(mapActe(ficheActe1_avecTitulaireAyantDeuxParents.data), mappingRequeteDelivrance(requeteAvecDocs)));
 
   fireEvent.click(screen.getByLabelText("Valider"));
 
@@ -547,24 +408,16 @@ test.skip("Attendu: controle sexe titulaire et parent de même sexe dans le cas 
   fireEvent.click(screen.getByLabelText("Valider"));
 
   waitFor(() => {
-    expect(
-      screen.getByText(
-        "Si vous continuez, l'extrait plurilingue généré sera en erreur."
-      )
-    ).toBeDefined();
+    expect(screen.getByText("Si vous continuez, l'extrait plurilingue généré sera en erreur.")).toBeDefined();
   });
 
   const boutonNon = screen.getByLabelText("confirmation Non");
 
   fireEvent.click(boutonNon);
 
-   waitFor(() => {
-      expect(
-        screen.queryByText(
-          "Si vous continuez, l'extrait plurilingue généré sera en erreur."
-        )
-      ).not.toBeDefined();
-    });
+  waitFor(() => {
+    expect(screen.queryByText("Si vous continuez, l'extrait plurilingue généré sera en erreur.")).not.toBeDefined();
+  });
 });
 
 test("Doit enregistrer INCONNU sur le parent 2 en base quand le pays est vide et au moins ville/région saisie et le mode de saisie est Etranger", () => {
@@ -1192,13 +1045,9 @@ test("Doit enregistrer INCONNU sur le parent 2 en base quand le pays est vide et
     sasieEtrangerPaysVideEtVilleRenseigne.titulaireEvt1 as any as ITitulaireEvtForm
   );
 
-  expect(response?.filiations?.[1].naissance.pays).toEqual(
-    EtrangerFrance.getKey(EtrangerFrance.INCONNU)
-  );
+  expect(response?.filiations?.[1].naissance.pays).toEqual(EtrangerFrance.getKey(EtrangerFrance.INCONNU));
 
-  expect(response?.filiations?.[0].naissance.pays).toEqual(
-    EtrangerFrance.getKey(EtrangerFrance.FRANCE)
-  );
+  expect(response?.filiations?.[0].naissance.pays).toEqual(EtrangerFrance.getKey(EtrangerFrance.FRANCE));
 });
 
 test("Doit enregistrer Algérie sur le parent 1 en base quand le pays est Algérie et au moins ville/région saisie et le mode de saisie est Etranger", () => {
@@ -1827,9 +1676,7 @@ test("Doit enregistrer Algérie sur le parent 1 en base quand le pays est Algér
   );
 
   expect(response?.filiations?.[0].naissance.pays).toEqual("Algérie");
-  expect(response?.filiations?.[1].naissance.pays).toEqual(
-    EtrangerFrance.getKey(EtrangerFrance.FRANCE)
-  );
+  expect(response?.filiations?.[1].naissance.pays).toEqual(EtrangerFrance.getKey(EtrangerFrance.FRANCE));
 });
 
 test("Attendu: saisiePaysInconnuTitulaire fonctionne correctement", () => {
@@ -1936,21 +1783,13 @@ test("Attendu: saisiePaysInconnuTitulaire fonctionne correctement", () => {
     ]
   } as any as ITitulaireActe;
 
-  expect(
-    saisiePaysInconnuTitulaire(natureActe as any as NatureActe, titulaire)
-  ).toBe(true);
+  expect(saisiePaysInconnuTitulaire(natureActe as any as NatureActe, titulaire)).toBe(true);
 
-  expect(
-    saisiePaysInconnuTitulaire(natureActe2 as any as NatureActe, titulaire)
-  ).toBe(false);
+  expect(saisiePaysInconnuTitulaire(natureActe2 as any as NatureActe, titulaire)).toBe(false);
 
-  expect(
-    saisiePaysInconnuTitulaire(natureActe3 as any as NatureActe, titulaire2)
-  ).toBe(false);
+  expect(saisiePaysInconnuTitulaire(natureActe3 as any as NatureActe, titulaire2)).toBe(false);
 
-  expect(
-    saisiePaysInconnuTitulaire(natureActe3 as any as NatureActe, titulaire)
-  ).toBe(true);
+  expect(saisiePaysInconnuTitulaire(natureActe3 as any as NatureActe, titulaire)).toBe(true);
 });
 
 test("Attendu: saisieParentPaysInconnu fonctionne correctement", () => {
@@ -1993,15 +1832,9 @@ test("Attendu: saisieParentPaysInconnu fonctionne correctement", () => {
     },
     prenoms: ["Constance"]
   } as any as IFiliation;
-  expect(
-    saisieParentPaysInconnu(natureActeMariage as any as NatureActe, parent)
-  ).toBe(false);
+  expect(saisieParentPaysInconnu(natureActeMariage as any as NatureActe, parent)).toBe(false);
 
-  expect(
-    saisieParentPaysInconnu(natureActeNaissance as any as NatureActe, parent)
-  ).toBe(false);
+  expect(saisieParentPaysInconnu(natureActeNaissance as any as NatureActe, parent)).toBe(false);
 
-  expect(
-    saisieParentPaysInconnu(natureActeNaissance as any as NatureActe, parent2)
-  ).toBe(true);
+  expect(saisieParentPaysInconnu(natureActeNaissance as any as NatureActe, parent2)).toBe(true);
 });

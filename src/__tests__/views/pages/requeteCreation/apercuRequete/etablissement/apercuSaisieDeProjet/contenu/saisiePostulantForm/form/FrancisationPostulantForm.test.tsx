@@ -1,6 +1,5 @@
 import { FRANCISATION_POSTULANT } from "@composant/formulaire/ConstantesNomsForm";
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
-import { requeteCreationEtablissementSaisieProjet } from "@mock/data/requeteCreationEtablissement";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
@@ -10,6 +9,7 @@ import { getPostulantValidationSchema } from "@pages/requeteCreation/apercuReque
 import { render, screen, waitFor } from "@testing-library/react";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { describe, expect, test } from "vitest";
+import { requeteCreationEtablissementSaisieProjet } from "../../../../../../../../../mock/data/requeteCreationEtablissement";
 
 const TITULAIRE: ITitulaireRequeteCreation = {
   id: "04bee8c3-ba96-454e-b78a-4e46219d948f",

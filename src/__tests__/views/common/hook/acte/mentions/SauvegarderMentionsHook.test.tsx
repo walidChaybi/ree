@@ -1,6 +1,4 @@
 import { SauvegarderMentionsParam, useSauvegarderMentions } from "@hook/acte/mentions/SauvegarderMentionsHook";
-import { documentReponseExtraitAvecFiliation } from "@mock/data/DocumentReponse";
-import { requeteDelivranceRDC } from "@mock/data/requeteDelivrance";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IMention } from "@model/etatcivil/acte/mention/IMention";
 import { IMentionAffichage } from "@model/etatcivil/acte/mention/IMentionAffichage";
@@ -9,6 +7,8 @@ import { INatureMention } from "@model/etatcivil/enum/NatureMention";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { expect, test } from "vitest";
+import { documentReponseExtraitAvecFiliation } from "../../../../../mock/data/DocumentReponse";
+import { requeteDelivranceRDC } from "../../../../../mock/data/requeteDelivrance";
 
 const mentionApi = {
   textes: {

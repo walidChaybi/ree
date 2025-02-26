@@ -1,5 +1,4 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
-import { requeteCreationEtablissementPieceJustificative } from "@mock/data/requeteCreationEtablissement";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { ListePiecesJustificativesEtablissement } from "@pages/requeteCreation/apercuRequete/etablissement/commun/ListePiecesJustificativesEtablissement";
 import { typeFctRenommePieceJustificative } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
@@ -9,10 +8,8 @@ import userEvent from "@testing-library/user-event";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { expect, test } from "vitest";
-import {
-  createTestingRouter,
-  pngFiles
-} from "../../../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, pngFiles } from "../../../../../../__tests__utils__/testsUtil";
+import { requeteCreationEtablissementPieceJustificative } from "../../../../../../mock/data/requeteCreationEtablissement";
 
 interface HookConsumerListePiecesJustificativesEtablissementProps {
   requete?: IRequeteCreationEtablissement;
@@ -38,25 +35,14 @@ const HookConsumerHookConsumerListePiecesJustificativesEtablissement: React.FC<
         )
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-        props.requete?.id || ""
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID, props.requete?.id || "")]
   );
   return <RouterProvider router={router} />;
 };
 
 test("DOIT ouvrir et afficher la modal QUAND on clique sur le bouton d'ouverture de la modal.", () => {
-  const requete = mappingRequeteCreation(
-    requeteCreationEtablissementPieceJustificative.data
-  );
-  render(
-    <HookConsumerHookConsumerListePiecesJustificativesEtablissement
-      requete={requete}
-    />
-  );
+  const requete = mappingRequeteCreation(requeteCreationEtablissementPieceJustificative.data);
+  render(<HookConsumerHookConsumerListePiecesJustificativesEtablissement requete={requete} />);
 
   const boutonOuvrirModal = screen.getByText("Ajouter un fichier");
 
@@ -69,9 +55,7 @@ test("DOIT ouvrir et afficher la modal QUAND on clique sur le bouton d'ouverture
   const boutonValider = screen.getByText("Valider") as HTMLInputElement;
 
   waitFor(() => {
-    expect(
-      screen.getByLabelText("Catégorie de la pièce justificative")
-    ).toBeDefined();
+    expect(screen.getByLabelText("Catégorie de la pièce justificative")).toBeDefined();
     expect(screen.getByText("Sélectionner un fichier")).toBeDefined();
     expect(boutonValider.disabled).toBeTruthy();
     expect(screen.getByText("Fermer")).toBeDefined();
@@ -80,21 +64,13 @@ test("DOIT ouvrir et afficher la modal QUAND on clique sur le bouton d'ouverture
 
 test.skip("DOIT activer le bouton de validation QUAND des données ont été selectionné", () => {
   const user = userEvent.setup();
-  const requete = mappingRequeteCreation(
-    requeteCreationEtablissementPieceJustificative.data
-  );
-  render(
-    <HookConsumerHookConsumerListePiecesJustificativesEtablissement
-      requete={requete}
-    />
-  );
+  const requete = mappingRequeteCreation(requeteCreationEtablissementPieceJustificative.data);
+  render(<HookConsumerHookConsumerListePiecesJustificativesEtablissement requete={requete} />);
 
   const boutonOuvrirModal = screen.getByText("Ajouter un fichier");
   fireEvent.click(boutonOuvrirModal);
 
-  const selectField = screen.getByLabelText(
-    "Catégorie de la pièce justificative"
-  ) as HTMLInputElement;
+  const selectField = screen.getByLabelText("Catégorie de la pièce justificative") as HTMLInputElement;
   const uploadFileField = screen.getByTestId("file") as HTMLInputElement;
   const fakeFile = new File(["hello"], "hello.png", { type: "image/jpg" });
 

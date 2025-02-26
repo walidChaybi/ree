@@ -1,5 +1,3 @@
-import { DataRMCRequeteAvecResultat, DataTableauRequete } from "@mock/data/RMCRequete";
-import { userDroitConsulterPerimetreTousRegistres } from "@mock/data/mockConnectedUserAvecDroit";
 import { RMCTableauRequetes } from "@pages/rechercheMultiCriteres/requete/resultats/RMCTableauRequetes";
 import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
 import {
@@ -13,6 +11,8 @@ import { getLastPathElem, getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test, vi } from "vitest";
 import { createTestingRouter, elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
+import { DataRMCRequeteAvecResultat, DataTableauRequete } from "../../../../../mock/data/RMCRequete";
+import { userDroitConsulterPerimetreTousRegistres } from "../../../../../mock/data/mockConnectedUserAvecDroit";
 
 describe("Test RMCTableauRequetes", () => {
   test("renders Resultat Requetes Recherche Multi Critères => Avec résultat", async () => {

@@ -6,10 +6,6 @@ import {
   INbInscriptionsInfos,
   specificationPhraseRMCAutoVide
 } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
-import { idDocumentsReponse } from "@mock/data/DocumentReponse";
-import { imagePngVideBase64 } from "@mock/data/ImagePng";
-import { ReponseAppelNomenclatureDocummentDelivrance } from "@mock/data/nomenclatures";
-import { idRequeteRDCSC } from "@mock/data/requeteDelivrance";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
@@ -17,6 +13,10 @@ import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { expect, test } from "vitest";
 import { elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
+import { idDocumentsReponse } from "../../../../../mock/data/DocumentReponse";
+import { imagePngVideBase64 } from "../../../../../mock/data/ImagePng";
+import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../mock/data/nomenclatures";
+import { idRequeteRDCSC } from "../../../../../mock/data/requeteDelivrance";
 
 const titulaire = {
   nom: "nom",
@@ -68,11 +68,7 @@ test("Attendu: la génération d'un certificat de situation pour une recherche R
   const resulatContenu = screen.getByTestId("resulatContenu");
 
   waitFor(() => {
-    expect(resulatIdDoc.innerHTML).toBe(
-      `idDocumentReponse=${idDocumentsReponse[0]}`
-    );
-    expect(resulatContenu.innerHTML).toBe(
-      `contenuDocumentReponse=${imagePngVideBase64}`
-    );
+    expect(resulatIdDoc.innerHTML).toBe(`idDocumentReponse=${idDocumentsReponse[0]}`);
+    expect(resulatContenu.innerHTML).toBe(`contenuDocumentReponse=${imagePngVideBase64}`);
   });
 });

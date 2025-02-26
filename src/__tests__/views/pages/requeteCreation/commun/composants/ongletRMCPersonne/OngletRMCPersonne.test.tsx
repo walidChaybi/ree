@@ -1,17 +1,17 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { requeteCreationEtablissement } from "@mock/data/requeteCreation";
-import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
-import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
-import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
+import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
+import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { getPostulantNationaliteOuTitulaireActeTranscritDresse } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React, { useEffect } from "react";
 import { describe, expect, test } from "vitest";
+import MockRECEContextProvider from "../../../../../../mock/context/MockRECEContextProvider";
+import { requeteCreationEtablissement } from "../../../../../../mock/data/requeteCreation";
+import { requeteCreationTranscription } from "../../../../../../mock/data/requeteCreationTranscription";
 
 interface HookConsumerTableauRMCAutoPersonneProps {
   requete: IRequeteCreationTranscription;

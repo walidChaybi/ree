@@ -1,6 +1,5 @@
 import * as EtatCivilApi from "@api/appels/etatcivilApi";
 import * as RequeteApi from "@api/appels/requeteApi";
-import mockConnectedUser from "@mock/data/connectedUser.json";
 import { IOfficier } from "@model/agent/IOfficier";
 import { URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS, URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID } from "@router/ReceUrls";
 import { createEvent, fireEvent, render, waitFor } from "@testing-library/react";
@@ -8,6 +7,7 @@ import { PopinSignatureMiseAJourMentions } from "@widget/signature/PopinSignatur
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test, vi } from "vitest";
 import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
+import mockConnectedUser from "../../../../mock/data/connectedUser.json";
 
 describe("Doit signer le document QUAND on valide le code pin.", () => {
   test("DOIT composer le document contenant les mentions ultérieures, puis enregistrer le document signé, et modifier le statut de la requête", async () => {

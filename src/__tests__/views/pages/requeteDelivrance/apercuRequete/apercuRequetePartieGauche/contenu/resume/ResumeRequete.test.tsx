@@ -1,11 +1,4 @@
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
-import {
-  detailRequeteDelivranceAvecRequerantQualiteAutreProfessionnel,
-  detailRequeteDelivranceAvecRequerantQualiteInstitutionnel,
-  detailRequeteDelivranceAvecRequerantQualiteUtilisateurRece,
-  ReponseAppelDetailRequeteDelivrance
-} from "@mock/data/DetailRequeteDelivrance";
-import { TYPE_PIECE_JUSTIFICATIVE } from "@mock/data/NomenclatureTypePieceJustificative";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { ResumeRequete } from "@pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequete";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
@@ -14,6 +7,13 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { beforeAll, describe, expect, test } from "vitest";
 import { createTestingRouter, elementAvecContexte, mockFenetreFicheTestFunctions } from "../../../../../../../__tests__utils__/testsUtil";
+import {
+  detailRequeteDelivranceAvecRequerantQualiteAutreProfessionnel,
+  detailRequeteDelivranceAvecRequerantQualiteInstitutionnel,
+  detailRequeteDelivranceAvecRequerantQualiteUtilisateurRece,
+  ReponseAppelDetailRequeteDelivrance
+} from "../../../../../../../mock/data/DetailRequeteDelivrance";
+import { TYPE_PIECE_JUSTIFICATIVE } from "../../../../../../../mock/data/NomenclatureTypePieceJustificative";
 
 beforeAll(() => {
   mockFenetreFicheTestFunctions();

@@ -1,7 +1,12 @@
 import { specificationCourrier } from "@hook/generation/generationCourrierHook/specificationCourrier";
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
-import { ActeAnalyseMarginales, OptionsChoisiesCourrier17, RequeteRDDCourrier17, SaisieCourrier17 } from "@mock/data/SaisieCourrier";
 import { expect, test } from "vitest";
+import {
+  ActeAnalyseMarginales,
+  OptionsChoisiesCourrier17,
+  RequeteRDDCourrier17,
+  SaisieCourrier17
+} from "../../../../../mock/data/SaisieCourrier";
 
 const saisieCourrier = SaisieCourrier17;
 const requete = RequeteRDDCourrier17;

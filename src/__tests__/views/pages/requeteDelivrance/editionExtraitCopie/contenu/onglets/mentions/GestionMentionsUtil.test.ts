@@ -1,11 +1,4 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
-import { documentReponseCopieIntegrale, documentReponseExtraitAvecFiliation } from "@mock/data/DocumentReponse";
-import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
-import { NATURE_MENTION } from "@mock/data/NomenclatureNatureMention";
-import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
-import { ficheActe2, ficheActeMariage } from "@mock/data/ficheActe";
-import { acte } from "@mock/data/ficheEtBandeau/ficheActe";
-import { mentionsAffichage, mentionsApi } from "@mock/data/mentions";
 import { IMention } from "@model/etatcivil/acte/mention/IMention";
 import {
   IMentionAffichage,
@@ -26,6 +19,13 @@ import {
   validerMentions
 } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
 import { describe, expect, test, vi } from "vitest";
+import { documentReponseCopieIntegrale, documentReponseExtraitAvecFiliation } from "../../../../../../../mock/data/DocumentReponse";
+import { DOCUMENT_DELIVRANCE } from "../../../../../../../mock/data/NomenclatureDocumentDelivrance";
+import { NATURE_MENTION } from "../../../../../../../mock/data/NomenclatureNatureMention";
+import { TYPE_MENTION } from "../../../../../../../mock/data/NomenclatureTypeMention";
+import { ficheActe2, ficheActeMariage } from "../../../../../../../mock/data/ficheActe";
+import { acte } from "../../../../../../../mock/data/ficheEtBandeau/ficheActe";
+import { mentionsAffichage, mentionsApi } from "../../../../../../../mock/data/mentions";
 
 describe("Test GestionMentionUtil", () => {
   DocumentDelivrance.init(DOCUMENT_DELIVRANCE);

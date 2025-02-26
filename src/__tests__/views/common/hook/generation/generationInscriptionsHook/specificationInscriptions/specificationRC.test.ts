@@ -1,7 +1,10 @@
 import { mappingInscriptionsRC } from "@hook/acte/InscriptionsRcHook";
 import { SpecificationRC } from "@hook/generation/generationInscriptionsHook/specificationInscriptions/specificationRC";
-import { decrets } from "@mock/data/NomenclatureEtatCivilDecrets";
-import { NATURE_RC } from "@mock/data/NomenclatureNatureRc";
+import { NatureRc } from "@model/etatcivil/enum/NatureRc";
+import { TypeInscriptionRc } from "@model/etatcivil/enum/TypeInscriptionRc";
+import { describe, expect, test } from "vitest";
+import { decrets } from "../../../../../../mock/data/NomenclatureEtatCivilDecrets";
+import { NATURE_RC } from "../../../../../../mock/data/NomenclatureNatureRc";
 import {
   FicheRcDecisionNotaire,
   FicheRcDecisionNotaireTypeRequete,
@@ -9,10 +12,7 @@ import {
   FicheRcRadiation,
   FicheRcRenouvellementTypeJugement,
   FicheRcRenouvellementTypeOrdonnance
-} from "@mock/data/ficheRC";
-import { NatureRc } from "@model/etatcivil/enum/NatureRc";
-import { TypeInscriptionRc } from "@model/etatcivil/enum/TypeInscriptionRc";
-import { describe, expect, test } from "vitest";
+} from "../../../../../../mock/data/ficheRC";
 
 describe("Test specificationRC", () => {
   NatureRc.init(NATURE_RC);

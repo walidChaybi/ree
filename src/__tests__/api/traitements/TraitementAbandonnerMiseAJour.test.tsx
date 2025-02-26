@@ -1,11 +1,11 @@
 import TRAITEMENT_ABANDONNER_MISE_A_JOUR from "@api/traitements/TraitementAbandonnerMiseAJour";
-import { NATURE_MENTION } from "@mock/data/NomenclatureNatureMention";
-import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, test } from "vitest";
 import useTraitementApi from "../../../hooks/api/TraitementApiHook";
+import { NATURE_MENTION } from "../../mock/data/NomenclatureNatureMention";
+import { TYPE_MENTION } from "../../mock/data/NomenclatureTypeMention";
 
 describe("Test du traitement Abondon d'une requête de mise à jour", () => {
   NatureMention.init(NATURE_MENTION);

@@ -27,10 +27,9 @@
       "@api/*": ["./src/api/*"],
       "@model/*": ["./src/model/*"],
       "@scss/*": ["./src/scss/*"],
-      "@mock/*": ["./src/mock/*"],
+      "@mock/*": ["./src/__tests__/mock/*"],
       "@pageEtablissement/*": ["./src/views/pages/requeteCreation/apercuRequete/etablissement/*"]
     }
   },
   "include": ["src"]
 }
-

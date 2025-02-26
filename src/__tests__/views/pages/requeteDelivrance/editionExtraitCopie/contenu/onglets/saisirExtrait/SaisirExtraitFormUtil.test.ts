@@ -1,9 +1,9 @@
 import { mapTitulaires } from "@hook/repertoires/MappingRepertoires";
-import { titulaireClassique, titulaireParentsDeMemeSexe, titulaireSexeInconnu } from "@mock/data/Titulaire";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { parentMemeSexeOuIndeterminCasPlurilingue } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitFormUtil";
 import { expect, test } from "vitest";
+import { titulaireClassique, titulaireParentsDeMemeSexe, titulaireSexeInconnu } from "../../../../../../../mock/data/Titulaire";
 
 test("Attendu: parentMemeSexeOuExtraitPlurilingue fonctionne correctement", () => {
   const titulairesSexesInconnus = mapTitulaires([titulaireSexeInconnu]);

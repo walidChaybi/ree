@@ -1,8 +1,3 @@
-import { DataRMCActeAvecResultat, DataTableauActe } from "@mock/data/RMCActe";
-import { DataRMCInscriptionAvecResultat, DataTableauInscription } from "@mock/data/RMCInscription";
-import { userDroitnonCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
-import { ReponseAppelNomenclatureTypeAlerte } from "@mock/data/nomenclatures";
-import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { DataRMCAuto } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { ApercuRequetePriseEnChargePartieDroite } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/ApercuRequetePriseEnChargePartieDroite";
@@ -12,6 +7,11 @@ import { act } from "react";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import { elementAvecContexte } from "../../../../../../__tests__utils__/testsUtil";
+import { DataRMCActeAvecResultat, DataTableauActe } from "../../../../../../mock/data/RMCActe";
+import { DataRMCInscriptionAvecResultat, DataTableauInscription } from "../../../../../../mock/data/RMCInscription";
+import { userDroitnonCOMEDEC } from "../../../../../../mock/data/mockConnectedUserAvecDroit";
+import { ReponseAppelNomenclatureTypeAlerte } from "../../../../../../mock/data/nomenclatures";
+import requeteDelivrance from "../../../../../../mock/data/requeteDelivrance";
 
 describe("Test ApercuRequetePriseEnChargePartieDroite", () => {
   const dataHistory: DataRMCAuto = {

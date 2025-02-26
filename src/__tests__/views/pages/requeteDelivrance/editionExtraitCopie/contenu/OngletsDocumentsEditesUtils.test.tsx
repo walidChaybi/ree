@@ -1,5 +1,3 @@
-import { acteDeces } from "@mock/data/ficheEtBandeau/ficheActe";
-import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
@@ -14,6 +12,8 @@ import { RouterProvider } from "react-router-dom";
 import { beforeAll, describe, expect, test } from "vitest";
 import PageEditionRequeteDelivrance from "../../../../../../pages/requetesDelivrance/PageEditionRequeteDelivrance";
 import { createTestingRouter, mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
+import { acteDeces } from "../../../../../mock/data/ficheEtBandeau/ficheActe";
+import { DOCUMENT_DELIVRANCE } from "../../../../../mock/data/NomenclatureDocumentDelivrance";
 
 beforeAll(() => {
   mockFenetreFicheTestFunctions();

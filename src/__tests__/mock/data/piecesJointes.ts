@@ -1,5 +1,5 @@
 import { PieceJointe } from "@util/FileUtils";
-import { MimeType } from "../../ressources/MimeType";
+import { MimeType } from "../../../ressources/MimeType";
 
 export const piecesJointesMock = [
   {

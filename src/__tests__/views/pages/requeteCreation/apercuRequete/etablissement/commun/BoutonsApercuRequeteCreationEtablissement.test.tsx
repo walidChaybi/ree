@@ -1,4 +1,3 @@
-import { requeteCreationEtablissement } from "@mock/data/requeteCreation";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { RMCRequetePage } from "@pages/rechercheMultiCriteres/requete/RMCRequetePage";
@@ -15,6 +14,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
+import { requeteCreationEtablissement } from "../../../../../../mock/data/requeteCreation";
 import { localStorageFeatureFlagMock } from "../../../../../../setupTests";
 
 describe("BoutonsApercuCreationEtablissement - ", () => {

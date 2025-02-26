@@ -1,13 +1,10 @@
 import { HTTP_NOT_FOUND } from "@api/ApiManager";
-import {
-  gereErreur,
-  useGetRequeteAleatoire
-} from "@hook/requete/PrendreEnChargeAleatoirementApiHook";
-import { ReponseAppelMesRequetes } from "@mock/data/EspaceDelivrance";
+import { gereErreur, useGetRequeteAleatoire } from "@hook/requete/PrendreEnChargeAleatoirementApiHook";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { expect, test, vi } from "vitest";
+import { ReponseAppelMesRequetes } from "../../../../mock/data/EspaceDelivrance";
 const HookConsumerUseGetRequeteDelivranceAleatoire: React.FC = () => {
   const res = useGetRequeteAleatoire(TypeRequete.DELIVRANCE, true);
 

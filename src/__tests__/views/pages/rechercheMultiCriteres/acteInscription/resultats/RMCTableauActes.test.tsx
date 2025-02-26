@@ -1,17 +1,11 @@
-import { DataRMCActeAvecResultat, DataTableauActe } from "@mock/data/RMCActe";
-import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { RMCTableauActes } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauActes";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import {
-  NB_LIGNES_PAR_APPEL_ACTE,
-  NB_LIGNES_PAR_PAGE_ACTE
-} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import { NB_LIGNES_PAR_APPEL_ACTE, NB_LIGNES_PAR_PAGE_ACTE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { RouterProvider } from "react-router-dom";
 import { beforeAll, expect, test } from "vitest";
-import {
-  createTestingRouter,
-  mockFenetreFicheTestFunctions
-} from "../../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
+import { DataRMCActeAvecResultat, DataTableauActe } from "../../../../../mock/data/RMCActe";
+import requeteDelivrance from "../../../../../mock/data/requeteDelivrance";
 
 beforeAll(() => {
   mockFenetreFicheTestFunctions();
@@ -134,18 +128,14 @@ test.skip("Ouverture d'un acte et navigation via bouton Précédent.", () => {
   fireEvent.click(screen.getByTestId("d8708d77-a359-4553-be72-1eb5f246d4db"));
 
   waitFor(() => {
-    expect(screen.getByTestId("titreBandeau").innerHTML).toBe(
-      "CSL.DX.NA.T.413.681"
-    );
+    expect(screen.getByTestId("titreBandeau").innerHTML).toBe("CSL.DX.NA.T.413.681");
     expect(screen.getByText("Résumé de l'acte")).toBeDefined();
   });
 
   fireEvent.click(screen.getByTitle("Précédent"));
 
   waitFor(() => {
-    expect(screen.getByTestId("titreBandeau").innerHTML).toBe(
-      "CSL.DX.NA.T.412.681"
-    );
+    expect(screen.getByTestId("titreBandeau").innerHTML).toBe("CSL.DX.NA.T.412.681");
     expect(screen.getByText("Résumé de l'acte")).toBeDefined();
   });
 });

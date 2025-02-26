@@ -1,12 +1,12 @@
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import ObservationsRequete from "../../../../../../composants/pages/requetesDelivrance/commun/requete/ObservationsRequete";
 
-import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { IOfficier } from "@model/agent/IOfficier";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import request from "superagent";
 import { afterAll, describe, expect, test } from "vitest";
+import MockRECEContextProvider from "../../../../../mock/context/MockRECEContextProvider";
 
 describe("ObservationsRequete", () => {
   const NOM_UTILISATEUR = "Nomtest";

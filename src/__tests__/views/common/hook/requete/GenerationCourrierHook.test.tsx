@@ -3,8 +3,6 @@ import {
   mappingSaisieAdresseVersAdresseRequerant,
   useGenerationCourrierHook
 } from "@hook/requete/GenerationCourrierHook";
-import { idDocumentsReponse } from "@mock/data/DocumentReponse";
-import { OptionsChoisiesCourrier17, RequeteRDDCourrier17, SaisieCourrier17 } from "@mock/data/SaisieCourrier";
 import { Orientation } from "@model/composition/enum/Orientation";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { ISauvegardeCourrier } from "@model/requete/ISauvegardeCourrier";
@@ -12,6 +10,8 @@ import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { describe, expect, test } from "vitest";
 import { MimeType } from "../../../../../ressources/MimeType";
+import { idDocumentsReponse } from "../../../../mock/data/DocumentReponse";
+import { OptionsChoisiesCourrier17, RequeteRDDCourrier17, SaisieCourrier17 } from "../../../../mock/data/SaisieCourrier";
 
 describe("Test GenerationCourrierHook", () => {
   const saisieCourrier = SaisieCourrier17;

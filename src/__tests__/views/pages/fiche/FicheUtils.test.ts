@@ -1,4 +1,3 @@
-import { pacsModificationNotaireMap } from "@mock/data/PACS";
 import { IOfficier } from "@model/agent/IOfficier";
 import { INatureRca } from "@model/etatcivil/enum/NatureRca";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
@@ -6,6 +5,7 @@ import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
 import { IDataFicheProps } from "@pages/fiche/FichePage";
 import { getFicheTitle, setFiche } from "@pages/fiche/FicheUtils";
 import { expect, test } from "vitest";
+import { pacsModificationNotaireMap } from "../../../mock/data/PACS";
 
 test("ficheUtils getFicheTitle works", () => {
   const title = getFicheTitle(

@@ -1,16 +1,13 @@
-import requetes from "@mock/data/requetes.json";
-import { generateurRequetes } from "@mock/script-generation-donnees/generateurRequetes";
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { fireEvent, render, screen } from "@testing-library/react";
-import {
-  NB_LIGNES_PAR_APPEL_DEFAUT,
-  NB_LIGNES_PAR_PAGE_DEFAUT
-} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import { NB_LIGNES_PAR_APPEL_DEFAUT, NB_LIGNES_PAR_PAGE_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { expect, test, vi } from "vitest";
+import requetes from "../../../../../mock/data/requetes.json";
+import { generateurRequetes } from "../../../../../mock/script-generation-donnees/generateurRequetes";
 
 const HookConsummer: React.FC = (props: any) => {
   return <button onClick={() => props.reloadData()}>{"BoutonTest"}</button>;

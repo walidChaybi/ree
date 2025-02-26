@@ -1,12 +1,4 @@
 import { useGenerationInscriptionsHook } from "@hook/generation/generationInscriptionsHook/GenerationInscriptionsHook";
-import { idDocumentsReponse2 } from "@mock/data/DocumentReponse";
-import {
-  DataRMCInscriptionAvecUnPACS,
-  DataRMCInscriptionAvecUnRC,
-  DataRMCInscriptionAvecUnRCA
-} from "@mock/data/RMCInscription";
-import { ReponseAppelNomenclatureDocummentDelivrance } from "@mock/data/nomenclatures";
-import { idRequeteRDCSC } from "@mock/data/requeteDelivrance";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
@@ -14,6 +6,14 @@ import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { expect, test } from "vitest";
 import { elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
+import { idDocumentsReponse2 } from "../../../../../mock/data/DocumentReponse";
+import {
+  DataRMCInscriptionAvecUnPACS,
+  DataRMCInscriptionAvecUnRC,
+  DataRMCInscriptionAvecUnRCA
+} from "../../../../../mock/data/RMCInscription";
+import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../mock/data/nomenclatures";
+import { idRequeteRDCSC } from "../../../../../mock/data/requeteDelivrance";
 
 const titulaire = {
   nom: "nom",
@@ -32,25 +32,13 @@ const requete = {
   titulaires: [titulaire]
 } as IRequeteTableauDelivrance;
 
-const dataRMCAutoInscription = [
-  ...DataRMCInscriptionAvecUnRC,
-  ...DataRMCInscriptionAvecUnRCA,
-  ...DataRMCInscriptionAvecUnPACS
-];
+const dataRMCAutoInscription = [...DataRMCInscriptionAvecUnRC, ...DataRMCInscriptionAvecUnRCA, ...DataRMCInscriptionAvecUnPACS];
 const HookConsummer: React.FC = () => {
-  const res = useGenerationInscriptionsHook(
-    requete,
-    dataRMCAutoInscription,
-    true
-  );
+  const res = useGenerationInscriptionsHook(requete, dataRMCAutoInscription, true);
 
   return (
     <>
-      <div data-testid="resulatIdDoc">
-        {res?.idDocumentsReponse && (
-          <>{`idDocumentsReponse=${res?.idDocumentsReponse}`}</>
-        )}
-      </div>
+      <div data-testid="resulatIdDoc">{res?.idDocumentsReponse && <>{`idDocumentsReponse=${res?.idDocumentsReponse}`}</>}</div>
     </>
   );
 };
@@ -60,8 +48,6 @@ test("Attendu: la génération d'un certificat d'inscription RC", () => {
   const resulatIdDoc = screen.getByTestId("resulatIdDoc");
 
   waitFor(() => {
-    expect(resulatIdDoc.innerHTML).toBe(
-      `idDocumentsReponse=${idDocumentsReponse2}`
-    );
+    expect(resulatIdDoc.innerHTML).toBe(`idDocumentsReponse=${idDocumentsReponse2}`);
   });
 });
