@@ -45,7 +45,7 @@ export interface IMetaModeleTypeMentionDto {
   idTypeMention: string;
   estSaisieAssistee: boolean;
   metamodelsBlocs: IBlocMetaModeleDto[];
-  modeleHandleBars?: string;
+  modeleTexte?: string;
 }
 
 export class ValeursConditionneesMetaModele {
@@ -188,7 +188,7 @@ export class MetaModeleTypeMention {
     public readonly idTypeMention: string,
     public readonly estSaisieAssistee: boolean,
     public readonly metamodelsBlocs: BlocMetaModele[],
-    public readonly modeleHandleBars: string
+    public readonly modeleTexte: string
   ) {}
 
   public static depuisDto(dto: IMetaModeleTypeMentionDto): MetaModeleTypeMention | null {
@@ -200,7 +200,7 @@ export class MetaModeleTypeMention {
       dto.idTypeMention,
       dto.estSaisieAssistee,
       BlocMetaModele.depuisTableau(dto.metamodelsBlocs ?? []),
-      dto.modeleHandleBars ?? ""
+      dto.modeleTexte ?? ""
     );
   }
 

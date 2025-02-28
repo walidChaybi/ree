@@ -26,7 +26,7 @@ const AideALaSaisieMention: React.FC<IAideALaSaisieMention> = ({ metamodeleTypeM
       </ConteneurBlocFormulaireAideSaisie>
     ))}
 
-    {metamodeleTypeMention?.modeleHandleBars && <TexteMentionAideALaSaisie templateTexteMention={metamodeleTypeMention.modeleHandleBars} />}
+    {metamodeleTypeMention?.modeleTexte && <TexteMentionAideALaSaisie templateTexteMention={metamodeleTypeMention.modeleTexte} />}
   </div>
 );
 

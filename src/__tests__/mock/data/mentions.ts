@@ -1404,7 +1404,7 @@ export const MetamodeleAideSaisie = {
   data: {
     idTypeMention: "b03c1503-d452-4751-8bb3-94d082db1e5e",
     estSaisieAssistee: true,
-    modeleHandleBars:
+    modeleTexte:
       "/e1/Marié{{#if (eq titulaire.sexe 'feminin')}}e{{/if} à /e{{valeur 'evenementEtranger.ville'}}{{#if evenementEtranger.pays}} ({{valeur 'evenementEtranger.pays'}}){{/if}}/e2/ /e{{valeur 'evenementEtranger.date'}}/e3/ avec /e{{valeur 'lienMentionConjoint.prenoms'}}/e4/ /e{{valeur 'lienMentionConjoint.nom'}}/e5.Acte /e{{valeur 'decisionValidationEnregistrement.modeCreation'}}/e6 /e{{valeur 'autoriteValidationRegistre.etablissement'}}/e7/ à /e{{valeur 'autoriteValidationRegistre.ville'}}{{#if (eq decisionValidationEnregistrement.acteRECE 'true')}}/e8/ RECE./e{{valeur 'decisionValidationEnregistrement.annee'}}/e9/./e{{valeur 'decisionValidationEnregistrement.numeroActe'}{{else}}/e10/ CSL./e{{valeur 'decisionValidationEnregistrement.poste'}}/e11/./e{{valeur 'decisionValidationEnregistrement.annee'}}/e12/./e{{valeur 'decisionValidationEnregistrement.Support'}}/e13/./e{{valeur 'decisionValidationEnregistrement.numeroActe'}}{{/if}}/e14/./e",
     metamodelsBlocs: [
       {
