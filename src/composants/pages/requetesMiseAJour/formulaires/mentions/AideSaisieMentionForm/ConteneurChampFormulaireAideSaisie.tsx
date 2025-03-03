@@ -1,7 +1,7 @@
 /* v8 ignore start */
 import { ChampMetaModele } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
 import { useFormikContext } from "formik";
-import { lazy, useEffect, useMemo } from "react";
+import { lazy, useCallback, useEffect, useMemo } from "react";
 import SeparateurSection from "../../../../../commun/conteneurs/formulaire/SeparateurSection";
 import { TMentionForm } from "../../MentionForm";
 import { ChampConditionneAideSaisie } from "./ChampConditionneAideSaisie";
@@ -19,16 +19,12 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
 }> = ({ champ, idBloc, setEstVisible }) => {
   const { values, setFieldValue, setFieldTouched } = useFormikContext<TMentionForm>();
   const estAffiche = useMemo(() => champ.estAffichable(values), [values]);
+  const valeurLectureSeule = useMemo(() => champ.valeurLectureSeule(values), [values]);
+  const estLectureSeule = useMemo(() => Boolean(valeurLectureSeule), [valeurLectureSeule]);
+
   const nomChamp = `${idBloc}.${champ.id}`;
 
-  useEffect(() => {
-    setFieldTouched(nomChamp, false);
-
-    setEstVisible?.(estAffiche);
-    if (estAffiche || !champ.type) {
-      return;
-    }
-
+  const viderChamp = useCallback(() => {
     switch (champ.type) {
       case "select":
       case "radioBouton":
@@ -46,7 +42,20 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
       default:
         setFieldValue(nomChamp, "");
     }
-  }, [estAffiche]);
+  }, []);
+
+  useEffect(() => {
+    setFieldTouched(nomChamp, false);
+
+    setEstVisible?.(estAffiche);
+    if (estAffiche || !champ.type) {
+      if (estLectureSeule) {
+        setFieldValue(nomChamp, estLectureSeule ? valeurLectureSeule : "");
+      }
+      return;
+    }
+    viderChamp();
+  }, [estAffiche, valeurLectureSeule]);
 
   switch (true) {
     case champ.type === "text" && estAffiche:
@@ -56,6 +65,7 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
             name={nomChamp}
             type="text"
             libelle={champ.libelle}
+            disabled={estLectureSeule}
           />
         </ChampFormAideSaisie>
       );
@@ -65,6 +75,7 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
           <ChampsCaseACocher
             name={nomChamp}
             libelle={champ.libelle}
+            disabled={estLectureSeule}
           />
         </ChampFormAideSaisie>
       );
@@ -75,6 +86,7 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
             name={nomChamp}
             libelle={champ.libelle}
             optionsRecherchePocopa={{ nombreResultatsMax: 15, familleRegistre: "CSL" }}
+            disabled={estLectureSeule}
           />
         </ChampFormAideSaisie>
       );
@@ -86,6 +98,7 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
             name={nomChamp}
             libelle={champ.libelle}
             desactiverCorrectionAutomatique
+            disabled={estLectureSeule}
           />
         </ChampFormAideSaisie>
       );
@@ -98,6 +111,7 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
             name={nomChamp}
             libelle={champ.libelle}
             maxLength={champ.type === "crpcen" ? 5 : undefined}
+            disabled={estLectureSeule}
             numerique
           />
         </ChampFormAideSaisie>
@@ -116,6 +130,7 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
           estAffiche={estAffiche}
           champ={champ}
           name={nomChamp}
+          disabled={estLectureSeule}
         />
       );
     default:

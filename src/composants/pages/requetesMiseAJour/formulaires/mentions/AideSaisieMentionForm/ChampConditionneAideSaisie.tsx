@@ -11,7 +11,8 @@ export const ChampConditionneAideSaisie: React.FC<{
   name: string;
   champ: ChampMetaModele;
   estAffiche: boolean;
-}> = ({ name, champ, estAffiche }) => {
+  disabled?: boolean;
+}> = ({ name, champ, estAffiche, disabled }) => {
   const [field] = useField(name);
   const { values, setFieldValue } = useFormikContext<TMentionForm>();
   const [nombreOptions, setNombreOptions] = useState<number | null>(null);
@@ -55,6 +56,7 @@ export const ChampConditionneAideSaisie: React.FC<{
             libelle={champ.libelle}
             name={name}
             options={options}
+            disabled={disabled}
           />
         </ChampFormAideSaisie>
       );
@@ -65,6 +67,7 @@ export const ChampConditionneAideSaisie: React.FC<{
             libelle={champ.libelle}
             name={name}
             options={options}
+            disabled={disabled}
           />
         </ChampFormAideSaisie>
       );

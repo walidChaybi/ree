@@ -9,6 +9,7 @@ interface IChampRecherchePocopasProps {
   libelle: string;
   optionsRecherchePocopa: IRecherchePocopa;
   delai?: number;
+  disabled?: boolean;
 }
 
 interface IRecherchePocopa {
@@ -17,7 +18,7 @@ interface IRecherchePocopa {
   estOuvert?: boolean;
 }
 
-const ChampRecherchePocopas: React.FC<IChampRecherchePocopasProps> = ({ name, libelle, optionsRecherchePocopa, delai }) => {
+const ChampRecherchePocopas: React.FC<IChampRecherchePocopasProps> = ({ name, libelle, optionsRecherchePocopa, delai, disabled }) => {
   const [valeurChampAutocomplete, setValeurChampAutocomplete] = useDelai("", delai);
 
   const [field, meta, helpers] = useField(name as string);
@@ -87,6 +88,7 @@ const ChampRecherchePocopas: React.FC<IChampRecherchePocopasProps> = ({ name, li
           );
         }}
         noOptionsText={<span className="italic">{"Aucun résultat"}</span>}
+        disabled={disabled}
       />
       {meta.error && (
         <div className="text-start text-sm text-rouge">

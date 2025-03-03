@@ -45,6 +45,14 @@ export interface IMentionEnCours {
   mention: IMentionMiseAJour;
 }
 
+export interface IMentionEnregistree {
+  idTypeMention: string;
+  texteMention: string;
+  numeroOrdre: number;
+  evenement?: TValeurFormulaire | null;
+  estSaisieAssistee?: boolean;
+}
+
 export interface IAnalyseMarginaleMiseAJour extends TObjetFormulaire {
   nom: string;
   nomSecable: boolean;
@@ -178,7 +186,8 @@ export const PartieFormulaire: React.FC = () => {
                 idTypeMention: mention.idTypeMention,
                 numeroOrdre: index + 1,
                 texteMention: mention.texte,
-                evenement: getEvenementMention(mention.donneesAideSaisie?.champs)
+                evenement: getEvenementMention(mention.donneesAideSaisie?.champs),
+                estSaisieAssistee: Boolean(mention.donneesAideSaisie)
               })),
               analyseMarginale:
                 afficherAnalyseMarginale && analyseMarginaleModifiee ? MiseAJourAnalyseMarginaleValeursForm.versDto(analyseMarginale) : null

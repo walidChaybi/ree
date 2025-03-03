@@ -9,6 +9,7 @@ interface IDate {
   jour: string;
   mois: string;
   annee: string;
+  sansPrefix?: boolean;
 }
 
 type TCondition = {
@@ -25,7 +26,7 @@ interface IConditionEncours {
 const MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
 
 const FormaterTexteHelper = {
-  formaterDate: ({ jour, mois, annee }: IDate): string => {
+  formaterDate: ({ jour, mois, annee, sansPrefix }: IDate): string => {
     const moisFormate = mois ? MOIS[parseInt(mois, 10) - 1] : null;
     const jourFormate = jour ? jour.replace(/^0/, "") : null;
 
@@ -33,11 +34,11 @@ const FormaterTexteHelper = {
       case !annee:
         return "";
       case Boolean(jourFormate && moisFormate):
-        return `le ${jourFormate === "1" ? "1er" : jourFormate} ${moisFormate} ${annee}`;
+        return `${sansPrefix ? "" : "le "}${jourFormate === "1" ? "1er" : jourFormate} ${moisFormate} ${annee}`;
       case Boolean(moisFormate):
-        return `en ${moisFormate} ${annee}`;
+        return `${sansPrefix ? "" : "en "}${moisFormate} ${annee}`;
       default:
-        return `en ${annee}`;
+        return `${sansPrefix ? "" : "en "}${annee}`;
     }
   }
 };

@@ -1,6 +1,6 @@
 // À tester
 /* v8 ignore start */
-import { ValeursPossiblesMetaModele } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
+import { ValeursConditionneesMetaModele } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
 import { ConditionChamp } from "@model/form/commun/ConditionChamp";
 import * as Yup from "yup";
 
@@ -187,7 +187,7 @@ const SchemaValidation = {
     ) as Yup.BooleanSchema;
   },
 
-  listeDeroulante: (schemaParams: ISchemaCommunParams & { options?: string[]; valeursPossibles?: ValeursPossiblesMetaModele[] }) => {
+  listeDeroulante: (schemaParams: ISchemaCommunParams & { options?: string[]; valeursPossibles?: ValeursConditionneesMetaModele[] }) => {
     let schema = Yup.string();
 
     if (schemaParams.options) {
@@ -195,7 +195,7 @@ const SchemaValidation = {
     }
 
     if (schemaParams.valeursPossibles) {
-      schemaParams.valeursPossibles.forEach((valeurPossible: ValeursPossiblesMetaModele) => {
+      schemaParams.valeursPossibles.forEach((valeurPossible: ValeursConditionneesMetaModele) => {
         valeurPossible.conditions.some((obligation: ConditionChamp) => {
           switch (obligation.operateur) {
             case "AlwaysTrue":

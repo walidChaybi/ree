@@ -18,7 +18,7 @@ export enum ETypeChamp {
   POCOPA = "pocopa",
   CRPCEN = "crpcen"
 }
-interface IValeursPossiblesMetaModeleDto {
+interface IValeursConditionneesMetaModeleDto {
   valeurs: string[];
   conditions: IConditionChampDto[];
 }
@@ -29,8 +29,10 @@ interface IChampMetaModeleDto {
   type: ETypeChamp;
   estObligatoire: IConditionChampDto[];
   estAffiche: IConditionChampDto[];
-  valeursPossibles: IValeursPossiblesMetaModeleDto[];
+  estLectureSeule: IValeursConditionneesMetaModeleDto[];
+  valeursPossibles: IValeursConditionneesMetaModeleDto[];
   valeurParDefaut?: string;
+  sansPrefix?: boolean;
 }
 interface IBlocMetaModeleDto {
   id: string;
@@ -46,30 +48,33 @@ export interface IMetaModeleTypeMentionDto {
   modeleHandleBars?: string;
 }
 
-export class ValeursPossiblesMetaModele {
+export class ValeursConditionneesMetaModele {
   private constructor(
     public readonly valeurs: string[],
     public readonly conditions: ConditionChamp[]
   ) {}
 
-  public static depuisDto(dto: IValeursPossiblesMetaModeleDto): ValeursPossiblesMetaModele | null {
+  public static depuisDto(dto: IValeursConditionneesMetaModeleDto): ValeursConditionneesMetaModele | null {
     const conditions = ConditionChamp.depuisTableau(dto.conditions ?? []);
     if (!dto.valeurs?.length || !conditions.length) {
       return null;
     }
 
-    return new ValeursPossiblesMetaModele(dto.valeurs, conditions);
+    return new ValeursConditionneesMetaModele(dto.valeurs, conditions);
   }
 
-  public static depuisTableau(dto: IValeursPossiblesMetaModeleDto[]): ValeursPossiblesMetaModele[] {
-    return dto.reduce((listeValeursPossibles: ValeursPossiblesMetaModele[], valeursPossiblesDto: IValeursPossiblesMetaModeleDto) => {
-      const valeursPossibles = ValeursPossiblesMetaModele.depuisDto(valeursPossiblesDto);
-      if (valeursPossibles) {
-        listeValeursPossibles.push(valeursPossibles);
-      }
+  public static depuisTableau(dto: IValeursConditionneesMetaModeleDto[]): ValeursConditionneesMetaModele[] {
+    return dto.reduce(
+      (listeValeursPossibles: ValeursConditionneesMetaModele[], valeursPossiblesDto: IValeursConditionneesMetaModeleDto) => {
+        const valeursPossibles = ValeursConditionneesMetaModele.depuisDto(valeursPossiblesDto);
+        if (valeursPossibles) {
+          listeValeursPossibles.push(valeursPossibles);
+        }
 
-      return listeValeursPossibles;
-    }, []);
+        return listeValeursPossibles;
+      },
+      []
+    );
   }
 
   public sontUtilisables(valeurs: TObjetFormulaire): boolean {
@@ -87,8 +92,10 @@ export class ChampMetaModele {
     public readonly type: ETypeChamp,
     public readonly estObligatoire: ConditionChamp[],
     public readonly estAffiche: ConditionChamp[],
-    public readonly valeursPossibles: ValeursPossiblesMetaModele[],
-    public readonly valeurParDefaut?: string
+    public readonly estLectureSeule: ValeursConditionneesMetaModele[],
+    public readonly valeursPossibles: ValeursConditionneesMetaModele[],
+    public readonly valeurParDefaut?: string,
+    public readonly sansPrefix?: boolean
   ) {}
 
   public static depuisDto(dto: IChampMetaModeleDto): ChampMetaModele | null {
@@ -104,8 +111,10 @@ export class ChampMetaModele {
       dto.type,
       ConditionChamp.depuisTableau(dto.estObligatoire ?? []),
       ConditionChamp.depuisTableau(dto.estAffiche ?? []),
-      ValeursPossiblesMetaModele.depuisTableau(dto.valeursPossibles ?? []),
-      dto.valeurParDefaut
+      ValeursConditionneesMetaModele.depuisTableau(dto.estLectureSeule ?? []),
+      ValeursConditionneesMetaModele.depuisTableau(dto.valeursPossibles ?? []),
+      dto.valeurParDefaut,
+      dto.sansPrefix
     );
   }
 
@@ -124,6 +133,13 @@ export class ChampMetaModele {
 
   public estAffichable(valeurs: TObjetFormulaire): boolean {
     return this.estAffiche.every(condition => condition.estRespectee(valeurs));
+  }
+
+  public valeurLectureSeule(valeurs: TObjetFormulaire): string | null {
+    if (this.estLectureSeule.length === 0) return null;
+    return (
+      this.estLectureSeule.find(condition => condition.conditions.find(condition => condition.estRespectee(valeurs)))?.valeurs[0] ?? ""
+    );
   }
 }
 
@@ -260,7 +276,8 @@ export class MetaModeleTypeMention {
                       return {
                         jour: "",
                         mois: "",
-                        annee: ""
+                        annee: "",
+                        sansPrefix: champ.sansPrefix
                       };
                     case "boolean":
                       return champ.valeurParDefaut === "true";
