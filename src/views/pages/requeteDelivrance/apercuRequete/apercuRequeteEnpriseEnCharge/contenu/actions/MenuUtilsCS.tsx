@@ -1,4 +1,4 @@
-import { InscriptionRcUtil, TypeInscriptionRc } from "@model/etatcivil/enum/TypeInscriptionRc";
+import { ETypeInscriptionRcRca } from "@model/etatcivil/enum/ETypeInscriptionRcRca";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 
@@ -116,7 +116,7 @@ export function getInscriptionsRCDeTypeRadiation(inscriptionsRC?: IInscriptionRc
   let inscriptionRC: IInscriptionRc[] = [];
   if (inscriptionsRC) {
     inscriptionRC = inscriptionsRC.filter(inscription => {
-      return inscription.typeInscription === TypeInscriptionRc.RADIATION;
+      return inscription.typeInscription === ETypeInscriptionRcRca.RADIATION;
     });
   }
 
@@ -127,7 +127,7 @@ export function getInscriptionsRCDeTypeModification(inscriptionsRC?: IInscriptio
   let inscriptionRC: IInscriptionRc[] = [];
   if (inscriptionsRC) {
     inscriptionRC = inscriptionsRC.filter(inscription => {
-      return inscription.typeInscription === TypeInscriptionRc.MODIFICATION;
+      return inscription.typeInscription === ETypeInscriptionRcRca.MODIFICATION;
     });
   }
 
@@ -136,7 +136,7 @@ export function getInscriptionsRCDeTypeModification(inscriptionsRC?: IInscriptio
 
 export const estPresentRcTypeModification = (inscriptions?: IResultatRMCInscription[]): IResultatRMCInscription | undefined => {
   if (inscriptions) {
-    return inscriptions.find(inscription => InscriptionRcUtil.estDeTypeModificationViaLibelle(inscription.typeInscription));
+    return inscriptions.find(inscription => inscription.typeInscription);
   }
 };
 

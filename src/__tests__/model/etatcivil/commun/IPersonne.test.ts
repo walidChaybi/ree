@@ -1,29 +1,29 @@
-import { Personne } from "@model/etatcivil/commun/IPersonne";
+import { PersonneUtils } from "@model/etatcivil/commun/Personne";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { expect, test } from "vitest";
 import { personneMock } from "../../../mock/data/ficheEtBandeau/divers/PersonneMock";
 test("render composant SectionPart", () => {
-  expect(Personne.getNom(personneMock)).toBe("Faulkner");
-  expect(Personne.getAutresNoms(personneMock)).toBe("Elisa (Pseudonyme)");
-  expect(Personne.getPrenoms(personneMock)).toBe("Elie_madelaine-henriette, Maëlla, Marie-Charlotte");
-  expect(Personne.getAutresPrenom(personneMock)).toBe("Solomon");
-  expect(Personne.getLieuNaissance(personneMock)).toBe("marseille 2ème arrondissement (Provence-Aples-côte d'azur)");
-  expect(Personne.getLieuDeces(personneMock)).toBe("londres, Angleterre (Grande bretagne)");
-  expect(Personne.getDateNaissance(personneMock)).toBe("26/02/1980");
-  expect(Personne.getDateDeces(personneMock)).toBe("07/2020");
-  expect(Personne.getNationalite(personneMock)).toBe("Française");
-  expect(Personne.getSexe(personneMock)).toBe("Masculin");
-  expect(Personne.getParents(personneMock)).toStrictEqual([
+  expect(PersonneUtils.getNom(personneMock)).toBe("Faulkner");
+  expect(PersonneUtils.getAutresNoms(personneMock)).toBe("Elisa (Pseudonyme)");
+  expect(PersonneUtils.getPrenoms(personneMock)).toBe("Elie_madelaine-henriette, Maëlla, Marie-Charlotte");
+  expect(PersonneUtils.getAutresPrenom(personneMock)).toBe("Solomon");
+  expect(PersonneUtils.getLieuNaissance(personneMock)).toBe("marseille 2ème arrondissement (Provence-Aples-côte d'azur)");
+  expect(PersonneUtils.getLieuDeces(personneMock)).toBe("londres, Angleterre (Grande bretagne)");
+  expect(PersonneUtils.getDateNaissance(personneMock)).toBe("26/02/1980");
+  expect(PersonneUtils.getDateDeces(personneMock)).toBe("07/2020");
+  expect(PersonneUtils.getNationalite(personneMock)).toBe("Française");
+  expect(PersonneUtils.getSexe(personneMock)).toBe("Masculin");
+  expect(PersonneUtils.getParents(personneMock)).toStrictEqual([
     { nom: "Paul", prenoms: ["Justice"] },
     { nom: "Barton", prenoms: ["Buck"] },
     { nom: "Janine", prenoms: ["Alyce"] }
   ]);
-  expect(Personne.getEnfants(personneMock)).toStrictEqual([
+  expect(PersonneUtils.getEnfants(personneMock)).toStrictEqual([
     { nom: "Paul", prenoms: ["Justice"] },
     { nom: "Barton", prenoms: ["Buck"] },
     { nom: "Janine", prenoms: ["Alyce"] }
   ]);
-  expect(Personne.getActes(personneMock)).toStrictEqual([
+  expect(PersonneUtils.getActes(personneMock)).toStrictEqual([
     {
       id: "b41079a5-9e8d-478c-b04c-c4c2ac67134f",
       numero: "413",
@@ -31,7 +31,7 @@ test("render composant SectionPart", () => {
       referenceComplete: "Mariage ACQ.Y.2023.2"
     }
   ]);
-  expect(Personne.getPacss(personneMock)).toStrictEqual([
+  expect(PersonneUtils.getPacss(personneMock)).toStrictEqual([
     {
       id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e0",
       numero: "123456",
@@ -63,7 +63,7 @@ test("render composant SectionPart", () => {
       referenceComplete: "PACS N° 2020-1234504"
     }
   ]);
-  expect(Personne.getRcs(personneMock)).toStrictEqual([
+  expect(PersonneUtils.getRcs(personneMock)).toStrictEqual([
     {
       id: "85df1d10-71b7-4336-9463-bb1c5760d1a0",
       numero: "3",
@@ -77,7 +77,7 @@ test("render composant SectionPart", () => {
       referenceComplete: "RC N° 2020-5"
     }
   ]);
-  expect(Personne.getRcas(personneMock)).toStrictEqual([
+  expect(PersonneUtils.getRcas(personneMock)).toStrictEqual([
     {
       id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e",
       numero: "4094",

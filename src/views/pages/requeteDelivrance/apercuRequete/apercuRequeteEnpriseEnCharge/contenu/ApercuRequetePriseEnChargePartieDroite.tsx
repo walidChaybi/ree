@@ -4,7 +4,7 @@ import { IGetAlertesActeApiHookParameters, useGetAlertesActeApiHook } from "@hoo
 import { GetNbrTitulairesActeHookParameters, useGetNbrTitulairesActeApiHook } from "@hook/repertoires/NbrTitulairesActeHook";
 import { GetTitulairesActeHookParameters, useGetTitulairesActeApiHook } from "@hook/repertoires/TitulairesActeHook";
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
-import { InscriptionRcUtil } from "@model/etatcivil/enum/TypeInscriptionRc";
+import { ETypeInscriptionRcRca } from "@model/etatcivil/enum/ETypeInscriptionRcRca";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
@@ -92,7 +92,7 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
       }
 
       setInscriptionsSelectionnees(nouvellesInscriptionsSelectionnees);
-      if (nouvellesInscriptionsSelectionnees.length && InscriptionRcUtil.estDeTypeModificationViaLibelle(data.typeInscription)) {
+      if (nouvellesInscriptionsSelectionnees.length && data.typeInscription === ETypeInscriptionRcRca.MODIFICATION) {
         setIdPersonne(nouvellesInscriptionsSelectionnees[0].idPersonne);
       }
     },

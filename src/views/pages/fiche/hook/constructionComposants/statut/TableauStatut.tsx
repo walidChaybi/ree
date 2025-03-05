@@ -1,4 +1,4 @@
-import { IStatutFiche } from "@model/etatcivil/fiche/IStatutFiche";
+import { StatutFiche } from "@model/etatcivil/fiche/StatutFiche";
 import DateUtils from "@util/DateUtils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { processDataStorting } from "@widget/tableau/TableUtils";
@@ -6,7 +6,7 @@ import { TableauSimple, TableauSimpleProps } from "@widget/tableau/TableauSimple
 import React from "react";
 import "./scss/TableauStatut.scss";
 interface TableauStatutProps {
-  statutsFiche: IStatutFiche[];
+  statutsFiche: StatutFiche[];
 }
 
 export const TableauStatut: React.FC<TableauStatutProps> = ({ statutsFiche }) => {
@@ -14,7 +14,7 @@ export const TableauStatut: React.FC<TableauStatutProps> = ({ statutsFiche }) =>
 };
 
 /** Construction du tableau des pièces jointes */
-function getTableauStatut(statuts: IStatutFiche[]): JSX.Element {
+function getTableauStatut(statuts: StatutFiche[]): JSX.Element {
   const tableauSimpleProps: TableauSimpleProps = {
     entetes: [
       { className: "EnteteStatut", libelle: "Statut" },
@@ -57,20 +57,16 @@ function getTableauStatut(statuts: IStatutFiche[]): JSX.Element {
   return <TableauSimple {...tableauSimpleProps} />;
 }
 
-function getColonneDateStatut(statut: IStatutFiche): string | JSX.Element {
+function getColonneDateStatut(statut: StatutFiche): string | JSX.Element {
   return DateUtils.getDateString(DateUtils.getDateFromTimestamp(statut.dateStatut));
 }
 
-function getColonneDateEvenement(statut: IStatutFiche): string | JSX.Element {
+function getColonneDateEvenement(statut: StatutFiche): string | JSX.Element {
   return statut.statutFicheEvenement ? DateUtils.getDateStringFromDateCompose(statut.statutFicheEvenement.date) : "";
 }
 
-function getColonneLieu(statut: IStatutFiche): string | JSX.Element {
+function getColonneLieu(statut: StatutFiche): string | JSX.Element {
   return statut.statutFicheEvenement
-    ? LieuxUtils.getLieu(
-        statut.statutFicheEvenement.ville,
-        statut.statutFicheEvenement.region,
-        statut.statutFicheEvenement.pays
-      )
+    ? LieuxUtils.getLieu(statut.statutFicheEvenement.ville, statut.statutFicheEvenement.region, statut.statutFicheEvenement.pays)
     : "";
 }

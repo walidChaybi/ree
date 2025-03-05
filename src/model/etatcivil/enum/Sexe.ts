@@ -3,6 +3,13 @@
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 import { Options } from "@util/Type";
 
+export enum ESexe {
+  MASCULIN = "Masculin",
+  FEMININ = "Féminin",
+  INDETERMINE = "Indéterminé",
+  INCONNU = "Non renseigné"
+}
+
 export class Sexe extends EnumWithLibelle {
   public static readonly MASCULIN = new Sexe("Masculin");
   public static readonly FEMININ = new Sexe("Féminin");

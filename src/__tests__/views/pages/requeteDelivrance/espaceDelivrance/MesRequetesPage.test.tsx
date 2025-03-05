@@ -5,10 +5,9 @@ import { RouterProvider } from "react-router-dom";
 import { expect, test, vi } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
-const miseAJourCompteur = vi.fn();
-const setParamsRMCAuto = vi.fn();
-
 test("renders Page requete with all elements", async () => {
+  const miseAJourCompteur = vi.fn();
+  const setParamsRMCAuto = vi.fn();
   const router = createTestingRouter(
     [
       {

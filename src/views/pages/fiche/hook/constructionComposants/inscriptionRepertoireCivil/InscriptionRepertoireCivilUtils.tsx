@@ -1,7 +1,5 @@
 import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { InscriptionRcUtil } from "@model/etatcivil/enum/TypeInscriptionRc";
-import { IDureeInscription } from "@model/etatcivil/rcrca/IDureeInscription";
-import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import DateUtils from "@util/DateUtils";
 import { premiereLettreEnMajusculeLeResteEnMinuscule } from "@util/Utils";
 import { SectionContentProps } from "@widget/section/SectionContent";
@@ -9,7 +7,7 @@ import { SectionPartProps } from "@widget/section/SectionPart";
 import { LienFiche } from "../../../LienFiche";
 import { InscriptionsLiees } from "./InscriptionsLiees";
 
-export function getInscriptionRepertoireCivil(rcrca: IFicheRcRca): SectionPartProps {
+export function getInscriptionRepertoireCivil(rcrca: FicheRcRca): SectionPartProps {
   return {
     partContent: {
       contents: FicheUtil.isFicheRca(rcrca.categorie) ? getInteresseRca(rcrca) : getInteresseRc(rcrca),
@@ -18,7 +16,7 @@ export function getInscriptionRepertoireCivil(rcrca: IFicheRcRca): SectionPartPr
   };
 }
 
-function getInteresseRc(rcrca: IFicheRcRca): SectionContentProps[] {
+function getInteresseRc(rcrca: FicheRcRca): SectionContentProps[] {
   return [
     {
       libelle: "Nature",
@@ -44,7 +42,7 @@ function getInteresseRc(rcrca: IFicheRcRca): SectionContentProps[] {
     },
     {
       libelle: "Durée inscription",
-      value: getUniteDuree(rcrca.duree)
+      value: rcrca.duree?.valeurAvecUnite ?? ""
     },
     {
       libelle: "Date fin de mesure",
@@ -53,7 +51,7 @@ function getInteresseRc(rcrca: IFicheRcRca): SectionContentProps[] {
   ];
 }
 
-function getInteresseRca(rcrca: IFicheRcRca): SectionContentProps[] {
+function getInteresseRca(rcrca: FicheRcRca): SectionContentProps[] {
   return [
     {
       libelle: "Nature",
@@ -71,26 +69,23 @@ function getInteresseRca(rcrca: IFicheRcRca): SectionContentProps[] {
   ];
 }
 
-function getTypeInscription(rcrca: IFicheRcRca): JSX.Element {
+function getTypeInscription(rcrca: FicheRcRca): JSX.Element {
   return (
     <span>
-      {InscriptionRcUtil.getLibelle(rcrca.typeInscription)}
+      {rcrca.typeInscription}
       {rcrca.inscriptionsImpactees?.map((inscription, index) => (
         <span key={`link-fiche-rc-${inscription.id || ""}`}>
           {index === 0 ? " (" : ""}
           {`RC n°`}
-          <LienFiche identifiant={inscription.id} categorie={TypeFiche.RC} numero={`${inscription.annee} - ${inscription.numero}`} />
+          <LienFiche
+            identifiant={inscription.id}
+            categorie={TypeFiche.RC}
+            numero={`${inscription.annee} - ${inscription.numero}`}
+          />
 
           {rcrca.inscriptionsImpactees.length - 1 === index ? ")" : ", "}
         </span>
       ))}
     </span>
   );
-}
-
-function getUniteDuree(duree?: IDureeInscription) {
-  if (duree?.uniteDuree) {
-    return `${duree.nombreDuree} ${duree.uniteDuree}`;
-  }
-  return "";
 }

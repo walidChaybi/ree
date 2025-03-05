@@ -1,10 +1,10 @@
+import { ETypeInscriptionRcRca } from "@model/etatcivil/enum/ETypeInscriptionRcRca";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { idFichePacs } from "./fichePacs";
+import { idFichePacs } from "./fichePACS";
 
 export const DataTableauInscription = {
   previousDataLinkState: "previousDataLinkState",
-  nextDataLinkState:
-    "http://localhost:8089/rece-etatcivil-api/v1/repertoirecivil/rmc?range=1-105",
+  nextDataLinkState: "http://localhost:8089/rece-etatcivil-api/v1/repertoirecivil/rmc?range=1-105",
   rowsNumberState: 6,
   minRangeState: 0,
   maxRangeState: 105
@@ -79,7 +79,7 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
     nature: "",
     categorie: "PACS",
     statutInscription: "Actif",
-    typeInscription: "INSCRIPTION",
+    typeInscription: ETypeInscriptionRcRca.INSCRIPTION,
     dateInscription: "2020-12-01",
     anneeInscription: "2020"
   },
@@ -95,7 +95,7 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
     nature: "Mesure d’accompagnement social personnalisé (L271-1 casf)",
     categorie: "RC",
     statutInscription: "Actif",
-    typeInscription: "MAIN_LEVEE",
+    typeInscription: ETypeInscriptionRcRca.MAIN_LEVEE,
     dateInscription: "2019-11-05",
     anneeInscription: "2019"
   },
@@ -111,7 +111,7 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
     nature: "Acte de notoriété constatant la possession d'état",
     categorie: "RCA",
     statutInscription: "Inactif",
-    typeInscription: "CADUCITE 2",
+    typeInscription: ETypeInscriptionRcRca.CADUCITE,
     dateInscription: "2017-05-07",
     anneeInscription: "2017"
   },
@@ -127,7 +127,7 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
     nature: "Sauvegarde justice (433cc)",
     categorie: "RC",
     statutInscription: "Actif",
-    typeInscription: "RENOUVELLEMENT",
+    typeInscription: ETypeInscriptionRcRca.RENOUVELLEMENT,
     dateInscription: "2009-02-05",
     anneeInscription: "2009"
   },
@@ -143,7 +143,7 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
     nature: "Annulation de reconnaissance",
     categorie: "RCA",
     statutInscription: "Actif",
-    typeInscription: "RENOUVELLEMENT",
+    typeInscription: ETypeInscriptionRcRca.RENOUVELLEMENT,
     dateInscription: "2007-07-07",
     anneeInscription: "2007"
   },
@@ -159,7 +159,7 @@ export const DataRMCInscriptionAvecResultat: IResultatRMCInscription[] = [
     nature: "",
     categorie: "PACS",
     statutInscription: "Actif",
-    typeInscription: "CADUCITE 2",
+    typeInscription: ETypeInscriptionRcRca.CADUCITE,
     dateInscription: "2000-02-11",
     anneeInscription: "2000"
   }
@@ -178,7 +178,7 @@ export const DataRMCInscriptionAvecUnRCA: IResultatRMCInscription[] = [
     nature: "Annulation de reconnaissance",
     categorie: "RCA",
     statutInscription: "Actif",
-    typeInscription: "RENOUVELLEMENT",
+    typeInscription: ETypeInscriptionRcRca.RENOUVELLEMENT,
     dateInscription: "2007-07-07",
     anneeInscription: "2007"
   }
@@ -197,7 +197,7 @@ export const DataRMCInscriptionAvecUnRC: IResultatRMCInscription[] = [
     nature: "Sauvegarde justice (433cc)",
     categorie: "RC",
     statutInscription: "Actif",
-    typeInscription: "RENOUVELLEMENT",
+    typeInscription: ETypeInscriptionRcRca.RENOUVELLEMENT,
     dateInscription: "2009-02-05",
     anneeInscription: "2009"
   }
@@ -213,7 +213,7 @@ export const DataRMCInscriptionAvecUnPACS: IResultatRMCInscription[] = [
     dateNaissance: "08/06/1960",
     paysNaissance: "Tunisie",
     numeroInscription: "1234508",
-    typeInscription: "",
+    typeInscription: ETypeInscriptionRcRca.INSCRIPTION,
     categorie: "PACS",
     statutInscription: "ACTIF",
     dateInscription: "2013-05-02",

@@ -1,14 +1,14 @@
-import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
-import { getInscriptionRepertoireCivil } from "@pages/fiche/hook/constructionComposants/inscriptionRepertoireCivil/InscriptionRepertoireCivilUtils";
-import { expect, test } from "vitest";
 import {
   ficheInscriptionRepertoireCivil,
   ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImpactes,
   ficheInscriptionRepertoireCivilSansUniteDureeInscription
-} from "../../../../../../mock/data/ficheEtBandeau/divers/InscriptionRepertoireCivilMock";
+} from "@mock/data/ficheEtBandeau/divers/InscriptionRepertoireCivilMock";
+import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
+import { getInscriptionRepertoireCivil } from "@pages/fiche/hook/constructionComposants/inscriptionRepertoireCivil/InscriptionRepertoireCivilUtils";
+import { expect, test } from "vitest";
 
-test("Inscription repertoire civil utils : affichage correcte des infos d'une inscription civile  ", () => {
-  const component = getInscriptionRepertoireCivil(ficheInscriptionRepertoireCivil as unknown as IFicheRcRca);
+test("Inscription répertoire civil utils : affichage correct des infos d'une inscription civile  ", () => {
+  const component = getInscriptionRepertoireCivil(FicheRcRca.RcDepuisDto(ficheInscriptionRepertoireCivil) as FicheRcRca);
 
   const idxNature = component.partContent?.contents.findIndex(content => content.libelle === "Nature");
   expect(idxNature).toBeGreaterThan(-1);
@@ -60,17 +60,19 @@ test("Inscription repertoire civil utils : affichage correcte des infos d'une in
   expect(idxDureeInscription).toBeLessThan(idxDateFinMEsure as number);
 });
 
-test("Inscription repertoire civil utils : affichage correcte des infos d'une inscription civile sans unité de durée d'inscription", () => {
-  const component = getInscriptionRepertoireCivil(ficheInscriptionRepertoireCivilSansUniteDureeInscription as unknown as IFicheRcRca);
+test("Inscription repertoire civil utils : affichage correct des infos d'une inscription civile sans unité de durée d'inscription", () => {
+  const component = getInscriptionRepertoireCivil(
+    FicheRcRca.RcDepuisDto(ficheInscriptionRepertoireCivilSansUniteDureeInscription) as FicheRcRca
+  );
   const idxDateFinDeMesure = component.partContent?.contents.findIndex(content => content.libelle === "Date fin de mesure");
   const valueDateFinDeMesure = component.partContent?.contents[idxDateFinDeMesure as number].value;
   expect(idxDateFinDeMesure).toBeGreaterThan(-1);
   expect(valueDateFinDeMesure).toBe("15/02/2020");
 });
 
-test("Inscription repertoire civil utils : affichage correcte des infos d'une inscription civile sans inscriptions liees et sans inscriptions impactées", async () => {
+test("Inscription repertoire civil utils : affichage correct des infos d'une inscription civile sans inscriptions liees et sans inscriptions impactées", async () => {
   const component = getInscriptionRepertoireCivil(
-    ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImpactes as unknown as IFicheRcRca
+    FicheRcRca.RcDepuisDto(ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImpactes) as FicheRcRca
   );
 
   const idxTypeInscription = component.partContent?.contents.findIndex(content => content.libelle === "Type inscription");

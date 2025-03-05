@@ -1,39 +1,35 @@
 import { Decret, IDecret } from "@model/etatcivil/commun/IDecret";
+import { DECISIONS_JURIDICTION, ETypeDecision } from "@model/etatcivil/enum/ETypeDecision";
 import { LienParente } from "@model/etatcivil/enum/LienParente";
-import {
-  TypeDecision,
-  TypeDecisionUtil
-} from "@model/etatcivil/enum/TypeDecision";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
-import { IInteresse } from "@model/etatcivil/rcrca/IInteresse";
+import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import { IMariageInteresse } from "@model/etatcivil/rcrca/IMariageInteresse";
 import { IParent } from "@model/etatcivil/rcrca/IParent";
+import { Interesse } from "@model/etatcivil/rcrca/Interesse";
 import DateUtils from "@util/DateUtils";
 import { compareNombre, formatNom, triListeObjetsSurPropriete } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
-export function getDecisionExequatur(data: IFicheRcRca) {
+export function getDecisionExequatur(data: FicheRcRca): string | undefined {
   let decision = undefined;
-  if (TypeDecisionUtil.isDecisionJuridiction(data.decision?.type as TypeDecision) && data.decision?.dateDecisionEtrangere) {
+  if (DECISIONS_JURIDICTION.includes(data.decision?.type as ETypeDecision) && data.decision?.dateDecisionEtrangere) {
     const dateDecisionEtrangere = DateUtils.getDateFormatJasper(DateUtils.getDateFromTimestamp(data.decision?.dateDecisionEtrangere));
     decision = `prise en exequatur de la décision étrangère en date du ${dateDecisionEtrangere}`;
   }
   return decision;
 }
 
-export function getDecisionJuridiction(infos: IFicheRcRca, dateDecision: string, localite: string) {
-  let decisionRecue = "";
-  let typeDecision = "";
+export function getDecisionJuridiction(infos: FicheRcRca, dateDecision: string, localite: string) {
+  let typeDecision: string;
 
   switch (infos.decision?.type) {
-    case TypeDecision.JUGEMENT:
+    case ETypeDecision.JUGEMENT:
       typeDecision = "le jugement";
       break;
-    case TypeDecision.ORDONNANCE:
+    case ETypeDecision.ORDONNANCE:
       typeDecision = "l'ordonnance";
       break;
-    case TypeDecision.DECISION_JUDICIAIRE:
+    case ETypeDecision.DECISION_JUDICIAIRE:
       typeDecision = "la décision";
       break;
     default:
@@ -41,21 +37,21 @@ export function getDecisionJuridiction(infos: IFicheRcRca, dateDecision: string,
       break;
   }
 
-  decisionRecue = `Le Service central d'état civil a reçu ${typeDecision} `;
+  let decisionRecue = `Le Service central d'état civil a reçu ${typeDecision} `;
   decisionRecue += `du ${infos.decision?.autorite.typeJuridiction} de ${localite}, `;
   decisionRecue += `en date du ${dateDecision}`;
 
   return decisionRecue;
 }
 
-export function getDecisionNotaire(infos: IFicheRcRca, dateDecision: string, localite: string) {
+export function getDecisionNotaire(infos: FicheRcRca, dateDecision: string, localite: string) {
   let decisionRecue = "";
   // décision de Notaire de type "Convention"
-  if (infos.decision?.type === TypeDecision.CONVENTION) {
+  if (infos.decision?.type === ETypeDecision.CONVENTION) {
     decisionRecue = `Le Service central d'état civil a reçu la convention déposée au rang des minutes de Maître `;
   }
   // décision de Notaire de type "Requete"
-  else if (infos.decision?.type === TypeDecision.REQUETE) {
+  else if (infos.decision?.type === ETypeDecision.REQUETE) {
     const localiteJuridictionExecutante = LieuxUtils.getLocalisationAutorite(
       infos.decision?.juridictionExecutante?.ville,
       infos.decision?.juridictionExecutante?.libelleDepartement,
@@ -83,7 +79,7 @@ export function getDecisionNotaire(infos: IFicheRcRca, dateDecision: string, loc
   return decisionRecue;
 }
 
-export function getParagrapheFin(infosRcRca: IFicheRcRca, decrets: IDecret[]) {
+export function getParagrapheFin(infosRcRca: FicheRcRca, decrets: IDecret[]) {
   let paragrapheFin = `Conformément à l'`;
 
   if (infosRcRca.categorie === TypeFiche.RCA) {
@@ -137,21 +133,9 @@ function getPrenomsParents(data: IParent) {
   return prenoms;
 }
 
-function getPrenomsInteresse(data: IInteresse) {
-  let prenoms = "";
-
-  if (data.prenoms) {
-    prenoms = triListeObjetsSurPropriete([...data.prenoms], "numeroOrdre")
-      .map(prenom => prenom.valeur)
-      .join(", ");
-    prenoms += " ";
-  }
-  return prenoms;
-}
-
-function getLignesPrenomsNomNaissance(data: IInteresse | IParent, isParent: boolean) {
+function getLignesPrenomsNomNaissance(data: Interesse | IParent, isParent: boolean) {
   // Partie Prenoms/Nom
-  const prenoms = isParent ? getPrenomsParents(data as IParent) : getPrenomsInteresse(data as IInteresse);
+  const prenoms = isParent ? getPrenomsParents(data as IParent) : (data as Interesse).prenoms.concat(" ");
 
   let result = `${prenoms}${formatNom(data.nomFamille)}`;
 
@@ -175,7 +159,7 @@ function getLignesParentsInteresse(data: IParent[]) {
   return parents;
 }
 
-function getLignesInteresseDecision(data: IInteresse, showDeces: boolean) {
+function getLignesInteresseDecision(data: Interesse, showDeces: boolean) {
   // Partie Prenoms/Nom/Naissance
   let interesse = `${getLignesPrenomsNomNaissance(data, false)}`;
 
@@ -200,7 +184,7 @@ function getLignesInteresseDecision(data: IInteresse, showDeces: boolean) {
   return interesse;
 }
 
-function getLignesMariageInteresses(data: IMariageInteresse) {
+function getLignesMariageInteresses(data: IMariageInteresse): string {
   let mariageInteresses = "\nmariés";
 
   mariageInteresses +=
@@ -212,32 +196,22 @@ function getLignesMariageInteresses(data: IMariageInteresse) {
   return mariageInteresses;
 }
 
-export function getInteressesDecision(data: IFicheRcRca) {
+export function getInteressesDecision(data: FicheRcRca): string {
   let interesses = "";
 
-  const showDeces =
-    data.categorie === TypeFiche.RCA &&
-    data.decision?.type === TypeDecision.ONAC;
+  const showDeces = data.categorie === TypeFiche.RCA && data.decision?.type === ETypeDecision.ONAC;
   // Partie Interesses
-  data.interesses.sort((n1, n2) =>
-    compareNombre(n1.numeroOrdreSaisi, n2.numeroOrdreSaisi)
-  );
+  data.interesses.sort((n1, n2) => compareNombre(n1.numeroOrdreSaisi, n2.numeroOrdreSaisi));
   data.interesses.forEach(interesse => {
     if (interesses !== "") {
       interesses = addPhrase(interesses, "\net\n");
     }
-    interesses = addPhrase(
-      interesses,
-      getLignesInteresseDecision(interesse, showDeces)
-    );
+    interesses = addPhrase(interesses, getLignesInteresseDecision(interesse, showDeces));
   });
 
   // Partie Mariage
   if (data.mariageInteresses) {
-    interesses = addPhrase(
-      interesses,
-      getLignesMariageInteresses(data.mariageInteresses)
-    );
+    interesses = addPhrase(interesses, getLignesMariageInteresses(data.mariageInteresses));
   }
 
   return interesses;

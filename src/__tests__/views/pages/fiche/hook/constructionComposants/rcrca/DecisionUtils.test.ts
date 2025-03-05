@@ -1,15 +1,15 @@
-import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
-import { getDecision } from "@pages/fiche/hook/constructionComposants/rcrca/DecisionUtils";
-import { expect, test } from "vitest";
 import {
   ficheAutoriteJuridictionFranceAvecConfirmation,
   ficheAutoriteJuridictionFranceAvecConfirmationAvecDateEtrangèreRCA,
   ficheAutoriteNotaireFranceAvecConfirmation,
   ficheAutoriteONACFranceAvecConfirmation
-} from "../../../../../../mock/data/ficheEtBandeau/divers/DecisionAutoriteMock";
+} from "@mock/data/ficheEtBandeau/divers/DecisionAutoriteMock";
+import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
+import { getDecision } from "@pages/fiche/hook/constructionComposants/rcrca/DecisionUtils";
+import { expect, test } from "vitest";
 
 test("Decision utils get decision : decision de type Juridiction, ", () => {
-  const components = getDecision(ficheAutoriteJuridictionFranceAvecConfirmation as any as IFicheRcRca);
+  const components = getDecision(FicheRcRca.RcDepuisDto(ficheAutoriteJuridictionFranceAvecConfirmation) as FicheRcRca);
 
   expect(components).toHaveLength(2);
 
@@ -31,7 +31,7 @@ test("Decision utils get decision : decision de type Juridiction, ", () => {
 });
 
 test("Decision utils get decision : decision de type Notaire, ", () => {
-  const components = getDecision(ficheAutoriteNotaireFranceAvecConfirmation as unknown as IFicheRcRca);
+  const components = getDecision(FicheRcRca.RcDepuisDto(ficheAutoriteNotaireFranceAvecConfirmation) as FicheRcRca);
 
   expect(components).toHaveLength(2);
 
@@ -51,7 +51,7 @@ test("Decision utils get decision : decision de type Notaire, ", () => {
 });
 
 test("Decision utils get decision : decision de type ONAC, ", () => {
-  const componentsEtrangere = getDecision(ficheAutoriteONACFranceAvecConfirmation as unknown as IFicheRcRca);
+  const componentsEtrangere = getDecision(FicheRcRca.RcaDepuisDto(ficheAutoriteONACFranceAvecConfirmation) as FicheRcRca);
 
   expect(componentsEtrangere).toHaveLength(2);
 
@@ -78,7 +78,7 @@ test("Decision utils get decision : decision de type ONAC, ", () => {
 });
 
 test("Decision utils get decision fiche RCA : decision de type Juridiction, ", () => {
-  const components = getDecision(ficheAutoriteJuridictionFranceAvecConfirmationAvecDateEtrangèreRCA as unknown as IFicheRcRca);
+  const components = getDecision(FicheRcRca.RcaDepuisDto(ficheAutoriteJuridictionFranceAvecConfirmationAvecDateEtrangèreRCA) as FicheRcRca);
 
   expect(components).toHaveLength(2);
 
@@ -105,7 +105,7 @@ test("Decision utils get decision fiche RCA : decision de type Juridiction, ", (
 });
 
 test("Decision utils get decision fiche RCA : decision notaire et confirmation decision de type Juridiction, ", () => {
-  const components = getDecision(ficheAutoriteJuridictionFranceAvecConfirmationAvecDateEtrangèreRCA as unknown as IFicheRcRca);
+  const components = getDecision(FicheRcRca.RcaDepuisDto(ficheAutoriteJuridictionFranceAvecConfirmationAvecDateEtrangèreRCA) as FicheRcRca);
 
   expect(components).toHaveLength(2);
 

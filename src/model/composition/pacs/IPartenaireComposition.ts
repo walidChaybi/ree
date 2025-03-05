@@ -1,4 +1,5 @@
-import { IPartenaire, Partenaire } from "../../etatcivil/pacs/IPartenaire";
+import DateUtils from "@util/DateUtils";
+import { Partenaire } from "../../etatcivil/pacs/Partenaire";
 
 export interface IPartenaire1Composition {
   prenoms_partenaire_1: string;
@@ -21,37 +22,27 @@ export interface IPartenaire2Composition {
 }
 
 export const PartenaireComposition = {
-  ajoutInfosPartenaire1(
-    obj: IPartenaire1Composition,
-    partenaire?: IPartenaire
-  ) {
+  ajoutInfosPartenaire1(obj: IPartenaire1Composition, partenaire?: Partenaire) {
     if (partenaire) {
-      obj.prenoms_partenaire_1 = Partenaire.getPrenoms(partenaire);
-      obj.nom_partenaire_1 = Partenaire.getNomFamille(partenaire);
-      obj.jour_naissance_partenaire_1 = Partenaire.getJourNaissance(partenaire);
-      obj.mois_naissance_partenaire_1 = Partenaire.getMoisNaissance(partenaire);
-      obj.annee_naissance_partenaire_1 = Partenaire.getAnneeNaissance(
-        partenaire
-      );
-      obj.lieu_naissance_partenaire_1 = Partenaire.getLieuNaissance(partenaire);
-      obj.sexe_partenaire_1 = Partenaire.getSexe(partenaire).toLowerCase();
+      obj.prenoms_partenaire_1 = partenaire.prenoms;
+      obj.nom_partenaire_1 = partenaire.nomFamille;
+      obj.jour_naissance_partenaire_1 = DateUtils.formatJour(partenaire.dateNaissance.jour);
+      obj.mois_naissance_partenaire_1 = DateUtils.formatMois(partenaire.dateNaissance.mois);
+      obj.annee_naissance_partenaire_1 = partenaire.dateNaissance.annee;
+      obj.lieu_naissance_partenaire_1 = partenaire.getLieuNaissance();
+      obj.sexe_partenaire_1 = partenaire.sexe.libelle.toLowerCase();
     }
   },
 
-  ajoutInfosPartenaire2(
-    obj: IPartenaire2Composition,
-    partenaire?: IPartenaire
-  ) {
+  ajoutInfosPartenaire2(obj: IPartenaire2Composition, partenaire?: Partenaire) {
     if (partenaire) {
-      obj.prenoms_partenaire_2 = Partenaire.getPrenoms(partenaire);
-      obj.nom_partenaire_2 = Partenaire.getNomFamille(partenaire);
-      obj.jour_naissance_partenaire_2 = Partenaire.getJourNaissance(partenaire);
-      obj.mois_naissance_partenaire_2 = Partenaire.getMoisNaissance(partenaire);
-      obj.annee_naissance_partenaire_2 = Partenaire.getAnneeNaissance(
-        partenaire
-      );
-      obj.lieu_naissance_partenaire_2 = Partenaire.getLieuNaissance(partenaire);
-      obj.sexe_partenaire_2 = Partenaire.getSexe(partenaire).toLowerCase();
+      obj.prenoms_partenaire_2 = partenaire.prenoms;
+      obj.nom_partenaire_2 = partenaire.nomFamille;
+      obj.jour_naissance_partenaire_2 = DateUtils.formatJour(partenaire.dateNaissance.jour);
+      obj.mois_naissance_partenaire_2 = DateUtils.formatMois(partenaire.dateNaissance.mois);
+      obj.annee_naissance_partenaire_2 = partenaire.dateNaissance.annee;
+      obj.lieu_naissance_partenaire_2 = partenaire.getLieuNaissance();
+      obj.sexe_partenaire_2 = partenaire.sexe.libelle.toLowerCase();
     }
   }
 };

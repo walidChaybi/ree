@@ -1,5 +1,5 @@
-import { IPersonne } from "@model/etatcivil/commun/IPersonne";
-import { AutresNoms } from "@model/etatcivil/enum/AutresNoms";
+import { IPersonne } from "@model/etatcivil/commun/Personne";
+import { AutresNoms } from "@model/etatcivil/enum/ETypeAutreNom";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";

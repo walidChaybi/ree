@@ -1,14 +1,17 @@
+import { EStatutFiche } from "@model/etatcivil/enum/EStatutFiche";
+import { StatutFiche } from "@model/etatcivil/fiche/StatutFiche";
 import { TableauStatut } from "@pages/fiche/hook/constructionComposants/statut/TableauStatut";
 import { render, screen } from "@testing-library/react";
 import { expect, test } from "vitest";
 
 const statuts = [
   {
-    statut: "ACTIF",
+    statut: "ACTIF" as keyof typeof EStatutFiche,
     dateStatut: 1612166196,
     motif: "motif du statut",
     complementMotif: "complément du motif",
     statutFicheEvenement: {
+      id: "id",
       date: {
         jour: "01",
         mois: "02",
@@ -20,23 +23,26 @@ const statuts = [
     }
   },
   {
-    statut: "INACTIF",
+    statut: "INACTIF" as keyof typeof EStatutFiche,
     dateStatut: 1617263796,
     motif: "motif du statut",
     complementMotif: "complément du motif",
     statutFicheEvenement: {
+      id: "id",
       ville: "Nantes",
       region: "Pays de la Loire",
       pays: "France"
     }
   },
   {
-    statut: "ACTIF",
+    statut: "ACTIF" as keyof typeof EStatutFiche,
     dateStatut: 1615166196,
     motif: "motif du statut",
     complementMotif: "complément du motif"
   }
-];
+]
+  .map(StatutFiche.depuisDto)
+  .filter((statutFiche): statutFiche is StatutFiche => statutFiche != null);
 
 test("L'historique des statuts d'une inscription RC est affiché", () => {
   render(<TableauStatut statutsFiche={statuts} />);
@@ -59,10 +65,10 @@ test("L'historique des statuts d'une inscription RC est affiché", () => {
   const colonneComplementMotif = screen.getByText("Complément motif");
   expect(colonneComplementMotif).toBeDefined();
 
-  const statut1 = screen.getAllByText("ACTIF");
+  const statut1 = screen.getAllByText("Actif");
   expect(statut1).toHaveLength(2);
 
-  const statut2 = screen.getByText("INACTIF");
+  const statut2 = screen.getByText("Inactif");
   expect(statut2).toBeDefined();
 
   const tds = screen.getAllByRole("cell", { name: "" });

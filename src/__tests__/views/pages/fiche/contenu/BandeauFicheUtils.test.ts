@@ -1,40 +1,42 @@
+import { acte } from "@mock/data/ficheEtBandeau/ficheActe";
+import { fichePacsPourBandeau } from "@mock/data/fichePACS";
+import { FicheRcPourBandeauFiche } from "@mock/data/ficheRC";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
+import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import { IDataFicheProps } from "@pages/fiche/FichePage";
 import { setDataBandeau } from "@pages/fiche/contenu/BandeauFicheUtils";
 import { expect, test } from "vitest";
-import DATA_FICHE_PACS from "../../../../mock/data/ficheEtBandeau/bandeauPacs";
-import DATA_FICHE_RC from "../../../../mock/data/ficheEtBandeau/bandeauRc";
-import { acte } from "../../../../mock/data/ficheEtBandeau/ficheActe";
 
-test("bandeauFicheUtils setDataBandeau works RC / RCA", () => {
+test("bandeauFicheUtils setDataBandeau fonctionne pour RC/RCA", () => {
   const dataFiche = {
     identifiant: "d994e5c1-6bcd-44cd-af7a-41da6bab4669",
     categorie: TypeFiche.RC
   } as IDataFicheProps;
 
-  const data = DATA_FICHE_RC.dataBandeau;
+  const ficheRc = FicheRcRca.RcDepuisDto(FicheRcPourBandeauFiche);
 
-  const bandeauFiche = setDataBandeau(dataFiche, data);
+  const bandeauFiche = setDataBandeau(dataFiche, ficheRc);
 
   expect(bandeauFiche.titreFenetre).toBe("RC - NOM1 Prenom11 et NOM2 Prenom21 - N° 2018 - 56533");
-  expect(bandeauFiche.statutsFiche).toEqual([{ statut: "Actif" }, { statut: "Inactif" }]);
+  expect(bandeauFiche.statutsFiche).toEqual(ficheRc?.statutsFiche);
   expect(bandeauFiche.personnes[0].prenom).toBe("Prenom11");
   expect(bandeauFiche.personnes[1].prenom).toBe("Prenom21");
   expect(bandeauFiche.alertes).toEqual([{ alerte: "Date de fin de mesure dépassée", dateCreation: 1581807600 }]);
 });
 
-test("bandeauFicheUtils setDataBandeau works PACS", () => {
+test("bandeauFicheUtils setDataBandeau fonctionne pour PACS", () => {
   const dataFiche = {
     identifiant: "d994e5c1-6bcd-44cd-af7a-41da6bab4669",
     categorie: TypeFiche.PACS
   } as IDataFicheProps;
 
-  const data = DATA_FICHE_PACS.dataBandeau;
+  const fichePacs = FichePacs.depuisDto(fichePacsPourBandeau);
 
-  const bandeauFiche = setDataBandeau(dataFiche, data);
+  const bandeauFiche = setDataBandeau(dataFiche, fichePacs);
 
   expect(bandeauFiche.titreFenetre).toBe("PACS - NOM1 Prenom11 et NOM2 Prenom21 - N° 2019 - 29369");
-  expect(bandeauFiche.statutsFiche).toEqual([{ statut: "Actif" }, { statut: "Inactif" }]);
+  expect(bandeauFiche.statutsFiche).toEqual(fichePacs?.statutsFiche);
   expect(bandeauFiche.personnes[0].prenom).toBe("Prenom11");
   expect(bandeauFiche.personnes[1].prenom).toBe("Prenom21");
 });

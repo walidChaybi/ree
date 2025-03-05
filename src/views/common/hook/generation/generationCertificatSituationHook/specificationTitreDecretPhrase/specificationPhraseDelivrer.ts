@@ -1,17 +1,16 @@
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { StatutPacesUtil } from "@model/etatcivil/enum/StatutPacs";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { IFichePacs } from "@model/etatcivil/pacs/IFichePacs";
-import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
+import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import DateUtils from "@util/DateUtils";
 import { replaceIndexByValue } from "@util/Utils";
 import { IPhrasesJasperCertificatSituation } from "../GenerationCertificatSituationHook";
 import { INbInscriptionsInfos } from "./specificationPhraseRMCAutoVide";
 export interface IInfosInscriptions {
-  infosPacs: IFichePacs[];
-  infosRc: IFicheRcRca[];
-  infosRca: IFicheRcRca[];
+  infosPacs: FichePacs[];
+  infosRc: FicheRcRca[];
+  infosRca: FicheRcRca[];
 }
 
 class DemandeDeliver {
@@ -44,11 +43,11 @@ class SpecificationDeliver {
     return { phrasesLiees, phrasesPiecesJointes };
   }
 
-  nextPhrase(phrases: string, demande: boolean, infosInscription: IFichePacs[] | IFicheRcRca[], sexe: Sexe, type: TypeFiche) {
+  nextPhrase(phrases: string, demande: boolean, infosInscription: FichePacs[] | FicheRcRca[], sexe: Sexe, type: TypeFiche) {
     const messages = this.getText(type);
     let phraseSuivante = "";
     if (demande && infosInscription.length > 0) {
-      infosInscription.forEach((info: IFichePacs | IFicheRcRca) => {
+      infosInscription.forEach((info: FichePacs | FicheRcRca) => {
         if (info.annee && info.numero && info.dateInscription) {
           phraseSuivante = sexe === Sexe.FEMININ ? messages.inscrite : messages.inscrit;
           const date = new Date(info.dateInscription);
@@ -78,11 +77,10 @@ class SpecificationDeliver {
     }
   }
 
-  getInfoComplementaire(type: TypeFiche, info: IFichePacs | IFicheRcRca) {
+  getInfoComplementaire(type: TypeFiche, info: FichePacs | FicheRcRca) {
     let infoComplementaire = "";
     if (type === TypeFiche.PACS) {
-      info = info as IFichePacs;
-      infoComplementaire = ` (${StatutPacesUtil.getLibelle(info.statut).toLowerCase()})`;
+      infoComplementaire = ` (${(info as FichePacs).statut.toLowerCase()})`;
     }
 
     return infoComplementaire;

@@ -1,73 +1,84 @@
 /* istanbul ignore file */
 
-export const ficheInscriptionRepertoireCivil = {
-  nature: { article: "la", libelle: "Protection des majeurs", code: "CURATELLE_AMENAGEE" },
+import { FicheRcDecisionNotaire } from "@mock/data/ficheRC";
+import { IFicheRcDto } from "@model/etatcivil/rcrca/FicheRcRca";
+
+export const ficheInscriptionRepertoireCivil: IFicheRcDto = {
+  ...FicheRcDecisionNotaire,
+  nature: {
+    id: "058a436b-330d-4c3c-83e0-e49d27390127",
+    nom: "NATURE_RC",
+    code: "CURATELLE_AMENAGEE",
+    libelle: "curatelle aménagée",
+    estActif: true,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "CURATELLE"
+  },
   mandataires: [
-    { libelle: "Mandataire judiciaire à la protection des majeurs association" },
-    { libelle: "Mandataire judiciaire à la protection des majeurs  individuel" }
+    { id: "", libelle: "Mandataire judiciaire à la protection des majeurs association", nom: "", code: "", estActif: true },
+    { id: "", nom: "", code: "", estActif: true, libelle: "Mandataire judiciaire à la protection des majeurs  individuel" }
   ],
   typeInscription: "RENOUVELLEMENT",
   inscriptionsImpactees: [
-    { id: "0", annee: "2015", numero: "36547" },
-    { id: "1", annee: "2020", numero: "36548" }
+    { id: "0", annee: "2015", numero: "36547", typeInscription: "MODIFICATION", nature: "" },
+    { id: "1", annee: "2020", numero: "36548", typeInscription: "RADIATION", nature: "" }
   ],
   inscriptionsLiees: [
     {
-      typeInscription: "Modification",
-      numeroRc: "2017 - 145235",
-      idInscription: ""
+      typeInscription: "MODIFICATION",
+      numero: "2017 - 145235",
+      annee: "2017",
+      id: "2",
+      nature: ""
     },
     {
-      typeInscription: "Radiation",
-      numeroRc: "2019 - 48596",
-      idInscription: ""
+      typeInscription: "RADIATION",
+      numero: "2019 - 48596",
+      annee: "2019",
+      id: "3",
+      nature: ""
     }
   ],
-  dateInscription: new Date(1518652800000),
+  dateInscription: [2018, 2, 15],
   duree: {
     nombreDuree: 2,
     uniteDuree: "années",
-    dateFinDeMesure: 1581724800000
+    dateFinDeMesure: [2020, 2, 15]
   },
   statutsFiche: [
     {
       statut: "ACTIF",
-      dateEvenement: {
-        jour: null,
-        mois: null,
-        annee: "2020"
+      statutFicheEvenement: {
+        id: "",
+        date: {
+          annee: "2020"
+        },
+        ville: "nantes",
+        region: "Pays de la Loire",
+        pays: "France"
       },
       motif: "",
-      villeEvenement: "nantes",
-      departementEvenement: "Pays de la Loire",
-      paysEvenement: "France",
-      complementMotif: ""
+      complementMotif: "",
+      dateStatut: 1581724800000
     }
   ]
 };
 
-export const ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImpactes = {
-  nature: { article: "la", libelle: "Protection des majeurs", code: "CURATELLE_AMENAGEE" },
-  mandataires: ["Mandataire judiciaire à la protection des majeurs association", "Préposé d'établissement"],
-  typeInscription: "RENOUVELLEMENT",
+export const ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImpactes: IFicheRcDto = {
+  ...ficheInscriptionRepertoireCivil,
+  mandataires: [
+    { id: "", libelle: "Mandataire judiciaire à la protection des majeurs association", nom: "", code: "", estActif: true },
+    { id: "", nom: "", code: "", estActif: true, libelle: "Préposé d'établissement" }
+  ],
   inscriptionsImpactees: [],
-  inscriptionsLiees: [],
-  dateInscription: new Date(1518652800000),
-  duree: {
-    nombreDuree: 2,
-    uniteDuree: "années",
-    dateFinDeMesure: 1581724800000
-  }
+  inscriptionsLiees: []
 };
 
-export const ficheInscriptionRepertoireCivilSansUniteDureeInscription = {
-  nature: { article: "la", libelle: "Protection des majeurs", code: "CURATELLE_AMENAGEE" },
-  mandataires: ["Mandataire judiciaire à la protection des majeurs association", "Préposé d'établissement"],
-  typeInscription: "RENOUVELLEMENT",
-  inscriptionsImpactees: [],
-  inscriptionsLiees: [],
-  dateInscription: new Date(1518652800000),
+export const ficheInscriptionRepertoireCivilSansUniteDureeInscription: IFicheRcDto = {
+  ...ficheInscriptionRepertoireCivilSansInscriptionsLieesInscriptionsImpactes,
   duree: {
-    dateFinDeMesure: 1581724800000
+    dateFinDeMesure: [2020, 2, 15]
   }
 };

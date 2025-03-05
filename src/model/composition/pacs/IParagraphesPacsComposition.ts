@@ -3,20 +3,15 @@ import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { IAutorite } from "../../etatcivil/commun/IAutorite";
 import { TypeAutorite } from "../../etatcivil/enum/TypeAutorite";
 import { TypeJuridiction } from "../../etatcivil/enum/TypeJuridiction";
+import { FichePacs } from "../../etatcivil/pacs/FichePacs";
 import { IAnnulation } from "../../etatcivil/pacs/IAnnulation";
 import { IDissolution } from "../../etatcivil/pacs/IDissolution";
-import { IFichePacs } from "../../etatcivil/pacs/IFichePacs";
 import { IModification } from "../../etatcivil/pacs/IModification";
 import { ICertificatPACSComposition } from "./ICertificatPACSComposition";
 
 export const ParagrapheComposition = {
-  ajoutParagrapheEnregistrementPACS(
-    obj: ICertificatPACSComposition,
-    fiche: IFichePacs
-  ) {
-    const dateEnregistrement = DateUtils.getDateFormatJasper(
-      fiche.dateEnregistrementParAutorite
-    );
+  ajoutParagrapheEnregistrementPACS(obj: ICertificatPACSComposition, fiche: FichePacs) {
+    const dateEnregistrement = DateUtils.getDateFormatJasper(fiche.dateEnregistrementParAutorite);
     const dateInscription = DateUtils.getDateFormatJasper(fiche.dateInscription);
 
     obj.paragraphe_enregistrement = `Enregistrée ${ParagrapheComposition.getAutoriteEtLocalisation(
@@ -24,46 +19,25 @@ export const ParagrapheComposition = {
     )}, le ${dateEnregistrement}.\nDate d'effet de la déclaration du PACS à l'égard des tiers : ${dateInscription}.\n`;
   },
 
-  ajoutParagrapheModificationPACS(
-    obj: ICertificatPACSComposition,
-    modifications: IModification[]
-  ) {
-    const dateConvention = DateUtils.getDateFormatJasper(
-      DateUtils.getDateFromTimestamp(modifications[0].date)
-    );
-    const dateModif = DateUtils.getDateFormatJasper(
-      DateUtils.getDateFromTimestamp(modifications[0].dateEffet)
-    );
+  ajoutParagrapheModificationPACS(obj: ICertificatPACSComposition, modifications: IModification[]) {
+    const dateConvention = DateUtils.getDateFormatJasper(DateUtils.getDateFromTimestamp(modifications[0].date));
+    const dateModif = DateUtils.getDateFormatJasper(DateUtils.getDateFromTimestamp(modifications[0].dateEffet));
     obj.paragraphe_modification = `Modifiée ${ParagrapheComposition.getAutoriteEtLocalisation(
       modifications[0].autorite
     )}, le ${dateConvention}.\nDate d'effet de la modification du PACS à l'égard des tiers : ${dateModif}.\n`;
   },
 
-  ajoutParagrapheDissolutionPACS(
-    obj: ICertificatPACSComposition,
-    dissolution: IDissolution
-  ) {
-    const dateDissolution = DateUtils.getDateFormatJasper(
-      DateUtils.getDateFromTimestamp(dissolution.date)
-    );
-    const dateEffet = DateUtils.getDateFormatJasper(
-      DateUtils.getDateFromTimestamp(dissolution.dateEffet)
-    );
+  ajoutParagrapheDissolutionPACS(obj: ICertificatPACSComposition, dissolution: IDissolution) {
+    const dateDissolution = DateUtils.getDateFormatJasper(DateUtils.getDateFromTimestamp(dissolution.date));
+    const dateEffet = DateUtils.getDateFormatJasper(DateUtils.getDateFromTimestamp(dissolution.dateEffet));
     obj.paragraphe_dissolution = `Dissoute ${ParagrapheComposition.getAutoriteEtLocalisation(
       dissolution.autorite
     )}, le ${dateDissolution}.\nDate d'effet de la dissolution du PACS à l'égard des tiers : ${dateEffet}.\n`;
   },
 
-  ajoutParagrapheAnnulationPACS(
-    obj: ICertificatPACSComposition,
-    annulation: IAnnulation
-  ) {
-    const dateAnnulation = DateUtils.getDateFormatJasper(
-      DateUtils.getDateFromTimestamp(annulation.date)
-    );
-    const dateEffet = DateUtils.getDateFormatJasper(
-      DateUtils.getDateFromTimestamp(annulation.dateEffet)
-    );
+  ajoutParagrapheAnnulationPACS(obj: ICertificatPACSComposition, annulation: IAnnulation) {
+    const dateAnnulation = DateUtils.getDateFormatJasper(DateUtils.getDateFromTimestamp(annulation.date));
+    const dateEffet = DateUtils.getDateFormatJasper(DateUtils.getDateFromTimestamp(annulation.dateEffet));
 
     obj.paragraphe_annulation = `Annulée ${ParagrapheComposition.getAutoriteEtLocalisation(
       annulation.autorite,
@@ -97,9 +71,7 @@ export const ParagrapheComposition = {
   getAutoriteEtLocalisation(autorite: IAutorite, annulation = false) {
     let autoriteTexte = "";
     if (annulation) {
-      autoriteTexte = ParagrapheComposition.getLibelleJuridiction(
-        autorite?.typeJuridiction as TypeJuridiction
-      );
+      autoriteTexte = ParagrapheComposition.getLibelleJuridiction(autorite?.typeJuridiction as TypeJuridiction);
     } else {
       autoriteTexte = ParagrapheComposition.getAutorite(autorite);
     }

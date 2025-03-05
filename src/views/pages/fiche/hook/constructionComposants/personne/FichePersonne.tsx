@@ -1,9 +1,9 @@
 import { IFamille } from "@model/etatcivil/commun/IFamille";
 import { IFicheLien } from "@model/etatcivil/commun/IFicheLien";
 import { IFicheLienActes } from "@model/etatcivil/commun/IFicheLienActes";
-import { IPersonne, Personne } from "@model/etatcivil/commun/IPersonne";
+import { IPersonne, Personne, PersonneUtils } from "@model/etatcivil/commun/Personne";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { getLibelle, remplaceSNP, remplaceSPC } from "@util/Utils";
+import { remplaceSNP, remplaceSPC } from "@util/Utils";
 import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
@@ -12,17 +12,14 @@ import { SectionPartContentProps } from "@widget/section/SectionPartContent";
 import { LienFiche } from "../../../LienFiche";
 import { IParamsAffichage } from "../acte/FicheActeUtils";
 
-export function getFichesPersonneActe(
-  personnes: IPersonne[],
-  paramsAffichage: IParamsAffichage
-) {
+export function getFichesPersonneActe(personnes: IPersonne[], paramsAffichage: IParamsAffichage) {
   if (paramsAffichage.personnes === "visible") {
     return getFichesPersonne(personnes);
   } else if (paramsAffichage.personnes === "disabled") {
     return [
       {
         panelAreas: [],
-        title: getLibelle(`Fiche Personne`)
+        title: `Fiche Personne`
       }
     ];
   } else {
@@ -31,33 +28,26 @@ export function getFichesPersonneActe(
   }
 }
 
-export function getFichesPersonne(personnes: IPersonne[]): SectionPanelProps[] {
+// TOREFACTO: les types IPersonne et Personne cohabitent. IPersonne est vouée à disparaitre lorsque le mapping de acte sera typé
+export function getFichesPersonne(personnes: IPersonne[] | Personne[]): SectionPanelProps[] {
   return personnes.map((personne, index) => {
     return {
       panelAreas: getPanelAreasFichesPersonnes(personne),
-      title: getLibelle(`Fiche Personne ${index + 1}`)
+      title: `Fiche Personne ${index + 1}`
     };
   });
 }
 
-function getPanelAreasFichesPersonnes(
-  personne: IPersonne
-): SectionPanelAreaProps[] {
+function getPanelAreasFichesPersonnes(personne: IPersonne | Personne): SectionPanelAreaProps[] {
   return [
     {
       parts: [
         getInformationsPersonne(personne),
         {
-          subParts: [
-            getInformationsParents(personne),
-            getInformationsEnfants(personne)
-          ]
+          subParts: [getInformationsParents(personne), getInformationsEnfants(personne)]
         },
         {
-          subParts: [
-            getInformationsListeActes(personne),
-            getInformationsListeInscriptions(personne)
-          ]
+          subParts: [getInformationsListeActes(personne), getInformationsListeInscriptions(personne)]
         }
       ],
       nbColonne: 3
@@ -65,128 +55,172 @@ function getPanelAreasFichesPersonnes(
   ];
 }
 
-function getInformationsListeInscriptions(
-  personne: IPersonne
-): SectionPartContentProps {
-  return {
-    contents: [
-      getRcsPersonne(Personne.getRcs(personne)),
-      getRcasPersonne(Personne.getRcas(personne)),
-      getPacssPersonne(Personne.getPacss(personne))
-    ],
-    title: getLibelle("Liste d'inscriptions")
-  };
-}
-
-function getInformationsListeActes(
-  personne: IPersonne
-): SectionPartContentProps {
-  return {
-    contents: [getActesPersonne(Personne.getActes(personne))],
-    title: getLibelle("Liste d'actes")
-  };
-}
-
-function getInformationsParents(personne: IPersonne): SectionPartContentProps {
-  return {
-    contents: [...getParentsPersonne(Personne.getParents(personne))],
-    title: getLibelle("Parents")
-  };
-}
-
-function getInformationsEnfants(personne: IPersonne): SectionPartContentProps {
-  return {
-    contents: [getEnfantsPersonne(Personne.getEnfants(personne))],
-    title: getLibelle("Enfants")
-  };
-}
-
-function getInformationsPersonne(personne: IPersonne): SectionPartProps {
-  return {
-    partContent: {
+function getInformationsListeInscriptions(personne: IPersonne | Personne): SectionPartContentProps {
+  if (personne instanceof Personne) {
+    return {
+      contents: [getRcsPersonne(personne.rcs), getRcasPersonne(personne.rcas), getPacssPersonne(personne.pacss)],
+      title: "Liste d'inscriptions"
+    };
+  } else {
+    return {
       contents: [
-        getNomPersonne(Personne.getNom(personne)),
-        getAutresNomsPersonne(Personne.getAutresNoms(personne)),
-        getPrenomsPersonne(Personne.getPrenoms(personne)),
-        getAutresPrenomsPersonne(Personne.getAutresPrenom(personne)),
-        getLieuNaissance(Personne.getLieuNaissance(personne)),
-        getDateNaissance(Personne.getDateNaissance(personne)),
-        getNationalitePersonne(Personne.getNationalite(personne)),
-        getSexePersonne(Personne.getSexe(personne)),
-        getLieuDeces(Personne.getLieuDeces(personne)),
-        getDateDeces(Personne.getDateDeces(personne))
+        getRcsPersonne(PersonneUtils.getRcs(personne)),
+        getRcasPersonne(PersonneUtils.getRcas(personne)),
+        getPacssPersonne(PersonneUtils.getPacss(personne))
       ],
-      title: getLibelle("Personne")
-    }
-  };
+      title: "Liste d'inscriptions"
+    };
+  }
+}
+
+function getInformationsListeActes(personne: IPersonne | Personne): SectionPartContentProps {
+  if (personne instanceof Personne) {
+    return {
+      contents: [getActesPersonne(personne.actes)],
+      title: "Liste d'actes"
+    };
+  } else {
+    return {
+      contents: [getActesPersonne(PersonneUtils.getActes(personne))],
+      title: "Liste d'actes"
+    };
+  }
+}
+
+function getInformationsParents(personne: IPersonne | Personne): SectionPartContentProps {
+  if (personne instanceof Personne) {
+    return {
+      contents: [...getParentsPersonne(personne.parents)],
+      title: "Parents"
+    };
+  } else {
+    return {
+      contents: [...getParentsPersonne(PersonneUtils.getParents(personne))],
+      title: "Parents"
+    };
+  }
+}
+
+function getInformationsEnfants(personne: IPersonne | Personne): SectionPartContentProps {
+  if (personne instanceof Personne) {
+    return {
+      contents: [getEnfantsPersonne(personne.enfants)],
+      title: "Enfants"
+    };
+  } else {
+    return {
+      contents: [getEnfantsPersonne(PersonneUtils.getEnfants(personne))],
+      title: "Enfants"
+    };
+  }
+}
+
+function getInformationsPersonne(personne: IPersonne | Personne): SectionPartProps {
+  if (personne instanceof Personne) {
+    return {
+      partContent: {
+        contents: [
+          getNomPersonne(personne.nom),
+          getAutresNomsPersonne(personne.autresNoms),
+          getPrenomsPersonne(personne.prenoms),
+          getAutresPrenomsPersonne(personne.autresPrenoms),
+          getLieuNaissance(personne.lieuNaissance),
+          getDateNaissance(personne.dateNaissance),
+          getNationalitePersonne(personne.nationalite.libelle),
+          getSexePersonne(personne.sexe.libelle),
+          getLieuDeces(personne.lieuDeces),
+          getDateDeces(personne.dateDeces)
+        ],
+        title: "Personne"
+      }
+    };
+  } else {
+    return {
+      partContent: {
+        contents: [
+          getNomPersonne(PersonneUtils.getNom(personne)),
+          getAutresNomsPersonne(PersonneUtils.getAutresNoms(personne)),
+          getPrenomsPersonne(PersonneUtils.getPrenoms(personne)),
+          getAutresPrenomsPersonne(PersonneUtils.getAutresPrenom(personne)),
+          getLieuNaissance(PersonneUtils.getLieuNaissance(personne)),
+          getDateNaissance(PersonneUtils.getDateNaissance(personne)),
+          getNationalitePersonne(PersonneUtils.getNationalite(personne)),
+          getSexePersonne(PersonneUtils.getSexe(personne)),
+          getLieuDeces(PersonneUtils.getLieuDeces(personne)),
+          getDateDeces(PersonneUtils.getDateDeces(personne))
+        ],
+        title: "Personne"
+      }
+    };
+  }
 }
 
 function getNomPersonne(nom: string): SectionContentProps {
   return {
-    libelle: getLibelle("Nom"),
+    libelle: "Nom",
     value: nom
   };
 }
 
 function getAutresNomsPersonne(autresNom: string): SectionContentProps {
   return {
-    libelle: getLibelle("Autres noms"),
+    libelle: "Autres noms",
     value: autresNom
   };
 }
 
 function getPrenomsPersonne(prenoms: string): SectionContentProps {
   return {
-    libelle: getLibelle("Prénoms"),
+    libelle: "Prénoms",
     value: prenoms
   };
 }
 
 function getAutresPrenomsPersonne(autresPrenoms: string): SectionContentProps {
   return {
-    libelle: getLibelle("Autres prénoms"),
+    libelle: "Autres prénoms",
     value: autresPrenoms
   };
 }
 
 function getLieuNaissance(lieuNaissance: string): SectionContentProps {
   return {
-    libelle: getLibelle("Lieu de naissance"),
+    libelle: "Lieu de naissance",
     value: lieuNaissance
   };
 }
 
 function getLieuDeces(lieuDeces: string): SectionContentProps {
   return {
-    libelle: getLibelle("Lieu décès"),
+    libelle: "Lieu décès",
     value: lieuDeces
   };
 }
 
 function getDateNaissance(dateNaissance: string): SectionContentProps {
   return {
-    libelle: getLibelle("Né(e) le"),
+    libelle: "Né(e) le",
     value: dateNaissance
   };
 }
 
 function getDateDeces(dateDeces: string): SectionContentProps {
   return {
-    libelle: getLibelle("Date décès"),
+    libelle: "Date décès",
     value: dateDeces
   };
 }
 
 function getNationalitePersonne(nationalite: string): SectionContentProps {
   return {
-    libelle: getLibelle("Nationalité"),
+    libelle: "Nationalité",
     value: nationalite
   };
 }
 
 function getSexePersonne(sexe: string): SectionContentProps {
   return {
-    libelle: getLibelle("Sexe"),
+    libelle: "Sexe",
     value: sexe
   };
 }
@@ -200,21 +234,18 @@ function getParentsPersonne(parents: IFamille[]): SectionContentProps[] {
     if (index === 0 || index === 1) {
       result = result.concat([
         {
-          libelle: getLibelle(`Nom parent ${index + 1}`),
+          libelle: `Nom parent ${index + 1}`,
           value: parent.nom
         },
         {
-          libelle: getLibelle(`Prénom parent ${index + 1}`),
+          libelle: `Prénom parent ${index + 1}`,
           value: remplaceSPC(parent.prenoms[0])
         }
       ]);
-    } else if (
-      index === indexPremierParentAdoptif ||
-      index === indexDeuxiemeParentAdoptif
-    ) {
+    } else if (index === indexPremierParentAdoptif || index === indexDeuxiemeParentAdoptif) {
       result = result.concat([
         {
-          libelle: getLibelle(`Prénom et nom (parent adoptif ${index - 1})`),
+          libelle: `Prénom et nom (parent adoptif ${index - 1})`,
           value: `${remplaceSPC(parent.prenoms[0])} ${remplaceSNP(parent.nom)}`
         }
       ]);
@@ -225,11 +256,7 @@ function getParentsPersonne(parents: IFamille[]): SectionContentProps[] {
 
 function getEnfantsPersonne(enfants: IFamille[]): SectionContentProps {
   const enfantsHtml = enfants?.map(enfant => {
-    return (
-      <p key={`enfant-${enfant.nom}-${enfant.prenoms}`}>{`${remplaceSNP(
-        enfant.nom
-      )} ${remplaceSPC(enfant.prenoms[0])}`}</p>
-    );
+    return <p key={`enfant-${enfant.nom}-${enfant.prenoms}`}>{`${remplaceSNP(enfant.nom)} ${remplaceSPC(enfant.prenoms[0])}`}</p>;
   });
 
   return {

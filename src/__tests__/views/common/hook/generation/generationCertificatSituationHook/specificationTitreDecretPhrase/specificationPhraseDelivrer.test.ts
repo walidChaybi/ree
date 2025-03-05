@@ -1,13 +1,15 @@
 import { specificationPhraseDelivrer } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseDelivrer";
 import { INbInscriptionsInfos } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
+import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
+import { annulationJuridictionMap, pacsModificationNotaireMap } from "@mock/data/fichePACS";
+import { FicheRcDecisionNotaire, FicheRcModification } from "@mock/data/ficheRC";
+import { ficheRcaDecisionAvecInstructionProcureur, ficheRcaDecisionJuridictionEtrangere } from "@mock/data/ficheRCA";
+import { ReponseAppelNomenclatureDocummentDelivrance } from "@mock/data/nomenclatures";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
+import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { describe, expect, test } from "vitest";
-import { DOCUMENT_DELIVRANCE } from "../../../../../../mock/data/NomenclatureDocumentDelivrance";
-import { annulationJuridictionMap, pacsModificationNotaireMap } from "../../../../../../mock/data/PACS";
-import { FicheRcDecisionNotaire, FicheRcModification } from "../../../../../../mock/data/ficheRC";
-import { FicheRcaDecisionAvecInstructionProcureur, FicheRcaDecisionJuridictionEtrangere } from "../../../../../../mock/data/ficheRCA";
-import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../../mock/data/nomenclatures";
 const nbInscriptionsInfos = {} as INbInscriptionsInfos;
 
 describe("Test specificationPhraseDelivrer", () => {
@@ -63,7 +65,10 @@ describe("Test specificationPhraseDelivrer", () => {
       Sexe.FEMININ,
       nbInscriptionsInfos,
       {
-        infosPacs: [pacsModificationNotaireMap, annulationJuridictionMap],
+        infosPacs: [
+          FichePacs.depuisDto(pacsModificationNotaireMap) as FichePacs,
+          FichePacs.depuisDto(annulationJuridictionMap) as FichePacs
+        ],
         infosRc: [],
         infosRca: []
       }
@@ -80,7 +85,7 @@ describe("Test specificationPhraseDelivrer", () => {
       nbInscriptionsInfos,
       {
         infosPacs: [],
-        infosRc: [FicheRcDecisionNotaire, FicheRcModification],
+        infosRc: [FicheRcRca.RcDepuisDto(FicheRcDecisionNotaire) as FicheRcRca, FicheRcRca.RcDepuisDto(FicheRcModification) as FicheRcRca],
         infosRca: []
       }
     );
@@ -97,7 +102,10 @@ describe("Test specificationPhraseDelivrer", () => {
       {
         infosPacs: [],
         infosRc: [],
-        infosRca: [FicheRcaDecisionJuridictionEtrangere, FicheRcaDecisionAvecInstructionProcureur]
+        infosRca: [
+          FicheRcRca.RcaDepuisDto(ficheRcaDecisionJuridictionEtrangere) as FicheRcRca,
+          FicheRcRca.RcaDepuisDto(ficheRcaDecisionAvecInstructionProcureur) as FicheRcRca
+        ]
       }
     );
     expect(phrase.phrasesLiees).toBe(
@@ -111,9 +119,15 @@ describe("Test specificationPhraseDelivrer", () => {
       Sexe.FEMININ,
       nbInscriptionsInfos,
       {
-        infosPacs: [pacsModificationNotaireMap, annulationJuridictionMap],
-        infosRc: [FicheRcDecisionNotaire, FicheRcModification],
-        infosRca: [FicheRcaDecisionJuridictionEtrangere, FicheRcaDecisionAvecInstructionProcureur]
+        infosPacs: [
+          FichePacs.depuisDto(pacsModificationNotaireMap) as FichePacs,
+          FichePacs.depuisDto(annulationJuridictionMap) as FichePacs
+        ],
+        infosRc: [FicheRcRca.RcDepuisDto(FicheRcDecisionNotaire) as FicheRcRca, FicheRcRca.RcDepuisDto(FicheRcModification) as FicheRcRca],
+        infosRca: [
+          FicheRcRca.RcaDepuisDto(ficheRcaDecisionJuridictionEtrangere) as FicheRcRca,
+          FicheRcRca.RcaDepuisDto(ficheRcaDecisionAvecInstructionProcureur) as FicheRcRca
+        ]
       }
     );
     expect(phrase.phrasesLiees).toBe(

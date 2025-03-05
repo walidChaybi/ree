@@ -1,17 +1,18 @@
+import { annulationJuridictionMap, dissolutionJuridictionMap, pacsModificationNotaireMap } from "@mock/data/fichePACS";
 import { ICertificatPACSComposition } from "@model/composition/pacs/ICertificatPACSComposition";
 import { ParagrapheComposition } from "@model/composition/pacs/IParagraphesPacsComposition";
 import { IAutorite } from "@model/etatcivil/commun/IAutorite";
 import { TypeAutorite } from "@model/etatcivil/enum/TypeAutorite";
 import { TypeJuridiction } from "@model/etatcivil/enum/TypeJuridiction";
+import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
 import { IAnnulation } from "@model/etatcivil/pacs/IAnnulation";
 import { IDissolution } from "@model/etatcivil/pacs/IDissolution";
 import { IModification } from "@model/etatcivil/pacs/IModification";
 import { expect, test } from "vitest";
-import { annulationJuridictionMap, dissolutionJuridictionMap, pacsModificationNotaireMap } from "../../../mock/data/PACS";
 
 test("ajoutParagrapheEnregistrementPACS", () => {
   let temp = {} as ICertificatPACSComposition;
-  ParagrapheComposition.ajoutParagrapheEnregistrementPACS(temp, pacsModificationNotaireMap);
+  ParagrapheComposition.ajoutParagrapheEnregistrementPACS(temp, FichePacs.depuisDto(pacsModificationNotaireMap) as FichePacs);
   ParagrapheComposition.ajoutParagrapheModificationPACS(
     temp,
     pacsModificationNotaireMap.modifications ? pacsModificationNotaireMap.modifications : ([] as IModification[])

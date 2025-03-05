@@ -3,7 +3,7 @@ import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
 export interface IMariageInteresse {
   villeMariage: string;
-  arrondissementMariage: string;
+  arrondissementMariage?: string;
   regionMariage: string;
   paysMariage: string;
   dateMariage: IDateCompose;
@@ -19,28 +19,14 @@ export function getLibelleLieuMariage(mariage: IMariageInteresse): string {
 }
 
 export function getLieuMariage(mariage: IMariageInteresse) {
-  const villeString = mariage.villeMariage
-    ? `${mariage.villeMariage
-        .charAt(0)
-        .toUpperCase()}${mariage.villeMariage.slice(1)}`
-    : "";
-  const regionString = mariage.regionMariage
-    ? `${mariage.regionMariage
-        .charAt(0)
-        .toUpperCase()}${mariage.regionMariage.slice(1)}`
-    : "";
-  const paysString = mariage.paysMariage
-    ? `${mariage.paysMariage
-        .charAt(0)
-        .toUpperCase()}${mariage.paysMariage.slice(1)}`
-    : "";
+  const villeString = mariage.villeMariage ? `${mariage.villeMariage.charAt(0).toUpperCase()}${mariage.villeMariage.slice(1)}` : "";
+  const regionString = mariage.regionMariage ? `${mariage.regionMariage.charAt(0).toUpperCase()}${mariage.regionMariage.slice(1)}` : "";
+  const paysString = mariage.paysMariage ? `${mariage.paysMariage.charAt(0).toUpperCase()}${mariage.paysMariage.slice(1)}` : "";
   const regionStringParentheses = `(${regionString})`;
 
   if (mariage.aletranger === true) {
     const regionMariage = `- ${regionString}`;
-    return `${villeString} ${
-      regionString ? regionMariage : ""
-    } (${paysString})`;
+    return `${villeString} ${regionString ? regionMariage : ""} (${paysString})`;
   } else if (!LieuxUtils.estPaysFrance(paysString)) {
     return `devant les autorités consulaires de ${paysString} en France`;
   } else if (!mariage.arrondissementMariage) {

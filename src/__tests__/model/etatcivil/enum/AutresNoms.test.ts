@@ -1,4 +1,4 @@
-import { AutresNoms } from "@model/etatcivil/enum/AutresNoms";
+import { AutresNoms } from "@model/etatcivil/enum/ETypeAutreNom";
 import { expect, test } from "vitest";
 
 test("enum autre nom", () => {

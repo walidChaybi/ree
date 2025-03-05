@@ -1,10 +1,7 @@
 import { getInformationsFiche } from "@api/appels/etatcivilApi";
-import {
-  mapActe,
-  mapPacs,
-  mapRcRca
-} from "@hook/repertoires/MappingRepertoires";
+import { mapActe, mapRcRca } from "@hook/repertoires/MappingRepertoires";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 
@@ -18,9 +15,7 @@ export function useFichePageApiHook(
   identifiant?: string,
   estConsultation = false
 ) {
-  const [dataFicheState, setDataFicheState] = useState<IDataFicheApi>(
-    {} as IDataFicheApi
-  );
+  const [dataFicheState, setDataFicheState] = useState<IDataFicheApi>({} as IDataFicheApi);
   useEffect(() => {
     if (identifiant != null && typeFiche != null) {
       getInformationsFiche(typeFiche, identifiant, estConsultation)
@@ -34,7 +29,7 @@ export function useFichePageApiHook(
               break;
 
             case TypeFiche.PACS:
-              dataFiche.data = mapPacs(result.body.data);
+              dataFiche.data = FichePacs.depuisDto(result.body.data);
               break;
 
             case TypeFiche.ACTE:
@@ -48,8 +43,7 @@ export function useFichePageApiHook(
         })
         .catch((error: any) => {
           logError({
-            messageUtilisateur:
-              "Impossible de récupérer les informations de la fiche",
+            messageUtilisateur: "Impossible de récupérer les informations de la fiche",
             error
           });
         });

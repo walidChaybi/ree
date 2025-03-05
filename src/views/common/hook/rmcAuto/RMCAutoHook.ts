@@ -3,7 +3,7 @@ import { createReponseSansDelivranceCSPourCompositionApiPACSNonInscrit } from "@
 import { useRMCAutoActeApiHook } from "@hook/rmcAuto/RMCAutoActeApiHook";
 import { IReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
 import { NOM_DOCUMENT_REFUS_PACS_NON_INSCRIT } from "@model/composition/IReponseSansDelivranceCSPACSNonInscritComposition";
-import { StatutFiche } from "@model/etatcivil/enum/StatutFiche";
+import { EStatutFiche } from "@model/etatcivil/enum/EStatutFiche";
 import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
@@ -187,7 +187,7 @@ function getNbInscriptionsInfos(dataRMCAutoActe?: IResultatRMCActe[], dataRMCAut
 function getPacsAuStatutActif(resulatatInscriptionPacs?: IResultatRMCInscription[]): IResultatRMCInscription[] {
   const pacs = getPacs(resulatatInscriptionPacs);
 
-  return pacs.filter(inscription => inscription.statutInscription === StatutFiche.ACTIF.libelle);
+  return pacs.filter(inscription => inscription.statutInscription === EStatutFiche.ACTIF);
 }
 
 function getPacs(tableauPacs?: IResultatRMCInscription[]): IResultatRMCInscription[] {

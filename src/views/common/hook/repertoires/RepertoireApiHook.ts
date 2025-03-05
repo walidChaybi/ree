@@ -1,8 +1,9 @@
 import { getInformationsFicheRepertoire } from "@api/appels/etatcivilApi";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
-import { TFiche, mapPacs, mapRcRca } from "./MappingRepertoires";
+import { TFiche, mapRcRca } from "./MappingRepertoires";
 
 export function useInformationsRepertoireApiHook(typeFiche?: TypeFiche, identifiant?: string) {
   const [informationsRepertoire, setInformationsRepertoire] = useState<TFiche | undefined>();
@@ -11,17 +12,21 @@ export function useInformationsRepertoireApiHook(typeFiche?: TypeFiche, identifi
     if (identifiant != null && typeFiche != null) {
       getInformationsFicheRepertoire(typeFiche, identifiant)
         .then((result: any) => {
-          let infoRepertoire = {} as TFiche;
+          let infoRepertoire: TFiche | null = null;
           switch (typeFiche) {
             case TypeFiche.RC:
             case TypeFiche.RCA:
               infoRepertoire = mapRcRca(result.body.data);
               break;
             case TypeFiche.PACS:
-              infoRepertoire = mapPacs(result.body.data);
+              infoRepertoire = FichePacs.depuisDto(result.body.data);
               break;
           }
-          setInformationsRepertoire(infoRepertoire);
+          if (infoRepertoire === null) {
+            console.error("Certaines données obligatoires de la fiche RC/RCA/PACS sont absentes ou invalides.");
+          } else {
+            setInformationsRepertoire(infoRepertoire);
+          }
         })
         .catch((error: any) => {
           logError({

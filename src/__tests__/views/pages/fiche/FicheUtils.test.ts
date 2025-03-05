@@ -1,11 +1,13 @@
+import { pacsModificationNotaireMap } from "@mock/data/fichePACS";
+import { ficheRca } from "@mock/data/ficheRCA";
 import { IOfficier } from "@model/agent/IOfficier";
-import { INatureRca } from "@model/etatcivil/enum/NatureRca";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { StatutFiche } from "@model/etatcivil/fiche/StatutFiche";
+import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
+import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import { IDataFicheProps } from "@pages/fiche/FichePage";
 import { getFicheTitle, setFiche } from "@pages/fiche/FicheUtils";
 import { expect, test } from "vitest";
-import { pacsModificationNotaireMap } from "../../../mock/data/PACS";
 
 test("ficheUtils getFicheTitle works", () => {
   const title = getFicheTitle(
@@ -30,14 +32,15 @@ test("ficheUtils setFiche PACS works", () => {
     categorie: TypeFiche.PACS
   };
 
-  const fiche = setFiche({} as IOfficier, dataFiche, pacsModificationNotaireMap);
+  const fiche = setFiche({} as IOfficier, dataFiche, FichePacs.depuisDto(pacsModificationNotaireMap));
 
   expect(fiche.bandeauFiche.titreFenetre).toBe("PACS - DUREL Marie Charlotte et DUPE Louis-Philippe - N° 2018 - 123456");
   expect(fiche.bandeauFiche.statutsFiche).toStrictEqual([
-    {
-      statut: "Actif",
+    StatutFiche.depuisDto({
+      statut: "ACTIF",
       dateStatut: 1606381200000,
       statutFicheEvenement: {
+        id: "",
         ville: "nantes",
         region: "Pays de Loire",
         pays: "FRANCE",
@@ -45,33 +48,20 @@ test("ficheUtils setFiche PACS works", () => {
       },
       motif: "",
       complementMotif: ""
-    }
+    })
   ]);
 });
 
 test("ficheUtils setFiche RCA works", () => {
   const dataFiche: IDataFicheProps = {
-    identifiant: "1",
+    identifiant: "8c9ea77f-55dc-494f-8e75-b136ac7ce63d",
     categorie: TypeFiche.RCA
   };
 
-  const data: IFicheRcRca = {
-    id: "1",
-    categorie: TypeFiche.RCA,
-    annee: "1992",
-    numero: "1",
-    alertes: [{ alerte: "ouhou", dateCreation: 1 }],
-    interesses: [],
-    statutsFiche: [],
-    nature: "hi" as unknown as INatureRca,
-    mandataires: [],
-    inscriptionsImpactees: [],
-    inscriptionsLiees: [],
-    personnes: []
-  };
+  const data = FicheRcRca.RcaDepuisDto(ficheRca.data);
 
   const fiche = setFiche({} as IOfficier, dataFiche, data);
 
-  expect(fiche.bandeauFiche.titreFenetre).toBe("RCA -  - N° 1992 - 1");
-  expect(fiche.bandeauFiche.annee).toBe("1992");
+  expect(fiche.bandeauFiche.titreFenetre).toBe("RCA - FLECK Léo - N° 2020 - 4093");
+  expect(fiche.bandeauFiche.annee).toBe("2020");
 });

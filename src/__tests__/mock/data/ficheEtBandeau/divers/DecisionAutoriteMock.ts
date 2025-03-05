@@ -1,15 +1,17 @@
-/* istanbul ignore file */
-
+import { FicheRcDecisionNotaire } from "@mock/data/ficheRC";
+import { ficheRca } from "@mock/data/ficheRCA";
+import { ETypeDecision } from "@model/etatcivil/enum/ETypeDecision";
 import { TypeAutorite } from "@model/etatcivil/enum/TypeAutorite";
-import { TypeDecision } from "@model/etatcivil/enum/TypeDecision";
+import { IFicheRcDto, IFicheRcaDto } from "@model/etatcivil/rcrca/FicheRcRca";
 
 const regionIleDeFrance = "Ile de france";
 const regionBoucheDuRhone = "Bouches-du-Rhône";
 
-export const ficheAutoriteJuridictionFranceAvecConfirmation = {
+export const ficheAutoriteJuridictionFranceAvecConfirmation: IFicheRcDto = {
+  ...FicheRcDecisionNotaire,
   decision: {
-    dateDecision: 1577059200,
-    type: TypeDecision.JUGEMENT,
+    dateDecision: [2019, 12, 23],
+    type: "JUGEMENT",
     autorite: {
       typeAutorite: TypeAutorite.JURIDICTION,
       numeroDepartement: "69",
@@ -22,8 +24,7 @@ export const ficheAutoriteJuridictionFranceAvecConfirmation = {
       nomNotaire: "nomnotaire",
       prenomNotaire: "prenomnotaire",
       numeroCrpcen: "",
-      nomOnac: "",
-      prenomOnac: ""
+      titreOnac: ""
     },
     enrolementRg: "enrolementRg",
     enrolementPortalis: "enrolementPortalis",
@@ -39,23 +40,23 @@ export const ficheAutoriteJuridictionFranceAvecConfirmation = {
         nomNotaire: "nomnotaire",
         prenomNotaire: "prenomnotaire",
         numeroCrpcen: "",
-        nomOnac: "",
-        prenomOnac: ""
+        titreOnac: ""
       },
-      dateDecision: 1584403200,
+      dateDecision: [2020, 3, 17],
       enrolementRg: "enrolementRg",
       enrolementPortalis: "enrolementPortalis",
-      type: TypeDecision.ARRET
+      type: "ARRET"
     }
   }
 };
 
-export const ficheAutoriteJuridictionFranceAvecConfirmationAvecDateEtrangèreRCA = {
+export const ficheAutoriteJuridictionFranceAvecConfirmationAvecDateEtrangèreRCA: IFicheRcaDto = {
+  ...ficheRca.data,
   categorie: "RCA",
   decision: {
-    dateDecision: 1577059200,
-    dateDecisionEtrangere: 1577059200,
-    type: TypeDecision.JUGEMENT,
+    dateDecision: [2019, 12, 23],
+    dateDecisionEtrangere: [2019, 12, 23],
+    type: "JUGEMENT",
     autorite: {
       typeAutorite: TypeAutorite.JURIDICTION,
       numeroDepartement: "69",
@@ -67,9 +68,7 @@ export const ficheAutoriteJuridictionFranceAvecConfirmationAvecDateEtrangèreRCA
       arrondissement: "8",
       nomNotaire: "nomnotaire",
       prenomNotaire: "prenomnotaire",
-      numeroCrpcen: "",
-      nomOnac: "",
-      prenomOnac: ""
+      numeroCrpcen: ""
     },
     enrolementRg: "enrolementRg",
     enrolementPortalis: "enrolementPortalis",
@@ -84,23 +83,22 @@ export const ficheAutoriteJuridictionFranceAvecConfirmationAvecDateEtrangèreRCA
         region: regionIleDeFrance,
         nomNotaire: "nomnotaire",
         prenomNotaire: "prenomnotaire",
-        numeroCrpcen: "",
-        nomOnac: "",
-        prenomOnac: ""
+        numeroCrpcen: ""
       },
-      dateDecision: 1584403200,
-      dateDecisionEtrangere: 1577059200,
+      dateDecision: [2020, 3, 17],
+      dateDecisionEtrangere: [2019, 12, 23],
       enrolementRg: "enrolementRg",
       enrolementPortalis: "enrolementPortalis",
-      type: TypeDecision.ARRET
+      type: "ARRET"
     }
   }
 };
 
-export const ficheAutoriteJuridictionEtrangerAvecConfirmation = {
+export const ficheAutoriteJuridictionEtrangerAvecConfirmation: IFicheRcDto = {
+  ...FicheRcDecisionNotaire,
   decision: {
-    dateDecision: 1577059200,
-    type: TypeDecision.JUGEMENT,
+    dateDecision: [2019, 12, 23],
+    type: "JUGEMENT",
     autorite: {
       typeAutorite: TypeAutorite.JURIDICTION,
       numeroDepartement: "",
@@ -111,9 +109,7 @@ export const ficheAutoriteJuridictionEtrangerAvecConfirmation = {
       arrondissement: "",
       nomNotaire: "nomnotaire",
       prenomNotaire: "prenomnotaire",
-      numeroCrpcen: "",
-      nomOnac: "",
-      prenomOnac: ""
+      numeroCrpcen: ""
     },
     enrolementRg: "enrolementRg",
     enrolementPortalis: "enrolementPortalis",
@@ -128,22 +124,21 @@ export const ficheAutoriteJuridictionEtrangerAvecConfirmation = {
         region: regionIleDeFrance,
         nomNotaire: "nomnotaire",
         prenomNotaire: "prenomnotaire",
-        numeroCrpcen: "",
-        nomOnac: "",
-        prenomOnac: ""
+        numeroCrpcen: ""
       },
-      dateDecision: 1584403200,
+      dateDecision: [2020, 3, 17],
       enrolementRg: "enrolementRg",
       enrolementPortalis: "enrolementPortalis",
-      type: TypeDecision.ARRET
+      type: "ARRET"
     }
   }
 };
 
-export const ficheAutoriteNotaireFranceAvecConfirmation = {
+export const ficheAutoriteNotaireFranceAvecConfirmation: IFicheRcDto = {
+  ...FicheRcDecisionNotaire,
   decision: {
-    dateDecision: 1577059200,
-    type: TypeDecision.ACTE_NOTARIE,
+    dateDecision: [2019, 12, 23],
+    type: "ACTE_NOTARIE",
     autorite: {
       typeAutorite: TypeAutorite.NOTAIRE,
       numeroDepartement: "69",
@@ -154,15 +149,12 @@ export const ficheAutoriteNotaireFranceAvecConfirmation = {
       arrondissement: "8",
       nomNotaire: "nomnotaire",
       prenomNotaire: "prenomnotaire",
-      numeroCrpcen: "",
-      nomOnac: "",
-      prenomOnac: ""
+      numeroCrpcen: ""
     },
     enrolementRg: "enrolementRg",
     enrolementPortalis: "enrolementPortalis",
     sourceConfirmation: {
       autorite: {
-        type: undefined,
         ville: "Marseille",
         arrondissement: "10",
         numeroDepartement: "13",
@@ -171,24 +163,23 @@ export const ficheAutoriteNotaireFranceAvecConfirmation = {
         region: regionIleDeFrance,
         nomNotaire: "nomnotaire",
         prenomNotaire: "prenomnotaire",
-        numeroCrpcen: "",
-        nomOnac: "",
-        prenomOnac: ""
+        numeroCrpcen: ""
       },
-      dateDecision: 1584403200,
+      dateDecision: [2020, 3, 17],
       enrolementRg: "enrolementRg",
       enrolementPortalis: "enrolementPortalis",
-      type: TypeDecision.ARRET
+      type: "ARRET"
     }
   }
 };
 
-export const ficheAutoriteONACFranceAvecConfirmation = {
+export const ficheAutoriteONACFranceAvecConfirmation: IFicheRcaDto = {
+  ...ficheRca.data,
   categorie: "RCA",
   decision: {
-    dateDecision: 1577059200,
-    dateDecisionEtrangere: 1577059200,
-    type: TypeDecision.CONVENTION,
+    dateDecision: [2019, 12, 23],
+    dateDecisionEtrangere: [2019, 12, 23],
+    type: "CONVENTION",
     autorite: {
       typeAutorite: TypeAutorite.JURIDICTION,
       numeroDepartement: "69",
@@ -200,8 +191,7 @@ export const ficheAutoriteONACFranceAvecConfirmation = {
       nomNotaire: "nomnotaire",
       prenomNotaire: "prenomnotaire",
       numeroCrpcen: "",
-      nomOnac: "nomOnac",
-      prenomOnac: "enomOnac"
+      titreOnac: "nomOnac"
     },
     enrolementRg: "enrolementRg",
     enrolementPortalis: "enrolementPortalis",
@@ -216,24 +206,23 @@ export const ficheAutoriteONACFranceAvecConfirmation = {
         region: regionIleDeFrance,
         nomNotaire: "nomnotaire",
         prenomNotaire: "prenomnotaire",
-        numeroCrpcen: "",
-        nomOnac: "",
-        prenomOnac: ""
+        numeroCrpcen: ""
       },
-      dateDecision: 1584403200,
-      dateDecisionEtrangere: 1577059200,
+      dateDecision: [2020, 3, 17],
+      dateDecisionEtrangere: [2019, 12, 23],
 
       enrolementRg: "enrolementRg",
       enrolementPortalis: "enrolementPortalis",
-      type: TypeDecision.ARRET
+      type: "ARRET"
     }
   }
 };
 
-export const ficheAutoriteNotaireEtrangerAvecConfirmation = {
+export const ficheAutoriteNotaireEtrangerAvecConfirmation: IFicheRcDto = {
+  ...FicheRcDecisionNotaire,
   decision: {
-    dateDecision: 1577059200,
-    type: TypeDecision.ACTE_NOTARIE,
+    dateDecision: [2019, 12, 23],
+    type: "ACTE_NOTARIE",
     autorite: {
       typeAutorite: TypeAutorite.NOTAIRE,
       numeroDepartement: "69",
@@ -244,15 +233,12 @@ export const ficheAutoriteNotaireEtrangerAvecConfirmation = {
       arrondissement: "8",
       nomNotaire: "nomnotaire",
       prenomNotaire: "prenomnotaire",
-      numeroCrpcen: "",
-      nomOnac: "",
-      prenomOnac: ""
+      numeroCrpcen: ""
     },
     enrolementRg: "enrolementRg",
     enrolementPortalis: "enrolementPortalis",
     sourceConfirmation: {
       autorite: {
-        type: undefined,
         ville: "Marseille",
         arrondissement: "10",
         numeroDepartement: "13",
@@ -261,22 +247,21 @@ export const ficheAutoriteNotaireEtrangerAvecConfirmation = {
         region: regionIleDeFrance,
         nomNotaire: "nomnotaire",
         prenomNotaire: "prenomnotaire",
-        numeroCrpcen: "",
-        nomOnac: "",
-        prenomOnac: ""
+        numeroCrpcen: ""
       },
-      dateDecision: 1584403200,
+      dateDecision: [2020, 3, 17],
       enrolementRg: "enrolementRg",
       enrolementPortalis: "enrolementPortalis",
-      type: TypeDecision.ARRET
+      type: "ARRET"
     }
   }
 };
 
-export const ficheAutoriteOnaceEtrangerAvecConfirmation = {
+export const ficheAutoriteOnaceEtrangerAvecConfirmation: IFicheRcDto = {
+  ...FicheRcDecisionNotaire,
   decision: {
-    dateDecision: 1577059200,
-    type: TypeDecision.ACTE_NOTARIE,
+    dateDecision: [2019, 12, 23],
+    type: "ACTE_NOTARIE",
     autorite: {
       typeAutorite: TypeAutorite.ONAC,
       numeroDepartement: "69",
@@ -287,15 +272,12 @@ export const ficheAutoriteOnaceEtrangerAvecConfirmation = {
       arrondissement: "8",
       nomNotaire: "nomnotaire",
       prenomNotaire: "prenomnotaire",
-      numeroCrpcen: "",
-      nomOnac: "",
-      prenomOnac: ""
+      numeroCrpcen: ""
     },
     enrolementRg: "enrolementRg",
     enrolementPortalis: "enrolementPortalis",
     sourceConfirmation: {
       autorite: {
-        type: "ONAC",
         ville: "Marseille",
         arrondissement: "10",
         numeroDepartement: "13",
@@ -304,22 +286,21 @@ export const ficheAutoriteOnaceEtrangerAvecConfirmation = {
         region: regionIleDeFrance,
         nomNotaire: "nomnotaire",
         prenomNotaire: "prenomnotaire",
-        numeroCrpcen: "",
-        nomOnac: "",
-        prenomOnac: ""
+        numeroCrpcen: ""
       },
-      dateDecision: 1584403200,
+      dateDecision: [2020, 3, 17],
       enrolementRg: "enrolementRg",
       enrolementPortalis: "enrolementPortalis",
-      type: TypeDecision.ARRET
+      type: "ARRET"
     }
   }
 };
 
-export const ficheAutoriteSansConfirmation = {
+export const ficheAutoriteSansConfirmation: IFicheRcDto = {
+  ...FicheRcDecisionNotaire,
   decision: {
-    dateDecision: 1577059200,
-    type: TypeDecision.ACTE_NOTARIE,
+    dateDecision: [2019, 12, 23],
+    type: "ACTE_NOTARIE",
     autorite: {
       typeAutorite: TypeAutorite.JURIDICTION,
       numeroDepartement: "69",
@@ -330,21 +311,19 @@ export const ficheAutoriteSansConfirmation = {
       arrondissement: "8",
       nomNotaire: "nomnotaire",
       prenomNotaire: "prenomnotaire",
-      numeroCrpcen: "",
-      nomOnac: "",
-      prenomOnac: ""
+      numeroCrpcen: ""
     },
     enrolementRg: "enrolementRg",
-    enrolementPortalis: "enrolementPortalis",
-    sourceConfirmation: null
+    enrolementPortalis: "enrolementPortalis"
   }
 };
 
-export const ficheAutoriteOnac = {
+export const ficheAutoriteOnac: IFicheRcaDto = {
+  ...ficheRca.data,
   categorie: "RCA",
   decision: {
-    dateDecision: 1577059200,
-    type: TypeDecision.ACTE_NOTARIE,
+    dateDecision: [2019, 12, 23],
+    type: "ACTE_NOTARIE",
     autorite: {
       typeAutorite: TypeAutorite.ONAC,
       numeroDepartement: "69",
@@ -359,17 +338,16 @@ export const ficheAutoriteOnac = {
       titreOnac: "titreOnac"
     },
     enrolementRg: "enrolementRg",
-    enrolementPortalis: "enrolementPortalis",
-    sourceConfirmation: null
+    enrolementPortalis: "enrolementPortalis"
   }
 };
 
-export const ficheNonValide = {
+export const ficheNonValide: IFicheRcDto = {
+  ...FicheRcDecisionNotaire,
   decision: {
-    dateDecision: 1577059200,
-    type: null,
+    dateDecision: [2019, 12, 23],
+    type: "" as keyof typeof ETypeDecision,
     autorite: {
-      type: null,
       numeroDepartement: "69",
       libelleDepartement: "Rhône",
       ville: "Lyon",
@@ -378,12 +356,9 @@ export const ficheNonValide = {
       arrondissement: "8",
       nomNotaire: "nomnotaire",
       prenomNotaire: "prenomnotaire",
-      numeroCrpcen: "",
-      nomOnac: "",
-      prenomOnac: ""
+      numeroCrpcen: ""
     },
     enrolementRg: "enrolementRg",
-    enrolementPortalis: "enrolementPortalis",
-    sourceConfirmation: null
+    enrolementPortalis: "enrolementPortalis"
   }
 };

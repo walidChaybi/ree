@@ -1,24 +1,20 @@
 import { TypeAutoriteUtil } from "@model/etatcivil/enum/TypeAutorite";
-import { TypeDecisionUtil } from "@model/etatcivil/enum/TypeDecision";
 import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { IDecisionRcRca } from "@model/etatcivil/rcrca/IDecisionRcRca";
-import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { IDecisionRcRca } from "@model/etatcivil/rcrca/DecisionRcRca";
+import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import DateUtils from "@util/DateUtils";
 import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPartProps } from "@widget/section/SectionPart";
 
-export function getDecision(rcrca: IFicheRcRca): SectionPartProps[] {
+export function getDecision(rcrca: FicheRcRca): SectionPartProps[] {
   let contentsDecision: SectionContentProps[] = [];
 
   if (rcrca.decision) {
     if (TypeAutoriteUtil.isJuridiction(rcrca.decision.autorite.typeAutorite)) {
-      contentsDecision = [
-        ...getContentJuridiction(rcrca.decision, rcrca.categorie)
-      ];
+      contentsDecision = [...getContentJuridiction(rcrca.decision, rcrca.categorie)];
     } else if (
       TypeAutoriteUtil.isNotaire(rcrca.decision.autorite.typeAutorite) ||
-      (TypeAutoriteUtil.isOnac(rcrca.decision.autorite.typeAutorite) &&
-        FicheUtil.isFicheRca(rcrca.categorie))
+      (TypeAutoriteUtil.isOnac(rcrca.decision.autorite.typeAutorite) && FicheUtil.isFicheRca(rcrca.categorie))
     ) {
       contentsDecision = [...getContentNotaire(rcrca.decision)];
     }
@@ -44,14 +40,11 @@ export function getDecision(rcrca: IFicheRcRca): SectionPartProps[] {
   return decision;
 }
 
-function getContentJuridiction(
-  decision: IDecisionRcRca,
-  typeFiche: TypeFiche
-): SectionContentProps[] {
+function getContentJuridiction(decision: IDecisionRcRca, typeFiche: TypeFiche): SectionContentProps[] {
   const result = [
     {
       libelle: "Type",
-      value: TypeDecisionUtil.getLibelle(decision.type)
+      value: decision.type
     },
     {
       libelle: "Date",
@@ -59,10 +52,7 @@ function getContentJuridiction(
     }
   ];
 
-  if (
-    FicheUtil.isFicheRca(typeFiche) &&
-    decision.dateDecisionEtrangere != null
-  ) {
+  if (FicheUtil.isFicheRca(typeFiche) && decision.dateDecisionEtrangere != null) {
     result.push({
       libelle: "Date décision étrangère",
       value: decision.dateDecisionEtrangere ? DateUtils.getDateString(DateUtils.getDateFromTimestamp(decision.dateDecisionEtrangere)) : ""
@@ -85,7 +75,7 @@ function getContentNotaire(decision: IDecisionRcRca): SectionContentProps[] {
   return [
     {
       libelle: "Type",
-      value: TypeDecisionUtil.getLibelle(decision.type)
+      value: decision.type
     },
     {
       libelle: "Date",
@@ -94,23 +84,16 @@ function getContentNotaire(decision: IDecisionRcRca): SectionContentProps[] {
   ];
 }
 
-function getContentConfirmationDecision(
-  decision: IDecisionRcRca,
-  typeFiche: TypeFiche
-): SectionContentProps[] {
-  if (
-    TypeAutoriteUtil.isJuridiction(
-      decision.sourceConfirmation.autorite.typeAutorite
-    )
-  ) {
+function getContentConfirmationDecision(decision: IDecisionRcRca, typeFiche: TypeFiche): SectionContentProps[] {
+  if (TypeAutoriteUtil.isJuridiction(decision.sourceConfirmation?.autorite.typeAutorite)) {
     const confirmationDecision = [
       {
         libelle: "Type",
-        value: TypeDecisionUtil.getLibelle(decision.sourceConfirmation.type)
+        value: decision.sourceConfirmation?.type ?? ""
       },
       {
         libelle: "Date",
-        value: decision.sourceConfirmation.dateDecision
+        value: decision.sourceConfirmation?.dateDecision
           ? DateUtils.getDateString(DateUtils.getDateFromTimestamp(decision.sourceConfirmation.dateDecision))
           : ""
       }
@@ -118,10 +101,8 @@ function getContentConfirmationDecision(
 
     if (
       FicheUtil.isFicheRca(typeFiche) &&
-      decision.sourceConfirmation.dateDecisionEtrangere != null &&
-      TypeAutoriteUtil.isJuridiction(
-        decision.sourceConfirmation.autorite.typeAutorite
-      )
+      decision.sourceConfirmation?.dateDecisionEtrangere != null &&
+      TypeAutoriteUtil.isJuridiction(decision.sourceConfirmation.autorite.typeAutorite)
     ) {
       confirmationDecision.push({
         libelle: "Date décision étrangère",
@@ -134,11 +115,11 @@ function getContentConfirmationDecision(
     return confirmationDecision.concat([
       {
         libelle: "Enrôlement RG",
-        value: decision.sourceConfirmation.enrolementRg || ""
+        value: decision.sourceConfirmation?.enrolementRg ?? ""
       },
       {
         libelle: "Enrôlement Portalis",
-        value: decision.sourceConfirmation.enrolementPortalis || ""
+        value: decision.sourceConfirmation?.enrolementPortalis ?? ""
       }
     ]);
   } else {

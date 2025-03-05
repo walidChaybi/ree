@@ -1,9 +1,9 @@
 import { IElementsJasperCertificatRCA } from "@model/composition/ICertificatRCAComposition";
 import { IDecret } from "@model/etatcivil/commun/IDecret";
+import { ETypeDecision } from "@model/etatcivil/enum/ETypeDecision";
+import { ETypeInscriptionRcRca } from "@model/etatcivil/enum/ETypeInscriptionRcRca";
 import { TypeAutoriteUtil } from "@model/etatcivil/enum/TypeAutorite";
-import { TypeDecision } from "@model/etatcivil/enum/TypeDecision";
-import { TypeInscriptionRc } from "@model/etatcivil/enum/TypeInscriptionRc";
-import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import DateUtils from "@util/DateUtils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import {
@@ -14,7 +14,7 @@ import {
   getParagrapheFin
 } from "./specificationCommunes";
 
-function getParagrapheDecisionRecue(infosRCA: IFicheRcRca) {
+function getParagrapheDecisionRecue(infosRCA: FicheRcRca) {
   let decisionRecue = "";
 
   if (infosRCA.decision) {
@@ -27,18 +27,13 @@ function getParagrapheDecisionRecue(infosRCA: IFicheRcRca) {
       infosRCA.decision?.autorite.arrondissement
     );
     // Si la décision au RCA est une décision ONAC et de type inscription "Inscription",
-    if (
-      infosRCA.decision?.type === TypeDecision.ONAC &&
-      infosRCA.typeInscription === TypeInscriptionRc.INSCRIPTION
-    ) {
+    if (infosRCA.decision?.type === ETypeDecision.ONAC && infosRCA.typeInscription === ETypeInscriptionRcRca.INSCRIPTION) {
       decisionRecue = getDecisionONACInscription(infosRCA, dateDecision);
     }
     // Si la décision au RCA est une décision de Juridiction et de type inscription "Inscription"
     else if (
-      TypeAutoriteUtil.isJuridiction(
-        infosRCA.decision?.autorite.typeAutorite
-      ) &&
-      infosRCA.typeInscription === TypeInscriptionRc.INSCRIPTION
+      TypeAutoriteUtil.isJuridiction(infosRCA.decision?.autorite.typeAutorite) &&
+      infosRCA.typeInscription === ETypeInscriptionRcRca.INSCRIPTION
     ) {
       decisionRecue = getDecisionJuridiction(infosRCA, dateDecision, localite);
       decisionRecue += ` concernant ${infosRCA.nature.article} ${infosRCA.nature.libelle} de : `;
@@ -46,7 +41,7 @@ function getParagrapheDecisionRecue(infosRCA: IFicheRcRca) {
     // Si la décision au RCA est une décision de Notaire et de type inscription "Inscription"
     else if (
       TypeAutoriteUtil.isNotaire(infosRCA.decision?.autorite.typeAutorite) &&
-      infosRCA.typeInscription === TypeInscriptionRc.INSCRIPTION
+      infosRCA.typeInscription === ETypeInscriptionRcRca.INSCRIPTION
     ) {
       decisionRecue = getDecisionNotaire(infosRCA, dateDecision, localite);
       decisionRecue += ` concernant ${infosRCA.nature.article} ${infosRCA.nature.libelle} de : `;
@@ -55,19 +50,13 @@ function getParagrapheDecisionRecue(infosRCA: IFicheRcRca) {
   return decisionRecue;
 }
 
-function getDecisionONACInscription(
-  infosRCA: IFicheRcRca,
-  dateDecision: string
-) {
+function getDecisionONACInscription(infosRCA: FicheRcRca, dateDecision: string) {
   let decisionRecue = "";
   const titreOnac = infosRCA.decision?.autorite.titreOnac;
 
   decisionRecue += "Le Service central d'état civil a reçu la décision ";
 
-  decisionRecue +=
-    titreOnac && titreOnac === "Directrice générale"
-      ? `de la ${titreOnac} `
-      : `du ${titreOnac} `;
+  decisionRecue += titreOnac && titreOnac === "Directrice générale" ? `de la ${titreOnac} ` : `du ${titreOnac} `;
 
   decisionRecue += `de l'Office national des anciens combattants et victimes de guerre en date du ${dateDecision} `;
   decisionRecue += `concernant la mention ${infosRCA.nature.libelle} attribuée à :`;
@@ -76,7 +65,7 @@ function getDecisionONACInscription(
 
 /////////////////////////////////////////////////////////////////////
 class SpecificationRCA {
-  getElementsJasper(infosRCA: IFicheRcRca, decrets: IDecret[]) {
+  getElementsJasper(infosRCA: FicheRcRca, decrets: IDecret[]) {
     const elementsJasper = {} as IElementsJasperCertificatRCA;
 
     if (infosRCA) {

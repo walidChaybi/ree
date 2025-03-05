@@ -1,3 +1,5 @@
+import { ETypeInscriptionRcRca } from "@model/etatcivil/enum/ETypeInscriptionRcRca";
+
 export interface IResultatRMCInscription {
   idInscription: string;
   idPersonne: string;
@@ -8,7 +10,7 @@ export interface IResultatRMCInscription {
   paysNaissance?: string;
   numeroInscription?: string;
   nature?: string;
-  typeInscription?: string;
+  typeInscription?: ETypeInscriptionRcRca;
   statutInscription?: string;
   categorie: string;
   anneeInscription?: string;

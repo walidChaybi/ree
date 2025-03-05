@@ -1,5 +1,5 @@
+import { ETypeInscriptionRcRca } from "@model/etatcivil/enum/ETypeInscriptionRcRca";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { InscriptionRcUtil } from "@model/etatcivil/enum/TypeInscriptionRc";
 import { IInscriptionLiee } from "@model/etatcivil/rcrca/IInscriptionLiee";
 import React from "react";
 import { LienFiche } from "../../../LienFiche";
@@ -13,9 +13,7 @@ export const InscriptionsLiees: React.FC<IInscriptionsLieesProps> = props => {
     <span>
       {props.inscriptionsLiees.map((inscription, index) => (
         <span key={`inscription-liees-lien-${inscription.numero}`}>
-          {`${InscriptionRcUtil.getLibelle(
-            inscription.typeInscription
-          )} (${"RC n°"}`}
+          {`${ETypeInscriptionRcRca[inscription.typeInscription]} (${"RC n°"}`}
           <LienFiche
             identifiant={inscription.id}
             categorie={TypeFiche.RC}

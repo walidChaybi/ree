@@ -1,3 +1,6 @@
+import { idFicheActe1 } from "@mock/data/ficheActe";
+import { idFichePacs } from "@mock/data/fichePACS";
+import { userDroitConsulterPerimetreTousRegistres } from "@mock/data/mockConnectedUserAvecDroit";
 import { titreForm } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
 import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
@@ -5,9 +8,6 @@ import * as TableauPaginationConstantes from "@widget/tableau/TableauRece/Tablea
 import { RouterProvider } from "react-router-dom";
 import { afterEach, beforeAll, expect, test } from "vitest";
 import { createTestingRouter, elementAvecContexte, mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
-import { idFicheActe1 } from "../../../../mock/data/ficheActe";
-import { idFichePacs } from "../../../../mock/data/fichePacs";
-import { userDroitConsulterPerimetreTousRegistres } from "../../../../mock/data/mockConnectedUserAvecDroit";
 
 beforeAll(async () => {
   mockFenetreFicheTestFunctions();

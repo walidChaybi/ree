@@ -5,80 +5,36 @@ import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IRegistre } from "@model/etatcivil/acte/IRegistre";
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { ITypeRegistre } from "@model/etatcivil/acte/ITypeRegistre";
-import { IAutresNoms } from "@model/etatcivil/commun/IAutresNoms";
+import { IAutresNoms } from "@model/etatcivil/commun/AutresNoms";
 import { IFicheLien } from "@model/etatcivil/commun/IFicheLien";
 import { ILieuEvenement } from "@model/etatcivil/commun/ILieuEvenement";
-import { IPersonne } from "@model/etatcivil/commun/IPersonne";
-import { AutresNoms } from "@model/etatcivil/enum/AutresNoms";
+import { IPersonne } from "@model/etatcivil/commun/Personne";
+import { AutresNoms } from "@model/etatcivil/enum/ETypeAutreNom";
 import { ExistenceContratMariage } from "@model/etatcivil/enum/ExistenceContratMariage";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { INatureRc, NatureRc } from "@model/etatcivil/enum/NatureRc";
-import { INatureRca, NatureRca } from "@model/etatcivil/enum/NatureRca";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { StatutFiche } from "@model/etatcivil/enum/StatutFiche";
 import { TypeActe } from "@model/etatcivil/enum/TypeActe";
 import { TypeDeclarationConjointe } from "@model/etatcivil/enum/TypeDeclarationConjointe";
 import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
 import { TypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteArchiviste";
-import { IFichePacs } from "@model/etatcivil/pacs/IFichePacs";
-import { IPartenaire } from "@model/etatcivil/pacs/IPartenaire";
-import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
-import { IInteresse, Interesse } from "@model/etatcivil/rcrca/IInteresse";
+import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
+import { FicheRcRca, IFicheRcDto, IFicheRcaDto } from "@model/etatcivil/rcrca/FicheRcRca";
 import DateUtils, { IDateCompose } from "@util/DateUtils";
-import { formatNom, formatPrenom } from "@util/Utils";
 import { mappingMentions } from "../acte/mentions/MentionsApiHook";
 
-export type TFiche = IFicheRcRca | IFichePacs | IFicheActe;
+export type TFiche = FicheRcRca | FichePacs | IFicheActe;
 
-export function mapRcRca(data: any): IFicheRcRca {
-  const dataRcRca: IFicheRcRca = { ...data };
-  if (dataRcRca.interesses !== undefined) {
-    dataRcRca.interesses.forEach(interesse => {
-      harmoniserNomPrenomsInteresse(interesse);
-      harmoniserSexeEtNationalite(interesse);
-    });
+export const mapRcRca = (data: IFicheRcaDto | IFicheRcDto): FicheRcRca | null => {
+  switch (data.categorie) {
+    case "RC":
+      return FicheRcRca.RcDepuisDto(data);
+    case "RCA":
+      return FicheRcRca.RcaDepuisDto(data);
+    default:
+      return null;
   }
-  dataRcRca.dateDerniereDelivrance = data.dateDerniereDelivrance ? DateUtils.getDateFromTimestamp(data.dateDerniereDelivrance) : undefined;
-  dataRcRca.dateDerniereMaj = data.dateDerniereMaj ? DateUtils.getDateFromTimestamp(data.dateDerniereMaj) : undefined;
-  dataRcRca.dateInscription = DateUtils.getDateFromTimestamp(data.dateInscription);
-
-  dataRcRca.personnes = mapPersonnes(data.personnes, data.numero);
-  dataRcRca.nature =
-    data.categorie === "RC" ? (NatureRc.depuisId(data.nature.id) as INatureRc) : (NatureRca.depuisId(data.nature.id) as INatureRca);
-
-  dataRcRca.statutsFiche = mapStatutFiche(data);
-
-  return dataRcRca;
-}
-
-export function mapPacs(data: any): IFichePacs {
-  const dataPacs: IFichePacs = { ...data };
-  dataPacs.statutsFiche = [];
-  if (data.partenaires) {
-    data.partenaires.forEach((p: any) => {
-      (p as IPartenaire).nationalite = Nationalite.getEnumFor(p.nationalite);
-      (p as IPartenaire).sexe = Sexe.getEnumFor(p.sexe);
-    });
-  }
-  dataPacs.dateDerniereDelivrance = data.dateDerniereDelivrance ? DateUtils.getDateFromTimestamp(data.dateDerniereDelivrance) : undefined;
-  dataPacs.dateDerniereMaj = data.dateDerniereMaj ? DateUtils.getDateFromTimestamp(data.dateDerniereMaj) : undefined;
-  dataPacs.dateEnregistrementParAutorite = DateUtils.getDateFromTimestamp(data.dateEnregistrementParAutorite);
-  dataPacs.dateInscription = DateUtils.getDateFromTimestamp(data.dateInscription);
-
-  dataPacs.personnes = mapPersonnes(data.personnes, data.numero);
-
-  dataPacs.statutsFiche = mapStatutFiche(data);
-
-  return dataPacs;
-}
-
-function mapStatutFiche(data: any) {
-  return data.statutsFiche.map((sf: any) => ({
-    ...sf,
-    statut: StatutFiche.getEnumFor(sf.statut).libelle
-  }));
-}
+};
 
 export function mapActe(data: any): IFicheActe {
   const dataActe: IFicheActe = { ...data };
@@ -224,27 +180,4 @@ export function mapRegistre(data: any) {
     registre.type = data.type as ITypeRegistre;
   }
   return registre;
-}
-
-function harmoniserNomPrenomsInteresse(interesse: IInteresse) {
-  interesse.nomFamille = interesse.nomFamille ? formatNom(interesse.nomFamille) : interesse.nomFamille;
-  if (interesse.autreNoms !== undefined) {
-    interesse.autreNoms.forEach(autreNom => formatNom(autreNom));
-  }
-  if (interesse.autrePrenoms !== undefined) {
-    interesse.autrePrenoms.forEach(autrePrenom => formatPrenom(autrePrenom));
-  }
-  if (interesse.prenoms !== undefined) {
-    interesse.prenoms.forEach(prenom => {
-      prenom.valeur = formatPrenom(prenom.valeur);
-    });
-  }
-
-  return interesse;
-}
-
-function harmoniserSexeEtNationalite(interesse: IInteresse) {
-  interesse.sexe = Interesse.getSexe(interesse);
-  interesse.nationalite = Interesse.getNationalite(interesse);
-  return interesse;
 }

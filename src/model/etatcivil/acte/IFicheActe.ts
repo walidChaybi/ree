@@ -12,7 +12,7 @@ import {
   UN
 } from "@util/Utils";
 import { ChoixDelivrance } from "../../requete/enum/ChoixDelivrance";
-import { IPersonne } from "../commun/IPersonne";
+import { IPersonne } from "../commun/Personne";
 import { NatureActe } from "../enum/NatureActe";
 import { NATIONALITE, NatureMention } from "../enum/NatureMention";
 import { Sexe } from "../enum/Sexe";

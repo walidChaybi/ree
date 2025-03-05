@@ -125,14 +125,14 @@ export const remplaceSNP = (nom: string) => {
 };
 
 export const formatNom = (nom?: string, nomParDefaut = SANS_NOM_PATRONYMIQUE, enMajuscules = true): string => {
-  let nomFormate = nom ?? "";
-  if (nom === SNP) {
-    nomFormate = nomParDefaut;
-  } else {
-    nomFormate = enMajuscules ? (nom?.toLocaleUpperCase() ?? "") : nomFormate;
+  switch (nom) {
+    case SANS_NOM_PATRONYMIQUE:
+      return SANS_NOM_PATRONYMIQUE;
+    case SNP:
+      return nomParDefaut;
+    default:
+      return (enMajuscules ? nom?.toLocaleUpperCase() : nom) ?? "";
   }
-
-  return nomFormate;
 };
 
 export const formatDe = (str: string) => {

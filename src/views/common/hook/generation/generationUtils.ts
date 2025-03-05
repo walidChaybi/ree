@@ -1,5 +1,5 @@
-import { IFichePacs } from "@model/etatcivil/pacs/IFichePacs";
-import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
+import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import { TFiche } from "../repertoires/MappingRepertoires";
 
 export const RESULTAT_VIDE = {};
@@ -19,8 +19,8 @@ export interface IResultGenerationInscriptions {
 }
 
 export interface IResultGenerationPlusieursInscriptions {
-  pacs?: IFichePacs[];
-  rc?: IFicheRcRca[];
-  rca?: IFicheRcRca[];
+  pacs?: FichePacs[];
+  rc?: FicheRcRca[];
+  rca?: FicheRcRca[];
   idDocumentsReponse?: string[];
 }

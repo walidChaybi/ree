@@ -1,6 +1,3 @@
-import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
-import { getAutorite } from "@pages/fiche/hook/constructionComposants/rcrca/AutoriteUtils";
-import { expect, test } from "vitest";
 import {
   ficheAutoriteJuridictionEtrangerAvecConfirmation,
   ficheAutoriteJuridictionFranceAvecConfirmation,
@@ -10,10 +7,13 @@ import {
   ficheAutoriteOnaceEtrangerAvecConfirmation,
   ficheAutoriteSansConfirmation,
   ficheNonValide
-} from "../../../../../../mock/data/ficheEtBandeau/divers/DecisionAutoriteMock";
+} from "@mock/data/ficheEtBandeau/divers/DecisionAutoriteMock";
+import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
+import { getAutorite } from "@pages/fiche/hook/constructionComposants/rcrca/AutoriteUtils";
+import { expect, test } from "vitest";
 
 test("Autorite utils get autorite : decision en France, de type Juridiction, la source de confirmation est présente", () => {
-  const components = getAutorite(ficheAutoriteJuridictionFranceAvecConfirmation as any as IFicheRcRca);
+  const components = getAutorite(FicheRcRca.RcDepuisDto(ficheAutoriteJuridictionFranceAvecConfirmation) as FicheRcRca);
 
   expect(components).toHaveLength(2);
 
@@ -43,7 +43,7 @@ test("Autorite utils get autorite : decision en France, de type Juridiction, la 
 });
 
 test("Autorite utils get autorite : decision à l'étranger, de type Juridiction, la source de confirmation est présente", () => {
-  const components = getAutorite(ficheAutoriteJuridictionEtrangerAvecConfirmation as unknown as IFicheRcRca);
+  const components = getAutorite(FicheRcRca.RcDepuisDto(ficheAutoriteJuridictionEtrangerAvecConfirmation) as FicheRcRca);
 
   const idxType = components[0].partContent?.contents.findIndex(content => content.libelle === "Type");
   expect(idxType).toBeGreaterThan(-1);
@@ -69,7 +69,7 @@ test("Autorite utils get autorite : decision à l'étranger, de type Juridiction
 });
 
 test("Autorite utils get autorite : decision en France, de type Notaire ", () => {
-  const components = getAutorite(ficheAutoriteNotaireFranceAvecConfirmation as unknown as IFicheRcRca);
+  const components = getAutorite(FicheRcRca.RcDepuisDto(ficheAutoriteNotaireFranceAvecConfirmation) as FicheRcRca);
 
   const idxType = components[0].partContent?.contents.findIndex(content => content.libelle === "Type");
   expect(idxType).toBeGreaterThan(-1);
@@ -102,7 +102,7 @@ test("Autorite utils get autorite : decision en France, de type Notaire ", () =>
 });
 
 test("Autorite utils get autorite : decision à l'étranger, de type Notaire ", () => {
-  const components = getAutorite(ficheAutoriteNotaireEtrangerAvecConfirmation as unknown as IFicheRcRca);
+  const components = getAutorite(FicheRcRca.RcDepuisDto(ficheAutoriteNotaireEtrangerAvecConfirmation) as FicheRcRca);
 
   const idxType = components[0].partContent?.contents.findIndex(content => content.libelle === "Type");
   expect(idxType).toBeGreaterThan(-1);
@@ -131,7 +131,7 @@ test("Autorite utils get autorite : decision à l'étranger, de type Notaire ", 
 });
 
 test("Autorite utils get autorite : decision à l'étranger, de type Onac avec confirmation ONAC ", () => {
-  const components = getAutorite(ficheAutoriteOnaceEtrangerAvecConfirmation as unknown as IFicheRcRca);
+  const components = getAutorite(FicheRcRca.RcDepuisDto(ficheAutoriteOnaceEtrangerAvecConfirmation) as FicheRcRca);
 
   const idxType = components[0].partContent?.contents.findIndex(content => content.libelle === "Type");
   expect(idxType).toBeGreaterThan(-1);
@@ -160,19 +160,19 @@ test("Autorite utils get autorite : decision à l'étranger, de type Onac avec c
 });
 
 test("Autorite utils get autorite : la source de confirmation n'est pas présente", () => {
-  const components = getAutorite(ficheAutoriteSansConfirmation as unknown as IFicheRcRca);
+  const components = getAutorite(FicheRcRca.RcDepuisDto(ficheAutoriteSansConfirmation) as FicheRcRca);
 
   expect(components).toHaveLength(1);
 });
 
 test("Autorite utils get autorite : donnees non valides", async () => {
-  const components = getAutorite(ficheNonValide as unknown as IFicheRcRca);
+  const components = getAutorite(FicheRcRca.RcDepuisDto(ficheNonValide) as FicheRcRca);
 
-  expect(components[0].partContent?.contents).toHaveLength(0);
+  expect(components).toHaveLength(0);
 });
 
 test("Autorite utils get autorite : onac", async () => {
-  const components = getAutorite(ficheAutoriteOnac as unknown as IFicheRcRca);
+  const components = getAutorite(FicheRcRca.RcaDepuisDto(ficheAutoriteOnac) as FicheRcRca);
   const element = components[0].partContent?.contents[1].value as JSX.Element;
   expect(element.props.children).toBe("titreOnac");
 });

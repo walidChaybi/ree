@@ -1,16 +1,10 @@
-import { IFichePacs } from "@model/etatcivil/pacs/IFichePacs";
-import { getPanelsPacs } from "@pages/fiche/hook/constructionComposants/pacs/FichePacsUtils";
+import { annulationJuridictionMap, dissolutionJuridictionMap, dissolutionPosteMap, pacsModificationNotaireMap } from "@mock/data/fichePACS";
+import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
 import { SectionPartProps } from "@widget/section/SectionPart";
 import { expect, test } from "vitest";
-import {
-  annulationJuridictionMap,
-  dissolutionJuridictionMap,
-  dissolutionPosteMap,
-  pacsModificationNotaireMap
-} from "../../../../../../mock/data/PACS";
 
 test("ficheUtils Pacs fonctionne avec modification notaire", () => {
-  const panels = getPanelsPacs(pacsModificationNotaireMap as IFichePacs);
+  const panels = (FichePacs.depuisDto(pacsModificationNotaireMap) as FichePacs).commePanelAccordionReceSection;
 
   expect(panels.panels.length).toBe(1);
   expect(panels.panels[0].panelAreas.length).toBe(5);
@@ -88,7 +82,7 @@ test("ficheUtils Pacs fonctionne avec modification notaire", () => {
 });
 
 test("ficheUtils Pacs fonctionne avec annulation juridiction", () => {
-  const panels = getPanelsPacs(annulationJuridictionMap as IFichePacs);
+  const panels = (FichePacs.depuisDto(annulationJuridictionMap) as FichePacs).commePanelAccordionReceSection;
 
   expect(panels.panels.length).toBe(1);
   expect(panels.panels[0].panelAreas.length).toBe(5);
@@ -116,7 +110,7 @@ test("ficheUtils Pacs fonctionne avec annulation juridiction", () => {
 });
 
 test("ficheUtils Pacs fonctionne avec dissoultion juridiction", () => {
-  const panels = getPanelsPacs(dissolutionJuridictionMap as IFichePacs);
+  const panels = (FichePacs.depuisDto(dissolutionJuridictionMap) as FichePacs).commePanelAccordionReceSection;
 
   expect(panels.panels.length).toBe(1);
   expect(panels.panels[0].panelAreas.length).toBe(5);
@@ -128,7 +122,7 @@ test("ficheUtils Pacs fonctionne avec dissoultion juridiction", () => {
 });
 
 test("ficheUtils Pacs fonctionne avec dissolution poste", () => {
-  const panels = getPanelsPacs(dissolutionPosteMap as IFichePacs);
+  const panels = (FichePacs.depuisDto(dissolutionPosteMap) as FichePacs).commePanelAccordionReceSection;
 
   expect(panels.panels.length).toBe(1);
   expect(panels.panels[0].panelAreas.length).toBe(5);

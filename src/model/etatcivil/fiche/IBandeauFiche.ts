@@ -1,6 +1,6 @@
 import { IAlerte } from "./IAlerte";
-import { IStatutFiche } from "./IStatutFiche";
 import { SimplePersonne } from "./SimplePersonne";
+import { StatutFiche } from "./StatutFiche";
 
 export interface IBandeauFiche {
   titreFenetre: string;
@@ -9,7 +9,7 @@ export interface IBandeauFiche {
   registre?: string;
   annee: string;
   numero: string;
-  statutsFiche: IStatutFiche[];
+  statutsFiche: StatutFiche[];
   personnes: SimplePersonne[];
   alertes?: IAlerte[];
   dateDerniereMaj: string;

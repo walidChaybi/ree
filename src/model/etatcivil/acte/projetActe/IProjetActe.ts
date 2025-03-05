@@ -1,4 +1,4 @@
-import { IPersonne } from "@model/etatcivil/commun/IPersonne";
+import { IPersonne } from "@model/etatcivil/commun/Personne";
 import { TypeRedactionActe } from "../../enum/TypeRedactionActe";
 import { ICorpsExtraitRectification } from "../ICorpsExtraitRectification";
 import { ICorpsText } from "../ICorpsText";

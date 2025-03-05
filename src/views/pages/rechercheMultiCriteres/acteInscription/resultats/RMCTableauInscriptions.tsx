@@ -2,7 +2,7 @@ import { RECEContextData } from "@core/contexts/RECEContext";
 import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
-import { StatutFiche } from "@model/etatcivil/enum/StatutFiche";
+import { EStatutFiche } from "@model/etatcivil/enum/EStatutFiche";
 import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { TRequete } from "@model/requete/IRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -141,7 +141,7 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
     (data: IResultatRMCInscription): boolean => {
       if (dataRequete?.type === TypeRequete.DELIVRANCE) {
         const requeteDelivrance = dataRequete as IRequeteDelivrance;
-        if (data?.statutInscription === StatutFiche.INACTIF.libelle) {
+        if (data?.statutInscription === EStatutFiche.INACTIF) {
           return true;
         }
         if (

@@ -1,6 +1,7 @@
 import DateUtils, { IDateCompose } from "@util/DateUtils";
 import { estRenseigne, getValeurOuVide, numberToString } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
+import { ILieuEvenement } from "../commun/ILieuEvenement";
 
 export interface IEvenement {
   id?: string;
@@ -15,6 +16,23 @@ export interface IEvenement {
   region?: string;
   pays: string;
   lieuReprise?: string;
+  lieuFormate?: string;
+  neDansLeMariage?: boolean;
+}
+
+export interface IEvenementDto {
+  id?: string;
+  heure?: number | null;
+  minute?: number | null;
+  jour?: number;
+  mois?: number;
+  annee?: number;
+  voie?: string | null;
+  ville?: string;
+  arrondissement?: string | null;
+  region?: string;
+  pays: string;
+  lieuReprise?: string | null;
   lieuFormate?: string;
   neDansLeMariage?: boolean;
 }
@@ -68,5 +86,22 @@ export const Evenement = {
       mois: getValeurOuVide(evenement?.mois),
       annee: getValeurOuVide(evenement?.annee)
     };
+  },
+
+  getLieuEvenement: (evenementNaissance: IEvenement | IEvenementDto): ILieuEvenement => {
+    return {
+      arrondissement: evenementNaissance.arrondissement ?? "",
+      pays: evenementNaissance.pays,
+      region: evenementNaissance.region ?? "",
+      ville: evenementNaissance.ville ?? ""
+    };
+  },
+
+  getDateCompose: (evenement: IEvenement | IEvenementDto): IDateCompose => {
+    return {
+      jour: evenement.jour?.toString(),
+      mois: evenement.mois?.toString(),
+      annee: evenement.annee?.toString()
+    } as IDateCompose;
   }
 };

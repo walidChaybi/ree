@@ -1,17 +1,13 @@
 import { Autorite, IAutorite } from "@model/etatcivil/commun/IAutorite";
-import {
-  TypeAutorite,
-  TypeAutoriteUtil
-} from "@model/etatcivil/enum/TypeAutorite";
+import { TypeAutorite, TypeAutoriteUtil } from "@model/etatcivil/enum/TypeAutorite";
 import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import { formatNom, formatPrenom, getValeurOuVide } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPartProps } from "@widget/section/SectionPart";
-import React from "react";
 
-export function getAutorite(rcrca: IFicheRcRca): SectionPartProps[] {
+export function getAutorite(rcrca: FicheRcRca): SectionPartProps[] {
   let autorite: SectionPartProps[] = [];
   if (rcrca.decision) {
     autorite = [
@@ -23,18 +19,12 @@ export function getAutorite(rcrca: IFicheRcRca): SectionPartProps[] {
     ];
 
     if (
-      rcrca.decision &&
-      rcrca.decision.sourceConfirmation != null &&
-      TypeAutoriteUtil.isJuridiction(
-        rcrca.decision.sourceConfirmation.autorite.typeAutorite
-      )
+      rcrca.decision?.sourceConfirmation != null &&
+      TypeAutoriteUtil.isJuridiction(rcrca.decision.sourceConfirmation.autorite.typeAutorite)
     ) {
       autorite.push({
         partContent: {
-          contents: getContentAutorite(
-            rcrca.decision.sourceConfirmation.autorite,
-            rcrca.categorie
-          )
+          contents: getContentAutorite(rcrca.decision.sourceConfirmation.autorite, rcrca.categorie)
         }
       });
     }
@@ -42,36 +32,24 @@ export function getAutorite(rcrca: IFicheRcRca): SectionPartProps[] {
   return autorite;
 }
 
-function getContentAutorite(
-  autorite: IAutorite,
-  typeFiche: TypeFiche
-): SectionContentProps[] {
+function getContentAutorite(autorite: IAutorite, typeFiche: TypeFiche): SectionContentProps[] {
   if (LieuxUtils.estPaysFrance(autorite.pays)) {
     return getContentAutoriteFrance(autorite, typeFiche);
   } else if (TypeAutoriteUtil.isJuridiction(autorite.typeAutorite)) {
     return getContentJuridictionEtEtranger(autorite);
-  } else if (
-    TypeAutoriteUtil.isNotaire(autorite.typeAutorite) ||
-    TypeAutoriteUtil.isOnac(autorite.typeAutorite)
-  ) {
+  } else if (TypeAutoriteUtil.isNotaire(autorite.typeAutorite) || TypeAutoriteUtil.isOnac(autorite.typeAutorite)) {
     return getContentNotaireOnacEtEtranger(autorite);
   } else {
     return [];
   }
 }
 
-function getContentAutoriteFrance(
-  autorite: IAutorite,
-  typeFiche: TypeFiche
-): SectionContentProps[] {
+function getContentAutoriteFrance(autorite: IAutorite, typeFiche: TypeFiche): SectionContentProps[] {
   if (TypeAutoriteUtil.isJuridiction(autorite.typeAutorite)) {
     return getContentJuridictionEtFrance(autorite);
   } else if (TypeAutoriteUtil.isNotaire(autorite.typeAutorite)) {
     return getContentNotaireEtFrance(autorite);
-  } else if (
-    TypeAutoriteUtil.isOnac(autorite.typeAutorite) &&
-    FicheUtil.isFicheRca(typeFiche)
-  ) {
+  } else if (TypeAutoriteUtil.isOnac(autorite.typeAutorite) && FicheUtil.isFicheRca(typeFiche)) {
     return getContentOnacEtFrance(autorite);
   } else {
     return [];
@@ -79,11 +57,7 @@ function getContentAutoriteFrance(
 }
 
 function getContentOnacEtFrance(autorite: IAutorite): SectionContentProps[] {
-  const content = [
-    getTypeAutoriteContent(autorite.typeAutorite),
-    getTitreOnac(autorite),
-    getVilleAutoriteContent(autorite.ville)
-  ];
+  const content = [getTypeAutoriteContent(autorite.typeAutorite), getTitreOnac(autorite), getVilleAutoriteContent(autorite.ville)];
 
   if (LieuxUtils.estVilleAvecArrondissement(autorite.ville)) {
     content.push(getArrondissementAutoriteContent(autorite.arrondissement));
@@ -94,23 +68,17 @@ function getContentOnacEtFrance(autorite: IAutorite): SectionContentProps[] {
   return content;
 }
 
-function getContentNotaireOnacEtEtranger(
-  autorite: IAutorite
-): SectionContentProps[] {
+function getContentNotaireOnacEtEtranger(autorite: IAutorite): SectionContentProps[] {
   return [
     getTypeAutoriteContent(autorite.typeAutorite),
-    TypeAutoriteUtil.isNotaire(autorite.typeAutorite)
-      ? getPrenomNomNotaire(autorite)
-      : getTitreOnac(autorite),
+    TypeAutoriteUtil.isNotaire(autorite.typeAutorite) ? getPrenomNomNotaire(autorite) : getTitreOnac(autorite),
     getVilleAutoriteContent(autorite.ville),
     getRegionAutoriteContent(autorite.region),
     getPaysAutoriteContent(autorite.pays)
   ];
 }
 
-function getContentJuridictionEtEtranger(
-  autorite: IAutorite
-): SectionContentProps[] {
+function getContentJuridictionEtEtranger(autorite: IAutorite): SectionContentProps[] {
   return [
     getTypeJuridictionContent(autorite.typeJuridiction),
     getVilleAutoriteContent(autorite.ville),
@@ -119,13 +87,8 @@ function getContentJuridictionEtEtranger(
   ];
 }
 
-function getContentJuridictionEtFrance(
-  autorite: IAutorite
-): SectionContentProps[] {
-  const contents: SectionContentProps[] = [
-    getTypeJuridictionContent(autorite.typeJuridiction),
-    getVilleAutoriteContent(autorite.ville)
-  ];
+function getContentJuridictionEtFrance(autorite: IAutorite): SectionContentProps[] {
+  const contents: SectionContentProps[] = [getTypeJuridictionContent(autorite.typeJuridiction), getVilleAutoriteContent(autorite.ville)];
 
   addArrondissementAutoriteContentIfPossible(autorite, contents);
 
@@ -153,24 +116,14 @@ function getContentNotaireEtFrance(autorite: IAutorite): SectionContentProps[] {
 function getPrenomNomNotaire(autorite: IAutorite): SectionContentProps {
   return {
     libelle: "Prénom NOM",
-    value: (
-      <span>{`Maître ${formatPrenom(autorite.prenomNotaire)} ${formatNom(
-        autorite.nomNotaire
-      )}`}</span>
-    )
+    value: <span>{`Maître ${formatPrenom(autorite.prenomNotaire)} ${formatNom(autorite.nomNotaire)}`}</span>
   };
 }
 
 function getTitreOnac(autorite: IAutorite): SectionContentProps {
   return {
     libelle: "Titre",
-    value: (
-      <span>
-        {autorite.titreOnac
-          ? `${autorite.titreOnac.charAt(0)}${autorite.titreOnac.slice(1)}`
-          : ""}
-      </span>
-    )
+    value: <span>{autorite.titreOnac ? `${autorite.titreOnac.charAt(0)}${autorite.titreOnac.slice(1)}` : ""}</span>
   };
 }
 
@@ -185,9 +138,7 @@ function getTypeAutoriteContent(type?: TypeAutorite): SectionContentProps {
   return { libelle: "Type", value: TypeAutoriteUtil.getLibelle(type) };
 }
 
-function getTypeJuridictionContent(
-  libelleTypeJuridiction?: string
-): SectionContentProps {
+function getTypeJuridictionContent(libelleTypeJuridiction?: string): SectionContentProps {
   return {
     libelle: "Type",
     value: getValeurOuVide(libelleTypeJuridiction)
@@ -208,23 +159,17 @@ function getRegionAutoriteContent(region?: string): SectionContentProps {
   };
 }
 
-function getArrondissementAutoriteContent(
-  arrondissement?: string
-): SectionContentProps {
+function getArrondissementAutoriteContent(arrondissement?: string): SectionContentProps {
   return {
     libelle: "Arrondissement",
     value: <span>{arrondissement || ""}</span>
   };
 }
 
-function getDepartementAutoriteContent(
-  autorite: IAutorite
-): SectionContentProps {
+function getDepartementAutoriteContent(autorite: IAutorite): SectionContentProps {
   return {
     libelle: "Département",
-    value: (
-      <span>{`${autorite.libelleDepartement} (${autorite.numeroDepartement})`}</span>
-    )
+    value: <span>{`${autorite.libelleDepartement} (${autorite.numeroDepartement})`}</span>
   };
 }
 
@@ -235,10 +180,7 @@ function getPaysAutoriteContent(pays?: string): SectionContentProps {
   };
 }
 
-function addArrondissementAutoriteContentIfPossible(
-  autorite: IAutorite,
-  contents: SectionContentProps[]
-): void {
+function addArrondissementAutoriteContentIfPossible(autorite: IAutorite, contents: SectionContentProps[]): void {
   if (autorite.ville && LieuxUtils.estVilleAvecArrondissement(autorite.ville)) {
     contents.push({
       libelle: "Arrondissement",
@@ -247,19 +189,11 @@ function addArrondissementAutoriteContentIfPossible(
   }
 }
 
-function addDepartementAutoriteContentIfPossible(
-  autorite: IAutorite,
-  contents: SectionContentProps[]
-): void {
-  if (
-    !LieuxUtils.estVilleParis(autorite.ville) &&
-    LieuxUtils.estPaysFrance(autorite.pays)
-  ) {
+function addDepartementAutoriteContentIfPossible(autorite: IAutorite, contents: SectionContentProps[]): void {
+  if (!LieuxUtils.estVilleParis(autorite.ville) && LieuxUtils.estPaysFrance(autorite.pays)) {
     contents.push({
       libelle: "Département",
-      value: `${autorite.libelleDepartement || ""} (${
-        autorite.numeroDepartement || ""
-      })`
+      value: `${autorite.libelleDepartement || ""} (${autorite.numeroDepartement || ""})`
     });
   }
 }

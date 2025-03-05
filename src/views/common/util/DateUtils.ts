@@ -18,6 +18,8 @@ export interface IDateCompose {
   annee: string;
 }
 
+export type TDateArrayDTO = [annee: number, month: number, jour: number];
+
 export enum FormatDate {
   DDMMYYYY = "DD/MM/YYYY",
   DDMMYYYYHHmm = "DD/MM/YYYY HH:mm"
@@ -98,9 +100,19 @@ const DateUtils = {
     return DateUtils.getDateString(new Date());
   },
 
-  // Convertion d'un Timestamp (en millisecondes depuis 1970) en Date
+  // Conversion d'un Timestamp (en millisecondes depuis 1970) en Date
   getDateFromTimestamp: (timestamp: number): Date => {
     return new Date(timestamp);
+  },
+
+  getDateDepuisDateArrayDto: (dateArray: TDateArrayDTO): Date => {
+    const [annee, mois, jour] = dateArray;
+
+    return new Date(annee, mois - 1, jour);
+  },
+
+  getTimestampFromDateArrayDto: (dateArray: TDateArrayDTO): number => {
+    return DateUtils.getDateDepuisDateArrayDto(dateArray).getTime();
   },
 
   estDateValide: (dateCompose: IDateCompose) => {

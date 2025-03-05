@@ -14,7 +14,7 @@ const baseReponseSansDelivranceCS = {
     ligne2: "des Français à l'étranger",
     ligne3: "et de l’administration consulaire"
   },
-  adresse_internet: "courrier.scec@diplomatie.gouv.fr",
+  adresse_internet: "https://etat-civil.diplomatie.gouv.fr/rece-informationusager-ui/",
   adr_service_delivreur: {
     ligne4: "11, rue de la Maison Blanche",
     ligne6: "44941 Nantes CEDEX 9"
@@ -22,7 +22,7 @@ const baseReponseSansDelivranceCS = {
   tel_service_delivreur: "01.41.86.42.47",
   date_delivrance: DateUtils.dateCourrier(),
   ville_delivrance: "Nantes",
-  cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
+  cachet_signature: "P/la sous-directrice,\ncheffe du Service central d’état civil",
   sceau_ministere: imagePngVideBase64,
   identite_requerant: {
     ligne1: "PAUL RUIZ",
@@ -47,7 +47,7 @@ const baseReponseSansDelivranceCSInstitutionnel = {
     ligne2: "des Français à l'étranger",
     ligne3: "et de l’administration consulaire"
   },
-  adresse_internet: "courrier.scec@diplomatie.gouv.fr",
+  adresse_internet: "https://etat-civil.diplomatie.gouv.fr/rece-informationusager-ui/",
   adr_service_delivreur: {
     ligne4: "11, rue de la Maison Blanche",
     ligne6: "44941 Nantes CEDEX 9"
@@ -55,7 +55,7 @@ const baseReponseSansDelivranceCSInstitutionnel = {
   tel_service_delivreur: "01.41.86.42.47",
   ville_delivrance: "Nantes",
   date_delivrance: DateUtils.dateCourrier(),
-  cachet_signature: "P/le sous-directeur,chef du service central d’état civil",
+  cachet_signature: "P/la sous-directrice,\ncheffe du Service central d’état civil",
   sceau_ministere: imagePngVideBase64,
   identite_requerant: {
     ligne1: "AMBASSADE DU RWANDA",

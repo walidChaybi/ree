@@ -5,7 +5,7 @@ import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { FichePage } from "@pages/fiche/FichePage";
 import ApercuRequeteMiseAJourPage from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
 import { URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS } from "@router/ReceUrls";
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { DEUX, UN, ZERO } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
@@ -108,9 +108,7 @@ describe("Test du composant Fiche page", () => {
       expect(screen.getByText("Apposer mention(s) autre")).toBeDefined();
     });
 
-    act(() => {
-      fireEvent.click(screen.getByText("Apposer mention(s) suite à avis"));
-    });
+    fireEvent.click(screen.getByText("Apposer mention(s) suite à avis"));
 
     await waitFor(() => {
       expect(router.state.matches[ZERO].pathname).toBe(
@@ -119,7 +117,7 @@ describe("Test du composant Fiche page", () => {
     });
   });
 
-  test("Attendu: le bouton 'demander la délivrance' est affiché et au clique effectue le traitement demandé'", async () => {
+  test("Attendu: le bouton 'demander la délivrance' est affiché et le clic effectue le traitement demandé'", async () => {
     const utilisateurConnecte = userDroitCOMEDEC;
     const router = createTestingRouter(
       [
@@ -150,20 +148,20 @@ describe("Test du composant Fiche page", () => {
     fireEvent.click(screen.getByLabelText("Demander la délivrance"));
 
     let okButton: HTMLElement | null;
-    waitFor(() => {
+    await waitFor(() => {
       okButton = screen.getByText(/Oui/);
       expect(okButton).toBeDefined();
     });
 
     fireEvent.click(okButton!);
 
-    waitFor(() => {
+    await waitFor(() => {
       okButton = screen.queryByText(/Oui/);
       expect(okButton).toBeNull();
     });
   });
 
-  test("Attendu: le bouton 'demander la délivrance' n'est pas affiché lorsque l'utilisateur est habilité", () => {
+  test("Attendu: le bouton 'demander la délivrance' n'est pas affiché lorsque l'utilisateur est habilité", async () => {
     const utilisateurConnecte = userDroitConsulterPerimetreTUNIS;
 
     const router = createTestingRouter(
@@ -193,7 +191,7 @@ describe("Test du composant Fiche page", () => {
 
     const boutonDemanderDelivrance = screen.queryByLabelText("Demander la délivrance") as HTMLButtonElement;
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(boutonDemanderDelivrance).toBeNull();
     });
   });

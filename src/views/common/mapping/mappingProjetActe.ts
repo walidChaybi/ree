@@ -10,13 +10,13 @@ import { IProjetAnalyseMarginale } from "@model/etatcivil/acte/projetActe/IAnaly
 import { IProjetFiliation } from "@model/etatcivil/acte/projetActe/IFiliationProjetActe";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { ITitulaireProjetActe } from "@model/etatcivil/acte/projetActe/ITitulaireProjetActe";
-import { IAutresNoms } from "@model/etatcivil/commun/IAutresNoms";
+import { IAutresNoms } from "@model/etatcivil/commun/AutresNoms";
 import { IFamille } from "@model/etatcivil/commun/IFamille";
 import { IFicheLien } from "@model/etatcivil/commun/IFicheLien";
 import { IFicheLienActes } from "@model/etatcivil/commun/IFicheLienActes";
 import { ILieuEvenement } from "@model/etatcivil/commun/ILieuEvenement";
-import { IPersonne } from "@model/etatcivil/commun/IPersonne";
-import { AutresNoms } from "@model/etatcivil/enum/AutresNoms";
+import { IPersonne } from "@model/etatcivil/commun/Personne";
+import { AutresNoms } from "@model/etatcivil/enum/ETypeAutreNom";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { TypeDeclarationConjointe } from "@model/etatcivil/enum/TypeDeclarationConjointe";
@@ -41,9 +41,7 @@ export function mappingProjetActe(data: any): IProjetActe {
     analyseMarginales: mapAnalyseMarginales(data.analyseMarginales),
     corpsTexte: mapCorpsTexte(data.corpsTexte),
     type: getValeurOuUndefined(data.type),
-    corpsExtraitRectifications: mapCorpsExtraitRectification(
-      data.corpsExtraitRectifications
-    ),
+    corpsExtraitRectifications: mapCorpsExtraitRectification(data.corpsExtraitRectifications),
     mentions: mapMentions(data.mentions),
     declarant: mapDeclarant(data.declarant),
     numeroDossierNational: getValeurOuUndefined(data.numeroDossierNational),
@@ -70,19 +68,11 @@ function mapTitulairesProjetActe(titulaires: any[]): ITitulaireProjetActe[] {
     nomAvantMariage: getValeurOuUndefined(titulaire.nomAvantMariage),
     nomApresMariage: getValeurOuUndefined(titulaire.nomApresMariage),
     nomDernierConjoint: getValeurOuUndefined(titulaire.nomDernierConjoint),
-    prenomsDernierConjoint: getValeurOuUndefined(
-      titulaire.prenomsDernierConjoint
-    ),
-    typeDeclarationConjointe: TypeDeclarationConjointe.getEnumFor(
-      getValeurOuUndefined(titulaire.typeDeclarationConjointe)
-    ),
-    dateDeclarationConjointe: getValeurOuUndefined(
-      titulaire.dateDeclarationConjointe
-    ),
+    prenomsDernierConjoint: getValeurOuUndefined(titulaire.prenomsDernierConjoint),
+    typeDeclarationConjointe: TypeDeclarationConjointe.getEnumFor(getValeurOuUndefined(titulaire.typeDeclarationConjointe)),
+    dateDeclarationConjointe: getValeurOuUndefined(titulaire.dateDeclarationConjointe),
     identiteAvantDecret: getValeurOuUndefined(titulaire.identiteAvantDecret),
-    decretNaturalisation: mapDecretNaturalisation(
-      getValeurOuUndefined(titulaire.decretNaturalisation)
-    ),
+    decretNaturalisation: mapDecretNaturalisation(getValeurOuUndefined(titulaire.decretNaturalisation)),
     pasDePrenom: getValeurOuUndefined(titulaire.pasDePrenom),
     reconnuPar: titulaire.reconnuPar
   }));
@@ -131,15 +121,11 @@ function mapFiliations(filiations: any[]): IProjetFiliation[] {
   }));
 }
 
-function mapDecretNaturalisation(
-  decretNaturalisation: any
-): IDecretNaturalisation | null {
+function mapDecretNaturalisation(decretNaturalisation: any): IDecretNaturalisation | null {
   return decretNaturalisation
     ? {
         numeroDecret: getValeurOuUndefined(decretNaturalisation?.numeroDecret),
-        dateSignature: decretNaturalisation?.dateSignature
-          ? new Date(decretNaturalisation?.dateSignature)
-          : undefined,
+        dateSignature: decretNaturalisation?.dateSignature ? new Date(decretNaturalisation?.dateSignature) : undefined,
         natureDecret: getValeurOuUndefined(decretNaturalisation?.natureDecret)
       }
     : null;
@@ -236,9 +222,7 @@ function mapRegistre(registre: any): IRegistre {
   };
 }
 
-function mapAnalyseMarginales(
-  projetsAnalyseMarginale: any[]
-): IProjetAnalyseMarginale[] {
+function mapAnalyseMarginales(projetsAnalyseMarginale: any[]): IProjetAnalyseMarginale[] {
   return projetsAnalyseMarginale;
 }
 
@@ -246,9 +230,7 @@ function mapCorpsTexte(corpsTexte: any): ICorpsText {
   return corpsTexte;
 }
 
-function mapCorpsExtraitRectification(
-  corpsExtraitRectification: any[]
-): ICorpsExtraitRectification[] {
+function mapCorpsExtraitRectification(corpsExtraitRectification: any[]): ICorpsExtraitRectification[] {
   return corpsExtraitRectification;
 }
 

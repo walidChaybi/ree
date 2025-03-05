@@ -1,7 +1,7 @@
+import { EStatutFiche } from "@model/etatcivil/enum/EStatutFiche";
+import { ETypeInscriptionRcRca } from "@model/etatcivil/enum/ETypeInscriptionRcRca";
 import { NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { NatureRca } from "@model/etatcivil/enum/NatureRca";
-import { StatutFiche } from "@model/etatcivil/enum/StatutFiche";
-import { InscriptionRcUtil } from "@model/etatcivil/enum/TypeInscriptionRc";
 import { TypeRepertoire } from "@model/etatcivil/enum/TypeRepertoire";
 import { IRMCRequestActesInscriptions } from "@model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
@@ -66,8 +66,8 @@ export function mappingInscriptions(data: any): IResultatRMCInscription[] {
       paysNaissance: getValeurOuVide(inscription?.paysNaissance),
       numeroInscription: getValeurOuVide(inscription?.numero),
       nature: getNatureInscription(inscription?.categorie, inscription?.nature),
-      typeInscription: InscriptionRcUtil.getLibelle(inscription?.typeInscription),
-      statutInscription: getValeurOuVide(StatutFiche.getEnumFor(inscription?.statut)?.libelle),
+      typeInscription: ETypeInscriptionRcRca[inscription?.typeInscription as keyof typeof ETypeInscriptionRcRca],
+      statutInscription: getValeurOuVide(EStatutFiche[inscription?.statut as keyof typeof EStatutFiche]),
       categorie: getValeurOuVide(inscription?.categorie),
       anneeInscription: getValeurOuVide(inscription?.anneeInscription),
       dateInscription: getValeurOuVide(inscription?.dateInscription)

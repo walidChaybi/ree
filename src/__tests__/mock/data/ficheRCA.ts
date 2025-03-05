@@ -1,21 +1,206 @@
-import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
-import DateUtils from "@util/DateUtils";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { IFicheRcaDto } from "@model/etatcivil/rcrca/FicheRcRca";
 
-export const FicheRcaDecisionJuridictionEtrangere = {
+export const mockRcaDto = {
+  hasTechnicalError: false,
+  hasBusinessError: false,
+  status: 200,
+  url: "/rece/rece-requete-api/v1/repertoirecivil/rca/135e4dfe-9757-4d5d-8715-359c6e73289b",
+  data: {
+    id: "135e4dfe-9757-4d5d-8715-359c6e73289b",
+    categorie: "RCA",
+    annee: "2015",
+    numero: "15987",
+    nature: {
+      id: "c58a436b-330d-4c3c-83e0-e49d2739012c",
+      nom: "NATURE_RCA",
+      code: "REPRISE_VIE_COMMUNE",
+      libelle: "reprise de la vie commune",
+      estActif: true,
+      decisionCouple: true,
+      article: "la",
+      categorieRCRCA: "DIVORCE"
+    },
+    dateInscription: null,
+    dateDerniereMaj: 1435183200,
+    dateDerniereDelivrance: 1457046000,
+    statutsFiche: [
+      {
+        statut: "INACTIF",
+        dateStatut: 1618480800000
+      }
+    ],
+    alertes: [],
+    dureeInscription: {},
+    codesMandataires: [],
+    typeInscription: "INSCRIPTION",
+    inscriptionsImpactees: [],
+    inscriptionsLiees: [],
+    interesses: [
+      {
+        nomFamille: "FAVARO",
+        prenoms: [{ valeur: "Enrico", numeroOrdre: 0 }],
+        numeroOrdreSaisi: 1,
+        villeNaissance: "Lyon",
+        paysNaissance: "France",
+        regionNaissance: "Rhône",
+        arrondissementNaissance: "8",
+        nationalite: "FRANCAISE",
+        sexe: "MASCULIN",
+        autreNoms: [],
+        autrePrenoms: [],
+        dateNaissance: { jour: "01", mois: "09", annee: "1983" }
+      },
+      {
+        nomFamille: "MAHMOUDI",
+        prenoms: [{ valeur: "Ahmeda", numeroOrdre: 0 }],
+        numeroOrdreSaisi: 1,
+        villeNaissance: "Lyon",
+        paysNaissance: "France",
+        regionNaissance: "Rhône",
+        arrondissementNaissance: "8",
+        nationalite: "FRANCAISE",
+        sexe: "MASCULIN",
+        autreNoms: [],
+        autrePrenoms: [],
+        dateNaissance: { jour: "01", mois: "09", annee: "1983" }
+      }
+    ],
+    decision: {
+      dateDecision: [2018, 2, 15],
+      type: "JUGEMENT",
+      autorite: {
+        type: "TRIBUNAL_JUDICIAIRE",
+        numeroDepartement: "75",
+        libelleDepartement: "Seine",
+        pays: "France",
+        arrondissement: "18"
+      },
+      enrolementRg: "1345",
+      enrolementPortalis: "789521545",
+      sourceConfirmation: {
+        autorite: {
+          type: null,
+          ville: "Marseille",
+          arrondissement: "10",
+          numeroDepartement: "13",
+          libelleDepartement: "Bouches-du-Rhône",
+          pays: "France",
+          region: "Ile de france",
+          nomNotaire: "nomnotaire",
+          prenomNotaire: "prenomnotaire",
+          numeroCrpcen: "",
+          nomOnac: "",
+          prenomOnac: ""
+        },
+        dateDecision: [2020, 3, 17],
+        enrolementRg: "enrolementRg",
+        enrolementPortalis: "enrolementPortalis",
+        type: "ARRET"
+      }
+    },
+    personnes: [
+      {
+        id: "e7114c57-d00d-48ad-bbee-af2b01e2da63",
+        nom: "Faulkner",
+        sexe: "MASCULIN",
+        nationalite: "FRANCAISE",
+        naissance: {
+          minute: null,
+          heure: null,
+          jour: 26,
+          mois: 2,
+          annee: 1980,
+          voie: "",
+          ville: "marseille",
+          arrondissement: "2",
+          region: "Provence-Aples-côte d'azur",
+          pays: "France"
+        },
+        deces: {
+          mois: 7,
+          annee: 2020,
+          voie: "",
+          ville: "londres",
+          arrondissement: "",
+          region: "Angleterre",
+          pays: "Grande bretagne"
+        },
+        autresNoms: [{ nom: "Elisa", type: "PSEUDONYME" }],
+        prenoms: ["Elie_madelaine-henriette", "Maëlla", "Marie-Charlotte"],
+        autresPrenoms: ["Solomon"],
+        parents: [],
+        enfants: [
+          {
+            nom: "Paul",
+            prenoms: ["Justice"]
+          },
+          {
+            nom: "Barton",
+            prenoms: ["Buck"]
+          },
+          {
+            nom: "Janine",
+            prenoms: ["Alyce"]
+          }
+        ],
+        rcs: [
+          { id: "85df1d10-71b7-4336-9463-bb1c5760d1a0", numero: "3", referenceComplete: "" },
+          { id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918", numero: "4", referenceComplete: "" }
+        ],
+        rcas: [{ id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e", numero: "4094", referenceComplete: "" }],
+        pacss: [
+          {
+            id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e0",
+            numero: "123456",
+            referenceComplete: ""
+          },
+          {
+            id: "89c9d030-26c3-41d3-bdde-8b4dcc0420df",
+            numero: "1234506",
+            referenceComplete: ""
+          },
+          {
+            id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e1",
+            numero: "1234508",
+            referenceComplete: ""
+          },
+          {
+            id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e2",
+            numero: "1234509",
+            referenceComplete: ""
+          },
+          {
+            id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e3",
+            numero: "1234510",
+            referenceComplete: ""
+          }
+        ],
+        actes: [
+          {
+            id: "b41079a5-9e8d-478c-b04c-c4c2ac67134f",
+            numero: "413",
+            nature: NatureActe.ABSENCE,
+            referenceComplete: ""
+          }
+        ]
+      }
+    ]
+  } as IFicheRcaDto
+};
+
+export const ficheRcaDecisionJuridictionEtrangere = {
+  ...mockRcaDto.data,
   id: "8c9ea77f-55dc-494f-8e75-b136ac7ce61d",
   categorie: "RCA",
   annee: "2020",
   numero: "4013",
-  dateInscription: DateUtils.getDateFromDateCompose({
-    jour: "23",
-    mois: "02",
-    annee: "2020"
-  }),
-  dateDerniereMaj: new Date(1552554000000),
-  dateDerniereDelivrance: new Date(1554105600000),
+  dateInscription: [2020, 2, 23],
+  dateDerniereMaj: new Date(1552554000000).getTime(),
+  dateDerniereDelivrance: new Date(1554105600000).getTime(),
   alertes: [],
   decision: {
-    dateDecision: 1606374000000,
+    dateDecision: [2020, 11, 26],
     type: "JUGEMENT",
     autorite: {
       typeAutorite: "JURIDICTION",
@@ -26,7 +211,7 @@ export const FicheRcaDecisionJuridictionEtrangere = {
       arrondissement: "18",
       typeJuridiction: "Tribunal judiciaire"
     },
-    dateDecisionEtrangere: 1606374000000
+    dateDecisionEtrangere: [2020, 11, 26]
   },
   interesses: [
     {
@@ -90,6 +275,7 @@ export const FicheRcaDecisionJuridictionEtrangere = {
   ],
   personnes: [
     {
+      id: "",
       nom: "Prodesk",
       sexe: "FEMININ",
       nationalite: "ETRANGERE",
@@ -113,8 +299,8 @@ export const FicheRcaDecisionJuridictionEtrangere = {
       enfants: [],
       rcs: [],
       rcas: [
-        { id: "8c9ea77f-55dc-494f-8e75-b136ac7ce61c", numero: "4012" },
-        { id: "8c9ea77f-55dc-494f-8e75-b136ac7ce61d", numero: "4013" }
+        { id: "8c9ea77f-55dc-494f-8e75-b136ac7ce61c", numero: "4012", referenceComplete: "" },
+        { id: "8c9ea77f-55dc-494f-8e75-b136ac7ce61d", numero: "4013", referenceComplete: "" }
       ],
       pacss: [],
       actes: []
@@ -131,23 +317,15 @@ export const FicheRcaDecisionJuridictionEtrangere = {
     categorieRCRCA: "REGIME MATRIMONIAL"
   },
   typeInscription: "INSCRIPTION"
-} as any as IFicheRcRca;
+} as IFicheRcaDto;
 
-export const FicheRcaDecisionAvecInstructionProcureur = {
+export const ficheRcaDecisionAvecInstructionProcureur = {
+  ...ficheRcaDecisionJuridictionEtrangere,
   id: "8c9ea77f-55dc-494f-8e75-b136ac7ce61c",
   categorie: "RCA",
-  annee: "2020",
   numero: "4012",
-  dateInscription: DateUtils.getDateFromDateCompose({
-    jour: "23",
-    mois: "02",
-    annee: "2020"
-  }),
-  dateDerniereMaj: new Date(1552554000000),
-  dateDerniereDelivrance: new Date(1554105600000),
-  alertes: [],
   decision: {
-    dateDecision: 1606374000000,
+    dateDecision: [2020, 11, 26],
     type: "ONAC",
     autorite: {
       typeAutorite: "ONAC",
@@ -187,53 +365,6 @@ export const FicheRcaDecisionAvecInstructionProcureur = {
       dateNaissance: { jour: "02", mois: "09", annee: "1983" }
     }
   ],
-  statutsFiche: [
-    {
-      statut: "ACTIF",
-      motif: "",
-      statutFicheEvenement: {
-        id: "594dcd34-846a-47c7-aed1-94352cb4ea51",
-        date: { jour: "13", mois: "9", annee: "2011" },
-        ville: "Barcelone",
-        region: "Catalogne",
-        pays: "Espagne"
-      },
-      complementMotif: "",
-      dateStatut: 1618480800000
-    }
-  ],
-  personnes: [
-    {
-      nom: "Prodesk",
-      sexe: "FEMININ",
-      nationalite: "ETRANGERE",
-      naissance: {
-        minute: null,
-        heure: null,
-        jour: 25,
-        mois: 6,
-        annee: 1990,
-        voie: null,
-        ville: "Barcelone",
-        arrondissement: null,
-        region: "Catalogne",
-        pays: "Espagne",
-        lieuReprise: null
-      },
-      autresNoms: [],
-      prenoms: ["Elodie"],
-      autresPrenoms: [],
-      parents: [],
-      enfants: [],
-      rcs: [],
-      rcas: [
-        { id: "8c9ea77f-55dc-494f-8e75-b136ac7ce61c", numero: "4012" },
-        { id: "8c9ea77f-55dc-494f-8e75-b136ac7ce61d", numero: "4013" }
-      ],
-      pacss: [],
-      actes: []
-    }
-  ],
   nature: {
     id: "168a436b-330d-4c3c-83e0-e49d27390132",
     nom: "NATURE_RCA",
@@ -245,23 +376,17 @@ export const FicheRcaDecisionAvecInstructionProcureur = {
     categorieRCRCA: "FILIATION"
   },
   typeInscription: "INSCRIPTION"
-} as any as IFicheRcRca;
+} as IFicheRcaDto;
 
-export const FicheRcaDecisionNotaireConvention = {
+export const ficheRcaDecisionNotaireConvention = {
+  ...ficheRcaDecisionJuridictionEtrangere,
   id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e",
   categorie: "RCA",
   annee: "1998",
   numero: "4094",
-  dateInscription: DateUtils.getDateFromDateCompose({
-    jour: "1998",
-    mois: "11",
-    annee: "23"
-  }),
-  dateDerniereMaj: new Date(1552554000000),
-  dateDerniereDelivrance: new Date(1554105600000),
-  alertes: [],
+  dateInscription: [1998, 11, 23],
   decision: {
-    dateDecision: 1591167600000,
+    dateDecision: [2020, 6, 3],
     type: "CONVENTION",
     autorite: {
       typeAutorite: "NOTAIRE",
@@ -369,6 +494,7 @@ export const FicheRcaDecisionNotaireConvention = {
   ],
   personnes: [
     {
+      id: "",
       nom: "Durant",
       sexe: "FEMININ",
       nationalite: "FRANCAISE",
@@ -408,40 +534,28 @@ export const FicheRcaDecisionNotaireConvention = {
       autresPrenoms: ["Mireille"],
       parents: [
         {
-          id: null,
-          typeLienParente: "DIRECT",
           nom: "Glenn",
           prenoms: ["Pearl", "Ginger"]
         },
         {
-          id: null,
-          typeLienParente: "DIRECT",
           nom: "Nora",
           prenoms: ["Reed"]
         }
       ],
       enfants: [
         {
-          id: null,
-          typeLienParente: "DIRECT",
           nom: "Janine",
           prenoms: ["Alyce"]
         },
         {
-          id: null,
-          typeLienParente: "DIRECT",
           nom: "Barton",
           prenoms: ["Buck"]
         },
         {
-          id: null,
-          typeLienParente: "DIRECT",
           nom: "Kirsten",
           prenoms: ["Louella"]
         },
         {
-          id: null,
-          typeLienParente: "ADOPTION",
           nom: "Reynolds",
           prenoms: ["Mcleod", "Bates"]
         }
@@ -449,17 +563,20 @@ export const FicheRcaDecisionNotaireConvention = {
       rcs: [
         {
           id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918",
-          numero: "4"
+          numero: "4",
+          referenceComplete: ""
         },
         {
           id: "76b62678-8b06-4442-ad5b-b9207627a6e3",
-          numero: "1"
+          numero: "1",
+          referenceComplete: ""
         }
       ],
       rcas: [
         {
           id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e",
-          numero: "4094"
+          numero: "4094",
+          referenceComplete: ""
         }
       ],
       pacss: [],
@@ -467,7 +584,8 @@ export const FicheRcaDecisionNotaireConvention = {
         {
           id: "923a10fb-0b15-452d-83c0-d24c76d1de8d",
           numero: "254",
-          nature: "NAISSANCE"
+          nature: NatureActe.NAISSANCE,
+          referenceComplete: ""
         }
       ]
     }
@@ -483,9 +601,10 @@ export const FicheRcaDecisionNotaireConvention = {
     categorieRCRCA: "FILIATION"
   },
   typeInscription: "INSCRIPTION"
-} as any as IFicheRcRca;
+} as IFicheRcaDto;
 
 export const idFicheRca = "8c9ea77f-55dc-494f-8e75-b136ac7ce63d";
+
 export const ficheRca = {
   data: {
     id: idFicheRca,
@@ -676,15 +795,13 @@ export const ficheRca = {
         autresPrenoms: [],
         parents: [
           {
-            id: null,
-            typeLienParente: "DIRECT",
             nom: "Nora",
             prenoms: ["Reed"]
           }
         ],
         enfants: [],
-        rcs: [{ id: "8244d136-729b-4fd3-b88a-fa1fe30a2214", numero: "2" }],
-        rcas: [{ id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63d", numero: "4093" }],
+        rcs: [{ id: "8244d136-729b-4fd3-b88a-fa1fe30a2214", numero: "2", referenceComplete: "" }],
+        rcas: [{ id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63d", numero: "4093", referenceComplete: "" }],
         pacss: [],
         actes: []
       }
@@ -693,13 +810,12 @@ export const ficheRca = {
       id: "168a436b-330d-4c3c-83e0-e49d27390132",
       nom: "NATURE_RCA",
       code: "ADOPTION_SIMPLE_ETRANGER_EXEQUATUR",
-      libelle:
-        "adoption simple prononcée à l'étranger avec jugement d'exequatur",
+      libelle: "adoption simple prononcée à l'étranger avec jugement d'exequatur",
       estActif: true,
       decisionCouple: false,
       article: "l'",
       categorieRCRCA: "FILIATION"
     },
     typeInscription: "INSCRIPTION"
-  }
+  } as IFicheRcaDto
 };

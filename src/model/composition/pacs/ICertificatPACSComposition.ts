@@ -1,30 +1,14 @@
 import { getValeurOuVide } from "@util/Utils";
 import { Decret, IDecret } from "../../etatcivil/commun/IDecret";
-import { IFichePacs } from "../../etatcivil/pacs/IFichePacs";
-import { TypeCanal } from "../../requete/enum/TypeCanal";
+import { FichePacs } from "../../etatcivil/pacs/FichePacs";
 import { IRequerant } from "../../requete/IRequerant";
-import {
-  CommunComposition,
-  ICommunComposition
-} from "../commun/ICommunComposition";
-import {
-  IParametresComposition,
-  ParametresComposition
-} from "../commun/IParametresComposition";
-import {
-  IRequerantComposition,
-  RequerantComposition
-} from "../commun/IRequerantComposition";
-import {
-  formatLibellesDecrets,
-  TypeLibelleDecretComposition
-} from "../commun/TypeDecretComposition";
+import { TypeCanal } from "../../requete/enum/TypeCanal";
+import { CommunComposition, ICommunComposition } from "../commun/ICommunComposition";
+import { IParametresComposition, ParametresComposition } from "../commun/IParametresComposition";
+import { IRequerantComposition, RequerantComposition } from "../commun/IRequerantComposition";
+import { TypeLibelleDecretComposition, formatLibellesDecrets } from "../commun/TypeDecretComposition";
 import { ParagrapheComposition } from "./IParagraphesPacsComposition";
-import {
-  IPartenaire1Composition,
-  IPartenaire2Composition,
-  PartenaireComposition
-} from "./IPartenaireComposition";
+import { IPartenaire1Composition, IPartenaire2Composition, PartenaireComposition } from "./IPartenaireComposition";
 
 export const NOM_DOCUMENT_ATTESTATION_PACS = "Attestation PACS";
 
@@ -46,7 +30,7 @@ export interface ICertificatPACSComposition
 export const CertificatPACSComposition = {
   creerCertificatPACS(
     decrets: IDecret[],
-    fichePacs: IFichePacs,
+    fichePacs: FichePacs,
     canal?: TypeCanal,
     requerant?: IRequerant,
     numeroRequete?: string
@@ -60,38 +44,20 @@ export const CertificatPACSComposition = {
     CommunComposition.ajoutParamCommuns(certificatPACS, numeroRequete);
     ParametresComposition.ajoutParametres(certificatPACS);
     RequerantComposition.ajoutInfosRequerant(certificatPACS, canal, requerant);
-    if (fichePacs && fichePacs.partenaires) {
-      PartenaireComposition.ajoutInfosPartenaire1(
-        certificatPACS,
-        fichePacs.partenaires[0]
-      );
-      PartenaireComposition.ajoutInfosPartenaire2(
-        certificatPACS,
-        fichePacs.partenaires[1]
-      );
+    if (fichePacs?.partenaires) {
+      PartenaireComposition.ajoutInfosPartenaire1(certificatPACS, fichePacs.partenaires[0]);
+      PartenaireComposition.ajoutInfosPartenaire2(certificatPACS, fichePacs.partenaires[1]);
     }
 
-    ParagrapheComposition.ajoutParagrapheEnregistrementPACS(
-      certificatPACS,
-      fichePacs
-    );
+    ParagrapheComposition.ajoutParagrapheEnregistrementPACS(certificatPACS, fichePacs);
     if (fichePacs.modifications && fichePacs.modifications.length > 0) {
-      ParagrapheComposition.ajoutParagrapheModificationPACS(
-        certificatPACS,
-        fichePacs.modifications
-      );
+      ParagrapheComposition.ajoutParagrapheModificationPACS(certificatPACS, fichePacs.modifications);
     }
     if (fichePacs.dissolution) {
-      ParagrapheComposition.ajoutParagrapheDissolutionPACS(
-        certificatPACS,
-        fichePacs.dissolution
-      );
+      ParagrapheComposition.ajoutParagrapheDissolutionPACS(certificatPACS, fichePacs.dissolution);
     }
     if (fichePacs.annulation) {
-      ParagrapheComposition.ajoutParagrapheAnnulationPACS(
-        certificatPACS,
-        fichePacs.annulation
-      );
+      ParagrapheComposition.ajoutParagrapheAnnulationPACS(certificatPACS, fichePacs.annulation);
     }
     return certificatPACS;
   }

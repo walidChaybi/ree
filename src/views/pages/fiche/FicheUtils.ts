@@ -5,34 +5,13 @@ import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IBandeauFiche } from "@model/etatcivil/fiche/IBandeauFiche";
 import { SimplePersonne } from "@model/etatcivil/fiche/SimplePersonne";
+import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
+import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import { jointAvec } from "@util/Utils";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { IDataFicheProps } from "./FichePage";
 import { setDataBandeau } from "./contenu/BandeauFicheUtils";
-import {
-  getPanelsActe,
-  getParamsAffichageFicheActe
-} from "./hook/constructionComposants/acte/FicheActeUtils";
-import { getPanelsPacs } from "./hook/constructionComposants/pacs/FichePacsUtils";
-import { getPanelsRc } from "./hook/constructionComposants/rcrca/FicheRcUtils";
-import { getPanelsRca } from "./hook/constructionComposants/rcrca/FicheRcaUtils";
-
-export function getFicheTitle(
-  categorie: string,
-  annee: string,
-  numero: string,
-  personnes: SimplePersonne[],
-  typeFiche: TypeFiche
-) {
-  const noms = jointAvec(
-    personnes.map(p => `${p.nom} ${p.prenom}`),
-    " et "
-  );
-  const title = `${categorie.toLocaleUpperCase()} - ${noms}`;
-  return typeFiche === TypeFiche.ACTE
-    ? title
-    : title + ` - N° ${annee} - ${numero}`;
-}
+import { getPanelsActe, getParamsAffichageFicheActe } from "./hook/constructionComposants/acte/FicheActeUtils";
 
 export interface IAccordionReceSection {
   panels: SectionPanelProps[];
@@ -46,32 +25,29 @@ export interface IFiche {
   visuBoutonAlertes: boolean;
 }
 
-export function setFiche(
-  utilisateurConnecte: IOfficier,
-  dataFiche?: IDataFicheProps,
-  data?: any
-): IFiche {
+export const getFicheTitle = (categorie: string, annee: string, numero: string, personnes: SimplePersonne[], typeFiche: TypeFiche) => {
+  const noms = jointAvec(
+    personnes.map(p => `${p.nom} ${p.prenom}`),
+    " et "
+  );
+  const title = `${categorie.toLocaleUpperCase()} - ${noms}`;
+  return typeFiche === TypeFiche.ACTE ? title : title + ` - N° ${annee} - ${numero}`;
+};
+
+export const setFiche = (utilisateurConnecte: IOfficier, dataFiche?: IDataFicheProps, data?: any): IFiche => {
   const fiche = {} as IFiche;
 
-  if (
-    dataFiche &&
-    dataFiche.categorie &&
-    data &&
-    dataFiche.identifiant === data.id
-  ) {
+  if (dataFiche?.categorie && data && dataFiche.identifiant === data.id) {
     fiche.bandeauFiche = setDataBandeau(dataFiche, data);
 
     switch (dataFiche.categorie) {
       case TypeFiche.RC:
-        fiche.panelsFiche = getPanelsRc(data);
-        break;
-
       case TypeFiche.RCA:
-        fiche.panelsFiche = getPanelsRca(data);
+        fiche.panelsFiche = (data as FicheRcRca).commePanelAccordionReceSection;
         break;
 
       case TypeFiche.PACS:
-        fiche.panelsFiche = getPanelsPacs(data);
+        fiche.panelsFiche = (data as FichePacs).commePanelAccordionReceSection;
         break;
 
       case TypeFiche.ACTE:
@@ -91,4 +67,4 @@ export function setFiche(
   }
 
   return fiche;
-}
+};

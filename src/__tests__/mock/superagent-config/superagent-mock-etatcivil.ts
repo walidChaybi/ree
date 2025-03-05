@@ -1,3 +1,5 @@
+import { ReponseEnregistrementProjetActe } from "@mock/data/ProjetActe";
+import { fichePacs, idFichePacs, pacsModificationNotaire } from "@mock/data/fichePACS";
 import {
   ActeAnalyseMarginales,
   derniereAnalyseMarginaleAvecDeuxVocableEtNomPartie1,
@@ -8,10 +10,6 @@ import { ReponseAppelAddAlerteActe, ReponseAppelGetAlertesActe } from "../data/A
 import { acteExtraitSaisie } from "../data/DonneesSaisieExtrait";
 import { imagePngVideBase64 } from "../data/ImagePng";
 import { decrets } from "../data/NomenclatureEtatCivilDecrets";
-import { pacsModificationNotaire } from "../data/PACS";
-import { ReponseEnregistrementProjetActe } from "../data/ProjetActe";
-import mockRC from "../data/RC.json";
-import mockRCA from "../data/RCA.json";
 import { ReponseAppelRMCActe, ReponseAppelRMCActe4DernierResultats, ReponseAppelRMCActe4PremiersResultats } from "../data/RMCActe";
 import { RMCAutoPersonneResponseAlpha, RMCAutoPersonneResponseBeta } from "../data/RMCAutoPersonne";
 import {
@@ -47,9 +45,8 @@ import {
   acteNaissance,
   acteNationalite
 } from "../data/ficheEtBandeau/ficheActe";
-import { fichePacs, idFichePacs } from "../data/fichePacs";
-import { inscriptionsRc } from "../data/ficheRC";
-import { FicheRcaDecisionJuridictionEtrangere, ficheRca, idFicheRca } from "../data/ficheRCA";
+import { inscriptionsRc, mockRcDto } from "../data/ficheRC";
+import { ficheRca, ficheRcaDecisionJuridictionEtrangere, idFicheRca, mockRcaDto } from "../data/ficheRCA";
 import { listeDeuxPersonnes } from "../data/listePersonnes";
 import { EnregistrerMentionsResultat, MetamodeleAideSaisie, mentions, mentionsPlurilingues } from "../data/mentions";
 import {
@@ -81,23 +78,22 @@ export const configEtatcivil = [
      */
     fixtures: function (match: any, params: any, headers: any, context: any) {
       if (match[1] === "/repertoirecivil/rc/7566e16c-2b0e-11eb-adc1-0242ac120002") {
-        return { data: mockRC.data };
+        return { data: mockRcDto.data };
       }
 
       if (match[1] === "/repertoirecivil/rca/135e4dfe-9757-4d5d-8715-359c6e73289b") {
-        return { data: mockRCA.data };
+        return { data: mockRcaDto.data };
       }
 
-      if (match[1] === "/repertoirecivil/rca/215e4dfe-9757-4d5d-8715-359c6e73288c") {
-        return { data: FicheRcaDecisionJuridictionEtrangere };
+      if (
+        match[1] === "/repertoirecivil/rca/215e4dfe-9757-4d5d-8715-359c6e73288c" ||
+        match[1] === "/repertoirecivil/rc/135e4dfe-9757-4d5d-8715-359c6e73289b"
+      ) {
+        return { data: ficheRcaDecisionJuridictionEtrangere };
       }
 
       if (match[1] === `/repertoirecivil/rca/${idFicheRca}`) {
         return { ...ficheRca };
-      }
-
-      if (match[1] === "/repertoirecivil/rc/135e4dfe-9757-4d5d-8715-359c6e73289b") {
-        return { data: FicheRcaDecisionJuridictionEtrangere };
       }
 
       if (match[1] === `/repertoirecivil/pacs/${idFichePacs}`) {

@@ -1,10 +1,8 @@
 import { SimplePersonne } from "@model/etatcivil/fiche/SimplePersonne";
 import IFournisseurDonneesBandeau from "./IFournisseurDonneesBandeau";
 
-export abstract class FournisseurDonneesBandeau
-  implements IFournisseurDonneesBandeau
-{
-  personnes: SimplePersonne[];
+export abstract class FournisseurDonneesBandeau implements IFournisseurDonneesBandeau {
+  personnes: any[];
 
   constructor(protected data: any) {
     this.personnes = this.getPersonnesAsAny();

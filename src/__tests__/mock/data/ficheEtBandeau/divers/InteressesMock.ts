@@ -1,6 +1,9 @@
-/* istanbul ignore file */
+import { FicheRcDecisionNotaire } from "@mock/data/ficheRC";
+import { ficheRcaDecisionJuridictionEtrangere } from "@mock/data/ficheRCA";
+import { IFicheRcDto, IFicheRcaDto } from "@model/etatcivil/rcrca/FicheRcRca";
 
-export const ficheDeuxInteresseNumeroOrdreNonOrdonne = {
+export const ficheDeuxInteresseNumeroOrdreNonOrdonne: IFicheRcDto = {
+  ...FicheRcDecisionNotaire,
   interesses: [
     {
       numeroOrdreSaisi: 2,
@@ -9,7 +12,7 @@ export const ficheDeuxInteresseNumeroOrdreNonOrdonne = {
       paysNaissance: "Italie",
       regionNaissance: "",
       arrondissementNaissance: "",
-      nationalite: "Etrangère",
+      nationalite: "ETRANGERE",
       autreNoms: ["favarotti"],
       autrePrenoms: [],
       prenoms: [
@@ -23,7 +26,7 @@ export const ficheDeuxInteresseNumeroOrdreNonOrdonne = {
         annee: "1980"
       },
 
-      sexe: "Masculin"
+      sexe: "MASCULIN"
     },
     {
       numeroOrdreSaisi: 1,
@@ -32,7 +35,7 @@ export const ficheDeuxInteresseNumeroOrdreNonOrdonne = {
       paysNaissance: "France",
       regionNaissance: "Ile de france",
       arrondissementNaissance: "",
-      nationalite: "Française",
+      nationalite: "FRANCAISE",
       autreNoms: [],
       autrePrenoms: ["AutreP1", "AutreP2"],
       prenoms: [{ valeur: "P1", numeroOrdre: 0 }],
@@ -42,7 +45,7 @@ export const ficheDeuxInteresseNumeroOrdreNonOrdonne = {
         annee: "1972"
       },
 
-      sexe: "Masculin"
+      sexe: "MASCULIN"
     }
   ],
   mariageInteresses: {
@@ -59,7 +62,8 @@ export const ficheDeuxInteresseNumeroOrdreNonOrdonne = {
   }
 };
 
-export const ficheUnInteressePrenomNonOrdonne = {
+export const ficheUnInteressePrenomNonOrdonne: IFicheRcDto = {
+  ...FicheRcDecisionNotaire,
   interesses: [
     {
       numeroOrdreSaisi: 2,
@@ -68,7 +72,7 @@ export const ficheUnInteressePrenomNonOrdonne = {
       paysNaissance: "Italie",
       regionNaissance: "",
       arrondissementNaissance: "",
-      nationalite: "Etrangère",
+      nationalite: "ETRANGERE",
       autreNoms: ["favarotti", "favarotti2"],
       autrePrenoms: ["autreP1", "autreP2"],
       prenoms: [
@@ -82,14 +86,18 @@ export const ficheUnInteressePrenomNonOrdonne = {
         annee: "1980"
       },
 
-      sexe: "Masculin"
+      sexe: "MASCULIN"
     }
   ]
 };
 
-export const ficheUnInteresseVilleNaissanceFranceSansArrondissement = {
+export const ficheUnInteresseVilleNaissanceFranceSansArrondissement: IFicheRcDto = {
+  ...FicheRcDecisionNotaire,
   interesses: [
     {
+      numeroOrdreSaisi: 0,
+      nomFamille: "",
+      dateNaissance: { annee: "2020" },
       villeNaissance: "Nantes",
       paysNaissance: "France",
       regionNaissance: "Pays de la Loire",
@@ -98,9 +106,13 @@ export const ficheUnInteresseVilleNaissanceFranceSansArrondissement = {
   ]
 };
 
-export const ficheUnInteresseVilleNaissanceFranceAvecArrondissementNonParis = {
+export const ficheUnInteresseVilleNaissanceFranceAvecArrondissementNonParis: IFicheRcDto = {
+  ...FicheRcDecisionNotaire,
   interesses: [
     {
+      numeroOrdreSaisi: 0,
+      nomFamille: "",
+      dateNaissance: { annee: "2020" },
       villeNaissance: "Lyon",
       paysNaissance: "France",
       regionNaissance: "Auvergne-Rhône-Alpes",
@@ -109,9 +121,13 @@ export const ficheUnInteresseVilleNaissanceFranceAvecArrondissementNonParis = {
   ]
 };
 
-export const ficheUnInteresseVilleNaissanceFranceAvecArrondissementParis = {
+export const ficheUnInteresseVilleNaissanceFranceAvecArrondissementParis: IFicheRcDto = {
+  ...FicheRcDecisionNotaire,
   interesses: [
     {
+      numeroOrdreSaisi: 0,
+      nomFamille: "",
+      dateNaissance: { annee: "2020" },
       villeNaissance: "Paris",
       paysNaissance: "France",
       regionNaissance: "",
@@ -120,9 +136,13 @@ export const ficheUnInteresseVilleNaissanceFranceAvecArrondissementParis = {
   ]
 };
 
-export const ficheUnInteresseVilleNaissanceALEtrangerSansRegion = {
+export const ficheUnInteresseVilleNaissanceALEtrangerSansRegion: IFicheRcDto = {
+  ...FicheRcDecisionNotaire,
   interesses: [
     {
+      numeroOrdreSaisi: 0,
+      nomFamille: "",
+      dateNaissance: { annee: "2020" },
       villeNaissance: "Berlin",
       paysNaissance: "Allemagne",
       regionNaissance: "",
@@ -131,9 +151,13 @@ export const ficheUnInteresseVilleNaissanceALEtrangerSansRegion = {
   ]
 };
 
-export const ficheUnInteresseVilleNaissanceALEtrangerAvecRegion = {
+export const ficheUnInteresseVilleNaissanceALEtrangerAvecRegion: IFicheRcDto = {
+  ...FicheRcDecisionNotaire,
   interesses: [
     {
+      numeroOrdreSaisi: 0,
+      nomFamille: "",
+      dateNaissance: { annee: "2020" },
       villeNaissance: "Berlin",
       paysNaissance: "Allemagne",
       regionNaissance: "RegionBerlin",
@@ -142,7 +166,8 @@ export const ficheUnInteresseVilleNaissanceALEtrangerAvecRegion = {
   ]
 };
 
-export const ficheUnInteresseLieuDecesDateDeces = {
+export const ficheUnInteresseLieuDecesDateDeces: IFicheRcaDto = {
+  ...ficheRcaDecisionJuridictionEtrangere,
   categorie: "RCA",
   interesses: [
     {
@@ -162,7 +187,7 @@ export const ficheUnInteresseLieuDecesDateDeces = {
       paysNaissance: "Italie",
       regionNaissance: "",
       arrondissementNaissance: "",
-      nationalite: "Etrangère",
+      nationalite: "ETRANGERE",
       autreNoms: ["favarotti", "favarotti2"],
       autrePrenoms: ["autreP1", "autreP2"],
       prenoms: [
@@ -175,7 +200,7 @@ export const ficheUnInteresseLieuDecesDateDeces = {
         mois: "05",
         annee: "1980"
       },
-      sexe: "Masculin"
+      sexe: "MASCULIN"
     }
   ]
 };

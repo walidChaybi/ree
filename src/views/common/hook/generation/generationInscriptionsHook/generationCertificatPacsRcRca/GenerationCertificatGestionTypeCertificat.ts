@@ -6,8 +6,8 @@ import { TypeCertificatComposition } from "@model/composition/type/TypeCertifica
 import { Decret } from "@model/etatcivil/commun/IDecret";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
-import { IFichePacs } from "@model/etatcivil/pacs/IFichePacs";
-import { IFicheRcRca } from "@model/etatcivil/rcrca/IFicheRcRca";
+import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
+import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
@@ -72,7 +72,7 @@ export function getTypeFiche(typeCertificat: TypePacsRcRca): TypeFiche | undefin
 
 export const useConstructionCertificatPacsRcRca = (
   typeCertificat: TypePacsRcRca,
-  fichePacs: IFichePacs | IFicheRcRca,
+  fichePacsOuRcRca?: FichePacs | FicheRcRca,
   requete?: IRequeteTableauDelivrance,
   inscriptionsRcRadiation?: IInscriptionRc
 ): TypeCertificatComposition | undefined => {
@@ -81,7 +81,7 @@ export const useConstructionCertificatPacsRcRca = (
   let certificatComposition: TypeCertificatComposition | undefined;
   let titulaire: ITitulaireRequeteTableau | undefined;
 
-  if (!requete || !fichePacs) {
+  if (!requete || !fichePacsOuRcRca) {
     return;
   }
   if (requete.titulaires) {
@@ -92,7 +92,7 @@ export const useConstructionCertificatPacsRcRca = (
     case TypePacsRcRca.PACS:
       certificatComposition = CertificatPACSComposition.creerCertificatPACS(
         Decret.getDecretsAttestationPacs(decrets),
-        fichePacs as IFichePacs,
+        fichePacsOuRcRca as FichePacs,
         requete.canal,
         requete.requerant,
         requete.numero
@@ -100,7 +100,7 @@ export const useConstructionCertificatPacsRcRca = (
       break;
     case TypePacsRcRca.RC:
       certificatComposition = CertificatRCComposition.creerCertificatRC(
-        SpecificationRC.getElementsJasper(fichePacs as IFicheRcRca, decrets, inscriptionsRcRadiation),
+        SpecificationRC.getElementsJasper(fichePacsOuRcRca as FicheRcRca, decrets, inscriptionsRcRadiation),
         requete?.canal,
         requete?.requerant,
         requete?.numero,
@@ -109,7 +109,7 @@ export const useConstructionCertificatPacsRcRca = (
       break;
     case TypePacsRcRca.RCA:
       certificatComposition = CertificatRCAComposition.creerCertificatRCA(
-        specificationRCA.getElementsJasper(fichePacs as IFicheRcRca, decrets),
+        specificationRCA.getElementsJasper(fichePacsOuRcRca as FicheRcRca, decrets),
         requete?.canal,
         requete?.requerant,
         requete?.numero,
