@@ -3,8 +3,6 @@ import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import Tooltip from "@mui/material/Tooltip";
 import { URL_ACCUEIL } from "@router/ReceUrls";
-import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import logoReceBlanc from "../../../img/logo-rece-blanc.svg";
@@ -45,7 +43,7 @@ export const Header: React.FC<HeaderProps> = ({ onClick }) => {
       <div className="coteDroit">
         {officierHabiliterPourLeDroit(utilisateurConnecte, Droit.CONSULTER) && (
           <>
-            {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_CONSULT_ACTE_RQT) && <BoutonRechercheRmc />}
+            <BoutonRechercheRmc />
             <div className="traitVerticalConteneur">
               <div className="traitVertical" />
             </div>

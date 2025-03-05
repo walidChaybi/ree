@@ -182,18 +182,6 @@ test("NE DOIT PAS afficher le tableau de SuiviDossier QUAND le FF est inactif.",
   });
 });
 
-test("NE DOIT PAS afficher les actions 'Retour SDANF' QUAND le FF est activé", () => {
-  localStorageFeatureFlagMock.setItem("FF_RETOUR_SDANF", "false");
-  render(<HookConsumerSuiviDossier requete={requete} />);
-
-  waitFor(() => {
-    expect(screen.queryByText("Acte irrecevable")).toBeNull();
-    expect(screen.queryByText("Élément manquant")).toBeNull();
-    expect(screen.queryByText("Suspicion de fraude / nouvel élément")).toBeNull();
-  });
-  localStorageFeatureFlagMock.setItem("FF_RETOUR_SDANF", "true");
-});
-
 test("NE DOIT PAS afficher le tableau de SuiviDossier QUAND le FF est inactif.", () => {
   localStorageFeatureFlagMock.setItem("FF_INTEGRATION_CIBLE_REQUETE_NATURALISATION", "false");
   render(<HookConsumerSuiviDossier requete={requeteAvecTitulaires} />);

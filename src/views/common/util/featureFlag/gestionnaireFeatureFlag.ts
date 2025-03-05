@@ -17,16 +17,10 @@ class GestionnaireFeatureFlag {
   }
 
   positionneFlagsAPartirDuHeader(header: any, idSSOUtilisateur: string) {
-    // Exemple canary testing '[{"0123456": ["FF_DELIVRANCE_EXTRAITS_COPIES"]}, {"0456255": ["FF_DELIV_CS","FF_RQT_INFORMATION"]}]';
-    const idSSOsEtFeaturesFlags: IdSSOEtFeaturesFlags[] | undefined =
-      this.getIdSSOsEtFeaturesFlags(header);
+    // Exemple canary testing '[{"0123456": ["FF_DELIVRANCE_EXTRAITS_COPIES"]}, {"0456255": ["FF_DELIV_CS"]}]';
+    const idSSOsEtFeaturesFlags: IdSSOEtFeaturesFlags[] | undefined = this.getIdSSOsEtFeaturesFlags(header);
 
-    this.supprimeTousLesFlags([
-      FeatureFlag.FF_CONSULT_ACTE_RQT,
-      FeatureFlag.FF_DELIV_CS,
-      FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES,
-      FeatureFlag.FF_RQT_INFORMATION
-    ]);
+    this.supprimeTousLesFlags([FeatureFlag.FF_DELIV_CS, FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES]);
 
     const props = Object.getOwnPropertyNames(FeatureFlag);
     props.forEach((prop: string) => {
@@ -36,10 +30,7 @@ class GestionnaireFeatureFlag {
       }
     });
 
-    const featuresFlagsUtilisateurConnecte = this.getFeatureFlagsAPartirIdSSO(
-      idSSOsEtFeaturesFlags,
-      idSSOUtilisateur
-    );
+    const featuresFlagsUtilisateurConnecte = this.getFeatureFlagsAPartirIdSSO(idSSOsEtFeaturesFlags, idSSOUtilisateur);
 
     if (featuresFlagsUtilisateurConnecte) {
       featuresFlagsUtilisateurConnecte.forEach((featureFlag: string) => {
@@ -48,27 +39,15 @@ class GestionnaireFeatureFlag {
     }
   }
 
-  private getFeatureFlagsAPartirIdSSO(
-    idSSOsEtFeaturesFlags: IdSSOEtFeaturesFlags[] | undefined,
-    idSSO: string
-  ): string[] {
-    const idSSOEtFeaturesFlagsTrouve = idSSOsEtFeaturesFlags?.find(
-      idSSOEtFeaturesFlags => idSSOEtFeaturesFlags.hasOwnProperty(idSSO)
-    );
+  private getFeatureFlagsAPartirIdSSO(idSSOsEtFeaturesFlags: IdSSOEtFeaturesFlags[] | undefined, idSSO: string): string[] {
+    const idSSOEtFeaturesFlagsTrouve = idSSOsEtFeaturesFlags?.find(idSSOEtFeaturesFlags => idSSOEtFeaturesFlags.hasOwnProperty(idSSO));
 
     return idSSOEtFeaturesFlagsTrouve ? idSSOEtFeaturesFlagsTrouve[idSSO] : [];
   }
 
-  private getIdSSOsEtFeaturesFlags(
-    header: any
-  ): IdSSOEtFeaturesFlags[] | undefined {
-    const canaryTestingHeader = this.getValeurFlagHeader(
-      header,
-      CANARY_TESTING
-    );
-    return estRenseigne(canaryTestingHeader)
-      ? this.parseJson(canaryTestingHeader)
-      : undefined;
+  private getIdSSOsEtFeaturesFlags(header: any): IdSSOEtFeaturesFlags[] | undefined {
+    const canaryTestingHeader = this.getValeurFlagHeader(header, CANARY_TESTING);
+    return estRenseigne(canaryTestingHeader) ? this.parseJson(canaryTestingHeader) : undefined;
   }
 
   private parseJson(json: string): IdSSOEtFeaturesFlags[] | undefined {
@@ -77,9 +56,7 @@ class GestionnaireFeatureFlag {
     try {
       idSSOsEtFeaturesFlags = JSON.parse(json);
     } catch (error) {
-      window.alert(
-        `Erreur lors du parsing du json du Header CANARY_TESTING: ${error}`
-      );
+      window.alert(`Erreur lors du parsing du json du Header CANARY_TESTING: ${error}`);
     }
     return idSSOsEtFeaturesFlags;
   }

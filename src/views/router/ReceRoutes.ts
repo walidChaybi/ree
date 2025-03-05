@@ -379,22 +379,19 @@ export const routesRece: IRoute[] = [
     component: EspaceInformationPage,
     props: { selectedTab: 0 },
     auMoinsUnDesDroits: [Droit.INFORMER_USAGER],
-    libelle: "Mes requêtes d'information",
-    canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
+    libelle: "Mes requêtes d'information"
   },
   {
     url: URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
     component: ApercuReqInfoPage,
     auMoinsUnDesDroits: [Droit.INFORMER_USAGER],
-    libelle: "Aperçu de la requête",
-    canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
+    libelle: "Aperçu de la requête"
   },
   {
     url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_INFORMATION_ID,
     component: ApercuReqInfoPage,
     auMoinsUnDesDroits: [Droit.INFORMER_USAGER],
-    libelle: "Aperçu de la requête",
-    canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
+    libelle: "Aperçu de la requête"
   },
 
   ////////////////////////////////////////////////////////
@@ -405,16 +402,14 @@ export const routesRece: IRoute[] = [
     component: EspaceInformationPage,
     props: { selectedTab: 1 },
     droits: [Droit.INFORMER_USAGER, Droit.ATTRIBUER_REQUETE],
-    libelle: "Les requêtes d'information de mon service",
-    canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
+    libelle: "Les requêtes d'information de mon service"
   },
   // Aperçu requête ... depuis le tableau Requêtes d'Information de mon SERVICE
   {
     url: URL_REQUETES_INFORMATION_SERVICE_APERCU_REQUETE_ID,
     component: ApercuReqInfoPage,
-    auMoinsUnDesDroits: [Droit.ATTRIBUER_REQUETE],
-    libelle: LIBELLE_APERCU_REQUETE,
-    canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION)
+    droits: [Droit.INFORMER_USAGER, Droit.ATTRIBUER_REQUETE],
+    libelle: LIBELLE_APERCU_REQUETE
   },
   ////////////////////////////////////////////////////////
   ///////////// MES REQUETES DE CRÉATION /////////////////
@@ -430,7 +425,7 @@ export const routesRece: IRoute[] = [
     url: URL_MES_REQUETES_CREATION_SAISIR_RCTC,
     component: SaisirRCTCPage,
     droits: [Droit.CREER_ACTE_TRANSCRIT],
-    libelle: `Saisir une requête de transcription`
+    libelle: "Saisir une requête de transcription"
   },
   {
     url: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
@@ -575,8 +570,7 @@ export const routesRece: IRoute[] = [
     url: URL_MES_REQUETES_CONSULAIRE,
     component: PageMesRequetesConsulaires,
     auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT, Droit.CREER_ACTE_DRESSE],
-    libelle: "Mes requêtes consulaires",
-    canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_ACCES_ESPACE_CONSULAIRE)
+    libelle: "Mes requêtes consulaires"
   },
   {
     url: URL_MES_REQUETES_CONSULAIRE_SAISIR_RCTC,
@@ -593,8 +587,7 @@ export const routesRece: IRoute[] = [
     url: URL_REQUETES_CONSULAIRE_SERVICE,
     component: PageRequetesServiceConsulaire,
     auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT, Droit.CREER_ACTE_DRESSE],
-    libelle: "Les requêtes consulaires de mon service",
-    canAccess: () => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_ACCES_ESPACE_CONSULAIRE)
+    libelle: "Les requêtes consulaires de mon service"
   },
 
   ////////////////////////////////////////////////////////

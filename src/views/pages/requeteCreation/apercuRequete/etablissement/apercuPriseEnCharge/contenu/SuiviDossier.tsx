@@ -3,9 +3,9 @@ import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { SituationFamiliale } from "@model/requete/enum/SituationFamiliale";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import TableauSuiviDossier from "@pages/requeteCreation/commun/composants/TableauSuiviDossier/TableauSuiviDossier";
+import { ZERO } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { ZERO } from "@util/Utils";
 import React, { useState } from "react";
 import { useParams } from "react-router";
 import { TUuidRequeteParams } from "../../../../../../../model/params/TUuidRequeteParams";
@@ -45,20 +45,20 @@ export const SuiviDossier: React.FC<ISuiviDossierProps> = props => {
       <Item titre="Retour SDANF">
         <ItemEchangesRetourSDANF echanges={echanges} />
 
-        {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RETOUR_SDANF) && idRequeteParam && (
+        {idRequeteParam && (
           <ListeActionsRetourSDANF
             setEchanges={setEchanges}
             echanges={echanges}
             statusRequete={props.requete?.statutCourant.statut}
             idRequeteCorbeilleAgent={props.requete?.idUtilisateur}
-            idRequeteParam={idRequeteParam}
+            idRequeteParam={idRequeteParam ?? ""}
             modeConsultation={props.modeConsultation}
           />
         )}
       </Item>
 
       <SuiviObservationsRequete
-        idRequete={idRequeteParam || ""}
+        idRequete={idRequeteParam ?? ""}
         observations={props.requete?.observations}
       />
     </>

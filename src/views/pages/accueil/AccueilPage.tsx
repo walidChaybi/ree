@@ -5,8 +5,6 @@ import { faChartBar, faGavel, faLandmark, faPlusCircle, faSearch, faSync } from 
 import { IOfficier } from "@model/agent/IOfficier";
 import { getCodesHierarchieService } from "@model/agent/IUtilisateur";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import React, { useContext, useEffect, useState } from "react";
 import logoRece from "../../../img/logo-rece.svg";
 import "../accueil/scss/AccueilPage.scss";
@@ -75,41 +73,35 @@ export const AccueilPage: React.FC = () => {
           title="Espace création"
         ></BoutonAccueilEspaceCreation>
 
-        {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_ACCES_ESPACE_CONSULAIRE) && (
-          <BoutonAccueilEspaceConsulaire
-            libelle={"Consulaire"}
-            pageUrl={"mes-requetes-consulaire"}
-            iconFA={faLandmark}
-            title="Espace consulaire"
-          ></BoutonAccueilEspaceConsulaire>
-        )}
+        <BoutonAccueilEspaceConsulaire
+          libelle={"Consulaire"}
+          pageUrl={"mes-requetes-consulaire"}
+          iconFA={faLandmark}
+          title="Espace consulaire"
+        ></BoutonAccueilEspaceConsulaire>
 
-        {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_RQT_INFORMATION) && (
-          <BoutonAccueilCommunication
-            libelle="Communication avec les usagers"
-            pageUrl="mesrequetesinformation"
-            iconFA={faEnvelope}
-            title="Communication avec les usagers"
-            badge={nbReqInfo}
-          ></BoutonAccueilCommunication>
-        )}
-        {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_CONSULT_ACTE_RQT) && (
-          <>
-            <BoutonAccueilRechercheRequete
-              libelle="Rechercher une requête"
-              pageUrl="rechercherequete"
-              iconFA={faSearch}
-              title="Recherche d'une requête"
-            ></BoutonAccueilRechercheRequete>
+        <BoutonAccueilCommunication
+          libelle="Communication avec les usagers"
+          pageUrl="mesrequetesinformation"
+          iconFA={faEnvelope}
+          title="Communication avec les usagers"
+          badge={nbReqInfo}
+        ></BoutonAccueilCommunication>
 
-            <BoutonAccueilRechercheActeOuInscription
-              libelle="Rechercher un acte et une inscription"
-              pageUrl="rechercheacteinscription"
-              iconFA={faSearch}
-              title="Recherche d'un acte et d'une inscription"
-            ></BoutonAccueilRechercheActeOuInscription>
-          </>
-        )}
+        <BoutonAccueilRechercheRequete
+          libelle="Rechercher une requête"
+          pageUrl="rechercherequete"
+          iconFA={faSearch}
+          title="Recherche d'une requête"
+        ></BoutonAccueilRechercheRequete>
+
+        <BoutonAccueilRechercheActeOuInscription
+          libelle="Rechercher un acte et une inscription"
+          pageUrl="rechercheacteinscription"
+          iconFA={faSearch}
+          title="Recherche d'un acte et d'une inscription"
+        ></BoutonAccueilRechercheActeOuInscription>
+
         <BoutonAccueilRechercheActe
           libelle="Rechercher un acte"
           pageUrl="rechercheacte"

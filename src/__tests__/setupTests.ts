@@ -17,12 +17,9 @@ import { configTeleverification } from "./mock/superagent-config/superagent-mock
 
 export const localStorageFeatureFlagMock = (() => {
   let store: any = {
-    FF_CONSULT_ACTE_RQT: "true",
     FF_DELIV_CS: "true",
-    FF_RQT_INFORMATION: "true",
     FF_DELIVRANCE_EXTRAITS_COPIES: "true",
     FF_LOG_SERVEUR: "true",
-    FF_RETOUR_SDANF: "true",
     FF_INTEGRATION_CIBLE_REQUETE_NATURALISATION: "true",
     FF_SIGNER_ACTE_ETABLISSEMENT: "true"
   };
