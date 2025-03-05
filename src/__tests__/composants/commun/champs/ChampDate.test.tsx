@@ -58,23 +58,6 @@ describe("ChampDate", () => {
       expect(document.activeElement).toBe(anneeInput);
     });
   });
-
-  test("Empêche de dépasser le nombre de jours et le mois maximal", async () => {
-    renderComponent();
-
-    const jourInput: HTMLInputElement = screen.getByPlaceholderText("JJ");
-    fireEvent.change(jourInput, { target: { value: "1000" } });
-    fireEvent.blur(jourInput);
-
-    const moisInput: HTMLInputElement = screen.getByPlaceholderText("MM");
-    fireEvent.change(moisInput, { target: { value: "1000" } });
-    fireEvent.blur(moisInput);
-
-    await waitFor(() => {
-      expect(jourInput.value).toBe("31");
-      expect(moisInput.value).toBe("12");
-    });
-  });
 });
 
 describe("ChampHeure", () => {
@@ -129,22 +112,6 @@ describe("ChampHeure", () => {
     const minutesInput = screen.getByPlaceholderText("MN");
     fireEvent.change(heureInput, { target: { value: "11" } });
     expect(document.activeElement).toBe(minutesInput);
-  });
-
-  test("Empêche de dépasser le nombre d'heures et de minutes maximal", async () => {
-    renderComponent();
-    const heureInput: HTMLInputElement = screen.getByPlaceholderText("HH");
-    fireEvent.change(heureInput, { target: { value: "33" } });
-    fireEvent.blur(heureInput);
-
-    const minutesInput: HTMLInputElement = screen.getByPlaceholderText("MN");
-    fireEvent.change(minutesInput, { target: { value: "78" } });
-    fireEvent.blur(minutesInput);
-
-    await waitFor(() => {
-      expect(heureInput.value).toBe("23");
-      expect(minutesInput.value).toBe("59");
-    });
   });
 });
 

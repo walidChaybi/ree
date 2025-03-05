@@ -17,7 +17,7 @@ const ChampDate: React.FC<TChampDateProps> = ({
   avecHeure = false,
   className = "",
   estObligatoire,
-  desactiverCorrectionAutomatique = false,
+  desactiverCorrectionAutomatique = true,
   ...props
 }) => {
   const champsDate = useMemo(
