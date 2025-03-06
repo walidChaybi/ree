@@ -180,7 +180,6 @@ export const PartieFormulaire: React.FC = () => {
       case estMiseAJourAvecMentions:
         appelApiMiseAJourAnalyseMarginaleEtMentions({
           parametres: {
-            path: { idActe },
             body: {
               idActe: idActe,
               mentionCreationList: mentions.map((mention, index) => ({
