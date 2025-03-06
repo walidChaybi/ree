@@ -6,6 +6,7 @@ import { IMiseAJourAnalyseMarginaleDto } from "./PutMiseAJourAnalyseMarginaleCon
 const URI = "/acte/:idActe/mentions-et-analyse-marginale";
 
 export interface IEnregistrerAnalyseMarginaleEtMentionDto {
+  idActe: string;
   mentionCreationList: IMentionEnregistree[];
   analyseMarginale: IMiseAJourAnalyseMarginaleDto | null;
 }

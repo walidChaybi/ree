@@ -182,6 +182,7 @@ export const PartieFormulaire: React.FC = () => {
           parametres: {
             path: { idActe },
             body: {
+              idActe: idActe,
               mentionCreationList: mentions.map((mention, index) => ({
                 idTypeMention: mention.idTypeMention,
                 numeroOrdre: index + 1,
