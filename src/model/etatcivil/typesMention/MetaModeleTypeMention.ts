@@ -1,5 +1,3 @@
-// A tester Alex 5/02/25
-/* v8 ignore start */
 import { ConditionChamp, IConditionChampDto } from "@model/form/commun/ConditionChamp";
 import { ObjetFormulaire, TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import dayjs from "dayjs";
@@ -195,7 +193,6 @@ export class MetaModeleTypeMention {
     if (MetaModeleTypeMention.champsObligatoires.some(cle => dto[cle] === undefined)) {
       return null;
     }
-
     return new MetaModeleTypeMention(
       dto.idTypeMention,
       dto.estSaisieAssistee,
@@ -270,7 +267,7 @@ export class MetaModeleTypeMention {
                     case "int":
                     case "pocopa":
                     case "crpcen":
-                      return "";
+                      return champ.valeurParDefaut ?? "";
                     case "dateComplete":
                     case "dateIncomplete":
                       return {
@@ -286,7 +283,7 @@ export class MetaModeleTypeMention {
                     case "select":
                       return champ.valeurParDefaut ?? "";
                     default:
-                      return "";
+                      return champ.valeurParDefaut ?? "";
                   }
                 })()
           };
@@ -296,4 +293,3 @@ export class MetaModeleTypeMention {
     );
   }
 }
-/* v8 ignore end */
