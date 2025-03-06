@@ -48,13 +48,16 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
     setFieldTouched(nomChamp, false);
 
     setEstVisible?.(estAffiche);
-    if (estAffiche || !champ.type) {
-      if (estLectureSeule) {
-        setFieldValue(nomChamp, estLectureSeule ? valeurLectureSeule : "");
-      }
+    if (!estAffiche) {
+      viderChamp();
+
       return;
     }
-    viderChamp();
+
+    if (valeurLectureSeule !== null) {
+      const valeurPreRemplie = valeurLectureSeule ?? champ.valeurParDefaut;
+      setFieldValue(nomChamp, valeurPreRemplie ?? "");
+    }
   }, [estAffiche, valeurLectureSeule]);
 
   switch (true) {
