@@ -13,10 +13,7 @@ import { getLibelle } from "@util/Utils";
 import { connect } from "formik";
 import React from "react";
 import * as Yup from "yup";
-import {
-  CaracteresAutorises,
-  NumeroTelephone
-} from "../../../../../ressources/Regex";
+import { CaracteresAutorises, NumeroTelephone } from "../../../../../ressources/Regex";
 import {
   ADRESSE_MAIL_NON_CONFORME,
   CARACTERES_AUTORISES_MESSAGE,
@@ -26,13 +23,7 @@ import {
 import { SousFormulaire } from "../SousFormulaire";
 import { InputField } from "../champsSaisie/InputField";
 import { sortieChampEnMajuscule } from "../utils/ControlesUtil";
-import {
-  NB_CARACT_ADRESSE,
-  NB_CARACT_COMMUNE,
-  NB_CARACT_MAX_SAISIE,
-  SubFormProps,
-  withNamespace
-} from "../utils/FormUtil";
+import { NB_CARACT_ADRESSE, NB_CARACT_COMMUNE, NB_CARACT_MAX_SAISIE, SubFormProps, withNamespace } from "../utils/FormUtil";
 import "./scss/AdresseForm.scss";
 
 // Valeurs par défaut des champs
@@ -54,84 +45,33 @@ interface AdresseFormProps {
 
 // Schéma de validation des champs
 export const AdresseFormValidationSchema = Yup.object().shape({
-  [VOIE]: Yup.string().matches(
-    CaracteresAutorises,
-    CARACTERES_AUTORISES_MESSAGE
-  ),
-  [LIEU_DIT]: Yup.string().matches(
-    CaracteresAutorises,
-    CARACTERES_AUTORISES_MESSAGE
-  ),
-  [COMPLEMENT_DESTINATAIRE]: Yup.string().matches(
-    CaracteresAutorises,
-    CARACTERES_AUTORISES_MESSAGE
-  ),
-  [COMPLEMENT_POINT_GEO]: Yup.string().matches(
-    CaracteresAutorises,
-    CARACTERES_AUTORISES_MESSAGE
-  ),
-  [CODE_POSTAL]: Yup.string().matches(
-    CaracteresAutorises,
-    CARACTERES_AUTORISES_MESSAGE
-  ),
-  [COMMUNE]: Yup.string().matches(
-    CaracteresAutorises,
-    CARACTERES_AUTORISES_MESSAGE
-  ),
-  [PAYS]: Yup.string().matches(
-    CaracteresAutorises,
-    CARACTERES_AUTORISES_MESSAGE
-  ),
+  [VOIE]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
+  [LIEU_DIT]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
+  [COMPLEMENT_DESTINATAIRE]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
+  [COMPLEMENT_POINT_GEO]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
+  [CODE_POSTAL]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
+  [COMMUNE]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
+  [PAYS]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
   [ADRESSE_COURRIEL]: Yup.string().email(ADRESSE_MAIL_NON_CONFORME),
-  [NUMERO_TELEPHONE]: Yup.string().matches(
-    NumeroTelephone,
-    NUMERO_TELEPHONE_NON_CONFORME
-  )
+  [NUMERO_TELEPHONE]: Yup.string().matches(NumeroTelephone, NUMERO_TELEPHONE_NON_CONFORME)
 });
 
 export const AdresseFormValidationSchemaRequired = Yup.object().shape({
-  [VOIE]: Yup.string()
-    .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
-    .required(CHAMP_OBLIGATOIRE),
-  [LIEU_DIT]: Yup.string().matches(
-    CaracteresAutorises,
-    CARACTERES_AUTORISES_MESSAGE
-  ),
-  [COMPLEMENT_DESTINATAIRE]: Yup.string().matches(
-    CaracteresAutorises,
-    CARACTERES_AUTORISES_MESSAGE
-  ),
-  [COMPLEMENT_POINT_GEO]: Yup.string().matches(
-    CaracteresAutorises,
-    CARACTERES_AUTORISES_MESSAGE
-  ),
-  [CODE_POSTAL]: Yup.string()
-    .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
-    .required(CHAMP_OBLIGATOIRE),
-  [COMMUNE]: Yup.string()
-    .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
-    .required(CHAMP_OBLIGATOIRE),
-  [PAYS]: Yup.string().matches(
-    CaracteresAutorises,
-    CARACTERES_AUTORISES_MESSAGE
-  ),
+  [VOIE]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE).required(CHAMP_OBLIGATOIRE),
+  [LIEU_DIT]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
+  [COMPLEMENT_DESTINATAIRE]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
+  [COMPLEMENT_POINT_GEO]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
+  [CODE_POSTAL]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE).required(CHAMP_OBLIGATOIRE),
+  [COMMUNE]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE).required(CHAMP_OBLIGATOIRE),
+  [PAYS]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
   [ADRESSE_COURRIEL]: Yup.string().email(ADRESSE_MAIL_NON_CONFORME),
-  [NUMERO_TELEPHONE]: Yup.string().matches(
-    NumeroTelephone,
-    NUMERO_TELEPHONE_NON_CONFORME
-  )
+  [NUMERO_TELEPHONE]: Yup.string().matches(NumeroTelephone, NUMERO_TELEPHONE_NON_CONFORME)
 });
 
-const AdresseForm: React.FC<SubFormProps & AdresseFormProps> = ({
-  affichageSousFormulaire = true,
-  ...props
-}) => {
+const AdresseForm: React.FC<SubFormProps & AdresseFormProps> = ({ affichageSousFormulaire = true, ...props }) => {
   const voieWithNamespace = withNamespace(props.nom, VOIE);
   const lieuDitWithNamespace = withNamespace(props.nom, LIEU_DIT);
-  const destinataireWithNamespace = withNamespace(
-    props.nom,
-    COMPLEMENT_DESTINATAIRE
-  );
+  const destinataireWithNamespace = withNamespace(props.nom, COMPLEMENT_DESTINATAIRE);
   const pointGeoWithNamespace = withNamespace(props.nom, COMPLEMENT_POINT_GEO);
   const communeWithNamespace = withNamespace(props.nom, COMMUNE);
   const paysWithNamespace = withNamespace(props.nom, PAYS);
@@ -142,46 +82,30 @@ const AdresseForm: React.FC<SubFormProps & AdresseFormProps> = ({
         <InputField
           name={destinataireWithNamespace}
           label={getLibelle("Complément d’identification du destinataire")}
-          placeholder={getLibelle(
-            "Appartement, boite aux lettres, escalier, chez…"
-          )}
+          placeholder={getLibelle("Appartement, boite aux lettres, escalier, chez…")}
           maxLength={NB_CARACT_ADRESSE}
-          onBlur={e =>
-            sortieChampEnMajuscule(e, props.formik, destinataireWithNamespace)
-          }
+          onBlur={e => sortieChampEnMajuscule(e, props.formik, destinataireWithNamespace)}
         />
         <InputField
           name={pointGeoWithNamespace}
-          label={getLibelle(
-            "Complément d’identification du point géographique"
-          )}
+          label={getLibelle("Complément d’identification du point géographique")}
           placeholder={getLibelle("Entrée, bâtiment, immeuble, résidence…")}
           maxLength={NB_CARACT_ADRESSE}
-          onBlur={e =>
-            sortieChampEnMajuscule(e, props.formik, pointGeoWithNamespace)
-          }
+          onBlur={e => sortieChampEnMajuscule(e, props.formik, pointGeoWithNamespace)}
         />
         <InputField
           name={voieWithNamespace}
           label={getLibelle("Numéro, type et nom de la voie")}
           placeholder={getLibelle("Numéro, type et nom de la voie")}
           maxLength={NB_CARACT_ADRESSE}
-          onBlur={e =>
-            sortieChampEnMajuscule(e, props.formik, voieWithNamespace)
-          }
+          onBlur={e => sortieChampEnMajuscule(e, props.formik, voieWithNamespace)}
         />
         <InputField
           name={lieuDitWithNamespace}
-          label={getLibelle(
-            "Lieu-dit, boite postale ou état/province (à l'étranger)"
-          )}
-          placeholder={getLibelle(
-            "Lieu-dit, boite postale ou état/province à l'étranger"
-          )}
+          label={getLibelle("Lieu-dit, boite postale ou état/province (à l'étranger)")}
+          placeholder={getLibelle("Lieu-dit, boite postale ou état/province à l'étranger")}
           maxLength={NB_CARACT_ADRESSE}
-          onBlur={e =>
-            sortieChampEnMajuscule(e, props.formik, lieuDitWithNamespace)
-          }
+          onBlur={e => sortieChampEnMajuscule(e, props.formik, lieuDitWithNamespace)}
         />
         <div className="CodePostal">
           <InputField
@@ -193,17 +117,13 @@ const AdresseForm: React.FC<SubFormProps & AdresseFormProps> = ({
           name={communeWithNamespace}
           label={getLibelle("Commune")}
           maxLength={NB_CARACT_COMMUNE}
-          onBlur={e =>
-            sortieChampEnMajuscule(e, props.formik, communeWithNamespace)
-          }
+          onBlur={e => sortieChampEnMajuscule(e, props.formik, communeWithNamespace)}
         />
         <InputField
           name={paysWithNamespace}
           label={getLibelle("Pays")}
           maxLength={NB_CARACT_ADRESSE}
-          onBlur={e =>
-            sortieChampEnMajuscule(e, props.formik, paysWithNamespace)
-          }
+          onBlur={e => sortieChampEnMajuscule(e, props.formik, paysWithNamespace)}
         />
         {!props.formulaireReduit && (
           <>
@@ -226,15 +146,7 @@ const AdresseForm: React.FC<SubFormProps & AdresseFormProps> = ({
     );
   }
 
-  return (
-    <>
-      {affichageSousFormulaire ? (
-        <SousFormulaire titre={props.titre}>{getAddresseForm()}</SousFormulaire>
-      ) : (
-        getAddresseForm()
-      )}
-    </>
-  );
+  return <>{affichageSousFormulaire ? <SousFormulaire titre={props.titre}>{getAddresseForm()}</SousFormulaire> : getAddresseForm()}</>;
 };
 
 export default connect(AdresseForm);

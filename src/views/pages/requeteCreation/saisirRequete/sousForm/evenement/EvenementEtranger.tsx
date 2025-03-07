@@ -1,16 +1,10 @@
 import { getLibelle } from "@util/Utils";
 import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
-import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
-import {
-  INomForm,
-  NB_CARACT_MAX_SAISIE,
-  SubFormProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { INomForm, SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
 import * as Yup from "yup";
+import ChampTexte from "../../../../../../composants/commun/champs/ChampTexte";
 import { CaracteresAutorises } from "../../../../../../ressources/Regex";
 import {
   ARRONDISSEMENT_NAISSANCE,
@@ -30,67 +24,29 @@ export const EvenementEtrangerFormDefaultValues = {
 
 export const EvenementEtrangerFormValidationSchema = Yup.object().shape({
   [LIEU_DE_NAISSANCE]: Yup.boolean(),
-  [VILLE_NAISSANCE]: Yup.string().matches(
-    CaracteresAutorises,
-    CARACTERES_AUTORISES_MESSAGE
-  ),
-  [REGION_NAISSANCE]: Yup.string().matches(
-    CaracteresAutorises,
-    CARACTERES_AUTORISES_MESSAGE
-  ),
-  [PAYS_NAISSANCE]: Yup.string().matches(
-    CaracteresAutorises,
-    CARACTERES_AUTORISES_MESSAGE
-  )
+  [VILLE_NAISSANCE]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
+  [REGION_NAISSANCE]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
+  [PAYS_NAISSANCE]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
 });
 
 const EvenementEtrangerForm: React.FC<SubFormProps> = props => {
-  const villeWithNamespace = withNamespace(props.nom, VILLE_NAISSANCE);
-  const regionWithNamespace = withNamespace(props.nom, REGION_NAISSANCE);
-  const paysWithNamespace = withNamespace(props.nom, PAYS_NAISSANCE);
-
   return (
-    <div className="EvenementEtrangerForm">
-      <>
-        <InputField
-          name={withNamespace(props.nom, VILLE_NAISSANCE)}
-          label={getLibelle("Ville de naissance")}
-          maxLength={NB_CARACT_MAX_SAISIE}
-          onBlur={e =>
-            sortieChampPremiereLettreEnMajuscule(
-              e,
-              props.formik,
-              villeWithNamespace
-            )
-          }
-        />
-
-        <InputField
-          name={withNamespace(props.nom, REGION_NAISSANCE)}
-          label={getLibelle("Région/état de naissance")}
-          maxLength={NB_CARACT_MAX_SAISIE}
-          onBlur={e =>
-            sortieChampPremiereLettreEnMajuscule(
-              e,
-              props.formik,
-              regionWithNamespace
-            )
-          }
-        />
-
-        <InputField
-          name={withNamespace(props.nom, PAYS_NAISSANCE)}
-          label={getLibelle(`Pays de naissance`)}
-          maxLength={NB_CARACT_MAX_SAISIE}
-          onBlur={e =>
-            sortieChampPremiereLettreEnMajuscule(
-              e,
-              props.formik,
-              paysWithNamespace
-            )
-          }
-        />
-      </>
+    <div className="grid grid-cols-2 gap-4">
+      <ChampTexte
+        name={withNamespace(props.nom, VILLE_NAISSANCE)}
+        libelle={getLibelle("Ville de naissance")}
+        optionFormatage="PREMIER_MAJUSCULE"
+      />
+      <ChampTexte
+        name={withNamespace(props.nom, REGION_NAISSANCE)}
+        libelle={getLibelle("Région/état de naissance")}
+        optionFormatage="PREMIER_MAJUSCULE"
+      />
+      <ChampTexte
+        name={withNamespace(props.nom, PAYS_NAISSANCE)}
+        libelle={getLibelle(`Pays de naissance`)}
+        optionFormatage="PREMIER_MAJUSCULE"
+      />
     </div>
   );
 };

@@ -1,19 +1,11 @@
 import { getLibelle } from "@util/Utils";
 import { CheckboxField } from "@widget/formulaire/champsSaisie/CheckBoxField";
-import {
-  INomForm,
-  SubFormProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { INomForm, SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { PAS_DE_PRENOM_CONNU, PRENOMS } from "../ConstantesNomsForm";
-import PrenomsForm, {
-  creerValidationSchemaPrenom,
-  genererDefaultValuesPrenoms,
-  IPrenomsFormProps
-} from "./PrenomsForm";
+import PrenomsForm, { IPrenomsFormProps, creerValidationSchemaPrenom, genererDefaultValuesPrenoms } from "./PrenomsForm";
 
 export const PrenomsConnusValidationSchema = Yup.object()
   .shape({
@@ -27,9 +19,7 @@ export const PrenomsConnusValidationSchema = Yup.object()
       path: `${error.path}.prenoms.prenom1`,
       message: getLibelle("La saisie d'un prénom est obligatoire")
     };
-    return !pasDePrenomConnuCoche && !prenom1
-      ? this.createError(paramsError)
-      : true;
+    return !pasDePrenomConnuCoche && !prenom1 ? this.createError(paramsError) : true;
   });
 
 interface IPrenomsConnusFormProps {
@@ -37,15 +27,11 @@ interface IPrenomsConnusFormProps {
   pasDePrenomConnu: boolean;
 }
 
-type PrenomsConnusFormProps = IPrenomsConnusFormProps &
-  IPrenomsFormProps &
-  SubFormProps;
+type PrenomsConnusFormProps = IPrenomsConnusFormProps & IPrenomsFormProps & SubFormProps;
 
 const PrenomsConnusForm: React.FC<PrenomsConnusFormProps> = props => {
   const [pasDePrenomConnu, setPasDePrenomConnu] = useState<boolean>(false);
-  const [nbPrenoms, setNbPrenoms] = useState<number | undefined>(
-    props.nbPrenoms
-  );
+  const [nbPrenoms, setNbPrenoms] = useState<number | undefined>(props.nbPrenoms);
 
   useEffect(() => {
     setPasDePrenomConnu(props.pasDePrenomConnu);
@@ -59,19 +45,13 @@ const PrenomsConnusForm: React.FC<PrenomsConnusFormProps> = props => {
     } else {
       setPasDePrenomConnu(false);
       props.formik.handleChange(e);
-      props.formik.setFieldValue(
-        withNamespace(props.nom, PAS_DE_PRENOM_CONNU),
-        "false"
-      );
+      props.formik.setFieldValue(withNamespace(props.nom, PAS_DE_PRENOM_CONNU), "false");
     }
   }
 
   function reinitialiserPrenoms() {
     const pathPrenomsAReinitialiser = withNamespace(props.nom, PRENOMS);
-    props.formik.setFieldValue(
-      pathPrenomsAReinitialiser,
-      genererDefaultValuesPrenoms()
-    );
+    props.formik.setFieldValue(pathPrenomsAReinitialiser, genererDefaultValuesPrenoms());
     setNbPrenoms(0);
   }
 
@@ -100,6 +80,4 @@ const PrenomsConnusForm: React.FC<PrenomsConnusFormProps> = props => {
   );
 };
 
-export default connect<IPrenomsConnusFormProps & IPrenomsFormProps & INomForm>(
-  PrenomsConnusForm
-);
+export default connect<IPrenomsConnusFormProps & IPrenomsFormProps & INomForm>(PrenomsConnusForm);

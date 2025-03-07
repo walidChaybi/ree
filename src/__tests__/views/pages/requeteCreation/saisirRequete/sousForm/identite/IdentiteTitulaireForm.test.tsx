@@ -1,12 +1,19 @@
-import { NOMS, PAS_DE_PRENOM_CONNU, PRENOMS } from "@composant/formulaire/ConstantesNomsForm";
-import { creerValidationSchemaPrenom, genererDefaultValuesPrenoms } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
-import IdentiteTitulaireForm from "@pages/requeteCreation/saisirRequete/sousForm/identite/IdentiteTitulaireForm";
 import {
-  NomsFormDefaultValues,
-  NomsFormValidationSchema
-} from "@pages/requeteCreation/saisirRequete/sousForm/identite/nomsPrenoms/NomsForm";
+  DATE_NAISSANCE,
+  IDENTIFIANT,
+  LIEN_REQUERANT,
+  NAISSANCE,
+  NOM_ACTE_ETRANGER,
+  NOM_SOUHAITE_ACTE_FR,
+  PRENOMS,
+  REQUERANT,
+  REQUETE,
+  SEXE
+} from "@composant/formulaire/ConstantesNomsForm";
+import { EvenementEtrangerFormDefaultValues } from "@pages/requeteCreation/saisirRequete/sousForm/evenement/EvenementEtranger";
+import IdentiteTitulaireForm from "@pages/requeteCreation/saisirRequete/sousForm/identite/IdentiteTitulaireForm";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { Field, Form, Formik } from "formik";
+import { Form, Formik } from "formik";
 import React, { useState } from "react";
 import { expect, test } from "vitest";
 import * as Yup from "yup";
@@ -21,9 +28,13 @@ const HookTitulaireForm: React.FC = () => {
   };
 
   const ValidationSchema = Yup.object().shape({
-    [TITULAIRE]: Yup.object({
-      [NOMS]: NomsFormValidationSchema,
-      [PRENOMS]: creerValidationSchemaPrenom()
+    [TITULAIRE]: Yup.object().shape({
+      [NOM_ACTE_ETRANGER]: Yup.string(),
+      [NOM_SOUHAITE_ACTE_FR]: Yup.string(),
+      [PRENOMS]: Yup.object(),
+      [SEXE]: Yup.string(),
+      [DATE_NAISSANCE]: Yup.object(),
+      [NAISSANCE]: Yup.object()
     })
   });
 
@@ -31,9 +42,19 @@ const HookTitulaireForm: React.FC = () => {
     <Formik
       initialValues={{
         [TITULAIRE]: {
-          [NOMS]: NomsFormDefaultValues,
-          [PAS_DE_PRENOM_CONNU]: "false",
-          [PRENOMS]: genererDefaultValuesPrenoms()
+          [IDENTIFIANT]: "",
+          [NOM_ACTE_ETRANGER]: "",
+          [NOM_SOUHAITE_ACTE_FR]: "",
+          [PRENOMS]: { prenom1: "" },
+          [SEXE]: "INCONNU",
+          [DATE_NAISSANCE]: { jour: "", mois: "", annee: "" },
+          [NAISSANCE]: EvenementEtrangerFormDefaultValues
+        },
+        [REQUETE]: {
+          [LIEN_REQUERANT]: ""
+        },
+        [REQUERANT]: {
+          [NOM_ACTE_ETRANGER]: ""
         }
       }}
       validationSchema={ValidationSchema}
@@ -45,11 +66,7 @@ const HookTitulaireForm: React.FC = () => {
           nom={TITULAIRE}
         />
         <button type="submit">Submit</button>
-        <Field
-          as="textarea"
-          value={result}
-          data-testid="result"
-        />
+        <div data-testid="result">{result}</div>
       </Form>
     </Formik>
   );
@@ -58,59 +75,43 @@ const HookTitulaireForm: React.FC = () => {
 test("DOIT rendre le composant d'identite du titulaire correctement", async () => {
   render(<HookTitulaireForm />);
 
-  const boutonsCheckboxTitulaireNomActeEtranger = screen.getByLabelText("titulaire.noms.pasdenomacteetranger.pasdenomacteetranger");
+  const inputNomActeEtranger = screen.getByLabelText(/Nom sur l'acte étranger/i);
+  expect(inputNomActeEtranger).toBeDefined();
 
-  const inputNomActeEtranger = screen.getByRole("textbox", {
-    name: /titulaire.noms.nomActeEtranger/i
+  fireEvent.change(inputNomActeEtranger, {
+    target: { value: "mockNom" }
   });
 
-  fireEvent.click(boutonsCheckboxTitulaireNomActeEtranger);
+  fireEvent.blur(inputNomActeEtranger);
+
+  const inputNomSouhaiteActeFr = screen.getByLabelText(/Nom souhaité sur l'acte français/i);
+  expect(inputNomSouhaiteActeFr).toBeDefined();
+
+  fireEvent.change(inputNomSouhaiteActeFr, {
+    target: { value: "mockNomSouhaite" }
+  });
+
+  const inputPrenom = screen.getByLabelText(/Prénom/i);
+  expect(inputPrenom).toBeDefined();
+
+  fireEvent.change(inputPrenom, {
+    target: { value: "mockPrenom" }
+  });
+
+  const sexeRadioGroup = screen.getByText(/Sexe/i);
+  expect(sexeRadioGroup).toBeDefined();
+
+  const dateNaissanceField = screen.getByText(/Date de naissance/i);
+  expect(dateNaissanceField).toBeDefined();
+
+  const submitButton = screen.getByRole("button", { name: /Submit/i });
+  fireEvent.click(submitButton);
 
   await waitFor(() => {
-    expect(inputNomActeEtranger).toBeDefined();
+    const resultElement = screen.getByTestId("result");
+    const resultJson = JSON.parse(resultElement.textContent || "{}");
+    expect(resultJson[TITULAIRE][NOM_ACTE_ETRANGER]).toBe("mockNom");
+    expect(resultJson[TITULAIRE][NOM_SOUHAITE_ACTE_FR]).toBe("mockNomSouhaite");
+    expect(resultJson[TITULAIRE][PRENOMS].prenom1).toBe("mockPrenom");
   });
-
-  fireEvent.click(boutonsCheckboxTitulaireNomActeEtranger);
-
-  await waitFor(() => {
-    expect(inputNomActeEtranger).toBeDefined();
-  });
-
-  fireEvent.blur(inputNomActeEtranger, {
-    target: {
-      value: "mockNom"
-    }
-  });
-
-  const boutonsCheckboxTitulaireNomActeFrancais = screen.getByLabelText("titulaire.noms.nomSouhaiteActeFR");
-
-  fireEvent.blur(boutonsCheckboxTitulaireNomActeFrancais, {
-    target: {
-      value: "mockNomActeFrancais"
-    }
-  });
-
-  fireEvent.click(boutonsCheckboxTitulaireNomActeEtranger);
-});
-
-test("DOIT cacher le sous formulaire des prénoms quand la checkbox 'pas de prénom connu' est coché", () => {
-  render(<HookTitulaireForm />);
-
-  const inputPrenom1 = screen.getByLabelText("Prénom");
-
-  expect(inputPrenom1).toBeDefined();
-
-  fireEvent.blur(inputPrenom1, {
-    target: {
-      value: "mockPrenomTitulaire"
-    }
-  });
-
-  const boutonsCheckboxPasDePrenomConnu = screen.getByLabelText("titulaire.pasdeprenomconnu.pasdeprenomconnu");
-
-  fireEvent.click(boutonsCheckboxPasDePrenomConnu);
-
-  expect(screen.queryByText("Prénom")).toBeNull();
-
-  fireEvent.click(boutonsCheckboxPasDePrenomConnu);
 });

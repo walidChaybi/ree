@@ -1,21 +1,19 @@
-import { ILocalisation } from "@model/requete/IParents";
 import { genererArrondissements } from "@util/Utils";
+import { useField } from "formik";
 import React, { memo, useMemo } from "react";
-import ChampListeDeroulante from "../champs/ChampListeDeroulante";
-import ChampTexte from "../champs/ChampTexte";
-import ChampsRadio from "../champs/ChampsRadio";
+import ChampListeDeroulante from "./ChampListeDeroulante";
+import ChampTexte from "./ChampTexte";
+import ChampsRadio from "./ChampsRadio";
 
 interface Option {
   cle: string;
   libelle: string;
 }
 
-type TTypeLieu = ILocalisation["typeLieu"];
-
 interface IFormulaireAdresseProps {
   prefix: string;
-  categorieLieu?: TTypeLieu;
-  ville?: string;
+  libelle?: string;
+  afficherAdresse?: boolean;
 }
 
 const TYPES_LIEU: Option[] = [
@@ -33,8 +31,9 @@ const ARRONDISSEMENTS_OPTIONS: Record<TVilleSpeciale, Option[]> = {
   lyon: [{ cle: "", libelle: "" }, ...genererArrondissements(9)]
 };
 
-const AdresseFrance = memo(({ prefix, ville }: { prefix: string; ville?: string }) => {
-  const estVilleSpeciale = useMemo(() => VILLES_SPECIALES.includes(ville?.toLowerCase() as TVilleSpeciale), [ville]);
+const AdresseFrance = memo(({ prefix, afficherAdresse = true }: { prefix: string; afficherAdresse?: boolean }) => {
+  const [fieldVille] = useField(`${prefix}.ville`);
+  const estVilleSpeciale = useMemo(() => VILLES_SPECIALES.includes(fieldVille.value?.toLowerCase() as TVilleSpeciale), [fieldVille.value]);
 
   return (
     <div className="mt-4 space-y-4">
@@ -51,12 +50,12 @@ const AdresseFrance = memo(({ prefix, ville }: { prefix: string; ville?: string 
             <ChampListeDeroulante
               name={`${prefix}.arrondissement`}
               libelle="Arrondissement"
-              options={ARRONDISSEMENTS_OPTIONS[ville?.toLowerCase() as TVilleSpeciale]}
+              options={ARRONDISSEMENTS_OPTIONS[fieldVille.value.toLowerCase() as TVilleSpeciale]}
               premiereLettreMajuscule
             />
           </div>
         )}
-        {ville?.toLowerCase() !== "paris" && (
+        {fieldVille.value?.toLowerCase() !== "paris" && (
           <div className="flex-1">
             <ChampTexte
               name={`${prefix}.departement`}
@@ -65,15 +64,17 @@ const AdresseFrance = memo(({ prefix, ville }: { prefix: string; ville?: string 
           </div>
         )}
       </div>
-      <ChampTexte
-        name={`${prefix}.adresse`}
-        libelle="Adresse"
-      />
+      {afficherAdresse && (
+        <ChampTexte
+          name={`${prefix}.adresse`}
+          libelle="Adresse"
+        />
+      )}
     </div>
   );
 });
 
-const AdresseEtranger = memo(({ prefix }: { prefix: string }) => (
+const AdresseEtranger = memo(({ prefix, afficherAdresse = true }: { prefix: string; afficherAdresse?: boolean }) => (
   <div>
     <div className="mt-4 grid grid-cols-2 gap-4">
       <ChampTexte
@@ -94,30 +95,38 @@ const AdresseEtranger = memo(({ prefix }: { prefix: string }) => (
       />
     </div>
     <div className="mt-4">
-      <ChampTexte
-        name={`${prefix}.adresse`}
-        libelle="Adresse"
-      />
+      {afficherAdresse && (
+        <ChampTexte
+          name={`${prefix}.adresse`}
+          libelle="Adresse"
+        />
+      )}
     </div>
   </div>
 ));
 
-const FormulaireAdresse: React.FC<IFormulaireAdresseProps> = memo(({ prefix, categorieLieu, ville }) => {
+const FormulaireAdresse: React.FC<IFormulaireAdresseProps> = memo(({ prefix, libelle, afficherAdresse = true }) => {
+  const [fieldTypeLieu] = useField(`${prefix}.typeLieu`);
+
   return (
     <div>
       <ChampsRadio
         name={`${prefix}.typeLieu`}
-        libelle=""
+        libelle={libelle}
         options={TYPES_LIEU}
       />
-
-      {categorieLieu === "France" && (
+      {fieldTypeLieu.value === "France" && (
         <AdresseFrance
           prefix={prefix}
-          ville={ville}
+          afficherAdresse={afficherAdresse}
         />
       )}
-      {categorieLieu === "Étranger" && <AdresseEtranger prefix={prefix} />}
+      {fieldTypeLieu.value === "Étranger" && (
+        <AdresseEtranger
+          prefix={prefix}
+          afficherAdresse={afficherAdresse}
+        />
+      )}
     </div>
   );
 });

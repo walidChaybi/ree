@@ -1,31 +1,20 @@
-import { getLibelle } from "@util/Utils";
+import { AddCircle } from "@mui/icons-material";
+import Delete from "@mui/icons-material/Delete";
 import {
   ADRESSE_MAIL_NON_CONFORME,
   CARACTERES_AUTORISES_MESSAGE,
   NUMERO_TELEPHONE_NON_CONFORME
 } from "@widget/formulaire/FormulaireMessages";
-import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
-import AdresseForm, {
-  AdresseFormDefaultValues,
-  AdresseFormValidationSchema
-} from "@widget/formulaire/adresse/AdresseForm";
-import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
-import {
-  CENT_CARACT_MAX,
-  ISubForm,
-  NB_CARACT_MAX_SAISIE,
-  SubFormProps,
-  TRENTE_HUIT_CARACT_MAX,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { AdresseFormDefaultValues, AdresseFormValidationSchema } from "@widget/formulaire/adresse/AdresseForm";
+import { ISubForm, SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import {
-  CaracteresAutorises,
-  NumeroTelephone
-} from "../../../../../../ressources/Regex";
+import BoutonIcon from "../../../../../../composants/commun/bouton/BoutonIcon";
+import ChampTexte from "../../../../../../composants/commun/champs/ChampTexte";
+import { default as ChampsCoordonnees } from "../../../../../../composants/commun/champs/ChampsCoordonnees";
+import ConteneurAvecBordure from "../../../../../../composants/commun/conteneurs/formulaire/ConteneurAvecBordure";
+import { CaracteresAutorises, NumeroTelephone } from "../../../../../../ressources/Regex";
 import {
   ADRESSE,
   AUTRE_ADRESSE_COURRIEL,
@@ -34,7 +23,6 @@ import {
   NOM_USAGE,
   PRENOM
 } from "../../../../../common/composant/formulaire/ConstantesNomsForm";
-import "./RequerantForm.scss";
 
 export const RequerantFormDefaultValue = {
   [NOM]: "",
@@ -46,19 +34,10 @@ export const RequerantFormDefaultValue = {
 };
 
 export const RequerantFormValidationSchema = Yup.object().shape({
-  [NOM]: Yup.string().matches(
-    CaracteresAutorises,
-    CARACTERES_AUTORISES_MESSAGE
-  ),
-  [PRENOM]: Yup.string().matches(
-    CaracteresAutorises,
-    CARACTERES_AUTORISES_MESSAGE
-  ),
+  [NOM]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
+  [PRENOM]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
   [AUTRE_ADRESSE_COURRIEL]: Yup.string().email(ADRESSE_MAIL_NON_CONFORME),
-  [AUTRE_NUMERO_TELEPHONE]: Yup.string().matches(
-    NumeroTelephone,
-    NUMERO_TELEPHONE_NON_CONFORME
-  ),
+  [AUTRE_NUMERO_TELEPHONE]: Yup.string().matches(NumeroTelephone, NUMERO_TELEPHONE_NON_CONFORME),
   [ADRESSE]: AdresseFormValidationSchema
 });
 
@@ -68,21 +47,8 @@ const RequerantForm: React.FC<SubFormProps> = props => {
 
   const nomUsageForm = props.formik.getFieldProps(nomUsageWithNamespace).value;
 
-  const adresseFormProps = {
-    nom: withNamespace(props.nom, ADRESSE),
-    titre: getLibelle("Requérant")
-  } as SubFormProps;
   const nomWithNamespace = withNamespace(props.nom, NOM);
   const prenomWithNamespace = withNamespace(props.nom, PRENOM);
-  const courrielAutreContactWithNamespace = withNamespace(
-    props.nom,
-    AUTRE_ADRESSE_COURRIEL
-  );
-  const telephoneAutreContactWithNamespace = withNamespace(
-    props.nom,
-    AUTRE_NUMERO_TELEPHONE
-  );
-  const IGNORER_TABULATION = -1;
 
   useEffect(() => {
     if (nomUsageForm && !nomUsagePresent) {
@@ -95,101 +61,75 @@ const RequerantForm: React.FC<SubFormProps> = props => {
     setNomUsagePresent(!nomUsagePresent);
   };
 
-  function getBoutonAjouter(): JSX.Element {
-    return (
-      <button
-        type="button"
-        tabIndex={IGNORER_TABULATION}
-        disabled={nomUsagePresent}
-        onClick={toggleNomUsage}
-      >
-        {getLibelle("Ajouter un nom d'usage")}
-      </button>
-    );
-  }
-
-  function getBoutonSupprimer(): JSX.Element {
-    return (
-      <button
-        tabIndex={IGNORER_TABULATION}
-        type="button"
-        className="BoutonDanger"
-        disabled={!nomUsagePresent}
-        onClick={toggleNomUsage}
-      >
-        {getLibelle("Supprimer le nom d'usage")}
-      </button>
-    );
-  }
   return (
-    <SousFormulaire titre={props.titre}>
-      <div className="RequerantForm">
-        <div className="nomRequerant">
-          <InputField
-            name={nomWithNamespace}
-            label={getLibelle("Nom")}
-            maxLength={TRENTE_HUIT_CARACT_MAX}
-            onBlur={e =>
-              sortieChampPremiereLettreEnMajuscule(
-                e,
-                props.formik,
-                nomWithNamespace
-              )
-            }
+    <ConteneurAvecBordure
+      className="py-6"
+      titreEnTete={"REQUÉRANT"}
+    >
+      <div className="space-y-4">
+        <div className="flex space-x-4">
+          <div className="flex-1 space-y-2">
+            <div className="flex items-end">
+              <div className="flex-grow">
+                <ChampTexte
+                  name={nomWithNamespace}
+                  libelle="Nom"
+                />
+              </div>
+              {!nomUsagePresent && (
+                <div className="ml-4">
+                  <BoutonIcon
+                    tabIndex={-1}
+                    disabled={nomUsagePresent}
+                    onClick={toggleNomUsage}
+                    className="mb-0"
+                  >
+                    <div className="flex items-center gap-4 px-2">
+                      <AddCircle />
+                      <span className="font-noto-sans-ui text-sm font-bold">{"Ajouter un nom d'usage"}</span>
+                    </div>
+                  </BoutonIcon>
+                </div>
+              )}
+            </div>
+            {nomUsagePresent && (
+              <div className="flex items-end">
+                <div className="flex-grow">
+                  <ChampTexte
+                    name={nomUsageWithNamespace}
+                    libelle="Nom d'usage"
+                    boutonChamp={{
+                      composant: (
+                        <BoutonIcon
+                          className="group absolute right-0 h-full rounded-l-none bg-transparent"
+                          type="button"
+                          title={"Supprimer le nom d'usage"}
+                          onClick={toggleNomUsage}
+                          styleBouton="suppression"
+                        >
+                          <Delete className="text-rouge group-hover:text-blanc" />
+                        </BoutonIcon>
+                      )
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+          <ChampTexte
+            name={prenomWithNamespace}
+            libelle="Prénom"
+            className="flex-1"
           />
-          {!nomUsagePresent && (
-            <div className="BoutonsConteneur">{getBoutonAjouter()}</div>
-          )}
         </div>
 
-        {nomUsagePresent && (
-          <div className="nomUsage">
-            <InputField
-              name={nomUsageWithNamespace}
-              label={getLibelle("Nom d'usage")}
-              maxLength={NB_CARACT_MAX_SAISIE}
-              onBlur={e =>
-                sortieChampPremiereLettreEnMajuscule(
-                  e,
-                  props.formik,
-                  nomUsageWithNamespace
-                )
-              }
-            />
-            <div className="BoutonsConteneur">{getBoutonSupprimer()}</div>
-          </div>
-        )}
-        <InputField
-          name={prenomWithNamespace}
-          label={getLibelle("Prénom")}
-          maxLength={TRENTE_HUIT_CARACT_MAX}
-          onBlur={e =>
-            sortieChampPremiereLettreEnMajuscule(
-              e,
-              props.formik,
-              prenomWithNamespace
-            )
-          }
-        />
-
-        <AdresseForm
-          key={withNamespace(props.nom, ADRESSE)}
+        <ChampsCoordonnees
           affichageSousFormulaire={false}
-          {...adresseFormProps}
+          nom={`${props.nom}.adresse`}
         />
-
-        <InputField
-          name={courrielAutreContactWithNamespace}
-          label={getLibelle("Autre adresse courriel")}
-          maxLength={CENT_CARACT_MAX}
-        />
-        <InputField
-          name={telephoneAutreContactWithNamespace}
-          label={getLibelle("Autre numéro de téléphone")}
-          maxLength={CENT_CARACT_MAX}
-        />
+        <div className="flex space-x-4"></div>
       </div>
-    </SousFormulaire>
+    </ConteneurAvecBordure>
   );
 };
 

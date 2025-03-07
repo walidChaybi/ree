@@ -1,23 +1,16 @@
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { OuiNon } from "@model/etatcivil/enum/OuiNon";
-import { getLibelle } from "@util/Utils";
 import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
-import DateComposeForm, {
-  DateComposeFormProps,
-  DateDefaultValues
-} from "@widget/formulaire/champsDate/DateComposeForm";
+import { DateDefaultValues } from "@widget/formulaire/champsDate/DateComposeForm";
 import { DateValidationSchemaSansTestFormat } from "@widget/formulaire/champsDate/DateComposeFormValidation";
-import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
-import {
-  INomForm,
-  SubFormProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { INomForm, SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
+import ChampDate from "../../../../../../composants/commun/champs/ChampDate";
+import ChampTexte from "../../../../../../composants/commun/champs/ChampTexte";
+import ChampsRadio from "../../../../../../composants/commun/champs/ChampsRadio";
 import { CaracteresAutorises } from "../../../../../../ressources/Regex";
 import {
   DATE_RECONNAISSANCE,
@@ -39,65 +32,29 @@ export const EvenementReconnaissanceTitulaireFormDefaultValues = {
   [PAYS_RECONNAISSANCE]: ""
 };
 
-export const EvenementReconnaissanceTitulaireFormValidationSchema =
-  Yup.object().shape({
-    [TITULAIRE_RECONNU]: Yup.string(),
-    [DATE_RECONNAISSANCE]: DateValidationSchemaSansTestFormat,
-    [VILLE_RECONNAISSANCE]: Yup.string().matches(
-      CaracteresAutorises,
-      CARACTERES_AUTORISES_MESSAGE
-    ),
-    [REGION_ETAT_RECONNAISSANCE]: Yup.string().matches(
-      CaracteresAutorises,
-      CARACTERES_AUTORISES_MESSAGE
-    ),
-    [DEPARTEMENT_RECONNAISSANCE]: Yup.string().matches(
-      CaracteresAutorises,
-      CARACTERES_AUTORISES_MESSAGE
-    ),
-    [PAYS_RECONNAISSANCE]: Yup.string().matches(
-      CaracteresAutorises,
-      CARACTERES_AUTORISES_MESSAGE
-    )
-  });
+export const EvenementReconnaissanceTitulaireFormValidationSchema = Yup.object().shape({
+  [TITULAIRE_RECONNU]: Yup.string(),
+  [DATE_RECONNAISSANCE]: DateValidationSchemaSansTestFormat,
+  [VILLE_RECONNAISSANCE]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
+  [REGION_ETAT_RECONNAISSANCE]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
+  [DEPARTEMENT_RECONNAISSANCE]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
+  [PAYS_RECONNAISSANCE]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
+});
 const OUI = "OUI";
 
 export type EvenementReconnaissanceTitulaireSubFormProps = SubFormProps;
-const EvenementReconnaissanceTitulaireForm: React.FC<
-  EvenementReconnaissanceTitulaireSubFormProps
-> = props => {
-  const lieuReconnaissanceWithNamespace = withNamespace(
-    props.nom,
-    LIEU_ACTE_RECONNAISSANCE
-  );
-  const villeReconnaissanceWithNamespace = withNamespace(
-    props.nom,
-    VILLE_RECONNAISSANCE
-  );
-  const regionReconnaissanceWithNamespace = withNamespace(
-    props.nom,
-    REGION_ETAT_RECONNAISSANCE
-  );
-  const paysReconnaissanceWithNamespace = withNamespace(
-    props.nom,
-    PAYS_RECONNAISSANCE
-  );
-  const departementReconnaissanceWithNamespace = withNamespace(
-    props.nom,
-    DEPARTEMENT_RECONNAISSANCE
-  );
+const EvenementReconnaissanceTitulaireForm: React.FC<EvenementReconnaissanceTitulaireSubFormProps> = props => {
+  const lieuReconnaissanceWithNamespace = withNamespace(props.nom, LIEU_ACTE_RECONNAISSANCE);
+  const villeReconnaissanceWithNamespace = withNamespace(props.nom, VILLE_RECONNAISSANCE);
+  const regionReconnaissanceWithNamespace = withNamespace(props.nom, REGION_ETAT_RECONNAISSANCE);
+  const paysReconnaissanceWithNamespace = withNamespace(props.nom, PAYS_RECONNAISSANCE);
+  const departementReconnaissanceWithNamespace = withNamespace(props.nom, DEPARTEMENT_RECONNAISSANCE);
 
-  const boutonRadioTitulaireReconnuForm = props.formik.getFieldProps(
-    withNamespace(props.nom, TITULAIRE_RECONNU)
-  ).value;
+  const boutonRadioTitulaireReconnuForm = props.formik.getFieldProps(withNamespace(props.nom, TITULAIRE_RECONNU)).value;
 
-  const lieuReconnaissanceForm = props.formik.getFieldProps(
-    lieuReconnaissanceWithNamespace
-  ).value;
+  const lieuReconnaissanceForm = props.formik.getFieldProps(lieuReconnaissanceWithNamespace).value;
 
-  const [lieuReconnaissance, setLieuReconnaissance] = useState<EtrangerFrance>(
-    EtrangerFrance.INCONNU
-  );
+  const [lieuReconnaissance, setLieuReconnaissance] = useState<EtrangerFrance>(EtrangerFrance.INCONNU);
   const [titulaireReconnu, setTitulaireReconnu] = useState(false);
 
   useEffect(() => {
@@ -107,23 +64,12 @@ const EvenementReconnaissanceTitulaireForm: React.FC<
   }, [lieuReconnaissanceForm]);
 
   useEffect(() => {
-    if (
-      boutonRadioTitulaireReconnuForm &&
-      boutonRadioTitulaireReconnuForm === OUI
-    ) {
+    if (boutonRadioTitulaireReconnuForm && boutonRadioTitulaireReconnuForm === OUI) {
       setTitulaireReconnu(true);
     }
   }, [boutonRadioTitulaireReconnuForm]);
 
-  const dateEvenementReconnaissanceComposeFormProps = {
-    labelDate: getLibelle(`Date de reconnaissance`),
-    nomDate: withNamespace(props.nom, DATE_RECONNAISSANCE),
-    anneeMax: new Date().getFullYear()
-  } as DateComposeFormProps;
-
-  function rendreComposantEnFonctionDuLieuDeReconnaissance(
-    nationaliteSelectionne: EtrangerFrance
-  ): JSX.Element {
+  function rendreComposantEnFonctionDuLieuDeReconnaissance(nationaliteSelectionne: EtrangerFrance): JSX.Element {
     let composantLieuReconnaissance: JSX.Element = <></>;
     switch (nationaliteSelectionne) {
       case EtrangerFrance.ETRANGER:
@@ -141,73 +87,48 @@ const EvenementReconnaissanceTitulaireForm: React.FC<
 
   function getFormulaireReconnaissanceEtrangere(): JSX.Element {
     return (
-      <>
-        <InputField
+      <div className="space-y-4">
+        <ChampTexte
           name={villeReconnaissanceWithNamespace}
-          label={getLibelle("Ville de la reconnaissance")}
-          onBlur={e =>
-            sortieChampPremiereLettreEnMajuscule(
-              e,
-              props.formik,
-              villeReconnaissanceWithNamespace
-            )
-          }
+          libelle={"Ville de la reconnaissance"}
+          optionFormatage="PREMIER_MAJUSCULE"
+          onBlur={e => sortieChampPremiereLettreEnMajuscule(e, props.formik, villeReconnaissanceWithNamespace)}
         />
 
-        <InputField
+        <ChampTexte
           name={regionReconnaissanceWithNamespace}
-          label={getLibelle("Région/état de la reconnaissance")}
-          onBlur={e =>
-            sortieChampPremiereLettreEnMajuscule(
-              e,
-              props.formik,
-              regionReconnaissanceWithNamespace
-            )
-          }
+          libelle={"Région/état de la reconnaissance"}
+          optionFormatage="PREMIER_MAJUSCULE"
+          onBlur={e => sortieChampPremiereLettreEnMajuscule(e, props.formik, regionReconnaissanceWithNamespace)}
         />
 
-        <InputField
+        <ChampTexte
           name={paysReconnaissanceWithNamespace}
-          label={getLibelle("Pays de la reconnaissance")}
-          onBlur={e =>
-            sortieChampPremiereLettreEnMajuscule(
-              e,
-              props.formik,
-              paysReconnaissanceWithNamespace
-            )
-          }
+          libelle={"Pays de la reconnaissance"}
+          optionFormatage="PREMIER_MAJUSCULE"
+          onBlur={e => sortieChampPremiereLettreEnMajuscule(e, props.formik, paysReconnaissanceWithNamespace)}
         />
-      </>
+      </div>
     );
   }
 
   function getFormulaireReconnaissanceFrancaise(): JSX.Element {
     return (
-      <>
-        <InputField
+      <div className="space-y-4">
+        <ChampTexte
           name={withNamespace(props.nom, VILLE_RECONNAISSANCE)}
-          label={getLibelle("Ville de la reconnaissance")}
-          onBlur={e =>
-            sortieChampPremiereLettreEnMajuscule(
-              e,
-              props.formik,
-              villeReconnaissanceWithNamespace
-            )
-          }
+          libelle={"Ville de la reconnaissance"}
+          optionFormatage="PREMIER_MAJUSCULE"
+          onBlur={e => sortieChampPremiereLettreEnMajuscule(e, props.formik, villeReconnaissanceWithNamespace)}
         />
 
-        <InputField
+        <ChampTexte
           name={departementReconnaissanceWithNamespace}
-          label={getLibelle("Département de la reconnaissance")}
-          onBlur={e =>
-            sortieChampPremiereLettreEnMajuscule(
-              e,
-              props.formik,
-              departementReconnaissanceWithNamespace
-            )
-          }
+          libelle={"Département de la reconnaissance"}
+          optionFormatage="PREMIER_MAJUSCULE"
+          onBlur={e => sortieChampPremiereLettreEnMajuscule(e, props.formik, departementReconnaissanceWithNamespace)}
         />
-      </>
+      </div>
     );
   }
 
@@ -216,9 +137,7 @@ const EvenementReconnaissanceTitulaireForm: React.FC<
     props.formik.handleChange(e);
   }
 
-  function handleChangeTitulaireReconnu(
-    e: React.ChangeEvent<HTMLInputElement>
-  ) {
+  function handleChangeTitulaireReconnu(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.value === "OUI") {
       setTitulaireReconnu(true);
     } else {
@@ -228,39 +147,32 @@ const EvenementReconnaissanceTitulaireForm: React.FC<
   }
 
   return (
-    <>
-      <div className="EvenementReconnaissanceTitulaireForm">
-        <RadioField
-          name={withNamespace(props.nom, TITULAIRE_RECONNU)}
-          label={getLibelle("Le titulaire a t-il été reconnu ?")}
-          values={OuiNon.getAllEnumsAsOptions()}
-          onChange={handleChangeTitulaireReconnu}
-        />
+    <div className="space-y-4">
+      <ChampsRadio
+        name={withNamespace(props.nom, TITULAIRE_RECONNU)}
+        libelle={"Le titulaire a t-il été reconnu ?"}
+        options={OuiNon.getAllEnumsAsOptions()}
+        onChange={handleChangeTitulaireReconnu}
+      />
 
-        {titulaireReconnu && (
-          <>
-            <div className="Date">
-              <div className="DateEvenement">
-                <DateComposeForm
-                  {...dateEvenementReconnaissanceComposeFormProps}
-                ></DateComposeForm>
-              </div>
-            </div>
+      {titulaireReconnu && (
+        <div className="space-y-4">
+          <ChampDate
+            name={withNamespace(props.nom, DATE_RECONNAISSANCE)}
+            libelle={"Date de reconnaissance"}
+          />
 
-            <RadioField
-              name={withNamespace(props.nom, LIEU_ACTE_RECONNAISSANCE)}
-              label={getLibelle("Lieu de l'acte de reconnaissance")}
-              values={EtrangerFrance.getAllEnumsAsOptions()}
-              onChange={onChangeLieuReconnaissance}
-            />
+          <ChampsRadio
+            name={withNamespace(props.nom, LIEU_ACTE_RECONNAISSANCE)}
+            libelle={"Lieu de l'acte de reconnaissance"}
+            options={EtrangerFrance.getAllEnumsAsOptions()}
+            onChange={onChangeLieuReconnaissance}
+          />
 
-            {rendreComposantEnFonctionDuLieuDeReconnaissance(
-              lieuReconnaissance
-            )}
-          </>
-        )}
-      </div>
-    </>
+          {rendreComposantEnFonctionDuLieuDeReconnaissance(lieuReconnaissance)}
+        </div>
+      )}
+    </div>
   );
 };
 

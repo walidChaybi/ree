@@ -5,11 +5,11 @@ import React, { memo, useEffect, useMemo } from "react";
 import ChampCaseACocher from "../../../../commun/champs/ChampCaseACocher";
 import ChampDate from "../../../../commun/champs/ChampDate";
 import ChampTexte from "../../../../commun/champs/ChampTexte";
+import FormulaireAdresse from "../../../../commun/champs/ChampsAddresse";
 import ChampsPrenoms from "../../../../commun/champs/ChampsPrenoms";
 import ChampsRadio from "../../../../commun/champs/ChampsRadio";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import SeparateurSection from "../../../../commun/conteneurs/formulaire/SeparateurSection";
-import FormulaireAdresse from "../../../../commun/formulaire/FormulaireAdresse";
 import { ISaisieProjetActeForm } from "./FormulaireSaisirProjet";
 
 interface IBlocParentProps {
@@ -103,8 +103,6 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
       <FormulaireAdresse
         key={`${prefix}.lieuNaissance`}
         prefix={`${prefix}.lieuNaissance`}
-        categorieLieu={parent?.lieuNaissance?.typeLieu}
-        ville={parent?.lieuNaissance?.ville}
       />
 
       <SeparateurSection
@@ -137,8 +135,6 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
           <FormulaireAdresse
             key={`${prefix}.domicile`}
             prefix={`${prefix}.domicile`}
-            categorieLieu={parent?.domicile?.typeLieu}
-            ville={parent?.domicile?.ville}
           />
         )}
       </div>

@@ -4,6 +4,7 @@ import * as Yup from "yup";
 
 interface ISchemaCommunParams {
   obligatoire: boolean | ConditionChamp[];
+  operateurConditionsOu?: boolean;
 }
 
 type TValeurChamp = string | boolean | number | undefined;
@@ -129,7 +130,8 @@ const getSchemaValidationDate = (bloquerDateFutur?: boolean): Yup.ObjectSchema<T
 const gestionObligation = (
   schema: Yup.AnySchema,
   obligatoire: boolean | ConditionChamp[],
-  actionObligation: () => Yup.AnySchema
+  actionObligation: () => Yup.AnySchema,
+  conditionOu?: boolean
 ): Yup.AnySchema => {
   if (typeof obligatoire === "boolean") {
     return obligatoire ? actionObligation() : schema;
@@ -143,8 +145,11 @@ const gestionObligation = (
       return actionObligation();
     default:
       return schema.when([...obligatoire.map(condition => `$${condition.idChampReference}`)], {
-        is: (...valeurChamp: TValeurChamp[]) =>
-          obligatoire.every((condition, index) => condition.estRespecteePourValeur(valeurChamp[index])),
+        is: (...valeurChamp: TValeurChamp[]) => {
+          const verificationCondition = (condition: ConditionChamp, index: number) => condition.estRespecteePourValeur(valeurChamp[index]);
+
+          return conditionOu ? obligatoire.some(verificationCondition) : obligatoire.every(verificationCondition);
+        },
         then: actionObligation()
       });
   }
@@ -159,7 +164,12 @@ const SchemaValidation = {
     if (schemaParams.regexp)
       schema = schema.matches(schemaParams.regexp.valeur, schemaParams.regexp.message ?? "⚠ La valeur n'est pas conforme'");
 
-    return gestionObligation(schema, schemaParams.obligatoire, () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE)) as Yup.StringSchema;
+    return gestionObligation(
+      schema,
+      schemaParams.obligatoire,
+      () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE),
+      schemaParams.operateurConditionsOu
+    ) as Yup.StringSchema;
   },
 
   entier: (schemaParams: ISchemaCommunParams & { min?: TValidationEntier; max?: TValidationEntier }) => {

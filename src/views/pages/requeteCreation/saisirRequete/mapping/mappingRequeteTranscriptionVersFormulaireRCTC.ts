@@ -30,7 +30,6 @@ import {
   NATIONALITE_3,
   NATURE_ACTE,
   NOM,
-  NOMS,
   NOM_ACTE_ETRANGER,
   NOM_SOUHAITE_ACTE_FR,
   NOM_USAGE,
@@ -39,15 +38,10 @@ import {
   PARENT2,
   PARENTS,
   PARENTS_MARIES,
-  PAS_DE_NOM_ACTE_ETRANGER,
-  PAS_DE_NOM_CONNU,
-  PAS_DE_PRENOM_CONNU,
   PAYS,
   PAYS_DU_MARIAGE,
   PAYS_NAISSANCE,
-  PAYS_ORIGINE,
   PAYS_RECONNAISSANCE,
-  PAYS_STATUT_REFUGIE,
   PIECES_JOINTES,
   PRENOM,
   PRENOMS,
@@ -161,13 +155,9 @@ export function saisieTitulaire(titulaire?: ITitulaireRequeteCreation): IIdentit
   return titulaire
     ? ({
         [IDENTIFIANT]: getValeurOuVide(titulaire.id),
-        [NOMS]: {
-          [PAS_DE_NOM_ACTE_ETRANGER]: pasDeNomOuFalse(titulaire.nomNaissance ?? "", "pasDeNomActeEtranger"),
-          [NOM_ACTE_ETRANGER]: getValeurOuVide(titulaire.nomNaissance),
-          [NOM_SOUHAITE_ACTE_FR]: getValeurOuVide(titulaire.nomSouhaite)
-        },
+        [NOM_ACTE_ETRANGER]: getValeurOuVide(titulaire.nomNaissance),
+        [NOM_SOUHAITE_ACTE_FR]: getValeurOuVide(titulaire.nomSouhaite),
         [SEXE]: getValeurOuVide(titulaire.sexe),
-        [PAS_DE_PRENOM_CONNU]: pasDePrenomOuFalse(titulaire.prenoms?.[0].prenom),
         // TODO Prenoms a rajouter quand la MR 855 sera sur develop
         [PRENOMS]: getPrenomsOrdonneVersPrenomsDefaultValues(titulaire.prenoms),
         [DATE_NAISSANCE]: getDateNaissance(titulaire),
@@ -228,9 +218,7 @@ export function saisieParent(parent?: ITitulaireRequeteCreation): IParentForm {
   return parent
     ? ({
         [IDENTIFIANT]: parent.id,
-        [PAS_DE_NOM_CONNU]: pasDeNomOuFalse(parent.nomNaissance ?? "", "pasDeNomConnu"),
         [NOM]: parent.nomNaissance,
-        [PAS_DE_PRENOM_CONNU]: pasDePrenomOuFalse(parent.prenoms?.[0].prenom),
         [PRENOMS]: getPrenomsOrdonneVersPrenomsDefaultValues(parent.prenoms),
         [SEXE]: getValeurOuVide(parent.sexe),
         [DATE_NAISSANCE]: getDateNaissance(parent),
@@ -239,8 +227,6 @@ export function saisieParent(parent?: ITitulaireRequeteCreation): IParentForm {
           [DEPARTEMENT_NAISSANCE]: getValeurOuVide(parent.regionNaissance),
           ...getInformationsLieuNaissance(parent)
         },
-        [PAYS_STATUT_REFUGIE]: getValeurOuVide(parent.paysStatutRefugie),
-        [PAYS_ORIGINE]: getValeurOuVide(parent.paysOrigine),
         [NATIONALITES]: getNationalites(parent.nationalites)
       } as IParentForm)
     : ParentFormDefaultValues;

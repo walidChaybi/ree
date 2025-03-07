@@ -319,6 +319,7 @@ const initialiseTitulaires = (requete: ISaisieProjetActeProps): IBlocTitulaire =
 
 const initialiseParents = (parent?: any): IParent => {
   const estFranceouEtranger = parent?.paysNaissance?.toUpperCase() === "FRANCE" ? "France" : "Étranger";
+
   return {
     id: parent?.id || "",
     position: parent?.position || 0,
@@ -340,7 +341,7 @@ const initialiseParents = (parent?: any): IParent => {
     lieuNaissance: {
       typeLieu: parent?.paysNaissance ? estFranceouEtranger : "Inconnu",
       ville: parent?.villeNaissance || "",
-      adresse: parent?.adresseNaissance || "",
+      adresse: parent?.adresseNaissance ?? "",
       departement: parent?.regionNaissance || "",
       arrondissement: parent?.arrondissementNaissance || "",
       pays: parent?.paysNaissance || "",

@@ -1,8 +1,8 @@
 import { IDENTIFIANT, NAISSANCE, NATIONALITES, NOM, PARENTS, PRENOMS, SEXE } from "@composant/formulaire/ConstantesNomsForm";
-import { creerValidationSchemaPrenom, genererDefaultValuesPrenoms } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
+import { creerValidationSchemaPrenom } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { QUINZE, getLibelle } from "@util/Utils";
-import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
+import { AddCircle, Delete } from "@mui/icons-material";
+import { QUINZE } from "@util/Utils";
 import { DateDefaultValues } from "@widget/formulaire/champsDate/DateComposeForm";
 import { DateValidationSchemaSansTestFormat } from "@widget/formulaire/champsDate/DateComposeFormValidation";
 import { NationalitesFormDefaultValues, NationalitesFormValidationSchema } from "@widget/formulaire/nationalites/NationalitesForm";
@@ -10,17 +10,11 @@ import { FormikComponentProps, INomForm, SubFormProps, withNamespace } from "@wi
 import { connect } from "formik";
 import React, { useEffect, useMemo, useState } from "react";
 import * as Yup from "yup";
+import BoutonIcon from "../../../../../../composants/commun/bouton/BoutonIcon";
+import ConteneurAvecBordure from "../../../../../../composants/commun/conteneurs/formulaire/ConteneurAvecBordure";
+import SeparateurSection from "../../../../../../composants/commun/conteneurs/formulaire/SeparateurSection";
 import { limitesParents } from "../../../../../../pages/requetesConsulaire/contenu/SaisirRCTCPage";
-import { CaracteresAutorises } from "../../../../../../ressources/Regex";
-import {
-  DATE_NAISSANCE,
-  MARIAGE,
-  PAS_DE_NOM_CONNU,
-  PAS_DE_PRENOM_CONNU,
-  PAYS_ORIGINE,
-  PAYS_STATUT_REFUGIE,
-  RECONNAISSANCE
-} from "../../../../../common/composant/formulaire/ConstantesNomsForm";
+import { DATE_NAISSANCE, MARIAGE, RECONNAISSANCE } from "../../../../../common/composant/formulaire/ConstantesNomsForm";
 import EvenementMariageParentsForm from "../evenement/EvenementMariageParentsForm";
 import { EvenementParentsFormDefaultValues, EvenementParentsFormValidationSchema } from "../evenement/EvenementParentsForm";
 import EvenementReconnaissanceTitulaireForm from "../evenement/EvenementReconnaissanceTitulaireForm";
@@ -29,50 +23,34 @@ import "./scss/ParentsForm.scss";
 
 export const ParentFormDefaultValues = {
   [IDENTIFIANT]: "",
-  [PAS_DE_NOM_CONNU]: "false",
   [NOM]: "",
-  [PAS_DE_PRENOM_CONNU]: "false",
-  [PRENOMS]: genererDefaultValuesPrenoms(),
+  [PRENOMS]: { prenom1: "" },
   [SEXE]: "INCONNU",
   [DATE_NAISSANCE]: DateDefaultValues,
   [NAISSANCE]: EvenementParentsFormDefaultValues,
-  [NATIONALITES]: NationalitesFormDefaultValues,
-  [PAYS_STATUT_REFUGIE]: "",
-  [PAYS_ORIGINE]: ""
+  [NATIONALITES]: NationalitesFormDefaultValues
 };
 
 // Schéma de validation des champs
-export const ParentFormValidationSchema = Yup.object()
-  .shape({
-    [NOM]: Yup.string(),
-    [PRENOMS]: creerValidationSchemaPrenom(),
-    [SEXE]: Yup.string(),
-    [DATE_NAISSANCE]: DateValidationSchemaSansTestFormat,
-    [NAISSANCE]: EvenementParentsFormValidationSchema,
-    [NATIONALITES]: NationalitesFormValidationSchema,
-    [PAYS_STATUT_REFUGIE]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
-    [PAYS_ORIGINE]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
-  })
-  .test("parent.pasDePrenomConnu", function (value, error) {
-    const prenom1 = value[PRENOMS].prenom1 as string;
-    const pasDePrenomConnuCoche = value[PAS_DE_PRENOM_CONNU];
-
-    const paramsError = {
-      path: `${error.path}.prenoms.prenom1`,
-      message: getLibelle("La saisie d'un prénom est obligatoire")
-    };
-    return pasDePrenomConnuCoche === "false" && !prenom1 ? this.createError(paramsError) : true;
-  })
-  .test("pasDeNom", function (value, error) {
-    const nom = value[NOM] as string;
-    const pasDeNomConnuCoche = value[PAS_DE_NOM_CONNU];
-
-    const paramsError = {
-      path: `${error.path}.nom`,
-      message: getLibelle("La saisie d'un nom est obligatoire")
-    };
-    return pasDeNomConnuCoche === "false" && !nom ? this.createError(paramsError) : true;
-  });
+export const ParentFormValidationSchema = Yup.object().shape({
+  [NOM]: Yup.string().test({
+    name: "nom-ou-prenom-obligatoire",
+    message: "Le nom ou le prénom est obligatoire.",
+    test: function (nom) {
+      const prenom1 = this.parent[PRENOMS]?.prenom1;
+      return nom || prenom1;
+    }
+  }),
+  [PRENOMS]: creerValidationSchemaPrenom(),
+  [SEXE]: Yup.string().when([NOM, `${PRENOMS}.prenom1`], {
+    is: (nom: string | undefined, prenom1: string | undefined) => nom || prenom1,
+    then: Yup.string().oneOf(["MASCULIN", "FEMININ"], "Le sexe est obligatoire.").required("Le sexe est obligatoire."),
+    otherwise: Yup.string()
+  }),
+  [DATE_NAISSANCE]: DateValidationSchemaSansTestFormat,
+  [NAISSANCE]: EvenementParentsFormValidationSchema,
+  [NATIONALITES]: NationalitesFormValidationSchema
+});
 
 interface ComponentParentsFormProps {
   parents?: ITitulaireRequeteCreation[];
@@ -90,15 +68,19 @@ const ParentsForm: React.FC<ParentSubFormProps & FormikComponentProps> = props =
   }, [props.parents]);
 
   const boutonAjouterParent = useMemo(() => {
-    const libelle = getLibelle("Ajouter un parent");
     return parents.length < limitesParents.MAX ? (
-      <button
-        aria-label={libelle}
+      <BoutonIcon
         type="button"
+        title={"Ajouter un parent"}
         onClick={onAjoutParent}
+        disabled={parents.length >= limitesParents.MAX}
+        styleBouton="principal"
       >
-        {libelle}
-      </button>
+        <div className="flex items-center gap-4 px-2">
+          <AddCircle />
+          <span className="font-noto-sans-ui text-sm font-bold">{"Ajouter un parent"}</span>
+        </div>
+      </BoutonIcon>
     ) : (
       <></>
     );
@@ -106,16 +88,18 @@ const ParentsForm: React.FC<ParentSubFormProps & FormikComponentProps> = props =
   }, [parents.length]);
 
   const boutonSupprimerParent = useMemo(() => {
-    const libelle = getLibelle("Retirer un parent");
     return parents.length > limitesParents.MIN ? (
-      <button
-        className="BoutonDanger"
-        aria-label={libelle}
+      <BoutonIcon
         type="button"
+        title={"Retirer un parent"}
         onClick={onRetraitParent}
+        className="h-10 bg-rouge"
       >
-        {libelle}
-      </button>
+        <div className="flex items-center gap-4 px-2">
+          <Delete />
+          <span className="font-noto-sans-ui text-sm font-bold">{"Retirer un parent"}</span>
+        </div>
+      </BoutonIcon>
     ) : (
       <></>
     );
@@ -126,7 +110,7 @@ const ParentsForm: React.FC<ParentSubFormProps & FormikComponentProps> = props =
     const nomParent2 = withNamespace(PARENTS, "parent2");
     props.formik.setFieldValue(nomParent2, {
       ...ParentFormDefaultValues,
-      [PRENOMS]: { ...genererDefaultValuesPrenoms() }
+      [PRENOMS]: { prenom1: "" }
     });
     setParents([...parents, {} as ITitulaireRequeteCreation]);
   }
@@ -139,23 +123,35 @@ const ParentsForm: React.FC<ParentSubFormProps & FormikComponentProps> = props =
 
   return (
     <>
-      <div className="ParentsForm">
+      <ConteneurAvecBordure
+        className="py-6"
+        titreEnTete={"PARENTS"}
+      >
         {parents.map((parent, index) => (
-          <IdentiteParentForm
-            parent={parent}
-            key={index}
-            nom={withNamespace(props.nom, `parent${index + 1}`)}
-            titre={`Parent ${index + 1}`}
-            maxPrenoms={QUINZE}
-          />
+          <React.Fragment key={index}>
+            <SeparateurSection titre={`Parent ${index + 1}`} />
+
+            <IdentiteParentForm
+              parent={parent}
+              nom={withNamespace(props.nom, `parent${index + 1}`)}
+              titre={`Parent ${index + 1}`}
+              maxPrenoms={QUINZE}
+            />
+          </React.Fragment>
         ))}
-        <div className="conteneurBoutons">
+        <div className="mt-8">
           {boutonAjouterParent}
           {boutonSupprimerParent}
         </div>
-        <EvenementMariageParentsForm nom={withNamespace(props.nom, MARIAGE)} />
-        <EvenementReconnaissanceTitulaireForm nom={withNamespace(props.nom, RECONNAISSANCE)} />
-      </div>
+        <div className="mt-4 grid grid-cols-2 gap-4">
+          <div className="flex flex-col">
+            <EvenementMariageParentsForm nom={withNamespace(props.nom, MARIAGE)} />
+          </div>
+          <div className="flex flex-col">
+            <EvenementReconnaissanceTitulaireForm nom={withNamespace(props.nom, RECONNAISSANCE)} />
+          </div>
+        </div>
+      </ConteneurAvecBordure>
     </>
   );
 };

@@ -56,7 +56,7 @@ const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({ cheminPrenoms, prefixePr
           className="w-full"
         />
       </div>
-      <div className="flex items-end">
+      <div className="flex items-end gap-4">
         <BoutonIcon
           type="button"
           title="Ajouter un prénom"

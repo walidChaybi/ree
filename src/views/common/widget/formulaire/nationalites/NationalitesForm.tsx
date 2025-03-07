@@ -1,21 +1,13 @@
-import {
-  NATIONALITE_1,
-  NATIONALITE_2,
-  NATIONALITE_3
-} from "@composant/formulaire/ConstantesNomsForm";
-import { DEUX, UN, estRenseigne, getLibelle } from "@util/Utils";
+import { NATIONALITE_1, NATIONALITE_2, NATIONALITE_3 } from "@composant/formulaire/ConstantesNomsForm";
+import AddCircle from "@mui/icons-material/AddCircle";
+import { DEUX, UN, estRenseigne } from "@util/Utils";
 import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
-import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
-import {
-  IGNORER_TABULATION,
-  NB_CARACT_MAX_SAISIE,
-  SubFormProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
+import BoutonIcon from "../../../../../composants/commun/bouton/BoutonIcon";
+import ChampNationalite from "../../../../../composants/commun/champs/ChampNationalite";
 import { CaracteresAutorises } from "../../../../../ressources/Regex";
 import "./scss/Nationalite.scss";
 
@@ -32,19 +24,9 @@ export const NationalitesFormDefaultValues = {
 // Schéma de validation des champs
 export const NationalitesFormValidationSchema = Yup.object()
   .shape({
-    [NATIONALITE_1]: Yup.string().matches(
-      CaracteresAutorises,
-      CARACTERES_AUTORISES_MESSAGE
-    ),
-
-    [NATIONALITE_2]: Yup.string().matches(
-      CaracteresAutorises,
-      CARACTERES_AUTORISES_MESSAGE
-    ),
-    [NATIONALITE_3]: Yup.string().matches(
-      CaracteresAutorises,
-      CARACTERES_AUTORISES_MESSAGE
-    )
+    [NATIONALITE_1]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
+    [NATIONALITE_2]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
+    [NATIONALITE_3]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
   })
   .test("NATIONALITEObligatoire1", function (value, error) {
     const NATIONALITE1 = value[NATIONALITE_1] as string;
@@ -53,13 +35,10 @@ export const NationalitesFormValidationSchema = Yup.object()
 
     const params = {
       path: `${error.path}.NATIONALITE1`,
-      message: getLibelle("La saisie du Nationalité 1 est obligatoire")
+      message: "La saisie du Nationalité 1 est obligatoire"
     };
 
-    return NATIONALITE1 == null &&
-      (NATIONALITE2 != null || NATIONALITE3 != null)
-      ? this.createError(params)
-      : true;
+    return NATIONALITE1 == null && (NATIONALITE2 != null || NATIONALITE3 != null) ? this.createError(params) : true;
   })
   .test("NATIONALITEsObligatoire2", function (value, error) {
     const NATIONALITE2 = value[NATIONALITE_2] as string;
@@ -67,12 +46,10 @@ export const NationalitesFormValidationSchema = Yup.object()
 
     const params = {
       path: `${error.path}.NATIONALITE2`,
-      message: getLibelle("La saisie du Nationalité 2 est obligatoire")
+      message: "La saisie du Nationalité 2 est obligatoire"
     };
 
-    return NATIONALITE2 == null && NATIONALITE3 != null
-      ? this.createError(params)
-      : true;
+    return NATIONALITE2 == null && NATIONALITE3 != null ? this.createError(params) : true;
   });
 
 interface INationaliteOrdonnes {
@@ -80,154 +57,102 @@ interface INationaliteOrdonnes {
   numeroOrdre: number;
 }
 
-interface INationaliteFormProps {
+interface IPropsFormulaireNationalite {
   nationalites?: INationaliteOrdonnes[];
 }
-export type NationalitesFormProps = INationaliteFormProps & SubFormProps;
+export type PropsFormulaireNationalites = IPropsFormulaireNationalite & SubFormProps;
 
-const NationalitesForm: React.FC<NationalitesFormProps> = props => {
-  const NationaliteWithNamespace1 = withNamespace(props.nom, NATIONALITE_1);
-  const NationaliteWithNamespace2 = withNamespace(props.nom, NATIONALITE_2);
-  const NationaliteWithNamespace3 = withNamespace(props.nom, NATIONALITE_3);
+const FormulaireNationalites: React.FC<PropsFormulaireNationalites> = props => {
+  const nomNationalite1 = withNamespace(props.nom, NATIONALITE_1);
+  const nomNationalite2 = withNamespace(props.nom, NATIONALITE_2);
+  const nomNationalite3 = withNamespace(props.nom, NATIONALITE_3);
 
-  const [nbNATIONALITE, setNbNATIONALITE] = useState<number>(1);
-  const [nbNationaliteInitialise, setNbNationaliteInitialise] =
-    useState<boolean>(false);
+  const [nbNationalites, setNbNationalites] = useState<number>(1);
+  const [nbNationalitesInitialise, setNbNationalitesInitialise] = useState<boolean>(false);
   const [btnAjouterInactif, setBtnAjouterInactif] = useState(false);
   const [btnSupprimerInactif, setBtnSupprimerInactif] = useState(true);
 
   useEffect(() => {
-    if (
-      !nbNationaliteInitialise &&
-      props.nationalites &&
-      props.nationalites.length > 1
-    ) {
-      setNbNATIONALITE(props.nationalites.length);
-      setNbNationaliteInitialise(true);
+    if (!nbNationalitesInitialise && props.nationalites && props.nationalites.length > 1) {
+      setNbNationalites(props.nationalites.length);
+      setNbNationalitesInitialise(true);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.nationalites]);
 
-  const ajouterNATIONALITE = () => {
-    if (nbNATIONALITE + 1 <= NB_MAX_NATIONALITES) {
-      setNbNATIONALITE(nbNATIONALITE + 1);
+  const ajouterNationalite = () => {
+    if (nbNationalites + 1 <= NB_MAX_NATIONALITES) {
+      setNbNationalites(nbNationalites + 1);
     }
   };
 
-  const supprimerNATIONALITE = (champ: string) => {
-    if (nbNATIONALITE - 1 >= NB_MIN_NATIONALITES) {
-      setNbNATIONALITE(nbNATIONALITE - 1);
+  const supprimerNationalite = (champ: string) => {
+    if (nbNationalites - 1 >= NB_MIN_NATIONALITES) {
+      setNbNationalites(nbNationalites - 1);
       props.formik.setFieldValue(withNamespace(props.nom, champ), "");
     }
   };
 
   useEffect(() => {
-    setBtnAjouterInactif(nbNATIONALITE === NB_MAX_NATIONALITES);
-    setBtnSupprimerInactif(nbNATIONALITE === NB_MIN_NATIONALITES);
-  }, [nbNATIONALITE]);
+    setBtnAjouterInactif(nbNationalites === NB_MAX_NATIONALITES);
+    setBtnSupprimerInactif(nbNationalites === NB_MIN_NATIONALITES);
+  }, [nbNationalites]);
 
   function getBoutonAjouter(): JSX.Element {
     return (
-      <button
+      <BoutonIcon
         type="button"
+        title={"Ajouter une nationalité"}
+        onClick={ajouterNationalite}
         disabled={btnAjouterInactif}
-        onClick={ajouterNATIONALITE}
+        styleBouton="principal"
       >
-        {getLibelle("Ajouter une nationalité")}
-      </button>
+        <div className="flex items-center gap-4 px-2">
+          <AddCircle />
+          <span className="font-noto-sans-ui text-sm font-bold">{"Ajouter une nationalité"}</span>
+        </div>
+      </BoutonIcon>
     );
   }
 
-  function getBoutonSupprimer(champ: string): JSX.Element {
-    return (
-      <button
-        type="button"
-        tabIndex={IGNORER_TABULATION}
-        className="BoutonDanger"
-        disabled={btnSupprimerInactif}
-        onClick={() => supprimerNATIONALITE(champ)}
-      >
-        {getLibelle("Annuler saisie")}
-      </button>
-    );
-  }
-
-  function estPrenomDisabled(index: number) {
-    return (
-      props.nationalites &&
-      estRenseigne(props.nationalites[index]) &&
-      props.disabled
-    );
+  function estDesactive(index: number) {
+    return props.nationalites && estRenseigne(props.nationalites[index]) && props.disabled;
   }
 
   return (
-    <>
-      <div className="NationalitesForm">
-        <InputField
-          name={NationaliteWithNamespace1}
-          label={getLibelle("Nationalité 1")}
-          maxLength={NB_CARACT_MAX_SAISIE}
-          onBlur={e =>
-            sortieChampPremiereLettreEnMajuscule(
-              e,
-              props.formik,
-              NationaliteWithNamespace1
-            )
-          }
+    <div className="grid grid-cols-2 gap-4">
+      <ChampNationalite
+        nom={nomNationalite1}
+        libelle={"Nationalité 1"}
+        desactive={props.disabled}
+      />
+
+      <div className="flex items-end">{getBoutonAjouter()}</div>
+
+      {nbNationalites > NB_MIN_NATIONALITES && (
+        <ChampNationalite
+          nom={nomNationalite2}
+          libelle={"Nationalité 2"}
+          desactive={props.disabled}
+          afficherBoutonSupprimer={!estDesactive(UN)}
+          onSupprimer={() => supprimerNationalite(NATIONALITE_2)}
+          boutonSupprimerDesactive={btnSupprimerInactif}
         />
-        {nbNATIONALITE === NB_MIN_NATIONALITES && (
-          <div className="BoutonsConteneur">{getBoutonAjouter()}</div>
-        )}
-      </div>
-      {nbNATIONALITE > NB_MIN_NATIONALITES && (
-        <div className="NationalitesForm">
-          <InputField
-            name={NationaliteWithNamespace2}
-            label={getLibelle("Nationalité 2")}
-            maxLength={NB_CARACT_MAX_SAISIE}
-            onBlur={e =>
-              sortieChampPremiereLettreEnMajuscule(
-                e,
-                props.formik,
-                NationaliteWithNamespace2
-              )
-            }
-          />
-          {nbNATIONALITE > NB_MIN_NATIONALITES &&
-            nbNATIONALITE < NB_MAX_NATIONALITES && (
-              <div className="BoutonsConteneur">
-                {getBoutonAjouter()}
-                {
-                  !estPrenomDisabled(UN) && getBoutonSupprimer(NATIONALITE_2) // pas d'affichage du bouton "supprimer" si le champs prénom est disabled
-                }
-              </div>
-            )}
-        </div>
       )}
-      {nbNATIONALITE === NB_MAX_NATIONALITES && (
-        <div className="NationalitesForm">
-          <InputField
-            name={NationaliteWithNamespace3}
-            label={getLibelle("Nationalité 3")}
-            maxLength={NB_CARACT_MAX_SAISIE}
-            onBlur={e =>
-              sortieChampPremiereLettreEnMajuscule(
-                e,
-                props.formik,
-                NationaliteWithNamespace3
-              )
-            }
-          />
-          <div className="BoutonsConteneur">
-            {
-              !estPrenomDisabled(DEUX) && getBoutonSupprimer(NATIONALITE_3) // pas d'affichage du bouton "supprimer" si le champs prénom est disabled
-            }
-          </div>
-        </div>
+
+      {nbNationalites === NB_MAX_NATIONALITES && (
+        <ChampNationalite
+          nom={nomNationalite3}
+          libelle={"Nationalité 3"}
+          desactive={props.disabled}
+          afficherBoutonSupprimer={!estDesactive(DEUX)}
+          onSupprimer={() => supprimerNationalite(NATIONALITE_3)}
+          boutonSupprimerDesactive={btnSupprimerInactif}
+        />
       )}
-    </>
+    </div>
   );
 };
 
-export default connect(NationalitesForm);
+export default connect(FormulaireNationalites);

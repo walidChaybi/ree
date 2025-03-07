@@ -1,7 +1,4 @@
-import {
-  DEPARTEMENT_NAISSANCE,
-  INCONNUE
-} from "@composant/formulaire/ConstantesNomsForm";
+import { DEPARTEMENT_NAISSANCE, INCONNUE } from "@composant/formulaire/ConstantesNomsForm";
 import { ISaisieRequeteRCTCAEnvoyer } from "@hook/requete/CreationRequeteCreationApiHook";
 import {
   IAdresseForm,
@@ -24,11 +21,6 @@ import {
   getValeurOuUndefined,
   mapPrenomsVersPrenomsOrdonnes
 } from "@util/Utils";
-import {
-  PAS_DE_NOM_ACTE_ETRANGER,
-  PAS_DE_NOM_CONNU,
-  PAS_DE_PRENOM_CONNU
-} from "../../../../common/composant/formulaire/ConstantesNomsForm";
 import { NatureActe } from "./../../../../../model/etatcivil/enum/NatureActe";
 import {
   IEvenementMariageParentsForm,
@@ -41,9 +33,7 @@ import { TypeCanal } from "./../../../../../model/requete/enum/TypeCanal";
 import { TypeRequete } from "./../../../../../model/requete/enum/TypeRequete";
 import { SNP } from "./../../../../common/util/Utils";
 
-export function mappingSaisieRequeteRCTCVersRequetesAEnvoyer(
-  saisie: ISaisieRequeteRCTC
-): ISaisieRequeteRCTCAEnvoyer {
+export function mappingSaisieRequeteRCTCVersRequetesAEnvoyer(saisie: ISaisieRequeteRCTC): ISaisieRequeteRCTCAEnvoyer {
   return {
     villeRegistre: saisie.requete.registre.cle,
     canal: TypeCanal.COURRIER.nom,
@@ -71,10 +61,7 @@ function mapTitulairesRCTC(
   saisieEvenementReconnaissance: IEvenementReconnaissanceTitulaireForm
 ): any[] {
   const titulaires = [
-    mapTitulaireActeTranscritDresse(
-      saisieTitulaire,
-      saisieEvenementReconnaissance
-    ),
+    mapTitulaireActeTranscritDresse(saisieTitulaire, saisieEvenementReconnaissance),
     mapParent(saisieParent1, UN, saisieEvenementMariage)
   ];
   if (saisieParent2 && auMoinsUneProprieteEstRenseigne(saisieParent2)) {
@@ -94,41 +81,30 @@ function mapRequerantRCTC(saisieRequerant: IRequerantForm): any {
     qualite: Qualite.PARTICULIER.nom,
     courriel: getValeurOuUndefined(saisieRequerant.adresse.adresseCourriel),
     telephone: getValeurOuUndefined(saisieRequerant.adresse.numeroTelephone),
-    courrielAutreContact: getValeurOuUndefined(
-      saisieRequerant.autreAdresseCourriel
-    ),
-    telephoneAutreContact: getValeurOuUndefined(
-      saisieRequerant.autreNumeroTelephone
-    )
+    courrielAutreContact: getValeurOuUndefined(saisieRequerant.autreAdresseCourriel),
+    telephoneAutreContact: getValeurOuUndefined(saisieRequerant.autreNumeroTelephone)
   };
 }
 
-function mapTitulaire(
-  saisieTitulaire: IIdentiteTitulaireForm | IParentForm
-): any {
+function mapTitulaire(saisieTitulaire: IIdentiteTitulaireForm | IParentForm): any {
   return {
     id: saisieTitulaire.identifiant,
-    prenoms: mapPrenoms(
-      saisieTitulaire.prenoms,
-      saisieTitulaire.pasDePrenomConnu.includes(PAS_DE_PRENOM_CONNU)
-    ),
+    prenoms: mapPrenoms(saisieTitulaire.prenoms, false),
     sexe: getValeurOuUndefined(saisieTitulaire.sexe),
     jourNaissance: getValeurOuUndefined(saisieTitulaire.dateNaissance.jour),
     moisNaissance: getValeurOuUndefined(saisieTitulaire.dateNaissance.mois),
     anneeNaissance: getValeurOuUndefined(saisieTitulaire.dateNaissance.annee),
-    villeNaissance: getValeurOuUndefined(
-      saisieTitulaire.naissance.villeNaissance
-    ),
+    villeNaissance: getValeurOuUndefined(saisieTitulaire.naissance.ville),
+    paysNaissance: saisieTitulaire.naissance.typeLieu === "France" ? "France" : saisieTitulaire.naissance.pays,
+    arrondissementNaissance: saisieTitulaire.naissance.arrondissement,
+    departementNaissance: saisieTitulaire.naissance.departement,
+    lieuNaissance: saisieTitulaire.naissance.typeLieu,
     regionNaissance: getValeurOuUndefined(
-      saisieTitulaire.naissance.regionNaissance ||
-        (DEPARTEMENT_NAISSANCE in saisieTitulaire.naissance
-          ? saisieTitulaire.naissance.departementNaissance
-          : undefined)
+      saisieTitulaire.naissance.etatProvince ||
+        (DEPARTEMENT_NAISSANCE in saisieTitulaire.naissance ? saisieTitulaire.naissance.departement : undefined)
     ),
-    arrondissementNaissance: getValeurOuUndefined(
-      saisieTitulaire.naissance.arrondissementNaissance
-    ),
-    nationalite: INCONNUE
+    nationalite: INCONNUE,
+    adresseNaissance: ""
   };
 }
 
@@ -136,60 +112,33 @@ function mapTitulaireActeTranscritDresse(
   saisieTitulaireActeTranscritDresse: IIdentiteTitulaireForm,
   saisieEvenementReconnaissance: IEvenementReconnaissanceTitulaireForm
 ): any {
-  const nomNaissance =
-    saisieTitulaireActeTranscritDresse.noms.pasDeNomActeEtranger.includes(
-      PAS_DE_NOM_ACTE_ETRANGER
-    )
-      ? SNP
-      : getValeurOuUndefined(
-          saisieTitulaireActeTranscritDresse.noms.nomActeEtranger
-        );
+  const nomNaissance = saisieTitulaireActeTranscritDresse.nomActeEtranger
+    ? getValeurOuUndefined(saisieTitulaireActeTranscritDresse.nomActeEtranger)
+    : SNP;
 
   return {
     ...mapTitulaire(saisieTitulaireActeTranscritDresse),
     typeObjetTitulaire: TypeObjetTitulaire.TITULAIRE_ACTE_TRANSCRIT_DRESSE,
     position: UN,
     nomNaissance,
-    nomSouhaite: getValeurOuUndefined(
-      saisieTitulaireActeTranscritDresse.noms.nomSouhaiteActeFR
-    ),
-    paysNaissance: getValeurOuUndefined(
-      saisieTitulaireActeTranscritDresse.naissance.paysNaissance
-    ),
-    evenementUnions: mapReconnaissanceTitulaireActe(
-      saisieEvenementReconnaissance
-    )
+    nomSouhaite: getValeurOuUndefined(saisieTitulaireActeTranscritDresse.nomSouhaiteActeFR),
+    evenementUnions: mapReconnaissanceTitulaireActe(saisieEvenementReconnaissance)
   };
 }
 
-function mapParent(
-  saisieParent: IParentForm,
-  position: number,
-  saisieEvenementMariage: IEvenementMariageParentsForm
-): any {
+function mapParent(saisieParent: IParentForm, position: number, saisieEvenementMariage: IEvenementMariageParentsForm): any {
   return {
     ...mapTitulaire(saisieParent),
-    nomNaissance: saisieParent.pasDeNomConnu.includes(PAS_DE_NOM_CONNU)
-      ? SNP
-      : getValeurOuUndefined(saisieParent.nom),
+    nomNaissance: getValeurOuUndefined(saisieParent.nom),
     typeObjetTitulaire: TypeObjetTitulaire.FAMILLE,
     qualite: QualiteFamille.getKey(QualiteFamille.PARENT),
     position,
     nationalites: mapNationalites(saisieParent.nationalites),
-    evenementUnions: mapMariageParents(saisieEvenementMariage),
-    paysNaissance: getPaysEvenement(
-      getValeurOuUndefined(saisieParent.naissance.lieuNaissance),
-      getValeurOuUndefined(saisieParent.naissance.paysNaissance)
-    ),
-    paysStatutRefugie: getValeurOuUndefined(saisieParent.paysStatutRefugie),
-    paysOrigine: getValeurOuUndefined(saisieParent.paysOrigine)
+    evenementUnions: mapMariageParents(saisieEvenementMariage)
   };
 }
 
-function mapPrenoms(
-  saisiePrenoms: IPrenomsForm,
-  pasDePrenomConnu: boolean
-): any[] {
+function mapPrenoms(saisiePrenoms: IPrenomsForm, pasDePrenomConnu: boolean): any[] {
   return pasDePrenomConnu
     ? [
         {
@@ -219,9 +168,7 @@ function mapNationalites(saisieNationalites: INationalitesForm): any[] {
   ).map(saisieNationalite => ({ nationalite: saisieNationalite }));
 }
 
-function mapMariageParents(
-  saisieEvenementMariage: IEvenementMariageParentsForm
-): any[] {
+function mapMariageParents(saisieEvenementMariage: IEvenementMariageParentsForm): any[] {
   return saisieEvenementMariage.parentMarie === "NON"
     ? []
     : [
@@ -240,38 +187,23 @@ function mapMariageParents(
       ];
 }
 
-function mapReconnaissanceTitulaireActe(
-  saisieEvenementReconnaissance: IEvenementReconnaissanceTitulaireForm
-): any[] {
+function mapReconnaissanceTitulaireActe(saisieEvenementReconnaissance: IEvenementReconnaissanceTitulaireForm): any[] {
   return saisieEvenementReconnaissance.titulaireReconnu === "NON"
     ? []
     : [
         {
           id: getValeurOuUndefined(saisieEvenementReconnaissance.identifiant),
           type: NatureActe.getKey(NatureActe.RECONNAISSANCE),
-          jour: getValeurOuUndefined(
-            saisieEvenementReconnaissance.dateReconnaissance.jour
-          ),
-          mois: getValeurOuUndefined(
-            saisieEvenementReconnaissance.dateReconnaissance.mois
-          ),
-          annee: getValeurOuUndefined(
-            saisieEvenementReconnaissance.dateReconnaissance.annee
-          ),
-          ville: getValeurOuUndefined(
-            saisieEvenementReconnaissance.villeReconnaissance
-          ),
+          jour: getValeurOuUndefined(saisieEvenementReconnaissance.dateReconnaissance.jour),
+          mois: getValeurOuUndefined(saisieEvenementReconnaissance.dateReconnaissance.mois),
+          annee: getValeurOuUndefined(saisieEvenementReconnaissance.dateReconnaissance.annee),
+          ville: getValeurOuUndefined(saisieEvenementReconnaissance.villeReconnaissance),
           region: getValeurOuUndefined(
-            saisieEvenementReconnaissance.regionEtatReconnaissance ||
-              saisieEvenementReconnaissance.departementReconnaissance
+            saisieEvenementReconnaissance.regionEtatReconnaissance || saisieEvenementReconnaissance.departementReconnaissance
           ),
           pays: getPaysEvenement(
-            getValeurOuUndefined(
-              saisieEvenementReconnaissance.lieuActeReconnaissance
-            ),
-            getValeurOuUndefined(
-              saisieEvenementReconnaissance.paysReconnaissance
-            )
+            getValeurOuUndefined(saisieEvenementReconnaissance.lieuActeReconnaissance),
+            getValeurOuUndefined(saisieEvenementReconnaissance.paysReconnaissance)
           )
         }
       ];
@@ -295,9 +227,6 @@ function mapAdresseRequerant(saisieAdresseRequerant: IAdresseForm): any {
   };
 }
 
-function getPaysEvenement(
-  lieuEvenement: string,
-  paysEvenement: string
-): string {
+function getPaysEvenement(lieuEvenement: string, paysEvenement: string): string {
   return lieuEvenement === "FRANCE" ? "FRANCE" : paysEvenement;
 }

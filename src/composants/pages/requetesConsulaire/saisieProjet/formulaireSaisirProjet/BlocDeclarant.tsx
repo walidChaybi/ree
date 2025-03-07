@@ -7,11 +7,11 @@ import ChampCaseACocher from "../../../../commun/champs/ChampCaseACocher";
 import ChampListeDeroulante from "../../../../commun/champs/ChampListeDeroulante";
 import ChampTexte from "../../../../commun/champs/ChampTexte";
 import ChampZoneTexte from "../../../../commun/champs/ChampZoneTexte";
+import FormulaireAdresse from "../../../../commun/champs/ChampsAddresse";
 import ChampsPrenoms from "../../../../commun/champs/ChampsPrenoms";
 import ChampsRadio from "../../../../commun/champs/ChampsRadio";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import SeparateurSection from "../../../../commun/conteneurs/formulaire/SeparateurSection";
-import FormulaireAdresse from "../../../../commun/formulaire/FormulaireAdresse";
 import { ISaisieProjetActeForm } from "./FormulaireSaisirProjet";
 
 const optionsDeclarant: Option[] = [
@@ -113,8 +113,6 @@ const BlocDeclarant: React.FC = () => {
           <FormulaireAdresse
             key={values.declarant.domicile?.typeLieu}
             prefix={"declarant.domicile"}
-            categorieLieu={values.declarant.domicile?.typeLieu}
-            ville={values.declarant?.domicile?.ville}
           />
 
           <SeparateurSection
