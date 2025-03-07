@@ -10,8 +10,7 @@ import BoutonIcon from "../../../../commun/bouton/BoutonIcon";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import ConteneurModale from "../../../../commun/conteneurs/modale/ConteneurModale";
 import { IMentionEnCours, IMiseAJourForm } from "../../PartieFormulaire";
-// A tester Alexandre 15/01/2025
-/* v8 ignore start */
+
 interface ITableauMentionsProps {
   setAfficherOngletAnalyseMarginale: (afficher: boolean, mottf?: string) => void;
 }
@@ -191,4 +190,3 @@ const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAna
 };
 
 export default TableauMentions;
-/* v8 ignore end */

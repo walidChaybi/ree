@@ -4,7 +4,6 @@ import { ErrorMessage, useField, useFormikContext } from "formik";
 import { useEffect, useMemo, useState } from "react";
 import { ITypeMentionDisponible, TMentionForm } from "../MentionForm";
 
-/* v8 ignore start */
 interface IChampTypeMentionProps {
   name: string;
   typesMentionDisponibles: ITypeMentionDisponible[];
@@ -185,4 +184,3 @@ const ChampTypeMention: React.FC<IChampTypeMentionProps> = ({ name, typesMention
 };
 
 export default ChampTypeMention;
-/* v8 ignore end */

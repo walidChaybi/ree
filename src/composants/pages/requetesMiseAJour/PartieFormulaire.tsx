@@ -1,5 +1,3 @@
-/* v8 ignore start */
-
 import { CONFIG_PUT_ANALYSE_MARGINALE_ET_MENTIONS } from "@api/configurations/etatCivil/PutAnalyseMarginaleEtMentionsConfigApi";
 import { CONFIG_PUT_MISE_A_JOUR_ANALYSE_MARGINALE } from "@api/configurations/etatCivil/PutMiseAJourAnalyseMarginaleConfigApi";
 import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
@@ -205,7 +203,6 @@ export const PartieFormulaire: React.FC = () => {
     messageManager.showSuccessAndClose("L'acte a été mis à jour avec succès.");
     desactiverBlocker();
   };
-  /* v8 ignore end */
 
   const schemaValidation = useMemo(() => {
     return Yup.object({

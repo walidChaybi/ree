@@ -1,4 +1,3 @@
-/* v8 ignore start */
 import { ETypeChamp } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
 import { Suspense, useMemo } from "react";
 
@@ -21,4 +20,3 @@ export const ChampFormAideSaisie: React.FC<React.PropsWithChildren<{ typeChamp: 
     </div>
   );
 };
-/* v8 ignore end */

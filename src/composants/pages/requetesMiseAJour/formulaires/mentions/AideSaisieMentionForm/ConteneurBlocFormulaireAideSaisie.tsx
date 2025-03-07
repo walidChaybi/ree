@@ -1,4 +1,3 @@
-/* v8 ignore start */
 import { BlocMetaModele } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
 import React, { useMemo, useState } from "react";
 import ConteneurAvecBordure from "../../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
@@ -30,4 +29,3 @@ export const ConteneurBlocFormulaireAideSaisie: React.FC<{
     </div>
   );
 };
-/* v8 ignore end */

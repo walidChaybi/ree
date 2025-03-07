@@ -48,7 +48,13 @@ import {
 import { inscriptionsRc, mockRcDto } from "../data/ficheRC";
 import { ficheRca, ficheRcaDecisionJuridictionEtrangere, idFicheRca, mockRcaDto } from "../data/ficheRCA";
 import { listeDeuxPersonnes } from "../data/listePersonnes";
-import { EnregistrerMentionsResultat, MetamodeleAideSaisie, mentions, mentionsPlurilingues } from "../data/mentions";
+import {
+  EnregistrerMentionsResultat,
+  MetamodeleAideSaisie,
+  MetamodeleAideSaisieMariageEtranger,
+  mentions,
+  mentionsPlurilingues
+} from "../data/mentions";
 import {
   ReponseAppelNomenclatureMandataire,
   ReponseAppelNomenclatureNatureMention,
@@ -237,6 +243,10 @@ export const configEtatcivil = [
         match[1] === "/types-mentions/b0485f4e-5d29-4f03-956b-0a53d02ae617/metamodele-aide-a-saisie"
       ) {
         return MetamodeleAideSaisie;
+      }
+
+      if (match[1] === "/types-mentions/b03c0e14-bad0-40a7-a895-8169e2b7f38e/metamodele-aide-a-saisie" && context.method === "get") {
+        return MetamodeleAideSaisieMariageEtranger;
       }
 
       /////////////////////////////////////////////////////////////////////

@@ -1,5 +1,3 @@
-// À tester
-/* v8 ignore start */
 import { ValeursConditionneesMetaModele } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
 import { ConditionChamp } from "@model/form/commun/ConditionChamp";
 import * as Yup from "yup";
@@ -303,4 +301,3 @@ const SchemaValidation = {
 } as const;
 
 export default SchemaValidation;
-/* v8 ignore end */

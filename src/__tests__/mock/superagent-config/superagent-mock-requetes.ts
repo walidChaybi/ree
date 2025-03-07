@@ -110,6 +110,10 @@ export const configRequetes = [
         };
       }
 
+      if (match[1] === "/requetes/mise-a-jour/931c715b-ede1-4895-ad70-931f2ac4e43d/delai-de-traitement-restant-en-minutes") {
+        return { data: 10 };
+      }
+
       if (
         match[1] ===
         "/requetes/mesrequetes?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-100"

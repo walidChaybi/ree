@@ -1,4 +1,3 @@
-/* v8 ignore start */
 import { ObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { useFormikContext } from "formik";
 import React, { useEffect, useState } from "react";
@@ -263,5 +262,3 @@ export const TexteMentionAideALaSaisie: React.FC<{ templateTexteMention: string 
     </div>
   );
 };
-
-/* v8 ignore end */

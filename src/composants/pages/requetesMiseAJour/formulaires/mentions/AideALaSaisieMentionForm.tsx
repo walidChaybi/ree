@@ -1,4 +1,3 @@
-/* v8 ignore start */
 import { BlocMetaModele, ChampMetaModele, MetaModeleTypeMention } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
 import React from "react";
 import { ConteneurBlocFormulaireAideSaisie } from "./AideSaisieMentionForm/ConteneurBlocFormulaireAideSaisie";
@@ -31,4 +30,3 @@ const AideALaSaisieMention: React.FC<IAideALaSaisieMention> = ({ metamodeleTypeM
 );
 
 export default AideALaSaisieMention;
-/* v8 ignore end */

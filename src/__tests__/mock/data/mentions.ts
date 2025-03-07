@@ -1399,6 +1399,135 @@ export const EnregistrerMentionsResultat = JSON.stringify({
   mentions: "texteMention"
 });
 
+export const MetamodeleAideSaisieMariageEtranger = {
+  errors: [],
+  data: {
+    idTypeMention: "b03c0e14-bad0-40a7-a895-8169e2b7f38e",
+    estSaisieAssistee: true,
+    modeleTexte:
+      "[[1@Marié{{#if titulaire.sexe feminin}}e{{/if}} à ]]{{#valeur evenementFrance.ville LIEU <ÉVÉNEMENT>}}{{#if evenementFrance.arrondissement}} {{#valeur evenementFrance.arrondissement}}{{#if evenementFrance.arrondissement centre}}{{else}}{{#if evenementFrance.arrondissement 1}}er{{else}}ème{{/if}} arr.{{/if}}{{/if}}{{#if !evenementFrance.ville paris}}{{#if evenementFrance.departement}} ({{#valeur evenementFrance.departement DÉPARTEMENT <ÉVÉNEMENT>}}){{/if}}{{/if}}[[2@ ]]{{#valeur evenementFrance.date DATE <ÉVÉNEMENT>}}[[3@ avec ]]{{#if !conjoint.prenoms & !conjoint.nom}}PRÉNOM <CONJOINT> NOM <CONJOINT>{{else}}{{#valeur conjoint.prenoms}}{{#if conjoint.prenoms & conjoint.nom}} {{/if}}{{#valeur conjoint.nom}}{{/if}}[[4@.]]",
+    metamodelsBlocs: [
+      {
+        id: "evenementFrance",
+        titre: "ÉVÉNEMENT (EN FRANCE)",
+        typeBloc: "BLOC_EVENEMENT_FRANCE_VARIANTE_A",
+        position: 1,
+        champs: [
+          {
+            id: "ville",
+            libelle: "Ville",
+            position: 1,
+            type: "text",
+            obligatoire: false,
+            estAffiche: [{ idChampReference: null, operateur: "AlwaysTrue", valeurs: null }],
+            estObligatoire: [{ idChampReference: null, operateur: "AlwaysTrue", valeurs: null }],
+            valeursPossibles: []
+          },
+          {
+            id: "arrondissement",
+            libelle: "Arrondissement",
+            position: 2,
+            type: "select",
+            obligatoire: false,
+            valeurParDefaut: "",
+            estAffiche: [{ idChampReference: "evenementFrance.ville", operateur: "==", valeurs: ["Paris", "Lyon", "Marseille"] }],
+            estObligatoire: [{ idChampReference: null, operateur: "AlwaysFalse", valeurs: null }],
+            valeursPossibles: [
+              {
+                valeurs: [
+                  "",
+                  "centre",
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "6",
+                  "7",
+                  "8",
+                  "9",
+                  "10",
+                  "11",
+                  "12",
+                  "13",
+                  "14",
+                  "15",
+                  "16",
+                  "17",
+                  "18",
+                  "19",
+                  "20"
+                ],
+                conditions: [{ idChampReference: "evenementFrance.ville", operateur: "==", valeurs: ["Paris"] }]
+              },
+              {
+                valeurs: ["", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"],
+                conditions: [{ idChampReference: "evenementFrance.ville", operateur: "==", valeurs: ["Marseille"] }]
+              },
+              {
+                valeurs: ["", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+                conditions: [{ idChampReference: "evenementFrance.ville", operateur: "==", valeurs: ["Lyon"] }]
+              },
+              {
+                valeurs: [],
+                conditions: [{ idChampReference: "evenementFrance.ville", operateur: "!=", valeurs: ["Lyon", "Marseille", "Paris"] }]
+              }
+            ]
+          },
+          {
+            id: "departement",
+            libelle: "Département",
+            position: 3,
+            type: "text",
+            obligatoire: false,
+            estAffiche: [{ idChampReference: null, operateur: "AlwaysTrue", valeurs: null }],
+            estObligatoire: [{ idChampReference: "evenementFrance.ville", operateur: "!=", valeurs: ["Paris"] }],
+            valeursPossibles: []
+          },
+          {
+            id: "date",
+            libelle: "Date",
+            position: 4,
+            type: "dateComplete",
+            obligatoire: false,
+            estAffiche: [{ idChampReference: null, operateur: "AlwaysTrue", valeurs: null }],
+            estObligatoire: [{ idChampReference: null, operateur: "AlwaysTrue", valeurs: null }],
+            valeursPossibles: []
+          }
+        ]
+      },
+      {
+        id: "conjoint",
+        titre: "CONJOINT",
+        typeBloc: "BLOC_CONJOINT_VARIANTE_A",
+        position: 2,
+        champs: [
+          {
+            id: "prenoms",
+            libelle: "Prénom(s)",
+            position: 1,
+            type: "text",
+            obligatoire: false,
+            estAffiche: [{ idChampReference: null, operateur: "AlwaysTrue", valeurs: null }],
+            estObligatoire: [{ idChampReference: "conjoint.nom", operateur: "==", valeurs: [""] }],
+            valeursPossibles: []
+          },
+          {
+            id: "nom",
+            libelle: "Nom",
+            position: 2,
+            type: "text",
+            obligatoire: false,
+            estAffiche: [{ idChampReference: null, operateur: "AlwaysTrue", valeurs: null }],
+            estObligatoire: [{ idChampReference: "conjoint.prenoms", operateur: "==", valeurs: [""] }],
+            valeursPossibles: []
+          }
+        ]
+      }
+    ]
+  }
+};
+
 export const MetamodeleAideSaisie = {
   errors: [],
   data: {

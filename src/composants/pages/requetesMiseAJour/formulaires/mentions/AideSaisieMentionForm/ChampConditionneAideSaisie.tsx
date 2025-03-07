@@ -1,4 +1,3 @@
-/* v8 ignore start */
 import { ChampMetaModele } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
 import { useField, useFormikContext } from "formik";
 import { lazy, useEffect, useMemo, useState } from "react";
@@ -75,4 +74,3 @@ export const ChampConditionneAideSaisie: React.FC<{
       return <></>;
   }
 };
-/* v8 ignore end */
