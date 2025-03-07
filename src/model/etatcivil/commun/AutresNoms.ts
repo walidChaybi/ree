@@ -25,9 +25,7 @@ export class AutreNom {
         console.error(`Un champ obligatoire d'un AutreNom n'est pas défini.`);
         return null;
       case !Object.keys(ETypeAutreNom).includes(autreNom.type):
-        console.error(
-          `Le type de ${typeof autreNom} a la valeur ${autreNom.type} au lieu d'une des suivantes : ${Object.keys(ETypeAutreNom)}.`
-        );
+        console.error(`Le type de AutreNom a la valeur ${autreNom.type} au lieu d'une des suivantes : ${Object.keys(ETypeAutreNom)}.`);
         return null;
     }
 

@@ -101,7 +101,9 @@ export const ficheUnInteresseVilleNaissanceFranceSansArrondissement: IFicheRcDto
       villeNaissance: "Nantes",
       paysNaissance: "France",
       regionNaissance: "Pays de la Loire",
-      arrondissementNaissance: ""
+      arrondissementNaissance: "",
+      sexe: "INCONNU",
+      nationalite: "INCONNUE"
     }
   ]
 };
@@ -116,7 +118,9 @@ export const ficheUnInteresseVilleNaissanceFranceAvecArrondissementNonParis: IFi
       villeNaissance: "Lyon",
       paysNaissance: "France",
       regionNaissance: "Auvergne-Rhône-Alpes",
-      arrondissementNaissance: "02"
+      arrondissementNaissance: "02",
+      sexe: "INCONNU",
+      nationalite: "INCONNUE"
     }
   ]
 };
@@ -131,7 +135,9 @@ export const ficheUnInteresseVilleNaissanceFranceAvecArrondissementParis: IFiche
       villeNaissance: "Paris",
       paysNaissance: "France",
       regionNaissance: "",
-      arrondissementNaissance: "02"
+      arrondissementNaissance: "02",
+      sexe: "INCONNU",
+      nationalite: "INCONNUE"
     }
   ]
 };
@@ -146,7 +152,9 @@ export const ficheUnInteresseVilleNaissanceALEtrangerSansRegion: IFicheRcDto = {
       villeNaissance: "Berlin",
       paysNaissance: "Allemagne",
       regionNaissance: "",
-      arrondissementNaissance: "02"
+      arrondissementNaissance: "02",
+      sexe: "INCONNU",
+      nationalite: "INCONNUE"
     }
   ]
 };
@@ -161,7 +169,9 @@ export const ficheUnInteresseVilleNaissanceALEtrangerAvecRegion: IFicheRcDto = {
       villeNaissance: "Berlin",
       paysNaissance: "Allemagne",
       regionNaissance: "RegionBerlin",
-      arrondissementNaissance: "02"
+      arrondissementNaissance: "02",
+      sexe: "INCONNU",
+      nationalite: "INCONNUE"
     }
   ]
 };

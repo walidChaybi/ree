@@ -2,7 +2,6 @@ import DateUtils, { TDateArrayDTO } from "@util/DateUtils";
 import { IPersonneDTO, Personne } from "../commun/Personne";
 import { IAlerte } from "../fiche/IAlerte";
 import { IStatutFicheDTO, StatutFiche } from "../fiche/StatutFiche";
-import { DecisionRcRca, IDecisionRcRcaDTO } from "./DecisionRcRca";
 import { IMariageInteresse } from "./IMariageInteresse";
 import { IInteresseDTO, Interesse } from "./Interesse";
 
@@ -11,10 +10,9 @@ export interface IFicheInscriptionDto {
   annee: string;
   numero: string;
   dateInscription: TDateArrayDTO | null;
-  dateDerniereDelivrance: number | null;
+  dateDerniereDelivrance?: number;
   dateDerniereMaj?: number;
   alertes: IAlerte[];
-  decision: IDecisionRcRcaDTO;
   interesses: IInteresseDTO[];
   statutsFiche: IStatutFicheDTO[];
   personnes: IPersonneDTO[];
@@ -27,9 +25,7 @@ export class FicheInscription {
     "annee",
     "numero",
     "dateInscription",
-    "dateDerniereDelivrance",
     "alertes",
-    "decision",
     "interesses",
     "statutsFiche",
     "personnes"
@@ -43,7 +39,6 @@ export class FicheInscription {
     public readonly dateDerniereDelivrance: Date | null,
     public readonly dateDerniereMaj: Date | null,
     public readonly alertes: IAlerte[],
-    public readonly decision: DecisionRcRca | null,
     public readonly interesses: Interesse[],
     public readonly statutsFiche: StatutFiche[],
     public readonly personnes: Personne[],
@@ -52,7 +47,7 @@ export class FicheInscription {
 
   protected static readonly inscriptionDepuisDto = (ficheInscription: IFicheInscriptionDto): FicheInscription | null => {
     if (FicheInscription.champsObligatoires.some(cle => ficheInscription[cle] === undefined)) {
-      console.error(`Un champ obligatoire d'un ${typeof ficheInscription} n'est pas défini.`);
+      console.error(`Un champ obligatoire d'une FicheInscription n'est pas défini.`);
       return null;
     }
 
@@ -64,7 +59,6 @@ export class FicheInscription {
       ficheInscription.dateDerniereDelivrance ? DateUtils.getDateFromTimestamp(ficheInscription.dateDerniereDelivrance) : null,
       ficheInscription.dateDerniereMaj ? DateUtils.getDateFromTimestamp(ficheInscription.dateDerniereMaj) : null,
       ficheInscription.alertes,
-      DecisionRcRca.depuisDto(ficheInscription.decision),
       ficheInscription.interesses.map(Interesse.depuisDto).filter((interesse): interesse is Interesse => interesse !== null),
       ficheInscription.statutsFiche
         .map<StatutFiche | null>(StatutFiche.depuisDto)
@@ -84,7 +78,6 @@ export class FicheInscription {
     dateDerniereDelivrance: Date | null,
     dateDerniereMaj: Date | null,
     alertes: IAlerte[],
-    decision: DecisionRcRca | null,
     interesses: Interesse[],
     statutsFiche: StatutFiche[],
     personnes: Personne[],
@@ -98,7 +91,6 @@ export class FicheInscription {
       this.dateDerniereDelivrance,
       this.dateDerniereMaj,
       this.alertes,
-      this.decision,
       this.interesses,
       this.statutsFiche,
       this.personnes,

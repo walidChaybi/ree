@@ -27,7 +27,7 @@ export class StatutFiche {
         return null;
       case !Object.keys(EStatutFiche).includes(statutFiche.statut):
         console.error(
-          `Le statut de ${typeof statutFiche} a la valeur ${statutFiche.statut} au lieu d'une des suivantes : ${Object.keys(EStatutFiche)}.`
+          `Le statut de d'un StatutFiche a la valeur ${statutFiche.statut} au lieu d'une des suivantes : ${Object.keys(EStatutFiche)}.`
         );
         return null;
     }

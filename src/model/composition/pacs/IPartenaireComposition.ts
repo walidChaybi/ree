@@ -30,7 +30,7 @@ export const PartenaireComposition = {
       obj.mois_naissance_partenaire_1 = DateUtils.formatMois(partenaire.dateNaissance.mois);
       obj.annee_naissance_partenaire_1 = partenaire.dateNaissance.annee;
       obj.lieu_naissance_partenaire_1 = partenaire.getLieuNaissance();
-      obj.sexe_partenaire_1 = partenaire.sexe.libelle.toLowerCase();
+      obj.sexe_partenaire_1 = partenaire.sexe.toLowerCase();
     }
   },
 
@@ -42,7 +42,7 @@ export const PartenaireComposition = {
       obj.mois_naissance_partenaire_2 = DateUtils.formatMois(partenaire.dateNaissance.mois);
       obj.annee_naissance_partenaire_2 = partenaire.dateNaissance.annee;
       obj.lieu_naissance_partenaire_2 = partenaire.getLieuNaissance();
-      obj.sexe_partenaire_2 = partenaire.sexe.libelle.toLowerCase();
+      obj.sexe_partenaire_2 = partenaire.sexe.toLowerCase();
     }
   }
 };

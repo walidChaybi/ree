@@ -32,11 +32,11 @@ export class SourceConfirmation {
   public static readonly depuisDto = (sourceConfirmation: ISourceConfirmationDTO): SourceConfirmation | null => {
     switch (true) {
       case SourceConfirmation.champsObligatoires.some(cle => sourceConfirmation[cle] === undefined):
-        console.error(`Un champ obligatoire d'un ${typeof sourceConfirmation} n'est pas défini.`);
+        console.error(`Un champ obligatoire d'une SourceConfirmation n'est pas défini.`);
         return null;
       case !Object.keys(ETypeDecision).includes(sourceConfirmation.type):
         console.error(
-          `Le type de ${typeof sourceConfirmation} a la valeur ${sourceConfirmation.type} au lieu d'une des suivantes : ${Object.keys(ETypeDecision)}.`
+          `Le type d'une SourceConfirmation a la valeur ${sourceConfirmation.type} au lieu d'une des suivantes : ${Object.keys(ETypeDecision)}.`
         );
         return null;
     }

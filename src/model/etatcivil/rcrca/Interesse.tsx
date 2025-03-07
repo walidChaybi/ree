@@ -14,8 +14,8 @@ export interface IInteresseDTO {
   villeNaissance: string;
   paysNaissance: string;
   regionNaissance: string;
-  nationalite?: keyof typeof ENationalite;
-  sexe?: keyof typeof ESexe;
+  nationalite: keyof typeof ENationalite;
+  sexe: keyof typeof ESexe;
   autreNoms?: string[];
   autrePrenoms?: string[];
   prenoms?: IPrenom[];
@@ -35,7 +35,8 @@ export class Interesse {
     "dateNaissance",
     "villeNaissance",
     "paysNaissance",
-    "regionNaissance"
+    "sexe",
+    "nationalite"
   ];
 
   private _prenoms: IPrenom[];
@@ -63,9 +64,18 @@ export class Interesse {
   }
 
   public static readonly depuisDto = (interesse: IInteresseDTO): Interesse | null => {
-    if (Interesse.champsObligatoires.some(cle => interesse[cle] === undefined)) {
-      console.error(`Un champ obligatoire d'un ${typeof interesse} n'est pas défini.`);
-      return null;
+    switch (true) {
+      case Interesse.champsObligatoires.some(cle => interesse[cle] === undefined):
+        console.error(`Un champ obligatoire d'un Interesse n'est pas défini.`);
+        return null;
+      case !Object.keys(ESexe).includes(interesse.sexe):
+        console.error(`Le sexe d'un Interesse a la valeur ${interesse.sexe} au lieu d'une des suivantes : ${Object.keys(ESexe)}.`);
+        return null;
+      case !Object.keys(ENationalite).includes(interesse.nationalite):
+        console.error(
+          `La nationalité d'un Interesse a la valeur ${interesse.nationalite} au lieu d'une des suivantes : ${Object.keys(ENationalite)}.`
+        );
+        return null;
     }
 
     return new Interesse(
@@ -75,8 +85,8 @@ export class Interesse {
       interesse.villeNaissance,
       interesse.paysNaissance,
       interesse.regionNaissance,
-      interesse.nationalite ? ENationalite[interesse.nationalite] : ENationalite.INCONNUE,
-      interesse.sexe ? ESexe[interesse.sexe] : ESexe.INCONNU,
+      ENationalite[interesse.nationalite],
+      ESexe[interesse.sexe],
       interesse.autreNoms?.map<string>(autreNom => formatNom(autreNom, undefined, false)) ?? [],
       interesse.autrePrenoms?.map<string>(autrePrenom => formatPrenom(autrePrenom, undefined, false)) ?? [],
       interesse.prenoms?.map<IPrenom>(prenom => {

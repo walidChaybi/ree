@@ -5,57 +5,39 @@ import { getFichesPersonne } from "@pages/fiche/hook/constructionComposants/pers
 import { getAutorite } from "@pages/fiche/hook/constructionComposants/rcrca/AutoriteUtils";
 import { getDecision } from "@pages/fiche/hook/constructionComposants/rcrca/DecisionUtils";
 import { getStatuts } from "@pages/fiche/hook/constructionComposants/statut/StatutUtils";
-import { TDateArrayDTO } from "@util/DateUtils";
 import { triListeObjetsSurPropriete } from "@util/Utils";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPartProps } from "@widget/section/SectionPart";
-import { IPersonneDTO } from "../commun/Personne";
 import { ETypeInscriptionRcRca } from "../enum/ETypeInscriptionRcRca";
 import { IMandataire } from "../enum/MandataireRc";
 import { INatureRc, NatureRc } from "../enum/NatureRc";
 import { INatureRca, NatureRca } from "../enum/NatureRca";
 import { FicheUtil, TypeFiche } from "../enum/TypeFiche";
-import { IAlerte } from "../fiche/IAlerte";
-import { IStatutFicheDTO } from "../fiche/StatutFiche";
-import { IDecisionRcRcaDTO } from "./DecisionRcRca";
+import { DecisionRcRca, IDecisionRcRcaDTO } from "./DecisionRcRca";
 import { DureeInscription, IDureeInscriptionDTO } from "./DureeInscription";
-import { FicheInscription } from "./FicheInscription";
+import { FicheInscription, IFicheInscriptionDto } from "./FicheInscription";
 import { IInscriptionLiee } from "./IInscriptionLiee";
 import { IInscriptionsImpactees } from "./IInscriptionsImpactees";
-import { IMariageInteresse } from "./IMariageInteresse";
-import { IInteresseDTO, Interesse } from "./Interesse";
-
-export interface IFicheInscriptionDto {
-  id: string;
-  annee: string;
-  numero: string;
-  dateInscription: TDateArrayDTO | null;
-  dateDerniereDelivrance: number | null;
-  dateDerniereMaj?: number;
-  alertes: IAlerte[];
-  decision: IDecisionRcRcaDTO;
-  interesses: IInteresseDTO[];
-  statutsFiche: IStatutFicheDTO[];
-  personnes: IPersonneDTO[];
-  mariageInteresses?: IMariageInteresse;
-}
+import { Interesse } from "./Interesse";
 
 export interface IFicheRcDto extends IFicheInscriptionDto {
   categorie: "RC";
+  typeInscription: keyof typeof ETypeInscriptionRcRca;
   nature: INatureRc;
+  decision?: IDecisionRcRcaDTO;
   mandataires: IMandataire[];
   inscriptionsImpactees: IInscriptionsImpactees[];
   inscriptionsLiees: IInscriptionLiee[];
-  typeInscription: keyof typeof ETypeInscriptionRcRca;
-  duree: IDureeInscriptionDTO;
+  duree?: IDureeInscriptionDTO;
   complementNature?: string;
 }
 
 export interface IFicheRcaDto extends IFicheInscriptionDto {
   categorie: "RCA";
   typeInscription: keyof typeof ETypeInscriptionRcRca;
-  referenceActe?: string;
   nature: INatureRca;
+  decision: IDecisionRcRcaDTO;
+  referenceActe?: string;
 }
 
 export class FicheRcRca extends FicheInscription {
@@ -64,23 +46,23 @@ export class FicheRcRca extends FicheInscription {
     "mandataires",
     "inscriptionsImpactees",
     "inscriptionsLiees",
-    "duree",
     "nature"
   ];
 
-  private static readonly champsObligatoiresRca: (keyof IFicheRcaDto)[] = ["nature", "typeInscription"];
+  private static readonly champsObligatoiresRca: (keyof IFicheRcaDto)[] = ["nature", "typeInscription", "decision"];
 
   private constructor(
     ficheInscription: FicheInscription,
 
     public readonly categorie: TypeFiche,
     public readonly nature: INatureRc | INatureRca,
+    public readonly decision: DecisionRcRca | null,
 
     public readonly mandataires: IMandataire[],
     public readonly inscriptionsImpactees: IInscriptionsImpactees[],
     public readonly inscriptionsLiees: IInscriptionLiee[],
     public readonly typeInscription?: ETypeInscriptionRcRca,
-    public readonly duree?: DureeInscription
+    public readonly duree?: DureeInscription | null
   ) {
     super(...(ficheInscription as FicheRcRca).attributs);
   }
@@ -88,10 +70,12 @@ export class FicheRcRca extends FicheInscription {
   public static readonly RcDepuisDto = (ficheRc: IFicheRcDto): FicheRcRca | null => {
     switch (true) {
       case FicheRcRca.champsObligatoiresRc.some(cle => ficheRc[cle] === undefined):
-        console.error(`Un champ obligatoire d'un ${typeof ficheRc} n'est pas défini.`);
+        console.error(`Un champ obligatoire d'une FicheRc n'est pas défini.`);
         return null;
-      case !Object(ETypeInscriptionRcRca).hasOwnProperty(ficheRc.typeInscription):
-        console.error(`Le typeInscription de ${typeof ficheRc} a une valeur interdite : ${ficheRc.typeInscription}.`);
+      case !Object.keys(ETypeInscriptionRcRca).includes(ficheRc.typeInscription):
+        console.error(
+          `Le typeInscription de la FicheRc a la valeur ${ficheRc.typeInscription} au lieu d'une des suivantes : ${Object.keys(ETypeInscriptionRcRca)}.`
+        );
         return null;
     }
 
@@ -106,22 +90,25 @@ export class FicheRcRca extends FicheInscription {
 
       FicheUtil.getTypeFicheFromString(ficheRc.categorie),
       NatureRc.depuisId(ficheRc.nature.id) as INatureRc,
+      ficheRc.decision ? DecisionRcRca.depuisDto(ficheRc.decision) : null,
 
       ficheRc.mandataires,
       ficheRc.inscriptionsImpactees,
       ficheRc.inscriptionsLiees,
       ETypeInscriptionRcRca[ficheRc.typeInscription],
-      DureeInscription.depuisDto(ficheRc.duree)
+      ficheRc.duree ? DureeInscription.depuisDto(ficheRc.duree) : null
     );
   };
 
   public static readonly RcaDepuisDto = (ficheRca: IFicheRcaDto): FicheRcRca | null => {
     switch (true) {
       case FicheRcRca.champsObligatoiresRca.some(cle => ficheRca[cle] === undefined):
-        console.error(`Un champ obligatoire d'un ${typeof ficheRca} n'est pas défini.`);
+        console.error(`Un champ obligatoire d'une FicheRca n'est pas défini.`);
         return null;
-      case !Object(ETypeInscriptionRcRca).hasOwnProperty(ficheRca.typeInscription):
-        console.error(`Le typeInscription de ${typeof ficheRca} a une valeur interdite : ${ficheRca.typeInscription}.`);
+      case !Object.keys(ETypeInscriptionRcRca).includes(ficheRca.typeInscription):
+        console.error(
+          `Le typeInscription de la FicheRca a la valeur ${ficheRca.typeInscription} au lieu d'une des suivantes : ${Object.keys(ETypeInscriptionRcRca)}.`
+        );
         return null;
     }
 
@@ -136,6 +123,7 @@ export class FicheRcRca extends FicheInscription {
 
       FicheUtil.getTypeFicheFromString(ficheRca.categorie),
       NatureRca.depuisId(ficheRca.nature.id) as INatureRca,
+      DecisionRcRca.depuisDto(ficheRca.decision),
 
       [],
       [],

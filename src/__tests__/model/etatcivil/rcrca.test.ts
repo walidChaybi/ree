@@ -8,10 +8,14 @@ import {
   ficheUnInteresseVilleNaissanceFranceAvecArrondissementParis,
   ficheUnInteresseVilleNaissanceFranceSansArrondissement
 } from "@mock/data/ficheEtBandeau/divers/InteressesMock";
-import { mockRcDto } from "@mock/data/ficheRC";
-import { mockRcaDto } from "@mock/data/ficheRCA";
-import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
-import { describe, expect, test } from "vitest";
+import { FicheRcDecisionNotaire, mockRcDto } from "@mock/data/ficheRC";
+import { ficheRcaDecisionAvecInstructionProcureur, mockRcaDto } from "@mock/data/ficheRCA";
+import { ENationalite } from "@model/etatcivil/enum/Nationalite";
+import { ESexe } from "@model/etatcivil/enum/Sexe";
+import { IDecisionRcRcaDTO } from "@model/etatcivil/rcrca/DecisionRcRca";
+import { FicheRcRca, IFicheRcDto, IFicheRcaDto } from "@model/etatcivil/rcrca/FicheRcRca";
+import { IInteresseDTO, Interesse } from "@model/etatcivil/rcrca/Interesse";
+import { describe, expect, test, vi } from "vitest";
 
 describe("test FicheRcRca", () => {
   describe("test interessesCommeSectionPartProps", () => {
@@ -172,5 +176,124 @@ describe("test FicheRcRca", () => {
       expect(panels.panels[0].panelAreas).toHaveLength(5);
       expect(panels.panels[0].title).toBe("Visualisation du RCA");
     });
+  });
+
+  describe("test modeles DTO invalides", () => {
+    test("Fiche RCA avec une DecisionRcRca manquante", () => {
+      const consoleErrorMock = vi.spyOn(console, "error").mockImplementation(() => {});
+
+      const ficheRca = { ...ficheRcaDecisionAvecInstructionProcureur, decision: undefined as unknown as IDecisionRcRcaDTO } as IFicheRcaDto;
+
+      FicheRcRca.RcaDepuisDto(ficheRca);
+
+      expect(consoleErrorMock).toHaveBeenCalledWith("Un champ obligatoire d'une FicheRca n'est pas défini.");
+
+      consoleErrorMock.mockRestore();
+    });
+
+    test("Fiche RC avec une nature manquante", () => {
+      const consoleErrorMock = vi.spyOn(console, "error").mockImplementation(() => {});
+
+      const ficheRc = { ...FicheRcDecisionNotaire, nature: undefined as unknown } as IFicheRcDto;
+
+      FicheRcRca.RcDepuisDto(ficheRc);
+
+      expect(consoleErrorMock).toHaveBeenCalledWith("Un champ obligatoire d'une FicheRc n'est pas défini.");
+
+      consoleErrorMock.mockRestore();
+    });
+
+    test("Fiche RC avec une dateInscription manquante", () => {
+      const consoleErrorMock = vi.spyOn(console, "error").mockImplementation(() => {});
+
+      const ficheRc = { ...FicheRcDecisionNotaire, dateInscription: undefined as unknown } as IFicheRcDto;
+
+      FicheRcRca.RcDepuisDto(ficheRc);
+
+      expect(consoleErrorMock).toHaveBeenCalledWith("Un champ obligatoire d'une FicheInscription n'est pas défini.");
+
+      expect(consoleErrorMock).toHaveBeenCalledWith("La fiche RC récupérée est incomplète, donc invalide.");
+
+      consoleErrorMock.mockRestore();
+    });
+
+    test("Fiche RCA avec un typeInscription invalide", () => {
+      const consoleErrorMock = vi.spyOn(console, "error").mockImplementation(() => {});
+
+      const ficheRca = { ...ficheRcaDecisionAvecInstructionProcureur, typeInscription: "nul" as unknown } as IFicheRcaDto;
+
+      FicheRcRca.RcaDepuisDto(ficheRca);
+
+      expect(consoleErrorMock).toHaveBeenCalledWith(
+        "Le typeInscription de la FicheRca a la valeur nul au lieu d'une des suivantes : INSCRIPTION,RENOUVELLEMENT,MODIFICATION,RADIATION,MAIN_LEVEE,FIN_MESURE,CADUCITE,INCONNU."
+      );
+
+      consoleErrorMock.mockRestore();
+    });
+
+    test("Fiche RC avec un typeInscription invalide", () => {
+      const consoleErrorMock = vi.spyOn(console, "error").mockImplementation(() => {});
+
+      const ficheRc = { ...FicheRcDecisionNotaire, typeInscription: "nul" as unknown } as IFicheRcDto;
+
+      FicheRcRca.RcDepuisDto(ficheRc);
+
+      expect(consoleErrorMock).toHaveBeenCalledWith(
+        "Le typeInscription de la FicheRc a la valeur nul au lieu d'une des suivantes : INSCRIPTION,RENOUVELLEMENT,MODIFICATION,RADIATION,MAIN_LEVEE,FIN_MESURE,CADUCITE,INCONNU."
+      );
+
+      consoleErrorMock.mockRestore();
+    });
+  });
+});
+
+describe("test Interesse", () => {
+  test("Erreur si le sexe est invalide", () => {
+    const consoleErrorMock = vi.spyOn(console, "error").mockImplementation(() => {});
+
+    const interesse: IInteresseDTO = {
+      ...ficheRcaDecisionAvecInstructionProcureur.interesses[0],
+      sexe: "nul" as unknown as keyof typeof ESexe
+    };
+
+    Interesse.depuisDto(interesse);
+
+    expect(consoleErrorMock).toHaveBeenCalledWith(
+      "Le sexe d'un Interesse a la valeur nul au lieu d'une des suivantes : MASCULIN,FEMININ,INDETERMINE,INCONNU."
+    );
+
+    consoleErrorMock.mockRestore();
+  });
+
+  test("Erreur si la nationalite est invalide", () => {
+    const consoleErrorMock = vi.spyOn(console, "error").mockImplementation(() => {});
+
+    const interesse: IInteresseDTO = {
+      ...ficheRcaDecisionAvecInstructionProcureur.interesses[0],
+      nationalite: "nul" as unknown as keyof typeof ENationalite
+    };
+
+    Interesse.depuisDto(interesse);
+
+    expect(consoleErrorMock).toHaveBeenCalledWith(
+      "La nationalité d'un Interesse a la valeur nul au lieu d'une des suivantes : FRANCAISE,ETRANGERE,INCONNUE."
+    );
+
+    consoleErrorMock.mockRestore();
+  });
+
+  test("Erreur si un attribut obligatoire est manquant", () => {
+    const consoleErrorMock = vi.spyOn(console, "error").mockImplementation(() => {});
+
+    const interesse: IInteresseDTO = {
+      ...ficheRcaDecisionAvecInstructionProcureur.interesses[0],
+      nomFamille: undefined as unknown as keyof typeof ENationalite
+    };
+
+    Interesse.depuisDto(interesse);
+
+    expect(consoleErrorMock).toHaveBeenCalledWith("Un champ obligatoire d'un Interesse n'est pas défini.");
+
+    consoleErrorMock.mockRestore();
   });
 });

@@ -48,11 +48,11 @@ export class DecisionRcRca {
   public static readonly depuisDto = (decisionRcRca: IDecisionRcRcaDTO): DecisionRcRca | null => {
     switch (true) {
       case DecisionRcRca.champsObligatoires.some(cle => decisionRcRca[cle] === undefined):
-        console.error(`Un champ obligatoire d'un ${typeof decisionRcRca} n'est pas défini.`);
+        console.error(`Un champ obligatoire d'un DecisionRcRca n'est pas défini.`);
         return null;
       case !Object.keys(ETypeDecision).includes(decisionRcRca.type):
         console.error(
-          `Le type de ${typeof decisionRcRca} a la valeur ${decisionRcRca.type} au lieu d'une des suivantes : ${Object.keys(ETypeDecision)}.`
+          `Le type d'un DecisionRcRca a la valeur ${decisionRcRca.type} au lieu d'une des suivantes : ${Object.keys(ETypeDecision)}.`
         );
         return null;
     }

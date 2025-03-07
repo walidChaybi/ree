@@ -79,7 +79,7 @@ export class FichePacs {
         return null;
       case !Object.keys(EStatutPacs).includes(fichePacs.statut):
         console.error(
-          `Le statut de ${typeof fichePacs} a la valeur ${fichePacs.statut} au lieu d'une des suivantes : ${Object.keys(EStatutPacs)}.`
+          `Le statut d'un FichePacs a la valeur ${fichePacs.statut} au lieu d'une des suivantes : ${Object.keys(EStatutPacs)}.`
         );
         return null;
     }

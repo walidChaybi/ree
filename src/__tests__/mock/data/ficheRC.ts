@@ -752,7 +752,9 @@ export const FicheRcPourBandeauFiche: IFicheRcDto = {
       dateNaissance: { jour: "01", mois: "09", annee: "1983" },
       villeNaissance: "Châteauneuf-du-Faou",
       paysNaissance: "France",
-      regionNaissance: "Finistère, Bretagne"
+      regionNaissance: "Finistère, Bretagne",
+      sexe: "INCONNU",
+      nationalite: "INCONNUE"
     },
     {
       nomFamille: "nom2",
@@ -764,7 +766,9 @@ export const FicheRcPourBandeauFiche: IFicheRcDto = {
       dateNaissance: { jour: "01", mois: "09", annee: "1983" },
       villeNaissance: "Châteauneuf-du-Faou",
       paysNaissance: "France",
-      regionNaissance: "Finistère, Bretagne"
+      regionNaissance: "Finistère, Bretagne",
+      sexe: "INCONNU",
+      nationalite: "INCONNUE"
     }
   ],
   alertes: [

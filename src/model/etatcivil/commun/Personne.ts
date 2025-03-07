@@ -179,10 +179,10 @@ export class Personne {
         console.error(`Un champ obligatoire d'un Personne n'est pas défini.`);
         return null;
       case !Object(Sexe).hasOwnProperty(personne.sexe):
-        console.error(`Le sexe de ${typeof personne} a la valeur interdite : ${personne.sexe}.`);
+        console.error(`Le sexe d'un Personne a la valeur interdite : ${personne.sexe}.`);
         return null;
       case !Object(Nationalite).hasOwnProperty(personne.nationalite):
-        console.error(`La nationalité de ${typeof personne} a la valeur interdite : ${personne.nationalite}.`);
+        console.error(`La nationalité d'un Personne a la valeur interdite : ${personne.nationalite}.`);
         return null;
     }
 

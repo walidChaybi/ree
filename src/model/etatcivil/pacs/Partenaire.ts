@@ -2,8 +2,8 @@ import DateUtils, { IDateCompose } from "@util/DateUtils";
 import { formatNom, formatNoms, formatPrenoms, jointPrenoms } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { SectionPartProps } from "@widget/section/SectionPart";
-import { Nationalite } from "../enum/Nationalite";
-import { Sexe } from "../enum/Sexe";
+import { ENationalite } from "../enum/Nationalite";
+import { ESexe } from "../enum/Sexe";
 import { IPrenom } from "../fiche/IPrenom";
 
 export interface IPartenaireDTO {
@@ -13,8 +13,8 @@ export interface IPartenaireDTO {
   villeNaissance: string;
   paysNaissance: string;
   regionNaissance: string;
-  nationalite: string;
-  sexe: string;
+  nationalite: keyof typeof ENationalite;
+  sexe: keyof typeof ESexe;
   prenoms: IPrenom[];
   autreNoms?: string[];
   autrePrenoms?: string[];
@@ -31,7 +31,6 @@ export class Partenaire {
     "dateNaissance",
     "villeNaissance",
     "paysNaissance",
-    "regionNaissance",
     "nationalite",
     "sexe"
   ];
@@ -43,8 +42,8 @@ export class Partenaire {
     public readonly villeNaissance: string,
     public readonly paysNaissance: string,
     public readonly regionNaissance: string,
-    public readonly nationalite: Nationalite,
-    public readonly sexe: Sexe,
+    public readonly nationalite: ENationalite,
+    public readonly sexe: ESexe,
     prenoms: IPrenom[],
     public readonly autreNoms?: string[],
     public readonly autrePrenoms?: string[],
@@ -59,8 +58,13 @@ export class Partenaire {
       case Partenaire.champsObligatoires.some(cle => partenaire[cle] === undefined):
         console.error(`Un champ obligatoire d'un Partenaire n'est pas défini.`);
         return null;
-      case !Object(Sexe).hasOwnProperty(partenaire.sexe):
-        console.error(`Le sexe de ${typeof partenaire} a la valeur interdite : ${partenaire.sexe}.`);
+      case !Object.keys(ESexe).includes(partenaire.sexe):
+        console.error(`Le sexe d'un Partenaire a la valeur ${partenaire.sexe} au lieu d'une des suivantes : ${Object.keys(ESexe)}.`);
+        return null;
+      case !Object.keys(ENationalite).includes(partenaire.nationalite):
+        console.error(
+          `La nationalité d'un Partenaire a la valeur ${partenaire.nationalite} au lieu d'une des suivantes : ${Object.keys(ENationalite)}.`
+        );
         return null;
     }
 
@@ -71,8 +75,8 @@ export class Partenaire {
       partenaire.villeNaissance,
       partenaire.paysNaissance,
       partenaire.regionNaissance,
-      Nationalite.getEnumFor(partenaire.nationalite),
-      Sexe.getEnumFor(partenaire.sexe),
+      ENationalite[partenaire.nationalite],
+      ESexe[partenaire.sexe],
       partenaire.prenoms,
       partenaire.autreNoms,
       partenaire.autrePrenoms,
@@ -111,11 +115,11 @@ export class Partenaire {
           },
           {
             libelle: "Nationalité",
-            value: this.nationalite?.libelle
+            value: this.nationalite
           },
           {
             libelle: "Sexe",
-            value: this.sexe?.libelle
+            value: this.sexe
           }
         ]
       }
