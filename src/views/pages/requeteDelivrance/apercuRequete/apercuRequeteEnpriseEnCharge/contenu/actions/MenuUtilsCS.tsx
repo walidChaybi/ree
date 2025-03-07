@@ -136,7 +136,7 @@ export function getInscriptionsRCDeTypeModification(inscriptionsRC?: IInscriptio
 
 export const estPresentRcTypeModification = (inscriptions?: IResultatRMCInscription[]): IResultatRMCInscription | undefined => {
   if (inscriptions) {
-    return inscriptions.find(inscription => inscription.typeInscription);
+    return inscriptions.find(inscription => inscription.typeInscription === ETypeInscriptionRcRca.MODIFICATION);
   }
 };
 
