@@ -4,7 +4,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { act } from "react";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test, vi } from "vitest";
-import { PartieActeRequete } from "../../../../composants/pages/requetesMiseAJour/PartieActeRequete";
+import PartieActe from "../../../../composants/pages/requetesMiseAJour/PartieActe";
 import EditionMiseAJourContextProvider from "../../../../contexts/EditionMiseAJourContextProvider";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 import { TYPE_ALERTE } from "../../../mock/data/NomenclatureTypeAlerte";
@@ -34,7 +34,7 @@ describe("PartieActeRequete", () => {
               idRequete={""}
               estMiseAJourAvecMentions={false}
             >
-              <PartieActeRequete />
+              <PartieActe />
             </EditionMiseAJourContextProvider>
           )
         }
@@ -61,7 +61,7 @@ describe("PartieActeRequete", () => {
               idRequete={""}
               estMiseAJourAvecMentions={false}
             >
-              <PartieActeRequete />
+              <PartieActe />
             </EditionMiseAJourContextProvider>
           )
         },

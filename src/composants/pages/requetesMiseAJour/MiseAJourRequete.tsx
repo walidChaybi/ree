@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { EditionMiseAJourContext } from "../../../contexts/EditionMiseAJourContextProvider";
-import { PartieActeRequete } from "./PartieActeRequete";
+import PartieActe from "./PartieActe";
 import PartieFormulaire from "./PartieFormulaire";
 
 const MiseAJourRequete: React.FC = () => {
@@ -8,7 +8,7 @@ const MiseAJourRequete: React.FC = () => {
 
   return (
     <div className="mt-3 flex gap-4 px-2">
-      <PartieActeRequete />
+      <PartieActe />
       {!estActeSigne && <PartieFormulaire />}
     </div>
   );

@@ -8,7 +8,7 @@ import OngletsBouton from "../../commun/onglets/OngletsBouton";
 import OngletActe from "./onglets/OngletActe";
 import OngletActeMisAJour from "./onglets/OngletActeMisAJour";
 
-export const PartieActeRequete: React.FC = () => {
+const PartieActe: React.FC = () => {
   const navigate = useNavigate();
   const { ongletsActifs, miseAJourEffectuee, estActeSigne } = useContext(EditionMiseAJourContext.Valeurs);
   const { changerOnglet } = useContext(EditionMiseAJourContext.Actions);
@@ -54,3 +54,5 @@ export const PartieActeRequete: React.FC = () => {
     </div>
   );
 };
+
+export default PartieActe;

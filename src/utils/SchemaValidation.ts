@@ -34,7 +34,9 @@ const messagesErreur = {
   DATE_OBLIGATOIRE: "⚠ La saisie de la date est obligatoire",
   DOIT_ETRE_ENTIER: "⚠ La valeur doit être un entier",
   CHAMP_OBLIGATOIRE: "⚠ La saisie du champ est obligatoire",
-  PRENOM_OBLIGATOIRE: "⚠ La saisie du prénom est obligatoire"
+  PRENOM_OBLIGATOIRE: "⚠ La saisie du prénom est obligatoire",
+  NOM_OBLIGATOIRE: "⚠ La saisie du nom est obligatoire",
+  MOTIF_OBLIGATOIRE: "⚠ La saisie du motif est obligatoire"
 };
 
 const erreurSurDateEntiere = (message: string, baseChemin: string) =>
@@ -306,6 +308,10 @@ const SchemaValidation = {
 
     return SchemaValidation.objet(schemaPrenoms);
   },
+
+  nom: () => Yup.string().required(messagesErreur.NOM_OBLIGATOIRE),
+
+  motif: () => Yup.string().required(messagesErreur.MOTIF_OBLIGATOIRE),
 
   inconnu: () => Yup.mixed()
 } as const;

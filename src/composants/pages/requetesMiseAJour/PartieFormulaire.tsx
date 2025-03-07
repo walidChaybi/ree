@@ -14,9 +14,9 @@ import messageManager from "@util/messageManager";
 import { PopinSignatureMiseAJourMentions } from "@widget/signature/PopinSignatureMiseAJourMentions";
 import { Form, Formik } from "formik";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
-import * as Yup from "yup";
 import { ECleOngletsMiseAJour, EditionMiseAJourContext } from "../../../contexts/EditionMiseAJourContextProvider";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
+import MiseAJourForm from "../../../model/form/miseAJour/MiseAJourForm";
 import Bouton from "../../commun/bouton/Bouton";
 import { ConteneurBoutonBasDePage } from "../../commun/bouton/conteneurBoutonBasDePage/ConteneurBoutonBasDePage";
 import PageChargeur from "../../commun/chargeurs/PageChargeur";
@@ -64,25 +64,6 @@ export interface IMiseAJourForm {
   analyseMarginale: IAnalyseMarginaleMiseAJour;
 }
 
-export const ID_CONTENEUR_FORM_MENTION = "idConteneurFormulaireMention";
-
-export const SCHEMA_VALIDATION_ANALYSE_MARGINALE = Yup.object().shape({
-  nom: Yup.string().required("⚠ La saisie du nom est obligatoire"),
-  motif: Yup.string().required("⚠ La saisie du motif est obligatoire")
-});
-
-export const SCHEMA_VALIDATION_MENTIONS = Yup.object().shape({
-  mentions: Yup.array().min(1)
-});
-
-const getEvenementMention = (champs?: TObjetFormulaire): TValeurFormulaire | null => {
-  if (!champs) return null;
-
-  const cleEvenement = Object.keys(champs).find(cle => cle.includes("evenement"));
-
-  return cleEvenement ? champs[cleEvenement] : null;
-};
-
 export const PartieFormulaire: React.FC = () => {
   const { utilisateurConnecte } = useContext(RECEContextData);
   const { estMiseAJourAvecMentions, ongletsActifs, idActe, miseAJourEffectuee } = useContext(EditionMiseAJourContext.Valeurs);
@@ -100,7 +81,7 @@ export const PartieFormulaire: React.FC = () => {
   const [estPopinSignatureOuverte, setEstPopinSignatureOuverte] = useState<boolean>(false);
 
   const [sexeTitulaire, setSexeTitulaire] = useState<Sexe | null>(null);
-  const [valeurDefautFormulaire, setValeurDefautFormulaire] = useState<IMiseAJourForm | null>(null);
+  const [valeurDefautFormulaire, setValeurDefautFormulaire] = useState<MiseAJourForm | null>(null);
 
   const [formulaireMentionEnCoursDeSaisie, setFormulaireMentionEnCoursDeSaisie] = useState<boolean>(false);
 
@@ -112,43 +93,23 @@ export const PartieFormulaire: React.FC = () => {
         const analyseMarginale = (FicheActe.getAnalyseMarginaleLaPlusRecente(acte) ?? acte)?.titulaires[0];
 
         setSexeTitulaire(acte.titulaires[0]?.sexe ?? null);
-        setValeurDefautFormulaire({
-          mentions: [],
-          analyseMarginale: {
-            nom: analyseMarginale?.nom ?? "",
-            nomSecable: Boolean(analyseMarginale?.nomPartie1 && analyseMarginale?.nomPartie2),
-            nomPartie1: analyseMarginale?.nomPartie1 ?? "",
-            nomPartie2: analyseMarginale?.nomPartie2 ?? "",
-            prenoms:
-              analyseMarginale?.prenoms?.reduce(
-                (prenoms: { [cle: string]: string }, prenom: string, index: number) => ({ ...prenoms, [`prenom${index + 1}`]: prenom }),
-                {}
-              ) ?? {},
-            motif: ""
-          }
-        });
+        setValeurDefautFormulaire(MiseAJourForm.genererValeursDefautFormulaire(analyseMarginale));
       },
       apresErreur: () => messageManager.showError("Une erreur est survenue lors de la récupération des informations de l'acte")
     });
   }, []);
 
+  const schemaValidation = useMemo(() => {
+    MiseAJourForm.getSchemaValidation(afficherAnalyseMarginale);
+  }, [afficherAnalyseMarginale]);
+
   const traitementRetourApi = useCallback(
-    (reinitialiser: (valeurs: IMiseAJourForm) => void, analyseMarginale?: IAnalyseMarginaleMiseAJour, mentions?: IMentionMiseAJour[]) => ({
+    (reinitialiser: () => void) => ({
       apresSucces: () => {
         activerOngletActeMisAJour();
         setComposerActeMisAJour(true);
         changerOnglet(ECleOngletsMiseAJour.ACTE_MIS_A_JOUR, null);
-        reinitialiser({
-          mentions: mentions ?? [],
-          analyseMarginale: {
-            nom: analyseMarginale?.nom ?? "",
-            nomSecable: Boolean(analyseMarginale?.nomPartie1 && analyseMarginale?.nomPartie2),
-            nomPartie1: analyseMarginale?.nomPartie1 ?? "",
-            nomPartie2: analyseMarginale?.nomPartie2 ?? "",
-            prenoms: analyseMarginale?.prenoms ?? {},
-            motif: analyseMarginale?.motif ?? ""
-          }
-        });
+        reinitialiser();
       },
       apresErreur: (erreurs: TErreurApi[]) => {
         if (erreurs?.find(erreur => erreur.code === "FCT_16136")) {
@@ -164,34 +125,23 @@ export const PartieFormulaire: React.FC = () => {
     []
   );
 
-  const actualiserEtVisualiser = ({ mentions, analyseMarginale }: IMiseAJourForm, reinitialiser: (valeurs: IMiseAJourForm) => void) => {
+  const actualiserEtVisualiser = (valeurs: MiseAJourForm, reinitialiser: () => void) => {
     switch (true) {
       case !estMiseAJourAvecMentions:
         appelApiMisAJourAnalyseMarginale({
           parametres: {
             path: { idActe: idActe },
-            body: MiseAJourAnalyseMarginaleValeursForm.versDto(analyseMarginale)
+            body: MiseAJourAnalyseMarginaleValeursForm.versDto(valeurs.analyseMarginale)
           },
-          ...traitementRetourApi(reinitialiser, analyseMarginale)
+          ...traitementRetourApi(reinitialiser)
         });
         break;
       case estMiseAJourAvecMentions:
         appelApiMiseAJourAnalyseMarginaleEtMentions({
           parametres: {
-            body: {
-              idActe: idActe,
-              mentionCreationList: mentions.map((mention, index) => ({
-                idTypeMention: mention.idTypeMention,
-                numeroOrdre: index + 1,
-                texteMention: mention.texte,
-                evenement: getEvenementMention(mention.donneesAideSaisie?.champs),
-                estSaisieAssistee: Boolean(mention.donneesAideSaisie)
-              })),
-              analyseMarginale:
-                afficherAnalyseMarginale && analyseMarginaleModifiee ? MiseAJourAnalyseMarginaleValeursForm.versDto(analyseMarginale) : null
-            }
+            body: valeurs.versDto(idActe, afficherAnalyseMarginale && analyseMarginaleModifiee)
           },
-          ...traitementRetourApi(reinitialiser, analyseMarginale, mentions)
+          ...traitementRetourApi(reinitialiser)
         });
         break;
     }
@@ -203,12 +153,6 @@ export const PartieFormulaire: React.FC = () => {
     messageManager.showSuccessAndClose("L'acte a été mis à jour avec succès.");
     desactiverBlocker();
   };
-
-  const schemaValidation = useMemo(() => {
-    return Yup.object({
-      analyseMarginale: afficherAnalyseMarginale ? SCHEMA_VALIDATION_ANALYSE_MARGINALE : Yup.object()
-    });
-  }, [afficherAnalyseMarginale]);
 
   return (
     <>
@@ -241,14 +185,14 @@ export const PartieFormulaire: React.FC = () => {
 
         {valeurDefautFormulaire !== null && (
           <div className="mt-4 flex h-[calc(100vh-16rem)] flex-col overflow-y-auto">
-            <Formik<IMiseAJourForm>
+            <Formik<MiseAJourForm>
               initialValues={valeurDefautFormulaire}
               validationSchema={schemaValidation}
-              onSubmit={(values, helpers) => {
-                actualiserEtVisualiser(values, valeurs => {
-                  helpers.resetForm({ values: valeurs });
-                });
-              }}
+              onSubmit={(values, helpers) =>
+                actualiserEtVisualiser(MiseAJourForm.depuisFormulaire(values), () => {
+                  helpers.resetForm({ values });
+                })
+              }
             >
               {({ values, isValid, dirty, setFieldValue, resetForm }) => (
                 <Form>
@@ -264,7 +208,10 @@ export const PartieFormulaire: React.FC = () => {
 
                           const valeursSaisies = { ...values };
                           resetForm({
-                            values: { mentions: [], analyseMarginale: { ...valeurDefautFormulaire.analyseMarginale, motif: motifMention } }
+                            values: MiseAJourForm.genererValeursDefautFormulaire({
+                              ...valeurDefautFormulaire.analyseMarginale,
+                              motif: motifMention
+                            })
                           });
                           setFieldValue("mentions", valeursSaisies.mentions);
                           setFieldValue("analyseMarginale", { ...valeursSaisies.analyseMarginale, motif: motifMention });
