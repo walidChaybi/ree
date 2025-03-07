@@ -1,4 +1,5 @@
 import { ChampMetaModele } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
+import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { useFormikContext } from "formik";
 import { lazy, useCallback, useEffect, useMemo } from "react";
 import SeparateurSection from "../../../../../commun/conteneurs/formulaire/SeparateurSection";
@@ -16,7 +17,7 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
   idBloc: string;
   setEstVisible?: (estVisible: boolean) => void;
 }> = ({ champ, idBloc, setEstVisible }) => {
-  const { values, setFieldValue, setFieldTouched } = useFormikContext<TMentionForm>();
+  const { values, setFieldValue, setFieldTouched, initialValues } = useFormikContext<TMentionForm>();
   const estAffiche = useMemo(() => champ.estAffichable(values), [values]);
   const valeurLectureSeule = useMemo(() => champ.valeurLectureSeule(values), [values]);
   const estLectureSeule = useMemo(() => Boolean(valeurLectureSeule), [valeurLectureSeule]);
@@ -53,10 +54,8 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
       return;
     }
 
-    if (valeurLectureSeule !== null) {
-      const valeurPreRemplie = valeurLectureSeule ?? champ.valeurParDefaut;
-      setFieldValue(nomChamp, valeurPreRemplie ?? "");
-    }
+    const valeurPreRemplie = valeurLectureSeule || (initialValues?.[idBloc] as TObjetFormulaire)?.[champ.id] || champ.valeurParDefaut;
+    setFieldValue(nomChamp, valeurPreRemplie ?? "");
   }, [estAffiche, valeurLectureSeule]);
 
   switch (true) {

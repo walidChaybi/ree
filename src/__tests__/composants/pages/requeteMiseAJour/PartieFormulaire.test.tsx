@@ -155,7 +155,7 @@ describe("Formulaire de mise a jour d'un acte...", () => {
 
       const inputVilleModif = screen.getByRole("textbox", { name: /evenementFrance.ville/i });
 
-      fireEvent.change(inputVilleModif, {
+      await fireEvent.change(inputVilleModif, {
         target: {
           value: "megaSuperVille"
         }
