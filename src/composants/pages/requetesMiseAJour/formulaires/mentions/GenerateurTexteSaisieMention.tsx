@@ -8,7 +8,6 @@ interface IDate {
   jour: string;
   mois: string;
   annee: string;
-  sansPrefix?: boolean;
 }
 
 type TCondition = {
@@ -25,7 +24,7 @@ interface IConditionEncours {
 const MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
 
 const FormaterTexteHelper = {
-  formaterDate: ({ jour, mois, annee, sansPrefix }: IDate): string => {
+  formaterDate: ({ jour, mois, annee }: IDate, sansPrefixe: boolean): string => {
     const moisFormate = mois ? MOIS[parseInt(mois, 10) - 1] : null;
     const jourFormate = jour ? jour.replace(/^0/, "") : null;
 
@@ -33,11 +32,11 @@ const FormaterTexteHelper = {
       case !annee:
         return "";
       case Boolean(jourFormate && moisFormate):
-        return `${sansPrefix ? "" : "le "}${jourFormate === "1" ? "1er" : jourFormate} ${moisFormate} ${annee}`;
+        return `${sansPrefixe ? "" : "le "}${jourFormate === "1" ? "1er" : jourFormate} ${moisFormate} ${annee}`;
       case Boolean(moisFormate):
-        return `${sansPrefix ? "" : "en "}${moisFormate} ${annee}`;
+        return `${sansPrefixe ? "" : "en "}${moisFormate} ${annee}`;
       default:
-        return `${sansPrefix ? "" : "en "}${annee}`;
+        return `${sansPrefixe ? "" : "en "}${annee}`;
     }
   }
 };
@@ -54,14 +53,15 @@ const genererPourSaisie = (modeleTexte: string, valeurs: TMentionForm) => {
     }
 
     const [cle, ...partiesValeurDefaut] = valeur.replace(/({{#valeur |}})/g, "").split(" ");
-    const valeurRenseignee = ObjetFormulaire.recupererValeur({ valeurs: valeurs, cleAttribut: cle });
+    const [cleAttribut, variation] = cle.split("/");
+    const valeurRenseignee = ObjetFormulaire.recupererValeur({ valeurs: valeurs, cleAttribut: cleAttribut });
     const valeurDefaut = `${partiesValeurDefaut.join(" ")}`.toUpperCase();
 
     switch (true) {
       case Array.isArray(valeurRenseignee):
         return valeurDefaut;
       case typeof valeurRenseignee === "object" && Object.keys(valeurRenseignee).includes("annee"):
-        return FormaterTexteHelper.formaterDate(valeurRenseignee as unknown as IDate) || valeurDefaut;
+        return FormaterTexteHelper.formaterDate(valeurRenseignee as unknown as IDate, variation === "sansPrefixe") || valeurDefaut;
       case valeurRenseignee && typeof valeurRenseignee !== "object":
         return `${valeurRenseignee}`;
       default:

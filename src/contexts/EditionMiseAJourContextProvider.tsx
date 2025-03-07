@@ -7,8 +7,6 @@ import CompteurTemps from "../composants/pages/requetesMiseAJour/compteurTemps/C
 import { useCreateBlocker } from "../hooks/CreateBlocker";
 import useTraitementApi from "../hooks/api/TraitementApiHook";
 
-// A tester Alex 5/02/25
-/* v8 ignore start */
 export enum ECleOngletsMiseAJour {
   ACTE = "acte",
   ACTE_MIS_A_JOUR = "acte-mis-a-jour",
@@ -153,4 +151,3 @@ const EditionMiseAJourContextProvider: React.FC<React.PropsWithChildren<IEdition
 };
 
 export default EditionMiseAJourContextProvider;
-/* v8 ignore start */

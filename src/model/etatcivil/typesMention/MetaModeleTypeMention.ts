@@ -30,7 +30,6 @@ interface IChampMetaModeleDto {
   estLectureSeule: IValeursConditionneesMetaModeleDto[];
   valeursPossibles: IValeursConditionneesMetaModeleDto[];
   valeurParDefaut?: string;
-  sansPrefix?: boolean;
 }
 interface IBlocMetaModeleDto {
   id: string;
@@ -92,8 +91,7 @@ export class ChampMetaModele {
     public readonly estAffiche: ConditionChamp[],
     public readonly estLectureSeule: ValeursConditionneesMetaModele[],
     public readonly valeursPossibles: ValeursConditionneesMetaModele[],
-    public readonly valeurParDefaut?: string,
-    public readonly sansPrefix?: boolean
+    public readonly valeurParDefaut?: string
   ) {}
 
   public static depuisDto(dto: IChampMetaModeleDto): ChampMetaModele | null {
@@ -111,8 +109,7 @@ export class ChampMetaModele {
       ConditionChamp.depuisTableau(dto.estAffiche ?? []),
       ValeursConditionneesMetaModele.depuisTableau(dto.estLectureSeule ?? []),
       ValeursConditionneesMetaModele.depuisTableau(dto.valeursPossibles ?? []),
-      dto.valeurParDefaut,
-      dto.sansPrefix
+      dto.valeurParDefaut
     );
   }
 
@@ -273,8 +270,7 @@ export class MetaModeleTypeMention {
                       return {
                         jour: "",
                         mois: "",
-                        annee: "",
-                        sansPrefix: champ.sansPrefix
+                        annee: ""
                       };
                     case "boolean":
                       return champ.valeurParDefaut === "true";
