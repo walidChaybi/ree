@@ -133,7 +133,7 @@ export class ChampMetaModele {
   public valeurLectureSeule(valeurs: TObjetFormulaire): string | null {
     if (this.estLectureSeule.length === 0) return null;
     return (
-      this.estLectureSeule.find(condition => condition.conditions.find(condition => condition.estRespectee(valeurs)))?.valeurs[0] ?? ""
+      this.estLectureSeule.find(condition => condition.conditions.some(condition => condition.estRespectee(valeurs)))?.valeurs[0] ?? ""
     );
   }
 }

@@ -34,10 +34,7 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
         return;
       case "dateComplete":
       case "dateIncomplete":
-        setFieldValue(`${nomChamp}.jour`, "");
-        setFieldValue(`${nomChamp}.mois`, "");
-        setFieldValue(`${nomChamp}.annee`, "");
-
+        setFieldValue(nomChamp, { jour: "", mois: "", annee: "" });
         return;
       default:
         setFieldValue(nomChamp, "");
@@ -54,8 +51,7 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
       return;
     }
 
-    const valeurPreRemplie = valeurLectureSeule || (initialValues?.[idBloc] as TObjetFormulaire)?.[champ.id] || champ.valeurParDefaut;
-    setFieldValue(nomChamp, valeurPreRemplie ?? "");
+    setFieldValue(nomChamp, valeurLectureSeule ?? (initialValues?.[idBloc] as TObjetFormulaire)?.[champ.id]);
   }, [estAffiche, valeurLectureSeule]);
 
   switch (true) {

@@ -60,8 +60,8 @@ export default class MiseAJourForm {
   static getEvenementMention(champs?: TObjetFormulaire) {
     if (!champs) return null;
 
-    const cleEvenement = Object.keys(champs).find(cle => cle.includes("evenement"));
+    const evenement = (Object.entries(champs).find(([cle]) => cle.includes("evenement"))?.[1] as TObjetFormulaire) ?? {};
 
-    return cleEvenement ? champs[cleEvenement] : null;
+    return { ...evenement, ...(Object.entries(evenement).find(([cle]) => cle.includes("date"))?.[1] as TObjetFormulaire) } || null;
   }
 }
