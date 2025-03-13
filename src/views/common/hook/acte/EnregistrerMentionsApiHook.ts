@@ -1,13 +1,22 @@
 import { enregistrerMentionsEtAnalyseMarginale } from "@api/appels/etatcivilApi";
-import { TValeurFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+
+export interface IEvenementMention {
+  jour: string | null;
+  mois: string | null;
+  annee: string | null;
+  ville: string | null;
+  arrondissement: string | null;
+  departement: string | null;
+  pays: string | null;
+}
 
 export interface IMentionEnregistree {
   idTypeMention: string;
   texteMention: string;
   numeroOrdre: number;
-  evenement?: TValeurFormulaire | null;
+  evenement?: IEvenementMention;
   estSaisieAssistee?: boolean;
 }
 
