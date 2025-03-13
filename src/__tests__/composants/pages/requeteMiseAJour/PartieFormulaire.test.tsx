@@ -13,15 +13,15 @@ import { NATURE_MENTION } from "../../../mock/data/NomenclatureNatureMention";
 import { TYPE_MENTION } from "../../../mock/data/NomenclatureTypeMention";
 import { localStorageFeatureFlagMock } from "../../../setupTests";
 
-describe("Formulaire de mise a jour d'un acte...", () => {
+const idActe = "b41079a5-9e8d-478c-b04c-c4c4ey86537g";
+const idRequete = "931c715b-ede1-4895-ad70-931f2ac4e43d";
+describe("Tests du formulaire de mise à jour d'un acte", () => {
   localStorageFeatureFlagMock.setItem("FF_AIDE_A_LA_SAISIE_MENTION", "true");
 
   NatureMention.init(NATURE_MENTION);
   TypeMention.init(TYPE_MENTION);
 
-  const idActe = "b41079a5-9e8d-478c-b04c-c4c4ey86537g";
-  const idRequete = "931c715b-ede1-4895-ad70-931f2ac4e43d";
-  describe("...avec mention", () => {
+  describe("Tester la mise à jour d'un acte utilisant l'aide à la saisie des mentions", () => {
     const routerPartieFormulaireAvecMentions = createTestingRouter(
       [
         {
@@ -40,92 +40,59 @@ describe("Formulaire de mise a jour d'un acte...", () => {
       ["/"]
     );
 
-    test("Affiche les bons onglets lorsque l'utilisateur est en mise a jour avec mention", async () => {
+    test("L'ajout d'une mention l'ajoute à la liste mention", async () => {
       render(<RouterProvider router={routerPartieFormulaireAvecMentions} />);
 
-      expect(screen.getByText("Mentions")).toBeDefined();
-      expect(screen.queryByText("Analyse Marginale")).toBeNull();
-    });
-
-    test("L'ajout d'une mention l'ajoute à la liste mention, et ouvre l'analyse marginale si besoin", async () => {
-      render(<RouterProvider router={routerPartieFormulaireAvecMentions} />);
-
-      //! On vérifie que la selection d'une sous-mention dans l'Autocomplete fonctionne
-      await screen.findByPlaceholderText("Recherche...");
-      const selecteurTypemention = screen.getByPlaceholderText("Recherche...");
+      // On vérifie que la selection d'une sous-mention dans l'Autocomplete fonctionne
+      const selecteurTypemention = await screen.findByPlaceholderText("Recherche...");
 
       await userEvent.click(selecteurTypemention);
       const mention = screen.getByRole("option", { name: "1 Mariage" });
 
       await userEvent.click(mention);
 
-      await waitFor(() => {
-        expect(screen.getByRole("option", { name: "1-1 en France (mairie)" })).toBeDefined();
-      });
+      expect(await screen.findByRole("option", { name: "1-1 en France (mairie)" })).toBeDefined();
 
       const mentionSousType = screen.getByRole("option", { name: "1-1 en France (mairie)" });
 
       await userEvent.click(mentionSousType);
 
-      //! On vérifie que le formulaire d'aide à la saisie s'affiche correctement lorsque l'aide à la saisie est a true et que le FF est à true
-      await waitFor(() => {
-        expect(screen.getByRole("textbox", { name: /evenementFrance.ville/i })).toBeDefined();
-        expect(screen.getByRole("textbox", { name: /evenementFrance.departement/i })).toBeDefined();
-        expect(screen.getByRole("textbox", { name: /evenementFrance.departement/i })).toBeDefined();
-        expect(screen.getByPlaceholderText("JJ")).toBeDefined();
-        expect(screen.getByPlaceholderText("MM")).toBeDefined();
-        expect(screen.getByPlaceholderText("AAAA")).toBeDefined();
-        expect(screen.getByRole("button", { name: "Ajouter mention" })).toBeDefined();
-        expect(screen.getByText("LIEU <ÉVÉNEMENT>")).toBeDefined();
-      });
+      expect(await screen.findByText("LIEU <ÉVÉNEMENT>")).toBeDefined();
 
-      //! On vérifie le remplissage de l'aide à la saisie
-      const inputVille = screen.getByRole("textbox", { name: /evenementFrance.ville/i });
-      const inputDepartement = screen.getByRole("textbox", { name: /evenementFrance.departement/i });
-      const inputNom = screen.getByRole("textbox", { name: /conjoint.nom/i });
-      const inputJourEvenement = screen.getByPlaceholderText("JJ");
-      const inputMoisEvenement = screen.getByPlaceholderText("MM");
-      const inputAnneeEvenement = screen.getByPlaceholderText("AAAA");
-      const boutonValidation = screen.getByRole("button", { name: "Ajouter mention" });
+      // On vérifie le remplissage de l'aide à la saisie
+      const inputVille = await screen.findByRole("textbox", { name: /evenementFrance.ville/i });
+      const inputDepartement = await screen.findByRole("textbox", { name: /evenementFrance.departement/i });
+      const inputNom = await screen.findByRole("textbox", { name: /conjoint.nom/i });
+      const inputJourEvenement = await screen.findByPlaceholderText("JJ");
+      const inputMoisEvenement = await screen.findByPlaceholderText("MM");
+      const inputAnneeEvenement = await screen.findByPlaceholderText("AAAA");
+      const boutonValidation = await screen.findByRole("button", { name: "Ajouter mention" });
 
-      await waitFor(() => {
-        expect(inputVille).toBeDefined();
-        expect(inputDepartement).toBeDefined();
-        expect(inputNom).toBeDefined();
-        expect(inputJourEvenement).toBeDefined();
-        expect(inputMoisEvenement).toBeDefined();
-        expect(inputAnneeEvenement).toBeDefined();
-        expect(boutonValidation).toBeDefined();
-      });
+      expect(inputVille).toBeDefined();
+      expect(inputDepartement).toBeDefined();
+      expect(inputNom).toBeDefined();
+      expect(inputJourEvenement).toBeDefined();
+      expect(inputMoisEvenement).toBeDefined();
+      expect(inputAnneeEvenement).toBeDefined();
+      expect(boutonValidation).toBeDefined();
 
-      //! Les champs se mettent correctement en erreur X
+      // Les champs se mettent correctement en erreur
       await userEvent.click(boutonValidation);
-      //? Pourquoi il ne trouve pas le message qui s'affiche pourtant bien dans le DOM de test...
-      await waitFor(() => {
-        // expect(screen.getByText(/⚠ La saisie du champ est obligatoire/i)).toBeDefined();
-        // expect(screen.getByText(/La saisie du champ est obligatoire/i)).toBeDefined();
-        //expect(screen.getByText("La saisie du champ est obligatoire")).toBeDefined();
-      });
 
-      //! Le remplissage du texte d'aide à la saisie fonctionne
+      expect(await screen.findAllByText(/⚠ La saisie du champ est obligatoire/i)).toBeDefined();
+
+      // Le remplissage du texte d'aide à la saisie fonctionne
       await userEvent.type(inputVille, "superVille");
-
       await userEvent.type(inputDepartement, "superDepartement");
-
       await userEvent.type(inputJourEvenement, "12");
-
       await userEvent.type(inputMoisEvenement, "09");
-
       await userEvent.type(inputAnneeEvenement, "2000");
-
       await userEvent.type(inputNom, "superNom");
 
-      await waitFor(() => {
-        expect(screen.getByText("superVille (superDepartement)")).toBeDefined();
-        expect(screen.getByText("le 12 septembre 2000")).toBeDefined();
-      });
+      expect(await screen.findByText("superVille (superDepartement)")).toBeDefined();
+      expect(await screen.findByText("le 12 septembre 2000")).toBeDefined();
 
-      //! La soumission de la mention fonctionne
+      // La soumission de la mention fonctionne
       await userEvent.click(boutonValidation);
 
       await waitFor(() => {
@@ -133,65 +100,52 @@ describe("Formulaire de mise a jour d'un acte...", () => {
         expect(screen.getByText("Mariée à superVille (superDepartement) le 12 septembre 2000 avec superNom.")).toBeDefined();
       });
 
-      //! L'enregistrement de la mention fonctionne
-      const boutonActualiserVisualiser: HTMLButtonElement = screen.getByRole("button", { name: "Actualiser et visualiser" });
+      // L'enregistrement de la mention fonctionne
+      const boutonActualiserVisualiser: HTMLButtonElement = await screen.findByRole("button", { name: "Actualiser et visualiser" });
       await userEvent.click(boutonActualiserVisualiser);
 
       await waitFor(() => {
         expect(boutonActualiserVisualiser.disabled).toBeTruthy();
       });
 
-      //! La modification d'une mention fonctionne
-      await waitFor(() => {
-        expect(screen.getByTestId("EditIcon")).toBeDefined();
-      });
+      // La modification d'une mention fonctionne
 
-      fireEvent.click(screen.getByTestId("EditIcon"));
+      fireEvent.click(await screen.findByTestId("EditIcon"));
 
-      await waitFor(() => {
-        expect(screen.getByText("Modification d'une mention")).toBeDefined();
-        expect(screen.getByText("Ville")).toBeDefined();
-      });
+      const boutonValiderModification = await screen.findByRole("button", { name: /Modifier mention/i });
 
-      const inputVilleModif = screen.getByRole("textbox", { name: /evenementFrance.ville/i });
+      expect(await screen.findByText("Modification d'une mention")).toBeDefined();
+      expect(boutonValiderModification).toBeDefined();
 
-      await fireEvent.change(inputVilleModif, {
-        target: {
-          value: "megaSuperVille"
-        }
-      });
+      const inputVilleModif = await screen.findByRole("textbox", { name: /evenementFrance.ville/i });
 
-      const boutonModifierMention = screen.getByText("Modifier mention");
-      fireEvent.click(boutonModifierMention);
+      await userEvent.type(inputVilleModif, "{backspace}".repeat(5) + "Capitale");
+
+      userEvent.click(boutonValiderModification);
 
       await waitFor(() => {
         expect(screen.queryByText("Ville")).toBeNull();
-        expect(screen.getByText("Mariée à megaSuperVille (superDepartement) le 12 septembre 2000 avec superNom.")).toBeDefined();
+        expect(screen.getByText("Mariée à superCapitale (superDepartement) le 12 septembre 2000 avec superNom.")).toBeDefined();
       });
 
-      //! La suppression d'une mention fonctionne
-      await waitFor(() => {
-        expect(screen.getByTitle("Mariée à megaSuperVille (superDepartement) le 12 septembre 2000 avec superNom.")).toBeDefined();
-        expect(screen.getByTestId("DeleteIcon")).toBeDefined();
-      });
+      // La suppression d'une mention fonctionne
+      expect(await screen.findByTitle("Mariée à superCapitale (superDepartement) le 12 septembre 2000 avec superNom.")).toBeDefined();
+      expect(await screen.findByTestId("DeleteIcon")).toBeDefined();
 
       fireEvent.click(screen.getByTestId("DeleteIcon"));
 
-      await waitFor(() => {
-        expect(screen.getByText("Vous avez demandé la suppression d'une mention.")).toBeDefined();
-        expect(screen.getByText("OK")).toBeDefined();
-      });
+      expect(await screen.findByText("Vous avez demandé la suppression d'une mention.")).toBeDefined();
+      expect(await screen.findByText("OK")).toBeDefined();
 
-      fireEvent.click(screen.getByText("OK"));
+      userEvent.click(screen.getByRole("button", { name: /OK/i }));
 
       await waitFor(() => {
-        expect(screen.queryByTitle("Mariée à superVille (superDepartement) le 12 septembre 2000 avec superNom.")).toBeNull();
+        expect(screen.queryByTitle("Mariée à superCapitale (superDepartement) le 12 septembre 2000 avec superNom.")).toBeNull();
       });
     });
   });
 
-  // OK >
-  describe("...sans mention", () => {
+  describe("Tester la gestion des onglets", () => {
     const routerPartieFormulaireSansMentions = (estMajAvecMention: boolean) =>
       createTestingRouter(
         [
@@ -211,14 +165,14 @@ describe("Formulaire de mise a jour d'un acte...", () => {
         ["/"]
       );
 
-    test("Affiche les bons onglets lorsque l'utilisateur est en mise a jour sans mention", async () => {
+    test("LORSQUE l'utilisateur est en mise a jour sans mention ALORS seul l'onglet Analyse Marginale apparait", async () => {
       render(<RouterProvider router={routerPartieFormulaireSansMentions(false)} />);
 
       expect(screen.getByText("Analyse Marginale")).toBeDefined();
       expect(screen.queryByText("Mentions")).toBeNull();
     });
 
-    test("Affiche les bons onglets lorsque l'utilisateur est en mise a jour avec mention", async () => {
+    test("LORSQUE l'utilisateur est en mise a jour avec mention ALORS seul l'onglet Mention apparait", async () => {
       render(<RouterProvider router={routerPartieFormulaireSansMentions(true)} />);
 
       expect(screen.queryByText("Analyse Marginale")).toBeNull();
@@ -226,8 +180,7 @@ describe("Formulaire de mise a jour d'un acte...", () => {
     });
   });
 
-  // OK >
-  describe("Tester que l'utilisateur accès aux bons boutons selon ses droits", () => {
+  describe("Tester l'accès aux bons boutons par l'utilisateur selon ses droits", () => {
     const routerPartieFormulaireAvecDroits = (utilisateur?: IOfficier) =>
       createTestingRouter(
         [
@@ -247,21 +200,17 @@ describe("Formulaire de mise a jour d'un acte...", () => {
         ],
         ["/"]
       );
-    test("Les boutons de signature et d'actualisation n'apparaissent pas sans les bons droits", async () => {
+    test("LORSQUE l'utilisateur ne possède pas les bons droits ALORS les boutons de signature et d'actualisation n'apparaissent pas", async () => {
       render(<RouterProvider router={routerPartieFormulaireAvecDroits()} />);
 
-      await waitFor(() => {
-        const boutonActualiservisualiser: HTMLButtonElement = screen.getByRole("button", { name: /Actualiser et Visualiser/i });
-        const boutonValiderEtTerminer = screen.queryByRole("button", { name: /Valider et terminer/i });
-        const boutonTerminerEtSigner = screen.queryByRole("button", { name: /Terminer et Signer/i });
+      const boutonActualiservisualiser: HTMLButtonElement = await screen.findByRole("button", { name: /Actualiser et Visualiser/i });
 
-        expect(boutonTerminerEtSigner).toBeNull();
-        expect(boutonActualiservisualiser.disabled).toBeTruthy();
-        expect(boutonValiderEtTerminer).toBeNull();
-      });
+      expect(boutonActualiservisualiser.disabled).toBeTruthy();
+      expect(screen.queryByRole("button", { name: /Terminer et Signer/i })).toBeNull();
+      expect(screen.queryByRole("button", { name: /Valider et terminer/i })).toBeNull();
     });
 
-    test("Les boutons de signature et d'actualisation apparaissent avec les bons droits", async () => {
+    test("LORSQUE l'utilisateur possède les bons droits ALORS les boutons de signature et d'actualisation apparaissent", async () => {
       const utilisateur = {
         habilitations: [
           {
@@ -274,14 +223,11 @@ describe("Formulaire de mise a jour d'un acte...", () => {
 
       render(<RouterProvider router={routerPartieFormulaireAvecDroits(utilisateur)} />);
 
-      await waitFor(() => {
-        const boutonTerminerEtSigner = screen.getByRole("button", { name: /Terminer et Signer/i });
-        const boutonActualiservisualiser: HTMLButtonElement = screen.getByRole("button", { name: /Actualiser et Visualiser/i });
-        const boutonValiderEtTerminer = screen.queryByRole("button", { name: /Valider et terminer/i });
-        expect(boutonTerminerEtSigner).toBeDefined();
-        expect(boutonActualiservisualiser.disabled).toBeTruthy();
-        expect(boutonValiderEtTerminer).toBeNull();
-      });
+      const boutonActualiservisualiser: HTMLButtonElement = await screen.findByRole("button", { name: /Actualiser et Visualiser/i });
+
+      expect(boutonActualiservisualiser.disabled).toBeTruthy();
+      expect(screen.getByRole("button", { name: /Terminer et Signer/i })).toBeDefined();
+      expect(screen.queryByRole("button", { name: /Valider et terminer/i })).toBeNull();
     });
   });
 });
