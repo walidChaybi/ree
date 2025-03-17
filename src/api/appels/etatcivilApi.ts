@@ -55,6 +55,7 @@ export const URL_RC = "/rc";
 export const URL_PERSONNES_RMC_AUTO = "/personnes/rmcauto";
 export const URL_POCOPAS = "/mespocopas";
 export const URL_PROJET_ACTE = "/projetacte";
+export const URL_ETABLI = "/etabli";
 export const URL_PROJET_ACTE_INSCRIPTION_LISTE = "/projetacte/actesinscriptionssauvegardes";
 export const URL_ANALYSE_MARGINALE = "/analyseMarginale";
 export const URL_BULLETIN_IDENTIFICATION = "/bulletinIdentification";
@@ -107,7 +108,7 @@ export function postProjetActe(acte: IProjetActe): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
-      uri: `${URL_PROJET_ACTE}`,
+      uri: `${URL_PROJET_ACTE}${URL_ETABLI}`,
       data: acte
     })
   );

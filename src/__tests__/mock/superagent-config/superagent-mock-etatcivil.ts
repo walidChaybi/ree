@@ -454,7 +454,7 @@ export const configEtatcivil = [
       // Projet acte //
       /////////////////
 
-      if (match[1] === "/projetacte") {
+      if (match[1] === "/projetacte/etabli") {
         return ReponseEnregistrementProjetActe;
       }
 
