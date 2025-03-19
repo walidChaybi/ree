@@ -540,8 +540,66 @@ export const mesRequetesConsulaire = [
     ],
     numeroDossier: "888888",
     natureActe: "NAISSANCE_MINEUR"
+  },
+  {
+    id: "91d13aad-c023-4a6d-b88c-18f277061ca3",
+    idUtilisateur: "80fb7690-58a1-11ef-8a47-0800276b552b",
+    idService: "95878007-0256-49a7-9d61-1bd506baa82f",
+    numeroDossier: "777777",
+    natureActe: "NAISSANCE_MINEUR",
+    numeroFonctionnel: "ABC123",
+    sousType: "RCTC",
+    dateCreation: 1736322320884,
+    dateDerniereAction: 1736322321049,
+    statut: "EN_TRAITEMENT",
+    nomCompletRequerant: "Test En Traitement",
+    titulaires: [
+      {
+        nom: "Test",
+        prenoms: ["Traitement"]
+      }
+    ]
+  },
+  {
+    id: "91d13aad-c023-4a6d-b88c-18f277061ca4",
+    idUtilisateur: "80fb7690-58a1-11ef-8a47-0800276b552b",
+    idService: "95878007-0256-49a7-9d61-1bd506baa82f",
+    numeroDossier: "111111",
+    natureActe: "NAISSANCE_MINEUR",
+    numeroFonctionnel: "ABC123",
+    sousType: "RCTC",
+    dateCreation: 1736322320884,
+    dateDerniereAction: 1736322321049,
+    statut: "A_TRAITER",
+    nomCompletRequerant: "Test A Traiter",
+    titulaires: [
+      {
+        nom: "Test",
+        prenoms: ["Traitement"]
+      }
+    ]
+  },
+  {
+    id: "91d13aad-c023-4a6d-b88c-18f277061ca5",
+    idUtilisateur: "80fb7690-58a1-11ef-8a47-0800276b552b",
+    idService: "95878007-0256-49a7-9d61-1bd506baa82f",
+    numeroDossier: "000000",
+    natureActe: "NAISSANCE_MINEUR",
+    numeroFonctionnel: "ABC123",
+    sousType: "RCTC",
+    dateCreation: 1736322320884,
+    dateDerniereAction: 1736322321049,
+    statut: "A_AUTRE",
+    nomCompletRequerant: "Test A Autre",
+    titulaires: [
+      {
+        nom: "Test",
+        prenoms: ["Traitement"]
+      }
+    ]
   }
 ];
+
 export const creationRequeteRCTCResultat = [
   {
     id: "3ed9aa4e-921b-489f-b8fe-531dd703c60c",

@@ -4,7 +4,9 @@ import { IRequeteTableauConsulaire, mappingRequetesTableauConsulaire } from "@mo
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { UN } from "@util/Utils";
-import { useContext, useEffect, useState } from "react";
+import messageManager from "@util/messageManager";
+import { useCallback, useContext, useEffect, useState } from "react";
+import useNavigationRequeteTableauConsulaire from "../../../../hooks/requeteConsulaire/NavigationRequeteTableauConsulaireHook";
 import PageChargeur from "../../../commun/chargeurs/PageChargeur";
 import Tableau, { IEnTeteTableau, TSensTri } from "../../../commun/tableau/Tableau";
 
@@ -31,6 +33,7 @@ type TLigneTableau = {
   dateCreation: string;
   dateDerniereAction: string;
   statut: string;
+  onClick?: () => void;
 };
 
 const VALEUR_MINIMUM = 0;
@@ -77,33 +80,6 @@ const EN_TETE_MES_REQUETES_CONSULAIRES: IEnTeteTableau[] = [
   }
 ];
 
-const mapResultatCommeLignesTableau = (resultat: IRequeteTableauConsulaire[]): TLigneTableau[] =>
-  resultat.map(requete => {
-    return {
-      cle: requete.idRequete ?? "",
-      onClick: () => {},
-      numeroDossier: requete.numeroDossier ?? "",
-      sousType: requete.sousType ?? "",
-      sousTypeCode: requete.sousTypeCode ?? "",
-      idUtilisateur: requete.idUtilisateur ?? "",
-      natureActe: requete.natureActe ?? "",
-      titulaires: (
-        <>
-          {(requete.titulaires || []).map((titulaire: any) => (
-            <span key={`${titulaire.nom} ${titulaire.prenoms[0] ?? ""}`.trim()}>
-              {`${titulaire.nom.toUpperCase()} ${titulaire.prenoms[0] || ""}`.trim()}
-              <br />
-            </span>
-          ))}
-        </>
-      ),
-      requerant: requete?.nomCompletRequerant ?? "",
-      dateCreation: requete.dateCreation ?? "",
-      dateDerniereAction: requete.dateDerniereAction ?? "",
-      statut: requete.statut ?? ""
-    };
-  });
-
 const getPortionTableau = (tableau: TLigneTableau[], pageActuelle: number) => {
   const indexPageActuelle = Math.floor(pageActuelle / DIVISEUR_POSITION_PAGE);
 
@@ -112,12 +88,10 @@ const getPortionTableau = (tableau: TLigneTableau[], pageActuelle: number) => {
 
 const TableauMesRequetesConsulaire: React.FC = () => {
   const { utilisateurs, services } = useContext(RECEContextData);
+
   const [parametresTableau, setParametresTableau] = useState<IParamtresTableau>({
-    // STRECE-6057 RG1
     statuts: [StatutRequete.A_TRAITER.nom, StatutRequete.PRISE_EN_CHARGE.nom, StatutRequete.EN_TRAITEMENT.nom],
-    //STRECE-6057 RG1
     sousType: [SousTypeCreation.RCTC.nom, SousTypeCreation.RCTD.nom, SousTypeCreation.RCADC.nom],
-    //STRECE-6057 RG1
     tri: "statutEtDateCreation",
     sens: "ASC",
     range: `0-${PAGINATION_PLAGE_MAX}`
@@ -127,6 +101,35 @@ const TableauMesRequetesConsulaire: React.FC = () => {
     pageActuelle: VALEUR_MINIMUM,
     totalLignes: NOMBRE_MINIMUM_LIGNES
   });
+  const [enRecuperation, setEnRecuperation] = useState<boolean>(true);
+
+  const { naviguerVersRequeteConsulaire, enAttenteDeReponseApi } = useNavigationRequeteTableauConsulaire();
+
+  const mapResultatCommeLignesTableau = useCallback(
+    (resultat: IRequeteTableauConsulaire[]): TLigneTableau[] =>
+      resultat.map(requete => ({
+        cle: requete.idRequete ?? "",
+        numeroDossier: requete.numeroDossier ?? "",
+        sousType: requete.sousType ?? "",
+        natureActe: requete.natureActe ?? "",
+        titulaires: (
+          <>
+            {(requete.titulaires || []).map((titulaire: any) => (
+              <span key={`${titulaire.nom} ${titulaire.prenoms[0] ?? ""}`.trim()}>
+                {`${titulaire.nom.toUpperCase()} ${titulaire.prenoms[0] || ""}`.trim()}
+                <br />
+              </span>
+            ))}
+          </>
+        ),
+        requerant: requete?.nomCompletRequerant ?? "",
+        dateCreation: requete.dateCreation ?? "",
+        dateDerniereAction: requete.dateDerniereAction ?? "",
+        statut: requete.statut ?? "",
+        onClick: () => naviguerVersRequeteConsulaire(requete)
+      })),
+    [naviguerVersRequeteConsulaire]
+  );
 
   useEffect(() => {
     const plageActuelle = parseInt(parametresTableau.range.split("-")[VALEUR_MINIMUM] ?? `${VALEUR_MINIMUM}`);
@@ -139,11 +142,8 @@ const TableauMesRequetesConsulaire: React.FC = () => {
       ...parametresTableau,
       range: `${nouvellePlage}-${PAGINATION_PLAGE_MAX}`
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [parametresPagination]);
 
-  // Remplacer avec useFetch
-  const [enRecuperation, setEnRecuperation] = useState<boolean>(true);
   useEffect(() => {
     setEnRecuperation(true);
     getTableauRequetesConsulaires(parametresTableau.statuts.join(","), parametresTableau.sousType.join(","), parametresTableau)
@@ -159,19 +159,17 @@ const TableauMesRequetesConsulaire: React.FC = () => {
       })
       .catch(e => {
         console.error(`Une erreur est survenue lors de l'appel API GET requêtes consulaire ${JSON.stringify(e)}`);
+        messageManager.showErrorAndClose("Impossible de récupérer les requêtes consulaires");
       })
-
       .finally(() => setEnRecuperation(false));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [parametresTableau]);
-  // FIN remplacer avec useFetch
 
   return (
     <div className="m-0 mt-4">
-      {enRecuperation && <PageChargeur />}
+      {(enRecuperation || enAttenteDeReponseApi) && <PageChargeur />}
       <Tableau
         enTetes={EN_TETE_MES_REQUETES_CONSULAIRES}
-        lignes={lignesTableau ? getPortionTableau(lignesTableau, parametresPagination.pageActuelle) : undefined}
+        lignes={lignesTableau ? (getPortionTableau(lignesTableau, parametresPagination.pageActuelle) as any) : undefined}
         messageAucuneLigne="Aucune requête n'a été trouvée."
         parametresTri={{
           cle: parametresTableau.tri,
@@ -197,4 +195,5 @@ const TableauMesRequetesConsulaire: React.FC = () => {
     </div>
   );
 };
+
 export default TableauMesRequetesConsulaire;
