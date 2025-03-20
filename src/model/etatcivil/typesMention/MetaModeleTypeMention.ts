@@ -14,7 +14,8 @@ export enum ETypeChamp {
   SOUS_TITRE = "sousTitre",
   RADIO = "radioBouton",
   POCOPA = "pocopa",
-  CRPCEN = "crpcen"
+  CRPCEN = "crpcen",
+  NOM_SECABLE = "nomSecable"
 }
 interface IValeursConditionneesMetaModeleDto {
   valeurs: string[];
@@ -232,6 +233,8 @@ export class MetaModeleTypeMention {
               return SchemaValidation.dateComplete({ obligatoire: champ.estObligatoire, bloquerDateFutur: true });
             case "dateIncomplete":
               return SchemaValidation.dateIncomplete({ obligatoire: champ.estObligatoire, bloquerDateFutur: true });
+            case "nomSecable":
+              return SchemaValidation.nomSecable({ obligatoire: champ.estObligatoire });
             default:
               return SchemaValidation.inconnu();
           }
@@ -271,6 +274,13 @@ export class MetaModeleTypeMention {
                         jour: "",
                         mois: "",
                         annee: ""
+                      };
+                    case "nomSecable":
+                      return {
+                        nom: "",
+                        secable: false,
+                        nomPartie1: "",
+                        nomPartie2: ""
                       };
                     case "boolean":
                       return champ.valeurParDefaut === "true";

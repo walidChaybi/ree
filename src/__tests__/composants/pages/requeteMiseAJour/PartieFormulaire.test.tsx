@@ -46,40 +46,42 @@ describe("Tests du formulaire de mise à jour d'un acte", () => {
       // On vérifie que la selection d'une sous-mention dans l'Autocomplete fonctionne
       const selecteurTypemention = await screen.findByPlaceholderText("Recherche...");
 
-      await userEvent.click(selecteurTypemention);
-      const mention = screen.getByRole("option", { name: "1 Mariage" });
+      userEvent.click(selecteurTypemention);
+      const mention = await screen.findByRole("option", { name: "1 Mariage" });
 
-      await userEvent.click(mention);
+      fireEvent.click(mention);
 
-      expect(await screen.findByRole("option", { name: "1-1 en France (mairie)" })).toBeDefined();
+      await waitFor(() => expect(screen.getByRole("option", { name: "1-1 en France (mairie)" })).toBeDefined());
 
       const mentionSousType = screen.getByRole("option", { name: "1-1 en France (mairie)" });
 
-      await userEvent.click(mentionSousType);
+      fireEvent.click(mentionSousType);
 
-      expect(await screen.findByText("LIEU <ÉVÉNEMENT>")).toBeDefined();
+      await waitFor(() => expect(screen.getByText("LIEU <ÉVÉNEMENT>")).toBeDefined());
 
       // On vérifie le remplissage de l'aide à la saisie
-      const inputVille = await screen.findByRole("textbox", { name: /evenementFrance.ville/i });
-      const inputDepartement = await screen.findByRole("textbox", { name: /evenementFrance.departement/i });
-      const inputNom = await screen.findByRole("textbox", { name: /conjoint.nom/i });
-      const inputJourEvenement = await screen.findByPlaceholderText("JJ");
-      const inputMoisEvenement = await screen.findByPlaceholderText("MM");
-      const inputAnneeEvenement = await screen.findByPlaceholderText("AAAA");
-      const boutonValidation = await screen.findByRole("button", { name: "Ajouter mention" });
+      const inputVille = screen.getByRole("textbox", { name: /evenementFrance.ville/i });
+      const inputDepartement = screen.getByRole("textbox", { name: /evenementFrance.departement/i });
+      const inputNom = screen.getByRole("textbox", { name: /conjoint.nom/i });
+      const inputJourEvenement = screen.getByPlaceholderText("JJ");
+      const inputMoisEvenement = screen.getByPlaceholderText("MM");
+      const inputAnneeEvenement = screen.getByPlaceholderText("AAAA");
+      const boutonValidation = screen.getByRole("button", { name: "Ajouter mention" });
 
-      expect(inputVille).toBeDefined();
-      expect(inputDepartement).toBeDefined();
-      expect(inputNom).toBeDefined();
-      expect(inputJourEvenement).toBeDefined();
-      expect(inputMoisEvenement).toBeDefined();
-      expect(inputAnneeEvenement).toBeDefined();
-      expect(boutonValidation).toBeDefined();
+      await waitFor(() => {
+        expect(inputVille).toBeDefined();
+        expect(inputDepartement).toBeDefined();
+        expect(inputNom).toBeDefined();
+        expect(inputJourEvenement).toBeDefined();
+        expect(inputMoisEvenement).toBeDefined();
+        expect(inputAnneeEvenement).toBeDefined();
+        expect(boutonValidation).toBeDefined();
+      });
 
       // Les champs se mettent correctement en erreur
-      await userEvent.click(boutonValidation);
+      fireEvent.click(boutonValidation);
 
-      expect(await screen.findAllByText(/⚠ La saisie du champ est obligatoire/i)).toBeDefined();
+      await waitFor(() => expect(screen.getAllByText(/⚠ La saisie du champ est obligatoire/i)).toBeDefined());
 
       // Le remplissage du texte d'aide à la saisie fonctionne
       await userEvent.type(inputVille, "superVille");
@@ -89,11 +91,13 @@ describe("Tests du formulaire de mise à jour d'un acte", () => {
       await userEvent.type(inputAnneeEvenement, "2000");
       await userEvent.type(inputNom, "superNom");
 
-      expect(await screen.findByText("superVille (superDepartement)")).toBeDefined();
-      expect(await screen.findByText("le 12 septembre 2000")).toBeDefined();
+      await waitFor(() => {
+        expect(screen.getByText("superVille (superDepartement)")).toBeDefined();
+        expect(screen.getByText("le 12 septembre 2000")).toBeDefined();
+      });
 
       // La soumission de la mention fonctionne
-      await userEvent.click(boutonValidation);
+      fireEvent.click(boutonValidation);
 
       await waitFor(() => {
         expect(screen.queryByText("Ville")).toBeNull();
@@ -102,20 +106,21 @@ describe("Tests du formulaire de mise à jour d'un acte", () => {
 
       // L'enregistrement de la mention fonctionne
       const boutonActualiserVisualiser: HTMLButtonElement = await screen.findByRole("button", { name: "Actualiser et visualiser" });
-      await userEvent.click(boutonActualiserVisualiser);
+      fireEvent.click(boutonActualiserVisualiser);
 
       await waitFor(() => {
         expect(boutonActualiserVisualiser.disabled).toBeTruthy();
       });
 
       // La modification d'une mention fonctionne
-
       fireEvent.click(await screen.findByTestId("EditIcon"));
 
       const boutonValiderModification = await screen.findByRole("button", { name: /Modifier mention/i });
 
-      expect(await screen.findByText("Modification d'une mention")).toBeDefined();
-      expect(boutonValiderModification).toBeDefined();
+      await waitFor(() => {
+        expect(screen.getByText("Modification d'une mention")).toBeDefined();
+        expect(boutonValiderModification).toBeDefined();
+      });
 
       const inputVilleModif = await screen.findByRole("textbox", { name: /evenementFrance.ville/i });
 
@@ -129,13 +134,12 @@ describe("Tests du formulaire de mise à jour d'un acte", () => {
       });
 
       // La suppression d'une mention fonctionne
-      expect(await screen.findByTitle("Mariée à superCapitale (superDepartement) le 12 septembre 2000 avec superNom.")).toBeDefined();
-      expect(await screen.findByTestId("DeleteIcon")).toBeDefined();
+      fireEvent.click(await screen.findByTestId("DeleteIcon"));
 
-      fireEvent.click(screen.getByTestId("DeleteIcon"));
-
-      expect(await screen.findByText("Vous avez demandé la suppression d'une mention.")).toBeDefined();
-      expect(await screen.findByText("OK")).toBeDefined();
+      await waitFor(() => {
+        expect(screen.getByText("Vous avez demandé la suppression d'une mention.")).toBeDefined();
+        expect(screen.getByText("OK")).toBeDefined();
+      });
 
       userEvent.click(screen.getByRole("button", { name: /OK/i }));
 

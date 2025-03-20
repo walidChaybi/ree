@@ -1,10 +1,10 @@
 import { ChampMetaModele } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
 import { useField, useFormikContext } from "formik";
-import { lazy, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import ChampListeDeroulante from "../../../../../commun/champs/ChampListeDeroulante";
+import ChampsRadio from "../../../../../commun/champs/ChampsRadio";
 import { TMentionForm } from "../../MentionForm";
 import { ChampFormAideSaisie } from "./ChampFormAideSaisie";
-const ChampListeDeroulante = lazy(() => import("../../../../../commun/champs/ChampListeDeroulante"));
-const ChampsRadio = lazy(() => import("../../../../../commun/champs/ChampsRadio"));
 
 export const ChampConditionneAideSaisie: React.FC<{
   name: string;

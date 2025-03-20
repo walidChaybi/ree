@@ -29,6 +29,13 @@ type TDateChamp = {
   minutes: Yup.StringSchema<string | undefined>;
 };
 
+type TNomSecableChamp = {
+  nom: Yup.StringSchema<string>;
+  secable: Yup.BooleanSchema<boolean>;
+  nomPartie1: Yup.StringSchema<string | undefined>;
+  nomPartie2: Yup.StringSchema<string | undefined>;
+};
+
 const messagesErreur = {
   DATE_INVALIDE: "⚠ La date est invalide",
   DATE_OBLIGATOIRE: "⚠ La saisie de la date est obligatoire",
@@ -285,6 +292,26 @@ const SchemaValidation = {
           : true
       )
     ) as Yup.ObjectSchema<TDateChamp>;
+  },
+
+  nomSecable: (schemaParams: ISchemaCommunParams) => {
+    let schema = SchemaValidation.objet({
+      nom: Yup.string(),
+      secable: Yup.boolean(),
+      nomPartie1: Yup.string(),
+      nomPartie2: Yup.string()
+    });
+
+    return gestionObligation(schema, schemaParams.obligatoire, () =>
+      schema.test("nomSecableObligatoire", ({ nom }, error) =>
+        !nom
+          ? error.createError({
+              path: `${error.path}.nom`,
+              message: messagesErreur.CHAMP_OBLIGATOIRE
+            })
+          : true
+      )
+    ) as Yup.ObjectSchema<TNomSecableChamp>;
   },
 
   prenoms: (prefix: string) => {

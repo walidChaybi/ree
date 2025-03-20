@@ -1,5 +1,5 @@
 import { ETypeChamp } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
-import { Suspense, useMemo } from "react";
+import { useMemo } from "react";
 
 export const ChampFormAideSaisie: React.FC<React.PropsWithChildren<{ typeChamp: ETypeChamp }>> = ({ typeChamp, children }) => {
   const classesChamp = useMemo(() => {
@@ -14,9 +14,5 @@ export const ChampFormAideSaisie: React.FC<React.PropsWithChildren<{ typeChamp: 
     }
   }, [typeChamp]);
 
-  return (
-    <div {...(classesChamp ? { className: classesChamp } : {})}>
-      <Suspense fallback={<></>}>{children}</Suspense>
-    </div>
-  );
+  return <div {...(classesChamp ? { className: classesChamp } : {})}>{children}</div>;
 };

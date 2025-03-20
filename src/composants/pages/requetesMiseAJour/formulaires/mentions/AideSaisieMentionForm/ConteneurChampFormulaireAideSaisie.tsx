@@ -1,16 +1,16 @@
 import { ChampMetaModele } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
 import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { useFormikContext } from "formik";
-import { lazy, useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
+import ChampCaseACocher from "../../../../../commun/champs/ChampCaseACocher";
+import ChampDate from "../../../../../commun/champs/ChampDate";
+import ChampRecherchePocopas from "../../../../../commun/champs/ChampRecherchePocopas";
+import ChampTexte from "../../../../../commun/champs/ChampTexte";
+import ChampsNomSecable from "../../../../../commun/champs/ChampsNomSecable";
 import SeparateurSection from "../../../../../commun/conteneurs/formulaire/SeparateurSection";
 import { TMentionForm } from "../../MentionForm";
 import { ChampConditionneAideSaisie } from "./ChampConditionneAideSaisie";
 import { ChampFormAideSaisie } from "./ChampFormAideSaisie";
-
-const ChampsCaseACocher = lazy(() => import("../../../../../commun/champs/ChampCaseACocher"));
-const ChampDate = lazy(() => import("../../../../../commun/champs/ChampDate"));
-const ChampsTexte = lazy(() => import("../../../../../commun/champs/ChampTexte"));
-const ChampRecherchePocopas = lazy(() => import("../../../../../commun/champs/ChampRecherchePocopas"));
 
 export const ConteneurChampFormulaireAideSaisie: React.FC<{
   champ: ChampMetaModele;
@@ -36,6 +36,9 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
       case "dateIncomplete":
         setFieldValue(nomChamp, { jour: "", mois: "", annee: "" });
         return;
+      case "nomSecable":
+        setFieldValue(nomChamp, { nom: "", secable: false, nomPartie1: "", nomPartie2: "" });
+        return;
       default:
         setFieldValue(nomChamp, "");
     }
@@ -58,7 +61,7 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
     case champ.type === "text" && estAffiche:
       return (
         <ChampFormAideSaisie typeChamp={champ.type}>
-          <ChampsTexte
+          <ChampTexte
             name={nomChamp}
             type="text"
             libelle={champ.libelle}
@@ -69,7 +72,7 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
     case champ.type === "boolean" && estAffiche:
       return (
         <ChampFormAideSaisie typeChamp={champ.type}>
-          <ChampsCaseACocher
+          <ChampCaseACocher
             name={nomChamp}
             libelle={champ.libelle}
             disabled={estLectureSeule}
@@ -99,12 +102,24 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
           />
         </ChampFormAideSaisie>
       );
+
+    case champ.type === "nomSecable" && estAffiche:
+      return (
+        <ChampFormAideSaisie typeChamp={champ.type}>
+          <ChampsNomSecable
+            nom={{ name: `${nomChamp}.nom`, libelle: champ.libelle }}
+            secable={{ name: `${nomChamp}.secable`, libelle: "Nom sécable" }}
+            nomPartie1={{ name: `${nomChamp}.nomPartie1`, libelle: "Nom 1ère partie" }}
+            nomPartie2={{ name: `${nomChamp}.nomPartie2`, libelle: "Nom 2nde partie" }}
+          />
+        </ChampFormAideSaisie>
+      );
     case champ.type === "annee" && estAffiche:
     case champ.type === "int" && estAffiche:
     case champ.type === "crpcen" && estAffiche:
       return (
         <ChampFormAideSaisie typeChamp={champ.type}>
-          <ChampsTexte
+          <ChampTexte
             name={nomChamp}
             libelle={champ.libelle}
             maxLength={champ.type === "crpcen" ? 5 : undefined}
