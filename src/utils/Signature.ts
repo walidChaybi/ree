@@ -53,6 +53,7 @@ export const CODES_ERREUR_BLOQUANTS = [
   "FONC_8",
   "FONC_12",
   "FONC_15",
+  "FONC_16",
   "TECH_1",
   "TECH_2",
   "TECH_3",
