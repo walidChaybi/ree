@@ -27,7 +27,7 @@ import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFl
 import { IRoute } from "@util/route/IRoute";
 import PageMesRequetesConsulaires from "../../pages/requetesConsulaire/PageMesRequetesConsulaires";
 import PageRequetesServiceConsulaire from "../../pages/requetesConsulaire/PageRequetesServiceConsulaire";
-import { SaisirRCTCPage } from "../../pages/requetesConsulaire/contenu/SaisirRCTCPage";
+import PageSaisieCourrierTranscription from "../../pages/requetesConsulaire/PageSaisieCourrierTranscription";
 import PageEditionRequeteDelivrance from "../../pages/requetesDelivrance/PageEditionRequeteDelivrance";
 import PageEditionRequeteMiseAJour from "../../pages/requetesMiseAJour/PageEditionRequeteMiseAJour";
 import {
@@ -423,7 +423,7 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_MES_REQUETES_CREATION_SAISIR_RCTC,
-    component: SaisirRCTCPage,
+    component: PageSaisieCourrierTranscription,
     droits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: "Saisir une requête de transcription"
   },
@@ -484,7 +484,7 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_MES_REQUETES_CONSULAIRE_MODIFIER_RCTC_ID,
-    component: SaisirRCTCPage,
+    component: PageSaisieCourrierTranscription,
     droits: [Droit.SAISIR_REQUETE],
     auMoinsUnDesDroits: [Droit.CREER_ACTE_DRESSE, Droit.CREER_ACTE_ETABLI, Droit.CREER_ACTE_TRANSCRIT],
     libelle: "Modifier une requête de transcription"
@@ -502,7 +502,7 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_REQUETES_CREATION_SERVICE_SAISIR_RCTC,
-    component: SaisirRCTCPage,
+    component: PageSaisieCourrierTranscription,
     droits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: `Saisir une requête de transcription`
   },
@@ -574,7 +574,7 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_MES_REQUETES_CONSULAIRE_SAISIR_RCTC,
-    component: SaisirRCTCPage,
+    component: PageSaisieCourrierTranscription,
     droits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: `Saisir une requête de transcription`
   },

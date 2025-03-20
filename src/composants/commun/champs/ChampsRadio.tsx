@@ -1,21 +1,34 @@
 import { Option } from "@util/Type";
 import { ErrorMessage, useField } from "formik";
 import { useMemo } from "react";
+import { CHAMP_EN_ERREUR } from "../formulaire/ScrollVersErreur";
 
 type TChampsRadioProps = React.InputHTMLAttributes<HTMLInputElement> & {
   libelle?: string;
   options: Option[];
   desactive?: boolean;
+  estObligatoire?: boolean;
+  apresChangement?: (valeur: string) => void;
 };
 
-const ChampsRadio: React.FC<TChampsRadioProps> = ({ name, libelle, className, options, desactive, ...props }) => {
+const ChampsRadio: React.FC<TChampsRadioProps> = ({
+  name,
+  libelle,
+  className,
+  options,
+  desactive,
+  estObligatoire,
+  apresChangement,
+  ...props
+}) => {
   const [field, meta] = useField(name as string);
   const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
 
   return (
-    <fieldset className={`m-0 flex w-full flex-col border-0 p-0 text-start ${className ?? ""}`.trim()}>
+    <fieldset className={`m-0 flex w-full flex-col border-0 p-0 text-start ${className ?? ""}${enErreur ? CHAMP_EN_ERREUR : ""}`.trim()}>
       <legend className={`m-0 mb-1 block w-fit text-start text-base transition-colors ${enErreur ? "text-rouge" : "text-bleu-sombre"}`}>
         {libelle}
+        {estObligatoire && <span className="ml-1 text-rouge">*</span>}
       </legend>
       <div className="mt-2.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start">
         {...options.map((option: Option) => {
@@ -26,9 +39,13 @@ const ChampsRadio: React.FC<TChampsRadioProps> = ({ name, libelle, className, op
                 type="radio"
                 className={`m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
                 {...(() => {
-                  const { value, ...propsFormik } = field;
+                  const { value, onChange, ...propsFormik } = field;
                   return propsFormik;
                 })()}
+                onChange={event => {
+                  apresChangement?.(event.target.value);
+                  field.onChange(event);
+                }}
                 disabled={desactive}
                 value={option.cle}
                 checked={option.cle === field.value}

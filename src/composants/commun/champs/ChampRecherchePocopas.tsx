@@ -3,6 +3,7 @@ import { Autocomplete } from "@mui/material";
 import { ErrorMessage, useField } from "formik";
 import { useMemo } from "react";
 import { useDelai } from "../../../hooks/utilitaires/UseDelai";
+import { CHAMP_EN_ERREUR } from "../formulaire/ScrollVersErreur";
 
 interface IChampRecherchePocopasProps {
   name: string;
@@ -10,6 +11,7 @@ interface IChampRecherchePocopasProps {
   optionsRecherchePocopa: IRecherchePocopa;
   delai?: number;
   disabled?: boolean;
+  estObligatoire?: boolean;
 }
 
 interface IRecherchePocopa {
@@ -18,32 +20,41 @@ interface IRecherchePocopa {
   estOuvert?: boolean;
 }
 
-const ChampRecherchePocopas: React.FC<IChampRecherchePocopasProps> = ({ name, libelle, optionsRecherchePocopa, delai, disabled }) => {
+const ChampRecherchePocopas: React.FC<IChampRecherchePocopasProps> = ({
+  name,
+  libelle,
+  optionsRecherchePocopa,
+  delai,
+  disabled,
+  estObligatoire
+}) => {
   const [valeurChampAutocomplete, setValeurChampAutocomplete] = useDelai("", delai);
-
-  const [field, meta, helpers] = useField(name as string);
+  const [field, meta, helpers] = useField(name);
   const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
-
   const pocopas = useRecherchePocopa(
     valeurChampAutocomplete,
     optionsRecherchePocopa.familleRegistre,
     optionsRecherchePocopa.nombreResultatsMax,
     optionsRecherchePocopa.estOuvert
   );
-
-  const pocopaSelectionnee = useMemo(() => pocopas?.find(pocopa => pocopa === field.value) ?? null, [field.value]);
+  const optionsPocopas = useMemo(
+    () => [...(field.value && !pocopas?.includes(field.value) ? [field.value] : []), ...(pocopas ?? [])],
+    [pocopas]
+  );
+  const pocopaSelectionnee = useMemo(() => optionsPocopas?.find(pocopa => pocopa === field.value) ?? null, [field.value]);
 
   return (
-    <>
+    <div {...(enErreur ? { className: CHAMP_EN_ERREUR } : {})}>
       <label
         className={`m-0 mb-1 ml-1 block w-fit text-start transition-colors ${enErreur ? "text-rouge" : "text-bleu-sombre"}`}
-        htmlFor={name as string}
+        htmlFor={name}
       >
         {libelle}
+        {estObligatoire && <span className="ml-1 text-rouge">*</span>}
       </label>
       <Autocomplete
         id={name}
-        options={pocopas ?? []}
+        options={optionsPocopas}
         value={pocopaSelectionnee}
         onChange={(_, valeurSelectionne) => {
           helpers.setValue(valeurSelectionne ?? "");
@@ -95,7 +106,7 @@ const ChampRecherchePocopas: React.FC<IChampRecherchePocopasProps> = ({ name, li
           <ErrorMessage name={name} />
         </div>
       )}
-    </>
+    </div>
   );
 };
 

@@ -18,7 +18,7 @@ const ConteneurAccordeon: React.FC<React.PropsWithChildren<IConteneurAccordeonPr
   return (
     <div className="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl">
       {nonControllable ? (
-        <div className="text-blanc-rece relative m-0 bg-bleu px-4 py-2 font-noto-sans-ui">{titre}</div>
+        <div className="relative m-0 bg-bleu px-4 py-2 font-noto-sans-ui text-blanc">{titre}</div>
       ) : (
         <button
           className="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"

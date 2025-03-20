@@ -1,6 +1,7 @@
 import { Option } from "@util/Type";
 import { ErrorMessage, useField } from "formik";
 import { useMemo } from "react";
+import { CHAMP_EN_ERREUR } from "../formulaire/ScrollVersErreur";
 
 type TChampListeDeroulanteProps = React.InputHTMLAttributes<HTMLSelectElement> & {
   libelle: string;
@@ -26,7 +27,7 @@ const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({
   const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
 
   return (
-    <div className={`text-start ${className ?? ""}`.trim()}>
+    <div className={`text-start ${className ?? ""}${enErreur ? CHAMP_EN_ERREUR : ""}`.trim()}>
       <label
         className={`m-0 mb-1 ml-1 block w-fit text-start transition-colors ${enErreur ? "text-rouge" : "text-bleu-sombre"}`}
         htmlFor={name as string}

@@ -1,4 +1,7 @@
+import { INationalitesForm } from "@model/form/commun/NationalitesForm";
+import AddCircle from "@mui/icons-material/AddCircle";
 import Delete from "@mui/icons-material/Delete";
+import { useField } from "formik";
 import React from "react";
 import BoutonIcon from "../bouton/BoutonIcon";
 import ChampTexte from "./ChampTexte";
@@ -7,46 +10,99 @@ interface IPropsChampNationalite {
   nom: string;
   libelle: string;
   desactive?: boolean;
-  onSupprimer?: () => void;
-  afficherBoutonSupprimer?: boolean;
-  boutonSupprimerDesactive?: boolean;
 }
 
-const ChampNationalite: React.FC<IPropsChampNationalite> = ({
-  nom,
-  libelle,
-  desactive = false,
-  onSupprimer,
-  afficherBoutonSupprimer = false,
-  boutonSupprimerDesactive = false
-}) => {
+const ChampNationalite: React.FC<IPropsChampNationalite> = ({ nom, libelle, desactive }) => {
+  const [champ, , helper] = useField<INationalitesForm>(nom);
+
   return (
-    <div className="flex items-end gap-4">
+    <div className="grid grid-cols-2 gap-4">
       <ChampTexte
-        name={nom}
-        libelle={libelle}
+        name={`${nom}.nationalite1`}
+        libelle={`${libelle}${champ.value.nationalitesAffichees > 1 ? " 1" : ""}`}
         optionFormatage="PREMIER_MAJUSCULE"
         disabled={desactive}
-        className="w-full"
-        boutonChamp={
-          afficherBoutonSupprimer
-            ? {
-                composant: (
-                  <BoutonIcon
-                    className="group absolute right-0 h-full rounded-l-none bg-transparent"
-                    type="button"
-                    title={"Supprimer cette nationalité"}
-                    onClick={onSupprimer}
-                    styleBouton="suppression"
-                    disabled={boutonSupprimerDesactive}
-                  >
-                    <Delete className="text-rouge group-hover:text-blanc" />
-                  </BoutonIcon>
-                )
-              }
-            : undefined
-        }
       />
+
+      <div className="flex items-end gap-4">
+        <BoutonIcon
+          type="button"
+          title="Ajouter une nationalité"
+          onClick={() =>
+            champ.value.nationalitesAffichees < 3 &&
+            helper.setValue({
+              ...champ.value,
+              nationalitesAffichees: champ.value.nationalitesAffichees + 1
+            })
+          }
+          disabled={champ.value.nationalitesAffichees >= 3}
+          styleBouton="principal"
+        >
+          <div className="flex items-center gap-4 px-2">
+            <AddCircle />
+            <span className="font-noto-sans-ui text-sm font-bold">{"Ajouter une nationalité"}</span>
+          </div>
+        </BoutonIcon>
+      </div>
+
+      {champ.value.nationalitesAffichees >= 2 && (
+        <ChampTexte
+          name={`${nom}.nationalite2`}
+          libelle={`${libelle} 2`}
+          optionFormatage="PREMIER_MAJUSCULE"
+          disabled={desactive}
+          boutonChamp={{
+            composant: (
+              <BoutonIcon
+                className="group absolute right-0 h-full rounded-l-none bg-transparent"
+                type="button"
+                title={"Supprimer cette nationalité"}
+                onClick={() => {
+                  helper.setValue({
+                    ...champ.value,
+                    nationalitesAffichees: champ.value.nationalitesAffichees - 1,
+                    nationalite2: champ.value.nationalite3,
+                    nationalite3: ""
+                  });
+                }}
+                styleBouton="suppression"
+                disabled={desactive}
+              >
+                <Delete className="text-rouge group-hover:text-blanc" />
+              </BoutonIcon>
+            )
+          }}
+        />
+      )}
+
+      {champ.value.nationalitesAffichees === 3 && (
+        <ChampTexte
+          name={`${nom}.nationalite3`}
+          libelle={`${libelle} 3`}
+          optionFormatage="PREMIER_MAJUSCULE"
+          disabled={desactive}
+          boutonChamp={{
+            composant: (
+              <BoutonIcon
+                className="group absolute right-0 h-full rounded-l-none bg-transparent"
+                type="button"
+                title={"Supprimer cette nationalité"}
+                onClick={() =>
+                  helper.setValue({
+                    ...champ.value,
+                    nationalitesAffichees: 2,
+                    nationalite3: ""
+                  })
+                }
+                styleBouton="suppression"
+                disabled={desactive}
+              >
+                <Delete className="text-rouge group-hover:text-blanc" />
+              </BoutonIcon>
+            )
+          }}
+        />
+      )}
     </div>
   );
 };

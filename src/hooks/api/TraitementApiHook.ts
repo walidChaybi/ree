@@ -29,7 +29,7 @@ const useTraitementApi = <TParam extends object | undefined, TReponseSucces>(tra
 
     setInformationsTraitement({
       statut: "EN_COURS",
-      parametres: appel?.parametres ?? null,
+      parametres: appel?.parametres as TParam,
       apresSucces: appel?.apresSucces ?? null,
       apresErreur: appel?.apresErreur ?? null,
       finalement: appel?.finalement ?? null
@@ -37,8 +37,8 @@ const useTraitementApi = <TParam extends object | undefined, TReponseSucces>(tra
   };
 
   useEffect(() => {
-    if (informationsTraitement.statut === "EN_COURS") {
-      lancer(informationsTraitement.parametres ?? undefined);
+    if (informationsTraitement.statut === "EN_COURS" && informationsTraitement.parametres !== null) {
+      lancer(informationsTraitement.parametres);
 
       return;
     }

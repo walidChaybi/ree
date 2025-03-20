@@ -1,4 +1,4 @@
-import { IDateForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
+import { IDateForm } from "@model/form/commun/DateForm";
 import { INationalite } from "./INationalite";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
 import { ITitulaireRequete } from "./ITitulaireRequete";

@@ -1,6 +1,6 @@
 import { Identite } from "@model/etatcivil/enum/Identite";
 import { ConditionChamp, EOperateurCondition } from "@model/form/commun/ConditionChamp";
-import { IDateForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
+import { IDateForm } from "@model/form/commun/DateForm";
 import { ILocalisation, IParent } from "@model/requete/IParents";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { ITitulaireRequeteConsulaire } from "@model/requete/ITitulaireRequeteConsulaire";
@@ -29,7 +29,7 @@ export interface ISaisieProjetActeForm {
   mentions: IBlocMentions;
   formuleFinale: IBlocFormuleFinale;
   acteEtranger: IBlocActeEtranger;
-  autresEnonciations?: String;
+  autresEnonciations?: string;
 }
 
 export interface IBlocActeEtranger {

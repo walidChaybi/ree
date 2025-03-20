@@ -25,7 +25,7 @@ export const PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET = "apercurequetetran
 export const PATH_EDITION = "Edition";
 export const PATH_SAISIR_RDCSC = "saisircertificatsituation";
 export const PATH_SAISIR_RDC = "saisirextraitcopie";
-export const PATH_SAISIR_RCTC = "saisirrequetetranscription";
+export const PATH_SAISIR_RCTC = "saisir-requete-transcription";
 export const PATH_SAISIR_RDLFC = "saisirlivretfamille";
 export const PATH_MODIFIER_RDC = "modifierextraitcopie";
 export const PATH_MODIFIER_RDCSC = "modifiercertificatsituation";
@@ -179,7 +179,7 @@ export const URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_P
 
 export const URL_MES_REQUETES_CONSULAIRE = `${URL_BASE}/mes-requetes-consulaire`;
 export const URL_MES_REQUETES_CONSULAIRE_SAISIR_RCTC = `${URL_MES_REQUETES_CONSULAIRE}/${PATH_SAISIR_RCTC}`;
-export const URL_MES_REQUETES_CONSULAIRE_MODIFIER_RCTC_ID = `${URL_MES_REQUETES_CONSULAIRE}/${PATH_MODIFIER_RCTC}/${ID}`;
+export const URL_MES_REQUETES_CONSULAIRE_MODIFIER_RCTC_ID = `${URL_MES_REQUETES_CONSULAIRE}/modifier-requete-transcription/:idRequete`;
 
 export const URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID = `${URL_MES_REQUETES_CONSULAIRE}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE}/${ID}`;
 export const URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID = `${URL_MES_REQUETES_CONSULAIRE}/${PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET}/${ID}`;

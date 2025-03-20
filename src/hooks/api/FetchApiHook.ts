@@ -13,11 +13,19 @@ const useFetchApi = <
 ) => {
   const [enAttenteDeReponseApi, setEnAttenteDeReponseApi] = useState(false);
 
-  const appelApi = ({ parametres, apresSucces, apresErreur, finalement }: TAppelApi<TUri, TBody, TQuery, TResultat>) => {
-    if (enAttenteDeReponseApi) {
+  const appelApi = ({
+    parametres,
+    apresSucces,
+    apresErreur,
+    finalement,
+    forcerAppelsMultiples
+  }: TAppelApi<TUri, TBody, TQuery, TResultat>) => {
+    if (enAttenteDeReponseApi && !forcerAppelsMultiples) {
       return;
     }
-    setEnAttenteDeReponseApi(true);
+
+    !forcerAppelsMultiples && setEnAttenteDeReponseApi(true);
+
     GestionnaireApi.getInstance(configuration.api.nom, configuration.api.version)
       .fetch({
         methode: configuration.methode,
@@ -34,7 +42,7 @@ const useFetchApi = <
       })
       .finally(() => {
         finalement && finalement();
-        setEnAttenteDeReponseApi(false);
+        !forcerAppelsMultiples && setEnAttenteDeReponseApi(false);
       });
   };
 

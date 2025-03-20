@@ -14,6 +14,7 @@ export interface IChampRechercheProps {
   filterOptions?: (options: Option[], state: FilterOptionsState<Option>) => Option[];
   optionsValidesNonAffichees?: Option[];
   noOptionsText?: string;
+  seulementCle?: boolean;
 }
 
 const ChampRecherche: React.FC<IChampRechercheProps> = ({
@@ -25,6 +26,7 @@ const ChampRecherche: React.FC<IChampRechercheProps> = ({
   filterOptions,
   optionsValidesNonAffichees,
   noOptionsText,
+  seulementCle,
   ...props
 }) => {
   const [field, meta, helpers] = useField(name);
@@ -35,7 +37,7 @@ const ChampRecherche: React.FC<IChampRechercheProps> = ({
         id={name}
         data-testid={name}
         options={[OPTION_VIDE, ...options]}
-        value={field.value}
+        value={seulementCle ? options.find(option => option.cle === field.value) : field.value}
         renderInput={params => (
           <div ref={params.InputProps.ref}>
             <input
@@ -66,7 +68,8 @@ const ChampRecherche: React.FC<IChampRechercheProps> = ({
         }
         onChange={(_, newValue) => {
           onChange?.(newValue ?? undefined);
-          helpers.setValue(newValue);
+          const cle = newValue?.cle ?? "";
+          helpers.setValue(seulementCle ? cle : newValue);
         }}
         onInputChange={(_, newInputValue) => {
           onInput?.(newInputValue || null);
@@ -79,9 +82,9 @@ const ChampRecherche: React.FC<IChampRechercheProps> = ({
         noOptionsText={noOptionsText ?? "Aucun résultat"}
         getOptionLabel={(option: Option) => option.libelle || ""}
         isOptionEqualToValue={(option: Option, value) => {
-          return (
-            option.cle === value.cle || optionsValidesNonAffichees?.some(optionNonAffichee => optionNonAffichee.cle === value.cle) || false
-          );
+          const cle = seulementCle ? value : value.cle;
+
+          return option.cle === cle || optionsValidesNonAffichees?.some(optionNonAffichee => optionNonAffichee.cle === cle) || false;
         }}
       />
       {meta.touched && meta.error ? <div>{meta.error}</div> : null}

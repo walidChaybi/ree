@@ -1,5 +1,6 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import { Formik } from "formik";
+import { act, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { Form, Formik } from "formik";
 import { describe, expect, test } from "vitest";
 import ChampsPrenoms from "../../../../composants/commun/champs/ChampsPrenoms";
 
@@ -7,58 +8,38 @@ describe("Test du composant Champs prénoms", () => {
   const afficherFormulaire = (prenoms: Object, chemin: boolean) =>
     render(
       <Formik
-        initialValues={chemin ? { test: { prenoms: prenoms } } : prenoms}
+        initialValues={chemin ? { test: { prenoms: { prenomsAffiches: Object.keys(prenoms).length ?? 1, ...prenoms } } } : prenoms}
         onSubmit={() => {}}
       >
-        <ChampsPrenoms
-          cheminPrenoms={chemin ? "test.prenoms" : ""}
-          prefixePrenom={"prenom"}
-        />
+        <Form>
+          <ChampsPrenoms
+            cheminPrenoms={chemin ? "test.prenoms" : ""}
+            prefixePrenom={"prenom"}
+          />
+        </Form>
       </Formik>
     );
 
-  test("Affichage du formulaire prénoms sans chemin", () => {
-    afficherFormulaire({ prenom1: "John" }, false);
-
-    expect(screen.getByText("Prénom")).toBeDefined();
-    expect(screen.getByDisplayValue("John")).toBeDefined();
-
-    fireEvent.click(screen.getAllByTitle("Ajouter un prénom")[0]);
-
-    expect(screen.getByText("Prénom 1")).toBeDefined();
-    expect(screen.getByText("Prénom 2")).toBeDefined();
-
-    fireEvent.click(screen.getAllByTitle("Ajouter un prénom")[0]);
-
-    expect(screen.getByText("Prénom 1")).toBeDefined();
-    expect(screen.getByText("Prénom 2")).toBeDefined();
-    expect(screen.getByText("Prénom 3")).toBeDefined();
-
-    fireEvent.click(screen.getAllByTitle("Supprimer ce prénom")[0]);
-
-    expect(screen.getByText("Prénom 1")).toBeDefined();
-    expect(screen.getByText("Prénom 2")).toBeDefined();
-    expect(screen.queryByText("Prénom 3")).toBeNull();
-  });
-
-  test("Affichage du formulaire prénoms avec chemin", () => {
+  test("Affichage du formulaire prénoms", async () => {
     afficherFormulaire({ prenom1: "John" }, true);
 
+    const boutonAjout = screen.getByTitle("Ajouter un prénom");
+
     expect(screen.getByText("Prénom")).toBeDefined();
     expect(screen.getByDisplayValue("John")).toBeDefined();
 
-    fireEvent.click(screen.getAllByTitle("Ajouter un prénom")[0]);
+    await act(() => userEvent.click(boutonAjout));
 
     expect(screen.getByText("Prénom 1")).toBeDefined();
     expect(screen.getByText("Prénom 2")).toBeDefined();
 
-    fireEvent.click(screen.getAllByTitle("Ajouter un prénom")[0]);
+    await act(() => userEvent.click(boutonAjout));
 
     expect(screen.getByText("Prénom 1")).toBeDefined();
     expect(screen.getByText("Prénom 2")).toBeDefined();
     expect(screen.getByText("Prénom 3")).toBeDefined();
 
-    fireEvent.click(screen.getAllByTitle("Supprimer ce prénom")[1]);
+    await act(() => userEvent.click(screen.getAllByTitle("Supprimer ce prénom")[1]));
 
     expect(screen.getByText("Prénom 1")).toBeDefined();
     expect(screen.getByText("Prénom 2")).toBeDefined();

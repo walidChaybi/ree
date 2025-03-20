@@ -1,5 +1,6 @@
 import { useField } from "formik";
 import { useEffect, useMemo, useRef } from "react";
+import { CHAMP_EN_ERREUR } from "../formulaire/ScrollVersErreur";
 
 type TChampDateProps = React.InputHTMLAttributes<HTMLInputElement> & {
   libelle: string;
@@ -67,7 +68,7 @@ const ChampDate: React.FC<TChampDateProps> = ({
   }, [metaHeure?.value]);
 
   return (
-    <div>
+    <div {...(erreurs.length ? { className: CHAMP_EN_ERREUR } : {})}>
       <label
         className={`m-0 mb-1 ml-1 block w-fit text-start transition-colors ${erreurs.length ? "text-rouge" : "text-bleu-sombre"}`}
         htmlFor={`${name}.jour`}

@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { IDateForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
+import { IDateForm } from "@model/form/commun/DateForm";
 import { DEUX, formatNom, formatPrenoms, UN } from "@util/Utils";
 import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";

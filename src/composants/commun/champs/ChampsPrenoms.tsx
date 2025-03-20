@@ -1,8 +1,8 @@
-import { ObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
+import { IPrenomsForm } from "@model/form/commun/PrenomsForm";
 import AddCircle from "@mui/icons-material/AddCircle";
 import Delete from "@mui/icons-material/Delete";
-import { DEUX, QUINZE, UN } from "@util/Utils";
-import { FormikValues, useFormikContext } from "formik";
+import { UN } from "@util/Utils";
+import { useField } from "formik";
 import { useMemo } from "react";
 import BoutonIcon from "../bouton/BoutonIcon";
 import ChampTexte from "./ChampTexte";
@@ -12,56 +12,26 @@ interface IChampsPrenomsProps {
   prefixePrenom: string;
 }
 
-const MAX_PRENOMS = QUINZE;
-
-const compterPrenoms = (valeurs: FormikValues, cheminPrenoms: string) => {
-  const objetPrenoms = cheminPrenoms
-    .split(".")
-    .filter(partieChemin => partieChemin)
-    .reduce((valeur: FormikValues, partieChemin: string) => valeur[partieChemin] ?? {}, valeurs);
-  return Object.values(objetPrenoms).filter(prenom => typeof prenom === "string").length;
-};
-
 const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({ cheminPrenoms, prefixePrenom }) => {
-  const { values, setFieldValue } = useFormikContext<FormikValues>();
-  const nombrePrenoms = useMemo(() => compterPrenoms(values, cheminPrenoms), [values, cheminPrenoms]);
-
-  const ajouterChampsPrenom = () => {
-    if (nombrePrenoms >= MAX_PRENOMS) return;
-    setFieldValue(`${cheminPrenoms ? `${cheminPrenoms}.` : ""}${prefixePrenom}${nombrePrenoms + UN}`, "");
-  };
-
-  const getPrenom = (index: number) => {
-    return ObjetFormulaire.recupererValeur({
-      valeurs: values,
-      cleAttribut: `${cheminPrenoms ? `${cheminPrenoms}.` : ""}${prefixePrenom}${index}`
-    });
-  };
-
-  const supprimerPrenom = (indexASupprimer: number) => {
-    for (let i = indexASupprimer; i < nombrePrenoms; i++) {
-      const prochainPrenom = getPrenom(i + 1);
-      setFieldValue(`${cheminPrenoms ? `${cheminPrenoms}.` : ""}${prefixePrenom}${i}`, prochainPrenom);
-    }
-    setFieldValue(`${cheminPrenoms ? `${cheminPrenoms}.` : ""}${prefixePrenom}${nombrePrenoms}`, undefined);
-  };
+  const prefixeNomChamp = useMemo(() => (cheminPrenoms ? `${cheminPrenoms}.` : "").concat(prefixePrenom), [cheminPrenoms, prefixePrenom]);
+  const [champ, , helper] = useField<IPrenomsForm>(cheminPrenoms);
 
   return (
     <div className="grid grid-cols-2 gap-4">
-      <div className="flex items-end gap-4">
-        <ChampTexte
-          name={`${cheminPrenoms ? `${cheminPrenoms}.` : ""}${prefixePrenom}1`}
-          libelle={`Prénom ${nombrePrenoms > UN ? "1" : ""}`.trim()}
-          type="text"
-          className="w-full"
-        />
-      </div>
-      <div className="flex items-end gap-4">
+      <ChampTexte
+        name={`${prefixeNomChamp}1`}
+        libelle={`Prénom ${champ.value.prenomsAffiches > UN ? "1" : ""}`.trim()}
+        type="text"
+        className="w-full"
+      />
+      <div className="pt-[1.6rem]">
         <BoutonIcon
           type="button"
           title="Ajouter un prénom"
-          onClick={() => ajouterChampsPrenom()}
-          disabled={nombrePrenoms >= MAX_PRENOMS}
+          onClick={() =>
+            champ.value.prenomsAffiches < 15 && helper.setValue({ ...champ.value, prenomsAffiches: champ.value.prenomsAffiches + 1 })
+          }
+          disabled={champ.value.prenomsAffiches >= 15}
           styleBouton="principal"
         >
           <div className="flex items-center gap-4 px-2">
@@ -70,14 +40,15 @@ const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({ cheminPrenoms, prefixePr
           </div>
         </BoutonIcon>
       </div>
-      {Array.from({ length: nombrePrenoms - UN }).map((_, index) => (
+
+      {Array.from({ length: (champ.value.prenomsAffiches ?? 1) - 1 }, (_, index) => index + 2).map(indexChamp => (
         <div
-          key={`prenom${index}`}
+          key={`${prefixeNomChamp}${indexChamp}`}
           className="flex items-end gap-4"
         >
           <ChampTexte
-            name={`${cheminPrenoms ? `${cheminPrenoms}.` : ""}${prefixePrenom}${index + DEUX}`}
-            libelle={`Prénom ${index + DEUX}`}
+            name={`${prefixeNomChamp}${indexChamp}`}
+            libelle={`Prénom ${indexChamp}`}
             className="w-full"
             boutonChamp={{
               composant: (
@@ -85,7 +56,19 @@ const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({ cheminPrenoms, prefixePr
                   className="group absolute right-0 h-full rounded-l-none bg-transparent"
                   type="button"
                   title="Supprimer ce prénom"
-                  onClick={() => supprimerPrenom(index + DEUX)}
+                  onClick={() =>
+                    helper.setValue({
+                      ...champ.value,
+                      prenomsAffiches: champ.value.prenomsAffiches - 1,
+                      ...Array.from({ length: 16 - indexChamp }, (_, index) => index + indexChamp).reduce(
+                        (prenoms, indexPrenom) => ({
+                          ...prenoms,
+                          [`prenom${indexPrenom}`]: champ.value[`prenom${indexPrenom + 1}` as keyof IPrenomsForm] ?? ""
+                        }),
+                        {}
+                      )
+                    })
+                  }
                   styleBouton="suppression"
                 >
                   <Delete className="text-rouge group-hover:text-blanc" />

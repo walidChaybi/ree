@@ -12,7 +12,7 @@ export interface IErreurTraitement {
 
 export type TTraitementApi<TParamTraitment extends object | undefined = undefined, TReponseSucces = unknown> = {
   Lancer: (terminerTraitement: () => void) => {
-    lancer: (parametres?: TParamTraitment) => void;
+    lancer: (parametres: TParamTraitment) => void;
     erreurTraitement: IErreurTraitement;
     reponseTraitement: TReponseSucces;
   };

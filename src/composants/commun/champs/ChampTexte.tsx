@@ -1,6 +1,7 @@
 import { CENT } from "@util/Utils";
 import { ErrorMessage, useField } from "formik";
 import { useCallback, useMemo } from "react";
+import { CHAMP_EN_ERREUR } from "../formulaire/ScrollVersErreur";
 
 type TFormatChampsTexte = "PREMIER_MAJUSCULE" | "NOMS_PROPRES" | "MAJUSCULES" | "SANS_ESPACES";
 
@@ -80,7 +81,7 @@ const ChampTexte: React.FC<TChampsTexteProps> = ({
   const { onBlur, onChange, ...fieldProps } = field;
 
   return (
-    <div className={`flex w-full flex-col text-start ${className ?? ""}`.trim()}>
+    <div className={`flex w-full flex-col text-start ${className ?? ""} ${enErreur ? CHAMP_EN_ERREUR : ""}`.trim()}>
       <label
         className={`m-0 mb-1 ml-1 block w-fit text-start transition-colors ${enErreur ? "text-rouge" : "text-bleu-sombre"}`}
         htmlFor={name as string}

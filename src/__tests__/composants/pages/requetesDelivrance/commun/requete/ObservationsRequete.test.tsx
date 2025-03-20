@@ -2,7 +2,7 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import ObservationsRequete from "../../../../../../composants/pages/requetesDelivrance/commun/requete/ObservationsRequete";
 
 import { IOfficier } from "@model/agent/IOfficier";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import request from "superagent";
 import { afterAll, describe, expect, test } from "vitest";
@@ -89,7 +89,7 @@ describe("ObservationsRequete", () => {
     });
 
     const MESSAGE = "salut";
-    await waitFor(() => userEvent.type(screen.getByPlaceholderText("Description"), MESSAGE));
+    await act(() => userEvent.type(screen.getByPlaceholderText("Description"), MESSAGE));
 
     fireEvent.click(screen.getByText("Valider"));
 

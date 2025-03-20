@@ -1,90 +1,48 @@
-import {
-  ADRESSE,
-  ADRESSE_COURRIEL,
-  ARRONDISSEMENT_NAISSANCE,
-  AUTRE_ADRESSE_COURRIEL,
-  AUTRE_NUMERO_TELEPHONE,
-  CODE_POSTAL,
-  COMMUNE,
-  COMPLEMENT_DESTINATAIRE,
-  COMPLEMENT_POINT_GEO,
-  DATE_MARIAGE,
-  DATE_NAISSANCE,
-  DATE_RECONNAISSANCE,
-  DEPARTEMENT_NAISSANCE,
-  DEPARTEMENT_RECONNAISSANCE,
-  IDENTIFIANT,
-  LIEN_REQUERANT,
-  LIEU_ACTE_RECONNAISSANCE,
-  LIEU_DE_MARIAGE,
-  LIEU_DE_NAISSANCE,
-  LIEU_DIT,
-  NAISSANCE,
-  NATIONALITES,
-  NATIONALITE_1,
-  NATIONALITE_2,
-  NATIONALITE_3,
-  NATURE_ACTE,
-  NOM,
-  NOM_ACTE_ETRANGER,
-  NOM_SOUHAITE_ACTE_FR,
-  NOM_USAGE,
-  NUMERO_TELEPHONE,
-  PARENTS,
-  PARENTS_MARIES,
-  PAYS,
-  PAYS_DU_MARIAGE,
-  PAYS_NAISSANCE,
-  PAYS_RECONNAISSANCE,
-  PIECES_JOINTES,
-  PRENOM,
-  PRENOMS,
-  RECONNAISSANCE,
-  REGION_ETAT_RECONNAISSANCE,
-  REGION_NAISSANCE,
-  REGISTRE,
-  REQUERANT,
-  REQUETE,
-  SEXE,
-  TITULAIRE,
-  TITULAIRE_RECONNU,
-  VILLE_DE_MARIAGE,
-  VILLE_NAISSANCE,
-  VILLE_RECONNAISSANCE,
-  VOIE
-} from "@composant/formulaire/ConstantesNomsForm";
+/* v8 ignore start A TESTER 03/25 */
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { ConditionChamp, EOperateurCondition } from "@model/form/commun/ConditionChamp";
+import { DateForm, IDateForm } from "@model/form/commun/DateForm";
+import { INationalitesForm, NationalitesForm } from "@model/form/commun/NationalitesForm";
+import { IPrenomsForm, PrenomsForm } from "@model/form/commun/PrenomsForm";
+import { IRequeteConsulaire } from "@model/requete/IRequeteConsulaire";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
+import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { PieceJointe } from "@util/FileUtils";
-import { Option } from "@util/Type";
 import SchemaValidation from "../../../../utils/SchemaValidation";
 
-/* v8 ignore start à terminer semaine 10/03/25 */
-export interface IDateForm {
-  jour: string;
-  mois: string;
-  annee: string;
+export interface ISaisieRequeteRCTCDto {
+  type: "CREATION";
+  sousType: "RCTC";
+  canal: "COURRIER";
+  provenance: "COURRIER";
+  villeRegistre: string;
+  natureActeTranscrit: string;
+  lienRequerant: { typeLienRequerant?: string };
+  titulaires: {
+    id?: string;
+    prenoms: { prenom: string; numeroOrdre: number }[];
+    sexe: "MASCULIN" | "FEMININ";
+    jourNaissance?: number;
+    moisNaissance?: number;
+    anneeNaissance?: number;
+    villeNaissance?: string;
+    paysNaissance?: string;
+    arrondissementNaissance?: string;
+    departementNaissance?: string;
+  };
 }
 
-const DateForm = {
-  valeursDefauts: (): IDateForm => ({
-    jour: "",
-    mois: "",
-    annee: ""
-  })
-};
-
-interface IParentFormV2 {
+export interface IParentFormRCTC {
   identifiant: string;
   nom: string;
-  prenoms: { [cle: string]: string };
+  prenoms: IPrenomsForm;
   sexe: string;
   dateNaissance: IDateForm;
   naissance: {
@@ -95,56 +53,64 @@ interface IParentFormV2 {
     etatProvince: string;
     pays: string;
   };
-  nationalites: {
-    nationalite1: string;
-    nationalite2: string;
-    nationalite3: string;
-  };
+  nationalites: INationalitesForm;
 }
 
-const ParentForm = {
-  valeursDefauts: (): IParentFormV2 => ({
-    identifiant: "",
-    nom: "",
-    prenoms: {},
-    sexe: "",
-    dateNaissance: DateForm.valeursDefauts(),
-    naissance: {
-      typeLieu: "",
-      ville: "",
-      arrondissement: "",
-      departement: "",
-      etatProvince: "",
-      pays: ""
-    },
-    nationalites: {
-      nationalite1: "",
-      nationalite2: "",
-      nationalite3: ""
-    }
-  }),
+const ParentRCTCForm = {
+  valeursDefauts: (parent: ITitulaireRequeteCreation | null): IParentFormRCTC => {
+    const donneesLieuNaissance = (() => {
+      const estFrance = parent?.paysNaissance === "France";
+      const regionDepartement = parent?.regionNaissance ?? "";
 
-  valeursVersDto: (valeurs: IParentFormV2, position: 2 | 3) => ({
+      return {
+        region: estFrance ? "" : regionDepartement,
+        departement: estFrance ? regionDepartement : ""
+      };
+    })();
+
+    return {
+      identifiant: parent?.id ?? "",
+      nom: parent?.nomNaissance ?? "",
+      prenoms: PrenomsForm.valeursDefauts(parent?.prenoms),
+      sexe: parent?.sexe ?? "",
+      dateNaissance: DateForm.valeursDefauts(
+        parent
+          ? {
+              jour: `${parent.jourNaissance ?? ""}`,
+              mois: `${parent.moisNaissance ?? ""}`,
+              annee: `${parent.anneeNaissance ?? ""}`
+            }
+          : null
+      ),
+      naissance: {
+        typeLieu: "",
+        ville: parent?.villeNaissance ?? "",
+        arrondissement: parent?.arrondissementNaissance ?? "",
+        departement: donneesLieuNaissance.departement,
+        etatProvince: donneesLieuNaissance.region,
+        pays: parent?.paysNaissance ?? ""
+      },
+      nationalites: NationalitesForm.valeursDefauts()
+    };
+  },
+
+  valeursVersDto: (parent: IParentFormRCTC, position: 2 | 3) => ({
+    id: parent.identifiant || undefined,
     typeObjetTitulaire: TypeObjetTitulaire.FAMILLE,
     qualite: QualiteFamille.getKey(QualiteFamille.PARENT),
     position: position,
-    nomNaissance: valeurs.nom || undefined,
-    prenoms: valeurs.prenoms,
-    sexe: valeurs.sexe || undefined,
-    jourNaissance: valeurs.dateNaissance.jour || undefined,
-    moisNaissance: valeurs.dateNaissance.mois || undefined,
-    anneeNaissance: valeurs.dateNaissance.annee || undefined,
-    villeNaissance: valeurs.naissance.ville || undefined,
-    paysNaissance: valeurs.naissance.pays || undefined,
-    regionNaissance: valeurs.naissance.etatProvince || undefined,
+    nomNaissance: parent.nom || undefined,
+    prenoms: PrenomsForm.versDto(parent.prenoms),
+    sexe: parent.sexe || undefined,
+    jourNaissance: parent.dateNaissance.jour || undefined,
+    moisNaissance: parent.dateNaissance.mois || undefined,
+    anneeNaissance: parent.dateNaissance.annee || undefined,
+    villeNaissance: parent.naissance.ville || undefined,
+    arrondissementNaissance: parent.naissance.arrondissement || undefined,
+    paysNaissance: parent.naissance.pays || undefined,
+    regionNaissance: parent.naissance.etatProvince || parent.naissance.departement || undefined,
     nationalite: "INCONNUE",
-    nationalites: Object.values(valeurs.nationalites).reduce((nationalitesParent: { nationalite: string }[], nationalite: string) => {
-      if (nationalite) {
-        nationalitesParent.push({ nationalite: nationalite });
-      }
-
-      return nationalitesParent;
-    }, [])
+    nationalites: NationalitesForm.versDto(parent.nationalites)
   }),
 
   schemaValidation: (estParent1: boolean) => {
@@ -152,7 +118,7 @@ const ParentForm = {
 
     return SchemaValidation.objet({
       nom: SchemaValidation.texte({ obligatoire: false }),
-      prenoms: SchemaValidation.prenoms(`parents.${cleParent}.prenoms`),
+      prenoms: SchemaValidation.prenoms(`parents.${cleParent}.prenoms.prenom`),
       sexe: SchemaValidation.texte({
         obligatoire: ConditionChamp.depuisTableau([
           {
@@ -186,7 +152,7 @@ const ParentForm = {
   }
 };
 
-interface ISaisieRequeteRCTCForm {
+export interface ISaisieRequeteRCTCForm {
   requete: {
     natureActe: string;
     lienRequerant: string;
@@ -196,20 +162,22 @@ interface ISaisieRequeteRCTCForm {
     identifiant: string;
     nomActeEtranger: string;
     nomSouhaite: string;
-    prenoms: { [cle: string]: string };
+    prenoms: IPrenomsForm;
     sexe: string;
-    dateNaissance: IDateForm;
     naissance: {
+      date: IDateForm;
       ville: string;
       etatProvince: string;
       pays: string;
     };
   };
   parents: {
-    parent1: IParentFormV2;
-    parent2: IParentFormV2;
+    parent1: IParentFormRCTC;
+    avecParent2: boolean;
+    parent2: IParentFormRCTC;
     mariage: {
-      identifiant: string;
+      idMariageParent1?: string;
+      idMariageParent2?: string;
       parentsMaries: string;
       date: IDateForm;
       lieu: string;
@@ -228,6 +196,7 @@ interface ISaisieRequeteRCTCForm {
     };
   };
   requerant: {
+    id: string;
     nom: string;
     nomUsage: string;
     prenom: string;
@@ -246,75 +215,158 @@ interface ISaisieRequeteRCTCForm {
     autreNumeroTelephone: string;
   };
   pieceJointe: PieceJointe[];
+  service: {
+    avecService: boolean;
+    idService: string;
+  };
 }
 
-const SaisieRequeteRCTCForm = {
-  valeurDefaut: (): ISaisieRequeteRCTCForm => ({
-    requete: {
-      natureActe: "",
-      lienRequerant: "",
-      registre: ""
-    },
-    titulaire: {
-      identifiant: "",
-      nomActeEtranger: "",
-      nomSouhaite: "",
-      prenoms: {},
-      sexe: "",
-      dateNaissance: DateForm.valeursDefauts(),
-      naissance: {
-        ville: "",
-        etatProvince: "",
-        pays: ""
-      }
-    },
-    parents: {
-      parent1: ParentForm.valeursDefauts(),
-      parent2: ParentForm.valeursDefauts(),
-      mariage: {
-        identifiant: "",
-        parentsMaries: "",
-        date: DateForm.valeursDefauts(),
-        lieu: "",
-        ville: "",
-        pays: ""
-      },
-      reconnaissance: {
-        identifiant: "",
-        titulaireReconnu: "",
-        date: DateForm.valeursDefauts(),
-        lieu: "",
-        ville: "",
-        region: "",
-        departement: "",
-        pays: ""
-      }
-    },
-    requerant: {
-      nom: "",
-      nomUsage: "",
-      prenom: "",
-      adresse: {
-        voie: "",
-        lieuDit: "",
-        complementDestinataire: "",
-        complementPointGeo: "",
-        codePostal: "",
-        commune: "",
-        pays: "",
-        adresseCourriel: "",
-        numeroTelephone: ""
-      },
-      autreAdresseCourriel: "",
-      autreNumeroTelephone: ""
-    },
-    pieceJointe: []
-  }),
+export const SaisieRequeteRCTCForm = {
+  valeursDefauts: (requete: IRequeteConsulaire | null): ISaisieRequeteRCTCForm => {
+    const titulaire = requete?.titulaires[0] ?? null;
+    const parent1 = requete?.titulaires[1] ?? null;
+    const parent2 = requete?.titulaires[2] ?? null;
+    const reconnaissance = titulaire?.evenementUnions?.find(evenement => evenement.type === NatureActe.getKey(NatureActe.RECONNAISSANCE));
+    const mariageParent1 = parent1?.evenementUnions?.find(evenement => evenement.type === NatureActe.getKey(NatureActe.MARIAGE));
+    const mariageParent2 = parent2?.evenementUnions?.find(evenement => evenement.type === NatureActe.getKey(NatureActe.MARIAGE));
+    const donneesLieuReconnaissance = (() => {
+      const lieu = (() => {
+        switch (mariageParent1?.pays) {
+          case "France":
+            return "FRANCE";
+          case undefined:
+            return "";
+          default:
+            return "ETRANGER";
+        }
+      })();
+      const regionDepartement = mariageParent1?.region ?? "";
 
-  valeursVersDto: (valeurs: ISaisieRequeteRCTCForm) => {
+      return {
+        lieu: lieu,
+        ville: reconnaissance?.ville ?? "",
+        departement: lieu === "FRANCE" ? regionDepartement : "",
+        region: lieu === "FRANCE" ? "" : regionDepartement,
+        pays: reconnaissance?.pays ?? ""
+      };
+    })();
+
+    return {
+      requete: {
+        natureActe: (requete?.natureActeTranscrit ?? "") as string,
+        lienRequerant: (requete?.lienRequerant.typeLienRequerant ?? "") as string,
+        registre: requete?.villeRegistre ?? ""
+      },
+      titulaire: {
+        identifiant: titulaire?.id ?? "",
+        nomActeEtranger: titulaire?.nomNaissance ?? "",
+        nomSouhaite: titulaire?.nomSouhaite ?? "",
+        prenoms: PrenomsForm.valeursDefauts(titulaire?.prenoms),
+        sexe: titulaire?.sexe ?? "",
+        naissance: {
+          date: DateForm.valeursDefauts(
+            titulaire
+              ? {
+                  jour: `${titulaire.jourNaissance ?? ""}`,
+                  mois: `${titulaire.moisNaissance ?? ""}`,
+                  annee: `${titulaire.anneeNaissance ?? ""}`
+                }
+              : null
+          ),
+          ville: titulaire?.villeNaissance ?? "",
+          etatProvince: titulaire?.regionNaissance ?? "",
+          pays: titulaire?.paysNaissance ?? ""
+        }
+      },
+      parents: {
+        parent1: ParentRCTCForm.valeursDefauts(parent1),
+        avecParent2: Boolean(parent2),
+        parent2: ParentRCTCForm.valeursDefauts(parent2),
+        mariage: {
+          idMariageParent1: mariageParent1?.id,
+          idMariageParent2: mariageParent2?.id,
+          parentsMaries: mariageParent1 ? "oui" : "",
+          date: DateForm.valeursDefauts(
+            mariageParent1
+              ? {
+                  jour: `${mariageParent1.jour ?? ""}`,
+                  mois: `${mariageParent1.mois ?? ""}`,
+                  annee: `${mariageParent1.annee ?? ""}`
+                }
+              : null
+          ),
+          lieu: (() => {
+            switch (mariageParent1?.pays) {
+              case "France":
+                return "FRANCE";
+              case undefined:
+                return "";
+              default:
+                return "ETRANGER";
+            }
+          })(),
+          ville: mariageParent1?.ville ?? "",
+          pays: mariageParent1?.pays ?? ""
+        },
+        reconnaissance: {
+          identifiant: reconnaissance?.id ?? "",
+          titulaireReconnu: reconnaissance ? "oui" : "",
+          date: DateForm.valeursDefauts(
+            reconnaissance
+              ? {
+                  jour: `${reconnaissance.jour ?? ""}`,
+                  mois: `${reconnaissance.mois ?? ""}`,
+                  annee: `${reconnaissance.annee ?? ""}`
+                }
+              : null
+          ),
+          ...donneesLieuReconnaissance
+        }
+      },
+      requerant: {
+        id: requete?.requerant.id ?? "",
+        nom: requete?.requerant.nomFamille ?? "",
+        nomUsage: requete?.requerant.nomUsage ?? "",
+        prenom: requete?.requerant.prenom ?? "",
+        adresse: {
+          complementDestinataire: requete?.requerant.adresse?.ligne2 ?? "",
+          complementPointGeo: requete?.requerant.adresse?.ligne3 ?? "",
+          voie: requete?.requerant.adresse?.ligne4 ?? "",
+          lieuDit: requete?.requerant.adresse?.ligne5 ?? "",
+          codePostal: requete?.requerant.adresse?.codePostal ?? "",
+          commune: requete?.requerant.adresse?.ville ?? "",
+          pays: requete?.requerant.adresse?.pays ?? "",
+          adresseCourriel: requete?.requerant.courriel ?? "",
+          numeroTelephone: requete?.requerant.telephone ?? ""
+        },
+        autreAdresseCourriel: requete?.requerant.courrielAutreContact ?? "",
+        autreNumeroTelephone: requete?.requerant.telephoneAutreContact ?? ""
+      },
+      pieceJointe:
+        requete?.piecesJustificatives?.map<PieceJointe>(piece => ({
+          type: (() => {
+            const type = TypePieceJustificative.depuisId(piece.typePieceJustificative as unknown as string);
+
+            return type ? { cle: type.id, libelle: type.libelle } : undefined;
+          })(),
+          base64File: {
+            fileName: piece.nom,
+            base64String: "",
+            taille: piece.taille,
+            conteneurSwift: piece.conteneurSwift,
+            identifiantSwift: piece.referenceSwift
+          }
+        })) ?? [],
+      service: {
+        avecService: false,
+        idService: ""
+      }
+    };
+  },
+
+  versDto: (valeurs: ISaisieRequeteRCTCForm) => {
     const mariageParents = valeurs.parents.mariage.parentsMaries
       ? {
-          id: valeurs.parents.mariage.identifiant || undefined,
           type: NatureActe.getKey(NatureActe.MARIAGE),
           jour: valeurs.parents.mariage.date.jour || undefined,
           mois: valeurs.parents.mariage.date.mois || undefined,
@@ -334,16 +386,16 @@ const SaisieRequeteRCTCForm = {
       lienRequerant: { typeLienRequerant: valeurs.requete.lienRequerant || undefined },
       titulaires: [
         {
-          id: valeurs.titulaire.identifiant,
+          id: valeurs.titulaire.identifiant || undefined,
           typeObjetTitulaire: TypeObjetTitulaire.TITULAIRE_ACTE_TRANSCRIT_DRESSE,
           position: 1,
           nomNaissance: valeurs.titulaire.nomActeEtranger || "SNP",
           nomSouhaite: valeurs.titulaire.nomSouhaite || undefined,
-          prenoms: valeurs.titulaire.prenoms,
+          prenoms: PrenomsForm.versDto(valeurs.titulaire.prenoms),
           sexe: valeurs.titulaire.sexe || undefined,
-          jourNaissance: valeurs.titulaire.dateNaissance.jour || undefined,
-          moisNaissance: valeurs.titulaire.dateNaissance.mois || undefined,
-          anneeNaissance: valeurs.titulaire.dateNaissance.annee,
+          jourNaissance: valeurs.titulaire.naissance.date.jour || undefined,
+          moisNaissance: valeurs.titulaire.naissance.date.mois || undefined,
+          anneeNaissance: valeurs.titulaire.naissance.date.annee,
           villeNaissance: valeurs.titulaire.naissance.ville || undefined,
           paysNaissance: valeurs.titulaire.naissance.pays || undefined,
           regionNaissance: valeurs.titulaire.naissance.etatProvince || undefined,
@@ -363,24 +415,25 @@ const SaisieRequeteRCTCForm = {
               ]
             : []
         },
-        ...(valeurs.parents.parent1.nom || valeurs.parents.parent1.prenoms
+        ...(valeurs.parents.parent1.nom || valeurs.parents.parent1.prenoms.prenom1
           ? [
               {
-                ...ParentForm.valeursVersDto(valeurs.parents.parent1, 2),
-                evenementUnions: mariageParents ? [mariageParents] : []
+                ...ParentRCTCForm.valeursVersDto(valeurs.parents.parent1, 2),
+                evenementUnions: mariageParents ? [{ id: valeurs.parents.mariage.idMariageParent1, ...mariageParents }] : []
               }
             ]
           : []),
-        ...(valeurs.parents.parent2.nom || valeurs.parents.parent2.prenoms
+        ...(valeurs.parents.avecParent2 && (valeurs.parents.parent2.nom || valeurs.parents.parent2.prenoms.prenom1)
           ? [
               {
-                ...ParentForm.valeursVersDto(valeurs.parents.parent1, 3),
-                evenementUnions: mariageParents ? [mariageParents] : []
+                ...ParentRCTCForm.valeursVersDto(valeurs.parents.parent2, 3),
+                evenementUnions: mariageParents ? [{ id: valeurs.parents.mariage.idMariageParent2, ...mariageParents }] : []
               }
             ]
           : [])
       ],
       requerant: {
+        id: valeurs.requerant.id || undefined,
         nomFamille: valeurs.requerant.nom || undefined,
         detailQualiteParticulier: {
           nomUsage: valeurs.requerant.nomUsage || undefined
@@ -413,20 +466,20 @@ const SaisieRequeteRCTCForm = {
     titulaire: SchemaValidation.objet({
       nomActeEtranger: SchemaValidation.texte({ obligatoire: true }),
       nomSouhaite: SchemaValidation.texte({ obligatoire: false }),
-      prenoms: SchemaValidation.prenoms("titulaire.prenoms"),
+      prenoms: SchemaValidation.prenoms("titulaire.prenoms.prenom"),
       sexe: SchemaValidation.texte({ obligatoire: true }),
-      dateNaissance: SchemaValidation.dateIncomplete({ obligatoire: true }),
       naissance: SchemaValidation.objet({
+        date: SchemaValidation.dateIncomplete({ obligatoire: true }),
         ville: SchemaValidation.texte({ obligatoire: false }),
         etatProvince: SchemaValidation.texte({ obligatoire: false }),
         pays: SchemaValidation.texte({ obligatoire: false })
       })
     }),
     parents: SchemaValidation.objet({
-      parent1: ParentForm.schemaValidation(true),
-      parent2: ParentForm.schemaValidation(false),
+      parent1: ParentRCTCForm.schemaValidation(true),
+      parent2: ParentRCTCForm.schemaValidation(false),
       mariage: SchemaValidation.objet({
-        parentsMaries: SchemaValidation.texte({ obligatoire: true }),
+        parentsMaries: SchemaValidation.texte({ obligatoire: false }),
         date: SchemaValidation.dateIncomplete({ obligatoire: false }),
         lieu: SchemaValidation.texte({ obligatoire: false }),
         ville: SchemaValidation.texte({ obligatoire: false }),
@@ -459,120 +512,14 @@ const SaisieRequeteRCTCForm = {
       }),
       autreAdresseCourriel: SchemaValidation.texte({ obligatoire: false }),
       autreNumeroTelephone: SchemaValidation.texte({ obligatoire: false })
+    }),
+    service: SchemaValidation.objet({
+      idService: SchemaValidation.texte({
+        obligatoire: ConditionChamp.depuisTableau([
+          { idChampReference: "service.avecService", operateur: EOperateurCondition.EGAL, valeurs: ["true"] }
+        ])
+      })
     })
   })
 };
 /* v8 ignore end */
-
-export interface IParentForm {
-  [IDENTIFIANT]: string;
-  [NOM]: string;
-  [PRENOMS]: IPrenomsForm;
-  [SEXE]: string;
-  [DATE_NAISSANCE]: IDateForm;
-  [NAISSANCE]: IEvenementNaissanceForm;
-  [NATIONALITES]: INationalitesForm;
-}
-
-export interface ISaisieRequeteRCTC {
-  [REQUETE]: IRequeteForm;
-  [TITULAIRE]: IIdentiteTitulaireForm;
-  [PARENTS]: {
-    parent1: IParentForm;
-    parent2: IParentForm;
-    mariage: IEvenementMariageParentsForm;
-    [RECONNAISSANCE]: IEvenementReconnaissanceTitulaireForm;
-  };
-  [REQUERANT]: IRequerantForm;
-  [PIECES_JOINTES]?: PieceJointe[];
-}
-
-export interface IRequeteForm {
-  [NATURE_ACTE]: string;
-  [LIEN_REQUERANT]: string;
-  [REGISTRE]: Option;
-}
-
-export interface IIdentiteTitulaireForm {
-  [IDENTIFIANT]: string;
-  [NOM_ACTE_ETRANGER]: string;
-  [NOM_SOUHAITE_ACTE_FR]: string;
-  [PRENOMS]: IPrenomsForm;
-  [SEXE]: string;
-  [DATE_NAISSANCE]: IDateForm;
-  [NAISSANCE]: IEvenementNaissanceCommunForm;
-}
-
-export type IEvenementNaissanceCommunForm = Omit<IEvenementNaissanceForm, "lieuNaissance" | "departementNaissance">;
-
-export interface INomsForm {
-  [NOM_ACTE_ETRANGER]: string;
-  [NOM_SOUHAITE_ACTE_FR]: string;
-}
-
-export interface IPrenomsForm {
-  [key: string]: string;
-}
-
-export interface IEvenementNaissanceForm {
-  [VILLE_NAISSANCE]: string;
-  [REGION_NAISSANCE]: string;
-  [PAYS_NAISSANCE]: string;
-  [ARRONDISSEMENT_NAISSANCE]: string;
-  [LIEU_DE_NAISSANCE]: string;
-  [DEPARTEMENT_NAISSANCE]: string;
-  ville?: string;
-  typeLieu?: string;
-  pays?: string;
-  arrondissement?: string;
-  departement?: string;
-  etatProvince?: string;
-  adresse?: string;
-}
-
-export interface INationalitesForm {
-  [NATIONALITE_1]: string;
-  [NATIONALITE_2]: string;
-  [NATIONALITE_3]: string;
-}
-
-export interface IEvenementMariageParentsForm {
-  [IDENTIFIANT]: string;
-  [PARENTS_MARIES]: string;
-  [DATE_MARIAGE]: IDateForm;
-  [LIEU_DE_MARIAGE]: string;
-  [VILLE_DE_MARIAGE]: string;
-  [PAYS_DU_MARIAGE]: string;
-}
-
-export interface IEvenementReconnaissanceTitulaireForm {
-  [IDENTIFIANT]: string;
-  [TITULAIRE_RECONNU]: string;
-  [DATE_RECONNAISSANCE]: IDateForm;
-  [LIEU_ACTE_RECONNAISSANCE]: string;
-  [VILLE_RECONNAISSANCE]: string;
-  [REGION_ETAT_RECONNAISSANCE]: string;
-  [DEPARTEMENT_RECONNAISSANCE]: string;
-  [PAYS_RECONNAISSANCE]: string;
-}
-
-export interface IRequerantForm {
-  [NOM]: string;
-  [NOM_USAGE]: string;
-  [PRENOM]: string;
-  [AUTRE_ADRESSE_COURRIEL]: string;
-  [AUTRE_NUMERO_TELEPHONE]: string;
-  [ADRESSE]: IAdresseForm;
-}
-
-export interface IAdresseForm {
-  [VOIE]: string;
-  [LIEU_DIT]: string;
-  [COMPLEMENT_DESTINATAIRE]: string;
-  [COMPLEMENT_POINT_GEO]: string;
-  [CODE_POSTAL]: string;
-  [COMMUNE]: string;
-  [PAYS]: string;
-  [ADRESSE_COURRIEL]: string;
-  [NUMERO_TELEPHONE]: string;
-}

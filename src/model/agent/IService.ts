@@ -3,7 +3,7 @@ import IServiceDto from "../../dto/etatcivil/agent/IServiceDto";
 import { IHierarchieService } from "./IHierarchieService";
 import { ETypeService, TypeService } from "./enum/ETypeService";
 
-const CODE_SERVICE_ETABLISSEMENT = "Etablissement";
+const CODE_SERVICE_ETABLISSEMENT = "ETA";
 
 export interface IService {
   idService: string;
@@ -22,13 +22,11 @@ export const Service = {
     libelleService: serviceDto.libelleService ?? "",
     type: TypeService.depuisString(serviceDto.type ?? ""),
     estDansScec: Boolean(serviceDto.estDansScec),
-    hierarchieService:
-      (serviceDto.hierarchieService as IHierarchieService[] | undefined) ?? [],
+    hierarchieService: (serviceDto.hierarchieService as IHierarchieService[] | undefined) ?? [],
     utilisateur: serviceDto.utilisateur
   }),
 
-  trouverEtablissement: (listeServices: IService[]) =>
-    listeServices.find(service => service.code === CODE_SERVICE_ETABLISSEMENT),
+  trouverEtablissement: (listeServices: IService[]) => listeServices.find(service => service.code === CODE_SERVICE_ETABLISSEMENT),
 
   commeOptions: (services?: IService[]): Option[] =>
     services?.map(service => ({
@@ -37,6 +35,5 @@ export const Service = {
     })) ?? [],
 
   libelleDepuisId: (idService: string, services: IService[]): string | null =>
-    services.find(service => service.idService === idService)?.libelleService ??
-    null
+    services.find(service => service.idService === idService)?.libelleService ?? null
 } as const;

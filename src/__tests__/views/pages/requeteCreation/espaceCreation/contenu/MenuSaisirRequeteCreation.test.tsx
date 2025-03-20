@@ -10,7 +10,7 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test, vi } from "vitest";
-import { SaisirRCTCPage } from "../../../../../../pages/requetesConsulaire/contenu/SaisirRCTCPage";
+import PageSaisieCourrierTranscription from "../../../../../../pages/requetesConsulaire/PageSaisieCourrierTranscription";
 import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 
 window.alert = vi.fn();
@@ -24,7 +24,7 @@ describe.skip("MenuSaisirRequeteCreation - ", () => {
         },
         {
           path: URL_MES_REQUETES_CREATION_SAISIR_RCTC,
-          element: <SaisirRCTCPage />
+          element: <PageSaisieCourrierTranscription />
         }
       ],
       [URL_MES_REQUETES_CREATION]
@@ -62,7 +62,7 @@ describe.skip("MenuSaisirRequeteCreation - ", () => {
         },
         {
           path: URL_REQUETES_CREATION_SERVICE_SAISIR_RCTC,
-          element: <SaisirRCTCPage />
+          element: <PageSaisieCourrierTranscription />
         }
       ],
       [URL_REQUETES_CREATION_SERVICE]

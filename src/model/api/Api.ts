@@ -84,6 +84,7 @@ export type TAppelApi<
   apresSucces?: (data: TResultat, headers: THeader) => void;
   apresErreur?: (erreurs: TErreurApi[], statut?: number) => void;
   finalement?: () => void;
+  forcerAppelsMultiples?: boolean;
 };
 
 export type TParametres<TUri extends TBaseUri, TBody extends object | undefined, TQuery extends object | undefined> = {
