@@ -8,7 +8,7 @@ import { IProvenanceNatali } from "./IProvenanceNatali";
 import { IProvenanceServicePublic } from "./IProvenanceServicePublic";
 import { IRequete } from "./IRequete";
 import { ITitulaireRequeteCreation } from "./ITitulaireRequeteCreation";
-import { NatureActeTranscription } from "./NatureActeTranscription";
+import { ENatureActeTranscrit } from "./NatureActeTranscription";
 import { IPieceJustificativeCreation } from "./pieceJointe/IPieceJustificativeCreation";
 
 interface LienRequerant {
@@ -38,7 +38,7 @@ export interface IRequeteCreationEtablissement extends IRequete {
   nature?: string;
   campagne?: string;
   numeroDossierMetier?: string;
-  natureActeTranscrit: NatureActeTranscription;
+  natureActeTranscrit: ENatureActeTranscrit;
   personnesSauvegardees: IPersonneSauvegardee[];
   villeRegistre: string;
 }
@@ -49,10 +49,6 @@ export const RequeteCreationEtablissement = {
     idDocumentPJ: string | undefined,
     idPieceJustificative: string
   ): IPieceJustificativeCreation | undefined {
-    return DocumentPJ.getPieceJustificative(
-      requete?.documentsPj,
-      idDocumentPJ,
-      idPieceJustificative
-    );
+    return DocumentPJ.getPieceJustificative(requete?.documentsPj, idDocumentPJ, idPieceJustificative);
   }
 };

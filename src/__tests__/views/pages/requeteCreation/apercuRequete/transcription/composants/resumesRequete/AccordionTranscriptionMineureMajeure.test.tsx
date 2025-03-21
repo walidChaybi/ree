@@ -3,7 +3,7 @@ import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { IStatutCourant } from "@model/requete/IStatutCourant";
-import { NatureActeTranscription } from "@model/requete/NatureActeTranscription";
+import { ENatureActeTranscrit, NatureActeTranscription } from "@model/requete/NatureActeTranscription";
 import { ResumeRequeteCreationTranscriptionNaissanceMineureMajeure } from "@pages/requeteCreation/apercuRequete/transcription/composants/ResumeReqCreationTranscriptionNaissanceMineureMajeure";
 import { AccordionTranscriptionMineureMajeure } from "@pages/requeteCreation/apercuRequete/transcription/composants/resumesRequete/AccordionTranscriptionMineureMajeure";
 import { act, render, screen } from "@testing-library/react";
@@ -13,7 +13,7 @@ import { describe, expect, test } from "vitest";
 const dateCreation = DateUtils.formatDateStringIso("1999-02-21");
 const numeroTeledossier = "B-2-8GRZFCS3P";
 const sousType = SousTypeCreation.getEnumFor("RCTC");
-const natureActe = NatureActeTranscription.getEnumFor("NAISSANCE_MAJEURE");
+const natureActe = ENatureActeTranscrit.NAISSANCE_MAJEUR;
 const statutCourant = {
   statut: StatutRequete.getEnumFor("PRISE_EN_CHARGE"),
   dateEffet: 444444
@@ -24,11 +24,7 @@ const numeroFonctionnel = "numeroFonctionnel";
 describe.skip("Test du composant accordion mineure majeure", () => {
   test("DOIT rendre le composant ResumeRequeteCreationTranscriptionNaissanceMineureMajeure", async () => {
     await act(async () => {
-      render(
-        <ResumeRequeteCreationTranscriptionNaissanceMineureMajeure
-          requete={{} as IRequeteCreation}
-        />
-      );
+      render(<ResumeRequeteCreationTranscriptionNaissanceMineureMajeure requete={{} as IRequeteCreation} />);
     });
   });
   test("DOIT rendre l'accordion fermé à l'arrivée sur la page", async () => {
@@ -62,9 +58,7 @@ describe.skip("Test du composant accordion mineure majeure", () => {
       );
     });
 
-    expect(
-      screen.getByText(`Transcription ${natureActe.libelle}`)
-    ).toBeDefined();
+    expect(screen.getByText(`Transcription ${NatureActeTranscription.getLibelle(natureActe, false)}`)).toBeDefined();
 
     expect(screen.getByText(numeroTeledossier)).toBeDefined();
     expect(screen.getByText(sousType.libelle)).toBeDefined();

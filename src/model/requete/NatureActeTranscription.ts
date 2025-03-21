@@ -1,76 +1,47 @@
-import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
+export type Option = { cle: string; libelle: string };
 
-export class NatureActeTranscription extends EnumWithLibelle {
-  public static readonly NAISSANCE_MAJEUR = new NatureActeTranscription(
-    "Naissance majeure"
-  );
-  public static readonly NAISSANCE_MINEUR = new NatureActeTranscription(
-    "Naissance mineure"
-  );
-  public static readonly MARIAGE_AVEC_CCAM = new NatureActeTranscription(
-    "Mariage avec ccam"
-  );
-  public static readonly MARIAGE_SANS_CCAM = new NatureActeTranscription(
-    "Mariage sans ccam"
-  );
-  public static readonly DECES = new NatureActeTranscription("Décès");
-  public static readonly RECONNAISSANCE = new NatureActeTranscription(
-    "Reconnaissance"
-  );
-  public static readonly ENFANT_SANS_VIE = new NatureActeTranscription(
-    "Enfant sans vie"
-  );
-
-  public static getEnumFor(str: string) {
-    return EnumWithLibelle.getEnumFor(str, NatureActeTranscription);
-  }
-
-  public static getEnumFromLibelle(str?: string): NatureActeTranscription {
-    return str
-      ? EnumWithLibelle.getEnumFromLibelle(NatureActeTranscription, str)
-      : undefined;
-  }
-
-  public static getKey(obj?: NatureActeTranscription) {
-    return EnumWithLibelle.getKey(NatureActeTranscription, obj);
-  }
-
-  public static estNaissanceMajeure(
-    natureActe?: NatureActeTranscription
-  ): boolean {
-    return natureActe === NatureActeTranscription.NAISSANCE_MAJEUR;
-  }
-
-  public static estNaissanceMineure(
-    natureActe?: NatureActeTranscription
-  ): boolean {
-    return natureActe === NatureActeTranscription.NAISSANCE_MINEUR;
-  }
-
-  public static estNaissanceMineureOuMajeure(
-    natureActe?: NatureActeTranscription
-  ): boolean {
-    return (
-      this.estNaissanceMineure(natureActe) ||
-      this.estNaissanceMajeure(natureActe)
-    );
-  }
-
-  public static estMariageAvecCCAM(
-    natureActe?: NatureActeTranscription
-  ): boolean {
-    return natureActe === NatureActeTranscription.MARIAGE_AVEC_CCAM;
-  }
-
-  public static estMariageSansCCAM(
-    natureActe?: NatureActeTranscription
-  ): boolean {
-    return natureActe === NatureActeTranscription.MARIAGE_SANS_CCAM;
-  }
-
-  public static estMariage(natureActe?: NatureActeTranscription): boolean {
-    return (
-      this.estMariageAvecCCAM(natureActe) || this.estMariageSansCCAM(natureActe)
-    );
-  }
+export enum ENatureActeTranscrit {
+  NAISSANCE_MINEUR = "NAISSANCE_MINEUR",
+  NAISSANCE_MAJEUR = "NAISSANCE_MAJEUR",
+  MARIAGE_AVEC_CCAM = "MARIAGE_AVEC_CCAM",
+  MARIAGE_SANS_CCAM = "MARIAGE_SANS_CCAM",
+  DECES = "DECES",
+  RECONNAISSANCE = "RECONNAISSANCE",
+  ENFANT_SANS_VIE = "ENFANT_SANS_VIE"
 }
+
+export const LIBELLES_ACTES: Record<ENatureActeTranscrit, { court: string; long: string }> = {
+  [ENatureActeTranscrit.NAISSANCE_MINEUR]: {
+    court: "Naissance mineur",
+    long: "Acte de naissance d'une personne mineure"
+  },
+  [ENatureActeTranscrit.NAISSANCE_MAJEUR]: {
+    court: "Naissance majeur",
+    long: "Acte de naissance d'une personne majeure"
+  },
+  [ENatureActeTranscrit.MARIAGE_AVEC_CCAM]: {
+    court: "Mariage avec CCAM",
+    long: "Acte de mariage avec CCAM"
+  },
+  [ENatureActeTranscrit.MARIAGE_SANS_CCAM]: {
+    court: "Mariage sans CCAM",
+    long: "Acte de mariage sans CCAM"
+  },
+  [ENatureActeTranscrit.DECES]: {
+    court: "Décès",
+    long: "Acte de décès"
+  },
+  [ENatureActeTranscrit.RECONNAISSANCE]: {
+    court: "Reconnaissance",
+    long: "Acte de reconnaissance"
+  },
+  [ENatureActeTranscrit.ENFANT_SANS_VIE]: {
+    court: "Enfant sans vie",
+    long: "Acte pour enfant sans vie"
+  }
+};
+
+export const NatureActeTranscription = {
+  getLibelle: (natureActe: ENatureActeTranscrit, court: boolean = false): string =>
+    LIBELLES_ACTES[natureActe]?.[court ? "court" : "long"] ?? ""
+} as const;

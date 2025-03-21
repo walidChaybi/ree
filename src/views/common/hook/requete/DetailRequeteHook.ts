@@ -20,7 +20,7 @@ import { IStatutCourant } from "@model/requete/IStatutCourant";
 import { ISuiviDossier } from "@model/requete/ISuiviDossier";
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { NatureActeTranscription } from "@model/requete/NatureActeTranscription";
+import { ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
 import { BesoinUsager } from "@model/requete/enum/BesoinUsager";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
@@ -355,7 +355,11 @@ function mapDocumentPJ(documents?: any): IDocumentPJ[] {
 
 export function mappingRequeteCreation(data: any, utilisateurs?: IUtilisateur[]): IRequeteCreation {
   const requete = mappingRequete(data, utilisateurs);
-  const natureActeTranscrit = NatureActeTranscription.getEnumFor(data.natureActeTranscrit);
+
+  const natureActeTranscrit = data.natureActeTranscrit;
+
+  const estRequeteMariage =
+    natureActeTranscrit === ENatureActeTranscrit.MARIAGE_AVEC_CCAM || natureActeTranscrit === ENatureActeTranscrit.MARIAGE_SANS_CCAM;
 
   return {
     ...data,
@@ -377,10 +381,7 @@ export function mappingRequeteCreation(data: any, utilisateurs?: IUtilisateur[])
     provenance: Provenance.getEnumFor(data.provenance),
     titulaires: mapTitulairesCreation(requete.titulaires),
     natureActeTranscrit,
-    personnesSauvegardees: mapPersonnesSauvegardees(
-      data.personnesSauvegardees || undefined,
-      NatureActeTranscription.estMariage(natureActeTranscrit)
-    )
+    personnesSauvegardees: mapPersonnesSauvegardees(data.personnesSauvegardees || undefined, estRequeteMariage)
   };
 }
 
