@@ -239,7 +239,7 @@ const SchemaValidation = {
         !date.jour && (Boolean(date.mois) || Boolean(date.annee))
           ? error.createError({
               path: `${error.path}.jour`,
-              message: messagesErreur.DATE_OBLIGATOIRE
+              message: messagesErreur.DATE_INVALIDE
             })
           : true
       )
@@ -247,7 +247,7 @@ const SchemaValidation = {
         !date.mois && (Boolean(date.jour) || Boolean(date.annee))
           ? error.createError({
               path: `${error.path}.mois`,
-              message: messagesErreur.DATE_OBLIGATOIRE
+              message: messagesErreur.DATE_INVALIDE
             })
           : true
       )
@@ -255,7 +255,7 @@ const SchemaValidation = {
         !date.annee && (Boolean(date.jour) || Boolean(date.mois))
           ? error.createError({
               path: `${error.path}.annee`,
-              message: messagesErreur.DATE_OBLIGATOIRE
+              message: messagesErreur.DATE_INVALIDE
             })
           : true
       );

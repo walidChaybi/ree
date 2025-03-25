@@ -43,7 +43,7 @@ const ChampDate: React.FC<TChampDateProps> = ({
   const refMinutes = useRef<HTMLInputElement | null>(null);
 
   const erreurs = useMemo(() => {
-    const dateEnCompletion = [champsDate.jour, champsDate.mois].includes(idElementActif() ?? "") || !metaAnnee.touched;
+    const dateEnCompletion = !metaAnnee.touched;
 
     const listeErreurs = dateEnCompletion
       ? []
@@ -52,7 +52,16 @@ const ChampDate: React.FC<TChampDateProps> = ({
         );
 
     return listeErreurs.includes(messagesErreur.DATE_INVALIDE) ? [messagesErreur.DATE_INVALIDE] : listeErreurs;
-  }, [champsDate.jour, champsDate.mois, metaJour.error, metaMois.error, metaAnnee.error, metaHeure.error, metaMinutes.error]);
+  }, [
+    champsDate.jour,
+    champsDate.mois,
+    metaJour.error,
+    metaMois.error,
+    metaAnnee.error,
+    metaAnnee.touched,
+    metaHeure.error,
+    metaMinutes.error
+  ]);
 
   useEffect(() => {
     metaJour?.value?.length === 2 && idElementActif() === champsDate.jour && refMois.current?.focus();
