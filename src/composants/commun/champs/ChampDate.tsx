@@ -1,5 +1,6 @@
 import { useField } from "formik";
 import { useEffect, useMemo, useRef } from "react";
+import { messagesErreur } from "../../../utils/SchemaValidation";
 import { CHAMP_EN_ERREUR } from "../formulaire/ScrollVersErreur";
 
 type TChampDateProps = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -44,12 +45,14 @@ const ChampDate: React.FC<TChampDateProps> = ({
   const erreurs = useMemo(() => {
     const dateEnCompletion = [champsDate.jour, champsDate.mois].includes(idElementActif() ?? "") || !metaAnnee.touched;
 
-    return dateEnCompletion
+    const listeErreurs = dateEnCompletion
       ? []
       : [metaJour.error ?? "", metaMois.error ?? "", metaAnnee.error ?? "", metaHeure.error ?? "", metaMinutes.error ?? ""].filter(erreur =>
           Boolean(erreur.length)
         );
-  }, [metaJour.error, metaMois.error, metaAnnee]);
+
+    return listeErreurs.includes(messagesErreur.DATE_INVALIDE) ? [messagesErreur.DATE_INVALIDE] : listeErreurs;
+  }, [champsDate.jour, champsDate.mois, metaJour.error, metaMois.error, metaAnnee.error, metaHeure.error, metaMinutes.error]);
 
   useEffect(() => {
     metaJour?.value?.length === 2 && idElementActif() === champsDate.jour && refMois.current?.focus();

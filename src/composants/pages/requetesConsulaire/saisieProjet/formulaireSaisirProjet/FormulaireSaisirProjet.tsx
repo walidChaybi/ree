@@ -192,7 +192,7 @@ const ActeEtrangerSchemaValidationFormulaire = SchemaValidation.objet({
   }),
   dateEnregistrement: SchemaValidation.dateIncomplete({
     obligatoire: false,
-    bloquerDateFutur: true
+    bloquerDateFuture: true
   }),
   lieuEnregistrement: LieuEnregistrementSchemaValidation,
   redacteur: SchemaValidation.texte({
