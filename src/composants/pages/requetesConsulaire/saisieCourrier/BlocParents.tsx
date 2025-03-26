@@ -15,7 +15,7 @@ import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/Conteneu
 import SeparateurSection from "../../../commun/conteneurs/formulaire/SeparateurSection";
 
 const ARRONDISSEMENTS: { [ville: string]: Option[] } = {
-  Paris: [
+  paris: [
     { cle: "", libelle: "" },
     ...Array.from({ length: 20 }, (_, index) => {
       const arrondissement = `${index + 1}`;
@@ -24,7 +24,7 @@ const ARRONDISSEMENTS: { [ville: string]: Option[] } = {
     }),
     { cle: "Centre", libelle: "Centre" }
   ],
-  Marseille: [
+  marseille: [
     { cle: "", libelle: "" },
     ...Array.from({ length: 18 }, (_, index) => {
       const arrondissement = `${index + 1}`;
@@ -32,7 +32,7 @@ const ARRONDISSEMENTS: { [ville: string]: Option[] } = {
       return { cle: arrondissement, libelle: arrondissement };
     })
   ],
-  Lyon: [
+  lyon: [
     { cle: "", libelle: "" },
     ...Array.from({ length: 9 }, (_, index) => {
       const arrondissement = `${index + 1}`;
@@ -104,14 +104,15 @@ const BlocParent: React.FC<{ valeursParent: IParentFormRCTC; indexParent: number
                 name={`${prefixParent}.naissance.ville`}
                 libelle="Ville de naissance"
               />
-              {["Paris", "Marseille", "Lyon"].includes(valeursParent.naissance.ville) && valeursParent.naissance.typeLieu === "FRANCE" && (
-                <ChampListeDeroulante
-                  name={`${prefixParent}.naissance.arrondissement`}
-                  libelle="Arrondissement de naissance"
-                  options={ARRONDISSEMENTS[valeursParent.naissance.ville] ?? []}
-                />
-              )}
-              {valeursParent.naissance.typeLieu === "FRANCE" && valeursParent.naissance.ville !== "Paris" && (
+              {["paris", "marseille", "lyon"].includes(valeursParent?.naissance?.ville?.toLowerCase()) &&
+                valeursParent.naissance.typeLieu === "FRANCE" && (
+                  <ChampListeDeroulante
+                    name={`${prefixParent}.naissance.arrondissement`}
+                    libelle="Arrondissement de naissance"
+                    options={ARRONDISSEMENTS[valeursParent.naissance.ville.toLowerCase()] ?? []}
+                  />
+                )}
+              {valeursParent.naissance.typeLieu === "FRANCE" && valeursParent?.naissance?.ville?.toLowerCase() !== "paris" && (
                 <ChampTexte
                   name={`${prefixParent}.naissance.departement`}
                   libelle="Département de naissance"

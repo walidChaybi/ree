@@ -1,6 +1,7 @@
 import { Identite } from "@model/etatcivil/enum/Identite";
 import { ConditionChamp, EOperateurCondition } from "@model/form/commun/ConditionChamp";
 import { IDateForm } from "@model/form/commun/DateForm";
+import { IPrenomsChemin, IPrenomsNumerotes } from "@model/form/commun/PrenomsForm";
 import { ILocalisation, IParent } from "@model/requete/IParents";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { ITitulaireRequeteConsulaire } from "@model/requete/ITitulaireRequeteConsulaire";
@@ -49,7 +50,7 @@ interface IBlocTitulaire {
   nomNaissance: string | null;
   nomOEC: string | null;
   nomSouhaite: string | null;
-  prenomsChemin: { [prenom: string]: string };
+  prenomsChemin?: IPrenomsChemin;
   sexe: string | null;
   dateNaissance: IDateForm | null;
   secable: boolean | null;
@@ -68,7 +69,7 @@ export interface IBLocParents {
 interface IBlocDeclarant {
   identite: string;
   nom: string | null;
-  prenomsChemin?: { [prenom: string]: string };
+  prenomsChemin?: IPrenomsChemin;
   sexe: string;
   age?: number | string;
   qualite?: string | null;
@@ -85,7 +86,7 @@ interface IBlocMentions {
 interface IBlocFormuleFinale {
   identiteDemandeur: string;
   nom?: string | null;
-  prenomsChemin?: { [prenom: string]: string };
+  prenomsChemin?: IPrenomsChemin;
   qualite?: string | null;
   piecesProduites: string;
   legalisationApostille?: string | null;
@@ -296,13 +297,13 @@ const initialiseTitulaires = (requete: ISaisieProjetActeProps): IBlocTitulaire =
     nomNaissance: requete.titulaire?.nomNaissance ?? "",
     nomOEC: requete.titulaire?.nomOEC ?? "",
     nomSouhaite: requete.titulaire?.nomSouhaite ?? "",
-    prenomsChemin: requete.titulaire?.prenoms?.reduce(
-      (prenoms: { [prenom: string]: string }, prenom: { numeroOrdre: any; prenom: string }) => {
+    prenomsChemin: {
+      nombrePrenomsAffiches: requete.titulaire?.prenoms?.length ?? 1,
+      ...requete.titulaire?.prenoms?.reduce((prenoms, prenom) => {
         prenoms[`prenom${prenom.numeroOrdre}`] = prenom.prenom;
         return prenoms;
-      },
-      { prenom1: "" }
-    ) ?? { prenom1: "" },
+      }, {} as IPrenomsChemin)
+    },
     sexe: requete.titulaire?.sexe ?? "",
     dateNaissance: {
       jour: requete.titulaire?.jourNaissance ? `${requete.titulaire?.jourNaissance}`.padStart(2, "0") : "",
@@ -326,13 +327,13 @@ const initialiseParents = (parent?: any): IParent => {
     sexe: parent?.sexe || "",
     nomNaissance: parent?.nomNaissance || "",
     nom: parent?.nomNaissance || "",
-    prenoms: parent?.prenoms?.reduce(
-      (prenoms: { [prenom: string]: string }, prenom: IPrenomOrdonnes) => {
+    prenoms: {
+      nombrePrenomsAffiches: parent?.prenoms?.length ?? 1,
+      ...parent?.prenoms?.reduce((prenoms: IPrenomsNumerotes, prenom: IPrenomOrdonnes) => {
         prenoms[`prenom${prenom.numeroOrdre}`] = prenom.prenom;
         return prenoms;
-      },
-      { prenom1: "" }
-    ) ?? { prenom1: "" },
+      }, {} as IPrenomsChemin)
+    },
     dateNaissance: {
       jour: parent?.jourNaissance ? `${parent?.jourNaissance}`.padStart(2, "0") : "",
       mois: parent?.moisNaissance ? `${parent?.moisNaissance}`.padStart(2, "0") : "",
@@ -366,7 +367,7 @@ const initialiseParents = (parent?: any): IParent => {
 const initialValueDeclarant: IBlocDeclarant = {
   identite: Identite.getKey(Identite.PERE),
   nom: "",
-  prenomsChemin: { prenom1: "" },
+  prenomsChemin: { prenom1: "", nombrePrenomsAffiches: 1 },
   sexe: "",
   age: "",
   qualite: "",
@@ -382,7 +383,7 @@ const initialValueMentions: IBlocMentions = {
 const initialValueFormuleFinale: IBlocFormuleFinale = {
   identiteDemandeur: Identite.getKey(Identite.PERE),
   nom: "",
-  prenomsChemin: { prenom1: "" },
+  prenomsChemin: { prenom1: "", nombrePrenomsAffiches: 1 },
   qualite: "",
   piecesProduites: "COPIE",
   autresPieces: "",

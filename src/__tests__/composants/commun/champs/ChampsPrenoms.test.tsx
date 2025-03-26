@@ -8,7 +8,7 @@ describe("Test du composant Champs prénoms", () => {
   const afficherFormulaire = (prenoms: Object, chemin: boolean) =>
     render(
       <Formik
-        initialValues={chemin ? { test: { prenoms: { prenomsAffiches: Object.keys(prenoms).length ?? 1, ...prenoms } } } : prenoms}
+        initialValues={chemin ? { test: { prenoms: { nombrePrenomsAffiches: Object.keys(prenoms).length ?? 1, ...prenoms } } } : prenoms}
         onSubmit={() => {}}
       >
         <Form>
@@ -23,7 +23,7 @@ describe("Test du composant Champs prénoms", () => {
   test("Affichage du formulaire prénoms", async () => {
     afficherFormulaire({ prenom1: "John" }, true);
 
-    const boutonAjout = screen.getByTitle("Ajouter un prénom");
+    const boutonAjout = screen.getByTitle(/Ajouter un prénom/i);
 
     expect(screen.getByText("Prénom")).toBeDefined();
     expect(screen.getByDisplayValue("John")).toBeDefined();

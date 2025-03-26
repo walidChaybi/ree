@@ -8,12 +8,16 @@ import { ISaisieRequeteRCTCForm, SaisieRequeteRCTCForm } from "@model/form/creat
 import { IRequeteConsulaire } from "@model/requete/IRequeteConsulaire";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { URL_MES_REQUETES_CONSULAIRE, URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID } from "@router/ReceUrls";
+import {
+  URL_MES_REQUETES_CONSULAIRE,
+  URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+  URL_REQUETES_CONSULAIRE_SERVICE
+} from "@router/ReceUrls";
 import { Option } from "@util/Type";
 import { PiecesJointes } from "@widget/formulaire/piecesJointes/PiecesJointes";
 import { Form, Formik } from "formik";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Bouton from "../../composants/commun/bouton/Bouton";
 import { ConteneurBoutonBasDePage } from "../../composants/commun/bouton/conteneurBoutonBasDePage/ConteneurBoutonBasDePage";
 import PageChargeur from "../../composants/commun/chargeurs/PageChargeur";
@@ -32,11 +36,23 @@ const PageSaisieCourrierTranscription: React.FC = () => {
   const { idRequete } = useParams();
   const { services } = useContext(RECEContextData);
   const navigate = useNavigate();
+  const location = useLocation();
   const [requeteModifiee, setRequeteModifiee] = useState<IRequeteConsulaire | false | null>(false);
   const [optionsServices, setOptionsServices] = useState<Option[] | null>(null);
   const { appelApi: appelGetDetailRequete } = useFetchApi(CONFIG_GET_DETAIL_REQUETE);
   const { appelApi: appelGetServicesFils } = useFetchApi(CONFIG_GET_TOUS_SERVICES_FILS);
   const { lancerTraitement: enregistrerRCTC, traitementEnCours: enregistrementEnCours } = useTraitementApi(TRAITEMENT_ENREGISTRER_RCTC);
+
+  const [depuisServiceTab, setDepuisServiceTab] = useState(false);
+
+  useEffect(() => {
+    const estDepuisOngletService = sessionStorage.getItem("depuis_onglet_requete_mon_service");
+    if (estDepuisOngletService !== null) {
+      setDepuisServiceTab(JSON.parse(estDepuisOngletService));
+    } else {
+      setDepuisServiceTab(false);
+    }
+  }, [location]);
 
   useEffect(() => {
     if (!idRequete) {
@@ -150,7 +166,7 @@ const PageSaisieCourrierTranscription: React.FC = () => {
                   <Bouton
                     type="button"
                     title={idRequete ? "Annuler" : "Abandonner"}
-                    onClick={() => (idRequete ? navigate(-1) : navigate(URL_MES_REQUETES_CONSULAIRE))}
+                    onClick={() => navigate(depuisServiceTab ? URL_REQUETES_CONSULAIRE_SERVICE : URL_MES_REQUETES_CONSULAIRE)}
                   >
                     {idRequete ? "Annuler" : "Abandonner"}
                   </Bouton>

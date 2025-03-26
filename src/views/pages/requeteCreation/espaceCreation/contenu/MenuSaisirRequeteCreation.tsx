@@ -3,7 +3,7 @@ import AddIcon from "@mui/icons-material/Add";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { PATH_SAISIR_RCTC, URL_MES_REQUETES_CONSULAIRE_SAISIR_RCTC } from "@router/ReceUrls";
+import { URL_MES_REQUETES_CONSULAIRE_SAISIR_RCTC } from "@router/ReceUrls";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import { useState, type FC, type MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
@@ -27,10 +27,12 @@ const MenuSaisirRequeteCreation: FC<IMenuSaisirRequeteCreationProps> = ({ indexT
     setMenu(null);
   };
 
-  const clickMenuItem = (nomRequete: string) => {
-    if (nomRequete === "RCTC") {
-      navigate(indexTabPanel === 1 ? URL_MES_REQUETES_CONSULAIRE_SAISIR_RCTC : PATH_SAISIR_RCTC);
-    }
+  const clickMenuItem = () => {
+    const estDepuisServiceTab = indexTabPanel === 1;
+
+    sessionStorage.setItem("depuis_onglet_requete_mon_service", JSON.stringify(estDepuisServiceTab));
+
+    navigate(URL_MES_REQUETES_CONSULAIRE_SAISIR_RCTC);
   };
 
   const listeRequeteCourrier = getListeDesRequetesCourrierCreation();
@@ -67,7 +69,7 @@ const MenuSaisirRequeteCreation: FC<IMenuSaisirRequeteCreationProps> = ({ indexT
         {listeRequeteCourrier.map((sousTypeCreation: SousTypeCreation) => {
           return (
             <MenuItem
-              onClick={() => clickMenuItem(sousTypeCreation.nom)}
+              onClick={() => clickMenuItem()}
               key={sousTypeCreation.nom}
             >
               <AddIcon />

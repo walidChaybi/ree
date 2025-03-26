@@ -6,11 +6,13 @@ import { INationalitesForm, NationalitesForm } from "@model/form/commun/National
 import { IPrenomsForm, PrenomsForm } from "@model/form/commun/PrenomsForm";
 import { IRequeteConsulaire } from "@model/requete/IRequeteConsulaire";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
+import { TypeLienRequerantCreation } from "@model/requete/enum/TypeLienRequerantCreation";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
@@ -253,8 +255,8 @@ export const SaisieRequeteRCTCForm = {
 
     return {
       requete: {
-        natureActe: (requete?.natureActeTranscrit ?? "") as string,
-        lienRequerant: (requete?.lienRequerant.typeLienRequerant ?? "") as string,
+        natureActe: ENatureActeTranscrit.NAISSANCE_MINEUR,
+        lienRequerant: TypeLienRequerantCreation.getKey(TypeLienRequerantCreation.PERE_MERE),
         registre: requete?.villeRegistre ?? ""
       },
       titulaire: {

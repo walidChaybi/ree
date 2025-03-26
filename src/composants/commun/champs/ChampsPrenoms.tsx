@@ -20,7 +20,7 @@ const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({ cheminPrenoms, prefixePr
     <div className="grid grid-cols-2 gap-4">
       <ChampTexte
         name={`${prefixeNomChamp}1`}
-        libelle={`Prénom ${champ.value.prenomsAffiches > UN ? "1" : ""}`.trim()}
+        libelle={`Prénom ${champ.value.nombrePrenomsAffiches > UN ? "1" : ""}`.trim()}
         type="text"
         className="w-full"
       />
@@ -29,9 +29,10 @@ const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({ cheminPrenoms, prefixePr
           type="button"
           title="Ajouter un prénom"
           onClick={() =>
-            champ.value.prenomsAffiches < 15 && helper.setValue({ ...champ.value, prenomsAffiches: champ.value.prenomsAffiches + 1 })
+            champ.value.nombrePrenomsAffiches < 15 &&
+            helper.setValue({ ...champ.value, nombrePrenomsAffiches: champ.value.nombrePrenomsAffiches + 1 })
           }
-          disabled={champ.value.prenomsAffiches >= 15}
+          disabled={champ.value.nombrePrenomsAffiches >= 15}
           styleBouton="principal"
         >
           <div className="flex items-center gap-4 px-2">
@@ -41,7 +42,7 @@ const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({ cheminPrenoms, prefixePr
         </BoutonIcon>
       </div>
 
-      {Array.from({ length: (champ.value.prenomsAffiches ?? 1) - 1 }, (_, index) => index + 2).map(indexChamp => (
+      {Array.from({ length: (champ.value.nombrePrenomsAffiches ?? 1) - 1 }, (_, index) => index + 2).map(indexChamp => (
         <div
           key={`${prefixeNomChamp}${indexChamp}`}
           className="flex items-end gap-4"
@@ -59,7 +60,7 @@ const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({ cheminPrenoms, prefixePr
                   onClick={() =>
                     helper.setValue({
                       ...champ.value,
-                      prenomsAffiches: champ.value.prenomsAffiches - 1,
+                      nombrePrenomsAffiches: champ.value.nombrePrenomsAffiches - 1,
                       ...Array.from({ length: 16 - indexChamp }, (_, index) => index + indexChamp).reduce(
                         (prenoms, indexPrenom) => ({
                           ...prenoms,

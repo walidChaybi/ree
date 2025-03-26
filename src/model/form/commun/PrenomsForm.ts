@@ -1,11 +1,22 @@
 /* v8 ignore start A TESTER 03/25 */
+
+type TPrenomNumerote = `prenom${number}`;
+
+export interface IPrenomsNumerotes {
+  [prenom: TPrenomNumerote]: string;
+}
+
+export interface IPrenomsChemin extends IPrenomsNumerotes {
+  nombrePrenomsAffiches: number;
+}
+
 interface IPrenomDto {
   numeroOrdre: number;
   prenom: string;
 }
 
 export interface IPrenomsForm {
-  prenomsAffiches: number;
+  nombrePrenomsAffiches: number;
   prenom1: string;
   prenom2: string;
   prenom3: string;
@@ -25,7 +36,7 @@ export interface IPrenomsForm {
 
 export const PrenomsForm = {
   valeursDefauts: (prenomsDto?: IPrenomDto[]): IPrenomsForm => ({
-    prenomsAffiches: prenomsDto?.length ?? 1,
+    nombrePrenomsAffiches: prenomsDto?.length ?? 1,
     prenom1: "",
     prenom2: "",
     prenom3: "",
@@ -51,7 +62,7 @@ export const PrenomsForm = {
 
   versDto: (prenomsForm: IPrenomsForm): IPrenomDto[] =>
     Object.entries(prenomsForm).reduce((prenomsDtos: IPrenomDto[], [clePrenom, prenom]) => {
-      if (clePrenom !== "prenomsAffiches" && prenom) {
+      if (clePrenom !== "nombrePrenomsAffiches" && prenom) {
         prenomsDtos.push({
           numeroOrdre: parseInt(clePrenom.replace("prenom", "")),
           prenom: prenom
