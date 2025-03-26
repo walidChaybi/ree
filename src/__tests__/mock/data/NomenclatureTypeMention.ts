@@ -64,14 +64,14 @@ export const TYPE_MENTION = [
   },
   {
     idTypeMention: "0185f3c8-5f4c-4ea9-89e1-fb65fcb7b17f",
-    libelleType: "2 Divorce/Séparation/Annulation mariage",
+    libelleType: "2-1 à 2-3 Divorce/séparation de corps en France",
     natureActe: "NAISSANCE",
     affecteAnalyseMarginale: false,
     estPresentListeDeroulante: true,
     typeMentionEnfantList: [
       {
         idTypeMention: "7adaa7f8-6228-4e25-87a1-d99f3b98371a",
-        libelleType: "2-1 & 2-2 divorce/séparation de corps en France",
+        libelleType: "2-1 à 2-3 divorce en France",
         natureActe: "NAISSANCE",
         affecteAnalyseMarginale: false,
         estPresentListeDeroulante: true,
@@ -95,31 +95,93 @@ export const TYPE_MENTION = [
             estPresentListeDeroulante: true,
             estSousType: false,
             estSaisieAssistee: true
+          },
+          {
+            idTypeMention: "b03ca46d-592e-4e45-a7b0-39f0f3664ffb",
+            libelleType: "2-3 avec exequatur",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: false,
+            idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9",
+            estPresentListeDeroulante: true,
+            estSousType: false,
+            estSaisieAssistee: true
+          },
+          {
+            idTypeMention: "b048b66e-e0fa-4052-a63d-9111b442c3ee",
+            libelleType: "autres",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: false,
+            idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9",
+            estPresentListeDeroulante: true,
+            estSousType: true,
+            estSaisieAssistee: false
           }
         ],
         estSousType: false,
         estSaisieAssistee: false
       },
       {
-        idTypeMention: "b03ca46d-592e-4e45-a7b0-39f0f3664ffb",
-        libelleType: "2-3 divorce/séparation de corps avec exequatur",
+        idTypeMention: "2c588e52-8828-411c-a6be-4288e8a90ccc",
+        libelleType: "2-1 & 2-2 séparation de corps en France",
         natureActe: "NAISSANCE",
         affecteAnalyseMarginale: false,
-        idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9",
         estPresentListeDeroulante: true,
+        typeMentionEnfantList: [
+          {
+            idTypeMention: "b03cca54-ee3f-411e-9b75-04e900657ad0",
+            libelleType: "2-1 notariée",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: false,
+            idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
+            estPresentListeDeroulante: true,
+            estSousType: false,
+            estSaisieAssistee: true
+          },
+          {
+            idTypeMention: "dde0a069-54a5-4e80-bf4b-4ee7983243ff",
+            libelleType: "2-2 judiciaire",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: false,
+            idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
+            estPresentListeDeroulante: true,
+            estSousType: false,
+            estSaisieAssistee: true
+          },
+          {
+            idTypeMention: "b048a326-6d90-4806-936f-f43372f1af51",
+            libelleType: "autres",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: false,
+            idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
+            estPresentListeDeroulante: true,
+            estSousType: true,
+            estSaisieAssistee: false
+          }
+        ],
         estSousType: false,
-        estSaisieAssistee: true
-      },
+        estSaisieAssistee: false
+      }
+    ],
+    estSousType: false,
+    estSaisieAssistee: false
+  },
+  {
+    idTypeMention: "5f562b8d-0d26-4c55-8311-040ed70c0e15",
+    libelleType: "2-6 & 2-7 Divorce/séparation de corps à l'étranger",
+    natureActe: "NAISSANCE",
+    affecteAnalyseMarginale: false,
+    estPresentListeDeroulante: true,
+    typeMentionEnfantList: [
       {
-        idTypeMention: "5f562b8d-0d26-4c55-8311-040ed70c0e15",
-        libelleType: "2-6 & 2-7 divorce/séparation de corps à l'étranger",
+        idTypeMention: "5d63e46e-5af7-42e8-94db-091afb5c62f1",
+        libelleType: "2-6 & 2-7 divorce à l'étranger",
         natureActe: "NAISSANCE",
         affecteAnalyseMarginale: false,
         estPresentListeDeroulante: true,
         typeMentionEnfantList: [
           {
             idTypeMention: "7adec958-a42a-4fbd-918b-c6892b0b5180",
-            libelleType: "2-7 V.O",
+            libelleType: "2-7 V.O. (Vérification d'Opposabilité)",
             natureActe: "NAISSANCE",
             affecteAnalyseMarginale: false,
             idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9",
@@ -129,73 +191,62 @@ export const TYPE_MENTION = [
           },
           {
             idTypeMention: "b03c0e79-da22-44ef-8256-5276631662b3",
-            libelleType: "2-6 dans l'U.E.",
+            libelleType: "2-6 règlement du Conseil de l’Union européenne",
             natureActe: "NAISSANCE",
             affecteAnalyseMarginale: false,
             idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9",
             estPresentListeDeroulante: true,
             estSousType: false,
             estSaisieAssistee: true
+          },
+          {
+            idTypeMention: "9128fab1-a0f5-4009-8b39-25d64c3639a8",
+            libelleType: "autres",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: false,
+            idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9",
+            estPresentListeDeroulante: true,
+            estSousType: false,
+            estSaisieAssistee: false
           }
         ],
         estSousType: false,
         estSaisieAssistee: false
       },
       {
+        idTypeMention: "b03c23ef-e893-4659-8c6d-416ffb60bf82",
+        libelleType: "2-6 & 2-7 séparation de corps à l'étranger",
+        natureActe: "NAISSANCE",
+        affecteAnalyseMarginale: false,
+        idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
+        estPresentListeDeroulante: true,
+        estSousType: false,
+        estSaisieAssistee: false
+      }
+    ],
+    estSousType: false,
+    estSaisieAssistee: false
+  },
+  {
+    idTypeMention: "8e82dd9a-baa6-4224-be50-c631b22a31d1",
+    libelleType: "2-8 Annulation de mariage",
+    natureActe: "NAISSANCE",
+    affecteAnalyseMarginale: false,
+    estPresentListeDeroulante: true,
+    typeMentionEnfantList: [
+      {
         idTypeMention: "b03c481e-1cfd-4a3e-8ad5-005975951876",
-        libelleType: "2-8 annulation de mariage",
+        libelleType: "2-8 annulation de mariage en France",
         natureActe: "NAISSANCE",
         affecteAnalyseMarginale: false,
         idNatureMention: "b03cd289-503f-4c98-8d12-0dffd9c51178",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
-      },
-      {
-        idTypeMention: "b04835d7-880e-45f2-9947-da18dd3237de",
-        libelleType: "2-9 reprise vie commune",
-        natureActe: "NAISSANCE",
-        affecteAnalyseMarginale: false,
-        idNatureMention: "b03cd7cf-b9e2-4ddc-b039-87f1ab2fadb7",
-        estPresentListeDeroulante: true,
-        typeMentionEnfantList: [
-          {
-            idTypeMention: "3d62029f-8c16-48dc-bc25-941e7a5d27ac",
-            libelleType: "2-9 OEC",
-            natureActe: "NAISSANCE",
-            affecteAnalyseMarginale: false,
-            idNatureMention: "b03cd7cf-b9e2-4ddc-b039-87f1ab2fadb7",
-            estPresentListeDeroulante: true,
-            estSousType: true,
-            estSaisieAssistee: true
-          },
-          {
-            idTypeMention: "2e3d768f-2eae-4dba-80fc-5b404c10b589",
-            libelleType: "2-9 notaire",
-            natureActe: "NAISSANCE",
-            affecteAnalyseMarginale: false,
-            idNatureMention: "b03cd7cf-b9e2-4ddc-b039-87f1ab2fadb7",
-            estPresentListeDeroulante: true,
-            estSousType: false,
-            estSaisieAssistee: true
-          }
-        ],
-        estSousType: false,
-        estSaisieAssistee: false
-      },
-      {
-        idTypeMention: "b048b66e-e0fa-4052-a63d-9111b442c3ee",
-        libelleType: "divorce/séparation de corps - autres",
-        natureActe: "NAISSANCE",
-        affecteAnalyseMarginale: false,
-        idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9",
-        estPresentListeDeroulante: true,
-        estSousType: true,
         estSaisieAssistee: false
       },
       {
         idTypeMention: "b0481430-4307-4dd9-a9af-d3c21cb6d8f4",
-        libelleType: "annulation de mariage - autres",
+        libelleType: "autres",
         natureActe: "NAISSANCE",
         affecteAnalyseMarginale: false,
         idNatureMention: "b03cd289-503f-4c98-8d12-0dffd9c51178",
@@ -205,6 +256,16 @@ export const TYPE_MENTION = [
       }
     ],
     estSousType: false,
+    estSaisieAssistee: false
+  },
+  {
+    idTypeMention: "b04835d7-880e-45f2-9947-da18dd3237de",
+    libelleType: "2-9 Reprise vie commune",
+    natureActe: "NAISSANCE",
+    affecteAnalyseMarginale: false,
+    idNatureMention: "b03cd7cf-b9e2-4ddc-b039-87f1ab2fadb7",
+    estPresentListeDeroulante: true,
+    estSousType: true,
     estSaisieAssistee: false
   },
   {
@@ -262,10 +323,10 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c5a85-cc38-4577-aaac-397cabf86ca3",
         estPresentListeDeroulante: true,
         estSousType: true,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       }
     ],
-    estSousType: true,
+    estSousType: false,
     estSaisieAssistee: false
   },
   {
@@ -323,7 +384,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03cede5-d26e-41ec-a7e2-0f1a09d5e162",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b0481314-da13-4238-8922-37d8b7f7059f",
@@ -354,7 +415,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c04c5-a17e-4b75-b61e-8158b029da15",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b048bac0-a8ea-4837-a091-d66f5ed1411a",
@@ -364,7 +425,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c04c5-a17e-4b75-b61e-8158b029da15",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "18493a55-39ab-4c01-a772-6c20538fbcac",
@@ -374,7 +435,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c04c5-a17e-4b75-b61e-8158b029da15",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b04851fa-a513-4387-a1e2-c91415a4a304",
@@ -384,7 +445,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c04c5-a17e-4b75-b61e-8158b029da15",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b048cbd4-f38a-4958-b9eb-17bca4e05c90",
@@ -394,7 +455,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c04c5-a17e-4b75-b61e-8158b029da15",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b0485a55-d056-4065-95ff-9e802935cc7c",
@@ -428,7 +489,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c04c5-a17e-4b75-b61e-8158b029da15",
     estPresentListeDeroulante: true,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b6f778a2-9414-4fb7-8818-c703b02a2644",
@@ -445,7 +506,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c04c5-a17e-4b75-b61e-8158b029da15",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b0480356-1c3d-43ef-b7dc-8b362899f4ca",
@@ -465,7 +526,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c04c5-a17e-4b75-b61e-8158b029da15",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b0484914-a550-454e-b1a5-134d297848cc",
@@ -475,7 +536,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c04c5-a17e-4b75-b61e-8158b029da15",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b04889e7-3bef-4eea-b952-6f1a6d131348",
@@ -506,7 +567,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c14e3-7b8b-411d-8a6f-10a60334f509",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b0481643-9846-4a5f-b33d-88e0c2f22fb6",
@@ -516,7 +577,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c14e3-7b8b-411d-8a6f-10a60334f509",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b0487488-bb0c-4b41-b032-9068583d0c92",
@@ -526,7 +587,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c14e3-7b8b-411d-8a6f-10a60334f509",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b0483683-870f-4505-9091-ebfa39d73c43",
@@ -536,7 +597,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03cfc41-1821-496d-891c-87f963149600",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       }
     ],
     estSousType: false,
@@ -550,44 +611,170 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c04c5-a17e-4b75-b61e-8158b029da15",
     estPresentListeDeroulante: true,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "62569b32-666e-4a9f-9204-643d18ad2a6b",
     libelleType: "14 & 15 Changement de nom",
     natureActe: "NAISSANCE",
-    affecteAnalyseMarginale: true,
+    affecteAnalyseMarginale: false,
     estPresentListeDeroulante: true,
     typeMentionEnfantList: [
       {
         idTypeMention: "b0489bb0-6516-46a4-bbf3-22678749197d",
         libelleType: "14-1 décret (61 c.c)",
         natureActe: "NAISSANCE",
-        affecteAnalyseMarginale: true,
+        affecteAnalyseMarginale: false,
         idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
         estPresentListeDeroulante: true,
+        typeMentionEnfantList: [
+          {
+            idTypeMention: "e9932d53-3edc-4dcd-a3cd-91c8f9a143ac",
+            libelleType: "14-1 l'intéressé(e)",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: true,
+            idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+            estPresentListeDeroulante: true,
+            estSousType: false,
+            estSaisieAssistee: true
+          },
+          {
+            idTypeMention: "634fba6a-cbd4-4d65-aaef-724aead6c3e4",
+            libelleType: "14-1 le conjoint/partenaire de l'intéressé(e)",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: false,
+            idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+            estPresentListeDeroulante: true,
+            estSousType: false,
+            estSaisieAssistee: true
+          },
+          {
+            idTypeMention: "7a9aa51b-d52b-41e1-b156-b6c4ad637264",
+            libelleType: "14-1 l'intéressé(e) et son père/sa mère",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: true,
+            idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+            estPresentListeDeroulante: true,
+            estSousType: false,
+            estSaisieAssistee: true
+          },
+          {
+            idTypeMention: "2340151d-7461-4753-a6c6-00debbadd617",
+            libelleType: "14-1 le père/la mère de l'intéressé(e)",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: false,
+            idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+            estPresentListeDeroulante: true,
+            estSousType: false,
+            estSaisieAssistee: true
+          }
+        ],
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b04826fb-3aa8-444b-b48f-1822f8023dd3",
         libelleType: "14-2 procédure simplifiée (61-3-1 c.c al.1)",
         natureActe: "NAISSANCE",
-        affecteAnalyseMarginale: true,
+        affecteAnalyseMarginale: false,
         idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
         estPresentListeDeroulante: true,
+        typeMentionEnfantList: [
+          {
+            idTypeMention: "9371400b-2a08-4dc6-8b11-fdb4eb118413",
+            libelleType: "14-2 l'intéressé(e)",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: true,
+            idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+            estPresentListeDeroulante: true,
+            estSousType: false,
+            estSaisieAssistee: true
+          },
+          {
+            idTypeMention: "86ac7770-52a6-4749-b165-95ee77deea73",
+            libelleType: "14-2 le conjoint/partenaire de l'intéressé(e)",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: false,
+            idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+            estPresentListeDeroulante: true,
+            estSousType: false,
+            estSaisieAssistee: true
+          },
+          {
+            idTypeMention: "2c05e91d-13ba-4982-82a1-acc1482aa4c9",
+            libelleType: "14-2 l'intéressé(e) et son père/sa mère",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: true,
+            idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+            estPresentListeDeroulante: true,
+            estSousType: false,
+            estSaisieAssistee: true
+          },
+          {
+            idTypeMention: "6cc9b196-0be3-40c0-a220-e6e113ff80b2",
+            libelleType: "14-2 le père/la mère de l'intéressé(e)",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: false,
+            idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+            estPresentListeDeroulante: true,
+            estSousType: false,
+            estSaisieAssistee: true
+          }
+        ],
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "67da7f70-a32c-4209-853b-1adb39fc0b87",
         libelleType: "14-2 mise en concordance (61-3-1 c.c al.2)",
         natureActe: "NAISSANCE",
-        affecteAnalyseMarginale: true,
+        affecteAnalyseMarginale: false,
         idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
         estPresentListeDeroulante: true,
+        typeMentionEnfantList: [
+          {
+            idTypeMention: "06bfee19-0d8e-408b-b1c2-22c1adb08d27",
+            libelleType: "14-2 l'intéressé(e)",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: true,
+            idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+            estPresentListeDeroulante: true,
+            estSousType: false,
+            estSaisieAssistee: true
+          },
+          {
+            idTypeMention: "b32386a3-5719-4425-b34e-78701a512a6e",
+            libelleType: "14-2 le conjoint/partenaire de l'intéressé(e)",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: false,
+            idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+            estPresentListeDeroulante: true,
+            estSousType: false,
+            estSaisieAssistee: true
+          },
+          {
+            idTypeMention: "9fe2f885-ed2a-48e9-860a-763434a4cc6c",
+            libelleType: "14-2 l'intéressé(e) et son père/sa mère",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: true,
+            idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+            estPresentListeDeroulante: true,
+            estSousType: false,
+            estSaisieAssistee: true
+          },
+          {
+            idTypeMention: "599b852a-6b33-4c09-bd9e-d563170fe7b6",
+            libelleType: "14-2 le père/la mère de l'intéressé(e)",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: false,
+            idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+            estPresentListeDeroulante: true,
+            estSousType: false,
+            estSaisieAssistee: true
+          }
+        ],
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b048d075-724e-4e3c-8575-4494667ad90b",
@@ -597,7 +784,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b048e125-5b04-4dcd-9a56-11eefb6811eb",
@@ -617,28 +804,92 @@ export const TYPE_MENTION = [
     idTypeMention: "b0aa20ad-9bf3-4cbd-99f1-a54c8f6598a4",
     libelleType: "18 Changement de prénom (art. 60 c.c)",
     natureActe: "NAISSANCE",
-    affecteAnalyseMarginale: true,
+    affecteAnalyseMarginale: false,
     estPresentListeDeroulante: true,
     typeMentionEnfantList: [
       {
         idTypeMention: "b048e05c-ff6f-44fd-89dc-d07aa9b5fc80",
         libelleType: "18-1 décision OEC",
         natureActe: "NAISSANCE",
-        affecteAnalyseMarginale: true,
+        affecteAnalyseMarginale: false,
         idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
         estPresentListeDeroulante: true,
+        typeMentionEnfantList: [
+          {
+            idTypeMention: "c65a9fe7-3527-45ce-8284-ac9e1a5f2e7b",
+            libelleType: "18-1 l'intéressé(e)",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: true,
+            idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+            estPresentListeDeroulante: true,
+            estSousType: false,
+            estSaisieAssistee: false
+          },
+          {
+            idTypeMention: "836dd7c9-0710-4f38-98de-536957cd4ee3",
+            libelleType: "18-1 le conjoint/partenaire de l'intéressé(e)",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: false,
+            idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+            estPresentListeDeroulante: true,
+            estSousType: false,
+            estSaisieAssistee: false
+          },
+          {
+            idTypeMention: "cfdb9f10-ff3a-4050-9431-39b125188485",
+            libelleType: "18-1 le père/la mère de l'intéressé(e)",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: false,
+            idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+            estPresentListeDeroulante: true,
+            estSousType: false,
+            estSaisieAssistee: false
+          }
+        ],
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b0485f4e-5d29-4f03-956b-0a53d02ae617",
         libelleType: "18-2 décision judiciaire",
         natureActe: "NAISSANCE",
-        affecteAnalyseMarginale: true,
+        affecteAnalyseMarginale: false,
         idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
         estPresentListeDeroulante: true,
+        typeMentionEnfantList: [
+          {
+            idTypeMention: "a4bf3cf3-54b5-40c3-b885-4daaf9df9504",
+            libelleType: "18-2 l'intéressé(e)",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: true,
+            idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+            estPresentListeDeroulante: true,
+            estSousType: false,
+            estSaisieAssistee: false
+          },
+          {
+            idTypeMention: "4ab2c0da-e6a7-49a8-b26a-c422dc7d756a",
+            libelleType: "18-2 le conjoint/partenaire de l'intéressé(e)",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: false,
+            idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+            estPresentListeDeroulante: true,
+            estSousType: false,
+            estSaisieAssistee: false
+          },
+          {
+            idTypeMention: "495a6097-3473-4ab9-b80b-590a3043c369",
+            libelleType: "18-2 le père/la mère de l'intéressé(e)",
+            natureActe: "NAISSANCE",
+            affecteAnalyseMarginale: false,
+            idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+            estPresentListeDeroulante: true,
+            estSousType: false,
+            estSaisieAssistee: false
+          }
+        ],
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b048c1ab-a8e2-4b59-a0cd-7057dfb96cdd",
@@ -662,17 +913,89 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c45b2-74c6-4cc5-9f64-4bad6f343598",
     estPresentListeDeroulante: true,
     estSousType: true,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b0481141-b0e1-4cc6-940e-368b2987d86e",
     libelleType: "19 Francisation prénom(s)/nom",
     natureActe: "NAISSANCE",
-    affecteAnalyseMarginale: true,
+    affecteAnalyseMarginale: false,
     idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
     estPresentListeDeroulante: true,
+    typeMentionEnfantList: [
+      {
+        idTypeMention: "032d1cba-e74b-4c87-b59a-e05274331948",
+        libelleType: "19 l'intéressé(e)",
+        natureActe: "NAISSANCE",
+        affecteAnalyseMarginale: true,
+        idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+        estPresentListeDeroulante: true,
+        estSousType: false,
+        estSaisieAssistee: false
+      },
+      {
+        idTypeMention: "46e416e5-8727-4ab0-8ce5-ebac2945c13b",
+        libelleType: "19 francisation du nom et des prénoms : le conjoint/partenaire de l'intéressé(e)",
+        natureActe: "NAISSANCE",
+        affecteAnalyseMarginale: false,
+        idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+        estPresentListeDeroulante: true,
+        estSousType: false,
+        estSaisieAssistee: false
+      },
+      {
+        idTypeMention: "d7629e27-7c6c-4f54-82de-1df35ef6e01d",
+        libelleType: "19 francisation du nom et des prénoms : l'intéressé(e) et son père/sa mère",
+        natureActe: "NAISSANCE",
+        affecteAnalyseMarginale: true,
+        idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+        estPresentListeDeroulante: true,
+        estSousType: false,
+        estSaisieAssistee: false
+      },
+      {
+        idTypeMention: "c9cd08d7-f571-4fcf-a539-27a919393abc",
+        libelleType: "19 francisation du nom et des prénoms : le père/la mère de l'intéressé(e)",
+        natureActe: "NAISSANCE",
+        affecteAnalyseMarginale: false,
+        idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+        estPresentListeDeroulante: true,
+        estSousType: false,
+        estSaisieAssistee: false
+      },
+      {
+        idTypeMention: "575c1ccd-6c08-48d2-b505-7b76dbd54ed7",
+        libelleType: "19 francisation du prénom : le conjoint/partenaire de l'intéressé(e)",
+        natureActe: "NAISSANCE",
+        affecteAnalyseMarginale: false,
+        idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+        estPresentListeDeroulante: true,
+        estSousType: false,
+        estSaisieAssistee: false
+      },
+      {
+        idTypeMention: "f1f100c5-2065-41d4-b5e9-821b370b5867",
+        libelleType: "19 francisation du prénom : le père/la mère de l'intéressé(e)",
+        natureActe: "NAISSANCE",
+        affecteAnalyseMarginale: false,
+        idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+        estPresentListeDeroulante: true,
+        estSousType: false,
+        estSaisieAssistee: false
+      },
+      {
+        idTypeMention: "b048cd35-4825-4386-b141-596ddc72df9f",
+        libelleType: "autres",
+        natureActe: "NAISSANCE",
+        affecteAnalyseMarginale: true,
+        idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+        estPresentListeDeroulante: true,
+        estSousType: false,
+        estSaisieAssistee: false
+      }
+    ],
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "16ccfb8f-b756-4e3a-bab1-b3ef660968b6",
@@ -696,7 +1019,7 @@ export const TYPE_MENTION = [
             idNatureMention: "b03cf4c0-d452-45f8-b284-c585a7a47fb8",
             estPresentListeDeroulante: true,
             estSousType: false,
-            estSaisieAssistee: true
+            estSaisieAssistee: false
           },
           {
             idTypeMention: "b04861c1-3b73-4de5-9361-444dff8a4580",
@@ -706,7 +1029,7 @@ export const TYPE_MENTION = [
             idNatureMention: "b03c2ae6-1ae8-40b8-a9e8-6259af6d3afc",
             estPresentListeDeroulante: true,
             estSousType: false,
-            estSaisieAssistee: true
+            estSaisieAssistee: false
           }
         ],
         estSousType: false,
@@ -727,7 +1050,7 @@ export const TYPE_MENTION = [
             idNatureMention: "b03cf4c0-d452-45f8-b284-c585a7a47fb8",
             estPresentListeDeroulante: true,
             estSousType: false,
-            estSaisieAssistee: true
+            estSaisieAssistee: false
           },
           {
             idTypeMention: "b04ba34c-0a6f-4d54-b087-7e0f5e405009",
@@ -737,7 +1060,7 @@ export const TYPE_MENTION = [
             idNatureMention: "b03c2ae6-1ae8-40b8-a9e8-6259af6d3afc",
             estPresentListeDeroulante: true,
             estSousType: false,
-            estSaisieAssistee: true
+            estSaisieAssistee: false
           }
         ],
         estSousType: false,
@@ -751,7 +1074,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03cf4c0-d452-45f8-b284-c585a7a47fb8",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b04b087b-2504-4ee9-b2d1-6889a6241fe9",
@@ -761,7 +1084,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03cf4c0-d452-45f8-b284-c585a7a47fb8",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       }
     ],
     estSousType: false,
@@ -782,7 +1105,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c0e11-54d4-4fd6-87f2-a08d2b2d4a22",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b04bb719-bc07-41f1-a73a-81aa069b898e",
@@ -792,7 +1115,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c0e11-54d4-4fd6-87f2-a08d2b2d4a22",
         estPresentListeDeroulante: true,
         estSousType: true,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "f139e2a7-5774-4e5b-8ddf-735039285415",
@@ -802,7 +1125,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03ceb19-f934-49ab-9c3b-76d0d59337c4",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b04be004-a421-4f72-8417-77a6333dbce4",
@@ -812,7 +1135,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03ceb19-f934-49ab-9c3b-76d0d59337c4",
         estPresentListeDeroulante: true,
         estSousType: true,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       }
     ],
     estSousType: false,
@@ -826,7 +1149,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c2ae6-1ae8-40b8-a9e8-6259af6d3afc",
     estPresentListeDeroulante: true,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "79816598-7832-4f51-847d-8e4f0d3770a4",
@@ -850,7 +1173,7 @@ export const TYPE_MENTION = [
             idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
             estPresentListeDeroulante: true,
             estSousType: false,
-            estSaisieAssistee: true
+            estSaisieAssistee: false
           },
           {
             idTypeMention: "b04b9f49-b9b7-4b32-bdf4-db193ae540a8",
@@ -860,7 +1183,7 @@ export const TYPE_MENTION = [
             idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
             estPresentListeDeroulante: true,
             estSousType: false,
-            estSaisieAssistee: true
+            estSaisieAssistee: false
           },
           {
             idTypeMention: "b04b948e-6e4c-46be-8a38-32c924283fa4",
@@ -870,7 +1193,7 @@ export const TYPE_MENTION = [
             idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
             estPresentListeDeroulante: true,
             estSousType: false,
-            estSaisieAssistee: true
+            estSaisieAssistee: false
           },
           {
             idTypeMention: "b04bce76-d851-4d88-bf4d-3d500e838616",
@@ -880,7 +1203,7 @@ export const TYPE_MENTION = [
             idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
             estPresentListeDeroulante: true,
             estSousType: false,
-            estSaisieAssistee: true
+            estSaisieAssistee: false
           }
         ],
         estSousType: false,
@@ -894,7 +1217,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c848a-af74-483b-ace9-aec7f7ea3c1b",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "f1b07b6c-e19b-4636-8845-1a05a6ad7297",
@@ -911,7 +1234,7 @@ export const TYPE_MENTION = [
             idNatureMention: "b03c848a-af74-483b-ace9-aec7f7ea3c1b",
             estPresentListeDeroulante: true,
             estSousType: false,
-            estSaisieAssistee: true
+            estSaisieAssistee: false
           },
           {
             idTypeMention: "b04bc98a-c416-49e8-bd52-346bf0545d45",
@@ -921,7 +1244,7 @@ export const TYPE_MENTION = [
             idNatureMention: "b03c848a-af74-483b-ace9-aec7f7ea3c1b",
             estPresentListeDeroulante: true,
             estSousType: false,
-            estSaisieAssistee: true
+            estSaisieAssistee: false
           }
         ],
         estSousType: false,
@@ -963,7 +1286,7 @@ export const TYPE_MENTION = [
             idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
             estPresentListeDeroulante: true,
             estSousType: false,
-            estSaisieAssistee: true
+            estSaisieAssistee: false
           },
           {
             idTypeMention: "b04bcb53-3521-44fd-9b62-4bc2847c2865",
@@ -973,7 +1296,7 @@ export const TYPE_MENTION = [
             idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
             estPresentListeDeroulante: true,
             estSousType: false,
-            estSaisieAssistee: true
+            estSaisieAssistee: false
           }
         ],
         estSousType: false,
@@ -994,7 +1317,7 @@ export const TYPE_MENTION = [
             idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
             estPresentListeDeroulante: true,
             estSousType: false,
-            estSaisieAssistee: true
+            estSaisieAssistee: false
           },
           {
             idTypeMention: "bbde848d-8e0e-4ca4-a51e-590276eee34e",
@@ -1004,7 +1327,7 @@ export const TYPE_MENTION = [
             idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
             estPresentListeDeroulante: true,
             estSousType: false,
-            estSaisieAssistee: true
+            estSaisieAssistee: false
           }
         ],
         estSousType: false,
@@ -1025,7 +1348,7 @@ export const TYPE_MENTION = [
             idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
             estPresentListeDeroulante: true,
             estSousType: false,
-            estSaisieAssistee: true
+            estSaisieAssistee: false
           },
           {
             idTypeMention: "dc6eb3c4-8c6e-45e6-9a69-c3dd69a8cfb8",
@@ -1035,7 +1358,7 @@ export const TYPE_MENTION = [
             idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
             estPresentListeDeroulante: true,
             estSousType: false,
-            estSaisieAssistee: true
+            estSaisieAssistee: false
           }
         ],
         estSousType: false,
@@ -1056,7 +1379,7 @@ export const TYPE_MENTION = [
             idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
             estPresentListeDeroulante: true,
             estSousType: false,
-            estSaisieAssistee: true
+            estSaisieAssistee: false
           },
           {
             idTypeMention: "f670cf87-e297-44fb-a6ee-8e6809378c17",
@@ -1066,7 +1389,7 @@ export const TYPE_MENTION = [
             idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
             estPresentListeDeroulante: true,
             estSousType: false,
-            estSaisieAssistee: true
+            estSaisieAssistee: false
           }
         ],
         estSousType: false,
@@ -1087,7 +1410,7 @@ export const TYPE_MENTION = [
             idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
             estPresentListeDeroulante: true,
             estSousType: false,
-            estSaisieAssistee: true
+            estSaisieAssistee: false
           },
           {
             idTypeMention: "f0d8d45c-040f-4c4d-a830-9350eda78347",
@@ -1097,7 +1420,7 @@ export const TYPE_MENTION = [
             idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
             estPresentListeDeroulante: true,
             estSousType: false,
-            estSaisieAssistee: true
+            estSaisieAssistee: false
           }
         ],
         estSousType: false,
@@ -1111,7 +1434,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c848a-af74-483b-ace9-aec7f7ea3c1b",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "a52e5513-080d-486b-8033-efccd914c70e",
@@ -1121,7 +1444,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c848a-af74-483b-ace9-aec7f7ea3c1b",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b04b200d-e23b-4d1b-a740-0fb3ecf5ea82",
@@ -1131,7 +1454,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c848a-af74-483b-ace9-aec7f7ea3c1b",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "a3b470b0-6960-47ac-a6ec-5a786e1afbb0",
@@ -1141,7 +1464,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "77e37565-5612-465a-aaeb-e8462a397452",
@@ -1151,7 +1474,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b04b2e27-2e95-4515-9e43-c9106232992c",
@@ -1182,7 +1505,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b04beb7f-2855-4fff-9d89-a279b4128cd0",
@@ -1192,7 +1515,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c848a-af74-483b-ace9-aec7f7ea3c1b",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b04b4191-96da-49ca-8132-a5933fda53ad",
@@ -1202,7 +1525,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c848a-af74-483b-ace9-aec7f7ea3c1b",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b04bdb1a-6b4d-4e44-964b-3d2f20a90a0a",
@@ -1212,7 +1535,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c848a-af74-483b-ace9-aec7f7ea3c1b",
         estPresentListeDeroulante: true,
         estSousType: false,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b04b1d07-82df-4339-ac46-82f2b5c5d3d5",
@@ -1263,7 +1586,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03cdc6e-c77f-47a6-bc51-25b52ad7674e",
         estPresentListeDeroulante: true,
         estSousType: true,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       },
       {
         idTypeMention: "b04bb8af-9e0e-4473-a901-23aae1506b9f",
@@ -1273,7 +1596,7 @@ export const TYPE_MENTION = [
         idNatureMention: "b03c5f7f-2ad5-4f55-8599-6192dd6f126e",
         estPresentListeDeroulante: true,
         estSousType: true,
-        estSaisieAssistee: true
+        estSaisieAssistee: false
       }
     ],
     estSousType: false,
@@ -1287,7 +1610,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c3b1c-412b-4a94-93ba-ebbb457000b0",
     estPresentListeDeroulante: true,
     estSousType: true,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b1f6b-425f-4dc1-8703-81dddac7475e",
@@ -1300,43 +1623,113 @@ export const TYPE_MENTION = [
     estSaisieAssistee: false
   },
   {
-    idTypeMention: "b03cca54-ee3f-411e-9b75-04e900657ad0",
-    libelleType: "2-1-b Séparation de corps par consentement mutuel en France",
+    idTypeMention: "b04b9e9b-4774-4c63-957f-2307b9c43ec7",
+    libelleType: "27-2-a Acquisition nationalité autres articles (en France ou à l'étranger)",
     natureActe: "NAISSANCE",
     affecteAnalyseMarginale: false,
-    idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
+    idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
-    idTypeMention: "b03c5942-a05f-4b6f-8d1e-b0f406509038",
-    libelleType: "2-3-b Séparation de corps avec décision d'exequatur",
+    idTypeMention: "b04bfdc3-7a49-4358-9587-6a87ebe3c6c7",
+    libelleType: "27-2-b Effet collectif acquisition nationalité autres articles (en France ou à l'étranger)",
     natureActe: "NAISSANCE",
     affecteAnalyseMarginale: false,
-    idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
+    idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
-    idTypeMention: "b03c23ef-e893-4659-8c6d-416ffb60bf82",
-    libelleType: "2-6-b Séparation de corps à l'étranger dans le cadre du règlement du conseil de l'union européenne",
+    idTypeMention: "b04b3973-fe20-4852-b9d6-9feea0b1b2e6",
+    libelleType: "28-1 Déclaration de réintégration (en France ou à l'étranger)",
     natureActe: "NAISSANCE",
     affecteAnalyseMarginale: false,
-    idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
+    idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
-    idTypeMention: "b048a326-6d90-4806-936f-f43372f1af51",
-    libelleType: "2-98 Séparation de corps - Autres",
+    idTypeMention: "b04bb99d-a46b-4a08-b9ef-a2e1cccd4622",
+    libelleType: "28-2 Effet collectif de la réintégration dans la nationalité française (en France ou à l'étranger)",
     natureActe: "NAISSANCE",
     affecteAnalyseMarginale: false,
-    idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
+    idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
+    estPresentListeDeroulante: false,
+    estSousType: false,
+    estSaisieAssistee: false
+  },
+  {
+    idTypeMention: "b04bef13-8432-4b14-81b3-086f8b3504ff",
+    libelleType: "29-1 Déclaration tendant à répudier la nationalité française (en France ou à l'étranger)",
+    natureActe: "NAISSANCE",
+    affecteAnalyseMarginale: false,
+    idNatureMention: "b03c848a-af74-483b-ace9-aec7f7ea3c1b",
+    estPresentListeDeroulante: false,
+    estSousType: false,
+    estSaisieAssistee: false
+  },
+  {
+    idTypeMention: "b04b0ec2-eaa8-4bf6-8c85-32e2f91186be",
+    libelleType: "30 Renonciation faculté de répudier la nationalité française (en France ou à l'étranger)",
+    natureActe: "NAISSANCE",
+    affecteAnalyseMarginale: false,
+    idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
+    estPresentListeDeroulante: false,
+    estSousType: false,
+    estSaisieAssistee: false
+  },
+  {
+    idTypeMention: "b048137a-4596-4af3-a8b6-13153318256f",
+    libelleType: "12-99 Adoption simple révocation - Autres",
+    natureActe: "NAISSANCE",
+    affecteAnalyseMarginale: false,
+    idNatureMention: "b03cfc41-1821-496d-891c-87f963149600",
     estPresentListeDeroulante: false,
     estSousType: true,
+    estSaisieAssistee: false
+  },
+  {
+    idTypeMention: "b0486687-d58d-472c-9703-c3e37d80689b",
+    libelleType: "13-99 Légitimation - Autres",
+    natureActe: "NAISSANCE",
+    affecteAnalyseMarginale: false,
+    idNatureMention: "b03c04c5-a17e-4b75-b61e-8158b029da15",
+    estPresentListeDeroulante: false,
+    estSousType: false,
+    estSaisieAssistee: false
+  },
+  {
+    idTypeMention: "b04b48c9-5106-4559-ac8b-85d145bbb9eb",
+    libelleType: '21-99 Rectification judiciaire, hors annulation d\'une mention "réputée non écrite" - Autres',
+    natureActe: "NAISSANCE",
+    affecteAnalyseMarginale: true,
+    idNatureMention: "b03cf4c0-d452-45f8-b284-c585a7a47fb8",
+    estPresentListeDeroulante: false,
+    estSousType: true,
+    estSaisieAssistee: false
+  },
+  {
+    idTypeMention: "b04b9003-b32b-4aa3-a0b7-90ffe684e12c",
+    libelleType: '21-98 Rectification judiciaire, annulation d\'une mention "réputée non écrite" - Autres',
+    natureActe: "NAISSANCE",
+    affecteAnalyseMarginale: true,
+    idNatureMention: "b03c2ae6-1ae8-40b8-a9e8-6259af6d3afc",
+    estPresentListeDeroulante: false,
+    estSousType: true,
+    estSaisieAssistee: false
+  },
+  {
+    idTypeMention: "b048a937-2f7c-4e54-9b7f-675953d68fe9",
+    libelleType: "17 Déclaration conjointe d'adjonction de nom (art. 23 de la loi n°2002-304)",
+    natureActe: "NAISSANCE",
+    affecteAnalyseMarginale: false,
+    idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
+    estPresentListeDeroulante: false,
+    estSousType: false,
     estSaisieAssistee: false
   },
   {
@@ -1350,16 +1743,6 @@ export const TYPE_MENTION = [
     estSaisieAssistee: false
   },
   {
-    idTypeMention: "dde0a069-54a5-4e80-bf4b-4ee7983243ff",
-    libelleType: "2-2-b Séparation de corps judiciaire en France",
-    natureActe: "NAISSANCE",
-    affecteAnalyseMarginale: false,
-    idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
-    estPresentListeDeroulante: false,
-    estSousType: false,
-    estSaisieAssistee: true
-  },
-  {
     idTypeMention: "eac6d665-ef10-4ed0-b617-e4b507f947d7",
     libelleType: "2-7-b Séparation de corps prononcée par une décision étrangère hors U.E",
     natureActe: "NAISSANCE",
@@ -1367,67 +1750,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
-  },
-  {
-    idTypeMention: "b04b9e9b-4774-4c63-957f-2307b9c43ec7",
-    libelleType: "27-2-a Acquisition nationalité autres articles (en France ou à l'étranger)",
-    natureActe: "NAISSANCE",
-    affecteAnalyseMarginale: false,
-    idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
-    estPresentListeDeroulante: false,
-    estSousType: false,
-    estSaisieAssistee: true
-  },
-  {
-    idTypeMention: "b04bfdc3-7a49-4358-9587-6a87ebe3c6c7",
-    libelleType: "27-2-b Effet collectif acquisition nationalité autres articles (en France ou à l'étranger)",
-    natureActe: "NAISSANCE",
-    affecteAnalyseMarginale: false,
-    idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
-    estPresentListeDeroulante: false,
-    estSousType: false,
-    estSaisieAssistee: true
-  },
-  {
-    idTypeMention: "b04b3973-fe20-4852-b9d6-9feea0b1b2e6",
-    libelleType: "28-1 Déclaration de réintégration (en France ou à l'étranger)",
-    natureActe: "NAISSANCE",
-    affecteAnalyseMarginale: false,
-    idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
-    estPresentListeDeroulante: false,
-    estSousType: false,
-    estSaisieAssistee: true
-  },
-  {
-    idTypeMention: "b04bb99d-a46b-4a08-b9ef-a2e1cccd4622",
-    libelleType: "28-2 Effet collectif de la réintégration dans la nationalité française (en France ou à l'étranger)",
-    natureActe: "NAISSANCE",
-    affecteAnalyseMarginale: false,
-    idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
-    estPresentListeDeroulante: false,
-    estSousType: false,
-    estSaisieAssistee: true
-  },
-  {
-    idTypeMention: "b04bef13-8432-4b14-81b3-086f8b3504ff",
-    libelleType: "29-1 Déclaration tendant à répudier la nationalité française (en France ou à l'étranger)",
-    natureActe: "NAISSANCE",
-    affecteAnalyseMarginale: false,
-    idNatureMention: "b03c848a-af74-483b-ace9-aec7f7ea3c1b",
-    estPresentListeDeroulante: false,
-    estSousType: false,
-    estSaisieAssistee: true
-  },
-  {
-    idTypeMention: "b04b0ec2-eaa8-4bf6-8c85-32e2f91186be",
-    libelleType: "30 Renonciation faculté de répudier la nationalité française (en France ou à l'étranger)",
-    natureActe: "NAISSANCE",
-    affecteAnalyseMarginale: false,
-    idNatureMention: "b03ca8b9-5365-496f-8542-7ae225dc1e96",
-    estPresentListeDeroulante: false,
-    estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b0487801-b7b6-41db-ad88-381e06a97d46",
@@ -1500,66 +1823,6 @@ export const TYPE_MENTION = [
     estSaisieAssistee: false
   },
   {
-    idTypeMention: "b048137a-4596-4af3-a8b6-13153318256f",
-    libelleType: "12-99 Adoption simple révocation - Autres",
-    natureActe: "NAISSANCE",
-    affecteAnalyseMarginale: false,
-    idNatureMention: "b03cfc41-1821-496d-891c-87f963149600",
-    estPresentListeDeroulante: false,
-    estSousType: true,
-    estSaisieAssistee: false
-  },
-  {
-    idTypeMention: "b0486687-d58d-472c-9703-c3e37d80689b",
-    libelleType: "13-99 Légitimation - Autres",
-    natureActe: "NAISSANCE",
-    affecteAnalyseMarginale: false,
-    idNatureMention: "b03c04c5-a17e-4b75-b61e-8158b029da15",
-    estPresentListeDeroulante: false,
-    estSousType: false,
-    estSaisieAssistee: false
-  },
-  {
-    idTypeMention: "b04b48c9-5106-4559-ac8b-85d145bbb9eb",
-    libelleType: '21-99 Rectification judiciaire, hors annulation d\'une mention "réputée non écrite" - Autres',
-    natureActe: "NAISSANCE",
-    affecteAnalyseMarginale: true,
-    idNatureMention: "b03cf4c0-d452-45f8-b284-c585a7a47fb8",
-    estPresentListeDeroulante: false,
-    estSousType: true,
-    estSaisieAssistee: false
-  },
-  {
-    idTypeMention: "b04b9003-b32b-4aa3-a0b7-90ffe684e12c",
-    libelleType: '21-98 Rectification judiciaire, annulation d\'une mention "réputée non écrite" - Autres',
-    natureActe: "NAISSANCE",
-    affecteAnalyseMarginale: true,
-    idNatureMention: "b03c2ae6-1ae8-40b8-a9e8-6259af6d3afc",
-    estPresentListeDeroulante: false,
-    estSousType: true,
-    estSaisieAssistee: false
-  },
-  {
-    idTypeMention: "b048a937-2f7c-4e54-9b7f-675953d68fe9",
-    libelleType: "17 Déclaration conjointe d'adjonction de nom (art. 23 de la loi n°2002-304)",
-    natureActe: "NAISSANCE",
-    affecteAnalyseMarginale: false,
-    idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
-    estPresentListeDeroulante: false,
-    estSousType: false,
-    estSaisieAssistee: false
-  },
-  {
-    idTypeMention: "b048cd35-4825-4386-b141-596ddc72df9f",
-    libelleType: "19-99 Francisation des nom et/ou des prénom(s) - Autres",
-    natureActe: "NAISSANCE",
-    affecteAnalyseMarginale: true,
-    idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
-    estPresentListeDeroulante: false,
-    estSousType: false,
-    estSaisieAssistee: false
-  },
-  {
     idTypeMention: "b04bc836-dc01-4ba9-95cf-ac102a2373af",
     libelleType: "39-1-a Divorce par consentement mutuel en France",
     natureActe: "MARIAGE",
@@ -1567,7 +1830,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b33b4-ffa3-4330-b301-7ea46febeb23",
@@ -1577,7 +1840,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "e0900d9a-4c2c-465a-8616-cb5b7b2aa8e2",
@@ -1587,7 +1850,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "5ad585aa-8871-481d-b575-b46d6d5d4ebb",
@@ -1597,7 +1860,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04bdcc3-de81-4df6-a238-fa44b5ff2791",
@@ -1607,7 +1870,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b5876-e83d-40ce-8ca5-0378b0ce791f",
@@ -1617,7 +1880,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04bd773-c179-48b3-b82f-2e4efe8b7d14",
@@ -1637,7 +1900,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b813f-58c1-44ca-b2ca-cf3e46a25182",
@@ -1647,7 +1910,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b3115-4bc9-4d27-ab9c-c570a3c00aee",
@@ -1657,7 +1920,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03cd289-503f-4c98-8d12-0dffd9c51178",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "163668c7-3608-411e-8064-72592aba8348",
@@ -1667,7 +1930,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c5992-d421-4aa1-a4cf-f97f22b267f9",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "a8335d5f-8323-416d-a693-9bbd6ba2a289",
@@ -1677,7 +1940,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "880b48fe-e4f9-4bd3-8808-864b23699be3",
@@ -1687,7 +1950,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03cd289-503f-4c98-8d12-0dffd9c51178",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04bef1c-7a95-4b26-b53d-9011e5cc5c6f",
@@ -1697,7 +1960,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03cd289-503f-4c98-8d12-0dffd9c51178",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b9ae6-e061-4f63-8824-7db7a731f234",
@@ -1707,7 +1970,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03cd7cf-b9e2-4ddc-b039-87f1ab2fadb7",
     estPresentListeDeroulante: false,
     estSousType: true,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "2e9b80d5-0ff8-42f7-85b5-ea752a12032b",
@@ -1717,7 +1980,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03cd7cf-b9e2-4ddc-b039-87f1ab2fadb7",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "fdae6691-7d1a-458b-bc49-b38d44ac94ff",
@@ -1727,7 +1990,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03cd7cf-b9e2-4ddc-b039-87f1ab2fadb7",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b44fc-10c3-4215-86c5-a94f2917d3b4",
@@ -1767,7 +2030,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c5368-01a5-4027-981d-bfd165b358ae",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b2e85-49c6-4dfd-a21f-9a95f8d667e2",
@@ -1777,7 +2040,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c5368-01a5-4027-981d-bfd165b358ae",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04befed-3263-4e47-9aea-74af30c99a87",
@@ -1787,7 +2050,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c5368-01a5-4027-981d-bfd165b358ae",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b3164-2d4d-4b93-9529-f2f891f676cc",
@@ -1797,7 +2060,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c5368-01a5-4027-981d-bfd165b358ae",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04bc744-34a0-4f69-8ebe-93416f58b70b",
@@ -1817,7 +2080,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c5368-01a5-4027-981d-bfd165b358ae",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04bce7c-0800-44cf-83ee-2359f35802db",
@@ -1837,7 +2100,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c14e3-7b8b-411d-8a6f-10a60334f509",
     estPresentListeDeroulante: false,
     estSousType: true,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04bf5e4-476c-480d-bda4-74319e58fef4",
@@ -1857,7 +2120,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b116a-5e33-4931-bbb1-f2a4acd838f7",
@@ -1867,7 +2130,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b527b-bdf0-4b6a-aa09-2d94b02d146a",
@@ -1887,7 +2150,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04be79f-a83a-44a9-b0a3-f0487e5a96a1",
@@ -1897,7 +2160,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04bb8fd-dede-4d97-b37f-d9454c841036",
@@ -1907,7 +2170,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b8206-46f8-49c7-9c40-ea6d5dfba5df",
@@ -1927,7 +2190,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c5a32-397a-4ded-857b-798da72935d6",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b69a6-62b6-49bd-91fd-295d83b51e6a",
@@ -1937,7 +2200,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c2ae6-1ae8-40b8-a9e8-6259af6d3afc",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b78ff-09da-48e6-991a-239d4682e1e9",
@@ -1948,7 +2211,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03cf4c0-d452-45f8-b284-c585a7a47fb8",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04bfbb9-8430-47d2-b26e-792ea6202d6d",
@@ -1959,7 +2222,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c2ae6-1ae8-40b8-a9e8-6259af6d3afc",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b8ac4-dad5-40c5-81e6-62cdce3d992b",
@@ -1970,7 +2233,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03cf4c0-d452-45f8-b284-c585a7a47fb8",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04bdff0-8aac-4c48-8b00-8a9c38739def",
@@ -1981,7 +2244,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c2ae6-1ae8-40b8-a9e8-6259af6d3afc",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b7c72-646b-4663-adeb-ad07eb0f2f84",
@@ -1992,7 +2255,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03cf4c0-d452-45f8-b284-c585a7a47fb8",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b3d99-06de-4378-956d-7b1d728b8bbe",
@@ -2022,7 +2285,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c2ae6-1ae8-40b8-a9e8-6259af6d3afc",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b6ba8-ab38-4e86-a1b2-e09e009cee08",
@@ -2032,7 +2295,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03cf4c0-d452-45f8-b284-c585a7a47fb8",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b577d-8070-4a2c-9525-0c3ebf3a1516",
@@ -2042,7 +2305,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c0e11-54d4-4fd6-87f2-a08d2b2d4a22",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b0442-30f0-42c9-8e84-21e258bf707c",
@@ -2052,7 +2315,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c0e11-54d4-4fd6-87f2-a08d2b2d4a22",
     estPresentListeDeroulante: false,
     estSousType: true,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b9a38-c497-4abe-bfea-97fbdcc2c069",
@@ -2062,7 +2325,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03ceb19-f934-49ab-9c3b-76d0d59337c4",
     estPresentListeDeroulante: false,
     estSousType: true,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b5147-f07e-4ab1-b622-286a8d61765c",
@@ -2072,7 +2335,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c2ae6-1ae8-40b8-a9e8-6259af6d3afc",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b8ba5-7fa2-4496-9848-b2b1cc4730f5",
@@ -2082,7 +2345,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03cc823-a7c2-4ae9-8925-d336f8eaa62f",
     estPresentListeDeroulante: false,
     estSousType: true,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b5bb5-f3b8-4da4-8c0c-5caf4582ce4e",
@@ -2092,7 +2355,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03cc823-a7c2-4ae9-8925-d336f8eaa62f",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b27a1-2860-4dca-bfc1-860f6f68a746",
@@ -2102,7 +2365,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03cc823-a7c2-4ae9-8925-d336f8eaa62f",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b1767-8214-4f82-9b39-2893c15d598a",
@@ -2112,7 +2375,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c2ae6-1ae8-40b8-a9e8-6259af6d3afc",
     estPresentListeDeroulante: false,
     estSousType: true,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04bc6c1-0310-4129-b4ea-ffc04ac27819",
@@ -2123,7 +2386,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03cf4c0-d452-45f8-b284-c585a7a47fb8",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b4053-c092-4369-b07c-3fab08c1dcac",
@@ -2134,7 +2397,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c2ae6-1ae8-40b8-a9e8-6259af6d3afc",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04bdd7b-6771-4235-866e-4e270a7d9115",
@@ -2145,7 +2408,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03cf4c0-d452-45f8-b284-c585a7a47fb8",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04be753-4cad-470f-b09e-c4fd1d2f4412",
@@ -2155,7 +2418,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c2ae6-1ae8-40b8-a9e8-6259af6d3afc",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04ba3d6-879d-49df-a12a-ecc9885bc5a3",
@@ -2165,7 +2428,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03cf4c0-d452-45f8-b284-c585a7a47fb8",
     estPresentListeDeroulante: false,
     estSousType: true,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04bda57-d7c5-4b60-8555-8b61502ee9d8",
@@ -2175,7 +2438,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c0e11-54d4-4fd6-87f2-a08d2b2d4a22",
     estPresentListeDeroulante: false,
     estSousType: false,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04bddbd-20f3-4422-a8e2-14d9d392f521",
@@ -2185,7 +2448,7 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c0e11-54d4-4fd6-87f2-a08d2b2d4a22",
     estPresentListeDeroulante: false,
     estSousType: true,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   },
   {
     idTypeMention: "b04b3fd5-98fe-4ad4-b32b-951dcccce4c3",
@@ -2195,6 +2458,6 @@ export const TYPE_MENTION = [
     idNatureMention: "b03c07b4-922f-497d-83d8-434a09ee52ee",
     estPresentListeDeroulante: false,
     estSousType: true,
-    estSaisieAssistee: true
+    estSaisieAssistee: false
   }
 ] as ITypeMentionDto[];

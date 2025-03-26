@@ -12,11 +12,8 @@ import ConteneurModale from "../../../../commun/conteneurs/modale/ConteneurModal
 import { IMentionEnCours, IMiseAJourForm } from "../../PartieFormulaire";
 
 interface ITableauMentionsProps {
-  setAfficherOngletAnalyseMarginale: (afficher: boolean, mottf?: string) => void;
+  setAfficherOngletAnalyseMarginale: (afficher: boolean, motifMention: string) => void;
 }
-
-const formaterTexteMention = (texteMention: string): string =>
-  `${texteMention.charAt(0).toUpperCase()}${texteMention.substring(1)}${texteMention.endsWith(".") ? "" : "."}`;
 
 const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAnalyseMarginale }) => {
   const { setFieldValue, values, setValues, initialValues } = useFormikContext<IMiseAJourForm>();
@@ -61,6 +58,9 @@ const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAna
         )
       );
     }
+    setAfficherModaleAnalyseMarginale(
+      Boolean(TypeMention.getTypeMentionById(mentionEnCours.mention.idTypeMention)?.affecteAnalyseMarginale)
+    );
     setMentionEnCours(null);
     setModificationEnCours(false);
   }, [mentionEnCours]);
@@ -79,11 +79,15 @@ const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAna
       return;
     }
 
-    const motif = mentionAffectantAnalyseMarginale
+    const motifMention = mentionAffectantAnalyseMarginale
       ? `Suite à apposition de mention ${mentionAffectantAnalyseMarginale.libelle.split(" ")[0]}`
       : "";
-    setAfficherOngletAnalyseMarginale(Boolean(mentionAffectantAnalyseMarginale), motif);
-    motif ? setFieldValue("analyseMarginale.motif", motif) : setValues({ ...values, analyseMarginale: initialValues.analyseMarginale });
+
+    setAfficherOngletAnalyseMarginale(Boolean(mentionAffectantAnalyseMarginale), motifMention);
+
+    motifMention
+      ? setFieldValue("analyseMarginale.motif", motifMention)
+      : setValues({ ...values, analyseMarginale: initialValues.analyseMarginale });
   }, [values.mentions]);
 
   return (
@@ -188,5 +192,8 @@ const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAna
     </ConteneurAvecBordure>
   );
 };
+
+const formaterTexteMention = (texteMention: string): string =>
+  `${texteMention.charAt(0).toUpperCase()}${texteMention.substring(1)}${texteMention.endsWith(".") ? "" : "."}`;
 
 export default TableauMentions;
