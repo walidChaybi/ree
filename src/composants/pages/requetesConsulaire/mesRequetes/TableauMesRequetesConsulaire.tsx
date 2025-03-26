@@ -81,9 +81,7 @@ const EN_TETE_MES_REQUETES_CONSULAIRES: IEnTeteTableau[] = [
 ];
 
 const getPortionTableau = (tableau: TLigneTableau[], pageActuelle: number) => {
-  const indexPageActuelle = Math.floor(pageActuelle / DIVISEUR_POSITION_PAGE);
-
-  return tableau.slice(indexPageActuelle * LIGNE_PAR_PAGE, indexPageActuelle * LIGNE_PAR_PAGE + LIGNE_PAR_PAGE);
+  return tableau.slice(pageActuelle * LIGNE_PAR_PAGE, pageActuelle * LIGNE_PAR_PAGE + LIGNE_PAR_PAGE);
 };
 
 const TableauMesRequetesConsulaire: React.FC = () => {
