@@ -11,13 +11,10 @@ import EditionMiseAJourContextProvider from "../../../../contexts/EditionMiseAJo
 import { createTestingRouter, elementAvecContexte } from "../../../__tests__utils__/testsUtil";
 import { NATURE_MENTION } from "../../../mock/data/NomenclatureNatureMention";
 import { TYPE_MENTION } from "../../../mock/data/NomenclatureTypeMention";
-import { localStorageFeatureFlagMock } from "../../../setupTests";
 
 const idActe = "b41079a5-9e8d-478c-b04c-c4c4ey86537g";
 const idRequete = "931c715b-ede1-4895-ad70-931f2ac4e43d";
 describe("Tests du formulaire de mise à jour d'un acte", () => {
-  localStorageFeatureFlagMock.setItem("FF_AIDE_A_LA_SAISIE_MENTION", "true");
-
   NatureMention.init(NATURE_MENTION);
   TypeMention.init(TYPE_MENTION);
 

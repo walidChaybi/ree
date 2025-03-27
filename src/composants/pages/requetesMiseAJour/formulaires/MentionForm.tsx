@@ -6,8 +6,6 @@ import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IMetaModeleTypeMentionDto, MetaModeleTypeMention } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
 import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { logError } from "@util/LogManager";
-import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { Form, Formik } from "formik";
 import { useEffect, useMemo, useState } from "react";
 import * as Yup from "yup";
@@ -118,8 +116,6 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
     });
   }, [metamodeleTypeMention]);
 
-  const estFFAideSaisieMentionActif = useMemo(() => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_AIDE_A_LA_SAISIE_MENTION), []);
-
   useEffect(() => {
     if (!mentionModifiee) {
       return;
@@ -143,7 +139,7 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
       return;
     }
 
-    if (typeMentionChoisi?.aideSaisie && estFFAideSaisieMentionActif) {
+    if (typeMentionChoisi?.aideSaisie) {
       appelApiGetMetamodeleTypeMention({
         parametres: { path: { idTypeMention: typeMentionChoisi.id } },
         apresSucces: (metamodele: IMetaModeleTypeMentionDto) => {
@@ -220,7 +216,7 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
                   <ComposantChargeur />
                 ) : (
                   <>
-                    {estFFAideSaisieMentionActif && metamodeleTypeMention ? (
+                    {metamodeleTypeMention ? (
                       <AideALaSaisieMention metamodeleTypeMention={metamodeleTypeMention} />
                     ) : (
                       <ChampZoneTexte
