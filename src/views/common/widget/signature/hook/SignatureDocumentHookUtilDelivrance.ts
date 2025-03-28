@@ -113,7 +113,7 @@ function sendDocumentToSignature(
       gestionnaireSignatureFlag.getModeSignature()
     )
       ? gestionnaireSignatureFlag.getModeSignature()
-      : ModeSignature.CERTIGNA_SIGNED,
+      : ModeSignature.PKCS11_SIGNED,
     infos: documentsToSignWating[idRequetesToSign[0]].documentsToSign[0].infos,
     erreurSimulee: getErrorMock(),
     erreursSimulees: null

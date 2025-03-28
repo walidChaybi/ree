@@ -145,7 +145,7 @@ const Signature = {
           direction: "to-webextension",
           document: signerParams.parametres.document.contenu,
           pin: signerParams.parametres.codePin,
-          mode: ModeSignatureUtil.estValide(modeSignatureFF) ? modeSignatureFF : ModeSignature.CERTIGNA_SIGNED,
+          mode: ModeSignatureUtil.estValide(modeSignatureFF) ? modeSignatureFF : ModeSignature.PKCS11_SIGNED,
           infos: [
             { cle: "id", valeur: signerParams.parametres.document.id },
             { cle: "idRequete", valeur: signerParams.parametres.document.idRequete }
