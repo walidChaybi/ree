@@ -1,10 +1,7 @@
 import { useEnregistrerProjetActeApiHook } from "@hook/acte/EnregistrerProjetActeApiHook";
 import { useModifierProjetActeApiHook } from "@hook/acte/ModifierProjetActeApiHook";
 import { useRecupererProjetActeApiHook } from "@hook/acte/RecupererProjetActeApiHook";
-import {
-  IMiseAJourSuiviDossierParams,
-  useMiseAJourSuiviDossierApiHook
-} from "@hook/requete/MiseAJourSuiviDossierApiHook";
+import { IMiseAJourSuiviDossierParams, useMiseAJourSuiviDossierApiHook } from "@hook/requete/MiseAJourSuiviDossierApiHook";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { useEffect, useState } from "react";
@@ -26,16 +23,12 @@ export const useProjetActeHook = <TValeursForm>(
   numeroDossierNational?: string
 ): IProjetActeHookResultat<TValeursForm> => {
   const [projetActe, setProjetActe] = useState<IProjetActe>();
-  const [projetActeAEnregistrer, setProjetActeAEnregistrer] =
-    useState<IProjetActe>();
+  const [projetActeAEnregistrer, setProjetActeAEnregistrer] = useState<IProjetActe>();
   const [projetActeAModifier, setProjetActeAModifier] = useState<IProjetActe>();
-  const [miseAJourSuiviDossierParams, setMiseAJourSuiviDossierParams] =
-    useState<IMiseAJourSuiviDossierParams>();
+  const [miseAJourSuiviDossierParams, setMiseAJourSuiviDossierParams] = useState<IMiseAJourSuiviDossierParams>();
 
   const projetActeResultat = useRecupererProjetActeApiHook(idActe);
-  const projetActeEnregistre = useEnregistrerProjetActeApiHook(
-    projetActeAEnregistrer
-  );
+  const projetActeEnregistre = useEnregistrerProjetActeApiHook(projetActeAEnregistrer);
   const projetActeModife = useModifierProjetActeApiHook(projetActeAModifier);
   useMiseAJourSuiviDossierApiHook(miseAJourSuiviDossierParams);
 
@@ -68,14 +61,8 @@ export const useProjetActeHook = <TValeursForm>(
 
   const onClickActualiserProjet = (valeurs: TValeursForm) => {
     avancementProjetActe &&
-      (AvancementProjetActe.estASaisir(avancementProjetActe)
-        ? setProjetActeAEnregistrer
-        : setProjetActeAModifier)(
-        mappingSaisieProjetFormVersProjetActe(
-          valeurs,
-          numeroDossierNational,
-          projetActe
-        )
+      (AvancementProjetActe.estASaisir(avancementProjetActe) ? setProjetActeAEnregistrer : setProjetActeAModifier)(
+        mappingSaisieProjetFormVersProjetActe(valeurs, numeroDossierNational, projetActe)
       );
   };
 

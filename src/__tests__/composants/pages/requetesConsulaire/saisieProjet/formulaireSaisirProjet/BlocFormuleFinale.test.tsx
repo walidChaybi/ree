@@ -2,7 +2,7 @@ import { Identite } from "@model/etatcivil/enum/Identite";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Formik } from "formik";
 import { describe, expect, test } from "vitest";
-import BlocFormuleFinale from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisirProjet/BlocFormuleFinale";
+import BlocFormuleFinale from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisieProjet/BlocFormuleFinale";
 
 describe("BlocFormuleFinale", () => {
   const renderComponentPere = () => {

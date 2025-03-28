@@ -22,6 +22,7 @@ export interface IParent {
   nomNaissance?: string;
   nom?: string;
   prenoms?: IPrenomOrdonnes[];
+  prenomsChemin?: { [prenom: string]: string };
   dateNaissance?: IDateForm | null;
   lieuNaissance?: ILocalisation;
   profession?: string;

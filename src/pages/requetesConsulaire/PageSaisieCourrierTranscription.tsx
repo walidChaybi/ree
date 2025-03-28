@@ -104,7 +104,7 @@ const PageSaisieCourrierTranscription: React.FC = () => {
       {requeteModifiee !== false && (
         <div className="mx-auto mt-4 max-w-[120rem]">
           <Formik<ISaisieRequeteRCTCForm>
-            initialValues={SaisieRequeteRCTCForm.valeursDefauts(requeteModifiee)}
+            initialValues={SaisieRequeteRCTCForm.valeursInitiales(requeteModifiee)}
             enableReinitialize
             validationSchema={SaisieRequeteRCTCForm.schemaValidation}
             onSubmit={values =>

@@ -3,13 +3,13 @@ import { Option } from "@util/Type";
 import { useFormikContext } from "formik";
 import { useEffect, useMemo } from "react";
 
+import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import ChampListeDeroulante from "../../../../commun/champs/ChampListeDeroulante";
+import ChampTexte from "../../../../commun/champs/ChampTexte";
 import ChampsPrenoms from "../../../../commun/champs/ChampsPrenoms";
 import ChampsRadio from "../../../../commun/champs/ChampsRadio";
-import ChampTexte from "../../../../commun/champs/ChampTexte";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import SeparateurSection from "../../../../commun/conteneurs/formulaire/SeparateurSection";
-import { ISaisieProjetActeForm } from "./FormulaireSaisirProjet";
 
 const optionsDemandeur: Option[] = [
   { cle: Identite.getKey(Identite.PERE), libelle: Identite.PERE.libelle },
@@ -39,7 +39,7 @@ const optionsModeDepot: Option[] = [
 const optionsIdentiteTransmetteur: Option[] = [{ cle: "IDENTIQUE_DEMANDEUR", libelle: "Identique au demandeur" }];
 
 const BlocFormuleFinale: React.FC = () => {
-  const { values, setFieldValue, setFieldTouched, initialValues } = useFormikContext<ISaisieProjetActeForm>();
+  const { values, setFieldValue, setFieldTouched, initialValues } = useFormikContext<IProjetActeTranscritForm>();
   const estUnTier = useMemo(
     () => values.formuleFinale?.identiteDemandeur === Identite.getKey(Identite.TIERS),
     [values.formuleFinale.identiteDemandeur]

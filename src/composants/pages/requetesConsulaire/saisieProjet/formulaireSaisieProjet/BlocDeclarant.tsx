@@ -1,5 +1,8 @@
+/* istanbul ignore file */
+/* v8 ignore start a faire Lundi 31 Mars @ Adrien_Bonvin */
 import { Identite } from "@model/etatcivil/enum/Identite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { Option } from "@util/Type";
 import { useFormikContext } from "formik";
 import React, { useEffect, useMemo } from "react";
@@ -12,25 +15,19 @@ import ChampsPrenoms from "../../../../commun/champs/ChampsPrenoms";
 import ChampsRadio from "../../../../commun/champs/ChampsRadio";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import SeparateurSection from "../../../../commun/conteneurs/formulaire/SeparateurSection";
-import { ISaisieProjetActeForm } from "./FormulaireSaisirProjet";
 
-const optionsDeclarant: Option[] = [
-  { cle: Identite.getKey(Identite.PERE), libelle: Identite.PERE.libelle },
-  { cle: Identite.getKey(Identite.MERE), libelle: Identite.MERE.libelle },
-  { cle: Identite.getKey(Identite.PERE_ET_MERE), libelle: Identite.PERE_ET_MERE.libelle },
-  { cle: Identite.getKey(Identite.TIERS), libelle: Identite.TIERS.libelle }
-];
+const optionsDeclarant: Option[] = Identite.getAllEnumsAsOptions();
 
 const BlocDeclarant: React.FC = () => {
-  const { values, setFieldValue, setFieldTouched, initialValues } = useFormikContext<ISaisieProjetActeForm>();
+  const { values, setFieldValue, setFieldTouched, initialValues } = useFormikContext<IProjetActeTranscritForm>();
   const estDeclarantTiers = useMemo(() => values.declarant.identite === Identite.getKey(Identite.TIERS), [values.declarant.identite]);
 
   useEffect(() => {
     if (!estDeclarantTiers) {
       setFieldValue("declarant", { ...initialValues.declarant, identite: values.declarant.identite });
-      setFieldTouched("declarant.nom", false);
+      setFieldTouched("declarant.nom", false, false);
     }
-  }, [values.declarant.identite]);
+  }, [estDeclarantTiers]);
 
   useEffect(() => {
     if (values.declarant?.sansProfession) {
@@ -70,10 +67,7 @@ const BlocDeclarant: React.FC = () => {
             <ChampsRadio
               name="declarant.sexe"
               libelle="Sexe"
-              options={[
-                { libelle: Sexe.MASCULIN.libelle, cle: Sexe.getKey(Sexe.MASCULIN) },
-                { libelle: Sexe.FEMININ.libelle, cle: Sexe.getKey(Sexe.FEMININ) }
-              ]}
+              options={Sexe.getMasculinFemininAsOptions()}
             />
             <ChampTexte
               className="w-1/2"
@@ -95,7 +89,7 @@ const BlocDeclarant: React.FC = () => {
               name="declarant.profession"
               libelle="Profession"
               data-testid="declarant-profession"
-              disabled={values.declarant.sansProfession ?? false}
+              disabled={values.declarant.sansProfession}
             />
             <div className="w-full pt-[2rem] text-start">
               <ChampCaseACocher
@@ -122,7 +116,7 @@ const BlocDeclarant: React.FC = () => {
           <ChampZoneTexte
             name="declarant.complement"
             libelle=""
-            placeholder="Ex: Chez qui l'accouchement à eu lieu"
+            placeholder="Ex: Chez qui l'accouchement a eu lieu"
             maxLength={250}
             typeRedimensionnement="fixe"
           />
@@ -133,3 +127,5 @@ const BlocDeclarant: React.FC = () => {
 };
 
 export default BlocDeclarant;
+
+/* v8 ignore end */

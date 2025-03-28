@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Formik } from "formik";
 import { describe, expect, test } from "vitest";
-import BlocMentions from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisirProjet/BlocMentions";
+import BlocMentions from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisieProjet/BlocMentions";
 describe("BlocMentions", () => {
   const renderComponent = () => {
     return render(

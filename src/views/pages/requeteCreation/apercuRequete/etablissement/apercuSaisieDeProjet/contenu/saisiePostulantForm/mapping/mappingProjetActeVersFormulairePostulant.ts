@@ -50,7 +50,7 @@ import { IDeclarant } from "@model/etatcivil/acte/IDeclarant";
 import { IDecretNaturalisation } from "@model/etatcivil/acte/IDecretNaturalisation";
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { IProjetAnalyseMarginale } from "@model/etatcivil/acte/projetActe/IAnalyseMarginaleProjetActe";
-import { IProjetFiliation } from "@model/etatcivil/acte/projetActe/IFiliationProjetActe";
+import { IFiliationProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/IFiliationProjetActe";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { ITitulaireProjetActe } from "@model/etatcivil/acte/projetActe/ITitulaireProjetActe";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
@@ -141,7 +141,7 @@ function mapSaisiePostulant(
   };
 }
 
-function mapSaisieParent(parent?: IProjetFiliation): ISaisieParentSousForm | undefined {
+function mapSaisieParent(parent?: IFiliationProjetActeTranscrit): ISaisieParentSousForm | undefined {
   return parent
     ? {
         [NOM]: getValeurOuVide(parent.nom).toUpperCase(),

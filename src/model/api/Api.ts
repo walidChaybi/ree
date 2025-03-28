@@ -72,6 +72,7 @@ export type TConfigurationApi<
   api: TApi;
   methode: TMethodeHttp;
   uri: TUri;
+  avecAxios?: boolean;
 };
 
 export type TAppelApi<

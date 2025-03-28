@@ -71,7 +71,6 @@ export function useDetailRequeteApiHook(params?: IDetailRequeteParams) {
       );
     }
   }, [params]);
-
   return {
     detailRequeteState
   };

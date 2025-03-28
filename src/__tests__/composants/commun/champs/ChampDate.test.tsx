@@ -64,7 +64,7 @@ describe("ChampHeure", () => {
   const renderComponent = (name = "test", libelle = "Date de naissance") => {
     return render(
       <Formik
-        initialValues={{ test: { jour: "", mois: "", annee: "", heure: "", minutes: "" } }}
+        initialValues={{ test: { jour: "", mois: "", annee: "", heure: "", minute: "" } }}
         onSubmit={() => {}}
       >
         <ChampDate
@@ -88,12 +88,12 @@ describe("ChampHeure", () => {
     fireEvent.change(heureInput, { target: { value: "12" } });
     fireEvent.blur(heureInput);
 
-    const minutesInput: HTMLInputElement = screen.getByPlaceholderText("MN");
-    fireEvent.change(minutesInput, { target: { value: "5" } });
-    fireEvent.blur(minutesInput);
+    const minuteInput: HTMLInputElement = screen.getByPlaceholderText("MN");
+    fireEvent.change(minuteInput, { target: { value: "5" } });
+    fireEvent.blur(minuteInput);
 
     await waitFor(() => {
-      expect(minutesInput.value).toBe("05");
+      expect(minuteInput.value).toBe("05");
       expect(heureInput.value).toBe("12");
     });
   });
@@ -109,9 +109,9 @@ describe("ChampHeure", () => {
   test.skip("Change le focus du champ heure lorsque les deux chiffres sont entrés", async () => {
     renderComponent();
     const heureInput = screen.getByPlaceholderText("HH");
-    const minutesInput = screen.getByPlaceholderText("MN");
+    const minuteInput = screen.getByPlaceholderText("MN");
     fireEvent.change(heureInput, { target: { value: "11" } });
-    expect(document.activeElement).toBe(minutesInput);
+    expect(document.activeElement).toBe(minuteInput);
   });
 });
 
@@ -119,7 +119,7 @@ describe("Champs initialisés avec valeurs", () => {
   const renderComponentAvecValeurs = (name = "test", libelle = "Date de test") => {
     return render(
       <Formik
-        initialValues={{ test: { jour: "14", mois: "07", annee: "2010", heure: "16", minutes: "39" } }}
+        initialValues={{ test: { jour: "14", mois: "07", annee: "2010", heure: "16", minute: "39" } }}
         onSubmit={() => {}}
       >
         <ChampDate
@@ -137,14 +137,14 @@ describe("Champs initialisés avec valeurs", () => {
     const moisInput: HTMLInputElement = screen.getByPlaceholderText("MM");
     const anneeInput: HTMLInputElement = screen.getByPlaceholderText("AAAA");
     const heureInput: HTMLInputElement = screen.getByPlaceholderText("HH");
-    const minutesInput: HTMLInputElement = screen.getByPlaceholderText("MN");
+    const minuteInput: HTMLInputElement = screen.getByPlaceholderText("MN");
 
     await waitFor(() => {
       expect(jourInput.value).toBe("14");
       expect(moisInput.value).toBe("07");
       expect(anneeInput.value).toBe("2010");
       expect(heureInput.value).toBe("16");
-      expect(minutesInput.value).toBe("39");
+      expect(minuteInput.value).toBe("39");
     });
   });
 });

@@ -9,8 +9,6 @@ import { IMention } from "../mention/IMention";
 import { IProjetAnalyseMarginale } from "./IAnalyseMarginaleProjetActe";
 import { ITitulaireProjetActe } from "./ITitulaireProjetActe";
 
-// TODO: Ne devrait-on pas l'appeler IActe ?
-// Puisque qu'un projet d'acte est juste un acte au statut BROUILLON
 export interface IProjetActe {
   id: string;
   titulaires: ITitulaireProjetActe[];

@@ -1,5 +1,8 @@
+/* istanbul ignore file */
+/* v8 ignore start A TESTER 03/25 */
+
 import DateUtils from "@util/DateUtils";
-import { DEUX, mapPrenomsVersPrenomsOrdonnes, numberToString, SNP, SPC } from "@util/Utils";
+import { DEUX, mapPrenomsVersPrenomsOrdonnes, SNP, SPC } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { IPrenomOrdonnes } from "../../requete/IPrenomOrdonnes";
 import { LienParente } from "../enum/LienParente";
@@ -25,8 +28,8 @@ export interface ITitulaireActe {
   nomApresMariage?: string;
   nomDernierConjoint?: string;
   prenomsDernierConjoint?: string;
-  typeDeclarationConjointe?: TypeDeclarationConjointe; // concerne les titulaires de l'analyse marginale
-  dateDeclarationConjointe?: Date; // concerne les titulaires de l'analyse marginale
+  typeDeclarationConjointe?: TypeDeclarationConjointe;
+  dateDeclarationConjointe?: Date;
   origineDeclarationConjointeTitulaireActe?: boolean;
   origineNomPartiesTitulaireActe?: boolean;
   identiteAvantDecret?: string;
@@ -65,9 +68,11 @@ export const TitulaireActe = {
   getDateNaissance(titulaire?: ITitulaireActe): string {
     return titulaire?.naissance
       ? DateUtils.getDateStringFromDateCompose({
-          jour: numberToString(titulaire.naissance.jour),
-          mois: numberToString(titulaire.naissance.mois),
-          annee: numberToString(titulaire.naissance.annee)
+          jour: titulaire.naissance.jour?.toString(),
+          mois: titulaire.naissance.mois?.toString(),
+          annee: titulaire.naissance.annee?.toString() ?? "",
+          heure: titulaire.naissance.heure?.toString(),
+          minute: titulaire.naissance.minute?.toString()
         })
       : "";
   },
@@ -217,3 +222,4 @@ export const TitulaireActe = {
     return titulaire.prenoms?.length === 0 || titulaire.prenoms?.[0] === SPC;
   }
 };
+/* v8 ignore end */

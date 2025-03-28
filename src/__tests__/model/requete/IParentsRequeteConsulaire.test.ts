@@ -1,10 +1,10 @@
-import { ParentsRequeteConsulaire } from "@model/requete/IParentsRequeteConsulaire";
+import { ParentsRequeteTranscription } from "@model/requete/IParentsRequeteTranscription";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { describe, expect, test } from "vitest";
 
 describe("ParentsRequeteConsulaire", () => {
   test("doit retourner undefined quand pas de titulaires", () => {
-    expect(ParentsRequeteConsulaire.getParentsDepuisTitulaires()).toBeUndefined();
+    expect(ParentsRequeteTranscription.getParentsRequeteTranscription()).toBeUndefined();
   });
 
   test("doit formatter parents avec une seule mère", () => {
@@ -16,7 +16,7 @@ describe("ParentsRequeteConsulaire", () => {
       }
     ] as ITitulaireRequeteCreation[];
 
-    const result = ParentsRequeteConsulaire.getParentsDepuisTitulaires(titulaires);
+    const result = ParentsRequeteTranscription.getParentsRequeteTranscription(titulaires);
 
     expect(result).toEqual({
       parent1: {},
@@ -38,7 +38,7 @@ describe("ParentsRequeteConsulaire", () => {
       }
     ] as ITitulaireRequeteCreation[];
 
-    const result = ParentsRequeteConsulaire.getParentsDepuisTitulaires(titulaires);
+    const result = ParentsRequeteTranscription.getParentsRequeteTranscription(titulaires);
 
     expect(result).toEqual({
       parent1: titulaires[0],

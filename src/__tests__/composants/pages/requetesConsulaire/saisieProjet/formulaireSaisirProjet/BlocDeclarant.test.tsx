@@ -2,7 +2,7 @@ import { Identite } from "@model/etatcivil/enum/Identite";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Formik } from "formik";
 import { describe, expect, test } from "vitest";
-import BlocDeclarant from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisirProjet/BlocDeclarant";
+import BlocDeclarant from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisieProjet/BlocDeclarant";
 
 describe("BlocDeclarant", () => {
   const renderComponentVide = () => {

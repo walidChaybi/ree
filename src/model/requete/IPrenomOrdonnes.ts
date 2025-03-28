@@ -1,3 +1,4 @@
+import { IPrenomsNumerotes, TPrenomNumerote } from "@model/form/commun/PrenomsForm";
 import { UN } from "@util/Utils";
 
 export interface IPrenomOrdonnes {
@@ -11,5 +12,10 @@ export const PrenomsOrdonnes = {
     prenoms.map((prenom: string, position: number) => ({
       prenom: prenom,
       numeroOrdre: position + UN
+    })),
+  listeDepuisObjet: (prenoms: IPrenomsNumerotes): IPrenomOrdonnes[] =>
+    (Object.keys(prenoms) as TPrenomNumerote[]).map((cle, position) => ({
+      prenom: prenoms[cle],
+      numeroOrdre: position + 1
     }))
 } as const;

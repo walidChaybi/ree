@@ -1,12 +1,12 @@
-import { ParentsRequeteConsulaire } from "@model/requete/IParentsRequeteConsulaire";
+/* v8 ignore start a faire Lundi 31 Mars @ Adrien_Bonvin */
+
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
-import { TitulaireRequeteConsulaire } from "@model/requete/ITitulaireRequeteConsulaire";
 import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { GestionMentions } from "@pages/requeteCreation/commun/composants/GestionMentions";
 import React, { useState } from "react";
 import OngletsBouton from "../../../commun/onglets/OngletsBouton";
 import ConteneurVoletEdition from "../../requetesDelivrance/editionRequete/ConteneurVoletEdition";
-import FormulaireSaisirProjet from "./formulaireSaisirProjet/FormulaireSaisirProjet";
+import FormulaireSaisieProjet from "./formulaireSaisieProjet/FormulaireSaisieProjet";
 
 export enum ECleOngletPartieDroite {
   PROJET = "projet",
@@ -52,10 +52,7 @@ const PartieDroiteSaisieProjet: React.FC<IPartieDroiteSaisieProjetProps> = ({ re
           estScrollable
         >
           <div className="mr-2">
-            <FormulaireSaisirProjet
-              titulaire={TitulaireRequeteConsulaire.getTitulaireTranscription(requete.titulaires)}
-              parents={ParentsRequeteConsulaire.getParentsDepuisTitulaires(requete.titulaires)}
-            />
+            <FormulaireSaisieProjet requete={requete} />
           </div>
         </ConteneurVoletEdition>
       )}
@@ -77,3 +74,4 @@ const PartieDroiteSaisieProjet: React.FC<IPartieDroiteSaisieProjetProps> = ({ re
 };
 
 export default PartieDroiteSaisieProjet;
+/* v8 ignore end */

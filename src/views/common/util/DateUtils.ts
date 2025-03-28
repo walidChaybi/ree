@@ -16,6 +16,8 @@ export interface IDateCompose {
   jour?: string;
   mois?: string;
   annee: string;
+  heure?: string;
+  minute?: string;
 }
 
 export type TDateArrayDTO = [annee: number, month: number, jour: number];

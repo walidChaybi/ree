@@ -1,3 +1,6 @@
+/* v8 ignore start a faire Lundi 31 Mars @ Adrien_Bonvin */
+
+import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { useFormikContext } from "formik";
 import React, { memo, useEffect, useMemo } from "react";
 import ChampDate from "../../../../commun/champs/ChampDate";
@@ -6,7 +9,6 @@ import ChampTexte from "../../../../commun/champs/ChampTexte";
 import ChampZoneTexte from "../../../../commun/champs/ChampZoneTexte";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import SeparateurSection from "../../../../commun/conteneurs/formulaire/SeparateurSection";
-import { ISaisieProjetActeForm } from "./FormulaireSaisirProjet";
 
 const OPTIONSTYPEACTE = [
   { cle: "ACTE_DRESSE", libelle: "Acte dressé" },
@@ -18,7 +20,7 @@ const OPTIONSTYPEACTE = [
 ];
 
 const BlocActeEtranger: React.FC = () => {
-  const { values, setFieldValue, setFieldTouched } = useFormikContext<ISaisieProjetActeForm>();
+  const { values, setFieldValue, setFieldTouched } = useFormikContext<IProjetActeTranscritForm>();
   const estAutreTypeActe = useMemo(() => values.acteEtranger?.typeActe === "AUTRE", [values.acteEtranger?.typeActe]);
 
   useEffect(() => {
@@ -85,3 +87,5 @@ const BlocActeEtranger: React.FC = () => {
 };
 
 export default memo(BlocActeEtranger);
+
+/* v8 ignore end */

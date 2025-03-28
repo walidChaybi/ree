@@ -3,6 +3,8 @@ export interface IDateForm {
   jour: string;
   mois: string;
   annee: string;
+  heure?: string;
+  minute?: string;
 }
 
 export const DateForm = {

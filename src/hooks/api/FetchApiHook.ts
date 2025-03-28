@@ -2,6 +2,7 @@ import { GestionnaireApi } from "@api/GestionnaireApi";
 import { TAppelApi, TBaseUri, TConfigurationApi, TReponseApiEchec, TReponseApiSucces } from "@model/api/Api";
 
 import { useState } from "react";
+import API from "../../utils/AppelApi";
 
 const useFetchApi = <
   TUri extends TBaseUri,
@@ -25,6 +26,33 @@ const useFetchApi = <
     }
 
     !forcerAppelsMultiples && setEnAttenteDeReponseApi(true);
+    /* istanbul ignore file */
+    /* v8 ignore start a faire Lundi 31 Mars @ Adrien_Bonvin */
+    if (configuration.avecAxios) {
+      API.appel({
+        api: configuration.api,
+        configurationRequete: {
+          methode: configuration.methode,
+          uri: configuration.uri,
+          ...parametres
+        }
+      })
+        .then(reponse => {
+          const { data, headers } = reponse as TReponseApiSucces<TResultat>;
+          apresSucces?.(data, headers);
+        })
+        .catch(erreur => {
+          const { erreurs, status } = erreur as TReponseApiEchec;
+          apresErreur?.(erreurs, status);
+        })
+        .finally(() => {
+          finalement && finalement();
+          setEnAttenteDeReponseApi(false);
+          !forcerAppelsMultiples && setEnAttenteDeReponseApi(false);
+        });
+      return;
+    }
+    /* v8 ignore end */
 
     GestionnaireApi.getInstance(configuration.api.nom, configuration.api.version)
       .fetch({

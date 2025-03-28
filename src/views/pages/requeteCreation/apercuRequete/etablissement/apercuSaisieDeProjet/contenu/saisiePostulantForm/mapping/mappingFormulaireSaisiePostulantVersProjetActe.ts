@@ -2,7 +2,7 @@ import { IAdresse } from "@model/etatcivil/acte/IAdresse";
 import { IDeclarant } from "@model/etatcivil/acte/IDeclarant";
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { IProjetAnalyseMarginale } from "@model/etatcivil/acte/projetActe/IAnalyseMarginaleProjetActe";
-import { IProjetFiliation } from "@model/etatcivil/acte/projetActe/IFiliationProjetActe";
+import { IFiliationProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/IFiliationProjetActe";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { ITitulaireProjetActe } from "@model/etatcivil/acte/projetActe/ITitulaireProjetActe";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
@@ -122,7 +122,7 @@ export function mapPostulantVersTitulaireProjetActe(
   } as ITitulaireProjetActe;
 }
 
-export function getFiliationParParent(parentForm: ISaisieParentSousForm, ordre: number): IProjetFiliation {
+export function getFiliationParParent(parentForm: ISaisieParentSousForm, ordre: number): IFiliationProjetActeTranscrit {
   const prenoms = getPrenomsTableauStringVersPrenomsOrdonnes(parentForm.prenom.prenoms).map(p => p.prenom);
   return {
     lienParente: LienParente.PARENT,
@@ -132,7 +132,7 @@ export function getFiliationParParent(parentForm: ISaisieParentSousForm, ordre: 
     naissance: getFiliationNaissance(parentForm) as IEvenement,
     age: parseInt(parentForm.dateNaissance.age) || null,
     prenoms: prenoms.length ? prenoms.map(prenom => prenom.trim()) : null
-  } as IProjetFiliation;
+  } as IFiliationProjetActeTranscrit;
 }
 
 export function getFiliationNaissance(parentForm: ISaisieParentSousForm) {
@@ -164,8 +164,8 @@ export function getRegionNaissanceFiliation(parentForm: ISaisieParentSousForm) {
   }
 }
 
-export function getFiliation(acte: ISaisieProjetPostulantForm): IProjetFiliation[] {
-  let filiation: IProjetFiliation[] = [];
+export function getFiliation(acte: ISaisieProjetPostulantForm): IFiliationProjetActeTranscrit[] {
+  let filiation: IFiliationProjetActeTranscrit[] = [];
   const listeParents: ISaisieParentSousForm[] = [];
   acte.parents.parent1 && estParentRenseigne(acte.parents.parent1) && listeParents.push(acte.parents.parent1);
   acte.parents.parent2 && estParentRenseigne(acte.parents.parent2) && listeParents.push(acte.parents.parent2);

@@ -1,6 +1,6 @@
 /* v8 ignore start A TESTER 03/25 */
 
-type TPrenomNumerote = `prenom${number}`;
+export type TPrenomNumerote = `prenom${number}`;
 
 export interface IPrenomsNumerotes {
   [prenom: TPrenomNumerote]: string;

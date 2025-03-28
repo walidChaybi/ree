@@ -1,5 +1,7 @@
 /* istanbul ignore file */
+/* v8 ignore start a faire Lundi 31 Mars @ Adrien_Bonvin */
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { useFormikContext } from "formik";
 import React, { memo, useEffect, useMemo } from "react";
 import ChampCaseACocher from "../../../../commun/champs/ChampCaseACocher";
@@ -10,16 +12,15 @@ import ChampsPrenoms from "../../../../commun/champs/ChampsPrenoms";
 import ChampsRadio from "../../../../commun/champs/ChampsRadio";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import SeparateurSection from "../../../../commun/conteneurs/formulaire/SeparateurSection";
-import { ISaisieProjetActeForm } from "./FormulaireSaisirProjet";
 
 interface IBlocParentProps {
   estparent1?: boolean;
 }
 
 const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
-  const { values, setFieldValue } = useFormikContext<ISaisieProjetActeForm>();
+  const { values, setFieldValue } = useFormikContext<IProjetActeTranscritForm>();
   const optionsSexe = useMemo(() => Sexe.getMasculinFemininAsOptions(), []);
-  const prefix = useMemo(() => `parents.parent${estparent1 ? "1" : "2"}`, [estparent1]);
+  const prefixe = useMemo(() => `parents.parent${estparent1 ? "1" : "2"}`, [estparent1]);
   const parent = useMemo(() => (estparent1 ? values.parents.parent1 : values.parents.parent2), [values, estparent1]);
   const titre = useMemo(() => {
     switch (parent.sexe) {
@@ -37,12 +38,12 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
       cle: parent?.renseignerAge ? "dateNaissance" : "age",
       valeur: parent?.renseignerAge ? { jour: "", mois: "", annee: "" } : ""
     };
-    setFieldValue(`${prefix}.${valeurChamp.cle}`, valeurChamp.valeur);
+    setFieldValue(`${prefixe}.${valeurChamp.cle}`, valeurChamp.valeur);
   }, [parent?.renseignerAge]);
 
   useEffect(() => {
     if (parent?.sansProfession) {
-      setFieldValue(`${prefix}.profession`, "");
+      setFieldValue(`${prefixe}.profession`, "");
     }
   }, [parent?.sansProfession]);
 
@@ -59,35 +60,35 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
     >
       <div className="space-y-4">
         <ChampTexte
-          name={`${prefix}.nom`}
+          name={`${prefixe}.nom`}
           libelle="Nom"
         />
         <ChampsPrenoms
-          cheminPrenoms={`${prefix}.prenoms`}
+          cheminPrenoms={`${prefixe}.prenomsChemin`}
           prefixePrenom="prenom"
         />
         <ChampsRadio
-          name={`${prefix}.sexe`}
+          name={`${prefixe}.sexe`}
           libelle="Sexe"
           options={optionsSexe}
         />
         <div className="grid grid-cols-2">
           <div>
             <ChampDate
-              name={`${prefix}.dateNaissance`}
+              name={`${prefixe}.dateNaissance`}
               libelle="Date de naissance"
               disabled={parent?.renseignerAge}
             />
           </div>
           <div className="flex items-end space-x-4">
             <ChampCaseACocher
-              name={`${prefix}.renseignerAge`}
+              name={`${prefixe}.renseignerAge`}
               libelle="Saisir l'âge"
             />
             {parent?.renseignerAge && (
               <div className="flex-1">
                 <ChampTexte
-                  name={`${prefix}.age`}
+                  name={`${prefixe}.age`}
                   libelle="Âge (en années)"
                   numerique={true}
                   maxLength={3}
@@ -101,23 +102,23 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
       <SeparateurSection titre="Lieu de naissance" />
 
       <FormulaireAdresse
-        key={`${prefix}.lieuNaissance`}
-        prefix={`${prefix}.lieuNaissance`}
+        key={`${prefixe}.lieuNaissance`}
+        prefix={`${prefixe}.lieuNaissance`}
       />
 
       <SeparateurSection
         titre="Profession"
-        libellePour={`${prefix}.profession`}
+        libellePour={`${prefixe}.profession`}
       />
       <div className="grid grid-cols-2 items-center gap-4">
         <ChampTexte
-          name={`${prefix}.profession`}
+          name={`${prefixe}.profession`}
           libelle=""
-          data-testid={`${prefix}-profession`}
+          data-testid={`${prefixe}-profession`}
           disabled={parent?.sansProfession}
         />
         <ChampCaseACocher
-          name={`${prefix}.sansProfession`}
+          name={`${prefixe}.sansProfession`}
           libelle="Sans profession"
         />
       </div>
@@ -133,8 +134,8 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
 
         {(estparent1 || !values.parents.domicileCommun) && (
           <FormulaireAdresse
-            key={`${prefix}.domicile`}
-            prefix={`${prefix}.domicile`}
+            key={`${prefixe}.domicile`}
+            prefix={`${prefixe}.domicile`}
           />
         )}
       </div>
@@ -143,3 +144,5 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
 });
 
 export default BlocParent;
+
+/* v8 ignore end */

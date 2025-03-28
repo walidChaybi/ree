@@ -2,7 +2,7 @@ import { TypeDeclarationConjointe } from "@model/etatcivil/enum/TypeDeclarationC
 import { IAdresse } from "../IAdresse";
 import { IDecretNaturalisation } from "../IDecretNaturalisation";
 import { IEvenement } from "../IEvenement";
-import { IProjetFiliation } from "./IFiliationProjetActe";
+import { IFiliationProjetActeTranscrit } from "./IFiliationProjetActe";
 export interface ITitulaireProjetActe {
   nom?: string;
   ordre: number;
@@ -12,7 +12,7 @@ export interface ITitulaireProjetActe {
   age?: number | null;
   profession?: string;
   domicile?: IAdresse;
-  filiations: IProjetFiliation[];
+  filiations: IFiliationProjetActeTranscrit[];
   nomPartie1?: string;
   nomPartie2?: string;
   nomAvantMariage?: string;

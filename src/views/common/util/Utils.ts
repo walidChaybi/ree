@@ -422,6 +422,7 @@ export const getNombreOuUndefined = (nombreStr?: string): number | undefined => 
   return isNaN(nombre) ? undefined : nombre;
 };
 
+/** @deprecated A éviter, le 10 est le comportement par defaut de parseInt, et l'opération trop simple pour justifier une fonction */
 export const getNombreOuNull = (nombreStr?: string): number | null => {
   const nombre = parseInt(nombreStr ?? "", DIX);
   return isNaN(nombre) ? null : nombre;

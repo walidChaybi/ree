@@ -18,7 +18,7 @@ const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
     <ConteneurAvecBordure className="py-6">
       <div className="grid grid-cols-2 gap-4 text-start">
         <ChampTexte
-          name="titulaire.nomNaissance"
+          name="titulaire.nomActeEtranger"
           libelle="Nom sur l'acte étranger"
         />
         <div className="grid w-full gap-4 text-start">
@@ -31,14 +31,14 @@ const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
       </div>
       <div className="grid grid-cols-1 pt-4">
         <ChampsNomSecable
-          nom={{ name: "titulaire.nomOEC", libelle: "Nom retenu par l'OEC" }}
-          secable={{ name: "titulaire.secable", libelle: "Nom sécable" }}
+          nom={{ name: "titulaire.nomRetenuOEC", libelle: "Nom retenu par l'OEC" }}
+          secable={{ name: "titulaire.nomSecable.secable", libelle: "Nom sécable" }}
           nomPartie1={{
-            name: "nomSecable.nomPartie1",
+            name: "titulaire.nomSecable.nomPartie1",
             libelle: "Nom 1re partie"
           }}
           nomPartie2={{
-            name: "nomSecable.nomPartie2",
+            name: "titulaire.nomSecable.nomPartie2",
             libelle: "Nom 2nde partie"
           }}
           estObligatoire

@@ -1,0 +1,5 @@
+export enum CadreNaissance {
+  NE_DANS_LE_MARIAGE = "NE_DANS_LE_MARIAGE",
+  NE_HORS_MARIAGE = "NE_HORS_MARIAGE",
+  A_COMPLETE = "A_COMPLETE"
+}

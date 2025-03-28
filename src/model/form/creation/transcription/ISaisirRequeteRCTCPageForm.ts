@@ -59,7 +59,7 @@ export interface IParentFormRCTC {
 }
 
 const ParentRCTCForm = {
-  valeursDefauts: (parent: ITitulaireRequeteCreation | null): IParentFormRCTC => {
+  valeursInitiales: (parent: ITitulaireRequeteCreation | null): IParentFormRCTC => {
     const donneesLieuNaissance = (() => {
       const estFrance = parent?.paysNaissance === "France";
       const regionDepartement = parent?.regionNaissance ?? "";
@@ -92,7 +92,7 @@ const ParentRCTCForm = {
         etatProvince: donneesLieuNaissance.region,
         pays: parent?.paysNaissance ?? ""
       },
-      nationalites: NationalitesForm.valeursDefauts()
+      nationalites: NationalitesForm.valeursDefauts(parent?.nationalites)
     };
   },
 
@@ -224,7 +224,7 @@ export interface ISaisieRequeteRCTCForm {
 }
 
 export const SaisieRequeteRCTCForm = {
-  valeursDefauts: (requete: IRequeteConsulaire | null): ISaisieRequeteRCTCForm => {
+  valeursInitiales: (requete: IRequeteConsulaire | null): ISaisieRequeteRCTCForm => {
     const titulaire = requete?.titulaires[0] ?? null;
     const parent1 = requete?.titulaires[1] ?? null;
     const parent2 = requete?.titulaires[2] ?? null;
@@ -281,9 +281,9 @@ export const SaisieRequeteRCTCForm = {
         }
       },
       parents: {
-        parent1: ParentRCTCForm.valeursDefauts(parent1),
+        parent1: ParentRCTCForm.valeursInitiales(parent1),
         avecParent2: Boolean(parent2),
-        parent2: ParentRCTCForm.valeursDefauts(parent2),
+        parent2: ParentRCTCForm.valeursInitiales(parent2),
         mariage: {
           idMariageParent1: mariageParent1?.id,
           idMariageParent2: mariageParent2?.id,

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Formik } from "formik";
 import { describe, expect, test } from "vitest";
-import BlocAutresEnonciations from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisirProjet/BlocAutresEnonciations";
+import BlocAutresEnonciations from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisieProjet/BlocAutresEnonciations";
 
 const renderComponent = (initialValues: { autresEnonciations: { enonciations: string } }) => {
   return render(

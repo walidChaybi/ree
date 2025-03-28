@@ -26,7 +26,7 @@ type TDateChamp = {
   mois: Yup.StringSchema<string | undefined>;
   annee: Yup.StringSchema<string | undefined>;
   heure: Yup.StringSchema<string | undefined>;
-  minutes: Yup.StringSchema<string | undefined>;
+  minute: Yup.StringSchema<string | undefined>;
 };
 
 type TNomSecableChamp = {
@@ -59,7 +59,7 @@ const getSchemaValidationDate = (bloquerDateFuture?: boolean): Yup.ObjectSchema<
       mois: Yup.string(),
       annee: Yup.string().length(4, "⚠ L'année doit être sur 4 chiffres"),
       heure: Yup.string(),
-      minutes: Yup.string()
+      minute: Yup.string()
     })
 
     .test("jourValide", (date, error) => {
@@ -98,12 +98,12 @@ const getSchemaValidationDate = (bloquerDateFuture?: boolean): Yup.ObjectSchema<
           })
         : true;
     })
-    .test("minutesValide", (date, error) => {
-      if (!date.minutes) {
+    .test("minuteValide", (date, error) => {
+      if (!date.minute) {
         return true;
       }
 
-      return Number(date.minutes) >= 60
+      return Number(date.minute) >= 60
         ? error.createError({
             path: `${error.path}.heure`,
             message: messagesErreur.DATE_INVALIDE
@@ -181,7 +181,7 @@ const SchemaValidation = {
   },
 
   entier: (schemaParams: ISchemaCommunParams & { min?: TValidationEntier; max?: TValidationEntier }) => {
-    let schema = Yup.number().integer(messagesErreur.DOIT_ETRE_ENTIER);
+    let schema = Yup.number().integer(messagesErreur.DOIT_ETRE_ENTIER).nullable();
     schemaParams.min &&
       (schema = schema.min(
         schemaParams.min.valeur,

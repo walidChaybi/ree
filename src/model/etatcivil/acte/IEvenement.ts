@@ -1,5 +1,5 @@
 import DateUtils, { IDateCompose } from "@util/DateUtils";
-import { estRenseigne, getValeurOuVide, numberToString } from "@util/Utils";
+import { estRenseigne, getValeurOuVide } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { ILieuEvenement } from "../commun/ILieuEvenement";
 
@@ -41,9 +41,11 @@ export const Evenement = {
   getDate(evenement?: IEvenement): string {
     return evenement
       ? `${DateUtils.getDateStringFromDateCompose({
-          jour: numberToString(evenement.jour),
-          mois: numberToString(evenement.mois),
-          annee: numberToString(evenement.annee)
+          jour: evenement.jour?.toString(),
+          mois: evenement.mois?.toString(),
+          annee: evenement.annee?.toString() ?? "",
+          heure: evenement.heure?.toString(),
+          minute: evenement.minute?.toString()
         })} ${DateUtils.formatAHeure(evenement.heure, evenement.minute)}`
       : "";
   },
@@ -56,7 +58,7 @@ export const Evenement = {
     if (evenement?.lieuReprise) {
       return evenement.lieuReprise;
     } else {
-      return evenement ? LieuxUtils.getLocalisationEtrangere(evenement.ville, evenement.region, evenement.pays) : "";
+      return evenement ? LieuxUtils.getLocalisationEtrangere(evenement?.ville, evenement.region, evenement.pays) : "";
     }
   },
 

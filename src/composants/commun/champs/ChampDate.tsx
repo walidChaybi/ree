@@ -28,7 +28,7 @@ const ChampDate: React.FC<TChampDateProps> = ({
       mois: `${name}.mois`,
       annee: `${name}.annee`,
       heure: `${name}.heure`,
-      minutes: `${name}.minutes`
+      minute: `${name}.minute`
     }),
     [name]
   );
@@ -36,18 +36,18 @@ const ChampDate: React.FC<TChampDateProps> = ({
   const [fieldMois, metaMois, helpersMois] = useField(champsDate.mois);
   const [fieldAnnee, metaAnnee, helpersAnnee] = useField(champsDate.annee);
   const [fieldHeure, metaHeure, helpersHeure] = useField(champsDate.heure);
-  const [fieldMinutes, metaMinutes, helpersMinutes] = useField(champsDate.minutes);
+  const [fieldMinute, metaMinute, helpersMinute] = useField(champsDate.minute);
   const refMois = useRef<HTMLInputElement | null>(null);
   const refAnnee = useRef<HTMLInputElement | null>(null);
   const refHeure = useRef<HTMLInputElement | null>(null);
-  const refMinutes = useRef<HTMLInputElement | null>(null);
+  const refMinute = useRef<HTMLInputElement | null>(null);
 
   const erreurs = useMemo(() => {
     const dateEnCompletion = !metaAnnee.touched;
 
     const listeErreurs = dateEnCompletion
       ? []
-      : [metaJour.error ?? "", metaMois.error ?? "", metaAnnee.error ?? "", metaHeure.error ?? "", metaMinutes.error ?? ""].filter(erreur =>
+      : [metaJour.error ?? "", metaMois.error ?? "", metaAnnee.error ?? "", metaHeure.error ?? "", metaMinute.error ?? ""].filter(erreur =>
           Boolean(erreur.length)
         );
 
@@ -60,7 +60,7 @@ const ChampDate: React.FC<TChampDateProps> = ({
     metaAnnee.error,
     metaAnnee.touched,
     metaHeure.error,
-    metaMinutes.error
+    metaMinute.error
   ]);
 
   useEffect(() => {
@@ -76,7 +76,7 @@ const ChampDate: React.FC<TChampDateProps> = ({
   }, [metaAnnee?.value]);
 
   useEffect(() => {
-    metaHeure?.value?.length === 2 && idElementActif() === champsDate.heure && refMinutes.current?.focus();
+    metaHeure?.value?.length === 2 && idElementActif() === champsDate.heure && refMinute.current?.focus();
   }, [metaHeure?.value]);
 
   return (
@@ -213,32 +213,32 @@ const ChampDate: React.FC<TChampDateProps> = ({
             <span className="mx-1 text-xl">{"h"}</span>
             <input
               {...props}
-              id={champsDate.minutes}
-              ref={refMinutes}
-              className={`border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${metaMinutes.error && erreurs.length ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
+              id={champsDate.minute}
+              ref={refMinute}
+              className={`border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${metaMinute.error && erreurs.length ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
               placeholder="MN"
               maxLength={2}
-              value={fieldMinutes.value}
+              value={fieldMinute.value}
               onChange={event => {
                 event.target.value = event.target.value.replace(/\D/, "");
-                fieldMinutes.onChange(event);
+                fieldMinute.onChange(event);
               }}
               onBlur={() => {
-                const minutes = String(fieldMinutes.value ?? "");
+                const minute = String(fieldMinute.value ?? "");
 
-                let valeurMinutes = "";
+                let valeurMinute = "";
                 switch (true) {
-                  case minutes.length === 1:
-                    valeurMinutes = `0${minutes}`;
+                  case minute.length === 1:
+                    valeurMinute = `0${minute}`;
                     break;
-                  case !desactiverCorrectionAutomatique && Number(minutes) > 60:
-                    valeurMinutes = "59";
+                  case !desactiverCorrectionAutomatique && Number(minute) > 60:
+                    valeurMinute = "59";
                     break;
                   default:
-                    valeurMinutes = minutes;
+                    valeurMinute = minute;
                     break;
                 }
-                helpersMinutes.setValue(valeurMinutes);
+                helpersMinute.setValue(valeurMinute);
               }}
             />
             <span className="mx-1 text-xl">{"min"}</span>

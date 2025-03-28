@@ -7,7 +7,7 @@ import { IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { IRegistre } from "@model/etatcivil/acte/IRegistre";
 import { IMention } from "@model/etatcivil/acte/mention/IMention";
 import { IProjetAnalyseMarginale } from "@model/etatcivil/acte/projetActe/IAnalyseMarginaleProjetActe";
-import { IProjetFiliation } from "@model/etatcivil/acte/projetActe/IFiliationProjetActe";
+import { IFiliationProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/IFiliationProjetActe";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { ITitulaireProjetActe } from "@model/etatcivil/acte/projetActe/ITitulaireProjetActe";
 import { IAutresNoms } from "@model/etatcivil/commun/AutresNoms";
@@ -107,7 +107,7 @@ function mapDomicile(domicile?: any): IAdresse {
   };
 }
 
-function mapFiliations(filiations: any[]): IProjetFiliation[] {
+function mapFiliations(filiations: any[]): IFiliationProjetActeTranscrit[] {
   return filiations.map(filiation => ({
     lienParente: getValeurOuUndefined(filiation.lienParente),
     ordre: getValeurOuUndefined(filiation.ordre),
