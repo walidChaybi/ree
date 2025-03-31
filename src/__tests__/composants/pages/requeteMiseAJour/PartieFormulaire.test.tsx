@@ -43,7 +43,7 @@ describe("Tests du formulaire de mise à jour d'un acte", () => {
       // On vérifie que la selection d'une sous-mention dans l'Autocomplete fonctionne
       const selecteurTypemention = await screen.findByPlaceholderText("Recherche...");
 
-      userEvent.click(selecteurTypemention);
+      await userEvent.click(selecteurTypemention);
       const mention = await screen.findByRole("option", { name: "1 Mariage" });
 
       fireEvent.click(mention);
@@ -123,7 +123,7 @@ describe("Tests du formulaire de mise à jour d'un acte", () => {
 
       await userEvent.type(inputVilleModif, "{backspace}".repeat(5) + "Capitale");
 
-      userEvent.click(boutonValiderModification);
+      await userEvent.click(boutonValiderModification);
 
       await waitFor(() => {
         expect(screen.queryByText("Ville")).toBeNull();
@@ -138,7 +138,7 @@ describe("Tests du formulaire de mise à jour d'un acte", () => {
         expect(screen.getByText("OK")).toBeDefined();
       });
 
-      userEvent.click(screen.getByRole("button", { name: /OK/i }));
+      await userEvent.click(screen.getByRole("button", { name: /OK/i }));
 
       await waitFor(() => {
         expect(screen.queryByTitle("Mariée à superCapitale (superDepartement) le 12 septembre 2000 avec superNom.")).toBeNull();
@@ -147,7 +147,7 @@ describe("Tests du formulaire de mise à jour d'un acte", () => {
   });
 
   describe("Tester la gestion des onglets", () => {
-    const routerPartieFormulaireSansMentions = (estMajAvecMention: boolean) =>
+    const routerPartieFormulaire = (estMajAvecMention: boolean) =>
       createTestingRouter(
         [
           {
@@ -166,18 +166,22 @@ describe("Tests du formulaire de mise à jour d'un acte", () => {
         ["/"]
       );
 
-    test("LORSQUE l'utilisateur est en mise a jour sans mention ALORS seul l'onglet Analyse Marginale apparait", async () => {
-      render(<RouterProvider router={routerPartieFormulaireSansMentions(false)} />);
+    test("QUAND l'utilisateur est en mise à jour sans mention ALORS seul l'onglet Analyse Marginale apparait", async () => {
+      render(<RouterProvider router={routerPartieFormulaire(false)} />);
 
-      expect(screen.getByText("Analyse Marginale")).toBeDefined();
-      expect(screen.queryByText("Mentions")).toBeNull();
+      await waitFor(() => {
+        expect(screen.getByText("Analyse Marginale")).toBeDefined();
+        expect(screen.queryByText("Mentions")).toBeNull();
+      });
     });
 
-    test("LORSQUE l'utilisateur est en mise a jour avec mention ALORS seul l'onglet Mention apparait", async () => {
-      render(<RouterProvider router={routerPartieFormulaireSansMentions(true)} />);
+    test("QUAND l'utilisateur est en mise à jour avec mention ALORS seul l'onglet Mention apparait", async () => {
+      render(<RouterProvider router={routerPartieFormulaire(true)} />);
 
-      expect(screen.queryByText("Analyse Marginale")).toBeNull();
-      expect(screen.getByText("Mentions")).toBeDefined();
+      await waitFor(() => {
+        expect(screen.queryByText("Analyse Marginale")).toBeNull();
+        expect(screen.getByText("Mentions")).toBeDefined();
+      });
     });
   });
 

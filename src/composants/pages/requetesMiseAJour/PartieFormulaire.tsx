@@ -35,6 +35,7 @@ interface IDonneesAideSaisie {
 export interface IMentionMiseAJour {
   texte: string;
   idTypeMention: string;
+  affecteAnalyseMarginale: boolean;
   donneesAideSaisie?: IDonneesAideSaisie;
 }
 
@@ -122,37 +123,35 @@ export const PartieFormulaire: React.FC = () => {
           : messageManager.showError("Impossible de mettre à jour l'analyse marginale");
       }
     }),
-    []
+    [activerOngletActeMisAJour, setComposerActeMisAJour, changerOnglet]
   );
 
-  const actualiserEtVisualiser = (valeurs: MiseAJourForm, reinitialiser: () => void) => {
-    switch (true) {
-      case !estMiseAJourAvecMentions:
-        appelApiMisAJourAnalyseMarginale({
-          parametres: {
-            path: { idActe: idActe },
-            body: MiseAJourAnalyseMarginaleValeursForm.versDto(valeurs.analyseMarginale)
-          },
-          ...traitementRetourApi(reinitialiser)
-        });
-        break;
-      case estMiseAJourAvecMentions:
-        appelApiMiseAJourAnalyseMarginaleEtMentions({
-          parametres: {
-            body: valeurs.versDto(idActe, afficherAnalyseMarginale && analyseMarginaleModifiee)
-          },
-          ...traitementRetourApi(reinitialiser)
-        });
-        break;
-    }
-  };
+  const actualiserEtVisualiser = useCallback(
+    (valeurs: MiseAJourForm, reinitialiser: () => void) => {
+      estMiseAJourAvecMentions
+        ? appelApiMiseAJourAnalyseMarginaleEtMentions({
+            parametres: {
+              body: valeurs.versDto(idActe, afficherAnalyseMarginale && analyseMarginaleModifiee)
+            },
+            ...traitementRetourApi(reinitialiser)
+          })
+        : appelApiMisAJourAnalyseMarginale({
+            parametres: {
+              path: { idActe: idActe },
+              body: MiseAJourAnalyseMarginaleValeursForm.versDto(valeurs.analyseMarginale)
+            },
+            ...traitementRetourApi(reinitialiser)
+          });
+    },
+    [appelApiMisAJourAnalyseMarginale, appelApiMiseAJourAnalyseMarginaleEtMentions, traitementRetourApi]
+  );
 
-  const onSignatureValidee = () => {
+  const onSignatureValidee = useCallback(() => {
     changerOnglet(ECleOngletsMiseAJour.ACTE, null);
     setEstActeSigne(true);
     messageManager.showSuccessAndClose("L'acte a été mis à jour avec succès.");
     desactiverBlocker();
-  };
+  }, [changerOnglet, setEstActeSigne, desactiverBlocker]);
 
   return (
     <>
@@ -194,29 +193,11 @@ export const PartieFormulaire: React.FC = () => {
                 })
               }
             >
-              {({ values, isValid, dirty, setFieldValue, resetForm }) => (
+              {({ isValid, dirty }) => (
                 <Form>
                   {estMiseAJourAvecMentions && (
                     <OngletsContenu estActif={ongletsActifs.formulaires === ECleOngletsMiseAJour.MENTIONS}>
-                      <TableauMentions
-                        setAfficherOngletAnalyseMarginale={(afficher, motifMention = "") => {
-                          setAfficherAnalyseMarginale(afficher);
-
-                          if (afficher && Boolean(values.analyseMarginale.motif)) {
-                            return;
-                          }
-
-                          const valeursSaisies = { ...values };
-                          resetForm({
-                            values: MiseAJourForm.genererValeursDefautFormulaire({
-                              ...valeurDefautFormulaire.analyseMarginale,
-                              motif: motifMention
-                            })
-                          });
-                          setFieldValue("mentions", valeursSaisies.mentions);
-                          setFieldValue("analyseMarginale", { ...valeursSaisies.analyseMarginale, motif: motifMention });
-                        }}
-                      />
+                      <TableauMentions setAfficherOngletAnalyseMarginale={setAfficherAnalyseMarginale} />
                     </OngletsContenu>
                   )}
 
@@ -224,7 +205,7 @@ export const PartieFormulaire: React.FC = () => {
                     <OngletsContenu estActif={ongletsActifs.formulaires === ECleOngletsMiseAJour.ANALYSE_MARGINALE}>
                       <AnalyseMarginaleForm
                         analyseMarginaleModifiee={analyseMarginaleModifiee}
-                        setAnalyseMarginaleModifiee={estModifiee => setAnalyseMarginaleModifiee(estModifiee)}
+                        setAnalyseMarginaleModifiee={setAnalyseMarginaleModifiee}
                       />
                     </OngletsContenu>
                   )}

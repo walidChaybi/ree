@@ -8,11 +8,13 @@ describe("Test du modèle MiseAJourForm", () => {
       mentions: [
         {
           idTypeMention: "idMention1",
-          texte: "Mention 1"
+          texte: "Mention 1",
+          affecteAnalyseMarginale: false
         },
         {
           idTypeMention: "idMention2",
           texte: "Mention 2",
+          affecteAnalyseMarginale: false,
           donneesAideSaisie: {
             champs: {
               evenement: {
@@ -33,6 +35,7 @@ describe("Test du modèle MiseAJourForm", () => {
         {
           idTypeMention: "idMention3",
           texte: "Mention 3",
+          affecteAnalyseMarginale: false,
           donneesAideSaisie: {
             champs: {
               evenement: {

@@ -2,26 +2,28 @@ import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import Delete from "@mui/icons-material/Delete";
 import Edit from "@mui/icons-material/Edit";
 import { useFormikContext } from "formik";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { List, arrayMove } from "react-movable";
+import { EditionMiseAJourContext } from "../../../../../contexts/EditionMiseAJourContextProvider";
 import { EEvent, useEventDispatch, useEventState } from "../../../../../hooks/EventHook";
 import Bouton from "../../../../commun/bouton/Bouton";
 import BoutonIcon from "../../../../commun/bouton/BoutonIcon";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import ConteneurModale from "../../../../commun/conteneurs/modale/ConteneurModale";
-import { IMentionEnCours, IMiseAJourForm } from "../../PartieFormulaire";
+import { IMentionEnCours, IMentionMiseAJour, IMiseAJourForm } from "../../PartieFormulaire";
 
 interface ITableauMentionsProps {
-  setAfficherOngletAnalyseMarginale: (afficher: boolean, motifMention: string) => void;
+  setAfficherOngletAnalyseMarginale: (afficher: boolean) => void;
 }
 
 const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAnalyseMarginale }) => {
-  const { setFieldValue, values, setValues, initialValues } = useFormikContext<IMiseAJourForm>();
+  const { setFieldValue, values } = useFormikContext<IMiseAJourForm>();
   const [indexASupprimer, setIndexASupprimer] = useState<number | null>(null);
   const [afficherModaleAnalyseMarginale, setAfficherModaleAnalyseMarginale] = useState<boolean>(false);
   const { envoyer: modifierMention } = useEventDispatch<IMentionEnCours | null>(EEvent.MODIFIER_MENTION);
   const [modificationEnCours, setModificationEnCours] = useState<boolean>(false);
   const [mentionEnCours, setMentionEnCours] = useEventState<IMentionEnCours | null>(EEvent.ENREGISTRER_MENTION, null);
+  const { miseAJourEffectuee } = useContext(EditionMiseAJourContext.Valeurs);
 
   useEffect(() => {
     if (mentionEnCours === null) {
@@ -66,28 +68,16 @@ const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAna
   }, [mentionEnCours]);
 
   useEffect(() => {
-    let mentionAffectantAnalyseMarginale = null;
-    for (let mentionSaisie of values.mentions) {
-      const mention = TypeMention.getTypeMentionById(mentionSaisie.idTypeMention);
-      if (mention?.affecteAnalyseMarginale) {
-        mentionAffectantAnalyseMarginale = mention;
-        break;
-      }
-    }
+    const mentionsAffectantAnalyseMarginale: IMentionMiseAJour[] = values.mentions.filter(mention => mention.affecteAnalyseMarginale);
 
-    if (mentionAffectantAnalyseMarginale && Boolean(values.analyseMarginale.motif)) {
-      return;
-    }
+    setAfficherOngletAnalyseMarginale(Boolean(mentionsAffectantAnalyseMarginale.length));
 
-    const motifMention = mentionAffectantAnalyseMarginale
-      ? `Suite à apposition de mention ${mentionAffectantAnalyseMarginale.libelle.split(" ")[0]}`
-      : "";
+    const motifMention =
+      mentionsAffectantAnalyseMarginale.length === 1
+        ? `Suite à apposition de mention ${TypeMention.getTypeMentionById(mentionsAffectantAnalyseMarginale[0].idTypeMention)?.libelle.split(" ")[0]}`
+        : "";
 
-    setAfficherOngletAnalyseMarginale(Boolean(mentionAffectantAnalyseMarginale), motifMention);
-
-    motifMention
-      ? setFieldValue("analyseMarginale.motif", motifMention)
-      : setValues({ ...values, analyseMarginale: initialValues.analyseMarginale });
+    if (!miseAJourEffectuee) setFieldValue("analyseMarginale.motif", motifMention);
   }, [values.mentions]);
 
   return (

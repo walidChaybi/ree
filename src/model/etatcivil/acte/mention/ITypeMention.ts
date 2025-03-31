@@ -112,7 +112,7 @@ export class TypeMention {
   }
 
   public static getTypeMentionById(id: string) {
-    return TypeMention.getTypesMention(true).find(mention => mention.id === id);
+    return id ? TypeMention.getTypesMention(true).find(mention => mention.id === id) : undefined;
   }
 
   public static getTypeMentionAsOptions(mentions: ITypeMention[]): Options {

@@ -14,7 +14,7 @@ export enum ECleOngletsMiseAJour {
   MENTIONS = "mentions"
 }
 
-interface IEditionMiseAJourContext {
+export interface IEditionMiseAJourContext {
   idActe: string;
   idRequete: string;
   ongletsActifs: {

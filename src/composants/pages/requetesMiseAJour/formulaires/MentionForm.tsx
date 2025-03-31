@@ -16,6 +16,7 @@ import Bouton from "../../../commun/bouton/Bouton";
 import ChampZoneTexte from "../../../commun/champs/ChampZoneTexte";
 import ComposantChargeur from "../../../commun/chargeurs/ComposantChargeur";
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
+import ScrollVersErreur from "../../../commun/formulaire/ScrollVersErreur";
 import { IMentionEnCours } from "../PartieFormulaire";
 import AideALaSaisieMention from "./mentions/AideALaSaisieMentionForm";
 import ChampTypeMention from "./mentions/ChampTypeMention";
@@ -37,6 +38,7 @@ export interface ITypeMentionDisponible {
 
 export type TMentionForm = {
   idTypeMention: string;
+  mentionAffecteAnalyseMarginale: boolean;
   texteMention: string;
   textesEdites: { [cle: string]: { edite: string; original: string } };
 } & TObjetFormulaire;
@@ -98,7 +100,7 @@ const getTypesMentionDisponibles = (natureActe: NatureActe): ITypeMentionDisponi
   return typesMentionDisponibles;
 };
 
-const DEFAUT_CREATION: TMentionForm = { idTypeMention: "", texteMention: "", textesEdites: {} };
+const DEFAUT_CREATION: TMentionForm = { idTypeMention: "", texteMention: "", textesEdites: {}, mentionAffecteAnalyseMarginale: false };
 
 const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeSaisie }) => {
   const typesMentionDisponibles = useMemo(() => getTypesMentionDisponibles(NatureActe.NAISSANCE), []);
@@ -154,7 +156,8 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
             titulaire: { sexe: infoTitulaire.sexe?.libelle ?? "" },
             idTypeMention: typeMentionChoisi.id,
             texteMention: mentionModifiee?.mention.texte ?? "",
-            textesEdites: mentionModifiee?.mention.donneesAideSaisie?.textesEdites ?? {}
+            textesEdites: mentionModifiee?.mention.donneesAideSaisie?.textesEdites ?? {},
+            mentionAffecteAnalyseMarginale: typeMentionChoisi.affecteAnalyseMarginale
           });
         },
         apresErreur: () => {
@@ -172,7 +175,8 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
     setValeurDefaut({
       idTypeMention: typeMentionChoisi.id,
       texteMention: mentionModifiee?.mention.texte ?? "",
-      textesEdites: {}
+      textesEdites: {},
+      mentionAffecteAnalyseMarginale: typeMentionChoisi.affecteAnalyseMarginale
     });
   }, [typeMentionChoisi]);
 
@@ -194,7 +198,8 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
                 return champsAideSaisie;
               })(),
               textesEdites: values.textesEdites
-            }
+            },
+            affecteAnalyseMarginale: values.mentionAffecteAnalyseMarginale
           }
         });
         setMentionModifiee(null);
@@ -204,6 +209,7 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
       {({ values, initialValues }) => (
         <ConteneurAvecBordure titreEnTete={mentionModifiee ? "Modification d'une mention" : "Ajout d'une mention"}>
           <Form className="grid gap-9 px-1 pt-3">
+            <ScrollVersErreur />
             <ChampTypeMention
               name="idTypeMention"
               typesMentionDisponibles={typesMentionDisponibles}
