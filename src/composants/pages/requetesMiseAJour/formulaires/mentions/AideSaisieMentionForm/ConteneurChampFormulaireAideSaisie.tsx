@@ -109,7 +109,7 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
           <ChampsNomSecable
             nom={{ name: `${nomChamp}.nom`, libelle: champ.libelle }}
             secable={{ name: `${nomChamp}.secable`, libelle: "Nom sécable" }}
-            nomPartie1={{ name: `${nomChamp}.nomPartie1`, libelle: "Nom 1ère partie" }}
+            nomPartie1={{ name: `${nomChamp}.nomPartie1`, libelle: "Nom 1re partie" }}
             nomPartie2={{ name: `${nomChamp}.nomPartie2`, libelle: "Nom 2nde partie" }}
           />
         </ChampFormAideSaisie>

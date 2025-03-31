@@ -234,7 +234,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
   }
 
   private static creerTitulaireAMCompositionEC(titulaireAM1: ITitulaireActe): ITitulaireAMCompositionEC {
-    const partiesNom = EtatCivilUtil.formatPartiesNomOuVide(titulaireAM1.nomPartie1, titulaireAM1.nomPartie2); //(1re partie : <Nom 1ère partie titulaire 1>  2nde partie : <Nom 2nde partie titulaire 1>)
+    const partiesNom = EtatCivilUtil.formatPartiesNomOuVide(titulaireAM1.nomPartie1, titulaireAM1.nomPartie2); //(1re partie : <Nom 1re partie titulaire 1>  2nde partie : <Nom 2nde partie titulaire 1>)
 
     return {
       nom: EtatCivilUtil.getNomOuVide(titulaireAM1.nom),
@@ -278,7 +278,7 @@ export class CommunExtraitOuCopieActeTexteComposition {
       (FicheActe.estActeDeces(acte) || FicheActe.estActeMariage(acte)) && LieuxUtils.estPaysInconnu(titulaire.naissance?.pays);
     const prenoms = EtatCivilUtil.getPrenomsOuVide(titulaire.prenoms); //<Prénom(s) titulaire 1)>
     const nom = EtatCivilUtil.getNomOuVide(titulaire.nom); //<Nom titulaire 1>
-    const partiesNom = EtatCivilUtil.formatPartiesNomOuVide(titulaire.nomPartie1, titulaire.nomPartie2); //(1re partie : <Nom 1ère partie titulaire 1>  2nde partie : <Nom 2nde partie titulaire 1>)
+    const partiesNom = EtatCivilUtil.formatPartiesNomOuVide(titulaire.nomPartie1, titulaire.nomPartie2); //(1re partie : <Nom 1re partie titulaire 1>  2nde partie : <Nom 2nde partie titulaire 1>)
 
     const lieuNaissance = this.formatLieuNaissance(
       titulaire,

@@ -45,7 +45,7 @@ describe("Schema de validation: nomSecable", () => {
         <ChampsNomSecable
           nom={{ name: "nomSecable.nom", libelle: "Nom" }}
           secable={{ name: "nomSecable.secable", libelle: "Nom sécable" }}
-          nomPartie1={{ name: "nomSecable.nomPartie1", libelle: "Nom 1ère partie" }}
+          nomPartie1={{ name: "nomSecable.nomPartie1", libelle: "Nom 1re partie" }}
           nomPartie2={{ name: "nomSecable.nomPartie2", libelle: "Nom 2nde partie" }}
         />
       </MockFormulaire>
