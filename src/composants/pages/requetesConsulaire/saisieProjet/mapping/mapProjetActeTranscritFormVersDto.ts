@@ -13,6 +13,7 @@ import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { TypeRedactionActe } from "@model/etatcivil/enum/TypeRedactionActe";
 import { TypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteArchiviste";
+import { IPrenomsChemin } from "@model/form/commun/PrenomsForm";
 import { IProjetActeTranscritForm, ITitulaireTranscription } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { ILocalisation } from "@model/requete/IParents";
 import { IParentTranscription } from "@model/requete/IParentsRequeteTranscription";
@@ -86,7 +87,7 @@ const mapDeclarantProjectActe = (projetActeTranscription: IProjetActeTranscritFo
 };
 const mapTitulaire = (projetActe: IProjetActeTranscritForm, naissanceTitulaireEvenement: IEvenementCompletDto): ITitulaireDto => {
   const Titulaire: ITitulaireTranscription = projetActe.titulaire;
-  const prenoms: string[] = getPrenomsTitulaire(projetActe.titulaire);
+  const prenoms: string[] = getPrenomsDepuisPrenomsChemin(projetActe.titulaire.prenomsChemin);
   const lieuDeNaissanceConnu = !LieuxUtils.estPaysInconnu(Titulaire.paysNaissance ?? "Inconnu");
   return {
     nomActeEtranger: Titulaire.nomActeEtranger || null,
@@ -113,7 +114,7 @@ const mapTitulaire = (projetActe: IProjetActeTranscritForm, naissanceTitulaireEv
 };
 
 const mapFiliationParParent = (parentForm: IParentTranscription, ordre: number, domicileCommun: boolean = false): IFiliationDto => {
-  const prenoms: string[] = PrenomsOrdonnes.listeDepuisObjet(parentForm.prenomsChemin ?? {}).map(p => p.prenom.trim());
+  const prenoms: string[] = getPrenomsDepuisPrenomsChemin(parentForm.prenomsChemin);
 
   return {
     nom: parentForm.nom?.trim() || null,
@@ -205,8 +206,10 @@ const mapFiliations = (projetActe: IProjetActeTranscritForm): IFiliationDto[] =>
   return filiation;
 };
 
-const getPrenomsTitulaire = (titulaire: ITitulaireTranscription): string[] => {
-  return PrenomsOrdonnes.listeDepuisObjet(titulaire.prenomsChemin ?? {}).map(p => p.prenom.trim());
+const getPrenomsDepuisPrenomsChemin = (prenomsChemin?: IPrenomsChemin): string[] => {
+  if (!prenomsChemin) return [];
+  const { nombrePrenomsAffiches, ...prenoms } = prenomsChemin;
+  return PrenomsOrdonnes.listeDepuisObjet(prenoms ?? {}).map(p => p.prenom.trim());
 };
 
 const estParentRenseigne = (parent: IParentTranscription): boolean => {
@@ -215,13 +218,12 @@ const estParentRenseigne = (parent: IParentTranscription): boolean => {
 
 const mapFormuleFinale = (projetActe: IProjetActeTranscritForm): IFormuleFinaleDto => {
   const estTransmetteurIdentiqueDemandeur = projetActe.formuleFinale.identiteTransmetteur === "Identique au demandeur";
+  const prenoms: string[] = getPrenomsDepuisPrenomsChemin(projetActe.formuleFinale?.prenomsChemin);
+
   return {
     identiteDemandeur: projetActe.formuleFinale.identiteDemandeur || null,
     nomDemandeur: projetActe.formuleFinale?.nom || null,
-    prenomDemandeur:
-      PrenomsOrdonnes.listeDepuisObjet(projetActe.formuleFinale?.prenomsChemin ?? {})
-        .map(p => p.prenom.trim())
-        .toString() || null,
+    prenomDemandeur: prenoms.toString() || null,
     qualiteDemandeur: projetActe.formuleFinale?.qualite || null,
     piecesProduites: projetActe.formuleFinale.piecesProduites || null,
     legalisation: projetActe.formuleFinale.legalisationApostille || null,

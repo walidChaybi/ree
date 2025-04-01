@@ -25,7 +25,8 @@ describe.skip("test des fonction de mapping de la saisie projet d'acte transcrit
       prenomsChemin: {
         prenom1: "lao",
         prenom2: "xiar",
-        prenom3: "sehoo"
+        prenom3: "sehoo",
+        nombrePrenomsAffiches: 3
       },
       sexe: "FEMININ",
       dateNaissance: {
@@ -65,7 +66,8 @@ describe.skip("test des fonction de mapping de la saisie projet d'acte transcrit
         nomNaissance: "Greenwald",
         nom: "Greenwald",
         prenomsChemin: {
-          prenom1: "cassandra"
+          prenom1: "cassandra",
+          nombrePrenomsAffiches: 1
         },
         dateNaissance: {
           jour: "10",
@@ -102,7 +104,8 @@ describe.skip("test des fonction de mapping de la saisie projet d'acte transcrit
         nomNaissance: "",
         nom: "Xi Phun Bin",
         prenomsChemin: {
-          prenom1: "Maman"
+          prenom1: "Maman",
+          nombrePrenomsAffiches: 1
         },
         dateNaissance: {
           jour: "",
@@ -157,7 +160,8 @@ describe.skip("test des fonction de mapping de la saisie projet d'acte transcrit
       identiteDemandeur: "PERE",
       nom: "",
       prenomsChemin: {
-        prenom1: ""
+        prenom1: "",
+        nombrePrenomsAffiches: 1
       },
       qualite: "",
       piecesProduites: "COPIES",
@@ -359,7 +363,8 @@ describe.skip("test des fonction de mapping de la saisie projet d'acte transcrit
         secable: true
       },
       prenomsChemin: {
-        prenom1: "Consulaire"
+        prenom1: "Consulaire",
+        nombrePrenomsAffiches: 1
       },
       sexe: "FEMININ",
       dateNaissance: {
@@ -404,7 +409,8 @@ describe.skip("test des fonction de mapping de la saisie projet d'acte transcrit
         nomNaissance: "Patamob",
         nom: "Patamob",
         prenomsChemin: {
-          prenom1: "cassandra"
+          prenom1: "cassandra",
+          nombrePrenomsAffiches: 1
         },
         dateNaissance: {
           jour: "",
@@ -441,7 +447,8 @@ describe.skip("test des fonction de mapping de la saisie projet d'acte transcrit
         nomNaissance: "",
         nom: "Patamob",
         prenomsChemin: {
-          prenom1: "Maman"
+          prenom1: "Maman",
+          nombrePrenomsAffiches: 1
         },
         dateNaissance: {
           jour: "10",
@@ -495,7 +502,8 @@ describe.skip("test des fonction de mapping de la saisie projet d'acte transcrit
       nom: "nomDemandeur",
       prenomsChemin: {
         prenom1: "Prenom",
-        prenom2: "Demandeur"
+        prenom2: "Demandeur",
+        nombrePrenomsAffiches: 3
       },
       qualite: "Agent",
       piecesProduites: "COPIE",
@@ -628,7 +636,8 @@ describe.skip("test des fonctions non testée précedement", () => {
         secable: false
       },
       prenomsChemin: {
-        prenom1: "Consulaire"
+        prenom1: "Consulaire",
+        nombrePrenomsAffiches: 1
       },
       sexe: "FEMININ",
       dateNaissance: {
@@ -669,7 +678,8 @@ describe.skip("test des fonctions non testée précedement", () => {
         nomNaissance: "Patamob",
         nom: "Patamob",
         prenomsChemin: {
-          prenom1: ""
+          prenom1: "",
+          nombrePrenomsAffiches: 1
         },
         dateNaissance: {
           jour: "",
@@ -697,7 +707,8 @@ describe.skip("test des fonctions non testée précedement", () => {
       nom: "nomDemandeur",
       prenomsChemin: {
         prenom1: "Prenom",
-        prenom2: "Demandeur"
+        prenom2: "Demandeur",
+        nombrePrenomsAffiches: 2
       },
       qualite: "Agent",
       piecesProduites: "COPIE",

@@ -3,7 +3,7 @@ import { NomSecable } from "@model/etatcivil/commun/NomSecable";
 import { Identite } from "@model/etatcivil/enum/Identite";
 import { ConditionChamp, EOperateurCondition } from "@model/form/commun/ConditionChamp";
 import { IDateForm } from "@model/form/commun/DateForm";
-import { IPrenomsChemin, IPrenomsNumerotes } from "@model/form/commun/PrenomsForm";
+import { IPrenomsChemin } from "@model/form/commun/PrenomsForm";
 import { ILocalisation } from "@model/requete/IParents";
 import { IParentTranscription, ParentsRequeteTranscription } from "@model/requete/IParentsRequeteTranscription";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
@@ -43,7 +43,7 @@ export interface ITitulaireTranscription {
   nomActeEtranger: string | null;
   nomRetenuOEC: string;
   nomSouhaite: string | null;
-  prenomsChemin?: IPrenomsNumerotes;
+  prenomsChemin?: IPrenomsChemin;
   nomSecable: NomSecable;
   sexe: string | null;
   dateNaissance: IDateForm | null;
@@ -80,7 +80,7 @@ export interface IMentionsTranscription {
 export interface IFormuleFinaleTranscription {
   identiteDemandeur: string;
   nom?: string | null;
-  prenomsChemin?: IPrenomsNumerotes;
+  prenomsChemin?: IPrenomsChemin;
   qualite?: string | null;
   piecesProduites: string;
   legalisationApostille: string;
@@ -121,7 +121,7 @@ export const ProjetTranscriptionForm = {
       formuleFinale: {
         identiteDemandeur: Identite.getKey(Identite.PERE),
         nom: "",
-        prenomsChemin: { prenom1: "" },
+        prenomsChemin: { prenom1: "", nombrePrenomsAffiches: 1 },
         qualite: "",
         piecesProduites: "COPIE",
         autresPieces: "",

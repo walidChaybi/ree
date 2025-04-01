@@ -13,9 +13,14 @@ export const PrenomsOrdonnes = {
       prenom: prenom,
       numeroOrdre: position + UN
     })),
-  listeDepuisObjet: (prenoms: IPrenomsNumerotes): IPrenomOrdonnes[] =>
-    (Object.keys(prenoms) as TPrenomNumerote[]).map((cle, position) => ({
-      prenom: prenoms[cle],
-      numeroOrdre: position + 1
-    }))
-} as const;
+  listeDepuisObjet: (prenoms: IPrenomsNumerotes): IPrenomOrdonnes[] => {
+    console.log("prenoms", prenoms);
+    return (Object.keys(prenoms) as TPrenomNumerote[]).map((cle, position) => {
+      console.log("element : ", prenoms[cle], typeof prenoms[cle]);
+      return {
+        prenom: prenoms[cle],
+        numeroOrdre: position + 1
+      };
+    });
+  }
+};

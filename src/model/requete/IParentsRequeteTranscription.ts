@@ -1,5 +1,5 @@
 import { IDateForm } from "@model/form/commun/DateForm";
-import { IPrenomsChemin, IPrenomsNumerotes } from "@model/form/commun/PrenomsForm";
+import { IPrenomsChemin } from "@model/form/commun/PrenomsForm";
 import { ILocalisation } from "./IParents";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
 import { ITitulaireRequeteCreation as ITitulaireRequeteTranscription } from "./ITitulaireRequeteCreation";
@@ -12,7 +12,7 @@ export interface IParentTranscription {
   nom?: string;
   nomNaissance?: string;
   prenoms?: IPrenomOrdonnes[];
-  prenomsChemin?: IPrenomsNumerotes;
+  prenomsChemin?: IPrenomsChemin;
   dateNaissance?: IDateForm | null;
   lieuNaissance?: ILocalisation;
   profession?: string;
