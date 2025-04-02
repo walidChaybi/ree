@@ -1,29 +1,52 @@
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { expect, it as test, vi } from "vitest";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { RouterProvider } from "react-router-dom";
+import { describe, expect, it as test, vi } from "vitest";
 import Bouton from "../../../../composants/commun/bouton/Bouton";
+import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 
-test("renders le Bouton correctement", () => {
-  render(<Bouton>Click Moi</Bouton>);
+describe("Test du composant Bouton", () => {
+  test("Le bouton fonctionne correctement", async () => {
+    const handleClick = vi.fn();
+    render(
+      <Bouton
+        className="classe-test"
+        onClick={handleClick}
+      >
+        {"Bouton"}
+      </Bouton>
+    );
 
-  const buttonElement = screen.getByRole("button", { name: "Click Moi" });
-  expect(buttonElement).toBeDefined();
+    const buttonElement = await screen.findByRole<HTMLButtonElement>("button", { name: "Bouton" });
+    expect(buttonElement.classList).toContain("classe-test");
+    fireEvent.click(buttonElement);
+    await waitFor(() => expect(handleClick).toHaveBeenCalledOnce());
+  });
 
-  expect(buttonElement.textContent).toContain("Click Moi");
-});
+  test("Le lien fonctionne correctement", async () => {
+    const router = createTestingRouter(
+      [
+        {
+          path: "/",
+          element: (
+            <Bouton
+              className="classe-test"
+              lienVers="/test"
+            >
+              {"Lien"}
+            </Bouton>
+          )
+        },
+        {
+          path: "/test",
+          element: <div>{"Cible lien"}</div>
+        }
+      ],
+      ["/"]
+    );
 
-test("les props sont correctement transmis", async () => {
-  const handleClick = vi.fn();
-  render(
-    <Bouton className="classe-test" onClick={handleClick}>
-      Click Moi
-    </Bouton>,
-  );
+    render(<RouterProvider router={router} />);
 
-  const buttonElement = screen.getByRole("button", { name: "Click Moi" });
-
-  await userEvent.click(buttonElement);
-
-  expect(handleClick).toHaveBeenCalledTimes(1);
-  expect(buttonElement.classList).toContain("classe-test");
+    fireEvent.click(await screen.findByRole<HTMLAnchorElement>("link", { name: "Lien" }));
+    await waitFor(() => expect(screen.getByText("Cible lien")).toBeDefined());
+  });
 });

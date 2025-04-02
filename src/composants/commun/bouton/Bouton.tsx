@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export type TStyleBouton = "principal" | "secondaire" | "suppression" | "old";
 
 const getStyleBouton = (styleBouton?: TStyleBouton) => {
@@ -16,6 +18,7 @@ const getStyleBouton = (styleBouton?: TStyleBouton) => {
 export interface IBoutonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   styleBouton?: TStyleBouton;
   garderStyleSiDisabled?: boolean;
+  lienVers?: string;
 }
 
 const Bouton: React.FC<React.PropsWithChildren<IBoutonProps>> = ({
@@ -24,15 +27,25 @@ const Bouton: React.FC<React.PropsWithChildren<IBoutonProps>> = ({
   children,
   className,
   type,
+  lienVers,
   ...props
-}) => (
-  <button
-    className={`m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors ${getStyleBouton(styleBouton)} ${!garderStyleSiDisabled && "disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"} ${className ?? ""}`.trim()}
-    type={type ?? "button"}
-    {...props}
-  >
-    {children}
-  </button>
-);
+}) =>
+  lienVers ? (
+    <Link
+      to={lienVers}
+      className={`rounded-md border border-solid px-4 py-2 font-noto-sans-ui-bold no-underline transition-colors ${getStyleBouton(styleBouton)} ${!garderStyleSiDisabled && "disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"} ${className ?? ""}`.trim()}
+      title={props.title}
+    >
+      {children}
+    </Link>
+  ) : (
+    <button
+      className={`m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors ${getStyleBouton(styleBouton)} ${!garderStyleSiDisabled && "disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"} ${className ?? ""}`.trim()}
+      type={type ?? "button"}
+      {...props}
+    >
+      {children}
+    </button>
+  );
 
 export default Bouton;

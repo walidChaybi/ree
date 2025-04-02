@@ -1,9 +1,9 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import MenuSaisirRequeteCreation from "@pages/requeteCreation/espaceCreation/contenu/MenuSaisirRequeteCreation";
 import { URL_MES_REQUETES_CONSULAIRE } from "@router/ReceUrls";
 import { useContext } from "react";
 import PageChargeur from "../../composants/commun/chargeurs/PageChargeur";
 import OngletsLien from "../../composants/commun/onglets/OngletsLien";
+import BoutonsTableauConsulaire from "../../composants/pages/requetesConsulaire/BoutonsTableauConsulaire";
 
 interface IPageRequetesServiceConsulaireProps {
   query: any;
@@ -28,9 +28,9 @@ const PageRequetesServiceConsulaire: React.FC<IPageRequetesServiceConsulaireProp
               }
             ]}
           />
-          <div className="BlocBoutons">
-            <MenuSaisirRequeteCreation indexTabPanel={1} />
-          </div>
+
+          <BoutonsTableauConsulaire />
+
           <div>RequetesServiceConsulaire</div>
         </>
       )}

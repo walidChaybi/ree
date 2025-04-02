@@ -75,6 +75,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({ requete, acte 
       <BoutonListeDeroulante
         titre="Autres actions"
         styleBouton="secondaire"
+        pointAncrageMenu="haut-gauche"
       >
         {utilisateurPeut.transmettreAValideur && (
           <BoutonTransmettreAValideur

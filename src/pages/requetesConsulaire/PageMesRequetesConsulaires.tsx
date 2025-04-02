@@ -1,39 +1,27 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
-import MenuSaisirRequeteCreation from "@pages/requeteCreation/espaceCreation/contenu/MenuSaisirRequeteCreation";
 import { URL_REQUETES_CONSULAIRE_SERVICE } from "@router/ReceUrls";
-import { useContext } from "react";
-import PageChargeur from "../../composants/commun/chargeurs/PageChargeur";
 import OngletsLien from "../../composants/commun/onglets/OngletsLien";
+import BoutonsTableauConsulaire from "../../composants/pages/requetesConsulaire/BoutonsTableauConsulaire";
 import TableauMesRequetesConsulaire from "../../composants/pages/requetesConsulaire/mesRequetes/TableauMesRequetesConsulaire";
 interface IPageMesRequetesConsulaireProps {}
 
-const PageMesRequetesConsulaires: React.FC<IPageMesRequetesConsulaireProps> = () => {
-  const { utilisateurConnecte, utilisateurs } = useContext(RECEContextData);
+const PageMesRequetesConsulaires: React.FC<IPageMesRequetesConsulaireProps> = () => (
+  <>
+    <OngletsLien
+      liens={[
+        {
+          libelle: "Mes requêtes consulaires"
+        },
+        {
+          libelle: "Les requêtes consulaires de mon service",
+          url: URL_REQUETES_CONSULAIRE_SERVICE
+        }
+      ]}
+    />
 
-  return (
-    <div>
-      {utilisateurConnecte && (
-        <>
-          {!utilisateurs && <PageChargeur />}
-          <OngletsLien
-            liens={[
-              {
-                libelle: "Mes requêtes consulaires"
-              },
-              {
-                libelle: "Les requêtes consulaires de mon service",
-                url: URL_REQUETES_CONSULAIRE_SERVICE
-              }
-            ]}
-          />
-          <div className="BlocBoutons">
-            <MenuSaisirRequeteCreation indexTabPanel={0} />
-          </div>
-          <TableauMesRequetesConsulaire />
-        </>
-      )}
-    </div>
-  );
-};
+    <BoutonsTableauConsulaire />
+
+    <TableauMesRequetesConsulaire />
+  </>
+);
 
 export default PageMesRequetesConsulaires;

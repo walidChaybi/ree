@@ -86,7 +86,7 @@ export const BoutonsTerminerOuRelecture: React.FC<BoutonsTerminerOuRelectureProp
           )}
           <BoutonListeDeroulante
             titre="Relecture"
-            pointAncrageMenu="droite"
+            pointAncrageMenu="haut-droite"
           >
             <Bouton
               onClick={() =>
