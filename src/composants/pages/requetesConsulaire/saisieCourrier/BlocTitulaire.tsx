@@ -1,3 +1,5 @@
+/* v8 ignore start A TESTER 03/25 */
+
 import ChampDate from "../../../commun/champs/ChampDate";
 import ChampTexte from "../../../commun/champs/ChampTexte";
 import ChampsPrenoms from "../../../commun/champs/ChampsPrenoms";

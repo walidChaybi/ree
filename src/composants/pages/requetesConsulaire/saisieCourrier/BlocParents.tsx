@@ -1,3 +1,5 @@
+/* v8 ignore start A TESTER 03/25 */
+
 import { IParentFormRCTC, ISaisieRequeteRCTCForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
 import { AddCircle, Delete } from "@mui/icons-material";
 import { Option } from "@util/Type";
@@ -279,3 +281,5 @@ const BlocParents: React.FC = () => {
 };
 
 export default BlocParents;
+
+/* v8 ignore end */

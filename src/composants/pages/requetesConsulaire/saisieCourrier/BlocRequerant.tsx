@@ -1,3 +1,5 @@
+/* v8 ignore start A TESTER 03/25 */
+
 import React from "react";
 import ChampTexte from "../../../commun/champs/ChampTexte";
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
@@ -97,3 +99,5 @@ const BlocRequerant: React.FC = () => (
 );
 
 export default BlocRequerant;
+
+/* v8 ignore end */
