@@ -1,37 +1,47 @@
+import { IParentTranscription } from "@model/requete/IParentsRequeteTranscription";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Formik } from "formik";
 import { describe, expect, test } from "vitest";
 import BlocParent from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisieProjet/BlocParent";
-/** TODO: Réparation des TU le Lundi 31 Mars @ Adrien_Bonvin */
 
-describe.skip("BlocParents", () => {
+describe("BlocParents", () => {
+  const parent2: IParentTranscription = {
+    sexe: "Feminin",
+    nom: "",
+    prenoms: [{ prenom: "", numeroOrdre: 1 }],
+    prenomsChemin: {
+      prenom1: "",
+      nombrePrenomsAffiches: 1
+    },
+    dateNaissance: undefined,
+    lieuNaissance: { typeLieu: "" },
+    sansProfession: false,
+    domicile: { typeLieu: "" },
+    renseignerAge: false,
+    age: ""
+  };
+  const parent1: IParentTranscription = {
+    sexe: "Masculin",
+    nom: "",
+    prenoms: [{ prenom: "", numeroOrdre: 1 }],
+    prenomsChemin: {
+      prenom1: "",
+      nombrePrenomsAffiches: 1
+    },
+    dateNaissance: undefined,
+    lieuNaissance: { typeLieu: "" },
+    sansProfession: false,
+    domicile: { typeLieu: "" },
+    renseignerAge: false,
+    age: ""
+  };
   const renderComponent = () => {
     return render(
       <Formik
         initialValues={{
           parents: {
-            parent1: {
-              sexe: "Masculin",
-              nom: "",
-              prenoms: {},
-              dateNaissance: undefined,
-              lieuNaissance: { typeLieu: "" },
-              sansProfession: false,
-              domicile: { typeLieu: "" },
-              renseignerAge: false,
-              age: ""
-            },
-            parent2: {
-              sexe: "Feminin",
-              nom: "",
-              prenoms: {},
-              dateNaissance: undefined,
-              lieuNaissance: { typeLieu: "" },
-              sansProfession: false,
-              domicile: { typeLieu: "" },
-              renseignerAge: false,
-              age: ""
-            }
+            parent1,
+            parent2
           }
         }}
         onSubmit={() => {}}
@@ -46,11 +56,13 @@ describe.skip("BlocParents", () => {
   };
 
   describe("Tests d'affichage initial", () => {
-    test("doit afficher les formulaires des deux parents avec les champs appropriés", () => {
+    test("doit afficher les formulaires des deux parents avec les champs appropriés", async () => {
       renderComponent();
       // Vérification des titres
-      expect(screen.getByText("Parent 1")).toBeDefined();
-      expect(screen.getByText("Parent 2")).toBeDefined();
+      await waitFor(() => {
+        expect(screen.getByText("Parent 1")).toBeDefined();
+        expect(screen.getByText("Parent 2")).toBeDefined();
+      });
 
       const dateFields1 = {
         jour: screen.getAllByPlaceholderText("JJ")[0],

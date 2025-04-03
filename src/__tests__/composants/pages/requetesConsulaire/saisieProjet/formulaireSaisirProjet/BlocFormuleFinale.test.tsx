@@ -53,49 +53,52 @@ describe("BlocFormuleFinale", () => {
   };
 
   describe("Tests d'affichage initial", () => {
-    test("Doit afficher le formulaire formule finale Père", () => {
+    test("Doit afficher le formulaire formule finale Père", async () => {
       renderComponentPere();
       const selectValue: HTMLSelectElement = screen.getByLabelText("Identité du demandeur", {
         selector: 'select[name="formuleFinale.identiteDemandeur"]'
       });
-      expect(selectValue).toBeDefined();
-      expect(selectValue.value).toBe(Identite.getKey(Identite.PERE));
-    });
-    test("Doit pas afficher le formulaire formule finale pour Père sans les champs d'identité", () => {
-      renderComponentPere();
-      expect(screen.queryByText("Nom*")).toBeNull();
-      expect(screen.queryByText("Prénom")).toBeNull();
-      expect(screen.queryByText("Qualité")).toBeNull();
-      expect(screen.queryByText("Pièces")).toBeTruthy();
-      screen.debug();
-      expect(
-        screen.getByLabelText("Pièces produites", {
-          selector: 'select[name="formuleFinale.piecesProduites"]'
-        })
-      ).toBeTruthy();
-      expect(
-        screen.getByLabelText("Légalisation / Apostille", {
-          selector: 'select[name="formuleFinale.legalisationApostille"]'
-        })
-      ).toBeTruthy();
-      expect(screen.queryByText("Autres pièces*")).toBeNull();
-      expect(screen.queryByText("Mode de dépôt de la demande")).toBeTruthy();
-      expect(screen.getByLabelText("Transmise")).toBeDefined();
-      expect(screen.getByLabelText("Remise")).toBeDefined();
-      const radioModeDepot: HTMLInputElement = screen.getByLabelText("Transmise", {
-        selector: 'input[name="formuleFinale.modeDepot"]'
+      await waitFor(() => {
+        expect(selectValue).toBeDefined();
+        expect(selectValue.value).toBe(Identite.getKey(Identite.PERE));
       });
-      expect(radioModeDepot.value).toBe("TRANSMISE");
-      expect(
-        screen.getByLabelText("Identité du transmetteur", {
-          selector: 'select[name="formuleFinale.identiteTransmetteur"]'
-        })
-      ).toBeTruthy();
-      expect(
-        screen.getByLabelText("Identité du transmetteur", {
-          selector: 'select[name="formuleFinale.identiteTransmetteur"]'
-        })
-      ).toHaveProperty("disabled");
+    });
+    test("Doit pas afficher le formulaire formule finale pour Père sans les champs d'identité", async () => {
+      renderComponentPere();
+      await waitFor(() => {
+        expect(screen.queryByText("Nom*")).toBeNull();
+        expect(screen.queryByText("Prénom")).toBeNull();
+        expect(screen.queryByText("Qualité")).toBeNull();
+        expect(screen.queryByText("Pièces")).toBeTruthy();
+        expect(
+          screen.getByLabelText("Pièces produites", {
+            selector: 'select[name="formuleFinale.piecesProduites"]'
+          })
+        ).toBeTruthy();
+        expect(
+          screen.getByLabelText("Légalisation / Apostille", {
+            selector: 'select[name="formuleFinale.legalisationApostille"]'
+          })
+        ).toBeTruthy();
+        expect(screen.queryByText("Autres pièces*")).toBeNull();
+        expect(screen.queryByText("Mode de dépôt de la demande")).toBeTruthy();
+        expect(screen.getByLabelText("Transmise")).toBeDefined();
+        expect(screen.getByLabelText("Remise")).toBeDefined();
+        const radioModeDepot: HTMLInputElement = screen.getByLabelText("Transmise", {
+          selector: 'input[name="formuleFinale.modeDepot"]'
+        });
+        expect(radioModeDepot.value).toBe("TRANSMISE");
+        expect(
+          screen.getByLabelText("Identité du transmetteur", {
+            selector: 'select[name="formuleFinale.identiteTransmetteur"]'
+          })
+        ).toBeTruthy();
+        expect(
+          screen.getByLabelText("Identité du transmetteur", {
+            selector: 'select[name="formuleFinale.identiteTransmetteur"]'
+          })
+        ).toHaveProperty("disabled");
+      });
     });
   });
 
@@ -105,18 +108,20 @@ describe("BlocFormuleFinale", () => {
       const selectValue: HTMLSelectElement = screen.getByLabelText("Identité du demandeur", {
         selector: 'select[name="formuleFinale.identiteDemandeur"]'
       });
-      expect(selectValue).toBeDefined();
-      expect(selectValue.value).toBe(Identite.getKey(Identite.TIERS));
+      await waitFor(() => {
+        expect(selectValue).toBeDefined();
+        expect(selectValue.value).toBe(Identite.getKey(Identite.TIERS));
+      });
     });
 
     test("Doit gérer la saisie des champs du formulaire", async () => {
       renderComponentTiers();
       const nameInput: HTMLInputElement = screen.getByLabelText("Nom*");
-
-      expect(nameInput).toBeDefined();
-      expect(screen.getByLabelText("Prénom")).toBeDefined();
-      expect(screen.getByLabelText("Qualité")).toBeDefined();
-
+      await waitFor(() => {
+        expect(nameInput).toBeDefined();
+        expect(screen.getByLabelText("Prénom")).toBeDefined();
+        expect(screen.getByLabelText("Qualité")).toBeDefined();
+      });
       await act(async () => fireEvent.change(nameInput, { target: { value: "Roger" } }));
       await waitFor(() => {
         expect(nameInput.value).toBe("Roger");
@@ -127,12 +132,13 @@ describe("BlocFormuleFinale", () => {
   describe("Test d'affichage des pièces annexes", () => {
     test("Doit afficher le champ 'pièces annexes'", async () => {
       renderComponentTiers();
-      screen.debug();
-      expect(
-        screen.getByLabelText("Pièces produites", {
-          selector: 'select[name="formuleFinale.piecesProduites"]'
-        })
-      ).toBeTruthy();
+      await waitFor(() => {
+        expect(
+          screen.getByLabelText("Pièces produites", {
+            selector: 'select[name="formuleFinale.piecesProduites"]'
+          })
+        ).toBeTruthy();
+      });
       const selectPiecesProduites: HTMLSelectElement = screen.getByLabelText("Pièces produites", {
         selector: 'select[name="formuleFinale.piecesProduites"]'
       });

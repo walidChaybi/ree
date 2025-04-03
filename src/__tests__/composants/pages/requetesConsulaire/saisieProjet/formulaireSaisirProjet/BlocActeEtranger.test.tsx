@@ -14,9 +14,8 @@ const renderComponent = (initialValues: { acteEtranger: IActeEtrangerTranscripti
     </Formik>
   );
 };
-/** TODO: Réparation des TU le Lundi 31 Mars @ Adrien_Bonvin */
 
-describe.skip("BlocActeEtranger", () => {
+describe("BlocActeEtranger", () => {
   const initialValues = {
     acteEtranger: {
       typeActe: "DRESSE",

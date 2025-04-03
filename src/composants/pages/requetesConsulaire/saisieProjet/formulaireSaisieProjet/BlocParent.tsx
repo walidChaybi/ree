@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-/* v8 ignore start a faire Lundi 31 Mars @ Adrien_Bonvin */
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { useFormikContext } from "formik";
@@ -144,5 +142,3 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
 });
 
 export default BlocParent;
-
-/* v8 ignore end */

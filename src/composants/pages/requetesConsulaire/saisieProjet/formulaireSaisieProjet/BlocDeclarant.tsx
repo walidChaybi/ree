@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-/* v8 ignore start a faire Lundi 31 Mars @ Adrien_Bonvin */
 import { Identite } from "@model/etatcivil/enum/Identite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
@@ -127,5 +125,3 @@ const BlocDeclarant: React.FC = () => {
 };
 
 export default BlocDeclarant;
-
-/* v8 ignore end */

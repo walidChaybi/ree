@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-/* v8 ignore start a faire Lundi 31 Mars @ Adrien_Bonvin */
 import ChampDate from "../../../commun/champs/ChampDate";
 import ChampTexte from "../../../commun/champs/ChampTexte";
 import ChampsPrenoms from "../../../commun/champs/ChampsPrenoms";

@@ -14,6 +14,7 @@ export interface IActeEtranger {
       }
     | {};
   redacteur: string | null;
-  referenceEtComplement: string | null;
+  reference: string | null;
+  complement: string | null;
   mentions: string | null;
 }

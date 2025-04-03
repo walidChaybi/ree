@@ -1,5 +1,3 @@
-/* v8 ignore start a faire Lundi 31 Mars @ Adrien_Bonvin */
-
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { GestionMentions } from "@pages/requeteCreation/commun/composants/GestionMentions";

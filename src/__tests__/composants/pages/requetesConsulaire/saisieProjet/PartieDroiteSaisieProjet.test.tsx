@@ -3,9 +3,8 @@ import { describe, expect, test } from "vitest";
 import PartieDroiteSaisieProjet from "../../../../../composants/pages/requetesConsulaire/saisieProjet/PartieDroiteSaisieProjet";
 import { elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
 import { requeteCreationTranscription } from "../../../../mock/data/requeteCreationTranscription";
-/** TODO: Réparation des TU le Lundi 31 Mars @ Adrien_Bonvin */
 
-describe.skip("PartieDroiteSaisieProjet - Tests du composant", () => {
+describe("PartieDroiteSaisieProjet - Tests du composant", () => {
   test("PartieDroiteSaisieProjet - Doit afficher les onglets", async () => {
     render(elementAvecContexte(<PartieDroiteSaisieProjet requete={requeteCreationTranscription} />));
     await waitFor(() => {

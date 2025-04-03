@@ -1,5 +1,3 @@
-/* v8 ignore start a faire Lundi 31 Mars @ Adrien_Bonvin */
-
 import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { useFormikContext } from "formik";
 import React, { memo, useEffect, useMemo } from "react";
@@ -87,5 +85,3 @@ const BlocActeEtranger: React.FC = () => {
 };
 
 export default memo(BlocActeEtranger);
-
-/* v8 ignore end */

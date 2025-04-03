@@ -1,4 +1,3 @@
-/* v8 ignore start a faire Lundi 31 Mars @ Adrien_Bonvin */
 import { IActeEtrangerDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/IActeEtrangerDto";
 import { IAdresseCompleteDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/IAdresseDto";
 import { IDeclarantDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/IDeclarantDto";
