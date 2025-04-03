@@ -33,7 +33,10 @@ const ARRONDISSEMENTS_OPTIONS: Record<TVilleSpeciale, Option[]> = {
 
 const AdresseFrance = memo(({ prefix, afficherAdresse = true }: { prefix: string; afficherAdresse?: boolean }) => {
   const [fieldVille] = useField(`${prefix}.ville`);
-  const estVilleSpeciale = useMemo(() => VILLES_SPECIALES.includes(fieldVille.value?.toLowerCase() as TVilleSpeciale), [fieldVille.value]);
+  const estVilleSpeciale = useMemo(
+    () => VILLES_SPECIALES.includes(fieldVille.value?.toLowerCase().trim() as TVilleSpeciale),
+    [fieldVille.value]
+  );
 
   return (
     <div className="mt-4 space-y-4">
@@ -50,12 +53,12 @@ const AdresseFrance = memo(({ prefix, afficherAdresse = true }: { prefix: string
             <ChampListeDeroulante
               name={`${prefix}.arrondissement`}
               libelle="Arrondissement"
-              options={ARRONDISSEMENTS_OPTIONS[fieldVille.value.toLowerCase() as TVilleSpeciale]}
+              options={ARRONDISSEMENTS_OPTIONS[fieldVille.value.toLowerCase().trim() as TVilleSpeciale]}
               premiereLettreMajuscule
             />
           </div>
         )}
-        {fieldVille.value?.toLowerCase() !== "paris" && (
+        {fieldVille.value?.toLowerCase().trim() !== "paris" && (
           <div className="flex-1">
             <ChampTexte
               name={`${prefix}.departement`}

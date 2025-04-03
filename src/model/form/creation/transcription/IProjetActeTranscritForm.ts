@@ -195,15 +195,22 @@ export const ProjetTranscriptionForm = {
       return SchemaValidation.objet({
         nom: SchemaValidation.texte({ obligatoire: false }),
         prenoms: SchemaValidation.prenoms(`${parentPrefix}.prenoms.prenom`),
-        sexe: SchemaValidation.texte({
-          obligatoire: ConditionChamp.depuisTableau([
-            {
-              idChampReference: `${parentPrefix}.nom`,
-              operateur: EOperateurCondition.DIFF,
-              valeurs: [""]
+        sexe: SchemaValidation.texte({ obligatoire: false }).test(
+          "sexe-required-if-nom-or-prenom",
+          "Le sexe est obligatoire lorsque le nom ou le prénom est renseigné",
+          function (valeurSexe) {
+            const parent = this.parent;
+
+            const aNom = parent.nom && parent.nom.trim() !== "";
+            const aPrenom = parent.prenomsChemin.prenom1 && parent.prenomsChemin.prenom1.trim() !== "";
+
+            if ((aNom || aPrenom) && !valeurSexe) {
+              return false;
             }
-          ])
-        }),
+
+            return true;
+          }
+        ),
         dateNaissance: SchemaValidation.dateIncomplete({ obligatoire: false }),
         renseignerAge: SchemaValidation.booleen({ obligatoire: false }),
         age: SchemaValidation.entier({ obligatoire: false }),
@@ -213,6 +220,7 @@ export const ProjetTranscriptionForm = {
         domicile: AdresseSchemaValidationFormulaire(`${parentPrefix}.domicile`)
       });
     };
+
     const ParentsSchemaValidationFormulaire = SchemaValidation.objet({
       parent1: ParentSchemaValidationFormulaire(1),
       parent2: ParentSchemaValidationFormulaire(2)

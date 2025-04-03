@@ -1,6 +1,7 @@
 import { IParentFormRCTC, ISaisieRequeteRCTCForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
 import { AddCircle, Delete } from "@mui/icons-material";
 import { Option } from "@util/Type";
+import { genererArrondissements } from "@util/Utils";
 import { useFormikContext } from "formik";
 import { useMemo } from "react";
 import BoutonIcon from "../../../commun/bouton/BoutonIcon";
@@ -14,31 +15,9 @@ import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/Conteneu
 import SeparateurSection from "../../../commun/conteneurs/formulaire/SeparateurSection";
 
 const ARRONDISSEMENTS: { [ville: string]: Option[] } = {
-  paris: [
-    { cle: "", libelle: "" },
-    ...Array.from({ length: 20 }, (_, index) => {
-      const arrondissement = `${index + 1}`;
-
-      return { cle: arrondissement, libelle: arrondissement };
-    }),
-    { cle: "Centre", libelle: "Centre" }
-  ],
-  marseille: [
-    { cle: "", libelle: "" },
-    ...Array.from({ length: 18 }, (_, index) => {
-      const arrondissement = `${index + 1}`;
-
-      return { cle: arrondissement, libelle: arrondissement };
-    })
-  ],
-  lyon: [
-    { cle: "", libelle: "" },
-    ...Array.from({ length: 9 }, (_, index) => {
-      const arrondissement = `${index + 1}`;
-
-      return { cle: arrondissement, libelle: arrondissement };
-    })
-  ]
+  paris: [{ cle: "", libelle: "" }, ...genererArrondissements(20), { cle: "centre", libelle: "centre" }],
+  marseille: [{ cle: "", libelle: "" }, ...genererArrondissements(16)],
+  lyon: [{ cle: "", libelle: "" }, ...genererArrondissements(9)]
 };
 
 const BlocParent: React.FC<{ valeursParent: IParentFormRCTC; indexParent: number }> = ({ valeursParent, indexParent }) => {
@@ -103,15 +82,15 @@ const BlocParent: React.FC<{ valeursParent: IParentFormRCTC; indexParent: number
                 name={`${prefixParent}.naissance.ville`}
                 libelle="Ville de naissance"
               />
-              {["paris", "marseille", "lyon"].includes(valeursParent?.naissance?.ville?.toLowerCase()) &&
+              {["paris", "marseille", "lyon"].includes(valeursParent?.naissance?.ville?.toLowerCase().trim()) &&
                 valeursParent.naissance.typeLieu === "FRANCE" && (
                   <ChampListeDeroulante
                     name={`${prefixParent}.naissance.arrondissement`}
                     libelle="Arrondissement de naissance"
-                    options={ARRONDISSEMENTS[valeursParent.naissance.ville.toLowerCase()] ?? []}
+                    options={ARRONDISSEMENTS[valeursParent.naissance.ville.toLowerCase().trim()] ?? []}
                   />
                 )}
-              {valeursParent.naissance.typeLieu === "FRANCE" && valeursParent?.naissance?.ville?.toLowerCase() !== "paris" && (
+              {valeursParent.naissance.typeLieu === "FRANCE" && valeursParent?.naissance?.ville?.toLowerCase().trim() !== "paris" && (
                 <ChampTexte
                   name={`${prefixParent}.naissance.departement`}
                   libelle="Département de naissance"

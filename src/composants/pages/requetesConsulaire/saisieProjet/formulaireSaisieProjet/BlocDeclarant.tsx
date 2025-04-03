@@ -24,6 +24,8 @@ const BlocDeclarant: React.FC = () => {
     if (!estDeclarantTiers) {
       setFieldValue("declarant", { ...initialValues.declarant, identite: values.declarant.identite });
       setFieldTouched("declarant.nom", false, false);
+      setFieldTouched("declarant.domicile.ville", false, false);
+      setFieldTouched("declarant.domicile.departement", false, false);
     }
   }, [estDeclarantTiers]);
 
@@ -32,6 +34,13 @@ const BlocDeclarant: React.FC = () => {
       setFieldValue(`declarant.profession`, "");
     }
   }, [values.declarant?.sansProfession]);
+
+  useEffect(() => {
+    if (values.declarant.domicile?.typeLieu === "France") {
+      setFieldTouched("declarant.domicile.ville", true, true);
+      setFieldTouched("declarant.domicile.departement", true, true);
+    }
+  }, [values.declarant.domicile?.typeLieu]);
 
   return (
     <ConteneurAvecBordure className="py-6">
