@@ -13,11 +13,10 @@ import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { TypeRedactionActe } from "@model/etatcivil/enum/TypeRedactionActe";
 import { TypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteArchiviste";
-import { IPrenomsChemin } from "@model/form/commun/PrenomsForm";
+import { PrenomsForm } from "@model/form/commun/PrenomsForm";
 import { IProjetActeTranscritForm, ITitulaireTranscription } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { ILocalisation } from "@model/requete/IParents";
 import { IParentTranscription } from "@model/requete/IParentsRequeteTranscription";
-import { PrenomsOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 
 export const mapProjetActeTranscritFormVersDto = (ProjetActeTranscriptionForm: IProjetActeTranscritForm): IProjetActeTranscritDto => {
@@ -66,11 +65,12 @@ export const mapProjetActeTranscritFormVersDto = (ProjetActeTranscriptionForm: I
 
 const mapDeclarantProjectActe = (projetActeTranscription: IProjetActeTranscritForm): IDeclarantDto => {
   const estDeclarantTiers = projetActeTranscription.declarant.identite === "TIERS";
+
   return {
     identiteDeclarant: projetActeTranscription.declarant.identite || null,
     complementDeclarant: (estDeclarantTiers && projetActeTranscription.declarant.complement) || null,
     nom: (estDeclarantTiers && projetActeTranscription.declarant.nom) || null,
-    prenoms: (estDeclarantTiers && PrenomsOrdonnes.listeDepuisObjet(projetActeTranscription.declarant.prenomsChemin ?? {})) || null,
+    prenoms: (estDeclarantTiers && PrenomsForm.versPrenomsOrdonnesDto(projetActeTranscription.declarant.prenomsChemin)) || null,
     sexe: (estDeclarantTiers && projetActeTranscription.declarant.sexe) || null,
     age: (estDeclarantTiers && projetActeTranscription.declarant.age) || null,
     qualite: (estDeclarantTiers && projetActeTranscription.declarant?.qualite) || null,
@@ -87,7 +87,7 @@ const mapDeclarantProjectActe = (projetActeTranscription: IProjetActeTranscritFo
 };
 const mapTitulaire = (projetActe: IProjetActeTranscritForm, naissanceTitulaireEvenement: IEvenementCompletDto): ITitulaireDto => {
   const Titulaire: ITitulaireTranscription = projetActe.titulaire;
-  const prenoms: string[] = getPrenomsDepuisPrenomsChemin(projetActe.titulaire.prenomsChemin);
+  const prenoms: string[] = PrenomsForm.versPrenomsStringDto(projetActe.titulaire.prenomsChemin);
   const lieuDeNaissanceConnu = !LieuxUtils.estPaysInconnu(Titulaire.paysNaissance ?? "Inconnu");
   return {
     nomActeEtranger: Titulaire.nomActeEtranger || null,
@@ -114,11 +114,9 @@ const mapTitulaire = (projetActe: IProjetActeTranscritForm, naissanceTitulaireEv
 };
 
 const mapFiliationParParent = (parentForm: IParentTranscription, ordre: number, domicileCommun: boolean = false): IFiliationDto => {
-  const prenoms: string[] = getPrenomsDepuisPrenomsChemin(parentForm.prenomsChemin);
-
   return {
     nom: parentForm.nom?.trim() || null,
-    prenoms: prenoms || null,
+    prenoms: PrenomsForm.versPrenomsStringDto(parentForm.prenomsChemin) || null,
     sexe: parentForm.sexe || null,
     naissance: mapFiliationNaissance(parentForm),
     lienParente: LienParente.PARENT,
@@ -206,24 +204,17 @@ const mapFiliations = (projetActe: IProjetActeTranscritForm): IFiliationDto[] =>
   return filiation;
 };
 
-const getPrenomsDepuisPrenomsChemin = (prenomsChemin?: IPrenomsChemin): string[] => {
-  if (!prenomsChemin) return [];
-  const { nombrePrenomsAffiches, ...prenoms } = prenomsChemin;
-  return PrenomsOrdonnes.listeDepuisObjet(prenoms ?? {}).map(p => p.prenom.trim());
-};
-
 const estParentRenseigne = (parent: IParentTranscription): boolean => {
   return Boolean(parent.nom) || Boolean(parent.prenoms?.length);
 };
 
 const mapFormuleFinale = (projetActe: IProjetActeTranscritForm): IFormuleFinaleDto => {
   const estTransmetteurIdentiqueDemandeur = projetActe.formuleFinale.identiteTransmetteur === "Identique au demandeur";
-  const prenoms: string[] = getPrenomsDepuisPrenomsChemin(projetActe.formuleFinale?.prenomsChemin);
 
   return {
     identiteDemandeur: projetActe.formuleFinale.identiteDemandeur || null,
     nomDemandeur: projetActe.formuleFinale?.nom || null,
-    prenomDemandeur: prenoms.toString() || null,
+    prenomDemandeur: PrenomsForm.versPrenomsStringDto(projetActe.formuleFinale?.prenomsChemin).toString() || null,
     qualiteDemandeur: projetActe.formuleFinale?.qualite || null,
     piecesProduites: projetActe.formuleFinale.piecesProduites || null,
     legalisation: projetActe.formuleFinale.legalisationApostille || null,

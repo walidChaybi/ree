@@ -15,6 +15,7 @@ import Bouton from "../../../../commun/bouton/Bouton";
 import { ConteneurBoutonBasDePage } from "../../../../commun/bouton/conteneurBoutonBasDePage/ConteneurBoutonBasDePage";
 import PageChargeur from "../../../../commun/chargeurs/PageChargeur";
 import ConteneurAccordeon from "../../../../commun/conteneurs/accordeon/ConteneurAccordeon";
+import ScrollVersErreur from "../../../../commun/formulaire/ScrollVersErreur";
 import { mapProjetActeTranscritFormVersDto } from "../mapping/mapProjetActeTranscritFormVersDto";
 import BlocActeEtranger from "./BlocActeEtranger";
 import BlocAutresEnonciations from "./BlocAutresEnonciations";
@@ -112,6 +113,7 @@ const FormulaireSaisieProjet: React.FC<IProjetActeTranscritProps> = ({ requete }
             </Bouton>
           </ConteneurBoutonBasDePage>
         </>
+        <ScrollVersErreur />
       </Form>
     </Formik>
   );

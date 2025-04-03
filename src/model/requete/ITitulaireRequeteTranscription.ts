@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 /* v8 ignore start A TESTER 03/25 */
 import { IDateForm } from "@model/form/commun/DateForm";
-import { IPrenomsChemin, IPrenomsNumerotes } from "@model/form/commun/PrenomsForm";
+import { PrenomsForm, TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import { ITitulaireTranscription } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { INationalite } from "./INationalite";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
@@ -13,7 +13,7 @@ export interface ITitulaireRequeteTranscription extends ITitulaireRequete {
   regionNaissance?: string;
   nationalites?: INationalite[];
   prenomsDemande?: IPrenomOrdonnes[];
-  prenomsChemin?: IPrenomsNumerotes;
+  prenomsChemin?: TPrenomsForm;
   nomActuel?: string;
   nomSouhaite?: string;
   typeObjetTitulaire?: TypeObjetTitulaire;
@@ -37,13 +37,7 @@ export const TitulaireRequeteTranscription = {
       nomRetenuOEC: "",
       nomSouhaite: titulaire?.nomSouhaite ?? "",
       nomSecable: { nomPartie1: "", nomPartie2: "", secable: false },
-      prenomsChemin: {
-        nombrePrenomsAffiches: titulaire?.prenoms?.length ?? 1,
-        ...titulaire?.prenoms?.reduce((prenoms, prenom) => {
-          prenoms[`prenom${prenom.numeroOrdre}`] = prenom.prenom;
-          return prenoms;
-        }, {} as IPrenomsChemin)
-      },
+      prenomsChemin: PrenomsForm.valeursInitiales(titulaire?.prenoms),
       sexe: titulaire?.sexe ?? "",
       dateNaissance: {
         jour: titulaire?.jourNaissance ? `${titulaire?.jourNaissance}`.padStart(2, "0") : "",

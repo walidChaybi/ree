@@ -1,41 +1,17 @@
 /* v8 ignore start A TESTER 03/25 */
 
-export type TPrenomNumerote = `prenom${number}`;
-
-export interface IPrenomsNumerotes {
-  [prenom: TPrenomNumerote]: string;
-}
-
-export interface IPrenomsChemin extends IPrenomsNumerotes {
+export type TPrenomsForm = { [Cle in `prenom${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15}`]?: string } & {
   nombrePrenomsAffiches: number;
-}
+};
 
-interface IPrenomDto {
-  numeroOrdre: number;
+export interface IPrenomOrdonneDto {
   prenom: string;
-}
-
-export interface IPrenomsForm {
-  nombrePrenomsAffiches: number;
-  prenom1: string;
-  prenom2: string;
-  prenom3: string;
-  prenom4: string;
-  prenom5: string;
-  prenom6: string;
-  prenom7: string;
-  prenom8: string;
-  prenom9: string;
-  prenom10: string;
-  prenom11: string;
-  prenom12: string;
-  prenom13: string;
-  prenom14: string;
-  prenom15: string;
+  numeroOrdre: number;
+  estPrenomFrRetenuSdanf?: boolean;
 }
 
 export const PrenomsForm = {
-  valeursDefauts: (prenomsDto?: IPrenomDto[]): IPrenomsForm => ({
+  valeursInitiales: (prenomsDto?: IPrenomOrdonneDto[]): TPrenomsForm => ({
     nombrePrenomsAffiches: prenomsDto?.length ?? 1,
     prenom1: "",
     prenom2: "",
@@ -60,15 +36,22 @@ export const PrenomsForm = {
     }, {}) ?? {})
   }),
 
-  versDto: (prenomsForm: IPrenomsForm): IPrenomDto[] =>
-    Object.entries(prenomsForm).reduce((prenomsDtos: IPrenomDto[], [clePrenom, prenom]) => {
-      if (clePrenom !== "nombrePrenomsAffiches" && prenom) {
+  versPrenomsOrdonnesDto: (prenomsForm?: TPrenomsForm): IPrenomOrdonneDto[] => {
+    if (!prenomsForm) return [];
+    return Object.entries(prenomsForm).reduce((prenomsDtos: IPrenomOrdonneDto[], [clePrenom, prenom]) => {
+      if (typeof prenom === "string" && prenom) {
         prenomsDtos.push({
           numeroOrdre: parseInt(clePrenom.replace("prenom", "")),
           prenom: prenom
         });
       }
       return prenomsDtos;
-    }, [])
+    }, []);
+  },
+  versPrenomsStringDto: (prenomsForm?: TPrenomsForm): string[] => {
+    return PrenomsForm.versPrenomsOrdonnesDto(prenomsForm)
+      .sort((prenomA, prenomB) => prenomA.numeroOrdre - prenomB.numeroOrdre)
+      .map(prenomOrdonne => prenomOrdonne.prenom);
+  }
 };
 /* v8 ignore end */

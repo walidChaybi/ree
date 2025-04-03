@@ -1,10 +1,10 @@
-import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
+import { IPrenomOrdonneDto } from "@model/form/commun/PrenomsForm";
 import { IAdresseCompleteDto } from "./IAdresseDto";
 
 export interface IDeclarantDto {
   identiteDeclarant: string | null;
   nom: string | null;
-  prenoms: IPrenomOrdonnes[] | null;
+  prenoms: IPrenomOrdonneDto[] | null;
   sexe: string | null;
   age: number | null;
   qualite: string | null;

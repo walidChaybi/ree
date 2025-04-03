@@ -3,7 +3,7 @@ import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { ConditionChamp, EOperateurCondition } from "@model/form/commun/ConditionChamp";
 import { DateForm, IDateForm } from "@model/form/commun/DateForm";
 import { INationalitesForm, NationalitesForm } from "@model/form/commun/NationalitesForm";
-import { IPrenomsForm, PrenomsForm } from "@model/form/commun/PrenomsForm";
+import { PrenomsForm, TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import { IRequeteConsulaire } from "@model/requete/IRequeteConsulaire";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
@@ -44,7 +44,7 @@ export interface ISaisieRequeteRCTCDto {
 export interface IParentFormRCTC {
   identifiant: string;
   nom: string;
-  prenoms: IPrenomsForm;
+  prenoms: TPrenomsForm;
   sexe: string;
   dateNaissance: IDateForm;
   naissance: {
@@ -73,7 +73,7 @@ const ParentRCTCForm = {
     return {
       identifiant: parent?.id ?? "",
       nom: parent?.nomNaissance ?? "",
-      prenoms: PrenomsForm.valeursDefauts(parent?.prenoms),
+      prenoms: PrenomsForm.valeursInitiales(parent?.prenoms),
       sexe: parent?.sexe ?? "",
       dateNaissance: DateForm.valeursDefauts(
         parent
@@ -102,7 +102,7 @@ const ParentRCTCForm = {
     qualite: QualiteFamille.getKey(QualiteFamille.PARENT),
     position: position,
     nomNaissance: parent.nom || undefined,
-    prenoms: PrenomsForm.versDto(parent.prenoms),
+    prenoms: PrenomsForm.versPrenomsOrdonnesDto(parent.prenoms),
     sexe: parent.sexe || undefined,
     jourNaissance: parent.dateNaissance.jour || undefined,
     moisNaissance: parent.dateNaissance.mois || undefined,
@@ -164,7 +164,7 @@ export interface ISaisieRequeteRCTCForm {
     identifiant: string;
     nomActeEtranger: string;
     nomSouhaite: string;
-    prenoms: IPrenomsForm;
+    prenoms: TPrenomsForm;
     sexe: string;
     naissance: {
       date: IDateForm;
@@ -263,7 +263,7 @@ export const SaisieRequeteRCTCForm = {
         identifiant: titulaire?.id ?? "",
         nomActeEtranger: titulaire?.nomNaissance ?? "",
         nomSouhaite: titulaire?.nomSouhaite ?? "",
-        prenoms: PrenomsForm.valeursDefauts(titulaire?.prenoms),
+        prenoms: PrenomsForm.valeursInitiales(titulaire?.prenoms),
         sexe: titulaire?.sexe ?? "",
         naissance: {
           date: DateForm.valeursDefauts(
@@ -393,7 +393,7 @@ export const SaisieRequeteRCTCForm = {
           position: 1,
           nomNaissance: valeurs.titulaire.nomActeEtranger || "SNP",
           nomSouhaite: valeurs.titulaire.nomSouhaite || undefined,
-          prenoms: PrenomsForm.versDto(valeurs.titulaire.prenoms),
+          prenoms: PrenomsForm.versPrenomsOrdonnesDto(valeurs.titulaire.prenoms),
           sexe: valeurs.titulaire.sexe || undefined,
           jourNaissance: valeurs.titulaire.naissance.date.jour || undefined,
           moisNaissance: valeurs.titulaire.naissance.date.mois || undefined,

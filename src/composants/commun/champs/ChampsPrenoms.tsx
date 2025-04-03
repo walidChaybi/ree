@@ -1,4 +1,4 @@
-import { IPrenomsForm } from "@model/form/commun/PrenomsForm";
+import { TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import AddCircle from "@mui/icons-material/AddCircle";
 import Delete from "@mui/icons-material/Delete";
 import { UN } from "@util/Utils";
@@ -14,7 +14,7 @@ interface IChampsPrenomsProps {
 
 const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({ cheminPrenoms, prefixePrenom }) => {
   const prefixeNomChamp = useMemo(() => (cheminPrenoms ? `${cheminPrenoms}.` : "").concat(prefixePrenom), [cheminPrenoms, prefixePrenom]);
-  const [champ, , helper] = useField<IPrenomsForm>(cheminPrenoms);
+  const [champ, , helper] = useField<TPrenomsForm>(cheminPrenoms);
 
   return (
     <div className="grid grid-cols-2 gap-4">
@@ -64,7 +64,7 @@ const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({ cheminPrenoms, prefixePr
                       ...Array.from({ length: 16 - indexChamp }, (_, index) => index + indexChamp).reduce(
                         (prenoms, indexPrenom) => ({
                           ...prenoms,
-                          [`prenom${indexPrenom}`]: champ.value[`prenom${indexPrenom + 1}` as keyof IPrenomsForm] ?? ""
+                          [`prenom${indexPrenom}`]: champ.value[`prenom${indexPrenom + 1}` as keyof TPrenomsForm] ?? ""
                         }),
                         {}
                       )

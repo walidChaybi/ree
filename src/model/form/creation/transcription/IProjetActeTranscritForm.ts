@@ -3,7 +3,7 @@ import { NomSecable } from "@model/etatcivil/commun/NomSecable";
 import { Identite } from "@model/etatcivil/enum/Identite";
 import { ConditionChamp, EOperateurCondition } from "@model/form/commun/ConditionChamp";
 import { IDateForm } from "@model/form/commun/DateForm";
-import { IPrenomsChemin } from "@model/form/commun/PrenomsForm";
+import { TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import { ILocalisation } from "@model/requete/IParents";
 import { IParentTranscription, ParentsRequeteTranscription } from "@model/requete/IParentsRequeteTranscription";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
@@ -43,7 +43,7 @@ export interface ITitulaireTranscription {
   nomActeEtranger: string | null;
   nomRetenuOEC: string;
   nomSouhaite: string | null;
-  prenomsChemin?: IPrenomsChemin;
+  prenomsChemin?: TPrenomsForm;
   nomSecable: NomSecable;
   sexe: string | null;
   dateNaissance: IDateForm | null;
@@ -63,7 +63,7 @@ export interface IParentsTranscription {
 export interface IDeclarantTranscription {
   identite: string;
   nom: string | null;
-  prenomsChemin?: IPrenomsChemin;
+  prenomsChemin?: TPrenomsForm;
   sexe: string | null;
   age?: number | null;
   qualite?: string | null;
@@ -80,7 +80,7 @@ export interface IMentionsTranscription {
 export interface IFormuleFinaleTranscription {
   identiteDemandeur: string;
   nom?: string | null;
-  prenomsChemin?: IPrenomsChemin;
+  prenomsChemin?: TPrenomsForm;
   qualite?: string | null;
   piecesProduites: string;
   legalisationApostille: string;

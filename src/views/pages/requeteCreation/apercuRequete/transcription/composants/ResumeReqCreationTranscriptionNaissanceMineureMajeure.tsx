@@ -27,26 +27,14 @@ export const ResumeRequeteCreationTranscriptionNaissanceMineureMajeure: React.FC
             dateCreation={Requete.getDateCreation(props.requete)}
             numeroFonctionnel={props.requete.numeroFonctionnel}
             sousType={props.requete.sousType}
-            numeroTeledossier={
-              props.requete.provenanceServicePublic?.referenceDila
-            }
+            numeroTeledossier={props.requete.provenanceServicePublic?.referenceDila}
           />
 
-          <AccordionTranscriptionTitulaire
-            titulaires={TitulaireRequeteCreation.getTitulairesTries(
-              props.requete.titulaires
-            )}
-          />
+          <AccordionTranscriptionTitulaire titulaires={TitulaireRequeteCreation.getTitulairesTries(props.requete.titulaires)} />
 
-          <AccordionTranscriptionParents
-            parents={TitulaireRequeteCreation.getParentsTries(
-              props.requete.titulaires
-            )}
-          />
+          <AccordionTranscriptionParents parents={TitulaireRequeteCreation.getParentsTries(props.requete.titulaires)} />
 
-          <AccordionTranscriptionRequerant
-            requerant={props.requete.requerant}
-          />
+          <AccordionTranscriptionRequerant requerant={props.requete.requerant} />
         </>
       ) : (
         <OperationLocaleEnCoursSimple />
