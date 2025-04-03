@@ -204,7 +204,7 @@ const mapFiliations = (projetActe: IProjetActeTranscritForm): IFiliationDto[] =>
 };
 
 const estParentRenseigne = (parent: IParentTranscription): boolean => {
-  return Boolean(parent.nom) || Boolean(parent.prenoms?.length);
+  return Boolean(parent.nom) || Boolean(parent.prenomsChemin?.prenom1);
 };
 
 const mapFormuleFinale = (projetActe: IProjetActeTranscritForm): IFormuleFinaleDto => {
