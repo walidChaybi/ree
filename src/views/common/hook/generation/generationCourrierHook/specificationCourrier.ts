@@ -109,11 +109,11 @@ requiert la saisie d’un code de télé-vérification (CTV) inscrit au bas et �
 <style isBold="true">Vous êtes tenu d’indiquer au destinataire de l’acte, l’adresse du télé-service et de vérifier que le CTV est lisible après impression.</style>
 
 Si vous souhaitez que l’acte que vous avez demandé vous soit transmis par voie postale sur support papier, il vous appartient d’en faire la demande via l’adresse suivante : 
-https://psl.service-public.fr/mademarche/demarche_impr/demarche
+https://demarches.service-public.gouv.fr/mademarche/demarche_impr/demarche
 `;
 const TEXTE_VARIABLE_RDC = `Pour formuler une nouvelle demande, il vous est conseillé d’utiliser le formulaire disponible sur internet, à l’adresse suivante :
 
-https://psl.service-public.fr/mademarche/delivrance_demat/demarche`;
+https://demarches.service-public.gouv.fr/mademarche/delivrance_demat/demarche`;
 
 function ajoutTexteVariable(elementsJasper: IElementsJasperCourrier, sousTypeRequete: SousTypeRequete) {
   if (sousTypeRequete === SousTypeDelivrance.RDD) {

@@ -174,7 +174,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     optionAPuce: false,
     optionLibre: false,
     texteOptionCourrier:
-      "Je vous informe que la délivrance de copies ou extraits d'actes détenus par le Service central d’état civil (SCEC) est une procédure gratuite. Si la démarche vous a été facturée, il est possible que vous ayez formulé votre demande sur le site d'un prestataire privé (et non sur celui du SCEC) dont la prestation est payante. Afin d’éviter à l’avenir un tel désagrément, je vous recommande de formuler votre prochaine demande sur internet, à l’adresse suivante https://psl.service-public.fr/mademarche/delivrance_demat/demarche."
+      "Je vous informe que la délivrance de copies ou extraits d'actes détenus par le Service central d’état civil (SCEC) est une procédure gratuite. Si la démarche vous a été facturée, il est possible que vous ayez formulé votre demande sur le site d'un prestataire privé (et non sur celui du SCEC) dont la prestation est payante. Afin d’éviter à l’avenir un tel désagrément, je vous recommande de formuler votre prochaine demande sur internet, à l’adresse suivante https://demarches.service-public.gouv.fr/mademarche/delivrance_demat/demarche."
   },
   {
     id: "3439200b-6b47-4fec-8e43-93c43df839de",
@@ -317,7 +317,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     optionAPuce: false,
     optionLibre: false,
     texteOptionCourrier:
-      "Je vous informe que la délivrance de copies ou extraits d'actes détenus par le Service central d’état civil (SCEC) est une procédure gratuite. Si la démarche vous a été facturée, il est possible que vous ayez formulé votre demande sur le site d'un prestataire privé (et non sur celui du SCEC) dont la prestation est payante. Afin d’éviter à l’avenir un tel désagrément, je vous recommande de formuler votre prochaine demande sur internet, à l’adresse suivante https://psl.service-public.fr/mademarche/delivrance_demat/demarche."
+      "Je vous informe que la délivrance de copies ou extraits d'actes détenus par le Service central d’état civil (SCEC) est une procédure gratuite. Si la démarche vous a été facturée, il est possible que vous ayez formulé votre demande sur le site d'un prestataire privé (et non sur celui du SCEC) dont la prestation est payante. Afin d’éviter à l’avenir un tel désagrément, je vous recommande de formuler votre prochaine demande sur internet, à l’adresse suivante https://demarches.service-public.gouv.fr/mademarche/delivrance_demat/demarche."
   },
   {
     id: "cf54379f-d2bb-415d-8091-b822ff37f4e8",
@@ -420,7 +420,7 @@ export const NOMENCLATURE_OPTION_COURRIER = [
     optionAPuce: false,
     optionLibre: false,
     texteOptionCourrier:
-      "Je vous informe que la délivrance de copies ou extraits d'actes détenus par le Service central d’état civil (SCEC) est une procédure gratuite. Si la démarche vous a été facturée, il est possible que vous ayez formulé votre demande sur le site d'un prestataire privé (et non sur celui du SCEC) dont la prestation est payante. Afin d’éviter à l’avenir un tel désagrément, je vous recommande de formuler votre prochaine demande sur internet, à l’adresse suivante https://psl.service-public.fr/mademarche/delivrance_demat/demarche."
+      "Je vous informe que la délivrance de copies ou extraits d'actes détenus par le Service central d’état civil (SCEC) est une procédure gratuite. Si la démarche vous a été facturée, il est possible que vous ayez formulé votre demande sur le site d'un prestataire privé (et non sur celui du SCEC) dont la prestation est payante. Afin d’éviter à l’avenir un tel désagrément, je vous recommande de formuler votre prochaine demande sur internet, à l’adresse suivante https://demarches.service-public.gouv.fr/mademarche/delivrance_demat/demarche."
   }
 ];
 
