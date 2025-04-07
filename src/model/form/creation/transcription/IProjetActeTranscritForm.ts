@@ -105,7 +105,7 @@ export const ProjetTranscriptionForm = {
         qualite: "",
         profession: "",
         sansProfession: false,
-        domicile: { typeLieu: "Inconnu" }
+        domicile: { typeLieu: "Inconnu", ville: "", departement: "", pays: "", etatProvince: "" }
       },
       parents: {
         parent1: ParentsRequeteTranscription.mappingParentRequeteTranscriptionVersParentForm(parents?.parent1),
@@ -144,7 +144,7 @@ export const ProjetTranscriptionForm = {
       adresseNaissance: SchemaValidation.texte({ obligatoire: false })
     });
 
-    const AdresseSchemaValidationFormulaire = (prefix: string) =>
+    const AdresseSchemaValidationFormulaire = (prefix: string, estDeclarant = false) =>
       SchemaValidation.objet({
         typeLieu: SchemaValidation.texte({ obligatoire: false }),
         ville: SchemaValidation.texte({
@@ -153,7 +153,16 @@ export const ProjetTranscriptionForm = {
               idChampReference: `${prefix}.typeLieu`,
               operateur: EOperateurCondition.EGAL,
               valeurs: ["France"]
-            }
+            },
+            ...(estDeclarant
+              ? [
+                  {
+                    idChampReference: "declarant.identite",
+                    operateur: EOperateurCondition.EGAL,
+                    valeurs: ["TIERS"]
+                  }
+                ]
+              : [])
           ])
         }),
         adresse: SchemaValidation.texte({ obligatoire: false }),
@@ -168,7 +177,16 @@ export const ProjetTranscriptionForm = {
               idChampReference: `${prefix}.ville`,
               operateur: EOperateurCondition.DIFF,
               valeurs: ["Paris"]
-            }
+            },
+            ...(estDeclarant
+              ? [
+                  {
+                    idChampReference: "declarant.identite",
+                    operateur: EOperateurCondition.EGAL,
+                    valeurs: ["TIERS"]
+                  }
+                ]
+              : [])
           ])
         }).transform(val => val?.toLowerCase?.()),
         arrondissement: SchemaValidation.texte({ obligatoire: false }),
@@ -241,7 +259,7 @@ export const ProjetTranscriptionForm = {
       age: SchemaValidation.entier({ obligatoire: false }),
       qualite: SchemaValidation.texte({ obligatoire: false }),
       profession: SchemaValidation.texte({ obligatoire: false }),
-      domicile: AdresseSchemaValidationFormulaire("declarant.domicile"),
+      domicile: AdresseSchemaValidationFormulaire("declarant.domicile", true),
       complement: SchemaValidation.texte({ obligatoire: false })
     });
 

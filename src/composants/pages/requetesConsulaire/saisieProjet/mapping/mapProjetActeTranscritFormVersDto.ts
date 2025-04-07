@@ -64,6 +64,7 @@ export const mapProjetActeTranscritFormVersDto = (ProjetActeTranscriptionForm: I
 
 const mapDeclarantProjectActe = (projetActeTranscription: IProjetActeTranscritForm): IDeclarantDto => {
   const estDeclarantTiers = projetActeTranscription.declarant.identite === "TIERS";
+  const typeLieuDomicile = projetActeTranscription.declarant.domicile?.typeLieu ?? "Inconnu";
 
   return {
     identiteDeclarant: projetActeTranscription.declarant.identite || null,
@@ -76,11 +77,13 @@ const mapDeclarantProjectActe = (projetActeTranscription: IProjetActeTranscritFo
     profession: (estDeclarantTiers && projetActeTranscription.declarant?.profession) || null,
     sansProfession: (estDeclarantTiers && projetActeTranscription.declarant.sansProfession) || null,
     adresseDomicile: {
-      ville: (estDeclarantTiers && projetActeTranscription.declarant.domicile?.ville) || null,
-      arrondissement: (estDeclarantTiers && projetActeTranscription.declarant.domicile?.arrondissement) || null,
-      voie: (estDeclarantTiers && projetActeTranscription.declarant.domicile?.adresse) || null,
-      region: (estDeclarantTiers && getRegionDomicile(projetActeTranscription.declarant.domicile)) || null,
-      pays: (estDeclarantTiers && projetActeTranscription.declarant.domicile?.pays) || null
+      ville: (estDeclarantTiers && typeLieuDomicile !== "Inconnu" && projetActeTranscription.declarant.domicile?.ville) || null,
+      arrondissement:
+        (estDeclarantTiers && typeLieuDomicile === "France" && projetActeTranscription.declarant.domicile?.arrondissement) || null,
+      voie: (estDeclarantTiers && typeLieuDomicile !== "Inconnu" && projetActeTranscription.declarant.domicile?.adresse) || null,
+      region:
+        (estDeclarantTiers && typeLieuDomicile === "Étranger" && getRegionDomicile(projetActeTranscription.declarant.domicile)) || null,
+      pays: (estDeclarantTiers && typeLieuDomicile === "Étranger" && projetActeTranscription.declarant.domicile?.pays) || null
     }
   };
 };
@@ -176,7 +179,7 @@ const mapFiliationNaissance = (parentForm: IParentTranscription): IEvenementComp
     region: getRegionNaissanceFiliation(parentForm),
     pays: (lieuNaissanceConnu && (lieuNaissanceEstFrance ? EtrangerFrance.FRANCE.libelle : parentForm.lieuNaissance?.pays)) || null,
     voie: parentForm.lieuNaissance?.adresse || null,
-    departement: parentForm.lieuNaissance?.departement || null
+    departement: (lieuNaissanceEstFrance && parentForm.lieuNaissance?.departement) || null
   };
 };
 

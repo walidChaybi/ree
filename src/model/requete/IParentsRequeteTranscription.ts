@@ -1,5 +1,5 @@
 import { IDateForm } from "@model/form/commun/DateForm";
-import { TPrenomsForm } from "@model/form/commun/PrenomsForm";
+import { PrenomsForm, TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import { ILocalisation } from "./IParents";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
 import { ITitulaireRequeteCreation as ITitulaireRequeteTranscription } from "./ITitulaireRequeteCreation";
@@ -68,13 +68,7 @@ export const ParentsRequeteTranscription = {
     return {
       sexe: parent?.sexe ?? "",
       nom: (parent?.nomUsage || parent?.nomNaissance) ?? "",
-      prenomsChemin: {
-        nombrePrenomsAffiches: parent?.prenoms?.length ?? 1,
-        ...parent?.prenoms?.reduce((prenoms, prenom) => {
-          (prenoms as any)[`prenom${prenom.numeroOrdre}`] = prenom.prenom;
-          return prenoms;
-        }, {} as TPrenomsForm)
-      },
+      prenomsChemin: PrenomsForm.valeursInitiales(parent?.prenoms),
       dateNaissance: {
         jour: parent?.jourNaissance ? `${parent?.jourNaissance}`.padStart(2, "0") : "",
         mois: parent?.moisNaissance ? `${parent?.moisNaissance}`.padStart(2, "0") : "",

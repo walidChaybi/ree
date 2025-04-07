@@ -1,5 +1,3 @@
-/* v8 ignore start A TESTER 03/25 */
-
 export type TPrenomsForm = { [Cle in `prenom${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15}`]?: string } & {
   nombrePrenomsAffiches: number;
 };
@@ -12,7 +10,7 @@ export interface IPrenomOrdonneDto {
 
 export const PrenomsForm = {
   valeursInitiales: (prenomsDto?: IPrenomOrdonneDto[]): TPrenomsForm => ({
-    nombrePrenomsAffiches: prenomsDto?.length ?? 1,
+    nombrePrenomsAffiches: prenomsDto?.length || 1,
     prenom1: "",
     prenom2: "",
     prenom3: "",
@@ -54,4 +52,3 @@ export const PrenomsForm = {
       .map(prenomOrdonne => prenomOrdonne.prenom);
   }
 };
-/* v8 ignore end */

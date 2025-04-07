@@ -35,13 +35,6 @@ const BlocDeclarant: React.FC = () => {
     }
   }, [values.declarant?.sansProfession]);
 
-  useEffect(() => {
-    if (values.declarant.domicile?.typeLieu === "France") {
-      setFieldTouched("declarant.domicile.ville", true, true);
-      setFieldTouched("declarant.domicile.departement", true, true);
-    }
-  }, [values.declarant.domicile?.typeLieu]);
-
   return (
     <ConteneurAvecBordure className="py-6">
       <div className="grid grid-cols-2 gap-4">
@@ -111,10 +104,7 @@ const BlocDeclarant: React.FC = () => {
             libellePour="declarant.domicile"
           />
 
-          <FormulaireAdresse
-            key={values.declarant.domicile?.typeLieu}
-            prefix={"declarant.domicile"}
-          />
+          <FormulaireAdresse prefix={"declarant.domicile"} />
 
           <SeparateurSection
             titre="Complément"

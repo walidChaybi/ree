@@ -46,6 +46,7 @@ const AdresseFrance = memo(({ prefix, afficherAdresse = true }: { prefix: string
             name={`${prefix}.ville`}
             libelle="Ville"
             optionFormatage="PREMIER_MAJUSCULE"
+            estObligatoire
           />
         </div>
         {estVilleSpeciale && (
@@ -63,6 +64,7 @@ const AdresseFrance = memo(({ prefix, afficherAdresse = true }: { prefix: string
             <ChampTexte
               name={`${prefix}.departement`}
               libelle="Département"
+              estObligatoire
             />
           </div>
         )}

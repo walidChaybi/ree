@@ -112,12 +112,10 @@ describe("BlocDeclarant", () => {
     test("Doit gérer le changement de ville pour Paris", async () => {
       renderComponentTiers();
 
-      // Sélectionner France comme type de domicile
       const franceRadio = screen.getAllByLabelText("France")[0];
       fireEvent.click(franceRadio);
 
-      // Saisir Paris comme ville
-      const villeInput = screen.getAllByLabelText("Ville")[0] as HTMLInputElement;
+      const villeInput = screen.getAllByLabelText(/^Ville/)[0] as HTMLInputElement;
       fireEvent.change(villeInput, { target: { value: "Paris" } });
 
       await waitFor(() => {
@@ -132,7 +130,7 @@ describe("BlocDeclarant", () => {
       const franceRadio = screen.getAllByLabelText("France")[0];
       fireEvent.click(franceRadio);
 
-      const villeInput = screen.getAllByLabelText("Ville")[0] as HTMLInputElement;
+      const villeInput = screen.getAllByLabelText(/^Ville/)[0] as HTMLInputElement;
       fireEvent.change(villeInput, { target: { value: "Toulouse" } });
 
       await waitFor(() => {
@@ -149,8 +147,8 @@ describe("BlocDeclarant", () => {
       fireEvent.click(franceRadio);
 
       await waitFor(() => {
-        expect(screen.getAllByLabelText("Ville")[0]).toBeDefined();
-        expect(screen.getAllByLabelText("Département")[0]).toBeDefined();
+        expect(screen.getAllByLabelText(/^Ville/)[0]).toBeDefined();
+        expect(screen.getAllByLabelText(/^Département/)[0]).toBeDefined();
       });
     });
 
@@ -171,7 +169,7 @@ describe("BlocDeclarant", () => {
       fireEvent.click(inconnuRadio);
 
       await waitFor(() => {
-        expect(screen.queryByLabelText("Ville")).toBeNull();
+        expect(screen.queryByLabelText(/^Ville/)).toBeNull();
         expect(screen.queryByLabelText("Pays")).toBeNull();
       });
     });

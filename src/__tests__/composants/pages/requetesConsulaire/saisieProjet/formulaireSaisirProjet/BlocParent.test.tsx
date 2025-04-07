@@ -58,7 +58,6 @@ describe("BlocParents", () => {
   describe("Tests d'affichage initial", () => {
     test("doit afficher les formulaires des deux parents avec les champs appropriés", async () => {
       renderComponent();
-      // Vérification des titres
       await waitFor(() => {
         expect(screen.getByText("Parent 1")).toBeDefined();
         expect(screen.getByText("Parent 2")).toBeDefined();
@@ -75,11 +74,9 @@ describe("BlocParents", () => {
         annee: screen.getAllByPlaceholderText("AAAA")[1]
       };
 
-      // Vérifier que tous les champs de date sont présents
       Object.values(dateFields1).forEach(field => expect(field).toBeDefined());
       Object.values(dateFields2).forEach(field => expect(field).toBeDefined());
 
-      // Vérification des cases à cocher "Saisir l'âge" pour chaque parent
       expect(screen.getByLabelText("Saisir l'âge", { selector: 'input[name="parents.parent1.renseignerAge"]' })).toBeDefined();
       expect(screen.getByLabelText("Saisir l'âge", { selector: 'input[name="parents.parent2.renseignerAge"]' })).toBeDefined();
     });
@@ -123,11 +120,10 @@ describe("BlocParents", () => {
       renderComponent();
       const renseignerAgeCheckbox = screen.getAllByLabelText("Saisir l'âge")[0];
 
-      // Remplir d'abord la date
       const dayInput = screen.getAllByPlaceholderText("JJ")[0] as HTMLInputElement;
       fireEvent.change(dayInput, { target: { value: "15" } });
 
-      // Activer renseignerAge
+      
       fireEvent.click(renseignerAgeCheckbox);
 
       await waitFor(() => {
@@ -139,12 +135,10 @@ describe("BlocParents", () => {
       renderComponent();
       const renseignerAgeCheckbox = screen.getAllByLabelText("Saisir l'âge")[0];
 
-      // Activer renseignerAge et saisir un âge
       fireEvent.click(renseignerAgeCheckbox);
       const ageInput = screen.getByLabelText("Âge (en années)") as HTMLInputElement;
       fireEvent.change(ageInput, { target: { value: "25" } });
 
-      // Désactiver renseignerAge
       fireEvent.click(renseignerAgeCheckbox);
 
       await waitFor(() => {
@@ -164,12 +158,12 @@ describe("BlocParents", () => {
     test("doit gérer le changement de ville pour Paris", async () => {
       renderComponent();
 
-      // Sélectionner France comme type de domicile
+
       const franceRadio = screen.getAllByLabelText("France")[0];
       fireEvent.click(franceRadio);
 
-      // Saisir Paris comme ville
-      const villeInput = screen.getAllByLabelText("Ville")[0] as HTMLInputElement;
+    
+      const villeInput = screen.getAllByLabelText(/^Ville/)[0] as HTMLInputElement;
       fireEvent.change(villeInput, { target: { value: "Paris" } });
 
       await waitFor(() => {
@@ -184,7 +178,7 @@ describe("BlocParents", () => {
       const franceRadio = screen.getAllByLabelText("France")[0];
       fireEvent.click(franceRadio);
 
-      const villeInput = screen.getAllByLabelText("Ville")[0] as HTMLInputElement;
+      const villeInput = screen.getAllByLabelText(/^Ville/)[0] as HTMLInputElement;
       fireEvent.change(villeInput, { target: { value: "Toulouse" } });
 
       await waitFor(() => {
@@ -217,8 +211,8 @@ describe("BlocParents", () => {
       fireEvent.click(franceRadio);
 
       await waitFor(() => {
-        expect(screen.getAllByLabelText("Ville")[0]).toBeDefined();
-        expect(screen.getAllByLabelText("Département")[0]).toBeDefined();
+        expect(screen.getAllByLabelText(/^Ville/)[0]).toBeDefined();
+        expect(screen.getAllByLabelText(/^Département/)[0]).toBeDefined();
       });
     });
 
@@ -239,7 +233,7 @@ describe("BlocParents", () => {
       fireEvent.click(inconnuRadio);
 
       await waitFor(() => {
-        expect(screen.queryByLabelText("Ville")).toBeNull();
+        expect(screen.queryByLabelText(/^Ville/)).toBeNull();
         expect(screen.queryByLabelText("Pays")).toBeNull();
       });
     });

@@ -30,7 +30,7 @@ const ChampsRadio: React.FC<TChampsRadioProps> = ({
         {libelle}
         {estObligatoire && <span className="ml-1 text-rouge">*</span>}
       </legend>
-      <div className="mt-2.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start">
+      <div className="mt-1.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start">
         {...options.map((option: Option) => {
           return (
             <div key={`${name}-${option.cle}`}>
