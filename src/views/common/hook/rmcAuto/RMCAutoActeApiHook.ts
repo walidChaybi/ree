@@ -6,15 +6,20 @@ import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 import { mappingActes } from "../rmcActeInscription/mapping/RMCMappingUtil";
-import { determinerCriteresRMCAuto } from "./RMCAutoActesInscriptionsUtils";
+import { getCriteresRMCAuto } from "./RMCAutoActesInscriptionsUtils";
 
-export function useRMCAutoActeApiHook(requete?: IRequeteTableauDelivrance | TRequete, range?: string) {
+export interface IRMCAutoActeParams {
+  requete?: IRequeteTableauDelivrance | TRequete;
+  range?: string;
+}
+
+export function useRMCAutoActeApiHook({ requete, range }: IRMCAutoActeParams) {
   const [dataRMCAutoActe, setDataRMCAutoActe] = useState<IResultatRMCActe[]>();
   const [dataTableauRMCAutoActe, setDataTableauRMCAutoActe] = useState<IParamsTableau>();
 
   useEffect(() => {
     if (requete) {
-      const criteresRequest = determinerCriteresRMCAuto(requete);
+      const criteresRequest = getCriteresRMCAuto(requete);
 
       rechercheMultiCriteresAutoActes(criteresRequest, range)
         .then((result: any) => {

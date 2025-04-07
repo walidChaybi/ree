@@ -24,83 +24,53 @@ import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatR
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import messageManager from "@util/messageManager";
 
-const ERREUR_PAS_DE_REQUERENT =
-  "Erreur inattendue: Pas de requérant pour la requête";
+const ERREUR_PAS_DE_REQUERENT = "Erreur inattendue: Pas de requérant pour la requête";
 
 /** REQUETE_INCOMPLETE_ILLISIBLE */
 export const createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete = (
   requete?: IRequeteDelivrance
-) => {
-  let reponseSansDelivranceCS =
-    {} as IReponseSansDelivranceCSDemandeIncompleteComposition;
-  if (requete && requete.requerant) {
-    reponseSansDelivranceCS =
-      ReponseSansDelivranceCSDemandeIncompleteComposition.creerReponseSansDelivranceCS(
-        requete
-      );
+): IReponseSansDelivranceCSDemandeIncompleteComposition => {
+  if (requete?.requerant) {
+    return ReponseSansDelivranceCSDemandeIncompleteComposition.creerReponseSansDelivranceCS(requete);
   } else {
     messageManager.showErrorAndClose(ERREUR_PAS_DE_REQUERENT);
+    return {} as IReponseSansDelivranceCSDemandeIncompleteComposition;
   }
-
-  return reponseSansDelivranceCS;
 };
 
 /** PACS_NON_INSCRIT */
 export const createReponseSansDelivranceCSPourCompositionApiPACSNonInscrit = (
   requete: IRequeteDelivrance
-) => {
-  let reponseSansDelivranceCS =
-    {} as IReponseSansDelivranceCSPACSNonInscritComposition;
-  if (requete && requete.requerant) {
-    reponseSansDelivranceCS =
-      ReponseSansDelivranceCSPACSNonInscritComposition.creerReponseSansDelivranceCS(
-        requete,
-        requete.canal
-      );
-  } else {
-    messageManager.showErrorAndClose(ERREUR_PAS_DE_REQUERENT);
+): IReponseSansDelivranceCSPACSNonInscritComposition => {
+  if (requete?.requerant) {
+    return ReponseSansDelivranceCSPACSNonInscritComposition.creerReponseSansDelivranceCS(requete, requete.canal);
   }
-
-  return reponseSansDelivranceCS;
+  messageManager.showErrorAndClose(ERREUR_PAS_DE_REQUERENT);
+  return {} as IReponseSansDelivranceCSPACSNonInscritComposition;
 };
 
 /** ACTION_RESSORTISSANT_FRANCAIS */
 export const createReponseSansDelivranceCSPourCompositionApiFrancais = (
   requete: IRequeteDelivrance
-) => {
-  let reponseSansDelivranceCS =
-    {} as IReponseSansDelivranceCSFrancaisComposition;
-  if (requete && requete.requerant) {
-    reponseSansDelivranceCS =
-      ReponseSansDelivranceCSFrancaisComposition.creerReponseSansDelivranceCS(
-        requete
-      );
-  } else {
-    messageManager.showErrorAndClose(ERREUR_PAS_DE_REQUERENT);
+): IReponseSansDelivranceCSFrancaisComposition => {
+  if (requete.requerant) {
+    return ReponseSansDelivranceCSFrancaisComposition.creerReponseSansDelivranceCS(requete);
   }
-
-  return reponseSansDelivranceCS;
+  messageManager.showErrorAndClose(ERREUR_PAS_DE_REQUERENT);
+  return {} as IReponseSansDelivranceCSFrancaisComposition;
 };
 
 /** TRACE_MARIAGE_ACTIF */
 export const createReponseSansDelivranceCSPourCompositionApiMariage = async (
   requete: IRequeteDelivrance,
   acte: IResultatRMCActe | undefined
-) => {
-  let reponseSansDelivranceCS =
-    {} as IReponseSansDelivranceCSMariageComposition;
-  if (requete && requete.requerant && acte) {
+): Promise<IReponseSansDelivranceCSMariageComposition> => {
+  if (requete?.requerant && acte) {
     const infoActe = await getInformationsFicheActe(acte.idActe);
-    reponseSansDelivranceCS =
-      ReponseSansDelivranceCSMariageComposition.creerReponseSansDelivranceCS(
-        requete,
-        mapActe(infoActe.body.data)
-      );
-  } else {
-    messageManager.showErrorAndClose(ERREUR_PAS_DE_REQUERENT);
+    return ReponseSansDelivranceCSMariageComposition.creerReponseSansDelivranceCS(requete, mapActe(infoActe.body.data));
   }
-
-  return reponseSansDelivranceCS;
+  messageManager.showErrorAndClose(ERREUR_PAS_DE_REQUERENT);
+  return {} as IReponseSansDelivranceCSMariageComposition;
 };
 
 export function estSeulementActeMariage(
@@ -111,8 +81,7 @@ export function estSeulementActeMariage(
   if (requete?.type === TypeRequete.DELIVRANCE) {
     const sousType: string = requete?.sousType?.nom;
     return (
-      (SousTypeDelivrance.RDCSC.nom === sousType ||
-        SousTypeDelivrance.RDCSD.nom === sousType) &&
+      (SousTypeDelivrance.RDCSC.nom === sousType || SousTypeDelivrance.RDCSD.nom === sousType) &&
       (inscriptions?.length === undefined || inscriptions?.length === 0) &&
       estSeulementActeMariageSelectionne(actes)
     );
@@ -120,8 +89,5 @@ export function estSeulementActeMariage(
   return true;
 }
 
-function estSeulementActeMariageSelectionne(
-  actes: IResultatRMCActe[] | undefined
-): boolean {
-  return actes?.length === 1 && actes[0].nature === NatureActe.MARIAGE.libelle;
-}
+const estSeulementActeMariageSelectionne = (actes: IResultatRMCActe[] | undefined): boolean =>
+  actes?.length === 1 && actes[0].nature === NatureActe.MARIAGE.libelle;

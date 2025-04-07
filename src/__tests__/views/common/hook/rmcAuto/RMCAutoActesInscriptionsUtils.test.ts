@@ -1,15 +1,11 @@
 import {
-  determinerCriteresRMCAuto,
-  redirectionRMCAuto,
-  redirectionRMCAutoApercuTraitement
+  getCriteresRMCAuto,
+  redirectionVersRequetePriseEnCharge,
+  redirectionVersRequeteTraitement
 } from "@hook/rmcAuto/RMCAutoActesInscriptionsUtils";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import {
-  PATH_APERCU_REQ_TRAITEMENT,
-  URL_MES_REQUETES_DELIVRANCE,
-  URL_REQUETES_DELIVRANCE_SERVICE
-} from "@router/ReceUrls";
+import { PATH_APERCU_REQ_TRAITEMENT, URL_MES_REQUETES_DELIVRANCE, URL_REQUETES_DELIVRANCE_SERVICE } from "@router/ReceUrls";
 import { expect, test } from "vitest";
 
 const requete = {
@@ -31,43 +27,31 @@ const requete = {
 } as IRequeteTableauDelivrance;
 
 test("criteresRMCAutoMapper", () => {
-  const res = determinerCriteresRMCAuto(requete);
+  const res = getCriteresRMCAuto(requete);
 
   expect(res).toStrictEqual({
     criteres: [
       {
         nomTitulaire: "Dylan",
         prenomTitulaire: "Bob",
-        jourNaissance: 31,
-        moisNaissance: 1,
-        anneeNaissance: 1992,
-        numeroOrdre: 1
+        jourNaissance: "31",
+        moisNaissance: "1",
+        anneeNaissance: "1992",
+        numeroOrdre: "1"
       }
     ]
   });
 });
 
 test("redirectionRMCAuto", () => {
-  const res = redirectionRMCAuto(requete, URL_REQUETES_DELIVRANCE_SERVICE);
-  expect(res).toStrictEqual(
-    "/rece/rece-ui/requetesservice/apercurequetepriseencharge/0"
-  );
+  const res = redirectionVersRequetePriseEnCharge(requete, URL_REQUETES_DELIVRANCE_SERVICE);
+  expect(res).toStrictEqual("/rece/rece-ui/requetesservice/apercurequetepriseencharge/0");
 });
 test("redirectionRMCAutoApercuTraitement", () => {
-  const res = redirectionRMCAutoApercuTraitement(
-    "0",
-    URL_MES_REQUETES_DELIVRANCE
-  );
-  expect(res).toStrictEqual(
-    "/rece/rece-ui/mesrequetes/apercurequetetraitement/0"
-  );
+  const res = redirectionVersRequeteTraitement("0", URL_MES_REQUETES_DELIVRANCE);
+  expect(res).toStrictEqual("/rece/rece-ui/mesrequetes/apercurequetetraitement/0");
 });
 test("redirectionRMCAutoModifierTraitement", () => {
-  const res = redirectionRMCAuto(
-    requete,
-    `${URL_REQUETES_DELIVRANCE_SERVICE}/${PATH_APERCU_REQ_TRAITEMENT}/0`
-  );
-  expect(res).toStrictEqual(
-    "/rece/rece-ui/requetesservice/apercurequetepriseencharge/0"
-  );
+  const res = redirectionVersRequetePriseEnCharge(requete, `${URL_REQUETES_DELIVRANCE_SERVICE}/${PATH_APERCU_REQ_TRAITEMENT}/0`);
+  expect(res).toStrictEqual("/rece/rece-ui/requetesservice/apercurequetepriseencharge/0");
 });

@@ -43,7 +43,6 @@ export function useReponseSansDelivranceCS(
         requeteId
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [compositionData]);
 
   // 3- Stockage du document réponse une fois celui-ci créé
@@ -52,18 +51,14 @@ export function useReponseSansDelivranceCS(
   const uuidDocumentReponse = useStockerDocumentCreerActionMajStatutRequete(stockerDocumentCreerActionMajStatutRequeteParams);
 
   // 6- Une fois la requête mise à jour et l'action créé, changement de page
-  useEffect(
-    () => {
-      if (requeteId && uuidDocumentReponse) {
-        setResultat({
-          requeteId,
-          uuidDocumentReponse
-        });
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [uuidDocumentReponse]
-  );
+  useEffect(() => {
+    if (requeteId && uuidDocumentReponse) {
+      setResultat({
+        requeteId,
+        uuidDocumentReponse
+      });
+    }
+  }, [uuidDocumentReponse]);
 
   return resultat;
 }

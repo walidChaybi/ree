@@ -1,8 +1,8 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import {
-  ICreationActionMiseAjourStatutEtRmcAutoHookParams,
-  useCreationActionMiseAjourStatutEtRmcAuto
-} from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+  ICreationActionMiseAjourStatutEtRedirectionParams,
+  useCreationActionMiseAjourStatutEtRedirectionHook
+} from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -21,15 +21,11 @@ interface BoutonPrendreEnChargeProps {
   disabled?: boolean;
 }
 
-export const BoutonPrendreEnCharge: React.FC<
-  BoutonPrendreEnChargeProps
-> = props => {
+export const BoutonPrendreEnCharge: React.FC<BoutonPrendreEnChargeProps> = props => {
   const location = useLocation();
   const { utilisateurConnecte } = useContext(RECEContextData);
 
-  const [params, setParams] = useState<
-    ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
-  >();
+  const [params, setParams] = useState<ICreationActionMiseAjourStatutEtRedirectionParams | undefined>();
 
   const setActionEtUpdateStatut = () => {
     setParams({
@@ -41,27 +37,20 @@ export const BoutonPrendreEnCharge: React.FC<
     });
   };
 
-  useCreationActionMiseAjourStatutEtRmcAuto(params);
+  useCreationActionMiseAjourStatutEtRedirectionHook(params);
 
   return (
     <BoutonOperationEnCours
       onClick={setActionEtUpdateStatut}
       class="BoutonPrendreEnCharge"
-      estDesactive={
-        !autorisePrendreEnChargeDelivrance(
-          utilisateurConnecte,
-          props.requete
-        ) || props.disabled
-      }
+      estDesactive={!autorisePrendreEnChargeDelivrance(utilisateurConnecte, props.requete) || props.disabled}
     >
       {getLibelle("Prendre en charge")}
     </BoutonOperationEnCours>
   );
 };
 
-const mapRequeteRmcAuto = (
-  requete: IRequeteDelivrance
-): IRequeteTableauDelivrance => {
+const mapRequeteRmcAuto = (requete: IRequeteDelivrance): IRequeteTableauDelivrance => {
   requete.statutCourant.statut = StatutRequete.PRISE_EN_CHARGE;
   return mappingRequeteDelivranceToRequeteTableau(requete);
 };

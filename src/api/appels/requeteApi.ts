@@ -437,7 +437,7 @@ export async function postSauvCourrierCreerActionMajStatutRequete(
   );
 }
 
-export async function postSauvDocumentCreerActionMajStatutRequete(
+export async function patchSauvDocumentCreerActionMajStatutRequete(
   idRequete: string,
   libelleAction: string,
   statutRequete: StatutRequete,

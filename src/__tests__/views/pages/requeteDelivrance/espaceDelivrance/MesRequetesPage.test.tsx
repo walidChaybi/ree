@@ -15,7 +15,7 @@ test("renders Page requete with all elements", async () => {
         element: (
           <MesRequetesPage
             miseAJourCompteur={miseAJourCompteur}
-            setParamsRMCAuto={setParamsRMCAuto}
+            setNavigationApercuDelivranceParams={setParamsRMCAuto}
           />
         )
       }

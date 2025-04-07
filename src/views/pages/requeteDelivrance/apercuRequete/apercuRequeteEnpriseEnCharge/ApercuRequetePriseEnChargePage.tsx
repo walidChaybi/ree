@@ -1,23 +1,9 @@
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { IParamsTableau } from "@util/GestionDesLiensApi";
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
 import { ApercuRequeteTemplate } from "../apercuRequeteTemplate/ApercuRequeteTemplate";
 import { ApercuRequetePriseEnChargePartieDroite } from "./contenu/ApercuRequetePriseEnChargePartieDroite";
 
-export interface DataRMCAuto {
-  dataRMCAutoActe: IResultatRMCActe[];
-  dataTableauRMCAutoActe: IParamsTableau;
-  dataRMCAutoInscription: IResultatRMCInscription[];
-  dataTableauRMCAutoInscription: IParamsTableau;
-}
-
 export const ApercuRequetePriseEnChargePage: React.FC = () => {
-  const location = useLocation();
-  const [dataHistory] = useState<DataRMCAuto>(location.state as DataRMCAuto);
-
   const [requete, setRequete] = useState<IRequeteDelivrance>();
 
   return (
@@ -27,10 +13,7 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
     >
       {requete && (
         <div className="ApercuRequetePriseEnCharge">
-          <ApercuRequetePriseEnChargePartieDroite
-            detailRequete={requete}
-            dataHistory={dataHistory}
-          />
+          <ApercuRequetePriseEnChargePartieDroite detailRequete={requete} />
         </div>
       )}
     </ApercuRequeteTemplate>

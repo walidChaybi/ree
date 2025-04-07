@@ -2,9 +2,9 @@ import { IQueryParametersPourRequetes, TypeAppelRequete } from "@api/appels/requ
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import {
-  ICreationActionMiseAjourStatutEtRmcAutoHookParams,
-  useCreationActionMiseAjourStatutEtRmcAuto
-} from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+  ICreationActionMiseAjourStatutEtRedirectionParams,
+  useCreationActionMiseAjourStatutEtRedirectionHook
+} from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
@@ -30,12 +30,12 @@ const NOMBRE_REQUETES = {
 
 interface MesRequetesPageProps {
   miseAJourCompteur: () => void;
-  setParamsRMCAuto: (id: string, requete: IRequeteTableauDelivrance, urlWithParam: string, pasDeTraitementAuto: boolean) => void;
+  setNavigationApercuDelivranceParams: (requete: IRequeteTableauDelivrance, urlWithParam: string) => void;
 }
 
 export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [paramsMiseAJour, setParamsMiseAJour] = useState<ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
+  const [paramsMiseAJour, setParamsMiseAJour] = useState<ICreationActionMiseAjourStatutEtRedirectionParams | undefined>();
   const [lancerMajRequeteBouton, setLancerMajRequeteBouton] = useState<ICreationActionEtMiseAjourStatutParams>();
 
   const { decrets, utilisateurConnecte } = useContext(RECEContextData);
@@ -54,7 +54,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
     setEnChargement
   );
 
-  useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
+  useCreationActionMiseAjourStatutEtRedirectionHook(paramsMiseAJour);
 
   const goToLink = useCallback((link: string) => {
     const queryParametersPourRequetes = goToLinkRequete(link, "mesrequetes");
@@ -77,7 +77,6 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
   /**
    * Test sur cette fonction trop compliqué et longue à faire par rapport à la valeur ajouté
    */
-  /* istanbul ignore next */
   const handleReload = useCallback(() => {
     setLinkParameters({ ...linkParameters });
     if (props.miseAJourCompteur !== undefined) {
@@ -91,7 +90,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
     miseAjourOuRedirection(
       requeteSelect,
       setParamsMiseAJour,
-      props,
+      props.setNavigationApercuDelivranceParams,
       idRequete,
       data,
       idx,

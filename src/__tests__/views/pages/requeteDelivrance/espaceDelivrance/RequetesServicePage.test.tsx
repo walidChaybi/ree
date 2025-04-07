@@ -39,7 +39,7 @@ test.skip("renders Page requete interactions works, no errors returned", () => {
     [
       {
         path: URL_REQUETES_DELIVRANCE_SERVICE,
-        element: <RequetesServicePage setParamsRMCAuto={setParamsRMCAuto} />
+        element: <RequetesServicePage setNavigationApercuDelivranceParams={setParamsRMCAuto} />
       }
     ],
     [URL_REQUETES_DELIVRANCE_SERVICE]
@@ -85,7 +85,7 @@ test.skip("Test Attribuée à", () => {
     [
       {
         path: URL_REQUETES_DELIVRANCE_SERVICE,
-        element: <RequetesServicePage setParamsRMCAuto={setParamsRMCAuto} />
+        element: <RequetesServicePage setNavigationApercuDelivranceParams={setParamsRMCAuto} />
       }
     ],
     [URL_REQUETES_DELIVRANCE_SERVICE]
@@ -150,7 +150,7 @@ test.skip("la page DOIT afficher les requetes filtrées QUAND on selectionne un 
     [
       {
         path: URL_REQUETES_DELIVRANCE_SERVICE,
-        element: <RequetesServicePage setParamsRMCAuto={setParamsRMCAuto} />
+        element: <RequetesServicePage setNavigationApercuDelivranceParams={setParamsRMCAuto} />
       }
     ],
     [URL_REQUETES_DELIVRANCE_SERVICE]

@@ -1,7 +1,9 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
-import { useNavigationApercuRMCAutoDelivrance } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
-import { IRMCAutoParams } from "@hook/rmcAuto/RMCAutoHook";
+import {
+  INavigationApercuDelivranceParams,
+  useNavigationApercuDelivrance
+} from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceHook";
 import { IOfficier } from "@model/agent/IOfficier";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
@@ -38,12 +40,7 @@ const getElementEntreDeux = (selectedTabState: number, officier: IOfficier) => {
 
 const getOnglets = (
   miseAJourCompteur: () => void,
-  recuperationParamsRMCAuto: (
-    idRequete: string,
-    requete: IRequeteTableauDelivrance,
-    urlWithParam: string,
-    pasDeTraitementAuto: boolean
-  ) => void
+  setNavigationApercuDelivranceParams: (requete: IRequeteTableauDelivrance, urlWithParam: string) => void
 ): IOngletProps[] => {
   return [
     {
@@ -55,7 +52,7 @@ const getOnglets = (
         composant: (
           <MesRequetesPage
             miseAJourCompteur={miseAJourCompteur}
-            setParamsRMCAuto={recuperationParamsRMCAuto}
+            setNavigationApercuDelivranceParams={setNavigationApercuDelivranceParams}
           />
         )
       }
@@ -67,7 +64,7 @@ const getOnglets = (
         nomHabilitation: "LinkTabRequetesDelivranceService" as NomComposant
       },
       corps: {
-        composant: <RequetesServicePage setParamsRMCAuto={recuperationParamsRMCAuto} />,
+        composant: <RequetesServicePage setNavigationApercuDelivranceParams={setNavigationApercuDelivranceParams} />,
         nomHabilitation: "TabPanelRequetesDelivranceService" as NomComposant
       }
     }
@@ -84,20 +81,15 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
   };
   const selectedTabState = selectedTab ?? 0;
 
-  //**** RMC AUTO ****//
-  const [paramsRMCAuto, setParamsRMCAuto] = useState<IRMCAutoParams | undefined>();
-  useNavigationApercuRMCAutoDelivrance(paramsRMCAuto);
+  const [navigationApercuDelivranceParams, setNavigationApercuDelivranceParams] = useState<INavigationApercuDelivranceParams | null>(null);
+  useNavigationApercuDelivrance(navigationApercuDelivranceParams);
 
-  const recuperationParamsRMCAuto = useCallback(
-    (idRequete: string, requete: IRequeteTableauDelivrance, urlWithParam: string, pasDeTraitementAuto: boolean = false) => {
-      setParamsRMCAuto({
-        requete,
-        urlCourante: urlWithParam,
-        pasDeTraitementAuto
-      });
-    },
-    []
-  );
+  const recuperationParamsRMCAuto = useCallback((requete: IRequeteTableauDelivrance, urlWithParam: string) => {
+    setNavigationApercuDelivranceParams({
+      requete,
+      urlCourante: urlWithParam
+    });
+  }, []);
 
   useTitreDeLaFenetre("Délivrance");
 

@@ -7,9 +7,9 @@ import {
   useNavigationApercuCreation
 } from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
 import {
-  ICreationActionMiseAjourStatutEtRmcAutoHookParams,
-  useCreationActionMiseAjourStatutEtRmcAuto
-} from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+  ICreationActionMiseAjourStatutEtRedirectionParams,
+  useCreationActionMiseAjourStatutEtRedirectionHook
+} from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { TransfertParLotParams, useTransfertsApi } from "@hook/requete/TransfertHook";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { IFiltreServiceRequeteCreationFormValues } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
@@ -41,7 +41,7 @@ interface RequetesServiceCreationProps {
 export const RequetesServiceCreation: React.FC<RequetesServiceCreationProps> = props => {
   // STATEs
   const [opEnCours, setOpEnCours] = useState<boolean>(false);
-  const [paramsMiseAJour, setParamsMiseAJour] = useState<ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
+  const [paramsMiseAJour, setParamsMiseAJour] = useState<ICreationActionMiseAjourStatutEtRedirectionParams | undefined>();
   const [parametresLienRequete, setParametresLienRequete] = useState<IQueryParametersPourRequetes>();
   const [enChargement, setEnChargement] = React.useState(false);
   const [paramsAttributionParLot, setParamsAttributionParLot] = useState<TransfertParLotParams>();
@@ -58,7 +58,7 @@ export const RequetesServiceCreation: React.FC<RequetesServiceCreationProps> = p
     setParametresLienRequete
   );
 
-  useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
+  useCreationActionMiseAjourStatutEtRedirectionHook(paramsMiseAJour);
   useNavigationApercuCreation(paramsCreation);
 
   const resultatTransfertsApi = useTransfertsApi(paramsAttributionParLot);

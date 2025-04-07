@@ -12,19 +12,14 @@ import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IRe
 import { aplatirTableau } from "@util/Utils";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import React, { useCallback, useEffect, useState } from "react";
-import { RMCAuto } from "../../../../rechercheMultiCriteres/autoActesInscriptions/RMCAuto";
-import { DataRMCAuto } from "../ApercuRequetePriseEnChargePage";
+import { TableauRMC } from "../../../../rechercheMultiCriteres/autoActesInscriptions/TableauRMC";
 import { ChoixAction } from "./actions/ChoixAction";
 
 interface ApercuRequetePriseEnChargePartieDroiteProps {
   detailRequete: IRequeteDelivrance;
-  dataHistory?: DataRMCAuto;
 }
 
-export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePriseEnChargePartieDroiteProps> = ({
-  detailRequete,
-  dataHistory
-}) => {
+export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePriseEnChargePartieDroiteProps> = ({ detailRequete }) => {
   /* Etat actes sélectionnés */
   const [actesSelectionnes, setActesSelectionnes] = useState<IResultatRMCActe[]>([]);
 
@@ -135,9 +130,8 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
 
   return (
     <>
-      <RMCAuto
+      <TableauRMC
         requete={detailRequete}
-        dataHistory={dataHistory}
         dataAlertes={aplatirTableau(Array.from(alertes.values()))}
         onClickCheckboxTableauActes={onClickCheckboxActe}
         onClickCheckboxTableauInscriptions={onClickCheckboxInscription}

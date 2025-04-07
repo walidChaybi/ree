@@ -36,7 +36,7 @@ export interface IPhrasesJasperCertificatSituation {
   phrasesPiecesJointes?: string;
 }
 
-export function useGenerationCertificatSituationHook(params?: IGenerationCertificatSituationParams) {
+export function useGenerationCertificatSituationHook(params?: IGenerationCertificatSituationParams | null) {
   const [resultGenerationCertificatSituation, setResultGenerationCertificatSituation] = useState<IResultGenerationUnDocument>();
 
   const [certificatSituationComposition, setCertificatSituationComposition] = useState<ICertificatSituationComposition>();

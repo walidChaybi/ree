@@ -24,7 +24,6 @@ describe("Test du composant CompteurTemps", () => {
         }
       },
       get: function (_: any, data: any) {
-        console.log(data);
         return {
           body: data
         };

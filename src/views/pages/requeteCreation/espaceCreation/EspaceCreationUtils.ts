@@ -1,5 +1,5 @@
 import { NavigationApercuReqCreationParams } from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
-import { ICreationActionMiseAjourStatutEtRmcAutoHookParams } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+import { ICreationActionMiseAjourStatutEtRedirectionParams } from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { IOfficier } from "@model/agent/IOfficier";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -10,25 +10,14 @@ import { setParamsUseApercuCreation } from "../commun/requeteCreationUtils";
 
 export function getOnClickSurLigneTableauEspaceCreation(
   setOperationEnCours: React.Dispatch<React.SetStateAction<boolean>>,
-  setParamsMiseAJour: React.Dispatch<
-    React.SetStateAction<
-      ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
-    >
-  >,
-  setParamsCreation: React.Dispatch<
-    React.SetStateAction<NavigationApercuReqCreationParams | undefined>
-  >,
+  setParamsMiseAJour: React.Dispatch<React.SetStateAction<ICreationActionMiseAjourStatutEtRedirectionParams | undefined>>,
+  setParamsCreation: React.Dispatch<React.SetStateAction<NavigationApercuReqCreationParams | undefined>>,
   utilisateurConnecte: IOfficier
 ) {
   return (idRequete: string, data: IRequeteTableauCreation[], idx: number) => {
     setOperationEnCours(true);
     const requeteSelect = data[idx];
-    if (
-      autorisePrendreEnChargeReqTableauCreation(
-        requeteSelect,
-        utilisateurConnecte
-      )
-    ) {
+    if (autorisePrendreEnChargeReqTableauCreation(requeteSelect, utilisateurConnecte)) {
       setParamsMiseAJour({
         libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
         statutRequete: StatutRequete.PRISE_EN_CHARGE,
@@ -37,13 +26,7 @@ export function getOnClickSurLigneTableauEspaceCreation(
         typeRequete: TypeRequete.CREATION
       });
     } else {
-      setParamsUseApercuCreation(
-        idRequete,
-        setParamsCreation,
-        requeteSelect.sousType,
-        requeteSelect.statut,
-        requeteSelect.idUtilisateur
-      );
+      setParamsUseApercuCreation(idRequete, setParamsCreation, requeteSelect.sousType, requeteSelect.statut, requeteSelect.idUtilisateur);
     }
   };
 }

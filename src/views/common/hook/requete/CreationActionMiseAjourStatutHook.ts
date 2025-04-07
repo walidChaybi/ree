@@ -1,8 +1,5 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import {
-  ICreationActionEtMiseAjourStatutParams,
-  usePostCreationActionEtMiseAjourStatutApi
-} from "@hook/requete/ActionHook";
+import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
@@ -12,22 +9,14 @@ import { useContext, useEffect, useState } from "react";
 export interface ICreationActionMiseAjourStatutHookParams {
   statutRequete: StatutRequete;
   libelleAction: string;
-  requete?:
-    | IRequeteTableauInformation
-    | IRequeteTableauDelivrance
-    | IRequeteTableauCreation;
-  pasDeTraitementAuto?: boolean;
+  requete?: IRequeteTableauInformation | IRequeteTableauDelivrance | IRequeteTableauCreation;
   callback?: () => void;
 }
 
-export function useCreationActionMiseAjourStatut(
-  params?: ICreationActionMiseAjourStatutHookParams
-) {
+export function useCreationActionMiseAjourStatut(params?: ICreationActionMiseAjourStatutHookParams) {
   const { utilisateurConnecte } = useContext(RECEContextData);
-  const [
-    creationActionEtMiseAjourStatutParams,
-    setCreationActionEtMiseAjourStatutParams
-  ] = useState<ICreationActionEtMiseAjourStatutParams>();
+  const [creationActionEtMiseAjourStatutParams, setCreationActionEtMiseAjourStatutParams] =
+    useState<ICreationActionEtMiseAjourStatutParams>();
 
   useEffect(() => {
     if (params) {
@@ -39,9 +28,7 @@ export function useCreationActionMiseAjourStatut(
     }
   }, [params]);
 
-  const idAction = usePostCreationActionEtMiseAjourStatutApi(
-    creationActionEtMiseAjourStatutParams
-  );
+  const idAction = usePostCreationActionEtMiseAjourStatutApi(creationActionEtMiseAjourStatutParams);
 
   useEffect(() => {
     if (idAction && params?.requete) {

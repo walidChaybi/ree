@@ -5,6 +5,7 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
+import { mapPrenomsVersPrenomsOrdonnes } from "@util/Utils";
 
 export function mappingRequeteDelivranceToRequeteTableau(requete: IRequeteDelivrance): IRequeteTableauDelivrance {
   return {
@@ -21,6 +22,22 @@ export function mappingRequeteDelivranceToRequeteTableau(requete: IRequeteDelivr
     documentsReponses: requete.documentsReponses
   };
 }
+export const mappingRequeteTableauVersRequeteDelivrance = (requeteTableauDelivrance?: IRequeteTableauDelivrance): IRequeteDelivrance =>
+  requeteTableauDelivrance?.titulaires
+    ? ({
+        ...requeteTableauDelivrance,
+        // Dans le cas du PACS il n'y a qu'un seul titulaire !
+        titulaires: [
+          {
+            ...requeteTableauDelivrance.titulaires[0],
+            prenoms: mapPrenomsVersPrenomsOrdonnes(requeteTableauDelivrance.titulaires[0].prenoms),
+            nomNaissance: requeteTableauDelivrance.titulaires[0].nom
+          }
+        ]
+      } as any as IRequeteDelivrance)
+    : ({
+        ...requeteTableauDelivrance
+      } as any as IRequeteDelivrance);
 
 const getTitulaires = (titulaires: ITitulaireRequete[]): ITitulaireRequeteTableau[] => {
   return titulaires.map((t: ITitulaireRequete) => {

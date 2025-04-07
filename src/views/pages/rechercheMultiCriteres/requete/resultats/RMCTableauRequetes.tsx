@@ -3,16 +3,18 @@ import {
   NavigationApercuReqCreationParams,
   useNavigationApercuCreation
 } from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
-import { useNavigationApercuRMCAutoDelivrance } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
+import {
+  INavigationApercuDelivranceParams,
+  useNavigationApercuDelivrance
+} from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceHook";
 import {
   INavigationApercuReqInfoParams,
   useNavigationApercuInformation
 } from "@hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
 import {
-  ICreationActionMiseAjourStatutEtRmcAutoHookParams,
-  useCreationActionMiseAjourStatutEtRmcAuto
-} from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
-import { IRMCAutoParams } from "@hook/rmcAuto/RMCAutoHook";
+  ICreationActionMiseAjourStatutEtRedirectionParams,
+  useCreationActionMiseAjourStatutEtRedirectionHook
+} from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { IOfficier, officierALeDroitSurUnDesPerimetres, officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
@@ -21,7 +23,6 @@ import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation"
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { setParamsUseApercuCreation } from "@pages/requeteCreation/commun/requeteCreationUtils";
@@ -52,15 +53,16 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   // Gestion du tableau
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
+  const [navigationApercuDelivranceParams, setNavigationApercuDelivranceParams] = useState<INavigationApercuDelivranceParams | null>(null);
+
   //**** RMC AUTO ****//
-  const [paramsMiseAJour, setParamsMiseAJour] = useState<ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
-  const [paramsRMCAuto, setParamsRMCAuto] = useState<IRMCAutoParams | undefined>();
+  const [paramsMiseAJour, setParamsMiseAJour] = useState<ICreationActionMiseAjourStatutEtRedirectionParams | undefined>();
   const [paramsCreation, setParamsCreation] = useState<NavigationApercuReqCreationParams | undefined>();
 
   const { services, decrets, utilisateurConnecte } = useContext(RECEContextData);
 
-  useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
-  useNavigationApercuRMCAutoDelivrance(paramsRMCAuto);
+  useCreationActionMiseAjourStatutEtRedirectionHook(paramsMiseAJour);
+  useNavigationApercuDelivrance(navigationApercuDelivranceParams);
   useNavigationApercuCreation(paramsCreation);
 
   /**** Navigation vers Apercu Information ****/
@@ -110,11 +112,9 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
         typeRequete: TypeRequete.DELIVRANCE
       });
     } else {
-      setParamsRMCAuto({
+      setNavigationApercuDelivranceParams({
         requete,
-        urlCourante,
-        // La RMC ne remonte pas les informations suffisantes pour générer un certificat de situation automatique
-        pasDeTraitementAuto: SousTypeDelivrance.estRDCSDouRDCSC(SousTypeDelivrance.getEnumFromLibelleCourt(requete.sousType))
+        urlCourante
       });
     }
   };

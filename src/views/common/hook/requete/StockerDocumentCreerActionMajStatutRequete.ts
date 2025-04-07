@@ -1,4 +1,4 @@
-import { postSauvDocumentCreerActionMajStatutRequete } from "@api/appels/requeteApi";
+import { patchSauvDocumentCreerActionMajStatutRequete } from "@api/appels/requeteApi";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { logError } from "@util/LogManager";
@@ -11,20 +11,12 @@ export interface IStockerDocumentCreerActionMajStatutRequeteParams {
   requeteId?: string;
 }
 
-export function useStockerDocumentCreerActionMajStatutRequete(
-  params?: IStockerDocumentCreerActionMajStatutRequeteParams
-) {
+export function useStockerDocumentCreerActionMajStatutRequete(params?: IStockerDocumentCreerActionMajStatutRequeteParams) {
   const [uuidDocumentReponse, setUuidDocumentReponse] = useState<string>();
   // 4- Une fois le document stocké, création des paramètres pour la création de l'action et la mise à jour du statut de la requête
   useEffect(() => {
-    if (
-      params &&
-      params.requeteId &&
-      params.libelleAction &&
-      params.statutRequete &&
-      params.documentReponsePourStockage
-    ) {
-      postSauvDocumentCreerActionMajStatutRequete(
+    if (params && params.requeteId && params.libelleAction && params.statutRequete && params.documentReponsePourStockage) {
+      patchSauvDocumentCreerActionMajStatutRequete(
         params.requeteId,
         params.libelleAction,
         params.statutRequete,
@@ -35,8 +27,7 @@ export function useStockerDocumentCreerActionMajStatutRequete(
         })
         .catch(error => {
           logError({
-            messageUtilisateur:
-              "Impossible de stocker le document et de mettre à jour le statut",
+            messageUtilisateur: "Impossible de stocker le document et de mettre à jour le statut",
             error
           });
         });

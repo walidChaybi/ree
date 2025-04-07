@@ -320,7 +320,7 @@ export const requeteRDCSC = {
       villeNaissance: "Sydney",
       paysNaissance: "Australie",
       sexe: "MASCULIN",
-      nationalite: "FRANCAISE",
+      nationalite: Nationalite.FRANCAISE,
       prenoms: [
         {
           id: "8ef12d35-0d01-4ed1-b026-0038f901a13e",

@@ -1,10 +1,12 @@
-import { useNavigationApercuRMCAutoDelivrance } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
+import {
+  INavigationApercuDelivranceParams,
+  useNavigationApercuDelivrance
+} from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceHook";
 import { CreationActionHookParams, useCreationAction } from "@hook/requete/CreationAction";
 import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
-import { IRMCAutoParams } from "@hook/rmcAuto/RMCAutoHook";
 import { CreationRequeteRDC, IComplementCreationUpdateRequete, UpdateRequeteRDC } from "@model/form/delivrance/ISaisirRDCPageForm";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
@@ -24,17 +26,17 @@ export const useRedirectionApresSoumissionRDCHook = (
   const [creationActionParams, setCreationActionParams] = useState<CreationActionHookParams>();
   const [creationActionMiseAjourStatutParams, setCreationActionMiseAjourStatutParams] =
     useState<ICreationActionMiseAjourStatutHookParams>();
-  const [paramsRMCAuto, setParamsRMCAuto] = useState<IRMCAutoParams>();
+  const [navigationApercuDelivranceParams, setNavigationApercuDelivranceParams] = useState<INavigationApercuDelivranceParams | null>(null);
 
   useCreationActionMiseAjourStatut(creationActionMiseAjourStatutParams);
   useCreationAction(creationActionParams);
-  useNavigationApercuRMCAutoDelivrance(paramsRMCAuto);
+  useNavigationApercuDelivrance(navigationApercuDelivranceParams);
 
   const redirectionPage = async (requeteSauvegardee: IRequeteDelivrance) => {
     // Si l'appel s'est terminé sans erreur
     if (requeteSauvegardee) {
       messageManager.showSuccessAndClose("La requête a bien été enregistrée");
-      setParamsRMCAuto({
+      setNavigationApercuDelivranceParams({
         requete: mappingRequeteDelivranceToRequeteTableau(requeteSauvegardee),
         urlCourante
       });

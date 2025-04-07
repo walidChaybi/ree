@@ -1,11 +1,8 @@
 import {
-  ICreationActionMiseAjourStatutEtRmcAutoHookParams,
-  useCreationActionMiseAjourStatutEtRmcAuto
-} from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
-import {
-  IRequeteAleatoireResultat,
-  useGetRequeteAleatoire
-} from "@hook/requete/PrendreEnChargeAleatoirementApiHook";
+  ICreationActionMiseAjourStatutEtRedirectionParams,
+  useCreationActionMiseAjourStatutEtRedirectionHook
+} from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
+import { IRequeteAleatoireResultat, useGetRequeteAleatoire } from "@hook/requete/PrendreEnChargeAleatoirementApiHook";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
@@ -20,11 +17,8 @@ export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
 
   const [prendreEnCharge, setPrendreEnCharge] = useState<boolean>(false);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [paramsDelivrance, setParamsDelivrance] = useState<
-    ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
-  >();
-  const requeteAleatoireResultat: IRequeteAleatoireResultat | undefined =
-    useGetRequeteAleatoire(TypeRequete.DELIVRANCE, prendreEnCharge);
+  const [paramsDelivrance, setParamsDelivrance] = useState<ICreationActionMiseAjourStatutEtRedirectionParams | undefined>();
+  const requeteAleatoireResultat: IRequeteAleatoireResultat | undefined = useGetRequeteAleatoire(TypeRequete.DELIVRANCE, prendreEnCharge);
 
   useEffect(() => {
     if (requeteAleatoireResultat) {
@@ -37,18 +31,14 @@ export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
           typeRequete: TypeRequete.DELIVRANCE
         });
       } else if (!requeteAleatoireResultat.requete) {
-        messageManager.showInfoAndClose(
-          getLibelle(
-            "Il n'existe plus de requêtes disponibles à la prise en charge"
-          )
-        );
+        messageManager.showInfoAndClose(getLibelle("Il n'existe plus de requêtes disponibles à la prise en charge"));
       }
       setPrendreEnCharge(false);
       setOperationEnCours(false);
     }
   }, [requeteAleatoireResultat, location]);
 
-  useCreationActionMiseAjourStatutEtRmcAuto(paramsDelivrance);
+  useCreationActionMiseAjourStatutEtRedirectionHook(paramsDelivrance);
 
   const onClickPrendreEnCharge = () => {
     setPrendreEnCharge(true);
@@ -66,7 +56,4 @@ export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
   );
 };
 
-export default WithHabilitation(
-  BoutonPrendreEnChargeAleatoirement,
-  "BoutonPrendreEnChargeAleatoirement"
-);
+export default WithHabilitation(BoutonPrendreEnChargeAleatoirement, "BoutonPrendreEnChargeAleatoirement");

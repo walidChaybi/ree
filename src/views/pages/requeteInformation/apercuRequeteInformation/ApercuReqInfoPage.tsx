@@ -7,10 +7,7 @@ import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
-import {
-  IOfficier,
-  appartientAMonServiceOuServicesParentsOuServicesFils
-} from "@model/agent/IOfficier";
+import { IOfficier, appartientAMonServiceOuServicesParentsOuServicesFils } from "@model/agent/IOfficier";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { Requete, TRequete } from "@model/requete/IRequete";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
@@ -20,11 +17,8 @@ import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import {
-  IDetailRequeteParams,
-  useAvecRejeuDetailRequeteApiHook
-} from "../../../common/hook/requete/DetailRequeteHook";
-import { RMCAuto } from "../../rechercheMultiCriteres/autoActesInscriptions/RMCAuto";
+import { IDetailRequeteParams, useAvecRejeuDetailRequeteApiHook } from "../../../common/hook/requete/DetailRequeteHook";
+import { TableauRMC } from "../../rechercheMultiCriteres/autoActesInscriptions/TableauRMC";
 import { RMCRequetesAssocieesResultats } from "../../rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { ReponseReqInfo } from "./contenu/ReponseReqInfo";
 import { ResumeReqInfo } from "./contenu/ResumeReqInfo";
@@ -35,15 +29,12 @@ interface ApercuReqInfoPageProps {
 }
 
 export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
-  const [detailRequeteParams, setDetailRequeteParams] =
-    useState<IDetailRequeteParams>();
+  const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>();
   const [requete, setRequete] = useState<IRequeteInformation>();
   const { idRequeteParam } = useParams<TUuidRequeteParams>();
-  const [affichageBoutonPrendreEnCharge, setAffichageBoutonPrendreEnCharge] =
-    useState(false);
+  const [affichageBoutonPrendreEnCharge, setAffichageBoutonPrendreEnCharge] = useState(false);
 
-  const [paramsMAJReqInfo, setParamsMAJReqInfo] =
-    useState<ICreationActionMiseAjourStatutHookParams>();
+  const [paramsMAJReqInfo, setParamsMAJReqInfo] = useState<ICreationActionMiseAjourStatutHookParams>();
 
   const estModeConsultation = props.idRequeteAAfficher !== undefined;
 
@@ -53,8 +44,7 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
 
   const { utilisateurConnecte } = useContext(RECEContextData);
 
-  const { detailRequeteState } =
-    useAvecRejeuDetailRequeteApiHook(detailRequeteParams);
+  const { detailRequeteState } = useAvecRejeuDetailRequeteApiHook(detailRequeteParams);
 
   useEffect(() => {
     // L'idRequete peut venir de l'URL ou bien être une props dans le cas d'une requete liée
@@ -73,19 +63,14 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
       setRequete(detailRequeteState as IRequeteInformation);
       if (props.idRequeteAAfficher === undefined) {
         // Si l'id de la requête n'est pas fourni par les props (on n'est pas dans une fenêtre externe)
-        setAffichageBoutonPrendreEnCharge(
-          priseEnChargePossible(utilisateurConnecte, detailRequeteState)
-        );
+        setAffichageBoutonPrendreEnCharge(priseEnChargePossible(utilisateurConnecte, detailRequeteState));
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [detailRequeteState]);
 
   const onclickPrendreEnCharge = useCallback(() => {
-    if (
-      detailRequeteParams &&
-      Requete.estDeTypeInformation(detailRequeteState)
-    ) {
+    if (detailRequeteParams && Requete.estDeTypeInformation(detailRequeteState)) {
       setParamsMAJReqInfo({
         libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
         statutRequete: StatutRequete.PRISE_EN_CHARGE,
@@ -118,17 +103,11 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
                 observations={requete.observations}
                 idRequete={requete.id}
               ></SuiviObservationsRequete>
-              {!estModeConsultation && !affichageBoutonPrendreEnCharge && (
-                <RMCRequetesAssocieesResultats requete={requete} />
-              )}
-              <SuiviActionsRequete
-                actions={requete.actions}
-              ></SuiviActionsRequete>
+              {!estModeConsultation && !affichageBoutonPrendreEnCharge && <RMCRequetesAssocieesResultats requete={requete} />}
+              <SuiviActionsRequete actions={requete.actions}></SuiviActionsRequete>
             </div>
             <div className="side right">
-              {!estModeConsultation && !affichageBoutonPrendreEnCharge && (
-                <RMCAuto requete={detailRequeteState} />
-              )}
+              {!estModeConsultation && !affichageBoutonPrendreEnCharge && <TableauRMC requete={detailRequeteState} />}
               <ReponseReqInfo
                 requete={requete}
                 disabled={props.idRequeteAAfficher !== undefined}
@@ -143,16 +122,9 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
   );
 };
 
-function priseEnChargePossible(
-  utilisateurConnecte: IOfficier,
-  requete: TRequete
-) {
+function priseEnChargePossible(utilisateurConnecte: IOfficier, requete: TRequete) {
   let estPriseEnChargePossible = false;
-  const estDansMaStructureDeService =
-    appartientAMonServiceOuServicesParentsOuServicesFils(
-      utilisateurConnecte,
-      requete.idService
-    );
+  const estDansMaStructureDeService = appartientAMonServiceOuServicesParentsOuServicesFils(utilisateurConnecte, requete.idService);
 
   if (
     Requete.estDeTypeInformation(requete) &&

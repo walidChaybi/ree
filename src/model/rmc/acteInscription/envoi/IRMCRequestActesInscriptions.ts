@@ -2,7 +2,6 @@ import { NatureActe } from "../../../etatcivil/enum/NatureActe";
 import { TypeFamille } from "../../../etatcivil/enum/TypeFamille";
 import { TypeRepertoire } from "../../../etatcivil/enum/TypeRepertoire";
 
-
 export interface ICriteresRMCAutoActeInscription {
   criteres: IRMCRequestActesInscriptions[];
 }
@@ -14,6 +13,7 @@ export interface IRMCRequestActesInscriptions {
   moisNaissance?: string;
   anneeNaissance?: string;
   paysNaissance?: string;
+  numeroOrdre?: string;
 
   // Filtre Date de création
   dateCreationDebut?: Date;

@@ -1,8 +1,8 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import {
-  ICreationActionMiseAjourStatutEtRmcAutoHookParams,
-  useCreationActionMiseAjourStatutEtRmcAuto
-} from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+  ICreationActionMiseAjourStatutEtRedirectionParams,
+  useCreationActionMiseAjourStatutEtRedirectionHook
+} from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
@@ -21,27 +21,18 @@ interface BoutonPrendreEnChargeCreationProps {
   onClick?: () => void;
 }
 
-export const BoutonPrendreEnChargeCreation: React.FC<
-  BoutonPrendreEnChargeCreationProps
-> = props => {
+export const BoutonPrendreEnChargeCreation: React.FC<BoutonPrendreEnChargeCreationProps> = props => {
   const location = useLocation();
   const { utilisateurs, services, decrets } = useContext(RECEContextData);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [params, setParams] = useState<
-    ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
-  >();
+  const [params, setParams] = useState<ICreationActionMiseAjourStatutEtRedirectionParams | undefined>();
 
   const setActionEtUpdateStatut = () => {
     setOperationEnCours(true);
     setParams({
       libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
       statutRequete: StatutRequete.PRISE_EN_CHARGE,
-      requete: mappingUneRequeteTableauCreation(
-        props.requete,
-        false,
-        utilisateurs,
-        services
-      ),
+      requete: mappingUneRequeteTableauCreation(props.requete, false, utilisateurs, services),
       urlCourante: getUrlPrecedente(location.pathname),
       typeRequete: TypeRequete.CREATION,
       handleTraitementTermine: () => {
@@ -53,7 +44,7 @@ export const BoutonPrendreEnChargeCreation: React.FC<
     });
   };
 
-  useCreationActionMiseAjourStatutEtRmcAuto(params);
+  useCreationActionMiseAjourStatutEtRedirectionHook(params);
 
   return (
     <>

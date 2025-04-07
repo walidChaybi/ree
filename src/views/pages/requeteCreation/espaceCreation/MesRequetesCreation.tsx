@@ -5,9 +5,9 @@ import {
   useNavigationApercuCreation
 } from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
 import {
-  ICreationActionMiseAjourStatutEtRmcAutoHookParams,
-  useCreationActionMiseAjourStatutEtRmcAuto
-} from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+  ICreationActionMiseAjourStatutEtRedirectionParams,
+  useCreationActionMiseAjourStatutEtRedirectionHook
+} from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
@@ -27,7 +27,7 @@ interface MesRequetesCreationProps {
 
 export const MesRequetesCreation: React.FC<MesRequetesCreationProps> = props => {
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [paramsMiseAJour, setParamsMiseAJour] = useState<ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined>();
+  const [paramsMiseAJour, setParamsMiseAJour] = useState<ICreationActionMiseAjourStatutEtRedirectionParams | undefined>();
   const [paramsCreation, setParamsCreation] = useState<NavigationApercuReqCreationParams | undefined>();
 
   const [linkParameters, setLinkParameters] = useState<IQueryParametersPourRequetes>(props.queryParametersPourRequetes);
@@ -37,7 +37,7 @@ export const MesRequetesCreation: React.FC<MesRequetesCreationProps> = props => 
 
   const { dataState, paramsTableau } = useRequeteCreationApiHook(TypeAppelRequete.MES_REQUETES_CREATION, setEnChargement, linkParameters);
 
-  useCreationActionMiseAjourStatutEtRmcAuto(paramsMiseAJour);
+  useCreationActionMiseAjourStatutEtRedirectionHook(paramsMiseAJour);
   useNavigationApercuCreation(paramsCreation);
 
   const goToLink = useCallback((link: string) => {

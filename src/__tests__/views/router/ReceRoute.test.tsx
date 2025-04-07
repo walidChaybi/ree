@@ -4,6 +4,7 @@ import { Perimetre } from "@model/agent/enum/Perimetre";
 import ReceRoute from "@router/ReceRoute";
 import { URL_BASE } from "@router/ReceUrls";
 import { render } from "@testing-library/react";
+import { cleanUrl } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter, elementAvecContexte } from "../../__tests__utils__/testsUtil";
@@ -64,7 +65,7 @@ describe("Test du composant route RECE", () => {
     );
 
     render(elementAvecContexte(<RouterProvider router={router} />, userDroitConsulterArchive));
-    expect(router.state.location.pathname).toBe(URL_BASE);
+    expect(cleanUrl(router.state.location.pathname)).toBe(URL_BASE);
   });
 
   test("Test de l'affichage d'un element d'une route avec un droit sur un périmètre", () => {
@@ -125,6 +126,6 @@ describe("Test du composant route RECE", () => {
     );
 
     render(elementAvecContexte(<RouterProvider router={router} />, userDroitConsulterArchive));
-    expect(router.state.location.pathname).toBe(URL_BASE);
+    expect(cleanUrl(router.state.location.pathname)).toBe(URL_BASE);
   });
 });

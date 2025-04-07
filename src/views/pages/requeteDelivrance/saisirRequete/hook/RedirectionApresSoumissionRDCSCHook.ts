@@ -1,19 +1,19 @@
-import { useNavigationApercuRMCAutoDelivrance } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceRMCAutoHook";
+import {
+  INavigationApercuDelivranceParams,
+  useNavigationApercuDelivrance
+} from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceHook";
 import { CreationActionHookParams, useCreationAction } from "@hook/requete/CreationAction";
 import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
-import { IRMCAutoParams } from "@hook/rmcAuto/RMCAutoHook";
 import { IReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
 import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "@model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
 import { CreationRequeteRDCSC, IComplementCreationUpdateRequete, UpdateRequeteRDCSC } from "@model/form/delivrance/ISaisirRDCSCPageForm";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
-import { ADonneesTitulaireRequeteAbsentes } from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import messageManager from "@util/messageManager";
 import { useCallback, useState } from "react";
 import { createReponseSansDelivranceCS } from "../contenu/SaisirRDCSCPageFonctions";
@@ -31,15 +31,15 @@ export const useRedirectionApresSoumissionRDCSCHook = (
   const [paramsCreationAction, setParamsCreationAction] = useState<CreationActionHookParams>();
   const [creationActionMiseAjourStatutParams, setCreationActionMiseAjourStatutParams] =
     useState<ICreationActionMiseAjourStatutHookParams>();
-  const [paramsRMCAuto, setParamsRMCAuto] = useState<IRMCAutoParams>();
+  const [navigationApercuDelivranceParams, setNavigationApercuDelivranceParams] = useState<INavigationApercuDelivranceParams | null>(null);
 
   useCreationActionMiseAjourStatut(creationActionMiseAjourStatutParams);
   useCreationAction(paramsCreationAction);
-  useNavigationApercuRMCAutoDelivrance(paramsRMCAuto);
+  useNavigationApercuDelivrance(navigationApercuDelivranceParams);
 
   const redirectionPage = useCallback(
     async (requeteSauvegardee: IRequeteDelivrance, statutFinal: StatutRequete, refus = false) => {
-      // Si l'appel c'est terminé sans erreur
+      // Si l'appel s'est terminé sans erreur
       if (requeteSauvegardee && !StatutRequete.estBrouillon(statutFinal)) {
         // Redirection si l'enregistrement n'est pas un brouillon
         if (refus) {
@@ -49,17 +49,10 @@ export const useRedirectionApresSoumissionRDCSCHook = (
             fichier: NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE
           });
         } else {
-          let pasDeTraitementAuto;
-
           messageManager.showSuccessAndClose("La requête a bien été enregistrée");
-
-          if (SousTypeDelivrance.estRDCSC(requeteSauvegardee.sousType)) {
-            pasDeTraitementAuto = ADonneesTitulaireRequeteAbsentes(requeteSauvegardee) || modeModification;
-          }
-          setParamsRMCAuto({
+          setNavigationApercuDelivranceParams({
             requete: mappingRequeteDelivranceToRequeteTableau(requeteSauvegardee),
-            urlCourante,
-            pasDeTraitementAuto
+            urlCourante
           });
         }
       }

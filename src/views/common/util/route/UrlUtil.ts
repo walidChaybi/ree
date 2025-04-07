@@ -69,13 +69,9 @@ export function getUrlPrecedente(url: string) {
   return urlWithoutIdParam.substring(0, idxLastUrlSep);
 }
 
-export function replaceUrl(
-  navigate: NavigateFunction,
-  url: string,
-  data?: any
-) {
+export function replaceUrl(navigate: NavigateFunction, url: string, data?: any) {
   gestionnaireNavigation.deleteLastUrl();
-  navigate(url, { state: data });
+  navigate(url, { state: data, replace: true });
 }
 
 export function goBack(navigate: NavigateFunction) {

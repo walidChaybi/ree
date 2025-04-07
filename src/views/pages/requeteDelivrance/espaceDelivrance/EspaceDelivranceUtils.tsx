@@ -1,117 +1,66 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
-import { ICreationActionMiseAjourStatutEtRmcAutoHookParams } from "@hook/requete/CreationActionMiseAjourStatutEtRmcAutoHook";
+import { ICreationActionMiseAjourStatutEtRedirectionParams } from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { IOfficier } from "@model/agent/IOfficier";
-import { Nationalite } from "@model/etatcivil/enum/Nationalite";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import {
-  autorisePrendreEnChargeReqTableauDelivrance,
-  indexParamsReq
-} from "@util/RequetesUtils";
+import { autorisePrendreEnChargeReqTableauDelivrance, indexParamsReq } from "@util/RequetesUtils";
 import { DEUX, UN, ZERO } from "@util/Utils";
-import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { SortOrder } from "@widget/tableau/TableUtils";
 
-export function goToLinkRequete(
-  link: string,
-  separator: string
-): IQueryParametersPourRequetes | undefined {
+export const goToLinkRequete = (link: string, separator: string): IQueryParametersPourRequetes | undefined => {
   let queryParameters: IQueryParametersPourRequetes | undefined = undefined;
   if (link.indexOf("range") > 0) {
     let params = [];
     const estRequeteService = separator === "requetesService";
     params = link.split(`${separator}?`)[1].split("&");
     queryParameters = {
-      statuts: estRequeteService
-        ? []
-        : [
-            StatutRequete.getEnumFor(
-              params[indexParamsReq.Statut].split("=")[1]
-            )
-          ],
+      statuts: estRequeteService ? [] : [StatutRequete.getEnumFor(params[indexParamsReq.Statut].split("=")[1])],
 
       tri: params[estRequeteService ? ZERO : indexParamsReq.Tri].split("=")[1],
-      sens: params[estRequeteService ? UN : indexParamsReq.Sens].split(
-        "="
-      )[1] as SortOrder,
-      range:
-        params[estRequeteService ? DEUX : indexParamsReq.Range].split("=")[1]
+      sens: params[estRequeteService ? UN : indexParamsReq.Sens].split("=")[1] as SortOrder,
+      range: params[estRequeteService ? DEUX : indexParamsReq.Range].split("=")[1]
     };
   }
   return queryParameters;
-}
+};
 
 /* v8 ignore start */
 export const miseAjourOuRedirection = (
   requeteSelect: IRequeteTableauDelivrance,
-  setParamsMiseAJour: React.Dispatch<
-    React.SetStateAction<
-      ICreationActionMiseAjourStatutEtRmcAutoHookParams | undefined
-    >
-  >,
-  props: any,
+  setParamsMiseAJour: React.Dispatch<React.SetStateAction<ICreationActionMiseAjourStatutEtRedirectionParams | undefined>>,
+  setNavigationApercuDelivranceParams: (requete: IRequeteTableauDelivrance, urlWithParam: string) => void,
   idRequete: string,
   data: IRequeteTableauDelivrance[],
   idx: number,
   url: string,
   utilisateurConnecte: IOfficier
 ) => {
-  let pasDeTraitementAuto;
-  const aPrendreEnCharge = autorisePrendreEnChargeReqTableauDelivrance(
-    utilisateurConnecte,
-    requeteSelect
-  );
+  const aPrendreEnCharge = autorisePrendreEnChargeReqTableauDelivrance(utilisateurConnecte, requeteSelect);
   const statutARevoir = requeteSelect.statut === StatutRequete.A_REVOIR.libelle;
-  const aDocumentASigner = requeteSelect.documentsReponses?.some(
-    document => document.avecCtv
-  );
-
-  if (
-    SousTypeDelivrance.estRDCSC(
-      SousTypeDelivrance.getEnumFromLibelleCourt(data[idx].sousType)
-    )
-  ) {
-    pasDeTraitementAuto = ADonneesTitulaireRequeteAbsentes(data[idx]);
-  }
+  const aDocumentASigner = requeteSelect.documentsReponses?.some(document => document.avecCtv);
 
   if (aPrendreEnCharge || statutARevoir) {
-    const statutFutur = aPrendreEnCharge
-      ? StatutRequete.PRISE_EN_CHARGE
-      : aDocumentASigner
-      ? StatutRequete.A_SIGNER
-      : StatutRequete.A_VALIDER;
+    const statutFutur = (() => {
+      switch (true) {
+        case aPrendreEnCharge:
+          return StatutRequete.PRISE_EN_CHARGE;
+        case aDocumentASigner:
+          return StatutRequete.A_SIGNER;
+        default:
+          return StatutRequete.A_VALIDER;
+      }
+    })();
 
     setParamsMiseAJour({
       libelleAction: statutFutur.libelle,
       statutRequete: statutFutur,
       requete: requeteSelect,
       urlCourante: url,
-      pasDeTraitementAuto,
       typeRequete: TypeRequete.DELIVRANCE
     });
   } else {
-    props.setParamsRMCAuto(idRequete, data[idx], url, pasDeTraitementAuto);
+    setNavigationApercuDelivranceParams(data[idx], url);
   }
 };
 /* v8 ignore end */
-
-export function ADonneesTitulaireRequeteAbsentes(
-  requete: IRequeteTableauDelivrance | IRequeteDelivrance
-): boolean {
-  const titulaire = requete.titulaires?.[0];
-
-  if (titulaire) {
-    return (
-      LieuxUtils.estPaysFrance(titulaire.paysNaissance) ||
-      !titulaire.anneeNaissance ||
-      !titulaire.villeNaissance ||
-      !titulaire.paysNaissance ||
-      titulaire.nationalite === Nationalite.FRANCAISE
-    );
-  } else {
-    return false;
-  }
-}

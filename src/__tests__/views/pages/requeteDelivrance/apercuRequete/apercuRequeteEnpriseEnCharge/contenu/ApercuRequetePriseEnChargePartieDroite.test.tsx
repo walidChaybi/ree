@@ -1,5 +1,4 @@
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
-import { DataRMCAuto } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import { ApercuRequetePriseEnChargePartieDroite } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/ApercuRequetePriseEnChargePartieDroite";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { COMPLEMENT_DESCRIPTION, ID_TYPE_ALERTE } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
@@ -7,29 +6,17 @@ import { act } from "react";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, test } from "vitest";
 import { elementAvecContexte } from "../../../../../../__tests__utils__/testsUtil";
-import { DataRMCActeAvecResultat, DataTableauActe } from "../../../../../../mock/data/RMCActe";
-import { DataRMCInscriptionAvecResultat, DataTableauInscription } from "../../../../../../mock/data/RMCInscription";
 import { userDroitnonCOMEDEC } from "../../../../../../mock/data/mockConnectedUserAvecDroit";
 import { ReponseAppelNomenclatureTypeAlerte } from "../../../../../../mock/data/nomenclatures";
 import requeteDelivrance from "../../../../../../mock/data/requeteDelivrance";
 
 describe("Test ApercuRequetePriseEnChargePartieDroite", () => {
-  const dataHistory: DataRMCAuto = {
-    dataRMCAutoActe: DataRMCActeAvecResultat,
-    dataTableauRMCAutoActe: DataTableauActe,
-    dataRMCAutoInscription: DataRMCInscriptionAvecResultat,
-    dataTableauRMCAutoInscription: DataTableauInscription
-  };
-
   TypeAlerte.init(ReponseAppelNomenclatureTypeAlerte.data);
 
   test("render ApercuRequetePriseEnChargePartieDroite : RMC état civil manuelle ", async () => {
     render(
       <MemoryRouter>
-        <ApercuRequetePriseEnChargePartieDroite
-          detailRequete={requeteDelivrance}
-          dataHistory={dataHistory}
-        />
+        <ApercuRequetePriseEnChargePartieDroite detailRequete={requeteDelivrance} />
       </MemoryRouter>
     );
 
@@ -75,10 +62,7 @@ describe("Test ApercuRequetePriseEnChargePartieDroite", () => {
     render(
       elementAvecContexte(
         <MemoryRouter>
-          <ApercuRequetePriseEnChargePartieDroite
-            detailRequete={requeteDelivrance}
-            dataHistory={dataHistory}
-          />
+          <ApercuRequetePriseEnChargePartieDroite detailRequete={requeteDelivrance} />
         </MemoryRouter>,
         userDroitnonCOMEDEC
       )
