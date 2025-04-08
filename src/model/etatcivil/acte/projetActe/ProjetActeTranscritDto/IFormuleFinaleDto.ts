@@ -3,7 +3,7 @@ export interface IFormuleFinaleDto {
   nomDemandeur: string | null;
   prenomDemandeur: string | null;
   qualiteDemandeur: string | null;
-  piecesProduites: string | null;
+  pieceProduite: string | null;
   legalisation: string | null;
   autresPieces: string | null;
   modeDepot: string | null;

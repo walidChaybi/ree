@@ -66,7 +66,8 @@ const ParentRCTCForm = {
 
       return {
         region: estFrance ? "" : regionDepartement,
-        departement: estFrance ? regionDepartement : ""
+        departement: estFrance ? regionDepartement : "",
+        estFrance
       };
     })();
 
@@ -85,7 +86,7 @@ const ParentRCTCForm = {
           : null
       ),
       naissance: {
-        typeLieu: "",
+        typeLieu: parent?.paysNaissance ? (donneesLieuNaissance.estFrance ? "FRANCE" : "ETRANGER") : "Inconnu",
         ville: parent?.villeNaissance ?? "",
         arrondissement: parent?.arrondissementNaissance ?? "",
         departement: donneesLieuNaissance.departement,

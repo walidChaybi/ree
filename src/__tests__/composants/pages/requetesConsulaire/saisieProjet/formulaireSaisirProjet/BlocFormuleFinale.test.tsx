@@ -14,7 +14,7 @@ describe("BlocFormuleFinale", () => {
             nom: "",
             prenomsChemin: { prenom1: "" },
             qualite: "",
-            piecesProduites: "COPIE",
+            pieceProduite: "COPIE",
             autresPieces: "",
             legalisationApostille: "",
             modeDepot: "Transmise",
@@ -37,7 +37,7 @@ describe("BlocFormuleFinale", () => {
             nom: "",
             prenomsChemin: { prenom1: "" },
             qualite: "",
-            piecesProduites: "COPIE",
+            pieceProduite: "COPIE",
             autresPieces: "",
             legalisationApostille: "",
             modeDepot: "Transmise",
@@ -72,7 +72,7 @@ describe("BlocFormuleFinale", () => {
         expect(screen.queryByText("Pièces")).toBeTruthy();
         expect(
           screen.getByLabelText("Pièces produites", {
-            selector: 'select[name="formuleFinale.piecesProduites"]'
+            selector: 'select[name="formuleFinale.pieceProduite"]'
           })
         ).toBeTruthy();
         expect(
@@ -135,12 +135,12 @@ describe("BlocFormuleFinale", () => {
       await waitFor(() => {
         expect(
           screen.getByLabelText("Pièces produites", {
-            selector: 'select[name="formuleFinale.piecesProduites"]'
+            selector: 'select[name="formuleFinale.pieceProduite"]'
           })
         ).toBeTruthy();
       });
       const selectPiecesProduites: HTMLSelectElement = screen.getByLabelText("Pièces produites", {
-        selector: 'select[name="formuleFinale.piecesProduites"]'
+        selector: 'select[name="formuleFinale.pieceProduite"]'
       });
 
       expect(selectPiecesProduites.value).toBe("COPIE");

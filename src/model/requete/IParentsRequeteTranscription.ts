@@ -62,6 +62,7 @@ export const ParentsRequeteTranscription = {
     }
     return { parent1: parents[0], parent2: parents[1] };
   },
+
   mappingParentRequeteTranscriptionVersParentForm(parent?: IParentRequeteTranscription): IParentTranscription {
     const estNaissanceFranceOuEtranger = parent?.paysNaissance?.toUpperCase() === "FRANCE" ? "France" : "Étranger";
 

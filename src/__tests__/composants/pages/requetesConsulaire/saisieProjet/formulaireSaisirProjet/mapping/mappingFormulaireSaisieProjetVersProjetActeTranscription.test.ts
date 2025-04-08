@@ -137,7 +137,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
     acteEtranger: {
       typeActe: "ACTE_DRESSE",
       referenceComplement: "ref.2024.12.pek",
-      typeActeAutre: "",
+      infoTypeActe: "",
       dateEnregistrement: {
         jour: "15",
         mois: "12",
@@ -161,7 +161,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
         nombrePrenomsAffiches: 1
       },
       qualite: "",
-      piecesProduites: "COPIES",
+      pieceProduite: "COPIES",
       autresPieces: "passeport",
       legalisationApostille: "LEGALISATION",
       modeDepot: "REMISE",
@@ -177,7 +177,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
     const acteEtrangerProjetActe: IActeEtranger = {
       texteEnonciations: "tewt tewxt",
       typeActeEtranger: "ACTE_DRESSE",
-      typeActe: null,
+      infoTypeActe: null,
       cadreNaissance: "NE_DANS_LE_MARIAGE",
       jourEnregistrement: "15",
       moisEnregistrement: "12",
@@ -196,7 +196,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
       nomDemandeur: null,
       prenomDemandeur: null,
       qualiteDemandeur: null,
-      piecesProduites: "COPIES",
+      pieceProduite: "COPIES",
       legalisation: "LEGALISATION",
       autresPieces: "passeport",
       modeDepot: "REMISE",
@@ -245,7 +245,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
         redacteur: "Ambassador",
         reference: "ref.2024.12.pek",
         texteEnonciations: "tewt tewxt",
-        typeActe: null,
+        infoTypeActe: null,
         typeActeEtranger: "ACTE_DRESSE"
       },
       analyseMarginales: null,
@@ -289,7 +289,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
         modeDepot: "REMISE",
         nomDemandeur: null,
         nomTransmetteur: null,
-        piecesProduites: "COPIES",
+        pieceProduite: "COPIES",
         prenomDemandeur: null,
         qualiteDemandeur: null
       },
@@ -527,7 +527,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
     acteEtranger: {
       typeActe: "AUTRE",
       referenceComplement: "REF.2454.14245",
-      typeActeAutre: "acte divers",
+      infoTypeActe: "acte divers",
       dateEnregistrement: {
         jour: "12",
         mois: "01",
@@ -551,7 +551,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
         nombrePrenomsAffiches: 3
       },
       qualite: "Agent",
-      piecesProduites: "COPIE",
+      pieceProduite: "COPIE",
       autresPieces: "",
       legalisationApostille: "APOSTILLE",
       modeDepot: "TRANSMISE",
@@ -581,7 +581,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
         redacteur: "officier",
         reference: "REF.2454.14245",
         texteEnonciations: "RAS",
-        typeActe: "acte divers",
+        infoTypeActe: "acte divers",
         typeActeEtranger: "AUTRE"
       },
       analyseMarginales: null,
@@ -630,7 +630,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
         modeDepot: "TRANSMISE",
         nomDemandeur: "nomDemandeur",
         nomTransmetteur: "nomDemandeur",
-        piecesProduites: "COPIE",
+        pieceProduite: "COPIE",
         prenomDemandeur: "Prenom,Demandeur",
         qualiteDemandeur: "Agent"
       },
@@ -648,7 +648,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
                 pays: null,
                 region: null,
                 ville: null,
-                voie: ""
+                voie: null
               },
               domicileCommun: null,
               lienParente: LienParente.PARENT,
@@ -823,7 +823,7 @@ describe("test des fonctions non testée précedement", () => {
         nombrePrenomsAffiches: 2
       },
       qualite: "Agent",
-      piecesProduites: "COPIE",
+      pieceProduite: "COPIE",
       autresPieces: "",
       legalisationApostille: "APOSTILLE",
       modeDepot: "TRANSMISE",
@@ -853,7 +853,7 @@ describe("test des fonctions non testée précedement", () => {
         redacteur: null,
         reference: null,
         texteEnonciations: null,
-        typeActe: null,
+        infoTypeActe: null,
         typeActeEtranger: null
       },
       analyseMarginales: null,
@@ -902,7 +902,7 @@ describe("test des fonctions non testée précedement", () => {
         modeDepot: "TRANSMISE",
         nomDemandeur: "nomDemandeur",
         nomTransmetteur: "nomDemandeur",
-        piecesProduites: "COPIE",
+        pieceProduite: "COPIE",
         prenomDemandeur: "Prenom,Demandeur",
         qualiteDemandeur: "Agent"
       },

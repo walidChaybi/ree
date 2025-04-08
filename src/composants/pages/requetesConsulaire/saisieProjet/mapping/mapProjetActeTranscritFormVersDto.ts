@@ -64,7 +64,17 @@ export const mapProjetActeTranscritFormVersDto = (ProjetActeTranscriptionForm: I
 
 const mapDeclarantProjectActe = (projetActeTranscription: IProjetActeTranscritForm): IDeclarantDto => {
   const estDeclarantTiers = projetActeTranscription.declarant.identite === "TIERS";
-  const typeLieuDomicile = projetActeTranscription.declarant.domicile?.typeLieu ?? "Inconnu";
+  const domicile = projetActeTranscription.declarant.domicile;
+  const lieuDomicileConnu = !LieuxUtils.estPaysInconnu(domicile?.typeLieu);
+
+  const adresseDomicile: IAdresseCompleteDto = {
+    ville: (estDeclarantTiers && lieuDomicileConnu && domicile?.ville) || null,
+    arrondissement:
+      (estDeclarantTiers && lieuDomicileConnu && LieuxUtils.estPaysFrance(domicile?.typeLieu) && domicile?.arrondissement) || null,
+    voie: (estDeclarantTiers && lieuDomicileConnu && domicile?.adresse) || null,
+    region: (estDeclarantTiers && lieuDomicileConnu && getRegionDomicile(domicile)) || null,
+    pays: (estDeclarantTiers && lieuDomicileConnu && (LieuxUtils.estPaysFrance(domicile?.typeLieu) ? "France" : domicile?.pays)) || null
+  };
 
   return {
     identiteDeclarant: projetActeTranscription.declarant.identite || null,
@@ -76,21 +86,14 @@ const mapDeclarantProjectActe = (projetActeTranscription: IProjetActeTranscritFo
     qualite: (estDeclarantTiers && projetActeTranscription.declarant?.qualite) || null,
     profession: (estDeclarantTiers && projetActeTranscription.declarant?.profession) || null,
     sansProfession: (estDeclarantTiers && projetActeTranscription.declarant.sansProfession) || null,
-    adresseDomicile: {
-      ville: (estDeclarantTiers && typeLieuDomicile !== "Inconnu" && projetActeTranscription.declarant.domicile?.ville) || null,
-      arrondissement:
-        (estDeclarantTiers && typeLieuDomicile === "France" && projetActeTranscription.declarant.domicile?.arrondissement) || null,
-      voie: (estDeclarantTiers && typeLieuDomicile !== "Inconnu" && projetActeTranscription.declarant.domicile?.adresse) || null,
-      region:
-        (estDeclarantTiers && typeLieuDomicile === "Étranger" && getRegionDomicile(projetActeTranscription.declarant.domicile)) || null,
-      pays: (estDeclarantTiers && typeLieuDomicile === "Étranger" && projetActeTranscription.declarant.domicile?.pays) || null
-    }
+    adresseDomicile: adresseDomicile
   };
 };
+
 const mapTitulaire = (projetActe: IProjetActeTranscritForm, naissanceTitulaireEvenement: IEvenementCompletDto): ITitulaireDto => {
   const Titulaire: ITitulaireTranscription = projetActe.titulaire;
   const prenoms: string[] = PrenomsForm.versPrenomsStringDto(projetActe.titulaire.prenomsChemin);
-  const lieuDeNaissanceConnu = !LieuxUtils.estPaysInconnu(Titulaire.paysNaissance ?? "Inconnu");
+  const lieuDeNaissanceConnu = !LieuxUtils.estPaysInconnu(Titulaire.paysNaissance?.trim() ?? "Inconnu");
   return {
     nomActeEtranger: Titulaire.nomActeEtranger || null,
     nom: Titulaire.nomRetenuOEC.trim(),
@@ -140,11 +143,14 @@ const mapFiliationDomicile = (parentForm: IParentTranscription): IAdresseComplet
     ville: (lieuDomicileConnu && parentForm.domicile?.ville) || null,
     region: getRegionDomicile(parentForm.domicile),
     arrondissement:
-      (lieuDomicileEstFrance && LieuxUtils.estVilleMarseilleLyonParis(parentForm.domicile?.ville) && parentForm.domicile?.arrondissement) ||
+      (lieuDomicileEstFrance &&
+        LieuxUtils.estVilleMarseilleLyonParis(parentForm.domicile?.ville?.trim()) &&
+        parentForm.domicile?.arrondissement) ||
       null,
-    voie: parentForm.domicile?.adresse ?? null
+    voie: (lieuDomicileConnu && parentForm.domicile?.adresse) || null
   };
 };
+
 const getRegionDomicile = (domicile?: ILocalisation): string | null => {
   if (!domicile) return null;
   const lieuDomicileEstEtranger = LieuxUtils.estPaysEtranger(domicile?.typeLieu);
@@ -153,7 +159,7 @@ const getRegionDomicile = (domicile?: ILocalisation): string | null => {
     case lieuDomicileEstEtranger:
       return domicile?.etatProvince || null;
     case lieuDomicileEstFrance:
-      return (!LieuxUtils.estVilleParis(domicile?.ville) && domicile?.departement) || null;
+      return (!LieuxUtils.estVilleParis(domicile?.ville?.trim()) && domicile?.departement) || null;
     default:
       return null;
   }
@@ -173,13 +179,17 @@ const mapFiliationNaissance = (parentForm: IParentTranscription): IEvenementComp
     ville: (lieuNaissanceConnu && parentForm.lieuNaissance?.ville) || null,
     arrondissement:
       (lieuNaissanceEstFrance &&
-        LieuxUtils.estVilleMarseilleLyonParis(parentForm.lieuNaissance?.ville) &&
+        LieuxUtils.estVilleMarseilleLyonParis(parentForm.lieuNaissance?.ville?.trim()) &&
         parentForm.lieuNaissance?.arrondissement) ||
       null,
     region: getRegionNaissanceFiliation(parentForm),
     pays: (lieuNaissanceConnu && (lieuNaissanceEstFrance ? EtrangerFrance.FRANCE.libelle : parentForm.lieuNaissance?.pays)) || null,
-    voie: parentForm.lieuNaissance?.adresse || null,
-    departement: (lieuNaissanceEstFrance && parentForm.lieuNaissance?.departement) || null
+    voie: (lieuNaissanceConnu && parentForm.lieuNaissance?.adresse) || null,
+    departement:
+      (lieuNaissanceEstFrance &&
+        !LieuxUtils.estVilleParis(parentForm.lieuNaissance?.ville?.trim()) &&
+        parentForm.lieuNaissance?.departement) ||
+      null
   };
 };
 
@@ -188,7 +198,7 @@ const getRegionNaissanceFiliation = (parentForm: IParentTranscription): string |
     case LieuxUtils.estPaysEtranger(parentForm.lieuNaissance?.typeLieu):
       return parentForm.lieuNaissance?.etatProvince || null;
     case LieuxUtils.estPaysFrance(parentForm.lieuNaissance?.typeLieu):
-      return (!LieuxUtils.estVilleParis(parentForm.lieuNaissance?.ville) && parentForm.lieuNaissance?.departement) || null;
+      return (!LieuxUtils.estVilleParis(parentForm.lieuNaissance?.ville?.trim()) && parentForm.lieuNaissance?.departement) || null;
     default:
       return null;
   }
@@ -218,7 +228,7 @@ const mapFormuleFinale = (projetActe: IProjetActeTranscritForm): IFormuleFinaleD
     nomDemandeur: projetActe.formuleFinale?.nom || null,
     prenomDemandeur: PrenomsForm.versPrenomsStringDto(projetActe.formuleFinale?.prenomsChemin).toString() || null,
     qualiteDemandeur: projetActe.formuleFinale?.qualite || null,
-    piecesProduites: projetActe.formuleFinale.piecesProduites || null,
+    pieceProduite: projetActe.formuleFinale.pieceProduite || null,
     legalisation: projetActe.formuleFinale.legalisationApostille || null,
     autresPieces: projetActe.formuleFinale?.autresPieces || null,
     modeDepot: projetActe.formuleFinale.modeDepot || null,
@@ -231,7 +241,7 @@ const mapActeEtranger = (projetActe: IProjetActeTranscritForm): IActeEtrangerDto
   return {
     texteEnonciations: projetActe.autresEnonciations?.enonciations || null,
     typeActeEtranger: projetActe.acteEtranger?.typeActe || null,
-    typeActe: projetActe.acteEtranger?.typeActeAutre || null,
+    infoTypeActe: projetActe.acteEtranger?.infoTypeActe || null,
     cadreNaissance: CadreNaissance.NE_DANS_LE_MARIAGE,
     jourEnregistrement: projetActe.acteEtranger.dateEnregistrement?.jour || null,
     moisEnregistrement: projetActe.acteEtranger.dateEnregistrement?.mois || null,
@@ -244,7 +254,6 @@ const mapActeEtranger = (projetActe: IProjetActeTranscritForm): IActeEtrangerDto
       voie: null
     },
     redacteur: projetActe.acteEtranger?.redacteur || null,
-    //TODO: Le formulaire de transcription contient un seul champ pour les deux, mais il est scindé en base, il faut séparer les champs dans le formulaire (STRECE-*)
     reference: projetActe.acteEtranger?.referenceComplement || null,
     complement: projetActe.acteEtranger?.referenceComplement || null,
     mentions: projetActe.mentions.mentions || null

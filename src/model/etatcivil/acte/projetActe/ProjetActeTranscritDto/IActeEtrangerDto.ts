@@ -3,7 +3,7 @@ import { IAdresseCompleteDto } from "./IAdresseDto";
 export interface IActeEtrangerDto {
   texteEnonciations: string | null;
   typeActeEtranger: string | null;
-  typeActe?: string | null;
+  infoTypeActe?: string | null;
   cadreNaissance: string | null;
   jourEnregistrement?: string | null;
   moisEnregistrement?: string | null;

@@ -45,8 +45,8 @@ const BlocFormuleFinale: React.FC = () => {
     [values.formuleFinale.identiteDemandeur]
   );
   const doitAfficherAutresPieces = useMemo(
-    () => values.formuleFinale.piecesProduites.toUpperCase()?.includes("COPIES"),
-    [values.formuleFinale.piecesProduites]
+    () => values.formuleFinale.pieceProduite?.toUpperCase().includes("COPIES"),
+    [values.formuleFinale.pieceProduite]
   );
 
   useEffect(() => {
@@ -109,7 +109,7 @@ const BlocFormuleFinale: React.FC = () => {
       <SeparateurSection titre="Pièces" />
       <div className="grid grid-cols-2 gap-4">
         <ChampListeDeroulante
-          name="formuleFinale.piecesProduites"
+          name="formuleFinale.pieceProduite"
           libelle="Pièces produites"
           options={optionsPieces}
         />

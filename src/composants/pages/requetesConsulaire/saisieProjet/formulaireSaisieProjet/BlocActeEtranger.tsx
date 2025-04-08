@@ -23,8 +23,8 @@ const BlocActeEtranger: React.FC = () => {
 
   useEffect(() => {
     if (!estAutreTypeActe) {
-      setFieldValue("acteEtranger.typeActeAutre", "");
-      setFieldTouched("acteEtranger.typeActeAutre", false);
+      setFieldValue("acteEtranger.infoTypeActe", "");
+      setFieldTouched("acteEtranger.infoTypeActe", false);
     }
   }, [estAutreTypeActe]);
 
@@ -39,7 +39,7 @@ const BlocActeEtranger: React.FC = () => {
         />
         {estAutreTypeActe && (
           <ChampTexte
-            name="acteEtranger.typeActeAutre"
+            name="acteEtranger.infoTypeActe"
             libelle="Précisez le type d'acte"
             estObligatoire
           />

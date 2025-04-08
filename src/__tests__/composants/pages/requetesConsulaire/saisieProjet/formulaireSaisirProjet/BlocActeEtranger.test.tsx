@@ -19,7 +19,7 @@ describe("BlocActeEtranger", () => {
   const initialValues = {
     acteEtranger: {
       typeActe: "DRESSE",
-      typeActeAutre: "",
+      infoTypeActe: "",
       dateEnregistrement: { jour: "", mois: "", annee: "" },
       lieuEnregistrement: { ville: "", etatProvince: "", pays: "" },
       redacteur: "",
@@ -81,7 +81,7 @@ describe("BlocActeEtranger", () => {
       acteEtranger: {
         ...initialValues.acteEtranger,
         typeActe: "AUTRE",
-        typeActeAutre: "Test"
+        infoTypeActe: "Test"
       }
     });
 

@@ -127,7 +127,7 @@ describe.skip("test du formulaire saisie projet acte transcrit de naissance", as
     acteEtranger: {
       texteEnonciations: "tewt tewxt",
       typeActeEtranger: "ACTE_DRESSE",
-      typeActe: null,
+      infoTypeActe: null,
       cadreNaissance: "NE_DANS_LE_MARIAGE",
       jourEnregistrement: "15",
       moisEnregistrement: "12",
@@ -143,7 +143,7 @@ describe.skip("test du formulaire saisie projet acte transcrit de naissance", as
       nomDemandeur: null,
       prenomDemandeur: "",
       qualiteDemandeur: null,
-      piecesProduites: "COPIES",
+      pieceProduite: "COPIES",
       legalisation: "LEGALISATION",
       autresPieces: "passeport",
       modeDepot: "REMISE",

@@ -26,7 +26,7 @@ export interface IProjetActeTranscritProps {
 
 export interface IActeEtrangerTranscription {
   typeActe?: string;
-  typeActeAutre?: string;
+  infoTypeActe?: string;
   dateEnregistrement?: IDateForm;
   lieuEnregistrement?: ILieuEtranger;
   redacteur?: string;
@@ -82,7 +82,7 @@ export interface IFormuleFinaleTranscription {
   nom?: string | null;
   prenomsChemin?: TPrenomsForm;
   qualite?: string | null;
-  piecesProduites: string;
+  pieceProduite: string;
   legalisationApostille: string;
   autresPieces?: string | null;
   modeDepot: string;
@@ -123,7 +123,7 @@ export const ProjetTranscriptionForm = {
         nom: "",
         prenomsChemin: { prenom1: "", nombrePrenomsAffiches: 1 },
         qualite: "",
-        piecesProduites: "COPIE",
+        pieceProduite: "COPIE",
         autresPieces: "",
         legalisationApostille: "",
         modeDepot: "TRANSMISE",
@@ -280,12 +280,12 @@ export const ProjetTranscriptionForm = {
       }),
       prenomsChemin: SchemaValidation.prenoms("mentionsEtFormuleFinale.prenomsChemin.prenom"),
       qualite: SchemaValidation.texte({ obligatoire: false }),
-      piecesProduites: SchemaValidation.texte({ obligatoire: true }),
+      pieceProduite: SchemaValidation.texte({ obligatoire: true }),
       legalisationApostille: SchemaValidation.texte({ obligatoire: false }),
       autresPieces: SchemaValidation.texte({
         obligatoire: ConditionChamp.depuisTableau([
           {
-            idChampReference: "formuleFinale.piecesProduites",
+            idChampReference: "formuleFinale.pieceProduite",
             operateur: EOperateurCondition.EGAL,
             valeurs: ["COPIES", "COPIES_ET_TRADUCTION"]
           }
@@ -312,7 +312,7 @@ export const ProjetTranscriptionForm = {
         obligatoire: true,
         options: ["ACTE_DRESSE", "ACTE_TRANSCRIT", "ACTE_ENREGISTRE", "JUGEMENT_DECLARATIF", "JUGEMENT_SUPPLETIF", "AUTRE"]
       }),
-      typeActeAutre: SchemaValidation.texte({
+      infoTypeActe: SchemaValidation.texte({
         obligatoire: ConditionChamp.depuisTableau([
           {
             idChampReference: "acteEtranger.typeActe",
