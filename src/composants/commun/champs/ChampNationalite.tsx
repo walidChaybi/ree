@@ -68,7 +68,7 @@ const ChampNationalite: React.FC<IPropsChampNationalite> = ({ nom, libelle, desa
                 styleBouton="suppression"
                 disabled={desactive}
               >
-                <Delete className="text-rouge group-hover:text-blanc" />
+                <Delete className="text-rouge group-hover:text-blanc group-focus:text-blanc" />
               </BoutonIcon>
             )
           }}
@@ -97,7 +97,7 @@ const ChampNationalite: React.FC<IPropsChampNationalite> = ({ nom, libelle, desa
                 styleBouton="suppression"
                 disabled={desactive}
               >
-                <Delete className="text-rouge group-hover:text-blanc" />
+                <Delete className="text-rouge group-hover:text-blanc group-focus:text-blanc" />
               </BoutonIcon>
             )
           }}

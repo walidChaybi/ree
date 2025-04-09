@@ -5,11 +5,11 @@ export type TStyleBouton = "principal" | "secondaire" | "suppression" | "old";
 const getStyleBouton = (styleBouton?: TStyleBouton) => {
   switch (styleBouton) {
     case "principal":
-      return "border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu disabled:bg-bleu-sombre";
+      return "border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre";
     case "secondaire":
-      return "border-bleu-sombre bg-blanc text-bleu-sombre hover:text-bleu hover:border-bleu ";
+      return "border-bleu-sombre bg-blanc text-bleu-sombre hover:text-bleu hover:border-bleu focus:text-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2";
     case "suppression":
-      return "border-rouge bg-blanc text-rouge hover:border-rouge hover:bg-rouge hover:text-blanc";
+      return "border-rouge bg-blanc text-rouge hover:border-rouge hover:bg-rouge hover:text-blanc focus:border-rouge focus:bg-rouge focus:text-blanc focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2";
     default:
       return "";
   }

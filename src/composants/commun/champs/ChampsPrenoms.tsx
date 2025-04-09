@@ -43,10 +43,7 @@ const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({ cheminPrenoms, prefixePr
       </div>
 
       {Array.from({ length: (champ.value.nombrePrenomsAffiches ?? 1) - 1 }, (_, index) => index + 2).map(indexChamp => (
-        <div
-          key={`${prefixeNomChamp}${indexChamp}`}
-          className="flex items-end gap-4"
-        >
+        <div key={`${prefixeNomChamp}${indexChamp}`}>
           <ChampTexte
             name={`${prefixeNomChamp}${indexChamp}`}
             libelle={`Prénom ${indexChamp}`}
@@ -72,7 +69,7 @@ const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({ cheminPrenoms, prefixePr
                   }
                   styleBouton="suppression"
                 >
-                  <Delete className="text-rouge group-hover:text-blanc" />
+                  <Delete className="text-rouge group-hover:text-blanc group-focus:text-blanc" />
                 </BoutonIcon>
               )
             }}

@@ -3,26 +3,20 @@ import { CONFIG_GET_TOUS_SERVICES_FILS } from "@api/configurations/agent/service
 import { CONFIG_GET_DETAIL_REQUETE } from "@api/configurations/requete/GetDetailRequeteConfigApi";
 import TRAITEMENT_ENREGISTRER_RCTC from "@api/traitements/requetesConsulaire/TraitementEnregistrerRCTC";
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { TypeRedactionActe } from "@model/etatcivil/enum/TypeRedactionActe";
 import { ISaisieRequeteRCTCForm, SaisieRequeteRCTCForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
 import { IRequeteConsulaire } from "@model/requete/IRequeteConsulaire";
-import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import {
   URL_MES_REQUETES_CONSULAIRE,
   URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
   URL_REQUETES_CONSULAIRE_SERVICE
 } from "@router/ReceUrls";
 import { Option } from "@util/Type";
-import { PiecesJointes } from "@widget/formulaire/piecesJointes/PiecesJointes";
 import { Form, Formik } from "formik";
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Bouton from "../../composants/commun/bouton/Bouton";
-import { ConteneurBoutonBasDePage } from "../../composants/commun/bouton/conteneurBoutonBasDePage/ConteneurBoutonBasDePage";
 import PageChargeur from "../../composants/commun/chargeurs/PageChargeur";
 import ConteneurAccordeon from "../../composants/commun/conteneurs/accordeon/ConteneurAccordeon";
-import ConteneurAvecBordure from "../../composants/commun/conteneurs/formulaire/ConteneurAvecBordure";
 import ScrollVersErreur from "../../composants/commun/formulaire/ScrollVersErreur";
 import BlocParents from "../../composants/pages/requetesConsulaire/saisieCourrier/BlocParents";
 import BlocRequerant from "../../composants/pages/requetesConsulaire/saisieCourrier/BlocRequerant";
@@ -102,7 +96,7 @@ const PageSaisieCourrierTranscription: React.FC = () => {
       {(enregistrementEnCours || requeteModifiee === false || optionsServices === null) && <PageChargeur />}
 
       {requeteModifiee !== false && (
-        <div className="mx-auto mt-4 max-w-[120rem]">
+        <div className="mx-auto mt-4 max-w-[90rem]">
           <Formik<ISaisieRequeteRCTCForm>
             initialValues={SaisieRequeteRCTCForm.valeursInitiales(requeteModifiee)}
             enableReinitialize
@@ -122,67 +116,47 @@ const PageSaisieCourrierTranscription: React.FC = () => {
               })
             }
           >
-            {({ values, setFieldValue, dirty }) => (
+            {({ dirty }) => (
               <Form>
                 <ScrollVersErreur />
 
                 <ConteneurAccordeon
-                  titre="Création suite transcription courrier"
+                  titre="Saisie d'une requête de transcription courrier"
                   nonControllable
                   ouvertParDefaut
                 >
-                  <div className="grid h-[calc(100vh-14.5rem)] grid-cols-5">
-                    <div className="col-span-2 py-6 pl-4 text-start">
-                      <ConteneurAvecBordure
-                        titreEnTete="PIÈCES JUSTIFICATIVES"
-                        sansMargeHorizontale
-                      >
-                        <PiecesJointes
-                          menuItem={TypePieceJustificative.versOptions(TypeRequete.CREATION, TypeRedactionActe.TRANSCRIT)}
-                          piecesJointes={values.pieceJointe}
-                          setPiecesJointes={piecesJointes => setFieldValue("pieceJointe", piecesJointes)}
-                          maxPiecesJointes={34}
-                        />
-                      </ConteneurAvecBordure>
-                    </div>
-                    <div className="col-span-3 h-full overflow-y-scroll">
-                      <div className="grid gap-10 py-6">
-                        <BlocRequete />
-
-                        <BlocTitulaire />
-
-                        <BlocParents />
-
-                        <BlocRequerant />
-                      </div>
+                  <div className="h-[calc(100vh-22rem)] overflow-y-auto py-14">
+                    <div className="grid gap-10">
+                      <BlocRequete />
+                      <BlocTitulaire />
+                      <BlocParents />
+                      <BlocRequerant />
                     </div>
                   </div>
                 </ConteneurAccordeon>
 
-                <ConteneurBoutonBasDePage
-                  position="gauche"
-                  afficherDegrade
-                >
-                  <Bouton
-                    type="button"
-                    title={idRequete ? "Annuler" : "Abandonner"}
-                    onClick={() => navigate(depuisServiceTab ? URL_REQUETES_CONSULAIRE_SERVICE : URL_MES_REQUETES_CONSULAIRE)}
-                  >
-                    {idRequete ? "Annuler" : "Abandonner"}
-                  </Bouton>
-                </ConteneurBoutonBasDePage>
-
-                <ConteneurBoutonBasDePage position="droite">
-                  <Bouton
-                    type="submit"
-                    title={idRequete ? "Valider" : "Prendre en charge"}
-                    disabled={Boolean(idRequete) && !dirty}
-                  >
-                    {idRequete ? "Valider" : "Prendre en charge"}
-                  </Bouton>
-
-                  {!idRequete && optionsServices && <TransmissionService optionsServices={optionsServices} />}
-                </ConteneurBoutonBasDePage>
+                <div className="fixed bottom-0 left-0 right-0 bg-blanc py-4">
+                  <div className="mx-auto flex max-w-[90rem] justify-between px-8">
+                    <Bouton
+                      type="button"
+                      title={idRequete ? "Annuler" : "Abandonner"}
+                      onClick={() => navigate(depuisServiceTab ? URL_REQUETES_CONSULAIRE_SERVICE : URL_MES_REQUETES_CONSULAIRE)}
+                      styleBouton="secondaire"
+                    >
+                      {idRequete ? "Annuler" : "Abandonner"}
+                    </Bouton>
+                    <div className="flex gap-4">
+                      <Bouton
+                        type="submit"
+                        title={idRequete ? "Valider" : "Prendre en charge"}
+                        disabled={Boolean(idRequete) && !dirty}
+                      >
+                        {idRequete ? "Valider" : "Prendre en charge"}
+                      </Bouton>
+                      {!idRequete && optionsServices && <TransmissionService optionsServices={optionsServices} />}
+                    </div>
+                  </div>
+                </div>
               </Form>
             )}
           </Formik>

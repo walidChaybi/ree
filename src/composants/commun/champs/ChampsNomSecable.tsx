@@ -106,14 +106,12 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
 
   return (
     <div className="grid gap-4">
-      <div className="grid grid-cols-[1fr,auto] gap-4">
-        <div>
-          <ChampTexte
-            name={nom.name}
-            libelle={nom.libelle}
-            estObligatoire={estObligatoire}
-          />
-        </div>
+      <div className="flex items-start gap-4">
+        <ChampTexte
+          name={nom.name}
+          libelle={nom.libelle}
+          estObligatoire={estObligatoire}
+        />
 
         <div className="flex flex-nowrap items-center gap-3 pt-8">
           <ChampCaseACocher
