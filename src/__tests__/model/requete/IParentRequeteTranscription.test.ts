@@ -1,59 +1,51 @@
-import { IParentRequeteTranscription, ParentsRequeteTranscription } from "@model/requete/IParentsRequeteTranscription";
+import { PrenomsForm, TPrenomsForm } from "@model/form/commun/PrenomsForm";
+import {
+  IParentRequeteTranscription,
+  IParentTranscription,
+  ParentsRequeteTranscription
+} from "@model/requete/IParentsRequeteTranscription";
 import { describe, expect, test } from "vitest";
 
 describe("Interface ParentsRequeteTranscription.mappingParentRequeteTranscriptionVersParentForm", () => {
+  const prenomCheminVide: TPrenomsForm = PrenomsForm.valeursInitiales();
+
+
+  const parentTranscriptionVide: IParentTranscription = {
+    sexe: "",
+    nom: "",
+    prenomsChemin: prenomCheminVide,
+    dateNaissance: {
+      jour: "",
+      mois: "",
+      annee: ""
+    },
+    lieuNaissance: {
+      typeLieu: "Inconnu",
+      ville: "",
+      departement: undefined,
+      arrondissement: "",
+      pays: "",
+      etatProvince: "",
+      adresse: ""
+    },
+    sansProfession: false,
+    profession: "",
+    domicile: {
+      typeLieu: "Inconnu",
+      ville: "",
+      adresse: "",
+      departement: "",
+      arrondissement: "",
+      pays: "",
+      etatProvince: ""
+    },
+    renseignerAge: false,
+    age: ""
+  };
   test("doit retourner un mapping avec des valeurs par défaut quand parent est undefined", () => {
     const result = ParentsRequeteTranscription.mappingParentRequeteTranscriptionVersParentForm(undefined);
 
-    expect(result).toEqual({
-      sexe: "",
-      nom: "",
-      prenomsChemin: {
-        nombrePrenomsAffiches: 1,
-        prenom1: "",
-        prenom2: "",
-        prenom3: "",
-        prenom4: "",
-        prenom5: "",
-        prenom6: "",
-        prenom7: "",
-        prenom8: "",
-        prenom9: "",
-        prenom10: "",
-        prenom11: "",
-        prenom12: "",
-        prenom13: "",
-        prenom14: "",
-        prenom15: ""
-      },
-      dateNaissance: {
-        jour: "",
-        mois: "",
-        annee: ""
-      },
-      lieuNaissance: {
-        typeLieu: "Inconnu",
-        ville: "",
-        departement: undefined,
-        arrondissement: "",
-        pays: "",
-        etatProvince: "",
-        adresse: ""
-      },
-      sansProfession: false,
-      profession: "",
-      domicile: {
-        typeLieu: "Inconnu",
-        ville: "",
-        adresse: "",
-        departement: "",
-        arrondissement: "",
-        pays: "",
-        etatProvince: ""
-      },
-      renseignerAge: false,
-      age: ""
-    });
+    expect(result).toEqual(parentTranscriptionVide);
   });
 
   test("doit mapper correctement un parent né en France", () => {
@@ -89,22 +81,10 @@ describe("Interface ParentsRequeteTranscription.mappingParentRequeteTranscriptio
       sexe: "MASCULIN",
       nom: "nomUsage",
       prenomsChemin: {
+        ...prenomCheminVide,
         nombrePrenomsAffiches: 2,
         prenom1: "Jean",
-        prenom2: "Michel",
-        prenom3: "",
-        prenom4: "",
-        prenom5: "",
-        prenom6: "",
-        prenom7: "",
-        prenom8: "",
-        prenom9: "",
-        prenom10: "",
-        prenom11: "",
-        prenom12: "",
-        prenom13: "",
-        prenom14: "",
-        prenom15: ""
+        prenom2: "Michel"
       },
       dateNaissance: {
         jour: "05",
@@ -166,22 +146,10 @@ describe("Interface ParentsRequeteTranscription.mappingParentRequeteTranscriptio
       sexe: "FEMININ",
       nom: "Smith",
       prenomsChemin: {
+        ...prenomCheminVide,
         nombrePrenomsAffiches: 2,
         prenom1: "Sarah",
-        prenom2: "Jane",
-        prenom3: "",
-        prenom4: "",
-        prenom5: "",
-        prenom6: "",
-        prenom7: "",
-        prenom8: "",
-        prenom9: "",
-        prenom10: "",
-        prenom11: "",
-        prenom12: "",
-        prenom13: "",
-        prenom14: "",
-        prenom15: ""
+        prenom2: "Jane"
       },
       dateNaissance: {
         jour: "15",
@@ -224,53 +192,19 @@ describe("Interface ParentsRequeteTranscription.mappingParentRequeteTranscriptio
     const result = ParentsRequeteTranscription.mappingParentRequeteTranscriptionVersParentForm(parent);
 
     expect(result).toEqual({
+      ...parentTranscriptionVide,
       sexe: "MASCULIN",
       nom: "Durand",
       prenomsChemin: {
+        ...prenomCheminVide,
         nombrePrenomsAffiches: 1,
-        prenom1: "Pierre",
-        prenom2: "",
-        prenom3: "",
-        prenom4: "",
-        prenom5: "",
-        prenom6: "",
-        prenom7: "",
-        prenom8: "",
-        prenom9: "",
-        prenom10: "",
-        prenom11: "",
-        prenom12: "",
-        prenom13: "",
-        prenom14: "",
-        prenom15: ""
+        prenom1: "Pierre"
       },
       dateNaissance: {
         jour: "01",
         mois: "",
         annee: ""
-      },
-      lieuNaissance: {
-        typeLieu: "Inconnu",
-        ville: "",
-        departement: undefined,
-        arrondissement: "",
-        pays: "",
-        etatProvince: "",
-        adresse: ""
-      },
-      sansProfession: false,
-      profession: "",
-      domicile: {
-        typeLieu: "Inconnu",
-        ville: "",
-        adresse: "",
-        departement: "",
-        arrondissement: "",
-        pays: "",
-        etatProvince: ""
-      },
-      renseignerAge: false,
-      age: ""
+      }
     });
   });
 

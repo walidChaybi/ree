@@ -21,6 +21,7 @@ export interface IParentTranscription {
   age?: string;
   domicile?: ILocalisation;
 }
+
 export interface IParentRequeteTranscription {
   id?: string;
   position?: number;
