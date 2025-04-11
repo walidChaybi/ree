@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 /// <reference types="vitest" />
 
 import react from "@vitejs/plugin-react";
@@ -5,16 +6,22 @@ import path from "path";
 import { defineConfig } from "vite";
 import eslint from "vite-plugin-eslint";
 import packageJson from "./package.json";
+
+const PORT = parseInt(process.env.PORT || "", 10) || 3000;
+
 // https://vitejs.dev/config/
 export default defineConfig({
   base: "/rece/rece-ui",
   server: {
-    port: parseInt(process.env.PORT || "", 10) || 3000,
+    port: PORT,
     host: process.env.HOST || "0.0.0.0",
     strictPort: true,
     hmr: {
-      clientPort: parseInt(process.env.PORT || "", 10) || 3000
+      clientPort: PORT
     }
+  },
+  preview: {
+    port: PORT
   },
   test: {
     globals: true,
