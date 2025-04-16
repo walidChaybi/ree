@@ -1,5 +1,6 @@
 import { IMiseAJourAnalyseMarginaleDto } from "@api/configurations/etatCivil/PutMiseAJourAnalyseMarginaleConfigApi";
 import { IDerniereAnalyseMarginalResultat } from "@hook/requete/miseajour/DerniereAnalyseMarginaleApiHook";
+import { PrenomsForm } from "@model/form/commun/PrenomsForm";
 import { IMajMention } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
 import { getMotif } from "@pages/requeteMiseAJour/apercuRequete/contenu/MiseAJourAnalyseMarginale/MiseAJourAnalyseMarginale";
 import { getPremiereOuSecondeValeur } from "@util/Utils";
@@ -59,17 +60,9 @@ export const MiseAJourAnalyseMarginaleValeursForm = {
 
   versDto: (valeurs: IAnalyseMarginaleMiseAJour): IMiseAJourAnalyseMarginaleDto => {
     const secable = valeurs.nomSecable;
-    const nomPartie1 = secable ? valeurs.nomPartie1 : null;
-    const nomPartie2 = secable ? valeurs.nomPartie2 : null;
-    const prenomsFormulaire = valeurs.prenoms;
-    const prenoms = Object.keys(prenomsFormulaire)
-      .map((clePrenom: string) => ({
-        ordre: parseInt(clePrenom.replace("prenom", "")) ?? 0,
-        valeur: prenomsFormulaire[clePrenom]
-      }))
-      .sort((prenomA, prenomB) => (prenomA.ordre > prenomB.ordre ? 1 : -1))
-      .map(prenom => prenom.valeur.trim())
-      .filter(prenom => Boolean(prenom));
+    const nomPartie1 = secable ? valeurs.nomPartie1.trim() : null;
+    const nomPartie2 = secable ? valeurs.nomPartie2.trim() : null;
+    const prenoms = PrenomsForm.versPrenomsStringDto(valeurs.prenoms);
 
     return {
       motifModification: valeurs.motif,
@@ -78,8 +71,8 @@ export const MiseAJourAnalyseMarginaleValeursForm = {
           ordre: 1,
           nom: valeurs.nom.trim(),
           prenoms: prenoms,
-          nomPartie1: nomPartie1?.trim() ?? null,
-          nomPartie2: nomPartie2?.trim() ?? null
+          nomPartie1: nomPartie1,
+          nomPartie2: nomPartie2
         }
       ]
     };

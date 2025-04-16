@@ -1,3 +1,5 @@
+import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
+import { PrenomsForm } from "@model/form/commun/PrenomsForm";
 import MiseAJourForm from "@model/form/miseAJour/MiseAJourForm";
 import { describe, expect, test } from "vitest";
 import { IAnalyseMarginaleMiseAJour } from "../../../../composants/pages/requetesMiseAJour/PartieFormulaire";
@@ -90,5 +92,22 @@ describe("Test du modèle MiseAJourForm", () => {
       ],
       analyseMarginale: null
     });
+  });
+
+  test("genererValeursDefautFormulaire renvoit le même objet avec ITitulaireActe vide et avec IAnalyseMarginaleMiseAJour vide", () => {
+    const titulaireActeVide: ITitulaireActe = { ordre: 1 };
+
+    const analyseMarginaleMiseAJour: IAnalyseMarginaleMiseAJour = {
+      nom: "",
+      nomSecable: false,
+      nomPartie1: "",
+      nomPartie2: "",
+      prenoms: PrenomsForm.valeursInitiales(),
+      motif: ""
+    };
+
+    expect(MiseAJourForm.genererValeursDefautFormulaire(titulaireActeVide)).toStrictEqual(
+      MiseAJourForm.genererValeursDefautFormulaire(analyseMarginaleMiseAJour)
+    );
   });
 });

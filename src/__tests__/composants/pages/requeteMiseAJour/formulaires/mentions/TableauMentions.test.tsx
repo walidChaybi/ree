@@ -1,5 +1,6 @@
 import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
+import { PrenomsForm } from "@model/form/commun/PrenomsForm";
 import MiseAJourForm from "@model/form/miseAJour/MiseAJourForm";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -33,7 +34,7 @@ describe("Test AnalyseMarginaleForm", () => {
             nomSecable: false,
             nomPartie1: "",
             nomPartie2: "",
-            prenoms: { prenom1: "Elodie", prenom2: "Margaux", prenom3: "Sara" },
+            prenoms: PrenomsForm.depuisStringDto(["Elodie", "Margaux", "Sara"]),
             motif: motif
           }
         })}

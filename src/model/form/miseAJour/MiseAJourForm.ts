@@ -5,6 +5,7 @@ import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { IAnalyseMarginaleMiseAJour, IMentionMiseAJour } from "../../../composants/pages/requetesMiseAJour/PartieFormulaire";
 import SchemaValidation from "../../../utils/SchemaValidation";
 import { TObjetFormulaire, TValeurFormulaire } from "../commun/ObjetFormulaire";
+import { PrenomsForm } from "../commun/PrenomsForm";
 
 export default class MiseAJourForm {
   private constructor(
@@ -23,19 +24,16 @@ export default class MiseAJourForm {
   }
 
   public static genererValeursDefautFormulaire(analyseMarginale: ITitulaireActe | IAnalyseMarginaleMiseAJour): MiseAJourForm {
-    const prenoms = Array.isArray(analyseMarginale?.prenoms)
-      ? analyseMarginale?.prenoms?.reduce(
-          (prenoms: { [cle: string]: string }, prenom: string, index: number) => ({ ...prenoms, [`prenom${index + 1}`]: prenom }),
-          {}
-        )
-      : analyseMarginale?.prenoms;
+    const prenoms = Array.isArray(analyseMarginale.prenoms)
+      ? PrenomsForm.depuisStringDto(analyseMarginale.prenoms)
+      : analyseMarginale.prenoms;
 
     return new MiseAJourForm([], {
-      nom: analyseMarginale?.nom ?? "",
-      nomSecable: Boolean(analyseMarginale?.nomPartie1 && analyseMarginale?.nomPartie2),
-      nomPartie1: analyseMarginale?.nomPartie1 ?? "",
-      nomPartie2: analyseMarginale?.nomPartie2 ?? "",
-      prenoms: prenoms ?? {},
+      nom: analyseMarginale.nom ?? "",
+      nomSecable: Boolean(analyseMarginale.nomPartie1 && analyseMarginale.nomPartie2),
+      nomPartie1: analyseMarginale.nomPartie1 ?? "",
+      nomPartie2: analyseMarginale.nomPartie2 ?? "",
+      prenoms: prenoms ?? PrenomsForm.valeursInitiales(),
       motif: (analyseMarginale as IAnalyseMarginaleMiseAJour).motif ?? ""
     });
   }

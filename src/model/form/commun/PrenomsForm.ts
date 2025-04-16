@@ -1,4 +1,4 @@
-export type TPrenomsForm = { [Cle in `prenom${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15}`]?: string } & {
+export type TPrenomsForm = { [Cle in `prenom${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15}`]: string } & {
   nombrePrenomsAffiches: number;
 };
 
@@ -46,9 +46,13 @@ export const PrenomsForm = {
       return prenomsDtos;
     }, []);
   },
+
   versPrenomsStringDto: (prenomsForm?: TPrenomsForm): string[] => {
     return PrenomsForm.versPrenomsOrdonnesDto(prenomsForm)
       .sort((prenomA, prenomB) => prenomA.numeroOrdre - prenomB.numeroOrdre)
-      .map(prenomOrdonne => prenomOrdonne.prenom);
-  }
+      .map(prenomOrdonne => prenomOrdonne.prenom.trim());
+  },
+
+  depuisStringDto: (prenomsDto: string[]): TPrenomsForm =>
+    PrenomsForm.valeursInitiales(prenomsDto.map((prenom: string, index: number) => ({ prenom: prenom, numeroOrdre: index + 1 })))
 };

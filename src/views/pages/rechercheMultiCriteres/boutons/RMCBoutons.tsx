@@ -1,11 +1,8 @@
-import { getLibelle } from "@util/Utils";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
-import RMCBoutonRappelCriteres, {
-  RMCBoutonRappelCriteresProps
-} from "./RMCBoutonRappelCriteres";
+import RMCBoutonRappelCriteres, { RMCBoutonRappelCriteresProps } from "./RMCBoutonRappelCriteres";
 import "./scss/RMCBoutons.scss";
 
 export interface IRMCBoutonsProps {
@@ -20,27 +17,26 @@ const RMCBoutons: React.FC<RMCBoutonsProps> = props => {
   } as RMCBoutonRappelCriteresProps;
 
   return (
-    <>
-      <div className="BoutonsRechercheMulti">
-        <div className="rechercher">
-          <BoutonDoubleSubmit
-            disabled={!props.formik.isValid || !props.formik.dirty}
-            type="submit"
-          >
-            {getLibelle("Rechercher")}
-          </BoutonDoubleSubmit>
-        </div>
-        <div className="rappelEtReinitialiser">
-          {props.rappelCriteres && (
-            <RMCBoutonRappelCriteres {...rmcBoutonRappelCriteresProps} />
-          )}
-
-          <button type="reset" onClick={() => props.formik.resetForm()}>
-            {getLibelle("Réinitialiser les critères")}
-          </button>
-        </div>
+    <div className="BoutonsRechercheMulti">
+      <div className="rechercher">
+        <BoutonDoubleSubmit
+          disabled={!props.formik.isValid || !props.formik.dirty}
+          type="submit"
+        >
+          {"Rechercher"}
+        </BoutonDoubleSubmit>
       </div>
-    </>
+      <div className="rappelEtReinitialiser">
+        {props.rappelCriteres && <RMCBoutonRappelCriteres {...rmcBoutonRappelCriteresProps} />}
+
+        <button
+          type="reset"
+          onClick={() => props.formik.resetForm()}
+        >
+          {"Réinitialiser les critères"}
+        </button>
+      </div>
+    </div>
   );
 };
 

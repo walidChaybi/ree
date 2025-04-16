@@ -4,6 +4,7 @@ import { IFormuleFinaleDto } from "@model/etatcivil/acte/projetActe/ProjetActeTr
 import { IProjetActeTranscritDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/IProjetActeTranscritDto";
 import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { PrenomsForm } from "@model/form/commun/PrenomsForm";
 import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { describe, expect, test } from "vitest";
 import { mapProjetActeTranscritFormVersDto } from "../../../../../../../composants/pages/requetesConsulaire/saisieProjet/mapping/mapProjetActeTranscritFormVersDto";
@@ -19,12 +20,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
         nomPartie2: "phun bin",
         secable: false
       },
-      prenomsChemin: {
-        prenom1: "lao",
-        prenom2: "xiar",
-        prenom3: "sehoo",
-        nombrePrenomsAffiches: 3
-      },
+      prenomsChemin: PrenomsForm.depuisStringDto(["lao", "xiar", "sehoo"]),
       sexe: "FEMININ",
       dateNaissance: {
         jour: "03",
@@ -42,10 +38,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
     declarant: {
       identite: "PERE",
       nom: "",
-      prenomsChemin: {
-        prenom1: "",
-        nombrePrenomsAffiches: 1
-      },
+      prenomsChemin: PrenomsForm.valeursInitiales(),
       sexe: null,
       age: null,
       qualite: "",
@@ -62,10 +55,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
         sexe: "MASCULIN",
         nomNaissance: "Greenwald",
         nom: "Greenwald",
-        prenomsChemin: {
-          prenom1: "cassandra",
-          nombrePrenomsAffiches: 1
-        },
+        prenomsChemin: PrenomsForm.depuisStringDto(["cassandra"]),
         dateNaissance: {
           jour: "10",
           mois: "10",
@@ -100,10 +90,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
         sexe: "FEMININ",
         nomNaissance: "",
         nom: "Xi Phun Bin",
-        prenomsChemin: {
-          prenom1: "Maman",
-          nombrePrenomsAffiches: 1
-        },
+        prenomsChemin: PrenomsForm.depuisStringDto(["Maman"]),
         dateNaissance: {
           jour: "",
           mois: "",
@@ -156,10 +143,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
     formuleFinale: {
       identiteDemandeur: "PERE",
       nom: "",
-      prenomsChemin: {
-        prenom1: "",
-        nombrePrenomsAffiches: 1
-      },
+      prenomsChemin: PrenomsForm.valeursInitiales(),
       qualite: "",
       pieceProduite: "COPIES",
       autresPieces: "passeport",
@@ -407,10 +391,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
         nomPartie2: "prenomTrois",
         secable: true
       },
-      prenomsChemin: {
-        prenom1: "Consulaire",
-        nombrePrenomsAffiches: 1
-      },
+      prenomsChemin: PrenomsForm.depuisStringDto(["Consulaire"]),
       sexe: "FEMININ",
       dateNaissance: {
         jour: "19",
@@ -428,10 +409,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
     declarant: {
       identite: "TIERS",
       nom: "LeTiers",
-      prenomsChemin: {
-        prenom1: "Prenom",
-        nombrePrenomsAffiches: 1
-      },
+      prenomsChemin: PrenomsForm.depuisStringDto(["Prenom"]),
       sexe: Sexe.MASCULIN.libelle.toUpperCase(),
       age: 45,
       qualite: "La grand frère",
@@ -453,10 +431,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
         sexe: "MASCULIN",
         nomNaissance: "Patamob",
         nom: "Patamob",
-        prenomsChemin: {
-          prenom1: "cassandra",
-          nombrePrenomsAffiches: 1
-        },
+        prenomsChemin: PrenomsForm.depuisStringDto(["cassandra"]),
         dateNaissance: {
           jour: "",
           mois: "",
@@ -491,10 +466,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
         sexe: "FEMININ",
         nomNaissance: "",
         nom: "Patamob",
-        prenomsChemin: {
-          prenom1: "Maman",
-          nombrePrenomsAffiches: 1
-        },
+        prenomsChemin: PrenomsForm.depuisStringDto(["Maman"]),
         dateNaissance: {
           jour: "10",
           mois: "10",
@@ -545,11 +517,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
     formuleFinale: {
       identiteDemandeur: "TIERS",
       nom: "nomDemandeur",
-      prenomsChemin: {
-        prenom1: "Prenom",
-        prenom2: "Demandeur",
-        nombrePrenomsAffiches: 3
-      },
+      prenomsChemin: PrenomsForm.depuisStringDto(["Prenom", "Demandeur"]),
       qualite: "Agent",
       pieceProduite: "COPIE",
       autresPieces: "",
@@ -747,10 +715,7 @@ describe("test des fonctions non testée précedement", () => {
         nomPartie2: "",
         secable: false
       },
-      prenomsChemin: {
-        prenom1: "Consulaire",
-        nombrePrenomsAffiches: 1
-      },
+      prenomsChemin: PrenomsForm.depuisStringDto(["Consulaire"]),
       sexe: "FEMININ",
       dateNaissance: {
         jour: "",
@@ -768,10 +733,7 @@ describe("test des fonctions non testée précedement", () => {
     declarant: {
       identite: "TIERS",
       nom: "LeTiers",
-      prenomsChemin: {
-        prenom1: "Toto",
-        nombrePrenomsAffiches: 1
-      },
+      prenomsChemin: PrenomsForm.depuisStringDto(["Toto"]),
       sexe: Sexe.MASCULIN.libelle.toUpperCase(),
       age: null,
       qualite: "",
@@ -789,10 +751,7 @@ describe("test des fonctions non testée précedement", () => {
         sexe: "MASCULIN",
         nomNaissance: "Patamob",
         nom: "Patamob",
-        prenomsChemin: {
-          prenom1: "cassandra",
-          nombrePrenomsAffiches: 1
-        },
+        prenomsChemin: PrenomsForm.depuisStringDto(["cassandra"]),
         dateNaissance: {
           jour: "",
           mois: "",
@@ -817,11 +776,7 @@ describe("test des fonctions non testée précedement", () => {
     formuleFinale: {
       identiteDemandeur: "TIERS",
       nom: "nomDemandeur",
-      prenomsChemin: {
-        prenom1: "Prenom",
-        prenom2: "Demandeur",
-        nombrePrenomsAffiches: 2
-      },
+      prenomsChemin: PrenomsForm.depuisStringDto(["Prenom", "Demandeur"]),
       qualite: "Agent",
       pieceProduite: "COPIE",
       autresPieces: "",

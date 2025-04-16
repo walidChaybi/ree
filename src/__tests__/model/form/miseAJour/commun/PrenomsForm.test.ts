@@ -27,13 +27,7 @@ describe("Test du module PrenomsForm", () => {
   });
 
   test("versPrenomsOrdonnesDto convertit correctement les valeurs du formulaire en DTOs", () => {
-    const formValues: TPrenomsForm = {
-      nombrePrenomsAffiches: 3,
-      prenom1: "prenom1",
-      prenom2: "prenom2",
-      prenom3: "prenom3",
-      prenom4: ""
-    };
+    const formValues: TPrenomsForm = PrenomsForm.depuisStringDto(["prenom1", "prenom2", "prenom3", ""]);
 
     const resultat = PrenomsForm.versPrenomsOrdonnesDto(formValues);
 
@@ -50,21 +44,17 @@ describe("Test du module PrenomsForm", () => {
   });
 
   test("versPrenomsStringDto convertit correctement les valeurs du formulaire en tableau de strings", () => {
-    const formValues: TPrenomsForm = {
-      nombrePrenomsAffiches: 3,
-      prenom2: "prenom2",
-      prenom1: "prenom3",
-      prenom3: "prenom3"
-    };
+    const formValues: TPrenomsForm = PrenomsForm.depuisStringDto(["prenom1", "prenom2", "prenom3"]);
 
     const resultat = PrenomsForm.versPrenomsStringDto(formValues);
 
     expect(resultat).toHaveLength(3);
-    expect(resultat).toEqual(["prenom3", "prenom2", "prenom3"]);
+    expect(resultat).toEqual(["prenom1", "prenom2", "prenom3"]);
   });
 
   test("versPrenomsStringDto trie correctement les prénoms selon leur ordre", () => {
     const formValues: TPrenomsForm = {
+      ...PrenomsForm.valeursInitiales(),
       nombrePrenomsAffiches: 3,
       prenom3: "Troisième",
       prenom1: "Premier",
@@ -78,6 +68,7 @@ describe("Test du module PrenomsForm", () => {
 
   test("versPrenomsStringDto ignore les valeurs vides", () => {
     const formValues: TPrenomsForm = {
+      ...PrenomsForm.valeursInitiales(),
       nombrePrenomsAffiches: 5,
       prenom1: "Premier",
       prenom2: "",

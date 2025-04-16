@@ -10,6 +10,7 @@ import { TErreurApi } from "@model/api/Api";
 import { FicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { TObjetFormulaire, TValeurFormulaire } from "@model/form/commun/ObjetFormulaire";
+import { TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import messageManager from "@util/messageManager";
 import { PopinSignatureMiseAJourMentions } from "@widget/signature/PopinSignatureMiseAJourMentions";
 import { Form, Formik } from "formik";
@@ -57,7 +58,7 @@ export interface IAnalyseMarginaleMiseAJour extends TObjetFormulaire {
   nomSecable: boolean;
   nomPartie1: string;
   nomPartie2: string;
-  prenoms: { [cle: string]: string };
+  prenoms: TPrenomsForm;
   motif: string;
 }
 export interface IMiseAJourForm {

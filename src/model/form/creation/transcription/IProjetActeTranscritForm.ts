@@ -3,7 +3,7 @@ import { NomSecable } from "@model/etatcivil/commun/NomSecable";
 import { Identite } from "@model/etatcivil/enum/Identite";
 import { ConditionChamp, EOperateurCondition } from "@model/form/commun/ConditionChamp";
 import { IDateForm } from "@model/form/commun/DateForm";
-import { TPrenomsForm } from "@model/form/commun/PrenomsForm";
+import { PrenomsForm, TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import { ILocalisation } from "@model/requete/IParents";
 import { IParentTranscription, ParentsRequeteTranscription } from "@model/requete/IParentsRequeteTranscription";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
@@ -99,7 +99,7 @@ export const ProjetTranscriptionForm = {
       declarant: {
         identite: Identite.getKey(Identite.PERE),
         nom: "",
-        prenomsChemin: { prenom1: "", nombrePrenomsAffiches: 1 },
+        prenomsChemin: PrenomsForm.valeursInitiales(),
         sexe: null,
         age: null,
         qualite: "",
@@ -121,7 +121,7 @@ export const ProjetTranscriptionForm = {
       formuleFinale: {
         identiteDemandeur: Identite.getKey(Identite.PERE),
         nom: "",
-        prenomsChemin: { prenom1: "", nombrePrenomsAffiches: 1 },
+        prenomsChemin: PrenomsForm.valeursInitiales(),
         qualite: "",
         pieceProduite: "COPIE",
         autresPieces: "",

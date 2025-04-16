@@ -1,3 +1,4 @@
+import { PrenomsForm } from "@model/form/commun/PrenomsForm";
 import { IParentTranscription } from "@model/requete/IParentsRequeteTranscription";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Formik } from "formik";
@@ -9,10 +10,7 @@ describe("BlocParents", () => {
     sexe: "Feminin",
     nom: "",
     prenoms: [{ prenom: "", numeroOrdre: 1 }],
-    prenomsChemin: {
-      prenom1: "",
-      nombrePrenomsAffiches: 1
-    },
+    prenomsChemin: PrenomsForm.valeursInitiales(),
     dateNaissance: undefined,
     lieuNaissance: { typeLieu: "" },
     sansProfession: false,
@@ -24,10 +22,7 @@ describe("BlocParents", () => {
     sexe: "Masculin",
     nom: "",
     prenoms: [{ prenom: "", numeroOrdre: 1 }],
-    prenomsChemin: {
-      prenom1: "",
-      nombrePrenomsAffiches: 1
-    },
+    prenomsChemin: PrenomsForm.valeursInitiales(),
     dateNaissance: undefined,
     lieuNaissance: { typeLieu: "" },
     sansProfession: false,
@@ -123,7 +118,6 @@ describe("BlocParents", () => {
       const dayInput = screen.getAllByPlaceholderText("JJ")[0] as HTMLInputElement;
       fireEvent.change(dayInput, { target: { value: "15" } });
 
-      
       fireEvent.click(renseignerAgeCheckbox);
 
       await waitFor(() => {
@@ -136,7 +130,7 @@ describe("BlocParents", () => {
       const renseignerAgeCheckbox = screen.getAllByLabelText("Saisir l'âge")[0];
 
       fireEvent.click(renseignerAgeCheckbox);
-      const ageInput = screen.getByLabelText("Âge (en années)") as HTMLInputElement;
+      const ageInput: HTMLInputElement = screen.getByLabelText("Âge (en années)");
       fireEvent.change(ageInput, { target: { value: "25" } });
 
       fireEvent.click(renseignerAgeCheckbox);
@@ -150,7 +144,7 @@ describe("BlocParents", () => {
   describe("Tests de gestion du domicile", () => {
     test("doit gérer la case à cocher 'domicile commun'", async () => {
       renderComponent();
-      const checkbox = screen.getByLabelText("Domicile commun avec parent 1") as HTMLInputElement;
+      const checkbox: HTMLInputElement = screen.getByLabelText("Domicile commun avec parent 1");
       fireEvent.click(checkbox);
       await waitFor(() => expect(checkbox.checked).toBe(true));
     });
@@ -158,11 +152,9 @@ describe("BlocParents", () => {
     test("doit gérer le changement de ville pour Paris", async () => {
       renderComponent();
 
-
       const franceRadio = screen.getAllByLabelText("France")[0];
       fireEvent.click(franceRadio);
 
-    
       const villeInput = screen.getAllByLabelText(/^Ville/)[0] as HTMLInputElement;
       fireEvent.change(villeInput, { target: { value: "Paris" } });
 
@@ -191,7 +183,7 @@ describe("BlocParents", () => {
   describe("Tests de gestion de la profession", () => {
     test("doit gérer la case à cocher 'sans profession'", async () => {
       renderComponent();
-      const professionInput = screen.getByTestId("parents.parent1-profession") as HTMLInputElement;
+      const professionInput: HTMLInputElement = screen.getByTestId("parents.parent1-profession");
       const checkbox = screen.getAllByLabelText("Sans profession")[0] as HTMLInputElement;
 
       fireEvent.change(professionInput, { target: { value: "Ingénieur" } });

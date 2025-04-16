@@ -433,11 +433,6 @@ export const getValeurOuUndefined = (valeur?: any): any | undefined => {
   return valeur || undefined;
 };
 
-/** @deprecated méthode inutile, opération trop simple pour justifier une fonction */
-export const getValeurOuNull = <T>(valeur?: T): T | null => {
-  return valeur ?? null;
-};
-
 export const getPremiereOuSecondeValeur = (valeur1: string | undefined | null, valeur2: string | undefined | null) => {
   return valeur1 ?? valeur2 ?? "";
 };
