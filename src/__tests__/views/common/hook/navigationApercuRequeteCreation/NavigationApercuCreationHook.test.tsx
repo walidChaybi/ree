@@ -7,7 +7,6 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { ApercuRequeteEtablissementSuiviDossierPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/ApercuRequeteEtablissementSuiviDossierPage";
 import { ApercuRequeteEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSimple/ApercuRequeteEtablissementSimplePage";
 import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
-import { ApercuReqCreationTranscriptionSaisieProjetPage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSaisieProjetPage";
 import {
   URL_MES_REQUETES_CONSULAIRE,
   URL_MES_REQUETES_CREATION,
@@ -22,6 +21,7 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import React from "react";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
+import { PageRequeteTranscriptionSaisieProjet } from "../../../../../pages/requetesConsulaire/PageRequeteTranscriptionSaisieProjet";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 import MockRECEContextProvider from "../../../../mock/context/MockRECEContextProvider";
 
@@ -64,7 +64,7 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
         },
         {
           path: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_EN_TRAITEMENT_ID,
-          element: <ApercuReqCreationTranscriptionSaisieProjetPage />
+          element: <PageRequeteTranscriptionSaisieProjet />
         }
       ],
       [URL_MES_REQUETES_CREATION]
@@ -147,7 +147,7 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
             URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
             "b63ebccd-ba5e-443a-8837-c5e1e111e846"
           ),
-          element: <ApercuReqCreationTranscriptionSaisieProjetPage />
+          element: <PageRequeteTranscriptionSaisieProjet />
         }
       ],
       [URL_MES_REQUETES_CREATION]

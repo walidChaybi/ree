@@ -11,7 +11,6 @@ import { ApercuRequeteEtablissementSuiviDossierPage } from "@pages/requeteCreati
 import { ApercuRequeteEtablissementSaisieDeProjetPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/ApercuRequeteEtablissementSaisieDeProjetPage";
 import { ApercuRequeteEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSimple/ApercuRequeteEtablissementSimplePage";
 import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
-import { ApercuReqCreationTranscriptionSaisieProjetPage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSaisieProjetPage";
 import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
 import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
 import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
@@ -26,6 +25,7 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { IRoute } from "@util/route/IRoute";
 import PageMesRequetesConsulaires from "../../pages/requetesConsulaire/PageMesRequetesConsulaires";
+import { PageRequeteTranscriptionSaisieProjet } from "../../pages/requetesConsulaire/PageRequeteTranscriptionSaisieProjet";
 import PageRequetesServiceConsulaire from "../../pages/requetesConsulaire/PageRequetesServiceConsulaire";
 import PageSaisieCourrierTranscription from "../../pages/requetesConsulaire/PageSaisieCourrierTranscription";
 import PageEditionRequeteDelivrance from "../../pages/requetesDelivrance/PageEditionRequeteDelivrance";
@@ -367,7 +367,7 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_EN_TRAITEMENT_ID,
-    component: ApercuReqCreationTranscriptionSaisieProjetPage,
+    component: PageRequeteTranscriptionSaisieProjet,
     auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: LIBELLE_APERCU_SAISIE_PROJET
   },
@@ -478,7 +478,7 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
-    component: ApercuReqCreationTranscriptionSaisieProjetPage,
+    component: PageRequeteTranscriptionSaisieProjet,
     auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: LIBELLE_APERCU_SAISIE_PROJET
   },
@@ -557,7 +557,7 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
-    component: ApercuReqCreationTranscriptionSaisieProjetPage,
+    component: PageRequeteTranscriptionSaisieProjet,
     auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: LIBELLE_APERCU_SAISIE_PROJET
   },

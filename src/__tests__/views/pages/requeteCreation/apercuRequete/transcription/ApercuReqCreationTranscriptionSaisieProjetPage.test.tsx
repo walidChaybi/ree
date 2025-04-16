@@ -1,6 +1,5 @@
 import { IOfficier } from "@model/agent/IOfficier";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
-import { ApercuReqCreationTranscriptionSaisieProjetPage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSaisieProjetPage";
 import {
   PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET,
   URL_MES_REQUETES_CREATION,
@@ -10,6 +9,7 @@ import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
+import { PageRequeteTranscriptionSaisieProjet } from "../../../../../../pages/requetesConsulaire/PageRequeteTranscriptionSaisieProjet";
 import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 import MockRECEContextProvider from "../../../../../mock/context/MockRECEContextProvider";
 import mockConnectedUser from "../../../../../mock/data/connectedUser.json";
@@ -17,7 +17,7 @@ import mockConnectedUser from "../../../../../mock/data/connectedUser.json";
 let u: any = mockConnectedUser;
 const utilisateurConnecte = u as IOfficier;
 describe.skip("Test de la page Aperçu requête transcription en saisie de projet", () => {
-  test("DOIT rendre le composant ApercuReqCreationTranscriptionSaisieProjetPage correctement", async () => {
+  test("DOIT rendre le composant PageRequeteTranscriptionSaisieProjet correctement", async () => {
     await act(async () => {
       const router = createTestingRouter(
         [
@@ -28,7 +28,7 @@ describe.skip("Test de la page Aperçu requête transcription en saisie de proje
                 utilisateurConnecte={{ ...utilisateurConnecte } as IOfficier}
                 utilisateurs={[{} as IUtilisateur]}
               >
-                <ApercuReqCreationTranscriptionSaisieProjetPage />
+                <PageRequeteTranscriptionSaisieProjet />
               </MockRECEContextProvider>
             )
           }
@@ -43,7 +43,7 @@ describe.skip("Test de la page Aperçu requête transcription en saisie de proje
 
       const { container } = render(<RouterProvider router={router} />);
 
-      expect(container.getElementsByClassName("ApercuReqCreationTranscriptionSaisieProjetPage").length).toBe(1);
+      expect(container.getElementsByClassName("PageRequeteTranscriptionSaisieProjet").length).toBe(1);
     });
   });
 
@@ -58,7 +58,7 @@ describe.skip("Test de la page Aperçu requête transcription en saisie de proje
                 utilisateurConnecte={{ ...utilisateurConnecte } as IOfficier}
                 utilisateurs={[{} as IUtilisateur]}
               >
-                <ApercuReqCreationTranscriptionSaisieProjetPage />
+                <PageRequeteTranscriptionSaisieProjet />
               </MockRECEContextProvider>
             )
           }
@@ -100,7 +100,7 @@ describe.skip("Test de la page Aperçu requête transcription en saisie de proje
                 utilisateurConnecte={{ ...utilisateurConnecte } as IOfficier}
                 utilisateurs={[{} as IUtilisateur]}
               >
-                <ApercuReqCreationTranscriptionSaisieProjetPage />
+                <PageRequeteTranscriptionSaisieProjet />
               </MockRECEContextProvider>
             )
           }
@@ -144,7 +144,7 @@ describe.skip("Test de la précense du composant RMCRequeteAssociees", () => {
                 utilisateurConnecte={{ ...utilisateurConnecte } as IOfficier}
                 utilisateurs={[{} as IUtilisateur]}
               >
-                <ApercuReqCreationTranscriptionSaisieProjetPage />
+                <PageRequeteTranscriptionSaisieProjet />
               </MockRECEContextProvider>
             )
           }
@@ -170,7 +170,7 @@ describe.skip("Test de la précense du composant RMCRequeteAssociees", () => {
         [
           {
             path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
-            element: <ApercuReqCreationTranscriptionSaisieProjetPage idRequeteAAfficher="dd96cc3a-9865-4c83-b634-37fad2680f41" />
+            element: <PageRequeteTranscriptionSaisieProjet />
           }
         ],
         [

@@ -9,19 +9,9 @@ describe("PartieDroiteSaisieProjet - Tests du composant", () => {
     render(elementAvecContexte(<PartieDroiteSaisieProjet requete={requeteCreationTranscription} />));
     await waitFor(() => {
       expect(screen.getByTitle("Saisir le projet")).toBeDefined();
-      expect(screen.getByTitle("Gérer les mentions")).toBeDefined();
-      expect(screen.getByTitle("Echanges")).toBeDefined();
     });
   });
-  test("PartieDroiteSaisieProjet - Doit afficher l'onglet 'Mentions'", async () => {
-    render(elementAvecContexte(<PartieDroiteSaisieProjet requete={requeteCreationTranscription} />));
-    const boutonMentions = screen.getByTitle("Gérer les mentions");
-    expect(boutonMentions).toBeDefined();
-    fireEvent.click(screen.getByTitle("Gérer les mentions"));
-    await waitFor(() => {
-      expect(screen.getByText("GestionMention")).toBeDefined();
-    });
-  });
+
   test("PartieDroiteSaisieProjet - Doit afficher l'onglet 'Saisir le projet'", async () => {
     render(elementAvecContexte(<PartieDroiteSaisieProjet requete={requeteCreationTranscription} />));
     const boutonSaisirProjet = screen.getByRole("button", { name: "Saisir le projet" });
@@ -39,12 +29,5 @@ describe("PartieDroiteSaisieProjet - Tests du composant", () => {
       expect(boutonEnregistrerEtVisualiser).toBeDefined();
     });
     await act(async () => fireEvent.click(boutonEnregistrerEtVisualiser));
-  });
-  test("PartieDroiteSaisieProjet - Doit afficher l'onglet 'Echanges'", async () => {
-    render(elementAvecContexte(<PartieDroiteSaisieProjet requete={requeteCreationTranscription} />));
-    fireEvent.click(screen.getByText("Saisir le projet"));
-    await waitFor(() => {
-      expect(screen.getByText("Echanges")).toBeDefined();
-    });
   });
 });

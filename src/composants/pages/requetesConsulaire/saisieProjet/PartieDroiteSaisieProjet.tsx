@@ -19,30 +19,20 @@ const PartieDroiteSaisieProjet: React.FC<IPartieDroiteSaisieProjetProps> = ({ re
   const [ongletActifPartieDroite, setOngletActifPartieDroite] = useState<ECleOngletPartieDroite>(ECleOngletPartieDroite.PROJET);
 
   return (
-    <div className="w-1/2">
+    <div className="relative w-1/2">
+      <p className="absolute -top-10 right-0 mb-0.5 mt-1.5 pr-2.5 text-end text-sm text-bleu-sombre">
+        Les champs obligatoires sont précédés d'une étoile<span className="ml-1 text-rouge">*</span>
+      </p>
       <OngletsBouton<ECleOngletPartieDroite>
         onglets={[
           {
             cle: ECleOngletPartieDroite.PROJET,
             libelle: "Saisir le projet"
-          },
-          {
-            cle: ECleOngletPartieDroite.MENTIONS,
-            libelle: "Gérer les mentions"
-          },
-
-          {
-            cle: ECleOngletPartieDroite.ECHANGE,
-            libelle: "Echanges"
           }
         ]}
         cleOngletActif={ongletActifPartieDroite}
         changerOnglet={valeur => setOngletActifPartieDroite(valeur)}
       />
-
-      <p className="mb-0.5 mt-1.5 pr-2.5 text-end text-sm text-bleu-sombre">
-        Les champs obligatoires sont précédés d'une étoile<span className="ml-1 text-rouge">*</span>
-      </p>
 
       {requete && (
         <ConteneurVoletEdition

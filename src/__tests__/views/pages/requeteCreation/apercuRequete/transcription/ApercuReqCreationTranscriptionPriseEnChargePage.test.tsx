@@ -1,5 +1,4 @@
 import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
-import { ApercuReqCreationTranscriptionSaisieProjetPage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSaisieProjetPage";
 import {
   URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID
@@ -8,6 +7,7 @@ import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
+import { PageRequeteTranscriptionSaisieProjet } from "../../../../../../pages/requetesConsulaire/PageRequeteTranscriptionSaisieProjet";
 import { createTestingRouter, elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
 
 describe("Test de la page Aperçu requête transcription en prise en charge", () => {
@@ -123,7 +123,7 @@ describe("Test de la page Aperçu requête transcription en prise en charge", ()
         },
         {
           path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
-          element: <ApercuReqCreationTranscriptionSaisieProjetPage />
+          element: <PageRequeteTranscriptionSaisieProjet />
         }
       ],
       [getUrlWithParam(URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID, "dd96cc3a-9865-4c83-b634-37fad2680f41")]

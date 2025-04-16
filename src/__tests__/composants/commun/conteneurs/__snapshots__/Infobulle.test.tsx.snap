@@ -1,0 +1,43 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Composant Infobulle > doit afficher l'infobulle après le délai quand on survole 1`] = `
+<div
+  class="relative inline-block"
+>
+  <button>
+    Survolez-moi
+  </button>
+  <div
+    class="absolute left-1/2 mt-2 w-max -translate-x-1/2"
+  >
+    <div
+      class="absolute -top-1 left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 transform bg-gray-600"
+    />
+    <div
+      class="text-md relative max-w-md rounded bg-gray-600 px-3 py-2 text-white shadow-xl"
+    >
+      Texte d'infobulle
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Composant Infobulle > doit masquer l'infobulle quand la souris quitte l'élément 1`] = `
+<div
+  class="relative inline-block"
+>
+  <button>
+    Survolez-moi
+  </button>
+</div>
+`;
+
+exports[`Composant Infobulle > ne doit pas afficher l'infobulle par défaut 1`] = `
+<div
+  class="relative inline-block"
+>
+  <button>
+    Survolez-moi
+  </button>
+</div>
+`;

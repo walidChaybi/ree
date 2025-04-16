@@ -21,13 +21,13 @@ const OngletsBouton: <T extends string = string>(props: IOngletsBoutonProps<T>) 
   renderBoutonAjout
 }) => {
   return (
-    <div className="flex border-0 border-b border-solid border-gris">
+    <div className="flex items-end border-0 border-b border-solid border-gris">
       {onglets.map(onglet => (
         <Bouton
           key={onglet.cle}
           styleBouton={cleOngletActif === onglet.cle ? "principal" : "secondaire"}
           garderStyleSiDisabled={cleOngletActif === onglet.cle}
-          className="m-0 h-11 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
+          className={`m-0 ${cleOngletActif === onglet.cle ? "h-11" : "h-10"} rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0`}
           type="button"
           title={onglet.libelle}
           disabled={cleOngletActif === onglet.cle || onglet.inactif}

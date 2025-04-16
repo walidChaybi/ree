@@ -1,7 +1,7 @@
 import { ICreationRequeteCreationParams } from "@hook/requete/CreationRequeteCreationApiHook";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 
-export const requeteCreationTranscription = {
+export const requeteCreationTranscription: IRequeteCreationTranscription = {
   id: "3ed9aa4e-921b-489f-b8fe-531dd703c60c",
   numeroFonctionnel: "2H5U3Q",
   dateCreation: 1656404736683,

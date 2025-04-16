@@ -122,7 +122,7 @@ const PageSaisieCourrierTranscription: React.FC = () => {
 
                 <ConteneurAccordeon
                   titre="Saisie d'une requête de transcription courrier"
-                  nonControllable
+                  estControlable={false}
                   ouvertParDefaut
                 >
                   <div className="h-[calc(100vh-22rem)] overflow-y-auto py-14">
