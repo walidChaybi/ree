@@ -4,9 +4,13 @@ import { IOfficier } from "@model/agent/IOfficier";
 import { render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router-dom";
 import request from "superagent";
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import { PageRequeteTranscriptionSaisieProjet } from "../../../../pages/requetesConsulaire/PageRequeteTranscriptionSaisieProjet";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
+
+vi.mock("@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats", () => ({
+  RMCRequetesAssocieesResultats: () => <div data-testid="rmc-mock">Requetes associees</div>
+}));
 
 describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
   const mockUtilisateurConnecte = {
@@ -24,26 +28,12 @@ describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
           body: data
         };
       }
-    },
-    {
-      pattern: "http://localhost/rece/rece-requete-api/v2/requetes(.*)/rmcauto(.*)",
-      fixtures: (match: any) => {
-        return {
-          data: {
-            resultatsRecherche: []
-          }
-        };
-      },
-      get: (_: any, data: any) => {
-        return {
-          body: data
-        };
-      }
     }
   ]);
 
   test("affiche PartieGauche et PartieDroite après récupération de la requête", async () => {
     const router = createTestingRouter([{ path: "/:idRequeteParam", element: <PageRequeteTranscriptionSaisieProjet /> }], ["/test-id"]);
+
     const { container } = render(
       <MockRECEContextProvider utilisateurConnecte={mockUtilisateurConnecte}>
         <RouterProvider router={router} />
@@ -51,9 +41,13 @@ describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
     );
 
     await waitFor(() => {
-      const texteRequete = screen.getByText(/Requete/i);
+      const texteRequete = screen.getByText(/Description de la requête/i);
       expect(texteRequete).toBeDefined();
+
+      const rmcMock = screen.getByTestId("rmc-mock");
+      expect(rmcMock).toBeDefined();
     });
+
     expect(container.firstChild).toMatchSnapshot();
 
     superagentMock.unset();

@@ -52,6 +52,7 @@ describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
     });
 
     expect(container.firstChild).toMatchSnapshot();
+
     superagentMock.unset();
   });
 });

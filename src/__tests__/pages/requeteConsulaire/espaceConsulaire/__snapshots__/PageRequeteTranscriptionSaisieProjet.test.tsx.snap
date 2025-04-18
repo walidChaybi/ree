@@ -445,7 +445,13 @@ pays
       >
         <div
           class="mt-2"
-        />
+        >
+          <div
+            data-testid="rmc-mock"
+          >
+            Requetes associees
+          </div>
+        </div>
       </div>
     </div>
     <div
