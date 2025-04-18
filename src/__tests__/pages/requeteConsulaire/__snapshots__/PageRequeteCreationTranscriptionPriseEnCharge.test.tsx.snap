@@ -1,0 +1,471 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche PartieGauche et PartieDroite après récupération de la requête 1`] = `
+<div
+  class="mt-4 flex flex-col"
+>
+  <div
+    class="flex gap-8"
+  >
+    <div
+      class="flex w-[35%] flex-col"
+    >
+      <div
+        class="flex items-end border-0 border-b border-solid border-gris"
+      >
+        <button
+          class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre false m-0 h-11 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
+          disabled=""
+          title="Description de la requête"
+          type="button"
+        >
+          Description de la requête
+        </button>
+      </div>
+      <div
+        class="gap-2 pt-4 grid h-[calc(100vh-16.5rem)] overflow-auto rounded-lg"
+      >
+        <div
+          class="pr-4"
+        >
+          <div
+            class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
+          >
+            <button
+              class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+              type="button"
+            >
+              <span
+                class="truncate"
+              >
+                "Transcription" Acte de naissance d'une personne mineure
+              </span>
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-i4bv87-MuiSvgIcon-root"
+                data-testid="ExpandMoreIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                />
+              </svg>
+            </button>
+            <div
+              class="grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+            >
+              <div
+                class="min-h-0"
+              >
+                <div
+                  class="grid gap-y-4 p-4 "
+                >
+                  <div
+                    class="grid gap-12 py-4"
+                  >
+                    <div>
+                      <div
+                        class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                      >
+                        <span
+                          class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                        >
+                          Informations générales
+                        </span>
+                        <div
+                          class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 "
+                        >
+                          <div
+                            class="mb-5 px-3 text-left"
+                          >
+                            <div
+                              class="mb-1 text-left text-xs uppercase text-gray-500"
+                            >
+                              Type Requete
+                            </div>
+                            <div
+                              class="relative inline-block"
+                            >
+                              <div
+                                class="line-clamp-3 "
+                              >
+                                Création suite Transcription Courrier
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="mb-5 px-3 text-left"
+                          >
+                            <div
+                              class="mb-1 text-left text-xs uppercase text-gray-500"
+                            >
+                              Statut
+                            </div>
+                            <div
+                              class="relative inline-block"
+                            >
+                              <div
+                                class="line-clamp-3 flex rounded-r-full border border-solid border-bleu-sombre bg-blue-50 px-2 py-1 text-bleu-sombre"
+                              >
+                                Prise en charge
+                                <svg
+                                  aria-hidden="true"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium ml-1 h-5 w-5 css-i4bv87-MuiSvgIcon-root"
+                                  data-testid="PendingActionsIcon"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M17 12c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm1.65 7.35L16.5 17.2V14h1v2.79l1.85 1.85-.7.71zM18 3h-3.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H6c-1.1 0-2 .9-2 2v15c0 1.1.9 2 2 2h6.11c-.59-.57-1.07-1.25-1.42-2H6V5h2v3h8V5h2v5.08c.71.1 1.38.31 2 .6V5c0-1.1-.9-2-2-2zm-6 2c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"
+                                  />
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="mb-5 px-3 text-left"
+                          >
+                            <div
+                              class="mb-1 text-left text-xs uppercase text-gray-500"
+                            >
+                              Provenance
+                            </div>
+                            <div
+                              class="relative inline-block"
+                            >
+                              <div
+                                class="line-clamp-3 "
+                              >
+                                Courrier
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="mb-5 px-3 text-left"
+                          >
+                            <div
+                              class="mb-1 text-left text-xs uppercase text-gray-500"
+                            >
+                              Date création
+                            </div>
+                            <div
+                              class="relative inline-block"
+                            >
+                              <div
+                                class="line-clamp-3 "
+                              >
+                                28/06/2022
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="mb-5 px-3 text-left"
+                          >
+                            <div
+                              class="mb-1 text-left text-xs uppercase text-gray-500"
+                            >
+                              Numéro fonctionnel
+                            </div>
+                            <div
+                              class="relative inline-block"
+                            >
+                              <div
+                                class="line-clamp-3 "
+                              >
+                                2H5U3Q
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div
+                        class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                      >
+                        <span
+                          class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                        >
+                          Titulaire
+                        </span>
+                        <div
+                          class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 "
+                        >
+                          <div
+                            class="mb-5 px-3 text-left"
+                          >
+                            <div
+                              class="mb-1 text-left text-xs uppercase text-gray-500"
+                            >
+                              Nom
+                            </div>
+                            <div
+                              class="relative inline-block"
+                            >
+                              <div
+                                class="line-clamp-3 "
+                              >
+                                dupont
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="mb-5 px-3 text-left"
+                          >
+                            <div
+                              class="mb-1 text-left text-xs uppercase text-gray-500"
+                            >
+                              Prénoms
+                            </div>
+                            <div
+                              class="relative inline-block"
+                            >
+                              <div
+                                class="line-clamp-3 "
+                              >
+                                paul
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="mb-5 px-3 text-left"
+                          >
+                            <div
+                              class="mb-1 text-left text-xs uppercase text-gray-500"
+                            >
+                              Sexe
+                            </div>
+                            <div
+                              class="relative inline-block"
+                            >
+                              <div
+                                class="line-clamp-3 "
+                              >
+                                Masculin
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div>
+                        <div
+                          class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                        >
+                          <span
+                            class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                          >
+                            Père
+                          </span>
+                          <div
+                            class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 "
+                          >
+                            <div
+                              class="mb-5 px-3 text-left"
+                            >
+                              <div
+                                class="mb-1 text-left text-xs uppercase text-gray-500"
+                              >
+                                Nom
+                              </div>
+                              <div
+                                class="relative inline-block"
+                              >
+                                <div
+                                  class="line-clamp-3 "
+                                >
+                                  Philips
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="mb-5 px-3 text-left"
+                            >
+                              <div
+                                class="mb-1 text-left text-xs uppercase text-gray-500"
+                              >
+                                Prénoms
+                              </div>
+                              <div
+                                class="relative inline-block"
+                              >
+                                <div
+                                  class="line-clamp-3 "
+                                >
+                                  Yann
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="mb-5 px-3 text-left"
+                            >
+                              <div
+                                class="mb-1 text-left text-xs uppercase text-gray-500"
+                              >
+                                Sexe
+                              </div>
+                              <div
+                                class="relative inline-block"
+                              >
+                                <div
+                                  class="line-clamp-3 "
+                                >
+                                  Masculin
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="mb-5 px-3 text-left"
+                            >
+                              <div
+                                class="mb-1 text-left text-xs uppercase text-gray-500"
+                              >
+                                Nationalité
+                              </div>
+                              <div
+                                class="relative inline-block"
+                              >
+                                <div
+                                  class="line-clamp-3 "
+                                >
+                                  nationalite
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div
+                        class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                      >
+                        <span
+                          class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                        >
+                          Requerant
+                        </span>
+                        <div
+                          class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 "
+                        >
+                          <div
+                            class="mb-5 px-3 text-left"
+                          >
+                            <div
+                              class="mb-1 text-left text-xs uppercase text-gray-500"
+                            >
+                              Requérant
+                            </div>
+                            <div
+                              class="relative inline-block"
+                            >
+                              <div
+                                class="line-clamp-3 "
+                              >
+                                Titulaire
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="mb-5 px-3 text-left"
+                          >
+                            <div
+                              class="mb-1 text-left text-xs uppercase text-gray-500"
+                            >
+                              Courriel
+                            </div>
+                            <div
+                              class="relative inline-block"
+                            >
+                              <div
+                                class="line-clamp-3 "
+                              >
+                                courriel
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="mb-5 px-3 text-left"
+                          >
+                            <div
+                              class="mb-1 text-left text-xs uppercase text-gray-500"
+                            >
+                              Téléphone
+                            </div>
+                            <div
+                              class="relative inline-block"
+                            >
+                              <div
+                                class="line-clamp-3 "
+                              >
+                                telephone
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="mb-5 px-3 text-left"
+                          >
+                            <div
+                              class="mb-1 text-left text-xs uppercase text-gray-500"
+                            >
+                              Coordonnées
+                            </div>
+                            <div
+                              class="relative inline-block"
+                            >
+                              <div
+                                class="line-clamp-3 "
+                              >
+                                ligne2
+ligne3
+ligne4
+ligne5
+codePostal ville
+pays
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mb-4 mr-4 mt-4"
+        >
+          <div
+            class="mt-2"
+          >
+            <div
+              data-testid="rmc-mock"
+            >
+              Requetes associees
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="w-[65%]"
+    />
+  </div>
+  <div
+    class="mt-4 flex justify-between"
+  >
+    <div />
+    <button
+      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc shrink-0"
+      title="Créer le projet d'acte"
+      type="button"
+    >
+      Créer le projet d'acte
+    </button>
+  </div>
+</div>
+`;

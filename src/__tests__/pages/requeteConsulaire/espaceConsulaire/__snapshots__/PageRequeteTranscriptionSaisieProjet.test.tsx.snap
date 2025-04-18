@@ -5,27 +5,2690 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
   class="mt-4 flex gap-8"
 >
   <div
-    class="conteneur-page-chargeur"
+    class="flex w-1/2 flex-col"
   >
-    <span
-      class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-18lrjg1-MuiCircularProgress-root"
-      role="progressbar"
-      style="width: 40px; height: 40px;"
+    <div
+      class="flex items-end border-0 border-b border-solid border-gris"
     >
-      <svg
-        class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
-        viewBox="22 22 44 44"
+      <button
+        class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre false m-0 h-11 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
+        disabled=""
+        title="Description de la requête"
+        type="button"
       >
-        <circle
-          class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
-          cx="44"
-          cy="44"
-          fill="none"
-          r="20.2"
-          stroke-width="3.6"
+        Description de la requête
+      </button>
+      <button
+        class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-blanc text-bleu-sombre hover:text-bleu hover:border-bleu focus:text-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc m-0 h-10 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
+        title="Aperçu du projet"
+        type="button"
+      >
+        Aperçu du projet
+      </button>
+    </div>
+    <div
+      class="gap-2 pt-4 grid h-[calc(100vh-16.5rem)] overflow-auto rounded-lg"
+    >
+      <div
+        class="pr-4"
+      >
+        <div
+          class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
+        >
+          <button
+            class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+            type="button"
+          >
+            <span
+              class="truncate"
+            >
+              "Transcription" Acte de naissance d'une personne mineure
+            </span>
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-i4bv87-MuiSvgIcon-root"
+              data-testid="ExpandMoreIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+              />
+            </svg>
+          </button>
+          <div
+            class="grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+          >
+            <div
+              class="min-h-0"
+            >
+              <div
+                class="grid gap-y-4 p-4 "
+              >
+                <div
+                  class="grid gap-12 py-4"
+                >
+                  <div>
+                    <div
+                      class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                    >
+                      <span
+                        class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                      >
+                        Informations générales
+                      </span>
+                      <div
+                        class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
+                      >
+                        <div
+                          class="mb-5 px-3 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Type Requete
+                          </div>
+                          <div
+                            class="relative inline-block"
+                          >
+                            <div
+                              class="line-clamp-3 "
+                            >
+                              Création suite Transcription Courrier
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="mb-5 px-3 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Statut
+                          </div>
+                          <div
+                            class="relative inline-block"
+                          >
+                            <div
+                              class="line-clamp-3 flex rounded-r-full border border-solid border-bleu-sombre bg-blue-50 px-2 py-1 text-bleu-sombre"
+                            >
+                              Prise en charge
+                              <svg
+                                aria-hidden="true"
+                                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium ml-1 h-5 w-5 css-i4bv87-MuiSvgIcon-root"
+                                data-testid="PendingActionsIcon"
+                                focusable="false"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  d="M17 12c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm1.65 7.35L16.5 17.2V14h1v2.79l1.85 1.85-.7.71zM18 3h-3.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H6c-1.1 0-2 .9-2 2v15c0 1.1.9 2 2 2h6.11c-.59-.57-1.07-1.25-1.42-2H6V5h2v3h8V5h2v5.08c.71.1 1.38.31 2 .6V5c0-1.1-.9-2-2-2zm-6 2c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"
+                                />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="mb-5 px-3 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Provenance
+                          </div>
+                          <div
+                            class="relative inline-block"
+                          >
+                            <div
+                              class="line-clamp-3 "
+                            >
+                              Courrier
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="mb-5 px-3 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Date création
+                          </div>
+                          <div
+                            class="relative inline-block"
+                          >
+                            <div
+                              class="line-clamp-3 "
+                            >
+                              28/06/2022
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="mb-5 px-3 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Numéro fonctionnel
+                          </div>
+                          <div
+                            class="relative inline-block"
+                          >
+                            <div
+                              class="line-clamp-3 "
+                            >
+                              2H5U3Q
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                    >
+                      <span
+                        class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                      >
+                        Titulaire
+                      </span>
+                      <div
+                        class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
+                      >
+                        <div
+                          class="mb-5 px-3 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Nom
+                          </div>
+                          <div
+                            class="relative inline-block"
+                          >
+                            <div
+                              class="line-clamp-3 "
+                            >
+                              dupont
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="mb-5 px-3 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Prénoms
+                          </div>
+                          <div
+                            class="relative inline-block"
+                          >
+                            <div
+                              class="line-clamp-3 "
+                            >
+                              paul
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="mb-5 px-3 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Sexe
+                          </div>
+                          <div
+                            class="relative inline-block"
+                          >
+                            <div
+                              class="line-clamp-3 "
+                            >
+                              Masculin
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+                      <div
+                        class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                      >
+                        <span
+                          class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                        >
+                          Père
+                        </span>
+                        <div
+                          class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
+                        >
+                          <div
+                            class="mb-5 px-3 text-left"
+                          >
+                            <div
+                              class="mb-1 text-left text-xs uppercase text-gray-500"
+                            >
+                              Nom
+                            </div>
+                            <div
+                              class="relative inline-block"
+                            >
+                              <div
+                                class="line-clamp-3 "
+                              >
+                                Philips
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="mb-5 px-3 text-left"
+                          >
+                            <div
+                              class="mb-1 text-left text-xs uppercase text-gray-500"
+                            >
+                              Prénoms
+                            </div>
+                            <div
+                              class="relative inline-block"
+                            >
+                              <div
+                                class="line-clamp-3 "
+                              >
+                                Yann
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="mb-5 px-3 text-left"
+                          >
+                            <div
+                              class="mb-1 text-left text-xs uppercase text-gray-500"
+                            >
+                              Sexe
+                            </div>
+                            <div
+                              class="relative inline-block"
+                            >
+                              <div
+                                class="line-clamp-3 "
+                              >
+                                Masculin
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="mb-5 px-3 text-left"
+                          >
+                            <div
+                              class="mb-1 text-left text-xs uppercase text-gray-500"
+                            >
+                              Nationalité
+                            </div>
+                            <div
+                              class="relative inline-block"
+                            >
+                              <div
+                                class="line-clamp-3 "
+                              >
+                                nationalite
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                    >
+                      <span
+                        class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                      >
+                        Requerant
+                      </span>
+                      <div
+                        class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
+                      >
+                        <div
+                          class="mb-5 px-3 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Requérant
+                          </div>
+                          <div
+                            class="relative inline-block"
+                          >
+                            <div
+                              class="line-clamp-3 "
+                            >
+                              Titulaire
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="mb-5 px-3 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Courriel
+                          </div>
+                          <div
+                            class="relative inline-block"
+                          >
+                            <div
+                              class="line-clamp-3 "
+                            >
+                              courriel
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="mb-5 px-3 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Téléphone
+                          </div>
+                          <div
+                            class="relative inline-block"
+                          >
+                            <div
+                              class="line-clamp-3 "
+                            >
+                              telephone
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="mb-5 px-3 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Coordonnées
+                          </div>
+                          <div
+                            class="relative inline-block"
+                          >
+                            <div
+                              class="line-clamp-3 "
+                            >
+                              ligne2
+ligne3
+ligne4
+ligne5
+codePostal ville
+pays
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="mb-4 mr-4 mt-4"
+      >
+        <div
+          class="mt-2"
         />
-      </svg>
-    </span>
+      </div>
+    </div>
+    <div
+      class="gap-2 pt-4 hidden h-[calc(100vh-16.5rem)] overflow-auto rounded-lg"
+    >
+      <div
+        class="ApercuProjet"
+      />
+    </div>
+  </div>
+  <div
+    class="relative w-1/2"
+  >
+    <p
+      class="absolute -top-10 right-0 mb-0.5 mt-1.5 pr-2.5 text-end text-sm text-bleu-sombre"
+    >
+      Les champs obligatoires sont précédés d'une étoile
+      <span
+        class="ml-1 text-rouge"
+      >
+        *
+      </span>
+    </p>
+    <div
+      class="flex items-end border-0 border-b border-solid border-gris"
+    >
+      <button
+        class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre false m-0 h-11 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
+        disabled=""
+        title="Saisir le projet"
+        type="button"
+      >
+        Saisir le projet
+      </button>
+    </div>
+    <div
+      class="gap-2 pt-4 grid h-[calc(100vh-16.5rem)] overflow-auto rounded-lg"
+    >
+      <div
+        class="mr-2"
+      >
+        <form
+          action="#"
+        >
+          <div
+            class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
+          >
+            <button
+              class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+              type="button"
+            >
+              <span
+                class="truncate"
+              >
+                Titulaire
+              </span>
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-i4bv87-MuiSvgIcon-root"
+                data-testid="ExpandMoreIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                />
+              </svg>
+            </button>
+            <div
+              class="grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+            >
+              <div
+                class="min-h-0"
+              >
+                <div
+                  class="grid gap-y-4 p-4 "
+                >
+                  <div
+                    class="py-6"
+                  >
+                    <div
+                      class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                    >
+                      <div
+                        class="grid grid-cols-2 gap-4 text-start"
+                      >
+                        <div
+                          class="flex w-full flex-col text-start"
+                        >
+                          <label
+                            aria-label="aria-label-titulaire.nomActeEtranger"
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="titulaire.nomActeEtranger"
+                          >
+                            Nom sur l'acte étranger
+                          </label>
+                          <div
+                            class="relative flex rounded-md shadow-sm"
+                          >
+                            <input
+                              class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              id="titulaire.nomActeEtranger"
+                              maxlength="100"
+                              name="titulaire.nomActeEtranger"
+                              value="dupont"
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="grid w-full gap-4 text-start"
+                        >
+                          <div
+                            class="flex w-full flex-col text-start"
+                          >
+                            <label
+                              aria-label="aria-label-titulaire.nomSouhaite"
+                              class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                              for="titulaire.nomSouhaite"
+                            >
+                              Nom souhaité
+                            </label>
+                            <div
+                              class="relative flex rounded-md shadow-sm"
+                            >
+                              <input
+                                class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                disabled=""
+                                id="titulaire.nomSouhaite"
+                                maxlength="100"
+                                name="titulaire.nomSouhaite"
+                                value=""
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="grid grid-cols-1 pt-4"
+                      >
+                        <div
+                          class="grid gap-4"
+                        >
+                          <div
+                            class="flex items-start gap-4"
+                          >
+                            <div
+                              class="flex w-full flex-col text-start"
+                            >
+                              <label
+                                aria-label="aria-label-titulaire.nomRetenuOEC"
+                                class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                                for="titulaire.nomRetenuOEC"
+                              >
+                                Nom retenu par l'OEC
+                                <span
+                                  class="ml-1 text-rouge"
+                                >
+                                  *
+                                </span>
+                              </label>
+                              <div
+                                class="relative flex rounded-md shadow-sm"
+                              >
+                                <input
+                                  class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="titulaire.nomRetenuOEC"
+                                  maxlength="100"
+                                  name="titulaire.nomRetenuOEC"
+                                  value=""
+                                />
+                              </div>
+                            </div>
+                            <div
+                              class="flex flex-nowrap items-center gap-3 pt-8"
+                            >
+                              <label
+                                class="flex w-fit text-start cursor-default opacity-60"
+                              >
+                                <input
+                                  class="cursor-default"
+                                  disabled=""
+                                  name="titulaire.nomSecable.secable"
+                                  type="checkbox"
+                                  value="false"
+                                />
+                                <span
+                                  class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                                >
+                                  Nom sécable
+                                </span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="pt-4"
+                      >
+                        <div
+                          class="grid grid-cols-2 gap-4"
+                        >
+                          <div
+                            class="flex w-full flex-col text-start w-full"
+                          >
+                            <label
+                              aria-label="aria-label-titulaire.prenomsChemin.prenom1"
+                              class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                              for="titulaire.prenomsChemin.prenom1"
+                            >
+                              Prénom
+                            </label>
+                            <div
+                              class="relative flex rounded-md shadow-sm"
+                            >
+                              <input
+                                class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="titulaire.prenomsChemin.prenom1"
+                                maxlength="100"
+                                name="titulaire.prenomsChemin.prenom1"
+                                type="text"
+                                value="paul"
+                              />
+                            </div>
+                          </div>
+                          <div
+                            class="pt-[1.6rem]"
+                          >
+                            <button
+                              class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out  bg-bleu-sombre text-blanc hover:bg-bleu focus:bg-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-gris-sombre text-white disabled:cursor-not-allowed"
+                              title="Ajouter un prénom"
+                              type="button"
+                            >
+                              <div
+                                class="flex items-center gap-4 px-2"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  data-testid="AddCircleIcon"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
+                                  />
+                                </svg>
+                                <span
+                                  class="font-noto-sans-ui text-sm font-bold"
+                                >
+                                  Ajouter un prénom
+                                </span>
+                              </div>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="grid w-full grid-cols-2 gap-4 pt-4 text-start"
+                      >
+                        <fieldset
+                          class="m-0 flex w-full flex-col border-0 p-0 text-start"
+                        >
+                          <legend
+                            class="m-0 mb-1 block w-fit text-start text-base transition-colors text-bleu-sombre"
+                          >
+                            Sexe
+                          </legend>
+                          <div
+                            class="mt-1.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start"
+                          >
+                            <div>
+                              <input
+                                checked=""
+                                class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="titulaire.sexe-MASCULIN"
+                                name="titulaire.sexe"
+                                type="radio"
+                                value="MASCULIN"
+                              />
+                              <label
+                                class="cursor-pointer pl-2"
+                                for="titulaire.sexe-MASCULIN"
+                              >
+                                Masculin
+                              </label>
+                            </div>
+                            <div>
+                              <input
+                                class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="titulaire.sexe-FEMININ"
+                                name="titulaire.sexe"
+                                type="radio"
+                                value="FEMININ"
+                              />
+                              <label
+                                class="cursor-pointer pl-2"
+                                for="titulaire.sexe-FEMININ"
+                              >
+                                Féminin
+                              </label>
+                            </div>
+                            <div>
+                              <input
+                                class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="titulaire.sexe-INDETERMINE"
+                                name="titulaire.sexe"
+                                type="radio"
+                                value="INDETERMINE"
+                              />
+                              <label
+                                class="cursor-pointer pl-2"
+                                for="titulaire.sexe-INDETERMINE"
+                              >
+                                Indéterminé
+                              </label>
+                            </div>
+                          </div>
+                        </fieldset>
+                        <div>
+                          <label
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="titulaire.dateNaissance.jour"
+                          >
+                            Date de naissance
+                            <span
+                              class="ml-1 text-rouge"
+                            >
+                              <span
+                                class="text-xs"
+                              >
+                                (année)
+                              </span>
+                              *
+                            </span>
+                          </label>
+                          <div
+                            class="flex flex-nowrap gap-1"
+                          >
+                            <input
+                              class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              id="titulaire.dateNaissance.jour"
+                              maxlength="2"
+                              placeholder="JJ"
+                              value="04"
+                            />
+                            <span
+                              class="mx-1 text-xl"
+                            >
+                              /
+                            </span>
+                            <input
+                              class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              id="titulaire.dateNaissance.mois"
+                              maxlength="2"
+                              placeholder="MM"
+                              value="03"
+                            />
+                            <span
+                              class="mx-1 text-xl"
+                            >
+                              /
+                            </span>
+                            <input
+                              class="border-1 w-11 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              id="titulaire.dateNaissance.annee"
+                              maxlength="4"
+                              placeholder="AAAA"
+                              value="1963"
+                            />
+                            <span
+                              class="mx-1 text-xl"
+                            >
+                              à
+                            </span>
+                            <input
+                              class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              id="titulaire.dateNaissance.heure"
+                              maxlength="2"
+                              placeholder="HH"
+                              value=""
+                            />
+                            <span
+                              class="mx-1 text-xl"
+                            >
+                              h
+                            </span>
+                            <input
+                              class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              id="titulaire.dateNaissance.minute"
+                              maxlength="2"
+                              placeholder="MN"
+                              value=""
+                            />
+                            <span
+                              class="mx-1 text-xl"
+                            >
+                              min
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="pb-4 pt-8"
+                      >
+                        <div
+                          class="relative my-2.5 border-0 border-b-2 border-solid border-bleu text-start"
+                        >
+                          <label
+                            class="absolute -bottom-2.5 left-8 bg-blanc px-1.5 text-bleu-sombre"
+                          >
+                            Lieu de naissance
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        class="grid grid-cols-2 gap-4"
+                      >
+                        <div
+                          class="flex w-full flex-col text-start"
+                        >
+                          <label
+                            aria-label="aria-label-titulaire.villeNaissance"
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="titulaire.villeNaissance"
+                          >
+                            Ville
+                          </label>
+                          <div
+                            class="relative flex rounded-md shadow-sm"
+                          >
+                            <input
+                              class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              id="titulaire.villeNaissance"
+                              maxlength="100"
+                              name="titulaire.villeNaissance"
+                              value="nantes"
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="flex w-full flex-col text-start"
+                        >
+                          <label
+                            aria-label="aria-label-titulaire.regionNaissance"
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="titulaire.regionNaissance"
+                          >
+                            État, canton, province
+                          </label>
+                          <div
+                            class="relative flex rounded-md shadow-sm"
+                          >
+                            <input
+                              class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              id="titulaire.regionNaissance"
+                              maxlength="100"
+                              name="titulaire.regionNaissance"
+                              value="regionNaissance"
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="flex w-full flex-col text-start"
+                        >
+                          <label
+                            aria-label="aria-label-titulaire.paysNaissance"
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="titulaire.paysNaissance"
+                          >
+                            Pays
+                          </label>
+                          <div
+                            class="relative flex rounded-md shadow-sm"
+                          >
+                            <input
+                              class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              id="titulaire.paysNaissance"
+                              maxlength="100"
+                              name="titulaire.paysNaissance"
+                              value="paysNaissance"
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="flex w-full flex-col text-start"
+                        >
+                          <label
+                            aria-label="aria-label-titulaire.adresseNaissance"
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="titulaire.adresseNaissance"
+                          >
+                            Adresse
+                          </label>
+                          <div
+                            class="relative flex rounded-md shadow-sm"
+                          >
+                            <input
+                              class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              id="titulaire.adresseNaissance"
+                              maxlength="100"
+                              name="titulaire.adresseNaissance"
+                              value=""
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
+          >
+            <button
+              class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+              type="button"
+            >
+              <span
+                class="truncate"
+              >
+                Parents
+              </span>
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-i4bv87-MuiSvgIcon-root"
+                data-testid="ExpandMoreIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                />
+              </svg>
+            </button>
+            <div
+              class="grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+            >
+              <div
+                class="min-h-0"
+              >
+                <div
+                  class="grid gap-y-4 p-4 "
+                >
+                  <div
+                    class="py-6"
+                  >
+                    <div
+                      class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                    >
+                      <span
+                        class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                      >
+                        Père
+                      </span>
+                      <div
+                        class="space-y-4"
+                      >
+                        <div
+                          class="flex w-full flex-col text-start"
+                        >
+                          <label
+                            aria-label="aria-label-parents.parent1.nom"
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="parents.parent1.nom"
+                          >
+                            Nom
+                          </label>
+                          <div
+                            class="relative flex rounded-md shadow-sm"
+                          >
+                            <input
+                              class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              id="parents.parent1.nom"
+                              maxlength="100"
+                              name="parents.parent1.nom"
+                              value="nomUsage"
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="grid grid-cols-2 gap-4"
+                        >
+                          <div
+                            class="flex w-full flex-col text-start w-full"
+                          >
+                            <label
+                              aria-label="aria-label-parents.parent1.prenomsChemin.prenom1"
+                              class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                              for="parents.parent1.prenomsChemin.prenom1"
+                            >
+                              Prénom
+                            </label>
+                            <div
+                              class="relative flex rounded-md shadow-sm"
+                            >
+                              <input
+                                class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="parents.parent1.prenomsChemin.prenom1"
+                                maxlength="100"
+                                name="parents.parent1.prenomsChemin.prenom1"
+                                type="text"
+                                value="Yann"
+                              />
+                            </div>
+                          </div>
+                          <div
+                            class="pt-[1.6rem]"
+                          >
+                            <button
+                              class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out  bg-bleu-sombre text-blanc hover:bg-bleu focus:bg-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-gris-sombre text-white disabled:cursor-not-allowed"
+                              title="Ajouter un prénom"
+                              type="button"
+                            >
+                              <div
+                                class="flex items-center gap-4 px-2"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  data-testid="AddCircleIcon"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
+                                  />
+                                </svg>
+                                <span
+                                  class="font-noto-sans-ui text-sm font-bold"
+                                >
+                                  Ajouter un prénom
+                                </span>
+                              </div>
+                            </button>
+                          </div>
+                        </div>
+                        <fieldset
+                          class="m-0 flex w-full flex-col border-0 p-0 text-start"
+                        >
+                          <legend
+                            class="m-0 mb-1 block w-fit text-start text-base transition-colors text-bleu-sombre"
+                          >
+                            Sexe
+                          </legend>
+                          <div
+                            class="mt-1.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start"
+                          >
+                            <div>
+                              <input
+                                checked=""
+                                class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="parents.parent1.sexe-MASCULIN"
+                                name="parents.parent1.sexe"
+                                type="radio"
+                                value="MASCULIN"
+                              />
+                              <label
+                                class="cursor-pointer pl-2"
+                                for="parents.parent1.sexe-MASCULIN"
+                              >
+                                Masculin
+                              </label>
+                            </div>
+                            <div>
+                              <input
+                                class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="parents.parent1.sexe-FEMININ"
+                                name="parents.parent1.sexe"
+                                type="radio"
+                                value="FEMININ"
+                              />
+                              <label
+                                class="cursor-pointer pl-2"
+                                for="parents.parent1.sexe-FEMININ"
+                              >
+                                Féminin
+                              </label>
+                            </div>
+                          </div>
+                        </fieldset>
+                        <div
+                          class="grid grid-cols-2"
+                        >
+                          <div>
+                            <div>
+                              <label
+                                class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                                for="parents.parent1.dateNaissance.jour"
+                              >
+                                Date de naissance
+                              </label>
+                              <div
+                                class="flex flex-nowrap gap-1"
+                              >
+                                <input
+                                  class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="parents.parent1.dateNaissance.jour"
+                                  maxlength="2"
+                                  placeholder="JJ"
+                                  value="01"
+                                />
+                                <span
+                                  class="mx-1 text-xl"
+                                >
+                                  /
+                                </span>
+                                <input
+                                  class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="parents.parent1.dateNaissance.mois"
+                                  maxlength="2"
+                                  placeholder="MM"
+                                  value="02"
+                                />
+                                <span
+                                  class="mx-1 text-xl"
+                                >
+                                  /
+                                </span>
+                                <input
+                                  class="border-1 w-11 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="parents.parent1.dateNaissance.annee"
+                                  maxlength="4"
+                                  placeholder="AAAA"
+                                  value="2000"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="flex items-end space-x-4"
+                          >
+                            <label
+                              class="flex w-fit text-start cursor-pointer"
+                            >
+                              <input
+                                class="cursor-pointer accent-bleu-sombre"
+                                name="parents.parent1.renseignerAge"
+                                type="checkbox"
+                                value="false"
+                              />
+                              <span
+                                class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                              >
+                                Saisir l'âge
+                              </span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="pb-4 pt-8"
+                      >
+                        <div
+                          class="relative my-2.5 border-0 border-b-2 border-solid border-bleu text-start"
+                        >
+                          <label
+                            class="absolute -bottom-2.5 left-8 bg-blanc px-1.5 text-bleu-sombre"
+                          >
+                            Lieu de naissance
+                          </label>
+                        </div>
+                      </div>
+                      <div>
+                        <fieldset
+                          class="m-0 flex w-full flex-col border-0 p-0 text-start"
+                        >
+                          <legend
+                            class="m-0 mb-1 block w-fit text-start text-base transition-colors text-bleu-sombre"
+                          />
+                          <div
+                            class="mt-1.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start"
+                          >
+                            <div>
+                              <input
+                                class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="parents.parent1.lieuNaissance.typeLieu-France"
+                                name="parents.parent1.lieuNaissance.typeLieu"
+                                type="radio"
+                                value="France"
+                              />
+                              <label
+                                class="cursor-pointer pl-2"
+                                for="parents.parent1.lieuNaissance.typeLieu-France"
+                              >
+                                France
+                              </label>
+                            </div>
+                            <div>
+                              <input
+                                checked=""
+                                class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="parents.parent1.lieuNaissance.typeLieu-Étranger"
+                                name="parents.parent1.lieuNaissance.typeLieu"
+                                type="radio"
+                                value="Étranger"
+                              />
+                              <label
+                                class="cursor-pointer pl-2"
+                                for="parents.parent1.lieuNaissance.typeLieu-Étranger"
+                              >
+                                Étranger
+                              </label>
+                            </div>
+                            <div>
+                              <input
+                                class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="parents.parent1.lieuNaissance.typeLieu-Inconnu"
+                                name="parents.parent1.lieuNaissance.typeLieu"
+                                type="radio"
+                                value="Inconnu"
+                              />
+                              <label
+                                class="cursor-pointer pl-2"
+                                for="parents.parent1.lieuNaissance.typeLieu-Inconnu"
+                              >
+                                Inconnu
+                              </label>
+                            </div>
+                          </div>
+                        </fieldset>
+                        <div>
+                          <div
+                            class="mt-4 grid grid-cols-2 gap-4"
+                          >
+                            <div
+                              class="flex w-full flex-col text-start"
+                            >
+                              <label
+                                aria-label="aria-label-parents.parent1.lieuNaissance.ville"
+                                class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                                for="parents.parent1.lieuNaissance.ville"
+                              >
+                                Ville
+                              </label>
+                              <div
+                                class="relative flex rounded-md shadow-sm"
+                              >
+                                <input
+                                  class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="parents.parent1.lieuNaissance.ville"
+                                  maxlength="100"
+                                  name="parents.parent1.lieuNaissance.ville"
+                                  value="villeNaissance"
+                                />
+                              </div>
+                            </div>
+                            <div
+                              class="flex w-full flex-col text-start"
+                            >
+                              <label
+                                aria-label="aria-label-parents.parent1.lieuNaissance.etatProvince"
+                                class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                                for="parents.parent1.lieuNaissance.etatProvince"
+                              >
+                                État, canton, province
+                              </label>
+                              <div
+                                class="relative flex rounded-md shadow-sm"
+                              >
+                                <input
+                                  class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="parents.parent1.lieuNaissance.etatProvince"
+                                  maxlength="100"
+                                  name="parents.parent1.lieuNaissance.etatProvince"
+                                  value="regionNaissance"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="mt-4"
+                          >
+                            <div
+                              class="flex w-full flex-col text-start"
+                            >
+                              <label
+                                aria-label="aria-label-parents.parent1.lieuNaissance.pays"
+                                class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                                for="parents.parent1.lieuNaissance.pays"
+                              >
+                                Pays
+                              </label>
+                              <div
+                                class="relative flex rounded-md shadow-sm"
+                              >
+                                <input
+                                  class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="parents.parent1.lieuNaissance.pays"
+                                  maxlength="100"
+                                  name="parents.parent1.lieuNaissance.pays"
+                                  value="paysNaissance"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="mt-4"
+                          >
+                            <div
+                              class="flex w-full flex-col text-start"
+                            >
+                              <label
+                                aria-label="aria-label-parents.parent1.lieuNaissance.adresse"
+                                class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                                for="parents.parent1.lieuNaissance.adresse"
+                              >
+                                Adresse
+                              </label>
+                              <div
+                                class="relative flex rounded-md shadow-sm"
+                              >
+                                <input
+                                  class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="parents.parent1.lieuNaissance.adresse"
+                                  maxlength="100"
+                                  name="parents.parent1.lieuNaissance.adresse"
+                                  value=""
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="pb-4 pt-8"
+                      >
+                        <div
+                          class="relative my-2.5 border-0 border-b-2 border-solid border-bleu text-start"
+                        >
+                          <label
+                            class="absolute -bottom-2.5 left-8 bg-blanc px-1.5 text-bleu-sombre"
+                            for="parents.parent1.profession"
+                          >
+                            Profession
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        class="grid grid-cols-2 items-center gap-4"
+                      >
+                        <div
+                          class="flex w-full flex-col text-start"
+                        >
+                          <label
+                            aria-label="aria-label-parents.parent1.profession"
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="parents.parent1.profession"
+                          />
+                          <div
+                            class="relative flex rounded-md shadow-sm"
+                          >
+                            <input
+                              class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              data-testid="parents.parent1-profession"
+                              id="parents.parent1.profession"
+                              maxlength="100"
+                              name="parents.parent1.profession"
+                              value=""
+                            />
+                          </div>
+                        </div>
+                        <label
+                          class="flex w-fit text-start cursor-pointer"
+                        >
+                          <input
+                            class="cursor-pointer accent-bleu-sombre"
+                            name="parents.parent1.sansProfession"
+                            type="checkbox"
+                            value="false"
+                          />
+                          <span
+                            class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                          >
+                            Sans profession
+                          </span>
+                        </label>
+                      </div>
+                      <div
+                        class="pb-4 pt-8"
+                      >
+                        <div
+                          class="relative my-2.5 border-0 border-b-2 border-solid border-bleu text-start"
+                        >
+                          <label
+                            class="absolute -bottom-2.5 left-8 bg-blanc px-1.5 text-bleu-sombre"
+                          >
+                            Domicile
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        class="grid gap-4"
+                      >
+                        <div>
+                          <fieldset
+                            class="m-0 flex w-full flex-col border-0 p-0 text-start"
+                          >
+                            <legend
+                              class="m-0 mb-1 block w-fit text-start text-base transition-colors text-bleu-sombre"
+                            />
+                            <div
+                              class="mt-1.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start"
+                            >
+                              <div>
+                                <input
+                                  class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="parents.parent1.domicile.typeLieu-France"
+                                  name="parents.parent1.domicile.typeLieu"
+                                  type="radio"
+                                  value="France"
+                                />
+                                <label
+                                  class="cursor-pointer pl-2"
+                                  for="parents.parent1.domicile.typeLieu-France"
+                                >
+                                  France
+                                </label>
+                              </div>
+                              <div>
+                                <input
+                                  class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="parents.parent1.domicile.typeLieu-Étranger"
+                                  name="parents.parent1.domicile.typeLieu"
+                                  type="radio"
+                                  value="Étranger"
+                                />
+                                <label
+                                  class="cursor-pointer pl-2"
+                                  for="parents.parent1.domicile.typeLieu-Étranger"
+                                >
+                                  Étranger
+                                </label>
+                              </div>
+                              <div>
+                                <input
+                                  checked=""
+                                  class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="parents.parent1.domicile.typeLieu-Inconnu"
+                                  name="parents.parent1.domicile.typeLieu"
+                                  type="radio"
+                                  value="Inconnu"
+                                />
+                                <label
+                                  class="cursor-pointer pl-2"
+                                  for="parents.parent1.domicile.typeLieu-Inconnu"
+                                >
+                                  Inconnu
+                                </label>
+                              </div>
+                            </div>
+                          </fieldset>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="py-6"
+                  >
+                    <div
+                      class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                    >
+                      <span
+                        class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                      >
+                        Parent 2
+                      </span>
+                      <div
+                        class="space-y-4"
+                      >
+                        <div
+                          class="flex w-full flex-col text-start"
+                        >
+                          <label
+                            aria-label="aria-label-parents.parent2.nom"
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="parents.parent2.nom"
+                          >
+                            Nom
+                          </label>
+                          <div
+                            class="relative flex rounded-md shadow-sm"
+                          >
+                            <input
+                              class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              id="parents.parent2.nom"
+                              maxlength="100"
+                              name="parents.parent2.nom"
+                              value=""
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="grid grid-cols-2 gap-4"
+                        >
+                          <div
+                            class="flex w-full flex-col text-start w-full"
+                          >
+                            <label
+                              aria-label="aria-label-parents.parent2.prenomsChemin.prenom1"
+                              class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                              for="parents.parent2.prenomsChemin.prenom1"
+                            >
+                              Prénom
+                            </label>
+                            <div
+                              class="relative flex rounded-md shadow-sm"
+                            >
+                              <input
+                                class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="parents.parent2.prenomsChemin.prenom1"
+                                maxlength="100"
+                                name="parents.parent2.prenomsChemin.prenom1"
+                                type="text"
+                                value=""
+                              />
+                            </div>
+                          </div>
+                          <div
+                            class="pt-[1.6rem]"
+                          >
+                            <button
+                              class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out  bg-bleu-sombre text-blanc hover:bg-bleu focus:bg-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-gris-sombre text-white disabled:cursor-not-allowed"
+                              title="Ajouter un prénom"
+                              type="button"
+                            >
+                              <div
+                                class="flex items-center gap-4 px-2"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  data-testid="AddCircleIcon"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
+                                  />
+                                </svg>
+                                <span
+                                  class="font-noto-sans-ui text-sm font-bold"
+                                >
+                                  Ajouter un prénom
+                                </span>
+                              </div>
+                            </button>
+                          </div>
+                        </div>
+                        <fieldset
+                          class="m-0 flex w-full flex-col border-0 p-0 text-start"
+                        >
+                          <legend
+                            class="m-0 mb-1 block w-fit text-start text-base transition-colors text-bleu-sombre"
+                          >
+                            Sexe
+                          </legend>
+                          <div
+                            class="mt-1.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start"
+                          >
+                            <div>
+                              <input
+                                class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="parents.parent2.sexe-MASCULIN"
+                                name="parents.parent2.sexe"
+                                type="radio"
+                                value="MASCULIN"
+                              />
+                              <label
+                                class="cursor-pointer pl-2"
+                                for="parents.parent2.sexe-MASCULIN"
+                              >
+                                Masculin
+                              </label>
+                            </div>
+                            <div>
+                              <input
+                                class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="parents.parent2.sexe-FEMININ"
+                                name="parents.parent2.sexe"
+                                type="radio"
+                                value="FEMININ"
+                              />
+                              <label
+                                class="cursor-pointer pl-2"
+                                for="parents.parent2.sexe-FEMININ"
+                              >
+                                Féminin
+                              </label>
+                            </div>
+                          </div>
+                        </fieldset>
+                        <div
+                          class="grid grid-cols-2"
+                        >
+                          <div>
+                            <div>
+                              <label
+                                class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                                for="parents.parent2.dateNaissance.jour"
+                              >
+                                Date de naissance
+                              </label>
+                              <div
+                                class="flex flex-nowrap gap-1"
+                              >
+                                <input
+                                  class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="parents.parent2.dateNaissance.jour"
+                                  maxlength="2"
+                                  placeholder="JJ"
+                                  value=""
+                                />
+                                <span
+                                  class="mx-1 text-xl"
+                                >
+                                  /
+                                </span>
+                                <input
+                                  class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="parents.parent2.dateNaissance.mois"
+                                  maxlength="2"
+                                  placeholder="MM"
+                                  value=""
+                                />
+                                <span
+                                  class="mx-1 text-xl"
+                                >
+                                  /
+                                </span>
+                                <input
+                                  class="border-1 w-11 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="parents.parent2.dateNaissance.annee"
+                                  maxlength="4"
+                                  placeholder="AAAA"
+                                  value=""
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="flex items-end space-x-4"
+                          >
+                            <label
+                              class="flex w-fit text-start cursor-pointer"
+                            >
+                              <input
+                                class="cursor-pointer accent-bleu-sombre"
+                                name="parents.parent2.renseignerAge"
+                                type="checkbox"
+                                value="false"
+                              />
+                              <span
+                                class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                              >
+                                Saisir l'âge
+                              </span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="pb-4 pt-8"
+                      >
+                        <div
+                          class="relative my-2.5 border-0 border-b-2 border-solid border-bleu text-start"
+                        >
+                          <label
+                            class="absolute -bottom-2.5 left-8 bg-blanc px-1.5 text-bleu-sombre"
+                          >
+                            Lieu de naissance
+                          </label>
+                        </div>
+                      </div>
+                      <div>
+                        <fieldset
+                          class="m-0 flex w-full flex-col border-0 p-0 text-start"
+                        >
+                          <legend
+                            class="m-0 mb-1 block w-fit text-start text-base transition-colors text-bleu-sombre"
+                          />
+                          <div
+                            class="mt-1.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start"
+                          >
+                            <div>
+                              <input
+                                class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="parents.parent2.lieuNaissance.typeLieu-France"
+                                name="parents.parent2.lieuNaissance.typeLieu"
+                                type="radio"
+                                value="France"
+                              />
+                              <label
+                                class="cursor-pointer pl-2"
+                                for="parents.parent2.lieuNaissance.typeLieu-France"
+                              >
+                                France
+                              </label>
+                            </div>
+                            <div>
+                              <input
+                                class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="parents.parent2.lieuNaissance.typeLieu-Étranger"
+                                name="parents.parent2.lieuNaissance.typeLieu"
+                                type="radio"
+                                value="Étranger"
+                              />
+                              <label
+                                class="cursor-pointer pl-2"
+                                for="parents.parent2.lieuNaissance.typeLieu-Étranger"
+                              >
+                                Étranger
+                              </label>
+                            </div>
+                            <div>
+                              <input
+                                checked=""
+                                class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="parents.parent2.lieuNaissance.typeLieu-Inconnu"
+                                name="parents.parent2.lieuNaissance.typeLieu"
+                                type="radio"
+                                value="Inconnu"
+                              />
+                              <label
+                                class="cursor-pointer pl-2"
+                                for="parents.parent2.lieuNaissance.typeLieu-Inconnu"
+                              >
+                                Inconnu
+                              </label>
+                            </div>
+                          </div>
+                        </fieldset>
+                      </div>
+                      <div
+                        class="pb-4 pt-8"
+                      >
+                        <div
+                          class="relative my-2.5 border-0 border-b-2 border-solid border-bleu text-start"
+                        >
+                          <label
+                            class="absolute -bottom-2.5 left-8 bg-blanc px-1.5 text-bleu-sombre"
+                            for="parents.parent2.profession"
+                          >
+                            Profession
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        class="grid grid-cols-2 items-center gap-4"
+                      >
+                        <div
+                          class="flex w-full flex-col text-start"
+                        >
+                          <label
+                            aria-label="aria-label-parents.parent2.profession"
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="parents.parent2.profession"
+                          />
+                          <div
+                            class="relative flex rounded-md shadow-sm"
+                          >
+                            <input
+                              class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              data-testid="parents.parent2-profession"
+                              id="parents.parent2.profession"
+                              maxlength="100"
+                              name="parents.parent2.profession"
+                              value=""
+                            />
+                          </div>
+                        </div>
+                        <label
+                          class="flex w-fit text-start cursor-pointer"
+                        >
+                          <input
+                            class="cursor-pointer accent-bleu-sombre"
+                            name="parents.parent2.sansProfession"
+                            type="checkbox"
+                            value="false"
+                          />
+                          <span
+                            class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                          >
+                            Sans profession
+                          </span>
+                        </label>
+                      </div>
+                      <div
+                        class="pb-4 pt-8"
+                      >
+                        <div
+                          class="relative my-2.5 border-0 border-b-2 border-solid border-bleu text-start"
+                        >
+                          <label
+                            class="absolute -bottom-2.5 left-8 bg-blanc px-1.5 text-bleu-sombre"
+                          >
+                            Domicile
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        class="grid gap-4"
+                      >
+                        <label
+                          class="flex w-fit text-start cursor-pointer"
+                        >
+                          <input
+                            class="cursor-pointer accent-bleu-sombre"
+                            name="parents.domicileCommun"
+                            type="checkbox"
+                            value=""
+                          />
+                          <span
+                            class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                          >
+                            Domicile commun avec parent 1
+                          </span>
+                        </label>
+                        <div>
+                          <fieldset
+                            class="m-0 flex w-full flex-col border-0 p-0 text-start"
+                          >
+                            <legend
+                              class="m-0 mb-1 block w-fit text-start text-base transition-colors text-bleu-sombre"
+                            />
+                            <div
+                              class="mt-1.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start"
+                            >
+                              <div>
+                                <input
+                                  class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="parents.parent2.domicile.typeLieu-France"
+                                  name="parents.parent2.domicile.typeLieu"
+                                  type="radio"
+                                  value="France"
+                                />
+                                <label
+                                  class="cursor-pointer pl-2"
+                                  for="parents.parent2.domicile.typeLieu-France"
+                                >
+                                  France
+                                </label>
+                              </div>
+                              <div>
+                                <input
+                                  class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="parents.parent2.domicile.typeLieu-Étranger"
+                                  name="parents.parent2.domicile.typeLieu"
+                                  type="radio"
+                                  value="Étranger"
+                                />
+                                <label
+                                  class="cursor-pointer pl-2"
+                                  for="parents.parent2.domicile.typeLieu-Étranger"
+                                >
+                                  Étranger
+                                </label>
+                              </div>
+                              <div>
+                                <input
+                                  checked=""
+                                  class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="parents.parent2.domicile.typeLieu-Inconnu"
+                                  name="parents.parent2.domicile.typeLieu"
+                                  type="radio"
+                                  value="Inconnu"
+                                />
+                                <label
+                                  class="cursor-pointer pl-2"
+                                  for="parents.parent2.domicile.typeLieu-Inconnu"
+                                >
+                                  Inconnu
+                                </label>
+                              </div>
+                            </div>
+                          </fieldset>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
+          >
+            <button
+              class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+              type="button"
+            >
+              <span
+                class="truncate"
+              >
+                Déclarant
+              </span>
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-i4bv87-MuiSvgIcon-root"
+                data-testid="ExpandMoreIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                />
+              </svg>
+            </button>
+            <div
+              class="grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+            >
+              <div
+                class="min-h-0"
+              >
+                <div
+                  class="grid gap-y-4 p-4 "
+                >
+                  <div
+                    class="py-6"
+                  >
+                    <div
+                      class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                    >
+                      <div
+                        class="grid grid-cols-2 gap-4"
+                      >
+                        <div
+                          class="col-span-2 grid grid-cols-2 gap-x-4"
+                        >
+                          <div
+                            class="text-start"
+                          >
+                            <label
+                              class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                              for="declarant.identite"
+                            >
+                              Identité
+                            </label>
+                            <select
+                              class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                              id="declarant.identite"
+                              name="declarant.identite"
+                            >
+                              <option
+                                value="PERE"
+                              >
+                                Le père
+                              </option>
+                              <option
+                                value="MERE"
+                              >
+                                La mère
+                              </option>
+                              <option
+                                value="PERE_ET_MERE"
+                              >
+                                Le père et la mère
+                              </option>
+                              <option
+                                value="TIERS"
+                              >
+                                Un tiers
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
+          >
+            <button
+              class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+              type="button"
+            >
+              <span
+                class="truncate"
+              >
+                Autres énonciations intéressant l'état civil
+              </span>
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-i4bv87-MuiSvgIcon-root"
+                data-testid="ExpandMoreIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                />
+              </svg>
+            </button>
+            <div
+              class="grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+            >
+              <div
+                class="min-h-0"
+              >
+                <div
+                  class="grid gap-y-4 p-4 "
+                >
+                  <div
+                    class="py-6"
+                  >
+                    <div
+                      class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                    >
+                      <div
+                        class="grid"
+                      >
+                        <label
+                          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                          for="autresEnonciations.enonciations"
+                        >
+                          Texte énonciations
+                        </label>
+                        <textarea
+                          class="font-noto-sans-ui text-base resize-y"
+                          id="autresEnonciations.enonciations"
+                          maxlength="2000"
+                          name="autresEnonciations.enonciations"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
+          >
+            <button
+              class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+              type="button"
+            >
+              <span
+                class="truncate"
+              >
+                Acte étranger
+              </span>
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-i4bv87-MuiSvgIcon-root"
+                data-testid="ExpandMoreIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                />
+              </svg>
+            </button>
+            <div
+              class="grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+            >
+              <div
+                class="min-h-0"
+              >
+                <div
+                  class="grid gap-y-4 p-4 "
+                >
+                  <div
+                    class="py-6"
+                  >
+                    <div
+                      class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                    >
+                      <div
+                        class="mb-4 grid grid-cols-2 gap-4"
+                      >
+                        <div
+                          class="text-start"
+                        >
+                          <label
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="acteEtranger.typeActe"
+                          >
+                            Type d'acte étranger
+                          </label>
+                          <select
+                            class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                            id="acteEtranger.typeActe"
+                            name="acteEtranger.typeActe"
+                          >
+                            <option
+                              value="ACTE_DRESSE"
+                            >
+                              Acte dressé
+                            </option>
+                            <option
+                              value="ACTE_TRANSCRIT"
+                            >
+                              Acte transcrit
+                            </option>
+                            <option
+                              value="ACTE_ENREGISTRE"
+                            >
+                              Acte enregistré
+                            </option>
+                            <option
+                              value="JUGEMENT_DECLARATIF"
+                            >
+                              Jugement déclaratif
+                            </option>
+                            <option
+                              value="JUGEMENT_SUPPLETIF"
+                            >
+                              Jugement supplétif
+                            </option>
+                            <option
+                              value="AUTRE"
+                            >
+                              Autre
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div>
+                        <label
+                          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                          for="acteEtranger.dateEnregistrement.jour"
+                        >
+                          Date d'enregistrement
+                        </label>
+                        <div
+                          class="flex flex-nowrap gap-1"
+                        >
+                          <input
+                            class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                            id="acteEtranger.dateEnregistrement.jour"
+                            maxlength="2"
+                            placeholder="JJ"
+                            value=""
+                          />
+                          <span
+                            class="mx-1 text-xl"
+                          >
+                            /
+                          </span>
+                          <input
+                            class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                            id="acteEtranger.dateEnregistrement.mois"
+                            maxlength="2"
+                            placeholder="MM"
+                            value=""
+                          />
+                          <span
+                            class="mx-1 text-xl"
+                          >
+                            /
+                          </span>
+                          <input
+                            class="border-1 w-11 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                            id="acteEtranger.dateEnregistrement.annee"
+                            maxlength="4"
+                            placeholder="AAAA"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="pb-4 pt-8"
+                      >
+                        <div
+                          class="relative my-2.5 border-0 border-b-2 border-solid border-bleu text-start"
+                        >
+                          <label
+                            class="absolute -bottom-2.5 left-8 bg-blanc px-1.5 text-bleu-sombre"
+                          >
+                            Lieu d'enregistrement
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        class="mb-4 grid grid-cols-3 gap-4"
+                      >
+                        <div
+                          class="flex w-full flex-col text-start"
+                        >
+                          <label
+                            aria-label="aria-label-acteEtranger.lieuEnregistrement.ville"
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="acteEtranger.lieuEnregistrement.ville"
+                          >
+                            Ville
+                          </label>
+                          <div
+                            class="relative flex rounded-md shadow-sm"
+                          >
+                            <input
+                              class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              id="acteEtranger.lieuEnregistrement.ville"
+                              maxlength="100"
+                              name="acteEtranger.lieuEnregistrement.ville"
+                              value=""
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="flex w-full flex-col text-start"
+                        >
+                          <label
+                            aria-label="aria-label-acteEtranger.lieuEnregistrement.etatProvince"
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="acteEtranger.lieuEnregistrement.etatProvince"
+                          >
+                            État, canton, province
+                          </label>
+                          <div
+                            class="relative flex rounded-md shadow-sm"
+                          >
+                            <input
+                              class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              id="acteEtranger.lieuEnregistrement.etatProvince"
+                              maxlength="100"
+                              name="acteEtranger.lieuEnregistrement.etatProvince"
+                              value=""
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="flex w-full flex-col text-start"
+                        >
+                          <label
+                            aria-label="aria-label-acteEtranger.lieuEnregistrement.pays"
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="acteEtranger.lieuEnregistrement.pays"
+                          >
+                            Pays
+                          </label>
+                          <div
+                            class="relative flex rounded-md shadow-sm"
+                          >
+                            <input
+                              class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              id="acteEtranger.lieuEnregistrement.pays"
+                              maxlength="100"
+                              name="acteEtranger.lieuEnregistrement.pays"
+                              value=""
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="flex w-full flex-col text-start mb-4"
+                      >
+                        <label
+                          aria-label="aria-label-acteEtranger.redacteur"
+                          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                          for="acteEtranger.redacteur"
+                        >
+                          Rédacteur
+                        </label>
+                        <div
+                          class="relative flex rounded-md shadow-sm"
+                        >
+                          <input
+                            class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                            id="acteEtranger.redacteur"
+                            maxlength="300"
+                            name="acteEtranger.redacteur"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="grid"
+                      >
+                        <label
+                          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                          for="acteEtranger.referenceComplement"
+                        >
+                          Référence et/ou complément
+                        </label>
+                        <textarea
+                          class="font-noto-sans-ui text-base resize-y"
+                          id="acteEtranger.referenceComplement"
+                          maxlength="2000"
+                          name="acteEtranger.referenceComplement"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
+          >
+            <button
+              class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+              type="button"
+            >
+              <span
+                class="truncate"
+              >
+                Mentions figurant dans l'acte étranger
+              </span>
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-i4bv87-MuiSvgIcon-root"
+                data-testid="ExpandMoreIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                />
+              </svg>
+            </button>
+            <div
+              class="grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+            >
+              <div
+                class="min-h-0"
+              >
+                <div
+                  class="grid gap-y-4 p-4 "
+                >
+                  <div
+                    class="py-6"
+                  >
+                    <div
+                      class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                    >
+                      <div
+                        class="grid"
+                      >
+                        <label
+                          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                          for="mentions.mentions"
+                        >
+                          Mention(s)
+                        </label>
+                        <textarea
+                          class="font-noto-sans-ui text-base resize-y"
+                          id="mentions.mentions"
+                          maxlength="3000"
+                          name="mentions.mentions"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
+          >
+            <button
+              class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+              type="button"
+            >
+              <span
+                class="truncate"
+              >
+                Formule finale
+              </span>
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-i4bv87-MuiSvgIcon-root"
+                data-testid="ExpandMoreIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                />
+              </svg>
+            </button>
+            <div
+              class="grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+            >
+              <div
+                class="min-h-0"
+              >
+                <div
+                  class="grid gap-y-4 p-4 "
+                >
+                  <div
+                    class="py-6"
+                  >
+                    <div
+                      class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                    >
+                      <div
+                        class="grid grid-cols-2 gap-4"
+                      >
+                        <div
+                          class="text-start"
+                        >
+                          <label
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="formuleFinale.identiteDemandeur"
+                          >
+                            Identité du demandeur
+                          </label>
+                          <select
+                            class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                            id="formuleFinale.identiteDemandeur"
+                            name="formuleFinale.identiteDemandeur"
+                          >
+                            <option
+                              value="PERE"
+                            >
+                              Le père
+                            </option>
+                            <option
+                              value="MERE"
+                            >
+                              La mère
+                            </option>
+                            <option
+                              value="PERE_ET_MERE"
+                            >
+                              Le père et la mère
+                            </option>
+                            <option
+                              value="TIERS"
+                            >
+                              Un tiers
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div
+                        class="pb-4 pt-8"
+                      >
+                        <div
+                          class="relative my-2.5 border-0 border-b-2 border-solid border-bleu text-start"
+                        >
+                          <label
+                            class="absolute -bottom-2.5 left-8 bg-blanc px-1.5 text-bleu-sombre"
+                          >
+                            Pièces
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        class="grid grid-cols-2 gap-4"
+                      >
+                        <div
+                          class="text-start"
+                        >
+                          <label
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="formuleFinale.pieceProduite"
+                          >
+                            Pièces produites
+                          </label>
+                          <select
+                            class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                            id="formuleFinale.pieceProduite"
+                            name="formuleFinale.pieceProduite"
+                          >
+                            <option
+                              value="COPIE"
+                            >
+                              Copie
+                            </option>
+                            <option
+                              value="COPIE_ET_TRADUCTION"
+                            >
+                              Copie et traduction
+                            </option>
+                            <option
+                              value="COPIES"
+                            >
+                              Copies
+                            </option>
+                            <option
+                              value="COPIES_ET_TRADUCTION"
+                            >
+                              Copies et traduction
+                            </option>
+                          </select>
+                        </div>
+                        <div
+                          class="text-start"
+                        >
+                          <label
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="formuleFinale.legalisationApostille"
+                          >
+                            Légalisation / Apostille
+                          </label>
+                          <select
+                            class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                            id="formuleFinale.legalisationApostille"
+                            name="formuleFinale.legalisationApostille"
+                          >
+                            <option
+                              value=""
+                            />
+                            <option
+                              value="LEGALISATION"
+                            >
+                              Légalisation
+                            </option>
+                            <option
+                              value="APOSTILLE"
+                            >
+                              Apostille
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div
+                        class="pb-4 pt-8"
+                      >
+                        <div
+                          class="relative my-2.5 border-0 border-b-2 border-solid border-bleu text-start"
+                        />
+                      </div>
+                      <div
+                        class="grid grid-cols-2 gap-4"
+                      >
+                        <div
+                          class=""
+                        >
+                          <fieldset
+                            class="m-0 flex w-full flex-col border-0 p-0 text-start"
+                          >
+                            <legend
+                              class="m-0 mb-1 block w-fit text-start text-base transition-colors text-bleu-sombre"
+                            >
+                              Mode de dépôt de la demande
+                            </legend>
+                            <div
+                              class="mt-1.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start"
+                            >
+                              <div>
+                                <input
+                                  checked=""
+                                  class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="formuleFinale.modeDepot-TRANSMISE"
+                                  name="formuleFinale.modeDepot"
+                                  type="radio"
+                                  value="TRANSMISE"
+                                />
+                                <label
+                                  class="cursor-pointer pl-2"
+                                  for="formuleFinale.modeDepot-TRANSMISE"
+                                >
+                                  Transmise
+                                </label>
+                              </div>
+                              <div>
+                                <input
+                                  class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="formuleFinale.modeDepot-REMISE"
+                                  name="formuleFinale.modeDepot"
+                                  type="radio"
+                                  value="REMISE"
+                                />
+                                <label
+                                  class="cursor-pointer pl-2"
+                                  for="formuleFinale.modeDepot-REMISE"
+                                >
+                                  Remise
+                                </label>
+                              </div>
+                            </div>
+                          </fieldset>
+                        </div>
+                        <div
+                          class=""
+                        >
+                          <div
+                            class="text-start"
+                          >
+                            <label
+                              class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                              for="formuleFinale.identiteTransmetteur"
+                            >
+                              Identité du transmetteur
+                            </label>
+                            <select
+                              class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                              disabled=""
+                              id="formuleFinale.identiteTransmetteur"
+                              name="formuleFinale.identiteTransmetteur"
+                            >
+                              <option
+                                value="IDENTIQUE_DEMANDEUR"
+                              >
+                                Identique au demandeur
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="undefined fixed bottom-0 right-0 pr-16 flex gap-4 py-4 undefined"
+          >
+            <button
+              class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
+              title="Enregistrer et visualiser"
+              type="submit"
+            >
+              Enregistrer et visualiser
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div
+      class="gap-2 pt-4 hidden h-[calc(100vh-16.5rem)] overflow-auto rounded-lg"
+    >
+      <div
+        class="GestionMentions"
+      >
+        <h2>
+          GestionMention
+        </h2>
+      </div>
+    </div>
+    <div
+      class="gap-2 pt-4 hidden h-[calc(100vh-16.5rem)] overflow-hidden rounded-lg"
+    >
+      <div
+        class="Echanges"
+      >
+        <h2>
+          Echange
+        </h2>
+      </div>
+    </div>
   </div>
 </div>
 `;

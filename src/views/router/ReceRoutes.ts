@@ -10,7 +10,6 @@ import { ApercuRequeteEtablissementActeRegistrePage } from "@pages/requeteCreati
 import { ApercuRequeteEtablissementSuiviDossierPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/ApercuRequeteEtablissementSuiviDossierPage";
 import { ApercuRequeteEtablissementSaisieDeProjetPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/ApercuRequeteEtablissementSaisieDeProjetPage";
 import { ApercuRequeteEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSimple/ApercuRequeteEtablissementSimplePage";
-import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
 import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
 import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
 import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
@@ -25,6 +24,7 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { IRoute } from "@util/route/IRoute";
 import PageMesRequetesConsulaires from "../../pages/requetesConsulaire/PageMesRequetesConsulaires";
+import PageRequeteCreationTranscriptionPriseEnCharge from "../../pages/requetesConsulaire/PageRequeteCreationTranscriptionPriseEnCharge";
 import { PageRequeteTranscriptionSaisieProjet } from "../../pages/requetesConsulaire/PageRequeteTranscriptionSaisieProjet";
 import PageRequetesServiceConsulaire from "../../pages/requetesConsulaire/PageRequetesServiceConsulaire";
 import PageSaisieCourrierTranscription from "../../pages/requetesConsulaire/PageSaisieCourrierTranscription";
@@ -361,7 +361,7 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_PRISE_CHARGE_ID,
-    component: ApercuReqCreationTranscriptionPriseEnChargePage,
+    component: PageRequeteCreationTranscriptionPriseEnCharge,
     auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: LIBELLE_APERCU_PRISE_EN_CHARGE
   },
@@ -472,7 +472,7 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-    component: ApercuReqCreationTranscriptionPriseEnChargePage,
+    component: PageRequeteCreationTranscriptionPriseEnCharge,
     auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: LIBELLE_APERCU_PRISE_EN_CHARGE
   },
@@ -551,7 +551,7 @@ export const routesRece: IRoute[] = [
   },
   {
     url: URL_REQUETES_CREATION_SERVICE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-    component: ApercuReqCreationTranscriptionPriseEnChargePage,
+    component: PageRequeteCreationTranscriptionPriseEnCharge,
     auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT],
     libelle: LIBELLE_APERCU_PRISE_EN_CHARGE
   },

@@ -89,11 +89,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit changer d'onglet e
                           class="relative inline-block"
                         >
                           <div
-                            class="line-clamp-3 flex items-center "
+                            class="line-clamp-3 "
                           >
-                            <span>
-                              Création suite Transcription Courrier
-                            </span>
+                            Création suite Transcription Courrier
                           </div>
                         </div>
                       </div>
@@ -109,14 +107,12 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit changer d'onglet e
                           class="relative inline-block"
                         >
                           <div
-                            class="line-clamp-3 flex items-center rounded-r-full border border-solid border-bleu-sombre bg-blue-50 px-2 py-1 font-semibold text-bleu-sombre"
+                            class="line-clamp-3 flex rounded-r-full border border-solid border-bleu-sombre bg-blue-50 px-2 py-1 text-bleu-sombre"
                           >
-                            <span>
-                              En traitement
-                            </span>
+                            En traitement
                             <svg
                               aria-hidden="true"
-                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium ml-1 inline-block h-5 w-5 css-i4bv87-MuiSvgIcon-root"
+                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium ml-1 h-5 w-5 css-i4bv87-MuiSvgIcon-root"
                               data-testid="UpdateIcon"
                               focusable="false"
                               viewBox="0 0 24 24"
@@ -140,11 +136,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit changer d'onglet e
                           class="relative inline-block"
                         >
                           <div
-                            class="line-clamp-3 flex items-center "
+                            class="line-clamp-3 "
                           >
-                            <span>
-                              Courrier
-                            </span>
+                            Courrier
                           </div>
                         </div>
                       </div>
@@ -160,11 +154,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit changer d'onglet e
                           class="relative inline-block"
                         >
                           <div
-                            class="line-clamp-3 flex items-center "
+                            class="line-clamp-3 "
                           >
-                            <span>
-                              31/03/2025
-                            </span>
+                            31/03/2025
                           </div>
                         </div>
                       </div>
@@ -180,11 +172,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit changer d'onglet e
                           class="relative inline-block"
                         >
                           <div
-                            class="line-clamp-3 flex items-center "
+                            class="line-clamp-3 "
                           >
-                            <span>
-                              QEILP1
-                            </span>
+                            QEILP1
                           </div>
                         </div>
                       </div>
@@ -215,11 +205,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit changer d'onglet e
                           class="relative inline-block"
                         >
                           <div
-                            class="line-clamp-3 flex items-center "
+                            class="line-clamp-3 "
                           >
-                            <span>
-                              Xi-phun bin
-                            </span>
+                            Xi-phun bin
                           </div>
                         </div>
                       </div>
@@ -235,11 +223,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit changer d'onglet e
                           class="relative inline-block"
                         >
                           <div
-                            class="line-clamp-3 flex items-center "
+                            class="line-clamp-3 "
                           >
-                            <span>
-                              liao, xiar, sehoo
-                            </span>
+                            liao, xiar, sehoo
                           </div>
                         </div>
                       </div>
@@ -255,11 +241,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit changer d'onglet e
                           class="relative inline-block"
                         >
                           <div
-                            class="line-clamp-3 flex items-center "
+                            class="line-clamp-3 "
                           >
-                            <span>
-                              Féminin
-                            </span>
+                            Féminin
                           </div>
                         </div>
                       </div>
@@ -275,11 +259,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit changer d'onglet e
                           class="relative inline-block"
                         >
                           <div
-                            class="line-clamp-3 flex items-center "
+                            class="line-clamp-3 "
                           >
-                            <span>
-                              03/12/2024
-                            </span>
+                            03/12/2024
                           </div>
                         </div>
                       </div>
@@ -295,11 +277,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit changer d'onglet e
                           class="relative inline-block"
                         >
                           <div
-                            class="line-clamp-3 flex items-center "
+                            class="line-clamp-3 "
                           >
-                            <span>
-                              Bejin, China (Chine)
-                            </span>
+                            Bejin, China (Chine)
                           </div>
                         </div>
                       </div>
@@ -331,11 +311,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit changer d'onglet e
                             class="relative inline-block"
                           >
                             <div
-                              class="line-clamp-3 flex items-center "
+                              class="line-clamp-3 "
                             >
-                              <span>
-                                Greenwald
-                              </span>
+                              Greenwald
                             </div>
                           </div>
                         </div>
@@ -351,11 +329,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit changer d'onglet e
                             class="relative inline-block"
                           >
                             <div
-                              class="line-clamp-3 flex items-center "
+                              class="line-clamp-3 "
                             >
-                              <span>
-                                cassandra
-                              </span>
+                              cassandra
                             </div>
                           </div>
                         </div>
@@ -371,11 +347,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit changer d'onglet e
                             class="relative inline-block"
                           >
                             <div
-                              class="line-clamp-3 flex items-center "
+                              class="line-clamp-3 "
                             >
-                              <span>
-                                Masculin
-                              </span>
+                              Masculin
                             </div>
                           </div>
                         </div>
@@ -391,11 +365,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit changer d'onglet e
                             class="relative inline-block"
                           >
                             <div
-                              class="line-clamp-3 flex items-center "
+                              class="line-clamp-3 "
                             >
-                              <span>
-                                10/10/2000
-                              </span>
+                              10/10/2000
                             </div>
                           </div>
                         </div>
@@ -427,11 +399,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit changer d'onglet e
                           class="relative inline-block"
                         >
                           <div
-                            class="line-clamp-3 flex items-center "
+                            class="line-clamp-3 "
                           >
-                            <span>
-                              Père/mère
-                            </span>
+                            Père/mère
                           </div>
                         </div>
                       </div>
@@ -445,7 +415,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit changer d'onglet e
       </div>
     </div>
     <div
-      class="mb-4 mt-4 w-full"
+      class="mb-4 mr-4 mt-4"
     >
       <div
         class="mt-2"
@@ -551,11 +521,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                           class="relative inline-block"
                         >
                           <div
-                            class="line-clamp-3 flex items-center "
+                            class="line-clamp-3 "
                           >
-                            <span>
-                              Création suite Transcription Courrier
-                            </span>
+                            Création suite Transcription Courrier
                           </div>
                         </div>
                       </div>
@@ -571,14 +539,12 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                           class="relative inline-block"
                         >
                           <div
-                            class="line-clamp-3 flex items-center rounded-r-full border border-solid border-bleu-sombre bg-blue-50 px-2 py-1 font-semibold text-bleu-sombre"
+                            class="line-clamp-3 flex rounded-r-full border border-solid border-bleu-sombre bg-blue-50 px-2 py-1 text-bleu-sombre"
                           >
-                            <span>
-                              En traitement
-                            </span>
+                            En traitement
                             <svg
                               aria-hidden="true"
-                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium ml-1 inline-block h-5 w-5 css-i4bv87-MuiSvgIcon-root"
+                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium ml-1 h-5 w-5 css-i4bv87-MuiSvgIcon-root"
                               data-testid="UpdateIcon"
                               focusable="false"
                               viewBox="0 0 24 24"
@@ -602,11 +568,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                           class="relative inline-block"
                         >
                           <div
-                            class="line-clamp-3 flex items-center "
+                            class="line-clamp-3 "
                           >
-                            <span>
-                              Courrier
-                            </span>
+                            Courrier
                           </div>
                         </div>
                       </div>
@@ -622,11 +586,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                           class="relative inline-block"
                         >
                           <div
-                            class="line-clamp-3 flex items-center "
+                            class="line-clamp-3 "
                           >
-                            <span>
-                              31/03/2025
-                            </span>
+                            31/03/2025
                           </div>
                         </div>
                       </div>
@@ -642,11 +604,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                           class="relative inline-block"
                         >
                           <div
-                            class="line-clamp-3 flex items-center "
+                            class="line-clamp-3 "
                           >
-                            <span>
-                              QEILP1
-                            </span>
+                            QEILP1
                           </div>
                         </div>
                       </div>
@@ -677,11 +637,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                           class="relative inline-block"
                         >
                           <div
-                            class="line-clamp-3 flex items-center "
+                            class="line-clamp-3 "
                           >
-                            <span>
-                              Xi-phun bin
-                            </span>
+                            Xi-phun bin
                           </div>
                         </div>
                       </div>
@@ -697,11 +655,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                           class="relative inline-block"
                         >
                           <div
-                            class="line-clamp-3 flex items-center "
+                            class="line-clamp-3 "
                           >
-                            <span>
-                              liao, xiar, sehoo
-                            </span>
+                            liao, xiar, sehoo
                           </div>
                         </div>
                       </div>
@@ -717,11 +673,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                           class="relative inline-block"
                         >
                           <div
-                            class="line-clamp-3 flex items-center "
+                            class="line-clamp-3 "
                           >
-                            <span>
-                              Féminin
-                            </span>
+                            Féminin
                           </div>
                         </div>
                       </div>
@@ -737,11 +691,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                           class="relative inline-block"
                         >
                           <div
-                            class="line-clamp-3 flex items-center "
+                            class="line-clamp-3 "
                           >
-                            <span>
-                              03/12/2024
-                            </span>
+                            03/12/2024
                           </div>
                         </div>
                       </div>
@@ -757,11 +709,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                           class="relative inline-block"
                         >
                           <div
-                            class="line-clamp-3 flex items-center "
+                            class="line-clamp-3 "
                           >
-                            <span>
-                              Bejin, China (Chine)
-                            </span>
+                            Bejin, China (Chine)
                           </div>
                         </div>
                       </div>
@@ -793,11 +743,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                             class="relative inline-block"
                           >
                             <div
-                              class="line-clamp-3 flex items-center "
+                              class="line-clamp-3 "
                             >
-                              <span>
-                                Greenwald
-                              </span>
+                              Greenwald
                             </div>
                           </div>
                         </div>
@@ -813,11 +761,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                             class="relative inline-block"
                           >
                             <div
-                              class="line-clamp-3 flex items-center "
+                              class="line-clamp-3 "
                             >
-                              <span>
-                                cassandra
-                              </span>
+                              cassandra
                             </div>
                           </div>
                         </div>
@@ -833,11 +779,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                             class="relative inline-block"
                           >
                             <div
-                              class="line-clamp-3 flex items-center "
+                              class="line-clamp-3 "
                             >
-                              <span>
-                                Masculin
-                              </span>
+                              Masculin
                             </div>
                           </div>
                         </div>
@@ -853,11 +797,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                             class="relative inline-block"
                           >
                             <div
-                              class="line-clamp-3 flex items-center "
+                              class="line-clamp-3 "
                             >
-                              <span>
-                                10/10/2000
-                              </span>
+                              10/10/2000
                             </div>
                           </div>
                         </div>
@@ -889,11 +831,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                           class="relative inline-block"
                         >
                           <div
-                            class="line-clamp-3 flex items-center "
+                            class="line-clamp-3 "
                           >
-                            <span>
-                              Père/mère
-                            </span>
+                            Père/mère
                           </div>
                         </div>
                       </div>
@@ -907,7 +847,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
       </div>
     </div>
     <div
-      class="mb-4 mt-4 w-full"
+      class="mb-4 mr-4 mt-4"
     >
       <div
         class="mt-2"

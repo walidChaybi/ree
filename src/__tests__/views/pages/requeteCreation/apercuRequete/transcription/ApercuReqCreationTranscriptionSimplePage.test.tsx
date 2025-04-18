@@ -1,4 +1,3 @@
-import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
 import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
 import {
   PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE,
@@ -10,6 +9,7 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
+import PageRequeteCreationTranscriptionPriseEnCharge from "../../../../../../pages/requetesConsulaire/PageRequeteCreationTranscriptionPriseEnCharge";
 import { createTestingRouter, elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
 import { userDroitCreerActeTranscritPerimetreTousRegistres } from "../../../../../mock/data/mockConnectedUserAvecDroit";
 
@@ -150,7 +150,7 @@ describe.skip("Test du rendu du composant RMCRequeteAssociees", () => {
             URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_PRISE_CHARGE_ID,
             "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
           ),
-          element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+          element: <PageRequeteCreationTranscriptionPriseEnCharge />
         }
       ],
       [

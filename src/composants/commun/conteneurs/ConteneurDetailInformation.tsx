@@ -16,9 +16,9 @@ export const ConteneurDetailInformation: React.FC<PropsConteneurDetailInformatio
       <div className="mb-1 text-left text-xs uppercase text-gray-500">{libelle}</div>
       <Infobulle contenu={valeur}>
         <div
-          className={`line-clamp-3 flex items-center ${afficherCommeStatut ? "rounded-r-full border border-solid border-bleu-sombre bg-blue-50 px-2 py-1 font-semibold text-bleu-sombre" : ""}`}
+          className={`line-clamp-3 ${afficherCommeStatut ? "flex rounded-r-full border border-solid border-bleu-sombre bg-blue-50 px-2 py-1 text-bleu-sombre" : ""}`}
         >
-          <span>{valeurAffichee || "—"}</span>
+          {valeurAffichee}
           {afficherCommeStatut && <IconeStatut statut={valeur} />}
         </div>
       </Infobulle>

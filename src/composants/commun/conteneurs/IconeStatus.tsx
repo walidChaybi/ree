@@ -1,4 +1,5 @@
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import CreateOutlined from "@mui/icons-material/CreateOutlined";
 import PendingActions from "@mui/icons-material/PendingActions";
 import Update from "@mui/icons-material/Update";
 import React, { useMemo } from "react";
@@ -11,9 +12,11 @@ const IconeStatut: React.FC<IIconeStatutProps> = ({ statut }) => {
   const icone = useMemo(() => {
     switch (statut) {
       case StatutRequete.EN_TRAITEMENT.libelle:
-        return <Update className="ml-1 inline-block h-5 w-5" />;
+        return <Update className="ml-1 h-5 w-5" />;
       case StatutRequete.A_SIGNER.libelle:
-        return <PendingActions className="ml-1 inline-block h-5 w-5" />;
+        return <CreateOutlined className="ml-1 h-5 w-5" />;
+      case StatutRequete.PRISE_EN_CHARGE.libelle:
+        return <PendingActions className="ml-1 h-5 w-5" />;
       default:
         return <></>;
     }

@@ -6,7 +6,6 @@ import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { ApercuRequeteEtablissementSuiviDossierPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/ApercuRequeteEtablissementSuiviDossierPage";
 import { ApercuRequeteEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSimple/ApercuRequeteEtablissementSimplePage";
-import { ApercuReqCreationTranscriptionPriseEnChargePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionPriseEnChargePage";
 import {
   URL_MES_REQUETES_CONSULAIRE,
   URL_MES_REQUETES_CREATION,
@@ -21,6 +20,7 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import React from "react";
 import { RouterProvider } from "react-router-dom";
 import { describe, expect, test } from "vitest";
+import PageRequeteCreationTranscriptionPriseEnCharge from "../../../../../pages/requetesConsulaire/PageRequeteCreationTranscriptionPriseEnCharge";
 import { PageRequeteTranscriptionSaisieProjet } from "../../../../../pages/requetesConsulaire/PageRequeteTranscriptionSaisieProjet";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 import MockRECEContextProvider from "../../../../mock/context/MockRECEContextProvider";
@@ -56,7 +56,7 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
       [
         {
           path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-          element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+          element: <PageRequeteCreationTranscriptionPriseEnCharge />
         },
         {
           path: URL_MES_REQUETES_CREATION,
@@ -72,7 +72,9 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
 
     render(routerAvecContexte(router));
 
-    expect(router.state.location.pathname).toBe(apercuRequeteURL("apercurequetetranscriptionenpriseencharge", paramsCreation.idRequete));
+    expect(router.state.location.pathname).toBe(
+      apercuRequeteURL("apercu-requete-transcription-en-prise-en-charge", paramsCreation.idRequete)
+    );
   });
 
   test("Doit rediriger sur l'aperçu de requête création transcription prise en charge quand le sousType est RCTC et que le statut est A_TRAITER", () => {
@@ -86,7 +88,7 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
       [
         {
           path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-          element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+          element: <PageRequeteCreationTranscriptionPriseEnCharge />
         },
         {
           path: URL_MES_REQUETES_CREATION,
@@ -98,7 +100,9 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
 
     render(routerAvecContexte(router));
 
-    expect(router.state.location.pathname).toBe(apercuRequeteURL("apercurequetetranscriptionenpriseencharge", paramsCreation.idRequete));
+    expect(router.state.location.pathname).toBe(
+      apercuRequeteURL("apercu-requete-transcription-en-prise-en-charge", paramsCreation.idRequete)
+    );
   });
 
   test("Doit rediriger sur l'aperçu de requête création transcription prise en charge quand le sousType est RCTD et que le statut est PRISE_EN_CHARGE", () => {
@@ -111,7 +115,7 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
       [
         {
           path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-          element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+          element: <PageRequeteCreationTranscriptionPriseEnCharge />
         },
         {
           path: URL_MES_REQUETES_CREATION,
@@ -123,7 +127,9 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
 
     render(routerAvecContexte(router));
 
-    expect(router.state.location.pathname).toBe(apercuRequeteURL("apercurequetetranscriptionenpriseencharge", paramsCreation.idRequete));
+    expect(router.state.location.pathname).toBe(
+      apercuRequeteURL("apercu-requete-transcription-en-prise-en-charge", paramsCreation.idRequete)
+    );
   });
 
   test("Doit rediriger sur l'aperçu de requête création transcription en traitement quand le sousType est RCTD et que le statut est EN_TRAITEMENT", () => {
@@ -136,7 +142,7 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
       [
         {
           path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-          element: <ApercuReqCreationTranscriptionPriseEnChargePage />
+          element: <PageRequeteCreationTranscriptionPriseEnCharge />
         },
         {
           path: URL_MES_REQUETES_CREATION,
