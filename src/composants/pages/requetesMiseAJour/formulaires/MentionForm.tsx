@@ -9,7 +9,7 @@ import { logError } from "@util/LogManager";
 import { Form, Formik } from "formik";
 import { useEffect, useMemo, useState } from "react";
 import * as Yup from "yup";
-import { EEvent, useEventDispatch, useEventState } from "../../../../hooks/EventHook";
+import { EEventState, useEventDispatch, useEventState } from "../../../../hooks/EventHook";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
 import SchemaValidation from "../../../../utils/SchemaValidation";
 import Bouton from "../../../commun/bouton/Bouton";
@@ -109,8 +109,8 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
   const [metamodeleTypeMention, setMetamodeleTypeMention] = useState<MetaModeleTypeMention | null>(null);
   const { appelApi: appelApiGetMetamodeleTypeMention, enAttenteDeReponseApi: enAttenteMetamodele } =
     useFetchApi(CONFIG_GET_METAMODELE_TYPE_MENTION);
-  const [mentionModifiee, setMentionModifiee] = useEventState<IMentionEnCours | null>(EEvent.MODIFIER_MENTION, null);
-  const { envoyer: enregistrerMention } = useEventDispatch<IMentionEnCours | null>(EEvent.ENREGISTRER_MENTION);
+  const [mentionModifiee, setMentionModifiee] = useEventState<IMentionEnCours | null>(EEventState.MODIFIER_MENTION, null);
+  const { envoyer: enregistrerMention } = useEventDispatch<IMentionEnCours | null>(EEventState.ENREGISTRER_MENTION);
   const schemaValidation = useMemo(() => {
     return SchemaValidation.objet({
       ...SCHEMA_VALIDATION_MENTIONS,

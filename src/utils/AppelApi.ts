@@ -39,7 +39,7 @@ const API = {
       method: appelParams.configurationRequete.methode.toLowerCase(),
       url: genererUri(appelParams),
       responseType: appelParams.configurationRequete.responseType,
-      data: appelParams.configurationRequete.body,
+      data: appelParams.configurationRequete.body ?? {},
       headers: {
         [CSRF_HEADER_NAME]: getCsrfCookieValue(),
         ...appelParams.configurationRequete.headers
@@ -47,8 +47,8 @@ const API = {
     })
       .then(response => {
         return Promise.resolve<TReponseApiSucces<TResultat>>({
-          data: response.data?.data || {},
-          avertissements: response.data?.errors || [],
+          data: response.data?.data ?? {},
+          avertissements: response.data?.errors ?? [],
           status: response.status,
           headers: response.headers as THeader
         });
@@ -56,7 +56,7 @@ const API = {
       .catch(({ response }) => {
         const erreur: TReponseApiEchec = {
           status: response.status,
-          erreurs: response.data?.errors || []
+          erreurs: response.data?.errors ?? []
         };
 
         if (process.env.NODE_ENV === "development" && erreur.status !== CODE_FORBIDDEN) {

@@ -1,172 +1,11 @@
-import { ObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { useFormikContext } from "formik";
-import React, { useEffect, useState } from "react";
-import Texte from "../../../../../utils/Texte";
+import React, { useEffect, useMemo, useState } from "react";
+import ModeleTexte from "../../../../../utils/ModeleTexte";
 import { TMentionForm } from "../MentionForm";
-
-interface IDate {
-  jour: string;
-  mois: string;
-  annee: string;
-}
-
-type TCondition = {
-  si: string;
-  alors: (string | TCondition)[];
-  sinon: (string | TCondition)[];
-};
-
-interface IConditionEncours {
-  index: number;
-  estSinon: boolean;
-}
-
-const MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
-
-const FormaterTexteHelper = {
-  formaterDate: ({ jour, mois, annee }: IDate, sansPrefixe: boolean): string => {
-    const moisFormate = mois ? MOIS[parseInt(mois, 10) - 1] : null;
-    const jourFormate = jour ? jour.replace(/^0/, "") : null;
-
-    switch (true) {
-      case !annee:
-        return "";
-      case Boolean(jourFormate && moisFormate):
-        return `${sansPrefixe ? "" : "le "}${jourFormate === "1" ? "1er" : jourFormate} ${moisFormate} ${annee}`;
-      case Boolean(moisFormate):
-        return `${sansPrefixe ? "" : "en "}${moisFormate} ${annee}`;
-      default:
-        return `${sansPrefixe ? "" : "en "}${annee}`;
-    }
-  }
-};
-
-const genererPourSaisie = (modeleTexte: string, valeurs: TMentionForm) => {
-  const texteParConditions = modeleTexte.match(/({{#if[^}]{0,200}}})|({{else}})|({{\/if}})|({{#valeur[^}]{0,200}}})|[^{}]{0,500}/g) ?? [];
-
-  const valeursEtConditions: (string | TCondition)[] = [];
-  const conditionsEnCours: IConditionEncours[] = [];
-
-  const insererValeur = (valeur: string): string => {
-    if (!valeur.startsWith("{{#valeur ")) {
-      return valeur;
-    }
-
-    const [cle, ...partiesValeurDefaut] = valeur.replace(/({{#valeur |}})/g, "").split(" ");
-    const [cleAttribut, variation] = cle.split("/");
-    const valeurRenseignee = ObjetFormulaire.recupererValeur({ valeurs: valeurs, cleAttribut: cleAttribut });
-    const valeurDefaut = `${partiesValeurDefaut.join(" ")}`.toUpperCase();
-
-    switch (true) {
-      case Array.isArray(valeurRenseignee):
-        return valeurDefaut;
-      case typeof valeurRenseignee === "object" && Object.keys(valeurRenseignee).includes("annee"):
-        return FormaterTexteHelper.formaterDate(valeurRenseignee as unknown as IDate, variation === "sansPrefixe") || valeurDefaut;
-      case valeurRenseignee && typeof valeurRenseignee !== "object":
-        return `${valeurRenseignee}`;
-      default:
-        return valeurDefaut;
-    }
-  };
-
-  const ajouterCondition = (
-    tableauPourAjout: (string | TCondition)[],
-    listeConditionsEnCours: IConditionEncours[],
-    condition: TCondition
-  ) => {
-    if (!listeConditionsEnCours.length) {
-      const indexCondition = tableauPourAjout.push(condition) - 1;
-      conditionsEnCours.push({ index: indexCondition, estSinon: false });
-
-      return;
-    }
-
-    const conditionSuivante = listeConditionsEnCours.shift() as IConditionEncours;
-    ajouterCondition(
-      (tableauPourAjout[conditionSuivante.index] as TCondition)?.[conditionSuivante.estSinon ? "sinon" : "alors"],
-      listeConditionsEnCours,
-      condition
-    );
-  };
-
-  const ajouterValeurACondition = (
-    tableauPourAjout: (string | TCondition)[],
-    listeConditionsEnCours: IConditionEncours[],
-    valeur: string
-  ) => {
-    if (!listeConditionsEnCours.length) {
-      tableauPourAjout.push(valeur);
-
-      return;
-    }
-
-    const conditionSuivante = listeConditionsEnCours.shift() as IConditionEncours;
-    ajouterValeurACondition(
-      (tableauPourAjout[conditionSuivante.index] as TCondition)?.[conditionSuivante.estSinon ? "sinon" : "alors"],
-      listeConditionsEnCours,
-      valeur
-    );
-  };
-
-  texteParConditions.forEach(valeur => {
-    switch (true) {
-      case valeur.startsWith("{{#if "):
-        ajouterCondition(valeursEtConditions, [...conditionsEnCours], {
-          si: valeur.replace(/{{#if|}}/g, "").trim(),
-          alors: [],
-          sinon: []
-        });
-        break;
-      case valeur === "{{else}}":
-        conditionsEnCours[conditionsEnCours.length - 1].estSinon = true;
-        break;
-      case valeur === "{{/if}}":
-        conditionsEnCours.pop();
-        break;
-      case Boolean(conditionsEnCours.length):
-        ajouterValeurACondition(valeursEtConditions, [...conditionsEnCours], insererValeur(valeur));
-        break;
-      default:
-        valeursEtConditions.push(insererValeur(valeur));
-        break;
-    }
-  });
-
-  const gererConditon = (condition: TCondition): string[] => {
-    const conditionValide = condition.si
-      .split("&")
-      .filter(partieCondition => Boolean(partieCondition.trim()))
-      .every(partieCondition => {
-        const [cle, ...valeurAttendue] = partieCondition.trim().split(" ");
-        const negation = cle.startsWith("!");
-        const valeurSaisie = Texte.normalise(ObjetFormulaire.recupererValeurTexte({ valeurs: valeurs, cleAttribut: cle.replace("!", "") }));
-        const comparaison = valeurAttendue.length ? valeurSaisie === Texte.normalise(valeurAttendue.join(" ")) : Boolean(valeurSaisie);
-
-        return negation ? !comparaison : comparaison;
-      });
-
-    return (conditionValide ? condition.alors : condition.sinon).reduce(
-      (valeursCondition: string[], valeur: string | TCondition) => [
-        ...valeursCondition,
-        ...(typeof valeur === "string" ? [valeur] : gererConditon(valeur))
-      ],
-      []
-    );
-  };
-
-  return valeursEtConditions
-    .reduce(
-      (partiesTexte: string[], valeurOuCondition: string | TCondition) => [
-        ...partiesTexte,
-        ...(typeof valeurOuCondition === "string" ? [valeurOuCondition] : gererConditon(valeurOuCondition))
-      ],
-      []
-    )
-    .join("");
-};
 
 export const TexteMentionAideALaSaisie: React.FC<{ templateTexteMention: string }> = ({ templateTexteMention }) => {
   const { values, setFieldValue } = useFormikContext<TMentionForm>();
+  const modeleTexte = useMemo(() => ModeleTexte.creer(templateTexteMention), [templateTexteMention]);
   const [texteSaisie, setTexteSaisie] = useState("");
 
   const decouperTexteEditable = (texte: string) =>
@@ -201,8 +40,8 @@ export const TexteMentionAideALaSaisie: React.FC<{ templateTexteMention: string 
       });
 
   useEffect(() => {
-    setTexteSaisie(genererPourSaisie(templateTexteMention, values));
-  }, [values]);
+    setTexteSaisie(modeleTexte.generer(values));
+  }, [values, modeleTexte]);
 
   useEffect(() => {
     setFieldValue(

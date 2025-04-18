@@ -5,7 +5,7 @@ import { useFormikContext } from "formik";
 import { useContext, useEffect, useState } from "react";
 import { List, arrayMove } from "react-movable";
 import { EditionMiseAJourContext } from "../../../../../contexts/EditionMiseAJourContextProvider";
-import { EEvent, useEventDispatch, useEventState } from "../../../../../hooks/EventHook";
+import { EEventState, useEventDispatch, useEventState } from "../../../../../hooks/EventHook";
 import Bouton from "../../../../commun/bouton/Bouton";
 import BoutonIcon from "../../../../commun/bouton/BoutonIcon";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
@@ -20,9 +20,9 @@ const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAna
   const { setFieldValue, values } = useFormikContext<IMiseAJourForm>();
   const [indexASupprimer, setIndexASupprimer] = useState<number | null>(null);
   const [afficherModaleAnalyseMarginale, setAfficherModaleAnalyseMarginale] = useState<boolean>(false);
-  const { envoyer: modifierMention } = useEventDispatch<IMentionEnCours | null>(EEvent.MODIFIER_MENTION);
+  const { envoyer: modifierMention } = useEventDispatch<IMentionEnCours | null>(EEventState.MODIFIER_MENTION);
   const [modificationEnCours, setModificationEnCours] = useState<boolean>(false);
-  const [mentionEnCours, setMentionEnCours] = useEventState<IMentionEnCours | null>(EEvent.ENREGISTRER_MENTION, null);
+  const [mentionEnCours, setMentionEnCours] = useEventState<IMentionEnCours | null>(EEventState.ENREGISTRER_MENTION, null);
   const { miseAJourEffectuee } = useContext(EditionMiseAJourContext.Valeurs);
 
   useEffect(() => {

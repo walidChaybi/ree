@@ -5,13 +5,13 @@ import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTr
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import Edit from "@mui/icons-material/Edit";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
-import { ApercuProjet } from "@pages/requeteCreation/commun/composants/ApercuProjet";
 import { URL_MES_REQUETES_CONSULAIRE_MODIFIER_RCTC_ID } from "@router/ReceUrls";
 import { useContext, useMemo, useState } from "react";
 import Bouton from "../../../commun/bouton/Bouton";
 import OngletsBouton from "../../../commun/onglets/OngletsBouton";
 import ConteneurVoletEdition from "../../requetesDelivrance/editionRequete/ConteneurVoletEdition";
 import ResumeDetailsRequete from "../commun/ResumeDetailsRequete";
+import ApercuProjetActe from "./apercuProjet/ApercuProjetActe";
 
 enum ECleOngletPartieGauche {
   DESCRIPTION = "description",
@@ -66,9 +66,9 @@ const PartieGaucheSaisieProjet: React.FC<IPartieGaucheSaisieProjetProps> = ({ re
 
       <ConteneurVoletEdition
         estActif={ongletActif === ECleOngletPartieGauche.APERCU_PROJET}
-        estScrollable
+        sansMargeHaute
       >
-        <ApercuProjet />
+        <ApercuProjetActe requete={requete} />
       </ConteneurVoletEdition>
 
       {afficherBoutonModifierRequete && (

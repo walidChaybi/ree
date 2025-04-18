@@ -2,7 +2,7 @@
 import TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT from "@api/traitements/projetActe/transcription/TraitementProjetActeTranscrit";
 import { IProjetActeTranscritDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/IProjetActeTranscritDto";
 import { Form, Formik } from "formik";
-import React from "react";
+import React, { useMemo } from "react";
 import useTraitementApi from "../../../../../hooks/api/TraitementApiHook";
 
 import {
@@ -24,8 +24,16 @@ import BlocFormuleFinale from "./BlocFormuleFinale";
 import BlocMentions from "./BlocMentions";
 import BlocParent from "./BlocParent";
 import BlocTitulaire from "./BlocTitulaire";
+import ValeursVersApercuProjet from "./ValeursVersApercuProjet";
 
 const FormulaireSaisieProjet: React.FC<IProjetActeTranscritProps> = ({ requete }) => {
+  const donneesFormulaire = useMemo(
+    () => ({
+      valeursInitiales: ProjetTranscriptionForm.valeursInitiales(requete),
+      schemaValidation: ProjetTranscriptionForm.schemaValidation()
+    }),
+    [requete]
+  );
   const { lancerTraitement: lancerEnregistrement, traitementEnCours: enregistrementEnCours } = useTraitementApi(
     TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT
   );
@@ -45,14 +53,16 @@ const FormulaireSaisieProjet: React.FC<IProjetActeTranscritProps> = ({ requete }
 
   return (
     <Formik<IProjetActeTranscritForm>
-      validationSchema={ProjetTranscriptionForm.schemaValidation()}
-      initialValues={ProjetTranscriptionForm.valeursInitiales(requete)}
+      validationSchema={donneesFormulaire.schemaValidation}
+      initialValues={donneesFormulaire.valeursInitiales}
       onSubmit={values => {
         enregistrerEtVisualiser(values);
       }}
     >
       <Form>
         <>
+          <ValeursVersApercuProjet />
+
           <ConteneurAccordeon
             titre="Titulaire"
             ouvertParDefaut
@@ -119,5 +129,4 @@ const FormulaireSaisieProjet: React.FC<IProjetActeTranscritProps> = ({ requete }
   );
 };
 export default FormulaireSaisieProjet;
-
 /* v8 ignore end */

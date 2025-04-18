@@ -1,10 +1,16 @@
 // A tester Alex 5/02/25
+
+import { IDateForm } from "./DateForm";
+import { TPrenomsForm } from "./PrenomsForm";
+
 /* v8 ignore start */
 export type TObjetFormulaire = { [cle: string]: TValeurFormulaire };
 
-export type TValeurFormulaire = string | boolean | number | TValeurFormulaire[] | TObjetFormulaire | undefined;
+export type TValeurFormulaire = string | boolean | number | TValeurFormulaire[] | TObjetFormulaire | IDateForm | TPrenomsForm | undefined;
 
 export const ObjetFormulaire = {
+  depuisValeurs: (valeurs: object): TObjetFormulaire => valeurs as TObjetFormulaire,
+
   recupererValeur: ({ valeurs, cleAttribut }: { valeurs: TObjetFormulaire; cleAttribut: string }) =>
     cleAttribut
       .split(".")
@@ -61,6 +67,14 @@ export const ObjetFormulaire = {
     };
 
     return objetModifie(valeurs, valeursInitiales);
+  },
+
+  estDate: (valeur: TValeurFormulaire): valeur is IDateForm => {
+    return typeof valeur === "object" && "annee" in valeur;
+  },
+
+  estPrenoms: (valeur: TValeurFormulaire): valeur is TPrenomsForm => {
+    return typeof valeur === "object" && "prenom1" in valeur;
   }
 } as const;
 /* v8 ignore end */

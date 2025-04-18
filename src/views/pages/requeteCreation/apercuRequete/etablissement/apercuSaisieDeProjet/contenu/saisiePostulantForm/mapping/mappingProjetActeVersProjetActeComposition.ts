@@ -2,12 +2,9 @@ import { IProjetActeComposition } from "@model/composition/acte/IProjetActeCompo
 import { IMentionComposition } from "@model/composition/IMentionComposition";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 
-export function mappingProjetActeVersProjetActeComposition(
-  acteEnregistre: IProjetActe
-): IProjetActeComposition {
+export function mappingProjetActeVersProjetActeComposition(acteEnregistre: IProjetActe): IProjetActeComposition {
   const projetActeComposition = {} as IProjetActeComposition;
-  const { nature, titulaires, mentions, corpsTexte, analyseMarginales } =
-    acteEnregistre;
+  const { nature, titulaires, mentions, corpsTexte, analyseMarginales } = acteEnregistre;
   const titulaire = titulaires[0];
   const analyseMarginal = analyseMarginales?.[0].titulaires[0];
   let mentionsComposition = [] as IMentionComposition[];

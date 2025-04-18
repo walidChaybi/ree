@@ -13,10 +13,14 @@ import { TypeLienRequerantCreation } from "@model/requete/enum/TypeLienRequerant
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, test } from "vitest";
+import { afterAll, beforeAll, describe, expect, test, vi } from "vitest";
 import PartieGaucheSaisieProjet from "../../../../../composants/pages/requetesConsulaire/saisieProjet/PartieGaucheSaisieProjet";
+import { EEventState } from "../../../../../hooks/EventHook";
+import ModeleTexte, { EModeleTexteDocument } from "../../../../../utils/ModeleTexte";
 
 describe("PartieGaucheSaisieProjet - Tests du composant", () => {
+  global.ResizeObserver = vi.fn().mockImplementation(() => ({ disconnect: () => {}, observe: () => {}, unobserve: () => {} }));
+
   const requete: IRequeteCreationTranscription = {
     id: "5ff091d6-261d-4902-a8cf-2bfe12627768",
     numeroFonctionnel: "QEILP1",
@@ -120,6 +124,14 @@ describe("PartieGaucheSaisieProjet - Tests du composant", () => {
     }
   };
 
+  beforeAll(() => {
+    ModeleTexte.enregistrerModeleTexteDocument(EModeleTexteDocument.PROJET_NAISSANCE_MINEUR, "Test modele");
+  });
+
+  afterAll(() => {
+    ModeleTexte.reinitialiserModelesTexte();
+  });
+
   test("Doit rendre composant PartieGaucheSaisieProjet", () => {
     const { container } = render(
       <MockRECEContextProvider>
@@ -129,6 +141,8 @@ describe("PartieGaucheSaisieProjet - Tests du composant", () => {
         />
       </MockRECEContextProvider>
     );
+
+    fireEvent(document, new CustomEvent(EEventState.APERCU_PROJET_ACTE, { detail: { valeurTest: "" } }));
 
     expect(container.firstChild).toMatchSnapshot();
   });
@@ -143,6 +157,7 @@ describe("PartieGaucheSaisieProjet - Tests du composant", () => {
       </MockRECEContextProvider>
     );
 
+    fireEvent(document, new CustomEvent(EEventState.APERCU_PROJET_ACTE, { detail: { valeurTest: "" } }));
     fireEvent.click(screen.getByText("Aperçu du projet"));
 
     expect(container.firstChild).toMatchSnapshot();

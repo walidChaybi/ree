@@ -23,7 +23,7 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
         </button>
       </div>
       <div
-        class="gap-2 pt-4 grid h-[calc(100vh-16.5rem)] overflow-auto rounded-lg"
+        class="gap-2 rounded-lg grid overflow-auto pt-4 h-[calc(100vh-16.5rem)]"
       >
         <div
           class="pr-4"

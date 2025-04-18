@@ -41,7 +41,6 @@ export const Body: React.FC = () => {
 };
 
 function getMessageLogin(erreurLogin: any) {
-  console.log(erreurLogin);
   if (erreurLogin?.status === HTTP_UNAUTHORIZED || erreurLogin?.status === HTTP_FORBIDDEN) {
     return "Vous n'avez pas les droits pour utiliser RECE, veuillez contacter le service BIMO.";
   } else if (erreurLogin?.response?.body?.errors[ZERO]) {

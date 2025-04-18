@@ -24,7 +24,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit changer d'onglet e
     </button>
   </div>
   <div
-    class="gap-2 pt-4 hidden h-[calc(100vh-16.5rem)] overflow-auto rounded-lg"
+    class="gap-2 rounded-lg hidden overflow-auto pt-4 h-[calc(100vh-16.5rem)]"
   >
     <div
       class="pr-4"
@@ -423,11 +423,46 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit changer d'onglet e
     </div>
   </div>
   <div
-    class="gap-2 pt-4 grid h-[calc(100vh-16.5rem)] overflow-auto rounded-lg"
+    class="gap-2 rounded-lg grid overflow-hidden h-[calc(100vh-15.5rem)]"
   >
     <div
-      class="ApercuProjet"
-    />
+      class="h-full"
+    >
+      <div
+        class="relative h-full w-full overflow-y-auto overflow-x-hidden bg-gris-clair"
+      >
+        <div
+          class="absolute w-[calc(100%-80px)] pb-24 transition-all duration-100"
+          style="top: 40px; left: 40px;"
+        >
+          <div
+            class="mx-auto flex w-full max-w-[750px] bg-blanc font-liberation shadow-lg"
+          >
+            <div
+              class="flex aspect-[21/29.7] w-full"
+            >
+              <div
+                class="flex w-full flex-col justify-between gap-4 text-start"
+              >
+                <div>
+                  <div
+                    class="text-center"
+                  >
+                    PROJET D'ACTE DE NAISSANCE
+                  </div>
+                  <div>
+                    Test modele
+                  </div>
+                </div>
+                <div>
+                  &lt;REFERENCE.ACTE.TRANSCRIT&gt; - 31/03/2025
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;
@@ -456,7 +491,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
     </button>
   </div>
   <div
-    class="gap-2 pt-4 grid h-[calc(100vh-16.5rem)] overflow-auto rounded-lg"
+    class="gap-2 rounded-lg grid overflow-auto pt-4 h-[calc(100vh-16.5rem)]"
   >
     <div
       class="pr-4"
@@ -855,11 +890,46 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
     </div>
   </div>
   <div
-    class="gap-2 pt-4 hidden h-[calc(100vh-16.5rem)] overflow-auto rounded-lg"
+    class="gap-2 rounded-lg hidden overflow-hidden h-[calc(100vh-15.5rem)]"
   >
     <div
-      class="ApercuProjet"
-    />
+      class="h-full"
+    >
+      <div
+        class="relative h-full w-full overflow-y-auto overflow-x-hidden bg-gris-clair"
+      >
+        <div
+          class="absolute w-[calc(100%-80px)] pb-24 transition-all duration-100"
+          style="top: 40px; left: 40px;"
+        >
+          <div
+            class="mx-auto flex w-full max-w-[750px] bg-blanc font-liberation shadow-lg"
+          >
+            <div
+              class="flex aspect-[21/29.7] w-full"
+            >
+              <div
+                class="flex w-full flex-col justify-between gap-4 text-start"
+              >
+                <div>
+                  <div
+                    class="text-center"
+                  >
+                    PROJET D'ACTE DE NAISSANCE
+                  </div>
+                  <div>
+                    Test modele
+                  </div>
+                </div>
+                <div>
+                  &lt;REFERENCE.ACTE.TRANSCRIT&gt; - 31/03/2025
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;
