@@ -1,6 +1,6 @@
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
-import { DocumentReponse, IDocumentReponse, documentDejaCreer } from "@model/requete/IDocumentReponse";
+import { DocumentReponse, IDocumentReponse, documentDejaCree } from "@model/requete/IDocumentReponse";
 import { OptionsCourrier } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance, RequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
@@ -107,7 +107,7 @@ function genereEC(setGenerationECParams: any, document: IDocumentReponse, params
     requete: params.requete,
     validation: params.problemePlurilingue === undefined ? document.validation : getValidation(document, params.problemePlurilingue),
     mentionsRetirees: document.mentionsRetirees ? document.mentionsRetirees?.map(el => el.idMention) : [],
-    pasDAction: documentDejaCreer(params.requete.documentsReponses, params.requete.choixDelivrance),
+    pasDAction: documentDejaCree(params.requete.documentsReponses, params.requete.choixDelivrance),
     choixDelivrance: DocumentDelivrance.getChoixDelivranceFromUUID(document.typeDocument)
   });
 }

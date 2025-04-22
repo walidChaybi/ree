@@ -7,11 +7,11 @@ export const CaracteresAutorisesAvecVirgule = new RegExp(/^[0-9a-zA-ZÂÄÀÊË�
 export const CaracteresAutorisesRecherche = new RegExp(/^[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .*-]+$/);
 
 export const AsterisqueRecherche = new RegExp(
-  /^([0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .-]{1}|[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .-]{2,}\*?)$/
+  /^([0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .-]|[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .-]{2,}\*?)$/
 );
 
-export const NumeroInscription = new RegExp(/^\d{4}-\d+$/);
+export const NumeroInscription = new RegExp(/^\d{4}(-\d+)?$/);
 
 export const CaracteresAlphanumeriques = new RegExp(/^[0-9a-zA-Z]+$/);
 
-export const NumeroTelephone = new RegExp(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/);
+export const NumeroTelephone = new RegExp(/^[+]*[(]?\d{1,4}[)]?[-\s./0-9]*$/);

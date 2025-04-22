@@ -231,10 +231,6 @@ export function estPresentIdActeEtChoixDelivrance(params?: IGenerationECParams |
   return tousRenseignes(params?.idActe, params?.requete?.choixDelivrance);
 }
 
-export function estPresentActeEtChoixDelivrance(params?: IGenerationECParams): boolean {
-  return tousRenseignes(params?.acte, params?.choixDelivrance);
-}
-
 export function estDocumentAvecCTV(typeDocument: string | null, sousTypeDelivrance?: SousTypeDelivrance) {
   return DocumentDelivrance.estExtraitCopieAsigner(typeDocument) && SousTypeDelivrance.estSousTypeSignable(sousTypeDelivrance);
 }

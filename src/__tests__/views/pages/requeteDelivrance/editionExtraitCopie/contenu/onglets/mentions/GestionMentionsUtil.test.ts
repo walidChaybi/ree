@@ -1,11 +1,6 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { IMention } from "@model/etatcivil/acte/mention/IMention";
-import {
-  IMentionAffichage,
-  mappingVersMentionAffichage,
-  mappingVersMentionsApi,
-  modificationEffectue
-} from "@model/etatcivil/acte/mention/IMentionAffichage";
+import { IMentionAffichage } from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { INatureMention, NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
@@ -70,10 +65,6 @@ describe("Test GestionMentionUtil", () => {
 
   test("texteNonModifieNatureChangePasDeTexteDelivrance", () => {
     expect(texteNonModifieNatureChangePasDeTexteDelivrance(mentionNonOpposable, mentionOpposable, mentionApi)).toBeTruthy();
-  });
-
-  test("modificationEffectue", () => {
-    expect(modificationEffectue([mentionNonOpposable], [mentionApi], documentReponseExtraitAvecFiliation)).toBeTruthy();
   });
 
   test("miseAjourEnFonctionNature", () => {
@@ -141,40 +132,6 @@ describe("Test GestionMentionUtil", () => {
     handleReorga([mentionNonOpposable, mentionOpposable], setMentions, 0, 1);
 
     expect(mentionsTest!).toStrictEqual([mentionOpposable, mentionNonOpposable]);
-  });
-
-  test("mappingVersMentionAffichage", () => {
-    expect(mappingVersMentionAffichage([mentionApi], documentReponseExtraitAvecFiliation)).toStrictEqual([
-      {
-        nature: { opposableAuTiers: false },
-        texte: "texte mention",
-        estPresent: true,
-        id: "1",
-        numeroOrdre: 1,
-        estSupprimable: false,
-        estModifiable: false
-      }
-    ]);
-  });
-
-  test("mappingVersMentionApi", () => {
-    expect(mappingVersMentionsApi([mentionApi], [mentionOpposable], "28580709-06dd-4df2-bf6e-70a9482940a1")).toStrictEqual({
-      mentionsAEnvoyer: [
-        {
-          id: "1",
-          textes: {
-            texteMentionDelivrance: "texte mention",
-            texteMentionPlurilingue: undefined
-          },
-          typeMention: {
-            idNatureMention: "",
-            idTypeMention: "126ad458-fd77-4c8c-bd88-db0b818f7d91"
-          },
-          numeroOrdreExtrait: 1
-        }
-      ],
-      mentionsRetirees: []
-    });
   });
 
   test("aucuneMentionsNationalite", () => {

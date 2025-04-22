@@ -1,31 +1,14 @@
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import {
-  IMentionAffichage,
-  mappingVersMentionsApi,
-  modificationEffectue
-} from "@model/etatcivil/acte/mention/IMentionAffichage";
+import { IMentionAffichage, mappingVersMentionsApi, modificationEffectuee } from "@model/etatcivil/acte/mention/IMentionAffichage";
+import { IDocumentReponse, documentDejaCree } from "@model/requete/IDocumentReponse";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
-import {
-  documentDejaCreer,
-  IDocumentReponse
-} from "@model/requete/IDocumentReponse";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { getValeurOuVide, tousRenseignes } from "@util/Utils";
 import { useEffect, useState } from "react";
-import {
-  IGenerationECParams,
-  useGenerationEC
-} from "../../generation/generationECHook/generationECHook";
+import { IGenerationECParams, useGenerationEC } from "../../generation/generationECHook/generationECHook";
 import { IMentionsResultat } from "./MentionsApiHook";
-import {
-  IMiseAJourDocumentMentionParams,
-  useMiseAJourDocumentMentionApiHook
-} from "./MiseAJourDocumentMentionApiHook";
-import {
-  IMiseAJourMentionsParams,
-  useMiseAJourMentionsApiHook
-} from "./MiseAJourMentionsApiHook";
+import { IMiseAJourDocumentMentionParams, useMiseAJourDocumentMentionApiHook } from "./MiseAJourDocumentMentionApiHook";
+import { IMiseAJourMentionsParams, useMiseAJourMentionsApiHook } from "./MiseAJourMentionsApiHook";
 
 export interface SauvegarderMentionsParam {
   mentionsApi: IMentionsResultat;
@@ -41,88 +24,53 @@ export interface IResultatSauvegarderMentions {
 }
 
 export function useSauvegarderMentions(params?: SauvegarderMentionsParam) {
-  const [mentionsAEnvoyerParams, setMentionsAEnvoyerParams] =
-    useState<IMiseAJourMentionsParams>();
-  const [documentMajParams, setDocumentMajParams] =
-    useState<IMiseAJourDocumentMentionParams>();
+  const [mentionsAEnvoyerParams, setMentionsAEnvoyerParams] = useState<IMiseAJourMentionsParams>();
+  const [documentMajParams, setDocumentMajParams] = useState<IMiseAJourDocumentMentionParams>();
   const [resultat, setResultat] = useState<IResultatSauvegarderMentions>();
   const [generationEC, setGenerationEC] = useState<IGenerationECParams>();
-  const [mentionsRetireesSaved, setMentionsRetireesSaved] =
-    useState<string[]>();
+  const [mentionsRetireesSaved, setMentionsRetireesSaved] = useState<string[]>();
 
   // Maj mentions dans etatcivil-api
-  const resultatMiseAjourMentions = useMiseAJourMentionsApiHook(
-    mentionsAEnvoyerParams
-  );
+  const resultatMiseAjourMentions = useMiseAJourMentionsApiHook(mentionsAEnvoyerParams);
 
   // Maj des mentions retirées dans requete-api
-  const resultatMajDocReponseAvecMentionRetirees =
-    useMiseAJourDocumentMentionApiHook(documentMajParams);
+  const resultatMajDocReponseAvecMentionRetirees = useMiseAJourDocumentMentionApiHook(documentMajParams);
 
   // Génération du document réponse dans requete-api
   const resultatGenerationEC = useGenerationEC(generationEC);
 
   // 1 - Sauvegarder les mentions dans etatcivil-api
   useEffect(() => {
-    if (params) {
-      sauvegarderEnFonctionTypeDocument(
-        params,
-        setMentionsAEnvoyerParams,
-        setDocumentMajParams,
-        setMentionsRetireesSaved,
-        setGenerationEC
-      );
-    }
+    if (!params) return;
+
+    sauvegarderEnFonctionTypeDocument(params, setMentionsAEnvoyerParams, setDocumentMajParams, setMentionsRetireesSaved, setGenerationEC);
   }, [params]);
 
   // 2 - Générer le document et changer le statut de la requête si des mentions ont été modifiées
   useEffect(() => {
-    if (
-      resultatMiseAjourMentions &&
-      params &&
-      params.document.validation &&
-      params.requete.choixDelivrance &&
-      mentionsRetireesSaved
-    ) {
+    if (resultatMiseAjourMentions && params?.document.validation && params.requete.choixDelivrance && mentionsRetireesSaved) {
       setGenerationEC({
         idActe: params.acte.id,
         requete: params.requete,
-        pasDAction: documentDejaCreer(
-          params.requete.documentsReponses,
-          params.requete.choixDelivrance
-        ),
+        pasDAction: documentDejaCree(params.requete.documentsReponses, params.requete.choixDelivrance),
         mentionsRetirees: mentionsRetireesSaved,
-        choixDelivrance: DocumentDelivrance.getChoixDelivranceFromUUID(
-          params.document.typeDocument
-        )
+        choixDelivrance: DocumentDelivrance.getChoixDelivranceFromUUID(params.document.typeDocument)
       });
     }
   }, [resultatMiseAjourMentions, params, mentionsRetireesSaved]);
 
   // Maj du résultat retourné par le hook
   useEffect(() => {
-    if (
-      tousRenseignes(
-        params,
-        mentionsRetireesSaved,
-        resultatMajDocReponseAvecMentionRetirees || resultatGenerationEC
-      )
-    ) {
-      // @ts-ignore params non null
-      let idDoc = params.document.id;
-      if (resultatGenerationEC?.resultGenerationUnDocument?.idDocumentReponse) {
-        idDoc =
-          resultatGenerationEC.resultGenerationUnDocument?.idDocumentReponse;
-      }
+    if (!params || !mentionsRetireesSaved || !(resultatMajDocReponseAvecMentionRetirees || resultatGenerationEC)) return;
 
-      setResultat({
-        idDoc,
-        // @ts-ignore mentionsRetirees non null
-        mentionsRetirees: mentionsRetireesSaved
-      });
-    }
+    const idDoc = resultatGenerationEC?.resultGenerationUnDocument?.idDocumentReponse
+      ? resultatGenerationEC.resultGenerationUnDocument?.idDocumentReponse
+      : params.document.id;
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setResultat({
+      idDoc,
+      mentionsRetirees: mentionsRetireesSaved
+    });
   }, [resultatMajDocReponseAvecMentionRetirees, resultatGenerationEC]);
 
   return resultat;
@@ -142,19 +90,10 @@ function sauvegarderEnFonctionTypeDocument(
       params.document.typeDocument
     );
     setMentionsRetireesSaved(mentionsRetirees);
-    if (
-      modificationEffectue(
-        params.mentions,
-        params.mentionsApi.mentions,
-        params.document,
-        params.acte.nature
-      )
-    ) {
-      if (
-        !DocumentDelivrance.estCopieIntegrale(params.document?.typeDocument)
-      ) {
+    if (modificationEffectuee(params.mentions, params.mentionsApi.mentions, params.document, params.acte.nature)) {
+      if (!DocumentDelivrance.estCopieIntegrale(params.document?.typeDocument)) {
         setMentionsAEnvoyerParams({
-          idActe: getValeurOuVide(params.acte.id),
+          idActe: params.acte.id,
           mentions: mentionsAEnvoyer
         });
       } else {
@@ -162,14 +101,9 @@ function sauvegarderEnFonctionTypeDocument(
           idActe: params.acte.id,
           requete: params.requete,
           validation: Validation.O,
-          pasDAction: documentDejaCreer(
-            params.requete.documentsReponses,
-            params.requete.choixDelivrance
-          ),
+          pasDAction: documentDejaCree(params.requete.documentsReponses, params.requete.choixDelivrance),
           mentionsRetirees,
-          choixDelivrance: DocumentDelivrance.getChoixDelivranceFromUUID(
-            params.document.typeDocument
-          )
+          choixDelivrance: DocumentDelivrance.getChoixDelivranceFromUUID(params.document.typeDocument)
         });
       }
     } else {

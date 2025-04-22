@@ -16,15 +16,7 @@ import {
   useStockerDocumentCreerActionMajStatutRequete
 } from "../../requete/StockerDocumentCreerActionMajStatutRequete";
 import { IResultGenerationUnDocument } from "../generationUtils";
-import {
-  creationEC,
-  creationECSansCTV,
-  estDocumentAvecCTV,
-  estPresentActeEtChoixDelivrance,
-  estPresentIdActeEtChoixDelivrance,
-  getNomDocument,
-  toutesLesDonneesSontPresentes
-} from "./generationECHookUtil";
+import { creationEC, creationECSansCTV, estDocumentAvecCTV, getNomDocument, toutesLesDonneesSontPresentes } from "./generationECHookUtil";
 import { useRecupererCTV } from "./televerification/recupererCtvApiHook";
 import { IStockeCTVParams, useStockeCTV } from "./televerification/stockeCtvApiHook";
 
@@ -58,24 +50,23 @@ export function useGenerationEC(params?: IGenerationECParams): IGenerationECResu
   const [stockeCtvApiHookParam, setStockeCtvApiHookParam] = useState<IStockeCTVParams>();
 
   useEffect(() => {
-    if (estPresentIdActeEtChoixDelivrance(params)) {
+    if (!params?.choixDelivrance) return;
+
+    if (params.idActe) {
       setActeApiHookParams({
-        idActe: params?.idActe,
-        recupereImagesEtTexte: ChoixDelivrance.estCopieIntegraleOuArchive(
-          //@ts-ignore params.requete.choixDelivrance non null
-          params.choixDelivrance
-        )
+        idActe: params.idActe,
+        recupereImagesEtTexte: ChoixDelivrance.estCopieIntegraleOuArchive(params.choixDelivrance)
       });
-    } else if (estPresentActeEtChoixDelivrance(params)) {
-      setActeDejaPresent(params?.acte);
+    } else if (params.acte) {
+      setActeDejaPresent(params.acte);
       setTriggerEtapeUnTer(!triggerEtapeUnTer);
     }
-  }, [params]);
+  }, [params?.choixDelivrance, params?.idActe, params?.acte, params?.requete]);
 
   // 1- Récupération de l'acte complet pour la génération du document + images corpsImage
   const acteApiHookResultat = useInformationsActeApiHook(acteApiHookParams);
 
-  // 1bis - Récuperer code CTV
+  // 1bis - Récupérer code CTV
   const recupererCtvResultat = useRecupererCTV(recupererCtvApiHookParam);
 
   // 1ter

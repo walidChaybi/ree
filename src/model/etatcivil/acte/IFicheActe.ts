@@ -404,8 +404,9 @@ const extraireMentionNationalite = (texte?: string): string => {
       mentionNationalite = `${matches?.[UN]} ${partieMilieu} ${entreParenthese}`;
     })
     .catch(error => {
+      console.error("Le temps alloué à la recherche d'expression régulière a expiré.");
       logError({
-        messageUtilisateur: "Le temps alloué à la recherche d'expression régulière a expiré.",
+        messageUtilisateur: "Erreur lors de l'extraction de la mention de nationalité.",
         error
       });
     });

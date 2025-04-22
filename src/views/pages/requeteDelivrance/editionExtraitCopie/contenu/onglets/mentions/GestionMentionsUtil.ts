@@ -1,6 +1,6 @@
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IMention, Mention } from "@model/etatcivil/acte/mention/IMention";
-import { IMentionAffichage, modificationEffectue } from "@model/etatcivil/acte/mention/IMentionAffichage";
+import { IMentionAffichage, modificationEffectuee } from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import {
@@ -174,9 +174,9 @@ export function boutonReinitialiserEstDisabled(
   natureActe?: NatureActe
 ) {
   if (DocumentDelivrance.estCopieIntegrale(document?.typeDocument)) {
-    return !estdeverrouille || (estdeverrouille && !modificationEffectue(mentions, mentionsApi, document, natureActe));
+    return !estdeverrouille || (estdeverrouille && !modificationEffectuee(mentions, mentionsApi, document, natureActe));
   } else {
-    return !modificationEffectue(mentions, mentionsApi, document, natureActe);
+    return !modificationEffectuee(mentions, mentionsApi, document, natureActe);
   }
 }
 
@@ -199,7 +199,7 @@ export function validerMentions(
 
   const messageControleMention = controleMentions(mentions, acte, document);
 
-  if (estDocumentCopieIntegrale && modificationEffectue(mentions, mentionsApi, document, acte?.nature)) {
+  if (estDocumentCopieIntegrale && modificationEffectuee(mentions, mentionsApi, document, acte?.nature)) {
     if (
       window.confirm(
         `Vous avez choisi de décocher des mentions.

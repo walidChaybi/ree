@@ -4,7 +4,7 @@ import { IMentionsParams, useMentionsApiHook } from "@hook/acte/mentions/Mention
 import { SauvegarderMentionsParam, useSauvegarderMentions } from "@hook/acte/mentions/SauvegarderMentionsHook";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { Mention } from "@model/etatcivil/acte/mention/IMention";
-import { IMentionAffichage, mappingVersMentionAffichage, modificationEffectue } from "@model/etatcivil/acte/mention/IMentionAffichage";
+import { IMentionAffichage, mappingVersMentionAffichage, modificationEffectuee } from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { StatutMention } from "@model/etatcivil/enum/StatutMention";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -67,7 +67,7 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
 
   const setIsDirtySiModificationEffectuee = useCallback(
     (nouvellesMentions: IMentionAffichage[] | undefined) => {
-      setIsDirty(modificationEffectue(nouvellesMentions, mentionsApi?.mentions, props.document, props.acte?.nature));
+      setIsDirty(modificationEffectuee(nouvellesMentions, mentionsApi?.mentions, props.document, props.acte?.nature));
     },
     [mentionsApi, props.document, setIsDirty, props.acte]
   );

@@ -1,12 +1,9 @@
 import { Orientation } from "@model/composition/enum/Orientation";
-import { Validation } from "@model/requete/enum/Validation";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { Validation } from "@model/requete/enum/Validation";
 import { imagePngVideBase64 } from "./ImagePng";
 
-export const idDocumentsReponse = [
-  "bbac2335-562c-4b14-96aa-4386814c02a2",
-  "ccac2335-562c-4b14-96aa-4386814c02b3"
-];
+export const idDocumentsReponse = ["bbac2335-562c-4b14-96aa-4386814c02a2", "ccac2335-562c-4b14-96aa-4386814c02b3"];
 
 export const idDocumentsReponse2 = [
   "bbac2335-562c-4b14-96aa-4386814c02a2", // intentionnel: 3 uuid identiques
@@ -86,8 +83,7 @@ export const documentReponseExtraitAvecFiliation: IDocumentReponse = {
   avecCtv: false,
   nbPages: 1,
   orientation: Orientation.PORTRAIT,
-  referenceSwift:
-    "9bfa282d-1e66-4538-b242-b9de4f683f0f_9bfaca5e-a9f5-4e68-83fb-4b97d3e50285.pdf",
+  referenceSwift: "9bfa282d-1e66-4538-b242-b9de4f683f0f_9bfaca5e-a9f5-4e68-83fb-4b97d3e50285.pdf",
   conteneurSwift: "documents-delivres-2022-2",
   validation: Validation.N,
   idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235a",
@@ -95,7 +91,7 @@ export const documentReponseExtraitAvecFiliation: IDocumentReponse = {
   mentionsRetirees: []
 };
 
-export const documentReponseCopieNonSigne: IDocumentReponse = {
+export const documentReponseCopieNonSignee: IDocumentReponse = {
   id: idDocumentsReponse[1],
   nom: "COPIE_NON_SIGNEE",
   typeDocument: "8b808725-a83e-4ce5-81a2-192cd09e0cb2",

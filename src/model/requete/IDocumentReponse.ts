@@ -120,10 +120,6 @@ export const DocumentReponse = {
     return document.mentionsRetirees?.find(mentionRetiree => mentionRetiree.idMention === mention.id) != null;
   },
 
-  nEstPasMentionRetiree(document: IDocumentReponse, mention: IMention): boolean {
-    return !this.estMentionRetiree(document, mention);
-  },
-
   getIdsMentionsRetiree(document: IDocumentReponse): string[] {
     return document.mentionsRetirees ? document.mentionsRetirees.map(mentionRetiree => mentionRetiree.idMention) : [];
   }
@@ -133,7 +129,7 @@ function documentSansCtvExisteDejaAvecCtv(documentSansCtv: IDocumentReponse, doc
   return documentsAvecCtvs.find(documentAvecCtv => documentSansCtv.typeDocument === documentAvecCtv.typeDocument) !== undefined;
 }
 
-export function documentDejaCreer(documents: IDocumentReponse[], choixDelivrance?: ChoixDelivrance) {
+export function documentDejaCree(documents: IDocumentReponse[], choixDelivrance?: ChoixDelivrance) {
   return documents.some(
     el =>
       DocumentDelivrance.depuisCode(ChoixDelivrance.getCodeDocumentDelivranceFromChoixDelivrance(choixDelivrance)) ===
