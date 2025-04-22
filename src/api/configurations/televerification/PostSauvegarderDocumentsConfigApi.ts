@@ -1,13 +1,13 @@
 import { TELEVERIFICATION_API } from "@api/ApiDisponibles";
 import { TConfigurationApi } from "@model/api/Api";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 
 const URI = "/televerifications/generer";
 
 interface IBody {
   idRequete: string;
-  idDocumentReponse: string;
-  natureActe?: NatureActe;
+  idDocument: string;
+  idActe?: string;
+  natureActe?: string;
   anneeEvenement?: number;
   nomTitulaire1?: string;
   nomTitulaire2?: string;

@@ -37,23 +37,26 @@ describe("Test du composant Signature délivrance", () => {
   const APPEL_RECUPERER = "rece-requete-api/v2/documentsreponses/a-signer";
   const APPEL_ENREGISTRER_REQUETE = "rece-requete-api/v2/documentsreponses/signature-par-lot";
   const APPEL_ENREGISTRER_TELEVERIFICATION = "rece-televerification-api/v1/televerifications/generer";
+  const APPEL_DONNEES_TELEVERIFICATION = "rece-etatcivil-api/v1/acte/donnees-pour-televerification";
   const NUM_SANS_DOC = "numeroSansDoc";
   const NUM_AVEC_DOC = "numeroAvecDoc";
   const DOC_A_SIGNER: IDocumentASigner = {
     id: "idDocument",
     idRequete: "idRequete",
+    idActe: "idActe1",
     numeroFonctionnel: "numFonc",
     contenu: "contenu"
   };
   const DOC_A_SIGNER_BIS: IDocumentASigner = {
     id: "idDocument2",
     idRequete: "idRequete",
+    idActe: "idActe2",
     numeroFonctionnel: "numFonc",
     contenu: "contenu2"
   };
   const superagentMock = require("superagent-mock")(request, [
     {
-      pattern: `http://localhost/rece/(${APPEL_RECUPERER}|${APPEL_ENREGISTRER_REQUETE}|${APPEL_ENREGISTRER_TELEVERIFICATION})`,
+      pattern: `http://localhost/rece/(${APPEL_RECUPERER}|${APPEL_ENREGISTRER_REQUETE}|${APPEL_ENREGISTRER_TELEVERIFICATION}|${APPEL_DONNEES_TELEVERIFICATION})`,
       fixtures: function (match: any, data: any) {
         if (match[1] === APPEL_RECUPERER) {
           return data[0] === NUM_SANS_DOC ? { data: [] } : { data: [DOC_A_SIGNER, ...(data.length === 2 ? [DOC_A_SIGNER_BIS] : [])] };
@@ -63,6 +66,12 @@ describe("Test du composant Signature délivrance", () => {
         }
         if (match[1] === APPEL_ENREGISTRER_TELEVERIFICATION) {
           return true;
+        }
+        if (match[1] === APPEL_DONNEES_TELEVERIFICATION) {
+          return [
+            { idActe: "idActe1", nomTitulaire1: "nom", natureActe: "natureActe", anneeEvenement: 2020 },
+            { idActe: "idActe2", nomTitulaire1: "nom2", natureActe: "natureActe2", anneeEvenement: 2020 }
+          ];
         }
       },
       post: function (_: any, data: any) {
