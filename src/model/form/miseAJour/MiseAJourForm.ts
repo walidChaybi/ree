@@ -71,36 +71,37 @@ export default class MiseAJourForm {
     const estDate = (valeur: TValeurFormulaire): valeur is { jour: string; mois: string; annee: string } =>
       Object.keys(valeur ?? {}).includes("annee");
 
-    return Object.entries(champEvenement).reduce(
+    const evenement = Object.entries(champEvenement).reduce<IEvenementMention>(
       (evenement: IEvenementMention, [cleEvenement, valeurEvenement]) => {
-        if (valeurEvenement) {
-          switch (true) {
-            case valeurEvenement === "France":
-              evenement.pays = "France";
-              break;
+        if (!valeurEvenement) return evenement;
 
-            case !evenement.pays && cleEvenement.includes("pays"):
-              evenement.pays = (valeurEvenement as string) || null;
-              break;
+        if (valeurEvenement === "France") {
+          return { ...evenement, pays: "France" };
+        }
 
-            case !evenement.ville && cleEvenement.includes("ville"):
-              evenement.ville = (valeurEvenement as string) || null;
-              break;
+        if (!evenement.pays && cleEvenement.includes("pays")) {
+          return { ...evenement, pays: valeurEvenement as string };
+        }
 
-            case cleEvenement.includes("arrondissement"):
-              evenement.arrondissement = (valeurEvenement as string) || null;
-              break;
+        if (!evenement.ville && cleEvenement.includes("ville")) {
+          return { ...evenement, ville: valeurEvenement as string };
+        }
 
-            case cleEvenement.includes("departement"):
-              evenement.departement = (valeurEvenement as string) || null;
-              break;
+        if (cleEvenement.includes("arrondissement")) {
+          return { ...evenement, arrondissement: valeurEvenement as string };
+        }
 
-            case estDate(valeurEvenement):
-              evenement.jour = ((valeurEvenement as TObjetFormulaire)["jour" as keyof TObjetFormulaire] as string) || null;
-              evenement.mois = ((valeurEvenement as TObjetFormulaire)["mois" as keyof TObjetFormulaire] as string) || null;
-              evenement.annee = ((valeurEvenement as TObjetFormulaire)["annee" as keyof TObjetFormulaire] as string) || null;
-              break;
-          }
+        if (cleEvenement.includes("departement")) {
+          return { ...evenement, departement: valeurEvenement as string };
+        }
+
+        if (estDate(valeurEvenement)) {
+          return {
+            ...evenement,
+            jour: valeurEvenement.jour || null,
+            mois: valeurEvenement.mois || null,
+            annee: valeurEvenement.annee || null
+          };
         }
 
         return evenement;
@@ -115,5 +116,7 @@ export default class MiseAJourForm {
         pays: null
       }
     );
+
+    return evenement.annee ? evenement : undefined;
   }
 }

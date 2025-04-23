@@ -17,10 +17,11 @@ const AnalyseMarginaleForm: React.FC<IAnalyseMarginaleFormProps> = ({ analyseMar
   const { values, initialValues, setValues } = useFormikContext<IMiseAJourForm>();
 
   useEffect(() => {
+    const { motif } = initialValues.analyseMarginale;
     setAnalyseMarginaleModifiee(
       ObjetFormulaire.valeursModifiees({
-        valeurs: values.analyseMarginale,
-        valeursInitiales: initialValues.analyseMarginale
+        valeurs: motif ? values.analyseMarginale : { ...values.analyseMarginale, motif: "" },
+        valeursInitiales: motif ? initialValues.analyseMarginale : { ...initialValues.analyseMarginale, motif: "" }
       })
     );
   }, [values, initialValues]);
