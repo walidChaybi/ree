@@ -17,27 +17,29 @@ interface IApercuProjetActeProps {
 }
 
 const ApercuProjetActe: React.FC<IApercuProjetActeProps> = ({ requete }) => {
-  const titreActe = useMemo(() => {
-    const natureActe = (() => {
-      switch (requete.natureActeTranscrit) {
-        case ENatureActeTranscrit.NAISSANCE_MINEUR:
-        case ENatureActeTranscrit.NAISSANCE_MAJEUR:
-          return "NAISSANCE";
-        case ENatureActeTranscrit.MARIAGE_AVEC_CCAM:
-        case ENatureActeTranscrit.MARIAGE_SANS_CCAM:
-          return "MARIAGE";
-        case ENatureActeTranscrit.DECES:
-          return "DÉCÈS";
-        default:
-          return "<NATURE ACTE>";
-      }
-    })();
-
-    return `PROJET D'ACTE DE ${natureActe}`;
-  }, [requete.natureActeTranscrit]);
   const { appelApi: appelGetModeleTexte, enAttenteDeReponseApi: enAttenteModeleTexte } = useFetchApi(CONFIG_GET_MODELE_TEXTE);
   const [valeurs] = useEventState<IProjetActeTranscritForm | null>(EEventState.APERCU_PROJET_ACTE, null);
   const [modeleTexte, setModeleTexte] = useState<ModeleTexte | null>(null);
+
+  const titreActe = useMemo(() => {
+    const { prefixeTitre, natureActe } = (() => {
+      switch (requete.natureActeTranscrit) {
+        case ENatureActeTranscrit.NAISSANCE_MINEUR:
+        case ENatureActeTranscrit.NAISSANCE_MAJEUR:
+          return { prefixeTitre: "Projet d'acte de", natureActe: "naissance" };
+        case ENatureActeTranscrit.MARIAGE_AVEC_CCAM:
+        case ENatureActeTranscrit.MARIAGE_SANS_CCAM:
+          return { prefixeTitre: "Projet d'acte de", natureActe: "mariage" };
+        case ENatureActeTranscrit.DECES:
+          return { prefixeTitre: "Projet d'acte de", natureActe: "décès" };
+        default:
+          return { prefixeTitre: "Projet d'acte", natureActe: "<nature acte>" };
+      }
+    })();
+
+    return `${prefixeTitre} ${natureActe}`;
+  }, [requete.natureActeTranscrit]);
+
   const texteActe = useMemo(() => (valeurs && modeleTexte ? modeleTexte.generer(valeurs) : ""), [valeurs, modeleTexte]);
 
   useEffect(() => {
@@ -46,6 +48,11 @@ const ApercuProjetActe: React.FC<IApercuProjetActeProps> = ({ requete }) => {
         case ENatureActeTranscrit.NAISSANCE_MINEUR:
         case ENatureActeTranscrit.NAISSANCE_MAJEUR:
           return EModeleTexteDocument.PROJET_NAISSANCE_MINEUR;
+        case ENatureActeTranscrit.MARIAGE_AVEC_CCAM:
+        case ENatureActeTranscrit.MARIAGE_SANS_CCAM:
+          return EModeleTexteDocument.PROJET_MARIAGE;
+        case ENatureActeTranscrit.DECES:
+          return EModeleTexteDocument.PROJET_DECES;
         default:
           return null;
       }
@@ -86,7 +93,7 @@ const ApercuProjetActe: React.FC<IApercuProjetActeProps> = ({ requete }) => {
                 <div dangerouslySetInnerHTML={{ __html: texteActe }}></div>
               </div>
 
-              <div>{`${requete.numeroDossier ?? "<REFERENCE.ACTE.TRANSCRIT>"} - ${DateRECE.depuisTimestamp(requete.dateCreation).format()}`}</div>
+              <div>{`${requete.numeroDossier ?? "<REFERENCE.ACTE.TRANSCRIT>"} - ${DateRECE.depuisTimestamp(Date.now()).format()}`}</div>
             </div>
           </DocumentTexte>
         </ConteneurDocument>

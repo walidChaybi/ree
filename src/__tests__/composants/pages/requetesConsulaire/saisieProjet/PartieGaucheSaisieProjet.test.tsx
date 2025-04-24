@@ -126,6 +126,10 @@ describe("PartieGaucheSaisieProjet - Tests du composant", () => {
 
   beforeAll(() => {
     ModeleTexte.enregistrerModeleTexteDocument(EModeleTexteDocument.PROJET_NAISSANCE_MINEUR, "Test modele");
+    ModeleTexte.enregistrerModeleTexteDocument(EModeleTexteDocument.PROJET_MARIAGE, "Texte mariage");
+    ModeleTexte.enregistrerModeleTexteDocument(EModeleTexteDocument.PROJET_DECES, "Texte décès");
+
+    vi.setSystemTime(new Date(2025, 5, 5, 10));
   });
 
   afterAll(() => {
@@ -143,15 +147,36 @@ describe("PartieGaucheSaisieProjet - Tests du composant", () => {
     );
 
     fireEvent(document, new CustomEvent(EEventState.APERCU_PROJET_ACTE, { detail: { valeurTest: "" } }));
+    fireEvent.click(screen.getByText("Aperçu du projet"));
 
     expect(container.firstChild).toMatchSnapshot();
   });
 
-  test("Doit changer d'onglet et rendre l'aperçu du projet", () => {
+  test("Doit afficher titre mariage dans ApercuProjetActe", () => {
+    const RequeteMariage = { ...requete, natureActeTranscrit: ENatureActeTranscrit.MARIAGE_AVEC_CCAM };
+
     const { container } = render(
       <MockRECEContextProvider>
         <PartieGaucheSaisieProjet
-          requete={requete}
+          requete={RequeteMariage}
+          estModeConsultation={false}
+        />
+      </MockRECEContextProvider>
+    );
+
+    fireEvent(document, new CustomEvent(EEventState.APERCU_PROJET_ACTE, { detail: { valeurTest: "" } }));
+    fireEvent.click(screen.getByText("Aperçu du projet"));
+
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  test("Doit afficher titre décès dans ApercuProjetActe", () => {
+    const RequeteDeces = { ...requete, natureActeTranscrit: ENatureActeTranscrit.DECES };
+
+    const { container } = render(
+      <MockRECEContextProvider>
+        <PartieGaucheSaisieProjet
+          requete={RequeteDeces}
           estModeConsultation={false}
         />
       </MockRECEContextProvider>

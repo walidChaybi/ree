@@ -36,7 +36,7 @@ module.exports = {
       fontFamily: {
         "noto-sans-ui": ["NotoSansUI-Regular", "sans-serif"],
         "noto-sans-ui-bold": ["NotoSansUI-Bold", "sans-serif"],
-        liberation: ["Liberation"]
+        liberation: ["Liberation Mono"]
       },
 
       animation: {

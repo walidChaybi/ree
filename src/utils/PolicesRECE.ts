@@ -18,7 +18,7 @@ class PolicesRECE {
     );
 
     LIBERATION.forEach(policeLiberation =>
-      new FontFace("Liberation", `url('${publicUrl}/fonts/Liberation/LiberationMono-${policeLiberation.nom}.ttf')`, {
+      new FontFace("Liberation Mono", `url('${publicUrl}/fonts/Liberation/LiberationMono-${policeLiberation.nom}.ttf')`, {
         style: policeLiberation.style,
         weight: policeLiberation.weight
       })

@@ -15,11 +15,17 @@ interface IConditionEnCours {
 }
 
 export enum EModeleTexteDocument {
-  PROJET_NAISSANCE_MINEUR = "PROJET_NAISSANCE_MINEUR"
+  PROJET_NAISSANCE_MINEUR = "PROJET_NAISSANCE_MINEUR",
+  PROJET_MARIAGE = "PROJET_MARIAGE",
+  PROJET_DECES = "PROJET_DECES"
 }
 
 class ModeleTexte {
-  private static [EModeleTexteDocument.PROJET_NAISSANCE_MINEUR]: string | null = null;
+  private static modeles: Record<EModeleTexteDocument, string | null> = {
+    [EModeleTexteDocument.PROJET_NAISSANCE_MINEUR]: null,
+    [EModeleTexteDocument.PROJET_MARIAGE]: null,
+    [EModeleTexteDocument.PROJET_DECES]: null
+  };
 
   private constructor(private readonly modele: string) {}
 
@@ -173,15 +179,17 @@ class ModeleTexte {
   }
 
   public static getModeleTexteDocument(typeDocument: EModeleTexteDocument): string | null {
-    return ModeleTexte[typeDocument];
+    return ModeleTexte.modeles[typeDocument];
   }
 
   public static enregistrerModeleTexteDocument(typeDocument: EModeleTexteDocument, texte: string): void {
-    ModeleTexte[typeDocument] = texte;
+    ModeleTexte.modeles[typeDocument] = texte;
   }
 
   public static reinitialiserModelesTexte(): void {
-    Object.values(EModeleTexteDocument).forEach(modeleTexteDocument => (ModeleTexte[modeleTexteDocument] = null));
+    Object.values(EModeleTexteDocument).forEach(modeleTexteDocument => {
+      ModeleTexte.modeles[modeleTexteDocument as EModeleTexteDocument] = null;
+    });
   }
 }
 
