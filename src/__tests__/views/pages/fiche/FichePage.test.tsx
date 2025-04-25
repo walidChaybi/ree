@@ -9,7 +9,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { DEUX, UN, ZERO } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
 import IHabilitationDto from "../../../../dto/etatcivil/agent/IHabilitationDto";
 import { createTestingRouter, elementAvecContexte } from "../../../__tests__utils__/testsUtil";

@@ -13,7 +13,7 @@ import {
 } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { DEUX, UN, ZERO } from "@util/Utils";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../../../../../__tests__utils__/testsUtil";
 import MockRECEContextProvider from "../../../../../../../../../mock/context/MockRECEContextProvider";

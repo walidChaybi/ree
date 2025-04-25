@@ -16,7 +16,7 @@ import {
 } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { MemoryRouter, RouterProvider } from "react-router-dom";
+import { MemoryRouter, RouterProvider } from "react-router";
 import { expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../../../__tests__utils__/testsUtil";
 import MockRECEContextProvider from "../../../../../../../mock/context/MockRECEContextProvider";

@@ -39,7 +39,7 @@ import { PopinSignatureCreationEtablissement } from "@widget/signature/PopinSign
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import { FormikHelpers } from "formik";
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router";
 import "../../../commun/scss/ApercuReqCreationPage.scss";
 import {
   annulerModificationBulletinIdentification,

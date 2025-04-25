@@ -12,7 +12,7 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 import { getDefaultValuesCourrier } from "../../apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 import { BoutonsTerminer } from "./BoutonsTerminer";

@@ -1,6 +1,6 @@
 import { ChoixAction } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/ChoixAction";
 import { render, screen, waitFor } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 import { expect, test } from "vitest";
 import { requeteRDCSC } from "../../../../../../../mock/data/requeteDelivrance";
 

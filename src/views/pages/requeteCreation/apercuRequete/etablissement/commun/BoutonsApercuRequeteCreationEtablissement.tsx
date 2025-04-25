@@ -17,7 +17,7 @@ import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFl
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { useContext, useMemo } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { BlocInformatif } from "../../../../../common/composant/BlocInformatif/BlocInformatif";
 import { BoutonPrendreEnChargeCreation } from "./BoutonPrendreEnChargeCreation";
 import "./scss/OngletsApercuCreationEtablissement.scss";

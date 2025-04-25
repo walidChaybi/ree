@@ -3,17 +3,13 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { receRouter } from "@router/ReceRouter";
 import "@scss/_colors.scss";
 import "@scss/_library.scss";
-import {
-  CHROME,
-  FIREFOX,
-  SeulementNavigateur
-} from "@util/detectionNavigateur/DetectionNavigateur";
+import { CHROME, FIREFOX, SeulementNavigateur } from "@util/detectionNavigateur/DetectionNavigateur";
 import { ErrorManager } from "@util/ErrorManager";
 import { TOASTCONTAINER_PRINCIPAL } from "@util/messageManager";
 import fr from "date-fns/locale/fr";
 import React from "react";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { ToastContainer } from "react-toastify";
 import "../../index.css";
 import "./App.scss";
@@ -37,11 +33,7 @@ const theme = createTheme({
 const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
-      <SeulementNavigateur
-        navigateurs={
-          process.env.NODE_ENV === "development" ? [FIREFOX, CHROME] : [FIREFOX]
-        }
-      >
+      <SeulementNavigateur navigateurs={process.env.NODE_ENV === "development" ? [FIREFOX, CHROME] : [FIREFOX]}>
         <ErrorManager>
           <div className="App">
             <RECEContextProvider>

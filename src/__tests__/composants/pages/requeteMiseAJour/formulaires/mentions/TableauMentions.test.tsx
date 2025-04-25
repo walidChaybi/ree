@@ -5,7 +5,7 @@ import MiseAJourForm from "@model/form/miseAJour/MiseAJourForm";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Formik } from "formik";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
 import ChampTexte from "../../../../../../composants/commun/champs/ChampTexte";
 import { IMentionMiseAJour } from "../../../../../../composants/pages/requetesMiseAJour/PartieFormulaire";

@@ -15,7 +15,7 @@ import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 import {
   createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete,
   createReponseSansDelivranceCSPourCompositionApiFrancais,
@@ -31,17 +31,13 @@ import {
   menuSansDelivranceActions
 } from "./MenuUtilsCS";
 
-export const MenuReponseSansDelivranceCS: React.FC<
-  IChoixActionDelivranceProps
-> = props => {
+export const MenuReponseSansDelivranceCS: React.FC<IChoixActionDelivranceProps> = props => {
   const navigate = useNavigate();
   const location = useLocation();
   const refs = useRef([]);
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [reponseSansDelivranceCS, setReponseSansDelivranceCS] = useState<
-    IReponseSansDelivranceCS | undefined
-  >();
+  const [reponseSansDelivranceCS, setReponseSansDelivranceCS] = useState<IReponseSansDelivranceCS | undefined>();
   const [popinOuverte, setPopinOuverte] = useState<boolean>(false);
 
   const resultatReponseSansDelivranceCS = useReponseSansDelivranceCS(
@@ -67,10 +63,9 @@ export const MenuReponseSansDelivranceCS: React.FC<
     switch (indexMenu) {
       case INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.REQUETE_INCOMPLETE_ILLISIBLE:
         setOperationEnCours(true);
-        const contenuReponseSansDelivranceCSDemandeIncomplete =
-          createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete(
-            props.requete
-          );
+        const contenuReponseSansDelivranceCSDemandeIncomplete = createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete(
+          props.requete
+        );
         setReponseSansDelivranceCS({
           contenu: contenuReponseSansDelivranceCSDemandeIncomplete,
           fichier: NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE
@@ -78,10 +73,7 @@ export const MenuReponseSansDelivranceCS: React.FC<
         break;
       case INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.PACS_NON_INSCRIT:
         setOperationEnCours(true);
-        const contenuReponseSansDelivranceCSPACSNonInscrit =
-          createReponseSansDelivranceCSPourCompositionApiPACSNonInscrit(
-            props.requete
-          );
+        const contenuReponseSansDelivranceCSPACSNonInscrit = createReponseSansDelivranceCSPourCompositionApiPACSNonInscrit(props.requete);
         setReponseSansDelivranceCS({
           contenu: contenuReponseSansDelivranceCSPACSNonInscrit,
           fichier: NOM_DOCUMENT_REFUS_PACS_NON_INSCRIT
@@ -89,18 +81,12 @@ export const MenuReponseSansDelivranceCS: React.FC<
         break;
       case INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.MARIAGE_EN_COURS_DE_VALIDITE:
         const actes = supprimerNullEtUndefinedDuTableau(props.actes);
-        const inscriptions = supprimerNullEtUndefinedDuTableau(
-          props.inscriptions
-        );
+        const inscriptions = supprimerNullEtUndefinedDuTableau(props.inscriptions);
         if (!estSeulementActeMariage(props.requete, actes, inscriptions)) {
           setHasMessageBloquant(true);
         } else {
           setOperationEnCours(true);
-          const newReponseSansDelivranceCSMariage =
-            await createReponseSansDelivranceCSPourCompositionApiMariage(
-              props.requete,
-              actes?.[0]
-            );
+          const newReponseSansDelivranceCSMariage = await createReponseSansDelivranceCSPourCompositionApiMariage(props.requete, actes?.[0]);
           setReponseSansDelivranceCS({
             contenu: newReponseSansDelivranceCSMariage,
             fichier: NOM_DOCUMENT_REFUS_MARIAGE
@@ -109,10 +95,7 @@ export const MenuReponseSansDelivranceCS: React.FC<
         break;
       case INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.NATIONALITE_OU_NAISSANCE_FRANCAIS:
         setOperationEnCours(true);
-        const newReponseSansDelivranceCSFrancais =
-          createReponseSansDelivranceCSPourCompositionApiFrancais(
-            props.requete
-          );
+        const newReponseSansDelivranceCSFrancais = createReponseSansDelivranceCSPourCompositionApiFrancais(props.requete);
         setReponseSansDelivranceCS({
           contenu: newReponseSansDelivranceCSFrancais,
           fichier: NOM_DOCUMENT_REFUS_FRANCAIS
@@ -124,8 +107,7 @@ export const MenuReponseSansDelivranceCS: React.FC<
     }
   };
 
-  const listeActionsFiltreParSousTypes: IActionOption[] =
-    filtrerListeActionsParSousTypes(props.requete, menuSansDelivranceActions);
+  const listeActionsFiltreParSousTypes: IActionOption[] = filtrerListeActionsParSousTypes(props.requete, menuSansDelivranceActions);
 
   return (
     <>
@@ -136,10 +118,7 @@ export const MenuReponseSansDelivranceCS: React.FC<
       />
       <GroupeBouton
         titre={"Réponse sans délivrance"}
-        listeActions={filtrerListeActionsParDocumentDemande(
-          listeActionsFiltreParSousTypes,
-          props.requete
-        )}
+        listeActions={filtrerListeActionsParDocumentDemande(listeActionsFiltreParSousTypes, props.requete)}
         onSelect={handleReponseSansDelivranceCSMenu}
         refs={refs}
       />
@@ -153,11 +132,7 @@ export const MenuReponseSansDelivranceCS: React.FC<
       />
       <ConfirmationPopin
         estOuvert={hasMessageBloquant}
-        messages={[
-          getLibelle(
-            "Votre sélection n'est pas cohérente avec le choix de l'action de réponse négative."
-          )
-        ]}
+        messages={[getLibelle("Votre sélection n'est pas cohérente avec le choix de l'action de réponse négative.")]}
         boutons={[
           {
             label: getLibelle("OK"),

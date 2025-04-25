@@ -1,7 +1,7 @@
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { ApercuRequetePartieGauche } from "@pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/ApercuRequetePartieGauche";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 import { beforeEach, expect, test } from "vitest";
 import { TYPE_PIECE_JUSTIFICATIVE } from "../../../../../mock/data/NomenclatureTypePieceJustificative";
 import requeteDelivrance from "../../../../../mock/data/requeteDelivrance";

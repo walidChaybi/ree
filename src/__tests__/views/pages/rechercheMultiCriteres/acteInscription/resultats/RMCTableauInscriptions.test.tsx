@@ -1,7 +1,7 @@
 import { RMCTableauInscriptions } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauInscriptions";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { NB_LIGNES_PAR_APPEL_INSCRIPTION, NB_LIGNES_PAR_PAGE_INSCRIPTION } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 import { beforeAll, expect, test } from "vitest";
 import { elementAvecContexte, mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 import { DataRMCInscriptionAvecResultat, DataTableauInscription } from "../../../../../mock/data/RMCInscription";

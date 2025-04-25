@@ -1,8 +1,5 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import {
-  ICreationActionEtMiseAjourStatutParams,
-  usePostCreationActionEtMiseAjourStatutApi,
-} from "@hook/requete/ActionHook";
+import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
@@ -10,7 +7,7 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 import { IBoutonProps } from "../../../../commun/bouton/Bouton";
 import { BoutonAvecChargement } from "../../../../commun/bouton/BoutonAvecChargement";
 
@@ -18,29 +15,24 @@ interface BoutonTerminerApresImpressionProps extends IBoutonProps {
   requete: IRequeteDelivrance;
 }
 
-export const BoutonTerminerApresImpression: React.FC<
-  BoutonTerminerApresImpressionProps
-> = ({ requete, ...props }) => {
+export const BoutonTerminerApresImpression: React.FC<BoutonTerminerApresImpressionProps> = ({ requete, ...props }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { utilisateurConnecte } = useContext(RECEContextData);
 
-  const [
-    postCreationActionEtMiseAJourStatutParams,
-    setPostCreationActionEtMiseAJourStatutParams,
-  ] = useState<ICreationActionEtMiseAjourStatutParams | undefined>();
+  const [postCreationActionEtMiseAJourStatutParams, setPostCreationActionEtMiseAJourStatutParams] = useState<
+    ICreationActionEtMiseAjourStatutParams | undefined
+  >();
 
   const miseAJourStatutRequeteEtAjoutAction = () => {
     setPostCreationActionEtMiseAJourStatutParams({
       requeteId: requete.id,
       libelleAction: StatutRequete.TRAITE_IMPRIME_LOCAL.libelle,
-      statutRequete: StatutRequete.TRAITE_IMPRIME_LOCAL,
+      statutRequete: StatutRequete.TRAITE_IMPRIME_LOCAL
     });
   };
 
-  const idAction = usePostCreationActionEtMiseAjourStatutApi(
-    postCreationActionEtMiseAJourStatutParams,
-  );
+  const idAction = usePostCreationActionEtMiseAjourStatutApi(postCreationActionEtMiseAJourStatutParams);
 
   useEffect(() => {
     if (idAction) {
@@ -49,8 +41,7 @@ export const BoutonTerminerApresImpression: React.FC<
   }, [idAction, location.pathname, navigate]);
 
   function estActif() {
-    const mAppartient =
-      requete.idUtilisateur === utilisateurConnecte?.idUtilisateur;
+    const mAppartient = requete.idUtilisateur === utilisateurConnecte?.idUtilisateur;
     return (
       mAppartient &&
       officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER) &&

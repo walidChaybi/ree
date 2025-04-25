@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 interface CategorieProps {
   url: string;
@@ -16,11 +16,18 @@ export const Categorie: React.FC<CategorieProps> = ({ url, message, last }) => {
   return (
     <>
       {last ? (
-        <div className="TextFilAriane" title={message}>
+        <div
+          className="TextFilAriane"
+          title={message}
+        >
           {message}
         </div>
       ) : (
-        <div className="LinkFilAriane" onClick={onClickLink} title={message}>
+        <div
+          className="LinkFilAriane"
+          onClick={onClickLink}
+          title={message}
+        >
           {message}
         </div>
       )}

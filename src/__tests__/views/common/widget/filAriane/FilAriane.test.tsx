@@ -16,7 +16,7 @@ import {
   getPathElements,
   getUrlFromNPathElements
 } from "@widget/filAriane/FilAriane";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { expect, test } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
@@ -72,10 +72,7 @@ test("renders d'un uudi en dernier élément du FilAriane.", () => {
     ],
     [
       URL_MES_REQUETES_CREATION,
-      getUrlWithParam(
-        URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-        "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
-      )
+      getUrlWithParam(URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID, "3ed9aa4e-921b-489f-b8fe-531dd703c60c")
     ]
   );
 
@@ -108,19 +105,11 @@ test("renders d'un uudi en dernier élément du FilAriane et maj context.", () =
         element: <FilAriane routes={routesRece} />
       },
       {
-        path: getUrlWithParam(
-          URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-          "f254f7ef-08ba-4fef-a45f-5f6ed326f36e"
-        ),
+        path: getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID, "f254f7ef-08ba-4fef-a45f-5f6ed326f36e"),
         element: <ApercuRequetePage />
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
-        "f254f7ef-08ba-4fef-a45f-5f6ed326f36e"
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID, "f254f7ef-08ba-4fef-a45f-5f6ed326f36e")]
   );
   render(<RouterProvider router={router} />);
 });
@@ -129,29 +118,19 @@ test("Attendu: getUrlFromNPathElements fonctionne correctement.", () => {
   expect(getUrlFromNPathElements(["p1"], 0)).toBe("/rece/rece-ui/p1");
   expect(getUrlFromNPathElements(["p1", "p2"], 0)).toBe("/rece/rece-ui/p1");
   expect(getUrlFromNPathElements(["p1", "p2"], 1)).toBe("/rece/rece-ui/p1/p2");
-  expect(getUrlFromNPathElements(["p1", "p2", "p3"], 0)).toBe(
-    "/rece/rece-ui/p1"
-  );
-  expect(getUrlFromNPathElements(["p1", "p2", "p3"], 1)).toBe(
-    "/rece/rece-ui/p1/p2"
-  );
-  expect(getUrlFromNPathElements(["p1", "p2", "p3"], 2)).toBe(
-    "/rece/rece-ui/p1/p2/p3"
-  );
+  expect(getUrlFromNPathElements(["p1", "p2", "p3"], 0)).toBe("/rece/rece-ui/p1");
+  expect(getUrlFromNPathElements(["p1", "p2", "p3"], 1)).toBe("/rece/rece-ui/p1/p2");
+  expect(getUrlFromNPathElements(["p1", "p2", "p3"], 2)).toBe("/rece/rece-ui/p1/p2/p3");
 });
 
 test("Attendu: getPathElements fonctionne correctement.", () => {
-  expect(
-    getPathElements("/rece/rece-ui/mesrequetes/apercurequetedelivrance")
-  ).toEqual(["mesrequetes", "apercurequetedelivrance"]);
+  expect(getPathElements("/rece/rece-ui/mesrequetes/apercurequetedelivrance")).toEqual(["mesrequetes", "apercurequetedelivrance"]);
   expect(getPathElements("/rece/rece-ui/")).toEqual([]);
   expect(getPathElements("/rece/rece-ui")).toEqual([]);
 });
 
 test("Attendu: buildPagesInfos fonctionne correctement.", () => {
-  gestionnaireNavigation.addUrl(
-    "/rece/rece-ui/mesrequetes/apercurequetedelivrance/a8c57b94-b623-4e79-b3a4-08cdf0447623"
-  );
+  gestionnaireNavigation.addUrl("/rece/rece-ui/mesrequetes/apercurequetedelivrance/a8c57b94-b623-4e79-b3a4-08cdf0447623");
   expect(
     buildPagesInfos(
       "/rece/rece-ui/mesrequetes/apercurequetedelivrance/a8c57b94-b623-4e79-b3a4-08cdf0447623",

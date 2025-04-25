@@ -4,7 +4,7 @@ import { Droit } from "@model/agent/enum/Droit";
 import Tooltip from "@mui/material/Tooltip";
 import { URL_ACCUEIL } from "@router/ReceUrls";
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import logoReceBlanc from "../../../img/logo-rece-blanc.svg";
 import { BoutonDeconnexion } from "./BoutonDeconnexion";
 import { BoutonRechercheRmc } from "./BoutonRechercheRmc";

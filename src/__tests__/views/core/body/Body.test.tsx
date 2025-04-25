@@ -4,7 +4,7 @@ import { AccueilPage } from "@pages/accueil/AccueilPage";
 import { URL_BASE } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { afterEach, expect, test } from "vitest";
 import { createTestingRouter, elementAvecContexte } from "../../../__tests__utils__/testsUtil";
 import officier from "../../../mock/data/connectedUser.json";

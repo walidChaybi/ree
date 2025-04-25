@@ -5,7 +5,7 @@ import { Droit } from "@model/agent/enum/Droit";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { ID, ID_ACTE, URL_BASE, URL_MES_REQUETES_DELIVRANCE_EDITION_ID } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
 import PageEditionRequeteDelivrance from "../../../pages/requetesDelivrance/PageEditionRequeteDelivrance";
 import { createTestingRouter } from "../../__tests__utils__/testsUtil";

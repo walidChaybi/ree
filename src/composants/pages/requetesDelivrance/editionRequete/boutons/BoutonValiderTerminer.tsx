@@ -1,12 +1,9 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   IDerniereDelivranceRcRcaPacsParams,
-  useDerniereDelivranceRcRcaPacsApiHook,
+  useDerniereDelivranceRcRcaPacsApiHook
 } from "@hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
-import {
-  ICreationActionEtMiseAjourStatutParams,
-  usePostCreationActionEtMiseAjourStatutApi,
-} from "@hook/requete/ActionHook";
+import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "@model/agent/IOfficier";
 import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
@@ -15,7 +12,7 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 import { IBoutonProps } from "../../../../commun/bouton/Bouton";
 import { BoutonAvecChargement } from "../../../../commun/bouton/BoutonAvecChargement";
 
@@ -23,25 +20,21 @@ interface BoutonValiderTerminerProps extends IBoutonProps {
   requete: IRequeteDelivrance;
 }
 
-export const BoutonValiderTerminer: React.FC<BoutonValiderTerminerProps> = ({
-  requete,
-  ...props
-}) => {
+export const BoutonValiderTerminer: React.FC<BoutonValiderTerminerProps> = ({ requete, ...props }) => {
   const requeteDelivrance = requete;
   const location = useLocation();
   const navigate = useNavigate();
   const { utilisateurConnecte } = useContext(RECEContextData);
   const [estDisabled, setEstDisabled] = useState(true);
 
-  const [
-    postCreationActionEtMiseAJourStatutParams,
-    setPostCreationActionEtMiseAJourStatutParams,
-  ] = useState<ICreationActionEtMiseAjourStatutParams | undefined>();
+  const [postCreationActionEtMiseAJourStatutParams, setPostCreationActionEtMiseAJourStatutParams] = useState<
+    ICreationActionEtMiseAjourStatutParams | undefined
+  >();
 
-  const [majDateDerniereDelivranceParams, setMajDateDerniereDelivranceParams] =
-    useState<IDerniereDelivranceRcRcaPacsParams[] | undefined>();
-  const [pasDeMajDateDerniereDelivrance, setPasDeMajDateDerniereDelivrance] =
-    useState(false);
+  const [majDateDerniereDelivranceParams, setMajDateDerniereDelivranceParams] = useState<
+    IDerniereDelivranceRcRcaPacsParams[] | undefined
+  >();
+  const [pasDeMajDateDerniereDelivrance, setPasDeMajDateDerniereDelivrance] = useState(false);
 
   let futurStatut: StatutRequete;
   switch (requete.canal) {
@@ -62,13 +55,11 @@ export const BoutonValiderTerminer: React.FC<BoutonValiderTerminerProps> = ({
     setPostCreationActionEtMiseAJourStatutParams({
       requeteId: requete.id,
       libelleAction: futurStatut.libelle,
-      statutRequete: futurStatut,
+      statutRequete: futurStatut
     });
   };
 
-  const idAction = usePostCreationActionEtMiseAjourStatutApi(
-    postCreationActionEtMiseAJourStatutParams,
-  );
+  const idAction = usePostCreationActionEtMiseAjourStatutApi(postCreationActionEtMiseAJourStatutParams);
 
   // 2 - Mise à jour des dates de délivrance si des documents réponses sont des CS RC, RCA ou PACS
   useEffect(() => {
@@ -81,42 +72,33 @@ export const BoutonValiderTerminer: React.FC<BoutonValiderTerminerProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idAction]);
 
-  const majDateDerniereDelivrance = useDerniereDelivranceRcRcaPacsApiHook(
-    majDateDerniereDelivranceParams,
-  );
+  const majDateDerniereDelivrance = useDerniereDelivranceRcRcaPacsApiHook(majDateDerniereDelivranceParams);
 
   // 3 - Navigation après le traitement
   useEffect(() => {
     if (majDateDerniereDelivrance || pasDeMajDateDerniereDelivrance) {
       replaceUrl(navigate, getUrlPrecedente(location.pathname));
     }
-  }, [
-    majDateDerniereDelivrance,
-    pasDeMajDateDerniereDelivrance,
-    navigate,
-    location,
-  ]);
+  }, [majDateDerniereDelivrance, pasDeMajDateDerniereDelivrance, navigate, location]);
 
-  const recupererIdRepertoiresDocumentReponsesCs = (
-    requete: IRequeteDelivrance,
-  ): IDerniereDelivranceRcRcaPacsParams[] => {
+  const recupererIdRepertoiresDocumentReponsesCs = (requete: IRequeteDelivrance): IDerniereDelivranceRcRcaPacsParams[] => {
     const repertoiresAMaj = [] as IDerniereDelivranceRcRcaPacsParams[];
 
-    requete?.documentsReponses?.forEach((el) => {
+    requete?.documentsReponses?.forEach(el => {
       if (el.idPacs != null) {
         repertoiresAMaj.push({
           idRepertoire: el.idPacs,
-          typeRepertoire: TypePacsRcRca.PACS,
+          typeRepertoire: TypePacsRcRca.PACS
         });
       } else if (el.idRc != null) {
         repertoiresAMaj.push({
           idRepertoire: el.idRc,
-          typeRepertoire: TypePacsRcRca.RC,
+          typeRepertoire: TypePacsRcRca.RC
         });
       } else if (el.idRca != null) {
         repertoiresAMaj.push({
           idRepertoire: el.idRca,
-          typeRepertoire: TypePacsRcRca.RCA,
+          typeRepertoire: TypePacsRcRca.RCA
         });
       }
     });
@@ -126,14 +108,13 @@ export const BoutonValiderTerminer: React.FC<BoutonValiderTerminerProps> = ({
 
   const estAValider = requete.statutCourant.statut === StatutRequete.A_VALIDER;
 
-  const mAppartient =
-    requete.idUtilisateur === utilisateurConnecte?.idUtilisateur;
+  const mAppartient = requete.idUtilisateur === utilisateurConnecte?.idUtilisateur;
 
   if (
     mAppartient &&
     provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
       utilisateurConnecte,
-      requeteDelivrance.provenanceRequete.provenance.libelle,
+      requeteDelivrance.provenanceRequete.provenance.libelle
     ) &&
     DocumentReponse.verifierDocumentsValides(requete.documentsReponses) &&
     estDisabled

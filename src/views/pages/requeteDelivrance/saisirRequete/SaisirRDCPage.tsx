@@ -31,7 +31,7 @@ import { AdresseFormDefaultValues, AdresseFormValidationSchema } from "@widget/f
 import { RequeteFormDefaultValues, RequeteFormValidationSchema } from "@widget/formulaire/requete/RequeteForm";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router";
 import * as Yup from "yup";
 import { SaisieRequeteRDC } from "../../../../model/form/delivrance/ISaisirRDCPageForm";
 import SaisirRequeteBoutons from "../../../common/composant/formulaire/boutons/SaisirRequeteBoutons";

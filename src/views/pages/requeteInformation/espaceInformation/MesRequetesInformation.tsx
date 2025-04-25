@@ -1,7 +1,4 @@
-import {
-  IQueryParametersPourRequetes,
-  TypeAppelRequete
-} from "@api/appels/requeteApi";
+import { IQueryParametersPourRequetes, TypeAppelRequete } from "@api/appels/requeteApi";
 import {
   INavigationApercuReqInfoParams,
   useNavigationApercuInformation
@@ -11,18 +8,12 @@ import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUti
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { SortOrder } from "@widget/tableau/TableUtils";
-import {
-  NB_LIGNES_PAR_APPEL_DEFAUT,
-  NB_LIGNES_PAR_PAGE_DEFAUT
-} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import { NB_LIGNES_PAR_APPEL_DEFAUT, NB_LIGNES_PAR_PAGE_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
-import {
-  StatutsRequetesInformation,
-  requeteInformationMesRequetesColumnHeaders
-} from "./EspaceReqInfoParams";
+import { StatutsRequetesInformation, requeteInformationMesRequetesColumnHeaders } from "./EspaceReqInfoParams";
 import { useRequeteInformationApi } from "./hook/DonneesRequeteInformationApiHook";
 import "./scss/RequeteTableau.scss";
 
@@ -30,26 +21,17 @@ interface LocalProps {
   parametresReqInfo: IQueryParametersPourRequetes;
 }
 
-export const MesRequetesInformationPage: React.FC<LocalProps> = ({
-  parametresReqInfo
-}) => {
+export const MesRequetesInformationPage: React.FC<LocalProps> = ({ parametresReqInfo }) => {
   const location = useLocation();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
-  const [paramsNavReqInfo, setParamsNavReqInfo] = useState<
-    INavigationApercuReqInfoParams | undefined
-  >();
+  const [paramsNavReqInfo, setParamsNavReqInfo] = useState<INavigationApercuReqInfoParams | undefined>();
 
   useNavigationApercuInformation(paramsNavReqInfo);
 
-  const [linkParameters, setLinkParameters] =
-    React.useState<IQueryParametersPourRequetes>(parametresReqInfo);
+  const [linkParameters, setLinkParameters] = React.useState<IQueryParametersPourRequetes>(parametresReqInfo);
   const [enChargement, setEnChargement] = React.useState(true);
-  const { dataState, paramsTableau } = useRequeteInformationApi(
-    linkParameters,
-    TypeAppelRequete.MES_REQUETES_INFO,
-    setEnChargement
-  );
+  const { dataState, paramsTableau } = useRequeteInformationApi(linkParameters, TypeAppelRequete.MES_REQUETES_INFO, setEnChargement);
 
   const goToLink = useCallback((link: string) => {
     const queryParametersPourRequetes = goToLinkRequete(link, "requetes");
@@ -67,11 +49,7 @@ export const MesRequetesInformationPage: React.FC<LocalProps> = ({
     });
   }, []);
 
-  function onClickOnLine(
-    idRequete: string,
-    data: IRequeteTableauInformation[],
-    idx: number
-  ) {
+  function onClickOnLine(idRequete: string, data: IRequeteTableauInformation[], idx: number) {
     const requete = data[idx];
     const urlCourante = location.pathname;
     setOperationEnCours(true);

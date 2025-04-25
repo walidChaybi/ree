@@ -13,7 +13,7 @@ import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleS
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { VisionneuseAvecTitre } from "@widget/visionneuseDocument/VisionneuseAvecTitre";
 import React, { useCallback, useContext, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 import { ApercuRequeteTemplate } from "../apercuRequeteTemplate/ApercuRequeteTemplate";
 import { mappingRequeteDelivranceToRequeteTableau } from "../mapping/ReqDelivranceToReqTableau";
 import { BoutonPrendreEnCharge } from "./contenu/BoutonPrendreEnCharge";

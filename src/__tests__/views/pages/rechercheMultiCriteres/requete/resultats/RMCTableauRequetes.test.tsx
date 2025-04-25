@@ -8,7 +8,7 @@ import {
 } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getLastPathElem, getUrlWithParam } from "@util/route/UrlUtil";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { describe, expect, test, vi } from "vitest";
 import { createTestingRouter, elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
 import { DataRMCRequeteAvecResultat, DataTableauRequete } from "../../../../../mock/data/RMCRequete";

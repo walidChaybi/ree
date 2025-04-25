@@ -6,7 +6,7 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { BoutonValiderTerminer } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/contenu/BoutonValiderTerminer";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { expect, test } from "vitest";
 import { createTestingRouter, elementAvecContexte } from "../../../../../../__tests__utils__/testsUtil";
 import { userDroitnonCOMEDEC } from "../../../../../../mock/data/mockConnectedUserAvecDroit";

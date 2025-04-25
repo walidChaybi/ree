@@ -5,7 +5,7 @@ import { Provenance } from "@model/requete/enum/Provenance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { expect, test } from "vitest";
 import { BoutonValiderTerminer } from "../../../../../composants/pages/requetesDelivrance/editionRequete/boutons/BoutonValiderTerminer";
 import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";

@@ -6,7 +6,7 @@ import {
   URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID
 } from "@router/ReceUrls";
 import messageManager from "@util/messageManager";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import useFetchApi from "../api/FetchApiHook";
 
 const useNavigationRequeteTableauConsulaire = () => {

@@ -7,7 +7,7 @@ import { IDecret } from "@model/etatcivil/commun/IDecret";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { fireEvent, waitFor } from "@testing-library/react";
-import { RouteObject, createMemoryRouter } from "react-router-dom";
+import { RouteObject, createMemoryRouter } from "react-router";
 import { expect, vi } from "vitest";
 import { EditionDelivranceContext } from "../../contexts/EditionDelivranceContextProvider";
 import MockRECEContextProvider from "../mock/context/MockRECEContextProvider";

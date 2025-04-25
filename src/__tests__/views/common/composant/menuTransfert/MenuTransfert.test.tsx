@@ -16,7 +16,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 import MockRECEContextProvider from "../../../../mock/context/MockRECEContextProvider";

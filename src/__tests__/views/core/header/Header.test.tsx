@@ -1,6 +1,6 @@
 import { Header } from "@core/header/Header";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router";
 import { expect, test, vi } from "vitest";
 
 test("renders header", () => {

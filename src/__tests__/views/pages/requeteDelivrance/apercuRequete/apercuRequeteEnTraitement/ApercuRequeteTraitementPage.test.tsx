@@ -3,7 +3,7 @@ import { URL_MES_REQUETES_DELIVRANCE, URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { afterAll, beforeAll, beforeEach, expect, test } from "vitest";
 import { createTestingRouter, elementAvecContexte, mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 import { LISTE_UTILISATEURS } from "../../../../../mock/data/ListeUtilisateurs";

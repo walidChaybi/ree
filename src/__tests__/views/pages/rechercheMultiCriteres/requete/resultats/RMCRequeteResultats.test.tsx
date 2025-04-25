@@ -1,7 +1,7 @@
 import { RMCRequeteResultats } from "@pages/rechercheMultiCriteres/requete/resultats/RMCRequeteResultats";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { render, screen } from "@testing-library/react";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { expect, test, vi } from "vitest";
 import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 import { DataRMCRequeteAvecResultat, DataTableauRequete } from "../../../../../mock/data/RMCRequete";

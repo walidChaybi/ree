@@ -8,7 +8,7 @@ import {
 } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/OngletsDocumentsEditesUtils";
 import { PATH_EDITION, URL_MES_REQUETES_DELIVRANCE, URL_MES_REQUETES_DELIVRANCE_EDITION_ID } from "@router/ReceUrls";
 import { render, waitFor } from "@testing-library/react";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { beforeAll, describe, expect, test } from "vitest";
 import PageEditionRequeteDelivrance from "../../../../../../pages/requetesDelivrance/PageEditionRequeteDelivrance";
 import { createTestingRouter, mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";

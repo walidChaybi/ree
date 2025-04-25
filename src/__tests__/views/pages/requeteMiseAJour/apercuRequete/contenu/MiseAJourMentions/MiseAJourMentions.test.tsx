@@ -11,7 +11,7 @@ import { URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS, URL_REQUETE_MISE_A_JOUR_ME
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { ZERO } from "@util/Utils";
 import { act } from "react";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
 import { NATURE_MENTION } from "../../../../../../mock/data/NomenclatureNatureMention";

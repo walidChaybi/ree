@@ -6,7 +6,7 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { fireEvent, render, waitFor } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 import { expect, test } from "vitest";
 import { BoutonTerminerApresImpression } from "../../../../../composants/pages/requetesDelivrance/editionRequete/boutons/BoutonTerminerApresImpression";
 import { elementAvecContexte } from "../../../../__tests__utils__/testsUtil";

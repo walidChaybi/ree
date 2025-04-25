@@ -2,10 +2,7 @@ import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
-import {
-  IRequeteAleatoireResultat,
-  useGetRequeteAleatoire
-} from "@hook/requete/PrendreEnChargeAleatoirementApiHook";
+import { IRequeteAleatoireResultat, useGetRequeteAleatoire } from "@hook/requete/PrendreEnChargeAleatoirementApiHook";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID } from "@router/ReceUrls";
@@ -15,21 +12,16 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useCallback, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 
-export const BoutonPrendreEnChargeAleatoirementInformation: React.FC = (
-  props: any
-) => {
+export const BoutonPrendreEnChargeAleatoirementInformation: React.FC = (props: any) => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [prendreEnCharge, setPrendreEnCharge] = useState<boolean>(false);
-  const [paramsInformation, setParamsInformation] = useState<
-    ICreationActionMiseAjourStatutHookParams | undefined
-  >();
-  const requeteAleatoireResultat: IRequeteAleatoireResultat | undefined =
-    useGetRequeteAleatoire(TypeRequete.INFORMATION, prendreEnCharge);
+  const [paramsInformation, setParamsInformation] = useState<ICreationActionMiseAjourStatutHookParams | undefined>();
+  const requeteAleatoireResultat: IRequeteAleatoireResultat | undefined = useGetRequeteAleatoire(TypeRequete.INFORMATION, prendreEnCharge);
 
   useEffect(() => {
     if (requeteAleatoireResultat) {
@@ -41,11 +33,7 @@ export const BoutonPrendreEnChargeAleatoirementInformation: React.FC = (
           callback: redirectApercuRequeteInfo
         });
       } else if (!requeteAleatoireResultat.requete) {
-        messageManager.showInfoAndClose(
-          getLibelle(
-            "Il n'existe plus de requêtes disponibles à la prise en charge"
-          )
-        );
+        messageManager.showInfoAndClose(getLibelle("Il n'existe plus de requêtes disponibles à la prise en charge"));
       }
       setOperationEnCours(false);
       setPrendreEnCharge(false);
@@ -57,12 +45,7 @@ export const BoutonPrendreEnChargeAleatoirementInformation: React.FC = (
 
   const redirectApercuRequeteInfo = useCallback(() => {
     if (requeteAleatoireResultat?.requete) {
-      navigate(
-        getUrlWithParam(
-          URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-          requeteAleatoireResultat.requete.idRequete
-        )
-      );
+      navigate(getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, requeteAleatoireResultat.requete.idRequete));
     }
   }, [navigate, requeteAleatoireResultat]);
 
@@ -82,7 +65,4 @@ export const BoutonPrendreEnChargeAleatoirementInformation: React.FC = (
   );
 };
 
-export default WithHabilitation(
-  BoutonPrendreEnChargeAleatoirementInformation,
-  "BoutonPrendreEnChargeAleatoirementInformation"
-);
+export default WithHabilitation(BoutonPrendreEnChargeAleatoirementInformation, "BoutonPrendreEnChargeAleatoirementInformation");

@@ -28,7 +28,7 @@ import { BarreNavigationSuivPrec } from "@widget/navigation/barreNavigationSuivP
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
 import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import { FicheUtil, TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
 import { BoutonCreationRDD } from "./BoutonCreationRDD/BoutonCreationRDD";

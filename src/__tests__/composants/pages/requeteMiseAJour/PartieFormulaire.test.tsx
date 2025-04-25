@@ -4,7 +4,7 @@ import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
 import PartieFormulaire from "../../../../composants/pages/requetesMiseAJour/PartieFormulaire";
 import EditionMiseAJourContextProvider from "../../../../contexts/EditionMiseAJourContextProvider";

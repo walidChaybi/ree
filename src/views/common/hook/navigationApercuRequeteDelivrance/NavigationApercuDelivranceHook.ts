@@ -4,7 +4,7 @@ import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { receUrl } from "@router/ReceUrls";
 import { replaceUrl } from "@util/route/UrlUtil";
 import { useContext, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { getUrlApercuRequete, redirectionSelonStatutRequete } from "./NavigationApercuDelivranceUtils";
 
 export interface INavigationApercuDelivranceParams {

@@ -6,7 +6,7 @@ import { URL_REQUETES_INFORMATION_SERVICE, URL_REQUETES_INFORMATION_SERVICE_APER
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { expect, test } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 import MockRECEContextProvider from "../../../../mock/context/MockRECEContextProvider";

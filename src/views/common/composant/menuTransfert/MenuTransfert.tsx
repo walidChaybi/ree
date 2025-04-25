@@ -13,7 +13,7 @@ import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import {
   listeServicesToOptions,
   listeUtilisateursToOptionsBis,

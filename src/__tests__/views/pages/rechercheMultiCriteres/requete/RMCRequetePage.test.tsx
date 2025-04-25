@@ -1,7 +1,7 @@
 import { titreForm } from "@pages/rechercheMultiCriteres/requete/RMCRequeteForm";
 import { RMCRequetePage } from "@pages/rechercheMultiCriteres/requete/RMCRequetePage";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { beforeAll, expect, test } from "vitest";
 import { createTestingRouter, mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
 import MockRECEContextProvider from "../../../../mock/context/MockRECEContextProvider";

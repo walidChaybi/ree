@@ -2,7 +2,7 @@ import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { ID, ID_ACTE, URL_ACCUEIL, URL_RECHERCHE_ACTE_INSCRIPTION, URL_REQUETE_MISE_A_JOUR_ANALYSE_MARGINALE_ID } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
 import PageEditionRequeteMiseAJour from "../../../pages/requetesMiseAJour/PageEditionRequeteMiseAJour";
 import { createTestingRouter } from "../../__tests__utils__/testsUtil";

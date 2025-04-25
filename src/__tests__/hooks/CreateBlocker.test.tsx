@@ -1,15 +1,15 @@
 import { fireEvent, render, renderHook } from "@testing-library/react";
 import { act } from "react";
-import { useBlocker } from "react-router-dom";
+import { useBlocker } from "react-router";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { useCreateBlocker } from "../../hooks/CreateBlocker";
 
 vi.mock("@util/Utils", () => ({
-  getLibelle: (key: string) => key,
+  getLibelle: (key: string) => key
 }));
 
-vi.mock("react-router-dom", () => ({
-  useBlocker: vi.fn(),
+vi.mock("react-router", () => ({
+  useBlocker: vi.fn()
 }));
 vi.mock("@widget/popin/ConfirmationPopin", () => ({
   ConfirmationPopin: ({ boutons }: any) => (
@@ -23,7 +23,7 @@ vi.mock("@widget/popin/ConfirmationPopin", () => ({
         </button>
       ))}
     </div>
-  ),
+  )
 }));
 
 describe("useCreateBlocker", () => {
@@ -33,7 +33,7 @@ describe("useCreateBlocker", () => {
     mockBlocker = {
       state: "unblocked",
       proceed: vi.fn(),
-      reset: vi.fn(),
+      reset: vi.fn()
     };
     (useBlocker as ReturnType<typeof vi.fn>).mockReturnValue(mockBlocker);
   });
@@ -41,7 +41,7 @@ describe("useCreateBlocker", () => {
     const blockerProps = {
       messages: ["messageMock"],
       executerApresConfirmation: vi.fn(),
-      executerSiRedirectionAvecBlocageSansPopin: vi.fn(),
+      executerSiRedirectionAvecBlocageSansPopin: vi.fn()
     };
 
     const { result } = renderHook(() => useCreateBlocker(blockerProps));
@@ -57,7 +57,7 @@ describe("useCreateBlocker", () => {
   test("Doit activer le blocker et déclancher la popin", () => {
     const blockerProps = {
       messages: ["messageMock"],
-      executerApresConfirmation: vi.fn(),
+      executerApresConfirmation: vi.fn()
     };
 
     const { result } = renderHook(() => useCreateBlocker(blockerProps));
@@ -76,7 +76,7 @@ describe("useCreateBlocker", () => {
     const blockerProps = {
       messages: ["Test message"],
       executerApresConfirmation: vi.fn(),
-      titre: "Test Title",
+      titre: "Test Title"
     };
 
     const { result } = renderHook(() => useCreateBlocker(blockerProps));
@@ -93,7 +93,7 @@ describe("useCreateBlocker", () => {
     const blockerProps = {
       messages: ["messageMock"],
       executerApresConfirmation: vi.fn(),
-      titre: "TitreMock",
+      titre: "TitreMock"
     };
 
     const { result } = renderHook(() => useCreateBlocker(blockerProps));
@@ -117,7 +117,7 @@ describe("useCreateBlocker", () => {
     const blockerProps = {
       messages: ["messageMock"],
       executerApresConfirmation: vi.fn(),
-      titre: "TitreMock",
+      titre: "TitreMock"
     };
 
     const { result } = renderHook(() => useCreateBlocker(blockerProps));

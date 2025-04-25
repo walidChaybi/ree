@@ -10,7 +10,7 @@ import messageManager from "@util/messageManager";
 import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 
 export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
   const location = useLocation();

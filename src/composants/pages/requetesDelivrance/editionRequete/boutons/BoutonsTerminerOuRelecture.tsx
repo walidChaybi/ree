@@ -13,7 +13,7 @@ import { getDefaultValuesCourrier } from "@pages/requeteDelivrance/apercuRequete
 import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 
 import Bouton from "../../../../commun/bouton/Bouton";
 import BoutonListeDeroulante from "../../../../commun/bouton/BoutonListeDeroulante";

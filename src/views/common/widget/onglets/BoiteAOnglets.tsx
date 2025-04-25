@@ -1,10 +1,10 @@
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
-import { NomComposant } from "@util/habilitation/habilitationsDescription";
-import WithHabilitation from "@util/habilitation/WithHabilitation";
 import { getLibelle } from "@util/Utils";
+import WithHabilitation from "@util/habilitation/WithHabilitation";
+import { NomComposant } from "@util/habilitation/habilitationsDescription";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { LinkTab } from "./LinkTab";
 import { TabPanel } from "./TabPanel";
 
@@ -24,35 +24,17 @@ export interface IOngletProps {
   corps: CorpsOnglet;
 }
 
-const TabPanelRequetesDelivranceServiceWithHabilitation = WithHabilitation(
-  TabPanel,
-  "TabPanelRequetesDelivranceService"
-);
+const TabPanelRequetesDelivranceServiceWithHabilitation = WithHabilitation(TabPanel, "TabPanelRequetesDelivranceService");
 
-const LinkTabRequetesDelivranceServiceWithHabilitation = WithHabilitation(
-  LinkTab,
-  "LinkTabRequetesDelivranceService"
-);
+const LinkTabRequetesDelivranceServiceWithHabilitation = WithHabilitation(LinkTab, "LinkTabRequetesDelivranceService");
 
-const TabPanelRequetesInfoServiceWithHabilitation = WithHabilitation(
-  TabPanel,
-  "TabPanelRequetesInfoService"
-);
+const TabPanelRequetesInfoServiceWithHabilitation = WithHabilitation(TabPanel, "TabPanelRequetesInfoService");
 
-const LinkTabRequetesInfoServiceWithHabilitation = WithHabilitation(
-  LinkTab,
-  "LinkTabRequetesInfoService"
-);
+const LinkTabRequetesInfoServiceWithHabilitation = WithHabilitation(LinkTab, "LinkTabRequetesInfoService");
 
-const TabPanelRequetesCreationServiceWithHabilitation = WithHabilitation(
-  TabPanel,
-  "TabPanelRequetesCreationService"
-);
+const TabPanelRequetesCreationServiceWithHabilitation = WithHabilitation(TabPanel, "TabPanelRequetesCreationService");
 
-const LinkTabRequetesCreationServiceWithHabilitation = WithHabilitation(
-  LinkTab,
-  "LinkTabRequetesCreationService"
-);
+const LinkTabRequetesCreationServiceWithHabilitation = WithHabilitation(LinkTab, "LinkTabRequetesCreationService");
 
 export interface IBoiteAOngletsProps {
   onglets: IOngletProps[];
@@ -71,9 +53,7 @@ export function a11yProps(index: any) {
 }
 
 export const BoiteAOnglets: React.FC<IBoiteAOngletsProps> = props => {
-  const [selectedTabState, setSelectedTabState] = React.useState<number>(
-    props.selectedTab
-  );
+  const [selectedTabState, setSelectedTabState] = React.useState<number>(props.selectedTab);
   const navigate = useNavigate();
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -83,7 +63,10 @@ export const BoiteAOnglets: React.FC<IBoiteAOngletsProps> = props => {
 
   return (
     <>
-      <AppBar position="static" className={props.classOngletPrincipale}>
+      <AppBar
+        position="static"
+        className={props.classOngletPrincipale}
+      >
         <Tabs
           variant="fullWidth"
           value={selectedTabState}
@@ -180,7 +163,11 @@ export const BoiteAOnglets: React.FC<IBoiteAOngletsProps> = props => {
             );
           default:
             return (
-              <TabPanel value={selectedTabState} index={index} key={index}>
+              <TabPanel
+                value={selectedTabState}
+                index={index}
+                key={index}
+              >
                 {onglet.corps.composant}
               </TabPanel>
             );

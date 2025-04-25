@@ -3,7 +3,7 @@ import { ApercuRequetePriseEnChargePartieDroite } from "@pages/requeteDelivrance
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { COMPLEMENT_DESCRIPTION, ID_TYPE_ALERTE } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import { act } from "react";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 import { describe, expect, test } from "vitest";
 import { elementAvecContexte } from "../../../../../../__tests__utils__/testsUtil";
 import { userDroitnonCOMEDEC } from "../../../../../../mock/data/mockConnectedUserAvecDroit";

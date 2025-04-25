@@ -4,7 +4,7 @@ import { SaisirRDCSCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRD
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID, URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC } from "@router/ReceUrls";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getLastPathElem, getUrlWithParam } from "@util/route/UrlUtil";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
 import { DOCUMENT_DELIVRANCE } from "../../../../mock/data/NomenclatureDocumentDelivrance";

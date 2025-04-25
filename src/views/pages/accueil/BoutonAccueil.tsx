@@ -4,7 +4,7 @@ import Badge from "@mui/material/Badge";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import "../accueil/scss/BoutonAccueil.scss";
 
 interface BoutonAccueilProps {

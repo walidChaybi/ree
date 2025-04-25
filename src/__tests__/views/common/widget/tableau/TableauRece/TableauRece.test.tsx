@@ -4,7 +4,7 @@ import { NB_LIGNES_PAR_APPEL_DEFAUT, NB_LIGNES_PAR_PAGE_DEFAUT } from "@widget/t
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import React from "react";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 import { expect, test, vi } from "vitest";
 import requetes from "../../../../../mock/data/requetes.json";
 import { generateurRequetes } from "../../../../../mock/script-generation-donnees/generateurRequetes";

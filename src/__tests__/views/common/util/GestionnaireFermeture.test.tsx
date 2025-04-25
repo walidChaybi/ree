@@ -1,10 +1,7 @@
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { render } from "@testing-library/react";
-import {
-  GestionnaireFermeture,
-  appelRequetesASigner
-} from "@util/GestionnaireFermeture";
-import { MemoryRouter } from "react-router-dom";
+import { GestionnaireFermeture, appelRequetesASigner } from "@util/GestionnaireFermeture";
+import { MemoryRouter } from "react-router";
 import { test, vi } from "vitest";
 
 const xhrMockObj = {
@@ -26,9 +23,7 @@ test("renders GestionnaireFermeture", () => {
 
   render(
     <MemoryRouter>
-      <GestionnaireFermeture
-        urlRedirection={URL_MES_REQUETES_DELIVRANCE}
-      ></GestionnaireFermeture>
+      <GestionnaireFermeture urlRedirection={URL_MES_REQUETES_DELIVRANCE}></GestionnaireFermeture>
     </MemoryRouter>
   );
 

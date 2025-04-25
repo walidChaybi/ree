@@ -3,7 +3,7 @@ import BoutonPrendreEnChargeRequeteSuivanteCreation from "@pages/requeteCreation
 import { URL_MES_REQUETES_CREATION, URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { expect, test } from "vitest";
 import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
 import { userDroitCreerActeEtabliPerimetreTousRegistres } from "../../../../mock/data/mockConnectedUserAvecDroit";

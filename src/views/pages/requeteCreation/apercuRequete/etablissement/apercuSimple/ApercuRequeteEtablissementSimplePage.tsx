@@ -1,7 +1,4 @@
-import {
-    IDetailRequeteParams,
-    useDetailRequeteApiHook
-} from "@hook/requete/DetailRequeteHook";
+import { IDetailRequeteParams, useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
@@ -10,13 +7,13 @@ import { getLibelle } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router";
 import "../../../commun/scss/ApercuReqCreationPage.scss";
 import { SuiviDossier } from "../apercuPriseEnCharge/contenu/SuiviDossier";
 import {
-    getConteneurPieceJustificative,
-    getConteneurResumeRequete,
-    onRenommePieceJustificativeEtablissement
+  getConteneurPieceJustificative,
+  getConteneurResumeRequete,
+  onRenommePieceJustificativeEtablissement
 } from "../commun/ApercuRequeteEtablissementUtils";
 import { BoutonsApercuRequeteCreationEtablissement } from "../commun/BoutonsApercuRequeteCreationEtablissement";
 import "../commun/scss/OngletsApercuCreationEtablissement.scss";
@@ -31,17 +28,14 @@ interface ItemListe {
   component: JSX.Element;
 }
 
-export const ApercuRequeteEtablissementSimplePage: React.FC<
-  ApercuRequeteEtablissementSimplePageProps
-> = props => {
+export const ApercuRequeteEtablissementSimplePage: React.FC<ApercuRequeteEtablissementSimplePageProps> = props => {
   // Params & History
   const { idRequeteParam } = useParams<TUuidRequeteParams>();
   const location = useLocation();
 
   // States
   const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
-  const [detailRequeteParams, setDetailRequeteParams] =
-    useState<IDetailRequeteParams>();
+  const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>();
 
   // Hooks
   const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
@@ -65,18 +59,8 @@ export const ApercuRequeteEtablissementSimplePage: React.FC<
     });
   }
 
-  function onRenommePieceJustificativeSimple(
-    idPieceJustificative: string,
-    nouveauLibelle: string,
-    idDocumentPJ?: string
-  ) {
-    onRenommePieceJustificativeEtablissement(
-      requete,
-      setRequete,
-      idPieceJustificative,
-      nouveauLibelle,
-      idDocumentPJ
-    );
+  function onRenommePieceJustificativeSimple(idPieceJustificative: string, nouveauLibelle: string, idDocumentPJ?: string) {
+    onRenommePieceJustificativeEtablissement(requete, setRequete, idPieceJustificative, nouveauLibelle, idDocumentPJ);
   }
 
   const liste: ItemListe[] = [
@@ -116,11 +100,7 @@ export const ApercuRequeteEtablissementSimplePage: React.FC<
             <BoutonsApercuRequeteCreationEtablissement requete={requete} />
           </div>
 
-          {getConteneurPieceJustificative(
-            requete,
-            onRenommePieceJustificativeSimple,
-            rechargerRequete
-          )}
+          {getConteneurPieceJustificative(requete, onRenommePieceJustificativeSimple, rechargerRequete)}
         </>
       ) : (
         <OperationLocaleEnCoursSimple />

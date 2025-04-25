@@ -6,7 +6,7 @@ import { GestionnaireBlockErreur } from "@widget/formulaire/GestionnaireBlockErr
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import Bouton from "../../../../../composants/commun/bouton/Bouton";
 import "./scss/SaisirRequeteBoutons.scss";
 

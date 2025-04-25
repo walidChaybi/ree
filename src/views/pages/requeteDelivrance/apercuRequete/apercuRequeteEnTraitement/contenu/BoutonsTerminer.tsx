@@ -13,7 +13,7 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useCallback, useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import SignatureDelivrance from "../../../../../../composants/commun/signature/SignatureDelivrance";
 import { BoutonTerminerApresImpression } from "./BoutonTerminerApresImpression";
 import { BoutonTransmettreAValideur } from "./BoutonTransmettreAValideur";

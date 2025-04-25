@@ -21,8 +21,8 @@ describe("Partie Documents", () => {
   const idRequete = "9d00fe88-9d21-482e-bb02-223636f78386";
 
   const mockedUseNavigate = vi.fn();
-  vi.mock("react-router-dom", async () => {
-    const mod = await vi.importActual<typeof import("react-router-dom")>("react-router-dom");
+  vi.mock("react-router", async () => {
+    const mod = await vi.importActual<typeof import("react-router")>("react-router");
     return {
       ...mod,
       useNavigate: () => mockedUseNavigate

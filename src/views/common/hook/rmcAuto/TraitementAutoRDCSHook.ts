@@ -18,7 +18,7 @@ import messageManager from "@util/messageManager";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import {
   IGenerationCertificatSituationParams,
   useGenerationCertificatSituationHook

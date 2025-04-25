@@ -1,18 +1,9 @@
 import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
 import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
-import {
-  URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-  URL_MES_REQUETES_DELIVRANCE
-} from "@router/ReceUrls";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { expect, test, vi } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
@@ -30,12 +21,7 @@ test("clique requete liée", async () => {
         element: <EspaceDelivrancePage />
       }
     ],
-    [
-      getUrlWithParam(
-        URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
-        "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
-      )
-    ]
+    [getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856")]
   );
 
   await act(async () => {

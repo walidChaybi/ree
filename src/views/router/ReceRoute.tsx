@@ -8,7 +8,7 @@ import {
 import messageManager from "@util/messageManager";
 import { IRoute } from "@util/route/IRoute";
 import { useContext, useMemo } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router";
 import { URL_ACCUEIL } from "./ReceUrls";
 
 interface IReceRouteProps {

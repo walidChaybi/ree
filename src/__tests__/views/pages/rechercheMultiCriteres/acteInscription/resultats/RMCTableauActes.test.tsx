@@ -1,7 +1,7 @@
 import { RMCTableauActes } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauActes";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { NB_LIGNES_PAR_APPEL_ACTE, NB_LIGNES_PAR_PAGE_ACTE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { beforeAll, expect, test } from "vitest";
 import { createTestingRouter, mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 import { DataRMCActeAvecResultat, DataTableauActe } from "../../../../../mock/data/RMCActe";

@@ -1,32 +1,23 @@
 import { listeValideurToOptions } from "@composant/menuTransfert/MenuTransfertUtil";
-import {
-  ITransfertPopinForm,
-  TransfertPopin,
-} from "@composant/menuTransfert/TransfertPopin";
+import { ITransfertPopinForm, TransfertPopin } from "@composant/menuTransfert/TransfertPopin";
 import { RECEContextData } from "@core/contexts/RECEContext";
-import {
-  ITransmettreAValideurParams,
-  useTransmettreAValideurApiHook,
-} from "@hook/requete/TransmettreAValideur";
+import { ITransmettreAValideurParams, useTransmettreAValideurApiHook } from "@hook/requete/TransmettreAValideur";
 import { Option } from "@util/Type";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 import Bouton, { IBoutonProps } from "../../../../commun/bouton/Bouton";
 
 interface BoutonTransmettreAValideurProps extends IBoutonProps {
   idRequete: string;
 }
 
-export const BoutonTransmettreAValideur: React.FC<
-  BoutonTransmettreAValideurProps
-> = ({ idRequete, ...props }) => {
+export const BoutonTransmettreAValideur: React.FC<BoutonTransmettreAValideurProps> = ({ idRequete, ...props }) => {
   const [open, setOpen] = useState<boolean>(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { utilisateurs, utilisateurConnecte } = useContext(RECEContextData);
-  const [transmettreAValideurParams, setTransmettreAValideurParams] =
-    useState<ITransmettreAValideurParams>();
+  const [transmettreAValideurParams, setTransmettreAValideurParams] = useState<ITransmettreAValideurParams>();
 
   const onValidate = useCallback(
     (optionUtilisateur?: Option, texte?: string) => {
@@ -34,15 +25,13 @@ export const BoutonTransmettreAValideur: React.FC<
         const texteObservation = ` - ${texte}`;
         setTransmettreAValideurParams({
           libelleAction: "Requête transmise",
-          texteObservation: `${"Requête transmise"}${
-            texte ? texteObservation : ""
-          }`,
+          texteObservation: `${"Requête transmise"}${texte ? texteObservation : ""}`,
           requeteId: idRequete,
-          idUtilisateur: optionUtilisateur.cle,
+          idUtilisateur: optionUtilisateur.cle
         });
       }
     },
-    [idRequete],
+    [idRequete]
   );
 
   const idAction = useTransmettreAValideurApiHook(transmettreAValideurParams);
@@ -55,19 +44,17 @@ export const BoutonTransmettreAValideur: React.FC<
 
   return (
     <>
-      <Bouton onClick={() => setOpen(true)} {...props}>
+      <Bouton
+        onClick={() => setOpen(true)}
+        {...props}
+      >
         Transmettre à valideur
       </Bouton>
       <TransfertPopin
-        onValidate={(valeurs: ITransfertPopinForm) =>
-          onValidate(valeurs.optionChoisie, valeurs.texte)
-        }
+        onValidate={(valeurs: ITransfertPopinForm) => onValidate(valeurs.optionChoisie, valeurs.texte)}
         open={open}
         onClose={() => setOpen(false)}
-        options={listeValideurToOptions(
-          utilisateurs,
-          utilisateurConnecte?.idUtilisateur,
-        )}
+        options={listeValideurToOptions(utilisateurs, utilisateurConnecte?.idUtilisateur)}
         titre="Transmettre à valideur"
         placeholder="Pour vérification"
         libelleAvantTexte="Message pour valideur :"

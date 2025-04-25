@@ -1,8 +1,5 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import {
-  ICreationActionEtMiseAjourStatutParams,
-  usePostCreationActionEtMiseAjourStatutApi
-} from "@hook/requete/ActionHook";
+import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import { Droit } from "@model/agent/enum/Droit";
 import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -13,22 +10,18 @@ import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 
 interface BoutonTerminerApresImpressionProps {
   requete: IRequeteDelivrance;
 }
 
-export const BoutonTerminerApresImpression: React.FC<
-  BoutonTerminerApresImpressionProps
-> = props => {
+export const BoutonTerminerApresImpression: React.FC<BoutonTerminerApresImpressionProps> = props => {
   const navigate = useNavigate();
   const location = useLocation();
   const { utilisateurConnecte } = useContext(RECEContextData);
 
-  const [majStatutParams, setMajStatutParams] = useState<
-    ICreationActionEtMiseAjourStatutParams | undefined
-  >();
+  const [majStatutParams, setMajStatutParams] = useState<ICreationActionEtMiseAjourStatutParams | undefined>();
 
   // 1 - Ajout de l'action et mise à jour du statut
   const setActionEtUpdateStatut = () => {
@@ -48,18 +41,14 @@ export const BoutonTerminerApresImpression: React.FC<
   }, [idAction, location.pathname, navigate]);
 
   const estAValiderOuASigner =
-    props.requete.statutCourant.statut === StatutRequete.A_VALIDER ||
-    props.requete.statutCourant.statut === StatutRequete.A_SIGNER;
+    props.requete.statutCourant.statut === StatutRequete.A_VALIDER || props.requete.statutCourant.statut === StatutRequete.A_SIGNER;
 
-  const requeteCourrier =
-    props.requete.sousType === SousTypeDelivrance.RDC ||
-    props.requete.sousType === SousTypeDelivrance.RDCSC;
+  const requeteCourrier = props.requete.sousType === SousTypeDelivrance.RDC || props.requete.sousType === SousTypeDelivrance.RDCSC;
 
   const afficherBouton = requeteCourrier && estAValiderOuASigner;
 
   function estActif() {
-    const mAppartient =
-      props.requete.idUtilisateur === utilisateurConnecte?.idUtilisateur;
+    const mAppartient = props.requete.idUtilisateur === utilisateurConnecte?.idUtilisateur;
     return (
       mAppartient &&
       officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER) &&

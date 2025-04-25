@@ -3,7 +3,7 @@ import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
 import { URL_REQUETES_CREATION_SERVICE } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { expect, test } from "vitest";
 import IHabilitationDto from "../../../../../dto/etatcivil/agent/IHabilitationDto";
 import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";

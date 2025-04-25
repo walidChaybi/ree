@@ -7,7 +7,7 @@ import {
 } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { Navigate, RouterProvider } from "react-router-dom";
+import { Navigate, RouterProvider } from "react-router";
 import { beforeAll, expect, test } from "vitest";
 import PageEditionRequeteDelivrance from "../../../../../../pages/requetesDelivrance/PageEditionRequeteDelivrance";
 import { createTestingRouter, mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";

@@ -10,7 +10,7 @@ import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import ListesTypesMentionForm from "@pages/requeteMiseAJour/apercuRequete/contenu/MiseAJourMentions/form/ListesTypesMentionForm";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Formik } from "formik";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 import { describe, expect, test } from "vitest";
 import { NATURE_MENTION } from "../../../../../../../mock/data/NomenclatureNatureMention";
 import { TYPE_MENTION } from "../../../../../../../mock/data/NomenclatureTypeMention";

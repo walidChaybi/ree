@@ -4,7 +4,7 @@ import { statutsRequetesCreation } from "@pages/requeteCreation/espaceCreation/p
 import { URL_MES_REQUETES_CREATION } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { expect, test } from "vitest";
 import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
 import { userDroitCreerActeTranscritPerimetreTousRegistres } from "../../../../mock/data/mockConnectedUserAvecDroit";

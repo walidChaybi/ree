@@ -2,10 +2,10 @@ import { TUuidSuiviDossierParams } from "@model/params/TUuidSuiviDossierParams";
 import { TypePopinSignature } from "@model/signature/ITypePopinSignature";
 import { URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID } from "@router/ReceUrls";
 import { replaceUrl } from "@util/route/UrlUtil";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router";
+import { PopinSignature, PopinSignatureProps } from "./PopinSignature";
 import { useSignatureCreationEtablisementHook } from "./hook/SignatureCreationActeEtablissementHook";
 import { PopinPlageHoraireNonAutorisee } from "./messages/PopinPlageHoraireNonAutorisee";
-import { PopinSignature, PopinSignatureProps } from "./PopinSignature";
 import "./scss/PopinSignature.scss";
 
 type PopinSignatureCreationEtablissementProps = {
@@ -14,35 +14,26 @@ type PopinSignatureCreationEtablissementProps = {
 
 const TRAITEMENT_SIGNATURE_TIMEOUT_MS = 45000;
 
-export const PopinSignatureCreationEtablissement: React.FC<
-  PopinSignatureCreationEtablissementProps
-> = ({ idActe, estOuvert, setEstOuvert }) => {
+export const PopinSignatureCreationEtablissement: React.FC<PopinSignatureCreationEtablissementProps> = ({
+  idActe,
+  estOuvert,
+  setEstOuvert
+}) => {
   const navigate = useNavigate();
-  const { idRequeteParam, idSuiviDossierParam } =
-    useParams<TUuidSuiviDossierParams>();
+  const { idRequeteParam, idSuiviDossierParam } = useParams<TUuidSuiviDossierParams>();
 
   const redirectionApresSuccesTraitementSignature = () => {
     if (idActe) {
-      const url =
-        URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID.replace(
-          ":idRequeteParam",
-          idRequeteParam || ""
-        ).replace(":idActeParam", idActe);
+      const url = URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID.replace(
+        ":idRequeteParam",
+        idRequeteParam || ""
+      ).replace(":idActeParam", idActe);
       replaceUrl(navigate, url);
     }
   };
 
-  const {
-    documentASigner,
-    onSuccesSignatureAppNative,
-    etatTraitementSignature,
-    onTraitementSignatureTermine
-  } = useSignatureCreationEtablisementHook(
-    redirectionApresSuccesTraitementSignature,
-    idActe,
-    idRequeteParam,
-    idSuiviDossierParam
-  );
+  const { documentASigner, onSuccesSignatureAppNative, etatTraitementSignature, onTraitementSignatureTermine } =
+    useSignatureCreationEtablisementHook(redirectionApresSuccesTraitementSignature, idActe, idRequeteParam, idSuiviDossierParam);
 
   return (
     <>
@@ -57,9 +48,7 @@ export const PopinSignatureCreationEtablissement: React.FC<
         onTraitementSignatureTermine={onTraitementSignatureTermine}
         timeoutTraitementSignature={TRAITEMENT_SIGNATURE_TIMEOUT_MS}
       />
-      <PopinPlageHoraireNonAutorisee
-        etatTraitementSignature={etatTraitementSignature}
-      />
+      <PopinPlageHoraireNonAutorisee etatTraitementSignature={etatTraitementSignature} />
     </>
   );
 };

@@ -5,15 +5,13 @@ import { ITransmettreAValideurParams, useTransmettreAValideurApiHook } from "@ho
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 
 interface BoutonTransmettreAValideurProps {
   idRequete: string;
 }
 
-export const BoutonTransmettreAValideur: React.FC<
-  BoutonTransmettreAValideurProps
-> = props => {
+export const BoutonTransmettreAValideur: React.FC<BoutonTransmettreAValideurProps> = props => {
   const [open, setOpen] = useState<boolean>(false);
   const location = useLocation();
   const navigate = useNavigate();

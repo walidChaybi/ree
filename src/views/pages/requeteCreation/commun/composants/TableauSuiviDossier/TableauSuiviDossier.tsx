@@ -27,7 +27,7 @@ import {
   getColonneFontAwesomeIcone
 } from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/ColonneFontAwesomeIcone";
 import React, { useContext, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 import ModalBulletinIdentification from "./ModalBulletinIdentification";
 import { IDataBulletinIdentificationResultat } from "./ModalBulletinIdentificationApiHook";
 import { ILigneTableauSuiviDossier, ITableauSuiviDossierParams, useTableauSuiviDossierHook } from "./TableauSuiviDossierHook";

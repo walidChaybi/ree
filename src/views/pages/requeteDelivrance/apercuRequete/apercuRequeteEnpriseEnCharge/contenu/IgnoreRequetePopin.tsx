@@ -9,16 +9,12 @@ import { getLibelle } from "@util/Utils";
 import { getUrlPrecedente } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { Formulaire } from "@widget/formulaire/Formulaire";
-import {
-  ALERTE_AUTRE,
-  ALERTE_OBLIGATOIRE,
-  COMPLEMENT_DESCRIPTION_LIMITE_TAILLE
-} from "@widget/formulaire/FormulaireMessages";
+import { ALERTE_AUTRE, ALERTE_OBLIGATOIRE, COMPLEMENT_DESCRIPTION_LIMITE_TAILLE } from "@widget/formulaire/FormulaireMessages";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import FormBoutons, { FormBoutonsProps } from "@widget/popin/FormBoutons";
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 import * as Yup from "yup";
 import "../scss/IgnoreRequetePopin.scss";
 
@@ -50,16 +46,8 @@ const ValidationSchema = Yup.object({
   [MOTIF_IGNORE]: Yup.string().required(ALERTE_OBLIGATOIRE),
   [COMPLEMENT_IGNORE]: Yup.string().when(MOTIF_IGNORE, {
     is: (value: string) => value === AUTRE,
-    then: Yup.string()
-      .max(
-        COMPLEMENT_DESCRIPTION_MAX_LENGTH,
-        COMPLEMENT_DESCRIPTION_LIMITE_TAILLE
-      )
-      .required(ALERTE_AUTRE),
-    otherwise: Yup.string().max(
-      COMPLEMENT_DESCRIPTION_MAX_LENGTH,
-      COMPLEMENT_DESCRIPTION_LIMITE_TAILLE
-    )
+    then: Yup.string().max(COMPLEMENT_DESCRIPTION_MAX_LENGTH, COMPLEMENT_DESCRIPTION_LIMITE_TAILLE).required(ALERTE_AUTRE),
+    otherwise: Yup.string().max(COMPLEMENT_DESCRIPTION_MAX_LENGTH, COMPLEMENT_DESCRIPTION_LIMITE_TAILLE)
   })
 });
 
@@ -67,11 +55,7 @@ const REQUETE_DEJA_TRAITEE = "Requête déjà traitée";
 const ADRESSE_INCOMPLETE = "Adresse incomplète";
 const AUTRE = "Autre";
 
-export const IgnoreRequetePopin: React.FC<IgnoreRequetePopinProps> = ({
-  isOpen,
-  onClosePopin,
-  requete
-}) => {
+export const IgnoreRequetePopin: React.FC<IgnoreRequetePopinProps> = ({ isOpen, onClosePopin, requete }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -86,9 +70,7 @@ export const IgnoreRequetePopin: React.FC<IgnoreRequetePopinProps> = ({
     setOperationEnCours(true);
     setParam({
       idRequete: requete.id,
-      texteObservation: `${res[MOTIF_IGNORE]}${
-        res[COMPLEMENT_IGNORE] ? " - " : ""
-      }${res[COMPLEMENT_IGNORE]}`
+      texteObservation: `${res[MOTIF_IGNORE]}${res[COMPLEMENT_IGNORE] ? " - " : ""}${res[COMPLEMENT_IGNORE]}`
     });
     onClosePopin();
   };
@@ -121,9 +103,7 @@ export const IgnoreRequetePopin: React.FC<IgnoreRequetePopinProps> = ({
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {getLibelle("Ignorer la requête")}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">{getLibelle("Ignorer la requête")}</DialogTitle>
         <DialogContent>
           <Formulaire
             className="IgnoreRequetePopin"
@@ -132,9 +112,7 @@ export const IgnoreRequetePopin: React.FC<IgnoreRequetePopinProps> = ({
             onSubmit={onSubmit}
           >
             <DialogContentText id="alert-dialog-description">
-              {getLibelle(
-                `Vous allez ignorer la requête sans donner de réponse à l'usager.`
-              )}
+              {getLibelle(`Vous allez ignorer la requête sans donner de réponse à l'usager.`)}
               <br />
               {getLibelle(`
             Merci de choisir un motif et d'indiquer une observation sur la requête pour expliquer votre action :`)}

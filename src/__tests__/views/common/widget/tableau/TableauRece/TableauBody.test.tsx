@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { RenderIconPrioriteRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { TableauBody } from "@widget/tableau/TableauRece/TableauBody";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router";
 import { expect, test } from "vitest";
 
 const subData = {
@@ -98,22 +98,19 @@ test("test des prioritées des requêtes", () => {
 
   let colonnePrioriteElement = screen.getByTestId("100");
 
-  let element = (colonnePrioriteElement.lastChild as HTMLTableCellElement)
-    .innerHTML;
+  let element = (colonnePrioriteElement.lastChild as HTMLTableCellElement).innerHTML;
 
   expect(element.indexOf("Priorité moyenne")).toBeGreaterThan(-1);
 
   colonnePrioriteElement = screen.getByTestId("101");
 
-  element = (colonnePrioriteElement.lastChild as HTMLTableCellElement)
-    .innerHTML;
+  element = (colonnePrioriteElement.lastChild as HTMLTableCellElement).innerHTML;
 
   expect(element.indexOf("Priorité basse")).toBeGreaterThan(-1);
 
   colonnePrioriteElement = screen.getByTestId("102");
 
-  element = (colonnePrioriteElement.lastChild as HTMLTableCellElement)
-    .innerHTML;
+  element = (colonnePrioriteElement.lastChild as HTMLTableCellElement).innerHTML;
 
   expect(element.indexOf("Priorité haute")).toBeGreaterThan(-1);
 });

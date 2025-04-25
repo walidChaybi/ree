@@ -1,7 +1,4 @@
-import {
-  PIECES_JOINTES,
-  REPONSE
-} from "@composant/formulaire/ConstantesNomsForm";
+import { PIECES_JOINTES, REPONSE } from "@composant/formulaire/ConstantesNomsForm";
 import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import { IReponseRequeteInfo } from "@model/requete/IReponseRequeteInfo";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
@@ -14,16 +11,10 @@ import { Fieldset } from "@widget/fieldset/Fieldset";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import * as Yup from "yup";
-import {
-  IEnvoyerReponseReqInfoParams,
-  useEnvoyerReponsesReqInfoHook
-} from "../hook/EnvoyerReponseReqInfoHook";
-import {
-  ISauvegarderReponseReqInfoParams,
-  useSauvegarderReponsesReqInfoHook
-} from "../hook/SauvegarderReponseReqInfoHook";
+import { IEnvoyerReponseReqInfoParams, useEnvoyerReponsesReqInfoHook } from "../hook/EnvoyerReponseReqInfoHook";
+import { ISauvegarderReponseReqInfoParams, useSauvegarderReponsesReqInfoHook } from "../hook/SauvegarderReponseReqInfoHook";
 import "../scss/ReponseReqInfo.scss";
 import PiecesJointesReqInfoForm from "./PiecesJointesReqInfoForm";
 import ReponseReqInfoBoutons from "./ReponseReqInfoBoutons";
@@ -44,8 +35,7 @@ export interface ReponseReqInfoProps {
   onclickPrendreEnCharge?: () => void;
 }
 
-export type ReponseReqInfoFormProps = FormikComponentProps &
-  ReponseReqInfoProps;
+export type ReponseReqInfoFormProps = FormikComponentProps & ReponseReqInfoProps;
 
 const DefaultValuesReponseInfoForm = {
   [REPONSE]: DefaultValuesReponseInfoSubForm,
@@ -71,28 +61,14 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
   onclickPrendreEnCharge
 }) => {
   const navigate = useNavigate();
-  const blocsForm: JSX.Element = getReponseForm(
-    formulaireDisabled,
-    boutonVisible,
-    reponse,
-    affichageBoutonPrendreEnCharge
-  );
+  const blocsForm: JSX.Element = getReponseForm(formulaireDisabled, boutonVisible, reponse, affichageBoutonPrendreEnCharge);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
-  const [reponseSaisie, setReponseSaisie] = useState<
-    ISauvegarderReponseReqInfoParams | undefined
-  >();
-  const [reponseASauvegarder, setReponseASauvegarder] = useState<
-    ISauvegarderReponseReqInfoParams | undefined
-  >();
-  const [reponseAEnvoyer, setReponseAEnvoyer] = useState<
-    IEnvoyerReponseReqInfoParams | undefined
-  >();
-  const [ajoutPieceJointeTermine, setAjoutPieceJointeTermine] =
-    useState<boolean>(false);
-  const [piecesAEnvoyer, setPiecesAEnvoyer] = useState<
-    PieceJointe[] | undefined
-  >();
+  const [reponseSaisie, setReponseSaisie] = useState<ISauvegarderReponseReqInfoParams | undefined>();
+  const [reponseASauvegarder, setReponseASauvegarder] = useState<ISauvegarderReponseReqInfoParams | undefined>();
+  const [reponseAEnvoyer, setReponseAEnvoyer] = useState<IEnvoyerReponseReqInfoParams | undefined>();
+  const [ajoutPieceJointeTermine, setAjoutPieceJointeTermine] = useState<boolean>(false);
+  const [piecesAEnvoyer, setPiecesAEnvoyer] = useState<PieceJointe[] | undefined>();
 
   const onSubmit = (reponseForm: IReponseInfoFormValue) => {
     setOperationEnCours(true);
@@ -109,11 +85,7 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
   };
 
   // 1 - On sauvegarde les pièces jointes
-  const postPiecesJointesApiResultat = usePostPiecesJointesApi(
-    TypePieceJointe.PIECE_COMPLEMENT_INFORMATION,
-    requete.id,
-    piecesAEnvoyer
-  );
+  const postPiecesJointesApiResultat = usePostPiecesJointesApi(TypePieceJointe.PIECE_COMPLEMENT_INFORMATION, requete.id, piecesAEnvoyer);
 
   useEffect(() => {
     if (postPiecesJointesApiResultat && !postPiecesJointesApiResultat.erreur) {
@@ -204,7 +176,10 @@ export function getReponseForm(
           disabled={formulaireDisabled}
         />
       )}
-      <ReponseReqInfoSubForm key={REPONSE} {...reponseReqInfoFromProps} />
+      <ReponseReqInfoSubForm
+        key={REPONSE}
+        {...reponseReqInfoFromProps}
+      />
     </>
   );
 }

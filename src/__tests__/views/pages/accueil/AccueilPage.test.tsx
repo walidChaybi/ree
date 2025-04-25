@@ -1,7 +1,7 @@
 import { IOfficier } from "@model/agent/IOfficier";
 import { AccueilPage } from "@pages/accueil/AccueilPage";
 import { render, screen, waitFor } from "@testing-library/react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router";
 import { expect, test } from "vitest";
 import MockRECEContextProvider from "../../../mock/context/MockRECEContextProvider";
 import mockConnectedUser from "../../../mock/data/connectedUser.json";

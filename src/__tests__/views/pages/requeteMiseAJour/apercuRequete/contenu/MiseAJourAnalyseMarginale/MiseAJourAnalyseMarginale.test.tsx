@@ -6,7 +6,7 @@ import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import ApercuRequeteMiseAJourPage from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
 import { URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS, URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
 import MockRECEContextProvider from "../../../../../../mock/context/MockRECEContextProvider";

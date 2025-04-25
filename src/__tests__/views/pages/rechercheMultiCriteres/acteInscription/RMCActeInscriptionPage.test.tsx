@@ -5,7 +5,7 @@ import { titreForm } from "@pages/rechercheMultiCriteres/acteInscription/RMCActe
 import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import * as TableauPaginationConstantes from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { afterEach, beforeAll, expect, test } from "vitest";
 import { createTestingRouter, elementAvecContexte, mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
 

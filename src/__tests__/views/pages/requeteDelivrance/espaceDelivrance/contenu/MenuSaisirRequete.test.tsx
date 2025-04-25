@@ -14,7 +14,7 @@ import {
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { describe, expect, test, vi } from "vitest";
 import { createTestingRouter, elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
 import { userDroitnonCOMEDEC } from "../../../../../mock/data/mockConnectedUserAvecDroit";

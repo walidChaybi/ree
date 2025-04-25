@@ -3,7 +3,7 @@ import { AccueilPage } from "@pages/accueil/AccueilPage";
 import { URL_BASE } from "@router/ReceUrls";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { Categorie } from "@widget/filAriane/Categorie";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 

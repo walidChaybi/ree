@@ -2,7 +2,7 @@ import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { act } from "react";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { describe, expect, test, vi } from "vitest";
 import PartieActe from "../../../../composants/pages/requetesMiseAJour/PartieActe";
 import EditionMiseAJourContextProvider from "../../../../contexts/EditionMiseAJourContextProvider";
@@ -10,8 +10,8 @@ import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 import { TYPE_ALERTE } from "../../../mock/data/NomenclatureTypeAlerte";
 
 const mockedUseNavigate = vi.fn();
-vi.mock("react-router-dom", async () => {
-  const mod = await vi.importActual<typeof import("react-router-dom")>("react-router-dom");
+vi.mock("react-router", async () => {
+  const mod = await vi.importActual<typeof import("react-router")>("react-router");
   return {
     ...mod,
     useNavigate: () => mockedUseNavigate

@@ -3,7 +3,7 @@ import { Body } from "@core/body/Body";
 import { Header } from "@core/header/Header";
 import { PageMessage } from "@core/login/PageMessage";
 import { IRoute } from "@util/route/IRoute";
-import { Navigate, Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
+import { Navigate, Route, createBrowserRouter, createRoutesFromElements } from "react-router";
 import ReceRoute from "./ReceRoute";
 import { routesRece } from "./ReceRoutes";
 import { URL_ACCUEIL, URL_DECONNEXION } from "./ReceUrls";

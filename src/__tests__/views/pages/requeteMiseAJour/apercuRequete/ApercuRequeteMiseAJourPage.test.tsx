@@ -15,7 +15,7 @@ import {
   URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID
 } from "@router/ReceUrls";
 import { createEvent, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { describe, expect, test, vi } from "vitest";
 import IHabilitationDto from "../../../../../dto/etatcivil/agent/IHabilitationDto";
 import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";

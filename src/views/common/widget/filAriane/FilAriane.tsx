@@ -6,7 +6,7 @@ import { IRoute } from "@util/route/IRoute";
 import { URL_SEPARATEUR, getUrlWithoutIdParam, getUrlWithoutParam, isPathElemId } from "@util/route/UrlUtil";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useContext } from "react";
-import { useBlocker, useLocation } from "react-router-dom";
+import { useBlocker, useLocation } from "react-router";
 import { Categorie } from "./Categorie";
 
 // Gère l'empilement des urls visités par l'utilisateur

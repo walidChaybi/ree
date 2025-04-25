@@ -2,34 +2,25 @@
 /*
  * fichier non testé car composant à supprimer dans étape 2
  */
-import {
-  ICreationActionEtMiseAjourStatutParams,
-  usePostCreationActionEtMiseAjourStatutApi
-} from "@hook/requete/ActionHook";
+import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import { getLibelle } from "@util/Utils";
 import { GestionnaireARetraiterDansSaga } from "@util/migration/GestionnaireARetraiterDansSaga";
 import { goBack } from "@util/route/UrlUtil";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import "./scss/BoutonARetraiterSaga.scss";
 
 interface BoutonARetraiterSagaProps {
   idRequete: string;
 }
 
-export const BoutonARetraiterSaga: React.FC<BoutonARetraiterSagaProps> = ({
-  idRequete
-}) => {
+export const BoutonARetraiterSaga: React.FC<BoutonARetraiterSagaProps> = ({ idRequete }) => {
   const navigate = useNavigate();
-  const [
-    creationActionEtMiseAjourStatutParams,
-    setCreationActionEtMiseAjourStatutParams
-  ] = useState<ICreationActionEtMiseAjourStatutParams>();
+  const [creationActionEtMiseAjourStatutParams, setCreationActionEtMiseAjourStatutParams] =
+    useState<ICreationActionEtMiseAjourStatutParams>();
 
-  const idActionCreee = usePostCreationActionEtMiseAjourStatutApi(
-    creationActionEtMiseAjourStatutParams
-  );
+  const idActionCreee = usePostCreationActionEtMiseAjourStatutApi(creationActionEtMiseAjourStatutParams);
 
   useEffect(() => {
     if (idActionCreee) {

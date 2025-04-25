@@ -1,7 +1,7 @@
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import { BoutonAccueil } from "@pages/accueil/BoutonAccueil";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router";
 import { expect, test, vi } from "vitest";
 
 test("renders texte du bouton d'accueil", () => {

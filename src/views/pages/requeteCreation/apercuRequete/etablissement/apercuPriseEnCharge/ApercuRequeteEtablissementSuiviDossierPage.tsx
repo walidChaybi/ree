@@ -1,7 +1,4 @@
-import {
-  IDetailRequeteParams,
-  useDetailRequeteApiHook
-} from "@hook/requete/DetailRequeteHook";
+import { IDetailRequeteParams, useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
@@ -14,7 +11,7 @@ import { DEUX, getLibelle } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router";
 import "../../../commun/scss/ApercuReqCreationPage.scss";
 import {
   getConteneurPieceJustificative,
@@ -35,16 +32,13 @@ interface ItemListe {
   component: JSX.Element;
 }
 
-export const ApercuRequeteEtablissementSuiviDossierPage: React.FC<
-  ApercuRequeteEtablissementSuiviDossierPageProps
-> = props => {
+export const ApercuRequeteEtablissementSuiviDossierPage: React.FC<ApercuRequeteEtablissementSuiviDossierPageProps> = props => {
   // Params & History
   const { idRequeteParam } = useParams<TUuidRequeteParams>();
   const location = useLocation();
   // States
   const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
-  const [detailRequeteParams, setDetailRequeteParams] =
-    useState<IDetailRequeteParams>();
+  const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>();
 
   // Hooks
   const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
@@ -76,18 +70,8 @@ export const ApercuRequeteEtablissementSuiviDossierPage: React.FC<
     }
   }, [detailRequeteState]);
 
-  function onRenommePieceJustificativeSuiviDossier(
-    idPieceJustificative: string,
-    nouveauLibelle: string,
-    idDocumentPJ?: string
-  ) {
-    onRenommePieceJustificativeEtablissement(
-      requete,
-      setRequete,
-      idPieceJustificative,
-      nouveauLibelle,
-      idDocumentPJ
-    );
+  function onRenommePieceJustificativeSuiviDossier(idPieceJustificative: string, nouveauLibelle: string, idDocumentPJ?: string) {
+    onRenommePieceJustificativeEtablissement(requete, setRequete, idPieceJustificative, nouveauLibelle, idDocumentPJ);
   }
 
   const liste: ItemListe[] = [
@@ -110,19 +94,11 @@ export const ApercuRequeteEtablissementSuiviDossierPage: React.FC<
           resultatRMCPersonne={resultatRMCAutoPersonne ?? []}
           sousTypeRequete={requete?.sousType}
           listeTitulaires={requete?.titulaires}
-          natureActeRequete={NatureActeRequete.getEnumFor(
-            requete?.nature ?? ""
-          )}
+          natureActeRequete={NatureActeRequete.getEnumFor(requete?.nature ?? "")}
           tableauRMCPersonneEnChargement={rmcAutoPersonneEnChargement}
-          tableauActesInscriptionsSelectionnesEnChargement={
-            !dataActesInscriptionsSelectionnes
-          }
-          dataActesInscriptionsSelectionnes={
-            dataActesInscriptionsSelectionnes || []
-          }
-          setDataActesInscriptionsSelectionnes={
-            setDataActesInscriptionsSelectionnes
-          }
+          tableauActesInscriptionsSelectionnesEnChargement={!dataActesInscriptionsSelectionnes}
+          dataActesInscriptionsSelectionnes={dataActesInscriptionsSelectionnes || []}
+          setDataActesInscriptionsSelectionnes={setDataActesInscriptionsSelectionnes}
           setRmcAutoPersonneParams={setRmcAutoPersonneParams}
         />
       ),
@@ -153,15 +129,14 @@ export const ApercuRequeteEtablissementSuiviDossierPage: React.FC<
           {getConteneurResumeRequete(requete)}
 
           <div className="OngletsApercuCreationEtablissement">
-            <VoletAvecOnglet liste={liste} ongletParDefault={DEUX} />
+            <VoletAvecOnglet
+              liste={liste}
+              ongletParDefault={DEUX}
+            />
             <BoutonsApercuRequeteCreationEtablissement requete={requete} />
           </div>
 
-          {getConteneurPieceJustificative(
-            requete,
-            onRenommePieceJustificativeSuiviDossier,
-            rechargerRequete
-          )}
+          {getConteneurPieceJustificative(requete, onRenommePieceJustificativeSuiviDossier, rechargerRequete)}
         </>
       ) : (
         <OperationLocaleEnCoursSimple />

@@ -6,7 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { URL_MES_REQUETES_CONSULAIRE_SAISIR_RCTC } from "@router/ReceUrls";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import { useState, type FC, type MouseEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 const DUREE_OUVERTURE_POPIN = 100;
 

@@ -1,13 +1,7 @@
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BoiteAOnglets, IOngletProps } from "@widget/onglets/BoiteAOnglets";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { expect, test } from "vitest";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 

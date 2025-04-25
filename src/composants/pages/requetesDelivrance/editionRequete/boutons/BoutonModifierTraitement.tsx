@@ -9,7 +9,7 @@ import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivran
 import { PATH_APERCU_REQ_PRISE } from "@router/ReceUrls";
 import { getUrlPrecedente, getUrlWithParam, replaceUrl } from "@util/route/UrlUtil";
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 import { IBoutonProps } from "../../../../commun/bouton/Bouton";
 import { BoutonAvecChargement } from "../../../../commun/bouton/BoutonAvecChargement";
 

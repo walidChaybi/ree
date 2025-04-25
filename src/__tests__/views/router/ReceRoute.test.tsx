@@ -5,7 +5,7 @@ import ReceRoute from "@router/ReceRoute";
 import { URL_BASE } from "@router/ReceUrls";
 import { render } from "@testing-library/react";
 import { cleanUrl } from "@util/route/UrlUtil";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter, elementAvecContexte } from "../../__tests__utils__/testsUtil";
 

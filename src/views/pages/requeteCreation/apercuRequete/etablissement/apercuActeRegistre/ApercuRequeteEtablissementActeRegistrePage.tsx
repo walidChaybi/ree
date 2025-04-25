@@ -1,7 +1,4 @@
-import {
-    IDetailRequeteParams,
-    useDetailRequeteApiHook
-} from "@hook/requete/DetailRequeteHook";
+import { IDetailRequeteParams, useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { TUuidActeParams } from "@model/params/TUuidActeParams";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
@@ -15,12 +12,9 @@ import { DEUX, UN, ZERO, getLibelle } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router";
 import "../../../commun/scss/ApercuReqCreationPage.scss";
-import {
-    getConteneurResumeRequete,
-    onRenommePieceJustificativeEtablissement
-} from "../commun/ApercuRequeteEtablissementUtils";
+import { getConteneurResumeRequete, onRenommePieceJustificativeEtablissement } from "../commun/ApercuRequeteEtablissementUtils";
 import { BoutonsApercuRequeteCreationEtablissement } from "../commun/BoutonsApercuRequeteCreationEtablissement";
 import "../commun/scss/OngletsApercuCreationEtablissement.scss";
 
@@ -34,16 +28,13 @@ export const ApercuRequeteEtablissementActeRegistrePage: React.FC = () => {
   const { idRequeteParam, idActeParam } = useParams<TUuidActeParams>();
   const location = useLocation();
   const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
-  const [detailRequeteParams, setDetailRequeteParams] =
-    useState<IDetailRequeteParams>();
+  const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>();
 
   const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
 
   const tousLesProjetsActesSontSignes = () => {
     return requete?.titulaires?.every(titulaire => {
-      return titulaire?.suiviDossiers?.every(suiviDossier =>
-        AvancementProjetActe.estSigne(suiviDossier.avancement)
-      );
+      return titulaire?.suiviDossiers?.every(suiviDossier => AvancementProjetActe.estSigne(suiviDossier.avancement));
     });
   };
 
@@ -76,18 +67,8 @@ export const ApercuRequeteEtablissementActeRegistrePage: React.FC = () => {
     }
   }
 
-  function onRenommePieceJustificativeActeRegistre(
-    idPieceJustificative: string,
-    nouveauLibelle: string,
-    idDocumentPJ?: string
-  ) {
-    onRenommePieceJustificativeEtablissement(
-      requete,
-      setRequete,
-      idPieceJustificative,
-      nouveauLibelle,
-      idDocumentPJ
-    );
+  function onRenommePieceJustificativeActeRegistre(idPieceJustificative: string, nouveauLibelle: string, idDocumentPJ?: string) {
+    onRenommePieceJustificativeEtablissement(requete, setRequete, idPieceJustificative, nouveauLibelle, idDocumentPJ);
   }
 
   const listeOngletsGauche: ItemListe[] = [
@@ -100,15 +81,9 @@ export const ApercuRequeteEtablissementActeRegistrePage: React.FC = () => {
           listeTitulaires={requete?.titulaires}
           natureActeRequete={NatureActeRequete.getEnumFor(requete?.nature)}
           tableauRMCPersonneEnChargement={rmcAutoPersonneEnChargement}
-          tableauActesInscriptionsSelectionnesEnChargement={
-            !dataActesInscriptionsSelectionnes
-          }
-          dataActesInscriptionsSelectionnes={
-            dataActesInscriptionsSelectionnes || []
-          }
-          setDataActesInscriptionsSelectionnes={
-            setDataActesInscriptionsSelectionnes
-          }
+          tableauActesInscriptionsSelectionnesEnChargement={!dataActesInscriptionsSelectionnes}
+          dataActesInscriptionsSelectionnes={dataActesInscriptionsSelectionnes || []}
+          setDataActesInscriptionsSelectionnes={setDataActesInscriptionsSelectionnes}
           setRmcAutoPersonneParams={setRmcAutoPersonneParams}
         />
       ),

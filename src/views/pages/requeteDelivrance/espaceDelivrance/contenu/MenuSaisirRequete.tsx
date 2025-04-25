@@ -17,7 +17,7 @@ import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { BoutonMenu } from "@widget/boutonMenu/BoutonMenu";
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 interface MenuSaisirRequeteProps {
   indexTabPanel: number;
   disabled?: boolean;
@@ -30,10 +30,7 @@ const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
     if (props.indexTabPanel === 1) {
       switch (nomRequete) {
         case "RDCSC":
-          if (
-            utilisateurConnecte &&
-            utilisateurADroit(Droit.DELIVRER, utilisateurConnecte)
-          ) {
+          if (utilisateurConnecte && utilisateurADroit(Droit.DELIVRER, utilisateurConnecte)) {
             navigate(URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC);
           } else {
             alert("Vous n'avez pas les droits pour ce type de requête");
@@ -101,26 +98,16 @@ function mapSousTypeDelivrance(sousTypeDelivrance: SousTypeDelivrance): Option {
 function getListeDesRequetesCourrierAsOptions(): Options {
   let listeRequeteCourrier: Options = [];
 
-  if (
-    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES)
-  ) {
-    listeRequeteCourrier = listeRequeteCourrier.concat(
-      mapSousTypeDelivrance(SousTypeDelivrance.RDC)
-    );
+  if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES)) {
+    listeRequeteCourrier = listeRequeteCourrier.concat(mapSousTypeDelivrance(SousTypeDelivrance.RDC));
   }
 
   if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS)) {
-    listeRequeteCourrier = listeRequeteCourrier.concat(
-      mapSousTypeDelivrance(SousTypeDelivrance.RDCSC)
-    );
+    listeRequeteCourrier = listeRequeteCourrier.concat(mapSousTypeDelivrance(SousTypeDelivrance.RDCSC));
   }
 
-  if (
-    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES)
-  ) {
-    listeRequeteCourrier = listeRequeteCourrier.concat(
-      mapSousTypeDelivrance(SousTypeDelivrance.RDLFC)
-    );
+  if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES)) {
+    listeRequeteCourrier = listeRequeteCourrier.concat(mapSousTypeDelivrance(SousTypeDelivrance.RDLFC));
   }
 
   return listeRequeteCourrier;

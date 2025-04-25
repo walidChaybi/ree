@@ -5,7 +5,7 @@ import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleS
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 import "../scss/ReponseReqInfo.scss";
 
 export type ComponentProps = {

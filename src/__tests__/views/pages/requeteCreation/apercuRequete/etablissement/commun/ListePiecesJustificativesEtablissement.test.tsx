@@ -6,7 +6,7 @@ import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID } from
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { expect, test } from "vitest";
 import { createTestingRouter, pngFiles } from "../../../../../../__tests__utils__/testsUtil";
 import { requeteCreationEtablissementPieceJustificative } from "../../../../../../mock/data/requeteCreationEtablissement";

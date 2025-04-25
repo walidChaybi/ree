@@ -1,5 +1,5 @@
 import { fireEvent, render, waitFor } from "@testing-library/react";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { expect, test } from "vitest";
 import { BoutonTransmettreAValideur } from "../../../../../composants/pages/requetesDelivrance/editionRequete/boutons/BoutonTransmettreAValideur";
 import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";

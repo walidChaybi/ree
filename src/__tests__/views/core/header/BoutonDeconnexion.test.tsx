@@ -5,7 +5,7 @@ import { IOfficier } from "@model/agent/IOfficier";
 import { IService } from "@model/agent/IService";
 import { URL_DECONNEXION, URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { expect, test, vi } from "vitest";
 import { createTestingRouter, elementAvecContexte } from "../../../__tests__utils__/testsUtil";
 import officier from "../../../mock/data/connectedUser.json";

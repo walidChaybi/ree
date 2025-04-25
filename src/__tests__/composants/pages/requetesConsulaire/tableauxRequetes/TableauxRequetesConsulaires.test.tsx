@@ -4,7 +4,7 @@ import { IOfficier } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { URL_MES_REQUETES_CONSULAIRE_SAISIR_RCTC } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
 import BoutonsTableauConsulaire from "../../../../../composants/pages/requetesConsulaire/BoutonsTableauConsulaire";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";

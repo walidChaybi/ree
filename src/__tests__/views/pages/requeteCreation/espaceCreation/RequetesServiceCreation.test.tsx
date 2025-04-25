@@ -16,7 +16,7 @@ import { UN } from "@util/Utils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { act, useState } from "react";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { expect, test } from "vitest";
 import IHabilitationDto from "../../../../../dto/etatcivil/agent/IHabilitationDto";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";

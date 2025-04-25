@@ -16,7 +16,7 @@ import { logError } from "@util/LogManager";
 import { ZERO, premiereLettreEnMajusculeLeResteEnMinuscule } from "@util/Utils";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { RECEContextData } from "../contexts/RECEContext";
 
 interface BoutonDeconnexionProps {
@@ -25,25 +25,17 @@ interface BoutonDeconnexionProps {
 
 const codeErreurForbidden = 403;
 
-export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
-  onClick
-}) => {
+export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({ onClick }) => {
   const [menu, setMenu] = React.useState<null | HTMLElement>(null);
-  const [confirmationDeconnexion, setConfirmationDeconnexion] =
-    React.useState<boolean>(false);
+  const [confirmationDeconnexion, setConfirmationDeconnexion] = React.useState<boolean>(false);
   const [nbRequetes, setNbRequetes] = React.useState<number>(ZERO);
 
   const navigate = useNavigate();
   const { utilisateurConnecte, erreurLogin } = useContext(RECEContextData);
 
-  const listeUrlSansConfirmationDeconnexion = [
-    URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS,
-    URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE
-  ];
+  const listeUrlSansConfirmationDeconnexion = [URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS, URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE];
 
-  const handleClickBoutonOfficer = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const handleClickBoutonOfficer = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (onClick) {
       onClick(event);
     }
@@ -70,9 +62,7 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
 
   const handleClickDeconnexion = () => {
     const estRouteSansConfirmationDeconnexion = Boolean(
-      listeUrlSansConfirmationDeconnexion.filter(url =>
-        window.location.pathname.includes(url)
-      )[ZERO]
+      listeUrlSansConfirmationDeconnexion.filter(url => window.location.pathname.includes(url))[ZERO]
     );
 
     setMenu(null);
@@ -122,11 +112,22 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
 
   return (
     <>
-      <ConfirmationPopin estOuvert={confirmationDeconnexion} messages={messagePopin} boutons={boutonsPopin} />
-      <div id="simple-menu" className="UtilisateurBouton">
+      <ConfirmationPopin
+        estOuvert={confirmationDeconnexion}
+        messages={messagePopin}
+        boutons={boutonsPopin}
+      />
+      <div
+        id="simple-menu"
+        className="UtilisateurBouton"
+      >
         {(utilisateurConnecte !== undefined || erreurLogin?.status === codeErreurForbidden) && (
           <>
-            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={event => handleClickBoutonOfficer(event)}>
+            <Button
+              aria-controls="simple-menu"
+              aria-haspopup="true"
+              onClick={event => handleClickBoutonOfficer(event)}
+            >
               {utilisateurConnecte !== undefined
                 ? `${utilisateurConnecte.prenom} ${utilisateurConnecte.nom}${getFonction(
                     utilisateurConnecte.fonctionAgent?.libelleFonction
@@ -162,7 +163,5 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({
 };
 
 function getFonction(fonction?: string): string {
-  return fonction
-    ? ` - ${premiereLettreEnMajusculeLeResteEnMinuscule(fonction)}`
-    : "";
+  return fonction ? ` - ${premiereLettreEnMajusculeLeResteEnMinuscule(fonction)}` : "";
 }

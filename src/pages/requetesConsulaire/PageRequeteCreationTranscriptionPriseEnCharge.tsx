@@ -17,7 +17,7 @@ import {
 import { logError } from "@util/LogManager";
 import messageManager from "@util/messageManager";
 import { useContext, useEffect, useMemo, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router";
 import Bouton from "../../composants/commun/bouton/Bouton";
 import PageChargeur from "../../composants/commun/chargeurs/PageChargeur";
 import OngletsBouton from "../../composants/commun/onglets/OngletsBouton";

@@ -6,7 +6,7 @@ import { Provenance } from "@model/requete/enum/Provenance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { describe, expect, test, vi } from "vitest";
 import BoutonAjoutSuppressionDocument from "../../../../../composants/pages/requetesDelivrance/editionRequete/boutons/BoutonAjoutSuppressionDocument";
 import { createTestingRouter, elementAvecEditionDelivranceContexte } from "../../../../__tests__utils__/testsUtil";

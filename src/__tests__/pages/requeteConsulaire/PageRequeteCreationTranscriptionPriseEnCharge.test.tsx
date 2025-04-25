@@ -2,7 +2,7 @@ import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
 import { IOfficier } from "@model/agent/IOfficier";
 import { render, screen, waitFor } from "@testing-library/react";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import request from "superagent";
 import { describe, expect, test, vi } from "vitest";
 import PageRequeteCreationTranscriptionPriseEnCharge from "../../../pages/requetesConsulaire/PageRequeteCreationTranscriptionPriseEnCharge";

@@ -18,7 +18,7 @@ import {
 import { render } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import React from "react";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
 import PageRequeteCreationTranscriptionPriseEnCharge from "../../../../../pages/requetesConsulaire/PageRequeteCreationTranscriptionPriseEnCharge";
 import { PageRequeteTranscriptionSaisieProjet } from "../../../../../pages/requetesConsulaire/PageRequeteTranscriptionSaisieProjet";

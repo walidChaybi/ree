@@ -5,11 +5,8 @@ import { PATH_APERCU_REQ_INFO } from "@router/ReceUrls";
 import { autorisePrendreEnChargeReqTableauInformation } from "@util/RequetesUtils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { useCallback, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  ICreationActionMiseAjourStatutHookParams,
-  useCreationActionMiseAjourStatut
-} from "../requete/CreationActionMiseAjourStatutHook";
+import { useNavigate } from "react-router";
+import { ICreationActionMiseAjourStatutHookParams, useCreationActionMiseAjourStatut } from "../requete/CreationActionMiseAjourStatutHook";
 
 export interface INavigationApercuReqInfoParams {
   requete: IRequeteTableauInformation;
@@ -17,12 +14,8 @@ export interface INavigationApercuReqInfoParams {
   urlCourante: string;
 }
 
-export function useNavigationApercuInformation(
-  params?: INavigationApercuReqInfoParams
-) {
-  const [paramsMAJReqInfo, setParamsMAJReqInfo] = useState<
-    ICreationActionMiseAjourStatutHookParams | undefined
-  >();
+export function useNavigationApercuInformation(params?: INavigationApercuReqInfoParams) {
+  const [paramsMAJReqInfo, setParamsMAJReqInfo] = useState<ICreationActionMiseAjourStatutHookParams | undefined>();
 
   const navigate = useNavigate();
   const { utilisateurConnecte } = useContext(RECEContextData);
@@ -38,12 +31,7 @@ export function useNavigationApercuInformation(
 
   useEffect(() => {
     if (params?.requete) {
-      if (
-        autorisePrendreEnChargeReqTableauInformation(
-          utilisateurConnecte,
-          params.requete
-        )
-      ) {
+      if (autorisePrendreEnChargeReqTableauInformation(utilisateurConnecte, params.requete)) {
         setParamsMAJReqInfo({
           libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
           statutRequete: StatutRequete.PRISE_EN_CHARGE,

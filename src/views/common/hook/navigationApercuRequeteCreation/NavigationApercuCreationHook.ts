@@ -11,7 +11,7 @@ import {
   URL_MES_REQUETES_CONSULAIRE
 } from "@router/ReceUrls";
 import { useContext, useEffect } from "react";
-import { NavigateFunction, useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router";
 
 export type NavigationApercuReqCreationParams = {
   idRequete: string;

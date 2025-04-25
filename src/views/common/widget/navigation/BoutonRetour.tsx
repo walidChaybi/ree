@@ -1,7 +1,7 @@
 import { URL_ACCUEIL, URL_MES_REQUETES_DELIVRANCE, URL_RECHERCHE_REQUETE, URL_REQUETES_DELIVRANCE_SERVICE } from "@router/ReceUrls";
 import { getUrlPrecedente } from "@util/route/UrlUtil";
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router";
 
 export const BoutonRetour: React.FC = () => {
   const location = useLocation();

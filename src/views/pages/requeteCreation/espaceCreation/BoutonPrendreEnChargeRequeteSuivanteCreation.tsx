@@ -7,23 +7,18 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 interface BoutonPrendreEnChargeRequeteSuivanteProps {
   typeRequete: TypeRequete;
   disabled?: boolean;
 }
 
-export const BoutonPrendreEnChargeRequeteSuivanteCreation: React.FC<
-  BoutonPrendreEnChargeRequeteSuivanteProps
-> = props => {
+export const BoutonPrendreEnChargeRequeteSuivanteCreation: React.FC<BoutonPrendreEnChargeRequeteSuivanteProps> = props => {
   const navigate = useNavigate();
 
   const [prendreEnCharge, setPrendreEnCharge] = useState<boolean>(false);
-  const {
-    idRequete: idRequetePriseEnCharge,
-    erreur: erreurRequetePriseEnCharge
-  } = usePrendreEnChargeRequeteSuivanteApiHook(
+  const { idRequete: idRequetePriseEnCharge, erreur: erreurRequetePriseEnCharge } = usePrendreEnChargeRequeteSuivanteApiHook(
     props.typeRequete,
     prendreEnCharge
   );
@@ -31,16 +26,9 @@ export const BoutonPrendreEnChargeRequeteSuivanteCreation: React.FC<
   useEffect(() => {
     setPrendreEnCharge(false);
     if (idRequetePriseEnCharge) {
-      navigate(
-        getUrlWithParam(
-          URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
-          idRequetePriseEnCharge
-        )
-      );
+      navigate(getUrlWithParam(URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID, idRequetePriseEnCharge));
     } else if (erreurRequetePriseEnCharge) {
-      messageManager.showWarningAndClose(
-        getLibelle("Il n'existe plus de requête à prendre en charge")
-      );
+      messageManager.showWarningAndClose(getLibelle("Il n'existe plus de requête à prendre en charge"));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idRequetePriseEnCharge, erreurRequetePriseEnCharge]);
@@ -60,7 +48,4 @@ export const BoutonPrendreEnChargeRequeteSuivanteCreation: React.FC<
   );
 };
 
-export default WithHabilitation(
-  BoutonPrendreEnChargeRequeteSuivanteCreation,
-  "BoutonPrendreEnChargePlusAncienneCreation"
-);
+export default WithHabilitation(BoutonPrendreEnChargeRequeteSuivanteCreation, "BoutonPrendreEnChargePlusAncienneCreation");

@@ -2,7 +2,7 @@ import { IOfficier } from "@model/agent/IOfficier";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { URL_MES_REQUETES_CONSULAIRE } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
 import PageMesRequetesConsulaires from "../../../../pages/requetesConsulaire/PageMesRequetesConsulaires";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";

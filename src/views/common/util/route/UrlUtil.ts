@@ -1,6 +1,6 @@
 import { UN } from "@util/Utils";
 import { gestionnaireNavigation } from "@widget/filAriane/FilAriane";
-import { NavigateFunction } from "react-router-dom";
+import { NavigateFunction } from "react-router";
 import { UUID } from "../../../../ressources/Regex";
 
 export const URL_SEPARATEUR = "/";

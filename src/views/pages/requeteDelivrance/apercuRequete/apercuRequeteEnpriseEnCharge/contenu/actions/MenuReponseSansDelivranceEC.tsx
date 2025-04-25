@@ -6,12 +6,9 @@ import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IRe
 import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
 import { estRenseigne, getLibelle } from "@util/Utils";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
-import {
-  ConfirmationPopin,
-  IBoutonPopin
-} from "@widget/popin/ConfirmationPopin";
+import { ConfirmationPopin, IBoutonPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 import { DocumentEC } from "../../../../../../../model/requete/enum/DocumentEC";
 import { IgnoreRequetePopin } from "../IgnoreRequetePopin";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
@@ -22,29 +19,20 @@ import {
   getOptionsMenuReponseSansDelivrance,
   redirection
 } from "./MenuUtilEC";
-import {
-  UpdateChoixDelivranceProps,
-  useUpdateChoixDelivrance
-} from "./hook/UpdateChoixDelivranceApiHook";
+import { UpdateChoixDelivranceProps, useUpdateChoixDelivrance } from "./hook/UpdateChoixDelivranceApiHook";
 
-export const MenuReponseSansDelivranceEC: React.FC<
-  IChoixActionDelivranceProps
-> = props => {
+export const MenuReponseSansDelivranceEC: React.FC<IChoixActionDelivranceProps> = props => {
   const location = useLocation();
   const navigate = useNavigate();
   const refs = useRef([]);
 
   const [actes, setActes] = useState<IResultatRMCActe[] | undefined>();
-  const [inscriptions, setInscriptions] = useState<
-    IResultatRMCInscription[] | undefined
-  >();
+  const [inscriptions, setInscriptions] = useState<IResultatRMCInscription[] | undefined>();
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
   const [choixDelivrance, setChoixDelivrance] = useState<ChoixDelivrance>();
-  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] =
-    useState<UpdateChoixDelivranceProps>();
-  const [popinIgnorerOuverte, setPopinIgnorerOuverte] =
-    useState<boolean>(false);
+  const [paramUpdateChoixDelivrance, setParamUpdateChoixDelivrance] = useState<UpdateChoixDelivranceProps>();
+  const [popinIgnorerOuverte, setPopinIgnorerOuverte] = useState<boolean>(false);
 
   useEffect(() => {
     setInscriptions(props.inscriptions?.filter(Boolean));
@@ -52,9 +40,7 @@ export const MenuReponseSansDelivranceEC: React.FC<
   }, [props.actes, props.inscriptions]);
 
   // 1 - Mise à jour du choix delivrance
-  const updateChoixDelivranceResultat = useUpdateChoixDelivrance(
-    paramUpdateChoixDelivrance
-  );
+  const updateChoixDelivranceResultat = useUpdateChoixDelivrance(paramUpdateChoixDelivrance);
 
   const redirectionCallback = useCallback(
     (index: DocumentEC) => {
@@ -69,16 +55,13 @@ export const MenuReponseSansDelivranceEC: React.FC<
     [actes, navigate, location, updateChoixDelivranceResultat]
   );
 
-  const reponseSansDelivranceOptions: IActionOption[] =
-    getOptionsMenuReponseSansDelivrance();
+  const reponseSansDelivranceOptions: IActionOption[] = getOptionsMenuReponseSansDelivrance();
 
   const handleReponseSansDelivranceMenu = (indexMenu: number) => {
     if (estChoixIgnorerRequete(indexMenu)) {
       setPopinIgnorerOuverte(true);
     } else {
-      setChoixDelivrance(
-        reponseSansDelivranceOptions[indexMenu].choixDelivrance
-      );
+      setChoixDelivrance(reponseSansDelivranceOptions[indexMenu].choixDelivrance);
       if (estChoixActeNonDetenu(indexMenu)) {
         setActes([]);
       }
@@ -111,16 +94,9 @@ export const MenuReponseSansDelivranceEC: React.FC<
     if (updateChoixDelivranceResultat?.idRequete) {
       redirectionCallback(DocumentEC.Courrier);
     }
-  }, [
-    updateChoixDelivranceResultat,
-    redirectionCallback,
-    props.requete.sousType
-  ]);
+  }, [updateChoixDelivranceResultat, redirectionCallback, props.requete.sousType]);
 
-  const actions = filtrerListeActionsParSousTypes(
-    props.requete,
-    reponseSansDelivranceOptions
-  );
+  const actions = filtrerListeActionsParSousTypes(props.requete, reponseSansDelivranceOptions);
 
   return (
     <>

@@ -1,6 +1,6 @@
 import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import request from "superagent";
 import { afterAll, describe, expect, test, vi } from "vitest";
 import CompteurTemps from "../../../../../composants/pages/requetesMiseAJour/compteurTemps/CompteurTemps";

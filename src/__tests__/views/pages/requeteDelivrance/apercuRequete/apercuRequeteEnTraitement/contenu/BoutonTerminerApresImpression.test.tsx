@@ -7,7 +7,7 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { BoutonTerminerApresImpression } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/contenu/BoutonTerminerApresImpression";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { fireEvent, render, waitFor } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 import { expect, test } from "vitest";
 import { elementAvecContexte } from "../../../../../../__tests__utils__/testsUtil";
 import { userDroitnonCOMEDEC } from "../../../../../../mock/data/mockConnectedUserAvecDroit";

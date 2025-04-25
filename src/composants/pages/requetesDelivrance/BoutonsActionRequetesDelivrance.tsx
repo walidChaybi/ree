@@ -1,16 +1,12 @@
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { memo, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import "./BoutonsActionRequetesDelivrance.scss";
 
 const BoutonsActionMesRequetesDelivrance = memo(() => {
   const boutonsDisponibles = useMemo<boolean>(
-    () =>
-      gestionnaireFeatureFlag.auMoinUnEstActif(
-        FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES,
-        FeatureFlag.FF_DELIV_CS
-      ),
+    () => gestionnaireFeatureFlag.auMoinUnEstActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES, FeatureFlag.FF_DELIV_CS),
     []
   );
 
@@ -31,15 +27,11 @@ const BoutonsActionMesRequetesDelivrance = memo(() => {
         {menuSaisieOuvert && (
           <div className="menu-saisir-requete">
             <div>
-              <Link to="/rece/rece-ui/mes-requetes/saisir-extrait-copie">
-                Délivrance Extrait/Copie courrier
-              </Link>
+              <Link to="/rece/rece-ui/mes-requetes/saisir-extrait-copie">Délivrance Extrait/Copie courrier</Link>
             </div>
 
             <div>
-              <Link to="">
-                Délivrance Certificat & Attestation RC/RCA/PACS courrier
-              </Link>
+              <Link to="">Délivrance Certificat & Attestation RC/RCA/PACS courrier</Link>
             </div>
             <div>
               <Link to="">Délivrance Livret de famille courrier</Link>
@@ -47,7 +39,10 @@ const BoutonsActionMesRequetesDelivrance = memo(() => {
           </div>
         )}
       </div>
-      <button className="bouton-requete-suivante" type="button">
+      <button
+        className="bouton-requete-suivante"
+        type="button"
+      >
         Prendre en charge requête suivante
       </button>
     </div>

@@ -3,7 +3,7 @@ import { ICreationActionParams } from "@hook/requete/ActionHook";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { useContext, useEffect, useState } from "react";
-import { useNavigation } from "react-router-dom";
+import { useNavigation } from "react-router";
 import { usePostCreationActionApi } from "./CreationActionHook";
 
 export interface CreationActionHookParams {
@@ -12,13 +12,9 @@ export interface CreationActionHookParams {
   callback?: () => void;
 }
 
-export function useCreationAction(
-  params: CreationActionHookParams | undefined
-) {
+export function useCreationAction(params: CreationActionHookParams | undefined) {
   const navigation = useNavigation();
-  const [creationActionParams, setCreationActionParams] = useState<
-    ICreationActionParams | undefined
-  >();
+  const [creationActionParams, setCreationActionParams] = useState<ICreationActionParams | undefined>();
 
   const { utilisateurConnecte } = useContext(RECEContextData);
 

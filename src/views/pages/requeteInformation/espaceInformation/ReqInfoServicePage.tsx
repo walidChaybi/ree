@@ -1,7 +1,4 @@
-import {
-  IQueryParametersPourRequetes,
-  TypeAppelRequete
-} from "@api/appels/requeteApi";
+import { IQueryParametersPourRequetes, TypeAppelRequete } from "@api/appels/requeteApi";
 import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
 import {
   INavigationApercuReqInfoParams,
@@ -15,21 +12,15 @@ import { RenderMessageSaisirFiltreOuZeroRequete } from "@util/tableauRequete/Tab
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { SortOrder } from "@widget/tableau/TableUtils";
-import {
-  NB_LIGNES_PAR_APPEL_DEFAUT,
-  NB_LIGNES_PAR_PAGE_DEFAUT
-} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import { NB_LIGNES_PAR_APPEL_DEFAUT, NB_LIGNES_PAR_PAGE_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import FiltresServiceRequeteInformationForm, {
   VALEUR_FILTRE_INFORMATION_DEFAUT
 } from "../commun/FiltresServiceRequeteInformationForm/FiltresServiceRequeteInformationForm";
-import {
-  StatutsRequetesInformation,
-  requeteInformationRequetesServiceColumnHeaders
-} from "./EspaceReqInfoParams";
+import { StatutsRequetesInformation, requeteInformationRequetesServiceColumnHeaders } from "./EspaceReqInfoParams";
 import { useRequeteInformationApi } from "./hook/DonneesRequeteInformationApiHook";
 import "./scss/RequeteTableau.scss";
 
@@ -37,23 +28,16 @@ interface LocalProps {
   parametresReqInfo: IQueryParametersPourRequetes;
 }
 
-export const ReqInfoServicePage: React.FC<LocalProps> = ({
-  parametresReqInfo
-}) => {
+export const ReqInfoServicePage: React.FC<LocalProps> = ({ parametresReqInfo }) => {
   const location = useLocation();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [paramsNavReqInfo, setParamsNavReqInfo] = useState<
-    INavigationApercuReqInfoParams | undefined
-  >();
+  const [paramsNavReqInfo, setParamsNavReqInfo] = useState<INavigationApercuReqInfoParams | undefined>();
 
-  const [linkParameters, setLinkParameters] =
-    useState<IQueryParametersPourRequetes>(parametresReqInfo);
+  const [linkParameters, setLinkParameters] = useState<IQueryParametersPourRequetes>(parametresReqInfo);
   const [enChargement, setEnChargement] = useState<boolean>(false);
   const [rechercheEffectuee, setRechercheEffectuee] = useState<boolean>(false);
   const [filtresSelectionne, setFiltresSelectionne] =
-    useState<IFiltresServiceRequeteInformationFormValues>(
-      VALEUR_FILTRE_INFORMATION_DEFAUT
-    );
+    useState<IFiltresServiceRequeteInformationFormValues>(VALEUR_FILTRE_INFORMATION_DEFAUT);
   const [tableauDoitReset, setTableauDoitReset] = useState<boolean>(false);
   const { dataState, paramsTableau } = useRequeteInformationApi(
     linkParameters,
@@ -67,10 +51,7 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
   useNavigationApercuInformation(paramsNavReqInfo);
 
   const goToLink = useCallback((link: string) => {
-    const queryParametersPourRequetes = goToLinkRequete(
-      link,
-      "requetesinformationservice"
-    );
+    const queryParametersPourRequetes = goToLinkRequete(link, "requetesinformationservice");
     if (queryParametersPourRequetes) {
       setLinkParameters(queryParametersPourRequetes);
     }
@@ -80,11 +61,7 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
     setLinkParameters({ ...parametresReqInfo });
   }, [parametresReqInfo]);
 
-  const onClickOnLine = (
-    _: string,
-    data: IRequeteTableauInformation[],
-    idx: number
-  ) => {
+  const onClickOnLine = (_: string, data: IRequeteTableauInformation[], idx: number) => {
     const requete = data[idx];
     const urlCourante = location.pathname;
     setOperationEnCours(true);
@@ -104,11 +81,7 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({
     });
   }, []);
 
-  const getIcone = (
-    idRequete: string,
-    sousType: string,
-    idUtilisateur: string
-  ) => (
+  const getIcone = (idRequete: string, sousType: string, idUtilisateur: string) => (
     <MenuTransfert
       idRequete={idRequete}
       typeRequete={TypeRequete.INFORMATION}

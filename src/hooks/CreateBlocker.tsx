@@ -1,6 +1,6 @@
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import { useEffect, useMemo, useState } from "react";
-import { useBlocker } from "react-router-dom";
+import { useBlocker } from "react-router";
 
 interface IBlockerNavigationParams {
   messages: string[];
@@ -13,11 +13,11 @@ export const useCreateBlocker = ({
   messages,
   executerApresConfirmation,
   titre,
-  executerSiRedirectionAvecBlocageSansPopin,
+  executerSiRedirectionAvecBlocageSansPopin
 }: IBlockerNavigationParams) => {
   const [estNavigationBloquee, setEstNavigationBloquee] = useState({
     estBloquee: true,
-    estPopinAffichee: false,
+    estPopinAffichee: false
   });
   const [estConfirme, setEstConfirme] = useState<boolean>(false);
 
@@ -54,9 +54,9 @@ export const useCreateBlocker = ({
       },
       desactiverBlocker: () => {
         setEstNavigationBloquee({ estBloquee: false, estPopinAffichee: false });
-      },
+      }
     }),
-    [],
+    []
   );
 
   const BlockerNavigation = () => (
@@ -73,14 +73,14 @@ export const useCreateBlocker = ({
             }
 
             blocker.proceed?.();
-          },
+          }
         },
         {
           label: "Annuler",
           action: () => {
             blocker.reset?.();
-          },
-        },
+          }
+        }
       ]}
       estOuvert={blocker.state === "blocked" && estNavigationBloquee.estPopinAffichee && !estConfirme}
       messages={messages}
@@ -90,6 +90,6 @@ export const useCreateBlocker = ({
 
   return {
     gestionBlocker,
-    BlockerNavigation,
+    BlockerNavigation
   };
 };

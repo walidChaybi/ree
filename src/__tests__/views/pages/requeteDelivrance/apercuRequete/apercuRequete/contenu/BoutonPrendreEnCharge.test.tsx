@@ -9,7 +9,7 @@ import { BoutonPrendreEnCharge } from "@pages/requeteDelivrance/apercuRequete/ap
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { expect, test } from "vitest";
 import { createTestingRouter, elementAvecContexte } from "../../../../../../__tests__utils__/testsUtil";
 import { userDroitCOMEDEC, userDroitnonCOMEDEC } from "../../../../../../mock/data/mockConnectedUserAvecDroit";

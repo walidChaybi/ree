@@ -1,7 +1,7 @@
 import { getLibelle } from "@util/Utils";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import { useEffect } from "react";
-import { useBlocker } from "react-router-dom";
+import { useBlocker } from "react-router";
 
 export type BlocageNavigationDetail = {
   estBloquee: boolean;
@@ -27,11 +27,7 @@ export const BlockerNavigation: React.FC<BlockerNavigationProps> = ({
   useEffect(() => {
     if (blocker.state === "blocked" && !estNavigationBloquee.estBloquee) {
       blocker.proceed?.();
-    } else if (
-      blocker.state === "blocked" &&
-      !estNavigationBloquee.estPopinAffichee &&
-      fonctionAExecuterAvantRedirection
-    ) {
+    } else if (blocker.state === "blocked" && !estNavigationBloquee.estPopinAffichee && fonctionAExecuterAvantRedirection) {
       fonctionAExecuterAvantRedirection();
     }
 
@@ -52,9 +48,7 @@ export const BlockerNavigation: React.FC<BlockerNavigationProps> = ({
           }
         }
       ]}
-      estOuvert={
-        blocker.state === "blocked" && estNavigationBloquee.estPopinAffichee
-      }
+      estOuvert={blocker.state === "blocked" && estNavigationBloquee.estPopinAffichee}
       messages={messages}
       titre={titre}
     />

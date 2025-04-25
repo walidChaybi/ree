@@ -3,7 +3,7 @@ import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercu
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter, mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 import MockRECEContextProvider from "../../../../../mock/context/MockRECEContextProvider";

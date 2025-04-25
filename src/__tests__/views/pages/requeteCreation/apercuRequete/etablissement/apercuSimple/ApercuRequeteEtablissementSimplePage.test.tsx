@@ -6,69 +6,59 @@ import {
 } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
 
 describe("Test de la page Aperçu requête etablissement simple", () => {
   test("DOIT rendre le composant ApercuReqCreationEtablissementSimplePage correctement", () => {
-      const router = createTestingRouter(
-        [
-          {
-            path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-            element: <ApercuRequeteEtablissementSimplePage />
-          }
-        ],
-        [
-          getUrlWithParam(
-            `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}/:idRequete`,
-            "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
-          )
-        ]
-      );
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+          element: <ApercuRequeteEtablissementSimplePage />
+        }
+      ],
+      [
+        getUrlWithParam(
+          `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}/:idRequete`,
+          "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
+        )
+      ]
+    );
 
-      const { container } = render(<RouterProvider router={router} />);
+    const { container } = render(<RouterProvider router={router} />);
 
-      waitFor(() => {
-        expect(
-          container.getElementsByClassName(
-            "ApercuReqCreationEtablissementSimplePage"
-          ).length
-        ).toBe(1);
-      });
+    waitFor(() => {
+      expect(container.getElementsByClassName("ApercuReqCreationEtablissementSimplePage").length).toBe(1);
+    });
   });
 
   test("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée.", () => {
-      const router = createTestingRouter(
-        [
-          {
-            path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
-            element: <ApercuRequeteEtablissementSimplePage />
-          }
-        ],
-        [
-          getUrlWithParam(
-            `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}/:idRequete`,
-            "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
-          )
-        ]
-      );
+    const router = createTestingRouter(
+      [
+        {
+          path: URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
+          element: <ApercuRequeteEtablissementSimplePage />
+        }
+      ],
+      [
+        getUrlWithParam(
+          `${URL_MES_REQUETES_CREATION}/${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}/:idRequete`,
+          "3ed9aa4e-921b-489f-b8fe-531dd703c60c"
+        )
+      ]
+    );
 
-      const { container } = render(<RouterProvider router={router} />);
+    const { container } = render(<RouterProvider router={router} />);
 
-      waitFor(() => {
-        expect(
-          container.getElementsByClassName("OperationLocaleEnCoursSimple")
-            .length
-        ).toBe(1);
-      });
+    waitFor(() => {
+      expect(container.getElementsByClassName("OperationLocaleEnCoursSimple").length).toBe(1);
+    });
 
-        waitFor(() => {
-          expect(
-            container.getElementsByClassName("OperationLocaleEnCoursSimple")
-              .length
-          ).toBe(0);
-        });
+    waitFor(() => {
+      expect(container.getElementsByClassName("OperationLocaleEnCoursSimple").length).toBe(0);
+    });
   });
 
   test.skip("DOIT afficher les onglets avec pièce justificative active QUAND on arrive sur la page", () => {
@@ -89,11 +79,7 @@ describe("Test de la page Aperçu requête etablissement simple", () => {
 
     render(<RouterProvider router={router} />);
     waitFor(() => {
-      expect(
-        screen
-          .getByText("Pièces justificatives / Annexes")
-          .getAttribute("aria-selected")
-      ).toBe("true");
+      expect(screen.getByText("Pièces justificatives / Annexes").getAttribute("aria-selected")).toBe("true");
     });
   });
 });

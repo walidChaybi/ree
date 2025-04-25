@@ -5,7 +5,7 @@ import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTr
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import messageManager from "@util/messageManager";
 import React, { useEffect, useMemo, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router";
 import PageChargeur from "../../composants/commun/chargeurs/PageChargeur";
 import PartieDroiteSaisieProjet from "../../composants/pages/requetesConsulaire/saisieProjet/PartieDroiteSaisieProjet";
 import PartieGaucheSaisieProjet from "../../composants/pages/requetesConsulaire/saisieProjet/PartieGaucheSaisieProjet";

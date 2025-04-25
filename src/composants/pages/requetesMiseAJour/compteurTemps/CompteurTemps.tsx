@@ -1,7 +1,7 @@
 import { CONFIG_GET_DELAI_MISE_A_JOUR_RESTANT } from "@api/configurations/requete/miseAJour/GetDelaiMiseAJourRestantConfigApi";
 import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
 import { memo, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
 import Bouton from "../../../commun/bouton/Bouton";
 import ConteneurModale from "../../../commun/conteneurs/modale/ConteneurModale";

@@ -21,7 +21,7 @@ import { PATH_EDITION } from "@router/ReceUrls";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { IBoutonPopin } from "@widget/popin/ConfirmationPopin";
 import React, { MutableRefObject } from "react";
-import { Location, NavigateFunction } from "react-router-dom";
+import { Location, NavigateFunction } from "react-router";
 
 const ORDRE_OPTION_MAX = 900;
 const enum MaxTitulaireDelivrance {

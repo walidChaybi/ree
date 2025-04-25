@@ -3,7 +3,7 @@ import { URL_REQUETES_COUNT } from "@api/appels/requeteApi";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { executeEnDiffere, getLibelle } from "@util/Utils";
 import React, { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import apiResources from "../../../ressources/api.json";
 import { getCsrfHeader } from "./CsrfUtil";
 import messageManager from "./messageManager";
@@ -14,9 +14,7 @@ interface GestionnaireFermetureProps {
   urlRedirection?: string;
 }
 
-export const GestionnaireFermeture: React.FC<
-  GestionnaireFermetureProps
-> = props => {
+export const GestionnaireFermeture: React.FC<GestionnaireFermetureProps> = props => {
   const navigate = useNavigate();
   const { isDirty } = useContext(RECEContextData);
 
@@ -64,9 +62,7 @@ export const appelRequetesASigner = () => {
   } catch (error) {
     return 0;
   }
-  return req.status === HTTP_STATUS_OK && response && response.data
-    ? response.data
-    : 0;
+  return req.status === HTTP_STATUS_OK && response && response.data ? response.data : 0;
 };
 
 const appelApi = () => {
@@ -95,9 +91,7 @@ const appelApi = () => {
 export const traiteAppelRequeteASigner = (nbRequeteASigner: number) => {
   if (nbRequeteASigner > 0) {
     executeEnDiffere(function () {
-      const msg = getLibelle(
-        `Il reste ${nbRequeteASigner} requête(s) à signer`
-      );
+      const msg = getLibelle(`Il reste ${nbRequeteASigner} requête(s) à signer`);
       messageManager.showWarningAndClose(msg);
     }, TIME_OUT_MS);
   }

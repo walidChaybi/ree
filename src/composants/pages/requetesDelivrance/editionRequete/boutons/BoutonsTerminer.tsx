@@ -12,7 +12,7 @@ import { checkDirty } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import React, { useCallback, useContext, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import Bouton from "../../../../commun/bouton/Bouton";
 import BoutonListeDeroulante from "../../../../commun/bouton/BoutonListeDeroulante";
 import SignatureDelivrance from "../../../../commun/signature/SignatureDelivrance";

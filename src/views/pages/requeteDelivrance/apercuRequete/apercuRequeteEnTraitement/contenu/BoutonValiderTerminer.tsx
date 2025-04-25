@@ -3,10 +3,7 @@ import {
   IDerniereDelivranceRcRcaPacsParams,
   useDerniereDelivranceRcRcaPacsApiHook
 } from "@hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
-import {
-  ICreationActionEtMiseAjourStatutParams,
-  usePostCreationActionEtMiseAjourStatutApi
-} from "@hook/requete/ActionHook";
+import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "@model/agent/IOfficier";
 import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -17,29 +14,25 @@ import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 
 interface BoutonValiderTerminerProps {
   requete: IRequeteDelivrance;
 }
 
-export const BoutonValiderTerminer: React.FC<
-  BoutonValiderTerminerProps
-> = props => {
+export const BoutonValiderTerminer: React.FC<BoutonValiderTerminerProps> = props => {
   const requeteDelivrance = props.requete;
   const location = useLocation();
   const navigate = useNavigate();
   const { utilisateurConnecte } = useContext(RECEContextData);
   const [estDisabled, setEstDisabled] = useState(true);
 
-  const [majStatutParams, setMajStatutParams] = useState<
-    ICreationActionEtMiseAjourStatutParams | undefined
-  >();
+  const [majStatutParams, setMajStatutParams] = useState<ICreationActionEtMiseAjourStatutParams | undefined>();
 
-  const [majDateDerniereDelivranceParams, setMajDateDerniereDelivranceParams] =
-    useState<IDerniereDelivranceRcRcaPacsParams[] | undefined>();
-  const [pasDeMajDateDerniereDelivrance, setPasDeMajDateDerniereDelivrance] =
-    useState(false);
+  const [majDateDerniereDelivranceParams, setMajDateDerniereDelivranceParams] = useState<
+    IDerniereDelivranceRcRcaPacsParams[] | undefined
+  >();
+  const [pasDeMajDateDerniereDelivrance, setPasDeMajDateDerniereDelivrance] = useState(false);
 
   let futurStatut: StatutRequete;
   switch (props.requete.canal) {
@@ -78,27 +71,18 @@ export const BoutonValiderTerminer: React.FC<
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idAction]);
 
-  const majDateDerniereDelivrance = useDerniereDelivranceRcRcaPacsApiHook(
-    majDateDerniereDelivranceParams
-  );
+  const majDateDerniereDelivrance = useDerniereDelivranceRcRcaPacsApiHook(majDateDerniereDelivranceParams);
 
   // 3 - Navigation après le traitement
   useEffect(() => {
     if (majDateDerniereDelivrance || pasDeMajDateDerniereDelivrance) {
       replaceUrl(navigate, getUrlPrecedente(location.pathname));
     }
-  }, [
-    majDateDerniereDelivrance,
-    pasDeMajDateDerniereDelivrance,
-    navigate,
-    location
-  ]);
+  }, [majDateDerniereDelivrance, pasDeMajDateDerniereDelivrance, navigate, location]);
 
-  const estAValider =
-    props.requete.statutCourant.statut === StatutRequete.A_VALIDER;
+  const estAValider = props.requete.statutCourant.statut === StatutRequete.A_VALIDER;
 
-  const mAppartient =
-    props.requete.idUtilisateur === utilisateurConnecte?.idUtilisateur;
+  const mAppartient = props.requete.idUtilisateur === utilisateurConnecte?.idUtilisateur;
 
   if (
     mAppartient &&
@@ -127,9 +111,7 @@ export const BoutonValiderTerminer: React.FC<
   );
 };
 
-function recupererIdRepertoiresDocumentReponsesCs(
-  requete: IRequeteDelivrance
-): IDerniereDelivranceRcRcaPacsParams[] {
+function recupererIdRepertoiresDocumentReponsesCs(requete: IRequeteDelivrance): IDerniereDelivranceRcRcaPacsParams[] {
   const repertoiresAMaj = [] as IDerniereDelivranceRcRcaPacsParams[];
 
   requete?.documentsReponses?.forEach(el => {

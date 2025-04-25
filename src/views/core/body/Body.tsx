@@ -8,7 +8,7 @@ import { logError } from "@util/LogManager";
 import { ZERO } from "@util/Utils";
 import { FilAriane } from "@widget/filAriane/FilAriane";
 import React, { useContext, useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router";
 import { PageMessage } from "../login/PageMessage";
 
 export const Body: React.FC = () => {
