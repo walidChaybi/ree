@@ -56,6 +56,7 @@ interface ISignerDelivranceParams {
 
 interface ISignerParams {
   parametres: {
+    idActe: string;
     document: string;
     codePin: string;
   };
@@ -64,6 +65,7 @@ interface ISignerParams {
 
 interface IRecupererInformationsParams {
   parametres: {
+    idActe: string;
     codePin: string;
     agent: {
       nom: string;
@@ -230,7 +232,12 @@ const Signature = {
           direction: "to-webextension",
           document: DOCUMENT_VIDE_A_SIGNER,
           pin: recupererInformationsParams.parametres.codePin,
-          mode: ModeSignatureUtil.estValide(modeSignatureFF) ? modeSignatureFF : ModeSignature.PKCS11_SIGNED
+          mode: ModeSignatureUtil.estValide(modeSignatureFF) ? modeSignatureFF : ModeSignature.PKCS11_SIGNED,
+          infos: [
+            { cle: "typeSignature", valeur: "Mise à jour" },
+            { cle: "estFictive", valeur: "true" },
+            { cle: "idActe", valeur: recupererInformationsParams.parametres.idActe }
+          ]
         }
       })
     );
@@ -285,8 +292,10 @@ const Signature = {
           pin: signerParams.parametres.codePin,
           mode: ModeSignatureUtil.estValide(modeSignatureFF) ? modeSignatureFF : ModeSignature.PKCS11_SIGNED,
           infos: [
-            { cle: "id", valeur: signerParams.parametres.document.id },
-            { cle: "idRequete", valeur: signerParams.parametres.document.idRequete }
+            { cle: "typeSignature", valeur: "Délivrance" },
+            { cle: "estFictive", valeur: "false" },
+            { cle: "idRequete", valeur: signerParams.parametres.document.idRequete },
+            { cle: "idDocument", valeur: signerParams.parametres.document.id }
           ]
         }
       })
@@ -328,7 +337,12 @@ const Signature = {
           direction: "to-webextension",
           document: signerParams.parametres.document,
           pin: signerParams.parametres.codePin,
-          mode: ModeSignatureUtil.estValide(modeSignatureFF) ? modeSignatureFF : ModeSignature.PKCS11_SIGNED
+          mode: ModeSignatureUtil.estValide(modeSignatureFF) ? modeSignatureFF : ModeSignature.PKCS11_SIGNED,
+          infos: [
+            { cle: "typeSignature", valeur: "Mise à jour" },
+            { cle: "estFictive", valeur: "false" },
+            { cle: "idActe", valeur: signerParams.parametres.idActe }
+          ]
         }
       })
     );

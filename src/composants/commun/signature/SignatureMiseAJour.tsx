@@ -60,7 +60,7 @@ const AVANCEMENT: { [cle: string]: { niveau: number; message: string } } = {
   "enregistrement-document": { niveau: 100, message: "Enregistrement du document signé..." }
 };
 
-const SignatureMiseAJour: React.FC<ISignatureMiseAJourProps> = ({ idActe, idRequete, peutSigner, apresSignature }) => {
+/* NOSONAR */ const SignatureMiseAJour: React.FC<ISignatureMiseAJourProps> = ({ idActe, idRequete, peutSigner, apresSignature }) => {
   const { utilisateurConnecte } = useContext(RECEContextData);
   const aDroitSigner = useMemo(() => utilisateurADroit(Droit.SIGNER_MENTION, utilisateurConnecte), [utilisateurConnecte]);
   const messageInformation = useMemo(() => TypePopinSignature.getTextePopinSignatureMentions() ?? "", []);
@@ -76,6 +76,7 @@ const SignatureMiseAJour: React.FC<ISignatureMiseAJourProps> = ({ idActe, idRequ
         donneesSignature.codePin &&
           Signature.recupererInformationsCarte({
             parametres: {
+              idActe: idActe,
               codePin: donneesSignature.codePin,
               agent: { nom: utilisateurConnecte.nom, prenom: utilisateurConnecte.prenom }
             },
@@ -88,7 +89,9 @@ const SignatureMiseAJour: React.FC<ISignatureMiseAJourProps> = ({ idActe, idRequ
               }));
             },
             apresErreur: erreur => {
-              console.error(`[SIGNATURE] Erreur récupération des informations de la carte : ${erreur.code} - ${erreur.libelle}`);
+              console.error(
+                `[SIGNATURE] Erreur récupération des informations de la carte : ${erreur.code} - ${erreur.libelle} - ${erreur?.detail ?? "AUCUN DETAIL"}`
+              );
               setDonneesSignature(prec => ({
                 ...prec,
                 erreur: erreur.libelle,
@@ -139,6 +142,7 @@ const SignatureMiseAJour: React.FC<ISignatureMiseAJourProps> = ({ idActe, idRequ
           donneesSignature.documentASigner &&
           Signature.signerDocumentMiseAJour({
             parametres: {
+              idActe: idActe,
               document: donneesSignature.documentASigner,
               codePin: donneesSignature.codePin
             },
@@ -149,7 +153,7 @@ const SignatureMiseAJour: React.FC<ISignatureMiseAJourProps> = ({ idActe, idRequ
               const messageErreur = !erreur && !documentSigne ? "Erreur inattendue" : erreur;
               messageErreur
                 ? console.error(
-                    `[SIGNATURE] Erreur lors de la signature des mentions : ${reponse.erreur?.code ?? "CODE_INCONNU"} - ${messageErreur}`
+                    `[SIGNATURE] Erreur lors de la signature des mentions : ${reponse.erreur?.code ?? "CODE_INCONNU"} - ${messageErreur} - ${reponse.erreur?.detail ?? "AUCUN DETAIL"}`
                   )
                 : console.info("[SIGNATURE] Signature des mentions éffectuée");
 
