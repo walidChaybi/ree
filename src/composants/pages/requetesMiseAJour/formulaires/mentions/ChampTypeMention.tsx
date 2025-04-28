@@ -1,5 +1,5 @@
-import { ArrowBack } from "@mui/icons-material";
-import { Autocomplete } from "@mui/material";
+import ArrowBack from "@mui/icons-material/ArrowBack";
+import Autocomplete from "@mui/material/Autocomplete";
 import { ErrorMessage, useField, useFormikContext } from "formik";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { ITypeMentionDisponible, TMentionForm } from "../MentionForm";

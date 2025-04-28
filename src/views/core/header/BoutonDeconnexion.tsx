@@ -23,15 +23,13 @@ interface BoutonDeconnexionProps {
   onClick?: (event: React.MouseEvent) => void;
 }
 
-const codeErreurForbidden = 403;
-
 export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({ onClick }) => {
   const [menu, setMenu] = React.useState<null | HTMLElement>(null);
   const [confirmationDeconnexion, setConfirmationDeconnexion] = React.useState<boolean>(false);
   const [nbRequetes, setNbRequetes] = React.useState<number>(ZERO);
 
   const navigate = useNavigate();
-  const { utilisateurConnecte, erreurLogin } = useContext(RECEContextData);
+  const { utilisateurConnecte, erreurConnexion } = useContext(RECEContextData);
 
   const listeUrlSansConfirmationDeconnexion = [URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS, URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE];
 
@@ -54,10 +52,9 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({ onClick })
   useEffect(() => {
     return () => {
       if (window.location.pathname.includes(URL_DECONNEXION)) {
-        navigate(ZERO);
+        navigate(0);
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleClickDeconnexion = () => {
@@ -121,15 +118,15 @@ export const BoutonDeconnexion: React.FC<BoutonDeconnexionProps> = ({ onClick })
         id="simple-menu"
         className="UtilisateurBouton"
       >
-        {(utilisateurConnecte !== undefined || erreurLogin?.status === codeErreurForbidden) && (
+        {(utilisateurConnecte?.idSSO || erreurConnexion?.avecErreur) && (
           <>
             <Button
               aria-controls="simple-menu"
               aria-haspopup="true"
               onClick={event => handleClickBoutonOfficer(event)}
             >
-              {utilisateurConnecte !== undefined
-                ? `${utilisateurConnecte.prenom} ${utilisateurConnecte.nom}${getFonction(
+              {utilisateurConnecte?.idSSO
+                ? `${utilisateurConnecte.prenom ?? ""} ${utilisateurConnecte.nom ?? ""}${getFonction(
                     utilisateurConnecte.fonctionAgent?.libelleFonction
                   )}`
                 : "Déconnexion"}

@@ -1,5 +1,5 @@
 import { useRecherchePocopa } from "@hook/pocopa/RecherchePocopaApiHook";
-import { Autocomplete } from "@mui/material";
+import Autocomplete from "@mui/material/Autocomplete";
 import { ErrorMessage, useField } from "formik";
 import { useMemo } from "react";
 import { useDelai } from "../../../hooks/utilitaires/UseDelai";

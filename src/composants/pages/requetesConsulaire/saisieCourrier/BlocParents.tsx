@@ -1,7 +1,8 @@
 /* v8 ignore start A TESTER 03/25 */
 
 import { IParentFormRCTC, ISaisieRequeteRCTCForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
-import { AddCircle, Delete } from "@mui/icons-material";
+import AddCircle from "@mui/icons-material/AddCircle";
+import Delete from "@mui/icons-material/Delete";
 import { Option } from "@util/Type";
 import { genererArrondissements } from "@util/Utils";
 import { useFormikContext } from "formik";

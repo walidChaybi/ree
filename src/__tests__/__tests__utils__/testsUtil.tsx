@@ -1,3 +1,4 @@
+import { IErreurConnexion } from "@core/contexts/RECEContext";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
 import { IOfficier } from "@model/agent/IOfficier";
 import { IService } from "@model/agent/IService";
@@ -96,7 +97,7 @@ export const elementAvecContexte = (
   utilisateurs?: IUtilisateur[],
   services?: IService[],
   decrets?: IDecret[],
-  erreurLogin?: any
+  erreurConnexion?: IErreurConnexion | null
 ): any => {
   return (
     <MockRECEContextProvider
@@ -104,7 +105,7 @@ export const elementAvecContexte = (
       utilisateurs={utilisateurs}
       services={services}
       decrets={decrets}
-      erreurLogin={erreurLogin}
+      erreurConnexion={erreurConnexion}
     >
       {children}
     </MockRECEContextProvider>

@@ -99,7 +99,8 @@ test("renders Body avec erreur de login", async () => {
 
   render(
     elementAvecContexte(<RouterProvider router={router} />, officier as unknown as IOfficier, undefined, undefined, undefined, {
-      status: "Autre (console.error LogManager)"
+      statut: 0,
+      avecErreur: true
     })
   );
 
@@ -123,7 +124,8 @@ test("renders Body 403", async () => {
 
   render(
     elementAvecContexte(<RouterProvider router={router} />, officier as unknown as IOfficier, undefined, undefined, undefined, {
-      status: 403
+      statut: 403,
+      avecErreur: true
     })
   );
 

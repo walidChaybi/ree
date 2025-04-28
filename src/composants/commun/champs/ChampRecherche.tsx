@@ -1,5 +1,5 @@
-import { FilterOptionsState } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
+import { FilterOptionsState } from "@mui/material/useAutocomplete";
 import { OPTION_VIDE, Option } from "@util/Type";
 import { IconeCroix } from "@widget/icones/IconeCroix";
 import { useField } from "formik";

@@ -1,7 +1,8 @@
 import { IActionOption } from "@model/requete/IActionOption";
 import { DocumentEC } from "@model/requete/enum/DocumentEC";
-import { Add, ErrorOutline } from "@mui/icons-material";
+import Add from "@mui/icons-material/Add";
 import Clear from "@mui/icons-material/Clear";
+import ErrorOutline from "@mui/icons-material/ErrorOutline";
 import { getLibelle } from "@util/Utils";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useState } from "react";
@@ -36,13 +37,8 @@ export const OngletsDynamique: React.FC<OngletsDynamiqueProps> = props => {
               <button
                 key={onglet.id}
                 onClick={() => handleClick(onglet.id)}
-                className={`${
-                  onglet.id === props.ongletSelectionne ? "selected" : ""
-                } ${
-                  props.listeOnglets?.length === NOMBRE_ONGLETS &&
-                  index === DocumentEC.Complementaire
-                    ? "documentComplementaire"
-                    : ""
+                className={`${onglet.id === props.ongletSelectionne ? "selected" : ""} ${
+                  props.listeOnglets?.length === NOMBRE_ONGLETS && index === DocumentEC.Complementaire ? "documentComplementaire" : ""
                 }`}
               >
                 <span>{onglet.libelle}</span>
@@ -67,12 +63,7 @@ export const OngletsDynamique: React.FC<OngletsDynamiqueProps> = props => {
             <BoutonDoubleSubmit
               onClick={props.actionMoins}
               title={getLibelle("Suppression du document complémentaire")}
-              className={`retirerDocument ${
-                props.listeOnglets[props.listeOnglets.length - 1].id ===
-                idOngletCourant
-                  ? "selected"
-                  : ""
-              }`}
+              className={`retirerDocument ${props.listeOnglets[props.listeOnglets.length - 1].id === idOngletCourant ? "selected" : ""}`}
             >
               <Clear />
             </BoutonDoubleSubmit>

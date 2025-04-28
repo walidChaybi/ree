@@ -1,4 +1,4 @@
-import { RECEContextActions, RECEContextData } from "@core/contexts/RECEContext";
+import { IErreurConnexion, RECEContextActions, RECEContextData } from "@core/contexts/RECEContext";
 import { IOfficier } from "@model/agent/IOfficier";
 import { IService } from "@model/agent/IService";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
@@ -11,7 +11,7 @@ interface IMockRECEContextProviderProps {
   utilisateurs?: IUtilisateur[];
   services?: IService[];
   decrets?: IDecret[];
-  erreurLogin?: any;
+  erreurConnexion?: IErreurConnexion | null;
 }
 
 const MockRECEContextProvider: React.FC<React.PropsWithChildren<IMockRECEContextProviderProps>> = ({
@@ -19,7 +19,7 @@ const MockRECEContextProvider: React.FC<React.PropsWithChildren<IMockRECEContext
   utilisateurs = [] as IUtilisateur[],
   services = servicesALL.data as any as IService[],
   decrets = [] as IDecret[],
-  erreurLogin,
+  erreurConnexion = null,
   children
 }) => {
   const [isDirty, setIsDirty] = useState<boolean>(false);
@@ -31,9 +31,9 @@ const MockRECEContextProvider: React.FC<React.PropsWithChildren<IMockRECEContext
       services,
       decrets,
       isDirty,
-      erreurLogin
+      erreurConnexion
     }),
-    [utilisateurConnecte, utilisateurs, services, decrets, isDirty, erreurLogin]
+    [utilisateurConnecte, utilisateurs, services, decrets, isDirty, erreurConnexion]
   );
 
   const actionsContext = useMemo(() => ({ setIsDirty }), [setIsDirty]);

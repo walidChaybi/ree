@@ -14,6 +14,11 @@ import AppChargeur from "../../../composants/commun/chargeurs/AppChargeur";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import useTraitementApi from "../../../hooks/api/TraitementApiHook";
 
+export interface IErreurConnexion {
+  avecErreur: boolean;
+  statut?: number;
+}
+
 interface IDonneesContext {
   utilisateurs: IUtilisateur[];
   services: IService[];
@@ -23,7 +28,7 @@ export interface IRECEContext extends IDonneesContext {
   utilisateurConnecte: IOfficier;
   isDirty: boolean;
   setIsDirty: React.Dispatch<React.SetStateAction<boolean>>;
-  erreurLogin: any;
+  erreurConnexion: IErreurConnexion | null;
 }
 
 const RECEContextData = React.createContext<Omit<IRECEContext, "setIsDirty">>({} as IRECEContext);
@@ -31,7 +36,7 @@ const RECEContextActions = React.createContext<Pick<IRECEContext, "setIsDirty">>
 
 const RECEContextProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [utilisateurConnecte, setUtilisateurConnecte] = useState<IOfficier | null>(null);
-  const [erreurLogin, setErreurLogin] = useState<any>();
+  const [erreurConnexion, setErreurConnexion] = useState<IErreurConnexion | null>(null);
   const [isDirty, setIsDirty] = useState<boolean>(false);
   const [donneesContext, setDonneesContext] = useState<IDonneesContext>({
     utilisateurs: [],
@@ -56,11 +61,14 @@ const RECEContextProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
         chargerNomenclature({ apresSucces: () => setNomenclaturesChargees(true) });
         recupererDonneesContext({ apresSucces: donneesContext => setDonneesContext(donneesContext) });
       },
-      apresErreur: erreurs => {
+      apresErreur: (erreurs, statut) => {
         gestionnaireDoubleOuverture.init();
         setUtilisateurConnecte({} as IOfficier);
         setNomenclaturesChargees(true);
-        setErreurLogin(erreurs);
+        setErreurConnexion({
+          avecErreur: Boolean(erreurs.length),
+          statut: statut
+        });
       }
     });
   }, []);
@@ -69,10 +77,10 @@ const RECEContextProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     () => ({
       utilisateurConnecte: utilisateurConnecte ?? ({} as IOfficier),
       isDirty,
-      erreurLogin,
+      erreurConnexion,
       ...donneesContext
     }),
-    [utilisateurConnecte, donneesContext, isDirty, erreurLogin]
+    [utilisateurConnecte, donneesContext, isDirty, erreurConnexion]
   );
 
   const contextActions = useMemo(
