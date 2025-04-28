@@ -5,26 +5,20 @@ import OngletsContenu from "../../../../composants/commun/onglets/OngletsContenu
 
 describe("OngletContenu", () => {
   test("render le composant child correctement", () => {
-    const { container } = render(
-      <OngletsContenu estActif={false}>Hello World</OngletsContenu>
-    );
+    const { container } = render(<OngletsContenu estActif={false}>Hello World</OngletsContenu>);
 
     expect(container.textContent).toContain("Hello World");
   });
 
   test('doit avoir "volet-actif" quand estActif est true', () => {
-    const { container } = render(
-      <OngletsContenu estActif={true}>Active Tab</OngletsContenu>
-    );
+    const { container } = render(<OngletsContenu estActif={true}>Active Tab</OngletsContenu>);
 
-    expect(container.firstElementChild?.classList).toContain("volet-actif");
+    expect(container.firstElementChild?.classList).toContain("grid");
   });
 
   test('ne doit pas avoir "volet-actif" quand estActif est false', () => {
-    const { container } = render(
-      <OngletsContenu estActif={false}>Inactive Tab</OngletsContenu>
-    );
+    const { container } = render(<OngletsContenu estActif={false}>Inactive Tab</OngletsContenu>);
 
-    expect(container.firstElementChild?.classList).not.toContain("volet-actif");
+    expect(container.firstElementChild?.classList).toContain("hidden");
   });
 });

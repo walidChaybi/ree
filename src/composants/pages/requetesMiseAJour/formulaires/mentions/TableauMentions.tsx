@@ -94,7 +94,14 @@ const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAna
           </div>
         )}
         renderItem={({ value, props }) => (
-          <div {...props}>
+          <div
+            key={props.key}
+            {...(() => {
+              const { key, ...autres } = props;
+
+              return autres;
+            })()}
+          >
             <div className="flex cursor-move items-center gap-2 rounded-lg border border-solid border-bleu bg-white px-2 py-4 text-start transition-colors hover:bg-bleu-transparent">
               <span
                 className="line-clamp-2 flex-grow"

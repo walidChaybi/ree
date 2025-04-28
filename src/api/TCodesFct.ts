@@ -1,5 +1,6 @@
 export type TCodesFct = `FCT_${
   | 16136
+  | 16108
   | 15181
   | 23002
   | 23003

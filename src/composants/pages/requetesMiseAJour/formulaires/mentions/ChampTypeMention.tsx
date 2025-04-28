@@ -1,7 +1,7 @@
 import { ArrowBack } from "@mui/icons-material";
 import { Autocomplete } from "@mui/material";
 import { ErrorMessage, useField, useFormikContext } from "formik";
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { ITypeMentionDisponible, TMentionForm } from "../MentionForm";
 
 interface IChampTypeMentionProps {
@@ -152,7 +152,7 @@ const ChampTypeMention: React.FC<IChampTypeMentionProps> = ({ name, typesMention
               </div>
             </li>
           ) : (
-            <></>
+            <Fragment key={option.id} />
           );
         }}
         filterOptions={(options, state) => {

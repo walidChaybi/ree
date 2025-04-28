@@ -1,9 +1,10 @@
-import { TBaseUri, TConfigurationApi, TParametres } from "@model/api/Api";
+import { TBaseUri, TConfigurationApi, TErreurApi, TParametres } from "@model/api/Api";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
 type TReponseMock<TResultat> = {
   data?: TResultat;
+  erreurs?: TErreurApi[];
   codeHttp?: number;
 };
 
@@ -16,9 +17,7 @@ export class MockApi {
   private static mock: AxiosMockAdapter | undefined;
 
   public static getMock() {
-    if (!MockApi.mock) {
-      MockApi.mock = new AxiosMockAdapter(axios, { onNoMatch: "throwException" });
-    }
+    MockApi.mock ??= new AxiosMockAdapter(axios, { onNoMatch: "throwException" });
 
     return MockApi.mock;
   }

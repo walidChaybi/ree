@@ -14,7 +14,7 @@ const PartieActe: React.FC = () => {
   const { changerOnglet } = useContext(EditionMiseAJourContext.Actions);
 
   return (
-    <div className={estActeSigne ? "w-full" : "w-1/2"}>
+    <div className={estActeSigne ? "mx-auto w-full max-w-[90rem]" : "w-1/2"}>
       <OngletsBouton
         onglets={[
           {

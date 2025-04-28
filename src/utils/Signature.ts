@@ -1,13 +1,32 @@
 import { ModeSignature, ModeSignatureUtil } from "@model/requete/ModeSignature";
 import { gestionnaireSignatureFlag } from "@util/signatureFlag/gestionnaireSignatureFlag";
+import dayjs from "dayjs";
+import DOCUMENT_VALIDE from "../ressources/DocumentSigneValide";
+import DOCUMENT_VIDE_A_SIGNER from "../ressources/DocumentVideASigner";
+
+export interface IInformationsCarte {
+  noSerieCarte: string;
+  manufacturerIDCarte: string;
+  modelCarte: string;
+  flagsCarte: string;
+  algoSignature: string;
+  notBeforeCertificat: string;
+  notAfterCertificat: string;
+  noSerieCertificat: string;
+  entiteCertificat: string;
+  issuerCertificat: string;
+}
+
+interface IErreurSignature {
+  code: string;
+  libelle: string;
+  detail: string | null;
+}
 
 interface IReponseDocumentSigne {
   document?: string;
-  erreur?: {
-    code: string;
-    libelle: string;
-    detail: string | null;
-  };
+  erreur?: IErreurSignature;
+  infosSignature?: IInformationsCarte;
 }
 
 export interface IDocumentASigner {
@@ -23,15 +42,11 @@ export interface IDocumentSigne {
   idRequete: string;
   numeroFonctionnel: string;
   contenu?: string;
-  erreur?: {
-    code: string;
-    libelle: string;
-    detail: string | null;
-  };
+  erreur?: IErreurSignature;
   idActe?: string;
 }
 
-interface ISignerParams {
+interface ISignerDelivranceParams {
   parametres: {
     document: IDocumentASigner;
     codePin: string;
@@ -39,10 +54,36 @@ interface ISignerParams {
   apresReponse: (reponse: IDocumentSigne) => void;
 }
 
+interface ISignerParams {
+  parametres: {
+    document: string;
+    codePin: string;
+  };
+  apresReponse: (reponse: IReponseDocumentSigne) => void;
+}
+
+interface IRecupererInformationsParams {
+  parametres: {
+    codePin: string;
+    agent: {
+      nom: string;
+      prenom: string;
+    };
+  };
+  apresSucces: (informations: IInformationsCarte) => void;
+  apresErreur: (erreur: IErreurSignature) => void;
+}
+
 const EVENT_REPONSE_SIGNATURE = "signWebextResponse";
 const EVENT_ENVOI_SIGNATURE_WEBEXT = "signWebextCall";
 const TIMEOUT_WEBEXT = 30000;
 const CODE_WEBEXT_INDISPONIBLE = "WEB_EXT1";
+const ERREUR_WEBEXT_INDISPONIBLE: IErreurSignature = {
+  code: CODE_WEBEXT_INDISPONIBLE,
+  libelle: "La signature électronique est actuellement indisponible ou n'est pas installée.",
+  detail: null
+};
+
 export const CODE_PIN_INVALIDE = "FONC_3";
 export const CODES_ERREUR_BLOQUANTS = [
   "FONC_1",
@@ -65,37 +106,138 @@ export const CODES_ERREUR_BLOQUANTS = [
 
 // DEV seulement
 /* v8 ignore start */
-const reponseDelivranceModeDeveloppement = (signerParams: ISignerParams) => {
-  const codesPin = {
+const ModeDeveloppement = {
+  CODES_PIN: {
     valide: "0000",
     invalide: "1111",
     erreur: "2222"
-  };
-  if (process.env.NODE_ENV !== "development" || !Object.values(codesPin).includes(signerParams.parametres.codePin)) {
-    return;
-  }
+  } as { [cle: string]: string },
 
-  setTimeout(() => {
-    const pinIncorrect = signerParams.parametres.codePin === codesPin.invalide;
-    const genererErreur = signerParams.parametres.codePin === codesPin.erreur;
-    window.top?.dispatchEvent(
-      new CustomEvent<IReponseDocumentSigne>(EVENT_REPONSE_SIGNATURE, {
-        detail: {
-          erreur:
-            pinIncorrect || genererErreur
+  ignorer: (codePin: string) => process.env.NODE_ENV !== "development" || !Object.values(ModeDeveloppement.CODES_PIN).includes(codePin),
+
+  reponseRecupererInformations: (recupereInformationParams: IRecupererInformationsParams) => {
+    if (ModeDeveloppement.ignorer(recupereInformationParams.parametres.codePin)) {
+      return;
+    }
+
+    const pinIncorrect = recupereInformationParams.parametres.codePin === ModeDeveloppement.CODES_PIN.invalide;
+    setTimeout(() => {
+      window.top?.dispatchEvent(
+        new CustomEvent<IReponseDocumentSigne>(EVENT_REPONSE_SIGNATURE, {
+          detail: {
+            erreur: pinIncorrect
               ? { code: pinIncorrect ? CODE_PIN_INVALIDE : "FAKE_ERR", libelle: "Une erreur sur le document", detail: null }
               : undefined,
-          document: pinIncorrect || genererErreur ? undefined : signerParams.parametres.document.contenu
+            infosSignature: pinIncorrect
+              ? undefined
+              : ({
+                  entiteCertificat: `CN=${recupereInformationParams.parametres.agent.prenom} ${recupereInformationParams.parametres.agent.nom.toUpperCase()},test`,
+                  issuerCertificat: "AAE"
+                } as IInformationsCarte)
+          }
+        })
+      );
+    }, 3000);
+  },
+
+  reponseDelivrance: (signerParams: ISignerDelivranceParams) => {
+    if (ModeDeveloppement.ignorer(signerParams.parametres.codePin)) {
+      return;
+    }
+
+    const pinIncorrect = signerParams.parametres.codePin === ModeDeveloppement.CODES_PIN.invalide;
+    const genererErreur = signerParams.parametres.codePin === ModeDeveloppement.CODES_PIN.erreur;
+    setTimeout(() => {
+      window.top?.dispatchEvent(
+        new CustomEvent<IReponseDocumentSigne>(EVENT_REPONSE_SIGNATURE, {
+          detail: {
+            erreur:
+              pinIncorrect || genererErreur
+                ? { code: pinIncorrect ? CODE_PIN_INVALIDE : "FAKE_ERR", libelle: "Une erreur sur le document", detail: null }
+                : undefined,
+            document: pinIncorrect || genererErreur ? undefined : signerParams.parametres.document.contenu
+          }
+        })
+      );
+    }, 3000);
+  },
+
+  reponseMiseAJour: (signerParams: ISignerParams) => {
+    if (ModeDeveloppement.ignorer(signerParams.parametres.codePin)) {
+      return;
+    }
+
+    const genererErreur = signerParams.parametres.codePin === ModeDeveloppement.CODES_PIN.erreur;
+    setTimeout(() => {
+      window.top?.dispatchEvent(
+        new CustomEvent<IReponseDocumentSigne>(EVENT_REPONSE_SIGNATURE, {
+          detail: {
+            erreur: genererErreur ? { code: "FAKE_ERR", libelle: "Une erreur sur le document", detail: null } : undefined,
+            document: genererErreur ? undefined : DOCUMENT_VALIDE,
+            infosSignature: {
+              noSerieCarte: "1234",
+              manufacturerIDCarte: "4321",
+              modelCarte: "test",
+              flagsCarte: "flagTest",
+              algoSignature: "test",
+              notBeforeCertificat: dayjs().add(-10, "day").toISOString().split(".")[0].concat("-07:00"),
+              notAfterCertificat: dayjs().add(10, "day").toISOString().split(".")[0].concat("-07:00"),
+              noSerieCertificat: "0000",
+              entiteCertificat: "CN=test TEST",
+              issuerCertificat: "AAE"
+            }
+          }
+        })
+      );
+    }, 3000);
+  }
+} as const;
+/* v8 ignore stop */
+
+const Signature = {
+  recupererInformationsCarte: (recupererInformationsParams: IRecupererInformationsParams) => {
+    ModeDeveloppement.reponseRecupererInformations(recupererInformationsParams);
+
+    let retournerInformationsCarte: null | EventListener = null;
+
+    const reponseWebext: Promise<IReponseDocumentSigne> = new Promise(resolve => {
+      retournerInformationsCarte = ((reponse: CustomEvent<IReponseDocumentSigne>) => resolve(reponse.detail)) as EventListener;
+
+      window.top?.addEventListener(EVENT_REPONSE_SIGNATURE, retournerInformationsCarte);
+    });
+
+    const supprimerListener = () =>
+      retournerInformationsCarte && window.top?.removeEventListener(EVENT_REPONSE_SIGNATURE, retournerInformationsCarte);
+
+    const timeout = setTimeout(() => {
+      supprimerListener();
+      recupererInformationsParams.apresErreur(ERREUR_WEBEXT_INDISPONIBLE);
+    }, TIMEOUT_WEBEXT);
+
+    reponseWebext.then((reponse: IReponseDocumentSigne) => {
+      clearTimeout(timeout);
+      supprimerListener();
+      reponse.erreur
+        ? recupererInformationsParams.apresErreur(reponse.erreur)
+        : recupererInformationsParams.apresSucces(reponse.infosSignature as IInformationsCarte);
+    });
+
+    const modeSignatureFF = gestionnaireSignatureFlag.getModeSignature();
+    window.top?.dispatchEvent(
+      new CustomEvent(EVENT_ENVOI_SIGNATURE_WEBEXT, {
+        detail: {
+          function: "SIGN",
+          direction: "to-webextension",
+          document: DOCUMENT_VIDE_A_SIGNER,
+          pin: recupererInformationsParams.parametres.codePin,
+          mode: ModeSignatureUtil.estValide(modeSignatureFF) ? modeSignatureFF : ModeSignature.PKCS11_SIGNED
         }
       })
     );
-  }, 3000);
-};
-/* v8 ignore end */
+  },
 
-const Signature = {
-  signerDocumentDelivrance: (signerParams: ISignerParams) => {
-    reponseDelivranceModeDeveloppement(signerParams);
+  signerDocumentDelivrance: (signerParams: ISignerDelivranceParams) => {
+    ModeDeveloppement.reponseDelivrance(signerParams);
 
     let retournerDocumentSigne: null | EventListener = null;
 
@@ -122,11 +264,7 @@ const Signature = {
         id: signerParams.parametres.document.id,
         idRequete: signerParams.parametres.document.idRequete,
         numeroFonctionnel: signerParams.parametres.document.numeroFonctionnel,
-        erreur: {
-          code: CODE_WEBEXT_INDISPONIBLE,
-          libelle: "La signature électronique est actuellement indisponible ou n'est pas installée.",
-          detail: null
-        },
+        erreur: ERREUR_WEBEXT_INDISPONIBLE,
         idActe: signerParams.parametres.document.idActe
       });
     }, TIMEOUT_WEBEXT);
@@ -150,6 +288,47 @@ const Signature = {
             { cle: "id", valeur: signerParams.parametres.document.id },
             { cle: "idRequete", valeur: signerParams.parametres.document.idRequete }
           ]
+        }
+      })
+    );
+  },
+
+  signerDocumentMiseAJour: (signerParams: ISignerParams) => {
+    ModeDeveloppement.reponseMiseAJour(signerParams);
+
+    let retournerDocumentSigne: null | EventListener = null;
+
+    const reponseWebext: Promise<IReponseDocumentSigne> = new Promise(resolve => {
+      retournerDocumentSigne = ((reponse: CustomEvent<IReponseDocumentSigne>) => resolve(reponse.detail)) as EventListener;
+
+      window.top?.addEventListener(EVENT_REPONSE_SIGNATURE, retournerDocumentSigne);
+    });
+
+    const supprimerListener = () =>
+      retournerDocumentSigne && window.top?.removeEventListener(EVENT_REPONSE_SIGNATURE, retournerDocumentSigne);
+
+    const timeout = setTimeout(() => {
+      supprimerListener();
+      signerParams.apresReponse({
+        erreur: ERREUR_WEBEXT_INDISPONIBLE
+      });
+    }, TIMEOUT_WEBEXT);
+
+    reponseWebext.then((documentSigne: IReponseDocumentSigne) => {
+      clearTimeout(timeout);
+      supprimerListener();
+      signerParams.apresReponse(documentSigne);
+    });
+
+    const modeSignatureFF = gestionnaireSignatureFlag.getModeSignature();
+    window.top?.dispatchEvent(
+      new CustomEvent(EVENT_ENVOI_SIGNATURE_WEBEXT, {
+        detail: {
+          function: "SIGN",
+          direction: "to-webextension",
+          document: signerParams.parametres.document,
+          pin: signerParams.parametres.codePin,
+          mode: ModeSignatureUtil.estValide(modeSignatureFF) ? modeSignatureFF : ModeSignature.PKCS11_SIGNED
         }
       })
     );

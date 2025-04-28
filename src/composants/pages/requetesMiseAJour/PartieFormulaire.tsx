@@ -12,7 +12,6 @@ import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { TObjetFormulaire, TValeurFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import messageManager from "@util/messageManager";
-import { PopinSignatureMiseAJourMentions } from "@widget/signature/PopinSignatureMiseAJourMentions";
 import { Form, Formik } from "formik";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { ECleOngletsMiseAJour, EditionMiseAJourContext } from "../../../contexts/EditionMiseAJourContextProvider";
@@ -23,6 +22,7 @@ import { ConteneurBoutonBasDePage } from "../../commun/bouton/conteneurBoutonBas
 import PageChargeur from "../../commun/chargeurs/PageChargeur";
 import OngletsBouton from "../../commun/onglets/OngletsBouton";
 import OngletsContenu from "../../commun/onglets/OngletsContenu";
+import SignatureMiseAJour from "../../commun/signature/SignatureMiseAJour";
 import AnalyseMarginaleForm from "./formulaires/AnalyseMarginaleForm";
 import BoutonValiderEtTerminer from "./formulaires/BoutonValiderEtTerminer";
 import MentionForm from "./formulaires/MentionForm";
@@ -68,7 +68,7 @@ export interface IMiseAJourForm {
 
 export const PartieFormulaire: React.FC = () => {
   const { utilisateurConnecte } = useContext(RECEContextData);
-  const { estMiseAJourAvecMentions, ongletsActifs, idActe, miseAJourEffectuee } = useContext(EditionMiseAJourContext.Valeurs);
+  const { estMiseAJourAvecMentions, ongletsActifs, idActe, miseAJourEffectuee, idRequete } = useContext(EditionMiseAJourContext.Valeurs);
   const { changerOnglet, activerOngletActeMisAJour, setComposerActeMisAJour, setEstActeSigne, desactiverBlocker } = useContext(
     EditionMiseAJourContext.Actions
   );
@@ -80,7 +80,6 @@ export const PartieFormulaire: React.FC = () => {
   const { appelApi: appelResumeActe, enAttenteDeReponseApi: enAttenteResumeActe } = useFetchApi(CONFIG_GET_RESUME_ACTE);
   const [afficherAnalyseMarginale, setAfficherAnalyseMarginale] = useState(!estMiseAJourAvecMentions);
   const [analyseMarginaleModifiee, setAnalyseMarginaleModifiee] = useState<boolean>(false);
-  const [estPopinSignatureOuverte, setEstPopinSignatureOuverte] = useState<boolean>(false);
 
   const [sexeTitulaire, setSexeTitulaire] = useState<Sexe | null>(null);
   const [valeurDefautFormulaire, setValeurDefautFormulaire] = useState<MiseAJourForm | null>(null);
@@ -222,21 +221,12 @@ export const PartieFormulaire: React.FC = () => {
 
                     {estMiseAJourAvecMentions ? (
                       estOfficierHabiliterPourTousLesDroits(utilisateurConnecte, [Droit.SIGNER_MENTION, Droit.METTRE_A_JOUR_ACTE]) && (
-                        <>
-                          <Bouton
-                            title="Terminer et Signer"
-                            disabled={formulaireMentionEnCoursDeSaisie || !isValid || dirty}
-                            onClick={() => setEstPopinSignatureOuverte(true)}
-                          >
-                            {"Terminer et Signer"}
-                          </Bouton>
-
-                          <PopinSignatureMiseAJourMentions
-                            estOuvert={estPopinSignatureOuverte}
-                            setEstOuvert={setEstPopinSignatureOuverte}
-                            actionApresSignatureReussie={onSignatureValidee}
-                          />
-                        </>
+                        <SignatureMiseAJour
+                          idActe={idActe}
+                          idRequete={idRequete}
+                          peutSigner={!formulaireMentionEnCoursDeSaisie && isValid && !dirty && miseAJourEffectuee}
+                          apresSignature={onSignatureValidee}
+                        />
                       )
                     ) : (
                       <BoutonValiderEtTerminer disabled={!miseAJourEffectuee || dirty} />
@@ -257,6 +247,8 @@ export const PartieFormulaire: React.FC = () => {
           </div>
         )}
       </div>
+
+      <div id="conteneur-modale-signature"></div>
     </>
   );
 };

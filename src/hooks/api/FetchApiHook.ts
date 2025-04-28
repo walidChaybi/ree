@@ -10,7 +10,8 @@ const useFetchApi = <
   TQuery extends object | undefined = undefined,
   TResultat = unknown
 >(
-  configuration: TConfigurationApi<TUri, TBody, TQuery, TResultat>
+  configuration: TConfigurationApi<TUri, TBody, TQuery, TResultat>,
+  appelAvecAxios: boolean = false
 ) => {
   const [enAttenteDeReponseApi, setEnAttenteDeReponseApi] = useState(false);
 
@@ -28,7 +29,7 @@ const useFetchApi = <
     !forcerAppelsMultiples && setEnAttenteDeReponseApi(true);
     /* istanbul ignore file */
     /* v8 ignore start a faire Lundi 31 Mars @ Adrien_Bonvin */
-    if (configuration.avecAxios) {
+    if (configuration.avecAxios || appelAvecAxios) {
       API.appel({
         api: configuration.api,
         configurationRequete: {
