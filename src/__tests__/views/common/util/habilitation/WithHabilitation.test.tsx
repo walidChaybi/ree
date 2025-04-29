@@ -81,7 +81,7 @@ const BoutonTest4WithHab = WithHabilitation(
 );
 
 test.skip("Le bouton ne doit pas être grisé car l'utilisateur à le droit Attribuer", () => {
-  let utilisateurConnecteMock = {
+  const utilisateurConnecteMock = {
     ...utilisateurConnecte
   };
   utilisateurConnecteMock.habilitations[0].profil.droits[0] = {
@@ -94,7 +94,7 @@ test.skip("Le bouton ne doit pas être grisé car l'utilisateur à le droit Attr
 });
 
 test("Le bouton ne doit pas être grisé car l'utilisateur à un de ces droit à Attribuer ou Consulter", () => {
-  let utilisateurConnecteMock = {
+  const utilisateurConnecteMock = {
     ...utilisateurConnecte
   };
   utilisateurConnecteMock.habilitations[0].profil.droits[0] = {
@@ -107,7 +107,7 @@ test("Le bouton ne doit pas être grisé car l'utilisateur à un de ces droit à
 });
 
 test("Le bouton doit être grisé car l'utilisateur n'à pas le droit Attribuer", () => {
-  let utilisateurConnecteMock = {
+  const utilisateurConnecteMock = {
     ...utilisateurConnecte
   };
   utilisateurConnecteMock.habilitations[0].profil.droits = [];
@@ -117,7 +117,7 @@ test("Le bouton doit être grisé car l'utilisateur n'à pas le droit Attribuer"
 });
 
 test("Le bouton doit être invisible car l'utilisateur n'à pas le droit Attribuer", () => {
-  let utilisateurConnecteMock = {
+  const utilisateurConnecteMock = {
     ...utilisateurConnecte
   };
   utilisateurConnecteMock.habilitations[0].profil.droits[0] = {
@@ -130,7 +130,7 @@ test("Le bouton doit être invisible car l'utilisateur n'à pas le droit Attribu
 });
 
 test("Le bouton ne doit pas être grisé car il n'a aucun droit associé", () => {
-  let utilisateurConnecteMock = {
+  const utilisateurConnecteMock = {
     ...utilisateurConnecte
   };
   utilisateurConnecteMock.habilitations[0].profil.droits = [];
@@ -140,7 +140,7 @@ test("Le bouton ne doit pas être grisé car il n'a aucun droit associé", () =>
 });
 
 test("Le bouton ne doit être ni grisé ni invisible car l'utilisateur à seulement le droit CONSULTER_ARCHIVES", async () => {
-  let utilisateurConnecteMock = {
+  const utilisateurConnecteMock = {
     habilitations: [
       {
         profil: {
@@ -194,7 +194,7 @@ test("Le bouton doit être invisible car l'utilisateur n'a pas seulement le droi
       ]
     }
   } as IHabilitation;
-  let utilisateurConnecteMock = {
+  const utilisateurConnecteMock = {
     ...utilisateurConnecte
   };
   utilisateurConnecteMock.habilitations = [hab1, hab2];

@@ -7,34 +7,18 @@ import {
 } from "@model/agent/IOfficier";
 import * as React from "react";
 import { useContext } from "react";
-import {
-  habilitationsDescription,
-  IHabiliationDescription,
-  NomComposant
-} from "./habilitationsDescription";
+import { habilitationsDescription, IHabiliationDescription, NomComposant } from "./habilitationsDescription";
 
-function getHabilitationPourLeComposant(
-  nomComposant: string,
-  habsDesc: IHabiliationDescription[]
-) {
+function getHabilitationPourLeComposant(nomComposant: string, habsDesc: IHabiliationDescription[]) {
   return habsDesc.find(habDesc => habDesc.nomComposant === nomComposant);
 }
 
-function getComportement(
-  habilitationPourLeComposant: IHabiliationDescription,
-  utilisateurConnecte: IOfficier
-) {
+function getComportement(habilitationPourLeComposant: IHabiliationDescription, utilisateurConnecte: IOfficier) {
   const authorise = habilitationPourLeComposant.tousLesDroits
-    ? estOfficierHabiliterPourTousLesDroits(
-        utilisateurConnecte,
-        habilitationPourLeComposant.tousLesDroits
-      )
+    ? estOfficierHabiliterPourTousLesDroits(utilisateurConnecte, habilitationPourLeComposant.tousLesDroits)
     : habilitationPourLeComposant.unDesDroits
-    ? estOfficierHabiliterPourUnDesDroits(
-        utilisateurConnecte,
-        habilitationPourLeComposant.unDesDroits
-      )
-    : true;
+      ? estOfficierHabiliterPourUnDesDroits(utilisateurConnecte, habilitationPourLeComposant.unDesDroits)
+      : true;
   return authorise
     ? habilitationPourLeComposant.comportementSiAutorise
       ? habilitationPourLeComposant.comportementSiAutorise
@@ -59,26 +43,22 @@ const WithHabilitation = (
     if (utilisateurConnecte) {
       const habilitationPourLeComposant = getHabilitationPourLeComposant(
         composantId,
-        specifiquesHabilitationsDescription
-          ? specifiquesHabilitationsDescription
-          : habilitationsDescription
+        specifiquesHabilitationsDescription ? specifiquesHabilitationsDescription : habilitationsDescription
       );
+
       if (habilitationPourLeComposant) {
-        comportementComposant = getComportement(
-          habilitationPourLeComposant,
-          utilisateurConnecte
-        );
-        composantEstVisible = visibiliteComposant(
-          habilitationPourLeComposant,
-          utilisateurConnecte
-        );
+        comportementComposant = getComportement(habilitationPourLeComposant, utilisateurConnecte);
+        composantEstVisible = visibiliteComposant(habilitationPourLeComposant, utilisateurConnecte);
       }
     }
 
     return (
       <>
         {composantEstVisible && (
-          <ComponentToWrap {...comportementComposant} {...props} />
+          <ComponentToWrap
+            {...comportementComposant}
+            {...props}
+          />
         )}
       </>
     );
@@ -88,25 +68,16 @@ const WithHabilitation = (
 
 export default WithHabilitation;
 
-function visibiliteComposant(
-  habilitationPourLeComposant: IHabiliationDescription,
-  utilisateurConnecte: IOfficier
-): boolean {
+function visibiliteComposant(habilitationPourLeComposant: IHabiliationDescription, utilisateurConnecte: IOfficier): boolean {
   if (
     habilitationPourLeComposant.visiblePourLesDroits &&
-    !estOfficierHabiliterPourUnDesDroits(
-      utilisateurConnecte,
-      habilitationPourLeComposant.visiblePourLesDroits
-    )
+    !estOfficierHabiliterPourUnDesDroits(utilisateurConnecte, habilitationPourLeComposant.visiblePourLesDroits)
   ) {
     return false;
   }
   if (
     habilitationPourLeComposant.visibleSeulementPourLesDroits &&
-    !estOfficierHabiliterPourSeulementLesDroits(
-      utilisateurConnecte,
-      habilitationPourLeComposant.visibleSeulementPourLesDroits
-    )
+    !estOfficierHabiliterPourSeulementLesDroits(utilisateurConnecte, habilitationPourLeComposant.visibleSeulementPourLesDroits)
   ) {
     return false;
   }

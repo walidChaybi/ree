@@ -2,7 +2,6 @@
 
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
-import { AccueilPage } from "@pages/accueil/AccueilPage";
 import { RMCArchivePage } from "@pages/rechercheMultiCriteres/acteArchive/RMCArchivePage";
 import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import { RMCRequetePage } from "@pages/rechercheMultiCriteres/requete/RMCRequetePage";
@@ -23,6 +22,7 @@ import EspaceInformationPage from "@pages/requeteInformation/espaceInformation/E
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { IRoute } from "@util/route/IRoute";
+import PageAccueil from "../../pages/accueil/PageAccueil";
 import PageMesRequetesConsulaires from "../../pages/requetesConsulaire/PageMesRequetesConsulaires";
 import PageRequeteCreationTranscriptionPriseEnCharge from "../../pages/requetesConsulaire/PageRequeteCreationTranscriptionPriseEnCharge";
 import { PageRequeteTranscriptionSaisieProjet } from "../../pages/requetesConsulaire/PageRequeteTranscriptionSaisieProjet";
@@ -112,7 +112,7 @@ const Labels = {
 export const routesRece: IRoute[] = [
   {
     url: "",
-    component: AccueilPage,
+    component: PageAccueil,
     libelle: "Accueil"
   },
 
