@@ -22,12 +22,12 @@ const remplirTypeEtSousType = async () => {
 };
 
 const remplirFormulaireMention = async () => {
-  await userEvent.type(await screen.getByRole("textbox", { name: /evenementFrance.ville/i }), "superVille");
-  await userEvent.type(await screen.getByRole("textbox", { name: /evenementFrance.departement/i }), "superDepartement");
-  await userEvent.type(await screen.getByPlaceholderText("JJ"), "12");
-  await userEvent.type(await screen.getByPlaceholderText("MM"), "09");
-  await userEvent.type(await screen.getByPlaceholderText("AAAA"), "2000");
-  await userEvent.type(await screen.getByRole("textbox", { name: /conjoint.nom/i }), "superNom");
+  fireEvent.change(screen.getByRole("textbox", { name: /evenementFrance.ville/i }), { target: { value: "superVille" } });
+  fireEvent.change(screen.getByRole("textbox", { name: /evenementFrance.departement/i }), { target: { value: "superDepartement" } });
+  fireEvent.change(screen.getByPlaceholderText("JJ"), { target: { value: "12" } });
+  fireEvent.change(screen.getByPlaceholderText("MM"), { target: { value: "09" } });
+  fireEvent.change(screen.getByPlaceholderText("AAAA"), { target: { value: "2000" } });
+  fireEvent.change(screen.getByRole("textbox", { name: /conjoint.nom/i }), { target: { value: "superNom" } });
 };
 
 const creerMention = async () => {
@@ -103,8 +103,13 @@ describe("Tests du formulaire de mise à jour d'un acte", () => {
     test("Remplissage et prévisualisation du texte d'aide à la saisie", async () => {
       await remplirTypeEtSousType();
       await screen.findByRole("button", { name: "Ajouter mention" });
-      await remplirFormulaireMention();
 
+      await userEvent.type(screen.getByRole("textbox", { name: /evenementFrance.ville/i }), "superVille");
+      await userEvent.type(screen.getByRole("textbox", { name: /evenementFrance.departement/i }), "superDepartement");
+      await userEvent.type(screen.getByPlaceholderText("JJ"), "12");
+      await userEvent.type(screen.getByPlaceholderText("MM"), "09");
+      await userEvent.type(screen.getByPlaceholderText("AAAA"), "2000");
+      await userEvent.type(screen.getByRole("textbox", { name: /conjoint.nom/i }), "superNom");
       await waitFor(() => {
         expect(screen.getByText("superVille (superDepartement)")).toBeDefined();
         expect(screen.getByText("le 12 septembre 2000")).toBeDefined();
