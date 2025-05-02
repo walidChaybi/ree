@@ -38,11 +38,21 @@ module.exports = {
         "noto-sans-ui-bold": ["NotoSansUI-Bold", "sans-serif"],
         liberation: ["Liberation Mono"]
       },
-
-      animation: {
-        apparition: "apparition .25s ease"
+      keyframes: {
+        entreeGauche: {
+          "0%": { transform: "translateX(-20px)", opacity: "0" },
+          "100%": { transform: "translateX(0)", opacity: "1" }
+        },
+        entreeDroite: {
+          "0%": { transform: "translateX(20px)", opacity: "0" },
+          "100%": { transform: "translateX(0)", opacity: "1" }
+        }
       },
-
+      animation: {
+        apparition: "apparition .2s ease",
+        "entree-gauche": "entreeGauche 0.2s ease-out 0.1s both",
+        "entree-droite": "entreeDroite 0.2s ease-out 0.1s both"
+      },
       transitionProperty: {
         opacity: "opacity"
       }

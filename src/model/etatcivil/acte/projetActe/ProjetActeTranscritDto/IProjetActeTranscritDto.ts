@@ -1,3 +1,4 @@
+import { ICorpsText } from "../../ICorpsText";
 import { IMention } from "../../mention/IMention";
 import { IActeEtrangerDto } from "./IActeEtrangerDto";
 import { IAnalyseMarginaleDto } from "./IAnalyseMarginaleDto";
@@ -32,4 +33,5 @@ export interface IProjetActeTranscritDto {
   nomOec?: string | null;
   prenomOec?: string | null;
   mentions: IMention[] | null;
+  corpsTexte?: ICorpsText;
 }

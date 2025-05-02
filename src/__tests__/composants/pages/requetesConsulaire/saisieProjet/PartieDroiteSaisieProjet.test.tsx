@@ -15,7 +15,7 @@ describe("PartieDroiteSaisieProjet - Tests du composant", () => {
   test("PartieDroiteSaisieProjet - Doit afficher l'onglet 'Saisir le projet'", async () => {
     render(elementAvecContexte(<PartieDroiteSaisieProjet requete={requeteCreationTranscription} />));
     const boutonSaisirProjet = screen.getByRole("button", { name: "Saisir le projet" });
-    const boutonEnregistrerEtVisualiser = screen.getByRole("button", { name: "Enregistrer et visualiser" });
+    const boutonEnregistrerEtVisualiser = screen.getByRole("button", { name: "Terminer et signer" });
     expect(boutonSaisirProjet).toBeDefined();
     fireEvent.click(boutonSaisirProjet);
     await waitFor(() => {

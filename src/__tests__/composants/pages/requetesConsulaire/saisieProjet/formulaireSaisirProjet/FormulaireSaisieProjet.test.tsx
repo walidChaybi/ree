@@ -1,15 +1,10 @@
-import { CONFIG_POST_PROJET_ACTE_TRANSCRIPTION } from "@api/configurations/etatCivil/acte/transcription/PostProjetActeTranscriptionConfigApi";
-import { CONFIG_PATCH_STATUT_REQUETE_CREATION } from "@api/configurations/requete/creation/PatchStatutRequeteCreationConfigApi";
-import { MockApi } from "@mock/appelsApi/MockApi";
-import { IProjetActeTranscritDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/IProjetActeTranscritDto";
-import { LienParente } from "@model/etatcivil/enum/LienParente";
-import { TypeRedactionActe } from "@model/etatcivil/enum/TypeRedactionActe";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import messageManager from "@util/messageManager";
 import { describe, expect, test, vi } from "vitest";
 
+import { IPostProjetActeTranscritEtPdfParams } from "@api/traitements/projetActe/transcription/TraitementProjetActeTranscrit";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
@@ -24,239 +19,59 @@ import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import FormulaireSaisieProjet from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisieProjet/FormulaireSaisieProjet";
 
+const mockAppelEnregistrerRequeteApi = vi.fn();
+const mockAppelPatchCreationStatutRequete = vi.fn();
+const mockAppelerCompositionPdf = vi.fn();
+
+vi.mock("@api/traitements/projetActe/transcription/TraitementProjetActeTranscrit", () => ({
+  default: {
+    Lancer: (terminerTraitement: () => void) => {
+      const lancer = (parametres?: IPostProjetActeTranscritEtPdfParams): void => {
+        if (parametres && parametres.projetActe) {
+          mockAppelEnregistrerRequeteApi(parametres.projetActe);
+
+          const projetActe = parametres.projetActe || {};
+
+          if (parametres.formaterTitulaire && projetActe.titulaires) {
+            mockAppelerCompositionPdf({
+              nature_acte: parametres.nature_acte,
+              texte_corps_acte: projetActe?.corpsTexte?.texte,
+              titulaires: parametres.formaterTitulaire(projetActe.titulaires[0])
+            });
+          }
+
+          mockAppelPatchCreationStatutRequete({
+            idRequete: parametres.idRequete,
+            statut: "A_SIGNER"
+          });
+        }
+        terminerTraitement();
+      };
+
+      return {
+        lancer,
+        erreurTraitement: { enEchec: false },
+        reponseTraitement: {
+          projetActe: {},
+          pdf: {
+            contenu: "ZmFrZVBkZkJhc2U2NA==",
+            nbPages: 1
+          }
+        }
+      };
+    }
+  }
+}));
+
+vi.mock("@util/LogManager", () => ({
+  logError: vi.fn(),
+  default: {
+    logError: vi.fn()
+  }
+}));
+
 /** TODO: Réparation des TU le Lundi 31 Mars @ Adrien_Bonvin */
-describe.skip("test du formulaire saisie projet acte transcrit de naissance", async () => {
-  const projetActeTranscription: IProjetActeTranscritDto = {
-    modeCreation: TypeRedactionActe.TRANSCRIT,
-    evenement: {
-      annee: 2024,
-      mois: 12,
-      jour: 3,
-      heure: null,
-      minute: null,
-      pays: "Chine",
-      ville: "Bejin",
-      region: "China",
-      neDansLeMariage: true,
-      arrondissement: null,
-      departement: null,
-      voie: null
-    },
-    titulaires: [
-      {
-        nomActeEtranger: "Xi-phun bin",
-        nom: "Xi phun bin",
-        ordre: 1,
-        prenoms: ["lao", "xiar", "sehoo"],
-        sexe: "FEMININ",
-        naissance: {
-          jour: 3,
-          mois: 12,
-          annee: 2024,
-          heure: null,
-          minute: null,
-          pays: "Chine",
-          ville: "Bejin",
-          region: "China",
-          neDansLeMariage: true,
-          arrondissement: null,
-          departement: null,
-          voie: null
-        },
-        domicile: { ville: "Bejin", region: "China", pays: "Chine", voie: "Place du riz", arrondissement: null },
-        nomPartie1: "Xi",
-        nomPartie2: "phun bin",
-        filiations: [
-          {
-            lienParente: LienParente.PARENT,
-            ordre: 1,
-            nom: "Greenwald",
-            sexe: "MASCULIN",
-            naissance: {
-              pays: null,
-              ville: null,
-              region: null,
-              arrondissement: null,
-              annee: 2000,
-              mois: 10,
-              jour: 10,
-              departement: null,
-              heure: null,
-              minute: null,
-              voie: null,
-              neDansLeMariage: null
-            },
-            age: null,
-            prenoms: ["cassandra"],
-            sansProfession: true,
-            profession: "",
-            domicile: { pays: "France", ville: "Marseille", region: "13", arrondissement: "13", voie: "11 place du boulodrôme" },
-            domicileCommun: null
-          },
-          {
-            lienParente: LienParente.PARENT,
-            ordre: 2,
-            nom: "Xi Phun Bin",
-            sexe: "FEMININ",
-            naissance: {
-              pays: "France",
-              ville: "Nantes",
-              region: "loire atlantique",
-              arrondissement: null,
-              annee: null,
-              mois: null,
-              jour: null,
-              departement: null,
-              heure: null,
-              minute: null,
-              neDansLeMariage: null,
-              voie: null
-            },
-            domicile: null,
-            age: 34,
-            prenoms: ["Maman"],
-            sansProfession: false,
-            profession: "Artiste",
-            domicileCommun: true
-          }
-        ],
-        pasDePrenom: null,
-        reconnuPar: null
-      }
-    ],
-    acteEtranger: {
-      texteEnonciations: "tewt tewxt",
-      typeActeEtranger: "ACTE_DRESSE",
-      infoTypeActe: null,
-      cadreNaissance: "NE_DANS_LE_MARIAGE",
-      jourEnregistrement: "15",
-      moisEnregistrement: "12",
-      anneeEnregistrement: "2024",
-      adresseEnregistrement: { ville: "Pekin", region: "china", pays: "Chine", arrondissement: null, voie: null },
-      redacteur: "Ambassador",
-      mentions: "il est fait mention de...",
-      complement: null,
-      reference: null
-    },
-    formuleFinale: {
-      identiteDemandeur: "PERE",
-      nomDemandeur: null,
-      prenomDemandeur: "",
-      qualiteDemandeur: null,
-      pieceProduite: "COPIES",
-      legalisation: "LEGALISATION",
-      autresPieces: "passeport",
-      modeDepot: "REMISE",
-      identiteTransmetteur: "PERE",
-      nomTransmetteur: null
-    },
-    analyseMarginales: [
-      {
-        titulaires: [
-          {
-            nomActeEtranger: "Xi-phun bin",
-            nom: "Xi phun bin",
-            ordre: 1,
-            prenoms: ["lao", "xiar", "sehoo"],
-            sexe: "FEMININ",
-            naissance: {
-              jour: 3,
-              mois: 12,
-              annee: 2024,
-              heure: null,
-              minute: null,
-              pays: "Chine",
-              ville: "Bejin",
-              region: "China",
-              neDansLeMariage: true,
-              arrondissement: null,
-              departement: null,
-              voie: null
-            },
-            domicile: { ville: "Bejin", region: "China", pays: "Chine", voie: "Place du riz", arrondissement: null },
-            nomPartie1: "Xi",
-            nomPartie2: "phun bin",
-            filiations: [
-              {
-                lienParente: LienParente.PARENT,
-                ordre: 1,
-                nom: "Greenwald",
-                sexe: "MASCULIN",
-                naissance: {
-                  pays: null,
-                  ville: null,
-                  region: null,
-                  arrondissement: null,
-                  annee: 2000,
-                  mois: 10,
-                  jour: 10,
-                  departement: null,
-                  heure: null,
-                  minute: null,
-                  voie: null,
-                  neDansLeMariage: null
-                },
-                age: null,
-                prenoms: ["cassandra"],
-                sansProfession: true,
-                profession: "",
-                domicile: { pays: "France", ville: "Marseille", region: "13", arrondissement: "13", voie: "11 place du boulodrôme" },
-                domicileCommun: null
-              },
-              {
-                lienParente: LienParente.PARENT,
-                ordre: 2,
-                nom: "Xi Phun Bin",
-                sexe: "FEMININ",
-                naissance: {
-                  pays: "France",
-                  ville: "Nantes",
-                  region: "loire atlantique",
-                  arrondissement: null,
-                  annee: null,
-                  mois: null,
-                  jour: null,
-                  departement: null,
-                  heure: null,
-                  minute: null,
-                  neDansLeMariage: null,
-                  voie: null
-                },
-                domicile: null,
-                age: 34,
-                prenoms: ["Maman"],
-                sansProfession: false,
-                profession: "Artiste",
-                domicileCommun: true
-              }
-            ],
-            pasDePrenom: null,
-            reconnuPar: null
-          }
-        ],
-        id: null,
-        dateDebut: null,
-        nomOec: null,
-        prenomOec: null,
-        motifModification: null
-      }
-    ],
-    nature: "NAISSANCE",
-    visibiliteArchiviste: "NON",
-    declarant: {
-      identiteDeclarant: "PERE",
-      adresseDomicile: null,
-      age: null,
-      complementDeclarant: null,
-      nom: "Greenwald",
-      prenoms: [{ prenom: "cassandra", numeroOrdre: 1 }],
-      profession: null,
-      qualite: null,
-      sansProfession: null,
-      sexe: "MASCULIN"
-    },
-    mentions: null
-  };
+describe("test du formulaire saisie projet acte transcrit de naissance", async () => {
   const requete: IRequeteCreationTranscription = {
     id: "5ff091d6-261d-4902-a8cf-2bfe12627768",
     numeroFonctionnel: "QEILP1",
@@ -390,49 +205,42 @@ describe.skip("test du formulaire saisie projet acte transcrit de naissance", as
       raisonStatut: ""
     }
   };
-  const succes = vi.spyOn(messageManager, "showSuccessAndClose");
-  const erreur = vi.spyOn(messageManager, "showErrorAndClose");
 
-  MockApi.deployer(CONFIG_POST_PROJET_ACTE_TRANSCRIPTION, undefined, { data: projetActeTranscription, codeHttp: 201 });
-  MockApi.deployer(
-    CONFIG_PATCH_STATUT_REQUETE_CREATION,
-    {
-      path: {
-        idRequete: "5ff091d6-261d-4902-a8cf-2bfe12627768"
-      },
-      query: {
-        statut: StatutRequete.getKey(StatutRequete.A_SIGNER)
-      }
-    },
-    { data: "success" }
-  ).debugAppels();
-  test("Doit enregister le formulaire de saisie de projet d'acte", async () => {
+  const succes = vi.spyOn(messageManager, "showSuccessAndClose");
+  const erreur = vi.spyOn(messageManager, "showError");
+
+  test("Doit afficher le formulaire de saisie de projet d'acte", async () => {
+    const { container } = render(<FormulaireSaisieProjet requete={requete} />);
+
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  test("Doit enregistrer et composer le PDF acte de naissance", async () => {
     render(<FormulaireSaisieProjet requete={requete} />);
 
     const inputNomRetenuOEC = screen.getByRole("textbox", { name: /titulaire.nomRetenuOEC/i });
-    const inputDateAnneeTitulaire = screen.getAllByPlaceholderText("AAAA")[0];
-    const inputRadioSexeTitulaire = screen.getAllByLabelText("Féminin")[0];
-    const inputNomParent1 = screen.getByRole("textbox", { name: /parents.parent1.nom/i });
-    const inputRadioSexeParent1 = screen.getAllByLabelText("Féminin")[1];
-
-    await waitFor(() => {
-      expect(inputNomRetenuOEC).toBeDefined();
-      expect(inputDateAnneeTitulaire).toBeDefined();
-      expect(inputRadioSexeTitulaire).toBeDefined();
-      expect(inputNomParent1).toBeDefined();
-      expect(inputRadioSexeParent1).toBeDefined();
-    });
-
     await userEvent.type(inputNomRetenuOEC, "Xi phun bin");
-    screen.debug();
 
-    const boutonEnregistrer = screen.getByRole("button", { name: /Enregistrer et visualiser/i });
+    const boutonEnregistrer = screen.getByRole("button", { name: /Terminer et signer/i });
 
     expect(boutonEnregistrer).toBeDefined();
     await userEvent.click(boutonEnregistrer);
     await waitFor(() => {
-      expect(succes).toHaveBeenCalled();
+      expect(succes).toHaveBeenCalledTimes(1);
+      expect(succes).toHaveBeenCalledWith("Le projet d'acte a bien été enregistré");
+      expect(erreur).not.toHaveBeenCalled();
+
+      expect(mockAppelEnregistrerRequeteApi).toHaveBeenCalledTimes(1);
+
+      expect(mockAppelerCompositionPdf).toHaveBeenCalledTimes(1);
+
+      expect(mockAppelPatchCreationStatutRequete).toHaveBeenCalledTimes(1);
+      expect(mockAppelPatchCreationStatutRequete).toHaveBeenCalledWith(
+        expect.objectContaining({
+          idRequete: requete.id,
+          statut: "A_SIGNER"
+        })
+      );
     });
   });
-  MockApi.stopMock();
 });
