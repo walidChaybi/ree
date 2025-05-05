@@ -1,11 +1,11 @@
 import { Body } from "@core/body/Body";
 import { IOfficier } from "@model/agent/IOfficier";
+import { AccueilPage } from "@pages/accueil/AccueilPage";
 import { URL_BASE } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router";
 import { afterEach, expect, test } from "vitest";
-import PageAccueil from "../../../../pages/accueil/PageAccueil";
 import { createTestingRouter, elementAvecContexte } from "../../../__tests__utils__/testsUtil";
 import officier from "../../../mock/data/connectedUser.json";
 
@@ -19,7 +19,7 @@ test("renders BoutonDeconnexion", async () => {
     [
       {
         path: URL_BASE,
-        element: <PageAccueil />
+        element: <AccueilPage />
       }
     ],
     [URL_BASE]
@@ -44,7 +44,7 @@ test("renders Body", async () => {
     [
       {
         path: URL_BASE,
-        element: <PageAccueil />
+        element: <AccueilPage />
       }
     ],
     [URL_BASE]

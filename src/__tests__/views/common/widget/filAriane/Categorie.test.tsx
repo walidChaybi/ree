@@ -1,11 +1,10 @@
 import { URL_REQUETES } from "@api/appels/requeteApi";
-
+import { AccueilPage } from "@pages/accueil/AccueilPage";
 import { URL_BASE } from "@router/ReceUrls";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { Categorie } from "@widget/filAriane/Categorie";
 import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
-import PageAccueil from "../../../../../pages/accueil/PageAccueil";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 describe.skip("Categorie - ", () => {
@@ -24,7 +23,7 @@ describe.skip("Categorie - ", () => {
         },
         {
           path: URL_BASE,
-          element: <PageAccueil />
+          element: <AccueilPage />
         }
       ],
       [URL_REQUETES]
@@ -53,7 +52,7 @@ describe.skip("Categorie - ", () => {
         },
         {
           path: URL_BASE,
-          element: <PageAccueil />
+          element: <AccueilPage />
         }
       ],
       [URL_REQUETES]
@@ -86,7 +85,7 @@ describe.skip("Categorie - ", () => {
         },
         {
           path: URL_BASE,
-          element: <PageAccueil />
+          element: <AccueilPage />
         }
       ],
       [URL_REQUETES]
@@ -114,7 +113,7 @@ describe.skip("Categorie - ", () => {
         },
         {
           path: URL_BASE,
-          element: <PageAccueil />
+          element: <AccueilPage />
         }
       ],
       ["/test2", URL_REQUETES]
