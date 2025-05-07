@@ -12,7 +12,7 @@ const Infobulle: React.FC<IInfobulleProps> = ({ contenu, children, delai = 300 }
 
   return (
     <div
-      className="relative inline-block"
+      className="relative z-50 inline-block w-full"
       onMouseEnter={() => {
         if (timerRef.current) {
           clearTimeout(timerRef.current);
@@ -31,9 +31,9 @@ const Infobulle: React.FC<IInfobulleProps> = ({ contenu, children, delai = 300 }
     >
       {children}
       {visible && contenu && (
-        <div className="absolute left-1/2 mt-2 w-max -translate-x-1/2">
-          <div className="absolute -top-1 left-1/2 h-3 w-3 -translate-x-1/2 rotate-45 transform bg-gray-600" />
-          <div className="text-md relative max-w-md rounded bg-gray-600 px-3 py-2 text-white shadow-xl">{contenu}</div>
+        <div className="absolute left-0 mt-2">
+          <div className="absolute -top-1 left-4 h-3 w-3 rotate-45 transform bg-gray-600" />
+          <div className="text-md max-w-80 break-words rounded bg-gray-600 px-3 py-2 text-white shadow-xl">{contenu}</div>
         </div>
       )}
     </div>

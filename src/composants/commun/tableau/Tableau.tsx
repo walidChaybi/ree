@@ -1,10 +1,7 @@
+import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import ArrowUpward from "@mui/icons-material/ArrowUpward";
-import ChevronLeft from "@mui/icons-material/ChevronLeft";
-import ChevronRight from "@mui/icons-material/ChevronRight";
 import Report from "@mui/icons-material/Report";
-import { UN } from "@util/Utils";
-import React from "react";
-import "./Tableau.scss";
+import Bouton from "../bouton/Bouton";
 
 export type TSensTri = "ASC" | "DESC";
 
@@ -40,8 +37,8 @@ interface ITableauProps {
 }
 
 const libellePagination = (infoPagination: IParametresPagination) => {
-  const premiereLigne = infoPagination.pageActuelle * infoPagination.lignesParPage + UN;
-  const derniereLigne = (infoPagination.pageActuelle + UN) * infoPagination.lignesParPage;
+  const premiereLigne = infoPagination.pageActuelle * infoPagination.lignesParPage + 1;
+  const derniereLigne = (infoPagination.pageActuelle + 1) * infoPagination.lignesParPage;
 
   return `${premiereLigne}-${
     derniereLigne > infoPagination.totalLignes ? infoPagination.totalLignes : derniereLigne
@@ -49,66 +46,81 @@ const libellePagination = (infoPagination: IParametresPagination) => {
 };
 
 const pasDePageSuivante = (infoPagination: IParametresPagination) =>
-  (infoPagination.pageActuelle + UN) * infoPagination.lignesParPage >= infoPagination.totalLignes;
+  (infoPagination.pageActuelle + 1) * infoPagination.lignesParPage >= infoPagination.totalLignes;
 
 const Tableau: React.FC<ITableauProps> = ({ enTetes, lignes, messageAucuneLigne, onClickLigne, parametresTri, parametresPagination }) =>
   lignes ? (
     <>
-      <table className="tableau">
-        <thead>
+      <table className="min-w-full border-spacing-0 rounded-t-xl border border-solid border-gris-sombre text-sm shadow-lg">
+        <thead className="">
           <tr>
-            {enTetes.map(enTete => (
-              <th key={enTete.cle}>
+            {enTetes.map((enTete, index) => (
+              <th
+                key={enTete.cle}
+                className="text-center first:text-left"
+              >
                 {enTete.triable && parametresTri ? (
-                  <button
+                  <Bouton
                     key={enTete.cle}
-                    type="button"
                     title={`Trier par ${enTete.libelle.toLowerCase()}`}
+                    className="relative border-none bg-transparent text-bleu hover:bg-transparent focus:bg-transparent"
                     onClick={() => {
-                      if (!parametresTri) {
-                        return;
-                      }
-
+                      if (!parametresTri) return;
                       parametresTri.onChangeTri(
                         enTete.cle,
                         enTete.cle === parametresTri.cle && parametresTri.sens === "ASC" ? "DESC" : "ASC"
                       );
                     }}
                   >
-                    <span>{enTete.libelle}</span>
-                    {enTete.cle === parametresTri?.cle && (
-                      <ArrowUpward {...(parametresTri.sens === "DESC" ? { className: "sens-desc" } : {})} />
-                    )}
-                  </button>
+                    <span className="text-sm normal-case underline">{enTete.libelle}</span>
+                    <ArrowUpward
+                      fontSize="inherit"
+                      className={`absolute -right-1 top-1/2 -translate-y-1/2 ${
+                        enTete.cle !== parametresTri?.cle ? "opacity-0" : ""
+                      } ${parametresTri?.sens === "DESC" ? "rotate-180" : ""}`}
+                    />
+                  </Bouton>
                 ) : (
-                  <span key={enTete.cle}>{enTete.libelle}</span>
+                  <span
+                    key={enTete.cle}
+                    className="px-4 font-noto-sans-ui-bold text-bleu"
+                  >
+                    {enTete.libelle}
+                  </span>
                 )}
               </th>
             ))}
           </tr>
         </thead>
+
         <tbody>
           {lignes.length
             ? lignes.map(ligne => (
                 <tr
                   key={ligne.cle}
-                  {...(ligne.onClick
-                    ? {
-                        className: "ligne-clickable",
-                        onClick: () => ligne.onClick?.()
-                      }
-                    : {})}
+                  className={`${ligne.onClick ? "cursor-pointer text-left hover:bg-bleu/50" : ""} even:bg-bleu/15`}
+                  onClick={() => ligne.onClick?.()}
                 >
-                  {enTetes.map(enTete => (
-                    <td key={`${ligne.cle}-${enTete.cle}`}>{ligne[enTete.cle]}</td>
+                  {enTetes.map((enTete, index) => (
+                    <td
+                      key={`${ligne.cle}-${enTete.cle}`}
+                      className="px-4 py-1.5 text-center first:text-left"
+                    >
+                      {ligne[enTete.cle]}
+                    </td>
                   ))}
                 </tr>
               ))
             : messageAucuneLigne && (
                 <tr className="tableau-sans-ligne">
-                  <td colSpan={enTetes.length}>
-                    <Report />
-                    <div>{messageAucuneLigne}</div>
+                  <td
+                    colSpan={enTetes.length}
+                    className="py-2"
+                  >
+                    <div className="flex flex-col items-center">
+                      <Report />
+                      <div>{messageAucuneLigne}</div>
+                    </div>
                   </td>
                 </tr>
               )}
@@ -116,13 +128,14 @@ const Tableau: React.FC<ITableauProps> = ({ enTetes, lignes, messageAucuneLigne,
       </table>
 
       {parametresPagination && (
-        <div className="conteneur-pagination-tableau">
-          <span>{libellePagination(parametresPagination)}</span>
+        <div className="mt-4 flex items-center justify-end gap-4">
+          <span className="text-gris">{libellePagination(parametresPagination)}</span>
           <button
             type="button"
             onClick={() => parametresPagination.onChangePage(false)}
             disabled={!parametresPagination.pageActuelle}
             title="Page précédente"
+            className="m-0 min-w-0 p-0 text-gris hover:text-bleu-sombre disabled:bg-transparent disabled:text-gris"
           >
             <ChevronLeft fontSize="large" />
           </button>
@@ -131,6 +144,7 @@ const Tableau: React.FC<ITableauProps> = ({ enTetes, lignes, messageAucuneLigne,
             onClick={() => parametresPagination.onChangePage(true)}
             disabled={pasDePageSuivante(parametresPagination)}
             title="Page suivante"
+            className="m-0 min-w-0 p-0 text-gris-sombre hover:text-bleu-sombre disabled:bg-transparent disabled:text-gris"
           >
             <ChevronRight fontSize="large" />
           </button>

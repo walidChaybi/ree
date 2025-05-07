@@ -53,7 +53,7 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
               </svg>
             </button>
             <div
-              class="grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+              class="grid transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
             >
               <div
                 class="min-h-0"
@@ -77,7 +77,7 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
                           class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 "
                         >
                           <div
-                            class="mb-5 px-3 text-left"
+                            class="mb-5 text-left"
                           >
                             <div
                               class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -85,17 +85,17 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
                               Type Requete
                             </div>
                             <div
-                              class="relative inline-block"
+                              class="relative z-50 inline-block w-full"
                             >
                               <div
-                                class="line-clamp-3 "
+                                class="line-clamp-3 max-w-72 text-ellipsis break-words "
                               >
                                 Création suite Transcription Courrier
                               </div>
                             </div>
                           </div>
                           <div
-                            class="mb-5 px-3 text-left"
+                            class="mb-5 text-left"
                           >
                             <div
                               class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -103,10 +103,10 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
                               Statut
                             </div>
                             <div
-                              class="relative inline-block"
+                              class="relative z-50 inline-block w-full"
                             >
                               <div
-                                class="line-clamp-3 flex rounded-r-full border border-solid border-bleu-sombre bg-blue-50 px-2 py-1 text-bleu-sombre"
+                                class="line-clamp-3 max-w-72 text-ellipsis break-words flex w-fit rounded-r-full border border-solid border-bleu-sombre bg-blue-50 px-2 py-1 text-bleu-sombre"
                               >
                                 Prise en charge
                                 <svg
@@ -124,7 +124,7 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
                             </div>
                           </div>
                           <div
-                            class="mb-5 px-3 text-left"
+                            class="mb-5 text-left"
                           >
                             <div
                               class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -132,17 +132,17 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
                               Provenance
                             </div>
                             <div
-                              class="relative inline-block"
+                              class="relative z-50 inline-block w-full"
                             >
                               <div
-                                class="line-clamp-3 "
+                                class="line-clamp-3 max-w-72 text-ellipsis break-words "
                               >
                                 Courrier
                               </div>
                             </div>
                           </div>
                           <div
-                            class="mb-5 px-3 text-left"
+                            class="mb-5 text-left"
                           >
                             <div
                               class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -150,17 +150,17 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
                               Date création
                             </div>
                             <div
-                              class="relative inline-block"
+                              class="relative z-50 inline-block w-full"
                             >
                               <div
-                                class="line-clamp-3 "
+                                class="line-clamp-3 max-w-72 text-ellipsis break-words "
                               >
                                 28/06/2022
                               </div>
                             </div>
                           </div>
                           <div
-                            class="mb-5 px-3 text-left"
+                            class="mb-5 text-left"
                           >
                             <div
                               class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -168,10 +168,10 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
                               Numéro fonctionnel
                             </div>
                             <div
-                              class="relative inline-block"
+                              class="relative z-50 inline-block w-full"
                             >
                               <div
-                                class="line-clamp-3 "
+                                class="line-clamp-3 max-w-72 text-ellipsis break-words "
                               >
                                 2H5U3Q
                               </div>
@@ -193,7 +193,7 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
                           class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 "
                         >
                           <div
-                            class="mb-5 px-3 text-left"
+                            class="mb-5 text-left"
                           >
                             <div
                               class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -201,17 +201,17 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
                               Nom
                             </div>
                             <div
-                              class="relative inline-block"
+                              class="relative z-50 inline-block w-full"
                             >
                               <div
-                                class="line-clamp-3 "
+                                class="line-clamp-3 max-w-72 text-ellipsis break-words "
                               >
                                 dupont
                               </div>
                             </div>
                           </div>
                           <div
-                            class="mb-5 px-3 text-left"
+                            class="mb-5 text-left"
                           >
                             <div
                               class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -219,17 +219,17 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
                               Prénoms
                             </div>
                             <div
-                              class="relative inline-block"
+                              class="relative z-50 inline-block w-full"
                             >
                               <div
-                                class="line-clamp-3 "
+                                class="line-clamp-3 max-w-72 text-ellipsis break-words "
                               >
                                 paul
                               </div>
                             </div>
                           </div>
                           <div
-                            class="mb-5 px-3 text-left"
+                            class="mb-5 text-left"
                           >
                             <div
                               class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -237,10 +237,10 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
                               Sexe
                             </div>
                             <div
-                              class="relative inline-block"
+                              class="relative z-50 inline-block w-full"
                             >
                               <div
-                                class="line-clamp-3 "
+                                class="line-clamp-3 max-w-72 text-ellipsis break-words "
                               >
                                 Masculin
                               </div>
@@ -263,7 +263,7 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
                             class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 "
                           >
                             <div
-                              class="mb-5 px-3 text-left"
+                              class="mb-5 text-left"
                             >
                               <div
                                 class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -271,17 +271,17 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
                                 Nom
                               </div>
                               <div
-                                class="relative inline-block"
+                                class="relative z-50 inline-block w-full"
                               >
                                 <div
-                                  class="line-clamp-3 "
+                                  class="line-clamp-3 max-w-72 text-ellipsis break-words "
                                 >
                                   Philips
                                 </div>
                               </div>
                             </div>
                             <div
-                              class="mb-5 px-3 text-left"
+                              class="mb-5 text-left"
                             >
                               <div
                                 class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -289,17 +289,17 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
                                 Prénoms
                               </div>
                               <div
-                                class="relative inline-block"
+                                class="relative z-50 inline-block w-full"
                               >
                                 <div
-                                  class="line-clamp-3 "
+                                  class="line-clamp-3 max-w-72 text-ellipsis break-words "
                                 >
                                   Yann
                                 </div>
                               </div>
                             </div>
                             <div
-                              class="mb-5 px-3 text-left"
+                              class="mb-5 text-left"
                             >
                               <div
                                 class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -307,17 +307,17 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
                                 Sexe
                               </div>
                               <div
-                                class="relative inline-block"
+                                class="relative z-50 inline-block w-full"
                               >
                                 <div
-                                  class="line-clamp-3 "
+                                  class="line-clamp-3 max-w-72 text-ellipsis break-words "
                                 >
                                   Masculin
                                 </div>
                               </div>
                             </div>
                             <div
-                              class="mb-5 px-3 text-left"
+                              class="mb-5 text-left"
                             >
                               <div
                                 class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -325,10 +325,10 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
                                 Nationalité
                               </div>
                               <div
-                                class="relative inline-block"
+                                class="relative z-50 inline-block w-full"
                               >
                                 <div
-                                  class="line-clamp-3 "
+                                  class="line-clamp-3 max-w-72 text-ellipsis break-words "
                                 >
                                   nationalite
                                 </div>
@@ -351,7 +351,7 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
                           class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 "
                         >
                           <div
-                            class="mb-5 px-3 text-left"
+                            class="mb-5 text-left"
                           >
                             <div
                               class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -359,17 +359,17 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
                               Requérant
                             </div>
                             <div
-                              class="relative inline-block"
+                              class="relative z-50 inline-block w-full"
                             >
                               <div
-                                class="line-clamp-3 "
+                                class="line-clamp-3 max-w-72 text-ellipsis break-words "
                               >
                                 Titulaire
                               </div>
                             </div>
                           </div>
                           <div
-                            class="mb-5 px-3 text-left"
+                            class="mb-5 text-left"
                           >
                             <div
                               class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -377,17 +377,17 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
                               Courriel
                             </div>
                             <div
-                              class="relative inline-block"
+                              class="relative z-50 inline-block w-full"
                             >
                               <div
-                                class="line-clamp-3 "
+                                class="line-clamp-3 max-w-72 text-ellipsis break-words "
                               >
                                 courriel
                               </div>
                             </div>
                           </div>
                           <div
-                            class="mb-5 px-3 text-left"
+                            class="mb-5 text-left"
                           >
                             <div
                               class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -395,17 +395,17 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
                               Téléphone
                             </div>
                             <div
-                              class="relative inline-block"
+                              class="relative z-50 inline-block w-full"
                             >
                               <div
-                                class="line-clamp-3 "
+                                class="line-clamp-3 max-w-72 text-ellipsis break-words "
                               >
                                 telephone
                               </div>
                             </div>
                           </div>
                           <div
-                            class="mb-5 px-3 text-left"
+                            class="mb-5 text-left"
                           >
                             <div
                               class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -413,10 +413,10 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
                               Coordonnées
                             </div>
                             <div
-                              class="relative inline-block"
+                              class="relative z-50 inline-block w-full"
                             >
                               <div
-                                class="line-clamp-3 "
+                                class="line-clamp-3 max-w-72 text-ellipsis break-words "
                               >
                                 ligne2
 ligne3

@@ -54,7 +54,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
           </svg>
         </button>
         <div
-          class="grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+          class="grid transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
         >
           <div
             class="min-h-0"
@@ -78,7 +78,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                       class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
                     >
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -86,17 +86,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                           Type Requete
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             Création suite Transcription Courrier
                           </div>
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -104,10 +104,10 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                           Statut
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 flex rounded-r-full border border-solid border-bleu-sombre bg-blue-50 px-2 py-1 text-bleu-sombre"
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words flex w-fit rounded-r-full border border-solid border-bleu-sombre bg-blue-50 px-2 py-1 text-bleu-sombre"
                           >
                             En traitement
                             <svg
@@ -125,7 +125,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -133,17 +133,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                           Provenance
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             Courrier
                           </div>
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -151,17 +151,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                           Date création
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             31/03/2025
                           </div>
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -169,10 +169,10 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                           Numéro fonctionnel
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             QEILP1
                           </div>
@@ -194,7 +194,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                       class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
                     >
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -202,17 +202,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                           Nom
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             Xi-phun bin
                           </div>
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -220,17 +220,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                           Prénoms
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             liao, xiar, sehoo
                           </div>
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -238,17 +238,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                           Sexe
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             Féminin
                           </div>
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -256,17 +256,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                           Date de naissance
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             03/12/2024
                           </div>
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -274,10 +274,10 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                           Lieu de naissance
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             Bejin, China (Chine)
                           </div>
@@ -300,7 +300,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                         class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
                       >
                         <div
-                          class="mb-5 px-3 text-left"
+                          class="mb-5 text-left"
                         >
                           <div
                             class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -308,17 +308,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                             Nom
                           </div>
                           <div
-                            class="relative inline-block"
+                            class="relative z-50 inline-block w-full"
                           >
                             <div
-                              class="line-clamp-3 "
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
                             >
                               Greenwald
                             </div>
                           </div>
                         </div>
                         <div
-                          class="mb-5 px-3 text-left"
+                          class="mb-5 text-left"
                         >
                           <div
                             class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -326,17 +326,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                             Prénoms
                           </div>
                           <div
-                            class="relative inline-block"
+                            class="relative z-50 inline-block w-full"
                           >
                             <div
-                              class="line-clamp-3 "
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
                             >
                               cassandra
                             </div>
                           </div>
                         </div>
                         <div
-                          class="mb-5 px-3 text-left"
+                          class="mb-5 text-left"
                         >
                           <div
                             class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -344,17 +344,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                             Sexe
                           </div>
                           <div
-                            class="relative inline-block"
+                            class="relative z-50 inline-block w-full"
                           >
                             <div
-                              class="line-clamp-3 "
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
                             >
                               Masculin
                             </div>
                           </div>
                         </div>
                         <div
-                          class="mb-5 px-3 text-left"
+                          class="mb-5 text-left"
                         >
                           <div
                             class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -362,10 +362,10 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                             Date de naissance
                           </div>
                           <div
-                            class="relative inline-block"
+                            class="relative z-50 inline-block w-full"
                           >
                             <div
-                              class="line-clamp-3 "
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
                             >
                               10/10/2000
                             </div>
@@ -388,7 +388,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                       class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
                     >
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -396,10 +396,10 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                           Requérant
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             Père/mère
                           </div>
@@ -521,7 +521,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre mar
           </svg>
         </button>
         <div
-          class="grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+          class="grid transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
         >
           <div
             class="min-h-0"
@@ -545,7 +545,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre mar
                       class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
                     >
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -553,17 +553,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre mar
                           Type Requete
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             Création suite Transcription Courrier
                           </div>
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -571,10 +571,10 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre mar
                           Statut
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 flex rounded-r-full border border-solid border-bleu-sombre bg-blue-50 px-2 py-1 text-bleu-sombre"
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words flex w-fit rounded-r-full border border-solid border-bleu-sombre bg-blue-50 px-2 py-1 text-bleu-sombre"
                           >
                             En traitement
                             <svg
@@ -592,7 +592,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre mar
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -600,17 +600,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre mar
                           Provenance
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             Courrier
                           </div>
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -618,17 +618,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre mar
                           Date création
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             31/03/2025
                           </div>
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -636,10 +636,10 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre mar
                           Numéro fonctionnel
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             QEILP1
                           </div>
@@ -661,7 +661,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre mar
                       class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
                     >
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -669,17 +669,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre mar
                           Nom
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             Xi-phun bin
                           </div>
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -687,17 +687,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre mar
                           Prénoms
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             liao, xiar, sehoo
                           </div>
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -705,17 +705,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre mar
                           Sexe
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             Féminin
                           </div>
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -723,17 +723,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre mar
                           Date de naissance
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             03/12/2024
                           </div>
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -741,10 +741,10 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre mar
                           Lieu de naissance
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             Bejin, China (Chine)
                           </div>
@@ -767,7 +767,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre mar
                         class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
                       >
                         <div
-                          class="mb-5 px-3 text-left"
+                          class="mb-5 text-left"
                         >
                           <div
                             class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -775,17 +775,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre mar
                             Nom
                           </div>
                           <div
-                            class="relative inline-block"
+                            class="relative z-50 inline-block w-full"
                           >
                             <div
-                              class="line-clamp-3 "
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
                             >
                               Greenwald
                             </div>
                           </div>
                         </div>
                         <div
-                          class="mb-5 px-3 text-left"
+                          class="mb-5 text-left"
                         >
                           <div
                             class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -793,17 +793,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre mar
                             Prénoms
                           </div>
                           <div
-                            class="relative inline-block"
+                            class="relative z-50 inline-block w-full"
                           >
                             <div
-                              class="line-clamp-3 "
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
                             >
                               cassandra
                             </div>
                           </div>
                         </div>
                         <div
-                          class="mb-5 px-3 text-left"
+                          class="mb-5 text-left"
                         >
                           <div
                             class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -811,17 +811,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre mar
                             Sexe
                           </div>
                           <div
-                            class="relative inline-block"
+                            class="relative z-50 inline-block w-full"
                           >
                             <div
-                              class="line-clamp-3 "
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
                             >
                               Masculin
                             </div>
                           </div>
                         </div>
                         <div
-                          class="mb-5 px-3 text-left"
+                          class="mb-5 text-left"
                         >
                           <div
                             class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -829,10 +829,10 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre mar
                             Date de naissance
                           </div>
                           <div
-                            class="relative inline-block"
+                            class="relative z-50 inline-block w-full"
                           >
                             <div
-                              class="line-clamp-3 "
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
                             >
                               10/10/2000
                             </div>
@@ -855,7 +855,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre mar
                       class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
                     >
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -863,10 +863,10 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre mar
                           Requérant
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             Père/mère
                           </div>
@@ -988,7 +988,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
           </svg>
         </button>
         <div
-          class="grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+          class="grid transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
         >
           <div
             class="min-h-0"
@@ -1012,7 +1012,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                       class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
                     >
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -1020,17 +1020,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                           Type Requete
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             Création suite Transcription Courrier
                           </div>
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -1038,10 +1038,10 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                           Statut
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 flex rounded-r-full border border-solid border-bleu-sombre bg-blue-50 px-2 py-1 text-bleu-sombre"
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words flex w-fit rounded-r-full border border-solid border-bleu-sombre bg-blue-50 px-2 py-1 text-bleu-sombre"
                           >
                             En traitement
                             <svg
@@ -1059,7 +1059,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -1067,17 +1067,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                           Provenance
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             Courrier
                           </div>
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -1085,17 +1085,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                           Date création
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             31/03/2025
                           </div>
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -1103,10 +1103,10 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                           Numéro fonctionnel
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             QEILP1
                           </div>
@@ -1128,7 +1128,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                       class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
                     >
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -1136,17 +1136,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                           Nom
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             Xi-phun bin
                           </div>
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -1154,17 +1154,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                           Prénoms
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             liao, xiar, sehoo
                           </div>
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -1172,17 +1172,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                           Sexe
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             Féminin
                           </div>
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -1190,17 +1190,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                           Date de naissance
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             03/12/2024
                           </div>
                         </div>
                       </div>
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -1208,10 +1208,10 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                           Lieu de naissance
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             Bejin, China (Chine)
                           </div>
@@ -1234,7 +1234,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                         class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
                       >
                         <div
-                          class="mb-5 px-3 text-left"
+                          class="mb-5 text-left"
                         >
                           <div
                             class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -1242,17 +1242,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                             Nom
                           </div>
                           <div
-                            class="relative inline-block"
+                            class="relative z-50 inline-block w-full"
                           >
                             <div
-                              class="line-clamp-3 "
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
                             >
                               Greenwald
                             </div>
                           </div>
                         </div>
                         <div
-                          class="mb-5 px-3 text-left"
+                          class="mb-5 text-left"
                         >
                           <div
                             class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -1260,17 +1260,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                             Prénoms
                           </div>
                           <div
-                            class="relative inline-block"
+                            class="relative z-50 inline-block w-full"
                           >
                             <div
-                              class="line-clamp-3 "
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
                             >
                               cassandra
                             </div>
                           </div>
                         </div>
                         <div
-                          class="mb-5 px-3 text-left"
+                          class="mb-5 text-left"
                         >
                           <div
                             class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -1278,17 +1278,17 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                             Sexe
                           </div>
                           <div
-                            class="relative inline-block"
+                            class="relative z-50 inline-block w-full"
                           >
                             <div
-                              class="line-clamp-3 "
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
                             >
                               Masculin
                             </div>
                           </div>
                         </div>
                         <div
-                          class="mb-5 px-3 text-left"
+                          class="mb-5 text-left"
                         >
                           <div
                             class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -1296,10 +1296,10 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                             Date de naissance
                           </div>
                           <div
-                            class="relative inline-block"
+                            class="relative z-50 inline-block w-full"
                           >
                             <div
-                              class="line-clamp-3 "
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
                             >
                               10/10/2000
                             </div>
@@ -1322,7 +1322,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                       class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
                     >
                       <div
-                        class="mb-5 px-3 text-left"
+                        class="mb-5 text-left"
                       >
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
@@ -1330,10 +1330,10 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant P
                           Requérant
                         </div>
                         <div
-                          class="relative inline-block"
+                          class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 "
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
                             Père/mère
                           </div>

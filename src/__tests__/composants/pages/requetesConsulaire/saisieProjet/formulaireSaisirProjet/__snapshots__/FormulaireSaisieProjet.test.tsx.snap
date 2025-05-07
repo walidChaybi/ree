@@ -29,7 +29,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
       </svg>
     </button>
     <div
-      class="grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+      class="grid transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
     >
       <div
         class="min-h-0"
@@ -579,7 +579,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
       </svg>
     </button>
     <div
-      class="grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+      class="grid transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
     >
       <div
         class="min-h-0"
@@ -1450,7 +1450,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
       </svg>
     </button>
     <div
-      class="grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+      class="grid transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
     >
       <div
         class="min-h-0"
@@ -1539,7 +1539,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
       </svg>
     </button>
     <div
-      class="grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+      class="grid transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
     >
       <div
         class="min-h-0"
@@ -1600,7 +1600,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
       </svg>
     </button>
     <div
-      class="grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+      class="grid transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
     >
       <div
         class="min-h-0"
@@ -1859,7 +1859,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
       </svg>
     </button>
     <div
-      class="grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+      class="grid transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
     >
       <div
         class="min-h-0"
@@ -1920,7 +1920,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
       </svg>
     </button>
     <div
-      class="grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+      class="grid transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
     >
       <div
         class="min-h-0"

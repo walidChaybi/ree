@@ -42,7 +42,7 @@ const formaterNomPrenomTitulaire = (titulaire: ITitulaireDto): string => {
     nomPrenomsFormates += titulaire.prenoms.join(", ") + " ";
   }
 
-  nomPrenomsFormates += titulaire?.nom?.toUpperCase();
+  nomPrenomsFormates += titulaire?.nom;
 
   return nomPrenomsFormates;
 };
@@ -79,9 +79,9 @@ const FormulaireSaisieProjet: React.FC<IProjetActeTranscritProps> = ({ requete }
       switch (requete.natureActeTranscrit) {
         case ENatureActeTranscrit.NAISSANCE_MINEUR:
         case ENatureActeTranscrit.NAISSANCE_MAJEUR:
-          return { prefixeTitre: "Acte de", natureActe: "naissance" };
+          return { prefixeTitre: "ACTE DE", natureActe: "NAISSANCE" };
         default:
-          return { prefixeTitre: "Acte", natureActe: "<nature acte>" };
+          return { prefixeTitre: "ACTE", natureActe: "<nature acte>" };
       }
     })();
 

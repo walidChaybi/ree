@@ -43,7 +43,7 @@ const ConteneurAccordeon: React.FC<React.PropsWithChildren<IConteneurAccordeonPr
         <div className="relative m-0 truncate bg-bleu px-4 py-1 font-noto-sans-ui-bold text-lg text-blanc">{titre}</div>
       )}
       <div
-        className={`grid overflow-hidden transition-[grid-template-rows] duration-200 ease-in ${estOuvert ? "grid grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+        className={`grid transition-[grid-template-rows] duration-200 ease-in ${estOuvert ? "grid grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
       >
         <div className="min-h-0">
           <div className={`grid gap-y-4 p-4 ${gridColonneClasses}`}>{children}</div>
