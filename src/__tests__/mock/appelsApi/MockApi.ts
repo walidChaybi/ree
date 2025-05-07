@@ -55,7 +55,7 @@ export class MockApi {
 
     MockApi.getMock()
       [onMethode](parametres?.regexp ? new RegExp(uriAvecParametres) : uriAvecParametres)
-      .reply(reponse?.codeHttp ?? 200, reponse?.data);
+      .reply(reponse?.codeHttp ?? 200, reponse);
 
     return MockApi;
   }

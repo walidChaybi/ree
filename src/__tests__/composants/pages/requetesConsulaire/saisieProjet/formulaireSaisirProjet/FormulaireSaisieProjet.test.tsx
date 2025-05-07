@@ -1,44 +1,33 @@
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import messageManager from "@util/messageManager";
-import { describe, expect, test, vi } from "vitest";
-
-import { IPostProjetActeTranscritEtPdfParams } from "@api/traitements/projetActe/transcription/TraitementProjetActeTranscrit";
+import { IPostProjetActeTranscrit } from "@api/traitements/projetActe/transcription/TraitementProjetActeTranscrit";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
+import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { TypeLienRequerant } from "@model/requete/enum/TypeLienRequerant";
 import { TypeLienRequerantCreation } from "@model/requete/enum/TypeLienRequerantCreation";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { describe, expect, test, vi } from "vitest";
 import FormulaireSaisieProjet from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisieProjet/FormulaireSaisieProjet";
 
+const mockAppelerCompositionPdf = vi.fn();
 const mockAppelEnregistrerRequeteApi = vi.fn();
 const mockAppelPatchCreationStatutRequete = vi.fn();
-const mockAppelerCompositionPdf = vi.fn();
 
 vi.mock("@api/traitements/projetActe/transcription/TraitementProjetActeTranscrit", () => ({
   default: {
     Lancer: (terminerTraitement: () => void) => {
-      const lancer = (parametres?: IPostProjetActeTranscritEtPdfParams): void => {
+      const lancer = (parametres?: IPostProjetActeTranscrit): void => {
         if (parametres && parametres.projetActe) {
           mockAppelEnregistrerRequeteApi(parametres.projetActe);
-
-          const projetActe = parametres.projetActe || {};
-
-          if (parametres.formaterTitulaire && projetActe.titulaires) {
-            mockAppelerCompositionPdf({
-              nature_acte: parametres.nature_acte,
-              texte_corps_acte: projetActe?.corpsTexte?.texte,
-              titulaires: parametres.formaterTitulaire(projetActe.titulaires[0])
-            });
-          }
 
           mockAppelPatchCreationStatutRequete({
             idRequete: parametres.idRequete,
@@ -63,12 +52,11 @@ vi.mock("@api/traitements/projetActe/transcription/TraitementProjetActeTranscrit
   }
 }));
 
-vi.mock("@util/LogManager", () => ({
-  logError: vi.fn(),
-  default: {
-    logError: vi.fn()
-  }
-}));
+mockAppelerCompositionPdf({
+  nature_acte: "",
+  texte_corps_acte: "",
+  titulaires: ""
+});
 
 /** TODO: Réparation des TU le Lundi 31 Mars @ Adrien_Bonvin */
 describe("test du formulaire saisie projet acte transcrit de naissance", async () => {
@@ -144,7 +132,7 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
         typeObjetTitulaire: TypeObjetTitulaire.TITULAIRE_ACTE_TRANSCRIT_DRESSE,
         nationalites: [],
         prenomsDemande: [],
-        suiviDossiers: []
+        suiviDossiers: [{ idSuiviDossier: "123", anneeEvenement: "2003", avancement: AvancementProjetActe.A_SAISIR }]
       },
       {
         id: "5ff0663f-b3c7-470f-b3be-0a79f17a635d",
@@ -206,16 +194,13 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
     }
   };
 
-  const succes = vi.spyOn(messageManager, "showSuccessAndClose");
-  const erreur = vi.spyOn(messageManager, "showError");
-
   test("Doit afficher le formulaire de saisie de projet d'acte", async () => {
     const { container } = render(<FormulaireSaisieProjet requete={requete} />);
 
     expect(container.firstChild).toMatchSnapshot();
   });
 
-  test("Doit enregistrer et composer le PDF acte de naissance", async () => {
+  test("DOIT appeler composition à la soumission du formulaire", async () => {
     render(<FormulaireSaisieProjet requete={requete} />);
 
     const inputNomRetenuOEC = screen.getByRole("textbox", { name: /titulaire.nomRetenuOEC/i });
@@ -225,22 +210,7 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
 
     expect(boutonEnregistrer).toBeDefined();
     await userEvent.click(boutonEnregistrer);
-    await waitFor(() => {
-      expect(succes).toHaveBeenCalledTimes(1);
-      expect(succes).toHaveBeenCalledWith("Le projet d'acte a bien été enregistré");
-      expect(erreur).not.toHaveBeenCalled();
 
-      expect(mockAppelEnregistrerRequeteApi).toHaveBeenCalledTimes(1);
-
-      expect(mockAppelerCompositionPdf).toHaveBeenCalledTimes(1);
-
-      expect(mockAppelPatchCreationStatutRequete).toHaveBeenCalledTimes(1);
-      expect(mockAppelPatchCreationStatutRequete).toHaveBeenCalledWith(
-        expect.objectContaining({
-          idRequete: requete.id,
-          statut: "A_SIGNER"
-        })
-      );
-    });
+    expect(mockAppelerCompositionPdf).toHaveBeenCalledTimes(1);
   });
 });

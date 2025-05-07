@@ -25,8 +25,13 @@ import BlocParent from "./BlocParent";
 import BlocTitulaire from "./BlocTitulaire";
 import ValeursVersApercuProjet from "./ValeursVersApercuProjet";
 
+import {
+  CONFIG_COMPOSITION_ACTE_PDF,
+  IReponseCompositionActePDF
+} from "@api/configurations/etatCivil/acte/transcription/PostProjetActeTranscriptionConfigApi";
 import { ITitulaireDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/ITitulaireDto";
 import { ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
+import useFetchApi from "../../../../../hooks/api/FetchApiHook";
 import ModaleProjetActe from "./ModaleProjetActe";
 
 // /!\ À supprimer après le FIX dans Composition API /ACTE_TEXTE/1
@@ -69,6 +74,7 @@ const FormulaireSaisieProjet: React.FC<IProjetActeTranscritProps> = ({ requete }
       officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER_COMEDEC)
     );
   }, [utilisateurConnecte]); */
+  const { appelApi: appelerCompositionPdf } = useFetchApi(CONFIG_COMPOSITION_ACTE_PDF);
 
   const { lancerTraitement: lancerEnregistrement, traitementEnCours: enregistrementEnCours } = useTraitementApi(
     TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT
@@ -95,19 +101,33 @@ const FormulaireSaisieProjet: React.FC<IProjetActeTranscritProps> = ({ requete }
       parametres: {
         projetActe: donnees,
         idRequete: requete.id,
-        numeroDossierNational: requete.numero,
-        nature_acte: nature_acte,
-        formaterTitulaire: formaterNomPrenomTitulaire
+        idSuiviDossier: requete.titulaires?.[0].suiviDossiers?.[0].idSuiviDossier!
       },
       apresSucces: resultat => {
         messageManager.showSuccessAndClose("Le projet d'acte a bien été enregistré");
 
-        if (resultat.pdf) {
-          setPdfBase64(resultat.pdf.contenu);
-          setModaleOuverte(true);
-        } else {
-          messageManager.showWarning("L'aperçu PDF n'a pas pu être généré");
-        }
+        appelerCompositionPdf({
+          parametres: {
+            path: { typeComposition: "ACTE_TEXTE", version: "1" },
+            body: {
+              nature_acte: nature_acte,
+              texte_corps_acte: resultat.projetActe.corpsTexte?.texte,
+              titulaires: formaterNomPrenomTitulaire(resultat.projetActe.titulaires?.[0]!)
+            }
+          },
+          apresSucces: (reponse: IReponseCompositionActePDF) => {
+            if (reponse.contenu) {
+              setPdfBase64(reponse.contenu);
+              setModaleOuverte(true);
+            } else {
+              messageManager.showWarning("L'aperçu PDF n'a pas pu être généré");
+            }
+          },
+          apresErreur: messageErreur => {
+            console.error(`Erreur lors de la génération du PDF : ${messageErreur}`);
+            messageManager.showError("Une erreur est survenue lors de la composition de l'acte");
+          }
+        });
       },
       apresErreur: messageErreur => {
         console.error(`Erreur: ${messageErreur}`);

@@ -1,96 +1,72 @@
-/* istanbul ignore file */
-/* v8 ignore start A TESTER 03/25 */
-import {
-  CONFIG_COMPOSITION_ACTE_PDF,
-  CONFIG_POST_PROJET_ACTE_TRANSCRIPTION,
-  IPostProjetActeTranscriptionConfigApiParams,
-  IReponseCompositionActePDF
-} from "@api/configurations/etatCivil/acte/transcription/PostProjetActeTranscriptionConfigApi";
+import { CONFIG_PATCH_ID_ACTE_SUIVI_DOSSIER } from "@api/configurations/etatCivil/acte/transcription/PatchIdActeSuiviDossier";
+import { CONFIG_POST_PROJET_ACTE_TRANSCRIPTION } from "@api/configurations/etatCivil/acte/transcription/PostProjetActeTranscriptionConfigApi";
 import { CONFIG_PATCH_STATUT_REQUETE_CREATION } from "@api/configurations/requete/creation/PatchStatutRequeteCreationConfigApi";
 import { IErreurTraitement, TTraitementApi } from "@api/traitements/TTraitementApi";
 import { IProjetActeTranscritDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/IProjetActeTranscritDto";
-import { ITitulaireDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/ITitulaireDto";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
 
-export interface IPostProjetActeTranscritEtPdfParams extends IPostProjetActeTranscriptionConfigApiParams {
-  nature_acte?: string;
-  formaterTitulaire?: (titulaire: ITitulaireDto) => string;
-}
-
-export interface IReponseProjetActeEtPdf {
+export interface IPostProjetActeTranscrit {
+  idSuiviDossier: string;
   projetActe: IProjetActeTranscritDto;
-  pdf?: {
-    contenu: string;
-    nbPages: number;
-  };
+  idRequete: string;
 }
 
-export interface ICreationActionEtMiseAjourStatutParams {
-  libelleAction?: string;
-  statutRequete?: StatutRequete;
-  idRequete?: string;
+export interface IReponseProjetActe {
+  projetActe: IProjetActeTranscritDto;
 }
 
-const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetActeTranscritEtPdfParams, IReponseProjetActeEtPdf> = {
+type TEtatAppel = "EN_ATTENTE" | "TERMINE";
+
+interface IDonnesTraitement {
+  idRequete: string;
+  idActe: string;
+  idSuiviDossier: string;
+  appelStatutRequete: TEtatAppel;
+  appelSuiviDossier: TEtatAppel;
+}
+
+const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetActeTranscrit, IReponseProjetActe> = {
   Lancer: terminerTraitement => {
-    const [resultat, setResultat] = useState<IReponseProjetActeEtPdf>({ projetActe: {} as IProjetActeTranscritDto });
+    const [projetActeCree, setProjetActeCree] = useState<IReponseProjetActe>({ projetActe: {} as IProjetActeTranscritDto });
     const [erreurTraitement, setErreurTraitement] = useState<IErreurTraitement>({ enEchec: false });
+    const [donneesTraitement, setDonneesTraitement] = useState<IDonnesTraitement | null>(null);
 
-    const { appelApi: appelEnregistrerRequeteApi } = useFetchApi(CONFIG_POST_PROJET_ACTE_TRANSCRIPTION);
-    const { appelApi: appelPatchCreationStatutRequete } = useFetchApi(CONFIG_PATCH_STATUT_REQUETE_CREATION);
-    const { appelApi: appelerCompositionPdf } = useFetchApi(CONFIG_COMPOSITION_ACTE_PDF);
+    const { appelApi: appelPostProjetActeTranscription } = useFetchApi(CONFIG_POST_PROJET_ACTE_TRANSCRIPTION);
+    const { appelApi: appelPatchCreationStatutRequete } = useFetchApi(CONFIG_PATCH_STATUT_REQUETE_CREATION, true);
 
-    const lancer = (parametres?: IPostProjetActeTranscritEtPdfParams): void => {
-      const idRequete = parametres?.idRequete;
-      if (!parametres || !idRequete) {
+    const { appelApi: appelPatchIdActeSuiviDossier } = useFetchApi(CONFIG_PATCH_ID_ACTE_SUIVI_DOSSIER);
+
+    const lancer = (parametres: IPostProjetActeTranscrit): void => {
+      const idRequete = parametres.idRequete;
+      if (!idRequete) {
         terminerTraitement();
         return;
       }
 
-      appelEnregistrerRequeteApi({
+      if (parametres.projetActe.idActe) {
+        // TODO PATCH
+        terminerTraitement();
+        return;
+      }
+
+      appelPostProjetActeTranscription({
         parametres: {
           body: parametres.projetActe
         },
-        apresSucces: (projetActe: IProjetActeTranscritDto) => {
-          setResultat(statePrecedente => ({ ...statePrecedente, projetActe }));
-
-          if (parametres.formaterTitulaire && projetActe.titulaires) {
-            appelerCompositionPdf({
-              parametres: {
-                path: { typeComposition: "ACTE_TEXTE", version: "1" },
-                body: {
-                  nature_acte: parametres.nature_acte,
-                  texte_corps_acte: projetActe?.corpsTexte?.texte,
-                  titulaires: parametres.formaterTitulaire(projetActe.titulaires[0])
-                }
-              },
-              apresSucces: (reponse: IReponseCompositionActePDF) => {
-                setResultat(statePrecedente => ({
-                  ...statePrecedente,
-                  pdf: {
-                    contenu: reponse.contenu,
-                    nbPages: reponse.nbPages
-                  }
-                }));
-
-                lancerPatchCreationStatutRequete(idRequete);
-              },
-              apresErreur: messageErreur => {
-                console.error(`Erreur lors de la génération du PDF : ${messageErreur}`);
-                setErreurTraitement({
-                  enEchec: true,
-                  message: "Une erreur est survenue lors de la génération du PDF"
-                });
-                terminerTraitement();
-              }
-            });
-          } else {
-            lancerPatchCreationStatutRequete(idRequete);
-          }
+        // FIXME APRES REFACTO TYPAGE PROJET_ACTE
+        apresSucces: (projetActe: any) => {
+          setProjetActeCree(statePrecedent => ({ ...statePrecedent, projetActe }));
+          setDonneesTraitement({
+            idActe: projetActe.id,
+            idRequete: idRequete,
+            idSuiviDossier: parametres.idSuiviDossier,
+            appelStatutRequete: "EN_ATTENTE",
+            appelSuiviDossier: "EN_ATTENTE"
+          });
         },
-        apresErreur: () => {
+        apresErreur: erreur => {
           setErreurTraitement({
             enEchec: true,
             message: "Impossible d'enregister le projet d'acte transcrit"
@@ -100,11 +76,58 @@ const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetAc
       });
     };
 
-    const lancerPatchCreationStatutRequete = (idRequete: string) => {
+    useEffect(() => {
+      if (!donneesTraitement) {
+        return;
+      }
+
+      if (donneesTraitement.appelStatutRequete === "TERMINE" && donneesTraitement.appelSuiviDossier === "TERMINE") {
+        terminerTraitement();
+
+        return;
+      }
+
+      if (donneesTraitement.appelSuiviDossier === "EN_ATTENTE" && donneesTraitement.appelStatutRequete === "EN_ATTENTE") {
+        lancerPatchCreationStatutRequete();
+        lancerPatchIdActeSuiviDossier();
+      }
+    }, [donneesTraitement]);
+
+    const lancerPatchIdActeSuiviDossier = () => {
+      if (!donneesTraitement) return;
+
+      appelPatchIdActeSuiviDossier({
+        parametres: {
+          path: { idSuivi: donneesTraitement.idSuiviDossier, idActe: donneesTraitement.idActe }
+        },
+        apresErreur: messageErreur => {
+          console.error(`Erreur lors de la mise à jour de l'id du projet d'acte dans le suivi de dossier : ${messageErreur}`);
+          setErreurTraitement({
+            enEchec: true,
+            message: "Une erreur est survenue lors de la mise à jour de l'id du projet d'acte dans le suivi de dossier"
+          });
+          terminerTraitement();
+        },
+        finalement: () => {
+          setDonneesTraitement(donneesTraitementPrec =>
+            donneesTraitementPrec
+              ? {
+                  ...donneesTraitementPrec,
+                  appelSuiviDossier: "TERMINE"
+                }
+              : null
+          );
+        }
+      });
+    };
+
+    const lancerPatchCreationStatutRequete = () => {
+      if (!donneesTraitement) return;
+
       appelPatchCreationStatutRequete({
         parametres: {
           path: {
-            idRequete: idRequete
+            idRequete: donneesTraitement.idRequete
           },
           query: {
             statut: StatutRequete.getKey(StatutRequete.A_SIGNER)
@@ -116,14 +139,20 @@ const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetAc
             message: "Impossible de mettre à jour le statut de la requête"
           }),
         finalement: () => {
-          terminerTraitement();
+          setDonneesTraitement(donneesTraitementPrec =>
+            donneesTraitementPrec
+              ? {
+                  ...donneesTraitementPrec,
+                  appelStatutRequete: "TERMINE"
+                }
+              : null
+          );
         }
       });
     };
 
-    return { lancer, erreurTraitement, reponseTraitement: resultat };
+    return { lancer, erreurTraitement, reponseTraitement: projetActeCree };
   }
 };
 
 export default TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT;
-/* v8 ignore end */
