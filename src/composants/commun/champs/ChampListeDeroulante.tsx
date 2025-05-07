@@ -30,7 +30,7 @@ const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({
     <div className={`text-start ${className ?? ""}${enErreur ? CHAMP_EN_ERREUR : ""}`.trim()}>
       <label
         className={`m-0 mb-1 ml-1 block w-fit text-start transition-colors ${enErreur ? "text-rouge" : "text-bleu-sombre"}`}
-        htmlFor={name as string}
+        htmlFor={name}
       >
         {libelle}
         {estObligatoire && <span className="ml-1 text-rouge">*</span>}

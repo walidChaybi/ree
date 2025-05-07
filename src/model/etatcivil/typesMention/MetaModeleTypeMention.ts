@@ -1,4 +1,5 @@
 import { ConditionChamp, IConditionChampDto } from "@model/form/commun/ConditionChamp";
+import { NumeroInscriptionRcRcaForm } from "@model/form/commun/NumeroInscriptionRcRcaForm";
 import { ObjetFormulaire, TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import dayjs from "dayjs";
 import SchemaValidation from "../../../utils/SchemaValidation";
@@ -15,7 +16,8 @@ export enum ETypeChamp {
   RADIO = "radioBouton",
   POCOPA = "pocopa",
   CRPCEN = "crpcen",
-  NOM_SECABLE = "nomSecable"
+  NOM_SECABLE = "nomSecable",
+  NUMERO_INSCRIPTION_RCRCA = "numeroInscriptionRcRca"
 }
 interface IValeursConditionneesMetaModeleDto {
   valeurs: string[];
@@ -31,6 +33,7 @@ interface IChampMetaModeleDto {
   estLectureSeule: IValeursConditionneesMetaModeleDto[];
   valeursPossibles: IValeursConditionneesMetaModeleDto[];
   valeurParDefaut?: string;
+  tailleMax?: number;
 }
 interface IBlocMetaModeleDto {
   id: string;
@@ -92,7 +95,8 @@ export class ChampMetaModele {
     public readonly estAffiche: ConditionChamp[],
     public readonly estLectureSeule: ValeursConditionneesMetaModele[],
     public readonly valeursPossibles: ValeursConditionneesMetaModele[],
-    public readonly valeurParDefaut?: string
+    public readonly valeurParDefaut?: string,
+    public readonly tailleMax?: number
   ) {}
 
   public static depuisDto(dto: IChampMetaModeleDto): ChampMetaModele | null {
@@ -110,7 +114,8 @@ export class ChampMetaModele {
       ConditionChamp.depuisTableau(dto.estAffiche ?? []),
       ValeursConditionneesMetaModele.depuisTableau(dto.estLectureSeule ?? []),
       ValeursConditionneesMetaModele.depuisTableau(dto.valeursPossibles ?? []),
-      dto.valeurParDefaut
+      dto.valeurParDefaut,
+      dto.tailleMax
     );
   }
 
@@ -235,6 +240,12 @@ export class MetaModeleTypeMention {
               return SchemaValidation.dateIncomplete({ obligatoire: champ.estObligatoire, bloquerDateFuture: true });
             case "nomSecable":
               return SchemaValidation.nomSecable({ obligatoire: champ.estObligatoire });
+            case "numeroInscriptionRcRca":
+              return SchemaValidation.numerosInscriptionRcRca({
+                prefix: `${bloc.id}.${champ.id}.ligne`,
+                tailleMax: champ.tailleMax || 8,
+                obligatoire: champ.estObligatoire
+              });
             default:
               return SchemaValidation.inconnu();
           }
@@ -267,7 +278,10 @@ export class MetaModeleTypeMention {
                     case "int":
                     case "pocopa":
                     case "crpcen":
+                    case "radioBouton":
+                    case "select":
                       return champ.valeurParDefaut ?? "";
+
                     case "dateComplete":
                     case "dateIncomplete":
                       return {
@@ -275,6 +289,9 @@ export class MetaModeleTypeMention {
                         mois: "",
                         annee: ""
                       };
+                    case "numeroInscriptionRcRca":
+                      return NumeroInscriptionRcRcaForm.valeursInitiales();
+
                     case "nomSecable":
                       return {
                         nom: "",
@@ -282,12 +299,10 @@ export class MetaModeleTypeMention {
                         nomPartie1: "",
                         nomPartie2: ""
                       };
+
                     case "boolean":
                       return champ.valeurParDefaut === "true";
-                    case "radioBouton":
-                      return champ.valeurParDefaut ?? "";
-                    case "select":
-                      return champ.valeurParDefaut ?? "";
+
                     default:
                       return champ.valeurParDefaut ?? "";
                   }

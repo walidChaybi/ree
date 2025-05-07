@@ -135,12 +135,35 @@ const getSchemaValidationDate = (bloquerDateFuture?: boolean): Yup.ObjectSchema<
       return estDateFuture ? erreurSurDateEntiere(messagesErreur.DATE_FUTURE, error.path) : true;
     });
 
-const gestionObligation = (
-  schema: Yup.AnySchema,
+const getSchemaValidationNumeroInscriptionRcRca = (): Yup.StringSchema =>
+  Yup.string()
+    .test("annéeInvalide", (numero, error) => {
+      if (!numero) return true;
+
+      return +numero.slice(0, 4) < 1000
+        ? error.createError({
+            path: `${error.path}`,
+            message: messagesErreur.DATE_INVALIDE
+          })
+        : true;
+    })
+    .test("numeroIncomplet", (numero, error) => {
+      if (!numero) return true;
+
+      return numero.length < 10
+        ? error.createError({
+            path: `${error.path}`,
+            message: messagesErreur.CHAMP_OBLIGATOIRE
+          })
+        : true;
+    });
+
+const gestionObligation = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>(
+  schema: TSchemaChamp,
   obligatoire: boolean | ConditionChamp[],
-  actionObligation: () => Yup.AnySchema,
+  actionObligation: () => TSchemaChamp,
   conditionOu?: boolean
-): Yup.AnySchema => {
+): TSchemaChamp => {
   if (typeof obligatoire === "boolean") {
     return obligatoire ? actionObligation() : schema;
   }
@@ -322,7 +345,6 @@ const SchemaValidation = {
 
       if (index < 14) {
         const prenomsSuivants = Array.from({ length: 14 - index }).map((_, idx) => `$${prefix}${idx + index + 2}`);
-
         schema = schema.when(prenomsSuivants, {
           is: (...valeur: (string | undefined)[]) => valeur.some(val => Boolean(val)),
           then: schema.required(messagesErreur.PRENOM_OBLIGATOIRE)
@@ -333,6 +355,35 @@ const SchemaValidation = {
     });
 
     return SchemaValidation.objet(schemaPrenoms);
+  },
+
+  numerosInscriptionRcRca: ({ prefix, tailleMax, obligatoire }: { prefix: string; tailleMax: number } & ISchemaCommunParams) => {
+    const schemaNumeros: { [cle: string]: Yup.StringSchema } = {};
+
+    Array.from({ length: tailleMax }).forEach((_, index) => {
+      let schema = getSchemaValidationNumeroInscriptionRcRca();
+
+      let estPremierObligatoire = false;
+
+      if (index === 0) {
+        schema = gestionObligation(schema, obligatoire, () => {
+          estPremierObligatoire = true;
+
+          return schema.required(messagesErreur.CHAMP_OBLIGATOIRE);
+        });
+      }
+      if (index < tailleMax && !estPremierObligatoire) {
+        const numerosSuivants = Array.from({ length: tailleMax - 1 - index }).map((_, idx) => `$${prefix}${idx + index + 2}`);
+        schema = schema.when(numerosSuivants, {
+          is: (...valeur: (string | undefined)[]) => valeur.some(val => Boolean(val)),
+          then: schema.required(messagesErreur.CHAMP_OBLIGATOIRE)
+        });
+      }
+
+      schemaNumeros[`ligne${index + 1}`] = schema;
+    });
+
+    return SchemaValidation.objet(schemaNumeros);
   },
 
   inconnu: () => Yup.mixed()

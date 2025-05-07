@@ -9,6 +9,7 @@ export const ChampFormAideSaisie: React.FC<React.PropsWithChildren<{ typeChamp: 
       case "radioBouton":
       case "sousTitre":
       case "nomSecable":
+      case "numeroInscriptionRcRca":
         return "col-span-2";
       default:
         return null;

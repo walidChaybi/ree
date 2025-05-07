@@ -1,4 +1,5 @@
 import { ChampMetaModele } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
+import { NumeroInscriptionRcRcaForm } from "@model/form/commun/NumeroInscriptionRcRcaForm";
 import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { useFormikContext } from "formik";
 import { useCallback, useEffect, useMemo } from "react";
@@ -7,6 +8,7 @@ import ChampDate from "../../../../../commun/champs/ChampDate";
 import ChampRecherchePocopas from "../../../../../commun/champs/ChampRecherchePocopas";
 import ChampTexte from "../../../../../commun/champs/ChampTexte";
 import ChampsNomSecable from "../../../../../commun/champs/ChampsNomSecable";
+import ChampNumeroInscriptionRCRCA from "../../../../../commun/champs/ChampsNumeroInscriptionRcRca";
 import SeparateurSection from "../../../../../commun/conteneurs/formulaire/SeparateurSection";
 import { TMentionForm } from "../../MentionForm";
 import { ChampConditionneAideSaisie } from "./ChampConditionneAideSaisie";
@@ -38,6 +40,9 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
         return;
       case "nomSecable":
         setFieldValue(nomChamp, { nom: "", secable: false, nomPartie1: "", nomPartie2: "" });
+        return;
+      case "numeroInscriptionRcRca":
+        setFieldValue(nomChamp, NumeroInscriptionRcRcaForm.valeursInitiales());
         return;
       default:
         setFieldValue(nomChamp, "");
@@ -132,6 +137,18 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
       return (
         <ChampFormAideSaisie typeChamp={champ.type}>
           <SeparateurSection titre={champ.libelle} />
+        </ChampFormAideSaisie>
+      );
+
+    case champ.type === "numeroInscriptionRcRca" && estAffiche:
+      return (
+        <ChampFormAideSaisie typeChamp={champ.type}>
+          <ChampNumeroInscriptionRCRCA
+            libelle={champ.libelle}
+            cheminNumeroInscriptionRcRca={nomChamp}
+            prefixeNumeroInscriptionRcRca={"ligne"}
+            tailleMax={champ.tailleMax || 1}
+          />
         </ChampFormAideSaisie>
       );
 

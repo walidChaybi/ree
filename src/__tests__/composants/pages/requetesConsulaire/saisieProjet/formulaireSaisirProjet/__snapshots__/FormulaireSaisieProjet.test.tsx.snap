@@ -188,7 +188,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                     class="pt-[1.6rem]"
                   >
                     <button
-                      class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out  bg-bleu-sombre text-blanc hover:bg-bleu focus:bg-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-gris-sombre text-white disabled:cursor-not-allowed"
+                      class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out  bg-bleu-sombre text-blanc hover:bg-bleu focus-visible:bg-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-gris-sombre disabled:cursor-not-allowed"
                       title="Ajouter un prénom"
                       type="button"
                     >
@@ -236,7 +236,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                           value="xiar"
                         />
                         <button
-                          class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out hover:bg-rouge focus:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 text-white disabled:cursor-not-allowed group absolute right-0 h-full rounded-l-none bg-transparent"
+                          class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out hover:bg-rouge focus-visible:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 disabled:cursor-not-allowed group absolute right-0 h-full rounded-l-none bg-transparent"
                           title="Supprimer ce prénom"
                           type="button"
                         >
@@ -277,7 +277,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                           value="sehoo"
                         />
                         <button
-                          class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out hover:bg-rouge focus:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 text-white disabled:cursor-not-allowed group absolute right-0 h-full rounded-l-none bg-transparent"
+                          class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out hover:bg-rouge focus-visible:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 disabled:cursor-not-allowed group absolute right-0 h-full rounded-l-none bg-transparent"
                           title="Supprimer ce prénom"
                           type="button"
                         >
@@ -653,7 +653,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                     class="pt-[1.6rem]"
                   >
                     <button
-                      class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out  bg-bleu-sombre text-blanc hover:bg-bleu focus:bg-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-gris-sombre text-white disabled:cursor-not-allowed"
+                      class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out  bg-bleu-sombre text-blanc hover:bg-bleu focus-visible:bg-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-gris-sombre disabled:cursor-not-allowed"
                       title="Ajouter un prénom"
                       type="button"
                     >
@@ -1063,7 +1063,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                     class="pt-[1.6rem]"
                   >
                     <button
-                      class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out  bg-bleu-sombre text-blanc hover:bg-bleu focus:bg-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-gris-sombre text-white disabled:cursor-not-allowed"
+                      class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out  bg-bleu-sombre text-blanc hover:bg-bleu focus-visible:bg-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-gris-sombre disabled:cursor-not-allowed"
                       title="Ajouter un prénom"
                       type="button"
                     >

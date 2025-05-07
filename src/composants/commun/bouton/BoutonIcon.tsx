@@ -8,9 +8,11 @@ type BoutonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 const getStyleBouton = (styleBouton?: TStyleBouton) => {
   switch (styleBouton) {
     case "principal":
-      return " bg-bleu-sombre text-blanc hover:bg-bleu focus:bg-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-gris-sombre";
+      return " bg-bleu-sombre text-blanc hover:bg-bleu focus-visible:bg-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-gris-sombre";
+    case "secondaire":
+      return "border border-solid border-bleu-sombre bg-blanc hover:bg-bleu hover:text-blanc hover:border-bleu focus-visible:bg-bleu focus-visible:text-blanc focus-visible:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 text-bleu-sombre";
     case "suppression":
-      return "hover:bg-rouge focus:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2";
+      return "hover:bg-rouge focus-visible:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2";
     default:
       return "";
   }
@@ -30,7 +32,7 @@ const BoutonIcon = ({
 
   return (
     <button
-      className={`m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out ${baseStyles} text-white disabled:cursor-not-allowed ${className ?? ""}`.trim()}
+      className={`m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out ${baseStyles} disabled:cursor-not-allowed ${className ?? ""}`.trim()}
       type={type ?? "button"}
       {...props}
     >
