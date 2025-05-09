@@ -1,4 +1,6 @@
-export interface IActeEtranger {
+import { IAdresse } from "./IAdresse";
+
+export interface IActeEtrangerDto {
   texteEnonciations: string | null;
   typeActeEtranger: string | null;
   infoTypeActe?: string | null;
@@ -6,13 +8,7 @@ export interface IActeEtranger {
   jourEnregistrement?: string | null;
   moisEnregistrement?: string | null;
   anneeEnregistrement?: string | null;
-  adresseEnregistrement:
-    | {
-        ville: string | null;
-        region: string | null;
-        pays: string | null;
-      }
-    | {};
+  adresseEnregistrement: IAdresse | null;
   redacteur: string | null;
   reference: string | null;
   complement: string | null;

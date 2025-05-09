@@ -4,8 +4,8 @@ import { AddAlerteActeApiHookParameters, useAddAlerteActeApiHook } from "@hook/a
 import { DeleteAlerteActeApiHookParameters, useDeleteAlerteActeApiHook } from "@hook/alertes/DeleteAlerteActeHookApi";
 import { officierDroitConsulterSurLeTypeRegistreOuDroitMAE, officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
+import { EOrigineActe } from "@model/etatcivil/enum/EOrigineActe";
 import { EOptionMiseAJourActe, OptionMiseAJourActe } from "@model/etatcivil/enum/OptionMiseAJourActe";
-import { OrigineActe } from "@model/etatcivil/enum/OrigineActe";
 import { TitulaireRequeteMiseAJour } from "@model/requete/ITitulaireRequeteMiseAJour";
 import { SousTypeMiseAJour } from "@model/requete/enum/SousTypeMiseAJour";
 import {
@@ -114,7 +114,9 @@ export const FichePage: React.FC<FichePageProps> = ({
     const droitAnalyseMarginale = officierHabiliterPourLeDroit(utilisateurConnecte, Droit.MODIFIER_ANALYSE_MARGINALE);
 
     return {
-      autorise: OrigineActe.estRece(OrigineActe.getEnumFor(dataFicheState?.data?.origine)) && (droitMentions || droitAnalyseMarginale),
+      autorise:
+        EOrigineActe[dataFicheState?.data?.origine as keyof typeof EOrigineActe] === EOrigineActe.RECE &&
+        (droitMentions || droitAnalyseMarginale),
       mentions: droitMentions,
       AnalyseMarginale: droitAnalyseMarginale
     };

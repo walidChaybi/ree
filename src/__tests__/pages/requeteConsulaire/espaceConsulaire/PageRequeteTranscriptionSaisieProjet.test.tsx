@@ -5,7 +5,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router";
 import request from "superagent";
 import { describe, expect, test, vi } from "vitest";
-import { PageRequeteTranscriptionSaisieProjet } from "../../../../pages/requetesConsulaire/PageRequeteTranscriptionSaisieProjet";
+import PageRequeteTranscriptionSaisieProjet from "../../../../pages/requetesConsulaire/PageRequeteTranscriptionSaisieProjet";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 
 vi.mock("@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats", () => ({
@@ -15,7 +15,7 @@ vi.mock("@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocie
 describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
   const mockUtilisateurConnecte = {
     idUtilisateur: "test-utilisateur-id"
-  } as any as IOfficier;
+  } as IOfficier;
 
   const superagentMock = require("superagent-mock")(request, [
     {

@@ -1,3 +1,4 @@
+import { FiliationTitulaireProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/FiliationTitulaireProjetActeTranscrit";
 import { IDateForm } from "@model/form/commun/DateForm";
 import { PrenomsForm, TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import { ILocalisation } from "./IParents";
@@ -64,40 +65,57 @@ export const ParentsRequeteTranscription = {
     return { parent1: parents[0], parent2: parents[1] };
   },
 
-  mappingParentRequeteTranscriptionVersParentForm(parent?: IParentRequeteTranscription): IParentTranscription {
-    const estNaissanceFranceOuEtranger = parent?.paysNaissance?.toUpperCase() === "FRANCE" ? "France" : "Étranger";
-
+  mappingParentRequeteTranscriptionVersParentForm(
+    parentRequete?: IParentRequeteTranscription,
+    parentProjetActe?: FiliationTitulaireProjetActeTranscrit | null
+  ): IParentTranscription {
+    const estNaissanceFranceOuEtranger =
+      (parentProjetActe?.naissance?.pays ?? parentRequete?.paysNaissance)?.toUpperCase() === "FRANCE" ? "France" : "Étranger";
     return {
-      sexe: parent?.sexe ?? "",
-      nom: (parent?.nomUsage || parent?.nomNaissance) ?? "",
-      prenomsChemin: PrenomsForm.valeursInitiales(parent?.prenoms),
+      sexe: parentProjetActe?.sexe ?? parentRequete?.sexe ?? "",
+      nom: parentProjetActe?.nom ?? (parentRequete?.nomUsage || parentRequete?.nomNaissance) ?? "",
+      prenomsChemin: PrenomsForm.valeursInitiales(
+        parentProjetActe?.prenoms?.map((prenom: string, index: number) => ({ prenom: prenom, numeroOrdre: index + 1 })) ??
+          parentRequete?.prenoms
+      ),
       dateNaissance: {
-        jour: parent?.jourNaissance ? `${parent?.jourNaissance}`.padStart(2, "0") : "",
-        mois: parent?.moisNaissance ? `${parent?.moisNaissance}`.padStart(2, "0") : "",
-        annee: parent?.anneeNaissance?.toString() ?? ""
+        jour: (parentProjetActe?.naissance?.jour ?? parentRequete?.jourNaissance)?.toString().padStart(2, "0") ?? "",
+        mois: (parentProjetActe?.naissance?.mois ?? parentRequete?.moisNaissance)?.toString().padStart(2, "0") ?? "",
+        annee: (parentProjetActe?.naissance?.annee ?? parentRequete?.anneeNaissance)?.toString() ?? ""
       },
       lieuNaissance: {
-        typeLieu: parent?.paysNaissance ? estNaissanceFranceOuEtranger : "Inconnu",
-        ville: parent?.villeNaissance ?? "",
-        departement: parent?.regionNaissance,
-        arrondissement: parent?.arrondissementNaissance ?? "",
-        pays: parent?.paysNaissance ?? "",
-        etatProvince: parent?.regionNaissance ?? "",
-        adresse: ""
+        typeLieu: (parentProjetActe?.naissance?.pays ?? parentRequete?.paysNaissance) ? estNaissanceFranceOuEtranger : "Inconnu",
+        ville: parentProjetActe?.naissance?.ville ?? parentRequete?.villeNaissance ?? "",
+        departement: (estNaissanceFranceOuEtranger === "France" && parentProjetActe?.naissance?.region) || parentRequete?.regionNaissance,
+        etatProvince:
+          (estNaissanceFranceOuEtranger === "Étranger" && parentProjetActe?.naissance?.region) || parentRequete?.regionNaissance || "",
+        arrondissement: parentProjetActe?.naissance?.arrondissement ?? parentRequete?.arrondissementNaissance ?? "",
+        pays: parentProjetActe?.naissance?.pays ?? parentRequete?.paysNaissance ?? "",
+        adresse: parentProjetActe?.naissance?.voie ?? ""
       },
-      sansProfession: false,
-      profession: "",
+      sansProfession: parentProjetActe?.sansProfession ?? false,
+      profession: parentProjetActe?.profession ?? "",
       domicile: {
-        typeLieu: parent?.domiciliation?.typeLieu ?? "Inconnu",
-        ville: parent?.domiciliation?.ville ?? "",
-        adresse: parent?.domiciliation?.adresse ?? "",
-        departement: parent?.domiciliation?.departement ?? "",
-        arrondissement: parent?.domiciliation?.arrondissement ?? "",
-        pays: parent?.domiciliation?.pays ?? "",
-        etatProvince: parent?.domiciliation?.etatProvince ?? ""
+        typeLieu:
+          (parentProjetActe?.domicile?.pays &&
+            (parentProjetActe?.domicile?.pays.toUpperCase().trim() === "FRANCE" ? "France" : "Étranger")) ??
+          parentRequete?.domiciliation?.typeLieu ??
+          "Inconnu",
+        ville: parentProjetActe?.domicile?.ville ?? parentRequete?.domiciliation?.ville ?? "",
+        adresse: parentProjetActe?.domicile?.voie ?? parentRequete?.domiciliation?.adresse ?? "",
+        departement:
+          ((estNaissanceFranceOuEtranger === "France" && parentProjetActe?.domicile?.region) ||
+            parentRequete?.domiciliation?.departement) ??
+          "",
+        arrondissement: parentProjetActe?.domicile?.arrondissement ?? parentRequete?.domiciliation?.arrondissement ?? "",
+        pays: parentProjetActe?.domicile?.pays ?? parentRequete?.domiciliation?.pays ?? "",
+        etatProvince:
+          ((estNaissanceFranceOuEtranger === "Étranger" && parentProjetActe?.domicile?.region) ||
+            parentRequete?.domiciliation?.etatProvince) ??
+          ""
       },
-      renseignerAge: false,
-      age: ""
+      renseignerAge: (parentProjetActe?.age && !parentProjetActe?.naissance?.annee) || false,
+      age: parentProjetActe?.age?.toString() ?? ""
     };
   }
 };

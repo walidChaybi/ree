@@ -25,7 +25,7 @@ import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFl
 import { IRoute } from "@util/route/IRoute";
 import PageMesRequetesConsulaires from "../../pages/requetesConsulaire/PageMesRequetesConsulaires";
 import PageRequeteCreationTranscriptionPriseEnCharge from "../../pages/requetesConsulaire/PageRequeteCreationTranscriptionPriseEnCharge";
-import { PageRequeteTranscriptionSaisieProjet } from "../../pages/requetesConsulaire/PageRequeteTranscriptionSaisieProjet";
+import PageRequeteTranscriptionSaisieProjet from "../../pages/requetesConsulaire/PageRequeteTranscriptionSaisieProjet";
 import PageRequetesServiceConsulaire from "../../pages/requetesConsulaire/PageRequetesServiceConsulaire";
 import PageSaisieCourrierTranscription from "../../pages/requetesConsulaire/PageSaisieCourrierTranscription";
 import PageEditionRequeteDelivrance from "../../pages/requetesDelivrance/PageEditionRequeteDelivrance";

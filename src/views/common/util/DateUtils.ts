@@ -20,7 +20,7 @@ export interface IDateCompose {
   minute?: string;
 }
 
-export type TDateArrayDTO = [annee: number, month: number, jour: number];
+export type TDateArrayDTO = [annee: number, mois: number, jour: number];
 
 export enum FormatDate {
   DDMMYYYY = "DD/MM/YYYY",

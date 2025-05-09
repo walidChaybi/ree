@@ -12,14 +12,14 @@ import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/Conte
 import SeparateurSection from "../../../../commun/conteneurs/formulaire/SeparateurSection";
 
 interface IBlocParentProps {
-  estparent1?: boolean;
+  estParent1?: boolean;
 }
 
-const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
+const BlocParent: React.FC<IBlocParentProps> = memo(({ estParent1 }) => {
   const { values, setFieldValue } = useFormikContext<IProjetActeTranscritForm>();
   const optionsSexe = useMemo(() => Sexe.getMasculinFemininAsOptions(), []);
-  const prefixe = useMemo(() => `parents.parent${estparent1 ? "1" : "2"}`, [estparent1]);
-  const parent = useMemo(() => (estparent1 ? values.parents.parent1 : values.parents.parent2), [values, estparent1]);
+  const prefixe = useMemo(() => `parents.parent${estParent1 ? "1" : "2"}`, [estParent1]);
+  const parent = useMemo(() => (estParent1 ? values.parents.parent1 : values.parents.parent2), [values, estParent1]);
   const titre = useMemo(() => {
     switch (parent.sexe) {
       case "MASCULIN":
@@ -27,9 +27,9 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
       case "FEMININ":
         return "Mère";
       default:
-        return `Parent ${estparent1 ? "1" : "2"}`;
+        return `Parent ${estParent1 ? "1" : "2"}`;
     }
-  }, [parent, estparent1]);
+  }, [parent, estParent1]);
 
   useEffect(() => {
     const valeurChamp = {
@@ -46,7 +46,7 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
   }, [parent?.sansProfession]);
 
   useEffect(() => {
-    if (!estparent1 && values.parents.domicileCommun) {
+    if (!estParent1 && values.parents.domicileCommun) {
       setFieldValue("parents.parent2.domicile", values.parents.parent1.domicile);
     }
   }, [values.parents.domicileCommun, values.parents.parent1.domicile]);
@@ -123,14 +123,14 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estparent1 }) => {
 
       <SeparateurSection titre="Domicile" />
       <div className="grid gap-4">
-        {!estparent1 && (
+        {!estParent1 && (
           <ChampCaseACocher
             name="parents.domicileCommun"
             libelle="Domicile commun avec parent 1"
           />
         )}
 
-        {(estparent1 || !values.parents.domicileCommun) && (
+        {(estParent1 || !values.parents.domicileCommun) && (
           <FormulaireAdresse
             key={`${prefixe}.domicile`}
             prefix={`${prefixe}.domicile`}

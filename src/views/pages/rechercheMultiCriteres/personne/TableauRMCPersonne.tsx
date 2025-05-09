@@ -2,7 +2,7 @@ import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
-import { TypeRedactionActe } from "@model/etatcivil/enum/TypeRedactionActe";
+import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
@@ -27,7 +27,7 @@ import {
 } from "./TableauRMCPersonneUtils";
 
 interface TableauRMCPersonneProps {
-  typeRedactionActe: TypeRedactionActe;
+  typeRedactionActe: ETypeRedactionActe;
   dataTableauRMCPersonne: IDataTableauRMCPersonne[];
   identifiantsPersonnesSelectionnees: string[];
   identifiantsActesInscriptionsSelectionnes: string[];
@@ -56,12 +56,12 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
   function afficheBoutonAjouterPersonneOuActeInscription(data: IDataTableauRMCPersonne): boolean {
     let afficheBouton = false;
     let identifiants: string[] = [];
-    if (props.typeRedactionActe === TypeRedactionActe.TRANSCRIT) {
+    if (props.typeRedactionActe === ETypeRedactionActe.TRANSCRIT) {
       identifiants = [
         ...(data.estDataPersonne ? props.identifiantsPersonnesSelectionnees : props.identifiantsActesInscriptionsSelectionnes)
       ];
       afficheBouton = !identifiants.includes(getIdentifiantPersonneOuActeInscription(data));
-    } else if (props.typeRedactionActe === TypeRedactionActe.ETABLI && !data.estDataPersonne) {
+    } else if (props.typeRedactionActe === ETypeRedactionActe.ETABLI && !data.estDataPersonne) {
       afficheBouton = !props.identifiantsActesInscriptionsSelectionnes.includes(getIdentifiantPersonneOuActeInscription(data));
     }
     return afficheBouton;

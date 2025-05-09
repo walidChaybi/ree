@@ -19,7 +19,6 @@ import {
   formatPrenom,
   formatPrenoms,
   getNombreCommeSuffix,
-  getPremierElemOuVide,
   getValeurOuUndefined,
   getValeurOuVide,
   getValeurProprieteAPartirChemin,
@@ -31,16 +30,13 @@ import {
   seulementUneProprieteRenseignee,
   supprimeElement,
   supprimerNullEtUndefinedDuTableau,
-  tousNonRenseignes,
   tousRenseignes,
   triListeObjetsSurPropriete
 } from "@util/Utils";
 import { expect, test, vi } from "vitest";
 
 test("Attendu: premiereLettreEnMajusculeLeResteEnMinuscule fonctionne correctement", () => {
-  expect(premiereLettreEnMajusculeLeResteEnMinuscule("NAISSANCE")).toBe(
-    "Naissance"
-  );
+  expect(premiereLettreEnMajusculeLeResteEnMinuscule("NAISSANCE")).toBe("Naissance");
 });
 
 test("Attendu: formatDe fonctionne correctement", () => {
@@ -65,29 +61,14 @@ test("Attendu: getValeurOuVide fonctionne correctement", () => {
 test("Attendu: jointAvec fonctionne correctement", () => {
   const sep = " et ";
   expect(jointAvec(["", "", ""], sep)).toBe("");
-  expect(jointAvec(["martin ", " dupe", "aurelia mines"], sep)).toBe(
-    "martin et dupe et aurelia mines"
-  );
-  expect(jointAvec([" martin ", " dupe", "aurelia minet"], sep)).toBe(
-    "martin et dupe et aurelia minet"
-  );
+  expect(jointAvec(["martin ", " dupe", "aurelia mines"], sep)).toBe("martin et dupe et aurelia mines");
+  expect(jointAvec([" martin ", " dupe", "aurelia minet"], sep)).toBe("martin et dupe et aurelia minet");
 });
 
 test("Attendu: joint fonctionne correctement", () => {
   expect(joint(["", "", ""])).toBe("");
-  expect(joint(["martin ", " dupe", "aurelia mine"])).toBe(
-    "martin, dupe, aurelia mine"
-  );
-  expect(joint([" martin ", " dupe", "aurelia mine"])).toBe(
-    "martin, dupe, aurelia mine"
-  );
-});
-
-test("Attendu: getPremierElemOuVide fonctionne correctement", () => {
-  expect(getPremierElemOuVide(null!)).toBe("");
-  expect(getPremierElemOuVide(undefined)).toBe("");
-  expect(getPremierElemOuVide([])).toBe("");
-  expect(getPremierElemOuVide(["aze"])).toBe("aze");
+  expect(joint(["martin ", " dupe", "aurelia mine"])).toBe("martin, dupe, aurelia mine");
+  expect(joint([" martin ", " dupe", "aurelia mine"])).toBe("martin, dupe, aurelia mine");
 });
 
 test("Attendu: triListeObjetsSurPropriete fonctionne correctement", () => {
@@ -131,9 +112,7 @@ test("Attendu: enMajuscule fonctionne correctement", () => {
 
 test("Attendu: premiereLettreEnMajuscule fonctionne correctement", () => {
   expect(premiereLettreEnMajusculeLeResteEnMinuscule()).toBe("");
-  expect(premiereLettreEnMajusculeLeResteEnMinuscule("pierre durant")).toBe(
-    "Pierre durant"
-  );
+  expect(premiereLettreEnMajusculeLeResteEnMinuscule("pierre durant")).toBe("Pierre durant");
 });
 
 test("Attendu: formatPrenom fonctionne correctement", () => {
@@ -153,9 +132,7 @@ test("Attendu: formatNoms fonctionne correctement", () => {
 
 test("Attendu: formatPrenoms fonctionne correctement", () => {
   expect(formatPrenoms()).toBe("");
-  expect(formatPrenoms(["marie chantal", "jean-paul"])).toBe(
-    "Marie Chantal, Jean-Paul"
-  );
+  expect(formatPrenoms(["marie chantal", "jean-paul"])).toBe("Marie Chantal, Jean-Paul");
 });
 
 test("Attendu: jointPrenoms fonctionne correctement", () => {
@@ -211,22 +188,15 @@ test("Attendu: changeLaPlaceDunElement fonctionne correctement", () => {
 });
 
 test("3 petits points si la phrase en grande", () => {
-  const phrase1 =
-    "Je fais beaucoup plus de 30 charactères et vous ne pourrez pas lire ma fin";
-  expect(finirAvec3petitsPoints(phrase1, 30)).toStrictEqual(
-    "Je fais beaucoup plus de 30..."
-  );
+  const phrase1 = "Je fais beaucoup plus de 30 charactères et vous ne pourrez pas lire ma fin";
+  expect(finirAvec3petitsPoints(phrase1, 30)).toStrictEqual("Je fais beaucoup plus de 30...");
   const phrase2 = "Je ne fais pas 30 charactères";
-  expect(finirAvec3petitsPoints(phrase2, 30)).toStrictEqual(
-    "Je ne fais pas 30 charactères"
-  );
+  expect(finirAvec3petitsPoints(phrase2, 30)).toStrictEqual("Je ne fais pas 30 charactères");
 });
 
 test("Attendu: supprimerNullEtUndefinedDuTableau fonctionne correctement", () => {
   expect(supprimerNullEtUndefinedDuTableau([null, undefined])).toEqual([]);
-  expect(
-    supprimerNullEtUndefinedDuTableau(["", "a", null, "b", undefined])
-  ).toEqual(["", "a", "b"]);
+  expect(supprimerNullEtUndefinedDuTableau(["", "a", null, "b", undefined])).toEqual(["", "a", "b"]);
 });
 
 test("Attendu: tousRenseignes fonctionne correctement", () => {
@@ -239,31 +209,11 @@ test("Attendu: tousRenseignes fonctionne correctement", () => {
   expect(tousRenseignes("a", "b", 0)).toBeFalsy();
 });
 
-test("Attendu: tousNonRenseignes fonctionne correctement", () => {
-  expect(tousNonRenseignes()).toBeTruthy();
-  expect(tousNonRenseignes(undefined)).toBeTruthy();
-  expect(tousNonRenseignes("a", undefined, null)).toBeFalsy();
-  expect(tousNonRenseignes(undefined, "b", undefined)).toBeFalsy();
-  expect(tousNonRenseignes("", "", "")).toBeTruthy();
-  expect(tousNonRenseignes(undefined, null, "")).toBeTruthy();
-  expect(tousNonRenseignes("", "", 0)).toBeTruthy();
-  expect(tousNonRenseignes("a", "b", 0)).toBeFalsy();
-});
-
 test("Attendu: supprimeElement fonctionne correctement", () => {
   const tableau = [{ a: 1 }, { a: 2 }, { a: 3 }];
-  expect(supprimeElement(tableau, (elt: any) => elt.a === 2)).toEqual([
-    { a: 1 },
-    { a: 3 }
-  ]);
-  expect(supprimeElement(tableau, (elt: any) => elt.a === 1)).toEqual([
-    { a: 2 },
-    { a: 3 }
-  ]);
-  expect(supprimeElement(tableau, (elt: any) => elt.a === 3)).toEqual([
-    { a: 1 },
-    { a: 2 }
-  ]);
+  expect(supprimeElement(tableau, (elt: any) => elt.a === 2)).toEqual([{ a: 1 }, { a: 3 }]);
+  expect(supprimeElement(tableau, (elt: any) => elt.a === 1)).toEqual([{ a: 2 }, { a: 3 }]);
+  expect(supprimeElement(tableau, (elt: any) => elt.a === 3)).toEqual([{ a: 1 }, { a: 2 }]);
   expect(supprimeElement(tableau, (elt: any) => elt.a === 4)).toEqual(tableau);
 });
 
@@ -346,9 +296,7 @@ test("Attendu: getValeurProprieteAPartirChemin fonctionne correctement", () => {
   expect(getValeurProprieteAPartirChemin("e", objet)).toBe("valeur e");
   expect(getValeurProprieteAPartirChemin("a.a1", objet)).toBe("valeur a1");
   expect(getValeurProprieteAPartirChemin("b.b1.b11", objet)).toBe("valeur b11");
-  expect(getValeurProprieteAPartirChemin("c.c1.a1", objet)).toBe(
-    "valeur c.c1.a1"
-  );
+  expect(getValeurProprieteAPartirChemin("c.c1.a1", objet)).toBe("valeur c.c1.a1");
   expect(getValeurProprieteAPartirChemin("c.c1.c11", objet)).toBeUndefined();
   expect(getValeurProprieteAPartirChemin("a.a2", objet)).toBe("");
 });

@@ -1,14 +1,10 @@
-import TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT from "@api/traitements/projetActe/transcription/TraitementProjetActeTranscrit";
-import { IProjetActeTranscritDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/IProjetActeTranscritDto";
+import TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT from "@api/traitements/projetActe/transcription/TraitementEnregistrerProjetActeTranscrit";
+import { IProjetActeTranscritFormDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/IProjetActeTranscritFormDto";
 import { Form, Formik } from "formik";
 import React, { useContext, useMemo, useState } from "react";
 import useTraitementApi from "../../../../../hooks/api/TraitementApiHook";
 
-import {
-  IProjetActeTranscritForm,
-  IProjetActeTranscritProps,
-  ProjetTranscriptionForm
-} from "@model/form/creation/transcription/IProjetActeTranscritForm";
+import { IProjetActeTranscritForm, ProjetTranscriptionForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import messageManager from "@util/messageManager";
 import Bouton from "../../../../commun/bouton/Bouton";
 import { ConteneurBoutonBasDePage } from "../../../../commun/bouton/conteneurBoutonBasDePage/ConteneurBoutonBasDePage";
@@ -26,20 +22,21 @@ import BlocTitulaire from "./BlocTitulaire";
 import ValeursVersApercuProjet from "./ValeursVersApercuProjet";
 
 import {
-  CONFIG_COMPOSITION_ACTE_PDF,
+  CONFIG_POST_COMPOSITION_ACTE_TEXTE,
   IReponseCompositionActePDF
-} from "@api/configurations/etatCivil/acte/transcription/PostProjetActeTranscriptionConfigApi";
+} from "@api/configurations/composition/PostCompositionActeTexteApiConfigApi";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
-import { ITitulaireDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/ITitulaireDto";
+import { TitulaireProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/TitulaireProjetActeTranscrit";
 import { ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
+import { SaisieProjetActeTranscritContext } from "../../../../../contexts/SaisieProjetActeTranscritContextProvider";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
 import ModaleProjetActe from "./ModaleProjetActe";
 
 // /!\ À supprimer après le FIX dans Composition API /ACTE_TEXTE/1
 /*v8 ignore start */
-const formaterNomPrenomTitulaire = (titulaire: ITitulaireDto): string => {
+const formaterNomPrenomTitulaire = (titulaire: TitulaireProjetActeTranscrit): string => {
   if (!titulaire) {
     return "";
   }
@@ -56,16 +53,18 @@ const formaterNomPrenomTitulaire = (titulaire: ITitulaireDto): string => {
 };
 /*v8 ignore stop */
 
-const FormulaireSaisieProjet: React.FC<IProjetActeTranscritProps> = ({ requete }) => {
+const FormulaireSaisieProjet: React.FC = () => {
+  const { requete, projetActe, rechargerRequeteEtProjetActe } = useContext(SaisieProjetActeTranscritContext);
+
   const [pdfBase64, setPdfBase64] = useState<string | null>(null);
   const [modaleOuverte, setModaleOuverte] = useState(false);
 
   const donneesFormulaire = useMemo(
     () => ({
-      valeursInitiales: ProjetTranscriptionForm.valeursInitiales(requete),
+      valeursInitiales: ProjetTranscriptionForm.valeursInitiales(requete, projetActe),
       schemaValidation: ProjetTranscriptionForm.schemaValidation()
     }),
-    [requete]
+    [requete, projetActe]
   );
 
   const { utilisateurConnecte } = useContext(RECEContextData);
@@ -74,7 +73,7 @@ const FormulaireSaisieProjet: React.FC<IProjetActeTranscritProps> = ({ requete }
     return officierHabiliterPourLeDroit(utilisateurConnecte, Droit.SIGNER_ACTE);
   }, [utilisateurConnecte]);
 
-  const { appelApi: appelerCompositionPdf } = useFetchApi(CONFIG_COMPOSITION_ACTE_PDF);
+  const { appelApi: appelerCompositionPdf } = useFetchApi(CONFIG_POST_COMPOSITION_ACTE_TEXTE);
 
   const { lancerTraitement: lancerEnregistrement, traitementEnCours: enregistrementEnCours } = useTraitementApi(
     TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT
@@ -95,24 +94,23 @@ const FormulaireSaisieProjet: React.FC<IProjetActeTranscritProps> = ({ requete }
   }, [requete.natureActeTranscrit]);
 
   const enregistrerEtVisualiser = (valeurProjectActeForm: IProjetActeTranscritForm) => {
-    const donnees: IProjetActeTranscritDto = mapProjetActeTranscritFormVersDto(valeurProjectActeForm);
-
+    const donnees: IProjetActeTranscritFormDto = mapProjetActeTranscritFormVersDto(valeurProjectActeForm);
     lancerEnregistrement({
       parametres: {
         projetActe: donnees,
         idRequete: requete.id,
         idSuiviDossier: requete.titulaires?.[0].suiviDossiers?.[0].idSuiviDossier!
       },
-      apresSucces: resultat => {
+      apresSucces: projetActe => {
         messageManager.showSuccessAndClose("Le projet d'acte a bien été enregistré");
 
+        if (!projetActe) return;
         appelerCompositionPdf({
           parametres: {
-            path: { typeComposition: "ACTE_TEXTE", version: "1" },
             body: {
               nature_acte: nature_acte,
-              texte_corps_acte: resultat.projetActe.corpsTexte?.texte,
-              titulaires: formaterNomPrenomTitulaire(resultat.projetActe.titulaires?.[0]!)
+              texte_corps_acte: projetActe.corpsTexte?.texte,
+              titulaires: formaterNomPrenomTitulaire(projetActe.titulaires[0])
             }
           },
           apresSucces: (reponse: IReponseCompositionActePDF) => {
@@ -126,7 +124,8 @@ const FormulaireSaisieProjet: React.FC<IProjetActeTranscritProps> = ({ requete }
           apresErreur: messageErreur => {
             console.error(`Erreur lors de la génération du PDF : ${messageErreur}`);
             messageManager.showError("Une erreur est survenue lors de la composition de l'acte");
-          }
+          },
+          finalement: rechargerRequeteEtProjetActe
         });
       },
       apresErreur: messageErreur => {
@@ -159,7 +158,7 @@ const FormulaireSaisieProjet: React.FC<IProjetActeTranscritProps> = ({ requete }
             titre="Parents"
             ouvertParDefaut
           >
-            <BlocParent estparent1 />
+            <BlocParent estParent1 />
             <BlocParent />
           </ConteneurAccordeon>
 

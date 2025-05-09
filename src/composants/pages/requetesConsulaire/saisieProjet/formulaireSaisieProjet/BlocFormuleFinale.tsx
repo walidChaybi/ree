@@ -1,9 +1,13 @@
-import { Identite } from "@model/etatcivil/enum/Identite";
+import { EIdentite } from "@model/etatcivil/enum/Identite";
 import { Option } from "@util/Type";
 import { useFormikContext } from "formik";
 import { useEffect, useMemo } from "react";
 
+import { ELegalisationApostille } from "@model/etatcivil/enum/ELegalisationApostille";
+import { EModeDepot } from "@model/etatcivil/enum/EModeDepot";
+import { EPieceProduite } from "@model/etatcivil/enum/EPieceProduite";
 import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
+import { enumVersOptions } from "@util/Utils";
 import ChampListeDeroulante from "../../../../commun/champs/ChampListeDeroulante";
 import ChampTexte from "../../../../commun/champs/ChampTexte";
 import ChampsPrenoms from "../../../../commun/champs/ChampsPrenoms";
@@ -11,37 +15,20 @@ import ChampsRadio from "../../../../commun/champs/ChampsRadio";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import SeparateurSection from "../../../../commun/conteneurs/formulaire/SeparateurSection";
 
-const optionsDemandeur: Option[] = [
-  { cle: Identite.getKey(Identite.PERE), libelle: Identite.PERE.libelle },
-  { cle: Identite.getKey(Identite.MERE), libelle: Identite.MERE.libelle },
-  { cle: Identite.getKey(Identite.PERE_ET_MERE), libelle: Identite.PERE_ET_MERE.libelle },
-  { cle: Identite.getKey(Identite.TIERS), libelle: Identite.TIERS.libelle }
-];
+const optionsDemandeur: Option[] = enumVersOptions(EIdentite);
 
-const optionsPieces: Option[] = [
-  { cle: "COPIE", libelle: "Copie" },
-  { cle: "COPIE_ET_TRADUCTION", libelle: "Copie et traduction" },
-  { cle: "COPIES", libelle: "Copies" },
-  { cle: "COPIES_ET_TRADUCTION", libelle: "Copies et traduction" }
-];
+const optionsPieces: Option[] = enumVersOptions(EPieceProduite);
 
-const optionsLegalisationApostille: Option[] = [
-  { libelle: "", cle: "" },
-  { cle: "LEGALISATION", libelle: "Légalisation" },
-  { cle: "APOSTILLE", libelle: "Apostille" }
-];
+const optionsLegalisationApostille: Option[] = enumVersOptions(ELegalisationApostille, true);
 
-const optionsModeDepot: Option[] = [
-  { cle: "TRANSMISE", libelle: "Transmise" },
-  { cle: "REMISE", libelle: "Remise" }
-];
+const optionsModeDepot: Option[] = enumVersOptions(EModeDepot);
 
 const optionsIdentiteTransmetteur: Option[] = [{ cle: "IDENTIQUE_DEMANDEUR", libelle: "Identique au demandeur" }];
 
 const BlocFormuleFinale: React.FC = () => {
   const { values, setFieldValue, setFieldTouched, initialValues } = useFormikContext<IProjetActeTranscritForm>();
   const estUnTier = useMemo(
-    () => values.formuleFinale?.identiteDemandeur === Identite.getKey(Identite.TIERS),
+    () => values.formuleFinale?.identiteDemandeur === ("TIERS" as keyof typeof EIdentite),
     [values.formuleFinale.identiteDemandeur]
   );
   const doitAfficherAutresPieces = useMemo(

@@ -1,20 +1,18 @@
 import { CONFIG_PATCH_ID_ACTE_SUIVI_DOSSIER } from "@api/configurations/etatCivil/acte/transcription/PatchIdActeSuiviDossier";
 import { CONFIG_POST_PROJET_ACTE_TRANSCRIPTION } from "@api/configurations/etatCivil/acte/transcription/PostProjetActeTranscriptionConfigApi";
+
 import { CONFIG_PATCH_STATUT_REQUETE_CREATION } from "@api/configurations/requete/creation/PatchStatutRequeteCreationConfigApi";
 import { IErreurTraitement, TTraitementApi } from "@api/traitements/TTraitementApi";
-import { IProjetActeTranscritDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/IProjetActeTranscritDto";
+import { IProjetActeTranscritFormDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/IProjetActeTranscritFormDto";
+import { IProjetActeTranscritDto, ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/ProjetActeTranscrit";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useEffect, useState } from "react";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
 
 export interface IPostProjetActeTranscrit {
   idSuiviDossier: string;
-  projetActe: IProjetActeTranscritDto;
+  projetActe: IProjetActeTranscritFormDto;
   idRequete: string;
-}
-
-export interface IReponseProjetActe {
-  projetActe: IProjetActeTranscritDto;
 }
 
 type TEtatAppel = "EN_ATTENTE" | "TERMINE";
@@ -27,9 +25,9 @@ interface IDonnesTraitement {
   appelSuiviDossier: TEtatAppel;
 }
 
-const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetActeTranscrit, IReponseProjetActe> = {
+const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetActeTranscrit, ProjetActeTranscrit | null> = {
   Lancer: terminerTraitement => {
-    const [projetActeCree, setProjetActeCree] = useState<IReponseProjetActe>({ projetActe: {} as IProjetActeTranscritDto });
+    const [projetActeCree, setProjetActeCree] = useState<ProjetActeTranscrit | null>(null);
     const [erreurTraitement, setErreurTraitement] = useState<IErreurTraitement>({ enEchec: false });
     const [donneesTraitement, setDonneesTraitement] = useState<IDonnesTraitement | null>(null);
 
@@ -55,9 +53,8 @@ const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetAc
         parametres: {
           body: parametres.projetActe
         },
-        // FIXME APRES REFACTO TYPAGE PROJET_ACTE
-        apresSucces: (projetActe: any) => {
-          setProjetActeCree(statePrecedent => ({ ...statePrecedent, projetActe }));
+        apresSucces: (projetActe: IProjetActeTranscritDto) => {
+          setProjetActeCree(ProjetActeTranscrit.depuisDto(projetActe));
           setDonneesTraitement({
             idActe: projetActe.id,
             idRequete: idRequete,

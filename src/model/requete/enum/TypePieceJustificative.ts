@@ -1,6 +1,6 @@
 /* v8 ignore start */
 import { OptionAvecOrdre } from "@util/Type";
-import { TypeRedactionActe } from "../../etatcivil/enum/TypeRedactionActe";
+import { ETypeRedactionActe } from "../../etatcivil/enum/ETypeRedactionActe";
 import { TypeRequete } from "./TypeRequete";
 
 export const CODE_TRANSCRIPTION_ACTE = "TRANSCRIPTION_ACTE";
@@ -39,7 +39,7 @@ export class TypePieceJustificative {
     return TypePieceJustificative.liste?.find(typePieceJustificative => typePieceJustificative.libelle === libelle) ?? null;
   }
 
-  public static versOptions(typeRequete: TypeRequete, typeRedactionActe?: TypeRedactionActe): OptionAvecOrdre[] {
+  public static versOptions(typeRequete: TypeRequete, typeRedactionActe?: ETypeRedactionActe): OptionAvecOrdre[] {
     return (
       TypePieceJustificative.liste
         ?.filter(

@@ -8,11 +8,11 @@ import { describe, expect, test, vi } from "vitest";
 import PageRequeteCreationTranscriptionPriseEnCharge from "../../../pages/requetesConsulaire/PageRequeteCreationTranscriptionPriseEnCharge";
 import { createTestingRouter } from "../../__tests__utils__/testsUtil";
 
-vi.mock("@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats", () => ({
-  RMCRequetesAssocieesResultats: () => <div data-testid="rmc-mock">Requetes associees</div>
-}));
-
 describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
+  vi.mock("@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats", () => ({
+    RMCRequetesAssocieesResultats: () => <div data-testid="rmc-mock">Requetes associees</div>
+  }));
+
   test("affiche PartieGauche et PartieDroite après récupération de la requête", async () => {
     const mockUtilisateurConnecte = {
       idUtilisateur: "test-utilisateur-id"

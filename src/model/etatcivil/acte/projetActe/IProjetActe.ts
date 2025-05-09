@@ -1,7 +1,7 @@
 import { IPersonne } from "@model/etatcivil/commun/Personne";
-import { TypeRedactionActe } from "../../enum/TypeRedactionActe";
+import { ETypeRedactionActe } from "../../enum/ETypeRedactionActe";
 import { ICorpsExtraitRectification } from "../ICorpsExtraitRectification";
-import { ICorpsText } from "../ICorpsText";
+import { ICorpsTexte } from "../ICorpsTexte";
 import { IDeclarant } from "../IDeclarant";
 import { IEvenement } from "../IEvenement";
 import { IRegistre } from "../IRegistre";
@@ -24,7 +24,7 @@ export interface IProjetActe {
   dateCreation?: Date;
   visibiliteArchiviste: string;
   analyseMarginales?: IProjetAnalyseMarginale[];
-  corpsTexte?: ICorpsText;
+  corpsTexte?: ICorpsTexte;
   type: string;
   corpsExtraitRectifications: ICorpsExtraitRectification[];
   mentions: IMention[];
@@ -33,5 +33,5 @@ export interface IProjetActe {
   statut: string;
   dateStatut: Date;
   dateInitialisation: Date;
-  modeCreation?: TypeRedactionActe;
+  modeCreation?: ETypeRedactionActe;
 }

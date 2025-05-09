@@ -1,5 +1,6 @@
-/* istanbul ignore file */
 /* v8 ignore start A TESTER 03/25 */
+import { TitulaireProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/TitulaireProjetActeTranscrit";
+import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { IDateForm } from "@model/form/commun/DateForm";
 import { PrenomsForm, TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import { ITitulaireTranscription } from "@model/form/creation/transcription/IProjetActeTranscritForm";
@@ -31,26 +32,35 @@ export const TitulaireRequeteTranscription = {
         titulaireAFiltrer.typeObjetTitulaire === TypeObjetTitulaire.TITULAIRE_ACTE_TRANSCRIT
     );
   },
-  mappingTitulaireRequeteTranscriptionVersTitulaireForm: (titulaire?: ITitulaireRequeteTranscription): ITitulaireTranscription => {
+  mappingTitulaireRequeteTranscriptionVersTitulaireForm: (
+    titulaireRequete?: ITitulaireRequeteTranscription,
+    titulaireProjetActe?: TitulaireProjetActeTranscrit
+  ): ITitulaireTranscription => {
     return {
-      nomActeEtranger: titulaire?.nomNaissance ?? "",
-      nomRetenuOEC: "",
-      nomSouhaite: titulaire?.nomSouhaite ?? "",
-      nomSecable: { nomPartie1: "", nomPartie2: "", secable: false },
-      prenomsChemin: PrenomsForm.valeursInitiales(titulaire?.prenoms),
-      sexe: titulaire?.sexe ?? "",
-      dateNaissance: {
-        jour: titulaire?.jourNaissance ? `${titulaire?.jourNaissance}`.padStart(2, "0") : "",
-        mois: titulaire?.moisNaissance ? `${titulaire?.moisNaissance}`.padStart(2, "0") : "",
-        annee: titulaire?.anneeNaissance?.toString() ?? "",
-        heure: "",
-        minute: ""
+      nomActeEtranger: titulaireProjetActe?.nomActeEtranger ?? titulaireRequete?.nomNaissance ?? "",
+      nomRetenuOEC: titulaireProjetActe?.nom ?? titulaireProjetActe?.nom ?? "",
+      nomSouhaite: titulaireRequete?.nomSouhaite ?? "",
+      nomSecable: {
+        nomPartie1: titulaireProjetActe?.nomPartie1 ?? "",
+        nomPartie2: titulaireProjetActe?.nomPartie2 ?? "",
+        secable: Boolean(titulaireProjetActe?.nomPartie2)
       },
-      secable: null,
-      villeNaissance: titulaire?.villeNaissance ?? "",
-      regionNaissance: titulaire?.regionNaissance ?? "",
-      paysNaissance: titulaire?.paysNaissance ?? "",
-      adresseNaissance: ""
+      prenomsChemin: PrenomsForm.valeursInitiales(
+        titulaireProjetActe?.prenoms?.map((prenom: string, index: number) => ({ prenom: prenom, numeroOrdre: index + 1 })) ??
+          titulaireRequete?.prenoms
+      ),
+      sexe: titulaireProjetActe?.sexe ?? (titulaireRequete?.sexe as keyof typeof ESexe) ?? null,
+      dateNaissance: {
+        jour: (titulaireProjetActe?.naissance.jour ?? titulaireRequete?.jourNaissance)?.toString().padStart(2, "0") ?? "",
+        mois: (titulaireProjetActe?.naissance.mois ?? titulaireRequete?.moisNaissance)?.toString().padStart(2, "0") ?? "",
+        annee: (titulaireProjetActe?.naissance.annee ?? titulaireRequete?.anneeNaissance)?.toString() ?? "",
+        heure: titulaireProjetActe?.naissance.heure?.toString().padStart(2, "0") ?? "",
+        minute: titulaireProjetActe?.naissance.minute?.toString().padStart(2, "0") ?? ""
+      },
+      villeNaissance: titulaireProjetActe?.naissance.ville ?? titulaireRequete?.villeNaissance ?? "",
+      regionNaissance: titulaireProjetActe?.naissance.region ?? titulaireRequete?.regionNaissance ?? "",
+      paysNaissance: titulaireProjetActe?.naissance.pays ?? titulaireRequete?.paysNaissance ?? "",
+      adresseNaissance: titulaireProjetActe?.naissance.voie ?? titulaireProjetActe?.naissance.voie ?? ""
     };
   }
 };

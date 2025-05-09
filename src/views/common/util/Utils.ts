@@ -1,6 +1,7 @@
 import { IPrenom } from "@model/etatcivil/fiche/IPrenom";
 import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
+import { OPTION_VIDE, Option } from "./Type";
 
 export const SPC = "SPC";
 export const SANS_PRENOM_CONNU = "Sans prénom connu";
@@ -150,10 +151,6 @@ export const getTableauOuVide = (arr?: any[]) => {
   return arr?.length ? arr : [];
 };
 
-export const getPremierElemOuVide = (tab?: string[]): string => {
-  return tab?.[0] ? tab[0] : "";
-};
-
 export const jointAvec = (tab: string[], sep: string) => {
   let res = "";
   if (tab) {
@@ -298,12 +295,9 @@ export const compactObject = (object: any): any => {
   return object;
 };
 
+/** @deprecated  fonction trop simple et empêche typescript d'analyser les types*/
 export const tousRenseignes = (...args: any[]): boolean => {
   return args.length > 0 && args.every(elem => elem);
-};
-
-export const tousNonRenseignes = (...args: any[]): boolean => {
-  return args.length === 0 || args.every(elem => !elem);
 };
 
 export const supprimeElement = (tableau: any[], fct: any) => {
@@ -433,6 +427,7 @@ export const getValeurOuUndefined = (valeur?: any): any | undefined => {
   return valeur || undefined;
 };
 
+/** @deprecated méthode inutile, opération trop simple pour justifier une fonction */
 export const getPremiereOuSecondeValeur = (valeur1: string | undefined | null, valeur2: string | undefined | null) => {
   return valeur1 ?? valeur2 ?? "";
 };
@@ -697,3 +692,8 @@ export const rechercheExpressionReguliereAvecTimeout = (
     });
   });
 };
+
+export const enumVersOptions = <TEnum extends { [cle: string]: string }>(enumeration: TEnum, avecOptionVide: boolean = false): Option[] => [
+  ...(avecOptionVide ? [OPTION_VIDE] : []),
+  ...Object.entries(enumeration).map((entree): Option => ({ cle: entree[0], libelle: entree[1] }))
+];

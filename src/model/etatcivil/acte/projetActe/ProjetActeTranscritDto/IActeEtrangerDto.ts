@@ -1,4 +1,4 @@
-import { IAdresseCompleteDto } from "./IAdresseDto";
+import { IAdresse } from "../../IAdresse";
 
 export interface IActeEtrangerDto {
   texteEnonciations: string | null;
@@ -8,7 +8,7 @@ export interface IActeEtrangerDto {
   jourEnregistrement?: string | null;
   moisEnregistrement?: string | null;
   anneeEnregistrement?: string | null;
-  adresseEnregistrement: IAdresseCompleteDto | null;
+  adresseEnregistrement: IAdresse | null;
   redacteur: string | null;
   reference: string | null;
   complement: string | null;

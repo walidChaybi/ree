@@ -1,3 +1,4 @@
+import { TDateArrayDTO } from "@util/DateUtils";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 
@@ -80,6 +81,9 @@ class DateRECE {
       minute: DateRECE.valeurDate(objetDate.minute, true)
     });
   }
+
+  public static depuisDateArrayDTO = (dateArrayDto: TDateArrayDTO): DateRECE =>
+    DateRECE.depuisObjetDate({ annee: dateArrayDto[0], mois: dateArrayDto[1], jour: dateArrayDto[2] });
 
   /* Validations */
   public get estDateHeureValide(): boolean {

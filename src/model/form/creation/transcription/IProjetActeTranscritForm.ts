@@ -1,6 +1,8 @@
 /* v8 ignore start a faire Lundi 31 Mars @ Adrien_Bonvin */
+import { ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/ProjetActeTranscrit";
 import { NomSecable } from "@model/etatcivil/commun/NomSecable";
-import { Identite } from "@model/etatcivil/enum/Identite";
+import { EIdentite, Identite } from "@model/etatcivil/enum/Identite";
+import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { ConditionChamp, EOperateurCondition } from "@model/form/commun/ConditionChamp";
 import { IDateForm } from "@model/form/commun/DateForm";
 import { PrenomsForm, TPrenomsForm } from "@model/form/commun/PrenomsForm";
@@ -20,10 +22,6 @@ export interface IProjetActeTranscritForm {
   autresEnonciations?: { enonciations: string };
 }
 
-export interface IProjetActeTranscritProps {
-  requete: IRequeteCreationTranscription;
-}
-
 export interface IActeEtrangerTranscription {
   typeActe?: string;
   infoTypeActe?: string;
@@ -40,14 +38,13 @@ export interface ILieuEtranger {
 }
 
 export interface ITitulaireTranscription {
-  nomActeEtranger: string | null;
+  nomActeEtranger: string;
   nomRetenuOEC: string;
   nomSouhaite: string | null;
   prenomsChemin?: TPrenomsForm;
   nomSecable: NomSecable;
-  sexe: string | null;
+  sexe: keyof typeof ESexe;
   dateNaissance: IDateForm | null;
-  secable: boolean | null;
   villeNaissance: string | null;
   regionNaissance: string | null;
   paysNaissance: string | null;
@@ -61,10 +58,10 @@ export interface IParentsTranscription {
 }
 
 export interface IDeclarantTranscription {
-  identite: string;
+  identite: keyof typeof EIdentite;
   nom: string | null;
   prenomsChemin?: TPrenomsForm;
-  sexe: string | null;
+  sexe: keyof typeof ESexe | null;
   age?: number | null;
   qualite?: string | null;
   profession?: string | null;
@@ -90,43 +87,84 @@ export interface IFormuleFinaleTranscription {
 }
 
 export const ProjetTranscriptionForm = {
-  valeursInitiales: (requete: IRequeteCreationTranscription): IProjetActeTranscritForm => {
+  valeursInitiales: (requete: IRequeteCreationTranscription, projetActe: ProjetActeTranscrit | null): IProjetActeTranscritForm => {
     const titulaire = TitulaireRequeteTranscription.getTitulaireTranscriptionDepuisTitulairesRequeteTranscription(requete.titulaires);
     const parents = ParentsRequeteTranscription.getParentsRequeteTranscription(requete.titulaires);
-
     return {
-      titulaire: TitulaireRequeteTranscription.mappingTitulaireRequeteTranscriptionVersTitulaireForm(titulaire),
-      declarant: {
-        identite: Identite.getKey(Identite.PERE),
-        nom: "",
-        prenomsChemin: PrenomsForm.valeursInitiales(),
-        sexe: null,
-        age: null,
-        qualite: "",
-        profession: "",
-        sansProfession: false,
-        domicile: { typeLieu: "Inconnu", ville: "", departement: "", pays: "", etatProvince: "" }
-      },
+      titulaire: TitulaireRequeteTranscription.mappingTitulaireRequeteTranscriptionVersTitulaireForm(
+        titulaire,
+        projetActe?.titulaires?.[0]
+      ),
       parents: {
-        parent1: ParentsRequeteTranscription.mappingParentRequeteTranscriptionVersParentForm(parents?.parent1),
-        parent2: ParentsRequeteTranscription.mappingParentRequeteTranscriptionVersParentForm(parents?.parent2)
+        parent1: ParentsRequeteTranscription.mappingParentRequeteTranscriptionVersParentForm(
+          parents?.parent1,
+          projetActe?.titulaires?.[0].filiations.parent1
+        ),
+        parent2: ParentsRequeteTranscription.mappingParentRequeteTranscriptionVersParentForm(
+          parents?.parent2,
+          projetActe?.titulaires?.[0].filiations.parent2
+        ),
+        domicileCommun: Boolean(projetActe?.titulaires?.[0].filiations.parent2?.domicileCommun)
+      },
+      declarant: {
+        identite: projetActe?.declarant.identiteDeclarant ?? "PERE",
+        nom: projetActe?.declarant.nom ?? "",
+        prenomsChemin: PrenomsForm.valeursInitiales(projetActe?.declarant.prenoms),
+        sexe: projetActe?.declarant.sexe ?? null,
+        age: projetActe?.declarant.age,
+        qualite: projetActe?.declarant.qualite ?? "",
+        profession: projetActe?.declarant.profession ?? "",
+        sansProfession: Boolean(projetActe?.declarant.sansProfession),
+        domicile: {
+          typeLieu:
+            (projetActe?.declarant.adresseDomicile?.pays &&
+              (projetActe.declarant.adresseDomicile.pays.toUpperCase().trim() === "FRANCE" ? "France" : "Étranger")) ??
+            "Inconnu",
+          ville: projetActe?.declarant.adresseDomicile?.ville ?? "",
+          departement:
+            projetActe?.declarant.adresseDomicile?.pays.toUpperCase().trim() === "FRANCE"
+              ? projetActe.declarant.adresseDomicile.region
+              : "",
+          etatProvince:
+            projetActe?.declarant.adresseDomicile?.pays.toUpperCase().trim() !== "FRANCE"
+              ? (projetActe?.declarant.adresseDomicile?.region ?? "")
+              : "",
+          pays: projetActe?.declarant.adresseDomicile?.pays ?? "",
+          adresse: projetActe?.declarant.adresseDomicile?.voie ?? ""
+        },
+        complement: projetActe?.declarant.complementDeclarant
+      },
+      autresEnonciations: {
+        enonciations: projetActe?.acteEtranger.texteEnonciations ?? ""
       },
       acteEtranger: {
-        typeActe: "ACTE_DRESSE",
-        referenceComplement: ""
+        typeActe: projetActe?.acteEtranger.typeActeEtranger ?? "ACTE_DRESSE",
+        infoTypeActe: projetActe?.acteEtranger.infoTypeActe ?? undefined,
+        dateEnregistrement: {
+          jour: projetActe?.acteEtranger.jourEnregistrement ?? "",
+          mois: projetActe?.acteEtranger.moisEnregistrement ?? "",
+          annee: projetActe?.acteEtranger.anneeEnregistrement ?? ""
+        },
+        lieuEnregistrement: {
+          ville: projetActe?.acteEtranger.adresseEnregistrement?.ville ?? "",
+          etatProvince: projetActe?.acteEtranger.adresseEnregistrement?.region ?? "",
+          pays: projetActe?.acteEtranger.adresseEnregistrement?.pays ?? ""
+        },
+        redacteur: projetActe?.acteEtranger.redacteur ?? "",
+        referenceComplement: projetActe?.acteEtranger.reference ?? projetActe?.acteEtranger.complement ?? ""
       },
       mentions: {
-        mentions: ""
+        mentions: projetActe?.acteEtranger.mentions ?? ""
       },
       formuleFinale: {
-        identiteDemandeur: Identite.getKey(Identite.PERE),
-        nom: "",
-        prenomsChemin: PrenomsForm.valeursInitiales(),
-        qualite: "",
-        pieceProduite: "COPIE",
-        autresPieces: "",
-        legalisationApostille: "",
-        modeDepot: "TRANSMISE",
+        identiteDemandeur: projetActe?.formuleFinale.identiteDemandeur ?? Identite.getKey(Identite.PERE),
+        nom: projetActe?.formuleFinale.nomDemandeur ?? "",
+        prenomsChemin: PrenomsForm.depuisStringDto(projetActe?.formuleFinale.prenomDemandeur?.split(",") ?? []),
+        qualite: projetActe?.formuleFinale.qualiteDemandeur ?? "",
+        pieceProduite: projetActe?.formuleFinale.pieceProduite ?? "COPIE",
+        autresPieces: projetActe?.formuleFinale.autresPieces ?? "",
+        legalisationApostille: projetActe?.formuleFinale.legalisation ?? "",
+        modeDepot: projetActe?.formuleFinale.modeDepot ?? "TRANSMISE",
         identiteTransmetteur: "Identique au demandeur"
       }
     };

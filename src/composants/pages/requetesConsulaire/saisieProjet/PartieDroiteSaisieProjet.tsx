@@ -1,7 +1,7 @@
-import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { GestionMentions } from "@pages/requeteCreation/commun/composants/GestionMentions";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { SaisieProjetActeTranscritContext } from "../../../../contexts/SaisieProjetActeTranscritContextProvider";
 import OngletsBouton from "../../../commun/onglets/OngletsBouton";
 import ConteneurVoletEdition from "../../requetesDelivrance/editionRequete/ConteneurVoletEdition";
 import FormulaireSaisieProjet from "./formulaireSaisieProjet/FormulaireSaisieProjet";
@@ -11,11 +11,9 @@ export enum ECleOngletPartieDroite {
   MENTIONS = "mentions",
   ECHANGE = "echange"
 }
-interface IPartieDroiteSaisieProjetProps {
-  requete: IRequeteCreationTranscription;
-}
 
-const PartieDroiteSaisieProjet: React.FC<IPartieDroiteSaisieProjetProps> = ({ requete }) => {
+const PartieDroiteSaisieProjet: React.FC = () => {
+  const { requete } = useContext(SaisieProjetActeTranscritContext);
   const [ongletActifPartieDroite, setOngletActifPartieDroite] = useState<ECleOngletPartieDroite>(ECleOngletPartieDroite.PROJET);
 
   return (
@@ -40,7 +38,7 @@ const PartieDroiteSaisieProjet: React.FC<IPartieDroiteSaisieProjetProps> = ({ re
           estScrollable
         >
           <div className="mr-2">
-            <FormulaireSaisieProjet requete={requete} />
+            <FormulaireSaisieProjet />
           </div>
         </ConteneurVoletEdition>
       )}

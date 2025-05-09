@@ -38,6 +38,7 @@ const useNavigationRequeteTableauConsulaire = () => {
         navigate(URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID.replace(":idRequeteParam", idRequete));
         break;
 
+      case StatutRequete.A_SIGNER.libelle:
       case StatutRequete.EN_TRAITEMENT.libelle:
         navigate(URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID.replace(":idRequeteParam", idRequete));
         break;

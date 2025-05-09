@@ -1,8 +1,8 @@
+import { EStatutActe } from "@model/etatcivil/enum/EStatutActe";
 import { EStatutPacs } from "@model/etatcivil/enum/EStatutPacs";
 import { ETypeInscriptionRcRca } from "@model/etatcivil/enum/ETypeInscriptionRcRca";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { StatutActe } from "@model/etatcivil/enum/StatutActe";
 import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { IRMCAutoPersonneRequest } from "@model/rmc/personne/IRMCAutoPersonneRequest";
@@ -92,7 +92,7 @@ function mapActeInscription(acteInscriptionLie: any): IActeInscriptionRMCPersonn
       break;
     case TypeFiche.ACTE:
       nature = NatureActe.getEnumFor(getValeurOuVide(acteInscriptionLie.nature)).libelle;
-      statutOuType = StatutActe.getEnumFor(getValeurOuVide(acteInscriptionLie.statut)).libelle;
+      statutOuType = EStatutActe[acteInscriptionLie.statut as keyof typeof EStatutActe] ?? "";
       break;
   }
 

@@ -88,7 +88,7 @@ const TableauMesRequetesConsulaire: React.FC = () => {
   const { utilisateurs, services } = useContext(RECEContextData);
 
   const [parametresTableau, setParametresTableau] = useState<IParamtresTableau>({
-    statuts: [StatutRequete.A_TRAITER.nom, StatutRequete.PRISE_EN_CHARGE.nom, StatutRequete.EN_TRAITEMENT.nom],
+    statuts: [StatutRequete.A_TRAITER.nom, StatutRequete.PRISE_EN_CHARGE.nom, StatutRequete.EN_TRAITEMENT.nom, StatutRequete.A_SIGNER.nom],
     sousType: [SousTypeCreation.RCTC.nom, SousTypeCreation.RCTD.nom, SousTypeCreation.RCADC.nom],
     tri: "statutEtDateCreation",
     sens: "ASC",

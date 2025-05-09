@@ -1,6 +1,6 @@
 import { IAdresse } from "@model/etatcivil/acte/IAdresse";
 import { ICorpsExtraitRectification } from "@model/etatcivil/acte/ICorpsExtraitRectification";
-import { ICorpsText } from "@model/etatcivil/acte/ICorpsText";
+import { ICorpsTexte } from "@model/etatcivil/acte/ICorpsTexte";
 import { IDeclarant } from "@model/etatcivil/acte/IDeclarant";
 import { IDecretNaturalisation } from "@model/etatcivil/acte/IDecretNaturalisation";
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
@@ -226,7 +226,7 @@ function mapAnalyseMarginales(projetsAnalyseMarginale: any[]): IProjetAnalyseMar
   return projetsAnalyseMarginale;
 }
 
-function mapCorpsTexte(corpsTexte: any): ICorpsText {
+function mapCorpsTexte(corpsTexte: any): ICorpsTexte {
   return corpsTexte;
 }
 

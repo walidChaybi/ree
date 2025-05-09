@@ -1,9 +1,9 @@
 import { CONFIG_GET_MODELE_TEXTE } from "@api/configurations/etatCivil/acte/transcription/GetModeleTexteConfigApi";
 import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
-import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
 import messageManager from "@util/messageManager";
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
+import { SaisieProjetActeTranscritContext } from "../../../../../contexts/SaisieProjetActeTranscritContextProvider";
 import { EEventState, useEventState } from "../../../../../hooks/EventHook";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
 import DateRECE from "../../../../../utils/DateRECE";
@@ -12,11 +12,9 @@ import ComposantChargeur from "../../../../commun/chargeurs/ComposantChargeur";
 import ConteneurDocument from "../../../../commun/conteneurs/ConteneurDocument";
 import DocumentTexte from "../../../../commun/conteneurs/DocumentTexte";
 
-interface IApercuProjetActeProps {
-  requete: IRequeteCreationTranscription;
-}
+const ApercuProjetActe: React.FC = () => {
+  const { requete } = useContext(SaisieProjetActeTranscritContext);
 
-const ApercuProjetActe: React.FC<IApercuProjetActeProps> = ({ requete }) => {
   const { appelApi: appelGetModeleTexte, enAttenteDeReponseApi: enAttenteModeleTexte } = useFetchApi(CONFIG_GET_MODELE_TEXTE);
   const [valeurs] = useEventState<IProjetActeTranscritForm | null>(EEventState.APERCU_PROJET_ACTE, null);
   const [modeleTexte, setModeleTexte] = useState<ModeleTexte | null>(null);

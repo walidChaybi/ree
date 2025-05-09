@@ -1,7 +1,22 @@
-/* istanbul ignore file */
-
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 import { Options } from "@util/Type";
+
+export enum ENatureActe {
+  NAISSANCE = "Naissance",
+  MARIAGE = "Mariage",
+  DECES = "Décès",
+  DIVORCE = "Divorce",
+  SEPARATION = "Séparation",
+  ADOPTION_SIMPLE = "Adoption simple",
+  ABSENCE = "Absence",
+  RECONNAISSANCE = "Reconnaissance",
+  DIVERS = "Divers",
+  ADOPTION_PLENIERE = "Adoption plénière",
+  ADOPTION = "Adoption",
+  ENFANT_SANS_VIE = "Enfant sans vie",
+  DOSSIER = "Dossier",
+  INCONNUE = "Inconnue"
+}
 
 export class NatureActe extends EnumWithLibelle {
   public static readonly NAISSANCE = new NatureActe("Naissance");
@@ -13,9 +28,7 @@ export class NatureActe extends EnumWithLibelle {
   public static readonly ABSENCE = new NatureActe("Absence");
   public static readonly RECONNAISSANCE = new NatureActe("Reconnaissance");
   public static readonly DIVERS = new NatureActe("Divers");
-  public static readonly ADOPTION_PLENIERE = new NatureActe(
-    "Adoption plénière"
-  );
+  public static readonly ADOPTION_PLENIERE = new NatureActe("Adoption plénière");
   public static readonly ADOPTION = new NatureActe("Adoption");
   public static readonly ENFANT_SANS_VIE = new NatureActe("Enfant sans vie");
   public static readonly DOSSIER = new NatureActe("Dossier");
@@ -26,9 +39,7 @@ export class NatureActe extends EnumWithLibelle {
   }
 
   public static getEnumFromLibelle(str?: string): NatureActe {
-    return str
-      ? EnumWithLibelle.getEnumFromLibelle(NatureActe, str)
-      : undefined;
+    return str ? EnumWithLibelle.getEnumFromLibelle(NatureActe, str) : undefined;
   }
 
   public static getAllEnumsAsOptions(): Options {

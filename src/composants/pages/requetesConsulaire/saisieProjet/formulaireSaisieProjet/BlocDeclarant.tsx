@@ -1,7 +1,8 @@
-import { Identite } from "@model/etatcivil/enum/Identite";
+import { EIdentite } from "@model/etatcivil/enum/Identite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { Option } from "@util/Type";
+import { enumVersOptions } from "@util/Utils";
 import { useFormikContext } from "formik";
 import React, { useEffect, useMemo } from "react";
 import ChampCaseACocher from "../../../../commun/champs/ChampCaseACocher";
@@ -14,11 +15,11 @@ import ChampsRadio from "../../../../commun/champs/ChampsRadio";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import SeparateurSection from "../../../../commun/conteneurs/formulaire/SeparateurSection";
 
-const optionsDeclarant: Option[] = Identite.getAllEnumsAsOptions();
+const optionsDeclarant: Option[] = enumVersOptions(EIdentite);
 
 const BlocDeclarant: React.FC = () => {
   const { values, setFieldValue, setFieldTouched, initialValues } = useFormikContext<IProjetActeTranscritForm>();
-  const estDeclarantTiers = useMemo(() => values.declarant.identite === Identite.getKey(Identite.TIERS), [values.declarant.identite]);
+  const estDeclarantTiers = useMemo(() => values.declarant.identite === "TIERS", [values.declarant.identite]);
 
   useEffect(() => {
     if (!estDeclarantTiers) {

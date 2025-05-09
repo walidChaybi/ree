@@ -21,7 +21,7 @@ import React from "react";
 import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
 import PageRequeteCreationTranscriptionPriseEnCharge from "../../../../../pages/requetesConsulaire/PageRequeteCreationTranscriptionPriseEnCharge";
-import { PageRequeteTranscriptionSaisieProjet } from "../../../../../pages/requetesConsulaire/PageRequeteTranscriptionSaisieProjet";
+import PageRequeteTranscriptionSaisieProjet from "../../../../../pages/requetesConsulaire/PageRequeteTranscriptionSaisieProjet";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 import MockRECEContextProvider from "../../../../mock/context/MockRECEContextProvider";
 

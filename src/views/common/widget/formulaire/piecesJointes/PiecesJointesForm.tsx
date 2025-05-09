@@ -1,4 +1,4 @@
-import { TypeRedactionActe } from "@model/etatcivil/enum/TypeRedactionActe";
+import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { PieceJointe } from "@util/FileUtils";
@@ -12,7 +12,7 @@ import { PiecesJointes } from "./PiecesJointes";
 
 export interface PiecesJointesFormProps {
   typeRequete: TypeRequete;
-  typeRedactionActe?: TypeRedactionActe;
+  typeRedactionActe?: ETypeRedactionActe;
   maxPiecesJointes?: number;
 }
 

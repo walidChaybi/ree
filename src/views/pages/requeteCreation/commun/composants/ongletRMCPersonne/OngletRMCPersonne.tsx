@@ -2,7 +2,7 @@ import { RECEContextActions, RECEContextData } from "@core/contexts/RECEContext"
 import { IRMCPersonneResultat } from "@hook/rmcAuto/IRMCPersonneResultat";
 import { IRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
-import { getTypeRedactionActeParSousTypeCreation } from "@model/etatcivil/enum/TypeRedactionActe";
+import { getTypeRedactionActeParSousTypeCreation } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { RolePersonneSauvegardee } from "@model/requete/enum/RolePersonneSauvegardee";

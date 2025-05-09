@@ -1,5 +1,11 @@
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 
+export enum ETypeActe {
+  IMAGE = "IMAGE",
+  TEXTE = "TEXTE",
+  INCONNU = "INCONNU"
+}
+
 export class TypeActe extends EnumWithLibelle {
   public static readonly IMAGE = new TypeActe("IMAGE");
   public static readonly TEXTE = new TypeActe("TEXTE");
@@ -7,10 +13,6 @@ export class TypeActe extends EnumWithLibelle {
 
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, TypeActe);
-  }
-
-  public static getKey(obj: TypeActe) {
-    return EnumWithLibelle.getKey(TypeActe, obj);
   }
 
   public static estImage(obj?: TypeActe): boolean {

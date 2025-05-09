@@ -9,7 +9,7 @@ import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
-import { PageRequeteTranscriptionSaisieProjet } from "../../../../../../pages/requetesConsulaire/PageRequeteTranscriptionSaisieProjet";
+import PageRequeteTranscriptionSaisieProjet from "../../../../../../pages/requetesConsulaire/PageRequeteTranscriptionSaisieProjet";
 import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 import MockRECEContextProvider from "../../../../../mock/context/MockRECEContextProvider";
 import mockConnectedUser from "../../../../../mock/data/connectedUser.json";

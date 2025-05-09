@@ -43,7 +43,7 @@ describe("BlocParents", () => {
         enableReinitialize={true}
       >
         <>
-          <BlocParent estparent1 />
+          <BlocParent estParent1 />
           <BlocParent />
         </>
       </Formik>

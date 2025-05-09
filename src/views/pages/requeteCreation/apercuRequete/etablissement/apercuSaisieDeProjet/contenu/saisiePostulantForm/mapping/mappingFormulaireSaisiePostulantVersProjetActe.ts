@@ -5,10 +5,10 @@ import { IProjetAnalyseMarginale } from "@model/etatcivil/acte/projetActe/IAnaly
 import { IFiliationProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/IFiliationProjetActe";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { ITitulaireProjetActe } from "@model/etatcivil/acte/projetActe/ITitulaireProjetActe";
+import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { TypeRedactionActe } from "@model/etatcivil/enum/TypeRedactionActe";
 import { TypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteArchiviste";
 import {
   ISaisieParentSousForm,
@@ -26,7 +26,7 @@ export function mappingSaisieProjetPostulantFormVersProjetActe(
   projetActeExistant?: IProjetActe
 ): IProjetActe {
   const projetActeAEnvoyer = projetActeExistant ? { ...projetActeExistant, corpsTexte: undefined } : ({} as IProjetActe);
-  projetActeAEnvoyer.modeCreation = TypeRedactionActe.ETABLI;
+  projetActeAEnvoyer.modeCreation = ETypeRedactionActe.ETABLI;
 
   const naissancePostulantEvenement = {
     annee: +saisieProjetPostulant.titulaire.dateNaissance.annee,

@@ -55,7 +55,7 @@ const ResumeDetailsRequete: React.FC<IPartieGaucheSaisieProjetProps> = ({ requet
                 valeur={requete.provenanceServicePublic?.referenceDila}
               />
               <ConteneurDetailInformation
-                libelle="Type Requete"
+                libelle="Type Requête"
                 valeur={requete.sousType?.libelle}
               />
               <ConteneurDetailInformation
@@ -173,7 +173,7 @@ const ResumeDetailsRequete: React.FC<IPartieGaucheSaisieProjetProps> = ({ requet
           )}
 
           {/* Requerant */}
-          <ConteneurAvecBordure titreEnTete="Requerant">
+          <ConteneurAvecBordure titreEnTete="Requérant">
             <div className={`grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 ${nombreColonnes === 3 ? "xl:grid-cols-3" : ""}`}>
               <ConteneurDetailInformation
                 key="requerant-lien"

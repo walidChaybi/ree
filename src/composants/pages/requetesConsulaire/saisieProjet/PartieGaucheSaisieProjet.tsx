@@ -1,12 +1,12 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { appartientAUtilisateurConnecte } from "@model/agent/IOfficier";
 import { IRequete } from "@model/requete/IRequete";
-import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import Edit from "@mui/icons-material/Edit";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { URL_MES_REQUETES_CONSULAIRE_MODIFIER_RCTC_ID } from "@router/ReceUrls";
 import { useContext, useMemo, useState } from "react";
+import { SaisieProjetActeTranscritContext } from "../../../../contexts/SaisieProjetActeTranscritContextProvider";
 import Bouton from "../../../commun/bouton/Bouton";
 import OngletsBouton from "../../../commun/onglets/OngletsBouton";
 import ConteneurVoletEdition from "../../requetesDelivrance/editionRequete/ConteneurVoletEdition";
@@ -19,11 +19,12 @@ enum ECleOngletPartieGauche {
 }
 
 interface IPartieGaucheSaisieProjetProps {
-  requete: IRequeteCreationTranscription;
   estModeConsultation: boolean;
 }
 
-const PartieGaucheSaisieProjet: React.FC<IPartieGaucheSaisieProjetProps> = ({ requete, estModeConsultation }) => {
+const PartieGaucheSaisieProjet: React.FC<IPartieGaucheSaisieProjetProps> = ({ estModeConsultation }) => {
+  const { requete } = useContext(SaisieProjetActeTranscritContext);
+
   const { utilisateurConnecte } = useContext(RECEContextData);
   const [ongletActif, setOngletActif] = useState<ECleOngletPartieGauche>(ECleOngletPartieGauche.DESCRIPTION);
 
@@ -68,7 +69,7 @@ const PartieGaucheSaisieProjet: React.FC<IPartieGaucheSaisieProjetProps> = ({ re
         estActif={ongletActif === ECleOngletPartieGauche.APERCU_PROJET}
         sansMargeHaute
       >
-        <ApercuProjetActe requete={requete} />
+        <ApercuProjetActe />
       </ConteneurVoletEdition>
 
       {afficherBoutonModifierRequete && (
