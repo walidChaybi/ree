@@ -2661,15 +2661,7 @@ pays
           </div>
           <div
             class="undefined fixed bottom-0 right-0 pr-16 flex gap-4 py-4 undefined"
-          >
-            <button
-              class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
-              title="Terminer et signer"
-              type="submit"
-            >
-              Terminer et signer
-            </button>
-          </div>
+          />
         </form>
       </div>
     </div>

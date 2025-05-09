@@ -1,3 +1,4 @@
+import { userDroitSignerActe } from "@mock/data/mockConnectedUserAvecDroit";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, test } from "vitest";
 import PartieDroiteSaisieProjet from "../../../../../composants/pages/requetesConsulaire/saisieProjet/PartieDroiteSaisieProjet";
@@ -13,7 +14,7 @@ describe("PartieDroiteSaisieProjet - Tests du composant", () => {
   });
 
   test("PartieDroiteSaisieProjet - Doit afficher l'onglet 'Saisir le projet'", async () => {
-    render(elementAvecContexte(<PartieDroiteSaisieProjet requete={requeteCreationTranscription} />));
+    render(elementAvecContexte(<PartieDroiteSaisieProjet requete={requeteCreationTranscription} />, userDroitSignerActe));
     const boutonSaisirProjet = screen.getByRole("button", { name: "Saisir le projet" });
     const boutonEnregistrerEtVisualiser = screen.getByRole("button", { name: "Terminer et signer" });
     expect(boutonSaisirProjet).toBeDefined();

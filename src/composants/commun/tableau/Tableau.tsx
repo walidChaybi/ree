@@ -1,6 +1,7 @@
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import ArrowUpward from "@mui/icons-material/ArrowUpward";
 import Report from "@mui/icons-material/Report";
+import React from "react";
 import Bouton from "../bouton/Bouton";
 
 export type TSensTri = "ASC" | "DESC";
@@ -54,7 +55,7 @@ const Tableau: React.FC<ITableauProps> = ({ enTetes, lignes, messageAucuneLigne,
       <table className="min-w-full border-spacing-0 rounded-t-xl border border-solid border-gris-sombre text-sm shadow-lg">
         <thead className="">
           <tr>
-            {enTetes.map((enTete, index) => (
+            {enTetes.map(enTete => (
               <th
                 key={enTete.cle}
                 className="text-center first:text-left"
@@ -96,33 +97,17 @@ const Tableau: React.FC<ITableauProps> = ({ enTetes, lignes, messageAucuneLigne,
         <tbody>
           {lignes.length
             ? lignes.map(ligne => (
-                <tr
+                <LigneTableau
+                  ligne={ligne}
+                  enTetes={enTetes}
                   key={ligne.cle}
-                  className={`${ligne.onClick ? "cursor-pointer text-left hover:bg-bleu/50" : ""} even:bg-bleu/15`}
-                  onClick={() => ligne.onClick?.()}
-                >
-                  {enTetes.map((enTete, index) => (
-                    <td
-                      key={`${ligne.cle}-${enTete.cle}`}
-                      className="px-4 py-1.5 text-center first:text-left"
-                    >
-                      {ligne[enTete.cle]}
-                    </td>
-                  ))}
-                </tr>
+                />
               ))
             : messageAucuneLigne && (
-                <tr className="tableau-sans-ligne">
-                  <td
-                    colSpan={enTetes.length}
-                    className="py-2"
-                  >
-                    <div className="flex flex-col items-center">
-                      <Report />
-                      <div>{messageAucuneLigne}</div>
-                    </div>
-                  </td>
-                </tr>
+                <MessageAucuneLigne
+                  message={messageAucuneLigne}
+                  colSpan={enTetes.length}
+                />
               )}
         </tbody>
       </table>
@@ -154,5 +139,44 @@ const Tableau: React.FC<ITableauProps> = ({ enTetes, lignes, messageAucuneLigne,
   ) : (
     <></>
   );
+
+type TDonneesLigne = {
+  [cleColonne: string]: string | number | boolean | React.JSX.Element | undefined;
+};
+
+type TLigneTableau = TDonneesLigne & {
+  cle: string;
+  onClick?: () => void;
+};
+
+const LigneTableau: React.FC<{ ligne: TLigneTableau; enTetes: IEnTeteTableau[] }> = ({ ligne, enTetes }) => (
+  <tr
+    className={`${ligne.onClick ? "cursor-pointer text-left hover:bg-bleu/50" : ""} odd:bg-bleu/15`}
+    onClick={() => ligne.onClick?.()}
+  >
+    {enTetes.map(enTete => (
+      <td
+        key={`${ligne.cle}-${enTete.cle}`}
+        className="px-4 py-1.5 text-center first:text-left"
+      >
+        {ligne[enTete.cle]}
+      </td>
+    ))}
+  </tr>
+);
+
+const MessageAucuneLigne: React.FC<{ message: string; colSpan: number }> = ({ message, colSpan }) => (
+  <tr>
+    <td
+      colSpan={colSpan}
+      className="py-2"
+    >
+      <div className="flex flex-col items-center">
+        <Report />
+        <div>{message}</div>
+      </div>
+    </td>
+  </tr>
+);
 
 export default Tableau;

@@ -24,6 +24,70 @@ const BASE_PERIMETRE: IPerimetre = {
   listeIdTypeRegistre: []
 };
 
+export const userDroitSignerActe: IOfficier = {
+  ...BASE_UTILISATEUR,
+  habilitations: [
+    {
+      idHabilitation: "h12345",
+      profil: {
+        idProfil: "p12345",
+        nom: {
+          idNomenclature: "idNomenclature",
+          categorie: "TYPE_PROFIL",
+          code: "code",
+          libelle: "libelle",
+          estActif: true
+        },
+        droits: [{ idDroit: "d12345", nom: Droit.SIGNER_ACTE }]
+      },
+      perimetre: { ...BASE_PERIMETRE }
+    },
+    {
+      idHabilitation: "h12345",
+      profil: {
+        idProfil: "p12345",
+        nom: {
+          idNomenclature: "idNomenclature",
+          categorie: "TYPE_PROFIL",
+          code: "code",
+          libelle: "libelle",
+          estActif: true
+        },
+        droits: [{ idDroit: "d12345", nom: Droit.SIGNER_DELIVRANCE_DEMAT }]
+      },
+      perimetre: { ...BASE_PERIMETRE }
+    }
+  ],
+  service: {
+    code: "E 1/3",
+    idService: "1",
+    libelleService: "Exploitation 1 Section 3",
+    type: ETypeService.SECTION,
+    utilisateur: null,
+    hierarchieService: [
+      {
+        service: undefined,
+        serviceParent: {
+          code: "E 1/3",
+          idService: "11",
+          libelleService: "Exploitation 1 Section 3",
+          type: ETypeService.SECTION,
+          utilisateur: null
+        }
+      }
+    ]
+  },
+  servicesFils: [
+    {
+      code: "E 1/3",
+      idService: "111",
+      libelleService: "Exploitation 1 Section 3",
+      type: ETypeService.SECTION,
+      utilisateur: null
+    }
+  ]
+};
+
 export const userDroitConsulterArchive: IOfficier = {
   ...BASE_UTILISATEUR,
   habilitations: [

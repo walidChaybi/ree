@@ -1,4 +1,5 @@
 import { IPostProjetActeTranscrit } from "@api/traitements/projetActe/transcription/TraitementProjetActeTranscrit";
+import { userDroitSignerActe } from "@mock/data/mockConnectedUserAvecDroit";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
@@ -13,10 +14,12 @@ import { TypeLienRequerant } from "@model/requete/enum/TypeLienRequerant";
 import { TypeLienRequerantCreation } from "@model/requete/enum/TypeLienRequerantCreation";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import messageManager from "@util/messageManager";
 import { describe, expect, test, vi } from "vitest";
 import FormulaireSaisieProjet from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisieProjet/FormulaireSaisieProjet";
+import { elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
 
 const mockAppelerCompositionPdf = vi.fn();
 const mockAppelEnregistrerRequeteApi = vi.fn();
@@ -194,6 +197,9 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
     }
   };
 
+  const succes = vi.spyOn(messageManager, "showSuccessAndClose");
+  const erreur = vi.spyOn(messageManager, "showError");
+
   test("Doit afficher le formulaire de saisie de projet d'acte", async () => {
     const { container } = render(<FormulaireSaisieProjet requete={requete} />);
 
@@ -201,7 +207,7 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
   });
 
   test("DOIT appeler composition à la soumission du formulaire", async () => {
-    render(<FormulaireSaisieProjet requete={requete} />);
+    render(elementAvecContexte(<FormulaireSaisieProjet requete={requete} />, userDroitSignerActe));
 
     const inputNomRetenuOEC = screen.getByRole("textbox", { name: /titulaire.nomRetenuOEC/i });
     await userEvent.type(inputNomRetenuOEC, "Xi phun bin");
@@ -212,5 +218,34 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
     await userEvent.click(boutonEnregistrer);
 
     expect(mockAppelerCompositionPdf).toHaveBeenCalledTimes(1);
+  });
+
+  test.skip("Doit enregistrer et composer le PDF acte de naissance", async () => {
+    render(elementAvecContexte(<FormulaireSaisieProjet requete={requete} />, userDroitSignerActe));
+
+    const inputNomRetenuOEC = screen.getByRole("textbox", { name: /titulaire.nomRetenuOEC/i });
+    await userEvent.type(inputNomRetenuOEC, "Xi phun bin");
+
+    const boutonEnregistrer = screen.getByRole("button", { name: /Terminer et signer/i });
+
+    expect(boutonEnregistrer).toBeDefined();
+    await userEvent.click(boutonEnregistrer);
+    await waitFor(() => {
+      expect(succes).toHaveBeenCalledTimes(1);
+      expect(succes).toHaveBeenCalledWith("Le projet d'acte a bien été enregistré");
+      expect(erreur).not.toHaveBeenCalled();
+
+      expect(mockAppelEnregistrerRequeteApi).toHaveBeenCalledTimes(1);
+
+      expect(mockAppelerCompositionPdf).toHaveBeenCalledTimes(1);
+
+      expect(mockAppelPatchCreationStatutRequete).toHaveBeenCalledTimes(1);
+      expect(mockAppelPatchCreationStatutRequete).toHaveBeenCalledWith(
+        expect.objectContaining({
+          idRequete: requete.id,
+          statut: "A_SIGNER"
+        })
+      );
+    });
   });
 });

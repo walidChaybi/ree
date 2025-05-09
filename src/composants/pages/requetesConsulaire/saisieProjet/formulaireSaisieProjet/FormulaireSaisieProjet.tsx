@@ -1,7 +1,7 @@
 import TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT from "@api/traitements/projetActe/transcription/TraitementProjetActeTranscrit";
 import { IProjetActeTranscritDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/IProjetActeTranscritDto";
 import { Form, Formik } from "formik";
-import React, { useMemo, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import useTraitementApi from "../../../../../hooks/api/TraitementApiHook";
 
 import {
@@ -29,6 +29,9 @@ import {
   CONFIG_COMPOSITION_ACTE_PDF,
   IReponseCompositionActePDF
 } from "@api/configurations/etatCivil/acte/transcription/PostProjetActeTranscriptionConfigApi";
+import { RECEContextData } from "@core/contexts/RECEContext";
+import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
+import { Droit } from "@model/agent/enum/Droit";
 import { ITitulaireDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/ITitulaireDto";
 import { ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
@@ -65,15 +68,12 @@ const FormulaireSaisieProjet: React.FC<IProjetActeTranscritProps> = ({ requete }
     [requete]
   );
 
-  // /!\ À utiliser après pour signature
-  /*   const { utilisateurConnecte } = useContext(RECEContextData);
+  const { utilisateurConnecte } = useContext(RECEContextData);
 
   const peutSigner = useMemo(() => {
-    return (
-      officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER) ||
-      officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER_COMEDEC)
-    );
-  }, [utilisateurConnecte]); */
+    return officierHabiliterPourLeDroit(utilisateurConnecte, Droit.SIGNER_ACTE);
+  }, [utilisateurConnecte]);
+
   const { appelApi: appelerCompositionPdf } = useFetchApi(CONFIG_COMPOSITION_ACTE_PDF);
 
   const { lancerTraitement: lancerEnregistrement, traitementEnCours: enregistrementEnCours } = useTraitementApi(
@@ -201,13 +201,15 @@ const FormulaireSaisieProjet: React.FC<IProjetActeTranscritProps> = ({ requete }
           {enregistrementEnCours && <PageChargeur />}
 
           <ConteneurBoutonBasDePage position="droite">
-            <Bouton
-              title="Terminer et signer"
-              type="submit"
-              disabled={enregistrementEnCours}
-            >
-              {"Terminer et signer"}
-            </Bouton>
+            {peutSigner && (
+              <Bouton
+                title="Terminer et signer"
+                type="submit"
+                disabled={enregistrementEnCours}
+              >
+                {"Terminer et signer"}
+              </Bouton>
+            )}
           </ConteneurBoutonBasDePage>
 
           {modaleOuverte && pdfBase64 && (
