@@ -5,7 +5,7 @@ import { ITitulaireAnalyseMarginaleDto, TitulaireAnalyseMarginale } from "../../
 export interface IAnalyseMarginaleProjetActeTranscritDto {
   id: string;
   titulaires: ITitulaireAnalyseMarginaleDto[];
-  estValide: false;
+  estValide?: false;
   dateDebut: number;
   dateFin?: number;
 }
@@ -39,10 +39,18 @@ export class AnalyseMarginaleProjetActeTranscrit {
       analyseMarginale.titulaires
         .map(TitulaireAnalyseMarginale.depuisDto)
         .filter((titulaire): titulaire is TitulaireAnalyseMarginale => titulaire !== null),
-      analyseMarginale.estValide,
+      analyseMarginale?.estValide ?? false,
       DateRECE.depuisTimestamp(analyseMarginale.dateDebut),
       typeof analyseMarginale.dateFin === "number" ? DateRECE.depuisTimestamp(analyseMarginale.dateFin) : analyseMarginale.dateFin
     );
+  };
+
+  public readonly versDto = (): IAnalyseMarginaleProjetActeTranscritDto => {
+    return {
+      id: this.id,
+      dateDebut: this.dateDebut.versTimestamp(),
+      titulaires: this.titulaires.map(titulaire => titulaire.versDto())
+    };
   };
 }
 /* v8 ignore stop */

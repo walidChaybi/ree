@@ -1,5 +1,6 @@
 /* v8 ignore start */
 export type IEvenementProjetActeTranscritDto = {
+  id?: string | null;
   jour: number | null;
   mois: number | null;
   annee: number | null;
@@ -7,7 +8,7 @@ export type IEvenementProjetActeTranscritDto = {
   ville: string | null;
   arrondissement: string | null;
   region: string | null;
-  departement: string | null;
+  departement?: string | null;
   pays: string | null;
   heure: number | null;
   minute: number | null;
@@ -16,6 +17,7 @@ export type IEvenementProjetActeTranscritDto = {
 
 export class EvenementProjetActeTranscrit {
   private constructor(
+    public readonly id: string | null,
     public readonly jour: number | null,
     public readonly mois: number | null,
     public readonly annee: number | null,
@@ -31,6 +33,7 @@ export class EvenementProjetActeTranscrit {
 
   public static readonly depuisDto = (evenement: IEvenementProjetActeTranscritDto): EvenementProjetActeTranscrit => {
     return new EvenementProjetActeTranscrit(
+      evenement.id ?? null,
       evenement.jour,
       evenement.mois,
       evenement.annee,

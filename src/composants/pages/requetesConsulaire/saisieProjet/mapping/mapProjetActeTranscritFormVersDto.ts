@@ -17,7 +17,6 @@ import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { EIdentite } from "@model/etatcivil/enum/Identite";
 import { LienParente } from "@model/etatcivil/enum/LienParente";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { TypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteArchiviste";
 import { PrenomsForm } from "@model/form/commun/PrenomsForm";
@@ -51,7 +50,7 @@ export const mapProjetActeTranscritFormVersDto = (ProjetActeTranscriptionForm: I
   projetActeAEnvoyer.acteEtranger = mapActeEtranger(ProjetActeTranscriptionForm);
   projetActeAEnvoyer.formuleFinale = mapFormuleFinale(ProjetActeTranscriptionForm);
   projetActeAEnvoyer.analyseMarginales = [];
-  projetActeAEnvoyer.nature = NatureActe.NAISSANCE.libelle.toUpperCase();
+  projetActeAEnvoyer.nature = "NAISSANCE";
   projetActeAEnvoyer.visibiliteArchiviste = TypeVisibiliteArchiviste.getKey(TypeVisibiliteArchiviste.NON);
   projetActeAEnvoyer.declarant = mapDeclarantProjectActe(ProjetActeTranscriptionForm);
   projetActeAEnvoyer.mentions = [];

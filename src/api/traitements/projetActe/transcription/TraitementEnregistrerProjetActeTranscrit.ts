@@ -1,4 +1,5 @@
-import { CONFIG_PATCH_ID_ACTE_SUIVI_DOSSIER } from "@api/configurations/etatCivil/acte/transcription/PatchIdActeSuiviDossier";
+import { CONFIG_PATCH_ID_ACTE_SUIVI_DOSSIER } from "@api/configurations/etatCivil/acte/transcription/PatchIdActeSuiviDossierConfigApi";
+import { CONFIG_PATCH_PROJET_ACTE_TRANSCRIPTION } from "@api/configurations/etatCivil/acte/transcription/PatchProjetActeTranscriptionConfigApi";
 import { CONFIG_POST_PROJET_ACTE_TRANSCRIPTION } from "@api/configurations/etatCivil/acte/transcription/PostProjetActeTranscriptionConfigApi";
 
 import { CONFIG_PATCH_STATUT_REQUETE_CREATION } from "@api/configurations/requete/creation/PatchStatutRequeteCreationConfigApi";
@@ -13,6 +14,7 @@ export interface IPostProjetActeTranscrit {
   idSuiviDossier: string;
   projetActe: IProjetActeTranscritFormDto;
   idRequete: string;
+  statutRequete: StatutRequete;
 }
 
 type TEtatAppel = "EN_ATTENTE" | "TERMINE";
@@ -32,22 +34,39 @@ const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetAc
     const [donneesTraitement, setDonneesTraitement] = useState<IDonnesTraitement | null>(null);
 
     const { appelApi: appelPostProjetActeTranscription } = useFetchApi(CONFIG_POST_PROJET_ACTE_TRANSCRIPTION);
+
+    const { appelApi: appelPatchProjetActeTranscription } = useFetchApi(CONFIG_PATCH_PROJET_ACTE_TRANSCRIPTION);
     const { appelApi: appelPatchCreationStatutRequete } = useFetchApi(CONFIG_PATCH_STATUT_REQUETE_CREATION, true);
-
     const { appelApi: appelPatchIdActeSuiviDossier } = useFetchApi(CONFIG_PATCH_ID_ACTE_SUIVI_DOSSIER);
-
     const lancer = (parametres: IPostProjetActeTranscrit): void => {
       const idRequete = parametres.idRequete;
       if (!idRequete) {
         terminerTraitement();
         return;
       }
+      /* v8 ignore start */
+      if (parametres.statutRequete === StatutRequete.A_SIGNER) {
+        appelPatchProjetActeTranscription({
+          parametres: {
+            body: parametres.projetActe
+          },
+          apresSucces: (projetActe: IProjetActeTranscritDto) => {
+            setProjetActeCree(ProjetActeTranscrit.depuisDto(projetActe));
+            terminerTraitement();
+          },
+          apresErreur: erreur => {
+            console.error(erreur);
+            setErreurTraitement({
+              enEchec: true,
+              message: "Impossible de modifier le projet d'acte transcrit"
+            });
+            terminerTraitement();
+          }
+        });
 
-      if (parametres.projetActe.idActe) {
-        // TODO PATCH
-        terminerTraitement();
         return;
       }
+      /*v8 ignore stop*/
 
       appelPostProjetActeTranscription({
         parametres: {
@@ -64,6 +83,7 @@ const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetAc
           });
         },
         apresErreur: erreur => {
+          console.error(erreur);
           setErreurTraitement({
             enEchec: true,
             message: "Impossible d'enregister le projet d'acte transcrit"

@@ -5,7 +5,7 @@ export interface ITitulaireAnalyseMarginaleDto {
   nom: string;
   prenoms: string[];
   ordre: number;
-  typeDeclarationConjointe: keyof typeof ETypeDeclarationConjointe;
+  typeDeclarationConjointe?: keyof typeof ETypeDeclarationConjointe;
 }
 
 export class TitulaireAnalyseMarginale {
@@ -24,6 +24,14 @@ export class TitulaireAnalyseMarginale {
     }
 
     return new TitulaireAnalyseMarginale(titulaireAnalyseMarginale.nom, titulaireAnalyseMarginale.prenoms, titulaireAnalyseMarginale.ordre);
+  };
+
+  public readonly versDto = (): ITitulaireAnalyseMarginaleDto => {
+    return {
+      nom: this.nom,
+      prenoms: this.prenoms,
+      ordre: this.ordre
+    };
   };
 }
 /* v8 ignore stop */

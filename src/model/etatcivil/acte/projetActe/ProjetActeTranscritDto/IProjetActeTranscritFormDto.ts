@@ -1,4 +1,5 @@
 import { EStatutActe } from "@model/etatcivil/enum/EStatutActe";
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { ETypeActe } from "@model/etatcivil/enum/TypeActe";
 import { IMention } from "../../mention/IMention";
 import { IAnalyseMarginaleProjetActeTranscritDto } from "./AnalyseMarginaleProjetActeTranscrit";
@@ -9,11 +10,13 @@ import { IActeEtrangerDto } from "./IActeEtrangerDto";
 import { ITitulaireProjetActeTranscritDto } from "./TitulaireProjetActeTranscrit";
 
 export interface IProjetActeTranscritFormDto {
+  //FIXSOFIANE
   idRequete?: string | null;
+  id?: string;
   idActe?: string | null;
   titulaires: ITitulaireProjetActeTranscritDto[];
   evenement?: IEvenementProjetActeTranscritDto | null;
-  nature?: string | null;
+  nature?: keyof typeof ENatureActe | null;
   numero?: string | null;
   dateDerniereMaj?: Date | null;
   dateDerniereDelivrance?: Date | null;

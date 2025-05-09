@@ -72,7 +72,7 @@ export class TitulaireProjetActeTranscrit {
       titulaireProjetActeTranscrit.ordre,
       titulaireProjetActeTranscrit.prenoms,
       titulaireProjetActeTranscrit.sexe,
-      titulaireProjetActeTranscrit.naissance,
+      titulaireProjetActeTranscrit.naissance && EvenementProjetActeTranscrit.depuisDto(titulaireProjetActeTranscrit.naissance),
       {
         parent1: filiations.find(filiation => filiation.ordre === 1) ?? null,
         parent2: filiations.find(filiation => filiation.ordre === 2) ?? null

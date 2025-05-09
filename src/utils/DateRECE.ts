@@ -72,6 +72,18 @@ class DateRECE {
     });
   }
 
+  /* v8 ignore start */
+  public versTimestamp = (): number => {
+    return new Date(
+      Number(this.date.annee),
+      Number(this.date.mois),
+      Number(this.date.jour),
+      Number(this.date.heure),
+      Number(this.date.minute)
+    ).getTime();
+  };
+  /* v8 ignore stop*/
+
   public static depuisObjetDate(objetDate: IObjetDate): DateRECE {
     return new DateRECE({
       jour: DateRECE.valeurDate(objetDate.jour),

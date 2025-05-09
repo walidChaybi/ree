@@ -30,6 +30,7 @@ import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { TitulaireProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/TitulaireProjetActeTranscrit";
 import { ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { SaisieProjetActeTranscritContext } from "../../../../../contexts/SaisieProjetActeTranscritContextProvider";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
 import ModaleProjetActe from "./ModaleProjetActe";
@@ -93,13 +94,25 @@ const FormulaireSaisieProjet: React.FC = () => {
     return `${prefixeTitre} ${natureActe}`;
   }, [requete.natureActeTranscrit]);
 
+  /* v8 ignore start */
   const enregistrerEtVisualiser = (valeurProjectActeForm: IProjetActeTranscritForm) => {
-    const donnees: IProjetActeTranscritFormDto = mapProjetActeTranscritFormVersDto(valeurProjectActeForm);
+    let donnees: IProjetActeTranscritFormDto = mapProjetActeTranscritFormVersDto(valeurProjectActeForm);
+
+    if (requete.statutCourant.statut === StatutRequete.A_SIGNER) {
+      donnees.evenement = projetActe?.evenement;
+      donnees.analyseMarginales = projetActe?.analysesMarginales.map(am => am.versDto()) ?? [];
+      donnees.id = projetActe?.id;
+      donnees.nature = projetActe?.nature;
+      donnees.statut = projetActe?.statut;
+      donnees.type = projetActe?.type;
+    }
+
     lancerEnregistrement({
       parametres: {
         projetActe: donnees,
         idRequete: requete.id,
-        idSuiviDossier: requete.titulaires?.[0].suiviDossiers?.[0].idSuiviDossier!
+        idSuiviDossier: requete.titulaires?.[0]?.suiviDossiers?.[0]?.idSuiviDossier ?? "",
+        statutRequete: requete.statutCourant.statut
       },
       apresSucces: projetActe => {
         messageManager.showSuccessAndClose("Le projet d'acte a bien été enregistré");
@@ -134,6 +147,7 @@ const FormulaireSaisieProjet: React.FC = () => {
       }
     });
   };
+  /*v8 ignore stop*/
 
   return (
     <Formik<IProjetActeTranscritForm>

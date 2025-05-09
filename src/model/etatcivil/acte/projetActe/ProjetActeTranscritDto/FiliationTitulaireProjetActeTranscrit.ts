@@ -65,7 +65,7 @@ export class FiliationTitulaireProjetActeTranscrit {
       filiation.nom,
       filiation.prenoms,
       filiation.sexe,
-      filiation.naissance,
+      filiation.naissance && EvenementProjetActeTranscrit.depuisDto(filiation.naissance),
       filiation.age,
       filiation.sansProfession,
       filiation.profession,
