@@ -24,7 +24,7 @@ const CompteurTemps: React.FC<ICompteurTempsProps> = memo(({ idRequete, abandonn
       getDelaiRestant({
         parametres: { path: { idRequete } },
         apresSucces: delaiRestant => setMinutesRestantes(delaiRestant),
-        apresErreur: erreurs => {
+        apresErreur: () => {
           setMinutesRestantes(0);
         }
       });
@@ -50,7 +50,7 @@ const CompteurTemps: React.FC<ICompteurTempsProps> = memo(({ idRequete, abandonn
         <Bouton
           type="button"
           title="OK"
-          onClick={() => navigate(URL_RECHERCHE_ACTE_INSCRIPTION)}
+          onClick={() => navigate(URL_RECHERCHE_ACTE_INSCRIPTION, {replace: true})}
         >
           {"OK"}
         </Bouton>

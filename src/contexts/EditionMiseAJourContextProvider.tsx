@@ -1,5 +1,4 @@
 import TRAITEMENT_ABANDONNER_MISE_A_JOUR from "@api/traitements/TraitementAbandonnerMiseAJour";
-import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
 import React, { createContext, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import PageChargeur from "../composants/commun/chargeurs/PageChargeur";
@@ -140,8 +139,7 @@ const EditionMiseAJourContextProvider: React.FC<React.PropsWithChildren<IEdition
                 idRequete: idRequete,
                 miseAJourEffectuee: miseAJourEffectuee,
                 estMiseAJourAvecMentions: estMiseAJourAvecMentions
-              },
-              finalement: () => navigate(URL_RECHERCHE_ACTE_INSCRIPTION, { replace: true })
+              }
             });
           }}
         />
