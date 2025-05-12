@@ -42,7 +42,7 @@ const formaterNomPrenomTitulaire = (titulaire: TitulaireProjetActeTranscrit): st
     return "";
   }
 
-  let nomPrenomsFormates = "de ";
+  let nomPrenomsFormates = "de\u00A0";
 
   if (titulaire.prenoms && titulaire.prenoms.length > 0) {
     nomPrenomsFormates += titulaire.prenoms.join(", ") + " ";

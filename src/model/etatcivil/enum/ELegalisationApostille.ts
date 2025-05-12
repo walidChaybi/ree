@@ -1,4 +1,4 @@
 export enum ELegalisationApostille {
-  LEGALISATION = "Legalisation",
+  LEGALISATION = "Légalisation",
   APOSTILLE = "Apostille"
 }

@@ -2,6 +2,7 @@ import { RECEContextData } from "@core/contexts/RECEContext";
 import { appartientAUtilisateurConnecte } from "@model/agent/IOfficier";
 import { IRequete } from "@model/requete/IRequete";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import Edit from "@mui/icons-material/Edit";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { URL_MES_REQUETES_CONSULAIRE_MODIFIER_RCTC_ID } from "@router/ReceUrls";
@@ -26,7 +27,11 @@ const PartieGaucheSaisieProjet: React.FC<IPartieGaucheSaisieProjetProps> = ({ es
   const { requete } = useContext(SaisieProjetActeTranscritContext);
 
   const { utilisateurConnecte } = useContext(RECEContextData);
-  const [ongletActif, setOngletActif] = useState<ECleOngletPartieGauche>(ECleOngletPartieGauche.DESCRIPTION);
+  const [ongletActif, setOngletActif] = useState<ECleOngletPartieGauche>(
+    requete.statutCourant.statut.libelle === StatutRequete.A_SIGNER.libelle
+      ? ECleOngletPartieGauche.APERCU_PROJET
+      : ECleOngletPartieGauche.DESCRIPTION
+  );
 
   const afficherBoutonModifierRequete = useMemo(
     () => SousTypeCreation.estRCTC(requete?.sousType) && appartientAUtilisateurConnecte(utilisateurConnecte, requete?.idUtilisateur),

@@ -1,4 +1,5 @@
 /* v8 ignore start A TESTER 03/25 */
+import { EvenementProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/EvenementProjetActeTranscrit";
 import { TitulaireProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/TitulaireProjetActeTranscrit";
 import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { IDateForm } from "@model/form/commun/DateForm";
@@ -34,7 +35,8 @@ export const TitulaireRequeteTranscription = {
   },
   mappingTitulaireRequeteTranscriptionVersTitulaireForm: (
     titulaireRequete?: ITitulaireRequeteTranscription,
-    titulaireProjetActe?: TitulaireProjetActeTranscrit
+    titulaireProjetActe?: TitulaireProjetActeTranscrit,
+    evenement?: EvenementProjetActeTranscrit
   ): ITitulaireTranscription => {
     return {
       nomActeEtranger: titulaireProjetActe?.nomActeEtranger ?? titulaireRequete?.nomNaissance ?? "",
@@ -54,8 +56,8 @@ export const TitulaireRequeteTranscription = {
         jour: (titulaireProjetActe?.naissance.jour ?? titulaireRequete?.jourNaissance)?.toString().padStart(2, "0") ?? "",
         mois: (titulaireProjetActe?.naissance.mois ?? titulaireRequete?.moisNaissance)?.toString().padStart(2, "0") ?? "",
         annee: (titulaireProjetActe?.naissance.annee ?? titulaireRequete?.anneeNaissance)?.toString() ?? "",
-        heure: titulaireProjetActe?.naissance.heure?.toString().padStart(2, "0") ?? "",
-        minute: titulaireProjetActe?.naissance.minute?.toString().padStart(2, "0") ?? ""
+        heure: (titulaireProjetActe?.naissance.heure ?? evenement?.heure)?.toString().padStart(2, "0") ?? "",
+        minute: (titulaireProjetActe?.naissance.minute ?? evenement?.minute)?.toString().padStart(2, "0") ?? ""
       },
       villeNaissance: titulaireProjetActe?.naissance.ville ?? titulaireRequete?.villeNaissance ?? "",
       regionNaissance: titulaireProjetActe?.naissance.region ?? titulaireRequete?.regionNaissance ?? "",

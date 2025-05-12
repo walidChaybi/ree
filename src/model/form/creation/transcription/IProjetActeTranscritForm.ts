@@ -93,7 +93,8 @@ export const ProjetTranscriptionForm = {
     return {
       titulaire: TitulaireRequeteTranscription.mappingTitulaireRequeteTranscriptionVersTitulaireForm(
         titulaire,
-        projetActe?.titulaires?.[0]
+        projetActe?.titulaires?.[0],
+        projetActe?.evenement
       ),
       parents: {
         parent1: ParentsRequeteTranscription.mappingParentRequeteTranscriptionVersParentForm(
