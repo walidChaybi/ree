@@ -13,7 +13,7 @@ const AffichagePDF: React.FC<IAffichagePDFProps> = memo(({ contenuBase64, typeZo
   );
 
   return blobUrl ? (
-    <div className="flex-grow overflow-hidden">
+    <div className="mb-8 flex-grow overflow-hidden">
       <iframe
         title={"Document PDF"}
         className="h-full w-full overflow-auto border-0"
