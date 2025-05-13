@@ -1,10 +1,10 @@
 import { TNumeroInscriptionRcRcaForm } from "@model/form/commun/NumeroInscriptionRcRcaForm";
-import { Delete } from "@mui/icons-material";
 import AddCircle from "@mui/icons-material/AddCircle";
+import Delete from "@mui/icons-material/Delete";
 import { useField } from "formik";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import BoutonIcon from "../bouton/BoutonIcon";
-import ChampTexte from "./ChampTexte";
+import { CHAMP_EN_ERREUR } from "../formulaire/ScrollVersErreur";
 
 interface IChampsNumeroInscriptionRcRcaProps {
   libelle: string;
@@ -13,9 +13,97 @@ interface IChampsNumeroInscriptionRcRcaProps {
   tailleMax: number;
 }
 
-const CHAMP_NUMERO_COMMUN = {
-  placholder: "AAAA-XXXXX (année-numéro)",
-  regex: /[^\d-]/g
+interface IChampInscriptionProps {
+  name: string;
+  libelle: string;
+  actionSuppression?: () => void;
+  estObligatoire?: boolean;
+}
+
+const seulementNumerique = (texte: string) => texte.replace(/\D/, "");
+
+const ChampInscription: React.FC<IChampInscriptionProps> = ({ name, libelle, actionSuppression, estObligatoire }) => {
+  const champInscription = useMemo(
+    () => ({
+      annee: `${name}.anneeInscription`,
+      numero: `${name}.numero`
+    }),
+    [name]
+  );
+  const [fieldAnnee, metaAnnee] = useField(champInscription.annee);
+  const [fieldNumero, metaNumero] = useField(champInscription.numero);
+  const [refAnnee, setRefAnnee] = useState<HTMLInputElement | null>(null);
+  const [refNumero, setRefNumero] = useState<HTMLInputElement | null>(null);
+  const enErreur = useMemo(
+    () => (Boolean(metaAnnee.error) || Boolean(metaNumero.error)) && metaAnnee.touched && metaNumero.touched,
+    [metaAnnee, metaNumero]
+  );
+
+  return (
+    <div {...(enErreur ? { className: CHAMP_EN_ERREUR } : {})}>
+      <label
+        className={`m-0 mb-1 ml-1 block w-fit text-start transition-colors ${enErreur ? "text-rouge" : "text-bleu-sombre"}`}
+        htmlFor={champInscription.annee}
+      >
+        {libelle}
+        {estObligatoire && <span className="ml-1 text-rouge">{"*"}</span>}
+      </label>
+      <div className="flex items-center gap-1">
+        <input
+          ref={setRefAnnee}
+          id={champInscription.annee}
+          className={`border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
+          maxLength={4}
+          placeholder="AAAA"
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            const valeur = seulementNumerique(event.target.value);
+            valeur.length === 4 && refNumero?.focus();
+            event.target.value = valeur;
+            fieldAnnee.onChange(event);
+          }}
+          {...(() => {
+            const { onChange, ...autreProps } = fieldAnnee;
+
+            return autreProps;
+          })()}
+        />
+        <span>{"-"}</span>
+        <div className="relative flex flex-grow rounded-md shadow-sm">
+          <input
+            ref={setRefNumero}
+            id={champInscription.numero}
+            className={`border-1 flex w-full rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
+            maxLength={5}
+            placeholder="XXXXX"
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              const valeur = seulementNumerique(event.target.value);
+              !valeur.length && fieldNumero.value.length && refAnnee?.focus();
+              event.target.value = valeur;
+              fieldNumero.onChange(event);
+            }}
+            {...(() => {
+              const { onChange, ...autreProps } = fieldNumero;
+
+              return autreProps;
+            })()}
+          />
+          {actionSuppression && (
+            <BoutonIcon
+              className="group absolute right-0 h-full rounded-l-none bg-transparent"
+              type="button"
+              title="Supprimer ce numéro"
+              onClick={actionSuppression}
+              styleBouton="suppression"
+            >
+              <Delete className="text-rouge group-hover:text-blanc group-focus:text-blanc" />
+            </BoutonIcon>
+          )}
+        </div>
+      </div>
+
+      {enErreur && <div className="text-start text-sm text-rouge">{metaAnnee.error ?? metaNumero.error}</div>}
+    </div>
+  );
 };
 
 const ChampsNumeroInscriptionRcRca: React.FC<IChampsNumeroInscriptionRcRcaProps> = ({
@@ -32,13 +120,9 @@ const ChampsNumeroInscriptionRcRca: React.FC<IChampsNumeroInscriptionRcRcaProps>
 
   return (
     <div className="grid grid-cols-2 gap-4">
-      <ChampTexte
+      <ChampInscription
         name={`${prefixeNomChamp}1`}
         libelle={`${libelle}${champ.value?.nombreNumerosAffiches > 1 ? " 1" : ""}`}
-        type="text"
-        className="w-full"
-        maxLength={10}
-        {...CHAMP_NUMERO_COMMUN}
       />
 
       {tailleMax > 1 && (
@@ -64,38 +148,22 @@ const ChampsNumeroInscriptionRcRca: React.FC<IChampsNumeroInscriptionRcRcaProps>
 
       {Array.from({ length: (champ.value?.nombreNumerosAffiches ?? 1) - 1 }, (_, index) => index + 2).map(indexChamp => (
         <div key={`${indexChamp}`}>
-          <ChampTexte
+          <ChampInscription
             name={`${prefixeNomChamp}${indexChamp}`}
             libelle={`${libelle} ${indexChamp}`}
-            className="w-full"
-            maxLength={10}
-            {...CHAMP_NUMERO_COMMUN}
-            boutonChamp={{
-              composant: (
-                <BoutonIcon
-                  className="group absolute right-0 h-full rounded-l-none bg-transparent"
-                  type="button"
-                  title="Supprimer ce numéro"
-                  onClick={() =>
-                    helper.setValue({
-                      ...champ.value,
-                      nombreNumerosAffiches: champ.value?.nombreNumerosAffiches - 1,
-                      ...Array.from({ length: tailleMax + 1 - indexChamp }, (_, index) => index + indexChamp).reduce(
-                        (numerosInscriptionRCRCA, indexNumero) => ({
-                          ...numerosInscriptionRCRCA,
-                          [`ligne${indexNumero}`]: champ.value?.[`ligne${indexNumero + 1}` as keyof TNumeroInscriptionRcRcaForm] ?? ""
-                        }),
-                        {}
-                      )
-                    })
-                  }
-                  styleBouton="suppression"
-                >
-                  <Delete className="text-rouge group-hover:text-blanc group-focus:text-blanc" />
-                </BoutonIcon>
-              ),
-              estAGauche: false
-            }}
+            actionSuppression={() =>
+              helper.setValue({
+                ...champ.value,
+                nombreNumerosAffiches: champ.value?.nombreNumerosAffiches - 1,
+                ...Array.from({ length: tailleMax + 1 - indexChamp }, (_, index) => index + indexChamp).reduce(
+                  (numerosInscriptionRCRCA, indexNumero) => ({
+                    ...numerosInscriptionRCRCA,
+                    [`ligne${indexNumero}`]: champ.value?.[`ligne${indexNumero + 1}` as keyof TNumeroInscriptionRcRcaForm] ?? ""
+                  }),
+                  {}
+                )
+              })
+            }
           />
         </div>
       ))}

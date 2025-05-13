@@ -1,3 +1,4 @@
+import { INumeroRcRca } from "@model/form/commun/NumeroInscriptionRcRcaForm";
 import { ObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { PrenomsForm, TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import DateRECE from "./DateRECE";
@@ -67,6 +68,8 @@ class ModeleTexte {
           );
         case ObjetFormulaire.estPrenoms(valeurRenseignee):
           return (ObjetFormulaire.estPrenoms(valeurRenseignee) && ModeleTexte.formaterPrenoms(valeurRenseignee)) || valeurDefaut;
+        case ObjetFormulaire.estNumeroRcRca(valeurRenseignee):
+          return (ObjetFormulaire.estNumeroRcRca(valeurRenseignee) && ModeleTexte.formaterNumeroRcRca(valeurRenseignee)) || valeurDefaut;
         case valeurRenseignee && typeof valeurRenseignee !== "object":
           return `${valeurRenseignee}`;
         default:
@@ -176,6 +179,10 @@ class ModeleTexte {
 
   private static formaterPrenoms(prenomsForm: TPrenomsForm): string {
     return PrenomsForm.versPrenomsStringDto(prenomsForm).join(", ");
+  }
+
+  private static formaterNumeroRcRca(numeroForm: INumeroRcRca): string {
+    return numeroForm.anneeInscription && numeroForm.numero ? `${numeroForm.anneeInscription}-${numeroForm.numero}` : "";
   }
 
   public static getModeleTexteDocument(typeDocument: EModeleTexteDocument): string | null {

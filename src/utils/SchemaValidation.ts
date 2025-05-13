@@ -1,5 +1,7 @@
 import { ValeursConditionneesMetaModele } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
 import { ConditionChamp } from "@model/form/commun/ConditionChamp";
+import { INumeroRcRca } from "@model/form/commun/NumeroInscriptionRcRcaForm";
+import dayjs from "dayjs";
 import * as Yup from "yup";
 
 interface ISchemaCommunParams {
@@ -136,49 +138,6 @@ const getSchemaValidationDate = (bloquerDateFuture?: boolean): Yup.ObjectSchema<
       return estDateFuture ? erreurSurDateEntiere(messagesErreur.DATE_FUTURE, error.path) : true;
     });
 
-const getSchemaValidationNumeroInscriptionRcRca = (): Yup.StringSchema =>
-  Yup.string()
-    .test("annéeObligatoire", (numero, error) => {
-      if (!numero) return true;
-
-      return !numero.split("-")[0].length
-        ? error.createError({
-            path: `${error.path}`,
-            message: messagesErreur.DATE_OBLIGATOIRE
-          })
-        : true;
-    })
-    .test("annéeInvalide", (numero, error) => {
-      if (!numero) return true;
-
-      return +numero.split("-")[0] < 1000 || numero.split("-")[0].length > 4
-        ? error.createError({
-            path: `${error.path}`,
-            message: messagesErreur.DATE_INVALIDE
-          })
-        : true;
-    })
-    .test("numeroInvalide", (numero, error) => {
-      if (!numero) return true;
-
-      return !numero.match(/^\d{4}-\d{5}$/)
-        ? error.createError({
-            path: `${error.path}`,
-            message: messagesErreur.CHAMP_INVALIDE
-          })
-        : true;
-    })
-    .test("numeroIncomplet", (numero, error) => {
-      if (!numero) return true;
-
-      return !numero.length
-        ? error.createError({
-            path: `${error.path}`,
-            message: messagesErreur.CHAMP_OBLIGATOIRE
-          })
-        : true;
-    });
-  
 const gestionObligation = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>(
   schema: TSchemaChamp,
   obligatoire: boolean | ConditionChamp[],
@@ -236,6 +195,7 @@ const SchemaValidation = {
         schemaParams.max.valeur,
         schemaParams.max.message ?? `⚠ La valeur ne peut pas être supérieure à ${schemaParams.max.valeur}`
       ));
+
     return gestionObligation(schema, schemaParams.obligatoire, () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE)) as Yup.NumberSchema;
   },
 
@@ -339,6 +299,13 @@ const SchemaValidation = {
     );
   },
 
+  annee: (schemaParams: ISchemaCommunParams) =>
+    SchemaValidation.entier({
+      obligatoire: schemaParams.obligatoire,
+      min: { valeur: 1000, message: "⚠ L'année doit être sur 4 chiffres" },
+      max: { valeur: dayjs().get("year"), message: "⚠ L'année ne peut pas être supérieure à l'année actuelle" }
+    }),
+
   nomSecable: (schemaParams: ISchemaCommunParams) => {
     let schema = SchemaValidation.objet({
       nom: Yup.string(),
@@ -379,29 +346,34 @@ const SchemaValidation = {
   },
 
   numerosInscriptionRcRca: ({ prefix, tailleMax, obligatoire }: { prefix: string; tailleMax: number } & ISchemaCommunParams) => {
-    const schemaNumeros: { [cle: string]: Yup.StringSchema } = {};
+    const schemaNumeros: { [cle: string]: Yup.AnyObjectSchema } = {};
 
     Array.from({ length: tailleMax }).forEach((_, index) => {
-      let schema = getSchemaValidationNumeroInscriptionRcRca();
-
-      let estPremierObligatoire = false;
+      let schemaAnnee = SchemaValidation.annee({ obligatoire: false });
+      schemaAnnee = schemaAnnee.when(`$${prefix}${index + 1}.numero`, {
+        is: (numero: number) => Boolean(`${numero ?? ""}`.length),
+        then: schemaAnnee.required(messagesErreur.CHAMP_INVALIDE)
+      });
+      let schemaNumero = SchemaValidation.entier({ obligatoire: false });
+      schemaNumero = schemaNumero.when(`$${prefix}${index + 1}.anneeInscription`, {
+        is: (annee: number) => Boolean(`${annee ?? ""}`.length),
+        then: schemaNumero.required(messagesErreur.CHAMP_INVALIDE)
+      });
 
       if (index === 0) {
-        schema = gestionObligation(schema, obligatoire, () => {
-          estPremierObligatoire = true;
-
-          return schema.required(messagesErreur.CHAMP_OBLIGATOIRE);
-        });
-      }
-      if (index < tailleMax && !estPremierObligatoire) {
-        const numerosSuivants = Array.from({ length: tailleMax - 1 - index }).map((_, idx) => `$${prefix}${idx + index + 2}`);
-        schema = schema.when(numerosSuivants, {
-          is: (...valeur: (string | undefined)[]) => valeur.some(val => Boolean(val)),
-          then: schema.required(messagesErreur.CHAMP_OBLIGATOIRE)
-        });
+        schemaAnnee = gestionObligation(schemaAnnee, obligatoire, () => schemaAnnee.required(messagesErreur.CHAMP_OBLIGATOIRE));
       }
 
-      schemaNumeros[`ligne${index + 1}`] = schema;
+      const numerosSuivants = Array.from({ length: tailleMax - 1 - index }).map((_, idx) => `$${prefix}${idx + index + 2}`);
+      schemaAnnee = schemaAnnee.when(numerosSuivants, {
+        is: (...valeur: (INumeroRcRca | undefined)[]) => valeur.some(val => Boolean(val?.anneeInscription) && Boolean(val?.numero)),
+        then: schemaAnnee.required(messagesErreur.CHAMP_OBLIGATOIRE)
+      });
+
+      schemaNumeros[`ligne${index + 1}`] = SchemaValidation.objet({
+        anneeInscription: schemaAnnee,
+        numero: schemaNumero
+      });
     });
 
     return SchemaValidation.objet(schemaNumeros);

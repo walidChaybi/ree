@@ -1,7 +1,6 @@
 import { ConditionChamp, IConditionChampDto } from "@model/form/commun/ConditionChamp";
 import { NumeroInscriptionRcRcaForm } from "@model/form/commun/NumeroInscriptionRcRcaForm";
 import { ObjetFormulaire, TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
-import dayjs from "dayjs";
 import SchemaValidation from "../../../utils/SchemaValidation";
 
 export enum ETypeChamp {
@@ -221,11 +220,7 @@ export class MetaModeleTypeMention {
             case "int":
               return SchemaValidation.entier({ obligatoire: champ.estObligatoire });
             case "annee":
-              return SchemaValidation.entier({
-                obligatoire: champ.estObligatoire,
-                min: { valeur: 1000, message: "⚠ L'année doit être sur 4 chiffres" },
-                max: { valeur: dayjs().get("year"), message: "⚠ L'année ne peut pas être supérieure à l'année actuelle" }
-              });
+              return SchemaValidation.annee({ obligatoire: champ.estObligatoire });
             case "boolean":
               return SchemaValidation.booleen({ obligatoire: champ.estObligatoire });
 

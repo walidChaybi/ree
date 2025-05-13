@@ -1,12 +1,22 @@
 // A tester Alex 5/02/25
 
 import { IDateForm } from "./DateForm";
+import { INumeroRcRca } from "./NumeroInscriptionRcRcaForm";
 import { TPrenomsForm } from "./PrenomsForm";
 
 /* v8 ignore start */
 export type TObjetFormulaire = { [cle: string]: TValeurFormulaire };
 
-export type TValeurFormulaire = string | boolean | number | TValeurFormulaire[] | TObjetFormulaire | IDateForm | TPrenomsForm | undefined;
+export type TValeurFormulaire =
+  | string
+  | boolean
+  | number
+  | TValeurFormulaire[]
+  | TObjetFormulaire
+  | IDateForm
+  | TPrenomsForm
+  | INumeroRcRca
+  | undefined;
 
 export const ObjetFormulaire = {
   depuisValeurs: (valeurs: object): TObjetFormulaire => valeurs as TObjetFormulaire,
@@ -75,6 +85,10 @@ export const ObjetFormulaire = {
 
   estPrenoms: (valeur: TValeurFormulaire): valeur is TPrenomsForm => {
     return typeof valeur === "object" && "prenom1" in valeur;
+  },
+
+  estNumeroRcRca: (valeur: TValeurFormulaire): valeur is INumeroRcRca => {
+    return typeof valeur === "object" && "anneeInscription" in valeur;
   }
 } as const;
 /* v8 ignore end */
