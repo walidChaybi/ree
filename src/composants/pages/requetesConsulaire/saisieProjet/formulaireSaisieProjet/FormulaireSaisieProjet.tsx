@@ -1,5 +1,4 @@
 import TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT from "@api/traitements/projetActe/transcription/TraitementEnregistrerProjetActeTranscrit";
-import { IProjetActeTranscritFormDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/IProjetActeTranscritFormDto";
 import { Form, Formik } from "formik";
 import React, { useContext, useMemo, useState } from "react";
 import useTraitementApi from "../../../../../hooks/api/TraitementApiHook";
@@ -11,7 +10,6 @@ import { ConteneurBoutonBasDePage } from "../../../../commun/bouton/conteneurBou
 import PageChargeur from "../../../../commun/chargeurs/PageChargeur";
 import ConteneurAccordeon from "../../../../commun/conteneurs/accordeon/ConteneurAccordeon";
 import ScrollVersErreur from "../../../../commun/formulaire/ScrollVersErreur";
-import { mapProjetActeTranscritFormVersDto } from "../mapping/mapProjetActeTranscritFormVersDto";
 import BlocActeEtranger from "./BlocActeEtranger";
 import BlocAutresEnonciations from "./BlocAutresEnonciations";
 import BlocDeclarant from "./BlocDeclarant";
@@ -30,7 +28,6 @@ import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { TitulaireProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/TitulaireProjetActeTranscrit";
 import { ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { SaisieProjetActeTranscritContext } from "../../../../../contexts/SaisieProjetActeTranscritContextProvider";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
 import ModaleProjetActe from "./ModaleProjetActe";
@@ -55,18 +52,12 @@ const formaterNomPrenomTitulaire = (titulaire: TitulaireProjetActeTranscrit): st
 /*v8 ignore stop */
 
 const FormulaireSaisieProjet: React.FC = () => {
-  const { requete, projetActe, rechargerRequeteEtProjetActe } = useContext(SaisieProjetActeTranscritContext);
+  const { requete, projetActe } = useContext(SaisieProjetActeTranscritContext);
 
   const [pdfBase64, setPdfBase64] = useState<string | null>(null);
   const [modaleOuverte, setModaleOuverte] = useState(false);
 
-  const donneesFormulaire = useMemo(
-    () => ({
-      valeursInitiales: ProjetTranscriptionForm.valeursInitiales(requete, projetActe),
-      schemaValidation: ProjetTranscriptionForm.schemaValidation()
-    }),
-    [requete, projetActe]
-  );
+  const valeursInitiales = useMemo(() => ProjetTranscriptionForm.valeursInitiales(requete, projetActe), [requete, projetActe]);
 
   const { utilisateurConnecte } = useContext(RECEContextData);
 
@@ -95,34 +86,24 @@ const FormulaireSaisieProjet: React.FC = () => {
   }, [requete.natureActeTranscrit]);
 
   /* v8 ignore start */
-  const enregistrerEtVisualiser = (valeurProjectActeForm: IProjetActeTranscritForm) => {
-    let donnees: IProjetActeTranscritFormDto = mapProjetActeTranscritFormVersDto(valeurProjectActeForm);
-
-    if (requete.statutCourant.statut === StatutRequete.A_SIGNER) {
-      donnees.evenement = projetActe?.evenement;
-      donnees.analyseMarginales = projetActe?.analysesMarginales.map(am => am.versDto()) ?? [];
-      donnees.id = projetActe?.id;
-      donnees.nature = projetActe?.nature;
-      donnees.statut = projetActe?.statut;
-      donnees.type = projetActe?.type;
-    }
-
+  const enregistrerEtVisualiser = (valeursSaisies: IProjetActeTranscritForm) => {
     lancerEnregistrement({
       parametres: {
-        projetActe: donnees,
+        valeursSaisies: valeursSaisies,
+        projetActe: projetActe,
         idRequete: requete.id,
-        idSuiviDossier: requete.titulaires?.[0]?.suiviDossiers?.[0]?.idSuiviDossier ?? "",
-        statutRequete: requete.statutCourant.statut
+        idSuiviDossier: requete.titulaires?.[0]?.suiviDossiers?.[0]?.idSuiviDossier ?? ""
       },
       apresSucces: projetActe => {
         messageManager.showSuccessAndClose("Le projet d'acte a bien été enregistré");
 
         if (!projetActe) return;
+
         appelerCompositionPdf({
           parametres: {
             body: {
               nature_acte: nature_acte,
-              texte_corps_acte: projetActe.corpsTexte?.texte,
+              texte_corps_acte: "",
               titulaires: formaterNomPrenomTitulaire(projetActe.titulaires[0])
             }
           },
@@ -137,8 +118,7 @@ const FormulaireSaisieProjet: React.FC = () => {
           apresErreur: messageErreur => {
             console.error(`Erreur lors de la génération du PDF : ${messageErreur}`);
             messageManager.showError("Une erreur est survenue lors de la composition de l'acte");
-          },
-          finalement: rechargerRequeteEtProjetActe
+          }
         });
       },
       apresErreur: messageErreur => {
@@ -151,89 +131,92 @@ const FormulaireSaisieProjet: React.FC = () => {
 
   return (
     <Formik<IProjetActeTranscritForm>
-      validationSchema={donneesFormulaire.schemaValidation}
-      initialValues={donneesFormulaire.valeursInitiales}
+      validationSchema={ProjetTranscriptionForm.schemaValidation()}
+      initialValues={valeursInitiales}
       onSubmit={values => {
         enregistrerEtVisualiser(values);
       }}
+      enableReinitialize
     >
-      <Form>
-        <>
-          <ValeursVersApercuProjet />
+      {({ dirty }) => (
+        <Form>
+          <>
+            <ValeursVersApercuProjet />
 
-          <ConteneurAccordeon
-            titre="Titulaire"
-            ouvertParDefaut
-          >
-            <BlocTitulaire />
-          </ConteneurAccordeon>
+            <ConteneurAccordeon
+              titre="Titulaire"
+              ouvertParDefaut
+            >
+              <BlocTitulaire />
+            </ConteneurAccordeon>
 
-          <ConteneurAccordeon
-            titre="Parents"
-            ouvertParDefaut
-          >
-            <BlocParent estParent1 />
-            <BlocParent />
-          </ConteneurAccordeon>
+            <ConteneurAccordeon
+              titre="Parents"
+              ouvertParDefaut
+            >
+              <BlocParent estParent1 />
+              <BlocParent />
+            </ConteneurAccordeon>
 
-          <ConteneurAccordeon
-            titre="Déclarant"
-            ouvertParDefaut
-          >
-            <BlocDeclarant />
-          </ConteneurAccordeon>
+            <ConteneurAccordeon
+              titre="Déclarant"
+              ouvertParDefaut
+            >
+              <BlocDeclarant />
+            </ConteneurAccordeon>
 
-          <ConteneurAccordeon
-            titre="Autres énonciations intéressant l'état civil"
-            ouvertParDefaut
-          >
-            <BlocAutresEnonciations />
-          </ConteneurAccordeon>
+            <ConteneurAccordeon
+              titre="Autres énonciations intéressant l'état civil"
+              ouvertParDefaut
+            >
+              <BlocAutresEnonciations />
+            </ConteneurAccordeon>
 
-          <ConteneurAccordeon
-            titre="Acte étranger"
-            ouvertParDefaut
-          >
-            <BlocActeEtranger />
-          </ConteneurAccordeon>
+            <ConteneurAccordeon
+              titre="Acte étranger"
+              ouvertParDefaut
+            >
+              <BlocActeEtranger />
+            </ConteneurAccordeon>
 
-          <ConteneurAccordeon
-            titre="Mentions figurant dans l'acte étranger"
-            ouvertParDefaut
-          >
-            <BlocMentions />
-          </ConteneurAccordeon>
+            <ConteneurAccordeon
+              titre="Mentions figurant dans l'acte étranger"
+              ouvertParDefaut
+            >
+              <BlocMentions />
+            </ConteneurAccordeon>
 
-          <ConteneurAccordeon
-            titre="Formule finale"
-            ouvertParDefaut
-          >
-            <BlocFormuleFinale />
-          </ConteneurAccordeon>
+            <ConteneurAccordeon
+              titre="Formule finale"
+              ouvertParDefaut
+            >
+              <BlocFormuleFinale />
+            </ConteneurAccordeon>
 
-          {enregistrementEnCours && <PageChargeur />}
+            {enregistrementEnCours && <PageChargeur />}
 
-          <ConteneurBoutonBasDePage position="droite">
-            {peutSigner && (
-              <Bouton
-                title="Terminer et signer"
-                type="submit"
-                disabled={enregistrementEnCours}
-              >
-                {"Terminer et signer"}
-              </Bouton>
+            <ConteneurBoutonBasDePage position="droite">
+              {peutSigner && (
+                <Bouton
+                  title="Terminer et signer"
+                  type="submit"
+                  disabled={enregistrementEnCours || !dirty}
+                >
+                  {"Terminer et signer"}
+                </Bouton>
+              )}
+            </ConteneurBoutonBasDePage>
+
+            {modaleOuverte && pdfBase64 && (
+              <ModaleProjetActe
+                pdfBase64={pdfBase64}
+                fermerModale={() => setModaleOuverte(false)}
+              />
             )}
-          </ConteneurBoutonBasDePage>
-
-          {modaleOuverte && pdfBase64 && (
-            <ModaleProjetActe
-              pdfBase64={pdfBase64}
-              fermerModale={() => setModaleOuverte(false)}
-            />
-          )}
-        </>
-        <ScrollVersErreur />
-      </Form>
+          </>
+          <ScrollVersErreur />
+        </Form>
+      )}
     </Formik>
   );
 };

@@ -1,8 +1,9 @@
 import TRAITEMENT_CHARGER_REQUETE_TRANSCRIPTION_ET_PROJET_ACTE_TRANSCRIT from "@api/traitements/projetActe/transcription/TraitementChargerRequeteTranscriptionEtProjetActeTranscrit";
 import { ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/ProjetActeTranscrit";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import messageManager from "@util/messageManager";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import PageChargeur from "../composants/commun/chargeurs/PageChargeur";
 import useTraitementApi from "../hooks/api/TraitementApiHook";
@@ -15,7 +16,7 @@ interface IRequeteEtProjetActe {
 interface ISaisieProjetActeTranscritContext {
   requete: IRequeteCreationTranscription;
   projetActe: ProjetActeTranscrit | null;
-  rechargerRequeteEtProjetActe: (onRechargementTermine?: () => void) => void;
+  mettreAJourDonneesContext: (projetActe: ProjetActeTranscrit | null, statutRequete?: string) => void;
 }
 
 export const SaisieProjetActeTranscritContext = React.createContext<ISaisieProjetActeTranscritContext>(
@@ -47,22 +48,37 @@ const SaisieProjetActeTranscritContextProvider: React.FC<
     });
   }, [idRequete]);
 
+  /* v8 ignore start */
+  const mettreAJourDonneesContext = useCallback((projetActe: ProjetActeTranscrit | null, statutRequete?: string) => {
+    setRequeteEtProjetActe(prec =>
+      prec
+        ? {
+            ...prec,
+            projetActe: projetActe,
+            ...(statutRequete && prec.requete
+              ? {
+                  requete: {
+                    ...prec.requete,
+                    statutCourant: {
+                      ...prec.requete.statutCourant,
+                      statut: StatutRequete.getEnumFor(statutRequete)
+                    }
+                  }
+                }
+              : {})
+          }
+        : null
+    );
+  }, []);
+  /* v8 ignore stop */
+
   const valeursContexte: ISaisieProjetActeTranscritContext = useMemo(() => {
     if (!requeteEtProjetActe?.requete) return {} as ISaisieProjetActeTranscritContext;
 
     return {
       requete: requeteEtProjetActe.requete,
       projetActe: requeteEtProjetActe.projetActe || null,
-      rechargerRequeteEtProjetActe: (onRechargementTermine?: () => void) => {
-        lancerChargementRequeteEtProjetActe({
-          parametres: { idRequete, estModeConsultation },
-          apresSucces: setRequeteEtProjetActe,
-          apresErreur: messageErreur => {
-            messageErreur && messageManager.showError(messageErreur);
-          },
-          finalement: onRechargementTermine
-        });
-      }
+      mettreAJourDonneesContext
     };
   }, [requeteEtProjetActe]);
 

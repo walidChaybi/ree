@@ -4,17 +4,18 @@ import { CONFIG_POST_PROJET_ACTE_TRANSCRIPTION } from "@api/configurations/etatC
 
 import { CONFIG_PATCH_STATUT_REQUETE_CREATION } from "@api/configurations/requete/creation/PatchStatutRequeteCreationConfigApi";
 import { IErreurTraitement, TTraitementApi } from "@api/traitements/TTraitementApi";
-import { IProjetActeTranscritFormDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/IProjetActeTranscritFormDto";
 import { IProjetActeTranscritDto, ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/ProjetActeTranscrit";
+import { IProjetActeTranscritForm, ProjetTranscriptionForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { SaisieProjetActeTranscritContext } from "../../../../contexts/SaisieProjetActeTranscritContextProvider";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
 
 export interface IPostProjetActeTranscrit {
   idSuiviDossier: string;
-  projetActe: IProjetActeTranscritFormDto;
+  valeursSaisies: IProjetActeTranscritForm;
+  projetActe: ProjetActeTranscrit | null;
   idRequete: string;
-  statutRequete: StatutRequete;
 }
 
 type TEtatAppel = "EN_ATTENTE" | "TERMINE";
@@ -29,29 +30,32 @@ interface IDonnesTraitement {
 
 const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetActeTranscrit, ProjetActeTranscrit | null> = {
   Lancer: terminerTraitement => {
-    const [projetActeCree, setProjetActeCree] = useState<ProjetActeTranscrit | null>(null);
+    const { mettreAJourDonneesContext } = useContext(SaisieProjetActeTranscritContext);
+    const [projetActe, setProjetActe] = useState<ProjetActeTranscrit | null>(null);
     const [erreurTraitement, setErreurTraitement] = useState<IErreurTraitement>({ enEchec: false });
     const [donneesTraitement, setDonneesTraitement] = useState<IDonnesTraitement | null>(null);
 
     const { appelApi: appelPostProjetActeTranscription } = useFetchApi(CONFIG_POST_PROJET_ACTE_TRANSCRIPTION);
-
     const { appelApi: appelPatchProjetActeTranscription } = useFetchApi(CONFIG_PATCH_PROJET_ACTE_TRANSCRIPTION);
     const { appelApi: appelPatchCreationStatutRequete } = useFetchApi(CONFIG_PATCH_STATUT_REQUETE_CREATION, true);
     const { appelApi: appelPatchIdActeSuiviDossier } = useFetchApi(CONFIG_PATCH_ID_ACTE_SUIVI_DOSSIER);
+
     const lancer = (parametres: IPostProjetActeTranscrit): void => {
       const idRequete = parametres.idRequete;
+
       if (!idRequete) {
         terminerTraitement();
         return;
       }
-      /* v8 ignore start */
-      if (parametres.statutRequete === StatutRequete.A_SIGNER) {
+
+      if (parametres.projetActe?.id) {
         appelPatchProjetActeTranscription({
           parametres: {
-            body: parametres.projetActe
+            body: ProjetTranscriptionForm.versDtoPatch(parametres.valeursSaisies, parametres.projetActe)
           },
           apresSucces: (projetActe: IProjetActeTranscritDto) => {
-            setProjetActeCree(ProjetActeTranscrit.depuisDto(projetActe));
+            mettreAJourDonneesContext(ProjetActeTranscrit.depuisDto(projetActe));
+            setProjetActe(ProjetActeTranscrit.depuisDto(projetActe));
             terminerTraitement();
           },
           apresErreur: erreur => {
@@ -66,16 +70,16 @@ const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetAc
 
         return;
       }
-      /*v8 ignore stop*/
 
       appelPostProjetActeTranscription({
         parametres: {
-          body: parametres.projetActe
+          body: ProjetTranscriptionForm.versDtoPost(parametres.valeursSaisies)
         },
         apresSucces: (projetActe: IProjetActeTranscritDto) => {
-          setProjetActeCree(ProjetActeTranscrit.depuisDto(projetActe));
+          setProjetActe(ProjetActeTranscrit.depuisDto(projetActe));
+          mettreAJourDonneesContext(ProjetActeTranscrit.depuisDto(projetActe), "A_SIGNER");
           setDonneesTraitement({
-            idActe: projetActe.id,
+            idActe: projetActe.id ?? "",
             idRequete: idRequete,
             idSuiviDossier: parametres.idSuiviDossier,
             appelStatutRequete: "EN_ATTENTE",
@@ -168,7 +172,7 @@ const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetAc
       });
     };
 
-    return { lancer, erreurTraitement, reponseTraitement: projetActeCree };
+    return { lancer, erreurTraitement, reponseTraitement: projetActe };
   }
 };
 

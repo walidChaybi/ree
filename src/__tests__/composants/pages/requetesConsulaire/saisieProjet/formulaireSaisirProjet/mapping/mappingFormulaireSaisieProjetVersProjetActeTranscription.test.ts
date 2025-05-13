@@ -1,12 +1,11 @@
 import { IActeEtrangerDto } from "@model/etatcivil/acte/IActeEtrangerDto";
 import { IDeclarantProjetActeTranscritDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/DeclarantProjetActeTranscrit";
 import { IFormuleFinaleDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/FormuleFinale";
-import { IProjetActeTranscritFormDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/IProjetActeTranscritFormDto";
+import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { PrenomsForm } from "@model/form/commun/PrenomsForm";
-import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
+import { IProjetActeTranscritForm, ProjetTranscriptionForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { describe, expect, test } from "vitest";
-import { mapProjetActeTranscritFormVersDto } from "../../../../../../../composants/pages/requetesConsulaire/saisieProjet/mapping/mapProjetActeTranscritFormVersDto";
 
 describe("test des fonction de mapping de la saisie projet d'acte transcrit", () => {
   const saisieProjetActeTranscriptionForm: IProjetActeTranscritForm = {
@@ -153,13 +152,13 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
       enonciations: "tewt tewxt"
     }
   };
-  const resultat = mapProjetActeTranscritFormVersDto(saisieProjetActeTranscriptionForm);
+  const resultat = ProjetTranscriptionForm.versDtoPost(saisieProjetActeTranscriptionForm);
 
   test("mappingSaisieProjetTitulaireFormVersProjetActe doit renvoyer l'objet 'acte etranger' au format attendu", () => {
     const acteEtrangerProjetActe: IActeEtrangerDto = {
       texteEnonciations: "tewt tewxt",
       typeActeEtranger: "ACTE_DRESSE",
-      infoTypeActe: "",
+      infoTypeActe: undefined,
       cadreNaissance: "NE_DANS_LE_MARIAGE",
       jourEnregistrement: "15",
       moisEnregistrement: "12",
@@ -187,27 +186,23 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
     };
     expect(resultat.formuleFinale).toStrictEqual(formuleFinaleProjetActe);
   });
-  test.skip("mappingSaisieProjetTitulaireFormVersProjetActe doit renvoyer l'objet 'declarant' au format attendu", () => {
+  test("mappingSaisieProjetTitulaireFormVersProjetActe doit renvoyer l'objet 'declarant' au format attendu", () => {
     const declarantProjetActe: IDeclarantProjetActeTranscritDto = {
-      identiteDeclarant: "PERE",
-      adresseDomicile: {
-        pays: "",
-        ville: "",
-        region: ""
-      },
+      identiteDeclarant: "TIERS",
+      adresseDomicile: null,
       age: null,
       complementDeclarant: null,
-      nom: null,
+      nom: "",
       prenoms: [],
-      profession: null,
-      qualite: null,
+      profession: "",
+      qualite: "",
       sansProfession: null,
       sexe: "INCONNU"
     };
     expect(resultat.declarant).toStrictEqual(declarantProjetActe);
   });
-  test.skip("mappingSaisieProjetTitulaireFormVersProjetActe doit renvoyer l'objet 'projetActeTranscription' au format attendu", () => {
-    const projetActeTranscription: IProjetActeTranscritFormDto = {
+  test("mappingSaisieProjetTitulaireFormVersProjetActe doit renvoyer l'objet 'projetActeTranscription' au format attendu", () => {
+    const projetActeTranscription = {
       acteEtranger: {
         adresseEnregistrement: {
           pays: "Chine",
@@ -223,23 +218,19 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
         redacteur: "Ambassador",
         reference: "ref.2024.12.pek",
         texteEnonciations: "tewt tewxt",
-        infoTypeActe: null,
+        infoTypeActe: undefined,
         typeActeEtranger: "ACTE_DRESSE"
       },
       analyseMarginales: [],
       declarant: {
-        adresseDomicile: {
-          pays: "",
-          ville: "",
-          region: ""
-        },
+        adresseDomicile: null,
         age: null,
         complementDeclarant: null,
-        identiteDeclarant: "PERE",
-        nom: null,
+        identiteDeclarant: "TIERS",
+        nom: "",
         prenoms: [],
-        profession: null,
-        qualite: null,
+        profession: "",
+        qualite: "",
         sansProfession: null,
         sexe: "INCONNU"
       },
@@ -263,14 +254,13 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
         identiteTransmetteur: "PERE",
         legalisation: "LEGALISATION",
         modeDepot: "REMISE",
-        nomDemandeur: null,
+        nomDemandeur: "",
         nomTransmetteur: null,
         pieceProduite: "COPIES",
         prenomDemandeur: null,
-        qualiteDemandeur: null
+        qualiteDemandeur: ""
       },
       mentions: [],
-      modeCreation: "TRANSCRIT",
       nature: "NAISSANCE",
       titulaires: [
         {
@@ -310,7 +300,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
               nom: "Greenwald",
               ordre: 1,
               prenoms: ["cassandra"],
-              profession: null,
+              profession: "",
               sansProfession: true,
               sexe: "MASCULIN"
             },
@@ -321,7 +311,6 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
               lienParente: LienParente.PARENT,
               naissance: {
                 annee: null,
-
                 departement: "loire atlantique",
                 heure: null,
                 jour: null,
@@ -344,7 +333,6 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
           ],
           naissance: {
             annee: 2024,
-
             departement: null,
             heure: null,
             jour: 3,
@@ -367,7 +355,8 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
           sexe: "FEMININ"
         }
       ],
-      visibiliteArchiviste: "NON"
+      visibiliteArchiviste: "NON",
+      modeCreation: ETypeRedactionActe.TRANSCRIT
     };
 
     expect(resultat).toStrictEqual(projetActeTranscription);
@@ -522,9 +511,8 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
     }
   };
 
-  const resultatTiers = mapProjetActeTranscritFormVersDto(saisieProjetActeTranscriptionTiers);
-  test.skip("mappingSaisieProjetTitulaireFormVersProjetActe doit renvoyer l'objet 'projetActeTranscription' au format attendu donné 'TIERS'", () => {
-    const projetActeTranscriptionTiers: IProjetActeTranscritFormDto = {
+  test("mappingSaisieProjetTitulaireFormVersProjetActe doit renvoyer l'objet 'projetActeTranscription' au format attendu donné 'TIERS'", () => {
+    const projetActeTranscriptionTiers = {
       acteEtranger: {
         adresseEnregistrement: {
           pays: "Chine",
@@ -546,6 +534,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
       analyseMarginales: [],
       declarant: {
         adresseDomicile: {
+          arrondissement: "",
           pays: "Chine",
           region: "china",
           ville: "Pekin",
@@ -575,13 +564,13 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
         mois: 1,
         neDansLeMariage: true,
         pays: null,
-        region: "",
+        region: null,
         ville: null,
         arrondissement: null,
         voie: null
       },
       formuleFinale: {
-        autresPieces: null,
+        autresPieces: "",
         identiteDemandeur: "TIERS",
         identiteTransmetteur: "TIERS",
         legalisation: "APOSTILLE",
@@ -593,8 +582,6 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
         qualiteDemandeur: "Agent"
       },
       mentions: [],
-      modeCreation: "TRANSCRIT",
-      nature: "NAISSANCE",
       titulaires: [
         {
           domicile: null,
@@ -602,6 +589,8 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
             {
               age: 34,
               domicile: {
+                arrondissement: undefined,
+                voie: undefined,
                 pays: "",
                 ville: "",
                 region: ""
@@ -610,7 +599,6 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
               lienParente: LienParente.PARENT,
               naissance: {
                 annee: null,
-
                 departement: null,
                 heure: null,
                 jour: null,
@@ -633,6 +621,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
             {
               age: null,
               domicile: {
+                arrondissement: undefined,
                 pays: "France",
                 region: "loire atlantique",
                 ville: "Nantes",
@@ -642,7 +631,6 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
               lienParente: LienParente.PARENT,
               naissance: {
                 annee: 2000,
-
                 departement: "Loire atlantique",
                 heure: null,
                 jour: 10,
@@ -665,7 +653,6 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
           ],
           naissance: {
             annee: 2025,
-
             departement: null,
             heure: 9,
             jour: 19,
@@ -688,9 +675,11 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
           sexe: "FEMININ"
         }
       ],
-      visibiliteArchiviste: "NON"
+      visibiliteArchiviste: "NON",
+      modeCreation: ETypeRedactionActe.TRANSCRIT,
+      nature: "NAISSANCE"
     };
-    expect(resultatTiers).toStrictEqual(projetActeTranscriptionTiers);
+    expect(ProjetTranscriptionForm.versDtoPost(saisieProjetActeTranscriptionTiers)).toStrictEqual(projetActeTranscriptionTiers);
   });
 });
 describe("test des fonctions non testées précedement", () => {
@@ -776,9 +765,8 @@ describe("test des fonctions non testées précedement", () => {
       enonciations: ""
     }
   };
-  const resultatTiers = mapProjetActeTranscritFormVersDto(saisieProjetActeTranscriptionNull);
-  test.skip("mappingSaisieProjetTitulaireFormVersProjetActe doit renvoyer l'objet 'projetActeTranscription' au format attendu", () => {
-    const projetActeTranscritNull: IProjetActeTranscritFormDto = {
+  test("mappingSaisieProjetTitulaireFormVersProjetActe doit renvoyer l'objet 'projetActeTranscription' au format attendu", () => {
+    const projetActeTranscritNull = {
       acteEtranger: {
         adresseEnregistrement: {
           pays: "",
@@ -794,18 +782,13 @@ describe("test des fonctions non testées précedement", () => {
         moisEnregistrement: null,
         redacteur: null,
         reference: null,
-        texteEnonciations: null,
-        infoTypeActe: null,
+        texteEnonciations: "",
+        infoTypeActe: undefined,
         typeActeEtranger: null
       },
       analyseMarginales: [],
       declarant: {
-        adresseDomicile: {
-          pays: "",
-          arrondissement: "",
-          ville: "",
-          region: ""
-        },
+        adresseDomicile: null,
         age: null,
         complementDeclarant: "Chez qui...",
         identiteDeclarant: "TIERS",
@@ -816,14 +799,13 @@ describe("test des fonctions non testées précedement", () => {
             prenom: "Toto"
           }
         ],
-        profession: null,
-        qualite: null,
+        profession: "",
+        qualite: "",
         sansProfession: true,
         sexe: "MASCULIN"
       },
       evenement: {
         annee: 2025,
-
         departement: null,
         heure: null,
         jour: null,
@@ -837,7 +819,7 @@ describe("test des fonctions non testées précedement", () => {
         ville: null
       },
       formuleFinale: {
-        autresPieces: null,
+        autresPieces: "",
         identiteDemandeur: "TIERS",
         identiteTransmetteur: "TIERS",
         legalisation: "APOSTILLE",
@@ -849,7 +831,7 @@ describe("test des fonctions non testées précedement", () => {
         qualiteDemandeur: "Agent"
       },
       mentions: [],
-      modeCreation: "TRANSCRIT",
+      modeCreation: ETypeRedactionActe.TRANSCRIT,
       nature: "NAISSANCE",
       titulaires: [
         {
@@ -859,15 +841,15 @@ describe("test des fonctions non testées précedement", () => {
               age: null,
               domicile: {
                 pays: "",
-
+                arrondissement: undefined,
                 ville: "",
-                region: ""
+                region: "",
+                voie: undefined
               },
               domicileCommun: null,
               lienParente: LienParente.PARENT,
               naissance: {
                 annee: null,
-
                 departement: null,
                 heure: null,
                 jour: null,
@@ -883,7 +865,7 @@ describe("test des fonctions non testées précedement", () => {
               nom: "Patamob",
               ordre: 1,
               prenoms: ["cassandra"],
-              profession: null,
+              profession: "",
               sansProfession: true,
               sexe: "MASCULIN"
             }
@@ -915,6 +897,6 @@ describe("test des fonctions non testées précedement", () => {
       ],
       visibiliteArchiviste: "NON"
     };
-    expect(resultatTiers).toStrictEqual(projetActeTranscritNull);
+    expect(ProjetTranscriptionForm.versDtoPost(saisieProjetActeTranscriptionNull)).toStrictEqual(projetActeTranscritNull);
   });
 });

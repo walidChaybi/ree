@@ -7,6 +7,7 @@ import { TDateArrayDTO } from "@util/DateUtils";
 import DateRECE from "../../../../../utils/DateRECE";
 import { IActeEtrangerDto } from "../../IActeEtrangerDto";
 import { ICorpsTexte } from "../../ICorpsTexte";
+import { IMention } from "../../mention/IMention";
 import { AnalyseMarginaleProjetActeTranscrit, IAnalyseMarginaleProjetActeTranscritDto } from "./AnalyseMarginaleProjetActeTranscrit";
 import { DeclarantProjetActeTranscrit, IDeclarantProjetActeTranscritDto } from "./DeclarantProjetActeTranscrit";
 import { EvenementProjetActeTranscrit, IEvenementProjetActeTranscritDto } from "./EvenementProjetActeTranscrit";
@@ -14,7 +15,7 @@ import { FormuleFinale, IFormuleFinaleDto } from "./FormuleFinale";
 import { ITitulaireProjetActeTranscritDto, TitulaireProjetActeTranscrit } from "./TitulaireProjetActeTranscrit";
 
 export interface IProjetActeTranscritDto {
-  id: string;
+  id?: string;
   dateCreation: number;
   modeCreation: ETypeRedactionActe.TRANSCRIT;
   statut: keyof typeof EStatutActe;
@@ -29,7 +30,14 @@ export interface IProjetActeTranscritDto {
   declarant: IDeclarantProjetActeTranscritDto;
   formuleFinale: IFormuleFinaleDto;
   acteEtranger: IActeEtrangerDto;
+  visibiliteArchiviste: string;
+  mentions: IMention[];
 }
+
+export type IProjetActeTranscritPatchDto = Omit<IProjetActeTranscritDto, "dateCreation" | "dateStatut" | "dateDerniereMaj" | "corpsTexte">;
+export type IProjetActeTranscritPostDto = Omit<
+  IProjetActeTranscritDto,
+  "dateCreation" | "id" | "dateStatut" | "dateDerniereMaj" | "corpsTexte" | "statut"| "type"> ;
 
 export class ProjetActeTranscrit {
   private static readonly champsObligatoires: (keyof IProjetActeTranscritDto)[] = [
@@ -102,7 +110,7 @@ export class ProjetActeTranscrit {
     if (!formuleFinale) return null;
 
     return new ProjetActeTranscrit(
-      projetActeTranscrit.id,
+      projetActeTranscrit.id ?? "",
       DateRECE.depuisTimestamp(projetActeTranscrit.dateCreation),
       ETypeRedactionActe[projetActeTranscrit.modeCreation],
       projetActeTranscrit.statut,

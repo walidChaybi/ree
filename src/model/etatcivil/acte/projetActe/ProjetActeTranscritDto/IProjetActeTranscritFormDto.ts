@@ -13,7 +13,6 @@ export interface IProjetActeTranscritFormDto {
   //FIXSOFIANE
   idRequete?: string | null;
   id?: string;
-  idActe?: string | null;
   titulaires: ITitulaireProjetActeTranscritDto[];
   evenement?: IEvenementProjetActeTranscritDto | null;
   nature?: keyof typeof ENatureActe | null;
