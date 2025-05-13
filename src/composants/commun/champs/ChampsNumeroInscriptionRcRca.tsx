@@ -1,10 +1,10 @@
 import { TNumeroInscriptionRcRcaForm } from "@model/form/commun/NumeroInscriptionRcRcaForm";
+import { Delete } from "@mui/icons-material";
 import AddCircle from "@mui/icons-material/AddCircle";
-import Delete from "@mui/icons-material/Delete";
 import { useField } from "formik";
 import { useMemo } from "react";
 import BoutonIcon from "../bouton/BoutonIcon";
-import ChampNumeroInscriptionRcRca from "./ChampNumeroInscriptionRcRca";
+import ChampTexte from "./ChampTexte";
 
 interface IChampsNumeroInscriptionRcRcaProps {
   libelle: string;
@@ -12,6 +12,11 @@ interface IChampsNumeroInscriptionRcRcaProps {
   prefixeNumeroInscriptionRcRca: string;
   tailleMax: number;
 }
+
+const CHAMP_NUMERO_COMMUN = {
+  placholder: "AAAA-XXXXX (année-numéro)",
+  regex: /[^\d-]/g
+};
 
 const ChampsNumeroInscriptionRcRca: React.FC<IChampsNumeroInscriptionRcRcaProps> = ({
   libelle,
@@ -27,13 +32,15 @@ const ChampsNumeroInscriptionRcRca: React.FC<IChampsNumeroInscriptionRcRcaProps>
 
   return (
     <div className="grid grid-cols-2 gap-4">
-      <ChampNumeroInscriptionRcRca
+      <ChampTexte
         name={`${prefixeNomChamp}1`}
-        libelle={libelle}
+        libelle={`${libelle}${champ.value?.nombreNumerosAffiches > 1 ? " 1" : ""}`}
         type="text"
         className="w-full"
         maxLength={10}
+        {...CHAMP_NUMERO_COMMUN}
       />
+
       {tailleMax > 1 && (
         <div className="flex justify-center pt-[1.6rem]">
           <BoutonIcon
@@ -54,36 +61,42 @@ const ChampsNumeroInscriptionRcRca: React.FC<IChampsNumeroInscriptionRcRcaProps>
           </BoutonIcon>
         </div>
       )}
+
       {Array.from({ length: (champ.value?.nombreNumerosAffiches ?? 1) - 1 }, (_, index) => index + 2).map(indexChamp => (
         <div key={`${indexChamp}`}>
-          <ChampNumeroInscriptionRcRca
+          <ChampTexte
             name={`${prefixeNomChamp}${indexChamp}`}
             libelle={`${libelle} ${indexChamp}`}
             className="w-full"
             maxLength={10}
-          >
-            <BoutonIcon
-              className="group absolute right-0 h-full rounded-l-none bg-transparent"
-              type="button"
-              title="Supprimer ce numéro"
-              onClick={() =>
-                helper.setValue({
-                  ...champ.value,
-                  nombreNumerosAffiches: champ.value?.nombreNumerosAffiches - 1,
-                  ...Array.from({ length: tailleMax + 1 - indexChamp }, (_, index) => index + indexChamp).reduce(
-                    (numerosInscriptionRCRCA, indexNumero) => ({
-                      ...numerosInscriptionRCRCA,
-                      [`ligne${indexNumero}`]: champ.value?.[`ligne${indexNumero + 1}` as keyof TNumeroInscriptionRcRcaForm] ?? ""
-                    }),
-                    {}
-                  )
-                })
-              }
-              styleBouton="suppression"
-            >
-              <Delete className="text-rouge group-hover:text-blanc group-focus:text-blanc" />
-            </BoutonIcon>
-          </ChampNumeroInscriptionRcRca>
+            {...CHAMP_NUMERO_COMMUN}
+            boutonChamp={{
+              composant: (
+                <BoutonIcon
+                  className="group absolute right-0 h-full rounded-l-none bg-transparent"
+                  type="button"
+                  title="Supprimer ce numéro"
+                  onClick={() =>
+                    helper.setValue({
+                      ...champ.value,
+                      nombreNumerosAffiches: champ.value?.nombreNumerosAffiches - 1,
+                      ...Array.from({ length: tailleMax + 1 - indexChamp }, (_, index) => index + indexChamp).reduce(
+                        (numerosInscriptionRCRCA, indexNumero) => ({
+                          ...numerosInscriptionRCRCA,
+                          [`ligne${indexNumero}`]: champ.value?.[`ligne${indexNumero + 1}` as keyof TNumeroInscriptionRcRcaForm] ?? ""
+                        }),
+                        {}
+                      )
+                    })
+                  }
+                  styleBouton="suppression"
+                >
+                  <Delete className="text-rouge group-hover:text-blanc group-focus:text-blanc" />
+                </BoutonIcon>
+              ),
+              estAGauche: false
+            }}
+          />
         </div>
       ))}
     </div>

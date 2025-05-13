@@ -16,6 +16,7 @@ type TChampsTexteProps = React.InputHTMLAttributes<HTMLInputElement> & {
   optionFormatage?: TFormatChampsTexte;
   estObligatoire?: boolean;
   boutonChamp?: IBoutonIcon;
+  regex?: RegExp;
 };
 
 const ChampTexte: React.FC<TChampsTexteProps> = ({
@@ -23,37 +24,28 @@ const ChampTexte: React.FC<TChampsTexteProps> = ({
   libelle,
   className,
   maxLength,
-  numerique = false,
+  numerique,
   optionFormatage,
   estObligatoire,
   boutonChamp = {
     composant: <></>,
     estAGauche: false
   },
+  regex,
   ...props
 }) => {
   const [field, meta, helper] = useField(name as string);
   const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
 
-  const handleChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      if (numerique) {
-        event.target.value = event.target.value.replace(/\D/, "");
-      }
-      field.onChange(event);
-    },
-    [numerique, field]
-  );
-
   const handleBlur = useCallback(
     (event: React.FocusEvent<HTMLInputElement>) => {
       let nouveauFormatValeur = event.target.value;
 
-      switch (true) {
-        case optionFormatage === "PREMIER_MAJUSCULE":
+      switch (optionFormatage) {
+        case "PREMIER_MAJUSCULE":
           nouveauFormatValeur = `${event.target.value.charAt(0).toUpperCase()}${event.target.value.substring(1)}`;
           break;
-        case optionFormatage === "NOMS_PROPRES":
+        case "NOMS_PROPRES":
           nouveauFormatValeur = event.target.value
             .split(/\s/g)
             .map(nom => `${nom.charAt(0)?.toUpperCase() ?? ""}${nom.substring(1)}`)
@@ -62,10 +54,10 @@ const ChampTexte: React.FC<TChampsTexteProps> = ({
             .map(nom => `${nom.charAt(0)?.toUpperCase() ?? ""}${nom.substring(1)}`)
             .join("-");
           break;
-        case optionFormatage === "MAJUSCULES":
+        case "MAJUSCULES":
           nouveauFormatValeur = event.target.value.toUpperCase();
           break;
-        case optionFormatage === "SANS_ESPACES":
+        case "SANS_ESPACES":
           nouveauFormatValeur = event.target.value.replace(/\s/g, "");
           break;
         default:
@@ -95,7 +87,13 @@ const ChampTexte: React.FC<TChampsTexteProps> = ({
           id={name}
           className={`border-1 flex flex-grow rounded border border-solid px-2 py-1 ${boutonChamp?.estAGauche ? "pl-12" : ""} transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
           maxLength={maxLength ?? CENT}
-          onChange={handleChange}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            const regexTexte = numerique ? /\D/ : regex;
+            if (regexTexte) {
+              event.target.value = event.target.value.replace(regexTexte, "");
+            }
+            field.onChange(event);
+          }}
           onBlur={handleBlur}
           {...fieldProps}
           {...props}

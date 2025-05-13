@@ -42,6 +42,7 @@ export const messagesErreur = {
   DATE_FUTURE: "⚠ La date ne peut pas être supérieure à la date du jour",
   DOIT_ETRE_ENTIER: "⚠ La valeur doit être un entier",
   CHAMP_OBLIGATOIRE: "⚠ La saisie du champ est obligatoire",
+  CHAMP_INVALIDE: "⚠ Le champ est invalide",
   PRENOM_OBLIGATOIRE: "⚠ La saisie du prénom est obligatoire"
 };
 
@@ -137,27 +138,47 @@ const getSchemaValidationDate = (bloquerDateFuture?: boolean): Yup.ObjectSchema<
 
 const getSchemaValidationNumeroInscriptionRcRca = (): Yup.StringSchema =>
   Yup.string()
+    .test("annéeObligatoire", (numero, error) => {
+      if (!numero) return true;
+
+      return !numero.split("-")[0].length
+        ? error.createError({
+            path: `${error.path}`,
+            message: messagesErreur.DATE_OBLIGATOIRE
+          })
+        : true;
+    })
     .test("annéeInvalide", (numero, error) => {
       if (!numero) return true;
 
-      return +numero.slice(0, 4) < 1000
+      return +numero.split("-")[0] < 1000 || numero.split("-")[0].length > 4
         ? error.createError({
             path: `${error.path}`,
             message: messagesErreur.DATE_INVALIDE
           })
         : true;
     })
+    .test("numeroInvalide", (numero, error) => {
+      if (!numero) return true;
+
+      return !numero.match(/^\d{4}-\d{5}$/)
+        ? error.createError({
+            path: `${error.path}`,
+            message: messagesErreur.CHAMP_INVALIDE
+          })
+        : true;
+    })
     .test("numeroIncomplet", (numero, error) => {
       if (!numero) return true;
 
-      return numero.length < 10
+      return !numero.length
         ? error.createError({
             path: `${error.path}`,
             message: messagesErreur.CHAMP_OBLIGATOIRE
           })
         : true;
     });
-
+  
 const gestionObligation = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>(
   schema: TSchemaChamp,
   obligatoire: boolean | ConditionChamp[],
@@ -287,7 +308,7 @@ const SchemaValidation = {
       schema.test("dateEntiereObligatoire", (date, error) =>
         !date.jour && !date.mois && !date.annee ? erreurSurDateEntiere(messagesErreur.DATE_OBLIGATOIRE, error.path) : true
       )
-    ) as Yup.ObjectSchema<TDateChamp>;
+    );
   },
 
   dateIncomplete: (schemaParams: Omit<ISchemaCommunParams, "libelle"> & { bloquerDateFuture?: boolean }) => {
@@ -315,7 +336,7 @@ const SchemaValidation = {
             })
           : true
       )
-    ) as Yup.ObjectSchema<TDateChamp>;
+    );
   },
 
   nomSecable: (schemaParams: ISchemaCommunParams) => {

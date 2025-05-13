@@ -1,6 +1,6 @@
 import { ConditionChamp, EOperateurCondition, IConditionChampDto } from "@model/form/commun/ConditionChamp";
 import { NumeroInscriptionRcRcaForm } from "@model/form/commun/NumeroInscriptionRcRcaForm";
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Form, Formik } from "formik";
 import { describe, expect, test } from "vitest";
@@ -85,11 +85,11 @@ describe("Schema de validation: nomSecable", () => {
     userEvent.click(screen.getByRole("button", { name: "Valider" }));
     await waitFor(() => expect(screen.getByText("⚠ La date est invalide")).toBeDefined());
 
-    await userEvent.type(InputNumero, "456");
+    await userEvent.type(InputNumero, "4");
     userEvent.click(screen.getByRole("button", { name: "Valider" }));
-    await waitFor(() => expect(screen.getByText("⚠ La saisie du champ est obligatoire")).toBeDefined());
+    await waitFor(() => expect(screen.getByText("⚠ Le champ est invalide")).toBeDefined());
 
-    await userEvent.type(InputNumero, "7890000001");
+    await userEvent.type(InputNumero, "-567890000001");
     userEvent.click(screen.getByRole("button", { name: "Valider" }));
     await waitFor(() => {
       expect(screen.queryByText("⚠ La saisie du champ est obligatoie")).toBeNull();
@@ -103,7 +103,7 @@ describe("Schema de validation: nomSecable", () => {
         schemaDeValidation={SchemaValidation.objet({
           numero: SchemaValidation.numerosInscriptionRcRca({
             prefix: `numero.ligne`,
-            tailleMax: 4,
+            tailleMax: 6,
             obligatoire: conditionToujoursObligatoire("numero.ligne1")
           })
         })}
@@ -112,10 +112,11 @@ describe("Schema de validation: nomSecable", () => {
           libelle={"Numéro"}
           cheminNumeroInscriptionRcRca={"numero"}
           prefixeNumeroInscriptionRcRca={"ligne"}
-          tailleMax={4}
+          tailleMax={6}
         />
       </MockFormulaire>
     );
+    userEvent.click(screen.getByRole("button", { name: "Ajouter un numéro" }));
     userEvent.click(screen.getByRole("button", { name: "Ajouter un numéro" }));
     userEvent.click(screen.getByRole("button", { name: "Ajouter un numéro" }));
     userEvent.click(screen.getByRole("button", { name: "Ajouter un numéro" }));
@@ -130,20 +131,32 @@ describe("Schema de validation: nomSecable", () => {
     const InputNumero2: HTMLInputElement = screen.getByRole("textbox", { name: "aria-label-numero.ligne2" });
     const InputNumero3: HTMLInputElement = screen.getByRole("textbox", { name: "aria-label-numero.ligne3" });
     const InputNumero4: HTMLInputElement = screen.getByRole("textbox", { name: "aria-label-numero.ligne4" });
+    const InputNumero5: HTMLInputElement = screen.getByRole("textbox", { name: "aria-label-numero.ligne5" });
+    const InputNumero6: HTMLInputElement = screen.getByRole("textbox", { name: "aria-label-numero.ligne6" });
 
     await waitFor(() => {
       expect(InputNumero1).toBeDefined();
       expect(InputNumero2).toBeDefined();
       expect(InputNumero3).toBeDefined();
       expect(InputNumero4).toBeDefined();
-      expect(screen.queryByRole("textbox", { name: "aria-label-numero.ligne5" })).toBeNull();
+      expect(InputNumero5).toBeDefined();
+      expect(InputNumero6).toBeDefined();
+
+      expect(screen.queryByRole("textbox", { name: "aria-label-numero.ligne7" })).toBeNull();
     });
 
-    await userEvent.type(InputNumero3, "123");
+    fireEvent.input(InputNumero5, { target: { value: "002-" } });
+    fireEvent.input(InputNumero4, { target: { value: "12345" } });
+    fireEvent.input(InputNumero3, { target: { value: "-12345" } });
+    fireEvent.input(InputNumero2, { target: { value: "2024" } });
+
     userEvent.click(screen.getByRole("button", { name: "Valider" }));
+
     await waitFor(() => {
-      expect(screen.queryAllByText("⚠ La saisie du champ est obligatoire")).toHaveLength(2);
-      expect(screen.queryAllByText("⚠ La date est invalide")).toHaveLength(1);
+      expect(screen.queryAllByText("⚠ La saisie du champ est obligatoire")).toHaveLength(1);
+      expect(screen.queryAllByText("⚠ La date est invalide")).toHaveLength(2);
+      expect(screen.queryAllByText("⚠ La saisie de la date est obligatoire")).toHaveLength(1);
+      expect(screen.queryAllByText("⚠ Le champ est invalide")).toHaveLength(1);
     });
   });
 });
