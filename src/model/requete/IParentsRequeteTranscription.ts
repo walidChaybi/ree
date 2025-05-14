@@ -65,12 +65,16 @@ export const ParentsRequeteTranscription = {
     return { parent1: parents[0], parent2: parents[1] };
   },
 
-  mappingParentRequeteTranscriptionVersParentForm(
+  /* NOSONAR */ mappingParentRequeteTranscriptionVersParentForm(
     parentRequete?: IParentRequeteTranscription,
     parentProjetActe?: FiliationTitulaireProjetActeTranscrit | null
   ): IParentTranscription {
     const estNaissanceFranceOuEtranger =
       (parentProjetActe?.naissance?.pays ?? parentRequete?.paysNaissance)?.toUpperCase() === "FRANCE" ? "France" : "Étranger";
+
+    const estDomicileFranceOuEtranger =
+      (parentProjetActe?.domicile?.pays ?? parentRequete?.domiciliation?.pays)?.toUpperCase() === "FRANCE" ? "France" : "Étranger";
+
     return {
       sexe: parentProjetActe?.sexe ?? parentRequete?.sexe ?? "",
       nom: parentProjetActe?.nom ?? (parentRequete?.nomUsage || parentRequete?.nomNaissance) ?? "",
@@ -104,13 +108,12 @@ export const ParentsRequeteTranscription = {
         ville: parentProjetActe?.domicile?.ville ?? parentRequete?.domiciliation?.ville ?? "",
         adresse: parentProjetActe?.domicile?.voie ?? parentRequete?.domiciliation?.adresse ?? "",
         departement:
-          ((estNaissanceFranceOuEtranger === "France" && parentProjetActe?.domicile?.region) ||
-            parentRequete?.domiciliation?.departement) ??
+          ((estDomicileFranceOuEtranger === "France" && parentProjetActe?.domicile?.region) || parentRequete?.domiciliation?.departement) ??
           "",
         arrondissement: parentProjetActe?.domicile?.arrondissement ?? parentRequete?.domiciliation?.arrondissement ?? "",
         pays: parentProjetActe?.domicile?.pays ?? parentRequete?.domiciliation?.pays ?? "",
         etatProvince:
-          ((estNaissanceFranceOuEtranger === "Étranger" && parentProjetActe?.domicile?.region) ||
+          ((estDomicileFranceOuEtranger === "Étranger" && parentProjetActe?.domicile?.region) ||
             parentRequete?.domiciliation?.etatProvince) ??
           ""
       },
