@@ -69,7 +69,7 @@ const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({ cheminPrenoms, prefixePr
                   }
                   styleBouton="suppression"
                 >
-                  <Delete className="text-rouge group-hover:text-blanc group-focus:text-blanc" />
+                  <Delete className="text-rouge group-hover:text-blanc group-focus-visible:text-blanc" />
                 </BoutonIcon>
               )
             }}

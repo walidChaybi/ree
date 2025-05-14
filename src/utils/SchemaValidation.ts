@@ -352,22 +352,27 @@ const SchemaValidation = {
       let schemaAnnee = SchemaValidation.annee({ obligatoire: false });
       schemaAnnee = schemaAnnee.when(`$${prefix}${index + 1}.numero`, {
         is: (numero: number) => Boolean(`${numero ?? ""}`.length),
-        then: schemaAnnee.required(messagesErreur.CHAMP_INVALIDE)
+        then: schemaAnnee.required(messagesErreur.CHAMP_OBLIGATOIRE)
       });
       let schemaNumero = SchemaValidation.entier({ obligatoire: false });
       schemaNumero = schemaNumero.when(`$${prefix}${index + 1}.anneeInscription`, {
         is: (annee: number) => Boolean(`${annee ?? ""}`.length),
-        then: schemaNumero.required(messagesErreur.CHAMP_INVALIDE)
+        then: schemaNumero.required(messagesErreur.CHAMP_OBLIGATOIRE)
       });
 
       if (index === 0) {
         schemaAnnee = gestionObligation(schemaAnnee, obligatoire, () => schemaAnnee.required(messagesErreur.CHAMP_OBLIGATOIRE));
+        schemaNumero = gestionObligation(schemaNumero, obligatoire, () => schemaNumero.required(messagesErreur.CHAMP_OBLIGATOIRE));
       }
 
       const numerosSuivants = Array.from({ length: tailleMax - 1 - index }).map((_, idx) => `$${prefix}${idx + index + 2}`);
       schemaAnnee = schemaAnnee.when(numerosSuivants, {
         is: (...valeur: (INumeroRcRca | undefined)[]) => valeur.some(val => Boolean(val?.anneeInscription) && Boolean(val?.numero)),
         then: schemaAnnee.required(messagesErreur.CHAMP_OBLIGATOIRE)
+      });
+      schemaNumero = schemaNumero.when(numerosSuivants, {
+        is: (...valeur: (INumeroRcRca | undefined)[]) => valeur.some(val => Boolean(val?.anneeInscription) && Boolean(val?.numero)),
+        then: schemaNumero.required(messagesErreur.CHAMP_OBLIGATOIRE)
       });
 
       schemaNumeros[`ligne${index + 1}`] = SchemaValidation.objet({

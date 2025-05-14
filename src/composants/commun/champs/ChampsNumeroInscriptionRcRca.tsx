@@ -52,11 +52,11 @@ const ChampInscription: React.FC<IChampInscriptionProps> = ({ name, libelle, act
         <input
           ref={setRefAnnee}
           id={champInscription.annee}
-          className={`border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
+          className={`border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${Boolean(metaAnnee.error) && metaAnnee.touched ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
           maxLength={4}
           placeholder="AAAA"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            const valeur = seulementNumerique(event.target.value);
+            const valeur = seulementNumerique(event.target.value).replace(/^0{1,4}/, "");
             valeur.length === 4 && refNumero?.focus();
             event.target.value = valeur;
             fieldAnnee.onChange(event);
@@ -72,7 +72,7 @@ const ChampInscription: React.FC<IChampInscriptionProps> = ({ name, libelle, act
           <input
             ref={setRefNumero}
             id={champInscription.numero}
-            className={`border-1 flex w-full rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
+            className={`border-1 flex w-full rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${Boolean(metaNumero.error) && metaNumero.touched ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
             maxLength={5}
             placeholder="XXXXX"
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,7 +95,7 @@ const ChampInscription: React.FC<IChampInscriptionProps> = ({ name, libelle, act
               onClick={actionSuppression}
               styleBouton="suppression"
             >
-              <Delete className="text-rouge group-hover:text-blanc group-focus:text-blanc" />
+              <Delete className="text-rouge group-hover:text-blanc group-focus-visible:text-blanc" />
             </BoutonIcon>
           )}
         </div>
