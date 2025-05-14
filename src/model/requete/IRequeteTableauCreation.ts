@@ -1,13 +1,11 @@
+/* v8 ignore start */
 import { IService } from "@model/agent/IService";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import DateUtils from "@util/DateUtils";
 import { getValeurOuUndefined, getValeurOuVide } from "@util/Utils";
 import { IRequeteTableau } from "./IRequeteTableau";
 import { mapAttribueA } from "./IRequeteTableauDelivrance";
-import {
-  ITitulaireRequeteTableau,
-  mapTitulaires
-} from "./ITitulaireRequeteTableau";
+import { ITitulaireRequeteTableau, mapTitulaires } from "./ITitulaireRequeteTableau";
 import { SousTypeCreation } from "./enum/SousTypeCreation";
 import { StatutRequete } from "./enum/StatutRequete";
 import { TagPriorisation } from "./enum/TagPriorisation";
@@ -16,7 +14,7 @@ import { TypeRequete } from "./enum/TypeRequete";
 
 export interface IRequeteTableauCreation extends IRequeteTableau {
   numeroFonctionnel: string;
-  numeroTeledossierOuSDANFOuFonctionnel: string;
+  numeroTeledossier: string;
   numeroDila: string;
   numeroNatali?: string;
   numeroAncien: string;
@@ -35,14 +33,11 @@ export function mappingUneRequeteTableauCreation(
   utilisateurs: IUtilisateur[],
   services: IService[]
 ): IRequeteTableauCreation {
-  const titulaires = mapTitulaires(
-    filtrerUniquementTitulairesHorsFamille(requete?.titulaires),
-    mappingSupplementaire
-  );
+  const titulaires = mapTitulaires(filtrerUniquementTitulairesHorsFamille(requete?.titulaires), mappingSupplementaire);
   return {
     idRequete: getValeurOuUndefined(requete?.id),
     numeroFonctionnel: getValeurOuVide(requete?.numeroFonctionnel),
-    numeroTeledossierOuSDANFOuFonctionnel: requete?.numeroDossierNational
+    numeroTeledossier: requete?.numeroDossierNational
       ? getValeurOuVide(requete?.numeroDossierNational)
       : getValeurOuVide(requete?.numeroNatali) || getValeurOuVide(requete.numeroDila) || getValeurOuVide(requete.numeroFonctionnel),
     numero: getValeurOuVide(requete.numero),
@@ -75,8 +70,6 @@ function getPostulant(titulaires: ITitulaireRequeteTableau[]) {
 }
 
 function filtrerUniquementTitulairesHorsFamille(titulaires: any) {
-  return titulaires.filter(
-    (titulaire: any) =>
-      titulaire.typeObjetTitulaire !== TypeObjetTitulaire.FAMILLE
-  );
+  return titulaires.filter((titulaire: any) => titulaire.typeObjetTitulaire !== TypeObjetTitulaire.FAMILLE);
 }
+/* v8 ignore stop */

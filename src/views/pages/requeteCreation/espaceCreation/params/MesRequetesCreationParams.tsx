@@ -5,7 +5,7 @@ import { styleColonne } from "./EspaceCreationParams";
 
 export enum HeaderTableauMesRequetesCreation {
   Alerte = "alerte",
-  NumeroTeledossierOuSDANFOuFonctionnel = "numeroTeledossierOuSDANFOuFonctionnel",
+  numeroTeledossier = "numeroTeledossier",
   SousType = "sousType",
   Priorisation = "tagPriorisation",
   Postulant = "postulant",
@@ -25,9 +25,7 @@ export const colonnesTableauMesRequetesCreation = [
     sortable: true
   }),
   new TableauTypeColumn({
-    keys: [
-      HeaderTableauMesRequetesCreation.NumeroTeledossierOuSDANFOuFonctionnel
-    ],
+    keys: [HeaderTableauMesRequetesCreation.numeroTeledossier],
     title: getLibelle("N°"),
     align: "center",
     style: styleColonne,

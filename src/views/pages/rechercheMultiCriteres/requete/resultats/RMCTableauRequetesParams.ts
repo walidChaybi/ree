@@ -10,7 +10,7 @@ import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn
 export enum HeaderTableauRequete {
   Observations = "observations",
   Numero = "numero",
-  NumeroTeledossierOuSDANFOuFonctionnel = "numeroTeledossierOuSDANFOuFonctionnel",
+  numeroTeledossier = "numeroTeledossier",
   IdSagaDila = "idSagaDila",
   Type = "type",
   SousType = "sousType",
@@ -41,7 +41,7 @@ export const columnsTableauRequete = [
     style: { width: "70px" }
   }),
   new TableauTypeColumn({
-    keys: [HeaderTableauRequete.NumeroTeledossierOuSDANFOuFonctionnel],
+    keys: [HeaderTableauRequete.numeroTeledossier],
     title: "N° télédossier / SDANF",
     align: "center",
     style: { width: "150px" }

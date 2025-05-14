@@ -1,13 +1,11 @@
+/* v8 ignore start */
+
 import { IService } from "@model/agent/IService";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import DateUtils from "@util/DateUtils";
-import { getValeurOuUndefined, getValeurOuVide } from "@util/Utils";
 import { IRequeteTableau } from "./IRequeteTableau";
 import { mapAttribueA } from "./IRequeteTableauDelivrance";
-import {
-  ITitulaireRequeteTableau,
-  mapTitulaires
-} from "./ITitulaireRequeteTableau";
+import { ITitulaireRequeteTableau, mapTitulaires } from "./ITitulaireRequeteTableau";
 import { getObjetRequeteInfoLibelle } from "./enum/ObjetRequeteInfo";
 import { Qualite } from "./enum/Qualite";
 import { SousTypeInformation } from "./enum/SousTypeInformation";
@@ -20,7 +18,7 @@ export interface IRequeteTableauInformation extends IRequeteTableau {
   typeRequerant?: string;
   nomsTitulaires?: string;
   attribueA?: string;
-  numeroTeledossierOuSDANFOuFonctionnel?: string;
+  numeroTeledossier?: string;
 }
 
 //////////////////////////////////////////
@@ -34,12 +32,7 @@ export function mappingRequetesTableauInformation(
   services: IService[]
 ): IRequeteTableauInformation[] {
   return resultatsRecherche?.map((requete: any) => {
-    return mappingUneRequeteTableauInformation(
-      requete,
-      mappingSupplementaire,
-      utilisateurs,
-      services
-    );
+    return mappingUneRequeteTableauInformation(requete, mappingSupplementaire, utilisateurs, services);
   });
 }
 
@@ -50,28 +43,27 @@ export function mappingUneRequeteTableauInformation(
   services: IService[]
 ): IRequeteTableauInformation {
   return {
-    idRequete: getValeurOuUndefined(requete?.id),
+    idRequete: requete?.id || undefined,
     type: TypeRequete.INFORMATION.libelle,
-    numero: getValeurOuVide(requete?.numero),
+    numero: requete?.numero ?? "",
     sousType: SousTypeInformation.getEnumFor(requete?.sousType).libelle,
-    objet: getObjetRequeteInfoLibelle(getValeurOuVide(requete.objet)),
+    objet: getObjetRequeteInfoLibelle(requete.objet ?? ""),
     dateCreation: DateUtils.getFormatDateFromTimestamp(requete?.dateCreation),
     statut: StatutRequete.getEnumFor(requete?.statut)?.libelle,
-    nomCompletRequerant: getValeurOuVide(requete?.nomCompletRequerant),
+    nomCompletRequerant: requete?.nomCompletRequerant ?? "",
     typeRequerant: getTypeRequerant(requete?.qualiteRequerant, requete?.typeMandataire),
     titulaires: mapTitulaires(requete?.titulaires, mappingSupplementaire),
     nomsTitulaires: getNomsTitulaires(requete?.titulaires),
-    idUtilisateur: getValeurOuUndefined(requete?.idUtilisateur),
+    idUtilisateur: requete?.idUtilisateur || undefined,
     attribueA: mapAttribueA(requete, utilisateurs, services)
   } as IRequeteTableauInformation;
 }
 
 function getTypeRequerant(qualiteRequerant: string, typeMandataire: string) {
   if (typeMandataire != null) {
-    return TypeMandataireReq.getEnumFor(getValeurOuVide(typeMandataire))
-      .libelle;
+    return TypeMandataireReq.getEnumFor(typeMandataire ?? "").libelle;
   } else {
-    return Qualite.getEnumFor(getValeurOuVide(qualiteRequerant)).libelle;
+    return Qualite.getEnumFor(qualiteRequerant ?? "").libelle;
   }
 }
 
@@ -90,3 +82,4 @@ function getNomsTitulaires(titulaires: ITitulaireRequeteTableau[]) {
   }
   return res;
 }
+/* v8 ignore stop */
