@@ -103,7 +103,7 @@ const FormulaireSaisieProjet: React.FC = () => {
           parametres: {
             body: {
               nature_acte: nature_acte,
-              texte_corps_acte: "",
+              texte_corps_acte: projetActe.corpsTexte.texte || "",
               titulaires: formaterNomPrenomTitulaire(projetActe.titulaires[0])
             }
           },
