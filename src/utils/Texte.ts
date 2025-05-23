@@ -1,6 +1,5 @@
 // A tester Alex 5/02/25
 /* v8 ignore start */
-
 const Texte = {
   /** Suppression des accents pour comparaison de chaines stricte */
   normalise: (texte: string): string =>
@@ -8,7 +7,9 @@ const Texte = {
       .toLowerCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
-      .trim()
+      .trim(),
+
+  premiereLettreMajuscule: (texte: string): string => (texte.length ? texte.charAt(0).toUpperCase() + texte.slice(1) : "")
 } as const;
 
 export default Texte;

@@ -105,7 +105,7 @@ const BlocDeclarant: React.FC = () => {
             libellePour="declarant.domicile"
           />
 
-          <FormulaireAdresse prefix={"declarant.domicile"} />
+          <FormulaireAdresse prefixe={"declarant.domicile"} />
 
           <SeparateurSection
             titre="Complément"

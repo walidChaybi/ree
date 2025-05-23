@@ -4,15 +4,15 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 
 dayjs.extend(customParseFormat);
 
-type TFormatDate =
+export type TFormatDate =
   | "JJ/MM/AAAA"
   | "JJ/MM/AAAA à HHhmm"
   | "JJ mois AAAA"
-  | "le/en JJ mois AAAA"
   | "JJ mois AAAA à HHhmm"
-  | "le/en JJ mois AAAA à HHhmm"
   | "Date Toutes Lettres"
   | "Date/heure Toutes Lettres";
+
+export type TOptionPrefixe = "AVEC_PREFIXE" | "SANS_PREFIXE" | "SANS_PREFIXE_LE" | "SANS_PREFIXE_EN";
 
 interface IDateRece {
   jour: string;
@@ -94,7 +94,7 @@ class DateRECE {
     });
   }
 
-  public static depuisDateArrayDTO = (dateArrayDto: TDateArrayDTO): DateRECE =>
+  public static readonly depuisDateArrayDTO = (dateArrayDto: TDateArrayDTO): DateRECE =>
     DateRECE.depuisObjetDate({ annee: dateArrayDto[0], mois: dateArrayDto[1], jour: dateArrayDto[2] });
 
   /* Validations */
@@ -128,59 +128,61 @@ class DateRECE {
   }
 
   /* Formats */
-  public format(format: TFormatDate = "JJ/MM/AAAA"): string {
+  public format(format: TFormatDate = "JJ/MM/AAAA", optionPrefixe?: TOptionPrefixe): string {
     if (!this.estDateValide) {
       return "";
     }
 
     switch (format) {
       case "JJ/MM/AAAA":
-        return this.formatJourMoisAnnee();
+        return this.formatJourMoisAnnee(optionPrefixe);
       case "JJ/MM/AAAA à HHhmm":
-        return this.formatJourMoisAnneeHeure();
+        return this.formatJourMoisAnneeHeure(optionPrefixe);
       case "JJ mois AAAA":
-        return this.formatJourMoisLettreAnnee();
-      case "le/en JJ mois AAAA":
-        return this.formatJourMoisLettreAnnee(true);
+        return this.formatJourMoisLettreAnnee(optionPrefixe);
       case "JJ mois AAAA à HHhmm":
-        return this.formatJourMoisLettreAnneeHeure();
-      case "le/en JJ mois AAAA à HHhmm":
-        return this.formatJourMoisLettreAnneeHeure(true);
+        return this.formatJourMoisLettreAnneeHeure(optionPrefixe);
       case "Date Toutes Lettres":
-        return this.formatDateToutesLettres();
+        return this.formatDateToutesLettres(optionPrefixe);
       case "Date/heure Toutes Lettres":
-        return this.formatDateHeureToutesLettres();
+        return this.formatDateHeureToutesLettres(optionPrefixe);
       default:
         return "";
     }
   }
 
-  private formatJourMoisAnnee(): string {
-    return [this.date.jour.padStart(2, "0"), this.date.mois.padStart(2, "0"), this.date.annee].reduce(
+  private determinerPrefixeDate(optionPrefixe?: TOptionPrefixe): string {
+    switch (optionPrefixe) {
+      case "AVEC_PREFIXE":
+        return this.date.jour ? "le" : "en";
+      case "SANS_PREFIXE_EN":
+        return this.date.jour ? "le" : "";
+      case "SANS_PREFIXE_LE":
+        return this.date.jour ? "" : "en";
+      case "SANS_PREFIXE":
+      default:
+        return "";
+    }
+  }
+
+  private formatJourMoisAnnee(optionPrefixe?: TOptionPrefixe): string {
+    const dateFormatee = [this.date.jour.padStart(2, "0"), this.date.mois.padStart(2, "0"), this.date.annee].reduce(
       (dateFormatee: string, partieDate: string) => `${dateFormatee}${dateFormatee ? "/" : ""}${parseInt(partieDate) ? partieDate : ""}`,
       ""
     );
+
+    return dateFormatee ? `${this.determinerPrefixeDate(optionPrefixe)} ${dateFormatee}`.trim() : "";
   }
 
-  private formatJourMoisAnneeHeure(): string {
-    return `${this.formatJourMoisAnnee()}${this.formatHeure()}`;
+  private formatJourMoisAnneeHeure(optionPrefixe?: TOptionPrefixe): string {
+    return `${this.formatJourMoisAnnee(optionPrefixe)}${this.formatHeure()}`;
   }
 
-  private formatJourMoisLettreAnnee(avecPrefixe: boolean = false): string {
+  private formatJourMoisLettreAnnee(optionPrefixe?: TOptionPrefixe): string {
     const suffixeJour = this.date.jour === "1" ? "er" : "";
-    const prefixeDate = (() => {
-      switch (true) {
-        case !avecPrefixe:
-          return "";
-        case avecPrefixe && Boolean(this.date.jour):
-          return "le";
-        default:
-          return "en";
-      }
-    })();
 
     return [
-      prefixeDate,
+      this.determinerPrefixeDate(optionPrefixe),
       this.date.jour && this.date.mois ? `${this.date.jour}${suffixeJour}` : "",
       MOIS[parseInt(this.date.mois)] ?? "",
       this.date.annee
@@ -189,12 +191,13 @@ class DateRECE {
       .join(" ");
   }
 
-  private formatJourMoisLettreAnneeHeure(avecPrefixe: boolean = false): string {
-    return `${this.formatJourMoisLettreAnnee(avecPrefixe)}${this.formatHeure()}`;
+  private formatJourMoisLettreAnneeHeure(optionPrefixe?: TOptionPrefixe): string {
+    return `${this.formatJourMoisLettreAnnee(optionPrefixe)}${this.formatHeure()}`;
   }
 
-  private formatDateToutesLettres(): string {
+  private formatDateToutesLettres(optionPrefixe?: TOptionPrefixe): string {
     return [
+      this.determinerPrefixeDate(optionPrefixe),
       this.date.jour && this.date.mois ? DateRECE.nombreEnLettre(parseInt(this.date.jour), true) : "",
       MOIS[parseInt(this.date.mois)] ?? "",
       this.date.annee ? DateRECE.nombreEnLettre(parseInt(this.date.annee)) : ""
@@ -203,16 +206,17 @@ class DateRECE {
       .join(" ");
   }
 
-  private formatDateHeureToutesLettres() {
-    const dateLettre = this.formatDateToutesLettres();
-    if (!dateLettre || !this.date.heure || !this.date.minute) {
+  private formatDateHeureToutesLettres(optionPrefixe?: TOptionPrefixe) {
+    const dateLettre = this.formatDateToutesLettres(optionPrefixe);
+
+    if (!dateLettre || !this.date.heure) {
       return dateLettre;
     }
 
     const heureLettre: string = (() => {
       const nombreHeure = parseInt(this.date.heure);
       if (!nombreHeure) {
-        return "minuit";
+        return "zéro heure";
       }
 
       const formatHeureLettre = DateRECE.nombreEnLettre(nombreHeure);

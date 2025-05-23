@@ -101,7 +101,7 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estParent1 }) => {
 
       <FormulaireAdresse
         key={`${prefixe}.lieuNaissance`}
-        prefix={`${prefixe}.lieuNaissance`}
+        prefixe={`${prefixe}.lieuNaissance`}
       />
 
       <SeparateurSection
@@ -133,7 +133,7 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estParent1 }) => {
         {(estParent1 || !values.parents.domicileCommun) && (
           <FormulaireAdresse
             key={`${prefixe}.domicile`}
-            prefix={`${prefixe}.domicile`}
+            prefixe={`${prefixe}.domicile`}
           />
         )}
       </div>

@@ -1,7 +1,7 @@
 import { INumeroRcRca } from "@model/form/commun/NumeroInscriptionRcRcaForm";
 import { ObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { PrenomsForm, TPrenomsForm } from "@model/form/commun/PrenomsForm";
-import DateRECE from "./DateRECE";
+import DateRECE, { TFormatDate, TOptionPrefixe } from "./DateRECE";
 import Texte from "./Texte";
 
 type TCondition = {
@@ -53,28 +53,33 @@ class ModeleTexte {
       }
 
       const [cle, ...partiesValeurDefaut] = valeur.replace(/({{#valeur |}})/g, "").split(" ");
-      const [cleAttribut, variation] = cle.split("/");
+      const [cleAttribut, ...variations] = cle.split("/");
       const valeurRenseignee = ObjetFormulaire.recupererValeur({ valeurs: valeursFormulaire, cleAttribut: cleAttribut });
       const valeurDefaut = `${partiesValeurDefaut.join(" ")}`.toUpperCase();
 
-      switch (true) {
-        case Array.isArray(valeurRenseignee):
-          return valeurDefaut;
-        case ObjetFormulaire.estDate(valeurRenseignee):
-          return (
-            (ObjetFormulaire.estDate(valeurRenseignee) &&
-              DateRECE.depuisObjetDate(valeurRenseignee).format(variation === "sansPrefixe" ? "JJ mois AAAA" : "le/en JJ mois AAAA")) ||
-            valeurDefaut
-          );
-        case ObjetFormulaire.estPrenoms(valeurRenseignee):
-          return (ObjetFormulaire.estPrenoms(valeurRenseignee) && ModeleTexte.formaterPrenoms(valeurRenseignee)) || valeurDefaut;
-        case ObjetFormulaire.estNumeroRcRca(valeurRenseignee):
-          return (ObjetFormulaire.estNumeroRcRca(valeurRenseignee) && ModeleTexte.formaterNumeroRcRca(valeurRenseignee)) || valeurDefaut;
-        case valeurRenseignee && typeof valeurRenseignee !== "object":
-          return `${valeurRenseignee}`;
-        default:
-          return valeurDefaut;
-      }
+      const valeurFinale = (() => {
+        switch (true) {
+          case Array.isArray(valeurRenseignee):
+            return null;
+          case ObjetFormulaire.estDate(valeurRenseignee): {
+            return (
+              (ObjetFormulaire.estDate(valeurRenseignee) &&
+                DateRECE.depuisObjetDate(valeurRenseignee).format(...ModeleTexte.optionFormatDate(variations))) ||
+              null
+            );
+          }
+          case ObjetFormulaire.estPrenoms(valeurRenseignee):
+            return (ObjetFormulaire.estPrenoms(valeurRenseignee) && ModeleTexte.formaterPrenoms(valeurRenseignee)) || null;
+          case ObjetFormulaire.estNumeroRcRca(valeurRenseignee):
+            return (ObjetFormulaire.estNumeroRcRca(valeurRenseignee) && ModeleTexte.formaterNumeroRcRca(valeurRenseignee)) || null;
+          case valeurRenseignee && typeof valeurRenseignee !== "object":
+            return `${valeurRenseignee}`;
+          default:
+            return null;
+        }
+      })();
+
+      return ModeleTexte.formatTexte(valeurFinale, valeurDefaut, variations);
     };
 
     const ajouterCondition = (
@@ -141,10 +146,12 @@ class ModeleTexte {
     });
 
     const gererConditon = (condition: TCondition): string[] => {
+      const estConditionOu = condition.si.includes("|");
+
       const conditionValide = condition.si
-        .split("&")
+        .split(estConditionOu ? "|" : "&")
         .filter(partieCondition => Boolean(partieCondition.trim()))
-        .every(partieCondition => {
+        [estConditionOu ? "some" : "every"](partieCondition => {
           const [cle, ...valeurAttendue] = partieCondition.trim().split(" ");
           const negation = cle.startsWith("!");
           const valeurSaisie = Texte.normalise(
@@ -177,6 +184,30 @@ class ModeleTexte {
       .join("");
   }
 
+  /** Formateurs **/
+  private static optionFormatDate(options: string[]): [TFormatDate, TOptionPrefixe] {
+    return [
+      options.includes("formatDateTouteLettre") ? "Date/heure Toutes Lettres" : "JJ mois AAAA",
+      (() => {
+        switch (true) {
+          case options.includes("sansPrefixe"):
+            return "SANS_PREFIXE";
+          case options.includes("sansPrefixeLe"):
+            return "SANS_PREFIXE_LE";
+          case options.includes("sansPrefixeEn"):
+            return "SANS_PREFIXE_EN";
+          default:
+            return "AVEC_PREFIXE";
+        }
+      })()
+    ];
+  }
+
+  private static formatTexte(valeur: string | null, valeurDefaut: string, options: string[]) {
+    if (!valeur) return valeurDefaut;
+    return options.includes("premiereLettreMajuscule") ? Texte.premiereLettreMajuscule(valeur) : valeur;
+  }
+
   private static formaterPrenoms(prenomsForm: TPrenomsForm): string {
     return PrenomsForm.versPrenomsStringDto(prenomsForm).join(", ");
   }
@@ -185,6 +216,7 @@ class ModeleTexte {
     return numeroForm.anneeInscription && numeroForm.numero ? `${numeroForm.anneeInscription}-${numeroForm.numero}` : "";
   }
 
+  /** Gestions modèles texte **/
   public static getModeleTexteDocument(typeDocument: EModeleTexteDocument): string | null {
     return ModeleTexte.modeles[typeDocument];
   }

@@ -1,6 +1,6 @@
 import { genererArrondissements } from "@util/Utils";
-import { useField } from "formik";
-import React, { memo, useMemo } from "react";
+import { useField, useFormikContext } from "formik";
+import React, { memo, useEffect, useMemo } from "react";
 import ChampListeDeroulante from "./ChampListeDeroulante";
 import ChampTexte from "./ChampTexte";
 import ChampsRadio from "./ChampsRadio";
@@ -11,7 +11,7 @@ interface Option {
 }
 
 interface IFormulaireAdresseProps {
-  prefix: string;
+  prefixe: string;
   libelle?: string;
   afficherAdresse?: boolean;
 }
@@ -31,8 +31,8 @@ const ARRONDISSEMENTS_OPTIONS: Record<TVilleSpeciale, Option[]> = {
   lyon: [{ cle: "", libelle: "" }, ...genererArrondissements(9)]
 };
 
-const AdresseFrance = memo(({ prefix, afficherAdresse = true }: { prefix: string; afficherAdresse?: boolean }) => {
-  const [fieldVille] = useField(`${prefix}.ville`);
+const AdresseFrance = ({ prefixe, afficherAdresse = true }: { prefixe: string; afficherAdresse?: boolean }) => {
+  const [fieldVille] = useField(`${prefixe}.ville`);
   const estVilleSpeciale = useMemo(
     () => VILLES_SPECIALES.includes(fieldVille.value?.toLowerCase().trim() as TVilleSpeciale),
     [fieldVille.value]
@@ -43,7 +43,7 @@ const AdresseFrance = memo(({ prefix, afficherAdresse = true }: { prefix: string
       <div className="flex gap-4">
         <div className="flex-1">
           <ChampTexte
-            name={`${prefix}.ville`}
+            name={`${prefixe}.ville`}
             libelle="Ville"
             optionFormatage="PREMIER_MAJUSCULE"
             estObligatoire
@@ -52,7 +52,7 @@ const AdresseFrance = memo(({ prefix, afficherAdresse = true }: { prefix: string
         {estVilleSpeciale && (
           <div className="flex-1">
             <ChampListeDeroulante
-              name={`${prefix}.arrondissement`}
+              name={`${prefixe}.arrondissement`}
               libelle="Arrondissement"
               options={ARRONDISSEMENTS_OPTIONS[fieldVille.value.toLowerCase().trim() as TVilleSpeciale]}
               premiereLettreMajuscule
@@ -62,7 +62,7 @@ const AdresseFrance = memo(({ prefix, afficherAdresse = true }: { prefix: string
         {fieldVille.value?.toLowerCase().trim() !== "paris" && (
           <div className="flex-1">
             <ChampTexte
-              name={`${prefix}.departement`}
+              name={`${prefixe}.departement`}
               libelle="Département"
               estObligatoire
             />
@@ -71,30 +71,30 @@ const AdresseFrance = memo(({ prefix, afficherAdresse = true }: { prefix: string
       </div>
       {afficherAdresse && (
         <ChampTexte
-          name={`${prefix}.adresse`}
+          name={`${prefixe}.adresse`}
           libelle="Adresse"
         />
       )}
     </div>
   );
-});
+};
 
-const AdresseEtranger = memo(({ prefix, afficherAdresse = true }: { prefix: string; afficherAdresse?: boolean }) => (
+const AdresseEtranger = ({ prefixe, afficherAdresse = true }: { prefixe: string; afficherAdresse?: boolean }) => (
   <div>
     <div className="mt-4 grid grid-cols-2 gap-4">
       <ChampTexte
-        name={`${prefix}.ville`}
+        name={`${prefixe}.ville`}
         libelle="Ville"
         optionFormatage="PREMIER_MAJUSCULE"
       />
       <ChampTexte
-        name={`${prefix}.etatProvince`}
+        name={`${prefixe}.etatProvince`}
         libelle="État, canton, province"
       />
     </div>
     <div className="mt-4">
       <ChampTexte
-        name={`${prefix}.pays`}
+        name={`${prefixe}.pays`}
         libelle="Pays"
         optionFormatage="PREMIER_MAJUSCULE"
       />
@@ -102,33 +102,45 @@ const AdresseEtranger = memo(({ prefix, afficherAdresse = true }: { prefix: stri
     <div className="mt-4">
       {afficherAdresse && (
         <ChampTexte
-          name={`${prefix}.adresse`}
+          name={`${prefixe}.adresse`}
           libelle="Adresse"
         />
       )}
     </div>
   </div>
-));
+);
 
-const FormulaireAdresse: React.FC<IFormulaireAdresseProps> = memo(({ prefix, libelle, afficherAdresse = true }) => {
-  const [fieldTypeLieu] = useField(`${prefix}.typeLieu`);
+const FormulaireAdresse: React.FC<IFormulaireAdresseProps> = memo(({ prefixe, libelle, afficherAdresse = true }) => {
+  const [fieldTypeLieu] = useField(`${prefixe}.typeLieu`);
+
+  const { setFieldValue } = useFormikContext();
+
+  useEffect(() => {
+    const champsAReinitialiser = ["ville", "arrondissement", "departement", "etatProvince", "pays", "adresse"];
+
+    if (fieldTypeLieu.value) {
+      champsAReinitialiser.forEach(champ => {
+        setFieldValue(`${prefixe}.${champ}`, "");
+      });
+    }
+  }, [fieldTypeLieu.value]);
 
   return (
     <div>
       <ChampsRadio
-        name={`${prefix}.typeLieu`}
+        name={`${prefixe}.typeLieu`}
         libelle={libelle}
         options={TYPES_LIEU}
       />
       {fieldTypeLieu.value === "France" && (
         <AdresseFrance
-          prefix={prefix}
+          prefixe={prefixe}
           afficherAdresse={afficherAdresse}
         />
       )}
       {fieldTypeLieu.value === "Étranger" && (
         <AdresseEtranger
-          prefix={prefix}
+          prefixe={prefixe}
           afficherAdresse={afficherAdresse}
         />
       )}
