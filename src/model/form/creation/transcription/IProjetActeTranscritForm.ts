@@ -441,7 +441,25 @@ export const ProjetTranscriptionForm = {
     evenement: {
       ...ProjetTranscriptionForm.versDtoPost(valeursSaisies).evenement,
       id: projetActe?.evenement.id
-    }
+    },
+    analyseMarginales: projetActe.analysesMarginales[0]
+      ? [
+          {
+            ...projetActe.analysesMarginales[0],
+            dateDebut: projetActe.analysesMarginales[0].dateDebut.versTimestamp(),
+            dateFin: projetActe.analysesMarginales[0].dateFin?.versTimestamp(),
+            titulaires: projetActe.analysesMarginales[0].titulaires[0]
+              ? [
+                  {
+                    ...projetActe.analysesMarginales[0].titulaires[0],
+                    nom: valeursSaisies.titulaire.nomRetenuOEC.trim(),
+                    prenoms: PrenomsForm.versPrenomsStringDto(valeursSaisies.titulaire.prenomsChemin)
+                  }
+                ]
+              : []
+          }
+        ]
+      : []
   })
 };
 
