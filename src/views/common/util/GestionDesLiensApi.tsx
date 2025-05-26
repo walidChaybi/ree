@@ -14,22 +14,23 @@ export interface IParamsTableau {
   maxRangeState?: number;
 }
 
+export const PARAMS_TABLEAU_VIDE: IParamsTableau = {
+  previousDataLinkState: "",
+  nextDataLinkState: "",
+  rowsNumberState: 0,
+  minRangeState: 0,
+  maxRangeState: 0
+};
+
 export function parseLink(linkHeader: string) {
   let nextLink = "";
   let prevLink = "";
   if (linkHeader && linkHeader.indexOf(`rel="next"`) > 0) {
-    nextLink = linkHeader
-      .split(`;rel="next"`)[0]
-      .replace("<", "")
-      .replace(">", "");
+    nextLink = linkHeader.split(`;rel="next"`)[0].replace("<", "").replace(">", "");
     nextLink = `${nextLink}`;
   }
   if (linkHeader && linkHeader.indexOf(`rel="prev"`) > 0) {
-    prevLink = linkHeader
-      .replace(`<${nextLink}>;rel="next",`, "")
-      .split(`;rel="prev"`)[0]
-      .replace("<", "")
-      .replace(">", "");
+    prevLink = linkHeader.replace(`<${nextLink}>;rel="next",`, "").split(`;rel="prev"`)[0].replace("<", "").replace(">", "");
     prevLink = `${prevLink}`; // FIXME suppressin de ${api.url}:${api.ports} (à vérifier)
   }
   return { nextLink, prevLink };
@@ -38,9 +39,7 @@ export function parseLink(linkHeader: string) {
 const contentRange = "content-range";
 
 export function getRowsNumber(result: any) {
-  return result.headers[contentRange]
-    ? +(result.headers[contentRange] as string).split("/")[1]
-    : undefined;
+  return result.headers[contentRange] ? +(result.headers[contentRange] as string).split("/")[1] : undefined;
 }
 
 export function getMinRange(result: any) {
@@ -52,9 +51,7 @@ export function getMaxRange(result: any) {
 }
 
 function getRange(result: any, nb: number) {
-  return result.headers[contentRange]
-    ? +(result.headers[contentRange] as string).split("/")[0].split("-")[nb]
-    : undefined;
+  return result.headers[contentRange] ? +(result.headers[contentRange] as string).split("/")[0].split("-")[nb] : undefined;
 }
 
 export function getParamsTableau(result: any): IParamsTableau {

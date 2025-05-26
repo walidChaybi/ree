@@ -8,7 +8,8 @@ import { IFiltresServiceRequeteInformationFormValues } from "@model/requete/IFil
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
-import { ICriteresRMCAutoRequete, IRMCRequestRequete } from "@model/rmc/requete/IRMCRequestRequete";
+import { IRMCRequestRequete } from "@model/rmc/requete/IRMCRequestRequete";
+import { IEnveloppeCriteresRMCAutoRequete } from "@pages/rechercheMultiCriteres/autoRequetes/hook/RMCAutoRequeteApiHook";
 import { SortOrder } from "@widget/tableau/TableUtils";
 import { HttpMethod } from "../ApiManager";
 import { URL_MENTION } from "./etatcivilApi";
@@ -639,7 +640,7 @@ export function postIgnorerRequete(idRequete: string, texteObservation: string) 
   );
 }
 
-export function rechercheMultiCriteresAutoRequetes(criteres: ICriteresRMCAutoRequete, range?: string): Promise<any> {
+export function rechercheMultiCriteresAutoRequetes(criteres: IEnveloppeCriteresRMCAutoRequete, range?: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,

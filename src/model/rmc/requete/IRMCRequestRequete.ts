@@ -1,9 +1,5 @@
 import { TypeRequete } from "../../requete/enum/TypeRequete";
 
-
-export interface ICriteresRMCAutoRequete {
-  criteres: IRMCRequestRequete[];
-}
 export interface IRMCRequestRequete {
   // Filtre Requete
   numeroRequete?: string;
