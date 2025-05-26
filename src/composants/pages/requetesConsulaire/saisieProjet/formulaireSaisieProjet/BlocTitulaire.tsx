@@ -58,8 +58,7 @@ const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
           libelle="Sexe"
           options={[
             { libelle: Sexe.MASCULIN.libelle, cle: Sexe.getKey(Sexe.MASCULIN) },
-            { libelle: Sexe.FEMININ.libelle, cle: Sexe.getKey(Sexe.FEMININ) },
-            { libelle: Sexe.INDETERMINE.libelle, cle: Sexe.getKey(Sexe.INDETERMINE) }
+            { libelle: Sexe.FEMININ.libelle, cle: Sexe.getKey(Sexe.FEMININ) }
           ]}
         />
         <ChampDate

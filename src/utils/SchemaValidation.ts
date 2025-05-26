@@ -90,11 +90,11 @@ const getSchemaValidationDate = (bloquerDateFuture?: boolean): Yup.ObjectSchema<
         : true;
     })
     .test("heureValide", (date, error) => {
-      if (!date.heure) {
+      if (!date.heure && !date.minute) {
         return true;
       }
 
-      return Number(date.heure) >= 24
+      return !date.heure || Number(date.heure) >= 24
         ? error.createError({
             path: `${error.path}.heure`,
             message: messagesErreur.DATE_INVALIDE
@@ -108,7 +108,7 @@ const getSchemaValidationDate = (bloquerDateFuture?: boolean): Yup.ObjectSchema<
 
       return Number(date.minute) >= 60
         ? error.createError({
-            path: `${error.path}.heure`,
+            path: `${error.path}.minute`,
             message: messagesErreur.DATE_INVALIDE
           })
         : true;

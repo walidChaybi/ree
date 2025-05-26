@@ -115,16 +115,16 @@ class DateRECE {
     switch (true) {
       case !this.date.heure && !this.date.minute:
         return true;
-      case !this.date.heure || !this.date.minute:
+      case !this.date.heure && Boolean(this.date.minute):
         return false;
       default:
         break;
     }
 
     const nombreHeure = parseInt(this.date.heure);
-    const nombreMinute = parseInt(this.date.minute);
+    const nombreMinute = this.date.minute ? parseInt(this.date.minute) : null;
 
-    return nombreHeure >= 0 && nombreHeure < 24 && nombreMinute >= 0 && nombreMinute < 60;
+    return nombreHeure >= 0 && nombreHeure < 24 && (nombreMinute === null || (nombreMinute >= 0 && nombreMinute < 60));
   }
 
   /* Formats */
@@ -137,15 +137,15 @@ class DateRECE {
       case "JJ/MM/AAAA":
         return this.formatJourMoisAnnee(optionPrefixe);
       case "JJ/MM/AAAA à HHhmm":
-        return this.formatJourMoisAnneeHeure(optionPrefixe);
+        return this.estHeureValide ? this.formatJourMoisAnneeHeure(optionPrefixe) : "";
       case "JJ mois AAAA":
         return this.formatJourMoisLettreAnnee(optionPrefixe);
       case "JJ mois AAAA à HHhmm":
-        return this.formatJourMoisLettreAnneeHeure(optionPrefixe);
+        return this.estHeureValide ? this.formatJourMoisLettreAnneeHeure(optionPrefixe) : "";
       case "Date Toutes Lettres":
         return this.formatDateToutesLettres(optionPrefixe);
       case "Date/heure Toutes Lettres":
-        return this.formatDateHeureToutesLettres(optionPrefixe);
+        return this.estHeureValide ? this.formatDateHeureToutesLettres(optionPrefixe) : "";
       default:
         return "";
     }

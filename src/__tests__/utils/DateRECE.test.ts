@@ -31,7 +31,7 @@ describe("test du Helper dateRECEComplete", () => {
     expect(DateRECE.depuisObjetDate({ jour: 0, mois: 0, annee: 0 }).estDateValide).toBeFalsy();
 
     expect(DateRECE.depuisObjetDate({ heure: "", minute: "" }).estHeureValide).toBeTruthy();
-    expect(DateRECE.depuisObjetDate({ heure: 1, minute: "" }).estHeureValide).toBeFalsy();
+    expect(DateRECE.depuisObjetDate({ heure: 1, minute: "" }).estHeureValide).toBeTruthy();
     expect(DateRECE.depuisObjetDate({ heure: -1, minute: -1 }).estHeureValide).toBeFalsy();
     expect(DateRECE.depuisObjetDate({ heure: 24, minute: 60 }).estHeureValide).toBeFalsy();
 
