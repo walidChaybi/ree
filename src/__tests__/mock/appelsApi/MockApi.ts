@@ -55,7 +55,7 @@ export class MockApi {
 
     MockApi.getMock()
       [onMethode](parametres?.regexp ? new RegExp(uriAvecParametres) : uriAvecParametres)
-      .reply(reponse?.codeHttp ?? 200, reponse);
+      .reply(reponse?.codeHttp ?? 200, config.api.estExterne ? reponse?.data : reponse);
 
     return MockApi;
   }
@@ -66,7 +66,7 @@ export class MockApi {
     TQuery extends object | undefined,
     TResultat = unknown
   >(config: TConfigurationApi<TUri, TBody, TQuery, TResultat>, parametres?: TParametres<TUri, TBody, TQuery>): string {
-    const baseUri = ["http://localhost/rece", config.api.nom, config.api.version].join("/");
+    const baseUri = config.api.estExterne ? config.api.nom : ["http://localhost/rece", config.api.nom, config.api.version].join("/");
 
     if (!parametres) {
       return baseUri.concat(config.uri);
@@ -76,11 +76,17 @@ export class MockApi {
       (uriGeneree, [cle, valeur]) => uriGeneree.replace(`:${cle}`, valeur as string) as TUri,
       config.uri
     );
+    const hasQueryParams = uriAvecPathParams.includes("?");
+
     const query = Object.entries(parametres.query ?? {})
       .map(([cle, valeur]) => `${cle}=${valeur}`)
       .join("&");
 
-    return `${baseUri}${uriAvecPathParams}${query ? "?".concat(query) : ""}` as TUri;
+    if (query) {
+      return `${baseUri}${uriAvecPathParams}${hasQueryParams ? "&" : "?"}${query}` as TUri;
+    }
+
+    return `${baseUri}${uriAvecPathParams}` as TUri;
   }
 
   public static stopMock() {

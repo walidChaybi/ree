@@ -7,7 +7,8 @@ export type TApiAutorisee =
   | "rece-outiltech-api"
   | "rece-etatcivil-api"
   | "rece-composition-api"
-  | "rece-televerification-api";
+  | "rece-televerification-api"
+  | "https://geo.api.gouv.fr";
 
 export type TMethodeHttp = "GET" | "DELETE" | "PATCH" | "POST" | "PUT";
 
@@ -55,7 +56,7 @@ export type TConfigurationRequeteHttp<TUri extends TBaseUri, TBody extends objec
   responseType?: "blob";
 };
 
-export type TApi = { nom: TApiAutorisee; version: string };
+export type TApi = { nom: TApiAutorisee; version: string; estExterne?: boolean };
 
 export type TBaseUri = `/${string}`;
 

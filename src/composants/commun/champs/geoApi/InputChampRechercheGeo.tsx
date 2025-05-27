@@ -1,0 +1,37 @@
+import { Search } from "@mui/icons-material";
+import { AutocompleteRenderInputParams } from "@mui/material/Autocomplete";
+
+export const InputChampRecherche: React.FC<AutocompleteRenderInputParams & { enErreur: boolean; error?: string }> = ({
+  inputProps,
+  InputProps,
+  enErreur,
+  error
+}) => {
+  const { className, ...props } = inputProps;
+
+  return (
+    <>
+      <div
+        ref={InputProps.ref}
+        className={`flex items-center rounded-md border border-solid px-2 py-1 transition-colors focus-within:ring-2 focus-within:ring-opacity-70 ${
+          enErreur ? "border-rouge focus-within:ring-rouge" : "border-gris focus-within:ring-bleu"
+        }`}
+      >
+        <Search className="h-5 w-5 text-gris" />
+        <input
+          className="flex-grow border-none bg-transparent read-only:bg-gris-clair focus:border-none focus:outline-none focus:ring-0"
+          type="text"
+          {...props}
+        />
+      </div>
+      {enErreur && (
+        <div
+          className="mt-1 text-sm text-rouge"
+          role="alert"
+        >
+          {error}
+        </div>
+      )}
+    </>
+  );
+};

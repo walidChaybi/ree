@@ -28,3 +28,9 @@ export const TELEVERIFICATION_API: TApi = {
   nom: "rece-televerification-api",
   version: "v1"
 };
+
+export const GEO_API: TApi = {
+  nom: "https://geo.api.gouv.fr",
+  version: "",
+  estExterne: true
+};

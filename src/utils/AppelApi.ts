@@ -9,6 +9,7 @@ type TAppelParams<TUri extends TBaseUri, TBody extends object | undefined, TQuer
   api: {
     nom: TApiAutorisee;
     version: string;
+    estExterne?: boolean;
   };
   configurationRequete: TConfigurationRequeteHttp<TUri, TBody, TQuery>;
 };
@@ -19,16 +20,24 @@ export const ID_CORRELATION_HEADER_NAME = "X-Correlation-Id";
 const genererUri = <TUri extends TBaseUri, TBody extends object | undefined, TQuery extends object | undefined>(
   appelParams: TAppelParams<TUri, TBody, TQuery>
 ): TUri => {
-  const baseUri = `${window.location.protocol}//${window.location.hostname}/rece/${appelParams.api.nom}/${appelParams.api.version}`;
+  const baseUri = appelParams.api.estExterne
+    ? appelParams.api.nom
+    : `${window.location.protocol}//${window.location.hostname}/rece/${appelParams.api.nom}/${appelParams.api.version}`;
+
   const uriAvecPathParams = Object.entries(appelParams.configurationRequete.path ?? {}).reduce(
     (uriGeneree, [cle, valeur]) => uriGeneree.replace(`:${cle}`, valeur as string) as TUri,
     appelParams.configurationRequete.uri
   );
+  const hasQueryParams = uriAvecPathParams.includes("?");
   const query = Object.entries(appelParams.configurationRequete.query ?? {})
     .map(([cle, valeur]) => `${cle}=${valeur}`)
     .join("&");
 
-  return `${baseUri}${uriAvecPathParams}${query ? "?".concat(query) : ""}` as TUri;
+  if (query) {
+    return `${baseUri}${uriAvecPathParams}${hasQueryParams ? "&" : "?"}${query}` as TUri;
+  }
+
+  return `${baseUri}${uriAvecPathParams}` as TUri;
 };
 
 const API = {
@@ -47,7 +56,7 @@ const API = {
     })
       .then(response => {
         return Promise.resolve<TReponseApiSucces<TResultat>>({
-          data: response.data?.data ?? {},
+          data: (appelParams.api.estExterne ? response.data : response.data?.data) || {},
           avertissements: response.data?.errors ?? [],
           status: response.status,
           headers: response.headers as THeader

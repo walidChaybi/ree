@@ -232,6 +232,7 @@ export const SaisieRequeteRCTCForm = {
     const reconnaissance = titulaire?.evenementUnions?.find(evenement => evenement.type === NatureActe.getKey(NatureActe.RECONNAISSANCE));
     const mariageParent1 = parent1?.evenementUnions?.find(evenement => evenement.type === NatureActe.getKey(NatureActe.MARIAGE));
     const mariageParent2 = parent2?.evenementUnions?.find(evenement => evenement.type === NatureActe.getKey(NatureActe.MARIAGE));
+
     const donneesLieuReconnaissance = (() => {
       const lieu = (() => {
         switch (mariageParent1?.pays) {
@@ -243,7 +244,7 @@ export const SaisieRequeteRCTCForm = {
             return "ETRANGER";
         }
       })();
-      const regionDepartement = mariageParent1?.region ?? "";
+      const regionDepartement = reconnaissance?.region ?? "";
 
       return {
         lieu: lieu,

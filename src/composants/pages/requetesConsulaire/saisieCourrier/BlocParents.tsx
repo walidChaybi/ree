@@ -14,6 +14,8 @@ import ChampNationalite from "../../../commun/champs/ChampNationalite";
 import ChampTexte from "../../../commun/champs/ChampTexte";
 import ChampsPrenoms from "../../../commun/champs/ChampsPrenoms";
 import ChampsRadio from "../../../commun/champs/ChampsRadio";
+import ChampRechercheDepartement from "../../../commun/champs/geoApi/ChampRechercheDepartement";
+import ChampRechercheVille from "../../../commun/champs/geoApi/ChampRechercheVille";
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import SeparateurSection from "../../../commun/conteneurs/formulaire/SeparateurSection";
 
@@ -79,38 +81,44 @@ const BlocParent: React.FC<{ valeursParent: IParentFormRCTC; indexParent: number
               })
             }
           />
-          {valeursParent.naissance.typeLieu && (
+
+          {valeursParent.naissance.typeLieu === "FRANCE" && (
+            <>
+              <ChampRechercheVille
+                name={`${prefixParent}.naissance.ville`}
+                libelle="Ville de naissance"
+                cheminChampDepartement={`${prefixParent}.naissance.departement`}
+              />
+
+              {["paris", "marseille", "lyon"].includes(valeursParent?.naissance?.ville?.toLowerCase().trim()) && (
+                <ChampListeDeroulante
+                  name={`${prefixParent}.naissance.arrondissement`}
+                  libelle="Arrondissement de naissance"
+                  options={ARRONDISSEMENTS[valeursParent.naissance.ville.toLowerCase().trim()] ?? []}
+                />
+              )}
+
+              <ChampRechercheDepartement
+                name={`${prefixParent}.naissance.departement`}
+                libelle="Département de naissance"
+              />
+            </>
+          )}
+
+          {valeursParent.naissance.typeLieu === "ETRANGER" && (
             <>
               <ChampTexte
                 name={`${prefixParent}.naissance.ville`}
                 libelle="Ville de naissance"
               />
-              {["paris", "marseille", "lyon"].includes(valeursParent?.naissance?.ville?.toLowerCase().trim()) &&
-                valeursParent.naissance.typeLieu === "FRANCE" && (
-                  <ChampListeDeroulante
-                    name={`${prefixParent}.naissance.arrondissement`}
-                    libelle="Arrondissement de naissance"
-                    options={ARRONDISSEMENTS[valeursParent.naissance.ville.toLowerCase().trim()] ?? []}
-                  />
-                )}
-              {valeursParent.naissance.typeLieu === "FRANCE" && valeursParent?.naissance?.ville?.toLowerCase().trim() !== "paris" && (
-                <ChampTexte
-                  name={`${prefixParent}.naissance.departement`}
-                  libelle="Département de naissance"
-                />
-              )}
-              {valeursParent.naissance.typeLieu === "ETRANGER" && (
-                <>
-                  <ChampTexte
-                    name={`${prefixParent}.naissance.etatProvince`}
-                    libelle="État, canton, province de naissance"
-                  />
-                  <ChampTexte
-                    name={`${prefixParent}.naissance.pays`}
-                    libelle="Pays de naissance"
-                  />
-                </>
-              )}
+              <ChampTexte
+                name={`${prefixParent}.naissance.etatProvince`}
+                libelle="État, canton, province de naissance"
+              />
+              <ChampTexte
+                name={`${prefixParent}.naissance.pays`}
+                libelle="Pays de naissance"
+              />
             </>
           )}
         </div>
@@ -199,18 +207,24 @@ const BlocParents: React.FC = () => {
                 apresChangement={typeLieu => setFieldValue("parents.mariage.pays", typeLieu === "FRANCE" ? "France" : "")}
               />
 
-              {values.parents.mariage.lieu && (
+              {values.parents.mariage.lieu === "FRANCE" && (
+                <ChampRechercheVille
+                  name="parents.mariage.ville"
+                  libelle="Ville du mariage"
+                />
+              )}
+
+              {values.parents.mariage.lieu === "ETRANGER" && (
                 <>
                   <ChampTexte
                     name="parents.mariage.ville"
                     libelle="Ville du mariage"
                   />
-                  {values.parents.mariage.lieu === "ETRANGER" && (
-                    <ChampTexte
-                      name="parents.mariage.pays"
-                      libelle="Pays du mariage"
-                    />
-                  )}
+
+                  <ChampTexte
+                    name="parents.mariage.pays"
+                    libelle="Pays du mariage"
+                  />
                 </>
               )}
             </div>
@@ -220,7 +234,7 @@ const BlocParents: React.FC = () => {
         <div>
           <SeparateurSection
             className="pt-6"
-            titre="Le titulaire à été reconnu ?"
+            titre="Le titulaire a été reconnu ?"
             libellePour="parents.reconnaissance.titulaireReconnu"
           />
           <ChampsRadio
@@ -247,30 +261,37 @@ const BlocParents: React.FC = () => {
                 ]}
                 apresChangement={typeLieu => setFieldValue("parents.reconnaissance.pays", typeLieu === "FRANCE" ? "France" : "")}
               />
-              {values.parents.reconnaissance.lieu && (
+
+              {values.parents.reconnaissance.lieu === "FRANCE" && (
+                <>
+                  <ChampRechercheVille
+                    name={"parents.reconnaissance.ville"}
+                    libelle="Ville de la reconnaissance"
+                    cheminChampDepartement={"parents.reconnaissance.departement"}
+                  />
+
+                  <ChampRechercheDepartement
+                    name={`parents.reconnaissance.departement`}
+                    libelle="Département de la reconnaissance"
+                  />
+                </>
+              )}
+
+              {values.parents.reconnaissance.lieu === "ETRANGER" && (
                 <>
                   <ChampTexte
                     name="parents.reconnaissance.ville"
-                    libelle="Ville de la reconaissance"
+                    libelle="Ville de la reconnaissance"
                   />
-                  {values.parents.reconnaissance.lieu === "FRANCE" && (
-                    <ChampTexte
-                      name="parents.reconnaissance.departement"
-                      libelle="Département de la reconaissance"
-                    />
-                  )}
-                  {values.parents.reconnaissance.lieu === "ETRANGER" && (
-                    <>
-                      <ChampTexte
-                        name="parents.reconnaissance.region"
-                        libelle="Région/état de la reconaissance"
-                      />
-                      <ChampTexte
-                        name="parents.reconnaissance.pays"
-                        libelle="Pays de la reconaissance"
-                      />
-                    </>
-                  )}
+
+                  <ChampTexte
+                    name="parents.reconnaissance.region"
+                    libelle="Région/état de la reconnaissance"
+                  />
+                  <ChampTexte
+                    name="parents.reconnaissance.pays"
+                    libelle="Pays de la reconnaissance"
+                  />
                 </>
               )}
             </div>

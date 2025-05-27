@@ -108,6 +108,7 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estParent1 }) => {
         titre="Profession"
         libellePour={`${prefixe}.profession`}
       />
+
       <div className="grid grid-cols-2 items-center gap-4">
         <ChampTexte
           name={`${prefixe}.profession`}
