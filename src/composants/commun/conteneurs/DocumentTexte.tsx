@@ -6,7 +6,7 @@ interface IStyleDocument {
 }
 
 const COEFFICIENT_MARGE = 0.05;
-const COEFFICIENT_TAILLE_POLICE = 0.01956;
+const COEFFICIENT_TAILLE_POLICE = 0.01785;
 
 const DocumentTexte: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [refDocument, setRefDocument] = useState<HTMLDivElement | null>(null);
@@ -36,7 +36,7 @@ const DocumentTexte: React.FC<React.PropsWithChildren> = ({ children }) => {
     >
       <div
         ref={setRefContenuDocument}
-        className="flex aspect-[21/29.7] w-full"
+        className="flex aspect-[21/29.7] w-full overflow-hidden break-words"
         style={styleDocument}
       >
         {children}

@@ -25,7 +25,7 @@ const ModaleProjetActe: React.FC<IModaleProjetActeProps> = ({ pdfBase64, fermerM
 
         <div className="flex flex-grow overflow-hidden">
           <div className="h-full w-3/5 animate-entree-gauche overflow-hidden p-6">
-            <div className="flex h-full w-full rounded-lg border border-gray-100 shadow-md">
+            <div className="flex h-[calc(100%-2rem)] w-full rounded-lg border border-gray-100 shadow-md">
               <AffichagePDF
                 contenuBase64={pdfBase64}
                 typeZoom={90}

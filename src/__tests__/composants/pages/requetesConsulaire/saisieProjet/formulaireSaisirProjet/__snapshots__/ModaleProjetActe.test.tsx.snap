@@ -28,10 +28,10 @@ exports[`ModaleProjetActe - Tests du composant > Doit rendre le composant correc
           class="h-full w-3/5 animate-entree-gauche overflow-hidden p-6"
         >
           <div
-            class="flex h-full w-full rounded-lg border border-gray-100 shadow-md"
+            class="flex h-[calc(100%-2rem)] w-full rounded-lg border border-gray-100 shadow-md"
           >
             <div
-              class="mb-8 flex-grow overflow-hidden"
+              class="flex-grow overflow-hidden"
             >
               <iframe
                 class="h-full w-full overflow-auto border-0"
