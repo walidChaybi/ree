@@ -2,10 +2,7 @@ import { CONFIG_PUT_ANALYSE_MARGINALE_ET_MENTIONS } from "@api/configurations/et
 import { CONFIG_PUT_MISE_A_JOUR_ANALYSE_MARGINALE } from "@api/configurations/etatCivil/PutMiseAJourAnalyseMarginaleConfigApi";
 import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
 import { MiseAJourAnalyseMarginaleValeursForm } from "@api/validations/requeteMiseAJour/MiseAJourAnalyseMarginaleValidation";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
-import { estOfficierHabiliterPourTousLesDroits } from "@model/agent/IOfficier";
-import { Droit } from "@model/agent/enum/Droit";
 import { TErreurApi } from "@model/api/Api";
 import { FicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
@@ -22,8 +19,8 @@ import { ConteneurBoutonBasDePage } from "../../commun/bouton/conteneurBoutonBas
 import PageChargeur from "../../commun/chargeurs/PageChargeur";
 import OngletsBouton from "../../commun/onglets/OngletsBouton";
 import OngletsContenu from "../../commun/onglets/OngletsContenu";
-import SignatureMiseAJour from "../../commun/signature/SignatureMiseAJour";
 import AnalyseMarginaleForm from "./formulaires/AnalyseMarginaleForm";
+import BoutonTerminerEtSigner from "./formulaires/BoutonTerminerEtSigner";
 import BoutonValiderEtTerminer from "./formulaires/BoutonValiderEtTerminer";
 import MentionForm from "./formulaires/MentionForm";
 import TableauMentions from "./formulaires/mentions/TableauMentions";
@@ -67,11 +64,9 @@ export interface IMiseAJourForm {
 }
 
 export const PartieFormulaire: React.FC = () => {
-  const { utilisateurConnecte } = useContext(RECEContextData);
-  const { estMiseAJourAvecMentions, ongletsActifs, idActe, miseAJourEffectuee, idRequete } = useContext(EditionMiseAJourContext.Valeurs);
-  const { changerOnglet, activerOngletActeMisAJour, setComposerActeMisAJour, setEstActeSigne, desactiverBlocker } = useContext(
-    EditionMiseAJourContext.Actions
-  );
+  const { estMiseAJourAvecMentions, ongletsActifs, idActe, miseAJourEffectuee } = useContext(EditionMiseAJourContext.Valeurs);
+  const { changerOnglet, activerOngletActeMisAJour, setComposerActeMisAJour } = useContext(EditionMiseAJourContext.Actions);
+
   const { appelApi: appelApiMiseAJourAnalyseMarginaleEtMentions, enAttenteDeReponseApi: enAttenteMiseAJourAnalyseMarginaleEtMention } =
     useFetchApi(CONFIG_PUT_ANALYSE_MARGINALE_ET_MENTIONS);
   const { appelApi: appelApiMisAJourAnalyseMarginale, enAttenteDeReponseApi: enAttenteMiseAJourAnalyseMarginale } = useFetchApi(
@@ -104,54 +99,48 @@ export const PartieFormulaire: React.FC = () => {
     MiseAJourForm.getSchemaValidation(afficherAnalyseMarginale);
   }, [afficherAnalyseMarginale]);
 
-  const traitementRetourApi = useCallback(
-    (reinitialiser: () => void) => ({
-      apresSucces: () => {
-        activerOngletActeMisAJour();
-        setComposerActeMisAJour(true);
-        changerOnglet(ECleOngletsMiseAJour.ACTE_MIS_A_JOUR, null);
-        reinitialiser();
-      },
-      apresErreur: (erreurs: TErreurApi[]) => {
-        if (erreurs?.find(erreur => erreur.code === "FCT_16136")) {
-          messageManager.showError("Aucune modification de l'analyse marginale n'a été détectée");
-
-          return;
-        }
-        estMiseAJourAvecMentions
-          ? messageManager.showError("Impossible de mettre à jour l'acte")
-          : messageManager.showError("Impossible de mettre à jour l'analyse marginale");
-      }
-    }),
-    [activerOngletActeMisAJour, setComposerActeMisAJour, changerOnglet]
-  );
-
   const actualiserEtVisualiser = useCallback(
     (valeurs: MiseAJourForm, reinitialiser: () => void) => {
+      const apresRetour = {
+        apresSucces: () => {
+          activerOngletActeMisAJour();
+          setComposerActeMisAJour(true);
+          changerOnglet(ECleOngletsMiseAJour.ACTE_MIS_A_JOUR, null);
+          reinitialiser();
+        },
+        apresErreur: (erreurs: TErreurApi[]) => {
+          const messageErreur = (() => {
+            switch (true) {
+              case Boolean(erreurs?.find(erreur => erreur.code === "FCT_16136")):
+                return "Aucune modification de l'analyse marginale n'a été détectée";
+              case estMiseAJourAvecMentions:
+                return "Impossible de mettre à jour l'acte";
+              default:
+                return "Impossible de mettre à jour l'analyse marginale";
+            }
+          })();
+
+          messageManager.showErrorAndClose(messageErreur);
+        }
+      };
+
       estMiseAJourAvecMentions
         ? appelApiMiseAJourAnalyseMarginaleEtMentions({
             parametres: {
               body: valeurs.versDto(idActe, afficherAnalyseMarginale && analyseMarginaleModifiee)
             },
-            ...traitementRetourApi(reinitialiser)
+            ...apresRetour
           })
         : appelApiMisAJourAnalyseMarginale({
             parametres: {
               path: { idActe: idActe },
               body: MiseAJourAnalyseMarginaleValeursForm.versDto(valeurs.analyseMarginale)
             },
-            ...traitementRetourApi(reinitialiser)
+            ...apresRetour
           });
     },
-    [appelApiMisAJourAnalyseMarginale, appelApiMiseAJourAnalyseMarginaleEtMentions, traitementRetourApi]
+    [appelApiMisAJourAnalyseMarginale, appelApiMiseAJourAnalyseMarginaleEtMentions]
   );
-
-  const onSignatureValidee = useCallback(() => {
-    changerOnglet(ECleOngletsMiseAJour.ACTE, null);
-    setEstActeSigne(true);
-    messageManager.showSuccessAndClose("L'acte a été mis à jour avec succès.");
-    desactiverBlocker();
-  }, [changerOnglet, setEstActeSigne, desactiverBlocker]);
 
   return (
     <>
@@ -220,14 +209,7 @@ export const PartieFormulaire: React.FC = () => {
                     </Bouton>
 
                     {estMiseAJourAvecMentions ? (
-                      estOfficierHabiliterPourTousLesDroits(utilisateurConnecte, [Droit.SIGNER_MENTION, Droit.METTRE_A_JOUR_ACTE]) && (
-                        <SignatureMiseAJour
-                          idActe={idActe}
-                          idRequete={idRequete}
-                          peutSigner={!formulaireMentionEnCoursDeSaisie && isValid && !dirty && miseAJourEffectuee}
-                          apresSignature={onSignatureValidee}
-                        />
-                      )
+                      <BoutonTerminerEtSigner saisieMentionEnCours={formulaireMentionEnCoursDeSaisie} />
                     ) : (
                       <BoutonValiderEtTerminer disabled={!miseAJourEffectuee || dirty} />
                     )}
@@ -247,8 +229,6 @@ export const PartieFormulaire: React.FC = () => {
           </div>
         )}
       </div>
-
-      <div id="conteneur-modale-signature"></div>
     </>
   );
 };

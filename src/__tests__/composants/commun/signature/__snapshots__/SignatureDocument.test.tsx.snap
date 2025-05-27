@@ -1,0 +1,190 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Test du composant SignatureDocument > La fermeture de la modale de signature après erreur n'appelle pas apresSignature avec erreur 1`] = `
+<div>
+  <div
+    class="text-center"
+  >
+    <div
+      class="font-bold text-rouge"
+    >
+      ⚠ Impossible d'effectuer la signature :
+    </div>
+    <div
+      class="text-rouge"
+    >
+      Erreur récupération informations
+    </div>
+    <button
+      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc mt-6"
+      title="Fermer"
+      type="button"
+    >
+      Fermer
+    </button>
+  </div>
+  <div
+    id="conteneur-modale-signature"
+  />
+</div>
+`;
+
+exports[`Test du composant SignatureDocument > La modale de signature affiche correctement une erreur d'enregistrement du document signé 1`] = `
+<div>
+  <div
+    class="text-center"
+  >
+    <div
+      class="font-bold text-rouge"
+    >
+      ⚠ Impossible d'effectuer la signature :
+    </div>
+    <div
+      class="text-rouge"
+    >
+      Erreur lors de l'enregistrement des mentions signées 
+    </div>
+    <button
+      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc mt-6"
+      title="Fermer"
+      type="button"
+    >
+      Fermer
+    </button>
+  </div>
+  <div
+    id="conteneur-modale-signature"
+  />
+</div>
+`;
+
+exports[`Test du composant SignatureDocument > La modale de signature affiche correctement une erreur de composition du document 1`] = `
+<div>
+  <div
+    class="text-center"
+  >
+    <div
+      class="font-bold text-rouge"
+    >
+      ⚠ Impossible d'effectuer la signature :
+    </div>
+    <div
+      class="text-rouge"
+    >
+      Erreur lors de la composition du document à signer
+    </div>
+    <button
+      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc mt-6"
+      title="Fermer"
+      type="button"
+    >
+      Fermer
+    </button>
+  </div>
+  <div
+    id="conteneur-modale-signature"
+  />
+</div>
+`;
+
+exports[`Test du composant SignatureDocument > La modale de signature affiche correctement une erreur de récupération d'information 1`] = `
+<div>
+  <div
+    class="text-center"
+  >
+    <div
+      class="font-bold text-rouge"
+    >
+      ⚠ Impossible d'effectuer la signature :
+    </div>
+    <div
+      class="text-rouge"
+    >
+      Erreur récupération informations
+    </div>
+    <button
+      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc mt-6"
+      title="Fermer"
+      type="button"
+    >
+      Fermer
+    </button>
+  </div>
+  <div
+    id="conteneur-modale-signature"
+  />
+</div>
+`;
+
+exports[`Test du composant SignatureDocument > La modale de signature affiche correctement une erreur de signature du document 1`] = `
+<div>
+  <div
+    class="text-center"
+  >
+    <div
+      class="font-bold text-rouge"
+    >
+      ⚠ Impossible d'effectuer la signature :
+    </div>
+    <div
+      class="text-rouge"
+    >
+      Erreur signature document
+    </div>
+    <button
+      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc mt-6"
+      title="Fermer"
+      type="button"
+    >
+      Fermer
+    </button>
+  </div>
+  <div
+    id="conteneur-modale-signature"
+  />
+</div>
+`;
+
+exports[`Test du composant SignatureDocument > La signature se déroule correctement et appel la fonction apresSignature sans erreur 1`] = `
+<div>
+  <div
+    class="text-center"
+  >
+    <div>
+      Signature des mentions effectuée.
+    </div>
+    <button
+      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc mt-6"
+      title="Fermer"
+      type="button"
+    >
+      Fermer
+    </button>
+  </div>
+  <div
+    id="conteneur-modale-signature"
+  />
+</div>
+`;
+
+exports[`Test du composant SignatureDocument > Une erreur de mise à jour du statut n'affecte pas la réussite de la signature 1`] = `
+<div>
+  <div
+    class="text-center"
+  >
+    <div>
+      Signature des mentions effectuée.
+    </div>
+    <button
+      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc mt-6"
+      title="Fermer"
+      type="button"
+    >
+      Fermer
+    </button>
+  </div>
+  <div
+    id="conteneur-modale-signature"
+  />
+</div>
+`;

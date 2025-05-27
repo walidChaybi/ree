@@ -1,0 +1,66 @@
+import { RECEContextData } from "@core/contexts/RECEContext";
+import { estOfficierHabiliterPourTousLesDroits } from "@model/agent/IOfficier";
+import { Droit } from "@model/agent/enum/Droit";
+import MiseAJourForm from "@model/form/miseAJour/MiseAJourForm";
+import messageManager from "@util/messageManager";
+import { useFormikContext } from "formik";
+import { useContext, useMemo, useState } from "react";
+import { ECleOngletsMiseAJour, EditionMiseAJourContext } from "../../../../contexts/EditionMiseAJourContextProvider";
+import Bouton from "../../../commun/bouton/Bouton";
+import ConteneurModale from "../../../commun/conteneurs/modale/ConteneurModale";
+import SignatureDocument from "../../../commun/signature/SignatureDocument";
+
+interface IBoutonTerminerEtSignerProps {
+  saisieMentionEnCours: boolean;
+}
+
+const BoutonTerminerEtSigner: React.FC<IBoutonTerminerEtSignerProps> = ({ saisieMentionEnCours }) => {
+  const { utilisateurConnecte } = useContext(RECEContextData);
+  const { idActe, idRequete, miseAJourEffectuee } = useContext(EditionMiseAJourContext.Valeurs);
+  const { setEstActeSigne, desactiverBlocker, changerOnglet } = useContext(EditionMiseAJourContext.Actions);
+  const { dirty, isValid } = useFormikContext<MiseAJourForm>();
+  const aDroitSigner = useMemo<boolean>(
+    () => estOfficierHabiliterPourTousLesDroits(utilisateurConnecte, [Droit.SIGNER_MENTION, Droit.METTRE_A_JOUR_ACTE]),
+    [utilisateurConnecte]
+  );
+  const [modaleOuverte, setModaleOuverte] = useState<boolean>(false);
+
+  if (!aDroitSigner) return <></>;
+
+  return (
+    <>
+      <Bouton
+        type="button"
+        title="Terminer et signer"
+        onClick={() => setModaleOuverte(true)}
+        disabled={dirty || !isValid || saisieMentionEnCours || !miseAJourEffectuee}
+      >
+        {"Terminer et signer"}
+      </Bouton>
+
+      {modaleOuverte && (
+        <ConteneurModale>
+          <div className="border-3 w-[34rem] max-w-full rounded-xl border-solid border-bleu-sombre bg-blanc p-5">
+            <h2 className="m-0 mb-4 text-center font-medium text-bleu-sombre">{"Signature des mentions"}</h2>
+            <SignatureDocument
+              typeSignature="MISE_A_JOUR"
+              idActe={idActe}
+              idRequete={idRequete}
+              apresSignature={(succes: boolean) => {
+                setModaleOuverte(false);
+                if (!succes) return;
+
+                changerOnglet(ECleOngletsMiseAJour.ACTE, null);
+                setEstActeSigne(true);
+                messageManager.showSuccessAndClose("L'acte a été mis à jour avec succès.");
+                desactiverBlocker();
+              }}
+            />
+          </div>
+        </ConteneurModale>
+      )}
+    </>
+  );
+};
+
+export default BoutonTerminerEtSigner;

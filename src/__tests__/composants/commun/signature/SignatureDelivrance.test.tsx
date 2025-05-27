@@ -13,6 +13,7 @@ import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event";
 import request from "superagent";
 import { afterAll, describe, expect, test } from "vitest";
+import { ConteneurParentModales } from "../../../../composants/commun/conteneurs/modale/ConteneurModale";
 import SignatureDelivrance from "../../../../composants/commun/signature/SignatureDelivrance";
 import { CODES_ERREUR_BLOQUANTS, CODE_PIN_INVALIDE, IDocumentASigner } from "../../../../utils/Signature";
 import MockRECEContextProvider from "../../../mock/context/MockRECEContextProvider";
@@ -101,9 +102,8 @@ describe("Test du composant Signature délivrance", () => {
             habilitations: avecDroit
               ? [
                   {
-                    ...({} as IHabilitation),
-                    profil: { ...({} as IProfil), droits: [{ idDroit: "id", nom: Droit.SIGNER_DELIVRANCE_DEMAT }] }
-                  }
+                    profil: { droits: [{ idDroit: "id", nom: Droit.SIGNER_DELIVRANCE_DEMAT }] } as IProfil
+                  } as IHabilitation
                 ]
               : []
           } as unknown as IOfficier
@@ -115,6 +115,7 @@ describe("Test du composant Signature délivrance", () => {
           numerosFonctionnel={numerosFonctionnel}
           {...(paramsMention ? { donneesAvertissementsMentions: paramsMention } : {})}
         />
+        <ConteneurParentModales />
       </MockRECEContextProvider>
     );
 
@@ -157,14 +158,10 @@ describe("Test du composant Signature délivrance", () => {
 
     const demonterListener = listenerSignature({ erreur: { code: CODE_PIN_INVALIDE } });
 
-    const champPin = screen.getByLabelText("Code pin");
     const boutonValider = screen.getByTitle("Valider");
-    expect(champPin).toBeDefined();
     expect(boutonValider).toBeDefined();
-    await act(async () => {
-      await userEvent.type(champPin, "1234");
-      fireEvent.click(boutonValider);
-    });
+    await userEvent.type(screen.getByLabelText("Code pin"), "0000");
+    fireEvent.click(boutonValider);
 
     await waitFor(() => expect(screen.getByText("Le code pin est incorrect")).toBeDefined());
     demonterListener();
@@ -180,14 +177,10 @@ describe("Test du composant Signature délivrance", () => {
     const LIBELLE_BLOQUANT = "Libelle bloquant";
     const demonterListener = listenerSignature({ erreur: { code: CODES_ERREUR_BLOQUANTS[0], libelle: LIBELLE_BLOQUANT } });
 
-    const champPin = screen.getByLabelText("Code pin");
     const boutonValider = screen.getByTitle("Valider");
-    expect(champPin).toBeDefined();
     expect(boutonValider).toBeDefined();
-    await act(async () => {
-      await userEvent.type(champPin, "1234");
-      fireEvent.click(boutonValider);
-    });
+    await userEvent.type(screen.getByLabelText("Code pin"), "0000");
+    fireEvent.click(boutonValider);
 
     await waitFor(() => {
       expect(screen.getByText("⚠ Impossible d'effectuer la signature :")).toBeDefined();
@@ -209,12 +202,10 @@ describe("Test du composant Signature délivrance", () => {
       erreur: { code: "codeNonBloquant", libelle: LIBELLE_NON_BLOQUANT }
     });
 
-    const champPin = screen.getByLabelText("Code pin");
     const boutonValider = screen.getByTitle("Valider");
-    expect(champPin).toBeDefined();
     expect(boutonValider).toBeDefined();
-    await act(async () => userEvent.type(champPin, "1234"));
-    await act(async () => fireEvent.click(boutonValider));
+    await userEvent.type(screen.getByLabelText("Code pin"), "0000");
+    fireEvent.click(boutonValider);
 
     await waitFor(() => expect(() => screen.queryByText("Aucun document n'a pu être signé")).toBeDefined());
     demonterListener();
@@ -233,12 +224,10 @@ describe("Test du composant Signature délivrance", () => {
       erreur: { code: "codeNonBloquant", libelle: LIBELLE_NON_BLOQUANT }
     });
 
-    const champPin = screen.getByLabelText("Code pin");
     const boutonValider = screen.getByTitle("Valider");
-    expect(champPin).toBeDefined();
     expect(boutonValider).toBeDefined();
-    await act(() => userEvent.type(champPin, "1234"));
-    await waitFor(() => fireEvent.click(boutonValider));
+    await userEvent.type(screen.getByLabelText("Code pin"), "0000");
+    fireEvent.click(boutonValider);
 
     await waitFor(() => expect(() => screen.queryByText("Signature des documents effectuée.")).toBeDefined());
     expect(screen.queryAllByText(LIBELLE_NON_BLOQUANT).length).toBe(2);
@@ -268,15 +257,16 @@ describe("Test du composant Signature délivrance", () => {
 
     const boutonSigner: HTMLButtonElement = screen.getByTitle(TITRE_BOUTON);
     await waitFor(() => expect(boutonSigner.disabled).toBeFalsy());
-    await act(() => fireEvent.click(boutonSigner));
+    fireEvent.click(boutonSigner);
 
     const messageNationalite = `Aucune mention de nationalité n'a été cochée pour le document ${NOM_DOC}`;
     const messageInterdit = `Vous allez délivrer un extrait avec une mention à intégrer ou à ne pas reporter pour le document ${NOM_DOC}`;
-    expect(screen.getByText(messageNationalite)).toBeDefined();
-    expect(screen.getByText(messageInterdit)).toBeDefined();
+    await waitFor(() => {
+      expect(screen.getByText(messageNationalite)).toBeDefined();
+      expect(screen.getByText(messageInterdit)).toBeDefined();
+    });
 
-    await act(() => fireEvent.click(screen.getByTitle("Non")));
-
-    expect(screen.queryByText(TITRE_MODALE)).toBeNull();
+    fireEvent.click(screen.getByTitle("Non"));
+    await waitFor(() => expect(screen.queryByText(TITRE_MODALE)).toBeNull());
   });
 });

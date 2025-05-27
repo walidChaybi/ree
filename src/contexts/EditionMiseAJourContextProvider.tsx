@@ -1,6 +1,5 @@
 import TRAITEMENT_ABANDONNER_MISE_A_JOUR from "@api/traitements/TraitementAbandonnerMiseAJour";
 import React, { createContext, useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router";
 import PageChargeur from "../composants/commun/chargeurs/PageChargeur";
 import CompteurTemps from "../composants/pages/requetesMiseAJour/compteurTemps/CompteurTemps";
 import { useCreateBlocker } from "../hooks/CreateBlocker";
@@ -51,7 +50,6 @@ const EditionMiseAJourContextProvider: React.FC<React.PropsWithChildren<IEdition
   estMiseAJourAvecMentions,
   children
 }) => {
-  const navigate = useNavigate();
   const [ongletsActifs, setOngletsActifs] = useState<{ actes: ECleOngletsMiseAJour; formulaires: ECleOngletsMiseAJour }>({
     actes: ECleOngletsMiseAJour.ACTE,
     formulaires: estMiseAJourAvecMentions ? ECleOngletsMiseAJour.MENTIONS : ECleOngletsMiseAJour.ANALYSE_MARGINALE

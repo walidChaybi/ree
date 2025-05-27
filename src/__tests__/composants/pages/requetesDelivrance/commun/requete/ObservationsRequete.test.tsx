@@ -6,6 +6,7 @@ import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event";
 import request from "superagent";
 import { afterAll, describe, expect, test } from "vitest";
+import { ConteneurParentModales } from "../../../../../../composants/commun/conteneurs/modale/ConteneurModale";
 import MockRECEContextProvider from "../../../../../mock/context/MockRECEContextProvider";
 
 describe("ObservationsRequete", () => {
@@ -75,6 +76,7 @@ describe("ObservationsRequete", () => {
     render(
       <MockRECEContextProvider utilisateurConnecte={{ nom: NOM_UTILISATEUR, prenom: PRENOM_UTILISATEUR } as IOfficier}>
         <ObservationsRequete requete={requeteMock} />
+        <ConteneurParentModales />
       </MockRECEContextProvider>
     );
 
@@ -103,6 +105,7 @@ describe("ObservationsRequete", () => {
     render(
       <MockRECEContextProvider utilisateurConnecte={{ idUtilisateur: requeteMock.observations?.[0].idUtilisateur } as IOfficier}>
         <ObservationsRequete requete={requeteMock} />
+        <ConteneurParentModales />
       </MockRECEContextProvider>
     );
 
@@ -128,6 +131,7 @@ describe("ObservationsRequete", () => {
         }
       >
         <ObservationsRequete requete={requeteMock} />
+        <ConteneurParentModales />
       </MockRECEContextProvider>
     );
 

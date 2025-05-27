@@ -6,6 +6,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { RouterProvider } from "react-router";
 import { beforeEach, describe, expect, test } from "vitest";
+import { ConteneurParentModales } from "../../../../composants/commun/conteneurs/modale/ConteneurModale";
 import PartieFormulaire from "../../../../composants/pages/requetesMiseAJour/PartieFormulaire";
 import EditionMiseAJourContextProvider from "../../../../contexts/EditionMiseAJourContextProvider";
 import { createTestingRouter, elementAvecContexte } from "../../../__tests__utils__/testsUtil";
@@ -58,6 +59,7 @@ describe("Tests du formulaire de mise à jour d'un acte", () => {
                 estMiseAJourAvecMentions={true}
               >
                 <PartieFormulaire />
+                <ConteneurParentModales />
               </EditionMiseAJourContextProvider>
             )
           }

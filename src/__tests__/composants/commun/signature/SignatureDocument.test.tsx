@@ -7,17 +7,16 @@ import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
 import { IOfficier } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { TypePopinSignature } from "@model/signature/ITypePopinSignature";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, test, vi } from "vitest";
-import SignatureMiseAJour from "../../../../composants/commun/signature/SignatureMiseAJour";
+import SignatureDocument from "../../../../composants/commun/signature/SignatureDocument";
 import { IInformationsCarte } from "../../../../utils/Signature";
 
-describe("Test du composant Signature mise à jour", () => {
+describe("Test du composant SignatureDocument", () => {
   const apreSignature = vi.fn();
   const utilisateurAvecDroitSigner = {
-    habilitations: [{ profil: { droits: [{ idDroit: "", nom: Droit.SIGNER_MENTION } as IDroit] } as IProfil } as IHabilitation]
+    habilitations: [{ profil: { droits: [{ nom: Droit.SIGNER_MENTION } as IDroit] } as IProfil } as IHabilitation]
   } as IOfficier;
 
   const listenerSignature = (valeurRetour: object[]) => {
@@ -34,10 +33,10 @@ describe("Test du composant Signature mise à jour", () => {
     const { container } = render(
       <MockRECEContextProvider {...(avecUtilisateur ? { utilisateurConnecte: utilisateurAvecDroitSigner } : {})}>
         <div>
-          <SignatureMiseAJour
+          <SignatureDocument
+            typeSignature="MISE_A_JOUR"
             idActe={"idActe"}
             idRequete={"idRequete"}
-            peutSigner
             apresSignature={apreSignature}
           />
           <div id="conteneur-modale-signature"></div>
@@ -48,32 +47,10 @@ describe("Test du composant Signature mise à jour", () => {
     return container.firstChild;
   };
 
-  test("Le bouton ne s'affiche pas si l'utilisateur n'a pas de droit signer", () => {
-    const snapshot = renderSnapshot(false);
-
-    expect(snapshot).toMatchSnapshot();
-  });
-
-  test("Le bouton est inactif si l'utilisateur ne peut pas signer", () => {
-    const snapshot = renderSnapshot();
-
-    expect(snapshot).toMatchSnapshot();
-  });
-
-  test("La modale de signature s'ouvre correctement", async () => {
-    TypePopinSignature.getTextePopinSignatureMentions = vi.fn().mockReturnValue("Message mentions");
-    const snapshot = renderSnapshot();
-
-    await userEvent.click(screen.getByTitle("Terminer et signer"));
-
-    expect(snapshot).toMatchSnapshot();
-  });
-
   test("La modale de signature affiche correctement une erreur de récupération d'information", async () => {
     const snapshot = renderSnapshot();
     const demonterListener = listenerSignature([{ erreur: { code: "CODE_ERR", libelle: "Erreur récupération informations" } }]);
 
-    await userEvent.click(screen.getByTitle("Terminer et signer"));
     await userEvent.type(screen.getByLabelText("Code pin"), "0000");
     await userEvent.click(screen.getByTitle("Valider"));
 
@@ -95,7 +72,6 @@ describe("Test du composant Signature mise à jour", () => {
       { erreur: { code: "CODE_ERR", libelle: "Erreur signature document" } }
     ]);
 
-    await userEvent.click(screen.getByTitle("Terminer et signer"));
     await userEvent.type(screen.getByLabelText("Code pin"), "0000");
     await userEvent.click(screen.getByTitle("Valider"));
 
@@ -122,7 +98,6 @@ describe("Test du composant Signature mise à jour", () => {
       { erreur: { code: "CODE_ERR", libelle: "Erreur signature document" } }
     ]);
 
-    await userEvent.click(screen.getByTitle("Terminer et signer"));
     await userEvent.type(screen.getByLabelText("Code pin"), "0000");
     await userEvent.click(screen.getByTitle("Valider"));
 
@@ -161,7 +136,6 @@ describe("Test du composant Signature mise à jour", () => {
       { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" }, document: "documentSigne" }
     ]);
 
-    await userEvent.click(screen.getByTitle("Terminer et signer"));
     await userEvent.type(screen.getByLabelText("Code pin"), "0000");
     await userEvent.click(screen.getByTitle("Valider"));
 
@@ -201,7 +175,6 @@ describe("Test du composant Signature mise à jour", () => {
       { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" }, document: "documentSigne" }
     ]);
 
-    await userEvent.click(screen.getByTitle("Terminer et signer"));
     await userEvent.type(screen.getByLabelText("Code pin"), "0000");
     await userEvent.click(screen.getByTitle("Valider"));
 
@@ -214,11 +187,10 @@ describe("Test du composant Signature mise à jour", () => {
     MockApi.stopMock();
   });
 
-  test("La fermeture de la modale de signature après erreur n'appelle pas apresSignature", async () => {
+  test("La fermeture de la modale de signature après erreur n'appelle pas apresSignature avec erreur", async () => {
     const snapshot = renderSnapshot();
     const demonterListener = listenerSignature([{ erreur: { code: "CODE_ERR", libelle: "Erreur récupération informations" } }]);
 
-    await userEvent.click(screen.getByTitle("Terminer et signer"));
     await userEvent.type(screen.getByLabelText("Code pin"), "0000");
     await userEvent.click(screen.getByTitle("Valider"));
 
@@ -226,14 +198,13 @@ describe("Test du composant Signature mise à jour", () => {
 
     await userEvent.click(screen.getByTitle("Fermer"));
     await waitFor(() => {
-      expect(apreSignature).not.toHaveBeenCalled();
-      expect(snapshot).toMatchSnapshot();
+      expect(apreSignature).toHaveBeenCalledWith(false);
     });
 
     demonterListener();
   });
 
-  test("La signature se déroule correctement et appel la fonction apresSignature", async () => {
+  test("La signature se déroule correctement et appel la fonction apresSignature sans erreur", async () => {
     MockApi.deployer(
       CONFIG_PATCH_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES,
       { path: { idActe: "idActe" }, body: { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } } },
@@ -258,7 +229,6 @@ describe("Test du composant Signature mise à jour", () => {
       { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" }, document: "documentSigne" }
     ]);
 
-    await userEvent.click(screen.getByTitle("Terminer et signer"));
     await userEvent.type(screen.getByLabelText("Code pin"), "0000");
     await userEvent.click(screen.getByTitle("Valider"));
 
@@ -270,8 +240,7 @@ describe("Test du composant Signature mise à jour", () => {
 
     await userEvent.click(screen.getByTitle("Fermer"));
     await waitFor(() => {
-      expect(apreSignature).toHaveBeenCalledOnce();
-      expect(snapshot).toMatchSnapshot();
+      expect(apreSignature).toHaveBeenCalledWith(true);
     });
     demonterListener();
     MockApi.stopMock();

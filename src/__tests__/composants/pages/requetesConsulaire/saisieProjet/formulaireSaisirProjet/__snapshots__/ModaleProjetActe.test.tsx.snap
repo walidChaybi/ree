@@ -2,54 +2,58 @@
 
 exports[`ModaleProjetActe - Tests du composant > Doit rendre le composant correctement avec un PDF valide 1`] = `
 <div
-  class="fixed left-0 top-0 z-[1000] flex h-screen w-screen animate-apparition items-center justify-center bg-black bg-opacity-40 duration-100"
+  id="conteneur-modale-rece"
 >
   <div
-    class="m-4 flex"
+    class="fixed left-0 top-0 z-[1000] flex h-screen w-screen animate-apparition items-center justify-center bg-black bg-opacity-40 duration-100"
   >
     <div
-      class="flex h-[90vh] w-[90vw] animate-apparition flex-col overflow-hidden rounded-lg bg-blanc shadow-2xl"
+      class="m-4 flex"
     >
       <div
-        class="flex items-center justify-end border-b border-gris bg-bleu p-2"
-      >
-        <button
-          aria-label="Fermer"
-          class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-rouge bg-blanc text-rouge hover:border-rouge hover:bg-rouge hover:text-blanc focus:border-rouge focus:bg-rouge focus:text-blanc focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
-          type="button"
-        >
-          X
-        </button>
-      </div>
-      <div
-        class="flex flex-grow overflow-hidden"
+        class="flex h-[90vh] w-[90vw] animate-apparition flex-col overflow-hidden rounded-lg bg-blanc shadow-2xl"
       >
         <div
-          class="h-full w-3/5 animate-entree-gauche overflow-hidden p-6"
+          class="flex items-center justify-end border-b border-gris bg-bleu p-2"
         >
-          <div
-            class="flex h-[calc(100%-2rem)] w-full rounded-lg border border-gray-100 shadow-md"
+          <button
+            aria-label="Fermer"
+            class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-rouge bg-blanc text-rouge hover:border-rouge hover:bg-rouge hover:text-blanc focus:border-rouge focus:bg-rouge focus:text-blanc focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
+            type="button"
           >
-            <div
-              class="flex-grow overflow-hidden"
-            >
-              <iframe
-                class="h-full w-full overflow-auto border-0"
-                src="blobUrl://Base64String#zoom=90"
-                title="Document PDF"
-              />
-            </div>
-          </div>
+            X
+          </button>
         </div>
         <div
-          class="h-full w-2/5 animate-entree-droite border-l border-gray-200 p-6"
+          class="flex flex-grow overflow-hidden"
         >
           <div
-            class="flex h-full w-full flex-col items-center justify-center rounded-lg bg-gray-50 p-6"
+            class="h-full w-3/5 animate-entree-gauche overflow-hidden p-6"
           >
             <div
-              class="mb-4 text-gray-500"
-            />
+              class="flex h-[calc(100%-2rem)] w-full rounded-lg border border-gray-100 shadow-md"
+            >
+              <div
+                class="flex-grow overflow-hidden"
+              >
+                <iframe
+                  class="h-full w-full overflow-auto border-0"
+                  src="blobUrl://Base64String#zoom=90"
+                  title="Document PDF"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="h-full w-2/5 animate-entree-droite border-l border-gray-200 p-6"
+          >
+            <div
+              class="flex h-full w-full flex-col items-center justify-center rounded-lg bg-gray-50 p-6"
+            >
+              <div
+                class="mb-4 text-gray-500"
+              />
+            </div>
           </div>
         </div>
       </div>

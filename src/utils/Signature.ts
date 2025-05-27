@@ -59,6 +59,7 @@ interface ISignerParams {
     idActe: string;
     document: string;
     codePin: string;
+    estMiseAJour: boolean;
   };
   apresReponse: (reponse: IReponseDocumentSigne) => void;
 }
@@ -71,6 +72,7 @@ interface IRecupererInformationsParams {
       nom: string;
       prenom: string;
     };
+    estMiseAJour: boolean;
   };
   apresSucces: (informations: IInformationsCarte) => void;
   apresErreur: (erreur: IErreurSignature) => void;
@@ -164,7 +166,7 @@ const ModeDeveloppement = {
     }, 3000);
   },
 
-  reponseMiseAJour: (signerParams: ISignerParams) => {
+  reponseDocument: (signerParams: ISignerParams) => {
     if (ModeDeveloppement.ignorer(signerParams.parametres.codePin)) {
       return;
     }
@@ -234,7 +236,7 @@ const Signature = {
           pin: recupererInformationsParams.parametres.codePin,
           mode: ModeSignatureUtil.estValide(modeSignatureFF) ? modeSignatureFF : ModeSignature.PKCS11_SIGNED,
           infos: [
-            { cle: "typeSignature", valeur: "Mise à jour" },
+            { cle: "typeSignature", valeur: recupererInformationsParams.parametres.estMiseAJour ? "Mise à jour" : "Création" },
             { cle: "estFictive", valeur: "true" },
             { cle: "idActe", valeur: recupererInformationsParams.parametres.idActe }
           ]
@@ -302,8 +304,8 @@ const Signature = {
     );
   },
 
-  signerDocumentMiseAJour: (signerParams: ISignerParams) => {
-    ModeDeveloppement.reponseMiseAJour(signerParams);
+  signerDocument: (signerParams: ISignerParams) => {
+    ModeDeveloppement.reponseDocument(signerParams);
 
     let retournerDocumentSigne: null | EventListener = null;
 
@@ -339,7 +341,7 @@ const Signature = {
           pin: signerParams.parametres.codePin,
           mode: ModeSignatureUtil.estValide(modeSignatureFF) ? modeSignatureFF : ModeSignature.PKCS11_SIGNED,
           infos: [
-            { cle: "typeSignature", valeur: "Mise à jour" },
+            { cle: "typeSignature", valeur: signerParams.parametres.estMiseAJour ? "Mise à jour" : "Création" },
             { cle: "estFictive", valeur: "false" },
             { cle: "idActe", valeur: signerParams.parametres.idActe }
           ]

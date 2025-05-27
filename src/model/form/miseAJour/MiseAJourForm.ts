@@ -46,7 +46,7 @@ export default class MiseAJourForm {
         numeroOrdre: index + 1,
         texteMention: mention.texte,
         evenement: MiseAJourForm.getEvenementMention(mention.donneesAideSaisie?.champs),
-        estSaisieAssistee: Boolean(mention.donneesAideSaisie)
+        estSaisieAssistee: Boolean(Object.keys(mention.donneesAideSaisie?.champs ?? {}).length)
       })),
       analyseMarginale: analyseMarginaleModifiee ? MiseAJourAnalyseMarginaleValeursForm.versDto(this.analyseMarginale) : null
     } as IEnregistrerAnalyseMarginaleEtMentionDto;

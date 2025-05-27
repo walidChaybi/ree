@@ -3,6 +3,7 @@ import { FilterOptionsState } from "@mui/material/useAutocomplete";
 import { OPTION_VIDE, Option } from "@util/Type";
 import { IconeCroix } from "@widget/icones/IconeCroix";
 import { useField } from "formik";
+import React from "react";
 import "./ChampRecherche.scss";
 
 export interface IChampRechercheProps {
@@ -63,7 +64,7 @@ const ChampRecherche: React.FC<IChampRechercheProps> = ({
               {option.libelle}
             </li>
           ) : (
-            <></>
+            <React.Fragment key="option-sans-cle"></React.Fragment>
           )
         }
         onChange={(_, newValue) => {

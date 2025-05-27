@@ -11,6 +11,7 @@ import React from "react";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
 import { RouterProvider } from "react-router";
 import { ToastContainer } from "react-toastify";
+import { ConteneurParentModales } from "../../composants/commun/conteneurs/modale/ConteneurModale";
 import "../../index.css";
 import "./App.scss";
 import { RECEContextProvider } from "./contexts/RECEContext";
@@ -51,6 +52,7 @@ const App: React.FC = () => {
                   enableMultiContainer={true}
                 />
                 <RouterProvider router={receRouter} />
+                <ConteneurParentModales />
               </>
             </RECEContextProvider>
           </div>

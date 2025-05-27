@@ -3,6 +3,7 @@ import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { RouterProvider } from "react-router";
 import request from "superagent";
 import { afterAll, describe, expect, test, vi } from "vitest";
+import { ConteneurParentModales } from "../../../../../composants/commun/conteneurs/modale/ConteneurModale";
 import CompteurTemps from "../../../../../composants/pages/requetesMiseAJour/compteurTemps/CompteurTemps";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
@@ -55,7 +56,12 @@ describe("Test du composant CompteurTemps", () => {
     );
 
     await act(async () => {
-      render(<RouterProvider router={router} />);
+      render(
+        <>
+          <ConteneurParentModales />
+          <RouterProvider router={router} />
+        </>
+      );
     });
 
     await waitFor(() => expect(screen.queryByText(MESSAGE_REDIRECTION)).toBeNull());
@@ -83,7 +89,14 @@ describe("Test du composant CompteurTemps", () => {
       ["/"]
     );
 
-    render(<RouterProvider router={router} />);
+    await act(async () =>
+      render(
+        <>
+          <ConteneurParentModales />
+          <RouterProvider router={router} />
+        </>
+      )
+    );
 
     await waitFor(() => expect(screen.getByText(MESSAGE_REDIRECTION)).toBeDefined());
     expect(abandon).toHaveBeenCalledOnce();
