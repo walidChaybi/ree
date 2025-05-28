@@ -10,7 +10,7 @@ interface Option {
   libelle: string;
 }
 
-interface IFormulaireAdresseProps {
+interface IChampsAdresseProps {
   prefixe: string;
   libelle?: string;
   afficherAdresse?: boolean;
@@ -33,10 +33,18 @@ const ARRONDISSEMENTS_OPTIONS: Record<TVilleSpeciale, Option[]> = {
 
 const AdresseFrance = ({ prefixe, afficherAdresse = true }: { prefixe: string; afficherAdresse?: boolean }) => {
   const [fieldVille] = useField(`${prefixe}.ville`);
+  const { setFieldValue } = useFormikContext();
+
   const estVilleSpeciale = useMemo(
     () => VILLES_SPECIALES.includes(fieldVille.value?.toLowerCase().trim() as TVilleSpeciale),
     [fieldVille.value]
   );
+
+  useEffect(() => {
+    if (fieldVille.value?.toLowerCase().trim() === "paris") {
+      setFieldValue(`${prefixe}.departement`, "");
+    }
+  }, [fieldVille.value]);
 
   return (
     <div className="mt-4 space-y-4">
@@ -110,10 +118,10 @@ const AdresseEtranger = ({ prefixe, afficherAdresse = true }: { prefixe: string;
   </div>
 );
 
-const FormulaireAdresse: React.FC<IFormulaireAdresseProps> = memo(({ prefixe, libelle, afficherAdresse = true }) => {
+const ChampsAdresse: React.FC<IChampsAdresseProps> = memo(({ prefixe, libelle, afficherAdresse = true }) => {
   const [fieldTypeLieu] = useField(`${prefixe}.typeLieu`);
 
-  const { setFieldValue } = useFormikContext();
+  const { setFieldValue, setFieldTouched } = useFormikContext();
 
   useEffect(() => {
     const champsAReinitialiser = ["ville", "arrondissement", "departement", "etatProvince", "pays", "adresse"];
@@ -121,6 +129,7 @@ const FormulaireAdresse: React.FC<IFormulaireAdresseProps> = memo(({ prefixe, li
     if (fieldTypeLieu.value) {
       champsAReinitialiser.forEach(champ => {
         setFieldValue(`${prefixe}.${champ}`, "");
+        setFieldTouched(`${prefixe}.${champ}`, false);
       });
     }
   }, [fieldTypeLieu.value]);
@@ -148,4 +157,4 @@ const FormulaireAdresse: React.FC<IFormulaireAdresseProps> = memo(({ prefixe, li
   );
 });
 
-export default FormulaireAdresse;
+export default ChampsAdresse;

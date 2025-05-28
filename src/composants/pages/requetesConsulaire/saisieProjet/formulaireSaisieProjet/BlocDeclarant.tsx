@@ -9,7 +9,7 @@ import ChampCaseACocher from "../../../../commun/champs/ChampCaseACocher";
 import ChampListeDeroulante from "../../../../commun/champs/ChampListeDeroulante";
 import ChampTexte from "../../../../commun/champs/ChampTexte";
 import ChampZoneTexte from "../../../../commun/champs/ChampZoneTexte";
-import FormulaireAdresse from "../../../../commun/champs/ChampsAddresse";
+import ChampsAdresse from "../../../../commun/champs/ChampsAddresse";
 import ChampsPrenoms from "../../../../commun/champs/ChampsPrenoms";
 import ChampsRadio from "../../../../commun/champs/ChampsRadio";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
@@ -105,7 +105,7 @@ const BlocDeclarant: React.FC = () => {
             libellePour="declarant.domicile"
           />
 
-          <FormulaireAdresse prefixe={"declarant.domicile"} />
+          <ChampsAdresse prefixe={"declarant.domicile"} />
 
           <SeparateurSection
             titre="Complément"

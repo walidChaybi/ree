@@ -5,7 +5,7 @@ import React, { memo, useEffect, useMemo } from "react";
 import ChampCaseACocher from "../../../../commun/champs/ChampCaseACocher";
 import ChampDate from "../../../../commun/champs/ChampDate";
 import ChampTexte from "../../../../commun/champs/ChampTexte";
-import FormulaireAdresse from "../../../../commun/champs/ChampsAddresse";
+import ChampsAdresse from "../../../../commun/champs/ChampsAddresse";
 import ChampsPrenoms from "../../../../commun/champs/ChampsPrenoms";
 import ChampsRadio from "../../../../commun/champs/ChampsRadio";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
@@ -99,7 +99,7 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estParent1 }) => {
 
       <SeparateurSection titre="Lieu de naissance" />
 
-      <FormulaireAdresse
+      <ChampsAdresse
         key={`${prefixe}.lieuNaissance`}
         prefixe={`${prefixe}.lieuNaissance`}
       />
@@ -132,7 +132,7 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estParent1 }) => {
         )}
 
         {(estParent1 || !values.parents.domicileCommun) && (
-          <FormulaireAdresse
+          <ChampsAdresse
             key={`${prefixe}.domicile`}
             prefixe={`${prefixe}.domicile`}
           />
