@@ -54,6 +54,10 @@ export const configAgent = [
         return { ...serviceEtablissement };
       }
 
+      if (match[1].startsWith("/testhtml")) {
+        return { data: "<html>test html<html/>", status: 200 };
+      }
+
       const error = { msg: "url api agent non mockée", url: match[1] };
       const message = `Erreur mock api agent: ${JSON.stringify(error)}`;
       console.error(message);

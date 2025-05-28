@@ -2,6 +2,7 @@ import {
   TApiAutorisee,
   TBaseUri,
   TConfigurationRequeteHttp,
+  TErreurApi,
   THeader,
   TMethodeHttp,
   TReponseApiEchec,
@@ -57,6 +58,18 @@ export class GestionnaireApi {
 
     return httpRequete
       .then(response => {
+        if (typeof response.body?.data === "string") {
+          const erreur: TReponseApiEchec = {
+            status: 500,
+            erreurs: [
+              {
+                message: "Réponse HTML inattendue du serveur."
+              } as TErreurApi
+            ]
+          };
+          return Promise.reject(erreur);
+        }
+
         return Promise.resolve<TReponseApiSucces<TResultat>>({
           data: response.body?.data || {},
           avertissements: response.body?.errors || [],
@@ -64,10 +77,10 @@ export class GestionnaireApi {
           headers: response.header
         });
       })
-      .catch(({ response }) => {
+      .catch(({ response, erreurs, status }) => {
         const erreur: TReponseApiEchec = {
-          status: response.status,
-          erreurs: response.body?.errors || []
+          status: response?.status ?? status,
+          erreurs: response?.body?.errors ?? erreurs ?? []
         };
 
         if (process.env.NODE_ENV === "development" && erreur.status !== codeErreurForbidden) {

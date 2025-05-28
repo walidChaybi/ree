@@ -5,6 +5,17 @@ import { CSRF_HEADER_NAME, getCsrfCookieValue } from "@util/CsrfUtil";
 import messageManager from "@util/messageManager";
 import axios from "axios";
 
+export interface IReponseErreur extends Error {
+  response: {
+    status: number;
+    data: {
+      errors: {
+        message: string;
+      }[];
+    };
+  };
+}
+
 type TAppelParams<TUri extends TBaseUri, TBody extends object | undefined, TQuery extends object | undefined> = {
   api: {
     nom: TApiAutorisee;
@@ -55,6 +66,22 @@ const API = {
       }
     })
       .then(response => {
+        if (typeof response.data === "string") {
+          const error = new Error("Réponse HTML inattendue du serveur") as IReponseErreur;
+          error.response = {
+            status: 500,
+            data: {
+              errors: [
+                {
+                  message: "Réponse HTML inattendue du serveur."
+                }
+              ]
+            }
+          };
+
+          return Promise.reject(error);
+        }
+
         return Promise.resolve<TReponseApiSucces<TResultat>>({
           data: (appelParams.api.estExterne ? response.data : response.data?.data) || {},
           avertissements: response.data?.errors ?? [],
