@@ -17,9 +17,12 @@ export const InputChampRecherche: React.FC<AutocompleteRenderInputParams & { enE
           enErreur ? "border-rouge focus-within:ring-rouge" : "border-gris focus-within:ring-bleu"
         }`}
       >
-        <Search className="h-5 w-5 text-gris" />
+        <Search
+          className="text-gris"
+          fontSize="small"
+        />
         <input
-          className="flex-grow border-none bg-transparent read-only:bg-gris-clair focus:border-none focus:outline-none focus:ring-0"
+          className="flex-grow border-none bg-transparent p-0 pl-1 read-only:bg-gris-clair focus:border-none focus:outline-none focus:ring-0"
           type="text"
           {...props}
         />

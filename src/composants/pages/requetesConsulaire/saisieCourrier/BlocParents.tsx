@@ -98,10 +98,12 @@ const BlocParent: React.FC<{ valeursParent: IParentFormRCTC; indexParent: number
                 />
               )}
 
-              <ChampRechercheDepartement
-                name={`${prefixParent}.naissance.departement`}
-                libelle="Département de naissance"
-              />
+              {valeursParent?.naissance?.ville?.toLowerCase().trim() !== "paris" && (
+                <ChampRechercheDepartement
+                  name={`${prefixParent}.naissance.departement`}
+                  libelle="Département de naissance"
+                />
+              )}
             </>
           )}
 

@@ -15,7 +15,7 @@ export interface ICommuneDto {
   };
 }
 
-const URI = "/communes?fields=departement&boost=population&limit=5";
+const URI = "/communes?fields=departement&boost=population&limit=15";
 
 export const CONFIG_GET_COMMUNES: TConfigurationApi<typeof URI, undefined, IGetCommunesParams, ICommuneDto[] | []> = {
   api: GEO_API,

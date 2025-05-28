@@ -8,6 +8,8 @@ import { useDelai } from "../../../../hooks/utilitaires/UseDelai";
 import CacheDonneesApiGeo from "../../../../utils/CacheDonneesApiGeo";
 import { InputChampRecherche } from "./InputChampRechercheGeo";
 
+const empecherFiltreParDefaut = (options: ICommuneDto[]) => options;
+
 type TChampRechercheVille = React.InputHTMLAttributes<HTMLInputElement> & {
   name: string;
   libelle: string;
@@ -32,7 +34,7 @@ const ChampRechercheVille: React.FC<TChampRechercheVille> = ({
   const enErreur = useMemo(() => Boolean(meta.error) && meta.touched, [meta.error, meta.touched]);
 
   useEffect(() => {
-    if (communeRecherchee.length < 2) {
+    if (!communeRecherchee) {
       setCommunes([]);
       return;
     }
@@ -75,7 +77,8 @@ const ChampRechercheVille: React.FC<TChampRechercheVille> = ({
           setCommuneRecherchee(field.value.trim().toLowerCase());
         }}
         loadingText="Recherche en cours..."
-        isOptionEqualToValue={(option, value) => option.nom === value.nom}
+        filterOptions={empecherFiltreParDefaut}
+        isOptionEqualToValue={(option, value) => option.code === value.code}
         componentsProps={{
           popper: {
             sx: {
@@ -86,7 +89,7 @@ const ChampRechercheVille: React.FC<TChampRechercheVille> = ({
           }
         }}
         clearOnBlur={false}
-        noOptionsText={field.value.length < 2 ? "Saisissez au moins 2 caractères" : `Aucune ville trouvée pour "${field.value}"`}
+        noOptionsText={!field.value ? "Aucun résultat" : `Aucune ville trouvée pour ${field.value}`}
         getOptionLabel={option => option.nom || ""}
         onChange={(_, nouvelleVille: ICommuneDto | null) => {
           if (nouvelleVille) {

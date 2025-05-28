@@ -10,7 +10,7 @@ export interface IDepartementDto {
   code: string;
 }
 
-const URI = "/departements?limit=5";
+const URI = "/departements?limit=15";
 
 export const CONFIG_GET_DEPARTEMENT: TConfigurationApi<typeof URI, undefined, IGetDepartementsParams, IDepartementDto[] | []> = {
   api: GEO_API,

@@ -9,6 +9,10 @@ import ChampRechercheDepartement from "../../../../../composants/commun/champs/g
 import ChampRechercheVille from "../../../../../composants/commun/champs/geoApi/ChampRechercheVille";
 import CacheDonneesApiGeo from "../../../../../utils/CacheDonneesApiGeo";
 
+vi.mock("../../../../../hooks/utilitaires/UseDelai", () => ({
+  useDelai: (initialValue: string) => useState(initialValue)
+}));
+
 const mockVilles = [
   { nom: "Nantes", code: "44109", _score: 0.8142543771862568, departement: { code: "44", nom: "Loire-Atlantique" } },
   { nom: "Nancy", code: "54395", _score: 0.3411251264384351, departement: { code: "54", nom: "Meurthe-et-Moselle" } },
@@ -16,10 +20,6 @@ const mockVilles = [
   { nom: "Nangis", code: "77327", _score: 0.22199695736995792, departement: { code: "77", nom: "Seine-et-Marne" } },
   { nom: "Nandy", code: "77326", _score: 0.21677544246106986, departement: { code: "77", nom: "Seine-et-Marne" } }
 ];
-
-vi.mock("../../../hooks/utilitaires/UseDelai", () => ({
-  useDelai: (initialValue: string) => useState(initialValue)
-}));
 
 const MockForm = ({ initialValues }: any) => (
   <Formik
@@ -38,30 +38,20 @@ const MockForm = ({ initialValues }: any) => (
 describe("Fonctionnalités de recherche", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    CacheDonneesApiGeo.clearCommunes();
   });
 
   afterEach(() => {
     vi.resetAllMocks();
   });
 
-  test("DOIT afficher le message 'Saisissez au moins 2 caractères' QUAND la valeur est < 2", async () => {
-    render(<MockForm initialValues={{ ville: "" }}></MockForm>);
-
-    const input = screen.getByRole("combobox");
-
-    await userEvent.type(input, "p");
-
-    const message = screen.getByText("Saisissez au moins 2 caractères");
-    expect(message).toBeDefined();
-  });
-
-  test("DOIT lancer la recherche après saisie de 2 caractères", async () => {
+  test("DOIT lancer la recherche après la saisie de 1 caractère", async () => {
     render(<MockForm initialValues={{ ville: "" }}></MockForm>);
 
     MockApi.deployer(
       CONFIG_GET_COMMUNES,
       {
-        query: { nom: "" }
+        query: { nom: "p" }
       },
       { data: [] }
     );
@@ -70,7 +60,7 @@ describe("Fonctionnalités de recherche", () => {
 
     const input = screen.getByRole("combobox");
 
-    await userEvent.type(input, "pa");
+    await userEvent.type(input, "p");
 
     await waitFor(() => {
       expect(mockApi.history.get.length).toBe(1);
@@ -95,10 +85,15 @@ describe("Fonctionnalités de recherche", () => {
 
     const input: HTMLSelectElement = screen.getByRole("combobox");
 
-    await userEvent.type(input, "nan");
+    fireEvent.change(input, { target: { value: "nan" } });
 
     await waitFor(() => {
       expect(mockApi.history.get.length).toBe(1);
+    });
+
+    await waitFor(() => {
+      const options = screen.queryAllByRole("option");
+      expect(options).toHaveLength(5);
     });
 
     fireEvent.keyDown(input, { key: "ArrowDown" });
@@ -141,16 +136,13 @@ describe("Fonctionnalités de recherche", () => {
 
   test("DOIT utiliser les données du cache QUAND les données sont disponibles", async () => {
     vi.spyOn(CacheDonneesApiGeo, "getCommunes");
+    CacheDonneesApiGeo.setCommunes("nan", mockVilles);
     render(<MockForm initialValues={{ ville: "" }}></MockForm>);
 
     const mockApi = MockApi.getMock();
     const input: HTMLInputElement = screen.getByRole("combobox");
 
-    await userEvent.type(input, "nan");
-
-    await waitFor(() => {
-      expect(mockApi.history.get.length).toBe(0);
-    });
+    fireEvent.change(input, { target: { value: "nan" } });
 
     fireEvent.keyDown(input, { key: "ArrowDown" });
     fireEvent.keyDown(input, { key: "Enter" });
@@ -204,12 +196,14 @@ describe("Fonctionnalités de recherche", () => {
     );
 
     const mockApi = MockApi.getMock();
+
     const [villeInput, deptInput] = screen.getAllByRole("combobox") as HTMLInputElement[];
 
-    await userEvent.type(villeInput, "tou");
+    fireEvent.change(villeInput, { target: { value: "tou" } });
 
     await waitFor(() => {
-      expect(mockApi.history.get.length).toBe(1);
+      const options = screen.queryAllByRole("option");
+      expect(options).toHaveLength(5);
     });
 
     fireEvent.keyDown(villeInput, { key: "ArrowDown" });
@@ -218,6 +212,7 @@ describe("Fonctionnalités de recherche", () => {
     await waitFor(() => {
       expect(villeInput.value).toBe("Toulouse");
       expect(deptInput.value).toBe("Haute-Garonne");
+      expect(mockApi.history.get.length).toBe(1);
     });
 
     MockApi.stopMock();

@@ -16,6 +16,10 @@ class CacheDonneesApiGeo {
   public static setDepartements = (recherche: string, departements: IDepartementDto[]): void => {
     CacheDonneesApiGeo.departements[recherche] = departements;
   };
+
+  public static clearCommunes = () => (CacheDonneesApiGeo.communes = {});
+
+  public static clearDepartements = () => (CacheDonneesApiGeo.departements = {});
 }
 
 export default CacheDonneesApiGeo;

@@ -7,6 +7,8 @@ import { useDelai } from "../../../../hooks/utilitaires/UseDelai";
 import CacheDonneesApiGeo from "../../../../utils/CacheDonneesApiGeo";
 import { InputChampRecherche } from "./InputChampRechercheGeo";
 
+const empecherFiltreParDefaut = (options: IDepartementDto[]) => options;
+
 type TChampRechercheDepartement = React.InputHTMLAttributes<HTMLInputElement> & {
   libelle: string;
   estObligatoire?: boolean;
@@ -22,7 +24,7 @@ const ChampRechercheDepartement: React.FC<TChampRechercheDepartement> = ({ name,
   const { appelApi: appelGetDepartement, enAttenteDeReponseApi } = useFetchApi(CONFIG_GET_DEPARTEMENT);
 
   useEffect(() => {
-    if (departementRecherche.length < 2) {
+    if (!departementRecherche) {
       setDepartements([]);
       return;
     }
@@ -62,10 +64,10 @@ const ChampRechercheDepartement: React.FC<TChampRechercheDepartement> = ({ name,
         loading={enAttenteDeReponseApi}
         loadingText="Recherche en cours..."
         clearOnBlur={false}
-        noOptionsText={field.value.length < 2 ? "Saisissez au moins 2 caractères" : `Aucune département trouvé pour "${field.value}"`}
+        noOptionsText={!field.value ? "Aucun résultat" : `Aucun département trouvé pour ${field.value}`}
         getOptionLabel={option => option.nom || ""}
         isOptionEqualToValue={(option, value) => option.code === value.code}
-        filterOptions={options => options}
+        filterOptions={empecherFiltreParDefaut}
         onFocus={() => {
           setDepartementRecherche(field.value.trim().toLowerCase());
         }}
