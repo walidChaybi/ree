@@ -55,7 +55,7 @@ export const configAgent = [
       }
 
       if (match[1].startsWith("/testhtml")) {
-        return { data: "<html>test html<html/>", status: 200 };
+        return "<html>test html<html/>";
       }
 
       const error = { msg: "url api agent non mockée", url: match[1] };

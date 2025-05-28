@@ -58,7 +58,7 @@ export class GestionnaireApi {
 
     return httpRequete
       .then(response => {
-        if (typeof response.body?.data === "string") {
+        if (typeof response.body === "string") {
           const erreur: TReponseApiEchec = {
             status: 500,
             erreurs: [
