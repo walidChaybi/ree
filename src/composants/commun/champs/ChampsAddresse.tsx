@@ -22,10 +22,13 @@ const TYPES_LIEU: Option[] = [
   { cle: "Inconnu", libelle: "Inconnu" }
 ];
 
-const VILLES_SPECIALES = ["paris", "marseille", "lyon"] as const;
-type TVilleSpeciale = (typeof VILLES_SPECIALES)[number];
+enum EVilleSpeciale {
+  PARIS = "paris",
+  MARSEILLE = "marseille",
+  LYON = "lyon"
+}
 
-const ARRONDISSEMENTS_OPTIONS: Record<TVilleSpeciale, Option[]> = {
+const ARRONDISSEMENTS_OPTIONS: Record<EVilleSpeciale, Option[]> = {
   paris: [{ cle: "", libelle: "" }, ...genererArrondissements(20), { cle: "centre", libelle: "centre" }],
   marseille: [{ cle: "", libelle: "" }, ...genererArrondissements(16)],
   lyon: [{ cle: "", libelle: "" }, ...genererArrondissements(9)]
@@ -33,18 +36,20 @@ const ARRONDISSEMENTS_OPTIONS: Record<TVilleSpeciale, Option[]> = {
 
 const AdresseFrance = ({ prefixe, afficherAdresse = true }: { prefixe: string; afficherAdresse?: boolean }) => {
   const [fieldVille] = useField(`${prefixe}.ville`);
-  const { setFieldValue } = useFormikContext();
+  const { values, setFieldValue } = useFormikContext();
 
-  const estVilleSpeciale = useMemo(
-    () => VILLES_SPECIALES.includes(fieldVille.value?.toLowerCase().trim() as TVilleSpeciale),
-    [fieldVille.value]
-  );
+  const villeSpeciale = useMemo(() => {
+    const villeSaisie = fieldVille.value?.toLowerCase().trim();
+
+    return Object.values(EVilleSpeciale).includes(villeSaisie) ? (villeSaisie as EVilleSpeciale) : null;
+  }, [fieldVille.value]);
 
   useEffect(() => {
-    if (fieldVille.value?.toLowerCase().trim() === "paris") {
+    if (!villeSpeciale && getIn(values, `${prefixe}.arrondissement`)) setFieldValue(`${prefixe}.arrondissement`, "");
+    if (villeSpeciale === EVilleSpeciale.PARIS && getIn(values, `${prefixe}.departement`)) {
       setFieldValue(`${prefixe}.departement`, "");
     }
-  }, [fieldVille.value]);
+  }, [villeSpeciale]);
 
   return (
     <div className="mt-4 space-y-4">
@@ -57,17 +62,17 @@ const AdresseFrance = ({ prefixe, afficherAdresse = true }: { prefixe: string; a
             estObligatoire
           />
         </div>
-        {estVilleSpeciale && (
+        {villeSpeciale && (
           <div className="flex-1">
             <ChampListeDeroulante
               name={`${prefixe}.arrondissement`}
               libelle="Arrondissement"
-              options={ARRONDISSEMENTS_OPTIONS[fieldVille.value.toLowerCase().trim() as TVilleSpeciale]}
+              options={ARRONDISSEMENTS_OPTIONS[villeSpeciale]}
               premiereLettreMajuscule
             />
           </div>
         )}
-        {fieldVille.value?.toLowerCase().trim() !== "paris" && (
+        {villeSpeciale !== EVilleSpeciale.PARIS && (
           <div className="flex-1">
             <ChampTexte
               name={`${prefixe}.departement`}
