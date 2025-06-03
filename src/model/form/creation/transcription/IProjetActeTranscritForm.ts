@@ -163,7 +163,7 @@ export const ProjetTranscriptionForm = {
       },
       acteEtranger: {
         typeActe: projetActe?.acteEtranger.typeActeEtranger ?? "ACTE_DRESSE",
-        infoTypeActe: projetActe?.acteEtranger.infoTypeActe ?? undefined,
+        infoTypeActe: projetActe?.acteEtranger.infoTypeActe ?? "",
         dateEnregistrement: {
           jour: projetActe?.acteEtranger.jourEnregistrement ?? "",
           mois: projetActe?.acteEtranger.moisEnregistrement ?? "",
@@ -651,7 +651,7 @@ const mapActeEtranger = (projetActe: IProjetActeTranscritForm): IActeEtrangerDto
   return {
     texteEnonciations: projetActe.autresEnonciations?.enonciations ?? null,
     typeActeEtranger: projetActe.acteEtranger?.typeActe ?? null,
-    infoTypeActe: projetActe.acteEtranger?.infoTypeActe || undefined,
+    infoTypeActe: projetActe.acteEtranger?.infoTypeActe || "",
     cadreNaissance: CadreNaissance.NE_DANS_LE_MARIAGE,
     jourEnregistrement: projetActe.acteEtranger.dateEnregistrement?.jour ?? null,
     moisEnregistrement: projetActe.acteEtranger.dateEnregistrement?.mois ?? null,

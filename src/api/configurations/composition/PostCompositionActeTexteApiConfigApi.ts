@@ -23,5 +23,6 @@ export const CONFIG_POST_COMPOSITION_ACTE_TEXTE: TConfigurationApi<
 > = {
   api: COMPOSITION_API,
   methode: "POST",
-  uri: URI
+  uri: URI,
+  avecAxios: true
 };

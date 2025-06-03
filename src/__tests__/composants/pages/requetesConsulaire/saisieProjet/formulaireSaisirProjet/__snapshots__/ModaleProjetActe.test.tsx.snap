@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ModaleProjetActe - Tests du composant > Doit rendre le composant correctement avec un PDF valide 1`] = `
+exports[`ModaleProjetActe - Tests du composant > DOIT rendre le composant correctement avec un PDF valide 1`] = `
 <div
   id="conteneur-modale-rece"
 >
@@ -38,7 +38,7 @@ exports[`ModaleProjetActe - Tests du composant > Doit rendre le composant correc
               >
                 <iframe
                   class="h-full w-full overflow-auto border-0"
-                  src="blobUrl://Base64String#zoom=90"
+                  src="url_test#zoom=90"
                   title="Document PDF"
                 />
               </div>

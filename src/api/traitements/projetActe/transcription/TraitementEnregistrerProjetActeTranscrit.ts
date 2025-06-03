@@ -7,8 +7,7 @@ import { IErreurTraitement, TTraitementApi } from "@api/traitements/TTraitementA
 import { IProjetActeTranscritDto, ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/ProjetActeTranscrit";
 import { IProjetActeTranscritForm, ProjetTranscriptionForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { useContext, useEffect, useState } from "react";
-import { SaisieProjetActeTranscritContext } from "../../../../contexts/SaisieProjetActeTranscritContextProvider";
+import { useEffect, useState } from "react";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
 
 export interface IPostProjetActeTranscrit {
@@ -30,7 +29,6 @@ interface IDonnesTraitement {
 
 const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetActeTranscrit, ProjetActeTranscrit | null> = {
   Lancer: terminerTraitement => {
-    const { mettreAJourDonneesContext } = useContext(SaisieProjetActeTranscritContext);
     const [projetActe, setProjetActe] = useState<ProjetActeTranscrit | null>(null);
     const [erreurTraitement, setErreurTraitement] = useState<IErreurTraitement>({ enEchec: false });
     const [donneesTraitement, setDonneesTraitement] = useState<IDonnesTraitement | null>(null);
@@ -54,7 +52,6 @@ const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetAc
             body: ProjetTranscriptionForm.versDtoPatch(parametres.valeursSaisies, parametres.projetActe)
           },
           apresSucces: (projetActe: IProjetActeTranscritDto) => {
-            mettreAJourDonneesContext(ProjetActeTranscrit.depuisDto(projetActe));
             setProjetActe(ProjetActeTranscrit.depuisDto(projetActe));
             terminerTraitement();
           },
@@ -77,7 +74,6 @@ const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetAc
         },
         apresSucces: (projetActe: IProjetActeTranscritDto) => {
           setProjetActe(ProjetActeTranscrit.depuisDto(projetActe));
-          mettreAJourDonneesContext(ProjetActeTranscrit.depuisDto(projetActe), "A_SIGNER");
           setDonneesTraitement({
             idActe: projetActe.id ?? "",
             idRequete: idRequete,

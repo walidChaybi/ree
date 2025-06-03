@@ -1,5 +1,5 @@
 import { genererArrondissements } from "@util/Utils";
-import { useField, useFormikContext } from "formik";
+import { getIn, useField, useFormikContext } from "formik";
 import React, { memo, useEffect, useMemo } from "react";
 import ChampListeDeroulante from "./ChampListeDeroulante";
 import ChampTexte from "./ChampTexte";
@@ -119,20 +119,8 @@ const AdresseEtranger = ({ prefixe, afficherAdresse = true }: { prefixe: string;
 );
 
 const ChampsAdresse: React.FC<IChampsAdresseProps> = memo(({ prefixe, libelle, afficherAdresse = true }) => {
-  const [fieldTypeLieu] = useField(`${prefixe}.typeLieu`);
-
-  const { setFieldValue, setFieldTouched } = useFormikContext();
-
-  useEffect(() => {
-    const champsAReinitialiser = ["ville", "arrondissement", "departement", "etatProvince", "pays", "adresse"];
-
-    if (fieldTypeLieu.value) {
-      champsAReinitialiser.forEach(champ => {
-        setFieldValue(`${prefixe}.${champ}`, "");
-        setFieldTouched(`${prefixe}.${champ}`, false);
-      });
-    }
-  }, [fieldTypeLieu.value]);
+  const { values, setFieldValue } = useFormikContext();
+  const valeursAdresse = useMemo(() => getIn(values, prefixe), [values, prefixe]);
 
   return (
     <div>
@@ -140,14 +128,25 @@ const ChampsAdresse: React.FC<IChampsAdresseProps> = memo(({ prefixe, libelle, a
         name={`${prefixe}.typeLieu`}
         libelle={libelle}
         options={TYPES_LIEU}
+        apresChangement={typeLieu =>
+          setFieldValue(`${prefixe}`, {
+            ...valeursAdresse,
+            adresse: "",
+            arrondissement: "",
+            departement: "",
+            etatProvince: "",
+            ville: "",
+            pays: typeLieu === "FRANCE" ? "France" : ""
+          })
+        }
       />
-      {fieldTypeLieu.value === "France" && (
+      {valeursAdresse.typeLieu === "France" && (
         <AdresseFrance
           prefixe={prefixe}
           afficherAdresse={afficherAdresse}
         />
       )}
-      {fieldTypeLieu.value === "Étranger" && (
+      {valeursAdresse.typeLieu === "Étranger" && (
         <AdresseEtranger
           prefixe={prefixe}
           afficherAdresse={afficherAdresse}

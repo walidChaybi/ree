@@ -158,7 +158,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
     const acteEtrangerProjetActe: IActeEtrangerDto = {
       texteEnonciations: "tewt tewxt",
       typeActeEtranger: "ACTE_DRESSE",
-      infoTypeActe: undefined,
+      infoTypeActe: "",
       cadreNaissance: "NE_DANS_LE_MARIAGE",
       jourEnregistrement: "15",
       moisEnregistrement: "12",
@@ -218,7 +218,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
         redacteur: "Ambassador",
         reference: "ref.2024.12.pek",
         texteEnonciations: "tewt tewxt",
-        infoTypeActe: undefined,
+        infoTypeActe: "",
         typeActeEtranger: "ACTE_DRESSE"
       },
       analyseMarginales: [],
@@ -783,7 +783,7 @@ describe("test des fonctions non testées précedement", () => {
         redacteur: null,
         reference: null,
         texteEnonciations: "",
-        infoTypeActe: undefined,
+        infoTypeActe: "",
         typeActeEtranger: null
       },
       analyseMarginales: [],

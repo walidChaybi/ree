@@ -16,7 +16,7 @@ interface IRequeteEtProjetActe {
 interface ISaisieProjetActeTranscritContext {
   requete: IRequeteCreationTranscription;
   projetActe: ProjetActeTranscrit | null;
-  mettreAJourDonneesContext: (projetActe: ProjetActeTranscrit | null, statutRequete?: string) => void;
+  mettreAJourDonneesContext: (projetActe: ProjetActeTranscrit | null, statutRequete: StatutRequete | null) => void;
 }
 
 export const SaisieProjetActeTranscritContext = React.createContext<ISaisieProjetActeTranscritContext>(
@@ -49,7 +49,7 @@ const SaisieProjetActeTranscritContextProvider: React.FC<
   }, [idRequete]);
 
   /* v8 ignore start */
-  const mettreAJourDonneesContext = useCallback((projetActe: ProjetActeTranscrit | null, statutRequete?: string) => {
+  const mettreAJourDonneesContext = useCallback((projetActe: ProjetActeTranscrit | null, statutRequete: StatutRequete | null) => {
     setRequeteEtProjetActe(prec =>
       prec
         ? {
@@ -61,7 +61,7 @@ const SaisieProjetActeTranscritContextProvider: React.FC<
                     ...prec.requete,
                     statutCourant: {
                       ...prec.requete.statutCourant,
-                      statut: StatutRequete.getEnumFor(statutRequete)
+                      statut: statutRequete
                     }
                   }
                 }
