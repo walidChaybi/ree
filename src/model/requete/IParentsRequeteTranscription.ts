@@ -69,12 +69,37 @@ export const ParentsRequeteTranscription = {
     parentRequete?: IParentRequeteTranscription,
     parentProjetActe?: FiliationTitulaireProjetActeTranscrit | null
   ): IParentTranscription {
-    const estNaissanceFranceOuEtranger =
-      (parentProjetActe?.naissance?.pays ?? parentRequete?.paysNaissance)?.toUpperCase() === "FRANCE" ? "France" : "Étranger";
+    const estNaissanceFranceOuEtranger = (() => {
+      switch (true) {
+        case Boolean(parentProjetActe?.naissance?.pays ?? parentRequete?.paysNaissance):
+          return parentProjetActe?.naissance?.pays?.toUpperCase().trim() === "FRANCE" ||
+            parentRequete?.paysNaissance?.toUpperCase().trim() === "FRANCE"
+            ? "France"
+            : "Étranger";
+        case Boolean(parentProjetActe?.naissance?.ville ?? parentRequete?.villeNaissance) ||
+          Boolean(parentProjetActe?.naissance?.region ?? parentRequete?.regionNaissance):
+          return "Étranger";
+        default:
+          return "Inconnu";
+      }
+    })();
 
-    const estDomicileFranceOuEtranger =
-      (parentProjetActe?.domicile?.pays ?? parentRequete?.domiciliation?.pays)?.toUpperCase() === "FRANCE" ? "France" : "Étranger";
-
+    const estDomicileFranceOuEtranger = (() => {
+      switch (true) {
+        case Boolean(parentProjetActe?.domicile?.pays ?? parentRequete?.domiciliation?.pays):
+          return parentProjetActe?.domicile?.pays?.toUpperCase().trim() === "FRANCE" ||
+            parentRequete?.domiciliation?.pays?.toUpperCase().trim() === "FRANCE"
+            ? "France"
+            : "Étranger";
+        case Boolean(parentProjetActe?.domicile?.ville ?? parentRequete?.domiciliation?.ville) ||
+          Boolean(
+            parentProjetActe?.domicile?.region ?? parentRequete?.domiciliation?.departement ?? parentRequete?.domiciliation?.etatProvince
+          ):
+          return "Étranger";
+        default:
+          return "Inconnu";
+      }
+    })();
     return {
       sexe: parentProjetActe?.sexe ?? parentRequete?.sexe ?? "",
       nom: parentProjetActe?.nom ?? (parentRequete?.nomUsage || parentRequete?.nomNaissance) ?? "",
@@ -88,7 +113,7 @@ export const ParentsRequeteTranscription = {
         annee: (parentProjetActe?.naissance?.annee ?? parentRequete?.anneeNaissance)?.toString() ?? ""
       },
       lieuNaissance: {
-        typeLieu: (parentProjetActe?.naissance?.pays ?? parentRequete?.paysNaissance) ? estNaissanceFranceOuEtranger : "Inconnu",
+        typeLieu: estNaissanceFranceOuEtranger,
         ville: parentProjetActe?.naissance?.ville ?? parentRequete?.villeNaissance ?? "",
         departement: (estNaissanceFranceOuEtranger === "France" && parentProjetActe?.naissance?.region) || parentRequete?.regionNaissance,
         etatProvince:
@@ -100,11 +125,7 @@ export const ParentsRequeteTranscription = {
       sansProfession: parentProjetActe?.sansProfession ?? false,
       profession: parentProjetActe?.profession ?? "",
       domicile: {
-        typeLieu:
-          (parentProjetActe?.domicile?.pays &&
-            (parentProjetActe?.domicile?.pays.toUpperCase().trim() === "FRANCE" ? "France" : "Étranger")) ??
-          parentRequete?.domiciliation?.typeLieu ??
-          "Inconnu",
+        typeLieu: estDomicileFranceOuEtranger,
         ville: parentProjetActe?.domicile?.ville ?? parentRequete?.domiciliation?.ville ?? "",
         adresse: parentProjetActe?.domicile?.voie ?? parentRequete?.domiciliation?.adresse ?? "",
         departement:

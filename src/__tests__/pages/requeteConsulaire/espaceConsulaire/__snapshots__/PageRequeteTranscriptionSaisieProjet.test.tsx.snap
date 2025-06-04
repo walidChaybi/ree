@@ -1459,6 +1459,7 @@ pays
                               </div>
                               <div>
                                 <input
+                                  checked=""
                                   class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                   id="parents.parent1.domicile.typeLieu-Étranger"
                                   name="parents.parent1.domicile.typeLieu"
@@ -1474,7 +1475,6 @@ pays
                               </div>
                               <div>
                                 <input
-                                  checked=""
                                   class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                   id="parents.parent1.domicile.typeLieu-Inconnu"
                                   name="parents.parent1.domicile.typeLieu"
@@ -1490,6 +1490,108 @@ pays
                               </div>
                             </div>
                           </fieldset>
+                          <div>
+                            <div
+                              class="mt-4 grid grid-cols-2 gap-4"
+                            >
+                              <div
+                                class="flex w-full flex-col text-start"
+                              >
+                                <label
+                                  aria-label="aria-label-parents.parent1.domicile.ville"
+                                  class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                                  for="parents.parent1.domicile.ville"
+                                >
+                                  Ville
+                                </label>
+                                <div
+                                  class="relative flex rounded-md shadow-sm"
+                                >
+                                  <input
+                                    class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                    id="parents.parent1.domicile.ville"
+                                    maxlength="100"
+                                    name="parents.parent1.domicile.ville"
+                                    value="ville"
+                                  />
+                                </div>
+                              </div>
+                              <div
+                                class="flex w-full flex-col text-start"
+                              >
+                                <label
+                                  aria-label="aria-label-parents.parent1.domicile.etatProvince"
+                                  class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                                  for="parents.parent1.domicile.etatProvince"
+                                >
+                                  État, canton, province
+                                </label>
+                                <div
+                                  class="relative flex rounded-md shadow-sm"
+                                >
+                                  <input
+                                    class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                    id="parents.parent1.domicile.etatProvince"
+                                    maxlength="100"
+                                    name="parents.parent1.domicile.etatProvince"
+                                    value=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="mt-4"
+                            >
+                              <div
+                                class="flex w-full flex-col text-start"
+                              >
+                                <label
+                                  aria-label="aria-label-parents.parent1.domicile.pays"
+                                  class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                                  for="parents.parent1.domicile.pays"
+                                >
+                                  Pays
+                                </label>
+                                <div
+                                  class="relative flex rounded-md shadow-sm"
+                                >
+                                  <input
+                                    class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                    id="parents.parent1.domicile.pays"
+                                    maxlength="100"
+                                    name="parents.parent1.domicile.pays"
+                                    value="pays"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="mt-4"
+                            >
+                              <div
+                                class="flex w-full flex-col text-start"
+                              >
+                                <label
+                                  aria-label="aria-label-parents.parent1.domicile.adresse"
+                                  class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                                  for="parents.parent1.domicile.adresse"
+                                >
+                                  Adresse
+                                </label>
+                                <div
+                                  class="relative flex rounded-md shadow-sm"
+                                >
+                                  <input
+                                    class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                    id="parents.parent1.domicile.adresse"
+                                    maxlength="100"
+                                    name="parents.parent1.domicile.adresse"
+                                    value=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>

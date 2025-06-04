@@ -24,12 +24,7 @@ export interface IFiliationsTitulaireProjetActeTranscrit {
 }
 
 export class FiliationTitulaireProjetActeTranscrit {
-  private static readonly champsObligatoires: (keyof IFiliationTitulaireProjetActeTranscritDto)[] = [
-    "lienParente",
-    "ordre",
-    "nom",
-    "prenoms"
-  ];
+  private static readonly champsObligatoires: (keyof IFiliationTitulaireProjetActeTranscritDto)[] = ["lienParente", "ordre", "sexe"];
 
   private constructor(
     public readonly lienParente: keyof typeof LienParente,
@@ -49,6 +44,10 @@ export class FiliationTitulaireProjetActeTranscrit {
     filiation: IFiliationTitulaireProjetActeTranscritDto
   ): FiliationTitulaireProjetActeTranscrit | null => {
     switch (true) {
+      case !filiation.nom && filiation.prenoms.length === 0:
+        console.error(`Au moins un des champs 'nom' ou 'prenoms' doit être défini pour un filiationTitulaireProjetActeTranscritDto.`);
+        return null;
+
       case FiliationTitulaireProjetActeTranscrit.champsObligatoires.some(cle => filiation[cle] === undefined):
         console.error(`Un champ obligatoire d'un filiationTitulaireProjetActeTranscritDto n'est pas défini.`);
         return null;

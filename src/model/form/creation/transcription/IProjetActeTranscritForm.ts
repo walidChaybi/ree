@@ -140,22 +140,29 @@ export const ProjetTranscriptionForm = {
         profession: projetActe?.declarant.profession ?? "",
         sansProfession: Boolean(projetActe?.declarant.sansProfession),
         domicile: {
-          typeLieu:
-            (projetActe?.declarant.adresseDomicile?.pays &&
-              (projetActe.declarant.adresseDomicile.pays.toUpperCase().trim() === "FRANCE" ? "France" : "Étranger")) ??
-            "Inconnu",
+          typeLieu: (() => {
+            switch (true) {
+              case Boolean(projetActe?.declarant.adresseDomicile?.pays):
+                return projetActe?.declarant.adresseDomicile?.pays?.toUpperCase().trim() === "FRANCE" ? "France" : "Étranger";
+              case Boolean(projetActe?.declarant.adresseDomicile?.ville) || Boolean(projetActe?.declarant.adresseDomicile?.region):
+                return "Étranger";
+              default:
+                return "Inconnu";
+            }
+          })(),
           ville: projetActe?.declarant.adresseDomicile?.ville ?? "",
           departement:
-            projetActe?.declarant.adresseDomicile?.pays.toUpperCase().trim() === "FRANCE"
-              ? projetActe.declarant.adresseDomicile.region
+            projetActe?.declarant.adresseDomicile?.pays?.toUpperCase().trim() === "FRANCE"
+              ? (projetActe?.declarant.adresseDomicile?.region ?? "")
               : "",
           etatProvince:
-            projetActe?.declarant.adresseDomicile?.pays.toUpperCase().trim() !== "FRANCE"
+            projetActe?.declarant.adresseDomicile?.pays?.toUpperCase().trim() !== "FRANCE"
               ? (projetActe?.declarant.adresseDomicile?.region ?? "")
               : "",
           pays: projetActe?.declarant.adresseDomicile?.pays ?? "",
           adresse: projetActe?.declarant.adresseDomicile?.voie ?? ""
         },
+
         complement: projetActe?.declarant.complementDeclarant
       },
       autresEnonciations: {
