@@ -991,7 +991,7 @@ pays
                       <span
                         class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
                       >
-                        Père
+                        Père (Parent 1)
                       </span>
                       <div
                         class="space-y-4"
@@ -1122,7 +1122,9 @@ pays
                         <div
                           class="grid grid-cols-2"
                         >
-                          <div>
+                          <div
+                            class="flex items-end gap-4"
+                          >
                             <div>
                               <label
                                 class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
@@ -1166,10 +1168,6 @@ pays
                                 />
                               </div>
                             </div>
-                          </div>
-                          <div
-                            class="flex items-end space-x-4"
-                          >
                             <label
                               class="flex w-fit text-start cursor-pointer"
                             >
@@ -1735,7 +1733,9 @@ pays
                         <div
                           class="grid grid-cols-2"
                         >
-                          <div>
+                          <div
+                            class="flex items-end gap-4"
+                          >
                             <div>
                               <label
                                 class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
@@ -1779,10 +1779,6 @@ pays
                                 />
                               </div>
                             </div>
-                          </div>
-                          <div
-                            class="flex items-end space-x-4"
-                          >
                             <label
                               class="flex w-fit text-start cursor-pointer"
                             >

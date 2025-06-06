@@ -1,7 +1,7 @@
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { useFormikContext } from "formik";
-import React, { memo, useEffect, useMemo } from "react";
+import React, { memo, useMemo } from "react";
 import ChampCaseACocher from "../../../../commun/champs/ChampCaseACocher";
 import ChampDate from "../../../../commun/champs/ChampDate";
 import ChampTexte from "../../../../commun/champs/ChampTexte";
@@ -20,36 +20,19 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estParent1 }) => {
   const optionsSexe = useMemo(() => Sexe.getMasculinFemininAsOptions(), []);
   const prefixe = useMemo(() => `parents.parent${estParent1 ? "1" : "2"}`, [estParent1]);
   const parent = useMemo(() => (estParent1 ? values.parents.parent1 : values.parents.parent2), [values, estParent1]);
+
   const titre = useMemo(() => {
+    const numeroParent = estParent1 ? "1" : "2";
+
     switch (parent.sexe) {
       case "MASCULIN":
-        return "Père";
+        return `Père (Parent ${numeroParent})`;
       case "FEMININ":
-        return "Mère";
+        return `Mère (Parent ${numeroParent})`;
       default:
-        return `Parent ${estParent1 ? "1" : "2"}`;
+        return `Parent ${numeroParent}`;
     }
   }, [parent, estParent1]);
-
-  useEffect(() => {
-    const valeurChamp = {
-      cle: parent?.renseignerAge ? "dateNaissance" : "age",
-      valeur: parent?.renseignerAge ? { jour: "", mois: "", annee: "" } : ""
-    };
-    setFieldValue(`${prefixe}.${valeurChamp.cle}`, valeurChamp.valeur);
-  }, [parent?.renseignerAge]);
-
-  useEffect(() => {
-    if (parent?.sansProfession) {
-      setFieldValue(`${prefixe}.profession`, "");
-    }
-  }, [parent?.sansProfession]);
-
-  useEffect(() => {
-    if (!estParent1 && values.parents.domicileCommun) {
-      setFieldValue("parents.parent2.domicile", values.parents.parent1.domicile);
-    }
-  }, [values.parents.domicileCommun, values.parents.parent1.domicile]);
 
   return (
     <ConteneurAvecBordure
@@ -70,21 +53,11 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estParent1 }) => {
           libelle="Sexe"
           options={optionsSexe}
         />
+
         <div className="grid grid-cols-2">
-          <div>
-            <ChampDate
-              name={`${prefixe}.dateNaissance`}
-              libelle="Date de naissance"
-              disabled={parent?.renseignerAge}
-            />
-          </div>
-          <div className="flex items-end space-x-4">
-            <ChampCaseACocher
-              name={`${prefixe}.renseignerAge`}
-              libelle="Saisir l'âge"
-            />
-            {parent?.renseignerAge && (
-              <div className="flex-1">
+          <div className="flex items-end gap-4">
+            {parent?.renseignerAge ? (
+              <div className="w-1/4">
                 <ChampTexte
                   name={`${prefixe}.age`}
                   libelle="Âge (en années)"
@@ -92,7 +65,23 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estParent1 }) => {
                   maxLength={3}
                 />
               </div>
+            ) : (
+              <ChampDate
+                name={`${prefixe}.dateNaissance`}
+                libelle="Date de naissance"
+                disabled={parent?.renseignerAge}
+              />
             )}
+
+            <ChampCaseACocher
+              name={`${prefixe}.renseignerAge`}
+              libelle="Saisir l'âge"
+              apresChangement={renseignerAge =>
+                renseignerAge
+                  ? setFieldValue(`${prefixe}.dateNaissance`, { jour: "", mois: "", annee: "" })
+                  : setFieldValue(`${prefixe}.age`, "")
+              }
+            />
           </div>
         </div>
       </div>
@@ -119,6 +108,7 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estParent1 }) => {
         <ChampCaseACocher
           name={`${prefixe}.sansProfession`}
           libelle="Sans profession"
+          apresChangement={sansProfession => sansProfession && setFieldValue(`${prefixe}.profession`, "")}
         />
       </div>
 
@@ -128,6 +118,19 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estParent1 }) => {
           <ChampCaseACocher
             name="parents.domicileCommun"
             libelle="Domicile commun avec parent 1"
+            apresChangement={domicileCommun =>
+              domicileCommun
+                ? setFieldValue("parents.parent2.domicile", values.parents.parent1.domicile)
+                : setFieldValue("parents.parent2.domicile", {
+                    ...parent.domicile,
+                    adresse: "",
+                    arrondissement: "",
+                    departement: "",
+                    etatProvince: "",
+                    ville: "",
+                    pays: parent.domicile?.typeLieu === "France" ? "France" : ""
+                  })
+            }
           />
         )}
 

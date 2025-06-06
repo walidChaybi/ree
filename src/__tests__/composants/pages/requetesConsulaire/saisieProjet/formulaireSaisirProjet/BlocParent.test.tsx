@@ -111,7 +111,7 @@ describe("BlocParents", () => {
       });
     });
 
-    test("doit réinitialiser la date de naissance quand renseignerAge devient true", async () => {
+    test("DOIT remplacer les champs de date par le champ âge QUAND 'Saisir l'âge' est coché", async () => {
       renderComponent();
       const renseignerAgeCheckbox = screen.getAllByLabelText("Saisir l'âge")[0];
 
@@ -121,7 +121,10 @@ describe("BlocParents", () => {
       fireEvent.click(renseignerAgeCheckbox);
 
       await waitFor(() => {
-        expect(dayInput.value).toBe("");
+        expect(screen.queryAllByPlaceholderText("JJ")).toHaveLength(1);
+        expect(screen.queryAllByPlaceholderText("MM")).toHaveLength(1);
+        expect(screen.queryAllByPlaceholderText("AAAA")).toHaveLength(1);
+        expect(screen.queryAllByLabelText("Âge (en années)")).toHaveLength(1);
       });
     });
 
