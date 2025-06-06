@@ -81,7 +81,7 @@ export class SousTypeDelivrance extends EnumWithComplete {
   public static estPossibleAPrendreEnCharge(sousType?: SousTypeDelivrance): boolean {
     return (
       (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) && SousTypeDelivrance.estRDDouRDCouRDDP(sousType)) ||
-      (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATIONS) && SousTypeDelivrance.estRDCSDouRDCSC(sousType))
+      (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATION) && SousTypeDelivrance.estRDCSDouRDCSC(sousType))
     );
   }
 

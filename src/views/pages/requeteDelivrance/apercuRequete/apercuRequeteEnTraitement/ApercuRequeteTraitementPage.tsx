@@ -51,7 +51,7 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
           <BoutonRetour />
           <BoutonsTerminerOuRelecture requete={requete} />
           <div className="BoutonsAction">
-            {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATIONS) &&
+            {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATION) &&
               SousTypeDelivrance.estRDCSDouRDCSC(requete?.sousType) &&
               requete.statutCourant.statut !== StatutRequete.TRANSMISE_A_VALIDEUR && <BoutonModifierTraitement requete={requete} />}
 

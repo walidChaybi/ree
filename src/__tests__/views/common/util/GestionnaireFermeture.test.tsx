@@ -6,7 +6,7 @@ import { test, vi } from "vitest";
 
 const xhrMockObj = {
   open: vi.fn(),
-  send: vi.fn(),
+  send: vi.fn(),Pboutonsactio
   setRequestHeader: vi.fn(),
   readyState: 4,
   status: 200,

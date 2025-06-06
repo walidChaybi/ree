@@ -183,7 +183,7 @@ function gestionFeatureFlagAssigneeA(sousType: string) {
   return (
     (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) &&
       (SousTypeDelivrance.RDC.libelleCourt === sousType || SousTypeDelivrance.RDD.libelleCourt === sousType)) ||
-    (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATIONS) &&
+    (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATION) &&
       (SousTypeDelivrance.RDCSC.libelleCourt === sousType || SousTypeDelivrance.RDCSD.libelleCourt === sousType))
   );
 }

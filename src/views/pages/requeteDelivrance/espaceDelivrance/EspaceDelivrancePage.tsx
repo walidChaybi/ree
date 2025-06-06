@@ -30,7 +30,7 @@ const getElementEntreDeux = (selectedTabState: number, officier: IOfficier) => {
     <>
       {gestionnaireFeatureFlag.auMoinUnEstActif(
         FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES,
-        FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATIONS
+        FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATION
       ) && (
         <div className="BlocBoutons">
           <MenuSaisirRequete indexTabPanel={selectedTabState} />

@@ -15,21 +15,21 @@ describe("test du modèle SousTypeRequete", () => {
   test("Un sous type peut être pris en charge", () => {
     gererFlag([
       { flag: FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES, actif: false },
-      { flag: FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATIONS, actif: false }
+      { flag: FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATION, actif: false }
     ]);
     expect(SousTypeDelivrance.estPossibleAPrendreEnCharge(SousTypeDelivrance.RDD)).toBeFalsy();
     expect(SousTypeDelivrance.estPossibleAPrendreEnCharge(SousTypeDelivrance.RDCSC)).toBeFalsy();
 
     gererFlag([
       { flag: FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES, actif: true },
-      { flag: FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATIONS, actif: false }
+      { flag: FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATION, actif: false }
     ]);
     expect(SousTypeDelivrance.estPossibleAPrendreEnCharge(SousTypeDelivrance.RDD)).toBeTruthy();
     expect(SousTypeDelivrance.estPossibleAPrendreEnCharge(SousTypeDelivrance.RDCSC)).toBeFalsy();
 
     gererFlag([
       { flag: FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES, actif: true },
-      { flag: FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATIONS, actif: true }
+      { flag: FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATION, actif: true }
     ]);
     expect(SousTypeDelivrance.estPossibleAPrendreEnCharge(SousTypeDelivrance.RDD)).toBeTruthy();
     expect(SousTypeDelivrance.estPossibleAPrendreEnCharge(SousTypeDelivrance.RDCSC)).toBeTruthy();

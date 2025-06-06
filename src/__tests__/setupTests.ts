@@ -17,7 +17,7 @@ import { configTeleverification } from "./mock/superagent-config/superagent-mock
 
 export const localStorageFeatureFlagMock = (() => {
   let store: any = {
-    FF_DELIVRANCE_CERTIFS_SITUATIONS: "true",
+    FF_DELIVRANCE_CERTIFS_SITUATION: "true",
     FF_DELIVRANCE_EXTRAITS_COPIES: "true",
     FF_LOG_SERVEUR: "true",
     FF_INTEGRATION_CIBLE_REQUETE_NATURALISATION: "true",
