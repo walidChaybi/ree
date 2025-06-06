@@ -32,7 +32,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({ requete, acte 
   const FFEstActif = useMemo(
     () => ({
       delivranceExtraitCopie: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES),
-      delivCS: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS)
+      delivCS: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATIONS)
     }),
     []
   );

@@ -6,7 +6,7 @@ import "./BoutonsActionRequetesDelivrance.scss";
 
 const BoutonsActionMesRequetesDelivrance = memo(() => {
   const boutonsDisponibles = useMemo<boolean>(
-    () => gestionnaireFeatureFlag.auMoinUnEstActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES, FeatureFlag.FF_DELIV_CS),
+    () => gestionnaireFeatureFlag.auMoinUnEstActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES, FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATIONS),
     []
   );
 

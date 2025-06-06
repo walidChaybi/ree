@@ -6,16 +6,8 @@ import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFl
 import { Options } from "@util/Type";
 
 export class SousTypeDelivrance extends EnumWithComplete {
-  public static readonly RDD = new SousTypeDelivrance(
-    "RDD",
-    "Délivrance Extrait/Copie dématérialisée",
-    "Délivrance E/C (d)"
-  );
-  public static readonly RDC = new SousTypeDelivrance(
-    "RDC",
-    "Délivrance Extrait/Copie courrier",
-    "Délivrance E/C (c)"
-  );
+  public static readonly RDD = new SousTypeDelivrance("RDD", "Délivrance Extrait/Copie dématérialisée", "Délivrance E/C (d)");
+  public static readonly RDC = new SousTypeDelivrance("RDC", "Délivrance Extrait/Copie courrier", "Délivrance E/C (c)");
   public static readonly RDCSD = new SousTypeDelivrance(
     "RDCSD",
     "Délivrance Certificat & Attestation RC/RCA/PACS dématérialisé",
@@ -26,21 +18,9 @@ export class SousTypeDelivrance extends EnumWithComplete {
     "Délivrance Certificat & Attestation RC/RCA/PACS courrier",
     "Délivrance C&A (c)"
   );
-  public static readonly RDDP = new SousTypeDelivrance(
-    "RDDP",
-    "Délivrance Planète",
-    "Délivrance Planète"
-  );
-  public static readonly RDDCO = new SousTypeDelivrance(
-    "RDDCO",
-    "Délivrance Comedec",
-    "Délivrance Comedec"
-  );
-  public static readonly RDLFC = new SousTypeDelivrance(
-    "RDLFC",
-    "Délivrance Livret de famille courrier",
-    "Délivrance LF (c)"
-  );
+  public static readonly RDDP = new SousTypeDelivrance("RDDP", "Délivrance Planète", "Délivrance Planète");
+  public static readonly RDDCO = new SousTypeDelivrance("RDDCO", "Délivrance Comedec", "Délivrance Comedec");
+  public static readonly RDLFC = new SousTypeDelivrance("RDLFC", "Délivrance Livret de famille courrier", "Délivrance LF (c)");
 
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, SousTypeDelivrance);
@@ -83,49 +63,29 @@ export class SousTypeDelivrance extends EnumWithComplete {
   }
 
   public static estRDDouRDDP(sousType?: SousTypeDelivrance): boolean {
-    return (
-      SousTypeDelivrance.estRDD(sousType) ||
-      SousTypeDelivrance.estRDDP(sousType)
-    );
+    return SousTypeDelivrance.estRDD(sousType) || SousTypeDelivrance.estRDDP(sousType);
   }
 
   public static estRDDouRDCouRDDP(sousType?: SousTypeDelivrance): boolean {
-    return (
-      SousTypeDelivrance.estRDDouRDDP(sousType) ||
-      SousTypeDelivrance.estRDC(sousType)
-    );
+    return SousTypeDelivrance.estRDDouRDDP(sousType) || SousTypeDelivrance.estRDC(sousType);
   }
 
   public static estRDCSDouRDCSC(sousType?: SousTypeDelivrance): boolean {
-    return (
-      sousType === SousTypeDelivrance.RDCSD ||
-      SousTypeDelivrance.estRDCSC(sousType)
-    );
+    return sousType === SousTypeDelivrance.RDCSD || SousTypeDelivrance.estRDCSC(sousType);
   }
 
   public static estRDCouRDCSC(sousType?: SousTypeDelivrance): boolean {
+    return SousTypeDelivrance.estRDC(sousType) || SousTypeDelivrance.estRDCSC(sousType);
+  }
+
+  public static estPossibleAPrendreEnCharge(sousType?: SousTypeDelivrance): boolean {
     return (
-      SousTypeDelivrance.estRDC(sousType) ||
-      SousTypeDelivrance.estRDCSC(sousType)
+      (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) && SousTypeDelivrance.estRDDouRDCouRDDP(sousType)) ||
+      (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATIONS) && SousTypeDelivrance.estRDCSDouRDCSC(sousType))
     );
   }
 
-  public static estPossibleAPrendreEnCharge(
-    sousType?: SousTypeDelivrance
-  ): boolean {
-    return (
-      (gestionnaireFeatureFlag.estActif(
-        FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
-      ) &&
-        SousTypeDelivrance.estRDDouRDCouRDDP(sousType)) ||
-      (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS) &&
-        SousTypeDelivrance.estRDCSDouRDCSC(sousType))
-    );
-  }
-
-  public static estSousTypeCreationCourrierAutomatique(
-    type: SousTypeDelivrance
-  ): boolean {
+  public static estSousTypeCreationCourrierAutomatique(type: SousTypeDelivrance): boolean {
     return SousTypeDelivrance.estRDDouRDDP(type);
   }
 

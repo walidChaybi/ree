@@ -2,6 +2,8 @@ import { CONFIG_PATCH_DERNIERE_DELIVRANCE_ACTE } from "@api/configurations/etatC
 import { CONFIG_POST_RECUPERER_DONNEES_POUR_TELEVERIFICATION } from "@api/configurations/etatCivil/acte/PostRecupererDonneesPourTeleverificationConfigApi";
 import { CONFIG_PATCH_SIGNATURE_PAR_LOT_DOCUMENTS_REPONSES } from "@api/configurations/requete/documentsReponses/PatchSignatureParLotDocumentsResponsesConfigApi";
 import { CONFIG_POST_SAUVEGARDER_DOCUMENTS } from "@api/configurations/televerification/PostSauvegarderDocumentsConfigApi";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { useEffect, useState } from "react";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import { IDocumentSigne } from "../../../utils/Signature";
@@ -24,7 +26,7 @@ interface IDonneesTeleverification {
 const TRAITEMENT_ENREGISTRER_DOCUMENTS_SIGNES: TTraitementApi<IParamTraitement> = {
   Lancer: terminerTraitement => {
     const [enEchec, setEnEchec] = useState<boolean>(false);
-    const { appelApi: appelEnregistrerRequeteApi } = useFetchApi(CONFIG_PATCH_SIGNATURE_PAR_LOT_DOCUMENTS_REPONSES);
+    const { appelApi: appelEnregistrerLotDocumentsSignes } = useFetchApi(CONFIG_PATCH_SIGNATURE_PAR_LOT_DOCUMENTS_REPONSES);
     const { appelApi: appelRecupererDonneesPourTeleverification } = useFetchApi(CONFIG_POST_RECUPERER_DONNEES_POUR_TELEVERIFICATION);
     const { appelApi: appelEnregistrerTeleverificationApi } = useFetchApi(CONFIG_POST_SAUVEGARDER_DOCUMENTS);
     const { appelApi: appelMiseAJourDerniereDelivrance } = useFetchApi(CONFIG_PATCH_DERNIERE_DELIVRANCE_ACTE);
@@ -61,7 +63,7 @@ const TRAITEMENT_ENREGISTRER_DOCUMENTS_SIGNES: TTraitementApi<IParamTraitement> 
       }, []);
       let donneesPourTeleverification: IDonneesTeleverification = {};
 
-      appelEnregistrerRequeteApi({
+      appelEnregistrerLotDocumentsSignes({
         parametres: {
           body: parametres.documentsSigne.map(documentSigne => ({
             id: documentSigne.id,
@@ -70,33 +72,34 @@ const TRAITEMENT_ENREGISTRER_DOCUMENTS_SIGNES: TTraitementApi<IParamTraitement> 
             contenu: documentSigne.contenu ?? ""
           }))
         },
-        apresSucces: () => {
-          appelRecupererDonneesPourTeleverification({
-            parametres: { body: idsActesConcernes },
-            apresSucces: donneesPourTeleverificationDtos => {
-              donneesPourTeleverification = donneesPourTeleverificationDtos.reduce(
-                (donnees, donneesDto) => ({
-                  ...donnees,
-                  [donneesDto.idActe]: donneesDto
-                }),
-                {}
-              );
-            },
-            finalement: () =>
-              appelEnregistrerTeleverificationApi({
-                parametres: {
-                  body: parametres.documentsSigne.map(documentSigne => ({
-                    idDocument: documentSigne.id,
-                    idRequete: documentSigne.idRequete,
-                    pdf: documentSigne.contenu ?? "",
-                    ...(donneesPourTeleverification[documentSigne.idActe ?? ""] ?? {})
-                  }))
+        apresSucces: () =>
+          gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA)
+            ? mettreAJourDerniereDelivrance(idsActesConcernes)
+            : appelRecupererDonneesPourTeleverification({
+                parametres: { body: idsActesConcernes },
+                apresSucces: donneesPourTeleverificationDtos => {
+                  donneesPourTeleverification = donneesPourTeleverificationDtos.reduce(
+                    (donnees, donneesDto) => ({
+                      ...donnees,
+                      [donneesDto.idActe]: donneesDto
+                    }),
+                    {}
+                  );
                 },
-                apresErreur: () => setEnEchec(true),
-                finalement: () => mettreAJourDerniereDelivrance(idsActesConcernes)
-              })
-          });
-        },
+                finalement: () =>
+                  appelEnregistrerTeleverificationApi({
+                    parametres: {
+                      body: parametres.documentsSigne.map(documentSigne => ({
+                        idDocument: documentSigne.id,
+                        idRequete: documentSigne.idRequete,
+                        pdf: documentSigne.contenu ?? "",
+                        ...(donneesPourTeleverification[documentSigne.idActe ?? ""] ?? {})
+                      }))
+                    },
+                    apresErreur: () => setEnEchec(true),
+                    finalement: () => mettreAJourDerniereDelivrance(idsActesConcernes)
+                  })
+              }),
         apresErreur: () => setEnEchec(true)
       });
     };

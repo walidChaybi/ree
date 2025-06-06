@@ -102,7 +102,7 @@ function getListeDesRequetesCourrierAsOptions(): Options {
     listeRequeteCourrier = listeRequeteCourrier.concat(mapSousTypeDelivrance(SousTypeDelivrance.RDC));
   }
 
-  if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS)) {
+  if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATIONS)) {
     listeRequeteCourrier = listeRequeteCourrier.concat(mapSousTypeDelivrance(SousTypeDelivrance.RDCSC));
   }
 

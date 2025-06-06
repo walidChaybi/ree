@@ -84,7 +84,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({ requete, acte 
 const afficherBoutonValiderTerminer = (requete: IRequeteDelivrance) =>
   (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) &&
     SousTypeDelivrance.estRDDouRDCouRDDP(requete?.sousType)) ||
-  (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIV_CS) && SousTypeDelivrance.estRDCSDouRDCSC(requete.sousType));
+  (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATIONS) && SousTypeDelivrance.estRDCSDouRDCSC(requete.sousType));
 
 const estPossibleDeSigner = (statut: StatutRequete, sousTypeDelivrance: SousTypeDelivrance, utilisateurConnecte: IOfficier): boolean => {
   return (

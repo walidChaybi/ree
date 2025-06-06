@@ -17,10 +17,10 @@ class GestionnaireFeatureFlag {
   }
 
   positionneFlagsAPartirDuHeader(header: any, idSSOUtilisateur: string) {
-    // Exemple canary testing '[{"0123456": ["FF_DELIVRANCE_EXTRAITS_COPIES"]}, {"0456255": ["FF_DELIV_CS"]}]';
+    // Exemple canary testing '[{"0123456": ["FF_DELIVRANCE_EXTRAITS_COPIES"]}, {"0456255": ["FF_DELIVRANCE_CERTIFS_SITUATIONS"]}]';
     const idSSOsEtFeaturesFlags: IdSSOEtFeaturesFlags[] | undefined = this.getIdSSOsEtFeaturesFlags(header);
 
-    this.supprimeTousLesFlags([FeatureFlag.FF_DELIV_CS, FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES]);
+    this.supprimeTousLesFlags([FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATIONS, FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES]);
 
     const props = Object.getOwnPropertyNames(FeatureFlag);
     props.forEach((prop: string) => {
