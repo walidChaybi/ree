@@ -1,4 +1,3 @@
-import { Identite } from "@model/etatcivil/enum/Identite";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Formik } from "formik";
 import { describe, expect, test } from "vitest";
@@ -10,7 +9,7 @@ describe("BlocFormuleFinale", () => {
       <Formik
         initialValues={{
           formuleFinale: {
-            identiteDemandeur: Identite.getKey(Identite.PERE),
+            identiteDemandeur: "PARENT_1",
             nom: "",
             prenomsChemin: { prenom1: "" },
             qualite: "",
@@ -33,7 +32,7 @@ describe("BlocFormuleFinale", () => {
       <Formik
         initialValues={{
           formuleFinale: {
-            identiteDemandeur: Identite.getKey(Identite.TIERS),
+            identiteDemandeur: "TIERS",
             nom: "",
             prenomsChemin: { prenom1: "" },
             qualite: "",
@@ -53,14 +52,14 @@ describe("BlocFormuleFinale", () => {
   };
 
   describe("Tests d'affichage initial", () => {
-    test("Doit afficher le formulaire formule finale Père", async () => {
+    test("Doit afficher le formulaire formule finale avec Parent 1", async () => {
       renderComponentPere();
       const selectValue: HTMLSelectElement = screen.getByLabelText("Identité du demandeur", {
         selector: 'select[name="formuleFinale.identiteDemandeur"]'
       });
       await waitFor(() => {
         expect(selectValue).toBeDefined();
-        expect(selectValue.value).toBe(Identite.getKey(Identite.PERE));
+        expect(selectValue.value).toBe("PARENT_1");
       });
     });
     test("Doit pas afficher le formulaire formule finale pour Père sans les champs d'identité", async () => {
@@ -110,7 +109,7 @@ describe("BlocFormuleFinale", () => {
       });
       await waitFor(() => {
         expect(selectValue).toBeDefined();
-        expect(selectValue.value).toBe(Identite.getKey(Identite.TIERS));
+        expect(selectValue.value).toBe("TIERS");
       });
     });
 

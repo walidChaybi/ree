@@ -8,6 +8,20 @@ export enum EIdentite {
   TIERS = "Un tiers"
 }
 
+export enum EIdentiteDemandeur {
+  PARENT_1 = "Parent 1",
+  PARENT_2 = "Parent 2",
+  LES_PARENTS = "Les parents",
+  TIERS = "Un tiers"
+}
+
+export enum EIdentiteTransmetteur {
+  LE_REQUERANT = "Le requérant",
+  LA_REQUERANTE = "La requérante",
+  LES_REQUERANTS = "Les requérants",
+  LES_REQUERANTES = "Les requérantes"
+}
+
 export class Identite extends EnumWithLibelle {
   public static readonly PERE = new Identite("Le père");
   public static readonly MERE = new Identite("La mère");

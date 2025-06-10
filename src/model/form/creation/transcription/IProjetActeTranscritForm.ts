@@ -21,7 +21,7 @@ import { EModeDepot } from "@model/etatcivil/enum/EModeDepot";
 import { EPieceProduite } from "@model/etatcivil/enum/EPieceProduite";
 import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
-import { EIdentite, Identite } from "@model/etatcivil/enum/Identite";
+import { EIdentite, EIdentiteDemandeur, EIdentiteTransmetteur } from "@model/etatcivil/enum/Identite";
 import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { TypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteArchiviste";
@@ -98,15 +98,15 @@ export interface IMentionsTranscription {
 }
 
 export interface IFormuleFinaleTranscription {
-  identiteDemandeur: string;
+  identiteDemandeur: keyof typeof EIdentiteDemandeur;
   nom?: string | null;
   prenomsChemin?: TPrenomsForm;
   qualite?: string | null;
-  pieceProduite: string;
+  pieceProduite: keyof typeof EPieceProduite;
   legalisationApostille: string;
   autresPieces?: string | null;
   modeDepot: string;
-  identiteTransmetteur: string;
+  identiteTransmetteur: keyof typeof EIdentiteTransmetteur;
 }
 
 export const ProjetTranscriptionForm = {
@@ -188,7 +188,7 @@ export const ProjetTranscriptionForm = {
         mentions: projetActe?.acteEtranger.mentions ?? ""
       },
       formuleFinale: {
-        identiteDemandeur: projetActe?.formuleFinale.identiteDemandeur ?? Identite.getKey(Identite.PERE),
+        identiteDemandeur: projetActe?.formuleFinale.identiteDemandeur ?? "PARENT_1",
         nom: projetActe?.formuleFinale.nomDemandeur ?? "",
         prenomsChemin: PrenomsForm.depuisStringDto(projetActe?.formuleFinale.prenomDemandeur?.split(",") ?? []),
         qualite: projetActe?.formuleFinale.qualiteDemandeur ?? "",
@@ -196,7 +196,7 @@ export const ProjetTranscriptionForm = {
         autresPieces: projetActe?.formuleFinale.autresPieces ?? "",
         legalisationApostille: projetActe?.formuleFinale.legalisation ?? "",
         modeDepot: projetActe?.formuleFinale.modeDepot ?? "TRANSMISE",
-        identiteTransmetteur: "Identique au demandeur"
+        identiteTransmetteur: projetActe?.formuleFinale.identiteTransmetteur ?? "LE_REQUERANT"
       }
     };
   },
@@ -638,10 +638,8 @@ const estParentRenseigne = (parent: IParentTranscription): boolean => {
 };
 
 const mapFormuleFinale = (projetActe: IProjetActeTranscritForm): IFormuleFinaleDto => {
-  const estTransmetteurIdentiqueDemandeur = projetActe.formuleFinale.identiteTransmetteur === "Identique au demandeur";
-
   return {
-    identiteDemandeur: (projetActe.formuleFinale.identiteDemandeur as keyof typeof EIdentite) || null,
+    identiteDemandeur: projetActe.formuleFinale.identiteDemandeur || null,
     nomDemandeur: projetActe.formuleFinale?.nom ?? null,
     prenomDemandeur: PrenomsForm.versPrenomsStringDto(projetActe.formuleFinale?.prenomsChemin).toString() || null,
     qualiteDemandeur: projetActe.formuleFinale?.qualite ?? null,
@@ -649,8 +647,8 @@ const mapFormuleFinale = (projetActe: IProjetActeTranscritForm): IFormuleFinaleD
     legalisation: (projetActe.formuleFinale.legalisationApostille as keyof typeof ELegalisationApostille) || null,
     autresPieces: projetActe.formuleFinale?.autresPieces ?? null,
     modeDepot: (projetActe.formuleFinale.modeDepot as keyof typeof EModeDepot) || null,
-    identiteTransmetteur: (projetActe.formuleFinale.identiteDemandeur as keyof typeof EIdentite) || null,
-    nomTransmetteur: (estTransmetteurIdentiqueDemandeur && projetActe.formuleFinale.nom) || null
+    identiteTransmetteur: projetActe.formuleFinale.identiteTransmetteur || null,
+    nomTransmetteur: projetActe.formuleFinale.nom || null
   };
 };
 

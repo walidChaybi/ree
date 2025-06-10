@@ -1,11 +1,11 @@
-import { EIdentite } from "@model/etatcivil/enum/Identite";
+import { EIdentiteDemandeur, EIdentiteTransmetteur } from "@model/etatcivil/enum/Identite";
 import { Option } from "@util/Type";
 import { useFormikContext } from "formik";
-import { useEffect, useMemo } from "react";
 
 import { ELegalisationApostille } from "@model/etatcivil/enum/ELegalisationApostille";
 import { EModeDepot } from "@model/etatcivil/enum/EModeDepot";
 import { EPieceProduite } from "@model/etatcivil/enum/EPieceProduite";
+import { PrenomsForm } from "@model/form/commun/PrenomsForm";
 import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { enumVersOptions } from "@util/Utils";
 import ChampListeDeroulante from "../../../../commun/champs/ChampListeDeroulante";
@@ -15,49 +15,14 @@ import ChampsRadio from "../../../../commun/champs/ChampsRadio";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import SeparateurSection from "../../../../commun/conteneurs/formulaire/SeparateurSection";
 
-const optionsDemandeur: Option[] = enumVersOptions(EIdentite);
-
+const optionsDemandeur: Option[] = enumVersOptions(EIdentiteDemandeur);
+const optionsTransmetteur: Option[] = enumVersOptions(EIdentiteTransmetteur);
 const optionsPieces: Option[] = enumVersOptions(EPieceProduite);
-
 const optionsLegalisationApostille: Option[] = enumVersOptions(ELegalisationApostille, true);
-
 const optionsModeDepot: Option[] = enumVersOptions(EModeDepot);
 
-const optionsIdentiteTransmetteur: Option[] = [{ cle: "IDENTIQUE_DEMANDEUR", libelle: "Identique au demandeur" }];
-
 const BlocFormuleFinale: React.FC = () => {
-  const { values, setFieldValue, setFieldTouched, initialValues } = useFormikContext<IProjetActeTranscritForm>();
-  const estUnTier = useMemo(
-    () => values.formuleFinale?.identiteDemandeur === ("TIERS" as keyof typeof EIdentite),
-    [values.formuleFinale.identiteDemandeur]
-  );
-  const doitAfficherAutresPieces = useMemo(
-    () => values.formuleFinale.pieceProduite?.toUpperCase().includes("COPIES"),
-    [values.formuleFinale.pieceProduite]
-  );
-
-  useEffect(() => {
-    if (!estUnTier) {
-      setFieldValue("formuleFinale", {
-        ...values.formuleFinale,
-        nom: initialValues.formuleFinale.nom,
-        prenomsChemin: initialValues.formuleFinale.prenomsChemin,
-        qualite: initialValues.formuleFinale.qualite,
-        identiteDemandeur: values.formuleFinale?.identiteDemandeur
-      });
-      setFieldTouched("formuleFinale.nom", false);
-    }
-  }, [values.formuleFinale?.identiteDemandeur]);
-
-  useEffect(() => {
-    if (!doitAfficherAutresPieces) {
-      setFieldValue("formuleFinale", {
-        ...values.formuleFinale,
-        autresPieces: initialValues.formuleFinale.autresPieces
-      });
-      setFieldTouched("formuleFinale.autresPieces", false);
-    }
-  }, [doitAfficherAutresPieces]);
+  const { values, setFieldValue } = useFormikContext<IProjetActeTranscritForm>();
 
   return (
     <ConteneurAvecBordure className="py-6">
@@ -67,15 +32,26 @@ const BlocFormuleFinale: React.FC = () => {
           libelle="Identité du demandeur"
           options={optionsDemandeur}
           premiereLettreMajuscule
+          apresChangement={identiteDemandeur =>
+            identiteDemandeur !== "TIERS" &&
+            setFieldValue("formuleFinale", {
+              ...values.formuleFinale,
+              nom: "",
+              prenomsChemin: PrenomsForm.valeursInitiales(),
+              qualite: "",
+              identiteDemandeur
+            })
+          }
         />
       </div>
-      {estUnTier && (
+
+      {values.formuleFinale.identiteDemandeur === "TIERS" && (
         <>
           <div className="pt-4">
             <ChampTexte
               name="formuleFinale.nom"
               libelle="Nom"
-              estObligatoire={estUnTier}
+              estObligatoire
             />
           </div>
 
@@ -93,12 +69,19 @@ const BlocFormuleFinale: React.FC = () => {
           </div>
         </>
       )}
+
       <SeparateurSection titre="Pièces" />
+
       <div className="grid grid-cols-2 gap-4">
         <ChampListeDeroulante
           name="formuleFinale.pieceProduite"
           libelle="Pièces produites"
           options={optionsPieces}
+          apresChangement={pieceProduite => {
+            if (!pieceProduite?.includes("COPIES")) {
+              setFieldValue("formuleFinale.autresPieces", "");
+            }
+          }}
         />
 
         <ChampListeDeroulante
@@ -108,16 +91,18 @@ const BlocFormuleFinale: React.FC = () => {
         />
       </div>
 
-      {doitAfficherAutresPieces && (
+      {values.formuleFinale.pieceProduite?.includes("COPIES") && (
         <div className="grid grid-cols-2 pt-4">
           <ChampTexte
             name="formuleFinale.autresPieces"
             libelle="Autres pièces"
-            estObligatoire={doitAfficherAutresPieces}
+            estObligatoire
           />
         </div>
       )}
+
       <SeparateurSection />
+
       <div className="grid grid-cols-2 gap-4">
         <div className="">
           <ChampsRadio
@@ -130,8 +115,7 @@ const BlocFormuleFinale: React.FC = () => {
           <ChampListeDeroulante
             name="formuleFinale.identiteTransmetteur"
             libelle="Identité du transmetteur"
-            options={optionsIdentiteTransmetteur}
-            disabled
+            options={optionsTransmetteur}
           />
         </div>
       </div>

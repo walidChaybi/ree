@@ -182,10 +182,10 @@ export const projetActeNaissanceDto: IProjetActeTranscritDto = {
     complementDeclarant: null
   },
   formuleFinale: {
-    identiteDemandeur: "PERE",
+    identiteDemandeur: "PARENT_1",
     pieceProduite: "COPIE",
     modeDepot: "TRANSMISE",
-    identiteTransmetteur: "PERE",
+    identiteTransmetteur: "LE_REQUERANT",
     nomDemandeur: null,
     prenomDemandeur: null,
     qualiteDemandeur: null,

@@ -6,7 +6,7 @@ import { CHAMP_EN_ERREUR } from "../formulaire/ScrollVersErreur";
 type TChampListeDeroulanteProps = React.InputHTMLAttributes<HTMLSelectElement> & {
   libelle: string;
   options: Option[];
-  pendantChangement?: () => void;
+  apresChangement?: (valeur: string) => void;
   premiereLettreMajuscule?: boolean;
   optionVideMasquee?: boolean;
   estObligatoire?: boolean;
@@ -17,7 +17,7 @@ const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({
   libelle,
   className,
   options,
-  pendantChangement,
+  apresChangement,
   premiereLettreMajuscule,
   optionVideMasquee = false,
   estObligatoire = false,
@@ -42,7 +42,7 @@ const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({
         {...field}
         onChange={e => {
           field.onChange(e);
-          pendantChangement?.();
+          apresChangement?.(e.target.value);
         }}
       >
         {options?.map(option => (

@@ -138,7 +138,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
       mentions: "il est fait mention de..."
     },
     formuleFinale: {
-      identiteDemandeur: "PERE",
+      identiteDemandeur: "PARENT_1",
       nom: "",
       prenomsChemin: PrenomsForm.valeursInitiales(),
       qualite: "",
@@ -146,7 +146,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
       autresPieces: "passeport",
       legalisationApostille: "LEGALISATION",
       modeDepot: "REMISE",
-      identiteTransmetteur: "Identique au demandeur"
+      identiteTransmetteur: "LE_REQUERANT"
     },
     autresEnonciations: {
       enonciations: "tewt tewxt"
@@ -173,7 +173,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
   });
   test("mappingSaisieProjetTitulaireFormVersProjetActe doit renvoyer l'objet 'formule finale' au format attendu", () => {
     const formuleFinaleProjetActe: IFormuleFinaleDto = {
-      identiteDemandeur: "PERE",
+      identiteDemandeur: "PARENT_1",
       nomDemandeur: "",
       prenomDemandeur: null,
       qualiteDemandeur: "",
@@ -181,7 +181,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
       legalisation: "LEGALISATION",
       autresPieces: "passeport",
       modeDepot: "REMISE",
-      identiteTransmetteur: "PERE",
+      identiteTransmetteur: "LE_REQUERANT",
       nomTransmetteur: null
     };
     expect(resultat.formuleFinale).toStrictEqual(formuleFinaleProjetActe);
@@ -250,8 +250,8 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
       },
       formuleFinale: {
         autresPieces: "passeport",
-        identiteDemandeur: "PERE",
-        identiteTransmetteur: "PERE",
+        identiteDemandeur: "PARENT_1",
+        identiteTransmetteur: "LE_REQUERANT",
         legalisation: "LEGALISATION",
         modeDepot: "REMISE",
         nomDemandeur: "",
@@ -504,7 +504,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
       autresPieces: "",
       legalisationApostille: "APOSTILLE",
       modeDepot: "TRANSMISE",
-      identiteTransmetteur: "Identique au demandeur"
+      identiteTransmetteur: "LE_REQUERANT"
     },
     autresEnonciations: {
       enonciations: "RAS"
@@ -572,7 +572,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
       formuleFinale: {
         autresPieces: "",
         identiteDemandeur: "TIERS",
-        identiteTransmetteur: "TIERS",
+        identiteTransmetteur: "LE_REQUERANT",
         legalisation: "APOSTILLE",
         modeDepot: "TRANSMISE",
         nomDemandeur: "nomDemandeur",
@@ -759,7 +759,7 @@ describe("test des fonctions non testées précedement", () => {
       autresPieces: "",
       legalisationApostille: "APOSTILLE",
       modeDepot: "TRANSMISE",
-      identiteTransmetteur: "Identique au demandeur"
+      identiteTransmetteur: "LE_REQUERANT"
     },
     autresEnonciations: {
       enonciations: ""
@@ -821,7 +821,7 @@ describe("test des fonctions non testées précedement", () => {
       formuleFinale: {
         autresPieces: "",
         identiteDemandeur: "TIERS",
-        identiteTransmetteur: "TIERS",
+        identiteTransmetteur: "LE_REQUERANT",
         legalisation: "APOSTILLE",
         modeDepot: "TRANSMISE",
         nomDemandeur: "nomDemandeur",

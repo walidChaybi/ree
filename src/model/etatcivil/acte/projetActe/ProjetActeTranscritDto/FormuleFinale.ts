@@ -3,10 +3,10 @@
 import { ELegalisationApostille } from "@model/etatcivil/enum/ELegalisationApostille";
 import { EModeDepot } from "@model/etatcivil/enum/EModeDepot";
 import { EPieceProduite } from "@model/etatcivil/enum/EPieceProduite";
-import { EIdentite } from "@model/etatcivil/enum/Identite";
+import { EIdentiteDemandeur, EIdentiteTransmetteur } from "@model/etatcivil/enum/Identite";
 
 export interface IFormuleFinaleDto {
-  identiteDemandeur: keyof typeof EIdentite;
+  identiteDemandeur: keyof typeof EIdentiteDemandeur;
   nomDemandeur: string | null;
   prenomDemandeur: string | null;
   qualiteDemandeur: string | null;
@@ -14,7 +14,7 @@ export interface IFormuleFinaleDto {
   legalisation: keyof typeof ELegalisationApostille | null;
   autresPieces: string | null;
   modeDepot: keyof typeof EModeDepot;
-  identiteTransmetteur: keyof typeof EIdentite;
+  identiteTransmetteur: keyof typeof EIdentiteTransmetteur;
   nomTransmetteur: string | null;
 }
 
@@ -27,7 +27,7 @@ export class FormuleFinale {
   ];
 
   private constructor(
-    public readonly identiteDemandeur: keyof typeof EIdentite,
+    public readonly identiteDemandeur: keyof typeof EIdentiteDemandeur,
     public readonly nomDemandeur: string | null,
     public readonly prenomDemandeur: string | null,
     public readonly qualiteDemandeur: string | null,
@@ -35,7 +35,7 @@ export class FormuleFinale {
     public readonly legalisation: keyof typeof ELegalisationApostille | null,
     public readonly autresPieces: string | null,
     public readonly modeDepot: keyof typeof EModeDepot,
-    public readonly identiteTransmetteur: keyof typeof EIdentite,
+    public readonly identiteTransmetteur: keyof typeof EIdentiteTransmetteur,
     public readonly nomTransmetteur: string | null
   ) {}
 
@@ -44,14 +44,14 @@ export class FormuleFinale {
       case FormuleFinale.champsObligatoires.some(cle => formuleFinale[cle] === undefined):
         console.error("Un champ obligatoire d'une FormuleFinale n'est pas défini.");
         return null;
-      case !Object.keys(EIdentite).includes(formuleFinale.identiteDemandeur):
+      case !Object.keys(EIdentiteDemandeur).includes(formuleFinale.identiteDemandeur):
         console.error(
-          `L'identiteDemandeur de FormuleFinale a la valeur ${formuleFinale.identiteDemandeur} au lieu d'une des suivantes : ${Object.keys(EIdentite)}.`
+          `L'identiteDemandeur de FormuleFinale a la valeur ${formuleFinale.identiteDemandeur} au lieu d'une des suivantes : ${Object.keys(EIdentiteDemandeur)}.`
         );
         return null;
-      case !Object.keys(EIdentite).includes(formuleFinale.identiteTransmetteur):
+      case !Object.keys(EIdentiteTransmetteur).includes(formuleFinale.identiteTransmetteur):
         console.error(
-          `L'identiteTransmetteur de FormuleFinale a la valeur ${formuleFinale.identiteTransmetteur} au lieu d'une des suivantes : ${Object.keys(EIdentite)}.`
+          `L'identiteTransmetteur de FormuleFinale a la valeur ${formuleFinale.identiteTransmetteur} au lieu d'une des suivantes : ${Object.keys(EIdentiteTransmetteur)}.`
         );
         return null;
       case !Object.keys(EModeDepot).includes(formuleFinale.modeDepot):

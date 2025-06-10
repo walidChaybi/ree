@@ -10,7 +10,7 @@ const mockOptions = [
 ];
 
 describe("ChampListeDeroulante", () => {
-  const renderAvecFormulaire = (pendantChargement?: () => void) => {
+  const renderAvecFormulaire = (apresChangement?: () => void) => {
     return render(
       <Formik
         initialValues={{ champ: "" }}
@@ -21,7 +21,7 @@ describe("ChampListeDeroulante", () => {
             name="champ"
             libelle="Test Label"
             options={mockOptions}
-            pendantChangement={pendantChargement}
+            apresChangement={apresChangement}
           />
         </Form>
       </Formik>

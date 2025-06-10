@@ -2547,19 +2547,19 @@ pays
                             name="formuleFinale.identiteDemandeur"
                           >
                             <option
-                              value="PERE"
+                              value="PARENT_1"
                             >
-                              Le père
+                              Parent 1
                             </option>
                             <option
-                              value="MERE"
+                              value="PARENT_2"
                             >
-                              La mère
+                              Parent 2
                             </option>
                             <option
-                              value="PERE_ET_MERE"
+                              value="LES_PARENTS"
                             >
-                              Le père et la mère
+                              Les parents
                             </option>
                             <option
                               value="TIERS"
@@ -2723,14 +2723,28 @@ pays
                             </label>
                             <select
                               class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
-                              disabled=""
                               id="formuleFinale.identiteTransmetteur"
                               name="formuleFinale.identiteTransmetteur"
                             >
                               <option
-                                value="IDENTIQUE_DEMANDEUR"
+                                value="LE_REQUERANT"
                               >
-                                Identique au demandeur
+                                Le requérant
+                              </option>
+                              <option
+                                value="LA_REQUERANTE"
+                              >
+                                La requérante
+                              </option>
+                              <option
+                                value="LES_REQUERANTS"
+                              >
+                                Les requérants
+                              </option>
+                              <option
+                                value="LES_REQUERANTES"
+                              >
+                                Les requérantes
                               </option>
                             </select>
                           </div>
