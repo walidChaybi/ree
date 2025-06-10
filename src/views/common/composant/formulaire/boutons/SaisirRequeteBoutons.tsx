@@ -56,13 +56,15 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
       )}
       {utilisateurSansBrouillon && (
         <>
-          <Bouton
-            disabled={!props.formik.dirty}
-            id="boutonPrendreEnCharge"
-            type="submit"
-          >
-            {"Prendre en charge"}
-          </Bouton>
+          {!props.modeModification && (
+            <Bouton
+              disabled={!props.formik.dirty}
+              id="boutonPrendreEnCharge"
+              type="submit"
+            >
+              {"Prendre en charge"}
+            </Bouton>
+          )}
           {props.onTransferer && (
             <Bouton
               onClick={props.onTransferer}
