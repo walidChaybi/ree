@@ -1,7 +1,61 @@
-const ConteneurDocument: React.FC<React.PropsWithChildren> = ({ children }) => {
-  // TODO gestion du drag/zoom/print du document
+import Print from "@mui/icons-material/Print";
+
+const imprimerDocument = () => {
+  const pagesDocumentTexte = document.querySelectorAll(".contenu-document-texte");
+  const fenetreImpression = window.open("", "_blank", "left=0,top=0,width=800,height=800,toolbar=0,scrollbars=0,status=0");
+  if (!fenetreImpression || !pagesDocumentTexte.length) return;
+
+  Array.from(document.styleSheets || []).forEach(styleSheet => {
+    if (!styleSheet.cssRules) return;
+
+    const elementStyle = document.createElement("style");
+    Array.from(styleSheet.cssRules).forEach(cssRule => {
+      elementStyle.appendChild(document.createTextNode(cssRule.cssText));
+    });
+    fenetreImpression?.document.head.appendChild(elementStyle);
+  });
+
+  document.fonts?.forEach(police => {
+    fenetreImpression?.document.fonts.add(police);
+  });
+
+  pagesDocumentTexte.forEach(page => {
+    let elem = fenetreImpression.document.createElement("div");
+    elem.innerHTML = page.innerHTML;
+    elem.style.fontSize = "13px";
+    elem.style.height = "100vh";
+    elem.style.display = "flex";
+    elem.style.fontFamily = "Liberation Mono";
+    fenetreImpression.document.body.appendChild(elem);
+  });
+
+  fenetreImpression.document.title = "Aperçu projet acte";
+  fenetreImpression.document.close();
+  fenetreImpression.focus();
+  fenetreImpression.print();
+  fenetreImpression.close();
+};
+
+interface IConteneurDocumentProps {
+  imprimable?: boolean;
+}
+
+const ConteneurDocument: React.FC<React.PropsWithChildren<IConteneurDocumentProps>> = ({ children, imprimable }) => {
   return (
     <div className="relative h-full w-full overflow-y-auto overflow-x-hidden bg-gris-clair">
+      {imprimable && (
+        <div className="sticky top-0 text-end">
+          <button
+            className="min-w-0 bg-transparent px-1.5 py-0.5 text-bleu-sombre transition-colors hover:text-bleu focus-visible:text-bleu"
+            title="Imprimer"
+            type="button"
+            onClick={imprimerDocument}
+          >
+            <Print fontSize="medium" />
+          </button>
+        </div>
+      )}
+
       <div
         className="absolute w-[calc(100%-80px)] pb-24 transition-all duration-100"
         style={{ top: "40px", left: "40px" }}

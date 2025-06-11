@@ -75,4 +75,13 @@ describe("Test du Helper de modele texte", () => {
     };
     expect(ModeleTexte.creer(textePrenoms).generer(valeursPrenoms)).toBe("Test1, Test2, Test3, PAS DE PRÉNOMS");
   });
+
+  test("Création et génération d'un texte par pages via un modèle texte", () => {
+    const modeleTest = "{{/nl}}Texte test, motlongtrèslongtrèslongsilong. ligne1{{/nl}}ligne2{{/nl}}ligne3";
+
+    expect(ModeleTexte.creer(modeleTest).genererParPage({}, { tailleLigne: 11, ligneParPage: 6 })).toStrictEqual({
+      "page-1": ["", "Texte test,", "motlongtrès", "longtrèslon", "gsilong.", "ligne1"],
+      "page-2": ["ligne2", "ligne3"]
+    });
+  });
 });

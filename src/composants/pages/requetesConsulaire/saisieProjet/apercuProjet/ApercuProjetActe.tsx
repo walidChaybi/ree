@@ -14,8 +14,8 @@ import DocumentTexte from "../../../../commun/conteneurs/DocumentTexte";
 
 const ApercuProjetActe: React.FC = () => {
   const { requete } = useContext(SaisieProjetActeTranscritContext);
-
   const { appelApi: appelGetModeleTexte, enAttenteDeReponseApi: enAttenteModeleTexte } = useFetchApi(CONFIG_GET_MODELE_TEXTE);
+
   const [valeurs] = useEventState<IProjetActeTranscritForm | null>(EEventState.APERCU_PROJET_ACTE, null);
   const [modeleTexte, setModeleTexte] = useState<ModeleTexte | null>(null);
 
@@ -38,7 +38,13 @@ const ApercuProjetActe: React.FC = () => {
     return `${prefixeTitre} ${natureActe}`;
   }, [requete.natureActeTranscrit]);
 
-  const texteActe = useMemo(() => (valeurs && modeleTexte ? modeleTexte.generer(valeurs) : ""), [valeurs, modeleTexte]);
+  const pagesTexteActe = useMemo(() => {
+    if (!valeurs || !modeleTexte) return { pages: {}, total: 0 };
+
+    const acteTexteParPage = modeleTexte.genererParPage(valeurs, { tailleLigne: 84, ligneParPage: 45 });
+
+    return { pages: acteTexteParPage, total: Object.keys(acteTexteParPage).length };
+  }, [valeurs, modeleTexte]);
 
   useEffect(() => {
     const typeModelTexteRequete = (() => {
@@ -81,19 +87,28 @@ const ApercuProjetActe: React.FC = () => {
     <div className="h-full">
       {enAttenteModeleTexte && <ComposantChargeur />}
 
-      {texteActe && (
+      {Boolean(pagesTexteActe.total) && (
         <ConteneurDocument>
-          <DocumentTexte>
-            <div className="flex w-full flex-col justify-between gap-4 text-start">
-              <div>
-                <div className="text-center">{titreActe}</div>
+          <div className="grid gap-10">
+            {Object.entries(pagesTexteActe.pages).map(([clePage, lignes], indexPage) => (
+              <DocumentTexte key={clePage}>
+                <div className="flex w-full flex-col justify-between gap-4 text-start">
+                  <div>
+                    {indexPage === 0 && <div className="text-center">{titreActe}</div>}
 
-                <div dangerouslySetInnerHTML={{ __html: texteActe }}></div>
-              </div>
+                    {lignes.map((ligne, indexLigne) => (
+                      <div
+                        key={`${clePage}-${indexLigne}-${ligne}`}
+                        dangerouslySetInnerHTML={{ __html: ligne.length ? ligne : "<br/>" }}
+                      ></div>
+                    ))}
+                  </div>
 
-              <div>{`${requete.numeroDossier ?? "<REFERENCE.ACTE.TRANSCRIT>"} - ${DateRECE.depuisTimestamp(Date.now()).format()}`}</div>
-            </div>
-          </DocumentTexte>
+                  <div>{`${requete.numeroDossier ?? "<REFERENCE.ACTE.TRANSCRIT>"} - ${DateRECE.depuisTimestamp(Date.now()).format()} - ${indexPage + 1}/${pagesTexteActe.total}`}</div>
+                </div>
+              </DocumentTexte>
+            ))}
+          </div>
         </ConteneurDocument>
       )}
     </div>

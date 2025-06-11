@@ -184,6 +184,75 @@ class ModeleTexte {
       .join("");
   }
 
+  public genererParPage(valeurs: object, donneesPage: { tailleLigne: number; ligneParPage: number }) {
+    const texteComplet = this.generer(valeurs);
+    if (!texteComplet) return {};
+
+    const texteParLigne: string[] = [];
+    texteComplet.split("<br/>").forEach((partieTexte: string) => {
+      if (!partieTexte || partieTexte.length < donneesPage.tailleLigne) {
+        texteParLigne.push(partieTexte);
+
+        return;
+      }
+
+      let nombreCaractereCourant = 0;
+      let ligneCourante: string[] = [];
+      partieTexte.split(" ").forEach((motPartieTexte: string) => {
+        if (motPartieTexte.length >= donneesPage.tailleLigne) {
+          if (ligneCourante.length) {
+            texteParLigne.push(ligneCourante.join(" "));
+            ligneCourante = [];
+          }
+
+          (motPartieTexte.match(new RegExp(`.{1,${donneesPage.tailleLigne}}`, "g")) ?? []) /** NOSONAR "exec" différent avec le flag G */
+            .forEach(partieMotLong => {
+              if (partieMotLong.length >= donneesPage.tailleLigne - 2) {
+                texteParLigne.push(partieMotLong);
+
+                return;
+              }
+
+              ligneCourante.push(partieMotLong);
+              nombreCaractereCourant = partieMotLong.length + 1;
+            });
+
+          return;
+        }
+
+        if (nombreCaractereCourant + motPartieTexte.length > donneesPage.tailleLigne) {
+          texteParLigne.push(ligneCourante.join(" "));
+          ligneCourante = [motPartieTexte];
+          nombreCaractereCourant = motPartieTexte.length + 1;
+
+          return;
+        }
+
+        ligneCourante.push(motPartieTexte);
+        nombreCaractereCourant += motPartieTexte.length + 1;
+      });
+
+      if (ligneCourante.length) {
+        texteParLigne.push(ligneCourante.join(" "));
+      }
+    });
+
+    let indexPageCourante = 1;
+    return texteParLigne.reduce((parPage: { [cle: string]: string[] }, ligne: string) => {
+      const clePage = `page-${indexPageCourante}`;
+      if (!parPage[clePage]) {
+        parPage[clePage] = [ligne];
+
+        return parPage;
+      }
+
+      parPage[clePage].push(ligne);
+      parPage[clePage].length >= donneesPage.ligneParPage && indexPageCourante++;
+
+      return parPage;
+    }, {});
+  }
+
   /** Formateurs **/
   private static optionFormatDate(options: string[]): [TFormatDate, TOptionPrefixe] {
     return [

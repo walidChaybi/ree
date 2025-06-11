@@ -5,8 +5,8 @@ interface IStyleDocument {
   fontSize?: string;
 }
 
-const COEFFICIENT_MARGE = 0.05;
-const COEFFICIENT_TAILLE_POLICE = 0.01785;
+const COEFFICIENT_MARGE = 0.035;
+const COEFFICIENT_TAILLE_POLICE = 0.0182;
 
 const DocumentTexte: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [refDocument, setRefDocument] = useState<HTMLDivElement | null>(null);
@@ -19,7 +19,10 @@ const DocumentTexte: React.FC<React.PropsWithChildren> = ({ children }) => {
     const observeurTaille = new ResizeObserver(elements => {
       elements.forEach(element => {
         const largeur = element.contentRect.width;
-        setStyleDocument({ padding: `${largeur * COEFFICIENT_MARGE}px`, fontSize: `${largeur * COEFFICIENT_TAILLE_POLICE}px` });
+        setStyleDocument({
+          padding: `${largeur * COEFFICIENT_MARGE}px`,
+          fontSize: `${largeur * COEFFICIENT_TAILLE_POLICE}px`
+        });
       });
     });
     observeurTaille.observe(refDocument);
@@ -36,7 +39,7 @@ const DocumentTexte: React.FC<React.PropsWithChildren> = ({ children }) => {
     >
       <div
         ref={setRefContenuDocument}
-        className="flex aspect-[21/29.7] w-full overflow-hidden break-words"
+        className="contenu-document-texte flex aspect-[21/29.7] w-full overflow-hidden break-words"
         style={styleDocument}
       >
         {children}
