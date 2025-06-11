@@ -5,6 +5,7 @@ import SchemaValidation from "../../../utils/SchemaValidation";
 
 export enum ETypeChamp {
   TEXT = "text",
+  ZONE_TEXTE = "zoneDeTexte",
   SELECT = "select",
   DATE_COMPLETE = "dateComplete",
   DATE_INCOMPLETE = "dateIncomplete",
@@ -33,6 +34,7 @@ interface IChampMetaModeleDto {
   valeursPossibles: IValeursConditionneesMetaModeleDto[];
   valeurParDefaut?: string;
   tailleMax?: number;
+  sansRetourChariot?: boolean;
 }
 interface IBlocMetaModeleDto {
   id: string;
@@ -95,7 +97,8 @@ export class ChampMetaModele {
     public readonly estLectureSeule: ValeursConditionneesMetaModele[],
     public readonly valeursPossibles: ValeursConditionneesMetaModele[],
     public readonly valeurParDefaut?: string,
-    public readonly tailleMax?: number
+    public readonly tailleMax?: number,
+    public readonly sansRetourChariot?: boolean
   ) {}
 
   public static depuisDto(dto: IChampMetaModeleDto): ChampMetaModele | null {
@@ -114,7 +117,8 @@ export class ChampMetaModele {
       ValeursConditionneesMetaModele.depuisTableau(dto.estLectureSeule ?? []),
       ValeursConditionneesMetaModele.depuisTableau(dto.valeursPossibles ?? []),
       dto.valeurParDefaut,
-      dto.tailleMax
+      dto.tailleMax,
+      dto.sansRetourChariot
     );
   }
 
@@ -209,6 +213,7 @@ export class MetaModeleTypeMention {
         const validationChamp = (() => {
           switch (champ.type) {
             case "text":
+            case "zoneDeTexte":
             case "radioBouton":
             case "pocopa":
               return SchemaValidation.texte({ obligatoire: champ.estObligatoire });
@@ -270,6 +275,7 @@ export class MetaModeleTypeMention {
               : (() => {
                   switch (champ.type) {
                     case "text":
+                    case "zoneDeTexte":
                     case "int":
                     case "pocopa":
                     case "crpcen":

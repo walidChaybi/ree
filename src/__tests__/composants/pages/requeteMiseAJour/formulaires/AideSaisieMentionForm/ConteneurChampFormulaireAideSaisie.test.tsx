@@ -57,8 +57,8 @@ describe("Affichage des différents types de champs possible dans l'aide à la s
     render(formulaireAvecChampAffiche(ETypeChamp.NOM_SECABLE, "nomSecable"));
 
     await waitFor(() => {
-      expect(screen.getByRole("textbox", { name: "aria-label-nomSecable.idTest.nom" })).toBeDefined();
-      expect(screen.getByRole("checkbox", { name: "Nom sécable" })).toBeDefined();
+      expect(screen.getByLabelText("Libelle du champ")).toBeDefined();
+      expect(screen.getByLabelText("Nom sécable")).toBeDefined();
     });
   });
   test("AFFICHE correctement les champs de type DATE_COMPLETE", async () => {
@@ -83,7 +83,15 @@ describe("Affichage des différents types de champs possible dans l'aide à la s
     render(formulaireAvecChampAffiche(ETypeChamp.TEXT, "text"));
 
     await waitFor(() => {
-      expect(screen.getByRole("textbox", { name: "aria-label-text.idTest" })).toBeDefined();
+      expect(screen.getByLabelText("Libelle du champ")).toBeDefined();
+    });
+  });
+
+  test("AFFICHE correctement les champs de type ZONE_TEXTE", async () => {
+    render(formulaireAvecChampAffiche(ETypeChamp.ZONE_TEXTE, "zone-de-texte"));
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Libelle du champ")).toBeDefined();
     });
   });
   test("AFFICHE correctement les champs de type BOOLEAN", async () => {
@@ -96,35 +104,35 @@ describe("Affichage des différents types de champs possible dans l'aide à la s
       </MockFormulaire>
     );
     await waitFor(() => {
-      expect(screen.getByRole("checkbox", { name: "Libelle du champ" })).toBeDefined();
+      expect(screen.getByLabelText("Libelle du champ")).toBeDefined();
     });
   });
   test("AFFICHE correctement les champs de type POCOPA", async () => {
     render(formulaireAvecChampAffiche(ETypeChamp.POCOPA, "pocopa"));
 
     await waitFor(() => {
-      expect(screen.getByRole("combobox", { name: "Libelle du champ" })).toBeDefined();
+      expect(screen.getByLabelText("Libelle du champ")).toBeDefined();
     });
   });
   test("AFFICHE correctement les champs de type ANNEE", async () => {
     render(formulaireAvecChampAffiche(ETypeChamp.ANNEE, "annee"));
 
     await waitFor(() => {
-      expect(screen.getByRole("textbox", { name: "aria-label-annee.idTest" })).toBeDefined();
+      expect(screen.getByLabelText("Libelle du champ")).toBeDefined();
     });
   });
   test("AFFICHE correctement les champs de type INT", async () => {
     render(formulaireAvecChampAffiche(ETypeChamp.INT, "nombre"));
 
     await waitFor(() => {
-      expect(screen.getByRole("textbox", { name: "aria-label-nombre.idTest" })).toBeDefined();
+      expect(screen.getByLabelText("Libelle du champ")).toBeDefined();
     });
   });
   test("AFFICHE correctement les champs de type CRPCEN", async () => {
     render(formulaireAvecChampAffiche(ETypeChamp.CRPCEN, "crpcen"));
 
     await waitFor(() => {
-      expect(screen.getByRole("textbox", { name: "aria-label-crpcen.idTest" })).toBeDefined();
+      expect(screen.getByLabelText("Libelle du champ")).toBeDefined();
     });
   });
   test("AFFICHE correctement les champs de type SOUS_TITRE", async () => {
@@ -138,7 +146,7 @@ describe("Affichage des différents types de champs possible dans l'aide à la s
     render(formulaireAvecChampAffiche({} as ETypeChamp, "aucun"));
 
     await waitFor(() => {
-      expect(screen.queryByText("Libelle du champ")).toBeDefined();
+      expect(screen.queryByLabelText("Libelle du champ")).toBeNull();
     });
   });
 });
@@ -157,10 +165,11 @@ describe("Masquage des différents types de champs possible dans l'aide à la sa
     render(formulaireAvecChampMasque(ETypeChamp.NOM_SECABLE, "nomSecable"));
 
     await waitFor(() => {
-      expect(screen.queryByRole("textbox", { name: "aria-label-nomSecable.idTest.nom" })).toBeNull();
+      expect(screen.queryByLabelText("Libelle du champ")).toBeNull();
       expect(screen.queryByRole("checkbox", { name: "Nom sécable" })).toBeNull();
     });
   });
+
   test("MASQUE correctement les champs de type DATE_COMPLETE", async () => {
     render(formulaireAvecChampMasque(ETypeChamp.DATE_COMPLETE, "date"));
 
@@ -170,6 +179,7 @@ describe("Masquage des différents types de champs possible dans l'aide à la sa
       expect(screen.queryByPlaceholderText("AAAA")).toBeNull();
     });
   });
+
   test("MASQUE correctement les champs de type DATE_INCOMPLETE", async () => {
     render(formulaireAvecChampMasque(ETypeChamp.DATE_INCOMPLETE, "date"));
 
@@ -179,53 +189,60 @@ describe("Masquage des différents types de champs possible dans l'aide à la sa
       expect(screen.queryByPlaceholderText("AAAA")).toBeNull();
     });
   });
+
   test("MASQUE correctement les champs de type TEXTE", async () => {
     render(formulaireAvecChampMasque(ETypeChamp.TEXT, "text"));
 
     await waitFor(() => {
-      expect(screen.queryByRole("textbox", { name: "aria-label-text.idTest" })).toBeNull();
+      expect(screen.queryByLabelText("Libelle du champ")).toBeNull();
     });
   });
+
   test("MASQUE correctement les champs de type BOOLEAN", async () => {
     render(formulaireAvecChampMasque(ETypeChamp.BOOLEAN, "boolean"));
 
     await waitFor(() => {
-      expect(screen.queryByRole("checkbox", { name: "Libelle du champ" })).toBeNull();
+      expect(screen.queryByLabelText("Libelle du champ")).toBeNull();
     });
   });
+
   test("MASQUE correctement les champs de type POCOPA", async () => {
     render(formulaireAvecChampMasque(ETypeChamp.POCOPA, "pocopa"));
 
     await waitFor(() => {
-      expect(screen.queryByRole("combobox", { name: "Libelle du champ" })).toBeNull();
+      expect(screen.queryByLabelText("Libelle du champ")).toBeNull();
     });
   });
+
   test("MASQUE correctement les champs de type ANNEE", async () => {
     render(formulaireAvecChampMasque(ETypeChamp.ANNEE, "annee"));
 
     await waitFor(() => {
-      expect(screen.queryByRole("textbox", { name: "aria-label-annee.idTest" })).toBeNull();
+      expect(screen.queryByLabelText("Libelle du champ")).toBeNull();
     });
   });
+
   test("MASQUE correctement les champs de type INT", async () => {
     render(formulaireAvecChampMasque(ETypeChamp.INT, "nombre"));
 
     await waitFor(() => {
-      expect(screen.queryByRole("textbox", { name: "aria-label-nombre.idTest" })).toBeNull();
+      expect(screen.queryByLabelText("Libelle du champ")).toBeNull();
     });
   });
+
   test("MASQUE correctement les champs de type CRPCEN", async () => {
     render(formulaireAvecChampMasque(ETypeChamp.CRPCEN, "crpcen"));
 
     await waitFor(() => {
-      expect(screen.queryByRole("textbox", { name: "aria-label-crpcen.idTest" })).toBeNull();
+      expect(screen.queryByLabelText("Libelle du champ")).toBeNull();
     });
   });
+
   test("MASQUE correctement les champs de type SOUS_TITRE", async () => {
     render(formulaireAvecChampMasque(ETypeChamp.SOUS_TITRE, "sous-titre"));
 
     await waitFor(() => {
-      expect(screen.queryByText("Libelle du champ")).toBeNull();
+      expect(screen.queryByLabelText("Libelle du champ")).toBeNull();
     });
   });
 });

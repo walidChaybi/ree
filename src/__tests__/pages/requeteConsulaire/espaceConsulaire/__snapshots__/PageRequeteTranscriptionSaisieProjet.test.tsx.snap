@@ -2152,6 +2152,7 @@ pays
                         class="grid"
                       >
                         <label
+                          aria-label="aria-label-autresEnonciations.enonciations"
                           class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                           for="autresEnonciations.enonciations"
                         >
@@ -2411,6 +2412,7 @@ pays
                         class="grid"
                       >
                         <label
+                          aria-label="aria-label-acteEtranger.referenceComplement"
                           class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                           for="acteEtranger.referenceComplement"
                         >
@@ -2472,6 +2474,7 @@ pays
                         class="grid"
                       >
                         <label
+                          aria-label="aria-label-mentions.mentions"
                           class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                           for="mentions.mentions"
                         >

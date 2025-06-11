@@ -7,6 +7,7 @@ import ChampCaseACocher from "../../../../../commun/champs/ChampCaseACocher";
 import ChampDate from "../../../../../commun/champs/ChampDate";
 import ChampRecherchePocopas from "../../../../../commun/champs/ChampRecherchePocopas";
 import ChampTexte from "../../../../../commun/champs/ChampTexte";
+import ChampZoneTexte from "../../../../../commun/champs/ChampZoneTexte";
 import ChampsNomSecable from "../../../../../commun/champs/ChampsNomSecable";
 import ChampNumeroInscriptionRCRCA from "../../../../../commun/champs/ChampsNumeroInscriptionRcRca";
 import SeparateurSection from "../../../../../commun/conteneurs/formulaire/SeparateurSection";
@@ -71,6 +72,17 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
             type="text"
             libelle={champ.libelle}
             disabled={estLectureSeule}
+          />
+        </ChampFormAideSaisie>
+      );
+    case champ.type === "zoneDeTexte" && estAffiche:
+      return (
+        <ChampFormAideSaisie typeChamp={champ.type}>
+          <ChampZoneTexte
+            name={nomChamp}
+            libelle={champ.libelle}
+            disabled={estLectureSeule}
+            sansRetourChariot={champ.sansRetourChariot}
           />
         </ChampFormAideSaisie>
       );
