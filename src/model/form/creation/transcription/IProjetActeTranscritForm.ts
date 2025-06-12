@@ -641,7 +641,7 @@ const mapFormuleFinale = (projetActe: IProjetActeTranscritForm): IFormuleFinaleD
   return {
     identiteDemandeur: projetActe.formuleFinale.identiteDemandeur || null,
     nomDemandeur: projetActe.formuleFinale?.nom ?? null,
-    prenomDemandeur: PrenomsForm.versPrenomsStringDto(projetActe.formuleFinale?.prenomsChemin).toString() || null,
+    prenomDemandeur: PrenomsForm.versPrenomsStringDto(projetActe.formuleFinale?.prenomsChemin).join(", ") || null,
     qualiteDemandeur: projetActe.formuleFinale?.qualite ?? null,
     pieceProduite: (projetActe.formuleFinale.pieceProduite as keyof typeof EPieceProduite) || null,
     legalisation: (projetActe.formuleFinale.legalisationApostille as keyof typeof ELegalisationApostille) || null,

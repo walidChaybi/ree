@@ -578,7 +578,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
         nomDemandeur: "nomDemandeur",
         nomTransmetteur: "nomDemandeur",
         pieceProduite: "COPIE",
-        prenomDemandeur: "Prenom,Demandeur",
+        prenomDemandeur: "Prenom, Demandeur",
         qualiteDemandeur: "Agent"
       },
       mentions: [],
@@ -827,7 +827,7 @@ describe("test des fonctions non testées précedement", () => {
         nomDemandeur: "nomDemandeur",
         nomTransmetteur: "nomDemandeur",
         pieceProduite: "COPIE",
-        prenomDemandeur: "Prenom,Demandeur",
+        prenomDemandeur: "Prenom, Demandeur",
         qualiteDemandeur: "Agent"
       },
       mentions: [],
