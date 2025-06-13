@@ -48,23 +48,22 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estParent1 }) => {
           cheminPrenoms={`${prefixe}.prenomsChemin`}
           prefixePrenom="prenom"
         />
-        <ChampsRadio
-          name={`${prefixe}.sexe`}
-          libelle="Sexe"
-          options={optionsSexe}
-        />
+        <div className="grid grid-cols-2 gap-4">
+          <ChampsRadio
+            name={`${prefixe}.sexe`}
+            libelle="Sexe"
+            options={optionsSexe}
+          />
 
-        <div className="grid grid-cols-2">
-          <div className="flex items-end gap-4">
+          <div className="flex items-end gap-8">
             {parent?.renseignerAge ? (
-              <div className="w-1/4">
-                <ChampTexte
-                  name={`${prefixe}.age`}
-                  libelle="Âge (en années)"
-                  numerique={true}
-                  maxLength={3}
-                />
-              </div>
+              <ChampTexte
+                name={`${prefixe}.age`}
+                className="max-w-52"
+                libelle="Âge (en années)"
+                numerique={true}
+                maxLength={3}
+              />
             ) : (
               <ChampDate
                 name={`${prefixe}.dateNaissance`}
@@ -72,16 +71,17 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estParent1 }) => {
                 disabled={parent?.renseignerAge}
               />
             )}
-
-            <ChampCaseACocher
-              name={`${prefixe}.renseignerAge`}
-              libelle="Saisir l'âge"
-              apresChangement={renseignerAge =>
-                renseignerAge
-                  ? setFieldValue(`${prefixe}.dateNaissance`, { jour: "", mois: "", annee: "" })
-                  : setFieldValue(`${prefixe}.age`, "")
-              }
-            />
+            <div className="pb-1">
+              <ChampCaseACocher
+                name={`${prefixe}.renseignerAge`}
+                libelle="Saisir l'âge"
+                apresChangement={renseignerAge =>
+                  renseignerAge
+                    ? setFieldValue(`${prefixe}.dateNaissance`, { jour: "", mois: "", annee: "" })
+                    : setFieldValue(`${prefixe}.age`, "")
+                }
+              />
+            </div>
           </div>
         </div>
       </div>

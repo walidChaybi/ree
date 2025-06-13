@@ -1,11 +1,17 @@
 /* v8 ignore start */
-import { EIdentite } from "@model/etatcivil/enum/Identite";
 import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { IPrenomOrdonneDto } from "@model/form/commun/PrenomsForm";
 import { IAdresse } from "../../IAdresse";
 
+export enum EIdentiteDeclarant {
+  PERE = "Le père",
+  MERE = "La mère",
+  PERE_ET_MERE = "Le père et la mère",
+  TIERS = "Un tiers"
+}
+
 export interface IDeclarantProjetActeTranscritDto {
-  identiteDeclarant: keyof typeof EIdentite;
+  identiteDeclarant: keyof typeof EIdentiteDeclarant;
   sexe: keyof typeof ESexe;
   prenoms: IPrenomOrdonneDto[];
   nom: string | null;
@@ -34,7 +40,7 @@ export class DeclarantProjetActeTranscrit {
   private static readonly champsObligatoires: (keyof IDeclarantProjetActeTranscritDto)[] = ["identiteDeclarant", "sexe", "prenoms"];
 
   private constructor(
-    public readonly identiteDeclarant: keyof typeof EIdentite,
+    public readonly identiteDeclarant: keyof typeof EIdentiteDeclarant,
     public readonly sexe: keyof typeof ESexe,
     public readonly prenoms: IPrenomOrdonneDto[],
     public readonly nom: string | null,
@@ -56,9 +62,9 @@ export class DeclarantProjetActeTranscrit {
           `Le sexe du declarantTranscription a la valeur ${declarant.sexe} au lieu d'une des suivantes : ${Object.keys(ESexe)}.`
         );
         return null;
-      case !Object.keys(EIdentite).includes(declarant.identiteDeclarant):
+      case !Object.keys(EIdentiteDeclarant).includes(declarant.identiteDeclarant):
         console.error(
-          `L'identiteDeclarant du declarantTranscription a la valeur ${declarant.identiteDeclarant} au lieu d'une des suivantes : ${Object.keys(EIdentite)}.`
+          `L'identiteDeclarant du declarantTranscription a la valeur ${declarant.identiteDeclarant} au lieu d'une des suivantes : ${Object.keys(EIdentiteDeclarant)}.`
         );
         return null;
     }

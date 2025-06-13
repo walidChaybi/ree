@@ -84,4 +84,25 @@ describe("Test du Helper de modele texte", () => {
       "page-2": ["ligne2", "ligne3"]
     });
   });
+  test("DOIT convertir les retours à la ligne en balises <br/>", () => {
+    const modele = "{{#valeur monTexte/avecRetourChariot}}";
+    const valeurs = {
+      monTexte: "Première ligne\nDeuxième ligne\nTroisième ligne"
+    };
+
+    const result = ModeleTexte.creer(modele).generer(valeurs);
+
+    expect(result).toBe("Première ligne<br/>Deuxième ligne<br/>Troisième ligne");
+  });
+
+  test("DOIT filtrer les lignes vides", () => {
+    const modele = "{{#valeur monTexte/avecRetourChariot}}";
+    const valeurs = {
+      monTexte: "Ligne 1\n\nLigne 3\n\n\nLigne 6"
+    };
+
+    const result = ModeleTexte.creer(modele).generer(valeurs);
+
+    expect(result).toBe("Ligne 1<br/>Ligne 3<br/>Ligne 6");
+  });
 });

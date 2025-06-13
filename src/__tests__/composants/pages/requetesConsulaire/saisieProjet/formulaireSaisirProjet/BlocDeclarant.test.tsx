@@ -1,4 +1,3 @@
-import { Identite } from "@model/etatcivil/enum/Identite";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Formik } from "formik";
 import { describe, expect, test } from "vitest";
@@ -10,7 +9,7 @@ describe("BlocDeclarant", () => {
       <Formik
         initialValues={{
           declarant: {
-            identite: Identite.getKey(Identite.PERE),
+            identite: "PERE",
             nom: "",
             prenomsChemin: { prenom1: "" },
             sexe: "",
@@ -33,7 +32,7 @@ describe("BlocDeclarant", () => {
       <Formik
         initialValues={{
           declarant: {
-            identite: Identite.getKey(Identite.TIERS),
+            identite: "TIERS",
             nom: "",
             prenomsChemin: { prenom1: "" },
             sexe: "",
@@ -57,7 +56,7 @@ describe("BlocDeclarant", () => {
       renderComponentVide();
       const selectValue: HTMLSelectElement = screen.getByLabelText("Identité", { selector: 'select[name="declarant.identite"]' });
       expect(selectValue).toBeDefined();
-      expect(selectValue.value).toBe(Identite.getKey(Identite.PERE));
+      expect(selectValue.value).toBe("PERE");
     });
   });
 
@@ -66,7 +65,7 @@ describe("BlocDeclarant", () => {
       renderComponentTiers();
       const selectValue: HTMLSelectElement = screen.getByLabelText("Identité", { selector: 'select[name="declarant.identite"]' });
       expect(selectValue).toBeDefined();
-      expect(selectValue.value).toBe(Identite.getKey(Identite.TIERS));
+      expect(selectValue.value).toBe("TIERS");
     });
 
     test("Doit gérer la saisie des champs du formulaire", async () => {

@@ -55,8 +55,8 @@ class ModeleTexte {
       const [cle, ...partiesValeurDefaut] = valeur.replace(/({{#valeur |}})/g, "").split(" ");
       const [cleAttribut, ...variations] = cle.split("/");
       const valeurRenseignee = ObjetFormulaire.recupererValeur({ valeurs: valeursFormulaire, cleAttribut: cleAttribut });
-      const valeurDefaut = `${partiesValeurDefaut.join(" ")}`.toUpperCase();
 
+      const valeurDefaut = `${partiesValeurDefaut.join(" ")}`.toUpperCase();
       const valeurFinale = (() => {
         switch (true) {
           case Array.isArray(valeurRenseignee):
@@ -274,7 +274,17 @@ class ModeleTexte {
 
   private static formatTexte(valeur: string | null, valeurDefaut: string, options: string[]) {
     if (!valeur) return valeurDefaut;
-    return options.includes("premiereLettreMajuscule") ? Texte.premiereLettreMajuscule(valeur) : valeur;
+    switch (true) {
+      case options.includes("premiereLettreMajuscule"):
+        return Texte.premiereLettreMajuscule(valeur);
+      case options.includes("avecRetourChariot"):
+        return valeur
+          .split("\n")
+          .filter(ligne => ligne.trim())
+          .join("<br/>");
+      default:
+        return valeur;
+    }
   }
 
   private static formaterPrenoms(prenomsForm: TPrenomsForm): string {

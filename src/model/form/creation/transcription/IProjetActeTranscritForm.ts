@@ -2,12 +2,17 @@
 import { IActeEtrangerDto } from "@model/etatcivil/acte/IActeEtrangerDto";
 import { IAdresse } from "@model/etatcivil/acte/IAdresse";
 import {
+  EIdentiteDeclarant,
   IDeclarantProjetActeTranscritDto,
   declarantTranscritDtoVide
 } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/DeclarantProjetActeTranscrit";
 import { IEvenementProjetActeTranscritDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/EvenementProjetActeTranscrit";
 import { IFiliationTitulaireProjetActeTranscritDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/FiliationTitulaireProjetActeTranscrit";
-import { IFormuleFinaleDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/FormuleFinale";
+import {
+  EIdentiteDemandeur,
+  EIdentiteTransmetteur,
+  IFormuleFinaleDto
+} from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/FormuleFinale";
 import {
   IProjetActeTranscritPatchDto,
   IProjetActeTranscritPostDto,
@@ -21,7 +26,6 @@ import { EModeDepot } from "@model/etatcivil/enum/EModeDepot";
 import { EPieceProduite } from "@model/etatcivil/enum/EPieceProduite";
 import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
-import { EIdentite, EIdentiteDemandeur, EIdentiteTransmetteur } from "@model/etatcivil/enum/Identite";
 import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { TypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteArchiviste";
@@ -81,7 +85,7 @@ export interface IParentsTranscription {
 }
 
 export interface IDeclarantTranscription {
-  identite: keyof typeof EIdentite;
+  identite: keyof typeof EIdentiteDeclarant;
   nom: string | null;
   prenomsChemin?: TPrenomsForm;
   sexe: keyof typeof ESexe | null;
@@ -163,7 +167,7 @@ export const ProjetTranscriptionForm = {
           adresse: projetActe?.declarant.adresseDomicile?.voie ?? ""
         },
 
-        complement: projetActe?.declarant.complementDeclarant
+        complement: projetActe?.declarant.complementDeclarant ?? ""
       },
       autresEnonciations: {
         enonciations: projetActe?.acteEtranger.texteEnonciations ?? ""
@@ -471,7 +475,7 @@ export const ProjetTranscriptionForm = {
 };
 
 const mapDeclarantProjectActe = (projetActeTranscription: IProjetActeTranscritForm): IDeclarantProjetActeTranscritDto => {
-  const estDeclarantTiers = projetActeTranscription.declarant.identite === ("TIERS" as keyof typeof EIdentite);
+  const estDeclarantTiers = projetActeTranscription.declarant.identite === ("TIERS" as keyof typeof EIdentiteDeclarant);
 
   return {
     ...(estDeclarantTiers

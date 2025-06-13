@@ -1,4 +1,4 @@
-import { EIdentite } from "@model/etatcivil/enum/Identite";
+import { EIdentiteDeclarant } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/DeclarantProjetActeTranscrit";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { Option } from "@util/Type";
@@ -15,7 +15,7 @@ import ChampsRadio from "../../../../commun/champs/ChampsRadio";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import SeparateurSection from "../../../../commun/conteneurs/formulaire/SeparateurSection";
 
-const optionsDeclarant: Option[] = enumVersOptions(EIdentite);
+const optionsDeclarant: Option[] = enumVersOptions(EIdentiteDeclarant);
 
 const BlocDeclarant: React.FC = () => {
   const { values, setFieldValue, setFieldTouched, initialValues } = useFormikContext<IProjetActeTranscritForm>();

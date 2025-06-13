@@ -3,7 +3,20 @@
 import { ELegalisationApostille } from "@model/etatcivil/enum/ELegalisationApostille";
 import { EModeDepot } from "@model/etatcivil/enum/EModeDepot";
 import { EPieceProduite } from "@model/etatcivil/enum/EPieceProduite";
-import { EIdentiteDemandeur, EIdentiteTransmetteur } from "@model/etatcivil/enum/Identite";
+
+export enum EIdentiteDemandeur {
+  PARENT_1 = "Parent 1",
+  PARENT_2 = "Parent 2",
+  LES_PARENTS = "Les parents",
+  TIERS = "Un tiers"
+}
+
+export enum EIdentiteTransmetteur {
+  LE_REQUERANT = "Le requérant",
+  LA_REQUERANTE = "La requérante",
+  LES_REQUERANTS = "Les requérants",
+  LES_REQUERANTES = "Les requérantes"
+}
 
 export interface IFormuleFinaleDto {
   identiteDemandeur: keyof typeof EIdentiteDemandeur;

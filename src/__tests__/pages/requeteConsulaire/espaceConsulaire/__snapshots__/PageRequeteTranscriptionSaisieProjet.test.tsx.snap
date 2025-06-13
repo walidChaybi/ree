@@ -1075,55 +1075,55 @@ pays
                             </button>
                           </div>
                         </div>
-                        <fieldset
-                          class="m-0 flex w-full flex-col border-0 p-0 text-start"
-                        >
-                          <legend
-                            class="m-0 mb-1 block w-fit text-start text-base transition-colors text-bleu-sombre"
-                          >
-                            Sexe
-                          </legend>
-                          <div
-                            class="mt-1.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start"
-                          >
-                            <div>
-                              <input
-                                checked=""
-                                class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                                id="parents.parent1.sexe-MASCULIN"
-                                name="parents.parent1.sexe"
-                                type="radio"
-                                value="MASCULIN"
-                              />
-                              <label
-                                class="cursor-pointer pl-2"
-                                for="parents.parent1.sexe-MASCULIN"
-                              >
-                                Masculin
-                              </label>
-                            </div>
-                            <div>
-                              <input
-                                class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                                id="parents.parent1.sexe-FEMININ"
-                                name="parents.parent1.sexe"
-                                type="radio"
-                                value="FEMININ"
-                              />
-                              <label
-                                class="cursor-pointer pl-2"
-                                for="parents.parent1.sexe-FEMININ"
-                              >
-                                Féminin
-                              </label>
-                            </div>
-                          </div>
-                        </fieldset>
                         <div
-                          class="grid grid-cols-2"
+                          class="grid grid-cols-2 gap-4"
                         >
+                          <fieldset
+                            class="m-0 flex w-full flex-col border-0 p-0 text-start"
+                          >
+                            <legend
+                              class="m-0 mb-1 block w-fit text-start text-base transition-colors text-bleu-sombre"
+                            >
+                              Sexe
+                            </legend>
+                            <div
+                              class="mt-1.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start"
+                            >
+                              <div>
+                                <input
+                                  checked=""
+                                  class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="parents.parent1.sexe-MASCULIN"
+                                  name="parents.parent1.sexe"
+                                  type="radio"
+                                  value="MASCULIN"
+                                />
+                                <label
+                                  class="cursor-pointer pl-2"
+                                  for="parents.parent1.sexe-MASCULIN"
+                                >
+                                  Masculin
+                                </label>
+                              </div>
+                              <div>
+                                <input
+                                  class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="parents.parent1.sexe-FEMININ"
+                                  name="parents.parent1.sexe"
+                                  type="radio"
+                                  value="FEMININ"
+                                />
+                                <label
+                                  class="cursor-pointer pl-2"
+                                  for="parents.parent1.sexe-FEMININ"
+                                >
+                                  Féminin
+                                </label>
+                              </div>
+                            </div>
+                          </fieldset>
                           <div
-                            class="flex items-end gap-4"
+                            class="flex items-end gap-8"
                           >
                             <div>
                               <label
@@ -1168,21 +1168,25 @@ pays
                                 />
                               </div>
                             </div>
-                            <label
-                              class="flex w-fit text-start cursor-pointer"
+                            <div
+                              class="pb-1"
                             >
-                              <input
-                                class="cursor-pointer accent-bleu-sombre"
-                                name="parents.parent1.renseignerAge"
-                                type="checkbox"
-                                value="false"
-                              />
-                              <span
-                                class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                              <label
+                                class="flex w-fit text-start cursor-pointer"
                               >
-                                Saisir l'âge
-                              </span>
-                            </label>
+                                <input
+                                  class="cursor-pointer accent-bleu-sombre"
+                                  name="parents.parent1.renseignerAge"
+                                  type="checkbox"
+                                  value="false"
+                                />
+                                <span
+                                  class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                                >
+                                  Saisir l'âge
+                                </span>
+                              </label>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -1687,54 +1691,54 @@ pays
                             </button>
                           </div>
                         </div>
-                        <fieldset
-                          class="m-0 flex w-full flex-col border-0 p-0 text-start"
-                        >
-                          <legend
-                            class="m-0 mb-1 block w-fit text-start text-base transition-colors text-bleu-sombre"
-                          >
-                            Sexe
-                          </legend>
-                          <div
-                            class="mt-1.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start"
-                          >
-                            <div>
-                              <input
-                                class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                                id="parents.parent2.sexe-MASCULIN"
-                                name="parents.parent2.sexe"
-                                type="radio"
-                                value="MASCULIN"
-                              />
-                              <label
-                                class="cursor-pointer pl-2"
-                                for="parents.parent2.sexe-MASCULIN"
-                              >
-                                Masculin
-                              </label>
-                            </div>
-                            <div>
-                              <input
-                                class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                                id="parents.parent2.sexe-FEMININ"
-                                name="parents.parent2.sexe"
-                                type="radio"
-                                value="FEMININ"
-                              />
-                              <label
-                                class="cursor-pointer pl-2"
-                                for="parents.parent2.sexe-FEMININ"
-                              >
-                                Féminin
-                              </label>
-                            </div>
-                          </div>
-                        </fieldset>
                         <div
-                          class="grid grid-cols-2"
+                          class="grid grid-cols-2 gap-4"
                         >
+                          <fieldset
+                            class="m-0 flex w-full flex-col border-0 p-0 text-start"
+                          >
+                            <legend
+                              class="m-0 mb-1 block w-fit text-start text-base transition-colors text-bleu-sombre"
+                            >
+                              Sexe
+                            </legend>
+                            <div
+                              class="mt-1.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start"
+                            >
+                              <div>
+                                <input
+                                  class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="parents.parent2.sexe-MASCULIN"
+                                  name="parents.parent2.sexe"
+                                  type="radio"
+                                  value="MASCULIN"
+                                />
+                                <label
+                                  class="cursor-pointer pl-2"
+                                  for="parents.parent2.sexe-MASCULIN"
+                                >
+                                  Masculin
+                                </label>
+                              </div>
+                              <div>
+                                <input
+                                  class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="parents.parent2.sexe-FEMININ"
+                                  name="parents.parent2.sexe"
+                                  type="radio"
+                                  value="FEMININ"
+                                />
+                                <label
+                                  class="cursor-pointer pl-2"
+                                  for="parents.parent2.sexe-FEMININ"
+                                >
+                                  Féminin
+                                </label>
+                              </div>
+                            </div>
+                          </fieldset>
                           <div
-                            class="flex items-end gap-4"
+                            class="flex items-end gap-8"
                           >
                             <div>
                               <label
@@ -1779,21 +1783,25 @@ pays
                                 />
                               </div>
                             </div>
-                            <label
-                              class="flex w-fit text-start cursor-pointer"
+                            <div
+                              class="pb-1"
                             >
-                              <input
-                                class="cursor-pointer accent-bleu-sombre"
-                                name="parents.parent2.renseignerAge"
-                                type="checkbox"
-                                value="false"
-                              />
-                              <span
-                                class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                              <label
+                                class="flex w-fit text-start cursor-pointer"
                               >
-                                Saisir l'âge
-                              </span>
-                            </label>
+                                <input
+                                  class="cursor-pointer accent-bleu-sombre"
+                                  name="parents.parent2.renseignerAge"
+                                  type="checkbox"
+                                  value="false"
+                                />
+                                <span
+                                  class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                                >
+                                  Saisir l'âge
+                                </span>
+                              </label>
+                            </div>
                           </div>
                         </div>
                       </div>
