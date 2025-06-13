@@ -1,5 +1,5 @@
 /* v8 ignore start a faire Lundi 31 Mars @ Adrien_Bonvin */
-import { IActeEtrangerDto } from "@model/etatcivil/acte/IActeEtrangerDto";
+import { ETypeActeEtranger, IActeEtrangerDto } from "@model/etatcivil/acte/IActeEtrangerDto";
 import { IAdresse } from "@model/etatcivil/acte/IAdresse";
 import {
   EIdentiteDeclarant,
@@ -50,7 +50,7 @@ export interface IProjetActeTranscritForm {
 }
 
 export interface IActeEtrangerTranscription {
-  typeActe?: string;
+  typeActe: keyof typeof ETypeActeEtranger;
   infoTypeActe?: string;
   dateEnregistrement?: IDateForm;
   lieuEnregistrement?: ILieuEtranger;

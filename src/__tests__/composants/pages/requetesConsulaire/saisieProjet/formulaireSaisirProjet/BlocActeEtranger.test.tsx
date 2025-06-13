@@ -4,10 +4,10 @@ import { Formik } from "formik";
 import { describe, expect, test } from "vitest";
 import BlocActeEtranger from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisieProjet/BlocActeEtranger";
 
-const renderComponent = (initialValues: { acteEtranger: IActeEtrangerTranscription }) => {
+const renderComponent = (valeursInitiales: IActeEtrangerTranscription) => {
   return render(
     <Formik
-      initialValues={initialValues}
+      initialValues={{ acteEtranger: valeursInitiales }}
       onSubmit={() => {}}
     >
       <BlocActeEtranger />
@@ -16,19 +16,17 @@ const renderComponent = (initialValues: { acteEtranger: IActeEtrangerTranscripti
 };
 
 describe("BlocActeEtranger", () => {
-  const initialValues = {
-    acteEtranger: {
-      typeActe: "DRESSE",
-      infoTypeActe: "",
-      dateEnregistrement: { jour: "", mois: "", annee: "" },
-      lieuEnregistrement: { ville: "", etatProvince: "", pays: "" },
-      redacteur: "",
-      referenceComplement: ""
-    }
+  const valeursInitiales: IActeEtrangerTranscription = {
+    typeActe: "ACTE_DRESSE",
+    infoTypeActe: "",
+    dateEnregistrement: { jour: "", mois: "", annee: "" },
+    lieuEnregistrement: { ville: "", etatProvince: "", pays: "" },
+    redacteur: "",
+    referenceComplement: ""
   };
 
   test("doit afficher les champs par défaut", async () => {
-    renderComponent(initialValues);
+    renderComponent(valeursInitiales);
 
     await waitFor(() => {
       expect(screen.getByLabelText(/Type d'acte étranger/)).toBeDefined();
@@ -43,7 +41,8 @@ describe("BlocActeEtranger", () => {
 
   test("doit afficher le champ 'Précisez le type d'acte' si 'AUTRE' est sélectionné", async () => {
     renderComponent({
-      acteEtranger: { ...initialValues.acteEtranger, typeActe: "AUTRE" }
+      ...valeursInitiales,
+      typeActe: "AUTRE"
     });
 
     await waitFor(() => {
@@ -52,7 +51,7 @@ describe("BlocActeEtranger", () => {
   });
 
   test("ne doit pas afficher le champ 'Précisez le type d'acte' si 'AUTRE' n'est pas sélectionné", async () => {
-    renderComponent(initialValues);
+    renderComponent(valeursInitiales);
 
     await waitFor(() => {
       expect(screen.queryByLabelText(/Précisez le type d'acte/)).toBeNull();
@@ -60,7 +59,7 @@ describe("BlocActeEtranger", () => {
   });
 
   test("doit mettre à jour les valeurs dans Formik quand les champs sont modifiés", async () => {
-    const { getByLabelText } = renderComponent(initialValues);
+    const { getByLabelText } = renderComponent(valeursInitiales);
 
     const typeActeInput = getByLabelText(/Type d'acte étranger/) as HTMLInputElement;
     const redacteurInput = getByLabelText(/Rédacteur/) as HTMLInputElement;
@@ -78,11 +77,9 @@ describe("BlocActeEtranger", () => {
 
   test("doit vider le champ 'Précisez le type d'acte' si 'AUTRE' n'est pas sélectionné", async () => {
     const { getByLabelText } = renderComponent({
-      acteEtranger: {
-        ...initialValues.acteEtranger,
-        typeActe: "AUTRE",
-        infoTypeActe: "Test"
-      }
+      ...valeursInitiales,
+      typeActe: "AUTRE",
+      infoTypeActe: "Test"
     });
 
     const typeActeSelect = getByLabelText(/Type d'acte étranger/) as HTMLSelectElement;

@@ -747,7 +747,8 @@ describe("test des fonctions non testées précedement", () => {
       parent2: {}
     },
     acteEtranger: {
-      referenceComplement: ""
+      referenceComplement: "",
+      typeActe: "ACTE_DRESSE"
     },
     mentions: {},
     formuleFinale: {
@@ -784,7 +785,7 @@ describe("test des fonctions non testées précedement", () => {
         reference: null,
         texteEnonciations: "",
         infoTypeActe: "",
-        typeActeEtranger: null
+        typeActeEtranger: "ACTE_DRESSE"
       },
       analyseMarginales: [],
       declarant: {
