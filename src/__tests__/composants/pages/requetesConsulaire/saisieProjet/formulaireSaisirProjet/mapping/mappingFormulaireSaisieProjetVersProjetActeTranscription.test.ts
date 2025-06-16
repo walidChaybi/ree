@@ -344,7 +344,8 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
           departement: "",
           etatProvince: "",
           pays: "Tunisie",
-          adresse: ""
+          adresse: "",
+          arrondissement: ""
         },
         complement: ""
       },

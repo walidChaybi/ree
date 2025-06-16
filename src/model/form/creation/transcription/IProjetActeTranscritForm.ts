@@ -162,7 +162,8 @@ export const ProjetActeNaissanceTranscriptionForm = {
               ? (projetActe?.declarant.adresseDomicile?.region ?? "")
               : "",
           pays: projetActe?.declarant?.adresseDomicile?.pays ?? "",
-          adresse: projetActe?.declarant?.adresseDomicile?.voie ?? ""
+          adresse: projetActe?.declarant?.adresseDomicile?.voie ?? "",
+          arrondissement: projetActe?.declarant?.adresseDomicile?.arrondissement ?? ""
         },
 
         complement: projetActe?.declarant.complementDeclarant ?? ""

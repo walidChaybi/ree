@@ -4,7 +4,7 @@ import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IPr
 import { Option } from "@util/Type";
 import { enumVersOptions } from "@util/Utils";
 import { useFormikContext } from "formik";
-import React, { useEffect, useMemo } from "react";
+import React from "react";
 import ChampCaseACocher from "../../../../commun/champs/ChampCaseACocher";
 import ChampListeDeroulante from "../../../../commun/champs/ChampListeDeroulante";
 import ChampTexte from "../../../../commun/champs/ChampTexte";
@@ -18,23 +18,7 @@ import SeparateurSection from "../../../../commun/conteneurs/formulaire/Separate
 const optionsDeclarant: Option[] = enumVersOptions(EIdentiteDeclarant);
 
 const BlocDeclarant: React.FC = () => {
-  const { values, setFieldValue, setFieldTouched, initialValues } = useFormikContext<IProjetActeTranscritForm>();
-  const estDeclarantTiers = useMemo(() => values.declarant.identite === "TIERS", [values.declarant.identite]);
-
-  useEffect(() => {
-    if (!estDeclarantTiers) {
-      setFieldValue("declarant", { ...initialValues.declarant, identite: values.declarant.identite });
-      setFieldTouched("declarant.nom", false, false);
-      setFieldTouched("declarant.domicile.ville", false, false);
-      setFieldTouched("declarant.domicile.departement", false, false);
-    }
-  }, [estDeclarantTiers]);
-
-  useEffect(() => {
-    if (values.declarant?.sansProfession) {
-      setFieldValue(`declarant.profession`, "");
-    }
-  }, [values.declarant?.sansProfession]);
+  const { values, setFieldValue } = useFormikContext<IProjetActeTranscritForm>();
 
   return (
     <ConteneurAvecBordure className="py-6">
@@ -48,13 +32,14 @@ const BlocDeclarant: React.FC = () => {
           />
         </div>
       </div>
-      {estDeclarantTiers && (
+
+      {values.declarant.identite === "TIERS" && (
         <>
           <div className="pt-4">
             <ChampTexte
               name="declarant.nom"
               libelle="Nom"
-              estObligatoire={estDeclarantTiers}
+              estObligatoire={true}
             />
           </div>
 
@@ -64,6 +49,7 @@ const BlocDeclarant: React.FC = () => {
               prefixePrenom="prenom"
             />
           </div>
+
           <div className="col-span-2 grid grid-cols-2 gap-x-4 pt-4">
             <ChampsRadio
               name="declarant.sexe"
@@ -78,6 +64,7 @@ const BlocDeclarant: React.FC = () => {
               maxLength={3}
             />
           </div>
+
           <div className="col-span-2 grid grid-cols-2 gap-x-4 pt-4">
             <ChampTexte
               name="declarant.qualite"
@@ -85,6 +72,7 @@ const BlocDeclarant: React.FC = () => {
               placeholder="Ex: la grand-mère"
             />
           </div>
+
           <div className="col-span-2 grid grid-cols-2 gap-x-4 pt-4">
             <ChampTexte
               name="declarant.profession"
@@ -92,10 +80,12 @@ const BlocDeclarant: React.FC = () => {
               data-testid="declarant-profession"
               disabled={values.declarant.sansProfession}
             />
+
             <div className="w-full pt-[2rem] text-start">
               <ChampCaseACocher
                 name="declarant.sansProfession"
                 libelle="Sans profession"
+                apresChangement={() => setFieldValue(`declarant.profession`, "")}
               />
             </div>
           </div>
