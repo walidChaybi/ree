@@ -1,4 +1,3 @@
-/* v8 ignore start */
 import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { IPrenomOrdonneDto } from "@model/form/commun/PrenomsForm";
 import { IAdresse } from "../../IAdresse";
@@ -83,4 +82,3 @@ export class DeclarantProjetActeTranscrit {
     );
   };
 }
-/* v8 ignore stop */

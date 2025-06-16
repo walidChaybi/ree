@@ -1,7 +1,7 @@
 import { Option } from "@util/Type";
 import { useFormikContext } from "formik";
 
-import { EIdentiteDemandeur, EIdentiteTransmetteur } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/FormuleFinale";
+import { EIdentiteDemandeur, EIdentiteTransmetteur } from "@model/etatcivil/acte/projetActe/transcription/FormuleFinale";
 import { ELegalisationApostille } from "@model/etatcivil/enum/ELegalisationApostille";
 import { EModeDepot } from "@model/etatcivil/enum/EModeDepot";
 import { EPieceProduite } from "@model/etatcivil/enum/EPieceProduite";

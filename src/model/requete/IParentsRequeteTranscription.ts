@@ -1,4 +1,4 @@
-import { FiliationTitulaireProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/FiliationTitulaireProjetActeTranscrit";
+import { FiliationTitulaireProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/FiliationTitulaireProjetActeTranscrit";
 import { IDateForm } from "@model/form/commun/DateForm";
 import { PrenomsForm, TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import { ILocalisation } from "./IParents";

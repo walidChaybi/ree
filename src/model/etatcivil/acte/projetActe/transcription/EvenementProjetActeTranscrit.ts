@@ -1,4 +1,3 @@
-/* v8 ignore start */
 export type IEvenementProjetActeTranscritDto = {
   id?: string | null;
   jour: number | null;
@@ -48,4 +47,3 @@ export class EvenementProjetActeTranscrit {
     );
   };
 }
-/* v8 ignore stop */

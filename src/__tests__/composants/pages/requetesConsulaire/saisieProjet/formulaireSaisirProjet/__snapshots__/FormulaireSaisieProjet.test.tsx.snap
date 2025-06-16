@@ -64,7 +64,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       id="titulaire.nomActeEtranger"
                       maxlength="100"
                       name="titulaire.nomActeEtranger"
-                      value="Xi-phun bin"
+                      value=""
                     />
                   </div>
                 </div>
@@ -169,7 +169,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                       for="titulaire.prenomsChemin.prenom1"
                     >
-                      Prénom 1
+                      Prénom
                     </label>
                     <div
                       class="relative flex rounded-md shadow-sm"
@@ -180,7 +180,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                         maxlength="100"
                         name="titulaire.prenomsChemin.prenom1"
                         type="text"
-                        value="liao"
+                        value=""
                       />
                     </div>
                   </div>
@@ -213,88 +213,6 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                         </span>
                       </div>
                     </button>
-                  </div>
-                  <div>
-                    <div
-                      class="flex w-full flex-col text-start w-full"
-                    >
-                      <label
-                        aria-label="aria-label-titulaire.prenomsChemin.prenom2"
-                        class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                        for="titulaire.prenomsChemin.prenom2"
-                      >
-                        Prénom 2
-                      </label>
-                      <div
-                        class="relative flex rounded-md shadow-sm"
-                      >
-                        <input
-                          class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                          id="titulaire.prenomsChemin.prenom2"
-                          maxlength="100"
-                          name="titulaire.prenomsChemin.prenom2"
-                          value="xiar"
-                        />
-                        <button
-                          class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out hover:bg-rouge focus-visible:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 disabled:cursor-not-allowed group absolute right-0 h-full rounded-l-none bg-transparent"
-                          title="Supprimer ce prénom"
-                          type="button"
-                        >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium text-rouge group-hover:text-blanc group-focus:text-blanc css-i4bv87-MuiSvgIcon-root"
-                            data-testid="DeleteIcon"
-                            focusable="false"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <div
-                      class="flex w-full flex-col text-start w-full"
-                    >
-                      <label
-                        aria-label="aria-label-titulaire.prenomsChemin.prenom3"
-                        class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                        for="titulaire.prenomsChemin.prenom3"
-                      >
-                        Prénom 3
-                      </label>
-                      <div
-                        class="relative flex rounded-md shadow-sm"
-                      >
-                        <input
-                          class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                          id="titulaire.prenomsChemin.prenom3"
-                          maxlength="100"
-                          name="titulaire.prenomsChemin.prenom3"
-                          value="sehoo"
-                        />
-                        <button
-                          class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out hover:bg-rouge focus-visible:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 disabled:cursor-not-allowed group absolute right-0 h-full rounded-l-none bg-transparent"
-                          title="Supprimer ce prénom"
-                          type="button"
-                        >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium text-rouge group-hover:text-blanc group-focus:text-blanc css-i4bv87-MuiSvgIcon-root"
-                            data-testid="DeleteIcon"
-                            focusable="false"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -329,7 +247,6 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                     </div>
                     <div>
                       <input
-                        checked=""
                         class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                         id="titulaire.sexe-FEMININ"
                         name="titulaire.sexe"
@@ -341,21 +258,6 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                         for="titulaire.sexe-FEMININ"
                       >
                         Féminin
-                      </label>
-                    </div>
-                    <div>
-                      <input
-                        class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                        id="titulaire.sexe-INDETERMINE"
-                        name="titulaire.sexe"
-                        type="radio"
-                        value="INDETERMINE"
-                      />
-                      <label
-                        class="cursor-pointer pl-2"
-                        for="titulaire.sexe-INDETERMINE"
-                      >
-                        Indéterminé
                       </label>
                     </div>
                   </div>
@@ -385,7 +287,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       id="titulaire.dateNaissance.jour"
                       maxlength="2"
                       placeholder="JJ"
-                      value="03"
+                      value=""
                     />
                     <span
                       class="mx-1 text-xl"
@@ -397,7 +299,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       id="titulaire.dateNaissance.mois"
                       maxlength="2"
                       placeholder="MM"
-                      value="12"
+                      value=""
                     />
                     <span
                       class="mx-1 text-xl"
@@ -409,7 +311,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       id="titulaire.dateNaissance.annee"
                       maxlength="4"
                       placeholder="AAAA"
-                      value="2024"
+                      value=""
                     />
                     <span
                       class="mx-1 text-xl"
@@ -477,7 +379,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       id="titulaire.villeNaissance"
                       maxlength="100"
                       name="titulaire.villeNaissance"
-                      value="Bejin"
+                      value=""
                     />
                   </div>
                 </div>
@@ -499,7 +401,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       id="titulaire.regionNaissance"
                       maxlength="100"
                       name="titulaire.regionNaissance"
-                      value="China"
+                      value=""
                     />
                   </div>
                 </div>
@@ -521,7 +423,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       id="titulaire.paysNaissance"
                       maxlength="100"
                       name="titulaire.paysNaissance"
-                      value="Chine"
+                      value=""
                     />
                   </div>
                 </div>
@@ -596,7 +498,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
               <span
                 class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
               >
-                Père
+                Parent 1
               </span>
               <div
                 class="space-y-4"
@@ -619,7 +521,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       id="parents.parent1.nom"
                       maxlength="100"
                       name="parents.parent1.nom"
-                      value="Greenwald"
+                      value=""
                     />
                   </div>
                 </div>
@@ -645,7 +547,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                         maxlength="100"
                         name="parents.parent1.prenomsChemin.prenom1"
                         type="text"
-                        value="cassandra"
+                        value=""
                       />
                     </div>
                   </div>
@@ -680,54 +582,55 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                     </button>
                   </div>
                 </div>
-                <fieldset
-                  class="m-0 flex w-full flex-col border-0 p-0 text-start"
-                >
-                  <legend
-                    class="m-0 mb-1 block w-fit text-start text-base transition-colors text-bleu-sombre"
-                  >
-                    Sexe
-                  </legend>
-                  <div
-                    class="mt-1.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start"
-                  >
-                    <div>
-                      <input
-                        checked=""
-                        class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                        id="parents.parent1.sexe-MASCULIN"
-                        name="parents.parent1.sexe"
-                        type="radio"
-                        value="MASCULIN"
-                      />
-                      <label
-                        class="cursor-pointer pl-2"
-                        for="parents.parent1.sexe-MASCULIN"
-                      >
-                        Masculin
-                      </label>
-                    </div>
-                    <div>
-                      <input
-                        class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                        id="parents.parent1.sexe-FEMININ"
-                        name="parents.parent1.sexe"
-                        type="radio"
-                        value="FEMININ"
-                      />
-                      <label
-                        class="cursor-pointer pl-2"
-                        for="parents.parent1.sexe-FEMININ"
-                      >
-                        Féminin
-                      </label>
-                    </div>
-                  </div>
-                </fieldset>
                 <div
-                  class="grid grid-cols-2"
+                  class="grid grid-cols-2 gap-4"
                 >
-                  <div>
+                  <fieldset
+                    class="m-0 flex w-full flex-col border-0 p-0 text-start"
+                  >
+                    <legend
+                      class="m-0 mb-1 block w-fit text-start text-base transition-colors text-bleu-sombre"
+                    >
+                      Sexe
+                    </legend>
+                    <div
+                      class="mt-1.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start"
+                    >
+                      <div>
+                        <input
+                          class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                          id="parents.parent1.sexe-MASCULIN"
+                          name="parents.parent1.sexe"
+                          type="radio"
+                          value="MASCULIN"
+                        />
+                        <label
+                          class="cursor-pointer pl-2"
+                          for="parents.parent1.sexe-MASCULIN"
+                        >
+                          Masculin
+                        </label>
+                      </div>
+                      <div>
+                        <input
+                          class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                          id="parents.parent1.sexe-FEMININ"
+                          name="parents.parent1.sexe"
+                          type="radio"
+                          value="FEMININ"
+                        />
+                        <label
+                          class="cursor-pointer pl-2"
+                          for="parents.parent1.sexe-FEMININ"
+                        >
+                          Féminin
+                        </label>
+                      </div>
+                    </div>
+                  </fieldset>
+                  <div
+                    class="flex items-end gap-8"
+                  >
                     <div>
                       <label
                         class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
@@ -743,7 +646,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                           id="parents.parent1.dateNaissance.jour"
                           maxlength="2"
                           placeholder="JJ"
-                          value="10"
+                          value=""
                         />
                         <span
                           class="mx-1 text-xl"
@@ -755,7 +658,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                           id="parents.parent1.dateNaissance.mois"
                           maxlength="2"
                           placeholder="MM"
-                          value="10"
+                          value=""
                         />
                         <span
                           class="mx-1 text-xl"
@@ -767,29 +670,29 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                           id="parents.parent1.dateNaissance.annee"
                           maxlength="4"
                           placeholder="AAAA"
-                          value="2000"
+                          value=""
                         />
                       </div>
                     </div>
-                  </div>
-                  <div
-                    class="flex items-end space-x-4"
-                  >
-                    <label
-                      class="flex w-fit text-start cursor-pointer"
+                    <div
+                      class="pb-1"
                     >
-                      <input
-                        class="cursor-pointer accent-bleu-sombre"
-                        name="parents.parent1.renseignerAge"
-                        type="checkbox"
-                        value="false"
-                      />
-                      <span
-                        class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                      <label
+                        class="flex w-fit text-start cursor-pointer"
                       >
-                        Saisir l'âge
-                      </span>
-                    </label>
+                        <input
+                          class="cursor-pointer accent-bleu-sombre"
+                          name="parents.parent1.renseignerAge"
+                          type="checkbox"
+                          value="false"
+                        />
+                        <span
+                          class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                        >
+                          Saisir l'âge
+                        </span>
+                      </label>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1090,53 +993,55 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                     </button>
                   </div>
                 </div>
-                <fieldset
-                  class="m-0 flex w-full flex-col border-0 p-0 text-start"
-                >
-                  <legend
-                    class="m-0 mb-1 block w-fit text-start text-base transition-colors text-bleu-sombre"
-                  >
-                    Sexe
-                  </legend>
-                  <div
-                    class="mt-1.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start"
-                  >
-                    <div>
-                      <input
-                        class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                        id="parents.parent2.sexe-MASCULIN"
-                        name="parents.parent2.sexe"
-                        type="radio"
-                        value="MASCULIN"
-                      />
-                      <label
-                        class="cursor-pointer pl-2"
-                        for="parents.parent2.sexe-MASCULIN"
-                      >
-                        Masculin
-                      </label>
-                    </div>
-                    <div>
-                      <input
-                        class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                        id="parents.parent2.sexe-FEMININ"
-                        name="parents.parent2.sexe"
-                        type="radio"
-                        value="FEMININ"
-                      />
-                      <label
-                        class="cursor-pointer pl-2"
-                        for="parents.parent2.sexe-FEMININ"
-                      >
-                        Féminin
-                      </label>
-                    </div>
-                  </div>
-                </fieldset>
                 <div
-                  class="grid grid-cols-2"
+                  class="grid grid-cols-2 gap-4"
                 >
-                  <div>
+                  <fieldset
+                    class="m-0 flex w-full flex-col border-0 p-0 text-start"
+                  >
+                    <legend
+                      class="m-0 mb-1 block w-fit text-start text-base transition-colors text-bleu-sombre"
+                    >
+                      Sexe
+                    </legend>
+                    <div
+                      class="mt-1.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start"
+                    >
+                      <div>
+                        <input
+                          class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                          id="parents.parent2.sexe-MASCULIN"
+                          name="parents.parent2.sexe"
+                          type="radio"
+                          value="MASCULIN"
+                        />
+                        <label
+                          class="cursor-pointer pl-2"
+                          for="parents.parent2.sexe-MASCULIN"
+                        >
+                          Masculin
+                        </label>
+                      </div>
+                      <div>
+                        <input
+                          class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                          id="parents.parent2.sexe-FEMININ"
+                          name="parents.parent2.sexe"
+                          type="radio"
+                          value="FEMININ"
+                        />
+                        <label
+                          class="cursor-pointer pl-2"
+                          for="parents.parent2.sexe-FEMININ"
+                        >
+                          Féminin
+                        </label>
+                      </div>
+                    </div>
+                  </fieldset>
+                  <div
+                    class="flex items-end gap-8"
+                  >
                     <div>
                       <label
                         class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
@@ -1180,25 +1085,25 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                         />
                       </div>
                     </div>
-                  </div>
-                  <div
-                    class="flex items-end space-x-4"
-                  >
-                    <label
-                      class="flex w-fit text-start cursor-pointer"
+                    <div
+                      class="pb-1"
                     >
-                      <input
-                        class="cursor-pointer accent-bleu-sombre"
-                        name="parents.parent2.renseignerAge"
-                        type="checkbox"
-                        value="false"
-                      />
-                      <span
-                        class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                      <label
+                        class="flex w-fit text-start cursor-pointer"
                       >
-                        Saisir l'âge
-                      </span>
-                    </label>
+                        <input
+                          class="cursor-pointer accent-bleu-sombre"
+                          name="parents.parent2.renseignerAge"
+                          type="checkbox"
+                          value="false"
+                        />
+                        <span
+                          class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                        >
+                          Saisir l'âge
+                        </span>
+                      </label>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1351,7 +1256,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                     class="cursor-pointer accent-bleu-sombre"
                     name="parents.domicileCommun"
                     type="checkbox"
-                    value=""
+                    value="false"
                   />
                   <span
                     class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
@@ -1557,6 +1462,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                 class="grid"
               >
                 <label
+                  aria-label="aria-label-autresEnonciations.enonciations"
                   class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                   for="autresEnonciations.enonciations"
                 >
@@ -1816,6 +1722,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                 class="grid"
               >
                 <label
+                  aria-label="aria-label-acteEtranger.referenceComplement"
                   class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                   for="acteEtranger.referenceComplement"
                 >
@@ -1877,6 +1784,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                 class="grid"
               >
                 <label
+                  aria-label="aria-label-mentions.mentions"
                   class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                   for="mentions.mentions"
                 >
@@ -1952,19 +1860,19 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                     name="formuleFinale.identiteDemandeur"
                   >
                     <option
-                      value="PERE"
+                      value="PARENT_1"
                     >
-                      Le père
+                      Parent 1
                     </option>
                     <option
-                      value="MERE"
+                      value="PARENT_2"
                     >
-                      La mère
+                      Parent 2
                     </option>
                     <option
-                      value="PERE_ET_MERE"
+                      value="LES_PARENTS"
                     >
-                      Le père et la mère
+                      Les parents
                     </option>
                     <option
                       value="TIERS"
@@ -2082,6 +1990,21 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                     >
                       <div>
                         <input
+                          class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                          id="formuleFinale.modeDepot-REMISE"
+                          name="formuleFinale.modeDepot"
+                          type="radio"
+                          value="REMISE"
+                        />
+                        <label
+                          class="cursor-pointer pl-2"
+                          for="formuleFinale.modeDepot-REMISE"
+                        >
+                          Remise
+                        </label>
+                      </div>
+                      <div>
+                        <input
                           checked=""
                           class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                           id="formuleFinale.modeDepot-TRANSMISE"
@@ -2094,21 +2017,6 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                           for="formuleFinale.modeDepot-TRANSMISE"
                         >
                           Transmise
-                        </label>
-                      </div>
-                      <div>
-                        <input
-                          class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                          id="formuleFinale.modeDepot-REMISE"
-                          name="formuleFinale.modeDepot"
-                          type="radio"
-                          value="REMISE"
-                        />
-                        <label
-                          class="cursor-pointer pl-2"
-                          for="formuleFinale.modeDepot-REMISE"
-                        >
-                          Remise
                         </label>
                       </div>
                     </div>
@@ -2128,14 +2036,28 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                     </label>
                     <select
                       class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
-                      disabled=""
                       id="formuleFinale.identiteTransmetteur"
                       name="formuleFinale.identiteTransmetteur"
                     >
                       <option
-                        value="IDENTIQUE_DEMANDEUR"
+                        value="LE_REQUERANT"
                       >
-                        Identique au demandeur
+                        Le requérant
+                      </option>
+                      <option
+                        value="LA_REQUERANTE"
+                      >
+                        La requérante
+                      </option>
+                      <option
+                        value="LES_REQUERANTS"
+                      >
+                        Les requérants
+                      </option>
+                      <option
+                        value="LES_REQUERANTES"
+                      >
+                        Les requérantes
                       </option>
                     </select>
                   </div>
@@ -2149,6 +2071,14 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
   </div>
   <div
     class="undefined fixed bottom-0 right-0 pr-16 flex gap-4 py-4 undefined"
-  />
+  >
+    <button
+      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
+      title="Terminer et signer"
+      type="button"
+    >
+      Terminer et signer
+    </button>
+  </div>
 </form>
 `;

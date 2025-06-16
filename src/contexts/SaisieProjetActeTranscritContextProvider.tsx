@@ -1,5 +1,5 @@
 import TRAITEMENT_CHARGER_REQUETE_TRANSCRIPTION_ET_PROJET_ACTE_TRANSCRIT from "@api/traitements/projetActe/transcription/TraitementChargerRequeteTranscriptionEtProjetActeTranscrit";
-import { ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/ProjetActeTranscrit";
+import { ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import messageManager from "@util/messageManager";
@@ -42,13 +42,14 @@ const SaisieProjetActeTranscritContextProvider: React.FC<
       parametres: { idRequete, estModeConsultation },
       apresSucces: setRequeteEtProjetActe,
       apresErreur: messageErreur => {
+        console.log("je passe la", requeteEtProjetActe);
+
         messageErreur && messageManager.showError(messageErreur);
         navigate(-1);
       }
     });
   }, [idRequete]);
 
-  /* v8 ignore start */
   const mettreAJourDonneesContext = useCallback((projetActe: ProjetActeTranscrit | null, statutRequete: StatutRequete | null) => {
     setRequeteEtProjetActe(prec =>
       prec
@@ -70,7 +71,6 @@ const SaisieProjetActeTranscritContextProvider: React.FC<
         : null
     );
   }, []);
-  /* v8 ignore stop */
 
   const valeursContexte: ISaisieProjetActeTranscritContext = useMemo(() => {
     if (!requeteEtProjetActe?.requete) return {} as ISaisieProjetActeTranscritContext;

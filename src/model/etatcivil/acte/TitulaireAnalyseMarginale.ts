@@ -1,4 +1,3 @@
-/* v8 ignore start */
 import { ETypeDeclarationConjointe } from "../enum/TypeDeclarationConjointe";
 
 export interface ITitulaireAnalyseMarginaleDto {
@@ -34,4 +33,3 @@ export class TitulaireAnalyseMarginale {
     };
   };
 }
-/* v8 ignore stop */

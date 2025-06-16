@@ -1,5 +1,3 @@
-/* v8 ignore start */
-
 import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { IAdresse } from "../../IAdresse";
 import { EvenementProjetActeTranscrit, IEvenementProjetActeTranscritDto } from "./EvenementProjetActeTranscrit";
@@ -84,4 +82,3 @@ export class TitulaireProjetActeTranscrit {
     );
   };
 }
-/* v8 ignore stop */

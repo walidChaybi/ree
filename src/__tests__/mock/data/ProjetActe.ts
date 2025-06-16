@@ -1,4 +1,5 @@
-import { IProjetActeTranscritDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/ProjetActeTranscrit";
+import { IProjetActeTranscritDto } from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
+
 import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
 
 export const ReponseEnregistrementProjetActe = {

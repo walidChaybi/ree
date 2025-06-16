@@ -1,6 +1,6 @@
 /* v8 ignore start A TESTER 03/25 */
-import { EvenementProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/EvenementProjetActeTranscrit";
-import { TitulaireProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/TitulaireProjetActeTranscrit";
+import { EvenementProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/EvenementProjetActeTranscrit";
+import { TitulaireProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/TitulaireProjetActeTranscrit";
 import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { IDateForm } from "@model/form/commun/DateForm";
 import { PrenomsForm, TPrenomsForm } from "@model/form/commun/PrenomsForm";

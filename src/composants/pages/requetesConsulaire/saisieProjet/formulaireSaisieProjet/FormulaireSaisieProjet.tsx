@@ -3,35 +3,36 @@ import { Form, Formik } from "formik";
 import React, { useContext, useMemo, useState } from "react";
 import useTraitementApi from "../../../../../hooks/api/TraitementApiHook";
 
-import { IProjetActeTranscritForm, ProjetTranscriptionForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
+import { RECEContextData } from "@core/contexts/RECEContext";
+import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
+import { Droit } from "@model/agent/enum/Droit";
+import {
+  IProjetActeTranscritForm,
+  ProjetActeNaissanceTranscriptionForm
+} from "@model/form/creation/transcription/IProjetActeTranscritForm";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import messageManager from "@util/messageManager";
+import { SaisieProjetActeTranscritContext } from "../../../../../contexts/SaisieProjetActeTranscritContextProvider";
 import Bouton from "../../../../commun/bouton/Bouton";
 import { ConteneurBoutonBasDePage } from "../../../../commun/bouton/conteneurBoutonBasDePage/ConteneurBoutonBasDePage";
 import PageChargeur from "../../../../commun/chargeurs/PageChargeur";
 import ConteneurAccordeon from "../../../../commun/conteneurs/accordeon/ConteneurAccordeon";
 import ScrollVersErreur from "../../../../commun/formulaire/ScrollVersErreur";
-import BlocTitulaire from "./BlocTitulaire";
-import ValeursVersApercuProjet from "./ValeursVersApercuProjet";
-
-import { RECEContextData } from "@core/contexts/RECEContext";
-import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
-import { Droit } from "@model/agent/enum/Droit";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { SaisieProjetActeTranscritContext } from "../../../../../contexts/SaisieProjetActeTranscritContextProvider";
 import BlocActeEtranger from "./BlocActeEtranger";
 import BlocAutresEnonciations from "./BlocAutresEnonciations";
 import BlocDeclarant from "./BlocDeclarant";
 import BlocFormuleFinale from "./BlocFormuleFinale";
 import BlocMentions from "./BlocMentions";
 import BlocParent from "./BlocParent";
+import BlocTitulaire from "./BlocTitulaire";
 import ModaleProjetActe from "./ModaleProjetActe";
+import ValeursVersApercuProjet from "./ValeursVersApercuProjet";
 
 const FormulaireSaisieProjet: React.FC = () => {
   const { requete, projetActe, mettreAJourDonneesContext } = useContext(SaisieProjetActeTranscritContext);
-
   const [modaleOuverte, setModaleOuverte] = useState(false);
 
-  const valeursInitiales = useMemo(() => ProjetTranscriptionForm.valeursInitiales(requete, projetActe), [requete, projetActe]);
+  const valeursInitiales = useMemo(() => ProjetActeNaissanceTranscriptionForm.valeursInitiales(requete, projetActe), [requete, projetActe]);
 
   const { utilisateurConnecte } = useContext(RECEContextData);
 
@@ -43,7 +44,6 @@ const FormulaireSaisieProjet: React.FC = () => {
     TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT
   );
 
-  /* v8 ignore start */
   const enregistrerEtVisualiser = (valeursSaisies: IProjetActeTranscritForm) => {
     lancerEnregistrement({
       parametres: {
@@ -64,11 +64,10 @@ const FormulaireSaisieProjet: React.FC = () => {
       }
     });
   };
-  /*v8 ignore stop*/
 
   return (
     <Formik<IProjetActeTranscritForm>
-      validationSchema={ProjetTranscriptionForm.schemaValidation()}
+      validationSchema={ProjetActeNaissanceTranscriptionForm.schemaValidation()}
       initialValues={valeursInitiales}
       onSubmit={values => {
         enregistrerEtVisualiser(values);

@@ -1,4 +1,3 @@
-/* v8 ignore start */
 import DateRECE from "../../../../../utils/DateRECE";
 import { ITitulaireAnalyseMarginaleDto, TitulaireAnalyseMarginale } from "../../TitulaireAnalyseMarginale";
 

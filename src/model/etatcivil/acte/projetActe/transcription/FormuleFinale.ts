@@ -1,5 +1,3 @@
-/* v8 ignore start */
-
 import { ELegalisationApostille } from "@model/etatcivil/enum/ELegalisationApostille";
 import { EModeDepot } from "@model/etatcivil/enum/EModeDepot";
 import { EPieceProduite } from "@model/etatcivil/enum/EPieceProduite";
@@ -93,4 +91,3 @@ export class FormuleFinale {
     );
   };
 }
-/* v8 ignore stop */

@@ -4,8 +4,11 @@ import { CONFIG_POST_PROJET_ACTE_TRANSCRIPTION } from "@api/configurations/etatC
 
 import { CONFIG_PATCH_STATUT_REQUETE_CREATION } from "@api/configurations/requete/creation/PatchStatutRequeteCreationConfigApi";
 import { IErreurTraitement, TTraitementApi } from "@api/traitements/TTraitementApi";
-import { IProjetActeTranscritDto, ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/ProjetActeTranscrit";
-import { IProjetActeTranscritForm, ProjetTranscriptionForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
+import { IProjetActeTranscritDto, ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
+import {
+  IProjetActeTranscritForm,
+  ProjetActeNaissanceTranscriptionForm
+} from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useEffect, useState } from "react";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
@@ -49,7 +52,7 @@ const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetAc
       if (parametres.projetActe?.id) {
         appelPatchProjetActeTranscription({
           parametres: {
-            body: ProjetTranscriptionForm.versDtoPatch(parametres.valeursSaisies, parametres.projetActe)
+            body: ProjetActeNaissanceTranscriptionForm.versDtoPatch(parametres.valeursSaisies, parametres.projetActe)
           },
           apresSucces: (projetActe: IProjetActeTranscritDto) => {
             setProjetActe(ProjetActeTranscrit.depuisDto(projetActe));
@@ -70,7 +73,7 @@ const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetAc
 
       appelPostProjetActeTranscription({
         parametres: {
-          body: ProjetTranscriptionForm.versDtoPost(parametres.valeursSaisies)
+          body: ProjetActeNaissanceTranscriptionForm.versDtoPost(parametres.valeursSaisies)
         },
         apresSucces: (projetActe: IProjetActeTranscritDto) => {
           setProjetActe(ProjetActeTranscrit.depuisDto(projetActe));

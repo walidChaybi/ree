@@ -32,6 +32,7 @@ export const requeteCreationTranscription: IRequeteCreationTranscription = {
       arrondissementNaissance: "arrondissementNaissance",
       villeEtrangereNaissance: "villeEtrangereNaissance",
       regionNaissance: "regionNaissance",
+      nomSouhaite: "",
       paysNaissance: "paysNaissance",
       sexe: "MASCULIN",
       nationalite: "FRANCAISE",

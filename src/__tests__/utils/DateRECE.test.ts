@@ -123,6 +123,16 @@ describe("test du Helper dateRECEComplete", () => {
     expect(DateRECE.depuisObjetDate({ annee: 1121, heure: 2, minute: 1 }).format("Date/heure Toutes Lettres", "SANS_PREFIXE_LE")).toBe(
       "en mille cent vingt-et-un à deux heures une minute"
     );
+
+    const dateRECE = new DateRECE({
+      jour: "15",
+      mois: "05",
+      annee: "2025",
+      heure: "10",
+      minute: "34"
+    }).versTimestamp();
+
+    expect(dateRECE).toEqual(new Date(2025, 4, 15, 10, 34).getTime());
   });
 
   test("Formats date avec préfixes", () => {

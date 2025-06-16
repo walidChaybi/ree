@@ -2,7 +2,7 @@ import { CONFIG_GET_PROJET_ACTE } from "@api/configurations/etatCivil/acte/GetPr
 import { CONFIG_GET_DETAIL_REQUETE } from "@api/configurations/requete/GetDetailRequeteConfigApi";
 import { IErreurTraitement, TTraitementApi } from "@api/traitements/TTraitementApi";
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
-import { ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/ProjetActeTranscrit";
+import { ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useState } from "react";

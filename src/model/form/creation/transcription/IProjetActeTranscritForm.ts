@@ -1,24 +1,19 @@
-/* v8 ignore start a faire Lundi 31 Mars @ Adrien_Bonvin */
 import { ETypeActeEtranger, IActeEtrangerDto } from "@model/etatcivil/acte/IActeEtrangerDto";
 import { IAdresse } from "@model/etatcivil/acte/IAdresse";
 import {
   EIdentiteDeclarant,
   IDeclarantProjetActeTranscritDto,
   declarantTranscritDtoVide
-} from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/DeclarantProjetActeTranscrit";
-import { IEvenementProjetActeTranscritDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/EvenementProjetActeTranscrit";
-import { IFiliationTitulaireProjetActeTranscritDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/FiliationTitulaireProjetActeTranscrit";
-import {
-  EIdentiteDemandeur,
-  EIdentiteTransmetteur,
-  IFormuleFinaleDto
-} from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/FormuleFinale";
+} from "@model/etatcivil/acte/projetActe/transcription/DeclarantProjetActeTranscrit";
+import { IEvenementProjetActeTranscritDto } from "@model/etatcivil/acte/projetActe/transcription/EvenementProjetActeTranscrit";
+import { IFiliationTitulaireProjetActeTranscritDto } from "@model/etatcivil/acte/projetActe/transcription/FiliationTitulaireProjetActeTranscrit";
+import { EIdentiteDemandeur, EIdentiteTransmetteur, IFormuleFinaleDto } from "@model/etatcivil/acte/projetActe/transcription/FormuleFinale";
 import {
   IProjetActeTranscritPatchDto,
   IProjetActeTranscritPostDto,
   ProjetActeTranscrit
-} from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/ProjetActeTranscrit";
-import { ITitulaireProjetActeTranscritDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/TitulaireProjetActeTranscrit";
+} from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
+import { ITitulaireProjetActeTranscritDto } from "@model/etatcivil/acte/projetActe/transcription/TitulaireProjetActeTranscrit";
 import { NomSecable } from "@model/etatcivil/commun/NomSecable";
 import { CadreNaissance } from "@model/etatcivil/enum/CadreNaissance";
 import { ELegalisationApostille } from "@model/etatcivil/enum/ELegalisationApostille";
@@ -113,8 +108,11 @@ export interface IFormuleFinaleTranscription {
   identiteTransmetteur: keyof typeof EIdentiteTransmetteur;
 }
 
-export const ProjetTranscriptionForm = {
-  valeursInitiales: (requete: IRequeteCreationTranscription, projetActe: ProjetActeTranscrit | null): IProjetActeTranscritForm => {
+export const ProjetActeNaissanceTranscriptionForm = {
+  valeursInitiales: (
+    requete: IRequeteCreationTranscription,
+    projetActe: ProjetActeTranscrit | null
+  ): IProjetActeTranscritForm /* NOSONAR */ => {
     const titulaire = TitulaireRequeteTranscription.getTitulaireTranscriptionDepuisTitulairesRequeteTranscription(requete.titulaires);
     const parents = ParentsRequeteTranscription.getParentsRequeteTranscription(requete.titulaires);
     return {
@@ -135,14 +133,14 @@ export const ProjetTranscriptionForm = {
         domicileCommun: Boolean(projetActe?.titulaires?.[0].filiations.parent2?.domicileCommun)
       },
       declarant: {
-        identite: projetActe?.declarant.identiteDeclarant ?? "PERE",
-        nom: projetActe?.declarant.nom ?? "",
-        prenomsChemin: PrenomsForm.valeursInitiales(projetActe?.declarant.prenoms),
-        sexe: projetActe?.declarant.sexe ?? null,
-        age: projetActe?.declarant.age,
-        qualite: projetActe?.declarant.qualite ?? "",
-        profession: projetActe?.declarant.profession ?? "",
-        sansProfession: Boolean(projetActe?.declarant.sansProfession),
+        identite: projetActe?.declarant?.identiteDeclarant ?? "PERE",
+        nom: projetActe?.declarant?.nom ?? "",
+        prenomsChemin: PrenomsForm.valeursInitiales(projetActe?.declarant?.prenoms),
+        sexe: projetActe?.declarant?.sexe ?? null,
+        age: projetActe?.declarant?.age,
+        qualite: projetActe?.declarant?.qualite ?? "",
+        profession: projetActe?.declarant?.profession ?? "",
+        sansProfession: Boolean(projetActe?.declarant?.sansProfession),
         domicile: {
           typeLieu: (() => {
             switch (true) {
@@ -163,33 +161,33 @@ export const ProjetTranscriptionForm = {
             projetActe?.declarant.adresseDomicile?.pays?.toUpperCase().trim() !== "FRANCE"
               ? (projetActe?.declarant.adresseDomicile?.region ?? "")
               : "",
-          pays: projetActe?.declarant.adresseDomicile?.pays ?? "",
-          adresse: projetActe?.declarant.adresseDomicile?.voie ?? ""
+          pays: projetActe?.declarant?.adresseDomicile?.pays ?? "",
+          adresse: projetActe?.declarant?.adresseDomicile?.voie ?? ""
         },
 
         complement: projetActe?.declarant.complementDeclarant ?? ""
       },
       autresEnonciations: {
-        enonciations: projetActe?.acteEtranger.texteEnonciations ?? ""
+        enonciations: projetActe?.acteEtranger?.texteEnonciations ?? ""
       },
       acteEtranger: {
-        typeActe: projetActe?.acteEtranger.typeActeEtranger ?? "ACTE_DRESSE",
-        infoTypeActe: projetActe?.acteEtranger.infoTypeActe ?? "",
+        typeActe: projetActe?.acteEtranger?.typeActeEtranger ?? "ACTE_DRESSE",
+        infoTypeActe: projetActe?.acteEtranger?.infoTypeActe ?? "",
         dateEnregistrement: {
-          jour: projetActe?.acteEtranger.jourEnregistrement ?? "",
-          mois: projetActe?.acteEtranger.moisEnregistrement ?? "",
-          annee: projetActe?.acteEtranger.anneeEnregistrement ?? ""
+          jour: projetActe?.acteEtranger?.jourEnregistrement ?? "",
+          mois: projetActe?.acteEtranger?.moisEnregistrement ?? "",
+          annee: projetActe?.acteEtranger?.anneeEnregistrement ?? ""
         },
         lieuEnregistrement: {
-          ville: projetActe?.acteEtranger.adresseEnregistrement?.ville ?? "",
-          etatProvince: projetActe?.acteEtranger.adresseEnregistrement?.region ?? "",
-          pays: projetActe?.acteEtranger.adresseEnregistrement?.pays ?? ""
+          ville: projetActe?.acteEtranger?.adresseEnregistrement?.ville ?? "",
+          etatProvince: projetActe?.acteEtranger?.adresseEnregistrement?.region ?? "",
+          pays: projetActe?.acteEtranger?.adresseEnregistrement?.pays ?? ""
         },
-        redacteur: projetActe?.acteEtranger.redacteur ?? "",
-        referenceComplement: projetActe?.acteEtranger.reference ?? projetActe?.acteEtranger.complement ?? ""
+        redacteur: projetActe?.acteEtranger?.redacteur ?? "",
+        referenceComplement: projetActe?.acteEtranger?.reference ?? projetActe?.acteEtranger?.complement ?? ""
       },
       mentions: {
-        mentions: projetActe?.acteEtranger.mentions ?? ""
+        mentions: projetActe?.acteEtranger?.mentions ?? ""
       },
       formuleFinale: {
         identiteDemandeur: projetActe?.formuleFinale.identiteDemandeur ?? "PARENT_1",
@@ -445,24 +443,25 @@ export const ProjetTranscriptionForm = {
     };
   },
   versDtoPatch: (valeursSaisies: IProjetActeTranscritForm, projetActe: ProjetActeTranscrit): IProjetActeTranscritPatchDto => ({
-    ...ProjetTranscriptionForm.versDtoPost(valeursSaisies),
+    ...ProjetActeNaissanceTranscriptionForm.versDtoPost(valeursSaisies),
     id: projetActe.id,
     statut: projetActe.statut,
     type: projetActe.type,
     evenement: {
-      ...ProjetTranscriptionForm.versDtoPost(valeursSaisies).evenement,
+      ...ProjetActeNaissanceTranscriptionForm.versDtoPost(valeursSaisies).evenement,
       id: projetActe?.evenement.id
     },
     analyseMarginales: projetActe.analysesMarginales[0]
       ? [
           {
-            ...projetActe.analysesMarginales[0],
+            id: projetActe.analysesMarginales[0].id,
+            estValide: projetActe.analysesMarginales[0].estValide,
             dateDebut: projetActe.analysesMarginales[0].dateDebut.versTimestamp(),
             dateFin: projetActe.analysesMarginales[0].dateFin?.versTimestamp(),
             titulaires: projetActe.analysesMarginales[0].titulaires[0]
               ? [
                   {
-                    ...projetActe.analysesMarginales[0].titulaires[0],
+                    ordre: projetActe.analysesMarginales[0].titulaires[0].ordre,
                     nom: valeursSaisies.titulaire.nomRetenuOEC.trim(),
                     prenoms: PrenomsForm.versPrenomsStringDto(valeursSaisies.titulaire.prenomsChemin)
                   }
@@ -511,27 +510,19 @@ const mapTitulaire = (
   projetActe: IProjetActeTranscritForm,
   naissanceTitulaireEvenement: IEvenementProjetActeTranscritDto
 ): ITitulaireProjetActeTranscritDto => {
-  const Titulaire: ITitulaireTranscription = projetActe.titulaire;
+  const titulaire: ITitulaireTranscription = projetActe.titulaire;
   const prenoms: string[] = PrenomsForm.versPrenomsStringDto(projetActe.titulaire?.prenomsChemin);
-  const lieuDeNaissanceConnu = !LieuxUtils.estPaysInconnu(Titulaire.paysNaissance?.trim() ?? "Inconnu");
   return {
-    nomActeEtranger: Titulaire.nomActeEtranger,
-    nom: Titulaire.nomRetenuOEC.trim(),
-    nomPartie1: Titulaire.nomSecable.nomPartie1 || null,
-    nomPartie2: Titulaire.nomSecable.nomPartie2 || null,
+    nomActeEtranger: titulaire.nomActeEtranger,
+    nom: titulaire.nomRetenuOEC.trim(),
+    nomPartie1: titulaire.nomSecable.nomPartie1 || null,
+    nomPartie2: titulaire.nomSecable.nomPartie2 || null,
     prenoms,
-    sexe: Titulaire.sexe,
+    sexe: titulaire.sexe,
     ordre: 1,
     naissance: { ...naissanceTitulaireEvenement },
     pasDePrenom: !prenoms.length,
-    domicile: lieuDeNaissanceConnu
-      ? {
-          ville: Titulaire.villeNaissance ?? "",
-          region: Titulaire.regionNaissance ?? "",
-          pays: Titulaire.paysNaissance ?? "",
-          voie: Titulaire.adresseNaissance ?? ""
-        }
-      : null,
+    domicile: null,
     filiations: mapFiliations(projetActe)
   };
 };
@@ -676,4 +667,3 @@ const mapActeEtranger = (projetActe: IProjetActeTranscritForm): IActeEtrangerDto
     mentions: projetActe.mentions.mentions ?? null
   };
 };
-/* v8 ignore end */

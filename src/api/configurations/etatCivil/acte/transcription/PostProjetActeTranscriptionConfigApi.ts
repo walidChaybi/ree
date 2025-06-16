@@ -1,9 +1,6 @@
 import { ETATCIVIL_API } from "@api/ApiDisponibles";
 import { TConfigurationApi } from "@model/api/Api";
-import {
-  IProjetActeTranscritDto,
-  IProjetActeTranscritPostDto
-} from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/ProjetActeTranscrit";
+import { IProjetActeTranscritDto, IProjetActeTranscritPostDto } from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
 
 const URI_CREATION_PROJET_ACTE_TRANSCRIT = "/projetacte/transcrit";
 

@@ -1,4 +1,3 @@
-/* v8 ignore start */
 import { EStatutActe } from "@model/etatcivil/enum/EStatutActe";
 import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
@@ -15,7 +14,7 @@ import { FormuleFinale, IFormuleFinaleDto } from "./FormuleFinale";
 import { ITitulaireProjetActeTranscritDto, TitulaireProjetActeTranscrit } from "./TitulaireProjetActeTranscrit";
 
 export interface IProjetActeTranscritDto {
-  id?: string;
+  id: string;
   dateCreation: number;
   modeCreation: ETypeRedactionActe.TRANSCRIT;
   statut: keyof typeof EStatutActe;
@@ -37,7 +36,8 @@ export interface IProjetActeTranscritDto {
 export type IProjetActeTranscritPatchDto = Omit<IProjetActeTranscritDto, "dateCreation" | "dateStatut" | "dateDerniereMaj" | "corpsTexte">;
 export type IProjetActeTranscritPostDto = Omit<
   IProjetActeTranscritDto,
-  "dateCreation" | "id" | "dateStatut" | "dateDerniereMaj" | "corpsTexte" | "statut"| "type"> ;
+  "dateCreation" | "id" | "dateStatut" | "dateDerniereMaj" | "corpsTexte" | "statut" | "type"
+>;
 
 export class ProjetActeTranscrit {
   private static readonly champsObligatoires: (keyof IProjetActeTranscritDto)[] = [
@@ -132,4 +132,3 @@ export class ProjetActeTranscrit {
     );
   };
 }
-/* v8 ignore stop */

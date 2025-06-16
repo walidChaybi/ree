@@ -1,4 +1,4 @@
-import { EIdentiteDeclarant } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/DeclarantProjetActeTranscrit";
+import { EIdentiteDeclarant } from "@model/etatcivil/acte/projetActe/transcription/DeclarantProjetActeTranscrit";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { Option } from "@util/Type";

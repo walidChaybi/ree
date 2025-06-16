@@ -4,15 +4,168 @@ import { CONFIG_POST_PROJET_ACTE_TRANSCRIPTION } from "@api/configurations/etatC
 import { CONFIG_PATCH_STATUT_REQUETE_CREATION } from "@api/configurations/requete/creation/PatchStatutRequeteCreationConfigApi";
 import TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT from "@api/traitements/projetActe/transcription/TraitementEnregistrerProjetActeTranscrit";
 import { MockApi } from "@mock/appelsApi/MockApi";
-import { IProjetActeTranscritDto, ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/ProjetActeTranscrit";
-import { IProjetActeTranscritForm, ProjetTranscriptionForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
+import { projetActe, projetActeNaissanceDto } from "@mock/data/projetActeTranscrit";
+import {
+  IProjetActeTranscritForm,
+  ProjetActeNaissanceTranscriptionForm
+} from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { beforeEach } from "node:test";
 import { afterEach, describe, expect, test, vi } from "vitest";
 
-describe.skip("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
+const mockMettreAJourDonneesContext = vi.fn();
+
+describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
   const terminerTraitement = vi.fn();
   const appelPostProjetActeTranscription = vi.fn();
+
+  const saisieProjetActeTranscription: IProjetActeTranscritForm = {
+    titulaire: {
+      nomActeEtranger: "greenwald",
+      nomRetenuOEC: "prenomUn prenomDeux prenomTrois",
+      nomSouhaite: "",
+      nomSecable: {
+        nomPartie1: "prenomUn prenomDeux",
+        nomPartie2: "prenomTrois",
+        secable: true
+      },
+      prenomsChemin: undefined,
+      sexe: "FEMININ",
+      dateNaissance: {
+        jour: "19",
+        mois: "01",
+        annee: "2025",
+        heure: "09",
+        minute: "42"
+      },
+      villeNaissance: "",
+      regionNaissance: "",
+      paysNaissance: "",
+      adresseNaissance: ""
+    },
+    declarant: {
+      identite: "TIERS",
+      nom: "LeTiers",
+      prenomsChemin: undefined,
+      sexe: "MASCULIN",
+      age: 45,
+      qualite: "La grand frère",
+      profession: "plombier",
+      sansProfession: false,
+      domicile: {
+        typeLieu: "Étranger",
+        ville: "Pekin",
+        etatProvince: "china",
+        pays: "Chine",
+        adresse: "21 jump street"
+      },
+      complement: "Chez qui..."
+    },
+    parents: {
+      parent1: {
+        id: "c7e0e767-438c-4e42-83c1-e0c74d6bbd9d",
+        position: 1,
+        sexe: "MASCULIN",
+        nomNaissance: "Patamob",
+        nom: "Patamob",
+        prenomsChemin: undefined,
+        dateNaissance: {
+          jour: "",
+          mois: "",
+          annee: ""
+        },
+        lieuNaissance: {
+          typeLieu: "Étranger",
+          ville: "Pekin",
+          adresse: "",
+          departement: "",
+          arrondissement: "",
+          pays: "Chine",
+          etatProvince: ""
+        },
+        sansProfession: false,
+        profession: "sculpteur",
+        domicile: {
+          typeLieu: "Inconnu",
+          ville: "",
+          adresse: "",
+          departement: "",
+          arrondissement: "",
+          pays: "",
+          etatProvince: ""
+        },
+        renseignerAge: true,
+        age: "34"
+      },
+      parent2: {
+        id: "",
+        position: 0,
+        sexe: "FEMININ",
+        nomNaissance: "",
+        nom: "Patamob",
+        prenomsChemin: undefined,
+        dateNaissance: {
+          jour: "10",
+          mois: "10",
+          annee: "2000"
+        },
+        lieuNaissance: {
+          typeLieu: "France",
+          ville: "Nantes",
+          adresse: "",
+          departement: "Loire atlantique",
+          arrondissement: "",
+          pays: "",
+          etatProvince: ""
+        },
+        sansProfession: false,
+        profession: "UX Designer",
+        domicile: {
+          typeLieu: "France",
+          ville: "Nantes",
+          adresse: "36 tour Lu",
+          departement: "loire atlantique",
+          arrondissement: "",
+          pays: "",
+          etatProvince: ""
+        },
+        renseignerAge: false,
+        age: ""
+      }
+    },
+    acteEtranger: {
+      typeActe: "AUTRE",
+      referenceComplement: "REF.2454.14245",
+      infoTypeActe: "acte divers",
+      dateEnregistrement: {
+        jour: "12",
+        mois: "01",
+        annee: "2025"
+      },
+      lieuEnregistrement: {
+        ville: "Pekin",
+        pays: "Chine"
+      },
+      redacteur: "officier"
+    },
+    mentions: {
+      mentions: "RAS"
+    },
+    formuleFinale: {
+      identiteDemandeur: "TIERS",
+      nom: "nomDemandeur",
+      prenomsChemin: undefined,
+      qualite: "Agent",
+      pieceProduite: "COPIE",
+      autresPieces: "",
+      legalisationApostille: "APOSTILLE",
+      modeDepot: "TRANSMISE",
+      identiteTransmetteur: "LE_REQUERANT"
+    },
+    autresEnonciations: {
+      enonciations: "RAS"
+    }
+  };
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -28,7 +181,7 @@ describe.skip("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
       result.current.lancer({
         idSuiviDossier: "123",
         idRequete: "",
-        projetActe: { acteEtranger: {} } as any as ProjetActeTranscrit,
+        projetActe: null,
         valeursSaisies: {} as IProjetActeTranscritForm
       });
     });
@@ -37,11 +190,16 @@ describe.skip("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
     expect(terminerTraitement).toHaveBeenCalled();
   });
 
-  test("DOIT appeler la méthode patch QUAND le statut de la requête est à signer", async () => {
+  test("DOIT appeler la méthode patch QUAND l'id du projet d'acte est présent", async () => {
     const { result } = renderHook(() => TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT.Lancer(terminerTraitement));
-    const projetActeMock = { id: "Projet Test" } as IProjetActeTranscritDto;
 
-    MockApi.deployer(CONFIG_PATCH_PROJET_ACTE_TRANSCRIPTION, { body: projetActeMock }, { data: { id: "4448" } as IProjetActeTranscritDto });
+    MockApi.deployer(
+      CONFIG_PATCH_PROJET_ACTE_TRANSCRIPTION,
+      {
+        body: ProjetActeNaissanceTranscriptionForm.versDtoPatch(saisieProjetActeTranscription, projetActe!)
+      },
+      { data: projetActeNaissanceDto }
+    );
 
     const mockApi = MockApi.getMock();
 
@@ -49,8 +207,8 @@ describe.skip("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
       result.current.lancer({
         idRequete: "12345",
         idSuiviDossier: "123",
-        projetActe: { id: "345" } as any as ProjetActeTranscrit,
-        valeursSaisies: {} as IProjetActeTranscritForm
+        projetActe: projetActe,
+        valeursSaisies: saisieProjetActeTranscription
       });
     });
 
@@ -61,31 +219,25 @@ describe.skip("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
     MockApi.stopMock();
   });
 
-  test.skip("DOIT lancer le post du projet d'acte", async () => {
+  test("DOIT lancer le post du projet d'acte QUAND l'id du projet d'acte n'est pas présent", async () => {
     const { result } = renderHook(() => TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT.Lancer(terminerTraitement));
-    const projetActeFormMock = { acteEtranger: {} } as IProjetActeTranscritForm;
-    const projetActeFormMock2 = { acteEtranger: {} } as ProjetActeTranscrit;
 
     MockApi.deployer(
       CONFIG_POST_PROJET_ACTE_TRANSCRIPTION,
-      { body: ProjetTranscriptionForm.versDtoPost(projetActeFormMock) },
-      { data: { id: "4448" } as IProjetActeTranscritDto }
+      { body: ProjetActeNaissanceTranscriptionForm.versDtoPost(saisieProjetActeTranscription) },
+      { data: projetActeNaissanceDto }
     );
+    MockApi.deployer(CONFIG_PATCH_ID_ACTE_SUIVI_DOSSIER, { path: { idSuivi: "12563", idActe: "6190b304-18dc-43e5-a53a-02612dbadeae" } });
 
-    MockApi.deployer(CONFIG_PATCH_STATUT_REQUETE_CREATION, {
-      path: { idRequete: "789" },
-      query: { statut: "A_SIGNER" }
-    });
-
-    MockApi.deployer(CONFIG_PATCH_ID_ACTE_SUIVI_DOSSIER);
+    MockApi.deployer(CONFIG_PATCH_STATUT_REQUETE_CREATION);
 
     const mockApi = MockApi.getMock();
 
     act(() => {
       result.current.lancer({
         idSuiviDossier: "12563",
-        projetActe: projetActeFormMock2,
-        valeursSaisies: {} as IProjetActeTranscritForm,
+        projetActe: null,
+        valeursSaisies: saisieProjetActeTranscription,
         idRequete: "789"
       });
     });
@@ -96,7 +248,7 @@ describe.skip("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
 
       expect(mockApi.history.patch[0].url).toContain(`statut=A_SIGNER`);
       expect(mockApi.history.patch[1].url).toContain(`/suiviDossier/12563`);
-      expect(mockApi.history.patch[1].url).toContain(`/acte/4448`);
+      expect(mockApi.history.patch[1].url).toContain(`/acte/6190b304-18dc-43e5-a53a-02612dbadeae`);
     });
 
     MockApi.stopMock();

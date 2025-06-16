@@ -2,8 +2,8 @@ import {
   CONFIG_POST_COMPOSITION_ACTE_TEXTE,
   IReponseCompositionActePDF
 } from "@api/configurations/composition/PostCompositionActeTexteApiConfigApi";
-import { ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/ProjetActeTranscrit";
-import { TitulaireProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/TitulaireProjetActeTranscrit";
+import { ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
+import { TitulaireProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/TitulaireProjetActeTranscrit";
 import messageManager from "@util/messageManager";
 import { useEffect, useMemo, useState } from "react";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
@@ -41,7 +41,7 @@ const ModaleProjetActe: React.FC<IModaleProjetActeProps> = ({ fermerModale, proj
 
   const natureActe = useMemo(() => {
     const { prefixeTitre, natureActe } = (() => {
-      switch (projetActe?.nature) {
+      switch (projetActe.nature) {
         case "NAISSANCE":
           return { prefixeTitre: "ACTE DE", natureActe: "NAISSANCE" };
         default:
@@ -50,7 +50,7 @@ const ModaleProjetActe: React.FC<IModaleProjetActeProps> = ({ fermerModale, proj
     })();
 
     return `${prefixeTitre} ${natureActe}`;
-  }, [projetActe?.nature]);
+  }, [projetActe.nature]);
 
   useEffect(() => {
     appelerCompositionPdf({

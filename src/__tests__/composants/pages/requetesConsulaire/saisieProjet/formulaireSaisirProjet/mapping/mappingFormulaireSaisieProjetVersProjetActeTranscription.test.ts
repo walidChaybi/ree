@@ -1,13 +1,16 @@
-import { IActeEtrangerDto } from "@model/etatcivil/acte/IActeEtrangerDto";
-import { IDeclarantProjetActeTranscritDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/DeclarantProjetActeTranscrit";
-import { IFormuleFinaleDto } from "@model/etatcivil/acte/projetActe/ProjetActeTranscritDto/FormuleFinale";
+import { projetActeNaissanceDto, projetActeNaissancePatchDto, projetActeNaissancePostDto } from "@mock/data/projetActeTranscrit";
+import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
+import { ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
 import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { PrenomsForm } from "@model/form/commun/PrenomsForm";
-import { IProjetActeTranscritForm, ProjetTranscriptionForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
+import {
+  IProjetActeTranscritForm,
+  ProjetActeNaissanceTranscriptionForm
+} from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { describe, expect, test } from "vitest";
 
-describe("test des fonction de mapping de la saisie projet d'acte transcrit", () => {
+describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
   const saisieProjetActeTranscriptionForm: IProjetActeTranscritForm = {
     titulaire: {
       nomActeEtranger: "Xi-phun bin",
@@ -73,7 +76,7 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
           typeLieu: "France",
           ville: "Marseille",
           adresse: "11 place du boulodrôme",
-          departement: "13",
+          departement: "departement",
           arrondissement: "13",
           pays: "",
           etatProvince: ""
@@ -152,217 +155,255 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit", ()
       enonciations: "tewt tewxt"
     }
   };
-  const resultat = ProjetTranscriptionForm.versDtoPost(saisieProjetActeTranscriptionForm);
 
-  test("mappingSaisieProjetTitulaireFormVersProjetActe doit renvoyer l'objet 'acte etranger' au format attendu", () => {
-    const acteEtrangerProjetActe: IActeEtrangerDto = {
-      texteEnonciations: "tewt tewxt",
-      typeActeEtranger: "ACTE_DRESSE",
-      infoTypeActe: "",
-      cadreNaissance: "NE_DANS_LE_MARIAGE",
-      jourEnregistrement: "15",
-      moisEnregistrement: "12",
-      anneeEnregistrement: "2024",
-      adresseEnregistrement: { ville: "Pekin", region: "china", pays: "Chine" },
-      redacteur: "Ambassador",
-      reference: "ref.2024.12.pek",
-      complement: "ref.2024.12.pek",
-      mentions: "il est fait mention de..."
-    };
-    expect(resultat.acteEtranger).toStrictEqual(acteEtrangerProjetActe);
+  const projetActe = ProjetActeTranscrit.depuisDto(projetActeNaissanceDto);
+  test("DOIT retourner les bonnes valeurs lors de l'appel de versDtoPost", () => {
+    expect(ProjetActeNaissanceTranscriptionForm.versDtoPost(saisieProjetActeTranscriptionForm)).toStrictEqual(projetActeNaissancePostDto);
   });
-  test("mappingSaisieProjetTitulaireFormVersProjetActe doit renvoyer l'objet 'formule finale' au format attendu", () => {
-    const formuleFinaleProjetActe: IFormuleFinaleDto = {
-      identiteDemandeur: "PARENT_1",
-      nomDemandeur: "",
-      prenomDemandeur: null,
-      qualiteDemandeur: "",
-      pieceProduite: "COPIES",
-      legalisation: "LEGALISATION",
-      autresPieces: "passeport",
-      modeDepot: "REMISE",
-      identiteTransmetteur: "LE_REQUERANT",
-      nomTransmetteur: null
-    };
-    expect(resultat.formuleFinale).toStrictEqual(formuleFinaleProjetActe);
+
+  test("DOIT retourner les bonnes valeurs lors de l'appel de versDtoPatch", () => {
+    expect(ProjetActeNaissanceTranscriptionForm.versDtoPatch(saisieProjetActeTranscriptionForm, projetActe!)).toStrictEqual(
+      projetActeNaissancePatchDto
+    );
   });
-  test("mappingSaisieProjetTitulaireFormVersProjetActe doit renvoyer l'objet 'declarant' au format attendu", () => {
-    const declarantProjetActe: IDeclarantProjetActeTranscritDto = {
-      identiteDeclarant: "TIERS",
-      adresseDomicile: null,
-      age: null,
-      complementDeclarant: null,
-      nom: "",
-      prenoms: [],
-      profession: "",
-      qualite: "",
-      sansProfession: null,
-      sexe: "INCONNU"
-    };
-    expect(resultat.declarant).toStrictEqual(declarantProjetActe);
-  });
-  test("mappingSaisieProjetTitulaireFormVersProjetActe doit renvoyer l'objet 'projetActeTranscription' au format attendu", () => {
-    const projetActeTranscription = {
-      acteEtranger: {
-        adresseEnregistrement: {
-          pays: "Chine",
-          region: "china",
-          ville: "Pekin"
+
+  test("DOIT faire le mapping correctement avec les valeurs initiales", () => {
+    const valeursInitialesProjetActe = ProjetActeNaissanceTranscriptionForm.valeursInitiales(requeteCreationTranscription, projetActe);
+
+    const valeursInitialesAttendues = {
+      titulaire: {
+        nomActeEtranger: "Toto",
+        nomRetenuOEC: "Jo",
+        nomSouhaite: "",
+        nomSecable: {
+          nomPartie1: "",
+          nomPartie2: "",
+          secable: false
         },
-        anneeEnregistrement: "2024",
-        cadreNaissance: "NE_DANS_LE_MARIAGE",
-        complement: "ref.2024.12.pek",
-        jourEnregistrement: "15",
-        mentions: "il est fait mention de...",
-        moisEnregistrement: "12",
-        redacteur: "Ambassador",
-        reference: "ref.2024.12.pek",
-        texteEnonciations: "tewt tewxt",
-        infoTypeActe: "",
-        typeActeEtranger: "ACTE_DRESSE"
+        prenomsChemin: {
+          nombrePrenomsAffiches: 1,
+          prenom1: "Michel",
+          prenom10: "",
+          prenom11: "",
+          prenom12: "",
+          prenom13: "",
+          prenom14: "",
+          prenom15: "",
+          prenom2: "",
+          prenom3: "",
+          prenom4: "",
+          prenom5: "",
+          prenom6: "",
+          prenom7: "",
+          prenom8: "",
+          prenom9: ""
+        },
+        sexe: "MASCULIN",
+        dateNaissance: {
+          jour: "12",
+          mois: "10",
+          annee: "1966",
+          heure: "10",
+          minute: "10"
+        },
+        villeNaissance: "Nantes",
+        regionNaissance: "",
+        paysNaissance: "France",
+        adresseNaissance: ""
       },
-      analyseMarginales: [],
+      parents: {
+        parent1: {
+          age: "12",
+          dateNaissance: {
+            annee: "2010",
+            jour: "05",
+            mois: "05"
+          },
+          domicile: {
+            adresse: "",
+            arrondissement: "",
+            departement: "",
+            etatProvince: "",
+            pays: "France",
+            typeLieu: "France",
+            ville: ""
+          },
+          lieuNaissance: {
+            adresse: "",
+            arrondissement: "",
+            departement: undefined,
+            etatProvince: "",
+            pays: "France",
+            typeLieu: "France",
+            ville: "Nantes"
+          },
+          nom: "Perez",
+          prenomsChemin: {
+            nombrePrenomsAffiches: 1,
+            prenom1: "Joseph",
+            prenom10: "",
+            prenom11: "",
+            prenom12: "",
+            prenom13: "",
+            prenom14: "",
+            prenom15: "",
+            prenom2: "",
+            prenom3: "",
+            prenom4: "",
+            prenom5: "",
+            prenom6: "",
+            prenom7: "",
+            prenom8: "",
+            prenom9: ""
+          },
+          profession: "Banquier",
+          renseignerAge: false,
+          sansProfession: true,
+          sexe: "MASCULIN"
+        },
+        parent2: {
+          age: "",
+          dateNaissance: {
+            annee: "",
+            jour: "",
+            mois: ""
+          },
+          domicile: {
+            adresse: "",
+            arrondissement: "",
+            departement: "",
+            etatProvince: "",
+            pays: "",
+            typeLieu: "Inconnu",
+            ville: ""
+          },
+          lieuNaissance: {
+            adresse: "",
+            arrondissement: "",
+            departement: undefined,
+            etatProvince: "",
+            pays: "",
+            typeLieu: "Inconnu",
+            ville: ""
+          },
+          nom: "",
+          prenomsChemin: {
+            nombrePrenomsAffiches: 1,
+            prenom1: "",
+            prenom10: "",
+            prenom11: "",
+            prenom12: "",
+            prenom13: "",
+            prenom14: "",
+            prenom15: "",
+            prenom2: "",
+            prenom3: "",
+            prenom4: "",
+            prenom5: "",
+            prenom6: "",
+            prenom7: "",
+            prenom8: "",
+            prenom9: ""
+          },
+          profession: "",
+          renseignerAge: false,
+          sansProfession: false,
+          sexe: ""
+        },
+        domicileCommun: false
+      },
       declarant: {
-        adresseDomicile: null,
-        age: null,
-        complementDeclarant: null,
-        identiteDeclarant: "TIERS",
-        nom: "",
-        prenoms: [],
+        identite: "TIERS",
+        nom: "Garcion",
+        prenomsChemin: {
+          nombrePrenomsAffiches: 1,
+          prenom1: "Patrick",
+          prenom10: "",
+          prenom11: "",
+          prenom12: "",
+          prenom13: "",
+          prenom14: "",
+          prenom15: "",
+          prenom2: "",
+          prenom3: "",
+          prenom4: "",
+          prenom5: "",
+          prenom6: "",
+          prenom7: "",
+          prenom8: "",
+          prenom9: ""
+        },
+        sexe: "INCONNU",
+        age: 52,
+        qualite: "le copain",
         profession: "",
-        qualite: "",
-        sansProfession: null,
-        sexe: "INCONNU"
+        sansProfession: false,
+        domicile: {
+          typeLieu: "Étranger",
+          ville: "Tunis",
+          departement: "",
+          etatProvince: "",
+          pays: "Tunisie",
+          adresse: ""
+        },
+        complement: ""
       },
-      evenement: {
-        annee: 2024,
-        departement: null,
-        heure: null,
-        jour: 3,
-        minute: null,
-        mois: 12,
-        neDansLeMariage: true,
-        pays: "Chine",
-        region: "China",
-        ville: "Bejin",
-        voie: "Place du riz",
-        arrondissement: null
+      autresEnonciations: {
+        enonciations: ""
+      },
+      acteEtranger: {
+        typeActe: "ACTE_DRESSE",
+        infoTypeActe: "",
+        dateEnregistrement: {
+          jour: "",
+          mois: "",
+          annee: ""
+        },
+        lieuEnregistrement: {
+          ville: "",
+          etatProvince: "",
+          pays: ""
+        },
+        redacteur: "redacteur acte",
+        referenceComplement: "referenceComplement acte"
+      },
+      mentions: {
+        mentions: ""
       },
       formuleFinale: {
-        autresPieces: "passeport",
         identiteDemandeur: "PARENT_1",
-        identiteTransmetteur: "LE_REQUERANT",
-        legalisation: "LEGALISATION",
-        modeDepot: "REMISE",
-        nomDemandeur: "",
-        nomTransmetteur: null,
-        pieceProduite: "COPIES",
-        prenomDemandeur: null,
-        qualiteDemandeur: ""
-      },
-      mentions: [],
-      nature: "NAISSANCE",
-      titulaires: [
-        {
-          domicile: {
-            pays: "Chine",
-            region: "China",
-            ville: "Bejin",
-            voie: "Place du riz"
-          },
-          filiations: [
-            {
-              age: null,
-              domicile: {
-                arrondissement: "13",
-                pays: "France",
-                region: "13",
-                ville: "Marseille",
-                voie: "11 place du boulodrôme"
-              },
-              domicileCommun: null,
-              lienParente: LienParente.PARENT,
-              naissance: {
-                annee: 2000,
-
-                departement: null,
-                heure: null,
-                jour: 10,
-                minute: null,
-                mois: 10,
-                neDansLeMariage: null,
-                pays: null,
-                arrondissement: null,
-                voie: null,
-                region: null,
-                ville: null
-              },
-              nom: "Greenwald",
-              ordre: 1,
-              prenoms: ["cassandra"],
-              profession: "",
-              sansProfession: true,
-              sexe: "MASCULIN"
-            },
-            {
-              age: 34,
-              domicile: null,
-              domicileCommun: true,
-              lienParente: LienParente.PARENT,
-              naissance: {
-                annee: null,
-                departement: "loire atlantique",
-                heure: null,
-                jour: null,
-                minute: null,
-                mois: null,
-                neDansLeMariage: null,
-                pays: "France",
-                region: "loire atlantique",
-                ville: "Nantes",
-                voie: "hopital chu nantes",
-                arrondissement: null
-              },
-              nom: "Xi Phun Bin",
-              ordre: 2,
-              prenoms: ["Maman"],
-              profession: "Artiste",
-              sansProfession: false,
-              sexe: "FEMININ"
-            }
-          ],
-          naissance: {
-            annee: 2024,
-            departement: null,
-            heure: null,
-            jour: 3,
-            minute: null,
-            mois: 12,
-            neDansLeMariage: true,
-            pays: "Chine",
-            region: "China",
-            ville: "Bejin",
-            voie: "Place du riz",
-            arrondissement: null
-          },
-          nom: "Xi phun bin",
-          nomActeEtranger: "Xi-phun bin",
-          nomPartie1: "Xi",
-          nomPartie2: "phun bin",
-          ordre: 1,
-          pasDePrenom: false,
-          prenoms: ["lao", "xiar", "sehoo"],
-          sexe: "FEMININ"
-        }
-      ],
-      visibiliteArchiviste: "NON",
-      modeCreation: ETypeRedactionActe.TRANSCRIT
+        nom: "nom formule finale",
+        prenomsChemin: {
+          nombrePrenomsAffiches: 2,
+          prenom1: "Rachid",
+          prenom2: "Antoine",
+          prenom10: "",
+          prenom11: "",
+          prenom12: "",
+          prenom13: "",
+          prenom14: "",
+          prenom15: "",
+          prenom3: "",
+          prenom4: "",
+          prenom5: "",
+          prenom6: "",
+          prenom7: "",
+          prenom8: "",
+          prenom9: ""
+        },
+        qualite: "",
+        pieceProduite: "COPIE",
+        autresPieces: "",
+        legalisationApostille: "",
+        modeDepot: "TRANSMISE",
+        identiteTransmetteur: "LE_REQUERANT"
+      }
     };
 
-    expect(resultat).toStrictEqual(projetActeTranscription);
+    expect(valeursInitialesProjetActe).toStrictEqual(valeursInitialesAttendues);
   });
 });
-describe("test des fonction de mapping de la saisie projet d'acte transcrit TIERS", () => {
+describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIERS", () => {
   const saisieProjetActeTranscriptionTiers: IProjetActeTranscritForm = {
     titulaire: {
       nomActeEtranger: "greenwald",
@@ -679,225 +720,8 @@ describe("test des fonction de mapping de la saisie projet d'acte transcrit TIER
       modeCreation: ETypeRedactionActe.TRANSCRIT,
       nature: "NAISSANCE"
     };
-    expect(ProjetTranscriptionForm.versDtoPost(saisieProjetActeTranscriptionTiers)).toStrictEqual(projetActeTranscriptionTiers);
-  });
-});
-describe("test des fonctions non testées précedement", () => {
-  const saisieProjetActeTranscriptionNull: IProjetActeTranscritForm = {
-    titulaire: {
-      nomActeEtranger: "greenwald",
-      nomRetenuOEC: "prenomUn prenomDeux prenomTrois",
-      nomSouhaite: "",
-      nomSecable: {
-        nomPartie1: "",
-        nomPartie2: "",
-        secable: false
-      },
-      prenomsChemin: PrenomsForm.depuisStringDto(["Consulaire"]),
-      sexe: "FEMININ",
-      dateNaissance: {
-        jour: "",
-        mois: "",
-        annee: "2025",
-        heure: "",
-        minute: ""
-      },
-      villeNaissance: null,
-      regionNaissance: null,
-      paysNaissance: null,
-      adresseNaissance: null
-    },
-    declarant: {
-      identite: "TIERS",
-      nom: "LeTiers",
-      prenomsChemin: PrenomsForm.depuisStringDto(["Toto"]),
-      sexe: "MASCULIN",
-      age: null,
-      qualite: "",
-      profession: "",
-      sansProfession: true,
-      domicile: {
-        typeLieu: "Inconnu"
-      },
-      complement: "Chez qui..."
-    },
-    parents: {
-      parent1: {
-        id: "c7e0e767-438c-4e42-83c1-e0c74d6bbd9d",
-        position: 1,
-        sexe: "MASCULIN",
-        nomNaissance: "Patamob",
-        nom: "Patamob",
-        prenomsChemin: PrenomsForm.depuisStringDto(["cassandra"]),
-        dateNaissance: {
-          jour: "",
-          mois: "",
-          annee: ""
-        },
-        lieuNaissance: {
-          typeLieu: "Inconnu"
-        },
-        sansProfession: true,
-        profession: "",
-        domicile: {
-          typeLieu: "Inconnu"
-        },
-        renseignerAge: false
-      },
-      parent2: {}
-    },
-    acteEtranger: {
-      referenceComplement: "",
-      typeActe: "ACTE_DRESSE"
-    },
-    mentions: {},
-    formuleFinale: {
-      identiteDemandeur: "TIERS",
-      nom: "nomDemandeur",
-      prenomsChemin: PrenomsForm.depuisStringDto(["Prenom", "Demandeur"]),
-      qualite: "Agent",
-      pieceProduite: "COPIE",
-      autresPieces: "",
-      legalisationApostille: "APOSTILLE",
-      modeDepot: "TRANSMISE",
-      identiteTransmetteur: "LE_REQUERANT"
-    },
-    autresEnonciations: {
-      enonciations: ""
-    }
-  };
-  test("mappingSaisieProjetTitulaireFormVersProjetActe doit renvoyer l'objet 'projetActeTranscription' au format attendu", () => {
-    const projetActeTranscritNull = {
-      acteEtranger: {
-        adresseEnregistrement: {
-          pays: "",
-
-          ville: "",
-          region: ""
-        },
-        anneeEnregistrement: null,
-        cadreNaissance: "NE_DANS_LE_MARIAGE",
-        complement: null,
-        jourEnregistrement: null,
-        mentions: null,
-        moisEnregistrement: null,
-        redacteur: null,
-        reference: null,
-        texteEnonciations: "",
-        infoTypeActe: "",
-        typeActeEtranger: "ACTE_DRESSE"
-      },
-      analyseMarginales: [],
-      declarant: {
-        adresseDomicile: null,
-        age: null,
-        complementDeclarant: "Chez qui...",
-        identiteDeclarant: "TIERS",
-        nom: "LeTiers",
-        prenoms: [
-          {
-            numeroOrdre: 1,
-            prenom: "Toto"
-          }
-        ],
-        profession: "",
-        qualite: "",
-        sansProfession: true,
-        sexe: "MASCULIN"
-      },
-      evenement: {
-        annee: 2025,
-        departement: null,
-        heure: null,
-        jour: null,
-        minute: null,
-        mois: null,
-        neDansLeMariage: true,
-        pays: null,
-        arrondissement: null,
-        voie: null,
-        region: null,
-        ville: null
-      },
-      formuleFinale: {
-        autresPieces: "",
-        identiteDemandeur: "TIERS",
-        identiteTransmetteur: "LE_REQUERANT",
-        legalisation: "APOSTILLE",
-        modeDepot: "TRANSMISE",
-        nomDemandeur: "nomDemandeur",
-        nomTransmetteur: "nomDemandeur",
-        pieceProduite: "COPIE",
-        prenomDemandeur: "Prenom, Demandeur",
-        qualiteDemandeur: "Agent"
-      },
-      mentions: [],
-      modeCreation: ETypeRedactionActe.TRANSCRIT,
-      nature: "NAISSANCE",
-      titulaires: [
-        {
-          domicile: null,
-          filiations: [
-            {
-              age: null,
-              domicile: {
-                pays: "",
-                arrondissement: undefined,
-                ville: "",
-                region: "",
-                voie: undefined
-              },
-              domicileCommun: null,
-              lienParente: LienParente.PARENT,
-              naissance: {
-                annee: null,
-                departement: null,
-                heure: null,
-                jour: null,
-                minute: null,
-                mois: null,
-                neDansLeMariage: null,
-                pays: null,
-                arrondissement: null,
-                voie: null,
-                region: null,
-                ville: null
-              },
-              nom: "Patamob",
-              ordre: 1,
-              prenoms: ["cassandra"],
-              profession: "",
-              sansProfession: true,
-              sexe: "MASCULIN"
-            }
-          ],
-          naissance: {
-            annee: 2025,
-
-            departement: null,
-            heure: null,
-            jour: null,
-            minute: null,
-            mois: null,
-            neDansLeMariage: true,
-            pays: null,
-            arrondissement: null,
-            voie: null,
-            region: null,
-            ville: null
-          },
-          nom: "prenomUn prenomDeux prenomTrois",
-          nomActeEtranger: "greenwald",
-          nomPartie1: null,
-          nomPartie2: null,
-          ordre: 1,
-          pasDePrenom: false,
-          prenoms: ["Consulaire"],
-          sexe: "FEMININ"
-        }
-      ],
-      visibiliteArchiviste: "NON"
-    };
-    expect(ProjetTranscriptionForm.versDtoPost(saisieProjetActeTranscriptionNull)).toStrictEqual(projetActeTranscritNull);
+    expect(ProjetActeNaissanceTranscriptionForm.versDtoPost(saisieProjetActeTranscriptionTiers)).toStrictEqual(
+      projetActeTranscriptionTiers
+    );
   });
 });

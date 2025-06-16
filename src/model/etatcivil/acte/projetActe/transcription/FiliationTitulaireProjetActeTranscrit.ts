@@ -1,4 +1,3 @@
-/* v8 ignore start */
 import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { IAdresse } from "../../IAdresse";
@@ -73,4 +72,3 @@ export class FiliationTitulaireProjetActeTranscrit {
     );
   };
 }
-/* v8 ignore stop */
