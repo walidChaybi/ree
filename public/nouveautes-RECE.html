@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <title>Nouveautés du RECE</title>
+    <link
+      rel="icon"
+      href="./favicon.ico"
+    />
+    <style type="text/css">
+      @font-face {
+        font-family: "Marianne";
+        src: url("./fonts/Marianne/Marianne-Regular.woff");
+      }
+
+      @font-face {
+        font-family: "Marianne";
+        src: url("./fonts/Marianne/Marianne-Regular_Italic.woff");
+        font-style: italic;
+      }
+
+      @font-face {
+        font-family: "Marianne";
+        src: url("./fonts/Marianne/Marianne-Bold.woff");
+        font-weight: 700;
+      }
+
+      body {
+        --couleur-bleu: #03476e;
+        font-family: "Marianne", sans-serif;
+        max-width: 1400px;
+        margin: auto;
+        padding: 0 2rem 5rem;
+
+        #img-rece {
+          text-align: center;
+          padding-top: 15px;
+
+          img {
+            height: 100px;
+          }
+        }
+
+        h1 {
+          color: var(--couleur-bleu);
+          text-align: center;
+          margin-bottom: 5px;
+          margin-top: 10px;
+        }
+
+        #version-actuelle {
+          text-align: center;
+          margin-top: 0;
+          font-style: italic;
+        }
+
+        #conteneur-versions {
+          h2 {
+            color: var(--couleur-bleu);
+            margin-top: 50px;
+            margin-bottom: 5px;
+          }
+
+          p {
+            margin-top: 0;
+          }
+
+          ul {
+            list-style: none;
+            padding-left: 20px;
+          }
+
+          li {
+            display: flex;
+            align-items: center;
+
+            span.icone {
+              font-size: x-large;
+              padding-right: 10px;
+            }
+          }
+        }
+
+        #conteneur-bouton-afficher-plus {
+          text-align: center;
+          padding-top: 15px;
+
+          button {
+            color: #ffff;
+            background-color: var(--couleur-bleu);
+            cursor: pointer;
+            font-weight: bold;
+            border: none;
+            padding: 5px 20px;
+            opacity: 1;
+            transition: opacity ease 0.2s;
+            border-radius: 5px;
+
+            &:hover {
+              opacity: 0.85;
+            }
+          }
+        }
+
+        #bouton-haut-page {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          border: 3px solid var(--couleur-bleu);
+          border-radius: 50px;
+          background-color: transparent;
+          color: var(--couleur-bleu);
+          display: grid;
+          place-content: center;
+          width: 45px;
+          height: 45px;
+          cursor: pointer;
+          opacity: 1;
+          transition: opacity ease 0.2s;
+
+          &:hover {
+            opacity: 0.85;
+          }
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="img-rece">
+      <img
+        src="./logo512.png"
+        alt="RECE"
+      />
+    </div>
+    <h1>Nouveautés du RECE</h1>
+    <p id="version-actuelle">Version actuelle : <span id="info-version-actuelle">N.C.</span></p>
+
+    <div id="conteneur-versions"></div>
+
+    <div id="conteneur-bouton-afficher-plus"></div>
+
+    <button
+      id="bouton-haut-page"
+      onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+      title="Vers le haut de la page"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 115.4 122.88"
+        fill="currentColor"
+        width="20"
+        height="20"
+      >
+        <path
+          d="M24.94,67.88A14.66,14.66,0,0,1,4.38,47L47.83,4.21a14.66,14.66,0,0,1,20.56,0L111,46.15A14.66,14.66,0,0,1,90.46,67.06l-18-17.69-.29,59.17c-.1,19.28-29.42,19-29.33-.25L43.14,50,24.94,67.88Z"
+        />
+      </svg>
+    </button>
+  </body>
+
+  <script>
+    /** Icones pour imager les changements d'une version */
+    const ICONES = {
+      // Fonctionnalitée / livraisons
+      nouvelleFonctionnalite: "🆕",
+      fonctionnaliteExperimentale: "🧪",
+      nouvelleLivraison: "📦",
+
+      // Corrections et améliorations
+      correctionBug: "🐛",
+      correctionAmeliortationTechnique: "🔧",
+      ameliorationPerformances: "🚀",
+
+      // Mise à jour et changements internes
+      miseAJour: "⬆️",
+      changementInterne: "🔄",
+
+      autre: "📝"
+    };
+
+    /**
+     * EXEMPLE d'une version
+     * Copier/Coller l'objet en HAUT du table VERSIONS_RECE
+     * Puis complétez-le avec les données voulues
+     *
+     * numeroVersion: OBLIGATOIRE pour l'affichage
+     * dateProd: OPTIONNELLE (si la version ne part pas en PROD)
+     * texteInfo: OPTIONNEL (si envie d'ajouter une info hors changements de la version)
+     * changements: OBLIGATOIRE
+     *      icone: OPTIONNEL (sinon Icone AUTRE par défaut)
+     *      description: OBLIGATOIRE
+     **/
+    const EXEMPLE_VERSION = {
+      numeroVersion: "1.0",
+      dateProd: "01/01/2020",
+      texteInfo: "Texte sous le titre de la version",
+      changements: [
+        {
+          icone: ICONES.correctionBug,
+          description: "Description du changement"
+        }
+      ]
+    };
+
+    /**
+     * !!! ⚠ AJOUT DES VERSIONS ICI ⚠ !!!
+     *
+     * Liste des versions RECE
+     * Ajoutez la prochaine version en HAUT du tableau (ordre antéchronologique)
+     *
+     * ⚠ NE PAS OUBLIER LA VIRGULE AVANT L'ÉLÉMENT SUIVANT :
+     * [
+     *    {
+     *       maVersion
+     *    }, ← ⚠⚠⚠ !!!
+     *    {
+     *       ancienneVersion
+     *    }
+     * ]
+     **/
+    const VERSIONS_RECE = [];
+
+    /** DEV ONLY *********************************************************************************/
+
+    /** Récupération de la version actuelle en PROD */
+    const infoVersionActuelle = document.getElementById("info-version-actuelle");
+    const versionProdActuelle = VERSIONS_RECE.find(version => {
+      if (!version.dateProd) return false;
+
+      const [jour, mois, annee] = version.dateProd.split("/");
+
+      return new Date(parseInt(annee), parseInt(mois) - 1, parseInt(jour)) <= new Date();
+    });
+
+    if (infoVersionActuelle && versionProdActuelle) {
+      const derniereVersion = versionProdActuelle.numeroVersion ?? "N.C.";
+      const derniereDate = versionProdActuelle.dateProd ? `(${versionProdActuelle.dateProd})` : "";
+      infoVersionActuelle.innerHTML = `<b>${derniereVersion}</b> ${derniereDate}`;
+    }
+
+    /** Affichage des versions du RECE */
+    const conteneurVersion = document.getElementById("conteneur-versions");
+    const conteneurBouton = document.getElementById("conteneur-bouton-afficher-plus");
+    const NOMBRE_VERSION_PAR_GROUPE = 5;
+
+    const afficherVersions = (depart, fin) => {
+      if (!conteneurVersion) return;
+
+      VERSIONS_RECE.slice(depart, fin).forEach(version => {
+        if (!version.numeroVersion) return;
+
+        const titreVersion = document.createElement("h2");
+        const dateMiseEnProd = version.dateProd ? `- à partir du ${version.dateProd}` : "";
+        titreVersion.innerText = `Version ${version.numeroVersion} ${dateMiseEnProd}`;
+        conteneurVersion.appendChild(titreVersion);
+
+        if (version.texteInfo) {
+          const infoVersion = document.createElement("p");
+          infoVersion.innerText = version.texteInfo;
+          conteneurVersion.appendChild(infoVersion);
+        }
+
+        if (!version.evolutions.length) return;
+
+        const conteneurEvolutionsVersion = document.createElement("ul");
+        version.evolutions.forEach(evolutionVersion => {
+          const texteEvolution = document.createElement("li");
+          const iconeEvolution = Object.values(ICONES).includes(evolutionVersion.icone) ? evolutionVersion.icone : ICONES.autre;
+          texteEvolution.innerHTML = `<span class="icone">${iconeEvolution}</span> ${evolutionVersion.description}`;
+          conteneurEvolutionsVersion.appendChild(texteEvolution);
+        });
+        conteneurVersion.appendChild(conteneurEvolutionsVersion);
+
+        if (!conteneurBouton) return;
+
+        conteneurBouton.innerHTML = "";
+        if (VERSIONS_RECE.length > fin) {
+          const boutonAfficherPlus = document.createElement("button");
+          boutonAfficherPlus.title = "Afficher plus";
+          boutonAfficherPlus.innerText = "Afficher plus ...";
+          boutonAfficherPlus.addEventListener("click", () => afficherVersions(fin, fin + NOMBRE_VERSION_PAR_GROUPE));
+          conteneurBouton.appendChild(boutonAfficherPlus);
+        }
+      });
+    };
+
+    afficherVersions(0, NOMBRE_VERSION_PAR_GROUPE);
+  </script>
+</html>

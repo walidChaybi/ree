@@ -21,7 +21,7 @@ const ConteneurModale: React.FC<React.PropsWithChildren<IConteneurModaleProps>> 
 
   return createPortal(
     <div
-      className="fixed left-0 top-0 z-[1000] flex h-screen w-screen animate-apparition items-center justify-center bg-black bg-opacity-40 duration-100"
+      className="fixed left-0 top-0 z-[1000] flex h-screen w-screen animate-apparition items-center justify-center bg-black/40"
       {...(fermerModale ? { onClick: fermerModale } : {})}
     >
       <div

@@ -1,12 +1,11 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
-import Tooltip from "@mui/material/Tooltip";
 import { URL_ACCUEIL } from "@router/ReceUrls";
 import React, { useContext } from "react";
 import { useNavigate } from "react-router";
+import MenuUtilisateur from "../../../composants/miseEnPage/enTete/MenuUtilisateur";
 import logoReceBlanc from "../../../img/logo-rece-blanc.svg";
-import { BoutonDeconnexion } from "./BoutonDeconnexion";
 import { BoutonRechercheRmc } from "./BoutonRechercheRmc";
 
 interface HeaderProps {
@@ -16,7 +15,6 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ onClick }) => {
   const navigate = useNavigate();
   const { utilisateurConnecte } = useContext(RECEContextData);
-  const version = `${process.env.VERSION}_${process.env.DATE_BUILD}`;
 
   function onClickLogo(event: React.MouseEvent) {
     if (onClick) {
@@ -36,9 +34,7 @@ export const Header: React.FC<HeaderProps> = ({ onClick }) => {
         />
       </div>
 
-      <Tooltip title={`Version : ${version}`}>
-        <h1>{"Registre d'État Civil Électronique"}</h1>
-      </Tooltip>
+      <h1>{"Registre d'État Civil Électronique"}</h1>
 
       <div className="coteDroit">
         {officierHabiliterPourLeDroit(utilisateurConnecte, Droit.CONSULTER) && (
@@ -49,7 +45,8 @@ export const Header: React.FC<HeaderProps> = ({ onClick }) => {
             </div>
           </>
         )}
-        <BoutonDeconnexion />
+
+        <MenuUtilisateur />
       </div>
     </header>
   );

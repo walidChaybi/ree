@@ -39,6 +39,10 @@ module.exports = {
         liberation: ["Liberation Mono"]
       },
       keyframes: {
+        apparition: {
+          from: { opacity: "0" },
+          to: { opacity: "1" }
+        },
         entreeGauche: {
           "0%": { transform: "translateX(-20px)", opacity: "0" },
           "100%": { transform: "translateX(0)", opacity: "1" }
@@ -49,7 +53,7 @@ module.exports = {
         }
       },
       animation: {
-        apparition: "apparition .2s ease",
+        apparition: "apparition .1s ease",
         "entree-gauche": "entreeGauche 0.2s ease-out 0.1s both",
         "entree-droite": "entreeDroite 0.2s ease-out 0.1s both"
       },

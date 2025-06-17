@@ -1,0 +1,481 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`test du composant MenuUtilisateur > L'utilisateur peut se déconnecter si il y a des requêtes à signer 1`] = `
+<div>
+  <button
+    class="h-12 min-w-0 bg-transparent pl-4 pr-2"
+    title="Menu utilisateur"
+    type="button"
+  >
+    <svg
+      aria-hidden="true"
+      class="MuiSvgIcon-root MuiSvgIcon-fontSizeLarge css-tzssek-MuiSvgIcon-root"
+      data-testid="AccountCircleOutlinedIcon"
+      focusable="false"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM7.35 18.5C8.66 17.56 10.26 17 12 17s3.34.56 4.65 1.5c-1.31.94-2.91 1.5-4.65 1.5s-3.34-.56-4.65-1.5zm10.79-1.38C16.45 15.8 14.32 15 12 15s-4.45.8-6.14 2.12C4.7 15.73 4 13.95 4 12c0-4.42 3.58-8 8-8s8 3.58 8 8c0 1.95-.7 3.73-1.86 5.12z"
+      />
+      <path
+        d="M12 6c-1.93 0-3.5 1.57-3.5 3.5S10.07 13 12 13s3.5-1.57 3.5-3.5S13.93 6 12 6zm0 5c-.83 0-1.5-.67-1.5-1.5S11.17 8 12 8s1.5.67 1.5 1.5S12.83 11 12 11z"
+      />
+    </svg>
+  </button>
+  <aside
+    class="fixed top-0 z-10 flex h-screen w-[350px] flex-col justify-between bg-bleu pl-4 shadow-md transition-[right] right-0"
+  >
+    <div
+      class="grid gap-6"
+    >
+      <div
+        class="flex justify-between"
+      >
+        <div
+          class="flex gap-4 pt-3.5"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeLarge css-tzssek-MuiSvgIcon-root"
+            data-testid="AccountCircleOutlinedIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM7.35 18.5C8.66 17.56 10.26 17 12 17s3.34.56 4.65 1.5c-1.31.94-2.91 1.5-4.65 1.5s-3.34-.56-4.65-1.5zm10.79-1.38C16.45 15.8 14.32 15 12 15s-4.45.8-6.14 2.12C4.7 15.73 4 13.95 4 12c0-4.42 3.58-8 8-8s8 3.58 8 8c0 1.95-.7 3.73-1.86 5.12z"
+            />
+            <path
+              d="M12 6c-1.93 0-3.5 1.57-3.5 3.5S10.07 13 12 13s3.5-1.57 3.5-3.5S13.93 6 12 6zm0 5c-.83 0-1.5-.67-1.5-1.5S11.17 8 12 8s1.5.67 1.5 1.5S12.83 11 12 11z"
+            />
+          </svg>
+          <div
+            class="text-start"
+          >
+            <div
+              class="text-2xl font-bold"
+            >
+              Prénom NOM
+            </div>
+            <div
+              class="italic"
+            >
+              Fonction
+            </div>
+          </div>
+        </div>
+        <button
+          class="h-12 w-12 min-w-0 bg-transparent"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeLarge css-tzssek-MuiSvgIcon-root"
+            data-testid="CloseIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            />
+          </svg>
+        </button>
+      </div>
+      <button
+        class="m-0 mr-4 flex min-w-0 items-center justify-center gap-4 rounded-lg bg-bleu-sombre px-4 py-3 transition-colors hover:bg-opacity-75"
+        title="Déconnexion"
+      >
+        <span>
+          Déconnexion
+        </span>
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="LogoutIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="m17 7-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="grid gap-4 pb-4"
+    >
+      <a
+        class="mx-auto flex w-fit items-center gap-2 text-blanc"
+        href="./nouveautes-RECE.html"
+        rel="noopener"
+        target="__blank"
+        title="Nouveautés du RECE"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="InfoOutlinedIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+          />
+        </svg>
+        <span>
+          Nouveautés du RECE
+        </span>
+      </a>
+      <div
+        class="text-center italic"
+      >
+        RECE - version  - 
+      </div>
+    </div>
+  </aside>
+  <div
+    id="conteneur-modale-rece"
+  >
+    <div
+      class="fixed left-0 top-0 z-[1000] flex h-screen w-screen animate-apparition items-center justify-center bg-black/40"
+    >
+      <div
+        class="m-4 flex"
+      >
+        <div
+          class="border-1 rounded-xl border-solid border-bleu-sombre bg-blanc p-5"
+        >
+          <div>
+            Il vous reste 1 requête(s) à signer, êtes-vous sûr de vouloir vous déconnecter ?
+          </div>
+          <div
+            class="flex items-center justify-center gap-6 pt-6"
+          >
+            <button
+              class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-blanc text-bleu-sombre hover:text-bleu hover:border-bleu focus:text-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
+              title="Non, voir les requêtes à signer"
+              type="button"
+            >
+              Non
+            </button>
+            <button
+              class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
+              title="Oui, me déconnecter"
+              type="button"
+            >
+              Oui
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`test du composant MenuUtilisateur > Le bouton déconnexion s'affiche si erreur de connexion 1`] = `
+<div>
+  <button
+    class="m-0 flex min-w-0 items-center justify-center gap-4 rounded-lg bg-transparent px-4 py-3"
+    title="Déconnexion"
+  >
+    <span>
+      Déconnexion
+    </span>
+    <svg
+      aria-hidden="true"
+      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+      data-testid="LogoutIcon"
+      focusable="false"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="m17 7-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"
+      />
+    </svg>
+  </button>
+  <div
+    id="conteneur-modale-rece"
+  />
+</div>
+`;
+
+exports[`test du composant MenuUtilisateur > Le bouton s'affiche correctement et ouvre le menu 1`] = `
+<div>
+  <button
+    class="h-12 min-w-0 bg-transparent pl-4 pr-2"
+    title="Menu utilisateur"
+    type="button"
+  >
+    <svg
+      aria-hidden="true"
+      class="MuiSvgIcon-root MuiSvgIcon-fontSizeLarge css-tzssek-MuiSvgIcon-root"
+      data-testid="AccountCircleOutlinedIcon"
+      focusable="false"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM7.35 18.5C8.66 17.56 10.26 17 12 17s3.34.56 4.65 1.5c-1.31.94-2.91 1.5-4.65 1.5s-3.34-.56-4.65-1.5zm10.79-1.38C16.45 15.8 14.32 15 12 15s-4.45.8-6.14 2.12C4.7 15.73 4 13.95 4 12c0-4.42 3.58-8 8-8s8 3.58 8 8c0 1.95-.7 3.73-1.86 5.12z"
+      />
+      <path
+        d="M12 6c-1.93 0-3.5 1.57-3.5 3.5S10.07 13 12 13s3.5-1.57 3.5-3.5S13.93 6 12 6zm0 5c-.83 0-1.5-.67-1.5-1.5S11.17 8 12 8s1.5.67 1.5 1.5S12.83 11 12 11z"
+      />
+    </svg>
+  </button>
+  <aside
+    class="fixed top-0 z-10 flex h-screen w-[350px] flex-col justify-between bg-bleu pl-4 shadow-md transition-[right] -right-full"
+  >
+    <div
+      class="grid gap-6"
+    >
+      <div
+        class="flex justify-between"
+      >
+        <div
+          class="flex gap-4 pt-3.5"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeLarge css-tzssek-MuiSvgIcon-root"
+            data-testid="AccountCircleOutlinedIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM7.35 18.5C8.66 17.56 10.26 17 12 17s3.34.56 4.65 1.5c-1.31.94-2.91 1.5-4.65 1.5s-3.34-.56-4.65-1.5zm10.79-1.38C16.45 15.8 14.32 15 12 15s-4.45.8-6.14 2.12C4.7 15.73 4 13.95 4 12c0-4.42 3.58-8 8-8s8 3.58 8 8c0 1.95-.7 3.73-1.86 5.12z"
+            />
+            <path
+              d="M12 6c-1.93 0-3.5 1.57-3.5 3.5S10.07 13 12 13s3.5-1.57 3.5-3.5S13.93 6 12 6zm0 5c-.83 0-1.5-.67-1.5-1.5S11.17 8 12 8s1.5.67 1.5 1.5S12.83 11 12 11z"
+            />
+          </svg>
+          <div
+            class="text-start"
+          >
+            <div
+              class="text-2xl font-bold"
+            >
+              Prénom NOM
+            </div>
+            <div
+              class="italic"
+            >
+              Fonction
+            </div>
+          </div>
+        </div>
+        <button
+          class="h-12 w-12 min-w-0 bg-transparent"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeLarge css-tzssek-MuiSvgIcon-root"
+            data-testid="CloseIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            />
+          </svg>
+        </button>
+      </div>
+      <button
+        class="m-0 mr-4 flex min-w-0 items-center justify-center gap-4 rounded-lg bg-bleu-sombre px-4 py-3 transition-colors hover:bg-opacity-75"
+        title="Déconnexion"
+      >
+        <span>
+          Déconnexion
+        </span>
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="LogoutIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="m17 7-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="grid gap-4 pb-4"
+    >
+      <a
+        class="mx-auto flex w-fit items-center gap-2 text-blanc"
+        href="./nouveautes-RECE.html"
+        rel="noopener"
+        target="__blank"
+        title="Nouveautés du RECE"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="InfoOutlinedIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+          />
+        </svg>
+        <span>
+          Nouveautés du RECE
+        </span>
+      </a>
+      <div
+        class="text-center italic"
+      >
+        RECE - version  - 
+      </div>
+    </div>
+  </aside>
+  <div
+    id="conteneur-modale-rece"
+  />
+</div>
+`;
+
+exports[`test du composant MenuUtilisateur > Le bouton s'affiche correctement et ouvre le menu 2`] = `
+<div>
+  <button
+    class="h-12 min-w-0 bg-transparent pl-4 pr-2"
+    title="Menu utilisateur"
+    type="button"
+  >
+    <svg
+      aria-hidden="true"
+      class="MuiSvgIcon-root MuiSvgIcon-fontSizeLarge css-tzssek-MuiSvgIcon-root"
+      data-testid="AccountCircleOutlinedIcon"
+      focusable="false"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM7.35 18.5C8.66 17.56 10.26 17 12 17s3.34.56 4.65 1.5c-1.31.94-2.91 1.5-4.65 1.5s-3.34-.56-4.65-1.5zm10.79-1.38C16.45 15.8 14.32 15 12 15s-4.45.8-6.14 2.12C4.7 15.73 4 13.95 4 12c0-4.42 3.58-8 8-8s8 3.58 8 8c0 1.95-.7 3.73-1.86 5.12z"
+      />
+      <path
+        d="M12 6c-1.93 0-3.5 1.57-3.5 3.5S10.07 13 12 13s3.5-1.57 3.5-3.5S13.93 6 12 6zm0 5c-.83 0-1.5-.67-1.5-1.5S11.17 8 12 8s1.5.67 1.5 1.5S12.83 11 12 11z"
+      />
+    </svg>
+  </button>
+  <aside
+    class="fixed top-0 z-10 flex h-screen w-[350px] flex-col justify-between bg-bleu pl-4 shadow-md transition-[right] right-0"
+  >
+    <div
+      class="grid gap-6"
+    >
+      <div
+        class="flex justify-between"
+      >
+        <div
+          class="flex gap-4 pt-3.5"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeLarge css-tzssek-MuiSvgIcon-root"
+            data-testid="AccountCircleOutlinedIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM7.35 18.5C8.66 17.56 10.26 17 12 17s3.34.56 4.65 1.5c-1.31.94-2.91 1.5-4.65 1.5s-3.34-.56-4.65-1.5zm10.79-1.38C16.45 15.8 14.32 15 12 15s-4.45.8-6.14 2.12C4.7 15.73 4 13.95 4 12c0-4.42 3.58-8 8-8s8 3.58 8 8c0 1.95-.7 3.73-1.86 5.12z"
+            />
+            <path
+              d="M12 6c-1.93 0-3.5 1.57-3.5 3.5S10.07 13 12 13s3.5-1.57 3.5-3.5S13.93 6 12 6zm0 5c-.83 0-1.5-.67-1.5-1.5S11.17 8 12 8s1.5.67 1.5 1.5S12.83 11 12 11z"
+            />
+          </svg>
+          <div
+            class="text-start"
+          >
+            <div
+              class="text-2xl font-bold"
+            >
+              Prénom NOM
+            </div>
+            <div
+              class="italic"
+            >
+              Fonction
+            </div>
+          </div>
+        </div>
+        <button
+          class="h-12 w-12 min-w-0 bg-transparent"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeLarge css-tzssek-MuiSvgIcon-root"
+            data-testid="CloseIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            />
+          </svg>
+        </button>
+      </div>
+      <button
+        class="m-0 mr-4 flex min-w-0 items-center justify-center gap-4 rounded-lg bg-bleu-sombre px-4 py-3 transition-colors hover:bg-opacity-75"
+        title="Déconnexion"
+      >
+        <span>
+          Déconnexion
+        </span>
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="LogoutIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="m17 7-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="grid gap-4 pb-4"
+    >
+      <a
+        class="mx-auto flex w-fit items-center gap-2 text-blanc"
+        href="./nouveautes-RECE.html"
+        rel="noopener"
+        target="__blank"
+        title="Nouveautés du RECE"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="InfoOutlinedIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+          />
+        </svg>
+        <span>
+          Nouveautés du RECE
+        </span>
+      </a>
+      <div
+        class="text-center italic"
+      >
+        RECE - version  - 
+      </div>
+    </div>
+  </aside>
+  <div
+    id="conteneur-modale-rece"
+  />
+</div>
+`;
+
+exports[`test du composant MenuUtilisateur > Le bouton utilisateur ne s'affiche pas si une erreur système se produit 1`] = `
+<div>
+  <div
+    id="conteneur-modale-rece"
+  />
+</div>
+`;
