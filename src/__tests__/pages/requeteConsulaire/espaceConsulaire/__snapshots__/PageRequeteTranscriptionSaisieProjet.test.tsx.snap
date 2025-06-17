@@ -2563,11 +2563,13 @@ pays
                               Parent 1
                             </option>
                             <option
+                              disabled=""
                               value="PARENT_2"
                             >
                               Parent 2
                             </option>
                             <option
+                              disabled=""
                               value="LES_PARENTS"
                             >
                               Les parents

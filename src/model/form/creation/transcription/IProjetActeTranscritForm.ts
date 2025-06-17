@@ -283,8 +283,15 @@ export const ProjetActeNaissanceTranscriptionForm = {
       const parentPrefix = `parents.parent${parentId}`;
 
       return SchemaValidation.objet({
-        nom: SchemaValidation.texte({ obligatoire: false }),
-        prenoms: SchemaValidation.prenoms(`${parentPrefix}.prenoms.prenom`),
+        nom: SchemaValidation.texte({
+          obligatoire:
+            parentId === 1
+              ? ConditionChamp.depuisTableau([
+                  { idChampReference: "parents.parent1.prenomsChemin.prenom1", operateur: EOperateurCondition.EGAL, valeurs: [""] }
+                ])
+              : false
+        }),
+        prenomsChemin: SchemaValidation.prenoms(`${parentPrefix}.prenomsChemin.prenom`),
         sexe: SchemaValidation.texte({ obligatoire: false }).test(
           "sexe-required-if-nom-or-prenom",
           "Le sexe est obligatoire lorsque le nom ou le prénom est renseigné",

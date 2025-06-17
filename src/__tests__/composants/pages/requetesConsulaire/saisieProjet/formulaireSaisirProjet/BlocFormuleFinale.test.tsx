@@ -8,6 +8,10 @@ describe("BlocFormuleFinale", () => {
     return render(
       <Formik
         initialValues={{
+          parents: {
+            parent1: {},
+            parent2: {}
+          },
           formuleFinale: {
             identiteDemandeur: "PARENT_1",
             nom: "",
@@ -31,6 +35,10 @@ describe("BlocFormuleFinale", () => {
     return render(
       <Formik
         initialValues={{
+          parents: {
+            parent1: {},
+            parent2: {}
+          },
           formuleFinale: {
             identiteDemandeur: "TIERS",
             nom: "",

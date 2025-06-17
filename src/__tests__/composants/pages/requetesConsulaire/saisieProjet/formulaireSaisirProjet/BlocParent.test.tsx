@@ -9,7 +9,6 @@ describe("BlocParents", () => {
   const parent2: IParentTranscription = {
     sexe: "Feminin",
     nom: "",
-    prenoms: [{ prenom: "", numeroOrdre: 1 }],
     prenomsChemin: PrenomsForm.valeursInitiales(),
     dateNaissance: undefined,
     lieuNaissance: { typeLieu: "" },
@@ -21,7 +20,6 @@ describe("BlocParents", () => {
   const parent1: IParentTranscription = {
     sexe: "Masculin",
     nom: "",
-    prenoms: [{ prenom: "", numeroOrdre: 1 }],
     prenomsChemin: PrenomsForm.valeursInitiales(),
     dateNaissance: undefined,
     lieuNaissance: { typeLieu: "" },

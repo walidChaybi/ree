@@ -50,6 +50,7 @@ const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({
             key={option.cle ?? "option-vide"}
             value={option.cle}
             hidden={!option.cle && optionVideMasquee}
+            disabled={option.disabled}
           >
             {premiereLettreMajuscule ? `${option.libelle.charAt(0).toUpperCase()}${option.libelle.substring(1)}` : option.libelle}
           </option>

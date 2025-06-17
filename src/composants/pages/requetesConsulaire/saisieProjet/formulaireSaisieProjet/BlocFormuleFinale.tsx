@@ -1,13 +1,14 @@
 import { Option } from "@util/Type";
 import { useFormikContext } from "formik";
 
-import { EIdentiteDemandeur, EIdentiteTransmetteur } from "@model/etatcivil/acte/projetActe/transcription/FormuleFinale";
+import { EIdentiteTransmetteur } from "@model/etatcivil/acte/projetActe/transcription/FormuleFinale";
 import { ELegalisationApostille } from "@model/etatcivil/enum/ELegalisationApostille";
 import { EModeDepot } from "@model/etatcivil/enum/EModeDepot";
 import { EPieceProduite } from "@model/etatcivil/enum/EPieceProduite";
 import { PrenomsForm } from "@model/form/commun/PrenomsForm";
 import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { enumVersOptions } from "@util/Utils";
+import { useMemo } from "react";
 import ChampListeDeroulante from "../../../../commun/champs/ChampListeDeroulante";
 import ChampTexte from "../../../../commun/champs/ChampTexte";
 import ChampsPrenoms from "../../../../commun/champs/ChampsPrenoms";
@@ -15,7 +16,6 @@ import ChampsRadio from "../../../../commun/champs/ChampsRadio";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import SeparateurSection from "../../../../commun/conteneurs/formulaire/SeparateurSection";
 
-const optionsDemandeur: Option[] = enumVersOptions(EIdentiteDemandeur);
 const optionsTransmetteur: Option[] = enumVersOptions(EIdentiteTransmetteur);
 const optionsPieces: Option[] = enumVersOptions(EPieceProduite);
 const optionsLegalisationApostille: Option[] = enumVersOptions(ELegalisationApostille, true);
@@ -23,6 +23,17 @@ const optionsModeDepot: Option[] = enumVersOptions(EModeDepot);
 
 const BlocFormuleFinale: React.FC = () => {
   const { values, setFieldValue } = useFormikContext<IProjetActeTranscritForm>();
+
+  const optionsDemandeur: Option[] = useMemo(() => {
+    const parent2Complet = Boolean(values.parents.parent2?.nom?.trim() || values.parents.parent2?.prenomsChemin?.prenom1?.trim());
+
+    return [
+      { cle: "PARENT_1", libelle: "Parent 1" },
+      { cle: "PARENT_2", libelle: "Parent 2", disabled: !parent2Complet },
+      { cle: "LES_PARENTS", libelle: "Les parents", disabled: !parent2Complet },
+      { cle: "TIERS", libelle: "Un tiers" }
+    ];
+  }, [values.parents.parent2?.nom, values.parents.parent2?.prenomsChemin?.prenom1]);
 
   return (
     <ConteneurAvecBordure className="py-6">
