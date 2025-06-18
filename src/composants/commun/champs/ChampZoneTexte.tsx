@@ -36,7 +36,7 @@ const ChampZoneTexte: React.FC<TChampsZoneTexteProps> = ({ name, libelle, typeRe
         {libelle}
       </label>
       <textarea
-        className={`font-noto-sans-ui text-base ${getClasseRedimensionnement(typeRedimensionnement)}`}
+        className={`font-noto-sans-ui text-base ${getClasseRedimensionnement(typeRedimensionnement)} transition-colors ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
         id={name}
         onKeyDown={event => {
           if (sansRetourChariot && event.key === "Enter") {

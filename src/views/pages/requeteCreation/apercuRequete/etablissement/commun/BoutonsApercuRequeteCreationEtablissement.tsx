@@ -18,6 +18,7 @@ import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { useContext, useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
+import { BoutonChangerStatutRequete } from "../../../../../../composants/pages/requetesEtablissement/BoutonChangerStatutRequete";
 import { BlocInformatif } from "../../../../../common/composant/BlocInformatif/BlocInformatif";
 import { BoutonPrendreEnChargeCreation } from "./BoutonPrendreEnChargeCreation";
 import "./scss/OngletsApercuCreationEtablissement.scss";
@@ -120,6 +121,8 @@ export const BoutonsApercuRequeteCreationEtablissement: React.FC<BoutonsApercuRe
           }
         />
       )}
+
+      <BoutonChangerStatutRequete idRequete={props.requete.id} />
 
       {props.conditionAffichageBoutonsApercuActe && props.avancement && (
         <>

@@ -2167,7 +2167,7 @@ pays
                           Texte énonciations
                         </label>
                         <textarea
-                          class="font-noto-sans-ui text-base resize-y"
+                          class="font-noto-sans-ui text-base resize-y transition-colors border-gris focus-visible:ring-bleu"
                           id="autresEnonciations.enonciations"
                           maxlength="2000"
                           name="autresEnonciations.enonciations"
@@ -2427,7 +2427,7 @@ pays
                           Référence et/ou complément
                         </label>
                         <textarea
-                          class="font-noto-sans-ui text-base resize-y"
+                          class="font-noto-sans-ui text-base resize-y transition-colors border-gris focus-visible:ring-bleu"
                           id="acteEtranger.referenceComplement"
                           maxlength="2000"
                           name="acteEtranger.referenceComplement"
@@ -2489,7 +2489,7 @@ pays
                           Mention(s)
                         </label>
                         <textarea
-                          class="font-noto-sans-ui text-base resize-y"
+                          class="font-noto-sans-ui text-base resize-y transition-colors border-gris focus-visible:ring-bleu"
                           id="mentions.mentions"
                           maxlength="3000"
                           name="mentions.mentions"

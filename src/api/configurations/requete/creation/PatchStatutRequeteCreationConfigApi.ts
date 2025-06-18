@@ -5,6 +5,8 @@ const URI = "/requetes/creation/:idRequete/statut";
 
 interface IQuery {
   statut: string;
+  raisonStatut?: string;
+  force?: boolean;
 }
 
 export const CONFIG_PATCH_STATUT_REQUETE_CREATION: TConfigurationApi<typeof URI, undefined, IQuery> = {
