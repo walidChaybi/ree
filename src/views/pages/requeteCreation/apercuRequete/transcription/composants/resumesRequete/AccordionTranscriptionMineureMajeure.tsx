@@ -1,5 +1,5 @@
 import { IStatutCourant } from "@model/requete/IStatutCourant";
-import { ENatureActeTranscrit, NatureActeTranscription } from "@model/requete/NatureActeTranscription";
+import { ELibelleNatureActeTranscrit, ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { getLibelle } from "@util/Utils";
@@ -22,7 +22,7 @@ export const AccordionTranscriptionMineureMajeure: React.FC<AccordionTranscripti
     <div className="AccordionTranscriptionMineureMajeure">
       <AccordionRece
         key={`${props.numeroTeledossier}`}
-        titre={`"Transcription" ${props.natureActe ? NatureActeTranscription.getLibelle(props.natureActe) : ""}`}
+        titre={`"Transcription" ${props.natureActe ? ELibelleNatureActeTranscrit[props.natureActe].long : ""}`}
         className={{
           container: "accordionContainer",
           content: "accordionContent",

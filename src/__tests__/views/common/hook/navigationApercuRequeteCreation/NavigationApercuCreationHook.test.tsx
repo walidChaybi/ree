@@ -161,7 +161,7 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
 
     render(routerAvecContexte(router));
 
-    expect(router.state.location.pathname).toBe(apercuRequeteURL("apercurequetetranscriptionensaisieprojet", paramsCreation.idRequete));
+    expect(router.state.location.pathname).toBe(apercuRequeteURL("requete-transcription-saisie-projet", paramsCreation.idRequete));
   });
 });
 

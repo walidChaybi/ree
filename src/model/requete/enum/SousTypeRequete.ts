@@ -1,16 +1,28 @@
-/* istanbul ignore file */
 import { Option } from "@util/Type";
-import { SousTypeCreation } from "./SousTypeCreation";
-import { SousTypeDelivrance } from "./SousTypeDelivrance";
-import { SousTypeInformation } from "./SousTypeInformation";
-import { SousTypeMiseAJour } from "./SousTypeMiseAJour";
-import { TypeRequete } from "./TypeRequete";
+import { ELibelleSousTypeCreation, ESousTypeCreation, SousTypeCreation } from "./SousTypeCreation";
+import { ELibelleSousTypeDelivrance, ESousTypeDelivrance, SousTypeDelivrance } from "./SousTypeDelivrance";
+import { ELibelleSousTypeInformation, ESousTypeInformation, SousTypeInformation } from "./SousTypeInformation";
+import { ELibelleSousTypeMiseAJour, ESousTypeMiseAJour, SousTypeMiseAJour } from "./SousTypeMiseAJour";
+import { ETypeRequete, TypeRequete } from "./TypeRequete";
 
-export type SousTypeRequete =
-  | SousTypeCreation
-  | SousTypeDelivrance
-  | SousTypeInformation
-  | SousTypeMiseAJour;
+export type TSousTypeRequete<TTypeRequete extends keyof typeof ETypeRequete> = TTypeRequete extends "DELIVRANCE"
+  ? keyof typeof ESousTypeDelivrance
+  : TTypeRequete extends "CREATION"
+    ? keyof typeof ESousTypeCreation
+    : TTypeRequete extends "MISE_A_JOUR"
+      ? keyof typeof ESousTypeMiseAJour
+      : TTypeRequete extends "INFORMATION"
+        ? keyof typeof ESousTypeInformation
+        : never;
+
+export type SousTypeRequete = SousTypeCreation | SousTypeDelivrance | SousTypeInformation | SousTypeMiseAJour;
+
+export const ELibelleSousTypeRequete = {
+  ...ELibelleSousTypeCreation,
+  ...ELibelleSousTypeDelivrance,
+  ...ELibelleSousTypeMiseAJour,
+  ...ELibelleSousTypeInformation
+};
 
 export const SousTypeRequeteUtil = {
   getOptionsAPartirTypeRequete: (type: TypeRequete): Option[] => {
@@ -37,4 +49,3 @@ export const SousTypeRequeteUtil = {
     return options;
   }
 };
-

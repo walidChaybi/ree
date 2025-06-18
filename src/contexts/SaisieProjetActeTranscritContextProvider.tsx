@@ -42,8 +42,6 @@ const SaisieProjetActeTranscritContextProvider: React.FC<
       parametres: { idRequete, estModeConsultation },
       apresSucces: setRequeteEtProjetActe,
       apresErreur: messageErreur => {
-        console.log("je passe la", requeteEtProjetActe);
-
         messageErreur && messageManager.showError(messageErreur);
         navigate(-1);
       }

@@ -234,7 +234,6 @@ describe("Test de IMentionAffichage", () => {
   });
 
   test("mappingVersMentionAffichage pour extrait plurilingue", () => {
-    console.log(DocumentDelivrance.depuisId(DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_PLURILINGUE))?.code);
     expect(
       mappingVersMentionAffichage(
         [{ ...mentionApi, textes: { texteMentionPlurilingue: "Texte mention plurilingue" } }],

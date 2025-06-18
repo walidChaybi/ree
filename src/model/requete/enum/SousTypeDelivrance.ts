@@ -1,9 +1,50 @@
-/* istanbul ignore file */
+import { TEnumAvecDeuxLibelles } from "@model/commun/EnumAvecDeuxLibelles";
 import { EnumWithComplete } from "@util/enum/EnumWithComplete";
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { Options } from "@util/Type";
+
+export enum ESousTypeDelivrance {
+  RDD = "RDD",
+  RDC = "RDC",
+  RDCSD = "RDCSD",
+  RDCSC = "RDCSC",
+  RDDP = "RDDP",
+  RDDCO = "RDDCO",
+  RDLFC = "RDLFC"
+}
+
+export const ELibelleSousTypeDelivrance: TEnumAvecDeuxLibelles<ESousTypeDelivrance> = {
+  RDD: {
+    court: "Délivrance E/C (d)",
+    long: "Délivrance Extrait/Copie dématérialisée"
+  },
+  RDC: {
+    court: "Délivrance E/C (c)",
+    long: "Délivrance Extrait/Copie courrier"
+  },
+  RDCSD: {
+    court: "Délivrance C&A (d)",
+    long: "Délivrance Certificat & Attestation RC/RCA/PACS dématérialisé"
+  },
+  RDCSC: {
+    court: "Délivrance C&A (c)",
+    long: "Délivrance Certificat & Attestation RC/RCA/PACS courrier"
+  },
+  RDDP: {
+    court: "Délivrance Planète",
+    long: "Délivrance Planète"
+  },
+  RDDCO: {
+    court: "Délivrance Comedec",
+    long: "Délivrance Comedec"
+  },
+  RDLFC: {
+    court: "Délivrance LF (c)",
+    long: "Délivrance Livret de famille courrier"
+  }
+};
 
 export class SousTypeDelivrance extends EnumWithComplete {
   public static readonly RDD = new SousTypeDelivrance("RDD", "Délivrance Extrait/Copie dématérialisée", "Délivrance E/C (d)");
@@ -34,14 +75,6 @@ export class SousTypeDelivrance extends EnumWithComplete {
     return EnumWithLibelle.getAllLibellesAsOptions(SousTypeDelivrance);
   }
 
-  public static getAllNomsAsOptions(): Options {
-    return EnumWithComplete.getAllNomsAsOptions(SousTypeDelivrance);
-  }
-
-  public static getAllLibellesCourtAsOptions(): Options {
-    return EnumWithComplete.getAllLibellesCourtAsOptions(SousTypeDelivrance);
-  }
-
   public static estRDD(sousType?: SousTypeDelivrance): boolean {
     return sousType === SousTypeDelivrance.RDD;
   }
@@ -56,10 +89,6 @@ export class SousTypeDelivrance extends EnumWithComplete {
 
   public static estRDDP(sousType?: SousTypeDelivrance): boolean {
     return sousType === SousTypeDelivrance.RDDP;
-  }
-
-  public static estPlanete(sousType?: SousTypeDelivrance): boolean {
-    return SousTypeDelivrance.estRDDP(sousType);
   }
 
   public static estRDDouRDDP(sousType?: SousTypeDelivrance): boolean {

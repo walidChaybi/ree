@@ -38,7 +38,7 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
               <span
                 class="truncate"
               >
-                "Transcription" Acte de naissance d'une personne mineure
+                Transcription d'un acte de naissance d'une personne mineure
               </span>
               <svg
                 aria-hidden="true"

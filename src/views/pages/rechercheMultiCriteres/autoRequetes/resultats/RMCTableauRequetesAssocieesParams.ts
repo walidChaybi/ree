@@ -1,4 +1,4 @@
-import { RenderCellTitulaires } from "@util/tableauRequete/TableauRequeteUtils";
+import { RenderCellSousType, RenderCellTitulaires } from "@util/tableauRequete/TableauRequeteUtils";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 
 export enum HeaderTableauRequetesAssociees {
@@ -19,7 +19,8 @@ export const columnsTableauRequeteAssociees = [
   new TableauTypeColumn({
     keys: [HeaderTableauRequetesAssociees.SousType],
     title: "Sous-Type",
-    align: "center"
+    align: "center",
+    getElement: RenderCellSousType
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequetesAssociees.DateCreation],

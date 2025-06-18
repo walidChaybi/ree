@@ -4,7 +4,7 @@ import DateUtils from "@util/DateUtils";
 import { IRequeteConsulaire } from "./IRequeteConsulaire";
 import { IRequeteTableau } from "./IRequeteTableau";
 import { mapTitulaires } from "./ITitulaireRequeteTableau";
-import { ENatureActeTranscrit, NatureActeTranscription } from "./NatureActeTranscription";
+import { ELibelleNatureActeTranscrit, ENatureActeTranscrit } from "./NatureActeTranscription";
 import { SousTypeCreation } from "./enum/SousTypeCreation";
 import { StatutRequete } from "./enum/StatutRequete";
 
@@ -45,7 +45,7 @@ export const mappingUneRequeteTableauConsulaire = (
     idUtilisateur: requete.idUtilisateur,
     sousType: SousTypeCreation.getEnumFor(requete?.sousType)?.libelleCourt,
     sousTypeCode: requete?.sousType,
-    natureActe: requete?.natureActe ? NatureActeTranscription.getLibelle(requete.natureActe as ENatureActeTranscrit, true) : "",
+    natureActe: ELibelleNatureActeTranscrit[requete?.natureActe as ENatureActeTranscrit]?.court ?? "",
     titulaires: mapTitulaires(requete?.titulaires, mappingSupplementaire),
     nomCompletRequerant: requete?.nomCompletRequerant,
     dateCreation: DateUtils.getFormatDateFromTimestamp(requete?.dateCreation),

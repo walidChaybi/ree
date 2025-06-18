@@ -1,11 +1,8 @@
 import { rechercheMultiCriteresActes } from "@api/appels/etatcivilApi";
+import { IRMCActeApiHookResultat, RESULTAT_NON_DEFINIT } from "@hook/rmcActeInscription/RMCActeEtActeArchiveHookUtil";
 import { mappingActes } from "@hook/rmcActeInscription/mapping/RMCMappingUtil";
-import {
-  IRMCActeApiHookResultat,
-  RESULTAT_NON_DEFINIT
-} from "@hook/rmcActeInscription/RMCActeEtActeArchiveHookUtil";
 import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
-import { getParamsTableau } from "@util/GestionDesLiensApi";
+import { getParamsTableauDepuisReponseApi } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 import { mappingCriteres } from "./RMCActeArchiveUtils";
@@ -17,20 +14,17 @@ export interface ICriteresRechercheActeArchive {
   ficheIdentifiant?: string;
 }
 
-export function useRMCActeArchiveApiHook(
-  criteres?: ICriteresRechercheActeArchive
-) {
-  const [resultat, setResultat] =
-    useState<IRMCActeApiHookResultat>(RESULTAT_NON_DEFINIT);
+export function useRMCActeArchiveApiHook(criteres?: ICriteresRechercheActeArchive) {
+  const [resultat, setResultat] = useState<IRMCActeApiHookResultat>(RESULTAT_NON_DEFINIT);
   useEffect(() => {
-    if (criteres && criteres.valeurs) {
+    if (criteres?.valeurs) {
       const criteresRequest = mappingCriteres(criteres.valeurs);
 
       rechercheMultiCriteresActes(criteresRequest, criteres.range)
         .then((result: any) => {
           setResultat({
             dataRMCActe: mappingActes(result.body.data.registres),
-            dataTableauRMCActe: getParamsTableau(result),
+            dataTableauRMCActe: getParamsTableauDepuisReponseApi(result),
             // L'identifiant de la fiche qui a démandé la rmc doit être retourné dans la réponse car il est utilisé pour mettre à jour les actes
             //  (datasFiches) de la fiche acte pour sa pagination/navigation
             ficheIdentifiant: criteres.ficheIdentifiant
@@ -38,8 +32,7 @@ export function useRMCActeArchiveApiHook(
         })
         .catch(error => {
           logError({
-            messageUtilisateur:
-              "Impossible de récupérer les actes de la recherche multi-critères",
+            messageUtilisateur: "Impossible de récupérer les actes de la recherche multi-critères",
             error
           });
         });

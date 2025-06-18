@@ -8,7 +8,7 @@ import {
   mappingFiltreServiceCreationVersFiltreDto
 } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
 import { IRequeteTableauCreation, mappingUneRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
-import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
+import { getParamsTableauDepuisReponseApi, IParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { useContext, useEffect, useState } from "react";
@@ -35,7 +35,7 @@ export function useRequeteCreationApiHook(
               : await postRequetesServiceCreation(parametresLienRequete, mappingFiltreServiceCreationVersFiltreDto(filtresReq));
           const mesRequetes = mappingRequetesTableauCreation(result?.body?.data, false, utilisateurs, services);
           setDataState(mesRequetes);
-          setParamsTableau(getParamsTableau(result));
+          setParamsTableau(getParamsTableauDepuisReponseApi(result));
           setEnChargement(false);
         }
       } catch (error) {

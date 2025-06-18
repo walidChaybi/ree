@@ -9,11 +9,8 @@ import {
   IFiltreServiceRequeteDelivranceFormValues,
   mappingFiltreServiceRequeteDelivranceVersFiltreDto
 } from "@model/form/delivrance/IFiltreServiceRequeteDelivrance";
-import {
-  IRequeteTableauDelivrance,
-  mappingRequetesTableauDelivrance
-} from "@model/requete/IRequeteTableauDelivrance";
-import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
+import { IRequeteTableauDelivrance, mappingRequetesTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { getParamsTableauDepuisReponseApi, IParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import { NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { useContext, useEffect, useState } from "react";
@@ -22,17 +19,12 @@ export function useRequeteDelivranceApiHook(
   parametresLienRequete: IQueryParametersPourRequetes | undefined,
   typeRequete: TypeAppelRequete,
   setEnChargement: (enChargement: boolean) => void,
-  setParametresLienRequete?: React.Dispatch<
-    React.SetStateAction<IQueryParametersPourRequetes | undefined>
-  >
+  setParametresLienRequete?: React.Dispatch<React.SetStateAction<IQueryParametersPourRequetes | undefined>>
 ) {
   const { utilisateurs, services } = useContext(RECEContextData);
   const [dataState, setDataState] = useState<IRequeteTableauDelivrance[]>([]);
   const [paramsTableau, setParamsTableau] = useState<IParamsTableau>({});
-  const [filtresReq, setFiltresReq] =
-    useState<IFiltreServiceRequeteDelivranceFormValues>(
-      {} as IFiltreServiceRequeteDelivranceFormValues
-    );
+  const [filtresReq, setFiltresReq] = useState<IFiltreServiceRequeteDelivranceFormValues>({} as IFiltreServiceRequeteDelivranceFormValues);
 
   useEffect(() => {
     async function fetchMesRequetes() {
@@ -42,29 +34,19 @@ export function useRequeteDelivranceApiHook(
           const listeStatuts = parametresLienRequete?.statuts?.join(",");
           const result =
             typeRequete === TypeAppelRequete.MES_REQUETES_DELIVRANCE
-              ? await getTableauRequetesDelivrance(
-                  typeRequete,
-                  listeStatuts,
-                  parametresLienRequete
-                )
+              ? await getTableauRequetesDelivrance(typeRequete, listeStatuts, parametresLienRequete)
               : await postTableauRequetesDelivranceService(
                   parametresLienRequete,
                   mappingFiltreServiceRequeteDelivranceVersFiltreDto(filtresReq)
                 );
-          const mesRequetes = mappingRequetesTableauDelivrance(
-            result?.body?.data,
-            false,
-            utilisateurs,
-            services
-          );
+          const mesRequetes = mappingRequetesTableauDelivrance(result?.body?.data, false, utilisateurs, services);
           setDataState(mesRequetes);
-          setParamsTableau(getParamsTableau(result));
+          setParamsTableau(getParamsTableauDepuisReponseApi(result));
           setEnChargement(false);
         }
       } catch (error) {
         logError({
-          messageUtilisateur:
-            "Impossible de récupérer les requêtes de délivrance",
+          messageUtilisateur: "Impossible de récupérer les requêtes de délivrance",
           error
         });
       }

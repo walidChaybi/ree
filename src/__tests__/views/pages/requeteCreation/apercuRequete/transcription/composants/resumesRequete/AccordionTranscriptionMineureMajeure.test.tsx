@@ -3,7 +3,7 @@ import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { IStatutCourant } from "@model/requete/IStatutCourant";
-import { ENatureActeTranscrit, NatureActeTranscription } from "@model/requete/NatureActeTranscription";
+import { ELibelleNatureActeTranscrit, ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
 import { ResumeRequeteCreationTranscriptionNaissanceMineureMajeure } from "@pages/requeteCreation/apercuRequete/transcription/composants/ResumeReqCreationTranscriptionNaissanceMineureMajeure";
 import { AccordionTranscriptionMineureMajeure } from "@pages/requeteCreation/apercuRequete/transcription/composants/resumesRequete/AccordionTranscriptionMineureMajeure";
 import { act, render, screen } from "@testing-library/react";
@@ -58,7 +58,7 @@ describe.skip("Test du composant accordion mineure majeure", () => {
       );
     });
 
-    expect(screen.getByText(`Transcription ${NatureActeTranscription.getLibelle(natureActe, false)}`)).toBeDefined();
+    expect(screen.getByText(`Transcription ${ELibelleNatureActeTranscrit[natureActe].long}`)).toBeDefined();
 
     expect(screen.getByText(numeroTeledossier)).toBeDefined();
     expect(screen.getByText(sousType.libelle)).toBeDefined();

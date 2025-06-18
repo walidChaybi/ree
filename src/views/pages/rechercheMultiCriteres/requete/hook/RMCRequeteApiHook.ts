@@ -2,7 +2,7 @@ import { rechercheMultiCriteresRequetes } from "@api/appels/requeteApi";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { TRequeteTableau } from "@model/requete/IRequeteTableau";
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
-import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
+import { getParamsTableauDepuisReponseApi, IParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import { mappingRequetesTableau } from "@util/RequetesUtils";
 import { useContext, useEffect, useState } from "react";
@@ -20,7 +20,7 @@ export function useRMCRequeteApiHook(criteresRMCRequete?: ICriteresRMCRequete) {
         .then((result: any) => {
           const requetes = mappingRequetesTableau(result?.body?.data?.resultatsRecherche, true, utilisateurs, services);
           setDataRMCRequete(requetes);
-          setDataTableauRMCRequete(getParamsTableau(result));
+          setDataTableauRMCRequete(getParamsTableauDepuisReponseApi(result));
         })
         .catch((error: any) => {
           /* istanbul ignore next */

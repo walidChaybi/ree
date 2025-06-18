@@ -1,5 +1,5 @@
 import { rechercheMultiCriteresActes } from "@api/appels/etatcivilApi";
-import { getParamsTableau } from "@util/GestionDesLiensApi";
+import { getParamsTableauDepuisReponseApi } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import messageManager from "@util/messageManager";
 import { useEffect, useState } from "react";
@@ -19,7 +19,7 @@ export function useRMCActeApiHook(criteres?: ICriteresRechercheActeInscription):
           .then((result: any) => {
             setResultat({
               dataRMCActe: mappingActes(result.body.data.registres),
-              dataTableauRMCActe: getParamsTableau(result),
+              dataTableauRMCActe: getParamsTableauDepuisReponseApi(result),
               // L'identifiant de la fiche qui a démandé la rmc doit être retourné dans la réponse car il est utilisé pour mettre à jour les actes
               //  de la fiche acte pour sa pagination/navigation
               ficheIdentifiant: criteres.ficheIdentifiant,

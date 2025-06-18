@@ -1,3 +1,4 @@
+import requeteDelivrance from "@mock/data/requeteDelivrance";
 import { IDroit } from "@model/agent/Habilitation";
 import { INomenclatureAgentApi } from "@model/agent/INomenclatureAgentApi";
 import {
@@ -8,7 +9,11 @@ import {
 } from "@model/agent/IOfficier";
 import { IPerimetre } from "@model/agent/IPerimetre";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
+import {
+  RMCRequetesAssocieesResultats,
+  criteresAvecDonneesTitulaireSuffisantes,
+  determinerCriteresRMCAutoRequeteDepuisTitulaire
+} from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import {
   IInfoRequeteSelectionnee,
   getApercuRequeteEtablissementOuTranscription,
@@ -23,6 +28,7 @@ import {
   URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID
 } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
+import { SNP } from "@util/Utils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
@@ -349,5 +355,56 @@ describe("RMCRequetesAssocieesResultats", () => {
 
     const { container } = render(elementAvecContexte(<RouterProvider router={router} />, userDroitInformerUsager));
     expect(container.getElementsByClassName("ApercuRequete").length).toBe(1);
+  });
+
+  test("determinerCriteresRMCAuto DOIT extraire les critères de RMC auto requête QUAND une requête est fournie", () => {
+    const res = determinerCriteresRMCAutoRequeteDepuisTitulaire(requeteDelivrance.titulaires);
+
+    expect(res).toStrictEqual({
+      criteres: [
+        {
+          nomTitulaire: "Prodesk",
+          prenomTitulaire: "Elodie",
+          jourNaissance: "25",
+          moisNaissance: "6",
+          anneeNaissance: "1990"
+        },
+        {
+          nomTitulaire: "Daniel",
+          prenomTitulaire: "Jack",
+          jourNaissance: "25",
+          moisNaissance: "6",
+          anneeNaissance: "1990"
+        }
+      ]
+    });
+  });
+
+  test("criteresAvecDonneesTitulaireSuffisantes DOIT renvoyer false QUAND les critères de recherche portent sur un titulaire sans nom patronymique, sans date de naissance et sans prénom", () => {
+    expect(
+      criteresAvecDonneesTitulaireSuffisantes([
+        {
+          nomTitulaire: SNP,
+          prenomTitulaire: undefined,
+          jourNaissance: undefined,
+          moisNaissance: undefined,
+          anneeNaissance: undefined
+        }
+      ])
+    ).toBeFalsy();
+  });
+
+  test("criteresAvecDonneesTitulaireSuffisantes DOIT renvoyer true QUAND les critères de recherche portent sur un titulaire sans nom patronymique, avec date de naissance et avec prénom", () => {
+    expect(
+      criteresAvecDonneesTitulaireSuffisantes([
+        {
+          nomTitulaire: SNP,
+          prenomTitulaire: "prenom",
+          jourNaissance: "12",
+          moisNaissance: "12",
+          anneeNaissance: "2012"
+        }
+      ])
+    ).toBeTruthy();
   });
 });

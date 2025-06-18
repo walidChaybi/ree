@@ -1,22 +1,19 @@
-/* istanbul ignore file */
 import { EnumWithComplete } from "@util/enum/EnumWithComplete";
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 import { Options } from "@util/Type";
 
+export enum ETypeRequete {
+  DELIVRANCE = "Délivrance",
+  CREATION = "Création",
+  MISE_A_JOUR = "Mise à jour",
+  INFORMATION = "Information"
+}
+
 export class TypeRequete extends EnumWithComplete {
-  public static readonly DELIVRANCE = new TypeRequete(
-    "DELIVRANCE",
-    "Délivrance"
-  );
+  public static readonly DELIVRANCE = new TypeRequete("DELIVRANCE", "Délivrance");
   public static readonly CREATION = new TypeRequete("CREATION", "Création");
-  public static readonly MISE_A_JOUR = new TypeRequete(
-    "MISE_A_JOUR",
-    "Mise à jour"
-  );
-  public static readonly INFORMATION = new TypeRequete(
-    "INFORMATION",
-    "Information"
-  );
+  public static readonly MISE_A_JOUR = new TypeRequete("MISE_A_JOUR", "Mise à jour");
+  public static readonly INFORMATION = new TypeRequete("INFORMATION", "Information");
 
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, TypeRequete);

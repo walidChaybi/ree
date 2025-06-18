@@ -2,7 +2,7 @@ import { rechercheMultiCriteresAutoInscription } from "@api/appels/etatcivilApi"
 import { TRequete } from "@model/requete/IRequete";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
+import { getParamsTableauDepuisReponseApi, IParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 import { mappingInscriptions } from "../rmcActeInscription/RMCActeInscriptionUtils";
@@ -24,7 +24,7 @@ export function useRMCAutoInscriptionApiHook({ requete, range }: IRMCAutoInscrip
       rechercheMultiCriteresAutoInscription(criteresRequest, range)
         .then(result => {
           setDataRMCAutoInscription(mappingInscriptions(result?.body?.data?.repertoiresCiviles));
-          setDataTableauRMCAutoInscription(getParamsTableau(result));
+          setDataTableauRMCAutoInscription(getParamsTableauDepuisReponseApi(result));
         })
         .catch(error => {
           logError({

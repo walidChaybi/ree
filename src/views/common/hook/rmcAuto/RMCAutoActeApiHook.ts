@@ -2,7 +2,7 @@ import { rechercheMultiCriteresAutoActes } from "@api/appels/etatcivilApi";
 import { TRequete } from "@model/requete/IRequete";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
-import { getParamsTableau, IParamsTableau } from "@util/GestionDesLiensApi";
+import { getParamsTableauDepuisReponseApi, IParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 import { mappingActes } from "../rmcActeInscription/mapping/RMCMappingUtil";
@@ -24,7 +24,7 @@ export function useRMCAutoActeApiHook({ requete, range }: IRMCAutoActeParams) {
       rechercheMultiCriteresAutoActes(criteresRequest, range)
         .then((result: any) => {
           setDataRMCAutoActe(mappingActes(result.body.data.registres));
-          setDataTableauRMCAutoActe(getParamsTableau(result));
+          setDataTableauRMCAutoActe(getParamsTableauDepuisReponseApi(result));
         })
         .catch((error: any) => {
           logError({

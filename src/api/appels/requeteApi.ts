@@ -9,7 +9,6 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import { IRMCRequestRequete } from "@model/rmc/requete/IRMCRequestRequete";
-import { IEnveloppeCriteresRMCAutoRequete } from "@pages/rechercheMultiCriteres/autoRequetes/hook/RMCAutoRequeteApiHook";
 import { SortOrder } from "@widget/tableau/TableUtils";
 import { HttpMethod } from "../ApiManager";
 import { URL_MENTION } from "./etatcivilApi";
@@ -26,7 +25,6 @@ export const URL_SAUVEGARDER_REPONSE_REQINFO = "/requetes/information/reponse";
 export const URL_INFORMATION_STATUT = "/requetes/information/statut";
 export const URL_REQUETES_COUNT = "/requetes/count";
 export const URL_REQUETES_RMC = "/requetes/rmc";
-export const URL_REQUETES_RMC_AUTO = "/requetes/rmcauto";
 export const URL_NOMENCLATURE = "/nomenclature";
 export const URL_REQUETES_DELIVRANCE = "/requetes/delivrance";
 export const URL_REQUETES_CREATIONS = "/requetes/creations";
@@ -640,19 +638,6 @@ export function postIgnorerRequete(idRequete: string, texteObservation: string) 
   );
 }
 
-export function rechercheMultiCriteresAutoRequetes(criteres: IEnveloppeCriteresRMCAutoRequete, range?: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.POST,
-      uri: `${URL_REQUETES_RMC_AUTO}`,
-      data: criteres,
-      parameters: {
-        range
-      }
-    })
-  );
-}
-
 export function getRequeteAleatoire(type: string) {
   return getApiManager().then(api =>
     api.fetch({
@@ -769,7 +754,7 @@ export function updateDocumentMention(id: string, mentionsRetirees?: string[]): 
     api.fetch({
       method: HttpMethod.PATCH,
       uri: `${URL_DOCUMENT_REPONSE}/${id}${URL_MENTION}`,
-      data: mentionsRetirees ? mentionsRetirees : []
+      data: mentionsRetirees ?? []
     })
   );
 }

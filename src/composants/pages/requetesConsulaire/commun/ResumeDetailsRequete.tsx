@@ -3,7 +3,7 @@ import { EvenementUnion } from "@model/requete/IEvenementUnion";
 import { Requete } from "@model/requete/IRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { TitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { NatureActeTranscription } from "@model/requete/NatureActeTranscription";
+import { ELibelleNatureActeTranscrit } from "@model/requete/NatureActeTranscription";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import React, { Fragment, useMemo } from "react";
 import ConteneurDetailInformation from "../../../commun/conteneurs/ConteneurDetailInformation";
@@ -44,7 +44,7 @@ const ResumeDetailsRequete: React.FC<IPartieGaucheSaisieProjetProps> = ({ requet
     <div className="pr-4">
       {/* Transcription  */}
       <ConteneurAccordeon
-        titre={`"Transcription" ${requete.natureActeTranscrit ? NatureActeTranscription.getLibelle(requete.natureActeTranscrit) : ""}`}
+        titre={`Transcription d'un ${ELibelleNatureActeTranscrit[requete.natureActeTranscrit].long.toLocaleLowerCase()}`}
         ouvertParDefaut={true}
       >
         <div className="grid gap-12 py-4">

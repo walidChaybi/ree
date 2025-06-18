@@ -1,11 +1,3 @@
-import { SortOrder } from "@widget/tableau/TableUtils";
-
-export interface IParametresLienApi {
-  tri: string;
-  sens: SortOrder;
-  range?: string;
-}
-
 export interface IParamsTableau {
   previousDataLinkState?: string;
   nextDataLinkState?: string;
@@ -22,45 +14,32 @@ export const PARAMS_TABLEAU_VIDE: IParamsTableau = {
   maxRangeState: 0
 };
 
-export function parseLink(linkHeader: string) {
-  let nextLink = "";
-  let prevLink = "";
-  if (linkHeader && linkHeader.indexOf(`rel="next"`) > 0) {
-    nextLink = linkHeader.split(`;rel="next"`)[0].replace("<", "").replace(">", "");
-    nextLink = `${nextLink}`;
-  }
-  if (linkHeader && linkHeader.indexOf(`rel="prev"`) > 0) {
-    prevLink = linkHeader.replace(`<${nextLink}>;rel="next",`, "").split(`;rel="prev"`)[0].replace("<", "").replace(">", "");
-    prevLink = `${prevLink}`; // FIXME suppressin de ${api.url}:${api.ports} (à vérifier)
-  }
-  return { nextLink, prevLink };
+export interface IHeadersAvecParamsTableau {
+  link?: string;
+  "content-range"?: string;
 }
 
-const contentRange = "content-range";
+export const getParamsTableauDepuisReponseApi = (result: any): IParamsTableau => getParamsTableauDepuisHeaders(result.headers);
 
-export function getRowsNumber(result: any) {
-  return result.headers[contentRange] ? +(result.headers[contentRange] as string).split("/")[1] : undefined;
-}
+export const getParamsTableauDepuisHeaders = (headers: IHeadersAvecParamsTableau): IParamsTableau => ({
+  ...parseLink(headers.link),
+  ...getRangeTableau(headers["content-range"]),
+  rowsNumberState: getRowsNumber(headers["content-range"])
+});
 
-export function getMinRange(result: any) {
-  return getRange(result, 0);
-}
+const parseLink = (linkHeader: string | undefined): Pick<IParamsTableau, "previousDataLinkState" | "nextDataLinkState"> => {
+  const nextLink = linkHeader?.includes(`rel="next"`) ? linkHeader.split(`;rel="next"`)[0].replace("<", "").replace(">", "") : "";
+  const prevLink = linkHeader?.includes(`rel="prev"`)
+    ? linkHeader.replace(`<${nextLink}>;rel="next",`, "").split(`;rel="prev"`)[0].replace("<", "").replace(">", "")
+    : "";
+  return { nextDataLinkState: nextLink, previousDataLinkState: prevLink };
+};
 
-export function getMaxRange(result: any) {
-  return getRange(result, 1);
-}
+const getRowsNumber = (contentRange?: string): number | undefined => (contentRange ? +contentRange?.split("/")[1] : undefined);
 
-function getRange(result: any, nb: number) {
-  return result.headers[contentRange] ? +(result.headers[contentRange] as string).split("/")[0].split("-")[nb] : undefined;
-}
+const getRangeTableau = (contentRange?: string): Pick<IParamsTableau, "minRangeState" | "maxRangeState"> => {
+  if (!contentRange) return { minRangeState: undefined, maxRangeState: undefined };
 
-export function getParamsTableau(result: any): IParamsTableau {
-  const { nextLink, prevLink } = parseLink(result.headers["link"]);
-  return {
-    previousDataLinkState: prevLink,
-    nextDataLinkState: nextLink,
-    rowsNumberState: getRowsNumber(result),
-    minRangeState: getMinRange(result),
-    maxRangeState: getMaxRange(result)
-  };
-}
+  const ranges = contentRange.split("/")[0].split("-");
+  return { minRangeState: +ranges[0], maxRangeState: +ranges[1] };
+};
