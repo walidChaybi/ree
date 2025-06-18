@@ -65,7 +65,7 @@ const ChampTexte: React.FC<TChampsTexteProps> = ({
       }
 
       field.onBlur(event);
-      helper.setValue(nouveauFormatValeur);
+      helper.setValue(nouveauFormatValeur.trim());
     },
     [optionFormatage, field, helper]
   );

@@ -145,7 +145,7 @@ export const ProjetActeNaissanceTranscriptionForm = {
           typeLieu: (() => {
             switch (true) {
               case Boolean(projetActe?.declarant.adresseDomicile?.pays):
-                return projetActe?.declarant.adresseDomicile?.pays?.toUpperCase().trim() === "FRANCE" ? "France" : "Étranger";
+                return projetActe?.declarant.adresseDomicile?.pays?.toUpperCase() === "FRANCE" ? "France" : "Étranger";
               case Boolean(projetActe?.declarant.adresseDomicile?.ville) || Boolean(projetActe?.declarant.adresseDomicile?.region):
                 return "Étranger";
               default:
@@ -154,11 +154,11 @@ export const ProjetActeNaissanceTranscriptionForm = {
           })(),
           ville: projetActe?.declarant.adresseDomicile?.ville ?? "",
           departement:
-            projetActe?.declarant.adresseDomicile?.pays?.toUpperCase().trim() === "FRANCE"
+            projetActe?.declarant.adresseDomicile?.pays?.toUpperCase() === "FRANCE"
               ? (projetActe?.declarant.adresseDomicile?.region ?? "")
               : "",
           etatProvince:
-            projetActe?.declarant.adresseDomicile?.pays?.toUpperCase().trim() !== "FRANCE"
+            projetActe?.declarant.adresseDomicile?.pays?.toUpperCase() !== "FRANCE"
               ? (projetActe?.declarant.adresseDomicile?.region ?? "")
               : "",
           pays: projetActe?.declarant?.adresseDomicile?.pays ?? "",
@@ -298,8 +298,8 @@ export const ProjetActeNaissanceTranscriptionForm = {
           function (valeurSexe) {
             const parent = this.parent;
 
-            const aNom = parent.nom && parent.nom.trim() !== "";
-            const aPrenom = parent.prenomsChemin.prenom1 && parent.prenomsChemin.prenom1.trim() !== "";
+            const aNom = parent.nom && parent.nom !== "";
+            const aPrenom = parent.prenomsChemin.prenom1 && parent.prenomsChemin.prenom1 !== "";
 
             if ((aNom || aPrenom) && !valeurSexe) {
               return false;
@@ -470,7 +470,7 @@ export const ProjetActeNaissanceTranscriptionForm = {
               ? [
                   {
                     ordre: projetActe.analysesMarginales[0].titulaires[0].ordre,
-                    nom: valeursSaisies.titulaire.nomRetenuOEC.trim(),
+                    nom: valeursSaisies.titulaire.nomRetenuOEC,
                     prenoms: PrenomsForm.versPrenomsStringDto(valeursSaisies.titulaire.prenomsChemin)
                   }
                 ]
@@ -522,7 +522,7 @@ const mapTitulaire = (
   const prenoms: string[] = PrenomsForm.versPrenomsStringDto(projetActe.titulaire?.prenomsChemin);
   return {
     nomActeEtranger: titulaire.nomActeEtranger,
-    nom: titulaire.nomRetenuOEC.trim(),
+    nom: titulaire.nomRetenuOEC,
     nomPartie1: titulaire.nomSecable.nomPartie1 || null,
     nomPartie2: titulaire.nomSecable.nomPartie2 || null,
     prenoms,
@@ -541,7 +541,7 @@ const mapFiliationParParent = (
   domicileCommun: boolean = false
 ): IFiliationTitulaireProjetActeTranscritDto => {
   return {
-    nom: parentForm.nom?.trim() ?? "", // Nom est toujours défini, la condition est vérifiée avant l'appel de la fonction
+    nom: parentForm.nom ?? "", // Nom est toujours défini, la condition est vérifiée avant l'appel de la fonction
     prenoms: PrenomsForm.versPrenomsStringDto(parentForm.prenomsChemin),
     sexe: (parentForm.sexe as keyof typeof ESexe) ?? null,
     naissance: mapFiliationNaissance(parentForm),
@@ -564,9 +564,7 @@ const mapFiliationDomicile = (parentForm: IParentTranscription): IAdresse => {
     ville: (lieuDomicileConnu && parentForm.domicile?.ville) || "",
     region: getRegionDomicile(parentForm.domicile),
     arrondissement:
-      (lieuDomicileEstFrance &&
-        LieuxUtils.estVilleMarseilleLyonParis(parentForm.domicile?.ville?.trim()) &&
-        parentForm.domicile?.arrondissement) ||
+      (lieuDomicileEstFrance && LieuxUtils.estVilleMarseilleLyonParis(parentForm.domicile?.ville) && parentForm.domicile?.arrondissement) ||
       undefined,
     voie: (lieuDomicileConnu && parentForm.domicile?.adresse) || undefined
   };
@@ -579,7 +577,7 @@ const getRegionDomicile = (domicile?: ILocalisation): string => {
     case LieuxUtils.estPaysEtranger(domicile?.typeLieu):
       return domicile?.etatProvince ?? "";
     case LieuxUtils.estPaysFrance(domicile?.typeLieu):
-      return (!LieuxUtils.estVilleParis(domicile?.ville?.trim()) && domicile?.departement) || "";
+      return (!LieuxUtils.estVilleParis(domicile?.ville) && domicile?.departement) || "";
     default:
       return "";
   }
@@ -599,16 +597,14 @@ const mapFiliationNaissance = (parentForm: IParentTranscription): IEvenementProj
     ville: (lieuNaissanceConnu && parentForm.lieuNaissance?.ville) || null,
     arrondissement:
       (lieuNaissanceEstFrance &&
-        LieuxUtils.estVilleMarseilleLyonParis(parentForm.lieuNaissance?.ville?.trim()) &&
+        LieuxUtils.estVilleMarseilleLyonParis(parentForm.lieuNaissance?.ville) &&
         parentForm.lieuNaissance?.arrondissement) ||
       null,
     region: getRegionNaissanceFiliation(parentForm),
     pays: (lieuNaissanceConnu && (lieuNaissanceEstFrance ? EtrangerFrance.FRANCE.libelle : parentForm.lieuNaissance?.pays)) || null,
     voie: (lieuNaissanceConnu && parentForm.lieuNaissance?.adresse) || null,
     departement:
-      (lieuNaissanceEstFrance &&
-        !LieuxUtils.estVilleParis(parentForm.lieuNaissance?.ville?.trim()) &&
-        parentForm.lieuNaissance?.departement) ||
+      (lieuNaissanceEstFrance && !LieuxUtils.estVilleParis(parentForm.lieuNaissance?.ville) && parentForm.lieuNaissance?.departement) ||
       null
   };
 };
@@ -618,7 +614,7 @@ const getRegionNaissanceFiliation = (parentForm: IParentTranscription): string |
     case LieuxUtils.estPaysEtranger(parentForm.lieuNaissance?.typeLieu):
       return parentForm.lieuNaissance?.etatProvince || null;
     case LieuxUtils.estPaysFrance(parentForm.lieuNaissance?.typeLieu):
-      return (!LieuxUtils.estVilleParis(parentForm.lieuNaissance?.ville?.trim()) && parentForm.lieuNaissance?.departement) || null;
+      return (!LieuxUtils.estVilleParis(parentForm.lieuNaissance?.ville) && parentForm.lieuNaissance?.departement) || null;
     default:
       return null;
   }
