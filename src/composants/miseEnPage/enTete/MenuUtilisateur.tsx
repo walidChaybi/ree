@@ -20,7 +20,7 @@ const MenuUtilisateur: React.FC = () => {
   const { utilisateurConnecte, erreurConnexion } = useContext(RECEContextData);
   const [menuOuvert, setMenuOuvert] = useState<boolean>(false);
   const [nombreRequeteASigner, setNombreRequeteASigner] = useState<number>(0);
-  const {appelApi: appelNombreRequete, enAttenteDeReponseApi: enAttenteNombreRequete} = useFetchApi(CONFIG_GET_NOMBRE_REQUETE)
+  const { appelApi: appelNombreRequete, enAttenteDeReponseApi: enAttenteNombreRequete } = useFetchApi(CONFIG_GET_NOMBRE_REQUETE);
 
   const deconnexion = useCallback(() => {
     gestionnaireDoubleOuverture.arreterVerification();
@@ -84,9 +84,9 @@ const MenuUtilisateur: React.FC = () => {
             disabled={enAttenteNombreRequete}
             onClick={() =>
               appelNombreRequete({
-                parametres: { query: {statuts: StatutRequete.A_SIGNER.nom}},
-                apresSucces: nombreRequete => nombreRequete > 0 ? setNombreRequeteASigner(nombreRequete) : deconnexion(),
-                apresErreur: (erreur) => {
+                parametres: { query: { statuts: StatutRequete.A_SIGNER.nom } },
+                apresSucces: nombreRequete => (nombreRequete > 0 ? setNombreRequeteASigner(nombreRequete) : deconnexion()),
+                apresErreur: erreur => {
                   logError({
                     error: erreur[0].message ?? ""
                   });
@@ -103,7 +103,7 @@ const MenuUtilisateur: React.FC = () => {
 
         <div className="grid gap-4 pb-4">
           <a
-            href="./nouveautes-RECE.html"
+            href={`${import.meta.env.BASE_URL}/nouveautes-RECE.html`}
             title="Nouveautés du RECE"
             className="mx-auto flex w-fit items-center gap-2 text-blanc"
             target="__blank"

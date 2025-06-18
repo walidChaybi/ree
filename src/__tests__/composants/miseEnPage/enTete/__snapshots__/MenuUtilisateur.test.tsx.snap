@@ -104,7 +104,7 @@ exports[`test du composant MenuUtilisateur > L'utilisateur peut se déconnecter 
     >
       <a
         class="mx-auto flex w-fit items-center gap-2 text-blanc"
-        href="./nouveautes-RECE.html"
+        href="/rece/rece-ui/nouveautes-RECE.html"
         rel="noopener"
         target="__blank"
         title="Nouveautés du RECE"
@@ -302,7 +302,7 @@ exports[`test du composant MenuUtilisateur > Le bouton s'affiche correctement et
     >
       <a
         class="mx-auto flex w-fit items-center gap-2 text-blanc"
-        href="./nouveautes-RECE.html"
+        href="/rece/rece-ui/nouveautes-RECE.html"
         rel="noopener"
         target="__blank"
         title="Nouveautés du RECE"
@@ -439,7 +439,7 @@ exports[`test du composant MenuUtilisateur > Le bouton s'affiche correctement et
     >
       <a
         class="mx-auto flex w-fit items-center gap-2 text-blanc"
-        href="./nouveautes-RECE.html"
+        href="/rece/rece-ui/nouveautes-RECE.html"
         rel="noopener"
         target="__blank"
         title="Nouveautés du RECE"
