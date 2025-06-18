@@ -8,7 +8,7 @@ import { EPieceProduite } from "@model/etatcivil/enum/EPieceProduite";
 import { PrenomsForm } from "@model/form/commun/PrenomsForm";
 import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { enumVersOptions } from "@util/Utils";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import ChampListeDeroulante from "../../../../commun/champs/ChampListeDeroulante";
 import ChampTexte from "../../../../commun/champs/ChampTexte";
 import ChampsPrenoms from "../../../../commun/champs/ChampsPrenoms";
@@ -23,17 +23,26 @@ const optionsModeDepot: Option[] = enumVersOptions(EModeDepot);
 
 const BlocFormuleFinale: React.FC = () => {
   const { values, setFieldValue } = useFormikContext<IProjetActeTranscritForm>();
+  const valeurIdentiteDemandeur = values.formuleFinale.identiteDemandeur;
+  const parent2Complet = useMemo(
+    () => Boolean(values.parents.parent2?.nom?.trim() || values.parents.parent2?.prenomsChemin?.prenom1?.trim()),
+    [values.parents.parent2?.nom, values.parents.parent2?.prenomsChemin?.prenom1]
+  );
 
   const optionsDemandeur: Option[] = useMemo(() => {
-    const parent2Complet = Boolean(values.parents.parent2?.nom?.trim() || values.parents.parent2?.prenomsChemin?.prenom1?.trim());
-
     return [
       { cle: "PARENT_1", libelle: "Parent 1" },
       { cle: "PARENT_2", libelle: "Parent 2", disabled: !parent2Complet },
       { cle: "LES_PARENTS", libelle: "Les parents", disabled: !parent2Complet },
       { cle: "TIERS", libelle: "Un tiers" }
     ];
-  }, [values.parents.parent2?.nom, values.parents.parent2?.prenomsChemin?.prenom1]);
+  }, [parent2Complet]);
+
+  useEffect(() => {
+    if (!parent2Complet && ["PARENT_2", "LES_PARENTS"].includes(valeurIdentiteDemandeur)) {
+      setFieldValue("formuleFinale.identiteDemandeur", "PARENT_1");
+    }
+  }, [parent2Complet, valeurIdentiteDemandeur]);
 
   return (
     <ConteneurAvecBordure className="py-6">
@@ -135,3 +144,6 @@ const BlocFormuleFinale: React.FC = () => {
 };
 
 export default BlocFormuleFinale;
+function setValue(arg0: string, arg1: string) {
+  throw new Error("Function not implemented.");
+}

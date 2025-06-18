@@ -2,6 +2,7 @@ import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { Formik } from "formik";
 import { describe, expect, test } from "vitest";
 import BlocFormuleFinale from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisieProjet/BlocFormuleFinale";
+import BlocParent from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisieProjet/BlocParent";
 
 describe("BlocFormuleFinale", () => {
   const renderComponentPere = () => {
@@ -158,6 +159,85 @@ describe("BlocFormuleFinale", () => {
         expect(selectPiecesProduites.value).toBe("COPIES");
         expect(screen.getByLabelText("Autres pièces*")).toBeDefined();
       });
+    });
+  });
+
+  describe("Gestion du select identité demandeur", () => {
+    test("DOIT disabled Parent 2 et Les parents dans le select QUAND le parent 2 est incomplet", () => {
+      renderComponentPere();
+
+      const optionParent1 = screen.getByRole("option", { name: "Parent 1" });
+      const optionParent2 = screen.getByRole("option", { name: "Parent 2" });
+      const optionLesParents = screen.getByRole("option", { name: "Les parents" });
+      const optionTiers = screen.getByRole("option", { name: "Un tiers" });
+
+      expect(optionParent2).toBeTruthy();
+      expect(optionLesParents).toBeTruthy();
+      expect(optionParent1).not.toBeFalsy();
+      expect(optionTiers).not.toBeFalsy();
+    });
+
+    test("DOIT repasser le select à Parent 1 QUAND on supprime le nom ou le prénom du parent 2", async () => {
+      render(
+        <Formik
+          initialValues={{
+            parents: {
+              parent1: {},
+              parent2: {
+                nom: "Martin",
+                prenomsChemin: { prenom1: "" },
+                lieuNaissance: {
+                  typeLieu: "FRANCE"
+                },
+                domicile: {
+                  typeLieu: "FRANCE"
+                }
+              }
+            },
+            formuleFinale: {
+              identiteDemandeur: "PARENT_2",
+              nom: "",
+              prenomsChemin: { prenom1: "" },
+              qualite: "",
+              pieceProduite: "COPIE",
+              autresPieces: "",
+              legalisationApostille: "",
+              modeDepot: "Transmise",
+              identiteTransmetteur: "Identique au demandeur"
+            }
+          }}
+          onSubmit={() => {}}
+          enableReinitialize={true}
+        >
+          <>
+            <BlocParent />
+            <BlocFormuleFinale />
+          </>
+        </Formik>
+      );
+
+      const selectDemandeur: HTMLSelectElement = screen.getByRole("combobox", {
+        name: /identité.*demandeur/i
+      });
+
+      expect(selectDemandeur.value).toBe("PARENT_2");
+      const nameInput = screen.getByLabelText("Nom") as HTMLInputElement;
+
+      await act(async () => {
+        fireEvent.change(nameInput, { target: { value: "" } });
+      });
+
+      expect(selectDemandeur.value).toBe("PARENT_1");
+
+      const prenomInput = screen.getByLabelText("Prénom") as HTMLInputElement;
+
+      await act(async () => {
+        fireEvent.change(prenomInput, { target: { value: "Martin" } });
+        fireEvent.change(selectDemandeur, { target: { value: "PARENT_2" } });
+        fireEvent.change(prenomInput, { target: { value: "" } });
+      });
+
+      expect(selectDemandeur.value).toBe("PARENT_1");
     });
   });
 });
