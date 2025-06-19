@@ -6,7 +6,7 @@ import { TSousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { ETypeRequete } from "@model/requete/enum/TypeRequete";
 import DateRECE from "../../../utils/DateRECE";
-import { ITitulaireRmcAutoRequeteDto } from "./ITitulaireRmcAutoRequeteDto";
+import { ITitulaireRmcAutoRequeteDto, TitulaireRmcAutoRequete } from "./ITitulaireRmcAutoRequeteDto";
 
 export interface IRequeteRMCAutoDto<TTypeRequete extends keyof typeof ETypeRequete> {
   id: string;
@@ -35,10 +35,10 @@ export default class RequeteRMCAuto<TTypeRequete extends keyof typeof ETypeReque
     TTypeRequete extends keyof typeof ETypeRequete
   >(): (keyof IRequeteRMCAutoDto<TTypeRequete>)[] => ["id", "dateCreation", "type", "sousType", "titulaires", "statut", "numero"];
 
-  constructor(
+  private constructor(
     public readonly idRequete: string,
     public readonly dateCreation: string,
-    public readonly titulaires: ITitulaireRmcAutoRequeteDto[],
+    public readonly titulaires: TitulaireRmcAutoRequete[],
     public readonly type: TTypeRequete,
     public readonly sousType: TSousTypeRequete<TTypeRequete>,
     public readonly statut: string,
@@ -87,7 +87,9 @@ export default class RequeteRMCAuto<TTypeRequete extends keyof typeof ETypeReque
     return new RequeteRMCAuto<TTypeRequete>(
       requete.id,
       DateRECE.depuisTimestamp(requete.dateCreation).format("JJ/MM/AAAA"),
-      requete.titulaires,
+      requete.titulaires
+        .map(TitulaireRmcAutoRequete.depuisDto)
+        .filter((titulaire): titulaire is TitulaireRmcAutoRequete => titulaire !== null),
       requete.type,
       requete.sousType,
       EStatutRequete[requete.statut],

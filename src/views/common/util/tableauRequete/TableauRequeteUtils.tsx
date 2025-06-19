@@ -5,7 +5,7 @@ import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTablea
 import { AlerteRequete } from "@model/requete/enum/AlerteRequete";
 import { Priorite } from "@model/requete/enum/Priorite";
 import { ELibelleSousTypeRequete } from "@model/requete/enum/SousTypeRequete";
-import { ITitulaireRmcAutoRequeteDto } from "@model/rmc/requete/ITitulaireRmcAutoRequeteDto";
+import { ITitulaireRmcAutoRequeteDto, TitulaireRmcAutoRequete } from "@model/rmc/requete/ITitulaireRmcAutoRequeteDto";
 import { TRequeteRMCAuto } from "@model/rmc/requete/RequeteRMCAuto";
 import ClearIcon from "@mui/icons-material/Clear";
 import ErrorIcon from "@mui/icons-material/Error";
@@ -81,7 +81,7 @@ export const RenderObservationsNumeroRequete = (data: any): JSX.Element => {
 };
 
 export const RenderCellTitulaires = (data: any): JSX.Element => {
-  const titulaires = data.titulaires as ITitulaireRequeteTableau[] | ITitulaireRmcAutoRequeteDto[];
+  const titulaires = data.titulaires as ITitulaireRequeteTableau[] | TitulaireRmcAutoRequete[];
   let titleTitulaires = "";
   const celluleTitulaires: string[] = [];
 
