@@ -10,7 +10,7 @@ import { handleBlur, handleCheckBox, handleReorga, selectionneEtMiseAJour } from
 import { AjoutMention } from "./AjoutMention";
 import { ModificationMention } from "./ModificationMention";
 
-export interface SectionModificationMentionProps {
+interface SectionModificationMentionProps {
   estExtraitPlurilingue: boolean;
   mentions: IMentionAffichage[];
   mentionSelect?: IMentionAffichage;

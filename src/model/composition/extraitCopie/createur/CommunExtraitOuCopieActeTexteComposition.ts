@@ -20,7 +20,7 @@ import { Validation } from "../../../requete/enum/Validation";
 import { CommunComposition } from "../../commun/ICommunComposition";
 import { IExtraitCopieComposition } from "../IExtraitCopieComposition";
 
-export interface IActeCompositionEC {
+interface IActeCompositionEC {
   leouEnEvenement: string;
   dateEvenement: string;
   heureEvenement: string;
@@ -39,7 +39,7 @@ export interface ITitulaireCompositionEC {
   dateDeclarationConjointe?: Date;
 }
 
-export interface ITitulaireAMCompositionEC {
+interface ITitulaireAMCompositionEC {
   prenoms: string;
   nom: string;
   partiesNom: string;
@@ -66,7 +66,7 @@ export interface ICreerExtraitCopieActeTexteAvantCompositionParams {
   choixDelivrance: ChoixDelivrance;
 }
 
-export interface ICreerExtraitCopieActeTexteParams {
+interface ICreerExtraitCopieActeTexteParams {
   acte: IFicheActe;
   natureActe: string;
   choixDelivrance: ChoixDelivrance;

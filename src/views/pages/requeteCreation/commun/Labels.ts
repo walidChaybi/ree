@@ -1,24 +1,22 @@
-import { getLibelle } from "@util/Utils";
-
-export const SDANF = getLibelle("SDANF");
-export const REQUETE = getLibelle("Requête");
-export const UNION = getLibelle("Union");
-export const ENFANT = getLibelle("Enfant");
-export const INFOS = getLibelle("Informations");
-export const UNION_ACTUELLE = getLibelle("Union actuelle");
+export const SDANF = "SDANF";
+export const REQUETE = "Requête";
+export const UNION = "Union";
+export const ENFANT = "Enfant";
+export const INFOS = "Informations";
+export const UNION_ACTUELLE = "Union actuelle";
 
 const requete = {
-  liee: getLibelle(`${REQUETE} liée`),
-  description: getLibelle(`Description de la requête`),
-  sousType: getLibelle("Sous-type")
+  liee: `${REQUETE} liée`,
+  description: `Description de la requête`,
+  sousType: "Sous-type"
 };
 
 const requeteTranscription = {
-  description: getLibelle(`Requête n°`)
+  description: `Requête n°`
 };
 
 const infos = {
-  specifiques: getLibelle(`${INFOS} spécifiques`)
+  specifiques: `${INFOS} spécifiques`
 };
 
 const historique = {
@@ -26,26 +24,26 @@ const historique = {
 };
 
 const sdanf = {
-  statut: getLibelle(`Statut ${SDANF}`),
-  decision: getLibelle(`Décision ${SDANF}`)
+  statut: `Statut ${SDANF}`,
+  decision: `Décision ${SDANF}`
 };
 
 const union = {
-  anterieur: getLibelle(`${UNION} antérieure`),
-  anterieurs: getLibelle(`${UNION}s antérieures`),
-  mariage: getLibelle("Mariage"),
-  PACS: getLibelle("PACS"),
-  dissolution: getLibelle("Dissolution"),
-  deces: getLibelle("Décès")
+  anterieur: `${UNION} antérieure`,
+  anterieurs: `${UNION}s antérieures`,
+  mariage: "Mariage",
+  PACS: "PACS",
+  dissolution: "Dissolution",
+  deces: "Décès"
 };
 
 const enfant = {
-  mineurs: getLibelle(`${ENFANT}s mineurs`),
-  majeur: getLibelle(`${ENFANT} majeur`)
+  mineurs: `${ENFANT}s mineurs`,
+  majeur: `${ENFANT} majeur`
 };
 
 const nationalite = {
-  defaut: getLibelle("FR/ETR")
+  defaut: "FR/ETR"
 };
 
 export const resume = {
@@ -53,38 +51,32 @@ export const resume = {
   requeteTranscription,
   infos,
   historique,
-  identification: getLibelle("Identification"),
-  francisation: getLibelle("Francisation"),
-  signale: getLibelle("Signalé"),
-  campagne: getLibelle("Campagne"),
+  identification: "Identification",
+  francisation: "Francisation",
+  signale: "Signalé",
+  campagne: "Campagne",
   SDANF: sdanf,
   union,
-  requerant: getLibelle("Requérant"),
-  institutionnel: getLibelle("Institutionnel"),
-  titulaire: getLibelle("Titulaire"),
+  requerant: "Requérant",
+  institutionnel: "Institutionnel",
+  titulaire: "Titulaire",
   enfant,
-  parent: getLibelle("Parent"),
+  parent: "Parent",
   nationalite,
-  effetCollectif: getLibelle("Effet collectif"),
-  enfantMineurHorsEffetCollectif: getLibelle(
-    "Enfant mineur hors effet collectif"
-  ),
-  enfantMineurAttenteSDANF: getLibelle(
-    "Enfant mineur en attente décision SDANF"
-  ),
-  residence: getLibelle("Résidence"),
-  fraterie: getLibelle("Fratrie")
+  effetCollectif: "Effet collectif",
+  enfantMineurHorsEffetCollectif: "Enfant mineur hors effet collectif",
+  enfantMineurAttenteSDANF: "Enfant mineur en attente décision SDANF",
+  residence: "Résidence",
+  fraterie: "Fratrie"
 };
 
-export const PJ = {
-  description: getLibelle("Pièces justificatives / annexes")
+const PJ = {
+  description: "Pièces justificatives / annexes"
 };
 
 const Labels = {
   resume,
   PJ
 };
-
-
 
 export default Labels;

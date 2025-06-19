@@ -2,8 +2,8 @@ import { IOfficier } from "@model/agent/IOfficier";
 import { IUtilisateur } from "@model/agent/IUtilisateur";
 import {
   PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET,
-  URL_MES_REQUETES_CREATION,
-  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID
+  URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
+  URL_MES_REQUETES_CREATION
 } from "@router/ReceUrls";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
@@ -22,7 +22,7 @@ describe.skip("Test de la page Aperçu requête transcription en saisie de proje
       const router = createTestingRouter(
         [
           {
-            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
+            path: URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
             element: (
               <MockRECEContextProvider
                 utilisateurConnecte={{ ...utilisateurConnecte } as IOfficier}
@@ -52,7 +52,7 @@ describe.skip("Test de la page Aperçu requête transcription en saisie de proje
       const router = createTestingRouter(
         [
           {
-            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
+            path: URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
             element: (
               <MockRECEContextProvider
                 utilisateurConnecte={{ ...utilisateurConnecte } as IOfficier}
@@ -94,7 +94,7 @@ describe.skip("Test de la page Aperçu requête transcription en saisie de proje
       const router = createTestingRouter(
         [
           {
-            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
+            path: URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
             element: (
               <MockRECEContextProvider
                 utilisateurConnecte={{ ...utilisateurConnecte } as IOfficier}
@@ -138,7 +138,7 @@ describe.skip("Test de la précense du composant RMCRequeteAssociees", () => {
       const router = createTestingRouter(
         [
           {
-            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
+            path: URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
             element: (
               <MockRECEContextProvider
                 utilisateurConnecte={{ ...utilisateurConnecte } as IOfficier}
@@ -169,7 +169,7 @@ describe.skip("Test de la précense du composant RMCRequeteAssociees", () => {
       const router = createTestingRouter(
         [
           {
-            path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
+            path: URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
             element: <PageRequeteTranscriptionSaisieProjet />
           }
         ],

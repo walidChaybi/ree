@@ -10,7 +10,7 @@ import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
 import { ITitulaireRequete } from "./ITitulaireRequete";
 import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
 
-export interface ITitulaireRequeteTranscription extends ITitulaireRequete {
+interface ITitulaireRequeteTranscription extends ITitulaireRequete {
   villeEtrangereNaissance?: string;
   regionNaissance?: string;
   nationalites?: INationalite[];
@@ -66,4 +66,4 @@ export const TitulaireRequeteTranscription = {
     };
   }
 };
-/* v8 ignore end */
+/* v8 ignore stop */

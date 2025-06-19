@@ -2,7 +2,6 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { getLibelle } from "@util/Utils";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React from "react";
 import "./scss/ConfirmationPopinAvecMessage.scss";
@@ -15,7 +14,7 @@ interface IBoutonPopin {
   disabled?: boolean;
 }
 
-export interface ConfirmationPopinAvecMessageProps {
+interface ConfirmationPopinAvecMessageProps {
   isOpen: boolean;
   messages?: string[];
   boutons?: IBoutonPopin[];
@@ -28,9 +27,7 @@ export interface ConfirmationPopinAvecMessageProps {
 
 const nbRows = 10;
 
-export const ConfirmationPopinAvecMessage: React.FC<
-  ConfirmationPopinAvecMessageProps
-> = ({
+export const ConfirmationPopinAvecMessage: React.FC<ConfirmationPopinAvecMessageProps> = ({
   isOpen,
   messages,
   boutons,
@@ -52,7 +49,7 @@ export const ConfirmationPopinAvecMessage: React.FC<
       {title && <DialogTitle id="alert-dialog-title">{title}</DialogTitle>}
       <DialogContent>
         <label>
-          {getLibelle("Message d'information")}
+          {"Message d'information"}
           <textarea
             name="textarea"
             value={message}
@@ -60,15 +57,11 @@ export const ConfirmationPopinAvecMessage: React.FC<
             className="textarea"
             rows={nbRows}
             placeholder={"Saisir un message"}
-            aria-label={
-              "Texte pour saisir le message d'information retour sdanf"
-            }
+            aria-label={"Texte pour saisir le message d'information retour sdanf"}
           ></textarea>
         </label>
 
-        {messageErreur && (
-          <span className="messageErreur">{messageErreur}</span>
-        )}
+        {messageErreur && <span className="messageErreur">{messageErreur}</span>}
       </DialogContent>
       <DialogActions>
         {boutons &&

@@ -19,28 +19,6 @@ import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { PieceJointe } from "@util/FileUtils";
 import SchemaValidation from "../../../../utils/SchemaValidation";
 
-export interface ISaisieRequeteRCTCDto {
-  type: "CREATION";
-  sousType: "RCTC";
-  canal: "COURRIER";
-  provenance: "COURRIER";
-  villeRegistre: string;
-  natureActeTranscrit: string;
-  lienRequerant: { typeLienRequerant?: string };
-  titulaires: {
-    id?: string;
-    prenoms: { prenom: string; numeroOrdre: number }[];
-    sexe: "MASCULIN" | "FEMININ";
-    jourNaissance?: number;
-    moisNaissance?: number;
-    anneeNaissance?: number;
-    villeNaissance?: string;
-    paysNaissance?: string;
-    arrondissementNaissance?: string;
-    departementNaissance?: string;
-  };
-}
-
 export interface IParentFormRCTC {
   identifiant: string;
   nom: string;

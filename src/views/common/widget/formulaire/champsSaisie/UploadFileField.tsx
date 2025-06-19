@@ -1,16 +1,12 @@
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import {
-  Base64File,
-  ExtensionDocumentTypeMime,
-  getBase64FileAndValidate
-} from "@util/FileUtils";
+import { Base64File, ExtensionDocumentTypeMime, getBase64FileAndValidate } from "@util/FileUtils";
 import messageManager from "@util/messageManager";
 import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import React, { useEffect, useRef, useState } from "react";
 
-export interface UploadFileFieldProps {
+interface UploadFileFieldProps {
   name: string;
   libelleBouton?: string;
   iconBouton?: JSX.Element;
@@ -41,11 +37,7 @@ const UploadFileField: React.FC<UploadFileFieldProps> = props => {
   const onChange = async (event: any) => {
     const file: File = event?.target?.files?.[0];
     try {
-      const base64File: Base64File = await getBase64FileAndValidate(
-        file,
-        props.maxSizeKB,
-        props.acceptFileTypes
-      );
+      const base64File: Base64File = await getBase64FileAndValidate(file, props.maxSizeKB, props.acceptFileTypes);
       setFileState(base64File);
       props.onFileChange(base64File, menuItemState);
     } catch (error) {
@@ -55,9 +47,7 @@ const UploadFileField: React.FC<UploadFileFieldProps> = props => {
   const handleCloseMenu = () => {
     setMenu(null);
   };
-  const handleClickBoutonChoisirFichier = (
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const handleClickBoutonChoisirFichier = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (props.menuItems) {
       if (props.verificationAvantDOuvriLeMenu) {
@@ -87,7 +77,11 @@ const UploadFileField: React.FC<UploadFileFieldProps> = props => {
           readOnly
         />
       )}
-      <label ref={refLabelButton} htmlFor={props.name} className="FakeLabel">
+      <label
+        ref={refLabelButton}
+        htmlFor={props.name}
+        className="FakeLabel"
+      >
         <button
           className="BoutonUpload"
           onClick={e => handleClickBoutonChoisirFichier(e)}

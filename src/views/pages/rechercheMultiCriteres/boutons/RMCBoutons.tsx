@@ -5,7 +5,7 @@ import React from "react";
 import RMCBoutonRappelCriteres, { RMCBoutonRappelCriteresProps } from "./RMCBoutonRappelCriteres";
 import "./scss/RMCBoutons.scss";
 
-export interface IRMCBoutonsProps {
+interface IRMCBoutonsProps {
   rappelCriteres?: () => any;
 }
 

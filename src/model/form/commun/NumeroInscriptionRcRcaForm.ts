@@ -9,7 +9,7 @@ export type TNumeroInscriptionRcRcaForm = {
   nombreNumerosAffiches: number;
 };
 
-export interface INumeroInscriptionRcRcaOrdonneDto {
+interface INumeroInscriptionRcRcaOrdonneDto {
   numeroInscriptionRcRca: string;
   numeroOrdre: number;
 }

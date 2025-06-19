@@ -11,9 +11,8 @@ import {
   URL_MES_REQUETES_CREATION,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID,
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
-  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-  URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
-  URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_EN_TRAITEMENT_ID
+  URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_EN_TRAITEMENT_ID,
+  URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_PRISE_CHARGE_ID
 } from "@router/ReceUrls";
 import { render } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
@@ -55,7 +54,7 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
     const router = createTestingRouter(
       [
         {
-          path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+          path: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_PRISE_CHARGE_ID,
           element: <PageRequeteCreationTranscriptionPriseEnCharge />
         },
         {
@@ -87,7 +86,7 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
     const router = createTestingRouter(
       [
         {
-          path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+          path: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_PRISE_CHARGE_ID,
           element: <PageRequeteCreationTranscriptionPriseEnCharge />
         },
         {
@@ -114,7 +113,7 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
     const router = createTestingRouter(
       [
         {
-          path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+          path: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_PRISE_CHARGE_ID,
           element: <PageRequeteCreationTranscriptionPriseEnCharge />
         },
         {
@@ -141,7 +140,7 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
     const router = createTestingRouter(
       [
         {
-          path: URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
+          path: URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_PRISE_CHARGE_ID,
           element: <PageRequeteCreationTranscriptionPriseEnCharge />
         },
         {
@@ -150,7 +149,7 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
         },
         {
           path: getUrlWithParam(
-            URL_MES_REQUETES_CREATION_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
+            URL_RECHERCHE_REQUETE_APERCU_REQUETE_CREATION_TRANSCRIPTION_EN_TRAITEMENT_ID,
             "b63ebccd-ba5e-443a-8837-c5e1e111e846"
           ),
           element: <PageRequeteTranscriptionSaisieProjet />

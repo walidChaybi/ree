@@ -1,16 +1,7 @@
-import { creerPlageDeNombres, getLibelle, QUINZE, UN, ZERO } from "@util/Utils";
+import { creerPlageDeNombres, QUINZE, UN, ZERO } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import {
-  CARACTERES_AUTORISES_MESSAGE,
-  CHAMP_OBLIGATOIRE
-} from "@widget/formulaire/FormulaireMessages";
-import {
-  IGNORER_TABULATION,
-  INomForm,
-  NB_CARACT_MAX_SAISIE,
-  SubFormProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { CARACTERES_AUTORISES_MESSAGE, CHAMP_OBLIGATOIRE } from "@widget/formulaire/FormulaireMessages";
+import { IGNORER_TABULATION, INomForm, NB_CARACT_MAX_SAISIE, SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
@@ -24,13 +15,10 @@ export interface IPrenomsFormProps {
   prenom1Obligatoire?: boolean;
   onNbPrenomChange?: (prenomAjoute: boolean) => void;
   onPrenomChange?: () => void;
-  onPrenomBlur?: (
-    indexPrenomAPartirDeUn: number,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => void;
+  onPrenomBlur?: (indexPrenomAPartirDeUn: number, e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export enum TypeDeValeursParDefaut {
+enum TypeDeValeursParDefaut {
   UNDEFINED = "UNDEFINED",
   VIDE = "VIDE"
 }
@@ -38,10 +26,7 @@ export enum TypeDeValeursParDefaut {
 export function genererDefaultValuesPrenoms(typeDeValeurParDefaut?: string) {
   const prenomsObj: any = {};
   for (let i = 1; i <= MAX_PRENOMS; i++) {
-    prenomsObj[`prenom${i}`] =
-      typeDeValeurParDefaut === TypeDeValeursParDefaut.UNDEFINED
-        ? undefined
-        : "";
+    prenomsObj[`prenom${i}`] = typeDeValeurParDefaut === TypeDeValeursParDefaut.UNDEFINED ? undefined : "";
   }
   return prenomsObj;
 }
@@ -49,18 +34,11 @@ export function genererDefaultValuesPrenoms(typeDeValeurParDefaut?: string) {
 export function creerValidationSchemaPrenom() {
   const schemaValidation: { [key: string]: any } = {};
   for (let i = UN; i <= MAX_PRENOMS; i++) {
-    schemaValidation[`prenom${i}`] = Yup.string()
-      .nullable()
-      .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE);
+    schemaValidation[`prenom${i}`] = Yup.string().nullable().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE);
     if (i !== MAX_PRENOMS) {
-      schemaValidation[`prenom${i}`] = schemaValidation[`prenom${i}`].when(
-        `prenom${i + UN}`,
-        (prenomSuivant: string, schema: any) => {
-          return prenomSuivant
-            ? schema.required(`La saisie du Prénom ${i} est obligatoire`)
-            : schema;
-        }
-      );
+      schemaValidation[`prenom${i}`] = schemaValidation[`prenom${i}`].when(`prenom${i + UN}`, (prenomSuivant: string, schema: any) => {
+        return prenomSuivant ? schema.required(`La saisie du Prénom ${i} est obligatoire`) : schema;
+      });
     }
   }
 
@@ -71,23 +49,18 @@ export function creerValidationSchemaPrenomParent() {
   const schemaValidation: { [key: string]: any } = {};
   for (let i = UN; i <= MAX_PRENOMS; i++) {
     const prenomClef = `prenom${i}`;
-    schemaValidation[`prenom${i}`] = Yup.string()
-      .nullable()
-      .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE);
+    schemaValidation[`prenom${i}`] = Yup.string().nullable().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE);
     if (i !== MAX_PRENOMS) {
-      schemaValidation[prenomClef] = schemaValidation[prenomClef].when(
-        `prenom${i + UN}`,
-        (prenomSuivant: string, schema: any) => {
-          return schema;
-        }
-      );
+      schemaValidation[prenomClef] = schemaValidation[prenomClef].when(`prenom${i + UN}`, (prenomSuivant: string, schema: any) => {
+        return schema;
+      });
     }
   }
 
   return Yup.object(schemaValidation);
 }
 
-export type PrenomFormProps = IPrenomsFormProps & SubFormProps;
+type PrenomFormProps = IPrenomsFormProps & SubFormProps;
 
 const PrenomsForm: React.FC<PrenomFormProps> = props => {
   const [nbPrenoms, setNbPrenoms] = useState(1);
@@ -95,10 +68,7 @@ const PrenomsForm: React.FC<PrenomFormProps> = props => {
 
   useEffect(() => {
     if (props.nbPrenoms != null) {
-      if (
-        props.nbPrenomsAffiche != null &&
-        props.nbPrenomsAffiche > props.nbPrenoms
-      ) {
+      if (props.nbPrenomsAffiche != null && props.nbPrenomsAffiche > props.nbPrenoms) {
         setNbPrenoms(props.nbPrenomsAffiche);
       } else if (props.nbPrenoms > ZERO) {
         setNbPrenoms(props.nbPrenoms);
@@ -137,31 +107,28 @@ const PrenomsForm: React.FC<PrenomFormProps> = props => {
   return (
     <>
       {plageDeNombres.map((v: any, index: number) => (
-        <div key={index} className="PrenomsForm">
+        <div
+          key={index}
+          className="PrenomsForm"
+        >
           <InputField
-            label={
-              nbPrenoms === 1
-                ? getLibelle("Prénom")
-                : getLibelle(`Prénom ${index + 1}`)
-            }
+            label={nbPrenoms === 1 ? "Prénom" : `Prénom ${index + 1}`}
             maxLength={NB_CARACT_MAX_SAISIE}
             name={construireNomChamp(index)}
             onChange={(e: any) => props.formik.handleChange(e)}
-            onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
-              props.onPrenomBlur &&
-              props.onPrenomBlur(Number(`${index + 1}`), e)
-            }
+            onBlur={(e: React.ChangeEvent<HTMLInputElement>) => props.onPrenomBlur && props.onPrenomBlur(Number(`${index + 1}`), e)}
             disabled={index + 1 > nbPrenomEnregistre ? false : props.disabled}
             validate={(value: string) => {
-              return !value && props.prenom1Obligatoire === true
-                ? CHAMP_OBLIGATOIRE
-                : undefined;
+              return !value && props.prenom1Obligatoire === true ? CHAMP_OBLIGATOIRE : undefined;
             }}
           />
           <div className="BoutonsConteneur">
             {index === nbPrenoms - 1 && nbPrenoms < MAX_PRENOMS && (
-              <button type="button" onClick={handleAjouterPrenom}>
-                {getLibelle("Ajouter prénom")}
+              <button
+                type="button"
+                onClick={handleAjouterPrenom}
+              >
+                {"Ajouter prénom"}
               </button>
             )}
             {index === nbPrenoms - 1 && nbPrenoms > 1 && (
@@ -171,7 +138,7 @@ const PrenomsForm: React.FC<PrenomFormProps> = props => {
                 className="BoutonDanger"
                 onClick={() => handleAnnulerSaisie(construireNomChamp(index))}
               >
-                {getLibelle("Annuler saisie")}
+                {"Annuler saisie"}
               </button>
             )}
           </div>

@@ -29,14 +29,14 @@ export const DATES_DEBUT_FIN_ANNEE = "datesDebutFinAnnee";
 export const REGISTRE_REPERTOIRE = "registreRepertoire";
 
 // Valeurs par défaut des champs
-export const DefaultValuesRMCActeInscription = {
+const DefaultValuesRMCActeInscription = {
   [TITULAIRE]: TitulaireDefaultValues,
   [DATES_DEBUT_FIN_ANNEE]: DatesDebutFinAnneeDefaultValues,
   [REGISTRE_REPERTOIRE]: RegistreRepertoireDefaultValues
 };
 
 // Schéma de validation en sortie de champs
-export const ValidationSchemaRMCActeInscription = Yup.object({
+const ValidationSchemaRMCActeInscription = Yup.object({
   [TITULAIRE]: TitulaireValidationSchema,
   [DATES_DEBUT_FIN_ANNEE]: DatesDebutFinAnneeValidationSchema,
   [REGISTRE_REPERTOIRE]: RegistreRepertoireValidationSchema
@@ -49,14 +49,8 @@ interface RMCActeInscriptionFormProps {
   titulaires?: ITitulaireRequete[];
 }
 
-export const RMCActeInscriptionForm: React.FC<
-  RMCActeInscriptionFormProps
-> = props => {
-  const blocsForm: JSX.Element[] = [
-    getFormTitulaire(props.titulaires),
-    getRegistreRepertoire(),
-    getFormDatesDebutFinAnnee()
-  ];
+export const RMCActeInscriptionForm: React.FC<RMCActeInscriptionFormProps> = props => {
+  const blocsForm: JSX.Element[] = [getFormTitulaire(props.titulaires), getRegistreRepertoire(), getFormDatesDebutFinAnnee()];
 
   const onSubmitRMCActeInscription = (values: any): void => {
     props.onSubmit(values);
@@ -81,11 +75,17 @@ export const RMCActeInscriptionForm: React.FC<
   );
 };
 
-function getFormTitulaire(titulaires? : ITitulaireRequete[]): JSX.Element {
+function getFormTitulaire(titulaires?: ITitulaireRequete[]): JSX.Element {
   const titulaireFiltreProps = {
     nomFiltre: TITULAIRE
   } as TitulaireFiltreProps;
-  return <TitulaireFiltre key={TITULAIRE} {...titulaireFiltreProps} titulaires={titulaires} />;
+  return (
+    <TitulaireFiltre
+      key={TITULAIRE}
+      {...titulaireFiltreProps}
+      titulaires={titulaires}
+    />
+  );
 }
 
 function getFormDatesDebutFinAnnee(): JSX.Element {

@@ -1,17 +1,17 @@
 import { EvenementUnion } from "@model/requete/IEvenementUnion";
 import { ITitulaireRequeteCreation, TitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { resume } from "@pages/requeteCreation/commun/Labels";
-import { DEUX, UN, getLibelle } from "@util/Utils";
+import { DEUX, UN } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import React from "react";
 import { LigneAccordion } from "./LigneAccordion";
 
-export interface AccordionTranscriptionTitulaireProps {
+interface AccordionTranscriptionTitulaireProps {
   titulaires?: ITitulaireRequeteCreation[];
 }
 
-export function formatNomSouhaite(nomSouhaite?: string): string | undefined {
-  return nomSouhaite ? `(${getLibelle("souhaité")} : ${nomSouhaite})` : "";
+function formatNomSouhaite(nomSouhaite?: string): string | undefined {
+  return nomSouhaite ? `(${"souhaité"} : ${nomSouhaite})` : "";
 }
 
 export function formatNomsEtNomSouhaite(titulaire?: ITitulaireRequeteCreation): string {
@@ -22,7 +22,7 @@ export const AccordionTranscriptionTitulaire: React.FC<AccordionTranscriptionTit
   const classeNameUnSeulTitulaire = props.titulaires && props.titulaires?.length < DEUX ? "contenuAccordionUnSeulElement" : "";
 
   function getTitreAccordionTitulaire(): string {
-    return `${getLibelle(resume.titulaire)}${props.titulaires && props.titulaires?.length > UN ? "s" : ""}`;
+    return `${resume.titulaire}${props.titulaires && props.titulaires?.length > UN ? "s" : ""}`;
   }
 
   function getDateLieuReconnaissance(titulaire: ITitulaireRequeteCreation): string | undefined {
@@ -52,33 +52,33 @@ export const AccordionTranscriptionTitulaire: React.FC<AccordionTranscriptionTit
               >
                 <LigneAccordion
                   texte={formatNomsEtNomSouhaite(titulaire)}
-                  ariaLabel={getLibelle("Nom naissance et nom souhaité")}
+                  ariaLabel={"Nom naissance et nom souhaité"}
                 />
 
                 <LigneAccordion
                   texte={TitulaireRequeteCreation.getPrenomsOuSPC(titulaire)}
-                  ariaLabel={getLibelle("Prénoms")}
+                  ariaLabel={"Prénoms"}
                 />
 
                 <LigneAccordion
                   texte={TitulaireRequeteCreation.getSexe(titulaire)}
-                  ariaLabel={getLibelle("Sexe")}
+                  ariaLabel={"Sexe"}
                 />
 
                 <LigneAccordion
                   texte={titulaire.dateNaissanceFormatee}
-                  ariaLabel={getLibelle("Date de naissance")}
+                  ariaLabel={"Date de naissance"}
                 />
 
                 <LigneAccordion
                   texte={titulaire.lieuNaissanceFormate}
-                  ariaLabel={getLibelle("Lieu de naissance")}
+                  ariaLabel={"Lieu de naissance"}
                 />
 
                 <LigneAccordion
-                  label={getLibelle("Reconnaissance")}
+                  label={"Reconnaissance"}
                   texte={getDateLieuReconnaissance(titulaire)}
-                  ariaLabel={getLibelle("Reconnaissance")}
+                  ariaLabel={"Reconnaissance"}
                 />
               </div>
             );

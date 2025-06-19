@@ -1,22 +1,18 @@
 import { IAdresseRequerant } from "@model/requete/IAdresseRequerant";
 import { IRequerant, Requerant } from "@model/requete/IRequerant";
 import { resume } from "@pages/requeteCreation/commun/Labels";
-import { getLibelle } from "@util/Utils";
+
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import React from "react";
 import { LigneAccordion } from "./LigneAccordion";
 
-export interface AccordionTranscriptionRequerantProps {
+interface AccordionTranscriptionRequerantProps {
   requerant?: IRequerant;
 }
 
-export const AccordionTranscriptionRequerant: React.FC<
-  AccordionTranscriptionRequerantProps
-> = props => {
-  function formatCoordonneesRequerant(
-    requerant?: IRequerant
-  ): string | undefined {
+export const AccordionTranscriptionRequerant: React.FC<AccordionTranscriptionRequerantProps> = props => {
+  function formatCoordonneesRequerant(requerant?: IRequerant): string | undefined {
     let identiteFormate = "";
     if (requerant) {
       identiteFormate += Requerant.getNomPrenom(requerant);
@@ -25,9 +21,7 @@ export const AccordionTranscriptionRequerant: React.FC<
     return identiteFormate;
   }
 
-  function formatAdresseRequerant(
-    adresseRequerant?: IAdresseRequerant
-  ): string | undefined {
+  function formatAdresseRequerant(adresseRequerant?: IAdresseRequerant): string | undefined {
     let lignesFormates = "";
 
     if (adresseRequerant?.ligne2) {
@@ -65,7 +59,7 @@ export const AccordionTranscriptionRequerant: React.FC<
     <div className="AccordionTranscriptionRequerant">
       <AccordionRece
         key={`${props.requerant}`}
-        titre={`${getLibelle(resume.requerant)}`}
+        titre={`${resume.requerant}`}
         className={{
           container: "accordionContainer",
           content: "accordionContent",
@@ -74,16 +68,16 @@ export const AccordionTranscriptionRequerant: React.FC<
         expanded={false}
       >
         <LigneAccordion
-          label={getLibelle("Requérant")}
+          label={"Requérant"}
           texte={props.requerant?.lienRequerant?.lien.libelle}
-          ariaLabel={getLibelle("Requérant")}
+          ariaLabel={"Requérant"}
         />
 
         <div className="adressRequerant">
           <LigneAccordion
-            label={getLibelle("Coordonnées")}
+            label={"Coordonnées"}
             texte={formatCoordonneesRequerant(props.requerant)}
-            ariaLabel={getLibelle("Coordonnées")}
+            ariaLabel={"Coordonnées"}
           />
         </div>
 
@@ -91,25 +85,25 @@ export const AccordionTranscriptionRequerant: React.FC<
           <LigneAccordion
             label={" "}
             texte={props.requerant?.courriel}
-            ariaLabel={getLibelle("Adresse courriel")}
+            ariaLabel={"Adresse courriel"}
           />
           <LigneAccordion
-            label={getLibelle("Tél")}
+            label={"Tél"}
             texte={props.requerant?.telephone}
-            ariaLabel={getLibelle("Tél")}
+            ariaLabel={"Tél"}
           />
         </div>
 
         <div className="adresseCourrielRequerant">
           <LigneAccordion
-            label={getLibelle("Autre courriel")}
+            label={"Autre courriel"}
             texte={props.requerant?.courrielAutreContact}
-            ariaLabel={getLibelle("Autre courriel")}
+            ariaLabel={"Autre courriel"}
           />
           <LigneAccordion
-            label={getLibelle("Autre tél")}
+            label={"Autre tél"}
             texte={props.requerant?.telephoneAutreContact}
-            ariaLabel={getLibelle("Autre tél")}
+            ariaLabel={"Autre tél"}
           />
         </div>
       </AccordionRece>

@@ -423,12 +423,3 @@ export const NOMENCLATURE_OPTION_COURRIER = [
       "Je vous informe que la délivrance de copies ou extraits d'actes détenus par le Service central d’état civil (SCEC) est une procédure gratuite. Si la démarche vous a été facturée, il est possible que vous ayez formulé votre demande sur le site d'un prestataire privé (et non sur celui du SCEC) dont la prestation est payante. Afin d’éviter à l’avenir un tel désagrément, je vous recommande de formuler votre prochaine demande sur internet, à l’adresse suivante https://demarches.service-public.gouv.fr/mademarche/delivrance_demat/demarche."
   }
 ];
-
-export const ReponseAppelNomenclatureOptionCourrier = {
-  hasTechnicalError: false,
-  hasBusinessError: false,
-  status: 200,
-  url: "/rece-requete-api/v2/nomenclature/optioncourrier",
-  data: NOMENCLATURE_OPTION_COURRIER,
-  errors: []
-};

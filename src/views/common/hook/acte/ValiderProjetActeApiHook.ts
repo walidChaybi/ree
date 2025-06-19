@@ -2,7 +2,7 @@ import { postValiderProjetActe } from "@api/appels/requeteApi";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 
-export interface IValiderProjetActeParams {
+interface IValiderProjetActeParams {
   idRequete: string;
   idSuiviDossier: string;
 }
@@ -11,9 +11,7 @@ interface IValiderProjetActeResultat {
   projetEstValide: boolean;
 }
 
-export function useValiderProjetActeApiHook(
-  params?: IValiderProjetActeParams
-): IValiderProjetActeResultat {
+export function useValiderProjetActeApiHook(params?: IValiderProjetActeParams): IValiderProjetActeResultat {
   const [projetEstValide, setProjetEstValide] = useState<boolean>(false);
   useEffect(() => {
     if (params?.idSuiviDossier) {
@@ -26,8 +24,7 @@ export function useValiderProjetActeApiHook(
         .catch((error: any) => {
           logError({
             error,
-            messageUtilisateur:
-              "Impossible de valider le projet d'acte, veuillez réessayer"
+            messageUtilisateur: "Impossible de valider le projet d'acte, veuillez réessayer"
           });
         });
     }

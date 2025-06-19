@@ -83,7 +83,7 @@ export function rechercherActeAutorise(criteres: IRMCRequestActesInscriptions): 
   return !(criteres.typeRepertoire || criteres.natureRcRca || criteres.numeroInscription);
 }
 
-export function getNatureInscription(categorie: string, nature: string): string {
+function getNatureInscription(categorie: string, nature: string): string {
   switch (categorie?.toUpperCase()) {
     case TypeRepertoire.RC.libelle:
       return NatureRc.depuisId(nature)?.libelle ?? "";

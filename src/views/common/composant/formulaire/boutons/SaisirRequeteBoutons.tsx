@@ -10,13 +10,13 @@ import { useNavigate } from "react-router";
 import Bouton from "../../../../../composants/commun/bouton/Bouton";
 import "./scss/SaisirRequeteBoutons.scss";
 
-export interface ComponentProps {
+interface ComponentProps {
   setIsBrouillon?: any;
   modeModification?: boolean;
   onTransferer?: () => void;
 }
 
-export type SaisirRequeteBoutonsProps = ComponentProps & FormikComponentProps;
+type SaisirRequeteBoutonsProps = ComponentProps & FormikComponentProps;
 
 const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
   const navigate = useNavigate();

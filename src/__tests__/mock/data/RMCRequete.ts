@@ -4,14 +4,11 @@ import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivra
 
 export const DataTableauRequete = {
   previousDataLinkState: "previousDataLinkState",
-  nextDataLinkState:
-    "http://localhost:8089/rece-requete-api/v2/requetes/rmc?range=1-5",
+  nextDataLinkState: "http://localhost:8089/rece-requete-api/v2/requetes/rmc?range=1-5",
   rowsNumberState: 5,
   minRangeState: 0,
   maxRangeState: 5
 };
-
-export const DataTableauRequeteVide = {};
 
 export const ReponseAppelRMCRequete = {
   hasTechnicalError: false,

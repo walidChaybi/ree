@@ -15,41 +15,31 @@ interface IAjoutPieceJustificativeDto {
   idDocument: string;
 }
 
-export interface IAjoutPieceJustificativeToRequeteParams {
+interface IAjoutPieceJustificativeToRequeteParams {
   categoriePJ: string;
   file?: PieceJointe;
 }
 
-export function useAjoutPieceJustificativeToRequete(
-  params?: IAjoutPieceJustificativeToRequeteParams
-): void {
+export function useAjoutPieceJustificativeToRequete(params?: IAjoutPieceJustificativeToRequeteParams): void {
   const { idRequeteParam } = useParams<TUuidSuiviDossierParams>();
 
   useEffect(() => {
     if (params && idRequeteParam) {
-      postAjoutPieceJustificativeAUneRequeteCreation(
-        idRequeteParam,
-        mapParamsVersAjoutPieceJustificativeDto(params)
-      )
+      postAjoutPieceJustificativeAUneRequeteCreation(idRequeteParam, mapParamsVersAjoutPieceJustificativeDto(params))
         .then(res => {
-          messageManager.showSuccessAndClose(
-            "Enregistrement de la pièce justificative effectué avec succès !"
-          );
+          messageManager.showSuccessAndClose("Enregistrement de la pièce justificative effectué avec succès !");
         })
         .catch(e => {
           logError({
             error: e,
-            messageUtilisateur:
-              "Impossible d'ajouter cette pièce justificative à la requête"
+            messageUtilisateur: "Impossible d'ajouter cette pièce justificative à la requête"
           });
         });
     }
   }, [params, idRequeteParam]);
 }
 
-function mapParamsVersAjoutPieceJustificativeDto(
-  params: IAjoutPieceJustificativeToRequeteParams
-): IAjoutPieceJustificativeDto {
+function mapParamsVersAjoutPieceJustificativeDto(params: IAjoutPieceJustificativeToRequeteParams): IAjoutPieceJustificativeDto {
   const file = params.file?.base64File;
   return {
     nom: file?.fileName || "",

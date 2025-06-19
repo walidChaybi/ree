@@ -397,7 +397,7 @@ const triTitulaires = (titulaires?: ITitulaireRequeteCreation[]) => {
 
 export const formatagePrenoms = (prenoms?: IPrenomOrdonnes[]) => (prenoms ? triPrenoms(prenoms) : []);
 
-export const mappingDateNaissance = ({ jourNaissance, moisNaissance, anneeNaissance }: ITitulaireRequeteCreation) =>
+const mappingDateNaissance = ({ jourNaissance, moisNaissance, anneeNaissance }: ITitulaireRequeteCreation) =>
   DateUtils.getDateStringFromDateCompose(
     anneeNaissance
       ? {

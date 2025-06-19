@@ -3,7 +3,7 @@ import { connect } from "formik";
 import React from "react";
 import "./scss/RMCBoutons.scss";
 
-export interface IRMCBoutonRappelCriteresPropsProps {
+interface IRMCBoutonRappelCriteresPropsProps {
   rappelCriteres: () => any;
 }
 

@@ -5,7 +5,7 @@ import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 
-export interface IDataFicheApi {
+interface IDataFicheApi {
   data: any;
 }
 

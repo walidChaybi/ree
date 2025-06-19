@@ -3,7 +3,7 @@ import { TConfigurationApi } from "@model/api/Api";
 
 const URI = "/composition/ACTE_TEXTE/1";
 
-export interface ICorpsCompositionActePDF {
+interface ICorpsCompositionActePDF {
   nature_acte?: string;
   texte_corps_acte?: string;
   mentions?: string;

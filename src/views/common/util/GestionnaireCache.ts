@@ -12,9 +12,7 @@ export class GestionnaireCache {
   }
   static supprimeObjetsAvecDatesExpirationDepassees(nomCache?: string) {
     if (nomCache) {
-      this.supprimeObjetsAvecDatesExpirationDepasseesDanLeCache(
-        this.receCaches.get(nomCache)
-      );
+      this.supprimeObjetsAvecDatesExpirationDepasseesDanLeCache(this.receCaches.get(nomCache));
     } else {
       this.receCaches.forEach(value => {
         this.supprimeObjetsAvecDatesExpirationDepasseesDanLeCache(value);
@@ -22,9 +20,7 @@ export class GestionnaireCache {
     }
   }
 
-  private static supprimeObjetsAvecDatesExpirationDepasseesDanLeCache(
-    receCache?: ReceCache
-  ) {
+  private static supprimeObjetsAvecDatesExpirationDepasseesDanLeCache(receCache?: ReceCache) {
     if (receCache) {
       receCache.supprimeObjetsAvecDatesExpirationDepassees();
     }
@@ -42,10 +38,7 @@ export class ReceCache {
   set(key: any, newValue: any) {
     const cacheObject = this.receCache.get(key);
     if (!cacheObject) {
-      this.receCache.set(
-        key,
-        new CacheObject(newValue, this.delaisExpirationSecondes)
-      );
+      this.receCache.set(key, new CacheObject(newValue, this.delaisExpirationSecondes));
     } else {
       cacheObject.value = newValue;
       cacheObject.dateExpiration = this.delaisExpirationSecondes;
@@ -75,13 +68,14 @@ export class ReceCache {
  * Objet positionné dans un cache
  * Il possède une valeur et une date d'expiration (non obligatoire) calculé à partir du délais d'expiratoin fournit dans le constructeur
  */
-export class CacheObject {
+class CacheObject {
   private _dateExpiration?: number;
-  constructor(private _value: any, delaisExpirationSecondes?: number) {
+  constructor(
+    private _value: any,
+    delaisExpirationSecondes?: number
+  ) {
     if (delaisExpirationSecondes) {
-      this._dateExpiration =
-        Date.now() +
-        delaisExpirationSecondes * NB_MILISECONDES_DANS_UNE_SECONDE;
+      this._dateExpiration = Date.now() + delaisExpirationSecondes * NB_MILISECONDES_DANS_UNE_SECONDE;
     }
   }
 

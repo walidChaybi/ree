@@ -37,7 +37,7 @@ import React, { useCallback, useContext, useState } from "react";
 import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";
 import { columnsTableauRequete } from "./RMCTableauRequetesParams";
 
-export interface RMCResultatRequetesProps {
+interface RMCResultatRequetesProps {
   dataRMCRequete: IRequeteTableauDelivrance[];
   dataTableauRMCRequete: IParamsTableau;
   setRangeRequete: (range: string) => void;

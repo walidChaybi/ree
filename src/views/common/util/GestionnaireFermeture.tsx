@@ -1,7 +1,7 @@
 import { HTTP_STATUS_OK } from "@api/ApiManager";
 import { URL_REQUETES_COUNT } from "@api/appels/requeteApi";
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { executeEnDiffere, getLibelle } from "@util/Utils";
+import { executeEnDiffere } from "@util/Utils";
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import apiResources from "../../../ressources/api.json";
@@ -62,7 +62,7 @@ export const appelRequetesASigner = () => {
   } catch (error) {
     return 0;
   }
-  return req.status === HTTP_STATUS_OK && response && response.data ? response.data : 0;
+  return req.status === HTTP_STATUS_OK && response?.data ? response.data : 0;
 };
 
 const appelApi = () => {
@@ -88,10 +88,10 @@ const appelApi = () => {
   return req;
 };
 
-export const traiteAppelRequeteASigner = (nbRequeteASigner: number) => {
+const traiteAppelRequeteASigner = (nbRequeteASigner: number) => {
   if (nbRequeteASigner > 0) {
     executeEnDiffere(function () {
-      const msg = getLibelle(`Il reste ${nbRequeteASigner} requête(s) à signer`);
+      const msg = `Il reste ${nbRequeteASigner} requête(s) à signer`;
       messageManager.showWarningAndClose(msg);
     }, TIME_OUT_MS);
   }

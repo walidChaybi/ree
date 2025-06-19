@@ -5,7 +5,7 @@ import { SectionPanel, SectionPanelProps } from "../section/SectionPanel";
 import { AccordionTitle } from "./AccordionTitle";
 import "./scss/AccordionRece.scss";
 
-export interface AccordionReceProps {
+interface AccordionReceProps {
   panel?: SectionPanelProps;
   index?: number;
   expanded: boolean;
@@ -22,9 +22,7 @@ export interface AccordionReceClassNameProps {
   title?: string;
 }
 
-export const AccordionRece: React.FC<
-  React.PropsWithChildren<AccordionReceProps>
-> = ({ expandedPossible = true, ...props }) => {
+export const AccordionRece: React.FC<React.PropsWithChildren<AccordionReceProps>> = ({ expandedPossible = true, ...props }) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(props.expanded);
 
   useEffect(() => {
@@ -54,7 +52,10 @@ export const AccordionRece: React.FC<
         />
         <AccordionDetails>
           {props.panel && (
-            <SectionPanel {...props.panel} id={`${props.index}`} />
+            <SectionPanel
+              {...props.panel}
+              id={`${props.index}`}
+            />
           )}
           <div className={props.className?.content}>{props.children}</div>
         </AccordionDetails>

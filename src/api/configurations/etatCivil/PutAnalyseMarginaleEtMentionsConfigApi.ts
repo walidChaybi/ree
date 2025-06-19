@@ -1,9 +1,26 @@
 import { ETATCIVIL_API } from "@api/ApiDisponibles";
-import { IMentionEnregistree } from "@hook/acte/EnregistrerMentionsApiHook";
 import { TConfigurationApi } from "@model/api/Api";
 import { IMiseAJourAnalyseMarginaleDto } from "./PutMiseAJourAnalyseMarginaleConfigApi";
 
 const URI = "/acte/mentions-et-analyse-marginale";
+
+export interface IEvenementMention {
+  jour: string | null;
+  mois: string | null;
+  annee: string | null;
+  ville: string | null;
+  arrondissement: string | null;
+  departement: string | null;
+  pays: string | null;
+}
+
+interface IMentionEnregistree {
+  idTypeMention: string;
+  texteMention: string;
+  numeroOrdre: number;
+  evenement?: IEvenementMention;
+  estSaisieAssistee?: boolean;
+}
 
 export interface IEnregistrerAnalyseMarginaleEtMentionDto {
   idActe: string;

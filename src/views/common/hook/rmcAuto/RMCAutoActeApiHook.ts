@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { mappingActes } from "../rmcActeInscription/mapping/RMCMappingUtil";
 import { getCriteresRMCAuto } from "./RMCAutoActesInscriptionsUtils";
 
-export interface IRMCAutoActeParams {
+interface IRMCAutoActeParams {
   requete?: IRequeteTableauDelivrance | TRequete;
   range?: string;
 }

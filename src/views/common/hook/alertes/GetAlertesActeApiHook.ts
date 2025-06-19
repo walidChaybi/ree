@@ -7,7 +7,7 @@ export interface IGetAlertesActeApiHookParameters {
   idActe: string;
   isChecked: boolean;
 }
-export interface IGetAlertesActeApiHookResultat {
+interface IGetAlertesActeApiHookResultat {
   idTypeRegistre: string;
   alertes: IAlerte[];
 }

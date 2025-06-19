@@ -14,11 +14,6 @@ export const AGENT_API: TApi = {
   version: "v1"
 };
 
-export const OUTILTECH_API: TApi = {
-  nom: "rece-outiltech-api",
-  version: "v1"
-};
-
 export const REQUETE_API: TApi = {
   nom: "rece-requete-api",
   version: "v2"

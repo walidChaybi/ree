@@ -8,7 +8,7 @@ import { logError } from "@util/LogManager";
 import { useContext, useEffect, useState } from "react";
 import { mappingFormulaireRDCSCVersRequeteDelivrance } from "./mappingFormulaireRDCSCVersRequeteDelivrance";
 
-export interface ICreationRequeteDelivranceRDCSCResultat {
+interface ICreationRequeteDelivranceRDCSCResultat {
   requete: IRequeteDelivrance;
   futurStatut: StatutRequete;
   refus?: boolean;
@@ -18,17 +18,12 @@ export function useCreationRequeteDelivranceRDCSC(
   requeteRDCSC?: CreationRequeteRDCSC,
   nbTitulaires?: number
 ): ICreationRequeteDelivranceRDCSCResultat | undefined {
-  const [resultat, setResultat] = useState<
-    ICreationRequeteDelivranceRDCSCResultat | undefined
-  >();
+  const [resultat, setResultat] = useState<ICreationRequeteDelivranceRDCSCResultat | undefined>();
 
   const { utilisateurs } = useContext(RECEContextData);
   useEffect(() => {
     if (requeteRDCSC?.saisie) {
-      const requete = mappingFormulaireRDCSCVersRequeteDelivrance(
-        requeteRDCSC,
-        nbTitulaires
-      );
+      const requete = mappingFormulaireRDCSCVersRequeteDelivrance(requeteRDCSC, nbTitulaires);
       creationRequeteDelivrance({
         requete,
         futurStatut: requeteRDCSC.futurStatut,
@@ -43,8 +38,7 @@ export function useCreationRequeteDelivranceRDCSC(
         })
         .catch((error: any) => {
           logError({
-            messageUtilisateur:
-              "Une erreur est survenue lors de la création de la requête",
+            messageUtilisateur: "Une erreur est survenue lors de la création de la requête",
             error
           });
         });

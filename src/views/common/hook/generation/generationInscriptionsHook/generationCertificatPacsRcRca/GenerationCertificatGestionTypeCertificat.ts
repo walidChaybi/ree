@@ -13,7 +13,7 @@ import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivra
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { useContext } from "react";
-import { SpecificationRC } from "../specificationInscriptions/specificationRC";
+import SpecificationRC from "../specificationInscriptions/specificationRC";
 import { specificationRCA } from "../specificationInscriptions/specificationRCA";
 
 export function getNomDocument(typeCertificat: TypePacsRcRca): string | undefined {

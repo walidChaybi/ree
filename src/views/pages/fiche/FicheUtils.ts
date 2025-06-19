@@ -18,7 +18,7 @@ export interface IAccordionReceSection {
   panelParDefaut?: number;
 }
 
-export interface IFiche {
+interface IFiche {
   bandeauFiche: IBandeauFiche;
   panelsFiche: IAccordionReceSection;
   alertes: IAlerte[];

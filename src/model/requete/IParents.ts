@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-
 import { IDateForm } from "@model/form/commun/DateForm";
 import { DEUX, formatNom, formatPrenoms, UN } from "@util/Utils";
 import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
@@ -33,12 +31,6 @@ export interface IParent {
   typeObjetTitulaire?: TypeObjetTitulaire;
 }
 
-export interface IParents {
-  parent1: IParent;
-  parent2: IParent;
-  domicileCommun?: boolean;
-}
-
 export const Parent = {
   getNom(parent?: IParent): string {
     return parent ? formatNom(parent.nomNaissance) : "";
@@ -48,14 +40,6 @@ export const Parent = {
       ? formatPrenoms([parent.prenoms[0].prenom, parent.prenoms[UN]?.prenom, parent.prenoms[DEUX]?.prenom])
       : "";
   },
-  getTableauDePrenoms(parent?: IParent): string[] {
-    const prenoms: string[] = [];
-    parent?.prenoms?.forEach((prenom: IPrenomOrdonnes) => {
-      prenoms.push(prenom.prenom);
-    });
-
-    return prenoms;
-  },
   getPrenom(numero: number, parent?: IParent): string {
     let res = "";
     if (parent?.prenoms) {
@@ -63,16 +47,5 @@ export const Parent = {
       res = prenom?.prenom ?? "";
     }
     return res;
-  },
-  getPrenom1(parent: IParent): string {
-    return this.getPrenom(1, parent);
-  },
-  getPrenom2(parent: IParent): string {
-    const indexPrenom = 2;
-    return this.getPrenom(indexPrenom, parent);
-  },
-  getPrenom3(parent: IParent): string {
-    const indexPrenom = 3;
-    return this.getPrenom(indexPrenom, parent);
   }
 };

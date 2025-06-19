@@ -173,7 +173,7 @@ function mapDatePersonne(date: any): IDateCompose {
     : ({} as IDateCompose);
 }
 
-export function mapRegistre(data: any) {
+function mapRegistre(data: any) {
   let registre = {} as IRegistre;
   if (data) {
     registre = data as IRegistre;

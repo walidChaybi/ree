@@ -1,5 +1,5 @@
 import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
-import { BoutonPrendreEnChargeAleatoirementInformation } from "@pages/requeteInformation/espaceInformation/BoutonPrendreEnChargeAleatoirementInformation";
+import BoutonPrendreEnChargeAleatoirementInformation from "@pages/requeteInformation/espaceInformation/BoutonPrendreEnChargeAleatoirementInformation";
 import { URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, URL_MES_REQUETES_INFORMATION } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";

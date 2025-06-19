@@ -69,7 +69,7 @@ function mappingMention(mention: any): IMention {
   };
 }
 
-export function mappingTypeMention(typeMention: any): ITypeMention {
+function mappingTypeMention(typeMention: any): ITypeMention {
   return {
     id: typeMention.idTypeMention,
     libelle: typeMention.libelleType,

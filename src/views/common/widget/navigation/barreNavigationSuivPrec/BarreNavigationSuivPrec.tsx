@@ -2,15 +2,13 @@ import React from "react";
 import { BoutonSuivPrec } from "./BoutonSuivPrec";
 import "./scss/BarreNavigationSuivPrec.scss";
 
-export interface ActionsProps {
+interface ActionsProps {
   index: number;
   max: number;
   setIndex: (index: number) => void;
 }
 
-export const BarreNavigationSuivPrec: React.FC<
-  React.PropsWithChildren<ActionsProps>
-> = ({ index, max, setIndex, children }) => {
+export const BarreNavigationSuivPrec: React.FC<React.PropsWithChildren<ActionsProps>> = ({ index, max, setIndex, children }) => {
   return (
     <div className="BarreNavigationSuivPrec">
       <BoutonSuivPrec

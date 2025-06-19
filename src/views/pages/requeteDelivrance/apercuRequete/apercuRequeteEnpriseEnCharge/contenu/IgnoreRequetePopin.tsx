@@ -5,7 +5,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Options } from "@util/Type";
-import { getLibelle } from "@util/Utils";
 import { getUrlPrecedente } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { Formulaire } from "@widget/formulaire/Formulaire";
@@ -18,26 +17,26 @@ import { useLocation, useNavigate } from "react-router";
 import * as Yup from "yup";
 import "../scss/IgnoreRequetePopin.scss";
 
-export interface IgnoreRequetePopinProps {
+interface IgnoreRequetePopinProps {
   isOpen: boolean;
   onClosePopin: () => void;
   requete: IRequete;
 }
 
 export const MOTIF_IGNORE = "motifIgnore";
-export const COMPLEMENT_IGNORE = "complementIgnore";
+const COMPLEMENT_IGNORE = "complementIgnore";
 // Valeurs par défaut des champs
 const DefaultValues = {
   [MOTIF_IGNORE]: "",
   [COMPLEMENT_IGNORE]: ""
 };
 
-export interface IIgnorerFormValue {
+interface IIgnorerFormValue {
   [MOTIF_IGNORE]: string;
   [COMPLEMENT_IGNORE]: string;
 }
 
-export const COMPLEMENT_DESCRIPTION_MAX_LENGTH = 150;
+const COMPLEMENT_DESCRIPTION_MAX_LENGTH = 150;
 
 const NB_LIGNE_COMPLEMENT_DESCRIPTION = 10;
 
@@ -103,7 +102,7 @@ export const IgnoreRequetePopin: React.FC<IgnoreRequetePopinProps> = ({ isOpen, 
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{getLibelle("Ignorer la requête")}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Ignorer la requête"}</DialogTitle>
         <DialogContent>
           <Formulaire
             className="IgnoreRequetePopin"
@@ -112,21 +111,21 @@ export const IgnoreRequetePopin: React.FC<IgnoreRequetePopinProps> = ({ isOpen, 
             onSubmit={onSubmit}
           >
             <DialogContentText id="alert-dialog-description">
-              {getLibelle(`Vous allez ignorer la requête sans donner de réponse à l'usager.`)}
+              {`Vous allez ignorer la requête sans donner de réponse à l'usager.`}
               <br />
-              {getLibelle(`
-            Merci de choisir un motif et d'indiquer une observation sur la requête pour expliquer votre action :`)}
+              {`
+            Merci de choisir un motif et d'indiquer une observation sur la requête pour expliquer votre action :`}
             </DialogContentText>
             <SelectField
               name={MOTIF_IGNORE}
-              label={getLibelle("Motif:")}
+              label={"Motif:"}
               options={motif}
             />
             <InputField
               name={COMPLEMENT_IGNORE}
               component="textarea"
-              label={getLibelle("Observation:")}
-              placeholder={getLibelle("Observation")}
+              label={"Observation:"}
+              placeholder={"Observation"}
               rows={NB_LIGNE_COMPLEMENT_DESCRIPTION}
               maxLength={"150"}
             />

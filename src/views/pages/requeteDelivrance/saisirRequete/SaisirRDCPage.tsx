@@ -82,7 +82,7 @@ const ValidationSchemaRDCRequete = Yup.object({
   [ADRESSE]: AdresseFormValidationSchema
 });
 
-export const titreForm = SousTypeDelivrance.getEnumFor("RDC").libelle;
+const titreForm = SousTypeDelivrance.getEnumFor("RDC").libelle;
 
 export const SaisirRDCPage: React.FC = () => {
   // Parametres

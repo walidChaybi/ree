@@ -1,11 +1,9 @@
-/* v8 ignore start */
-// Code pas encore utilisé. V8 ignore peut être supprimé quand superagent sera remplacé par axios
 import { TApiAutorisee, TBaseUri, TConfigurationRequeteHttp, THeader, TReponseApiEchec, TReponseApiSucces } from "@model/api/Api";
 import { CSRF_HEADER_NAME, getCsrfCookieValue } from "@util/CsrfUtil";
 import messageManager from "@util/messageManager";
 import axios from "axios";
 
-export interface IReponseErreur extends Error {
+interface IReponseErreur extends Error {
   response: {
     status: number;
     data: {
@@ -26,7 +24,6 @@ type TAppelParams<TUri extends TBaseUri, TBody extends object | undefined, TQuer
 };
 
 const CODE_FORBIDDEN = 403;
-export const ID_CORRELATION_HEADER_NAME = "X-Correlation-Id";
 
 const genererUri = <TUri extends TBaseUri, TBody extends object | undefined, TQuery extends object | undefined>(
   appelParams: TAppelParams<TUri, TBody, TQuery>
@@ -107,4 +104,3 @@ const API = {
 } as const;
 
 export default API;
-/* v8 ignore end */

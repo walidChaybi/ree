@@ -2,13 +2,11 @@ import { IBandeauFiche } from "@model/etatcivil/fiche/IBandeauFiche";
 import React from "react";
 import "./scss/Bandeau.scss";
 
-export interface BandeauFicheActeNumeroProps {
+interface BandeauFicheActeNumeroProps {
   dataBandeau: IBandeauFiche;
 }
 
-export const BandeauFicheActeNumero: React.FC<
-  BandeauFicheActeNumeroProps
-> = props => {
+export const BandeauFicheActeNumero: React.FC<BandeauFicheActeNumeroProps> = props => {
   const data = props.dataBandeau;
   return (
     <div className="LigneNumeroActe">

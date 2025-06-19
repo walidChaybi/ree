@@ -28,7 +28,7 @@ import { DEUX } from "@util/Utils";
 
 export type IMentionAvecRetiree = IMention & { retiree?: boolean };
 
-export class GestionnaireMentionsRetireesAuto {
+class GestionnaireMentionsRetireesAuto {
   public getIdsMentionsRetirees(mentions: IMentionAvecRetiree[], choixDelivrance?: ChoixDelivrance, natureActe?: NatureActe): string[] {
     Mention.trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentions);
     if (choixDelivrance && natureActe && !ChoixDelivrance.estCopieIntegrale(choixDelivrance)) {

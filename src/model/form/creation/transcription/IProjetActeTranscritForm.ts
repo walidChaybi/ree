@@ -53,7 +53,7 @@ export interface IActeEtrangerTranscription {
   referenceComplement: string;
 }
 
-export interface ILieuEtranger {
+interface ILieuEtranger {
   ville?: string;
   etatProvince?: string;
   pays?: string;
@@ -73,13 +73,13 @@ export interface ITitulaireTranscription {
   adresseNaissance: string | null;
 }
 
-export interface IParentsTranscription {
+interface IParentsTranscription {
   parent1: IParentTranscription;
   parent2: IParentTranscription;
   domicileCommun?: boolean;
 }
 
-export interface IDeclarantTranscription {
+interface IDeclarantTranscription {
   identite: keyof typeof EIdentiteDeclarant;
   nom: string | null;
   prenomsChemin?: TPrenomsForm;
@@ -92,11 +92,11 @@ export interface IDeclarantTranscription {
   complement?: string | null;
 }
 
-export interface IMentionsTranscription {
+interface IMentionsTranscription {
   mentions?: string | null;
 }
 
-export interface IFormuleFinaleTranscription {
+interface IFormuleFinaleTranscription {
   identiteDemandeur: keyof typeof EIdentiteDemandeur;
   nom?: string | null;
   prenomsChemin?: TPrenomsForm;

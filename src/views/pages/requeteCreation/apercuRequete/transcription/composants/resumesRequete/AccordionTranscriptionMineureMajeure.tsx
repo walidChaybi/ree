@@ -2,12 +2,11 @@ import { IStatutCourant } from "@model/requete/IStatutCourant";
 import { ELibelleNatureActeTranscrit, ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { getLibelle } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import React from "react";
 import { LigneAccordion } from "./LigneAccordion";
 
-export interface AccordionTranscriptionMineureMajeureProps {
+interface AccordionTranscriptionMineureMajeureProps {
   numeroTeledossier?: string;
   natureActe?: ENatureActeTranscrit;
   sousType: SousTypeCreation;
@@ -32,31 +31,31 @@ export const AccordionTranscriptionMineureMajeure: React.FC<AccordionTranscripti
       >
         <LigneAccordion
           texte={props.numeroTeledossier}
-          ariaLabel={getLibelle("Numéro de télédossier")}
+          ariaLabel={"Numéro de télédossier"}
         />
 
         <div className="accordionTexteDouble">
           <LigneAccordion texte={props.sousType?.libelle} />
           <LigneAccordion
-            label={getLibelle("Statut")}
+            label={"Statut"}
             texte={props.statutCourant?.statut.libelle}
-            ariaLabel={getLibelle("Statut de la requête")}
+            ariaLabel={"Statut de la requête"}
           />
         </div>
 
         <div className="accordionTexteDouble">
           <LigneAccordion texte={props.provenanceRequete?.libelle} />
           <LigneAccordion
-            label={getLibelle("Date création")}
+            label={"Date création"}
             texte={props.dateCreation}
-            ariaLabel={getLibelle("Date de création")}
+            ariaLabel={"Date de création"}
           />
         </div>
 
         <LigneAccordion
-          label={getLibelle("Numéro fonctionnel")}
+          label={"Numéro fonctionnel"}
           texte={props.numeroFonctionnel}
-          ariaLabel={getLibelle("Numéro fonctionnel")}
+          ariaLabel={"Numéro fonctionnel"}
         />
       </AccordionRece>
     </div>

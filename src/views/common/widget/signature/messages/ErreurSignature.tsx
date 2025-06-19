@@ -1,7 +1,6 @@
 import { ITypeErreurSignature } from "@model/signature/ITypeErreurSignature";
 import Divider from "@mui/material/Divider";
 import { logError } from "@util/LogManager";
-import { getLibelle } from "@util/Utils";
 import React, { useCallback } from "react";
 import "./scss/ErrorsSignature.scss";
 
@@ -22,7 +21,7 @@ export const ErreurSignature: React.FC<ErreurSignatureProps> = ({ erreur }) => {
     return (
       <>
         <span className={"error-message"}>
-          {getLibelle(erreur.complementInformationErreur)}
+          {erreur.complementInformationErreur}
           <p>{texteErreur}</p>
         </span>
         <Divider key={`divider-${erreur.typeErreur.code}`} />

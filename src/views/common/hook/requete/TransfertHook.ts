@@ -6,7 +6,7 @@ import { logError } from "@util/LogManager";
 import { getValeurOuVide } from "@util/Utils";
 import { useContext, useEffect, useState } from "react";
 
-export interface TransfertParams {
+interface TransfertParams {
   idService?: string;
   idUtilisateur?: string;
   libelleAction: string;
@@ -57,10 +57,7 @@ export function useTransfertsApi(params?: TransfertParLotParams) {
         params.idRequetes.map((idRequete, idx) =>
           postTransfertRequete(
             idRequete,
-            params.idService
-              ? params.idService
-              : (getServiceParUtilisateurId(params.idUtilisateur, utilisateurs)
-                  ?.idService as string),
+            params.idService ? params.idService : (getServiceParUtilisateurId(params.idUtilisateur, utilisateurs)?.idService as string),
             params.idUtilisateur,
             params.libelleAction,
             params.statutRequete[idx],
@@ -81,7 +78,6 @@ export function useTransfertsApi(params?: TransfertParLotParams) {
 const errorFct = (error: any) => {
   logError({
     error,
-    messageUtilisateur:
-      "Impossible de mettre à jour le statut de la requête ou de créer une action associée"
+    messageUtilisateur: "Impossible de mettre à jour le statut de la requête ou de créer une action associée"
   });
 };

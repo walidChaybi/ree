@@ -35,7 +35,7 @@ import { goToLinkRMC } from "../acteInscription/resultats/RMCTableauCommun";
 import { getMessageSiVerificationRestrictionRmcActeInscriptionCriteresEnErreur } from "../acteInscription/validation/VerificationRestrictionRmcActeInscription";
 import { BoutonNouvelleRMCActeInscription } from "./BoutonNouvelleRMCActeInscription";
 
-export interface ITableauRMCProps {
+interface ITableauRMCProps {
   requete?: TRequete;
   dataAlertes?: IAlerte[];
   onClickCheckboxTableauActes?: (event: TChangeEventSurHTMLInputElement, data: IResultatRMCActe) => void;

@@ -6,7 +6,7 @@ import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { TErreurApi } from "@model/api/Api";
 import { FicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { TObjetFormulaire, TValeurFormulaire } from "@model/form/commun/ObjetFormulaire";
+import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import messageManager from "@util/messageManager";
 import { Form, Formik } from "formik";
@@ -42,14 +42,6 @@ export interface IMentionEnCours {
   mention: IMentionMiseAJour;
 }
 
-export interface IMentionEnregistree {
-  idTypeMention: string;
-  texteMention: string;
-  numeroOrdre: number;
-  evenement?: TValeurFormulaire | null;
-  estSaisieAssistee?: boolean;
-}
-
 export interface IAnalyseMarginaleMiseAJour extends TObjetFormulaire {
   nom: string;
   nomSecable: boolean;
@@ -63,7 +55,7 @@ export interface IMiseAJourForm {
   analyseMarginale: IAnalyseMarginaleMiseAJour;
 }
 
-export const PartieFormulaire: React.FC = () => {
+const PartieFormulaire: React.FC = () => {
   const { estMiseAJourAvecMentions, ongletsActifs, idActe, miseAJourEffectuee } = useContext(EditionMiseAJourContext.Valeurs);
   const { changerOnglet, activerOngletActeMisAJour, setComposerActeMisAJour } = useContext(EditionMiseAJourContext.Actions);
 

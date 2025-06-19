@@ -19,7 +19,7 @@ import { MentionsCopie } from "./contenu/MentionsCopie";
 import { MentionsExtrait } from "./contenu/MentionsExtrait";
 import "./scss/Mention.scss";
 
-export interface GestionMentionsProps {
+interface GestionMentionsProps {
   acte?: IFicheActe;
   document?: IDocumentReponse;
   requete: IRequeteDelivrance;

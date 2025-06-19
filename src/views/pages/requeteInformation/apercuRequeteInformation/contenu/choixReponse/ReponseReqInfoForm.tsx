@@ -9,7 +9,6 @@ import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import { Formulaire } from "@widget/formulaire/Formulaire";
-import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import * as Yup from "yup";
@@ -34,8 +33,6 @@ export interface ReponseReqInfoProps {
   affichageBoutonPrendreEnCharge?: boolean;
   onclickPrendreEnCharge?: () => void;
 }
-
-export type ReponseReqInfoFormProps = FormikComponentProps & ReponseReqInfoProps;
 
 const DefaultValuesReponseInfoForm = {
   [REPONSE]: DefaultValuesReponseInfoSubForm,
@@ -154,7 +151,7 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
   );
 };
 
-export function getReponseForm(
+function getReponseForm(
   formulaireDisabled: boolean,
   boutonVisible: boolean,
   reponse?: IReponseRequeteInfo,

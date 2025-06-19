@@ -90,7 +90,7 @@ export function useAvecRejeuDetailRequeteApiHook(params?: IDetailRequeteParams) 
   };
 }
 
-export async function fetchDetailRequete(
+ async function fetchDetailRequete(
   setDetailRequeteState: any,
   estConsultation = false,
   estConsultationHistoriqueAction = false,
@@ -274,7 +274,7 @@ function mappingRequete(data: any, utilisateurs?: IUtilisateur[]) {
   };
 }
 
-export function mappingRequeteInformation(data: any, utilisateurs?: IUtilisateur[]): IRequeteInformation {
+function mappingRequeteInformation(data: any, utilisateurs?: IUtilisateur[]): IRequeteInformation {
   return {
     ...mappingRequete(data, utilisateurs),
     //Partie Requête Delivrance
@@ -320,7 +320,7 @@ function mapPiecesJustificativesCreation(pieces?: any): IPieceJustificativeCreat
   return PieceJustificativeCreation.tri(piecesJustificatives);
 }
 
-export function mapEchangesRetourSDANF(echangesServeur?: any): IEchange[] {
+function mapEchangesRetourSDANF(echangesServeur?: any): IEchange[] {
   const echanges: IEchange[] = [];
 
   echangesServeur?.forEach((echange: any) => {

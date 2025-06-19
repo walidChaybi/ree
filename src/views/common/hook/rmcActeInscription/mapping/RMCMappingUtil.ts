@@ -1,7 +1,6 @@
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { TypeActe } from "@model/etatcivil/enum/TypeActe";
 import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
@@ -49,31 +48,3 @@ export function mappingActes(data: any): IResultatRMCActe[] {
   });
   return actesMapper;
 }
-
-export const mappingRequeteDelivranceToRMC = (
-  detailRequeteState: IRequeteDelivrance
-): IRMCActeArchive | IRMCActeInscription => {
-  return {
-    titulaire: {
-      nom: detailRequeteState.titulaires?.[0].nomNaissance,
-      prenom: detailRequeteState.titulaires?.[0].prenoms?.[0].prenom,
-      dateNaissance: {
-        annee: getValeurOuVide(
-          detailRequeteState.titulaires?.[0].anneeNaissance?.toString()
-        ),
-        mois: detailRequeteState.titulaires?.[0].moisNaissance?.toString(),
-        jour: detailRequeteState.titulaires?.[0].jourNaissance?.toString()
-      },
-
-      paysNaissance: detailRequeteState.titulaires?.[0].paysNaissance
-    },
-    evenement: {
-      dateEvenement: {
-        annee: getValeurOuVide(detailRequeteState.evenement?.annee?.toString()),
-        mois: getValeurOuVide(detailRequeteState.evenement?.mois?.toString()),
-        jour: getValeurOuVide(detailRequeteState.evenement?.jour?.toString())
-      },
-      paysEvenement: detailRequeteState.evenement?.pays
-    }
-  };
-};

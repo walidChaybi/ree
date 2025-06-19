@@ -16,7 +16,6 @@ import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
-import { tousRenseignes } from "@util/Utils";
 import { IExtraitCopieApiHookResultat } from "../../composition/CompositionExtraitCopieHook";
 import { ICreerCourrierECParams } from "../../requete/creerCourrierECHook";
 import { creationCompositionCopieActeImage } from "./creationComposition/creationCompositionCopieActeImage";
@@ -24,22 +23,18 @@ import { creationCompositionExtraitCopieActeTexte } from "./creationComposition/
 import { creationCompositionExtraitPlurilingue } from "./creationComposition/creationCompositionExtraitPlurilingue";
 import { IGenerationECParams } from "./generationECHook";
 
-export function nonNull(acte?: IFicheActe, params?: IGenerationECParams) {
-  return params && acte;
-}
-
-export function estDemandeExtraitAvecOuSansFiliationOuCopieActeTexte(acte: IFicheActe, choixDelivrance: ChoixDelivrance) {
+function estDemandeExtraitAvecOuSansFiliationOuCopieActeTexte(acte: IFicheActe, choixDelivrance: ChoixDelivrance) {
   return (
     ChoixDelivrance.estAvecOuSansFiliation(choixDelivrance) ||
     (ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance) && FicheActe.estActeTexte(acte))
   );
 }
 
-export function estDemandeExtraitPlurilingue(choixDelivrance: ChoixDelivrance) {
+function estDemandeExtraitPlurilingue(choixDelivrance: ChoixDelivrance) {
   return ChoixDelivrance.estPlurilingue(choixDelivrance);
 }
 
-export function estDemandeCopieActeImage(acte: IFicheActe, choixDelivrance: ChoixDelivrance) {
+function estDemandeCopieActeImage(acte: IFicheActe, choixDelivrance: ChoixDelivrance) {
   return ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance) && FicheActe.estActeImage(acte);
 }
 
@@ -68,7 +63,7 @@ export function getNomDocument(choixDelivrance: ChoixDelivrance) {
   return nomDocument;
 }
 
-export function creationComposition(
+function creationComposition(
   acte: IFicheActe,
   requete: IRequeteDelivrance,
   validation: Validation,
@@ -88,7 +83,7 @@ export function creationComposition(
   return composition;
 }
 
-export const getValidationEC = (acte: IFicheActe, choixDelivrance: ChoixDelivrance, validation = Validation.O) => {
+const getValidationEC = (acte: IFicheActe, choixDelivrance: ChoixDelivrance, validation = Validation.O) => {
   switch (choixDelivrance) {
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION:
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION:
@@ -143,15 +138,7 @@ export function getValidationExtraitPlurilingue(acte: IFicheActe, validation: Va
   return validation;
 }
 
-export const estDelivranceExtraitAvecOuSansFiliationActeNaissanceOuMariage = function (acte: IFicheActe, choixDelivrance: ChoixDelivrance) {
-  return (
-    (acte.nature === NatureActe.NAISSANCE || acte.nature === NatureActe.MARIAGE) &&
-    (choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION ||
-      choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION)
-  );
-};
-
-export const aPasCorpsExtraitRectificationCorrespondant = function (
+const aPasCorpsExtraitRectificationCorrespondant = function (
   corpsExtraitRectifications: ICorpsExtraitRectification[],
   choixDelivrance: ChoixDelivrance
 ) {
@@ -174,31 +161,18 @@ export function creationEC(
   setExtraitCopieApiHookParams: any,
   ctv?: string
 ) {
-  if (nonNull(acte, params)) {
+  if (acte && params) {
     // Verification des données pour la génération d'extrait mariage/naissance
     // En cas de validation en erreur alors un extrait en erreur sera généré
-    const validationControle = getValidationEC(
-      // @ts-ignore NonNull
-      acte,
-      // @ts-ignore NonNull
-      params.choixDelivrance,
-      // @ts-ignore NonNull
-      params.validation,
-      // @ts-ignore NonNull
-      params.requete
-    );
+    const validationControle = getValidationEC(acte, params.choixDelivrance, params.validation);
 
     const composition = creationComposition(
-      // @ts-ignore NonNull
       acte,
-      // @ts-ignore NonNull
       params.requete,
       validationControle,
-      // @ts-ignore NonNull
       params.mentionsRetirees,
-      // @ts-ignore NonNull
       params.choixDelivrance,
-      ctv
+      ctv ?? ""
     );
 
     setValidation(validationControle);
@@ -228,7 +202,7 @@ export function toutesLesDonneesSontPresentes(
 }
 
 export function estPresentIdActeEtChoixDelivrance(params?: IGenerationECParams | ICreerCourrierECParams): boolean {
-  return tousRenseignes(params?.idActe, params?.requete?.choixDelivrance);
+  return Boolean(params?.idActe && params?.requete?.choixDelivrance);
 }
 
 export function estDocumentAvecCTV(typeDocument: string | null, sousTypeDelivrance?: SousTypeDelivrance) {

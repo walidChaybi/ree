@@ -3,7 +3,6 @@ import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE } from "@model/agent/IOfficier";
 import { Alerte, IAlerte } from "@model/etatcivil/fiche/IAlerte";
-import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import React, { useCallback, useContext, useState } from "react";
@@ -17,35 +16,24 @@ interface PopinSupprimerAlerteState {
   isOpen: boolean;
 }
 
-export interface ListeAlertesProps {
+interface ListeAlertesProps {
   alertes: IAlerte[];
   idTypeRegistre?: string;
   displayReference: boolean;
   supprimerAlerteCallBack: (idAlerteActe: string, idActe: string) => void;
 }
 
-export const ListeAlertes: React.FC<ListeAlertesProps> = ({
-  alertes,
-  displayReference,
-  idTypeRegistre,
-  supprimerAlerteCallBack
-}) => {
-  const [popinSupprimerAlerteState, setPopinSupprimerAlerteState] =
-    useState<PopinSupprimerAlerteState>({
-      idAlerteActe: "",
-      idActe: "",
-      isOpen: false
-    });
+export const ListeAlertes: React.FC<ListeAlertesProps> = ({ alertes, displayReference, idTypeRegistre, supprimerAlerteCallBack }) => {
+  const [popinSupprimerAlerteState, setPopinSupprimerAlerteState] = useState<PopinSupprimerAlerteState>({
+    idAlerteActe: "",
+    idActe: "",
+    isOpen: false
+  });
   const [hasMessageBloquant, setHasMessageBloquant] = useState<boolean>(false);
   const { utilisateurs, utilisateurConnecte } = useContext(RECEContextData);
 
   const onClick = (alerte: IAlerte): void => {
-    if (
-      officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE(
-        utilisateurConnecte,
-        idTypeRegistre
-      )
-    ) {
+    if (officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE(utilisateurConnecte, idTypeRegistre)) {
       setPopinSupprimerAlerteState({
         idAlerteActe: alerte?.id || "",
         idActe: alerte?.idActe || "",
@@ -66,10 +54,7 @@ export const ListeAlertes: React.FC<ListeAlertesProps> = ({
 
   const onSubmit = useCallback((): void => {
     onClosePopin();
-    supprimerAlerteCallBack(
-      popinSupprimerAlerteState?.idAlerteActe,
-      popinSupprimerAlerteState?.idActe
-    );
+    supprimerAlerteCallBack(popinSupprimerAlerteState?.idAlerteActe, popinSupprimerAlerteState?.idActe);
   }, [popinSupprimerAlerteState, supprimerAlerteCallBack]);
 
   return (
@@ -82,16 +67,12 @@ export const ListeAlertes: React.FC<ListeAlertesProps> = ({
               className={alerte?.codeCouleur}
               title={alerte?.complementDescription}
             >
-              {displayReference
-                ? Alerte.toReferenceString(alerte, utilisateurs)
-                : Alerte.toAlertString(alerte, utilisateurs)}
-              {gestionnaireFeatureFlag.estActif(
-                FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
-              ) && (
+              {displayReference ? Alerte.toReferenceString(alerte, utilisateurs) : Alerte.toAlertString(alerte, utilisateurs)}
+              {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) && (
                 <FontAwesomeIcon
                   icon={faTrashAlt}
                   className="IconeBoutonSupprimerAlerte"
-                  title={getLibelle("Supprimer l'alerte")}
+                  title={"Supprimer l'alerte"}
                   onClick={() => onClick(alerte)}
                 />
               )}
@@ -102,12 +83,10 @@ export const ListeAlertes: React.FC<ListeAlertesProps> = ({
       <ConfirmationPopin
         disablePortal={true}
         estOuvert={hasMessageBloquant}
-        messages={[
-          getLibelle("Vous n'avez pas les droits pour supprimer une alerte.")
-        ]}
+        messages={["Vous n'avez pas les droits pour supprimer une alerte."]}
         boutons={[
           {
-            label: getLibelle("OK"),
+            label: "OK",
             action: () => {
               setHasMessageBloquant(false);
             }

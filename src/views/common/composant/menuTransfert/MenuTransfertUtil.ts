@@ -169,7 +169,7 @@ const filtreUtilisateurRequeteDelivrance = (
   return Boolean(estDuSCEC && aDroit && idUtilisateurRequete !== utilisateur.idUtilisateur && estDansMonServiceOuServiceFils);
 };
 
-export function filtrerValideur(utilisateur: IUtilisateur, idUtilisateurRequete?: string): boolean {
+function filtrerValideur(utilisateur: IUtilisateur, idUtilisateurRequete?: string): boolean {
   const estDuSCEC = utilisateur.service?.estDansScec;
   const aDroit = utilisateurADroit(Droit.DELIVRER, utilisateur);
 

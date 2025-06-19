@@ -6,8 +6,8 @@ import { UUID } from "../../../../ressources/Regex";
 export const URL_SEPARATEUR = "/";
 
 // Fontions utilitaires de résolution d'url
-export const urlWithParamPatern = /^(.+)\/:[^/]+$/;
-export const urlWithoutParamPatern = /\/:[^/]+/g;
+const urlWithParamPatern = /^(.+)\/:[^/]+$/;
+const urlWithoutParamPatern = /\/:[^/]+/g;
 
 /*
  * Supprime les éventuels paramètres de l'url (exemple: .../apercurequete/:idRequete => .../apercurequete)

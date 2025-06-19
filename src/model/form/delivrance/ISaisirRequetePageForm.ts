@@ -103,7 +103,7 @@ export interface ISaisieAdresse {
   [NUMERO_TELEPHONE]: string;
 }
 
-export interface Noms {
+interface Noms {
   [NOM_NAISSANCE]: string;
   [NOM_USAGE]: string;
 }
@@ -118,7 +118,7 @@ export interface Evenement {
   [PAYS_EVENEMENT]: string;
 }
 
-export interface DateJourMoisAnne {
+interface DateJourMoisAnne {
   [JOUR]: string;
   [MOIS]: string;
   [ANNEE]: string;

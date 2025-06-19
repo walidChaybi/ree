@@ -9,10 +9,6 @@ export interface IResultGenerationUnDocument {
   contenuDocumentReponse?: string;
 }
 
-export interface IResultGenerationPlusieursDocuments {
-  idDocumentsReponse?: string[];
-}
-
 export interface IResultGenerationInscriptions {
   fiches?: TFiche[];
   idDocumentsReponse?: string[];

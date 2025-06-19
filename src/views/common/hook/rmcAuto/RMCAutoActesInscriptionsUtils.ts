@@ -9,7 +9,6 @@ import {
 } from "@model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import {
   PATH_APERCU_REQ_PRISE,
-  PATH_APERCU_REQ_TRAITEMENT,
   receUrl,
   URL_MES_REQUETES_DELIVRANCE,
   URL_RECHERCHE_REQUETE,
@@ -28,20 +27,6 @@ export const redirectionVersRequetePriseEnCharge = (requete: IRequeteTableauDeli
     case receUrl.estUrlApercuTraitementRequete(urlCourante) &&
       StatutRequete.getEnumFromLibelle(requete.statut) === StatutRequete.PRISE_EN_CHARGE:
       return `${getUrlPrecedente(urlCourante)}/${PATH_APERCU_REQ_PRISE}/${requete.idRequete}`;
-
-    default:
-      return "";
-  }
-};
-
-export const redirectionVersRequeteTraitement = (idRequete: string, urlCourante: string): string => {
-  switch (true) {
-    case estUrlEspaceDelivranceOuRMCRequete(urlCourante):
-      return `${urlCourante}/${PATH_APERCU_REQ_TRAITEMENT}/${idRequete}`;
-
-    case receUrl.estUrlSaisirCourrier(urlCourante):
-    case receUrl.estUrlApercuRequete(urlCourante):
-      return `${getUrlPrecedente(urlCourante)}/${PATH_APERCU_REQ_TRAITEMENT}/${idRequete}`;
 
     default:
       return "";

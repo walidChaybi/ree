@@ -7,7 +7,7 @@ export interface IMajLibellePjParams {
   libelle: string;
   nouveauLibelle: string;
 }
-export interface IMajLibellePjResultat {
+interface IMajLibellePjResultat {
   resultat: boolean;
 }
 
@@ -23,8 +23,7 @@ export function useMiseAJourLibellePjApiHook(params?: IMajLibellePjParams) {
         .catch(error => {
           logError({
             error,
-            messageUtilisateur:
-              "Impossible de mettre à jour le libellé de la pièce jointe"
+            messageUtilisateur: "Impossible de mettre à jour le libellé de la pièce jointe"
           });
         });
     }

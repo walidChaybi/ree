@@ -3,7 +3,7 @@ import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import { EtatCivilUtil } from "@utilMetier/EtatCivilUtil";
 
-export interface INomSecablePostulant {
+interface INomSecablePostulant {
   estPaysSecable: boolean;
   nomTitulaire: string;
   nomPartie1: string;

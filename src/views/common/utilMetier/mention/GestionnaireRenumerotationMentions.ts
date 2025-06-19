@@ -4,7 +4,7 @@ import { ITexteMention } from "@model/etatcivil/acte/mention/ITexteMention";
 import { ITypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 
-export interface MentionPourRenumerotation {
+interface MentionPourRenumerotation {
   numeroOrdreExtrait: number;
   numeroOrdre: number;
   textes: ITexteMention;
@@ -14,7 +14,7 @@ export interface MentionPourRenumerotation {
   aSupprimer?: boolean;
 }
 
-export class GestionnaireRenumerotationMentions {
+class GestionnaireRenumerotationMentions {
   public renumerotationMentions(mentionsSurEcran: IMentionAffichage[], mentionsEnBase: IMention[], typeDocument: string) {
     let res: MentionPourRenumerotation[] = [];
     mentionsEnBase.forEach(el => res.push({ ...el }));

@@ -4,7 +4,7 @@ import IServiceDto from "../../../../dto/etatcivil/agent/IServiceDto";
 
 const URI = "/services/referentiel";
 
-export interface IPaginationParams {
+interface IPaginationParams {
   range?: string;
 }
 

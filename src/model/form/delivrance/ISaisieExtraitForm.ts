@@ -32,9 +32,6 @@ import {
   PARENT_NAISS2,
   PAYS,
   PRENOMS,
-  PRENOM_1,
-  PRENOM_2,
-  PRENOM_3,
   REGION_DEPARTEMENT,
   SECABLE,
   SEXE,
@@ -55,7 +52,7 @@ export interface ISaisieExtraitForm {
   [DONNEES_COMPLEMENTAIRES_PLURILINGUE]?: IDonneesComplementairesPlurilingueForm;
 }
 
-export interface IDernierConjointForm {
+interface IDernierConjointForm {
   [NOM_NAISSANCE]: string;
   [PRENOMS]: string;
 }
@@ -91,7 +88,7 @@ export interface INomSecableForm {
   [NOM_PARTIE2]: string;
 }
 
-export interface IDeclarationConjointeForm {
+interface IDeclarationConjointeForm {
   [TYPE]: string;
   [DATE]: IDateJourMoisAnneForm;
 }
@@ -104,16 +101,10 @@ export interface IDateCompleteForm {
   [NB_MINUTE]?: string;
 }
 
-export interface IDateJourMoisAnneForm {
+interface IDateJourMoisAnneForm {
   [JOUR]: string;
   [MOIS]: string;
   [ANNEE]: string;
-}
-
-export interface IPrenomsForm {
-  [PRENOM_1]: string;
-  [PRENOM_2]: string;
-  [PRENOM_3]: string;
 }
 
 export interface ILieuEvenementForm {

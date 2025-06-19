@@ -19,9 +19,6 @@ import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import classNames from "classnames";
-import dayjs from "dayjs";
-import DateUtils, { FormatDate } from "./DateUtils";
 
 export const indexParamsReq = {
   Statut: 0,
@@ -29,30 +26,6 @@ export const indexParamsReq = {
   Sens: 2,
   Range: 3
 };
-
-const limiteBasse = 2;
-const limiteHaute = 5;
-
-export function prioriteDeLaRequete(dateStatut: string): string {
-  const ecartEnJours = dayjs().diff(DateUtils.dayjsAvecFormat(dateStatut, FormatDate.DDMMYYYY), "day");
-
-  return classNames({
-    PrioriteBasse: ecartEnJours <= limiteBasse,
-    PrioriteMoyenne: ecartEnJours > limiteBasse && ecartEnJours <= limiteHaute,
-    PrioriteHaute: ecartEnJours > limiteHaute
-  });
-}
-
-export function getMessagePrioriteDeLaRequete(dateStatut: string): string {
-  const ecartEnJours = dayjs().diff(DateUtils.dayjsAvecFormat(dateStatut, FormatDate.DDMMYYYY), "day");
-  if (ecartEnJours <= limiteBasse) {
-    return "Priorité basse";
-  } else if (ecartEnJours > limiteBasse && ecartEnJours <= limiteHaute) {
-    return "Priorité moyenne";
-  } else {
-    return "Priorité haute";
-  }
-}
 
 export const autorisePrendreEnChargeDelivrance = (utilisateurConnecte: IOfficier, requete: IRequeteDelivrance) => {
   return (
@@ -93,7 +66,7 @@ export const autorisePrendreEnChargeReqTableauInformation = (utilisateurConnecte
   );
 };
 
-export const estRequeteCreationAuStatutATraiter = (type: TypeRequete, sousType: SousTypeCreation, statut: StatutRequete) => {
+const estRequeteCreationAuStatutATraiter = (type: TypeRequete, sousType: SousTypeCreation, statut: StatutRequete) => {
   return TypeRequete.estCreation(type) && SousTypeCreation.estRCEXROuRCTDOuRCTC(sousType) && StatutRequete.estATraiter(statut);
 };
 

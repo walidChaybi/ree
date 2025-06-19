@@ -12,7 +12,7 @@ import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseReque
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
 import DateUtils from "@util/DateUtils";
-import { DEUX, TROIS, UN, getPremiereLettreDunMot } from "@util/Utils";
+import { DEUX, TROIS, UN } from "@util/Utils";
 import { IExtraitPlurilingueComposition } from "../IExtraitPlurilingueComposition";
 
 export interface IMentionsExtraitPlurilingue {
@@ -20,13 +20,11 @@ export interface IMentionsExtraitPlurilingue {
   nombre_enonciations: number;
 }
 
-export const NOMBRE_MAX_MENTIONS = 9;
-export const ETAT = "France";
-export const ETAT_CIVIL = "Service Central d'Etat Civil";
-export const REGEX = /(.*)\s(désormais|né|née)\s(.*)/gm;
-export const DESORMAIS = "désormais";
-export const NE = "né";
-export const NEE = "née";
+const NOMBRE_MAX_MENTIONS = 9;
+const ETAT = "France";
+const ETAT_CIVIL = "Service Central d'Etat Civil";
+const REGEX = /^(.*)\s(désormais|né|née)\s(.*)$/gm;
+const DESORMAIS = "désormais";
 export class ExtraitPlurilingueCommunComposition {
   public static composerPlurilingue(
     composition: IExtraitPlurilingueComposition,
@@ -58,7 +56,7 @@ export class ExtraitPlurilingueCommunComposition {
   public static composerTitulairePlurilingue(compositionTitulaire: ITitulaireComposition, acte: IFicheActe, titulaire: ITitulaireActe) {
     compositionTitulaire.nom = this.getNomOuVide(acte, titulaire);
     compositionTitulaire.prenoms = this.getPrenomOuVide(acte, titulaire);
-    compositionTitulaire.sexe = getPremiereLettreDunMot(ExtraitPlurilingueCommunComposition.getSexeOuVideOuTiret(titulaire));
+    compositionTitulaire.sexe = ExtraitPlurilingueCommunComposition.getSexeOuVideOuTiret(titulaire)[0];
     compositionTitulaire.nom_pere = this.getNomOuVideFiliation(TitulaireActe.getParentDirectMasculin(titulaire));
     compositionTitulaire.prenoms_pere = this.getPrenomOuVideFiliation(TitulaireActe.getParentDirectMasculin(titulaire));
     compositionTitulaire.nom_mere = this.getNomOuVideFiliation(TitulaireActe.getParentDirectFeminin(titulaire));

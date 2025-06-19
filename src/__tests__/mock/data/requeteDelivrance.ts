@@ -526,14 +526,6 @@ export const requeteRDC = {
   ]
 } as any as IRequeteDelivrance;
 
-export const requeteRDD = {
-  type: TypeRequete.DELIVRANCE,
-  sousType: SousTypeDelivrance.RDC,
-  statutCourant: {
-    statut: StatutRequete.PRISE_EN_CHARGE
-  }
-} as IRequeteDelivrance;
-
 export const idRequeteRDCPourModification = "9d00fe88-9d21-482e-bb02-223636f78386";
 export const idRequeteRDCPourModificationMaCorbeille = "8f00fe88-9d21-482e-bb02-223636f78386";
 

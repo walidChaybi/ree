@@ -6,12 +6,6 @@ import EditionRequeteDelivrance from "../../composants/pages/requetesDelivrance/
 import BoutonsEditionRequeteDelivrance from "../../composants/pages/requetesDelivrance/editionRequete/boutons/BoutonsEditionRequeteDelivrance";
 import EditionDelivranceContextProvider from "../../contexts/EditionDelivranceContextProvider";
 
-export interface IDocumentsDelivrance {
-  acte: string | null;
-  principal: string | null;
-  secondaire: string | null;
-}
-
 const PageEditionRequeteDelivrance: React.FC = () => {
   const { idRequeteParam, idActeParam } = useParams<TUuidActeParams>();
   const { utilisateurs } = useContext(RECEContextData);

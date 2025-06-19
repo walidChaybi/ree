@@ -1,9 +1,8 @@
-import { getLibelle } from "@util/Utils";
 import { RenderIconeAlerteRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import { styleColonne } from "./EspaceCreationParams";
 
-export enum HeaderTableauMesRequetesCreation {
+enum HeaderTableauMesRequetesCreation {
   Alerte = "alerte",
   numeroTeledossier = "numeroTeledossier",
   SousType = "sousType",
@@ -18,7 +17,7 @@ export enum HeaderTableauMesRequetesCreation {
 export const colonnesTableauMesRequetesCreation = [
   new TableauTypeColumn({
     keys: [HeaderTableauMesRequetesCreation.Alerte],
-    title: getLibelle("Alerte"),
+    title: "Alerte",
     getElement: RenderIconeAlerteRequete,
     align: "center",
     style: styleColonne,
@@ -26,47 +25,47 @@ export const colonnesTableauMesRequetesCreation = [
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauMesRequetesCreation.numeroTeledossier],
-    title: getLibelle("N°"),
+    title: "N°",
     align: "center",
     style: styleColonne,
     sortable: true
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauMesRequetesCreation.SousType],
-    title: getLibelle("Sous-type"),
+    title: "Sous-type",
     align: "center"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauMesRequetesCreation.Priorisation],
-    title: getLibelle("Priorisation"),
+    title: "Priorisation",
     align: "center",
     sortable: true
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauMesRequetesCreation.Postulant],
-    title: getLibelle("Postulant/Déclarant"),
+    title: "Postulant/Déclarant",
     align: "center"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauMesRequetesCreation.NomCompletRequerant],
-    title: getLibelle("Requérant"),
+    title: "Requérant",
     align: "center"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauMesRequetesCreation.DateCreation],
-    title: getLibelle("Initialisation"),
+    title: "Initialisation",
     align: "center",
     sortable: true
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauMesRequetesCreation.DateDerniereAction],
-    title: getLibelle("Dernière action"),
+    title: "Dernière action",
     align: "center",
     sortable: true
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauMesRequetesCreation.Statut],
-    title: getLibelle("Statut"),
+    title: "Statut",
     align: "center",
     sortable: true
   })

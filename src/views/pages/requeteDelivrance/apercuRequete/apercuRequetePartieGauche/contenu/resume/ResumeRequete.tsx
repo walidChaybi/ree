@@ -19,8 +19,6 @@ import { ResumeRequetePartieHaute } from "./ResumeRequetePartieHaute";
 import { ResumeRequeteType } from "./ResumeRequeteType";
 import "./scss/ResumeRequete.scss";
 
-export const titreDetail = "Détails de requête";
-
 interface ResumeRequeteProps {
   requete: IRequeteDelivrance;
   disabledActions?: boolean;

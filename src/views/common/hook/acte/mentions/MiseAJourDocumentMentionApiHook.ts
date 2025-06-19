@@ -7,13 +7,11 @@ export interface IMiseAJourDocumentMentionParams {
   mentionsRetirees?: string[];
 }
 
-export interface IMiseAJourDocumentMentionResultat {
+interface IMiseAJourDocumentMentionResultat {
   resultat?: boolean;
 }
 
-export function useMiseAJourDocumentMentionApiHook(
-  params?: IMiseAJourDocumentMentionParams
-) {
+export function useMiseAJourDocumentMentionApiHook(params?: IMiseAJourDocumentMentionParams) {
   const [fait, setFait] = useState<IMiseAJourDocumentMentionResultat>();
 
   useEffect(() => {
@@ -26,8 +24,7 @@ export function useMiseAJourDocumentMentionApiHook(
           /* istanbul ignore next */
           setFait({ resultat: false });
           logError({
-            messageUtilisateur:
-              "Impossible de mettre à jour les mentions retirées du document ",
+            messageUtilisateur: "Impossible de mettre à jour les mentions retirées du document ",
             error
           });
         });

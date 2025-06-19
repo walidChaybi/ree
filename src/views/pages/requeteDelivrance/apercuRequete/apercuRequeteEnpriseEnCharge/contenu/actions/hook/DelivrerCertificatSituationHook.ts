@@ -15,15 +15,10 @@ import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IRe
 import { useEffect, useState } from "react";
 import { useSupprimerAnciensDocumentsReponseHook } from "./SupprimerAnciensDocumentsReponseHook";
 
-export interface IResultDelivrerCertificatSituation {
+interface IResultDelivrerCertificatSituation {
   idDocumentReponse?: string;
   idAction?: string;
   contenuDocumentReponse?: string;
-}
-
-export interface IPhrasesJasperCertificatSituation {
-  phrasesLiees?: string;
-  phrasesPiecesJointes?: string;
 }
 
 export function useDelivrerCertificatSituationHook(

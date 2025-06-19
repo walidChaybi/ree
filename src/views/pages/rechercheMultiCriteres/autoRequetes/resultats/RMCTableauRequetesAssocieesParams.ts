@@ -1,7 +1,7 @@
 import { RenderCellSousType, RenderCellTitulaires } from "@util/tableauRequete/TableauRequeteUtils";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 
-export enum HeaderTableauRequetesAssociees {
+enum HeaderTableauRequetesAssociees {
   Titulaires = "titulaires",
   SousType = "sousType",
   DateCreation = "dateCreation",

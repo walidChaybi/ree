@@ -2,13 +2,11 @@ import { getCodeCtv } from "@api/appels/televerificationApi";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 
-export interface IRecupererCTVResultat {
+interface IRecupererCTVResultat {
   ctv: string;
 }
 
-export function useRecupererCTV(params?: {}):
-  | IRecupererCTVResultat
-  | undefined {
+export function useRecupererCTV(params?: {}): IRecupererCTVResultat | undefined {
   const [res, setRes] = useState<IRecupererCTVResultat>();
 
   useEffect(() => {

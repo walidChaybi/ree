@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
 const DELAY = 200;
-export interface IAutoScrollProps {
+interface IAutoScrollProps {
   autoScroll?: boolean;
   baliseRef?: any;
 }

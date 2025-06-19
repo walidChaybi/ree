@@ -13,8 +13,8 @@ import { CaracteresAutorisesRecherche } from "../../../../../ressources/Regex";
 import "../scss/FiltreRMC.scss";
 
 // Noms des champs
-export const DATE_EVENEMENT = "dateEvenement";
-export const PAYS_EVENEMENT = "paysEvenement";
+const DATE_EVENEMENT = "dateEvenement";
+const PAYS_EVENEMENT = "paysEvenement";
 
 // Valeurs par défaut des champs
 export const EvenementDefaultValues = {

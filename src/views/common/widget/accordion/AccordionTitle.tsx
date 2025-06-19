@@ -4,7 +4,7 @@ import { LibelleEditable } from "@widget/libelleEditable/LibelleEditable";
 import React from "react";
 import "./scss/AccordionTitle.scss";
 
-export interface AccordionTitleProps {
+interface AccordionTitleProps {
   titre?: string;
   titreOrigine?: string;
   className?: string;
@@ -14,10 +14,7 @@ export interface AccordionTitleProps {
   handleMiseAJourLibelle?: (e: any) => void;
 }
 
-export const AccordionTitle: React.FC<AccordionTitleProps> = ({
-  boutonExpanded = true,
-  ...props
-}) => {
+export const AccordionTitle: React.FC<AccordionTitleProps> = ({ boutonExpanded = true, ...props }) => {
   return (
     <AccordionSummary
       className={["accordionTitle", props.className].join(" ")}
@@ -25,11 +22,7 @@ export const AccordionTitle: React.FC<AccordionTitleProps> = ({
       title={props.titre}
       style={{ userSelect: "text" }}
     >
-      <div
-        className={[props.bouton ? "MuiSummaryFlex" : "", props.className].join(
-          " "
-        )}
-      >
+      <div className={[props.bouton ? "MuiSummaryFlex" : "", props.className].join(" ")}>
         {props.tag}
         {props.handleMiseAJourLibelle ? (
           <LibelleEditable

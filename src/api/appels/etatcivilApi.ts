@@ -1,4 +1,3 @@
-import { IMajAnalyseMarginale, IMentionEnregistree } from "@hook/acte/EnregistrerMentionsApiHook";
 import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
 import { AddAlerteActeApiHookParameters } from "@hook/alertes/AddAlerteActeHookApi";
 import { DeleteAlerteActeApiHookParameters } from "@hook/alertes/DeleteAlerteActeHookApi";
@@ -22,51 +21,39 @@ async function getApiManager() {
   return ApiManager.getInstance("rece-etatcivil-api", "v1");
 }
 
-export const URL_ACTE = "/acte";
-export const URL_TITULAIRE = "/titulaire";
-export const URL_RESUME = "/resume";
-export const URL_COUNT_TITULAIRE = "/count/titulaire";
-export const URL_ETAT_CIVIL = "/repertoirecivil";
-export const URL_ETAT_CIVIL_RMC = "/repertoirecivil/rmc";
-export const URL_ACTE_RMC = "/acte/rmc";
+const URL_ACTE = "/acte";
+const URL_TITULAIRE = "/titulaire";
+const URL_RESUME = "/resume";
+const URL_COUNT_TITULAIRE = "/count/titulaire";
+const URL_ETAT_CIVIL = "/repertoirecivil";
+const URL_ETAT_CIVIL_RMC = "/repertoirecivil/rmc";
+const URL_ACTE_RMC = "/acte/rmc";
 // Utilisé pour visualiser les images de l'acte dans la fiche Acte (renvoie un "InputStreamResource")
-export const URL_CORPS_IMAGE = "/corps-image";
-export const URL_ACTE_IMAGES = "/acteimage/images";
-export const URL_DONNEES_POUR_COMPOSITION_ACTE_TEXTE = "/donnees-pour-composition-acte-texte";
+const URL_CORPS_IMAGE = "/corps-image";
+const URL_DONNEES_POUR_COMPOSITION_ACTE_TEXTE = "/donnees-pour-composition-acte-texte";
 const URL_DONNEES_POUR_COMPOSITION_ACTE_REPRIS = "/donnees-pour-composition-acte-repris";
 const URL_DONNEES_POUR_COMPOSITION_ACTE_AVANT_SIGNATURE_MENTIONS = "/donnees-pour-composition-acte-texte-mis-a-jour";
-export const URL_POCOPAS_DEBUTENT_PAR = "/acte/pocopas/debutentPar";
-export const URL_NOMENCLATURE = "/nomenclature";
+const URL_POCOPAS_DEBUTENT_PAR = "/acte/pocopas/debutentPar";
 export const URL_MENTION = "/mentions";
-export const URL_ENREGISTRER_MENTIONS_ET_ANALYSE_MARGINALE = "/mentions-et-analyse-marginale";
-export const URL_ABANDONNER_MAJ = "/abandonner-mise-a-jour";
-export const URL_CORPS_TEXTE = "/corpstexte";
-export const URL_ETAT_CIVIL_RMC_AUTO = "/repertoirecivil/rmcauto";
-export const URL_ACTE_RMC_AUTO = "/acte/rmcauto";
-export const URL_ALERTES_ACTE = "/alertes";
-export const URL_TYPE_MENTION = "/typemention";
-export const URL_ALERTE_ACTE = "/alerte";
-export const URL_DECRETS = "/repertoirecivil/decrets";
-export const URL_DERNIERE_DELIVRANCE = "/dernieredelivrance";
-export const URL_DERNIERE_DELIVRANCE_RC_RCA_PACS = "/repertoirecivil/datedernieredelivrance";
-export const URL_SAISIE_EXTRAIT = "/saisieExtrait";
-export const URL_PERSONNES = "/personnes";
-export const URL_RC = "/rc";
-export const URL_PERSONNES_RMC_AUTO = "/personnes/rmcauto";
-export const URL_POCOPAS = "/mespocopas";
-export const URL_PROJET_ACTE = "/projetacte";
-export const URL_ETABLI = "/etabli";
-export const URL_PROJET_ACTE_INSCRIPTION_LISTE = "/projetacte/actesinscriptionssauvegardes";
-export const URL_ANALYSE_MARGINALE = "/analyseMarginale";
-export const URL_BULLETIN_IDENTIFICATION = "/bulletinIdentification";
+const URL_CORPS_TEXTE = "/corpstexte";
+const URL_ETAT_CIVIL_RMC_AUTO = "/repertoirecivil/rmcauto";
+const URL_ACTE_RMC_AUTO = "/acte/rmcauto";
+const URL_ALERTES_ACTE = "/alertes";
+const URL_ALERTE_ACTE = "/alerte";
+const URL_DERNIERE_DELIVRANCE_RC_RCA_PACS = "/repertoirecivil/datedernieredelivrance";
+const URL_SAISIE_EXTRAIT = "/saisieExtrait";
+const URL_PERSONNES = "/personnes";
+const URL_RC = "/rc";
+const URL_PERSONNES_RMC_AUTO = "/personnes/rmcauto";
+const URL_PROJET_ACTE = "/projetacte";
+const URL_ETABLI = "/etabli";
+const URL_PROJET_ACTE_INSCRIPTION_LISTE = "/projetacte/actesinscriptionssauvegardes";
+const URL_ANALYSE_MARGINALE = "/analyseMarginale";
+const URL_BULLETIN_IDENTIFICATION = "/bulletinIdentification";
 const URL_COMPOSER_DOCUMENT_FINAL = "/composer-document-final";
 const URL_REGISTRE_PAPIER_PROJET_ACTE = "/registre-papier";
 const URL_INTEGRER_ACTE_SIGNE = "/integrer-acte-signe";
-const URL_INTEGRER_DOCUMENT_MENTION_SIGNE = "/integrer-document-mention-signe";
 const URL_ACTE_RECOMPOSER_APRES_SIGNATURE = "/recomposer-document-final";
-const URL_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES = "/composer-document-mentions-ulterieures";
-const URL_DERNIERE_ANALYSE_MARGINALE = "/derniere-analyse-marginale-valide";
-const URL_SUPPRIMER_DERNIERE_ANALYSE_MARGINALE_NON_VALIDE = "/supprimer-analyse-marginale-non-valide";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
@@ -160,46 +147,6 @@ export function integrerActeSigne(
       uri: `${URL_PROJET_ACTE}/${idActe}${URL_INTEGRER_ACTE_SIGNE}`,
       data: {
         documentPadesBase64: document,
-        signature: { infosSignature: infosCarteSignature },
-        modeAuthentification
-      }
-    })
-  );
-}
-
-/**
- * Composition du document mention final à signer.
- */
-export function composerDocumentMentionsUlterieures(idActe: string, issuerCertificat: string, entiteCertificat: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.PATCH,
-      uri: `${URL_ACTE}/${idActe}${URL_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES}`,
-      data: {
-        infosSignature: {
-          issuerCertificat,
-          entiteCertificat
-        }
-      }
-    })
-  );
-}
-
-/**
- * Intègre le document signé dans RECE.
- */
-export function integrerDocumentMentionSigne(
-  idActe: string,
-  documentPadesBase64: string,
-  infosCarteSignature: IInfosCarteSignature,
-  modeAuthentification: TModeAuthentification
-): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.PATCH,
-      uri: `${URL_ACTE}/${idActe}${URL_INTEGRER_DOCUMENT_MENTION_SIGNE}`,
-      data: {
-        documentPadesBase64,
         signature: { infosSignature: infosCarteSignature },
         modeAuthentification
       }
@@ -355,16 +302,6 @@ export function getCorpsActeImage(identifiant: string): Promise<any> {
   );
 }
 
-/** Récupère les images d'un acte sous forme de tableau d'images base64 */
-export function getImagesDeLActe(identifiantActe: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.GET,
-      uri: `${URL_ACTE_IMAGES}/${identifiantActe}`
-    })
-  );
-}
-
 export function getDonneesPourCompositionActeTexte(idActe: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
@@ -426,24 +363,6 @@ export function getPocopasOuvertsOuFermerParFamille(
   );
 }
 
-export async function getNomenclatureEtatCivil(nom: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetchCache({
-      method: HttpMethod.GET,
-      uri: `${URL_NOMENCLATURE}/${nom}`
-    })
-  );
-}
-
-export async function getTypesMention(): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetchCache({
-      method: HttpMethod.GET,
-      uri: `${URL_NOMENCLATURE}${URL_TYPE_MENTION}`
-    })
-  );
-}
-
 export async function getMentions(idActe: string, statutMention?: StatutMention): Promise<any> {
   const queryParams = statutMention !== undefined ? { statut: StatutMention[statutMention] } : undefined;
   return getApiManager().then(api =>
@@ -461,45 +380,6 @@ export async function postMentions(idActe: string, mentions: any[]): Promise<any
       method: HttpMethod.POST,
       uri: `${URL_ACTE}/${idActe}${URL_MENTION}`,
       data: mentions
-    })
-  );
-}
-
-export async function abandonnerMiseAjourActe(idActe: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.PATCH,
-      uri: `${URL_ACTE}/${idActe}${URL_ABANDONNER_MAJ}`
-    })
-  );
-}
-
-export async function enregistrerMentionsEtAnalyseMarginale(
-  idActe: string,
-  mentions: IMentionEnregistree[],
-  analyseMarginale?: IMajAnalyseMarginale
-): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.PUT,
-      uri: `${URL_ACTE}/${idActe}${URL_ENREGISTRER_MENTIONS_ET_ANALYSE_MARGINALE}`,
-      data: {
-        mentionCreationList: mentions,
-        analyseMarginale: analyseMarginale
-          ? {
-              motifModification: analyseMarginale?.motif,
-              titulaires: [
-                {
-                  nom: analyseMarginale?.nom.trim(),
-                  prenoms: analyseMarginale?.prenoms,
-                  nomPartie1: analyseMarginale?.nomPartie1?.trim(),
-                  nomPartie2: analyseMarginale?.nomPartie2?.trim(),
-                  ordre: 1
-                }
-              ]
-            }
-          : null
-      }
     })
   );
 }
@@ -573,24 +453,6 @@ export function deleteAlerteActe(parameters: DeleteAlerteActeApiHookParameters):
   );
 }
 
-// export function getToutesLesDecrets(): Promise<any> {
-//   return getApiManager().then(api =>
-//     api.fetch({
-//       method: HttpMethod.GET,
-//       uri: `${URL_DECRETS}`
-//     })
-//   );
-// }
-
-export function updateDateDerniereDelivranceActe(idActe: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.PATCH,
-      uri: `${URL_ACTE}/${idActe}${URL_DERNIERE_DELIVRANCE}`
-    })
-  );
-}
-
 export function updateDateDerniereDelivranceRcRcaPacs(body: IDerniereDelivranceRcRcaPacsParams[]): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
@@ -609,14 +471,6 @@ export function majEtatCivilSuiteSaisieExtrait(idActe: string, extraitSaisiAEnvo
       data: extraitSaisiAEnvoyer
     })
   );
-}
-
-export function getPocopasAgent(): Promise<any> {
-  const config: any = {
-    method: HttpMethod.GET,
-    uri: `${URL_ACTE}${URL_POCOPAS}`
-  };
-  return getApiManager().then(api => api.fetch(config));
 }
 
 export function getTitulaireAnalyseMarginalByIdActe(identifiantsActes: string[]): Promise<any> {
@@ -644,24 +498,6 @@ export function getActeRecomposerApresSignature(idActe: string): Promise<any> {
       method: HttpMethod.GET,
       uri: `${URL_ACTE}/${idActe}${URL_ACTE_RECOMPOSER_APRES_SIGNATURE}`,
       responseType: "blob"
-    })
-  );
-}
-
-export function getDerniereAnalyseMarginale(idActe: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.GET,
-      uri: `${URL_ACTE}/${idActe}${URL_DERNIERE_ANALYSE_MARGINALE}`
-    })
-  );
-}
-
-export function deleteDerniereAnalyseMarginaleNonValide(idActe: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.PATCH,
-      uri: `${URL_ACTE}/${idActe}${URL_SUPPRIMER_DERNIERE_ANALYSE_MARGINALE_NON_VALIDE}`
     })
   );
 }

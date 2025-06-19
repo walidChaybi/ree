@@ -1,13 +1,10 @@
 import { IMiseAJourAnalyseMarginaleDto } from "@api/configurations/etatCivil/PutMiseAJourAnalyseMarginaleConfigApi";
 import { IDerniereAnalyseMarginalResultat } from "@hook/requete/miseajour/DerniereAnalyseMarginaleApiHook";
+import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { PrenomsForm } from "@model/form/commun/PrenomsForm";
-import { IMajMention } from "@pages/requeteMiseAJour/apercuRequete/ApercuRequeteMiseAJourPage";
-import { getMotif } from "@pages/requeteMiseAJour/apercuRequete/contenu/MiseAJourAnalyseMarginale/MiseAJourAnalyseMarginale";
-import { getPremiereOuSecondeValeur } from "@util/Utils";
-import * as Yup from "yup";
 import { IAnalyseMarginaleMiseAJour } from "../../../composants/pages/requetesMiseAJour/PartieFormulaire";
 
-export interface IMiseAJourAnalyseMarginaleValeursForm {
+interface IMiseAJourAnalyseMarginaleValeursForm {
   analyseMarginale: {
     nom: string;
     prenoms: { [cle: string]: string };
@@ -20,12 +17,17 @@ export interface IMiseAJourAnalyseMarginaleValeursForm {
   };
 }
 
-export const SCHEMA_VALIDATION_MISE_A_JOUR_ANALYSE_MARGINALE = Yup.object().shape({
-  analyseMarginale: Yup.object().shape({
-    nom: Yup.string().required("⚠ La saisie du nom est obligatoire"),
-    motif: Yup.string().required("⚠ La saisie du motif est obligatoire")
-  })
-});
+interface IMentionsDetail {
+  idMentionNiveauUn: string;
+  idMentionNiveauDeux: string;
+  idMentionNiveauTrois?: string;
+}
+
+interface IMajMention {
+  texte: string;
+  typeMention: IMentionsDetail;
+  numeroOrdre: number;
+}
 
 export const MiseAJourAnalyseMarginaleValeursForm = {
   valeurParDefaut: (
@@ -36,7 +38,7 @@ export const MiseAJourAnalyseMarginaleValeursForm = {
     const nomPartie2 = defaut?.titulaire.nomPartie2 ?? "";
     const secable = Boolean(nomPartie1 && nomPartie2);
     const prenoms = defaut?.titulaire.prenoms ?? [];
-    const motif = listeMentions?.length ? getPremiereOuSecondeValeur(defaut?.motif, getMotif(listeMentions, defaut)) : "";
+    const motif = listeMentions?.length ? (defaut?.motif ?? getMotif(listeMentions, defaut) ?? "") : "";
 
     return {
       analyseMarginale: {
@@ -78,3 +80,24 @@ export const MiseAJourAnalyseMarginaleValeursForm = {
     };
   }
 } as const;
+
+const getMotif = (listeMentions: IMajMention[], derniereAnalyseMarginaleEnregistree?: IDerniereAnalyseMarginalResultat) => {
+  const listeMentionsAffecteAnalyseMarginal: IMajMention[] = listeMentions.filter(mention => {
+    return TypeMention.getTypeMentionById(
+      mention.typeMention.idMentionNiveauTrois || mention.typeMention.idMentionNiveauDeux || mention.typeMention.idMentionNiveauUn
+    )?.affecteAnalyseMarginale;
+  });
+
+  const typeMention = listeMentionsAffecteAnalyseMarginal[0]?.typeMention;
+  const codeTypeMention = TypeMention.getTypeMentionById(
+    typeMention?.idMentionNiveauTrois || typeMention?.idMentionNiveauDeux || typeMention?.idMentionNiveauUn
+  )
+    ?.libelle.trim()
+    .split(" ")[0];
+
+  return derniereAnalyseMarginaleEnregistree && listeMentionsAffecteAnalyseMarginal.length === 1
+    ? derniereAnalyseMarginaleEnregistree.estValide
+      ? `Suite à apposition de mention ${codeTypeMention}`
+      : derniereAnalyseMarginaleEnregistree?.motif
+    : "";
+};

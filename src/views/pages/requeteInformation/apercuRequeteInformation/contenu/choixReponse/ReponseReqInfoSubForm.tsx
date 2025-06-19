@@ -1,21 +1,17 @@
 import { REPONSE } from "@composant/formulaire/ConstantesNomsForm";
 import { getLibelle } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import {
-  FormikComponentProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { FormikComponentProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect } from "react";
 import * as Yup from "yup";
 import "../scss/ReponseReqInfo.scss";
 import { ReponseReqInfoProps } from "./ReponseReqInfoForm";
 
-export type ReponseReqInfoSubFormProps = FormikComponentProps &
-  ReponseReqInfoProps;
+export type ReponseReqInfoSubFormProps = FormikComponentProps & ReponseReqInfoProps;
 
-export const LIBELLE = "libelle";
-export const CORPS_MAIL = "corpsMail";
+const LIBELLE = "libelle";
+const CORPS_MAIL = "corpsMail";
 const NB_LIGNE_CORPS_MAIL = 20;
 const NB_CARACTERES_CORPS_MAIL = 8000;
 
@@ -32,16 +28,10 @@ export interface IReponseInfoSubFormValue {
 
 export const ValidationSchemaReponseInfoSubForm = Yup.object({
   [LIBELLE]: Yup.string().required("Merci de choisir une réponse"),
-  [CORPS_MAIL]: Yup.string()
-    .required("Obligatoire")
-    .max(NB_CARACTERES_CORPS_MAIL, "Le nombre de caractères maximal est 8000")
+  [CORPS_MAIL]: Yup.string().required("Obligatoire").max(NB_CARACTERES_CORPS_MAIL, "Le nombre de caractères maximal est 8000")
 });
 
-const ReponseReqInfoSubForm: React.FC<ReponseReqInfoSubFormProps> = ({
-  reponse,
-  formik,
-  formulaireDisabled
-}) => {
+const ReponseReqInfoSubForm: React.FC<ReponseReqInfoSubFormProps> = ({ reponse, formik, formulaireDisabled }) => {
   const libelleWithNamespace = withNamespace(REPONSE, LIBELLE);
   const corpsMailWithNamespace = withNamespace(REPONSE, CORPS_MAIL);
 

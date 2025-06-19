@@ -1,15 +1,11 @@
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { RenderCellTitulaires } from "@util/tableauRequete/TableauRequeteUtils";
-import { getLibelle } from "@util/Utils";
+
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 
-export const StatutsRequetesInformation = [
-  StatutRequete.PRISE_EN_CHARGE.nom,
-  StatutRequete.A_TRAITER.nom,
-  StatutRequete.TRANSFEREE.nom
-];
+export const StatutsRequetesInformation = [StatutRequete.PRISE_EN_CHARGE.nom, StatutRequete.A_TRAITER.nom, StatutRequete.TRANSFEREE.nom];
 
-export enum HeaderTableauRequeteInformation {
+enum HeaderTableauRequeteInformation {
   Numero = "numero",
   SousType = "sousType",
   NomRequerant = "nomCompletRequerant",
@@ -29,44 +25,44 @@ const style = {
 export const requeteInformationMesRequetesColumnHeaders = [
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.Numero],
-    title: getLibelle("N° requête"),
+    title: "N° requête",
     align: "center",
     style
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.SousType],
-    title: getLibelle("Sous-type"),
+    title: "Sous-type",
     align: "center"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.Objet],
-    title: getLibelle("Objet"),
+    title: "Objet",
     align: "center"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.DateCreation],
-    title: getLibelle("Date requête"),
+    title: "Date requête",
     align: "center",
     sortable: true
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.Statut],
-    title: getLibelle("Statut"),
+    title: "Statut",
     align: "center"
   }),
   new TableauTypeColumn({
     keys: ["typeRequerant"],
-    title: getLibelle("Type requérant"),
+    title: "Type requérant",
     align: "center"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.NomRequerant],
-    title: getLibelle("Prénom / Nom requérant"),
+    title: "Prénom / Nom requérant",
     align: "center"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.Titulaire],
-    title: getLibelle("Prénom / Nom de naissance titulaire"),
+    title: "Prénom / Nom de naissance titulaire",
     align: "center",
     dataIsArray: true,
     getElement: RenderCellTitulaires
@@ -76,29 +72,29 @@ export const requeteInformationMesRequetesColumnHeaders = [
 export const requeteInformationRequetesServiceColumnHeaders = [
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.Numero],
-    title: getLibelle("N° requête"),
+    title: "N° requête",
     align: "center",
     style
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.SousType],
-    title: getLibelle("Sous-type"),
+    title: "Sous-type",
     align: "center"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.Objet],
-    title: getLibelle("Objet"),
+    title: "Objet",
     align: "center"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.DateCreation],
-    title: getLibelle("Date requête"),
+    title: "Date requête",
     align: "center",
     sortable: true
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.AttribueA],
-    title: getLibelle("Attribuée à"),
+    title: "Attribuée à",
     align: "center"
   }),
   new TableauTypeColumn({
@@ -108,22 +104,22 @@ export const requeteInformationRequetesServiceColumnHeaders = [
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.Statut],
-    title: getLibelle("Statut"),
+    title: "Statut",
     align: "center"
   }),
   new TableauTypeColumn({
     keys: ["typeRequerant"],
-    title: getLibelle("Type requérant"),
+    title: "Type requérant",
     align: "center"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.NomRequerant],
-    title: getLibelle("Prénom / Nom requérant"),
+    title: "Prénom / Nom requérant",
     align: "center"
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequeteInformation.Titulaire],
-    title: getLibelle("Prénom / Nom de naissance titulaire"),
+    title: "Prénom / Nom de naissance titulaire",
     align: "center",
     dataIsArray: true,
     getElement: RenderCellTitulaires

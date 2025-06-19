@@ -9,7 +9,7 @@ export interface IModifierCorpsExtraitParams {
   type: TypeExtrait;
 }
 
-export interface IModifierCorpsExtraitResultat {
+interface IModifierCorpsExtraitResultat {
   resultat: boolean;
 }
 

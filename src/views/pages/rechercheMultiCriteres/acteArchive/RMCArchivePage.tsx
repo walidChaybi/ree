@@ -2,10 +2,7 @@ import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { stockageDonnees } from "@util/stockageDonnees";
 import { Formulaire } from "@widget/formulaire/Formulaire";
-import {
-  NB_LIGNES_PAR_APPEL_ACTE,
-  NB_LIGNES_PAR_PAGE_ACTE
-} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import { NB_LIGNES_PAR_APPEL_ACTE, NB_LIGNES_PAR_PAGE_ACTE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useCallback, useState } from "react";
 import * as Yup from "yup";
 import { goToLinkRMC } from "../acteInscription/resultats/RMCTableauCommun";
@@ -25,17 +22,14 @@ import TitulaireFiltre, {
   TitulaireFiltreProps,
   TitulaireValidationSchema
 } from "../filtres/titulaire/TitulaireFiltre";
-import {
-  ICriteresRechercheActeArchive,
-  useRMCActeArchiveApiHook
-} from "./hook/RMCActeArchiveApiHook";
+import { ICriteresRechercheActeArchive, useRMCActeArchiveApiHook } from "./hook/RMCActeArchiveApiHook";
 import { RMCActeArchiveResultats } from "./resultats/RMCActeArchiveResultats";
 import "./scss/RMCActeArchivePage.scss";
 
 // Nom des filtres
-export const TITULAIRE = "titulaire";
-export const DATES_DEBUT_FIN_ANNEE = "datesDebutFinAnnee";
-export const REGISTRE_ARCHIVE = "registreArchive";
+const TITULAIRE = "titulaire";
+const DATES_DEBUT_FIN_ANNEE = "datesDebutFinAnnee";
+const REGISTRE_ARCHIVE = "registreArchive";
 
 // Valeurs par défaut des champs
 const DefaultValuesRMCActeArchive = {
@@ -54,31 +48,21 @@ const ValidationSchemaRMCActeArchive = Yup.object({
 export const titreForm = "Critères de recherche d'un acte";
 
 export const RMCArchivePage: React.FC = () => {
-  const blocsForm: JSX.Element[] = [
-    getFormTitulaire(),
-    getRegistreArchive(),
-    getFormDatesDebutFinAnnee()
-  ];
+  const blocsForm: JSX.Element[] = [getFormTitulaire(), getRegistreArchive(), getFormDatesDebutFinAnnee()];
 
   const [valuesRMC, setValuesRMC] = useState<IRMCActeArchive>({});
 
   const [nouvelleRecherche, setNouvelleRecherche] = useState<boolean>(false);
 
-  const [criteresRechercheActe, setCriteresRechercheActe] =
-    useState<ICriteresRechercheActeArchive>();
+  const [criteresRechercheActe, setCriteresRechercheActe] = useState<ICriteresRechercheActeArchive>();
 
   // Critères de recherche pour alimenter les données des fiches Acte en effet leur pagination/navigation est indépendante du tableau de résultats
-  const [criteresRechercheFicheActe, setCriteresRechercheFicheActe] =
-    useState<ICriteresRechercheActeArchive>();
+  const [criteresRechercheFicheActe, setCriteresRechercheFicheActe] = useState<ICriteresRechercheActeArchive>();
 
-  const { dataRMCActe, dataTableauRMCActe } = useRMCActeArchiveApiHook(
-    criteresRechercheActe
-  );
+  const { dataRMCActe, dataTableauRMCActe } = useRMCActeArchiveApiHook(criteresRechercheActe);
 
   /** Récupération des résultats rmc pour une fiche Acte lors d'une navigation */
-  const resultatRMCFicheActe = useRMCActeArchiveApiHook(
-    criteresRechercheFicheActe
-  );
+  const resultatRMCFicheActe = useRMCActeArchiveApiHook(criteresRechercheFicheActe);
 
   const onSubmitRMCActeArchive = (values: any) => {
     setNouvelleRecherche(true);
@@ -143,9 +127,7 @@ export const RMCArchivePage: React.FC = () => {
           resetRMC={nouvelleRecherche}
           nbLignesParAppel={NB_LIGNES_PAR_APPEL_ACTE}
           nbLignesParPage={NB_LIGNES_PAR_PAGE_ACTE}
-          getLignesSuivantesOuPrecedentesActe={
-            getLignesSuivantesOuPrecedentesActe
-          }
+          getLignesSuivantesOuPrecedentesActe={getLignesSuivantesOuPrecedentesActe}
           idFicheActe={resultatRMCFicheActe?.ficheIdentifiant}
           dataRMCFicheActe={resultatRMCFicheActe?.dataRMCActe}
           dataTableauRMCFicheActe={resultatRMCFicheActe?.dataTableauRMCActe}
@@ -159,7 +141,12 @@ function getFormTitulaire(): JSX.Element {
   const titulaireFiltreProps = {
     nomFiltre: TITULAIRE
   } as TitulaireFiltreProps;
-  return <TitulaireFiltre key={TITULAIRE} {...titulaireFiltreProps} />;
+  return (
+    <TitulaireFiltre
+      key={TITULAIRE}
+      {...titulaireFiltreProps}
+    />
+  );
 }
 
 function getFormDatesDebutFinAnnee(): JSX.Element {

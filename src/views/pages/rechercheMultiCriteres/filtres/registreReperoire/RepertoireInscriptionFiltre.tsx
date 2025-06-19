@@ -14,9 +14,9 @@ import * as Yup from "yup";
 import { CaracteresAutorises, NumeroInscription } from "../../../../../ressources/Regex";
 
 // Noms des champs
-export const NUMERO_INSCRIPTION = "numeroInscription";
-export const TYPE_REPERTOIRE = "typeRepertoire";
-export const NATURE_INSCRIPTION = "natureInscription";
+const NUMERO_INSCRIPTION = "numeroInscription";
+const TYPE_REPERTOIRE = "typeRepertoire";
+const NATURE_INSCRIPTION = "natureInscription";
 
 // Valeurs par défaut des champs
 export const RepertoireInscriptionDefaultValues = {

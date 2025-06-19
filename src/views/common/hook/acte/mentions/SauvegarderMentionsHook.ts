@@ -18,7 +18,7 @@ export interface SauvegarderMentionsParam {
   requete: IRequeteDelivrance;
 }
 
-export interface IResultatSauvegarderMentions {
+interface IResultatSauvegarderMentions {
   mentionsRetirees: string[];
   idDoc: string;
 }

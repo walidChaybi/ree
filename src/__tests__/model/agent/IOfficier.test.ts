@@ -9,8 +9,7 @@ import {
   mappingOfficier,
   officierALeDroitSurLePerimetre,
   officierALeDroitSurUnDesPerimetres,
-  officierDroitConsulterSurLeTypeRegistre,
-  officierHabiliterUniquementPourLeDroit
+  officierDroitConsulterSurLeTypeRegistre
 } from "@model/agent/IOfficier";
 import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { expect, test } from "vitest";
@@ -19,8 +18,6 @@ import mockConnectedUser from "../../mock/data/connectedUser.json";
 import {
   resultatHeaderUtilistateurLaurenceBourdeau,
   resultatRequeteUtilistateurLaurenceBourdeau,
-  userDroitConsulterArchive,
-  userDroitConsulterConsulterArchive,
   userDroitConsulterPerimetreTousRegistres,
   userDroitConsulterPerimetreTUNIS,
   userDroitnonCOMEDEC
@@ -42,16 +39,6 @@ test("Habilitation model", () => {
     ["AUTRE"]
   );
   expect(estAutorise).toBe(false);
-});
-
-test("Attendu: officierHabiliterUniquementPourLeDroit fonctionne correctement", () => {
-  let utilisateurConnecte = userDroitConsulterArchive;
-  let uniquementLeDroit = officierHabiliterUniquementPourLeDroit(Droit.CONSULTER_ARCHIVES, utilisateurConnecte);
-  expect(uniquementLeDroit).toBe(true);
-
-  utilisateurConnecte = userDroitConsulterConsulterArchive;
-  uniquementLeDroit = officierHabiliterUniquementPourLeDroit(Droit.CONSULTER_ARCHIVES, utilisateurConnecte);
-  expect(uniquementLeDroit).toBe(false);
 });
 
 test("Utilisateur autoriser à consulter l'acte dont l'idTypeRegistre est passé", () => {

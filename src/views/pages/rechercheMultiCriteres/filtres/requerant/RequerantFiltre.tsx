@@ -1,28 +1,17 @@
-import { getLibelle } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
-import {
-  ASTERISQUE_MESSAGE,
-  CARACTERES_AUTORISES_MESSAGE
-} from "@widget/formulaire/FormulaireMessages";
+import { ASTERISQUE_MESSAGE, CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { traiteEspace } from "@widget/formulaire/utils/ControlesUtil";
-import {
-  ComponentFiltreProps,
-  FormikComponentProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { ComponentFiltreProps, FormikComponentProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
 import * as Yup from "yup";
-import {
-  AsterisqueRecherche,
-  CaracteresAutorisesRecherche
-} from "../../../../../ressources/Regex";
+import { AsterisqueRecherche, CaracteresAutorisesRecherche } from "../../../../../ressources/Regex";
 import "../scss/FiltreRMC.scss";
 
 // Noms des champs
-export const NOM = "nom";
-export const RAISON_SOCIALE = "raisonSociale";
+const NOM = "nom";
+const RAISON_SOCIALE = "raisonSociale";
 
 // Valeurs par défaut des champs
 export const RequerantDefaultValues = {
@@ -32,9 +21,7 @@ export const RequerantDefaultValues = {
 
 // Schéma de validation des champs
 export const RequerantValidationSchema = Yup.object({
-  [NOM]: Yup.string()
-    .matches(CaracteresAutorisesRecherche, CARACTERES_AUTORISES_MESSAGE)
-    .matches(AsterisqueRecherche, ASTERISQUE_MESSAGE),
+  [NOM]: Yup.string().matches(CaracteresAutorisesRecherche, CARACTERES_AUTORISES_MESSAGE).matches(AsterisqueRecherche, ASTERISQUE_MESSAGE),
   [RAISON_SOCIALE]: Yup.string()
     .matches(CaracteresAutorisesRecherche, CARACTERES_AUTORISES_MESSAGE)
     .matches(AsterisqueRecherche, ASTERISQUE_MESSAGE)
@@ -50,17 +37,17 @@ const RequerantFiltre: React.FC<RequerantFiltreProps> = props => {
 
   return (
     <div className={props.nomFiltre}>
-      <Fieldset titre={getLibelle("Filtre requérant")}>
+      <Fieldset titre={"Filtre requérant"}>
         <div className="FormFiltre">
           <InputField
             name={withNamespace(props.nomFiltre, NOM)}
-            label={getLibelle("Nom")}
+            label={"Nom"}
             onBlur={onBlurChamp}
           />
 
           <InputField
             name={withNamespace(props.nomFiltre, RAISON_SOCIALE)}
-            label={getLibelle("Raison sociale / Institutionnel")}
+            label={"Raison sociale / Institutionnel"}
             onBlur={onBlurChamp}
           />
         </div>

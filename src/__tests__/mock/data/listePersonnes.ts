@@ -1,4 +1,4 @@
-export const listePersonneAlpha = [
+const listePersonneAlpha = [
   {
     idPersonne: "e7114c54-d00d-48ad-bbee-af2b01e2da7a",
     nom: "PHILIPS",
@@ -10,7 +10,7 @@ export const listePersonneAlpha = [
   }
 ];
 
-export const listePersonneBeta = [
+const listePersonneBeta = [
   {
     idPersonne: "e7114c54-d00d-48ad-bbee-af2b01e2da7c",
     nom: "Coscas",

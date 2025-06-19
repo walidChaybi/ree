@@ -7,9 +7,8 @@ import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IDecret } from "@model/etatcivil/commun/IDecret";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { fireEvent, waitFor } from "@testing-library/react";
 import { RouteObject, createMemoryRouter } from "react-router";
-import { expect, vi } from "vitest";
+import { vi } from "vitest";
 import { EditionDelivranceContext } from "../../contexts/EditionDelivranceContextProvider";
 import MockRECEContextProvider from "../mock/context/MockRECEContextProvider";
 import { urlImagePngVideBase64 } from "../mock/data/ImagePng";
@@ -58,22 +57,6 @@ export function mockFenetreFicheTestFunctions() {
     };
   };
   globalAny.close = vi.fn();
-}
-
-export function renseigneChampsRecherche(screen: any, nomChamp: string, valeurChamp: string) {
-  const autocomplete = screen.getByTestId("autocomplete");
-  const champRecherche = screen.getByLabelText(nomChamp) as HTMLInputElement;
-  autocomplete.focus();
-
-  fireEvent.change(champRecherche, {
-    target: { value: valeurChamp }
-  });
-
-  waitFor(() => {
-    expect(screen.getByText(valeurChamp)).toBeDefined();
-  });
-
-  fireEvent.click(screen.getByText(valeurChamp));
 }
 
 export function deepCopie(objet: any) {

@@ -37,7 +37,7 @@ const ValidationSchema = Yup.object({
   [COMPLEMENT_DESCRIPTION]: Yup.string().max(COMPLEMENT_DESCRIPTION_MAX_LENGTH, COMPLEMENT_DESCRIPTION_LIMITE_TAILLE)
 });
 
-export interface PopinAjouterAlertesProps {
+interface PopinAjouterAlertesProps {
   open: boolean;
   onClosePopin: () => void;
   onSubmit: (value: IAjouterAlerteFormValue) => void;

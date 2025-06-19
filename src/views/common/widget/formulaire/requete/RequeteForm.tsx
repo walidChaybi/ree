@@ -30,10 +30,7 @@ export const RequeteFormDefaultValues = {
 
 const NB_EXEMPLAIRE_MAX = 5;
 
-export const LISTE_DOCUMENT_DEMANDE_DECES = [
-  ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE,
-  ECodeDocumentDelivrance.CODE_EXTRAIT_PLURILINGUE
-];
+const LISTE_DOCUMENT_DEMANDE_DECES = [ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE, ECodeDocumentDelivrance.CODE_EXTRAIT_PLURILINGUE];
 
 // Schéma de validation des champs
 export const RequeteFormValidationSchema = Yup.object()

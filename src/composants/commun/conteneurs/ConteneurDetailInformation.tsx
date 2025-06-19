@@ -2,13 +2,13 @@ import React, { useMemo } from "react";
 import IconeStatut from "./IconeStatus";
 import Infobulle from "./Infobulle";
 
-export interface PropsConteneurDetailInformation {
+interface PropsConteneurDetailInformation {
   libelle: string;
   valeur?: string;
   afficherCommeStatut?: boolean;
 }
 
-export const ConteneurDetailInformation: React.FC<PropsConteneurDetailInformation> = ({ libelle, valeur, afficherCommeStatut = false }) => {
+const ConteneurDetailInformation: React.FC<PropsConteneurDetailInformation> = ({ libelle, valeur, afficherCommeStatut = false }) => {
   const valeurAffichee = useMemo<string>(() => valeur?.trim() ?? "", [valeur]);
 
   return valeurAffichee ? (

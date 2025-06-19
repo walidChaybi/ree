@@ -4,16 +4,11 @@ import IServiceDto from "../../../../dto/etatcivil/agent/IServiceDto";
 
 const URI = "/services";
 
-export interface IServiceParent {
+interface IServiceParent {
   idService?: string;
 }
 
-export const CONFIG_GET_TOUS_SERVICES_FILS: TConfigurationApi<
-  typeof URI,
-  undefined,
-  IServiceParent,
-  IServiceDto[]
-> = {
+export const CONFIG_GET_TOUS_SERVICES_FILS: TConfigurationApi<typeof URI, undefined, IServiceParent, IServiceDto[]> = {
   api: AGENT_API,
   methode: "GET",
   uri: URI

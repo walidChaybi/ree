@@ -1,24 +1,14 @@
-import {
-  CreationRequeteRDCSC,
-  SaisieRequeteRDCSC,
-  UpdateRequeteRDCSC
-} from "@model/form/delivrance/ISaisirRDCSCPageForm";
-import {
-  ISaisieAdresse,
-  ISaisieIdentite
-} from "@model/form/delivrance/ISaisirRequetePageForm";
+import { CreationRequeteRDCSC, SaisieRequeteRDCSC, UpdateRequeteRDCSC } from "@model/form/delivrance/ISaisirRDCSCPageForm";
+import { ISaisieAdresse, ISaisieIdentite } from "@model/form/delivrance/ISaisirRequetePageForm";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import {
-  IPieceJustificative,
-  mapPieceJustificative
-} from "@model/requete/pieceJointe/IPieceJustificative";
+import { IPieceJustificative, mapPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
+import { SNP, getValeurOuVide } from "@util/Utils";
 import { supprimeProprietesVides } from "@util/supprimeProprietesVides";
-import { getValeurOuVide, SNP } from "@util/Utils";
 import { limitesTitulaires } from "../SaisirRDCSCPage";
 import { getPrenomsTableauStringVersPrenomsOrdonnes } from "./mappingCommun";
 
@@ -34,12 +24,7 @@ export function mappingFormulaireRDCSCVersRequeteDelivrance(
     documentDemande: requeteRDCSC.saisie.document,
     titulaires: [
       getTitulaireRequete(requeteRDCSC.saisie.titulaires.titulaire1),
-      nbTitulaires === limitesTitulaires.MAX
-        ? getTitulaireRequete(
-            requeteRDCSC.saisie.titulaires.titulaire2,
-            limitesTitulaires.MAX
-          )
-        : {}
+      nbTitulaires === limitesTitulaires.MAX ? getTitulaireRequete(requeteRDCSC.saisie.titulaires.titulaire2, limitesTitulaires.MAX) : {}
     ],
     requerant: getRequerant(requeteRDCSC.saisie),
     piecesJustificatives: getPiecesJustificativesAGarder(requeteRDCSC.saisie)
@@ -50,9 +35,7 @@ export function mappingFormulaireRDCSCVersRequeteDelivrance(
 // Renvoie des PJs déjà intégrées (sans contenu base64String) afin de gérer les suppressions
 function getPiecesJustificativesAGarder(saisie: SaisieRequeteRDCSC) {
   const piecesJustificatives: IPieceJustificative[] = [];
-  saisie?.piecesJointes
-    ?.filter(pj => !pj.base64File.base64String)
-    .forEach(pj => piecesJustificatives.push(mapPieceJustificative(pj)));
+  saisie?.piecesJointes?.filter(pj => !pj.base64File.base64String).forEach(pj => piecesJustificatives.push(mapPieceJustificative(pj)));
   return piecesJustificatives;
 }
 
@@ -60,9 +43,7 @@ function getTitulaireRequete(titulaire: ISaisieIdentite, position = 1) {
   return titulaire
     ? {
         position,
-        nomNaissance: titulaire.noms?.nomNaissance
-          ? titulaire.noms.nomNaissance
-          : SNP,
+        nomNaissance: titulaire.noms?.nomNaissance ? titulaire.noms.nomNaissance : SNP,
         nomUsage: titulaire.noms?.nomUsage,
         prenoms: getPrenomsTableauStringVersPrenomsOrdonnes(titulaire.prenoms),
         jourNaissance: parseInt(titulaire.naissance.dateEvenement.jour, 10),
@@ -85,7 +66,7 @@ const Requerant = {
   TITULAIRE2: "TITULAIRE2"
 };
 
-export const getRequerant = (saisie: SaisieRequeteRDCSC) => {
+const getRequerant = (saisie: SaisieRequeteRDCSC) => {
   const {
     requerant,
     adresse,
@@ -148,9 +129,7 @@ const getInstitutionnel = ({ requerant, adresse }: SaisieRequeteRDCSC) => {
 
 const getParticulier = ({ requerant, adresse }: SaisieRequeteRDCSC) => {
   return {
-    nomFamille: requerant.particulier.nomNaissance
-      ? requerant.particulier.nomNaissance
-      : SNP,
+    nomFamille: requerant.particulier.nomNaissance ? requerant.particulier.nomNaissance : SNP,
     prenom: getValeurOuVide(requerant.particulier.prenom),
     courriel: adresse.adresseCourriel,
     telephone: adresse.numeroTelephone,
@@ -162,13 +141,7 @@ const getParticulier = ({ requerant, adresse }: SaisieRequeteRDCSC) => {
   };
 };
 
-const getTitulaire = ({
-  titulaire,
-  adresse
-}: {
-  titulaire: ISaisieIdentite;
-  adresse: ISaisieAdresse;
-}) => {
+const getTitulaire = ({ titulaire, adresse }: { titulaire: ISaisieIdentite; adresse: ISaisieAdresse }) => {
   return {
     nomFamille: titulaire.noms?.nomNaissance,
     prenom: titulaire.prenoms.prenom1,
@@ -179,7 +152,7 @@ const getTitulaire = ({
   };
 };
 
-export const getAdresse = (adresse: ISaisieAdresse) => {
+const getAdresse = (adresse: ISaisieAdresse) => {
   return adresse
     ? {
         ligne2: adresse.complementDestinataire,

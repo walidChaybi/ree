@@ -3,7 +3,7 @@ import { IProjetActeComposition } from "@model/composition/acte/IProjetActeCompo
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 
-export interface ICompositionProjetActeApiHookResultat {
+interface ICompositionProjetActeApiHookResultat {
   documentComposer: ICompositionDto;
 }
 
@@ -11,12 +11,8 @@ export interface ICompositionProjetActeParams {
   projetActeComposition: IProjetActeComposition;
 }
 
-export function useCompositionProjetActeApiHook(
-  params?: ICompositionProjetActeParams
-): ICompositionProjetActeApiHookResultat {
-  const [document, setDocument] = useState<ICompositionDto>(
-    {} as ICompositionDto
-  );
+export function useCompositionProjetActeApiHook(params?: ICompositionProjetActeParams): ICompositionProjetActeApiHookResultat {
+  const [document, setDocument] = useState<ICompositionDto>({} as ICompositionDto);
   useEffect(() => {
     if (params) {
       compositionApi

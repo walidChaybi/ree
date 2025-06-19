@@ -1,15 +1,9 @@
-import {
-  AUTRE_PROFESSIONNEL,
-  INSTITUTI0NNEL,
-  MANDATAIRE,
-  PARTICULIER,
-  TYPE_REQUERANT
-} from "@composant/formulaire/ConstantesNomsForm";
-import { Qualite } from "@model/requete/enum/Qualite";
+import { AUTRE_PROFESSIONNEL, INSTITUTI0NNEL, MANDATAIRE, PARTICULIER, TYPE_REQUERANT } from "@composant/formulaire/ConstantesNomsForm";
 import { Requerant } from "@model/requete/IRequerant";
+import { Qualite } from "@model/requete/enum/Qualite";
 import { getLibelle } from "@util/Utils";
-import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
+import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import { SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
@@ -22,27 +16,13 @@ import InstitutionnelForm, {
   InstitutionnelFormDefaultValues,
   InstitutionnelFormValidationSchema
 } from "./institutionnel/InstitutionnelForm";
-import MandataireForm, {
-  MandataireFormDefaultValues,
-  MandataireFormValidationSchema
-} from "./mandataire/MandataireForm";
-import ParticulierForm, {
-  ParticulierFormDefaultValues,
-  ParticulierFormValidationSchema
-} from "./particulier/ParticulierForm";
+import MandataireForm, { MandataireFormDefaultValues, MandataireFormValidationSchema } from "./mandataire/MandataireForm";
+import ParticulierForm, { ParticulierFormDefaultValues, ParticulierFormValidationSchema } from "./particulier/ParticulierForm";
 import "./scss/RequerantForm.scss";
 
 // Valeurs par défaut des champs
 export const RequerantFormDefaultValues = {
   [TYPE_REQUERANT]: "TITULAIRE1",
-  [MANDATAIRE]: MandataireFormDefaultValues,
-  [INSTITUTI0NNEL]: InstitutionnelFormDefaultValues,
-  [PARTICULIER]: ParticulierFormDefaultValues
-};
-
-// Valeurs par défaut des champs
-export const PartenairesFormDefaultValues = {
-  [TYPE_REQUERANT]: "PARTENAIRE1",
   [MANDATAIRE]: MandataireFormDefaultValues,
   [INSTITUTI0NNEL]: InstitutionnelFormDefaultValues,
   [PARTICULIER]: ParticulierFormDefaultValues
@@ -74,9 +54,7 @@ export const RequerantFormValidationSchema = Yup.object()
       message: getLibelle("La sélection d'un Type est obligatoire 1 ")
     };
 
-    return typeRequerant === "MANDATAIRE" && mandataire["type"] == null
-      ? this.createError(paramsError)
-      : true;
+    return typeRequerant === "MANDATAIRE" && mandataire["type"] == null ? this.createError(paramsError) : true;
   })
   .test("typeInstitutionnelObligatoire", function (value, error) {
     const typeRequerant = value[TYPE_REQUERANT] as string;
@@ -87,9 +65,7 @@ export const RequerantFormValidationSchema = Yup.object()
       message: getLibelle("La sélection d'un Type est obligatoire")
     };
 
-    return typeRequerant === "INSTITUTIONNEL" && institutionnel["type"] == null
-      ? this.createError(paramsError)
-      : true;
+    return typeRequerant === "INSTITUTIONNEL" && institutionnel["type"] == null ? this.createError(paramsError) : true;
   })
   .test("natureAutreProfessionnelObligatoire", function (value, error) {
     const typeRequerant = value[TYPE_REQUERANT] as string;
@@ -100,10 +76,7 @@ export const RequerantFormValidationSchema = Yup.object()
       message: getLibelle("La saisie d'une Nature est obligatoire")
     };
 
-    return typeRequerant === "AUTRE_PROFESSIONNEL" &&
-      autreProfessionnel["nature"] == null
-      ? this.createError(paramsError)
-      : true;
+    return typeRequerant === "AUTRE_PROFESSIONNEL" && autreProfessionnel["nature"] == null ? this.createError(paramsError) : true;
   });
 
 const RequerantForm: React.FC<SubFormProps> = props => {
@@ -127,9 +100,7 @@ const RequerantForm: React.FC<SubFormProps> = props => {
           }
           break;
         default:
-          setRequerantSousForm(
-            props.requete.requerant.qualiteRequerant.qualite.nom
-          );
+          setRequerantSousForm(props.requete.requerant.qualiteRequerant.qualite.nom);
       }
     }
   }, [props.requete]);
@@ -155,22 +126,10 @@ const RequerantForm: React.FC<SubFormProps> = props => {
       props.onChange(e.target.value);
     }
     props.formik.setFieldValue(typeRequerantWithNamespace, e.target.value);
-    props.formik.setFieldValue(
-      withNamespace(props.nom, MANDATAIRE),
-      MandataireFormDefaultValues
-    );
-    props.formik.setFieldValue(
-      withNamespace(props.nom, INSTITUTI0NNEL),
-      InstitutionnelFormDefaultValues
-    );
-    props.formik.setFieldValue(
-      withNamespace(props.nom, PARTICULIER),
-      ParticulierFormDefaultValues
-    );
-    props.formik.setFieldValue(
-      withNamespace(props.nom, AUTRE_PROFESSIONNEL),
-      AutreProfessionnelFormDefaultValues
-    );
+    props.formik.setFieldValue(withNamespace(props.nom, MANDATAIRE), MandataireFormDefaultValues);
+    props.formik.setFieldValue(withNamespace(props.nom, INSTITUTI0NNEL), InstitutionnelFormDefaultValues);
+    props.formik.setFieldValue(withNamespace(props.nom, PARTICULIER), ParticulierFormDefaultValues);
+    props.formik.setFieldValue(withNamespace(props.nom, AUTRE_PROFESSIONNEL), AutreProfessionnelFormDefaultValues);
 
     setRequerantSousForm(e.target.value);
     props.formik.handleChange(e);
@@ -188,18 +147,10 @@ const RequerantForm: React.FC<SubFormProps> = props => {
               onChangeRequerant(e);
             }}
           />
-          {requerantSousForm === "PARTICULIER" && (
-            <ParticulierForm {...particulierFromProps} />
-          )}
-          {requerantSousForm === "MANDATAIRE" && (
-            <MandataireForm {...mandataireFromProps} />
-          )}
-          {requerantSousForm === "INSTITUTIONNEL" && (
-            <InstitutionnelForm {...institutionnelFromProps} />
-          )}
-          {requerantSousForm === "AUTRE_PROFESSIONNEL" && (
-            <AutreProfessionnelForm {...autreProfessionnelFromProps} />
-          )}
+          {requerantSousForm === "PARTICULIER" && <ParticulierForm {...particulierFromProps} />}
+          {requerantSousForm === "MANDATAIRE" && <MandataireForm {...mandataireFromProps} />}
+          {requerantSousForm === "INSTITUTIONNEL" && <InstitutionnelForm {...institutionnelFromProps} />}
+          {requerantSousForm === "AUTRE_PROFESSIONNEL" && <AutreProfessionnelForm {...autreProfessionnelFromProps} />}
         </div>
       </SousFormulaire>
     </>

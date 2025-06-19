@@ -8,17 +8,14 @@ import { checkDirty } from "@util/Utils";
 import React, { useContext, useState } from "react";
 import "./VoletAvecOnglet.scss";
 
-export interface IOnglet {
+interface IOnglet {
   titre: string;
   component: JSX.Element;
   iconeWarning?: boolean;
   data?: any;
 }
-export interface OngletProps {
-  liste: IOnglet[];
-  ongletSelectionne: number;
-}
-export interface VoletOngletProps {
+
+interface VoletOngletProps {
   liste: IOnglet[];
   ongletSelectionne?: number;
   handleChange?: (valeur: number) => void;
@@ -27,12 +24,8 @@ export interface VoletOngletProps {
   ongletParDefault?: number;
 }
 
-export const VoletAvecOnglet: React.FC<
-  React.PropsWithChildren<VoletOngletProps>
-> = props => {
-  const [ongletSelectionne, setOngletSelectionne] = useState(
-    props.ongletParDefault || 0
-  );
+export const VoletAvecOnglet: React.FC<React.PropsWithChildren<VoletOngletProps>> = props => {
+  const [ongletSelectionne, setOngletSelectionne] = useState(props.ongletParDefault || 0);
   const { isDirty } = useContext(RECEContextData);
   const { setIsDirty } = useContext(RECEContextActions);
 
@@ -45,20 +38,12 @@ export const VoletAvecOnglet: React.FC<
   };
 
   const handleChange = (e: React.SyntheticEvent, newValue: string) => {
-    props.handleChange
-      ? props.handleChange(parseInt(newValue))
-      : handleChangeLocalOnglet(parseInt(newValue));
+    props.handleChange ? props.handleChange(parseInt(newValue)) : handleChangeLocalOnglet(parseInt(newValue));
   };
 
   return (
     <div className="VoletAvecOnglet">
-      <TabContext
-        value={
-          props.ongletSelectionne === undefined
-            ? ongletSelectionne.toString()
-            : props.ongletSelectionne.toString()
-        }
-      >
+      <TabContext value={props.ongletSelectionne === undefined ? ongletSelectionne.toString() : props.ongletSelectionne.toString()}>
         <TabList
           onChange={handleChange}
           className="BarreOnglet"

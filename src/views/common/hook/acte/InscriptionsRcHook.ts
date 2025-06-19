@@ -5,10 +5,6 @@ import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 
-export interface GetInscriptionsRCHookParameters {
-  id?: string;
-}
-
 export function useGetInscriptionsRCApiHook(id?: string): IInscriptionRc[] {
   const [inscriptionsRC, setInscriptionsRC] = useState<IInscriptionRc[]>([]);
   useEffect(() => {

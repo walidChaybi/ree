@@ -13,7 +13,7 @@ import { Generateur } from "@util/generateur/Generateur";
 import messageManager from "@util/messageManager";
 import * as superagent from "superagent";
 
-export const ID_CORRELATION_HEADER_NAME = "X-Correlation-Id";
+const ID_CORRELATION_HEADER_NAME = "X-Correlation-Id";
 
 export class GestionnaireApi {
   private readonly url: string;

@@ -1,6 +1,6 @@
 import React from "react";
 import "./scss/TableauSimple.scss";
-export interface Entete {
+interface Entete {
   className?: string;
   libelle: string;
 }
@@ -11,7 +11,7 @@ export interface Ligne {
   className?: string;
 }
 
-export interface Colonne {
+interface Colonne {
   className?: string;
   contenu: JSX.Element | string;
   onClick?: (idxColonne: number) => void;
@@ -27,15 +27,14 @@ export interface TableauSimpleProps {
 
 export const TableauSimple: React.FC<TableauSimpleProps> = props => {
   return (
-    <table
-      className={
-        props.className ? `${props.className} TableauSimple` : "TableauSimple"
-      }
-    >
+    <table className={props.className ? `${props.className} TableauSimple` : "TableauSimple"}>
       <thead>
         <tr>
           {props.entetes.map((e: Entete, idx: number) => (
-            <th key={`${e.libelle}-${idx}`} className={e.className}>
+            <th
+              key={`${e.libelle}-${idx}`}
+              className={e.className}
+            >
               {e.libelle}
             </th>
           ))}
@@ -43,7 +42,10 @@ export const TableauSimple: React.FC<TableauSimpleProps> = props => {
       </thead>
       <tbody>
         {props.lignes.map((ligne: Ligne, idxLigne: number) => (
-          <tr key={`${ligne.key}-${idxLigne}`} className={ligne.className}>
+          <tr
+            key={`${ligne.key}-${idxLigne}`}
+            className={ligne.className}
+          >
             {ligne.colonnes.map((colonne: Colonne, idxColonne: number) => (
               <td
                 key={`${ligne.key}-${idxLigne}${idxColonne}`}

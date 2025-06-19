@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-
 import { Droit } from "@model/agent/enum/Droit";
 
 export interface IHabiliationDescription {
@@ -13,7 +11,7 @@ export interface IHabiliationDescription {
   visibleSeulementPourLesDroits?: Droit[];
   verificationPerimetre?: boolean;
 }
-export type NomFonction = "";
+type NomFonction = "";
 
 export type NomComposant =
   | "LinkTabRequetesDelivranceService"
@@ -38,7 +36,7 @@ export type NomComposant =
   | "BoutonPrendreEnChargePlusAncienneCreation"
   | "BoutonSignerLeLot"
   | "MenuSaisirRequeteCreation";
-export type NomComposantOuFonction = NomComposant | NomFonction;
+type NomComposantOuFonction = NomComposant | NomFonction;
 
 const droitsSaufConsulterArchives = [
   Droit.CREER_ACTE_DRESSE,

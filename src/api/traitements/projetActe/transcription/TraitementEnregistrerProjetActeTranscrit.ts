@@ -13,7 +13,7 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useEffect, useState } from "react";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
 
-export interface IPostProjetActeTranscrit {
+interface IPostProjetActeTranscrit {
   idSuiviDossier: string;
   valeursSaisies: IProjetActeTranscritForm;
   projetActe: ProjetActeTranscrit | null;

@@ -9,19 +9,13 @@ import { traiteEspace } from "./ControlesUtil";
 export const NB_CARACT_MAX_SAISIE = "100";
 export const NB_CARACT_ADRESSE = "38";
 export const NB_CARACT_COMMUNE = "32";
-export const TRENTE_DEUX_CARACT_MAX = "32";
-export const DEUX_CENT_CARACT_MAX = "200";
-export const CENT_CARACT_MAX = "100";
-export const DIX_CARACT_MAX = "10";
-// TOREFACTO Pas la bonne valeur ?
-export const TRENTE_HUIT_CARACT_MAX = "100";
 export const IGNORER_TABULATION = -1;
 
 export type FormikComponentProps = {
   formik: FormikProps<FormikValues>;
 };
 
-export interface IOnFieldChangeParam {
+interface IOnFieldChangeParam {
   filtreDirty?: boolean;
 }
 
@@ -73,31 +67,11 @@ export function getLibelleParentFromSexe(numeroOrdre: number, saisie?: ISaisiePa
   }
 }
 
-export const onBlurChampNumero = (
-  e: React.ChangeEvent<HTMLInputElement>,
-  formik: FormikProps<FormikValues>
-): void => {
+export const onBlurChampNumero = (e: React.ChangeEvent<HTMLInputElement>, formik: FormikProps<FormikValues>): void => {
   traiteEspace(e, formik.handleChange);
   formik.handleBlur(e);
 };
 
 export function compteNombreDePrenoms(prenoms?: Prenoms): number {
-  return Object.values(prenoms || {}).reduce(
-    (resultat: number, prenom: string) =>
-      prenom === "" ? resultat : resultat + 1,
-    0
-  );
+  return Object.values(prenoms || {}).reduce((resultat: number, prenom: string) => (prenom === "" ? resultat : resultat + 1), 0);
 }
-
-export function compteNombreDeChampsPrenoms(prenoms: Prenoms): number {
-  return Object.values(prenoms).filter(
-    prenom => prenom === "" || Boolean(prenom)
-  ).length;
-}
-
-export const getValeurFormik = (
-  formik: FormikProps<FormikValues>,
-  champ: string
-) => {
-  return formik.getFieldProps(champ).value;
-};

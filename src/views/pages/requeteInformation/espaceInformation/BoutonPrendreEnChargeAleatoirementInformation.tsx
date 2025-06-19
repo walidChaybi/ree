@@ -9,12 +9,11 @@ import { URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID } from "@router/ReceUrls";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import messageManager from "@util/messageManager";
 import { getUrlWithParam } from "@util/route/UrlUtil";
-import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 
-export const BoutonPrendreEnChargeAleatoirementInformation: React.FC = (props: any) => {
+const BoutonPrendreEnChargeAleatoirementInformation: React.FC = (props: any) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -33,7 +32,7 @@ export const BoutonPrendreEnChargeAleatoirementInformation: React.FC = (props: a
           callback: redirectApercuRequeteInfo
         });
       } else if (!requeteAleatoireResultat.requete) {
-        messageManager.showInfoAndClose(getLibelle("Il n'existe plus de requêtes disponibles à la prise en charge"));
+        messageManager.showInfoAndClose("Il n'existe plus de requêtes disponibles à la prise en charge");
       }
       setOperationEnCours(false);
       setPrendreEnCharge(false);
@@ -60,7 +59,7 @@ export const BoutonPrendreEnChargeAleatoirementInformation: React.FC = (props: a
       estDesactive={props.disabled}
       toileDeFondVisible={operationEnCours}
     >
-      {getLibelle("Prendre en charge requête suivante")}
+      {"Prendre en charge requête suivante"}
     </BoutonOperationEnCours>
   );
 };

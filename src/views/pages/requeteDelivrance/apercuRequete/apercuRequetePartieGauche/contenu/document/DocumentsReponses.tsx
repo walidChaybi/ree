@@ -1,8 +1,5 @@
 import { useGetDocumentReponseApi } from "@hook/DocumentReponseHook";
-import {
-  DocumentReponse,
-  IDocumentReponse
-} from "@model/requete/IDocumentReponse";
+import { DocumentReponse, IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import Image from "@mui/icons-material/Image";
 import PictureAsPdf from "@mui/icons-material/PictureAsPdf";
@@ -12,13 +9,12 @@ import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import { getIdDocumentReponseAAfficher } from "@util/RequetesUtils";
-import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import React, { useCallback, useEffect, useState } from "react";
 import { FenetreDocumentReponse } from "./FenetreDocumentReponse";
 import "./scss/DocumentsReponses.scss";
 
-export interface InfoDocumentAffiche {
+interface InfoDocumentAffiche {
   id: string;
   nom?: string;
 }
@@ -27,10 +23,7 @@ interface IDocumentsReponsesProps {
   onClickDocumentAffiche?: (docReponse: IDocumentReponse) => void;
 }
 
-export const DocumentsReponses: React.FC<IDocumentsReponsesProps> = ({
-  requete,
-  onClickDocumentAffiche
-}) => {
+export const DocumentsReponses: React.FC<IDocumentsReponsesProps> = ({ requete, onClickDocumentAffiche }) => {
   /* Gestion fenêtre externe si pas de visinneuse */
   const [documentAffiche, setDocumentAffiche] = useState<InfoDocumentAffiche>();
   const contenuPiece = useGetDocumentReponseApi(documentAffiche?.id);
@@ -79,7 +72,7 @@ export const DocumentsReponses: React.FC<IDocumentsReponsesProps> = ({
       }
     }
   }, [requete, onClickDocumentAffiche]);
-  
+
   return (
     <div className="documents-reponses">
       <AccordionRece
@@ -89,25 +82,21 @@ export const DocumentsReponses: React.FC<IDocumentsReponsesProps> = ({
         expandedPossible={requete.documentsReponses?.length > 0}
       >
         <List>
-          {DocumentReponse.triDocumentsDelivrance(
-            requete.documentsReponses || []
-          ).map(el => (
+          {DocumentReponse.triDocumentsDelivrance(requete.documentsReponses || []).map(el => (
             <ListItem
               key={el.id}
               onClick={() => {
                 onClick({ id: el.id, nom: DocumentReponse.getLibelle(el) });
               }}
-              className={`documentReponse ${
-                documentAffiche?.id === el.id ? "selected" : ""
-              }`}
+              className={`documentReponse ${documentAffiche?.id === el.id ? "selected" : ""}`}
             >
               <ListItemAvatar>
                 {el.mimeType === "application/pdf" ? (
-                  <Avatar title={getLibelle("Fichier au format PDF")}>
+                  <Avatar title={"Fichier au format PDF"}>
                     <PictureAsPdf />
                   </Avatar>
                 ) : (
-                  <Avatar title={getLibelle("Image au format PNG")}>
+                  <Avatar title={"Image au format PNG"}>
                     <Image />
                   </Avatar>
                 )}
@@ -125,7 +114,7 @@ export const DocumentsReponses: React.FC<IDocumentsReponsesProps> = ({
           toggleFenetre={toggleFenetre}
           numRequete={requete.numero}
           contenuPiece={contenuPiece}
-          nom={getValeurOuVide(documentAffiche?.nom)}
+          nom={documentAffiche?.nom ?? ""}
         />
       )}
     </div>

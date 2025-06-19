@@ -33,7 +33,7 @@ export const mappingRequetesTableauConsulaire = (
   });
 };
 
-export const mappingUneRequeteTableauConsulaire = (
+const mappingUneRequeteTableauConsulaire = (
   requete: any,
   mappingSupplementaire: boolean,
   utilisateurs: IUtilisateur[],

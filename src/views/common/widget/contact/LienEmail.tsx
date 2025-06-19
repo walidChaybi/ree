@@ -1,6 +1,6 @@
 import React from "react";
 
-export interface LienEmailProps {
+interface LienEmailProps {
   email?: string;
 }
 

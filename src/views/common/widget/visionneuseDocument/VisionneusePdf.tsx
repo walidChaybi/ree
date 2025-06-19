@@ -1,6 +1,6 @@
 import React from "react";
 
-export interface IVisionneusePdfProps {
+interface IVisionneusePdfProps {
   infoBulle: string;
   url: string;
   zoomPageFit?: boolean;

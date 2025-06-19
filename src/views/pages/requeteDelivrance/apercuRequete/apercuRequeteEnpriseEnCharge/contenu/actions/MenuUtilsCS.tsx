@@ -15,12 +15,12 @@ export enum INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE {
   IGNORER_REQUETE
 }
 
-export enum INDEX_CHOIX_ACTION_MENU_DELIVRER {
+enum INDEX_CHOIX_ACTION_MENU_DELIVRER {
   CERTIFICAT_SITUATION,
   ATTESTATION_PACS
 }
 
-export function getListeDocumentsAutorise(listeDocumentDemandeUn: string[], listeDocumentDemandeDeux?: string[]) {
+function getListeDocumentsAutorise(listeDocumentDemandeUn: string[], listeDocumentDemandeDeux?: string[]) {
   if (listeDocumentDemandeDeux) {
     return listeDocumentDemandeUn.concat(listeDocumentDemandeDeux);
   } else {
@@ -28,7 +28,7 @@ export function getListeDocumentsAutorise(listeDocumentDemandeUn: string[], list
   }
 }
 
-export const listeDocumentsDemandeAutreQueAttestationPACS = [
+const listeDocumentsDemandeAutreQueAttestationPACS = [
   ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS,
   ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS_RC,
   ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS_RCA,
@@ -38,7 +38,7 @@ export const listeDocumentsDemandeAutreQueAttestationPACS = [
   ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_RC_RCA
 ];
 
-export const documentsDemandeAttestationPACS = [ECodeDocumentDelivrance.CODE_ATTESTATION_PACS];
+const documentsDemandeAttestationPACS = [ECodeDocumentDelivrance.CODE_ATTESTATION_PACS];
 
 export const menuSansDelivranceActions: IActionOption[] = [
   {

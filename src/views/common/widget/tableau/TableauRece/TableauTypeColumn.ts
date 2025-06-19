@@ -1,6 +1,6 @@
 type alignType = "left" | "center" | "right" | "justify" | "inherit";
 
-export interface ITableauTypeColumnParam {
+interface ITableauTypeColumnParam {
   keys: string[];
   title?: string;
   getTitle?: (datas: any[]) => JSX.Element;

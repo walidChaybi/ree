@@ -10,13 +10,13 @@ import "../scss/PiecesJointesForm.scss";
 import { ISubForm, SubFormProps } from "../utils/FormUtil";
 import { PiecesJointes } from "./PiecesJointes";
 
-export interface PiecesJointesFormProps {
+interface PiecesJointesFormProps {
   typeRequete: TypeRequete;
   typeRedactionActe?: ETypeRedactionActe;
   maxPiecesJointes?: number;
 }
 
-export type PiecesJointesSubFormProps = SubFormProps & PiecesJointesFormProps;
+type PiecesJointesSubFormProps = SubFormProps & PiecesJointesFormProps;
 
 const PiecesJointesForm: React.FC<PiecesJointesSubFormProps> = props => {
   const [menuItemsState, setMenuItemsState] = React.useState<Options>([]);

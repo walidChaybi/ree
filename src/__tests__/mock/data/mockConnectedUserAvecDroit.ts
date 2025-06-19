@@ -109,30 +109,6 @@ export const userDroitConsulterArchive: IOfficier = {
   ]
 };
 
-export const userDroitConsulterConsulterArchive: IOfficier = {
-  ...BASE_UTILISATEUR,
-  habilitations: [
-    {
-      idHabilitation: "h12345",
-      profil: {
-        idProfil: "p12345",
-        nom: {
-          idNomenclature: "idNomenclature",
-          categorie: "TYPE_PROFIL",
-          code: "code",
-          libelle: "libelle",
-          estActif: true
-        },
-        droits: [
-          { idDroit: "d12345", nom: Droit.CONSULTER_ARCHIVES },
-          { idDroit: "d12345", nom: Droit.CONSULTER }
-        ]
-      },
-      perimetre: { ...BASE_PERIMETRE }
-    }
-  ]
-};
-
 export const userDroitConsulterPerimetreTousRegistres: IOfficier = {
   ...BASE_UTILISATEUR,
   habilitations: [

@@ -1,6 +1,6 @@
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import { getLibelle } from "@util/Utils";
+
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import FormBoutons, { FormBoutonsProps } from "@widget/popin/FormBoutons";
@@ -27,13 +27,10 @@ const OBSERVATION_LIMITE_TAILLE = `L'observation ne peut pas dépasser ${OBSERVA
 
 // Schéma de validation en sortie de champs
 const ValidationSchema = Yup.object({
-  [OBSERVATION]: Yup.string().max(
-    OBSERVATION_MAX_LENGTH - 1,
-    OBSERVATION_LIMITE_TAILLE
-  )
+  [OBSERVATION]: Yup.string().max(OBSERVATION_MAX_LENGTH - 1, OBSERVATION_LIMITE_TAILLE)
 });
 
-export interface PopinAjouterObservationProps {
+interface PopinAjouterObservationProps {
   open: boolean;
   onClosePopin: () => void;
   onSubmit: (value: IAjouterObservationFormValue) => void;
@@ -42,9 +39,7 @@ export interface PopinAjouterObservationProps {
   };
 }
 
-export const PopinAjouterObservation: React.FC<
-  PopinAjouterObservationProps
-> = ({ open, onClosePopin, onSubmit, defaultValue }) => {
+export const PopinAjouterObservation: React.FC<PopinAjouterObservationProps> = ({ open, onClosePopin, onSubmit, defaultValue }) => {
   const boutonsProps = {
     onClosePopin
   } as FormBoutonsProps;
@@ -67,8 +62,8 @@ export const PopinAjouterObservation: React.FC<
             <InputField
               name={OBSERVATION}
               component="textarea"
-              label={getLibelle("Saisissez l'observation")}
-              placeholder={getLibelle("Description")}
+              label={"Saisissez l'observation"}
+              placeholder={"Description"}
               rows={NB_LIGNE_COMPLEMENT_DESCRIPTION}
               maxLength={OBSERVATION_MAX_LENGTH.toString()}
             />

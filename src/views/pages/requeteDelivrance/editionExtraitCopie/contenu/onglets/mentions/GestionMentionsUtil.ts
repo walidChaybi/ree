@@ -9,14 +9,12 @@ import {
   natureMentionExtraitPlurilingueMariage,
   natureMentionExtraitPlurilingueNaissance
 } from "@model/etatcivil/enum/NatureMention";
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { Options } from "@util/Type";
 import messageManager from "@util/messageManager";
-import { fournisseurDonneesBandeauFactory } from "../../../../../fiche/contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
 
-export function miseAJourMention(
+function miseAJourMention(
   mentionSelect: IMentionAffichage | undefined,
   mentions: IMentionAffichage[],
   index: number,
@@ -152,12 +150,6 @@ export const texteNonModifieNatureChangePasDeTexteDelivrance = (
   );
 };
 
-export const getRegistreActe = (acte: IFicheActe) => {
-  const fournisseurDonneesBandeau = fournisseurDonneesBandeauFactory.createFournisseur(TypeFiche.ACTE, acte);
-
-  return fournisseurDonneesBandeau.getRegistre();
-};
-
 export function aucuneMentionsAffichageNationalite(mentions?: IMentionAffichage[]) {
   return mentions?.filter(el => el.estPresent).every(mention => mention.nature?.libelle !== "Nationalité");
 }
@@ -258,7 +250,7 @@ export function validerMentionsPlusieursDocuments(callback: () => void, acte?: I
   }
 }
 
-export function controleMentionsPlusieursDocs(acte?: IFicheActe, documents?: IDocumentReponse[]) {
+function controleMentionsPlusieursDocs(acte?: IFicheActe, documents?: IDocumentReponse[]) {
   let message = "";
   documents?.forEach(document => {
     const estExtraitAvecFilliation = DocumentDelivrance.estExtraitAvecFilliation(document?.typeDocument);
@@ -297,7 +289,7 @@ export function controleMentionsPlusieursDocs(acte?: IFicheActe, documents?: IDo
   return message;
 }
 
-export function getNaturesMentionsAffichage(mentionsAffichage?: IMentionAffichage[]): (INatureMention | null)[] {
+function getNaturesMentionsAffichage(mentionsAffichage?: IMentionAffichage[]): (INatureMention | null)[] {
   return mentionsAffichage?.filter(mentionAffichage => mentionAffichage.estPresent).map(mentionAffichage => mentionAffichage.nature) ?? [];
 }
 

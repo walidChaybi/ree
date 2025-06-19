@@ -1,15 +1,8 @@
 import { postCreationAction } from "@api/appels/requeteApi";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 
-export interface ICreationActionEtMiseAjourStatutParams {
-  libelleAction?: string;
-  statutRequete?: StatutRequete;
-  requeteId?: string;
-}
-
-export interface ICreationActionParams {
+interface ICreationActionParams {
   libelleAction?: string;
   requeteId?: string;
 }

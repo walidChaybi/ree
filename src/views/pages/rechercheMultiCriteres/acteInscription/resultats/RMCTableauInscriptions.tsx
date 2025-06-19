@@ -27,7 +27,7 @@ interface IFenetreFicheInscription {
   index: IIndex;
 }
 
-export interface RMCResultatInscriptionProps {
+interface RMCResultatInscriptionProps {
   typeRMC: TypeRMC;
   dataRequete?: TRequete;
   dataRMCInscription: IResultatRMCInscription[];

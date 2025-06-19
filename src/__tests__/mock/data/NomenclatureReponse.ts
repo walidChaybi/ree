@@ -10,10 +10,8 @@ export const NOMENCLATURE_REPONSE = [
     id: "da27bb9d-1e08-45da-a0d4-caf11fe64ace",
     objet: "DIVORCE",
     complementObjet: "MISE_A_JOUR_ETAT_CIVIL",
-    libelle:
-      "Séparation de corps/Divorce enregistré(e) par un notaire français",
-    corpsMail:
-      "Corps Séparation de corps/Divorce enregistré(e) par un notaire français"
+    libelle: "Séparation de corps/Divorce enregistré(e) par un notaire français",
+    corpsMail: "Corps Séparation de corps/Divorce enregistré(e) par un notaire français"
   },
   {
     id: "7c713156-8c88-4d20-8e90-9aa63c903b01",
@@ -34,16 +32,6 @@ export const NOMENCLATURE_REPONSE = [
     objet: "COMPLETION_REQUETE_EN_COURS",
     complementObjet: "REPONSE_LIBRE_AGENT",
     libelle: "Réponse libre agent",
-    corpsMail:
-      "Madame, Monsieur, \n\nNous avons bien reçu le(s) documents(s) que vous avez transmis."
+    corpsMail: "Madame, Monsieur, \n\nNous avons bien reçu le(s) documents(s) que vous avez transmis."
   }
 ];
-
-export const ReponseAppelNomenclatureReponse = {
-  hasTechnicalError: false,
-  hasBusinessError: false,
-  status: 200,
-  url: "/rece-requete-api/v2/nomenclature/reponse",
-  data: NOMENCLATURE_REPONSE,
-  errors: []
-};

@@ -5,7 +5,7 @@ export interface IParametreBaseRequeteDTO {
   fichierB64?: string;
 }
 
-export interface IParametreBaseRequete {
+interface IParametreBaseRequete {
   cle: string;
   libelle: string;
 }

@@ -1,10 +1,11 @@
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 
-export interface IDroitPerimetre {
+interface IDroitPerimetre {
   droit: Droit;
   perimetres: Perimetre[];
 }
+
 export interface IRoute {
   component?: any;
   url: string;

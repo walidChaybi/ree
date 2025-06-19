@@ -70,7 +70,7 @@ export function officierDroitConsulterSurLeTypeRegistre(utilisateurConnecte: IOf
   return res;
 }
 
-export function officierDroitDelivrerSurLeTypeRegistre(idTypeRegistre: string, utilisateurConnecte: IOfficier) {
+function officierDroitDelivrerSurLeTypeRegistre(idTypeRegistre: string, utilisateurConnecte: IOfficier) {
   let estHabilite = false;
 
   if (utilisateurConnecte) {
@@ -78,13 +78,15 @@ export function officierDroitDelivrerSurLeTypeRegistre(idTypeRegistre: string, u
     while (!estHabilite && i < utilisateurConnecte.habilitations.length) {
       const habilitationOfficier = utilisateurConnecte.habilitations[i];
       if (Habilitation.aDroitDelivrerEtDelivrerComedecSurPerimetre(habilitationOfficier, idTypeRegistre)) {
-        estHabilite = true;
+        if (Habilitation.aDroitDelivrerEtDelivrerComedecSurPerimetre(habilitationOfficier, idTypeRegistre)) {
+          estHabilite = true;
+        }
+        i++;
       }
-      i++;
     }
-  }
 
-  return estHabilite;
+    return estHabilite;
+  }
 }
 
 export function officierDroitConsulterSurLeTypeRegistreOuDroitMAE(utilisateurConnecte: IOfficier, idTypeRegistre?: string) {
@@ -132,7 +134,7 @@ export const appartientAMonServiceOuServicesParentsOuServicesFils = (utilisateur
   );
 };
 
-export function contientServiceFils(idService: string, utilisateurConnecte: IOfficier) {
+function contientServiceFils(idService: string, utilisateurConnecte: IOfficier) {
   return utilisateurConnecte?.servicesFils?.some(serviceFils => serviceFils.idService === idService);
 }
 
@@ -203,7 +205,7 @@ export function mappingOfficier(headers: any, body: any): IOfficier {
   };
 }
 
-export function setProfilsOfficier(profils: string): string[] {
+function setProfilsOfficier(profils: string): string[] {
   let profilsUtilisateur: string[] = [];
   if (profils) {
     profilsUtilisateur = profils.split("\\; ").filter(x => x);

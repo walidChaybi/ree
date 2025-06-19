@@ -1,7 +1,5 @@
-import { ISaisieRequeteAEnvoyer } from "@hook/requete/CreationRequeteCreationApiHook";
 import { IFiltreServiceRequeteCreationDto } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
 import { IFiltreServiceRequeteDelivranceDto } from "@model/form/delivrance/IFiltreServiceRequeteDelivrance";
-import { CLES } from "@model/parametres/clesParametres";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IEchange } from "@model/requete/IEchange";
 import { IFiltresServiceRequeteInformationFormValues } from "@model/requete/IFiltreServiceRequeteInformation";
@@ -13,60 +11,50 @@ import { SortOrder } from "@widget/tableau/TableUtils";
 import { HttpMethod } from "../ApiManager";
 import { URL_MENTION } from "./etatcivilApi";
 
-export const URL_REQUETES_DELIVRANCE_SERVICE = "/requetes/requetesService";
-export const URL_REQUETES_INFO_SERVICE = "/requetes/information/requetes-de-mon-service";
-export const URL_REQUETES_CREATION_SERVICE = "/requetes/creation/requetes-service";
+const URL_REQUETES_DELIVRANCE_SERVICE = "/requetes/requetesService";
+const URL_REQUETES_INFO_SERVICE = "/requetes/information/requetes-de-mon-service";
+const URL_REQUETES_CREATION_SERVICE = "/requetes/creation/requetes-service";
 export const URL_REQUETES = "/requetes";
-export const URL_MES_REQUETES_DELIVRANCE = "/requetes/mesrequetes";
-export const URL_MES_REQUETES_INFO = "/requetes/information/mesrequetes";
-export const URL_MES_REQUETES_CREATION = "/requetes/creation/mes-requetes";
-export const URL_CREATION = "/requetes/creation/";
-export const URL_SAUVEGARDER_REPONSE_REQINFO = "/requetes/information/reponse";
-export const URL_INFORMATION_STATUT = "/requetes/information/statut";
+const URL_MES_REQUETES_DELIVRANCE = "/requetes/mesrequetes";
+const URL_MES_REQUETES_INFO = "/requetes/information/mesrequetes";
+const URL_MES_REQUETES_CREATION = "/requetes/creation/mes-requetes";
+const URL_CREATION = "/requetes/creation/";
+const URL_SAUVEGARDER_REPONSE_REQINFO = "/requetes/information/reponse";
 export const URL_REQUETES_COUNT = "/requetes/count";
-export const URL_REQUETES_RMC = "/requetes/rmc";
-export const URL_NOMENCLATURE = "/nomenclature";
-export const URL_REQUETES_DELIVRANCE = "/requetes/delivrance";
-export const URL_REQUETES_CREATIONS = "/requetes/creations";
-export const URL_REQUETES_CREATION = "/requetes/creation";
-export const URL_REQUETES_CREATION_TRANSMISSION_SERVICE = "/requetes/creationsTransmissionService";
-export const URL_CHOIX_DELIVRANCE = "/choixdelivrance";
-export const URL_COURRIER = "/courrier";
-export const URL_DOCUMENT = "/document";
-export const URL_DOCUMENT_REPONSE = "/documentsreponses";
-export const URL_PIECES_COMPLEMENT_INFORMATION = "/piecescomplementinformations";
-export const URL_PIECE_COMPLEMENT_INFORMATION = "/piececomplementinformation";
-export const URL_PIECES_JUSTIFICATIVES = "/piecesjustificatives";
-export const URL_PIECE_JUSTIFICATIVE = "/piecejustificative";
-export const URL_FICHIER_PIECE_JUSTIFICATIVE = "/requetes/fichierpiecejustificative/";
-export const URL_LIBELLE = "/libelle";
-export const URL_PARAMETRE = "/parametres";
-export const URL_ACTION = "/requetes/action";
-export const URL_ACTION_MAJ_STATUT = "/requetes/action/majStatut";
-export const URL_TRANSFERT = "/requetes/action/transfert";
-export const URL_TRANSFERT_VALIDEUR = "/requetes/action/transfertValideur";
-export const URL_RETOUR_VALIDEUR = "/requetes/action/retourValideur";
-export const URL_OBSERVATION = "/requetes/observation";
-export const URL_IGNORER = "/requetes/action/ignorer";
-export const URL_REQUETE_ALEATOIRE = "/requetes/requetealeatoire";
-export const URL_OPTION_COURRIER = "/optioncourrier";
-export const URL_REPONSE_REQ_INFO = "/reponse";
-export const URL_NB_REQ_INFO = "/requetes/information/count";
-export const URL_ECHANGE = "/echange";
-export const URL_ECHANGE_STATUT = "/requetes/action/retourSdanf";
-export const URL_DOCUMENT_COMPLEMENTAIRE = "/documentsreponses/documentComplementaire";
-export const URL_RECHERCHE_REQ_NATALI = "/requetes/creation/natali/numeroDossierNational";
-export const URL_SAUVEGARDE_PERSONNE_ACTE_RMC = "/requetes/creation/sauvegardeDetailsRMC";
-export const URL_MISE_A_JOUR_SUIVI_DOSSIER = "/requetes/creation/suiviDossier";
-export const URL_AVANCEMENT_PROJET = "/avancement";
-export const URL_PIECE_JUSTIFICATIVES_CREATION = "/pieceJustificative";
-export const URL_STATUT = "/statut";
+const URL_REQUETES_RMC = "/requetes/rmc";
+const URL_NOMENCLATURE = "/nomenclature";
+const URL_REQUETES_DELIVRANCE = "/requetes/delivrance";
+const URL_REQUETES_CREATION = "/requetes/creation";
+const URL_CHOIX_DELIVRANCE = "/choixdelivrance";
+const URL_COURRIER = "/courrier";
+const URL_DOCUMENT = "/document";
+const URL_DOCUMENT_REPONSE = "/documentsreponses";
+const URL_PIECES_COMPLEMENT_INFORMATION = "/piecescomplementinformations";
+const URL_PIECE_COMPLEMENT_INFORMATION = "/piececomplementinformation";
+const URL_PIECES_JUSTIFICATIVES = "/piecesjustificatives";
+const URL_PIECE_JUSTIFICATIVE = "/piecejustificative";
+const URL_FICHIER_PIECE_JUSTIFICATIVE = "/requetes/fichierpiecejustificative/";
+const URL_LIBELLE = "/libelle";
+const URL_ACTION = "/requetes/action";
+const URL_ACTION_MAJ_STATUT = "/requetes/action/majStatut";
+const URL_TRANSFERT = "/requetes/action/transfert";
+const URL_TRANSFERT_VALIDEUR = "/requetes/action/transfertValideur";
+const URL_RETOUR_VALIDEUR = "/requetes/action/retourValideur";
+const URL_OBSERVATION = "/requetes/observation";
+const URL_IGNORER = "/requetes/action/ignorer";
+const URL_REQUETE_ALEATOIRE = "/requetes/requetealeatoire";
+const URL_OPTION_COURRIER = "/optioncourrier";
+const URL_REPONSE_REQ_INFO = "/reponse";
+const URL_NB_REQ_INFO = "/requetes/information/count";
+const URL_ECHANGE_STATUT = "/requetes/action/retourSdanf";
+const URL_DOCUMENT_COMPLEMENTAIRE = "/documentsreponses/documentComplementaire";
+const URL_SAUVEGARDE_PERSONNE_ACTE_RMC = "/requetes/creation/sauvegardeDetailsRMC";
+const URL_MISE_A_JOUR_SUIVI_DOSSIER = "/requetes/creation/suiviDossier";
+const URL_AVANCEMENT_PROJET = "/avancement";
+const URL_PIECE_JUSTIFICATIVES_CREATION = "/pieceJustificative";
 const URL_SUIVI_DOSSIER = "/suivi-dossier";
 const URL_METTRE_AJOUR_STATUT_APRES_SIGNATURE = "/mettre-a-jour-statut-apres-signature";
-export const URL_PRENDRE_EN_CHARGE_REQUETE_SUIVANTE = "/requetes/creation/requete-a-prendre-en-charge";
-export const URL_REQUETE_MISE_A_JOUR = "/mise-a-jour";
-
-const URL_REPONSES = "/reponses";
+const URL_PRENDRE_EN_CHARGE_REQUETE_SUIVANTE = "/requetes/creation/requete-a-prendre-en-charge";
 
 export enum TypeAppelRequete {
   REQUETE_DELIVRANCE_SERVICE = "requeteService",
@@ -84,24 +72,6 @@ export interface IQueryParametersPourRequetes {
   range?: string;
 }
 
-export interface IMiseAJourDocumentParams {
-  contenu: string;
-  nom: string;
-  conteneurSwift: string;
-  id: string;
-}
-
-export interface IQueryParametersAssigneRequetes {
-  idReponse?: string;
-  nomOec: string;
-  prenomOec: string;
-}
-
-export interface IQueryParametersPourRequete {
-  statut?: StatutRequete;
-  idRequete: string;
-}
-
 async function getApiManager() {
   const { ApiManager } = await import("../ApiManager");
   return ApiManager.getInstance("rece-requete-api", "v2");
@@ -110,16 +80,6 @@ async function getApiManager() {
 ////////////////////////
 /*** API REQUETE V2 ***/
 ////////////////////////
-export function getParametresBaseRequete(): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetchCache({
-      method: HttpMethod.POST,
-      uri: `${URL_PARAMETRE}`,
-      data: CLES
-    })
-  );
-}
-
 export function getTableauRequetesDelivrance(
   typeRequete: TypeAppelRequete,
   listeStatuts: string,
@@ -273,15 +233,6 @@ export function getDetailRequete(idRequete: string, estConsultation = false, est
   return getApiManager().then(api => api.fetch(config));
 }
 
-export async function getNomenclatureRequete(nom: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetchCache({
-      method: HttpMethod.GET,
-      uri: `${URL_NOMENCLATURE}/${nom}`
-    })
-  );
-}
-
 export function rechercheMultiCriteresRequetes(criteres: IRMCRequestRequete, range?: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
@@ -291,20 +242,6 @@ export function rechercheMultiCriteresRequetes(criteres: IRMCRequestRequete, ran
       parameters: {
         range
       }
-    })
-  );
-}
-
-export function patchUtilisateurAssigneRequete(queryParameters: IQueryParametersAssigneRequetes): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.PATCH,
-      uri: `${URL_REPONSES}/${queryParameters.idReponse}`,
-      parameters: {
-        nomOec: queryParameters.nomOec,
-        prenomOec: queryParameters.prenomOec
-      },
-      headers: []
     })
   );
 }
@@ -377,41 +314,11 @@ export async function updateChoixDelivrance(idRequete: string, choixDelivrance: 
   );
 }
 
-export async function creationRequeteCreation(requete: ISaisieRequeteAEnvoyer) {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.POST,
-      uri: `${URL_REQUETES_CREATIONS}`,
-      data: [requete]
-    })
-  );
-}
-
-export async function updateRequeteCreation(idRequete: string, requete: ISaisieRequeteAEnvoyer) {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.PATCH,
-      uri: `${URL_REQUETES_CREATION}/${idRequete}`,
-      data: requete
-    })
-  );
-}
-
 export async function mettreAJourStatutApresSignature(idRequete: string, idSuiviDossier: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.PATCH,
       uri: `${URL_REQUETES_CREATION}/${idRequete}${URL_SUIVI_DOSSIER}/${idSuiviDossier}${URL_METTRE_AJOUR_STATUT_APRES_SIGNATURE}`
-    })
-  );
-}
-
-export async function creationRequeteCreationEtTransmissionService(requete: ISaisieRequeteAEnvoyer, idService: string) {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.POST,
-      uri: `${URL_REQUETES_CREATION_TRANSMISSION_SERVICE}?idService=${idService}`,
-      data: [requete]
     })
   );
 }
@@ -461,17 +368,6 @@ export async function postSauvegarderDocument(idRequete: string, documents: IDoc
       method: HttpMethod.PATCH,
       uri: `${URL_DOCUMENT_REPONSE}/update/${idRequete}`,
       data: documents
-    })
-  );
-}
-
-export function patchDocumentsReponsesAvecSignature(miseAJourDocumentParams: IMiseAJourDocumentParams[]): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.PATCH,
-      uri: URL_DOCUMENT_REPONSE,
-      data: miseAJourDocumentParams,
-      headers: []
     })
   );
 }
@@ -687,30 +583,6 @@ export async function sauvegarderReponseReqInfo(idRequete: string, corpsMailRepo
   );
 }
 
-export async function updateStatutRequeteInformation(idRequete: string, statutDemande: StatutRequete): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.PATCH,
-      uri: `${URL_INFORMATION_STATUT}/${idRequete}`,
-      parameters: {
-        statut: statutDemande.nom
-      }
-    })
-  );
-}
-
-export async function updateStatutRequeteCreation(idRequete: string, statutDemande: StatutRequete): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.PATCH,
-      uri: `${URL_CREATION}${idRequete}/statut`,
-      parameters: {
-        statut: statutDemande.nom
-      }
-    })
-  );
-}
-
 export function getNbReqInfo(listeStatuts: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
@@ -767,16 +639,6 @@ export function deleteDocumentComplementaire(idDocumentReponse: string, idRequet
       parameters: {
         idRequete
       }
-    })
-  );
-}
-
-export function postMessageRetourSDANF(idRequete: string, message: IEchange) {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.POST,
-      uri: `${URL_CREATION}${idRequete}${URL_ECHANGE}`,
-      data: message
     })
   );
 }
@@ -855,16 +717,6 @@ export const postValiderProjetActe = (idRequete: string, idSuiviDossier: string)
     api.fetch({
       method: HttpMethod.POST,
       uri: `${URL_CREATION}${idRequete}${URL_SUIVI_DOSSIER}/${idSuiviDossier}/valider-projet`
-    })
-  );
-};
-
-// A remplacer par PatchStatutRequereMiseAJour (useFetch)
-export const modifierStatutRequeteMiseAJour = (idRequete: string, statutDemande: StatutRequete): Promise<any> => {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.PATCH,
-      uri: `${URL_REQUETES}${URL_REQUETE_MISE_A_JOUR}/${idRequete}/update-statut-requete-mise-a-jour/${StatutRequete.getKey(statutDemande)}`
     })
   );
 };

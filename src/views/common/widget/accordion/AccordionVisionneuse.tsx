@@ -1,12 +1,6 @@
 import { FenetrePiecesJointes } from "@composant/piecesJointes/FenetrePiecesJointes";
-import {
-  faExternalLink,
-  faSquareXmark
-} from "@fortawesome/free-solid-svg-icons";
-import {
-  IMajLibellePjParams,
-  useMiseAJourLibellePjApiHook
-} from "@hook/requete/creation/MiseAJourLibellePjApiHook";
+import { faExternalLink, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
+import { IMajLibellePjParams, useMiseAJourLibellePjApiHook } from "@hook/requete/creation/MiseAJourLibellePjApiHook";
 import { useGetPieceJointeApi } from "@hook/requete/piecesJointes/GetPieceJointeHook";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import Accordion from "@mui/material/Accordion";
@@ -18,7 +12,7 @@ import { AccordionTitle } from "./AccordionTitle";
 import { BoutonAccordionTitle } from "./BoutonAccordionTitle";
 import "./scss/AccordionVisionneuse.scss";
 
-export interface AccordionVisionneuseProps {
+interface AccordionVisionneuseProps {
   idDocumentAAfficher: string;
   titre?: string;
   titreOrigine: string;
@@ -59,10 +53,7 @@ export const AccordionVisionneuse: React.FC<AccordionVisionneuseProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatMaj]);
 
-  const documentApi = useGetPieceJointeApi(
-    TypePieceJointe.PIECE_JUSTIFICATIVE,
-    idDocument
-  );
+  const documentApi = useGetPieceJointeApi(TypePieceJointe.PIECE_JUSTIFICATIVE, idDocument);
 
   return (
     <>
@@ -87,16 +78,8 @@ export const AccordionVisionneuse: React.FC<AccordionVisionneuseProps> = ({
               <BoutonAccordionTitle
                 onClickBouton={toggleFenetreExtState}
                 iconeBouton={fenetreExtOuverte ? faSquareXmark : faExternalLink}
-                descriptionBouton={getLibelle(
-                  fenetreExtOuverte
-                    ? "Fermer la fenetre externe"
-                    : "Ouvrir PJ dans une fenêtre externe"
-                )}
-                classNameBouton={
-                  fenetreExtOuverte
-                    ? "BoutonFermetureFenetreExt"
-                    : "BoutonOuvertureFenetreExt"
-                }
+                descriptionBouton={getLibelle(fenetreExtOuverte ? "Fermer la fenetre externe" : "Ouvrir PJ dans une fenêtre externe")}
+                classNameBouton={fenetreExtOuverte ? "BoutonFermetureFenetreExt" : "BoutonOuvertureFenetreExt"}
               />
             ) : undefined
           }

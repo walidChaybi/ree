@@ -27,23 +27,23 @@ export interface SaisieCourrier {
   [REQUETE]: Requete;
 }
 
-export interface ChoixCourrier {
+interface ChoixCourrier {
   [DELIVRANCE]: string;
   [COURRIER]: string;
 }
 
-export interface OptionCourrierForm {
+interface OptionCourrierForm {
   [LIBELLE_OPTION]: string;
   [CONTENU]: string;
 }
 
-export interface TexteLibre {
+interface TexteLibre {
   [TYPE_MEMO]?: string;
   [MEMO]?: string;
   [TEXTE]: string;
 }
 
-export interface RequerantCourrier {
+interface RequerantCourrier {
   [RAISON_SOCIALE]: string;
   [NOM]: string;
   [PRENOM]: string;

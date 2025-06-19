@@ -37,11 +37,7 @@ export function AjoutePartAuPanelAreas(
   }
 }
 
-export function ajouterContentPartAuPartUneValeur(
-  panel: SectionContentProps[],
-  libelle: string,
-  info?: string
-) {
+export function ajouterContentPartAuPartUneValeur(panel: SectionContentProps[], libelle: string, info?: string) {
   if (libelle != null && info != null && info !== "") {
     panel.push({
       libelle,
@@ -50,11 +46,7 @@ export function ajouterContentPartAuPartUneValeur(
   }
 }
 
-export function ajouterContentPartAuPartUneValeurVide(
-  panel: SectionContentProps[],
-  libelle: string,
-  info?: string
-) {
+export function ajouterContentPartAuPartUneValeurVide(panel: SectionContentProps[], libelle: string, info?: string) {
   if (libelle != null && info != null && info !== "") {
     panel.push({
       libelle,
@@ -68,45 +60,12 @@ export function ajouterContentPartAuPartUneValeurVide(
   }
 }
 
-export function ajouterContentPartAuPartMultiValeurs(
-  panel: SectionContentProps[],
-  libelle: string,
-  infos: string[]
-) {
+export function ajouterContentPartAuPartMultiValeurs(panel: SectionContentProps[], libelle: string, infos: string[]) {
   if (libelle != null && infos != null && infos.length > 0) {
     const infosNonVide: string[] = [];
 
     infos.forEach((info: string) => {
       if (info != null && info !== "") {
-        infosNonVide.push(info);
-      }
-    });
-
-    if (infosNonVide.length > 0) {
-      panel.push({
-        libelle,
-        value: (
-          <>
-            {infosNonVide.map((info: string, index: number) => {
-              return <div key={`ligne${index}`}>{info}</div>;
-            })}
-          </>
-        )
-      });
-    }
-  }
-}
-
-export function ajouterContentPartAuPartMultiValeursVide(
-  panel: SectionContentProps[],
-  libelle: string,
-  infos: string[]
-) {
-  if (libelle != null && infos != null && infos.length > 0) {
-    const infosNonVide: string[] = [];
-
-    infos.forEach((info: string) => {
-      if (info != null) {
         infosNonVide.push(info);
       }
     });

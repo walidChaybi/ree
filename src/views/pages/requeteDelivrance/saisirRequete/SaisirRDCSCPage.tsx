@@ -73,7 +73,7 @@ const ValidationSchemaSaisirRDCSC = Yup.object({
   [ADRESSE]: AdresseFormValidationSchema
 });
 
-export const titreForm = SousTypeDelivrance.getEnumFor("RDCSC").libelle;
+const titreForm = SousTypeDelivrance.getEnumFor("RDCSC").libelle;
 
 export type TitulairesStateType = {
   titulaires: IdentiteSubFormProps[];

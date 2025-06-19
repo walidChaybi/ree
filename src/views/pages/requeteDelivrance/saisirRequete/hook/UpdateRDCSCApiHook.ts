@@ -8,7 +8,7 @@ import { logError } from "@util/LogManager";
 import { useContext, useEffect, useState } from "react";
 import { mappingFormulaireRDCSCVersRequeteDelivrance } from "./mappingFormulaireRDCSCVersRequeteDelivrance";
 
-export interface IUpdateRequeteDelivranceRDCSCResultat {
+interface IUpdateRequeteDelivranceRDCSCResultat {
   requete: IRequeteDelivrance;
   futurStatut: StatutRequete;
   libelleAction?: string;
@@ -19,18 +19,13 @@ export function useUpdateRequeteDelivranceRDCSC(
   requeteRDCSC?: UpdateRequeteRDCSC,
   nbTitulaires?: number
 ): IUpdateRequeteDelivranceRDCSCResultat | undefined {
-  const [resultat, setResultat] = useState<
-    IUpdateRequeteDelivranceRDCSCResultat | undefined
-  >();
+  const [resultat, setResultat] = useState<IUpdateRequeteDelivranceRDCSCResultat | undefined>();
 
   const { utilisateurs } = useContext(RECEContextData);
 
   useEffect(() => {
     if (requeteRDCSC?.saisie) {
-      const requete = mappingFormulaireRDCSCVersRequeteDelivrance(
-        requeteRDCSC,
-        nbTitulaires
-      );
+      const requete = mappingFormulaireRDCSCVersRequeteDelivrance(requeteRDCSC, nbTitulaires);
       updateRequeteDelivrance({
         idRequete: requeteRDCSC.idRequete,
         requete,
@@ -46,8 +41,7 @@ export function useUpdateRequeteDelivranceRDCSC(
         })
         .catch((error: any) => {
           logError({
-            messageUtilisateur:
-              "Une erreur est survenue lors de la mise à jour de la requête",
+            messageUtilisateur: "Une erreur est survenue lors de la mise à jour de la requête",
             error
           });
         });

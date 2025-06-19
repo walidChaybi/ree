@@ -1,16 +1,15 @@
-import { getLibelle } from "@util/Utils";
 import * as React from "react";
 
 export const FIREFOX = "Mozilla Firefox";
 export const CHROME = "Google Chrome ou Chromium";
 
-export type Navigateur = "Mozilla Firefox" | "Google Chrome ou Chromium";
+type Navigateur = "Mozilla Firefox" | "Google Chrome ou Chromium";
 /**
  * Code provenant du site MSDN
  * https://developer.mozilla.org/en-US/docs/Web/API/Window/navigator
  */
 // Prise en compte uniquement de FIREFOX et CHROME
-export class DetectionNavigateur {
+class DetectionNavigateur {
   public static getNomNavigateur() {
     const sUsrAg = navigator.userAgent;
 
@@ -32,35 +31,25 @@ interface SeulementNavigateurProps {
   navigateurs: Navigateur[];
 }
 
-export const SeulementNavigateur: React.FC<
-  React.PropsWithChildren<SeulementNavigateurProps>
-> = ({ children, navigateurs }) => {
+export const SeulementNavigateur: React.FC<React.PropsWithChildren<SeulementNavigateurProps>> = ({ children, navigateurs }) => {
   const navigateurCourant = DetectionNavigateur.getNomNavigateur();
-  const estNavigateurAutorise = navigateurs.find(
-    navigateur => navigateur === navigateurCourant
-  );
+  const estNavigateurAutorise = navigateurs.find(navigateur => navigateur === navigateurCourant);
 
   return estNavigateurAutorise ? (
     <>{children}</>
   ) : (
     <>
       <p>{getMessageNavigateursSupportes(navigateurs)}</p>
-      <span>
-        {getLibelle("Veuillez lancez l'applicatoin RECE via le menu Windows")}
-      </span>
+      <span>{"Veuillez lancez l'applicatoin RECE via le menu Windows"}</span>
     </>
   );
 
   function getMessageNavigateursSupportes(navigateursNames: Navigateur[]) {
     let message = "Navigateur non autorisé ";
     if (navigateursNames.length > 1) {
-      message += getLibelle(
-        `(seuls ${navigateursNames.join(", ")} sont supportés)`
-      );
+      message += `(seuls ${navigateursNames.join(", ")} sont supportés)`;
     } else {
-      message += getLibelle(
-        `(seul ${navigateursNames.join(", ")} est supporté)`
-      );
+      message += `(seul ${navigateursNames.join(", ")} est supporté)`;
     }
 
     return message;

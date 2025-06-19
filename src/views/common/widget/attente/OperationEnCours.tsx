@@ -4,7 +4,7 @@ import gestionnaireTimer from "@util/timer/GestionnaireTimer";
 import React, { useEffect } from "react";
 import "./scss/OperationEnCours.scss";
 
-export interface OperationEnCoursProps {
+interface OperationEnCoursProps {
   visible: boolean;
   onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
   onTimeoutEnd?: () => void;
@@ -19,9 +19,7 @@ export const OperationEnCours: React.FC<OperationEnCoursProps> = props => {
     if (props.visible && props.onTimeoutEnd) {
       gestionnaireTimer.declencherTimer(
         BACKDROP_TIMER_NAME,
-        props.timeoutInMiliSec
-          ? props.timeoutInMiliSec
-          : DEFAULT_TIMEOUT_MILI_SEC,
+        props.timeoutInMiliSec ? props.timeoutInMiliSec : DEFAULT_TIMEOUT_MILI_SEC,
         true,
         () => {
           if (props.onTimeoutEnd) {

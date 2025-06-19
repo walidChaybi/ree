@@ -17,7 +17,7 @@ import { useContext } from "react";
 import DateUtils from "../DateUtils";
 import "./scss/RequeteUtils.scss";
 
-export function prioriteDeLaRequete(priorite: string): string {
+function prioriteDeLaRequete(priorite: string): string {
   switch (Priorite.getEnumFor(priorite)) {
     case Priorite.BASSE:
       return "PrioriteBasse";

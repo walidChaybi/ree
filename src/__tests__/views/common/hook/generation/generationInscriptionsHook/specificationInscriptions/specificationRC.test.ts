@@ -1,5 +1,5 @@
 import { mappingInscriptionsRC } from "@hook/acte/InscriptionsRcHook";
-import { SpecificationRC } from "@hook/generation/generationInscriptionsHook/specificationInscriptions/specificationRC";
+import SpecificationRC from "@hook/generation/generationInscriptionsHook/specificationInscriptions/specificationRC";
 import {
   FicheRcDecisionNotaire,
   FicheRcDecisionNotaireTypeRequete,

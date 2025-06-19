@@ -1,26 +1,26 @@
 import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { Alerte, IAlerte } from "@model/etatcivil/fiche/IAlerte";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { TRequete } from "@model/requete/IRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IFenetreFicheActe } from "@pages/rechercheMultiCriteres/common/IFenetreFicheActeInscription";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
-import { getLibelle, getValeurOuVide, supprimeElement } from "@util/Utils";
+import { getValeurOuVide, supprimeElement } from "@util/Utils";
 import { CompteurElementsCoches } from "@widget/compteurElementsCoches/CompteurElementsCoches";
-import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
+import { getLigneTableauVide } from "@widget/tableau/TableUtils";
+import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { IConteneurElementPropsPartielles } from "@widget/tableau/TableauRece/colonneElements/ConteneurElement";
 import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
-import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
-import { getLigneTableauVide } from "@widget/tableau/TableUtils";
+import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
 import React, { useCallback, useEffect, useState } from "react";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
 import { IDataFicheProps } from "../../../fiche/FichePage";
 import { getColonnesTableauActes } from "./RMCTableauActesParams";
-import { goToLinkRMC, TypeRMC } from "./RMCTableauCommun";
-export interface RMCResultatActeProps {
+import { TypeRMC, goToLinkRMC } from "./RMCTableauCommun";
+interface RMCResultatActeProps {
   typeRMC: TypeRMC;
   dataRequete?: TRequete;
   dataAlertes?: IAlerte[];
@@ -28,17 +28,11 @@ export interface RMCResultatActeProps {
   dataTableauRMCActe: IParamsTableau;
   setRangeActe?: (range: string) => void;
   resetTableauActe?: boolean;
-  onClickCheckboxCallBack?: (
-    event: TChangeEventSurHTMLInputElement,
-    data: IResultatRMCActe
-  ) => void;
+  onClickCheckboxCallBack?: (event: TChangeEventSurHTMLInputElement, data: IResultatRMCActe) => void;
   nbLignesParPage: number;
   nbLignesParAppel: number;
   // Données propre à une fiche acte pour sa pagination/navigation
-  getLignesSuivantesOuPrecedentesActe?: (
-    ficheIdentifiant: string,
-    lien: string
-  ) => void;
+  getLignesSuivantesOuPrecedentesActe?: (ficheIdentifiant: string, lien: string) => void;
   idFicheActe?: string;
   dataRMCFicheActe?: IResultatRMCActe[];
   dataTableauRMCFicheActe?: IParamsTableau;
@@ -75,21 +69,15 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
   const [etatFenetres, setEtatFenetres] = useState<IFenetreFicheActe[]>([]);
 
   // Plage de fiche courante dans le tableau de résultat (suite à une RMC Acte)
-  const [datasFichesCourantes, setDatasFichesCourante] =
-    useState<IDataFicheProps[]>();
+  const [datasFichesCourantes, setDatasFichesCourantes] = useState<IDataFicheProps[]>();
 
   const closeFenetre = (idActe: string, idx: number) => {
-    const nouvelEtatFenetres = supprimeElement(
-      etatFenetres,
-      (etatFenetre: IFenetreFicheActe) => etatFenetre.idActe === idActe
-    );
+    const nouvelEtatFenetres = supprimeElement(etatFenetres, (etatFenetre: IFenetreFicheActe) => etatFenetre.idActe === idActe);
     setEtatFenetres(nouvelEtatFenetres);
   };
 
   const onClickOnLine = (idActe: string, data: any, index: number) => {
-    const etatFenetreTrouve = etatFenetres.find(
-      etatFenetre => etatFenetre.idActe === idActe
-    );
+    const etatFenetreTrouve = etatFenetres.find(etatFenetre => etatFenetre.idActe === idActe);
     if (datasFichesCourantes) {
       if (!etatFenetreTrouve) {
         const nouvelEtatFenetre: IFenetreFicheActe = {
@@ -111,9 +99,7 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
 
   useEffect(() => {
     if (dataRMCFicheActe) {
-      const etatFenetreTrouve = etatFenetres.find(
-        etatFenetre => etatFenetre.idActe === idFicheActe
-      );
+      const etatFenetreTrouve = etatFenetres.find(etatFenetre => etatFenetre.idActe === idFicheActe);
       if (etatFenetreTrouve) {
         const datasFiches = dataRMCFicheActe.map(data => ({
           identifiant: getValeurOuVide(data.idActe),
@@ -135,7 +121,7 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
       lienSuivant: dataTableauRMCActe?.nextDataLinkState,
       lienPrecedent: dataTableauRMCActe?.previousDataLinkState
     }));
-    setDatasFichesCourante(datasFiches);
+    setDatasFichesCourantes(datasFiches);
   }, [dataRMCActe, dataTableauRMCActe]);
 
   // Gestion du clic sur une colonne de type checkbox
@@ -145,10 +131,7 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
     (isChecked: boolean, data: any): boolean => {
       if (isChecked) {
         const alertes = dataAlertes?.filter((alerte: IAlerte) => {
-          return (
-            alerte?.idActe === data?.idActe &&
-            Alerte.estDeTypeDescriptionSAGA(data.alerte)
-          );
+          return alerte?.idActe === data?.idActe && Alerte.estDeTypeDescriptionSAGA(data.alerte);
         });
         return Array.isArray(alertes) && alertes.length > 0;
       }
@@ -168,34 +151,20 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
     setIdActeSelectionnes([]);
   }, [resetTableauActe]);
 
-  const colonneCaseACocherActesParams: IColonneCaseACocherParams<
-    IResultatRMCActe,
-    string
-  > = {
+  const colonneCaseACocherActesParams: IColonneCaseACocherParams<IResultatRMCActe, string> = {
     identifiantsSelectionnes: idActeSelectionnes,
     setIdentifiantsSelectionnes: setIdActeSelectionnes,
     getIdentifiant: (data: IResultatRMCActe) => data.idActe
   };
 
-  const conteneurCaseACocherProps: IConteneurElementPropsPartielles<
-    IResultatRMCActe,
-    string,
-    TChangeEventSurHTMLInputElement
-  > = {
+  const conteneurCaseACocherProps: IConteneurElementPropsPartielles<IResultatRMCActe, string, TChangeEventSurHTMLInputElement> = {
     handleInteractionUtilisateur: onClickCheckboxCallBack,
     handleEstDesactive: handleCaseACocherActeEstDesactive,
     handleAfficheAvertissement: handleCaseACocherActeAfficheAvertissement,
-    messageInfoBulleEstDesactive: getLibelle(
-      "Pas de délivrance pour un projet d'acte non finalisé"
-    )
+    messageInfoBulleEstDesactive: "Pas de délivrance pour un projet d'acte non finalisé"
   };
 
-  const columnHeaders = getColonnesTableauActes(
-    typeRMC,
-    colonneCaseACocherActesParams,
-    conteneurCaseACocherProps,
-    dataRequete?.type
-  );
+  const columnHeaders = getColonnesTableauActes(typeRMC, colonneCaseACocherActesParams, conteneurCaseACocherProps, dataRequete?.type);
 
   return (
     <>
@@ -231,9 +200,7 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
                   onClose={closeFenetre}
                   index={fenetreFicheActe.index}
                   nbLignesTotales={dataTableauRMCActe.rowsNumberState || 0}
-                  getLignesSuivantesOuPrecedentes={
-                    getLignesSuivantesOuPrecedentesActe
-                  }
+                  getLignesSuivantesOuPrecedentes={getLignesSuivantesOuPrecedentesActe}
                   nbLignesParAppel={nbLignesParAppel}
                 />
               )
@@ -245,16 +212,10 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
   );
 };
 
-function estProjetActe(
-  dataRequete: TRequete | undefined,
-  data: IResultatRMCActe
-): boolean {
+function estProjetActe(dataRequete: TRequete | undefined, data: IResultatRMCActe): boolean {
   if (dataRequete?.type === TypeRequete.DELIVRANCE) {
     const requeteDelivrance = dataRequete as IRequeteDelivrance;
-    if (
-      SousTypeDelivrance.estRDDouRDCouRDDP(requeteDelivrance?.sousType) &&
-      TypeFamille.estTypeFamilleProjetActe(data.familleRegistre)
-    ) {
+    if (SousTypeDelivrance.estRDDouRDCouRDDP(requeteDelivrance?.sousType) && TypeFamille.estTypeFamilleProjetActe(data.familleRegistre)) {
       return true;
     }
   }

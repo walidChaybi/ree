@@ -1,4 +1,3 @@
-/* istanbul ignore file */
 /********************************************************************************** */
 /* Lien GitHub du composant https://github.com/azmenak/material-ui-nested-menu-item */
 /********************************************************************************** */
@@ -9,7 +8,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem, { MenuItemProps } from "@mui/material/MenuItem";
 import React, { Ref, useImperativeHandle, useRef, useState } from "react";
 
-export interface NestedMenuItemProps extends Omit<MenuItemProps, "button"> {
+interface NestedMenuItemProps extends Omit<MenuItemProps, "button"> {
   /**
    * Open state of parent `<Menu />`, used to close decendent menus when the
    * root menu is closed.
@@ -23,8 +22,7 @@ export interface NestedMenuItemProps extends Omit<MenuItemProps, "button"> {
   /**
    * Props passed to container element.
    */
-  ContainerProps?: React.HTMLAttributes<HTMLElement> &
-    React.RefAttributes<HTMLElement | null>;
+  ContainerProps?: React.HTMLAttributes<HTMLElement> & React.RefAttributes<HTMLElement | null>;
   /**
    * @see https://material-ui.com/api/list-item/
    */
@@ -36,10 +34,7 @@ export interface NestedMenuItemProps extends Omit<MenuItemProps, "button"> {
  * Use as a drop-in replacement for `<MenuItem>` when you need to add cascading
  * menu elements as children to this component.
  */
-const NestedMenuItem = React.forwardRef<
-  HTMLLIElement | null,
-  NestedMenuItemProps
->(function NestedMenuItemFct(props, ref) {
+const NestedMenuItem = React.forwardRef<HTMLLIElement | null, NestedMenuItemProps>(function NestedMenuItemFct(props, ref) {
   const {
     parentMenuOpen,
     label,
@@ -57,10 +52,7 @@ const NestedMenuItem = React.forwardRef<
   useImperativeHandle(ref, () => menuItemRef.current || new HTMLLIElement());
 
   const containerRef = useRef<HTMLDivElement>(null);
-  useImperativeHandle(
-    containerRefProp as Ref<HTMLElement | null>,
-    () => containerRef.current
-  );
+  useImperativeHandle(containerRefProp as Ref<HTMLElement | null>, () => containerRef.current);
 
   const menuContainerRef = useRef<HTMLDivElement>(null);
 
@@ -118,14 +110,8 @@ const NestedMenuItem = React.forwardRef<
       containerRef.current?.focus();
     }
 
-    if (
-      event.key === "ArrowRight" &&
-      event.target === containerRef.current &&
-      event.target === active
-    ) {
-      const firstChild = menuContainerRef.current?.children[0] as
-        | HTMLElement
-        | undefined;
+    if (event.key === "ArrowRight" && event.target === containerRef.current && event.target === active) {
+      const firstChild = menuContainerRef.current?.children[0] as HTMLElement | undefined;
       firstChild?.focus();
     }
   };
@@ -148,7 +134,11 @@ const NestedMenuItem = React.forwardRef<
       onMouseLeave={handleMouseLeave}
       onKeyDown={handleKeyDown}
     >
-      <MenuItem {...menuItemProps} className={className} ref={menuItemRef}>
+      <MenuItem
+        {...menuItemProps}
+        className={className}
+        ref={menuItemRef}
+      >
         {openDirection === "left" && <ArrowLeft />}
         {label}
         {openDirection === "right" && <ArrowRight />}

@@ -152,7 +152,7 @@ export function getFiliationNaissance(parentForm: ISaisieParentSousForm) {
     jour: getNombreOuNull(parentForm.dateNaissance.date?.jour)
   };
 }
-export function getRegionNaissanceFiliation(parentForm: ISaisieParentSousForm) {
+function getRegionNaissanceFiliation(parentForm: ISaisieParentSousForm) {
   const lieuNaissanceEstEtranger = LieuxUtils.estPaysEtranger(parentForm.lieuNaissance.lieuNaissance);
   const lieuNaissanceEstFrance = LieuxUtils.estPaysFrance(parentForm.lieuNaissance.lieuNaissance);
   if (lieuNaissanceEstEtranger) {

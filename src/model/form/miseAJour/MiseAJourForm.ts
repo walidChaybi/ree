@@ -1,6 +1,8 @@
-import { IEnregistrerAnalyseMarginaleEtMentionDto } from "@api/configurations/etatCivil/PutAnalyseMarginaleEtMentionsConfigApi";
+import {
+  IEnregistrerAnalyseMarginaleEtMentionDto,
+  IEvenementMention
+} from "@api/configurations/etatCivil/PutAnalyseMarginaleEtMentionsConfigApi";
 import { MiseAJourAnalyseMarginaleValeursForm } from "@api/validations/requeteMiseAJour/MiseAJourAnalyseMarginaleValidation";
-import { IEvenementMention } from "@hook/acte/EnregistrerMentionsApiHook";
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { IAnalyseMarginaleMiseAJour, IMentionMiseAJour } from "../../../composants/pages/requetesMiseAJour/PartieFormulaire";
 import SchemaValidation from "../../../utils/SchemaValidation";

@@ -62,7 +62,7 @@ function getParagrapheDecisionRecue2(infosRC: FicheRcRca) {
   return decisionRecue;
 }
 
-export function getResume(data: FicheRcRca) {
+function getResume(data: FicheRcRca) {
   let resume = undefined;
   if (data.typeInscription === ETypeInscriptionRcRca.INSCRIPTION && data.nature.type === "Protection des majeurs") {
     resume = `sous le régime ${formatDe(data.nature.libelle)}${data.nature.libelle}`;
@@ -70,7 +70,7 @@ export function getResume(data: FicheRcRca) {
   return resume;
 }
 
-export function getRenouvellementModification(data?: FicheRcRca, inscriptionsRcRadiation?: IInscriptionRc): string | undefined {
+function getRenouvellementModification(data?: FicheRcRca, inscriptionsRcRadiation?: IInscriptionRc): string | undefined {
   let renouvellementModification;
   if (data) {
     if (inscriptionsRcRadiation && data.typeInscription === ETypeInscriptionRcRca.MODIFICATION) {
@@ -83,7 +83,7 @@ export function getRenouvellementModification(data?: FicheRcRca, inscriptionsRcR
   return renouvellementModification;
 }
 
-export function getModificationJasper(data: FicheRcRca, inscriptionRcRadiation: IInscriptionRc): string {
+function getModificationJasper(data: FicheRcRca, inscriptionRcRadiation: IInscriptionRc): string {
   const typeInscription = data.typeInscription ?? "";
   let modificationTexte = `prononçant la ${typeInscription.toLocaleLowerCase()}`;
 
@@ -94,7 +94,7 @@ export function getModificationJasper(data: FicheRcRca, inscriptionRcRadiation: 
   return modificationTexte;
 }
 
-export function getRenouvellementJasper(inscription: FicheRcRca) {
+function getRenouvellementJasper(inscription: FicheRcRca) {
   const typeInscription = inscription.typeInscription ?? "";
   const natureInscriptionImpactee = NatureRc.depuisId(inscription.inscriptionsImpactees[0].nature)?.libelle ?? "";
 
@@ -107,7 +107,7 @@ export function getRenouvellementJasper(inscription: FicheRcRca) {
   return renouvellementTexte;
 }
 
-export function getDuree(data: FicheRcRca) {
+function getDuree(data: FicheRcRca) {
   let duree = undefined;
   if (data.duree) {
     duree = `pour une durée de ${data.duree.nombreDuree} ${data.duree.uniteDuree}`;
@@ -116,7 +116,7 @@ export function getDuree(data: FicheRcRca) {
 }
 
 /////////////////////////////////////////////////////////////////////
-export const SpecificationRC = {
+const SpecificationRC = {
   getElementsJasper: (infosRC: FicheRcRca, decrets: IDecret[], inscriptionsRcRadiation?: IInscriptionRc) => {
     const elementsJasper = {} as IElementsJasperCertificatRC;
 
@@ -136,3 +136,5 @@ export const SpecificationRC = {
     return elementsJasper;
   }
 };
+
+export default SpecificationRC;

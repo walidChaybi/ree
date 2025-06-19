@@ -27,7 +27,7 @@ export function mappingRequeteDelivranceVersFormulaireRDCSC(requete: IRequeteDel
   return saisie;
 }
 
-export const saisieTitulaireRDCSC = (titulaire?: ITitulaireRequete) => {
+const saisieTitulaireRDCSC = (titulaire?: ITitulaireRequete) => {
   const titulaireForm = saisieTitulaire(titulaire);
   return titulaireForm || IdentiteFormDefaultValuesRDCSC;
 };

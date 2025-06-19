@@ -5,7 +5,7 @@ import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 
-export interface IPrendreEnChargeRequeteSuivanteResultat {
+interface IPrendreEnChargeRequeteSuivanteResultat {
   idRequete?: string;
   erreur?: IErreurTraitementApi;
 }
@@ -26,16 +26,13 @@ export function usePrendreEnChargeRequeteSuivanteApiHook(
         .catch(({ response }) => {
           const erreurs: IErreurTraitementApi[] = response.body.errors;
           const erreurPlusDeRequeteDisponible = erreurs.find(
-            erreur =>
-              erreur.code ===
-              CodeErreurFonctionnelle.FCT_AUCUNE_REQUETE_DISPONIBLE_A_PRENDRE_EN_CHARGE
+            erreur => erreur.code === CodeErreurFonctionnelle.FCT_AUCUNE_REQUETE_DISPONIBLE_A_PRENDRE_EN_CHARGE
           );
           if (erreurPlusDeRequeteDisponible) {
             setErreur(erreurPlusDeRequeteDisponible);
           } else {
             logError({
-              messageUtilisateur:
-                "Impossible de prendre en charge la requête suivante",
+              messageUtilisateur: "Impossible de prendre en charge la requête suivante",
               error: response.body.errors
             });
           }

@@ -1,7 +1,4 @@
-import {
-  estRenseigne,
-  formatMajusculesMinusculesMotCompose
-} from "@util/Utils";
+import { estRenseigne, formatMajusculesMinusculesMotCompose } from "@util/Utils";
 import React from "react";
 import Labels from "../../../../../commun/Labels";
 import { formatLigneNationalites } from "../formatages";
@@ -12,7 +9,7 @@ import { ItemEnfantMajeurProps } from "./ItemEnfantMajeur";
 import { ItemLigne } from "./ItemLigne";
 import { ItemParentProps } from "./ItemParent";
 
-export type ItemGenericProps = ItemParentProps | ItemEnfantMajeurProps;
+type ItemGenericProps = ItemParentProps | ItemEnfantMajeurProps;
 
 export const ItemGenerique: React.FC<ItemGenericProps & ItemProps> = props => {
   return (
@@ -35,11 +32,7 @@ export const ItemGenerique: React.FC<ItemGenericProps & ItemProps> = props => {
       />
 
       <ItemLigne
-        texte={
-          formatMajusculesMinusculesMotCompose(
-            formatLigneNationalites(props.nationalites)
-          ) ?? Labels.resume.nationalite.defaut
-        }
+        texte={formatMajusculesMinusculesMotCompose(formatLigneNationalites(props.nationalites)) ?? Labels.resume.nationalite.defaut}
       />
     </>
   );

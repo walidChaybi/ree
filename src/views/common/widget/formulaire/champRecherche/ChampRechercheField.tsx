@@ -4,7 +4,7 @@ import ChampRecherche, { IChampRechercheProps } from "../../../../../composants/
 import { IconErrorMessage } from "../erreur/IconeErreurMessage";
 import "./scss/ChampRecherche.scss";
 
-export type ChampRechercheFieldProps = IChampRechercheProps & {
+type ChampRechercheFieldProps = IChampRechercheProps & {
   label: string;
   componentName: string;
 };

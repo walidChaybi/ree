@@ -9,10 +9,8 @@ import * as Yup from "yup";
 import "../scss/FiltreRMC.scss";
 
 // Noms des champs
-export const DATE_DEBUT = "dateDebut";
-export const DATE_FIN = "dateFin";
-
-export const dateFinInfDateDebutError = "dateFinInfDateDebutError";
+const DATE_DEBUT = "dateDebut";
+const DATE_FIN = "dateFin";
 
 // Valeurs par défaut des champs
 export const DatesDebutFinAnneeDefaultValues = {

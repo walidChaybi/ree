@@ -40,12 +40,6 @@ import { ICourrierParams, useCourrierApiHook } from "../composition/CompositionC
 import { specificationCourrier } from "../generation/generationCourrierHook/specificationCourrier";
 import { IResultGenerationUnDocument, RESULTAT_VIDE } from "../generation/generationUtils";
 
-export interface IResultGenerationCourrier {
-  idDocumentReponse?: string;
-  idAction?: string;
-  contenuDocumentReponse?: string;
-}
-
 export interface IGenerationCourrierParams {
   saisieCourrier?: SaisieCourrier;
   optionsChoisies?: OptionsCourrier;

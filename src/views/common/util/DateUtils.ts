@@ -6,7 +6,7 @@ dayjs.extend(customParseFormat);
 
 export const MIN_YEAR = 1900;
 export const MEP_YEAR = 2021;
-export const MES_YEAR = 2023;
+const MES_YEAR = 2023;
 export const DATE_MES = new Date(MES_YEAR, 0, 1);
 
 export const MIN_LENGTH_ANNEE = 4;

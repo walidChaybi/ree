@@ -12,7 +12,7 @@ export interface IAnalyseMarginale {
   titulaires: ITitulaireActe[];
 }
 
-export interface ITitulairesAM {
+interface ITitulairesAM {
   titulaireAM1?: ITitulaireActe;
   titulaireAM2?: ITitulaireActe;
 }

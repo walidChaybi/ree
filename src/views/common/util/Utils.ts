@@ -1,5 +1,4 @@
 import { IPrenom } from "@model/etatcivil/fiche/IPrenom";
-import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { OPTION_VIDE, Option } from "./Type";
 
@@ -7,7 +6,7 @@ export const SPC = "SPC";
 export const SANS_PRENOM_CONNU = "Sans prénom connu";
 export const SANS_NOM_CONNU = "Sans nom connu";
 export const SNP = "SNP";
-export const SANS_NOM_PATRONYMIQUE = "Sans nom patronymique";
+const SANS_NOM_PATRONYMIQUE = "Sans nom patronymique";
 export const ABSENCE_VALIDEE = "ABSENCE_VALIDEE";
 const TIME_OUT_MS = 100;
 
@@ -27,9 +26,6 @@ export const DOUZE = 12;
 export const QUINZE = 15;
 export const SEIZE = 16;
 export const VINGT = 20;
-export const VINGT_QUATRE = 24;
-export const TRENTE_ET_UN = 31;
-export const SOIXANTE = 60;
 export const CENT = 100;
 export const DIX_MILLE = 10000;
 
@@ -232,7 +228,7 @@ export const numberToString = (nb?: number): string => {
   return nb ? nb.toString() : "";
 };
 
-export const rempliAGauche = (nb: number | string, c: string, long: number) => {
+const rempliAGauche = (nb: number | string, c: string, long: number) => {
   return nb ? String(nb).padStart(long, c) : "";
 };
 
@@ -329,7 +325,7 @@ export const shallowEgalTableau = (tab1: Object[], tab2: Object[]) => {
   return res;
 };
 
-export const shallowEgal = (obj1?: Object, obj2?: Object): boolean => {
+const shallowEgal = (obj1?: Object, obj2?: Object): boolean => {
   if (obj1 === undefined || obj2 === undefined) {
     return obj1 === undefined && obj2 === undefined;
   }
@@ -371,27 +367,8 @@ export const mapPrenomsVersPrenomsOrdonnes = (prenoms?: string[]) => {
   return prenomsOrdonnes;
 };
 
-export const mapPrenomsVersTableauString = (prenoms?: Prenoms): string[] => {
-  const tableauPrenoms: string[] = [];
-  if (prenoms) {
-    Object.values(prenoms).forEach(prenom => {
-      if (prenom) {
-        tableauPrenoms.push(prenom);
-      }
-    });
-  }
-  return tableauPrenoms;
-};
-
 export const estHeureValide = (nbHeure: number, nbMinute: number) => {
-  return (
-    !Number.isNaN(nbHeure) &&
-    !Number.isNaN(nbMinute) &&
-    nbHeure >= ZERO &&
-    nbHeure < VINGT_QUATRE &&
-    nbMinute >= ZERO &&
-    nbMinute < SOIXANTE
-  );
+  return !Number.isNaN(nbHeure) && !Number.isNaN(nbMinute) && nbHeure >= ZERO && nbHeure < 24 && nbMinute >= ZERO && nbMinute < 60;
 };
 
 export const checkDirty = (isDirty: boolean, setIsDirty: any) => {
@@ -427,28 +404,8 @@ export const getValeurOuUndefined = (valeur?: any): any | undefined => {
   return valeur || undefined;
 };
 
-/** @deprecated méthode inutile, opération trop simple pour justifier une fonction */
-export const getPremiereOuSecondeValeur = (valeur1: string | undefined | null, valeur2: string | undefined | null) => {
-  return valeur1 ?? valeur2 ?? "";
-};
-
-export const getTableauAPartirElementsNonVides = (...args: any[]) => {
-  const tableau: any[] = [];
-  args.forEach((element: any) => {
-    if (element) {
-      tableau.push(element);
-    }
-  });
-  return tableau;
-};
-
 export const executeEnDiffere = (fct: any, tempsMs?: number) => {
   setTimeout(fct, tempsMs ?? TIME_OUT_MS);
-};
-
-/** @deprecated méthode inutile, opération trop simple pour justifier une fonction  */
-export const execute = (fct?: any) => {
-  fct?.();
 };
 
 export const auMoinsUneProprieteEstRenseigne = (objet: Object): boolean => {
@@ -470,7 +427,7 @@ export const auMoinsUneProprieteEstRenseigne = (objet: Object): boolean => {
   return res;
 };
 
-export const estUnObjet = (objet: any): boolean => {
+const estUnObjet = (objet: any): boolean => {
   return objet != null && typeof objet === "object" && !Array.isArray(objet);
 };
 
@@ -498,15 +455,11 @@ export const seulementUneProprieteRenseignee = (cheminPropriete: string, objet?:
   );
 };
 
-export const ajouteCheminCourant = (propriete: string, cheminCourant: string) => {
-  return cheminCourant ? `${cheminCourant}.${propriete}` : propriete;
-};
-
 const seulementUneProprieteRenseigneeAvecCheminCourant = (cheminPropriete: string, objet: Object, cheminCourant: string): boolean => {
   let res = true;
   const proprietes = Object.getOwnPropertyNames(objet);
   for (const propriete of proprietes) {
-    const cheminProprieteCourante = ajouteCheminCourant(propriete, cheminCourant);
+    const cheminProprieteCourante = cheminCourant ? `${cheminCourant}.${propriete}` : propriete;
     if (cheminPropriete !== cheminProprieteCourante) {
       //@ts-ignore
       const valeur = objet[propriete];
@@ -551,7 +504,7 @@ export const aucuneProprieteRenseignee = (objet?: Object): boolean => {
   return res;
 };
 
-export const chainesEgales = (sensitivity: "base" | "accent", str1?: string, str2?: string): boolean => {
+const chainesEgales = (sensitivity: "base" | "accent", str1?: string, str2?: string): boolean => {
   let res;
   if (str1 === str2) {
     res = true;
@@ -570,10 +523,6 @@ export const chainesEgalesIgnoreCasseEtAccent = (str1?: string, str2?: string): 
 
 export const chainesEgalesIgnoreCasse = (str1?: string, str2?: string): boolean => {
   return chainesEgales("accent", str1, str2);
-};
-
-export const getPremiereLettreDunMot = (mot: string) => {
-  return mot[0];
 };
 
 export type LigneType = string | false | undefined;
@@ -597,12 +546,7 @@ export const getNombreCommeSuffix = (str: string): number | undefined => {
   return nombreStr ? Number(nombreStr) : undefined;
 };
 
-// Vérifie si un élément 'obj' est de type 'type', retourne un boolean.
-export const estDeType = (obj: any, type: string): boolean => {
-  return typeof obj === type;
-};
-
-// La propriété initialiement obligatoire d'une interface devient optionnelle.
+// La propriété initialement obligatoire d'une interface devient optionnelle.
 // >> PropsPartielles<IInterface, "prop1" | "prop2">
 export type PropsPartielles<T, K extends keyof T> = Omit<T, K> & Partial<T>;
 
@@ -616,52 +560,6 @@ export const estSuperieurA500Caracteres = (texte: string) => {
 };
 export const creerPlageDeNombres = (nb: number): number[] => {
   return Array.from({ length: nb }, (v, index) => index);
-};
-
-export const sontTableauxIdentiques = (arr1: any[], arr2: any) => {
-  let bool = true;
-  if (arr1 === arr2) {
-    bool = true;
-  } else if (arr1 == null || arr2 == null) {
-    bool = false;
-  } else if (arr1.length !== arr2.length) {
-    bool = false;
-  }
-  for (let i = 0; i < arr1.length; ++i) {
-    if (arr1[i] !== arr2[i]) {
-      bool = false;
-      break;
-    }
-  }
-  return bool;
-};
-
-export const objectsSontIdentiques = (object1: any, object2: any): boolean => {
-  const keys1 = Object.keys(object1);
-  const keys2 = Object.keys(object2);
-
-  if (keys1.length !== keys2.length) {
-    return false;
-  }
-
-  for (const key of keys1) {
-    const val1 = object1[key];
-    const val2 = object2[key];
-    const areObjects = isObject(val1) && isObject(val2);
-    if ((areObjects && !objectsSontIdentiques(val1, val2)) || (!areObjects && val1 !== val2)) {
-      return false;
-    }
-  }
-
-  return true;
-};
-
-export const isObject = (object: any): boolean => {
-  return object != null && typeof object === "object";
-};
-
-export const triAlphanumerique = (texteA: string, texteB: string) => {
-  return texteA.localeCompare(texteB);
 };
 
 export const genererArrondissements = (length: number) =>

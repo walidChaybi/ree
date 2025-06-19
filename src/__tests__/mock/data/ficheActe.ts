@@ -230,8 +230,7 @@ export const ficheActe1 = {
       images: [
         {
           idActeImage: "960078ff-1671-4908-867e-d95f2ae42f80",
-          pathFichier:
-            "\\\\drive\\repertoire1\\repertoire2\\actes\\L1_I00003_1.tif",
+          pathFichier: "\\\\drive\\repertoire1\\repertoire2\\actes\\L1_I00003_1.tif",
           conteneur: "actes_image",
           fichier: "L1_I00003_1.tif",
           noPage: 1,
@@ -241,8 +240,7 @@ export const ficheActe1 = {
         },
         {
           idActeImage: "a666d2bc-0343-4c53-8f24-1c1c28a51eac",
-          pathFichier:
-            "\\\\drive\\repertoire1\\repertoire2\\actes\\P1_I00001_1.tif",
+          pathFichier: "\\\\drive\\repertoire1\\repertoire2\\actes\\P1_I00001_1.tif",
           conteneur: "actes_image",
           fichier: "P1_I00001_1.tif",
           noPage: 1,
@@ -554,8 +552,7 @@ export const ficheActe1_avecTitulaireAyantDeuxParents = {
       images: [
         {
           idActeImage: "960078ff-1671-4908-867e-d95f2ae42f80",
-          pathFichier:
-            "\\\\drive\\repertoire1\\repertoire2\\actes\\L1_I00003_1.tif",
+          pathFichier: "\\\\drive\\repertoire1\\repertoire2\\actes\\L1_I00003_1.tif",
           conteneur: "actes_image",
           fichier: "L1_I00003_1.tif",
           noPage: 1,
@@ -565,8 +562,7 @@ export const ficheActe1_avecTitulaireAyantDeuxParents = {
         },
         {
           idActeImage: "a666d2bc-0343-4c53-8f24-1c1c28a51eac",
-          pathFichier:
-            "\\\\drive\\repertoire1\\repertoire2\\actes\\P1_I00001_1.tif",
+          pathFichier: "\\\\drive\\repertoire1\\repertoire2\\actes\\P1_I00001_1.tif",
           conteneur: "actes_image",
           fichier: "P1_I00001_1.tif",
           noPage: 1,
@@ -882,8 +878,7 @@ export const ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe = {
       images: [
         {
           idActeImage: "960078ff-1671-4908-867e-d95f2ae42f80",
-          pathFichier:
-            "\\\\drive\\repertoire1\\repertoire2\\actes\\L1_I00003_1.tif",
+          pathFichier: "\\\\drive\\repertoire1\\repertoire2\\actes\\L1_I00003_1.tif",
           conteneur: "actes_image",
           fichier: "L1_I00003_1.tif",
           noPage: 1,
@@ -893,8 +888,7 @@ export const ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe = {
         },
         {
           idActeImage: "a666d2bc-0343-4c53-8f24-1c1c28a51eac",
-          pathFichier:
-            "\\\\drive\\repertoire1\\repertoire2\\actes\\P1_I00001_1.tif",
+          pathFichier: "\\\\drive\\repertoire1\\repertoire2\\actes\\P1_I00001_1.tif",
           conteneur: "actes_image",
           fichier: "P1_I00001_1.tif",
           noPage: 1,
@@ -2090,7 +2084,6 @@ export const ficheActeMariage2 = {
   }
 };
 
-export const idFicheActeNaissance = "923a10fb-0b15-452d-83c0-d24c76d1de8e";
 export const ficheActeNaissance = {
   errors: [],
   hasTechnicalError: false,
@@ -2466,7 +2459,6 @@ export const ficheActeNaissance = {
   }
 };
 
-export const idFicheActeDeces = "b41079a6-9e8d-478c-b04c-c4c2ac87134f";
 export const ficheActeDeces = {
   errors: [],
   hasTechnicalError: false,
@@ -3794,8 +3786,7 @@ export const ficheActeEC = {
   }
 };
 
-export const idFicheActeAvecGenreIndetermine =
-  "b45079a5-9e8f-478a-b07c-c4c2az671123";
+export const idFicheActeAvecGenreIndetermine = "b45079a5-9e8f-478a-b07c-c4c2az671123";
 export const ficheActeAvecGenreIndetermine = {
   errors: [],
   hasTechnicalError: false,
@@ -4171,8 +4162,7 @@ export const ficheActeAvecGenreIndetermine = {
   }
 };
 
-export const idFicheActeAvecTitulaireMultiple =
-  "b45079a5-9e8f-488a-b07c-c4c2az613121";
+export const idFicheActeAvecTitulaireMultiple = "b45079a5-9e8f-488a-b07c-c4c2az613121";
 export const ficheActeAvecTitulaireMultiple = {
   errors: [],
   hasTechnicalError: false,
@@ -4627,8 +4617,7 @@ export const ficheActeAvecTitulaireMultiple = {
   }
 };
 
-export const idFicheActeAvecUnTitulaireIndetermine =
-  "b45079a5-9e8f-488a-b07c-c4c2az613121";
+const idFicheActeAvecUnTitulaireIndetermine = "b45079a5-9e8f-488a-b07c-c4c2az613121";
 export const ficheActeAvecUnTitulaireIndetermine = {
   errors: [],
   hasTechnicalError: false,
@@ -4916,8 +4905,6 @@ export const ficheActeAvecUnTitulaireIndetermine = {
   }
 };
 
-export const idFicheActeAvecDeuxTitulaireIndetermine =
-  "b45079a5-9e8f-488a-b07c-c4c2az613121";
 export const ficheActeAvecDeuxTitulaireIndetermine = {
   errors: [],
   hasTechnicalError: false,
@@ -5333,8 +5320,6 @@ export const ficheActeAvecDeuxTitulaireIndetermine = {
   }
 };
 
-export const idFicheActeAvecTitulaireInconnu =
-  "b45079a5-9e8f-488a-b07c-c4c2az613121";
 export const ficheActeNaissanceAvecTitulaireInconnu = {
   ...ficheActeNaissance,
   errors: [],
@@ -5460,8 +5445,6 @@ export const ficheActeNaissanceAvecTitulaireInconnu = {
   }
 };
 
-export const idFicheActeAvecUnParentTitulaireInconnu =
-  "b45079a5-9e8f-488a-b07c-c4c2az613121";
 export const ficheActeAvecUnParentTitulaireInconnu = {
   ...ficheActeNaissance,
   errors: [],
@@ -5574,8 +5557,6 @@ export const ficheActeAvecUnParentTitulaireInconnu = {
   }
 };
 
-export const idFicheActeAvecAnneeNaissanceTitulaireAbsente =
-  "b45079a5-9e8f-488a-b07c-c4c2az613121";
 export const ficheActeAvecAnneeNaissanceTitulaireAbsente = {
   ...ficheActeNaissance,
   errors: [],
@@ -5701,8 +5682,6 @@ export const ficheActeAvecAnneeNaissanceTitulaireAbsente = {
   }
 };
 
-export const idFicheActeAvecTitulaireIndetermine =
-  "b45079a5-9e8f-488a-b07c-c4c2az613121";
 export const ficheActeAvecTitulaireIndetermine = {
   ...ficheActeNaissance,
   errors: [],
@@ -5815,8 +5794,7 @@ export const ficheActeAvecTitulaireIndetermine = {
   }
 };
 
-export const idFicheActeNaissanceAvecParentsDeMemeSexe =
-  "b45079a5-9e8f-488a-b07c-c4c2az613121";
+const idFicheActeNaissanceAvecParentsDeMemeSexe = "b45079a5-9e8f-488a-b07c-c4c2az613121";
 export const ficheActeNaissanceAvecParentsDeMemeSexe = {
   ...ficheActeNaissance,
   errors: [],
@@ -5930,8 +5908,6 @@ export const ficheActeNaissanceAvecParentsDeMemeSexe = {
   }
 };
 
-export const idFicheActeAvecUnParentTitulaireIndetermine =
-  "b45079a5-9e8f-488a-b07c-c4c2az613121";
 export const ficheActeAvecUnParentTitulaireIndetermine = {
   ...ficheActeNaissance,
   errors: [],
@@ -6044,8 +6020,6 @@ export const ficheActeAvecUnParentTitulaireIndetermine = {
   }
 };
 
-export const idFicheActeAvecUnNomTitulaireSNPEtPrenomSPC =
-  "b45079a5-9e8f-488a-b07c-c4c2az613121";
 export const ficheActeAvecUnNomTitulaireSNP = {
   ...ficheActeMariage,
   errors: [],
@@ -6162,7 +6136,6 @@ export const ficheActeAvecUnNomTitulaireSNP = {
   }
 };
 
-export const idFicheActeMariageAvecNomContientDesormais = "";
 export const ficheActeMariageAvecNomContientDesormais = {
   ...ficheActeMariage,
   errors: [],

@@ -7,7 +7,7 @@ import {
 } from "@util/tableauRequete/TableauRequeteUtils";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 
-export enum HeaderTableauRequete {
+enum HeaderTableauRequete {
   Observations = "observations",
   Numero = "numero",
   numeroTeledossier = "numeroTeledossier",

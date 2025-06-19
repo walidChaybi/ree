@@ -1,13 +1,10 @@
 import {
-  creationRequeteCreationEtTransmissionService,
   deleteDocumentsReponseApi,
   mettreAJourStatutApresSignature,
   patchMiseAJourIdSuiviDossier,
   patchModificationAvancementProjet,
-  patchUtilisateurAssigneRequete,
   postAjoutPieceJustificativeAUneRequeteCreation,
   postCreationAction,
-  postMessageRetourSDANF,
   postObservation,
   postPieceJustificative,
   postRequetesServiceCreation,
@@ -15,12 +12,8 @@ import {
   postSauvegardePersonneEtActeSelectionne,
   postTableauRequetesDelivranceService,
   postTransfertValideur,
-  postValiderProjetActe,
-  updateStatutRequeteCreation,
-  updateStatutRequeteInformation
+  postValiderProjetActe
 } from "@api/appels/requeteApi";
-import { IEchange } from "@model/requete/IEchange";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { ITypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { describe, expect, test, vi } from "vitest";
 
@@ -60,29 +53,7 @@ describe("Test des appels API requête", () => {
     );
     expect(spyFetch).toHaveBeenCalled();
 
-    await patchUtilisateurAssigneRequete({
-      nomOec: "",
-      prenomOec: ""
-    });
-    expect(spyFetch).toHaveBeenCalled();
-
     await mettreAJourStatutApresSignature("", "");
-    expect(spyFetch).toHaveBeenCalled();
-
-    await creationRequeteCreationEtTransmissionService(
-      {
-        natureActeTranscrit: "",
-        villeRegistre: "",
-        lienRequerant: undefined,
-        canal: "",
-        provenance: "",
-        requerant: undefined,
-        sousType: "",
-        titulaires: [],
-        type: ""
-      },
-      ""
-    );
     expect(spyFetch).toHaveBeenCalled();
 
     await deleteDocumentsReponseApi("");
@@ -107,16 +78,7 @@ describe("Test des appels API requête", () => {
     await postRetourValideur("", "", "", "");
     expect(spyFetch).toHaveBeenCalled();
 
-    await updateStatutRequeteInformation("", {} as StatutRequete);
-    expect(spyFetch).toHaveBeenCalled();
-
-    await updateStatutRequeteCreation("", {} as StatutRequete);
-    expect(spyFetch).toHaveBeenCalled();
-
     await postObservation("", "");
-    expect(spyFetch).toHaveBeenCalled();
-
-    await postMessageRetourSDANF("", {} as IEchange);
     expect(spyFetch).toHaveBeenCalled();
 
     await postSauvegardePersonneEtActeSelectionne("", {});

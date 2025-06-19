@@ -1,6 +1,6 @@
 import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
-import { getLibelle } from "@util/Utils";
+
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import { NomComposant } from "@util/habilitation/habilitationsDescription";
 import React from "react";
@@ -8,13 +8,13 @@ import { useNavigate } from "react-router";
 import { LinkTab } from "./LinkTab";
 import { TabPanel } from "./TabPanel";
 
-export interface EnTeteOnglet {
+interface EnTeteOnglet {
   titre: string;
   url: string;
   nomHabilitation?: NomComposant;
 }
 
-export interface CorpsOnglet {
+interface CorpsOnglet {
   composant: JSX.Element;
   nomHabilitation?: NomComposant;
 }
@@ -36,7 +36,7 @@ const TabPanelRequetesCreationServiceWithHabilitation = WithHabilitation(TabPane
 
 const LinkTabRequetesCreationServiceWithHabilitation = WithHabilitation(LinkTab, "LinkTabRequetesCreationService");
 
-export interface IBoiteAOngletsProps {
+interface IBoiteAOngletsProps {
   onglets: IOngletProps[];
   elementEntreTitreEtContenu?: JSX.Element;
   selectedTab: number;
@@ -71,7 +71,7 @@ export const BoiteAOnglets: React.FC<IBoiteAOngletsProps> = props => {
           variant="fullWidth"
           value={selectedTabState}
           onChange={handleChange}
-          aria-label={getLibelle(props.titre)}
+          aria-label={props.titre}
           className={props.classOnglet}
           indicatorColor="primary"
         >
@@ -84,7 +84,7 @@ export const BoiteAOnglets: React.FC<IBoiteAOngletsProps> = props => {
                 return (
                   <LinkTabRequetesDelivranceServiceWithHabilitation
                     key={index}
-                    label={getLibelle(onglet.enTete.titre)}
+                    label={onglet.enTete.titre}
                     href={onglet.enTete.url}
                     {...a11yProps(index)}
                   />
@@ -94,7 +94,7 @@ export const BoiteAOnglets: React.FC<IBoiteAOngletsProps> = props => {
                 return (
                   <LinkTabRequetesInfoServiceWithHabilitation
                     key={index}
-                    label={getLibelle(onglet.enTete.titre)}
+                    label={onglet.enTete.titre}
                     href={onglet.enTete.url}
                     {...a11yProps(index)}
                   />
@@ -104,7 +104,7 @@ export const BoiteAOnglets: React.FC<IBoiteAOngletsProps> = props => {
                 return (
                   <LinkTabRequetesCreationServiceWithHabilitation
                     key={index}
-                    label={getLibelle(onglet.enTete.titre)}
+                    label={onglet.enTete.titre}
                     href={onglet.enTete.url}
                     {...a11yProps(index)}
                   />
@@ -113,7 +113,7 @@ export const BoiteAOnglets: React.FC<IBoiteAOngletsProps> = props => {
                 return (
                   <LinkTab
                     key={index}
-                    label={getLibelle(onglet.enTete.titre)}
+                    label={onglet.enTete.titre}
                     href={onglet.enTete.url}
                     {...a11yProps(index)}
                   />

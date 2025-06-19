@@ -10,7 +10,7 @@ import "./scss/OptionsCourrierForm.scss";
 export const contenuDisabled = (option: OptionCourrier | undefined, optionsChoisies: OptionCourrier[]): boolean =>
   option === undefined || optionsChoisies.indexOf(option) === -1 || !(option.presenceVariables || option.optionLibre);
 
-export const contenuOptionNonModifie = (option: OptionCourrier | undefined): boolean =>
+const contenuOptionNonModifie = (option: OptionCourrier | undefined): boolean =>
   option !== undefined && !texteOptionCourrierModifie(option);
 
 export const texteOptionCourrierModifie = (option: OptionCourrier): boolean =>

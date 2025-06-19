@@ -1,11 +1,7 @@
-import {
-  getCriteresRMCAuto,
-  redirectionVersRequetePriseEnCharge,
-  redirectionVersRequeteTraitement
-} from "@hook/rmcAuto/RMCAutoActesInscriptionsUtils";
+import { getCriteresRMCAuto, redirectionVersRequetePriseEnCharge } from "@hook/rmcAuto/RMCAutoActesInscriptionsUtils";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import { PATH_APERCU_REQ_TRAITEMENT, URL_MES_REQUETES_DELIVRANCE, URL_REQUETES_DELIVRANCE_SERVICE } from "@router/ReceUrls";
+import { PATH_APERCU_REQ_TRAITEMENT, URL_REQUETES_DELIVRANCE_SERVICE } from "@router/ReceUrls";
 import { expect, test } from "vitest";
 
 const requete = {
@@ -46,10 +42,6 @@ test("criteresRMCAutoMapper", () => {
 test("redirectionRMCAuto", () => {
   const res = redirectionVersRequetePriseEnCharge(requete, URL_REQUETES_DELIVRANCE_SERVICE);
   expect(res).toStrictEqual("/rece/rece-ui/requetesservice/apercurequetepriseencharge/0");
-});
-test("redirectionRMCAutoApercuTraitement", () => {
-  const res = redirectionVersRequeteTraitement("0", URL_MES_REQUETES_DELIVRANCE);
-  expect(res).toStrictEqual("/rece/rece-ui/mesrequetes/apercurequetetraitement/0");
 });
 test("redirectionRMCAutoModifierTraitement", () => {
   const res = redirectionVersRequetePriseEnCharge(requete, `${URL_REQUETES_DELIVRANCE_SERVICE}/${PATH_APERCU_REQ_TRAITEMENT}/0`);

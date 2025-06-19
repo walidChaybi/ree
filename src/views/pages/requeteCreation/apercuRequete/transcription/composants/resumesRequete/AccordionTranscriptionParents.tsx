@@ -1,12 +1,12 @@
 import { EvenementUnion } from "@model/requete/IEvenementUnion";
 import { ITitulaireRequeteCreation, TitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { resume } from "@pages/requeteCreation/commun/Labels";
-import { DEUX, UN, estRenseigne, getLibelle } from "@util/Utils";
+import { DEUX, UN, estRenseigne } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import React from "react";
 import { LigneAccordion } from "./LigneAccordion";
 
-export interface AccordionTranscriptionParentsProps {
+interface AccordionTranscriptionParentsProps {
   parents?: ITitulaireRequeteCreation[];
 }
 
@@ -14,7 +14,7 @@ export const AccordionTranscriptionParents: React.FC<AccordionTranscriptionParen
   const estPresentUnParent = props.parents && props.parents?.length < DEUX ? "contenuAccordionUnSeulElement" : "";
 
   function getTitreAccordionParents(): string {
-    return `${getLibelle(resume.parent)}${props.parents && props.parents?.length > UN ? "s" : ""}`;
+    return `${resume.parent}${props.parents && props.parents?.length > UN ? "s" : ""}`;
   }
 
   function getDateLieuMariage(titulaire?: ITitulaireRequeteCreation): string | undefined {
@@ -49,44 +49,44 @@ export const AccordionTranscriptionParents: React.FC<AccordionTranscriptionParen
               >
                 <LigneAccordion
                   texte={TitulaireRequeteCreation.getNomNaissanceOuSNP(parent)}
-                  ariaLabel={getLibelle("Nom naissance")}
+                  ariaLabel={"Nom naissance"}
                 />
 
                 <LigneAccordion
                   texte={TitulaireRequeteCreation.getPrenomsOuSPC(parent)}
-                  ariaLabel={getLibelle("Prénoms")}
+                  ariaLabel={"Prénoms"}
                 />
 
                 <LigneAccordion
                   texte={TitulaireRequeteCreation.getSexe(parent)}
-                  ariaLabel={getLibelle("Sexe")}
+                  ariaLabel={"Sexe"}
                 />
 
                 <LigneAccordion
                   texte={parent.dateNaissanceFormatee}
-                  ariaLabel={getLibelle("Date de naissance")}
+                  ariaLabel={"Date de naissance"}
                 />
 
                 <LigneAccordion
                   texte={parent.lieuNaissanceFormate}
-                  ariaLabel={getLibelle("Lieu de naissance")}
+                  ariaLabel={"Lieu de naissance"}
                 />
 
                 <LigneAccordion
                   texte={formatNationalites(TitulaireRequeteCreation.getTableauDeNationalites(parent))}
-                  ariaLabel={getLibelle("Nationalité")}
+                  ariaLabel={"Nationalité"}
                 />
 
                 <LigneAccordion
                   texte={parent.paysStatutRefugie}
-                  label={getLibelle("Pays statut réfugié")}
-                  ariaLabel={getLibelle("Pays statut réfugié")}
+                  label={"Pays statut réfugié"}
+                  ariaLabel={"Pays statut réfugié"}
                 />
 
                 <LigneAccordion
                   texte={parent.paysOrigine}
-                  label={getLibelle("Pays d'origine")}
-                  ariaLabel={getLibelle("Pays d'origine")}
+                  label={"Pays d'origine"}
+                  ariaLabel={"Pays d'origine"}
                 />
               </div>
             );
@@ -94,8 +94,8 @@ export const AccordionTranscriptionParents: React.FC<AccordionTranscriptionParen
         </div>
         <LigneAccordion
           texte={getDateLieuMariage(props.parents?.[0])}
-          label={getLibelle("Mariage")}
-          ariaLabel={getLibelle("Date de mariage")}
+          label={"Mariage"}
+          ariaLabel={"Date de mariage"}
         />
       </AccordionRece>
     </div>

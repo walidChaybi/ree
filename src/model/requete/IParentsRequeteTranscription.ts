@@ -42,7 +42,7 @@ export interface IParentRequeteTranscription {
   typeObjetTitulaire?: TypeObjetTitulaire;
 }
 
-export interface IParentsRequeteTranscription {
+interface IParentsRequeteTranscription {
   parent1: IParentRequeteTranscription;
   parent2: IParentRequeteTranscription;
 }

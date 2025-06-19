@@ -1,5 +1,5 @@
 import { CONFIG_PATCH_STATUT_REQUETE_MISE_A_JOUR } from "@api/configurations/requete/miseAJour/PatchStatutRequeteMiseAjourConfigApi";
-import { CONFIG_PATCH_VALIDER_ANALYSE_MARGINALE } from "@api/configurations/requete/miseAJour/PatchValideranalyseMarginaleConfigApi";
+import { CONFIG_PATCH_VALIDER_ANALYSE_MARGINALE } from "@api/configurations/requete/miseAJour/PatchValiderAnalyseMarginaleConfigApi";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useState } from "react";
 import useFetchApi from "../../hooks/api/FetchApiHook";

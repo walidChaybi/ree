@@ -4,17 +4,11 @@ import IUtilisateurDto from "../../../../dto/etatcivil/agent/IUtilisateurDto";
 
 const URI = "/utilisateurs/referentiel";
 
-
-export interface IPaginationParams {
+interface IPaginationParams {
   range?: string;
 }
 
-export const CONFIG_GET_TOUS_UTILISATEURS: TConfigurationApi<
-  typeof URI,
-  undefined,
-  IPaginationParams,
-  IUtilisateurDto[]
-> = {
+export const CONFIG_GET_TOUS_UTILISATEURS: TConfigurationApi<typeof URI, undefined, IPaginationParams, IUtilisateurDto[]> = {
   api: AGENT_API,
   methode: "GET",
   uri: URI

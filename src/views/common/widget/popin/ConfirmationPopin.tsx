@@ -12,7 +12,7 @@ export interface IBoutonPopin {
   color?: string;
 }
 
-export interface ConfirmationPopinProps {
+interface ConfirmationPopinProps {
   estOuvert: boolean;
   messages?: string[];
   boutons?: IBoutonPopin[];
@@ -20,13 +20,7 @@ export interface ConfirmationPopinProps {
   disablePortal?: boolean;
 }
 
-export const ConfirmationPopin: React.FC<ConfirmationPopinProps> = ({
-  estOuvert,
-  messages,
-  boutons,
-  titre,
-  disablePortal = false
-}) => {
+export const ConfirmationPopin: React.FC<ConfirmationPopinProps> = ({ estOuvert, messages, boutons, titre, disablePortal = false }) => {
   const [messagesPopin, setMessagesPopin] = useState<string[]>();
 
   useEffect(() => {

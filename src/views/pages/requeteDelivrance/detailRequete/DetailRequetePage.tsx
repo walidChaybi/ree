@@ -1,15 +1,12 @@
 import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
-import {
-  IDetailRequeteParams,
-  useDetailRequeteApiHook
-} from "@hook/requete/DetailRequeteHook";
+import { IDetailRequeteParams, useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SectionPanel } from "@widget/section/SectionPanel";
 import React, { useEffect, useState } from "react";
 import { getPanelsDetailRequete } from "./DetailRequeteUtils";
 import "./scss/DetailRequetePage.scss";
 
-export const titreDetail = "Détails requête";
+const titreDetail = "Détails requête";
 interface DetailRequetePageProps {
   requete?: IRequeteDelivrance;
   idRequeteAAfficher?: string;
@@ -18,8 +15,7 @@ interface DetailRequetePageProps {
 export const DetailRequetePage: React.FC<DetailRequetePageProps> = props => {
   const [idRequete, setIdRequete] = useState<string>();
   const [requete, setRequete] = useState<IRequeteDelivrance>();
-  const [detailRequeteParams, setDetailRequeteParams] =
-    useState<IDetailRequeteParams>();
+  const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>();
   const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
 
   useEffect(() => {

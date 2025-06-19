@@ -3,7 +3,7 @@ import { ZERO } from "@util/Utils";
 import React, { PropsWithChildren } from "react";
 import { TChangeEventSurHTMLInputElement } from "../IColonneElementsParams";
 
-export interface ICelluleEnteteCaseACocher<TIdentifiant> extends CheckboxProps {
+interface ICelluleEnteteCaseACocher<TIdentifiant> extends CheckboxProps {
   identifiantsDeLaPage: TIdentifiant[];
   identifiantsSelectionnes: TIdentifiant[];
   handleChange: (event: TChangeEventSurHTMLInputElement) => void;
@@ -14,9 +14,7 @@ export const CelluleEnteteCaseACocher = <TIdentifiant,>({
   identifiantsSelectionnes: identifiantsSelectionnesProps,
   handleChange: handleChangeProps,
   ...props
-}: PropsWithChildren<
-  ICelluleEnteteCaseACocher<TIdentifiant>
->): React.ReactElement => {
+}: PropsWithChildren<ICelluleEnteteCaseACocher<TIdentifiant>>): React.ReactElement => {
   function identifiantEstSelectionne(identifiant: TIdentifiant): boolean {
     return identifiantsSelectionnesProps.includes(identifiant);
   }
@@ -30,9 +28,7 @@ export const CelluleEnteteCaseACocher = <TIdentifiant,>({
   }
 
   function estIndeterminee(): boolean {
-    return (
-      identifiantsDeLaPageProps.some(identifiantEstSelectionne) && !estCochee()
-    );
+    return identifiantsDeLaPageProps.some(identifiantEstSelectionne) && !estCochee();
   }
 
   return (

@@ -3,7 +3,6 @@ import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IRe
 import { getParamsTableauDepuisReponseApi, IParamsTableau } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import messageManager from "@util/messageManager";
-import { execute, getLibelle } from "@util/Utils";
 import { useEffect, useState } from "react";
 import {
   ICriteresRechercheActeInscription,
@@ -12,7 +11,7 @@ import {
   rechercherRepertoireAutorise
 } from "./RMCActeInscriptionUtils";
 
-export interface IRMCInscriptionApiHookResultat {
+interface IRMCInscriptionApiHookResultat {
   dataRMCInscription?: IResultatRMCInscription[];
   dataTableauRMCInscription?: IParamsTableau;
   ficheIdentifiant?: string;
@@ -40,7 +39,7 @@ export function useRMCInscriptionApiHook(criteres?: ICriteresRechercheActeInscri
               ficheIdentifiant: criteres.ficheIdentifiant,
               errors: result?.body?.errors
             });
-            execute(criteres.onFinTraitement);
+            criteres.onFinTraitement?.();
           } else {
             setResultat({
               dataRMCInscription: [],
@@ -53,7 +52,7 @@ export function useRMCInscriptionApiHook(criteres?: ICriteresRechercheActeInscri
           messageUtilisateur: "Impossible de récupérer les inscriptions de la recherche multi-critères",
           error
         });
-        execute(criteres?.onErreur);
+        criteres?.onErreur?.();
       }
     }
     fetchInscriptions();
@@ -61,7 +60,7 @@ export function useRMCInscriptionApiHook(criteres?: ICriteresRechercheActeInscri
 
   useEffect(() => {
     if (resultat.errors) {
-      resultat.errors.forEach(e => messageManager.showInfoAndClose(getLibelle(e.message)));
+      resultat.errors.forEach(e => messageManager.showInfoAndClose(e.message));
     }
   }, [resultat.errors]);
 

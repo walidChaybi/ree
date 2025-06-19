@@ -65,7 +65,7 @@ import {
   ReponseAppelNomenclatureTypeMention
 } from "../data/nomenclatures";
 
-export const NORESULT = "NORESULT";
+const NORESULT = "NORESULT";
 
 export const configEtatcivil = [
   {

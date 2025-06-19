@@ -104,12 +104,6 @@ export const DateValidationSchemaSansTestFormat = Yup.object().shape({
   [ANNEE]: Yup.number()
 });
 
-export const DateValidationSchemaAnneeObligatoire = Yup.object().shape({
-  [JOUR]: Yup.number(),
-  [MOIS]: Yup.number(),
-  [ANNEE]: Yup.number().required("La saisie de l'année de naissance est obligatoire")
-});
-
 export const DateValidationCompleteSchemaSansTestFormatRequired = Yup.object()
   .shape({
     [JOUR]: Yup.number(),

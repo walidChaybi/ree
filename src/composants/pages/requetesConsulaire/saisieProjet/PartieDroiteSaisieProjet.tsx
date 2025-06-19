@@ -6,7 +6,7 @@ import OngletsBouton from "../../../commun/onglets/OngletsBouton";
 import ConteneurVoletEdition from "../../requetesDelivrance/editionRequete/ConteneurVoletEdition";
 import FormulaireSaisieProjet from "./formulaireSaisieProjet/FormulaireSaisieProjet";
 
-export enum ECleOngletPartieDroite {
+enum ECleOngletPartieDroite {
   PROJET = "projet",
   MENTIONS = "mentions",
   ECHANGE = "echange"

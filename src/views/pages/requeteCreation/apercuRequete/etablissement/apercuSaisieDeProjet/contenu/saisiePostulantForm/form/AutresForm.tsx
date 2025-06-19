@@ -12,20 +12,11 @@ import LieuForm, { ILieuProps } from "@composant/formulaire/LieuForm";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { TypeReconnaissance } from "@model/requete/enum/TypeReconnaissance";
-import { getLibelle } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
-import {
-  OptionVide,
-  SelectField
-} from "@widget/formulaire/champsSaisie/SelectField";
-import {
-  DEUX_CENT_CARACT_MAX,
-  FormikComponentProps,
-  NB_CARACT_MAX_SAISIE,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { OptionVide, SelectField } from "@widget/formulaire/champsSaisie/SelectField";
+import { FormikComponentProps, NB_CARACT_MAX_SAISIE, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
 import Item from "../../../../commun/resumeRequeteCreationEtablissement/items/Item";
@@ -39,45 +30,41 @@ const AutresForm: React.FC<AutresFormProps> = props => {
   const villeNamespace = withNamespace(props.nom, VILLE);
   const declarantNamespace = withNamespace(props.nom, DECLARANT);
   const valeurDeclarant = props.formik.getFieldProps(declarantNamespace).value;
-  const estVilleParis = LieuxUtils.estVilleParis(
-    props.formik.getFieldProps(villeNamespace).value
-  );
+  const estVilleParis = LieuxUtils.estVilleParis(props.formik.getFieldProps(villeNamespace).value);
   const adresseTitulaire: ILieuProps = {
     lieu: (
       <RadioField
         name={withNamespace(props.nom, ADRESSE)}
-        label={getLibelle("Adresse du titulaire")}
+        label={"Adresse du titulaire"}
         values={EtrangerFrance.getAllEnumsAsOptions()}
       />
     ),
     ville: (
       <InputField
         name={villeNamespace}
-        label={getLibelle("Ville")}
+        label={"Ville"}
         maxLength={NB_CARACT_MAX_SAISIE}
       />
     ),
     arrondissement: (
       <SelectField
         name={withNamespace(props.nom, ARRONDISSEMENT)}
-        label={getLibelle("Arrondissement")}
-        options={LieuxUtils.getOptionsArrondissement(
-          props.formik.getFieldProps(villeNamespace).value
-        )}
+        label={"Arrondissement"}
+        options={LieuxUtils.getOptionsArrondissement(props.formik.getFieldProps(villeNamespace).value)}
         optionVide={OptionVide.SELECTIONNABLE}
       />
     ),
     departement: (
       <InputField
         name={withNamespace(props.nom, DEPARTEMENT)}
-        label={getLibelle("Département")}
+        label={"Département"}
         maxLength={NB_CARACT_MAX_SAISIE}
       />
     ),
     pays: (
       <InputField
         name={withNamespace(props.nom, PAYS)}
-        label={getLibelle(`Pays`)}
+        label={`Pays`}
         maxLength={NB_CARACT_MAX_SAISIE}
       />
     )
@@ -92,21 +79,21 @@ const AutresForm: React.FC<AutresFormProps> = props => {
       />
       <SelectField
         name={withNamespace(props.nom, RECONNAISSANCE)}
-        label={getLibelle("Reconnaissance")}
+        label={"Reconnaissance"}
         options={TypeReconnaissance.getAllEnumsAsOptions()}
         optionVide={OptionVide.SELECTIONNABLE}
       />
       <SelectField
         name={declarantNamespace}
-        label={getLibelle("Déclarant(s)")}
+        label={"Déclarant(s)"}
         options={TypeDeclarant.getAllEnumsAsOptions()}
         optionVide={OptionVide.SELECTIONNABLE}
       />
       {TypeDeclarant.estAutre(valeurDeclarant) && (
         <InputField
           name={withNamespace(props.nom, AUTRE_DECLARANT)}
-          label={getLibelle("Autre déclarant")}
-          maxLength={DEUX_CENT_CARACT_MAX}
+          label={"Autre déclarant"}
+          maxLength={"200"}
         />
       )}
     </Item>

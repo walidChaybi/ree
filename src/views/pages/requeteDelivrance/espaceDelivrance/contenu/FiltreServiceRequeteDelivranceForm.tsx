@@ -19,11 +19,11 @@ import "./scss/FiltreServiceRequeteDelivranceForm.scss";
 
 // TOREFACTO à couvrir (ignoré le 28/11/24)
 /* v8 ignore start */
-export interface IFiltreServiceRequeteDelivranceFormProps {
+interface IFiltreServiceRequeteDelivranceFormProps {
   onSubmit: (values: IFiltreServiceRequeteDelivranceFormValues) => void;
 }
 
-export const FiltreServiceRequeteDelivranceFormDefaultValues: IFiltreServiceRequeteDelivranceFormValues = {
+const FiltreServiceRequeteDelivranceFormDefaultValues: IFiltreServiceRequeteDelivranceFormValues = {
   sousType: "",
   provenance: "",
   attribueA: { cle: "", libelle: "" },

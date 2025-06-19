@@ -1,18 +1,9 @@
-import {
-  AddAlerteActeApiHookParameters,
-  useAddAlerteActeApiHook
-} from "@hook/alertes/AddAlerteActeHookApi";
-import {
-  DeleteAlerteActeApiHookParameters,
-  useDeleteAlerteActeApiHook
-} from "@hook/alertes/DeleteAlerteActeHookApi";
-import {
-  IGetAlertesActeApiHookParameters,
-  useGetAlertesActeApiHook
-} from "@hook/alertes/GetAlertesActeApiHook";
+import { AddAlerteActeApiHookParameters, useAddAlerteActeApiHook } from "@hook/alertes/AddAlerteActeHookApi";
+import { DeleteAlerteActeApiHookParameters, useDeleteAlerteActeApiHook } from "@hook/alertes/DeleteAlerteActeHookApi";
+import { IGetAlertesActeApiHookParameters, useGetAlertesActeApiHook } from "@hook/alertes/GetAlertesActeApiHook";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { getLibelle } from "@util/Utils";
+
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
@@ -22,41 +13,28 @@ import { ListeAlertes } from "@widget/alertes/listeAlertes/ListeAlertes";
 import React, { useCallback, useEffect, useState } from "react";
 import "./scss/AlertesActes.scss";
 
-export interface AlertesActesProps {
+interface AlertesActesProps {
   detailRequete?: IRequeteDelivrance;
   idActeInit?: string;
   addActe?: IGetAlertesActeApiHookParameters;
   ajoutAlerte?: (alerte: Map<string, IAlerte[]>) => void;
 }
 
-export const AlertesActes: React.FC<AlertesActesProps> = ({
-  idActeInit,
-  addActe,
-  ajoutAlerte
-}) => {
+export const AlertesActes: React.FC<AlertesActesProps> = ({ idActeInit, addActe, ajoutAlerte }) => {
   /* Etat alertes associées aux aajoutAlertePossiblectes sélectionnés */
   const [alertes, setAlertes] = useState<Map<string, IAlerte[]>>(new Map([]));
 
   /* Etat paramètres d'appel de l'API de récupération des alertes */
-  const [alertesActeApiHookParameters, setAlertesActeApiHookParameters] =
-    useState<IGetAlertesActeApiHookParameters>();
+  const [alertesActeApiHookParameters, setAlertesActeApiHookParameters] = useState<IGetAlertesActeApiHookParameters>();
 
   /* Etat paramètres d'appel de l'API d'ajout d'une alerte */
-  const [
-    ajouterAlerteActeApiHookParameters,
-    setAjouterAlerteActeApiHookParameters
-  ] = useState<AddAlerteActeApiHookParameters>();
+  const [ajouterAlerteActeApiHookParameters, setAjouterAlerteActeApiHookParameters] = useState<AddAlerteActeApiHookParameters>();
 
   /*  Etat paramètres d'appel de l'API de suppression d'une alerte */
-  const [
-    deleteAlerteActeApiHookParameters,
-    setDeleteAlerteActeApiHookParameters
-  ] = useState<DeleteAlerteActeApiHookParameters>();
+  const [deleteAlerteActeApiHookParameters, setDeleteAlerteActeApiHookParameters] = useState<DeleteAlerteActeApiHookParameters>();
 
   /* Hook d'appel de l'API de récupération des alertes associées à un acte */
-  const resultatGetAlertesActe = useGetAlertesActeApiHook(
-    alertesActeApiHookParameters
-  );
+  const resultatGetAlertesActe = useGetAlertesActeApiHook(alertesActeApiHookParameters);
 
   useEffect(() => {
     if (idActeInit) {
@@ -75,10 +53,7 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({
     if (alertesActeApiHookParameters) {
       const newAlertes = new Map(alertes);
       if (alertesActeApiHookParameters.isChecked && resultatGetAlertesActe) {
-        newAlertes.set(
-          alertesActeApiHookParameters.idActe,
-          resultatGetAlertesActe.alertes
-        );
+        newAlertes.set(alertesActeApiHookParameters.idActe, resultatGetAlertesActe.alertes);
       } else {
         newAlertes.delete(alertesActeApiHookParameters.idActe);
       }
@@ -88,16 +63,13 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({
   }, [alertesActeApiHookParameters, resultatGetAlertesActe]);
 
   /* Ajout d'une alerte */
-  const ajouterAlerteCallBack = useCallback(
-    (idActe: string, value: IAjouterAlerteFormValue) => {
-      setAjouterAlerteActeApiHookParameters({
-        idActe,
-        idTypeAlerte: value?.idTypeAlerte,
-        complementDescription: value?.complementDescription
-      });
-    },
-    []
-  );
+  const ajouterAlerteCallBack = useCallback((idActe: string, value: IAjouterAlerteFormValue) => {
+    setAjouterAlerteActeApiHookParameters({
+      idActe,
+      idTypeAlerte: value?.idTypeAlerte,
+      complementDescription: value?.complementDescription
+    });
+  }, []);
 
   const majAlertes = useCallback(
     (newAlertes: any) => {
@@ -109,9 +81,7 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({
     [ajoutAlerte]
   );
 
-  const resultatAjoutAlerte = useAddAlerteActeApiHook(
-    ajouterAlerteActeApiHookParameters
-  );
+  const resultatAjoutAlerte = useAddAlerteActeApiHook(ajouterAlerteActeApiHookParameters);
   useEffect(() => {
     if (resultatAjoutAlerte) {
       /* màj des alertes*/
@@ -124,30 +94,23 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({
   }, [resultatAjoutAlerte]);
 
   /* Suppression d'une alerte */
-  const supprimerAlerteCallBack = useCallback(
-    (idAlerteActe: string, idActe: string) => {
-      setDeleteAlerteActeApiHookParameters({
-        idAlerteActe,
-        idActe
-      });
-    },
-    []
-  );
+  const supprimerAlerteCallBack = useCallback((idAlerteActe: string, idActe: string) => {
+    setDeleteAlerteActeApiHookParameters({
+      idAlerteActe,
+      idActe
+    });
+  }, []);
 
-  const resultatSuppressionAlerte = useDeleteAlerteActeApiHook(
-    deleteAlerteActeApiHookParameters
-  );
+  const resultatSuppressionAlerte = useDeleteAlerteActeApiHook(deleteAlerteActeApiHookParameters);
   useEffect(() => {
     if (resultatSuppressionAlerte) {
       /* màj des alertes*/
       const newAlertes = new Map(alertes);
 
-      const idAlerteActe =
-        deleteAlerteActeApiHookParameters?.idAlerteActe || "";
+      const idAlerteActe = deleteAlerteActeApiHookParameters?.idAlerteActe || "";
       const idActe = deleteAlerteActeApiHookParameters?.idActe || "";
 
-      const nouvellesAlertesDeLActe =
-        newAlertes?.get(idActe)?.filter(a => a.id !== idAlerteActe) || [];
+      const nouvellesAlertesDeLActe = newAlertes?.get(idActe)?.filter(a => a.id !== idAlerteActe) || [];
 
       newAlertes.set(idActe, nouvellesAlertesDeLActe);
 
@@ -167,39 +130,32 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({
   return (
     <div className="AlertesActes">
       <AccordionRece
-        titre={getLibelle("Alertes et informations")}
+        titre={"Alertes et informations"}
         disabled={false}
         expanded={estOuvert()}
       >
         <div className="Liste">
-          {Array.from(alertes.entries()).map(
-            (entry: [string, IAlerte[]], index: number) => (
-              <div
-                key={`alertes-${index}`}
-                className={`Alertes ${index === 0 ? "" : "SeparateurAlertes"}`}
-              >
-                {gestionnaireFeatureFlag.estActif(
-                  FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
-                ) && (
-                  <BoutonAjouterAlerte
-                    key={`bouton-ajouter-alerte-${index}`}
-                    ajouterAlerteCallBack={ajouterAlerteCallBack.bind(
-                      null,
-                      entry?.[0]
-                    )}
-                    idTypeRegistre={resultatGetAlertesActe?.idTypeRegistre}
-                  />
-                )}
-                <ListeAlertes
+          {Array.from(alertes.entries()).map((entry: [string, IAlerte[]], index: number) => (
+            <div
+              key={`alertes-${index}`}
+              className={`Alertes ${index === 0 ? "" : "SeparateurAlertes"}`}
+            >
+              {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) && (
+                <BoutonAjouterAlerte
+                  key={`bouton-ajouter-alerte-${index}`}
+                  ajouterAlerteCallBack={ajouterAlerteCallBack.bind(null, entry?.[0])}
                   idTypeRegistre={resultatGetAlertesActe?.idTypeRegistre}
-                  key={`liste-alertes-${index}`}
-                  alertes={entry?.[1]}
-                  displayReference={true}
-                  supprimerAlerteCallBack={supprimerAlerteCallBack}
                 />
-              </div>
-            )
-          )}
+              )}
+              <ListeAlertes
+                idTypeRegistre={resultatGetAlertesActe?.idTypeRegistre}
+                key={`liste-alertes-${index}`}
+                alertes={entry?.[1]}
+                displayReference={true}
+                supprimerAlerteCallBack={supprimerAlerteCallBack}
+              />
+            </div>
+          ))}
         </div>
       </AccordionRece>
     </div>

@@ -1,20 +1,18 @@
+import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
-import "../scss/ReceDatePicker.scss";
 import "react-datepicker/dist/react-datepicker.css";
+import "../scss/ReceDatePicker.scss";
 import { customHeaderRenderer } from "./CustomHeader";
 
-interface ComponentProps {
+interface ReceDatePickerProps {
   dateValue?: Date;
   disabled?: boolean;
   onChange?: (date: Date) => void;
   dateMini?: Date;
   dateMaxi?: Date;
 }
-
-export type ReceDatePickerProps = ComponentProps;
 
 const ReceDatePicker: React.FC<ReceDatePickerProps> = props => {
   const [dateValue, setDateValue] = useState(props.dateValue ?? new Date());
@@ -30,9 +28,7 @@ const ReceDatePicker: React.FC<ReceDatePickerProps> = props => {
       <DatePicker
         renderCustomHeader={customHeaderRenderer}
         selected={dateValue}
-        onChange={(date: Date, event: React.SyntheticEvent<any> | undefined) =>
-          onDateValueChange(props, setDateValue, date, event)
-        }
+        onChange={(date: Date, event: React.SyntheticEvent<any> | undefined) => onDateValueChange(props, setDateValue, date, event)}
         customInput={<IconCalendar />}
         shouldCloseOnSelect={true}
         disabled={props.disabled}
@@ -57,12 +53,7 @@ class IconCalendar extends React.Component<{ value?: any; onClick?: any }> {
   }
 }
 
-export function onDateValueChange(
-  props: any,
-  setDateValue: any,
-  date: Date,
-  event: React.SyntheticEvent<any> | undefined
-) {
+export function onDateValueChange(props: any, setDateValue: any, date: Date, event: React.SyntheticEvent<any> | undefined) {
   if (date) {
     if (props.onChange) {
       props.onChange(date);

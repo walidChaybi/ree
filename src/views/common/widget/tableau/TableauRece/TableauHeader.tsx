@@ -5,7 +5,7 @@ import { SortOrder } from "../TableUtils";
 import { TableauHeaderCell } from "./TableauHeaderCell";
 import { TableauTypeColumn } from "./TableauTypeColumn";
 
-export interface TableauReceProps {
+interface TableauReceProps {
   onRequestSort?: (event: React.MouseEvent<unknown>, property: string) => void;
   order?: SortOrder;
   orderBy?: string;
@@ -14,10 +14,7 @@ export interface TableauReceProps {
 }
 
 export const TableauHeader: React.FC<TableauReceProps> = props => {
-  const createSortHandler = (
-    event: React.MouseEvent<unknown>,
-    property: string
-  ) => {
+  const createSortHandler = (event: React.MouseEvent<unknown>, property: string) => {
     if (props.onRequestSort) {
       props.onRequestSort(event, property);
     }

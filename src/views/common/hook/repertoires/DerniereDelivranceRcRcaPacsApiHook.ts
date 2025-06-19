@@ -8,18 +8,15 @@ export interface IDerniereDelivranceRcRcaPacsParams {
   typeRepertoire: TypePacsRcRca;
 }
 
-export interface IDerniereDelivranceRcRcaPacsResultat {
+interface IDerniereDelivranceRcRcaPacsResultat {
   resultat: boolean;
 }
 
-export function useDerniereDelivranceRcRcaPacsApiHook(
-  params?: IDerniereDelivranceRcRcaPacsParams[]
-) {
-  const [resultat, setResultat] =
-    useState<IDerniereDelivranceRcRcaPacsResultat>();
+export function useDerniereDelivranceRcRcaPacsApiHook(params?: IDerniereDelivranceRcRcaPacsParams[]) {
+  const [resultat, setResultat] = useState<IDerniereDelivranceRcRcaPacsResultat>();
 
   useEffect(() => {
-    if (params && params.length) {
+    if (params?.length) {
       updateDateDerniereDelivranceRcRcaPacs(params)
         .then(result => {
           setResultat({ resultat: true });

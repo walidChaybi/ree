@@ -7,7 +7,7 @@ import { ListeAlertes } from "@widget/alertes/listeAlertes/ListeAlertes";
 import React from "react";
 import "./scss/BandeauAlertesActe.scss";
 
-export interface BandeauAlertesActeProps {
+interface BandeauAlertesActeProps {
   alertes: IAlerte[];
   idTypeRegistre?: string;
   ajouterAlerteCallBack: (value: IAjouterAlerteFormValue) => void;
@@ -25,12 +25,7 @@ export const BandeauAlertesActe: React.FC<BandeauAlertesActeProps> = ({
   disableScrollLock
 }) => {
   function afficherBoutonSelonFeatureFlag() {
-    return (
-      afficherBouton &&
-      gestionnaireFeatureFlag.estActif(
-        FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
-      )
-    );
+    return afficherBouton && gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES);
   }
 
   return (

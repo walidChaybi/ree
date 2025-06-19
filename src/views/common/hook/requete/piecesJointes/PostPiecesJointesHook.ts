@@ -1,7 +1,4 @@
-import {
-  postPieceComplementInformationApi,
-  postPieceJustificative
-} from "@api/appels/requeteApi";
+import { postPieceComplementInformationApi, postPieceJustificative } from "@api/appels/requeteApi";
 import { mapPieceComplementInformation } from "@model/requete/pieceJointe/IPieceComplementInformation";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { mapPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
@@ -9,9 +6,7 @@ import { PieceJointe } from "@util/FileUtils";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 
-
-
-export interface IPostPiecesJointesApiResultat {
+interface IPostPiecesJointesApiResultat {
   uuidDocuments: string[];
   erreur?: any;
 }
@@ -24,8 +19,7 @@ export function usePostPiecesJointesApi(
   const [resultat, setResultat] = useState<IPostPiecesJointesApiResultat>();
   const [uuidDocuments, setUuidDocuments] = useState<string[]>([]);
 
-  const [piecesJointesAEnvoyer, setPiecesJointesAEnvoyer] =
-    useState<PieceJointe[]>();
+  const [piecesJointesAEnvoyer, setPiecesJointesAEnvoyer] = useState<PieceJointe[]>();
 
   useEffect(() => {
     if (idRequete && piecesJointes && piecesJointes.length > 0) {
@@ -35,24 +29,14 @@ export function usePostPiecesJointesApi(
 
   useEffect(() => {
     async function fetchData() {
-      if (
-        idRequete &&
-        piecesJointesAEnvoyer &&
-        piecesJointesAEnvoyer.length > 0
-      ) {
+      if (idRequete && piecesJointesAEnvoyer && piecesJointesAEnvoyer.length > 0) {
         try {
           let result;
           const pieceJointeAEnvoyer = piecesJointesAEnvoyer[0];
           if (typePiece === TypePieceJointe.PIECE_COMPLEMENT_INFORMATION) {
-            result = await postPieceComplementInformationApi(
-              idRequete,
-              mapPieceComplementInformation(pieceJointeAEnvoyer)
-            );
+            result = await postPieceComplementInformationApi(idRequete, mapPieceComplementInformation(pieceJointeAEnvoyer));
           } else if (typePiece === TypePieceJointe.PIECE_JUSTIFICATIVE) {
-            result = await postPieceJustificative(
-              idRequete,
-              mapPieceJustificative(pieceJointeAEnvoyer)
-            );
+            result = await postPieceJustificative(idRequete, mapPieceJustificative(pieceJointeAEnvoyer));
           }
           if (result) {
             setUuidDocuments([...uuidDocuments, result.body.data]);
@@ -80,4 +64,3 @@ export function usePostPiecesJointesApi(
 
   return resultat;
 }
-

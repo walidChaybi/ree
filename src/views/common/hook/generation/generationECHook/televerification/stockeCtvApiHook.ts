@@ -7,13 +7,11 @@ export interface IStockeCTVParams {
   idDocument: string;
 }
 
-export interface IStockeCTVResultat {
+interface IStockeCTVResultat {
   resultat: boolean;
 }
 
-export function useStockeCTV(
-  params?: IStockeCTVParams
-): IStockeCTVResultat | undefined {
+export function useStockeCTV(params?: IStockeCTVParams): IStockeCTVResultat | undefined {
   const [res, setRes] = useState<IStockeCTVResultat>();
 
   useEffect(() => {

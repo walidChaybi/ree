@@ -2,36 +2,23 @@ import { RECEContextData } from "@core/contexts/RECEContext";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE } from "@model/agent/IOfficier";
-import { getLibelle } from "@util/Utils";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useContext, useState } from "react";
-import {
-  IAjouterAlerteFormValue,
-  PopinAjouterAlertes
-} from "./contenu/PopinAjouterAlertes";
+import { IAjouterAlerteFormValue, PopinAjouterAlertes } from "./contenu/PopinAjouterAlertes";
 
-export interface BoutonAjouterAlerteProps {
+interface BoutonAjouterAlerteProps {
   ajouterAlerteCallBack: (value: IAjouterAlerteFormValue) => void;
   idTypeRegistre?: string;
   disableScrollLock?: boolean;
 }
 
-export const BoutonAjouterAlerte: React.FC<BoutonAjouterAlerteProps> = ({
-  ajouterAlerteCallBack,
-  idTypeRegistre,
-  disableScrollLock
-}) => {
+export const BoutonAjouterAlerte: React.FC<BoutonAjouterAlerteProps> = ({ ajouterAlerteCallBack, idTypeRegistre, disableScrollLock }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [hasMessageBloquant, setHasMessageBloquant] = useState<boolean>(false);
   const { utilisateurConnecte } = useContext(RECEContextData);
 
   const onClick = (): void => {
-    if (
-      officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE(
-        utilisateurConnecte,
-        idTypeRegistre
-      )
-    ) {
+    if (officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE(utilisateurConnecte, idTypeRegistre)) {
       setIsOpen(true);
     } else {
       setHasMessageBloquant(true);
@@ -52,7 +39,7 @@ export const BoutonAjouterAlerte: React.FC<BoutonAjouterAlerteProps> = ({
       <FontAwesomeIcon
         icon={faPlusCircle}
         className={`IconeBoutonAjoutAlerte`}
-        title={getLibelle("Ajouter une alerte")}
+        title={"Ajouter une alerte"}
         onClick={onClick}
       />
       <PopinAjouterAlertes
@@ -64,12 +51,10 @@ export const BoutonAjouterAlerte: React.FC<BoutonAjouterAlerteProps> = ({
       <ConfirmationPopin
         disablePortal={true}
         estOuvert={hasMessageBloquant}
-        messages={[
-          getLibelle("Vous n'avez pas les droits pour ajouter une alerte.")
-        ]}
+        messages={["Vous n'avez pas les droits pour ajouter une alerte."]}
         boutons={[
           {
-            label: getLibelle("OK"),
+            label: "OK",
             action: () => {
               setHasMessageBloquant(false);
             }

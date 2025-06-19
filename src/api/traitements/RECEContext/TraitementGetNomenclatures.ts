@@ -8,7 +8,7 @@ import { INatureMention, NatureMention } from "@model/etatcivil/enum/NatureMenti
 import { INatureRc, NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { INatureRca, NatureRca } from "@model/etatcivil/enum/NatureRca";
 import { ITypeAlerte, TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
-import { CLES } from "@model/parametres/clesParametres";
+import CLES from "@model/parametres/clesParametres";
 import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
 import { DocumentDelivrance, IDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { IPaysSecabilite, PaysSecabilite } from "@model/requete/enum/PaysSecabilite";

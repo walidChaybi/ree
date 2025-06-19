@@ -9,18 +9,15 @@ export interface UpdateChoixDelivranceProps {
   choixDelivrance?: ChoixDelivrance;
 }
 
-export interface IUpdateChoixDelivranceResultat {
+interface IUpdateChoixDelivranceResultat {
   idRequete?: string;
 }
 
-export function useUpdateChoixDelivrance(
-  params?: UpdateChoixDelivranceProps
-): IUpdateChoixDelivranceResultat | undefined {
-  const [updateChoixDelivranceResultat, setUpdateChoixDelivranceResultat] =
-    useState<IUpdateChoixDelivranceResultat>();
+export function useUpdateChoixDelivrance(params?: UpdateChoixDelivranceProps): IUpdateChoixDelivranceResultat | undefined {
+  const [updateChoixDelivranceResultat, setUpdateChoixDelivranceResultat] = useState<IUpdateChoixDelivranceResultat>();
 
   useEffect(() => {
-    if (params && params.choixDelivrance) {
+    if (params?.choixDelivrance) {
       updateChoixDelivrance(
         params.requete.id,
         // On enlève le choix délivrance en cas de "Modification du traitement"
@@ -32,8 +29,7 @@ export function useUpdateChoixDelivrance(
         .catch((error: any) => {
           /* istanbul ignore next */
           logError({
-            messageUtilisateur:
-              "Une erreur est survenue lors de la mise à jour de la requête",
+            messageUtilisateur: "Une erreur est survenue lors de la mise à jour de la requête",
             error
           });
         });

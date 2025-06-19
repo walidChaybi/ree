@@ -1,8 +1,4 @@
-import {
-  HTTP_PAYLOAD_TOO_LARGE,
-  HTTP_REQUEST_TIME_OUT,
-  ID_CORRELATION_HEADER_NAME
-} from "@api/ApiManager";
+import { HTTP_PAYLOAD_TOO_LARGE, HTTP_REQUEST_TIME_OUT, ID_CORRELATION_HEADER_NAME } from "@api/ApiManager";
 import { IQueryParameterPostLog, postLog } from "@api/appels/outiltechApi";
 import dayjs from "dayjs";
 import { FeatureFlag } from "./featureFlag/FeatureFlag";
@@ -61,8 +57,7 @@ function logErrorOnScreen(errorMessage: string) {
   messageManager.showErrorAndClose(errorMessage);
 }
 
-/* istanbul ignore next */
-export function logErrorOnConsole(logErrorMgs: LogErrorMsg) {
+function logErrorOnConsole(logErrorMgs: LogErrorMsg) {
   if (!storeRece.logErrorDesactive) {
     if (logErrorMgs) {
       console.error("Erreur inattendue: ", logErrorMgs.error);

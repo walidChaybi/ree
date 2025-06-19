@@ -43,14 +43,14 @@ import "./scss/FichePage.scss";
 export interface IIndex {
   value: number;
 }
-export interface FichePageProps {
+
+interface FichePageProps {
   estConsultation?: boolean;
   dataFicheIdentifiant: string;
   datasFiches: IDataFicheProps[];
   index: IIndex;
   numeroRequete?: string;
   fenetreExterneUtil?: FenetreExterneUtil;
-  provenanceRequete?: string;
   nbLignesTotales: number;
   nbLignesParAppel: number;
   getLignesSuivantesOuPrecedentes?: (ficheIdentifiant: string, lien: string) => void;

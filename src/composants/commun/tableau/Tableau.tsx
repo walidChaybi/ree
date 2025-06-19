@@ -6,7 +6,7 @@ import Bouton from "../bouton/Bouton";
 
 export type TSensTri = "ASC" | "DESC";
 
-export interface IParametresPagination {
+interface IParametresPagination {
   pageActuelle: number;
   lignesParPage: number;
   totalLignes: number;

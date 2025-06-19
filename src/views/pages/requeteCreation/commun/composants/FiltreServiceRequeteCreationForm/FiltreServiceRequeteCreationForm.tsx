@@ -16,11 +16,11 @@ import { Formik } from "formik";
 import React, { useContext } from "react";
 import "./FiltreServiceRequeteCreationForm.scss";
 
-export interface FiltreServiceRequeteCreationFormProps {
+interface FiltreServiceRequeteCreationFormProps {
   onSubmit: (values: IFiltreServiceRequeteCreationFormValues) => void;
 }
 
-export const FiltreServiceRequeteCreationFormDefaultValues: IFiltreServiceRequeteCreationFormValues = {
+const FiltreServiceRequeteCreationFormDefaultValues: IFiltreServiceRequeteCreationFormValues = {
   numeroRequete: "",
   sousType: "",
   priorisation: "",

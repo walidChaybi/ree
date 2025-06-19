@@ -9,7 +9,7 @@ import { AccordionTranscriptionRequerant } from "./resumesRequete/AccordionTrans
 import { AccordionTranscriptionTitulaire } from "./resumesRequete/AccordionTranscriptionTitulaire";
 import "./scss/ResumeRequeteCreationTranscriptionNaissanceMineureMajeure.scss";
 
-export interface ResumeRequeteCreationTranscriptionNaissanceMineureMajeureProps {
+interface ResumeRequeteCreationTranscriptionNaissanceMineureMajeureProps {
   requete?: IRequeteCreation;
 }
 

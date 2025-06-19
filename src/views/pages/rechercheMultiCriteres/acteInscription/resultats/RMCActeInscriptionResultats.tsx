@@ -11,7 +11,7 @@ import { RMCTableauActes } from "./RMCTableauActes";
 import { TypeRMC } from "./RMCTableauCommun";
 import { RMCTableauInscriptions } from "./RMCTableauInscriptions";
 
-export interface RMCActeInscriptionResultatsProps {
+interface RMCActeInscriptionResultatsProps {
   typeRMC: TypeRMC;
   dataAlertes?: IAlerte[];
   dataRequete?: TRequete;

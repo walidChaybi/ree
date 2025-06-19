@@ -1,23 +1,7 @@
-import { mappingActes, mappingRequeteDelivranceToRMC } from "@hook/rmcActeInscription/mapping/RMCMappingUtil";
+import { mappingActes } from "@hook/rmcActeInscription/mapping/RMCMappingUtil";
 import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
 import { expect, test } from "vitest";
 import { ReponseAppelRMCActe } from "../../../../../mock/data/RMCActe";
-import requeteDelivrance from "../../../../../mock/data/requeteDelivrance";
-
-test("mappingIRMCActeArchive", () => {
-  expect(mappingRequeteDelivranceToRMC(requeteDelivrance)).toStrictEqual({
-    titulaire: {
-      nom: "Prodesk",
-      prenom: "Elodie",
-      dateNaissance: { annee: "1990", mois: "6", jour: "25" },
-      paysNaissance: "Espagne"
-    },
-    evenement: {
-      dateEvenement: { annee: "", mois: "", jour: "" },
-      paysEvenement: undefined
-    }
-  });
-});
 
 test("mappingIRMCActe", () => {
   expect(mappingActes(ReponseAppelRMCActe.data.registres)).toStrictEqual([
