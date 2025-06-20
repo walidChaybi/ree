@@ -1,10 +1,4 @@
-import {
-  DATES_DEBUT_FIN_ANNEE,
-  REQUERANT,
-  REQUETE,
-  TITULAIRE
-} from "@composant/formulaire/ConstantesNomsForm";
-import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
+import { DATES_DEBUT_FIN_ANNEE, REQUERANT, REQUETE, TITULAIRE } from "@composant/formulaire/ConstantesNomsForm";
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
 import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
 import { MEP_YEAR } from "@util/DateUtils";
@@ -14,6 +8,7 @@ import { Formulaire } from "@widget/formulaire/Formulaire";
 import { NB_LIGNES_PAR_APPEL_REQUETE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
 import * as Yup from "yup";
+import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import RMCBoutons from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,
@@ -25,11 +20,7 @@ import RequerantFiltre, {
   RequerantFiltreProps,
   RequerantValidationSchema
 } from "../filtres/requerant/RequerantFiltre";
-import RequeteFiltre, {
-  RequeteDefaultValues,
-  RequeteFiltreProps,
-  RequeteValidationSchema
-} from "../filtres/requete/RequeteFiltre";
+import RequeteFiltre, { RequeteDefaultValues, RequeteFiltreProps, RequeteValidationSchema } from "../filtres/requete/RequeteFiltre";
 import TitulaireFiltre, {
   TitulaireDefaultValues,
   TitulaireFiltreProps,
@@ -69,16 +60,10 @@ export const RMCRequeteForm: React.FC<RMCRequeteFormProps> = ({
   setValuesRMCRequete,
   setCriteresRechercheRequete
 }) => {
-  const blocsForm: JSX.Element[] = [
-    getFormRequete(),
-    getFormDatesDebutFin(),
-    getFormTitulaire(),
-    getFormRequerant()
-  ];
+  const blocsForm: JSX.Element[] = [getFormRequete(), getFormDatesDebutFin(), getFormTitulaire(), getFormRequerant()];
 
   const onSubmitRMCRequete = (values: any) => {
-    const messageErreur =
-      getMessageSiVerificationRestrictionRmcRequeteEnErreur(values);
+    const messageErreur = getMessageSiVerificationRestrictionRmcRequeteEnErreur(values);
     if (messageErreur) {
       messageManager.showErrorAndClose(messageErreur);
     } else {
@@ -120,7 +105,12 @@ function getFormRequete(): JSX.Element {
   const requeteFiltreProps = {
     nomFiltre: REQUETE
   } as RequeteFiltreProps;
-  return <RequeteFiltre key={REQUETE} {...requeteFiltreProps} />;
+  return (
+    <RequeteFiltre
+      key={REQUETE}
+      {...requeteFiltreProps}
+    />
+  );
 }
 
 function getFormDatesDebutFin(): JSX.Element {
@@ -140,12 +130,22 @@ function getFormTitulaire(): JSX.Element {
   const titulaireFiltreProps = {
     nomFiltre: TITULAIRE
   } as TitulaireFiltreProps;
-  return <TitulaireFiltre key={TITULAIRE} {...titulaireFiltreProps} />;
+  return (
+    <TitulaireFiltre
+      key={TITULAIRE}
+      {...titulaireFiltreProps}
+    />
+  );
 }
 
 function getFormRequerant(): JSX.Element {
   const requerantFiltreProps = {
     nomFiltre: REQUERANT
   } as RequerantFiltreProps;
-  return <RequerantFiltre key={REQUERANT} {...requerantFiltreProps} />;
+  return (
+    <RequerantFiltre
+      key={REQUERANT}
+      {...requerantFiltreProps}
+    />
+  );
 }

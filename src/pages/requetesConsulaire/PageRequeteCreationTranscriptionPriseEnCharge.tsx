@@ -24,12 +24,14 @@ import OngletsBouton from "../../composants/commun/onglets/OngletsBouton";
 import ResumeDetailsRequete from "../../composants/pages/requetesConsulaire/commun/ResumeDetailsRequete";
 import ConteneurVoletEdition from "../../composants/pages/requetesDelivrance/editionRequete/ConteneurVoletEdition";
 import useFetchApi from "../../hooks/api/FetchApiHook";
+import { useTitreDeLaFenetre } from "../../hooks/utilitaires/TitreDeLaFenetreHook";
 
 enum ECleOngletPage {
   DESCRIPTION = "description"
 }
 
 const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
+  useTitreDeLaFenetre("Aperçu requête transcription (prise en charge)");
   const { idRequeteParam } = useParams();
   const navigate = useNavigate();
   const location = useLocation();

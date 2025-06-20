@@ -1,6 +1,5 @@
 import { ADRESSE, DOCUMENT, PIECES_JOINTES, REQUERANT, TITULAIRES } from "@composant/formulaire/ConstantesNomsForm";
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { useReponseSansDelivranceCS } from "@hook/reponseSansDelivrance/ChoixReponseSansDelivranceCSHook";
 import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
@@ -26,6 +25,7 @@ import { FormikProps, FormikValues } from "formik";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 import * as Yup from "yup";
+import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import SaisirRequeteBoutons from "../../../common/composant/formulaire/boutons/SaisirRequeteBoutons";
 import {
   creerTitulaire,

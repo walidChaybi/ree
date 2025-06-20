@@ -1,11 +1,11 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { URL_MES_REQUETES_INFORMATION, URL_REQUETES_INFORMATION_SERVICE } from "@router/ReceUrls";
 import { NomComposant } from "@util/habilitation/habilitationsDescription";
 import { BoiteAOnglets, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useContext } from "react";
+import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import BoutonPrendreEnChargeAleatoirementInformation from "./BoutonPrendreEnChargeAleatoirementInformation";
 import { StatutsRequetesInformation } from "./EspaceReqInfoParams";
 import { MesRequetesInformationPage } from "./MesRequetesInformation";

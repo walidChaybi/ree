@@ -25,8 +25,10 @@ import BlocTitulaire from "../../composants/pages/requetesConsulaire/saisieCourr
 import TransmissionService from "../../composants/pages/requetesConsulaire/saisieCourrier/TransmissionService";
 import useFetchApi from "../../hooks/api/FetchApiHook";
 import useTraitementApi from "../../hooks/api/TraitementApiHook";
+import { useTitreDeLaFenetre } from "../../hooks/utilitaires/TitreDeLaFenetreHook";
 
 const PageSaisieCourrierTranscription: React.FC = () => {
+  useTitreDeLaFenetre("Saisir une requête de transcription courrier");
   const { idRequete } = useParams();
   const { services } = useContext(RECEContextData);
   const navigate = useNavigate();

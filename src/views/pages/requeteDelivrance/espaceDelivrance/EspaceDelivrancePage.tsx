@@ -1,5 +1,4 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import {
   INavigationApercuDelivranceParams,
   useNavigationApercuDelivrance
@@ -14,6 +13,7 @@ import { NomComposant } from "@util/habilitation/habilitationsDescription";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoiteAOnglets, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import React, { useCallback, useContext, useState } from "react";
+import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import { MesRequetesPage } from "./MesRequetesPage";
 import { RequetesServicePage } from "./RequetesServicePage";
 import BoutonPrendreEnChargeAleatoirement from "./contenu/BoutonPrendreEnChargeAleatoirement";
@@ -28,10 +28,7 @@ interface LocalProps {
 const getElementEntreDeux = (selectedTabState: number, officier: IOfficier) => {
   return (
     <>
-      {gestionnaireFeatureFlag.auMoinUnEstActif(
-        FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES,
-        FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATION
-      ) && (
+      {gestionnaireFeatureFlag.auMoinUnEstActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES, FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATION) && (
         <div className="BlocBoutons">
           <MenuSaisirRequete indexTabPanel={selectedTabState} />
           <BoutonPrendreEnChargeAleatoirement typeRequete={TypeRequete.DELIVRANCE} />

@@ -4,12 +4,14 @@ import { useContext } from "react";
 import PageChargeur from "../../composants/commun/chargeurs/PageChargeur";
 import OngletsLien from "../../composants/commun/onglets/OngletsLien";
 import BoutonsTableauConsulaire from "../../composants/pages/requetesConsulaire/BoutonsTableauConsulaire";
+import { useTitreDeLaFenetre } from "../../hooks/utilitaires/TitreDeLaFenetreHook";
 
 interface IPageRequetesServiceConsulaireProps {
   query: any;
 }
 
 const PageRequetesServiceConsulaire: React.FC<IPageRequetesServiceConsulaireProps> = () => {
+  useTitreDeLaFenetre("Espace consulaire");
   const { utilisateurConnecte, utilisateurs } = useContext(RECEContextData);
 
   return (

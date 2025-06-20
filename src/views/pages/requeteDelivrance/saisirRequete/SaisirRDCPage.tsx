@@ -12,7 +12,6 @@ import {
   TYPE_REQUERANT
 } from "@composant/formulaire/ConstantesNomsForm";
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { IDetailRequeteParams, useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
@@ -33,6 +32,7 @@ import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import * as Yup from "yup";
+import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import { SaisieRequeteRDC } from "../../../../model/form/delivrance/ISaisirRDCPageForm";
 import SaisirRequeteBoutons from "../../../common/composant/formulaire/boutons/SaisirRequeteBoutons";
 import { getMessagesPopin, modificationChamps } from "./contenu/SaisirRDCPageFonctions";

@@ -4,8 +4,10 @@ import { useLocation, useNavigate, useParams } from "react-router";
 import PartieDroiteSaisieProjet from "../../composants/pages/requetesConsulaire/saisieProjet/PartieDroiteSaisieProjet";
 import PartieGaucheSaisieProjet from "../../composants/pages/requetesConsulaire/saisieProjet/PartieGaucheSaisieProjet";
 import SaisieProjetActeTranscritContextProvider from "../../contexts/SaisieProjetActeTranscritContextProvider";
+import { useTitreDeLaFenetre } from "../../hooks/utilitaires/TitreDeLaFenetreHook";
 
 const PageRequeteTranscriptionSaisieProjet: React.FC = () => {
+  useTitreDeLaFenetre("Aperçu requête transcription (saisie de projet)");
   const { idRequeteParam } = useParams();
   const location = useLocation();
   const navigate = useNavigate();

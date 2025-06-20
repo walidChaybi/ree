@@ -1,11 +1,11 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import { faChartBar, faGavel, faLandmark, faPlusCircle, faSearch, faSync } from "@fortawesome/free-solid-svg-icons";
 import { IOfficier } from "@model/agent/IOfficier";
 import { getCodesHierarchieService } from "@model/agent/IUtilisateur";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import React, { useContext, useEffect, useState } from "react";
+import { useTitreDeLaFenetre } from "../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import logoRece from "../../../img/logo-rece.svg";
 import "../accueil/scss/AccueilPage.scss";
 import { useCompteurRequeteHook } from "../requeteDelivrance/espaceDelivrance/hook/CompteurRequeteHook";

@@ -2,7 +2,6 @@ import { BandeauRequete } from "@composant/bandeauApercuRequete/BandeauApercuReq
 import { SuiviActionsRequete } from "@composant/suivis/SuiviActionsRequete";
 import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
@@ -17,6 +16,7 @@ import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
+import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import { IDetailRequeteParams, useAvecRejeuDetailRequeteApiHook } from "../../../common/hook/requete/DetailRequeteHook";
 import { TableauRMC } from "../../rechercheMultiCriteres/autoActesInscriptions/TableauRMC";
 import { RMCRequetesAssocieesResultats } from "../../rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";

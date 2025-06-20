@@ -1,8 +1,8 @@
-import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { IDetailRequeteParams, useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SectionPanel } from "@widget/section/SectionPanel";
 import React, { useEffect, useState } from "react";
+import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import { getPanelsDetailRequete } from "./DetailRequeteUtils";
 import "./scss/DetailRequetePage.scss";
 

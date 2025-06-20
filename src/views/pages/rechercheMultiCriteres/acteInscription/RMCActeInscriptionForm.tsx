@@ -1,10 +1,10 @@
-import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { MIN_YEAR } from "@util/DateUtils";
 import { stockageDonnees } from "@util/stockageDonnees";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import React from "react";
 import * as Yup from "yup";
+import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import RMCBoutons from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,

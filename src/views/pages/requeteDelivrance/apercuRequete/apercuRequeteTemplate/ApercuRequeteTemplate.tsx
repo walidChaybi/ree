@@ -1,5 +1,4 @@
 import { BandeauRequete } from "@composant/bandeauApercuRequete/BandeauApercuRequete";
-import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { IDetailRequeteParams, useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
@@ -9,6 +8,7 @@ import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
+import { useTitreDeLaFenetre } from "../../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import { ApercuRequetePartieGauche } from "../apercuRequetePartieGauche/ApercuRequetePartieGauche";
 import "./scss/ApercuRequeteTemplate.scss";
 

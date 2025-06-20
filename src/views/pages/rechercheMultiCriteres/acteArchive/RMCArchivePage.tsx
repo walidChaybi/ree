@@ -1,10 +1,10 @@
-import { useTitreDeLaFenetre } from "@core/document/TitreDeLaFenetreHook";
 import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { stockageDonnees } from "@util/stockageDonnees";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { NB_LIGNES_PAR_APPEL_ACTE, NB_LIGNES_PAR_PAGE_ACTE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useCallback, useState } from "react";
 import * as Yup from "yup";
+import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import { goToLinkRMC } from "../acteInscription/resultats/RMCTableauCommun";
 import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
