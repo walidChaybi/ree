@@ -44,11 +44,16 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
   const { appelApi: appelApiMajStatutEtAction, enAttenteDeReponseApi: enAttenteMajStatutEtAction } =
     useFetchApi(CONFIG_POST_MAJ_STATUT_ET_ACTION);
 
-  const afficherBoutonModifierRequete = useMemo(
-    () =>
-      requete && SousTypeCreation.estRCTC(requete?.sousType) && appartientAUtilisateurConnecte(utilisateurConnecte, requete?.idUtilisateur),
-    [requete, utilisateurConnecte]
-  );
+  const afficherBoutonModifierRequete = useMemo(() => {
+    const statutActuel = requete?.statutCourant?.statut?.libelle;
+    return (
+      requete &&
+      SousTypeCreation.estRCTC(requete?.sousType) &&
+      appartientAUtilisateurConnecte(utilisateurConnecte, requete?.idUtilisateur) &&
+      statutActuel !== StatutRequete.EN_TRAITEMENT.libelle &&
+      statutActuel !== StatutRequete.A_SIGNER.libelle
+    );
+  }, [requete, utilisateurConnecte]);
 
   useEffect(() => {
     if (!idRequeteParam) {
