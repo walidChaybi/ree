@@ -2,28 +2,28 @@ import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import Delete from "@mui/icons-material/Delete";
 import Edit from "@mui/icons-material/Edit";
 import { useFormikContext } from "formik";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { List, arrayMove } from "react-movable";
-import { EditionMiseAJourContext } from "../../../../../contexts/EditionMiseAJourContextProvider";
-import { EEventState, useEventDispatch, useEventState } from "../../../../../hooks/EventHook";
-import Bouton from "../../../../commun/bouton/Bouton";
-import BoutonIcon from "../../../../commun/bouton/BoutonIcon";
-import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
-import ConteneurModale from "../../../../commun/conteneurs/modale/ConteneurModale";
-import { IMentionEnCours, IMentionMiseAJour, IMiseAJourForm } from "../../PartieFormulaire";
+import { EEventState, useEventDispatch, useEventState } from "../../../../../../hooks/EventHook";
+import Bouton from "../../../../../commun/bouton/Bouton";
+import BoutonIcon from "../../../../../commun/bouton/BoutonIcon";
+import ConteneurAvecBordure from "../../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
+import ConteneurModale from "../../../../../commun/conteneurs/modale/ConteneurModale";
+import { IMentionEnCours, IMentionMiseAJour, IMiseAJourForm } from "../../../PartieFormulaire";
 
 interface ITableauMentionsProps {
   setAfficherOngletAnalyseMarginale: (afficher: boolean) => void;
+  setMotif: (motif: string) => void;
 }
 
-const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAnalyseMarginale }) => {
-  const { setFieldValue, values } = useFormikContext<IMiseAJourForm>();
+const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAnalyseMarginale, setMotif }) => {
+  const { setFieldValue, values, submitForm } = useFormikContext<IMiseAJourForm>();
   const [indexASupprimer, setIndexASupprimer] = useState<number | null>(null);
   const [afficherModaleAnalyseMarginale, setAfficherModaleAnalyseMarginale] = useState<boolean>(false);
   const { envoyer: modifierMention } = useEventDispatch<IMentionEnCours | null>(EEventState.MODIFIER_MENTION);
   const [modificationEnCours, setModificationEnCours] = useState<boolean>(false);
   const [mentionEnCours, setMentionEnCours] = useEventState<IMentionEnCours | null>(EEventState.ENREGISTRER_MENTION, null);
-  const { miseAJourEffectuee } = useContext(EditionMiseAJourContext.Valeurs);
+  const estRenduInitial = useRef<boolean>(true);
 
   useEffect(() => {
     if (mentionEnCours === null) {
@@ -77,7 +77,14 @@ const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAna
         ? `Suite à apposition de mention ${TypeMention.getTypeMentionById(mentionsAffectantAnalyseMarginale[0].idTypeMention)?.libelle.split(" ")[0]}`
         : "";
 
-    if (!miseAJourEffectuee) setFieldValue("analyseMarginale.motif", motifMention);
+    setMotif(motifMention);
+
+    if (estRenduInitial.current) {
+      estRenduInitial.current = false;
+      return;
+    }
+
+    submitForm();
   }, [values.mentions]);
 
   return (
@@ -122,14 +129,16 @@ const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAna
                   <Edit />
                 </BoutonIcon>
 
-                <BoutonIcon
-                  title={`Supprimer la ${Number(props.key) + 1}${props.key === 0 ? "ère" : "ème"} mention`}
-                  onClick={() => setIndexASupprimer(props.key ?? null)}
-                  disabled={modificationEnCours}
-                  danger
-                >
-                  <Delete />
-                </BoutonIcon>
+                {values.mentions.length > 1 && (
+                  <BoutonIcon
+                    title={`Supprimer la ${Number(props.key) + 1}${props.key === 0 ? "ère" : "ème"} mention`}
+                    onClick={() => setIndexASupprimer(props.key ?? null)}
+                    disabled={modificationEnCours}
+                    danger
+                  >
+                    <Delete />
+                  </BoutonIcon>
+                )}
               </div>
             </div>
           </div>

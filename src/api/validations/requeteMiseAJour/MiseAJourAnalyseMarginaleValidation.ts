@@ -1,8 +1,5 @@
-import { IMiseAJourAnalyseMarginaleDto } from "@api/configurations/etatCivil/PutMiseAJourAnalyseMarginaleConfigApi";
 import { IDerniereAnalyseMarginalResultat } from "@hook/requete/miseajour/DerniereAnalyseMarginaleApiHook";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
-import { PrenomsForm } from "@model/form/commun/PrenomsForm";
-import { IAnalyseMarginaleMiseAJour } from "../../../composants/pages/requetesMiseAJour/PartieFormulaire";
 
 interface IMiseAJourAnalyseMarginaleValeursForm {
   analyseMarginale: {
@@ -57,26 +54,6 @@ export const MiseAJourAnalyseMarginaleValeursForm = {
         nomPartie1: secable ? nomPartie1 : "",
         nomPartie2: secable ? nomPartie2 : ""
       }
-    };
-  },
-
-  versDto: (valeurs: IAnalyseMarginaleMiseAJour): IMiseAJourAnalyseMarginaleDto => {
-    const secable = valeurs.nomSecable;
-    const nomPartie1 = secable ? valeurs.nomPartie1.trim() : null;
-    const nomPartie2 = secable ? valeurs.nomPartie2.trim() : null;
-    const prenoms = PrenomsForm.versPrenomsStringDto(valeurs.prenoms);
-
-    return {
-      motifModification: valeurs.motif,
-      titulaires: [
-        {
-          ordre: 1,
-          nom: valeurs.nom.trim(),
-          prenoms: prenoms,
-          nomPartie1: nomPartie1,
-          nomPartie2: nomPartie2
-        }
-      ]
     };
   }
 } as const;

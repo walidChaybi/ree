@@ -7,6 +7,7 @@ import {
 import { ESousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { ETypeRequete } from "@model/requete/enum/TypeRequete";
 import RequeteRMCAuto, { IRequeteRMCAutoDto } from "@model/rmc/requete/RequeteRMCAuto";
+import { ITitulaireRmcAutoRequeteDto, TitulaireRmcAutoRequete } from "@model/rmc/requete/TitulaireRmcAutoRequete";
 import { describe, expect, test } from "vitest";
 
 describe("Test RequeteRMCAuto", () => {
@@ -64,5 +65,26 @@ describe("Test RequeteRMCAuto", () => {
     } as IRequeteRMCAutoDto<"CREATION">);
 
     expect(requeteCreation).toBeNull();
+  });
+});
+
+describe("Test TitulaireRmcAutoRequete", () => {
+  test("TitulaireRmcAutoRequete depuisDto valide", () => {
+    const titulaireDto: ITitulaireRmcAutoRequeteDto = {
+      nom: "NomTitulaire",
+      prenoms: [
+        { prenom: "prenom1", numeroOrdre: 1 },
+        { prenom: "prenom2", numeroOrdre: 2 }
+      ]
+    };
+    const titulaire = TitulaireRmcAutoRequete.depuisDto(titulaireDto);
+
+    expect(titulaire).not.toBeNull();
+  });
+
+  test("DOIT retourner null QUAND un champ obligatoire manque", () => {
+    const titulaire = TitulaireRmcAutoRequete.depuisDto({} as ITitulaireRmcAutoRequeteDto);
+
+    expect(titulaire).toBeNull();
   });
 });

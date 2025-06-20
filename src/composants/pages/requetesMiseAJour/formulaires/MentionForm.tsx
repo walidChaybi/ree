@@ -181,89 +181,91 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
   }, [typeMentionChoisi]);
 
   return (
-    <Formik<TMentionForm>
-      initialValues={valeurDefaut}
-      validationSchema={schemaValidation}
-      enableReinitialize
-      onSubmit={values => {
-        enregistrerMention({
-          index: mentionModifiee?.index ?? null,
-          mention: {
-            idTypeMention: values.idTypeMention,
-            texte: values.texteMention,
-            donneesAideSaisie: {
-              champs: (() => {
-                const { idTypeMention, texteMention, textesEdites, ...champsAideSaisie } = values;
+    <div className="mt-4">
+      <Formik<TMentionForm>
+        initialValues={valeurDefaut}
+        validationSchema={schemaValidation}
+        enableReinitialize
+        onSubmit={values => {
+          enregistrerMention({
+            index: mentionModifiee?.index ?? null,
+            mention: {
+              idTypeMention: values.idTypeMention,
+              texte: values.texteMention,
+              donneesAideSaisie: {
+                champs: (() => {
+                  const { idTypeMention, texteMention, textesEdites, ...champsAideSaisie } = values;
 
-                return champsAideSaisie;
-              })(),
-              textesEdites: values.textesEdites
-            },
-            affecteAnalyseMarginale: values.mentionAffecteAnalyseMarginale
-          }
-        });
-        setMentionModifiee(null);
-        setValeurDefaut({ ...DEFAUT_CREATION });
-      }}
-    >
-      {({ values, initialValues }) => (
-        <ConteneurAvecBordure titreEnTete={mentionModifiee ? "Modification d'une mention" : "Ajout d'une mention"}>
-          <Form className="grid gap-9 px-1 pt-3">
-            <ScrollVersErreur />
-            <ChampTypeMention
-              name="idTypeMention"
-              typesMentionDisponibles={typesMentionDisponibles}
-              setIdTypeMentionChoisi={id => setTypeMentionChoisi(typesMentionDisponibles.find(mention => mention.id === id) ?? null)}
-            />
+                  return champsAideSaisie;
+                })(),
+                textesEdites: values.textesEdites
+              },
+              affecteAnalyseMarginale: values.mentionAffecteAnalyseMarginale
+            }
+          });
+          setMentionModifiee(null);
+          setValeurDefaut({ ...DEFAUT_CREATION });
+        }}
+      >
+        {({ values, initialValues }) => (
+          <ConteneurAvecBordure titreEnTete={mentionModifiee ? "Modification d'une mention" : "Ajout d'une mention"}>
+            <Form className="grid gap-9 px-1 pt-3">
+              <ScrollVersErreur />
+              <ChampTypeMention
+                name="idTypeMention"
+                typesMentionDisponibles={typesMentionDisponibles}
+                setIdTypeMentionChoisi={id => setTypeMentionChoisi(typesMentionDisponibles.find(mention => mention.id === id) ?? null)}
+              />
 
-            {initialValues.idTypeMention && (
-              <>
-                {enAttenteMetamodele ? (
-                  <ComposantChargeur />
-                ) : (
-                  <>
-                    {metamodeleTypeMention ? (
-                      <AideALaSaisieMention metamodeleTypeMention={metamodeleTypeMention} />
-                    ) : (
-                      <ChampZoneTexte
-                        libelle="Texte mention"
-                        name={TEXTE_MENTION}
-                        rows={8}
-                        typeRedimensionnement="fixe"
-                      />
-                    )}
-                  </>
-                )}
+              {initialValues.idTypeMention && (
+                <>
+                  {enAttenteMetamodele ? (
+                    <ComposantChargeur />
+                  ) : (
+                    <>
+                      {metamodeleTypeMention ? (
+                        <AideALaSaisieMention metamodeleTypeMention={metamodeleTypeMention} />
+                      ) : (
+                        <ChampZoneTexte
+                          libelle="Texte mention"
+                          name={TEXTE_MENTION}
+                          rows={8}
+                          typeRedimensionnement="fixe"
+                        />
+                      )}
+                    </>
+                  )}
 
-                <div className="flex justify-end gap-6">
-                  <Bouton
-                    title="Valider"
-                    disabled={!values.texteMention}
-                    type="submit"
-                  >
-                    {mentionModifiee ? "Modifier mention" : "Ajouter mention"}
-                  </Bouton>
-                  <Bouton
-                    title="Annuler"
-                    styleBouton="secondaire"
-                    onClick={() => {
-                      if (mentionModifiee) {
-                        enregistrerMention(mentionModifiee);
-                        setMentionModifiee(null);
-                      }
-                      setValeurDefaut({ ...DEFAUT_CREATION });
-                      setTypeMentionChoisi(null);
-                    }}
-                  >
-                    {"Annuler"}
-                  </Bouton>
-                </div>
-              </>
-            )}
-          </Form>
-        </ConteneurAvecBordure>
-      )}
-    </Formik>
+                  <div className="flex justify-end gap-6">
+                    <Bouton
+                      title="Valider"
+                      disabled={!values.texteMention}
+                      type="submit"
+                    >
+                      {mentionModifiee ? "Modifier mention" : "Ajouter mention"}
+                    </Bouton>
+                    <Bouton
+                      title="Annuler"
+                      styleBouton="secondaire"
+                      onClick={() => {
+                        if (mentionModifiee) {
+                          enregistrerMention(mentionModifiee);
+                          setMentionModifiee(null);
+                        }
+                        setValeurDefaut({ ...DEFAUT_CREATION });
+                        setTypeMentionChoisi(null);
+                      }}
+                    >
+                      {"Annuler"}
+                    </Bouton>
+                  </div>
+                </>
+              )}
+            </Form>
+          </ConteneurAvecBordure>
+        )}
+      </Formik>
+    </div>
   );
 };
 

@@ -5,8 +5,8 @@ import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTablea
 import { AlerteRequete } from "@model/requete/enum/AlerteRequete";
 import { Priorite } from "@model/requete/enum/Priorite";
 import { ELibelleSousTypeRequete } from "@model/requete/enum/SousTypeRequete";
-import { ITitulaireRmcAutoRequeteDto, TitulaireRmcAutoRequete } from "@model/rmc/requete/ITitulaireRmcAutoRequeteDto";
 import { TRequeteRMCAuto } from "@model/rmc/requete/RequeteRMCAuto";
+import { ITitulaireRmcAutoRequeteDto, TitulaireRmcAutoRequete } from "@model/rmc/requete/TitulaireRmcAutoRequete";
 import ClearIcon from "@mui/icons-material/Clear";
 import ErrorIcon from "@mui/icons-material/Error";
 import LabelIcon from "@mui/icons-material/Label";

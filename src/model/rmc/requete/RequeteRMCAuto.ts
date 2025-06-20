@@ -6,7 +6,7 @@ import { TSousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { ETypeRequete } from "@model/requete/enum/TypeRequete";
 import DateRECE from "../../../utils/DateRECE";
-import { ITitulaireRmcAutoRequeteDto, TitulaireRmcAutoRequete } from "./ITitulaireRmcAutoRequeteDto";
+import { ITitulaireRmcAutoRequeteDto, TitulaireRmcAutoRequete } from "./TitulaireRmcAutoRequete";
 
 export interface IRequeteRMCAutoDto<TTypeRequete extends keyof typeof ETypeRequete> {
   id: string;

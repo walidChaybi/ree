@@ -1,0 +1,28 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`BoutonTerminerEtSigner > affiche le bouton si l'utilisateur a les droits 1`] = `
+<div>
+  <button
+    class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
+    title="Terminer et signer"
+    type="button"
+  >
+    Terminer et signer
+  </button>
+</div>
+`;
+
+exports[`BoutonTerminerEtSigner > désactive le bouton quand saisie en cours ou mise à jour non effectuée 1`] = `
+<div>
+  <button
+    class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
+    disabled=""
+    title="Terminer et signer"
+    type="button"
+  >
+    Terminer et signer
+  </button>
+</div>
+`;
+
+exports[`BoutonTerminerEtSigner > n'affiche pas le bouton si l'utilisateur n'a pas les droits 1`] = `<div />`;
