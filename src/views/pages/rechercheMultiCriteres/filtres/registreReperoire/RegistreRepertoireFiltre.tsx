@@ -1,19 +1,11 @@
 import { TypeRepertoire } from "@model/etatcivil/enum/TypeRepertoire";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { IRMCRegistre } from "@model/rmc/acteInscription/rechercheForm/IRMCRegistre";
-import {
-  ComponentFiltreProps,
-  FormikComponentProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { ComponentFiltreProps, FormikComponentProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
-import EvenementFiltre, {
-  EvenementDefaultValues,
-  EvenementFiltreProps,
-  EvenementValidationSchema
-} from "./EvenementFiltre";
+import EvenementFiltre, { EvenementDefaultValues, EvenementFiltreProps, EvenementValidationSchema } from "./EvenementFiltre";
 import RegistreActeFiltre, {
   RegistreActeDefaultValues,
   RegistreActeFiltreProps,
@@ -45,39 +37,24 @@ export const RegistreRepertoireValidationSchema = Yup.object({
   [EVENEMENT]: EvenementValidationSchema
 });
 
-export type RegistreRepertoireFiltreProps = ComponentFiltreProps &
-  FormikComponentProps;
+export type RegistreRepertoireFiltreProps = ComponentFiltreProps & { afficherNouvelleRMC?: boolean } & FormikComponentProps;
 
-const RegistreRepertoireFiltre: React.FC<
-  RegistreRepertoireFiltreProps
-> = props => {
+const RegistreRepertoireFiltre: React.FC<RegistreRepertoireFiltreProps> = props => {
   const [filtreActeInactif, setFiltreActeInactif] = useState<boolean>(false);
-  const [filtreInscriptionInactif, setFiltreInscriptionInactif] =
-    useState<boolean>(false);
-  const [filtreEvenementInactif, setFiltreEvenementInactif] =
-    useState<boolean>(false);
-  const [filtreTypeRepertoire, setFiltreTypeRepertoire] = useState<
-    TypeRepertoire | undefined
-  >();
+  const [filtreInscriptionInactif, setFiltreInscriptionInactif] = useState<boolean>(false);
+  const [filtreEvenementInactif, setFiltreEvenementInactif] = useState<boolean>(false);
+  const [filtreTypeRepertoire, setFiltreTypeRepertoire] = useState<TypeRepertoire | undefined>();
 
   // Permet de dégriser les filtres registre ou inscription apres un resetForm.
   // Ou de griser si besoin un des filtres apres un rappelCriteres
   useEffect(() => {
-    setFiltreActeInactif(
-      repertoireFormEstModifie(props.formik.values as IRMCActeInscription)
-    );
+    setFiltreActeInactif(repertoireFormEstModifie(props.formik.values as IRMCActeInscription));
 
     setFiltreInscriptionInactif(
-      registreFormEstModifie(
-        props.formik.getFieldProps<IRMCRegistre>(
-          withNamespace(props.nomFiltre, REGISTRE)
-        ).value
-      )
+      registreFormEstModifie(props.formik.getFieldProps<IRMCRegistre>(withNamespace(props.nomFiltre, REGISTRE)).value)
     );
 
-    setFiltreEvenementInactif(
-      estTypeRcRca(props.formik.values as IRMCActeInscription)
-    );
+    setFiltreEvenementInactif(estTypeRcRca(props.formik.values as IRMCActeInscription));
 
     paysEvenementEstModifie(props.formik.values as IRMCActeInscription)
       ? setFiltreTypeRepertoire(TypeRepertoire.PACS)
@@ -108,10 +85,12 @@ const RegistreRepertoireFiltre: React.FC<
         filtreInactif={filtreInscriptionInactif}
         {...registreRepertoireFiltreProps}
       />
-      <EvenementFiltre
-        filtreInactif={filtreEvenementInactif}
-        {...evenementFiltreProps}
-      />
+      {!props.afficherNouvelleRMC && (
+        <EvenementFiltre
+          filtreInactif={filtreEvenementInactif}
+          {...evenementFiltreProps}
+        />
+      )}
     </div>
   );
 };
@@ -130,8 +109,5 @@ function paysEvenementEstModifie(values: IRMCActeInscription) {
 
 function estTypeRcRca(values: IRMCActeInscription) {
   const criteres = values.registreRepertoire?.repertoire;
-  return (
-    criteres?.typeRepertoire === TypeRepertoire.RC.libelle ||
-    criteres?.typeRepertoire === TypeRepertoire.RCA.libelle
-  );
+  return criteres?.typeRepertoire === TypeRepertoire.RC.libelle || criteres?.typeRepertoire === TypeRepertoire.RCA.libelle;
 }

@@ -254,8 +254,20 @@ export const RMCActeInscriptionForm = {
           })
         }),
         evenement: SchemaValidation.objet({
-          dateEvenement: SchemaValidation.dateComplete({ obligatoire: false, bloquerDateFuture: true }),
-          paysEvenement: SchemaValidation.texte({ obligatoire: false }).matches(CaracteresAutorisesRecherche, CARACTERES_AUTORISES_MESSAGE)
+          dateEvenement: SchemaValidation.dateComplete({
+            obligatoire: false,
+            bloquerDateFuture: true,
+            interditSeul: {
+              estInterditSeul: true,
+              cheminErreurSpecifique: "annee"
+            }
+          }),
+          paysEvenement: SchemaValidation.texte({
+            obligatoire: false,
+            interditSeul: {
+              estInterditSeul: true
+            }
+          }).matches(CaracteresAutorisesRecherche, CARACTERES_AUTORISES_MESSAGE)
         })
       }),
       datesDebutFinAnnee: SchemaValidation.objet({
@@ -294,7 +306,8 @@ export const RMCActeInscriptionForm = {
           ],
           interditSeul: {
             estInterditSeul: true,
-            messageErreurSpecifique: "⚠ Le champ ne peut être utilisé sans au moins un autre critère du titulaire"
+            messageErreurSpecifique: "⚠ Le champ ne peut être utilisé sans au moins un autre critère du titulaire",
+            limiterAuBloc: true
           }
         }),
         dateNaissance: SchemaValidation.dateIncomplete({
@@ -302,7 +315,8 @@ export const RMCActeInscriptionForm = {
           interditSeul: {
             estInterditSeul: true,
             cheminErreurSpecifique: "annee",
-            messageErreurSpecifique: "⚠ Le champ ne peut être utilisé sans au moins un autre critère du titulaire"
+            messageErreurSpecifique: "⚠ Le champ ne peut être utilisé sans au moins un autre critère du titulaire",
+            limiterAuBloc: true
           },
           bloquerDateFuture: true
         })

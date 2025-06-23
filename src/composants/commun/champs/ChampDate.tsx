@@ -1,4 +1,4 @@
-import Delete from "@mui/icons-material/Delete";
+import Replay from "@mui/icons-material/Replay";
 import { useField } from "formik";
 import { useEffect, useMemo, useRef } from "react";
 import { messagesErreur } from "../../../utils/SchemaValidation";
@@ -270,13 +270,13 @@ const ChampDate: React.FC<TChampDateProps> = ({
         )}
         {avecBoutonReinitialiser && (
           <BoutonIcon
-            title="Réinitialiser la date"
             className="ml-1"
             styleBouton="suppression"
+            title="Réinitialiser la date"
             iconeSeule
             onClick={resetDate}
           >
-            <Delete />
+            <Replay />
           </BoutonIcon>
         )}
       </div>

@@ -24,7 +24,12 @@ type TValidationText = TValidation & {
   valeur: RegExp;
 };
 
-type TInterditSeul = { estInterditSeul: boolean; cheminErreurSpecifique?: string; messageErreurSpecifique?: string };
+type TInterditSeul = {
+  estInterditSeul: boolean;
+  cheminErreurSpecifique?: string;
+  messageErreurSpecifique?: string;
+  limiterAuBloc?: boolean;
+};
 
 type TGestionObligationParams<TSchemaChamp extends Yup.AnySchema = Yup.AnySchema> = {
   schema: TSchemaChamp;
@@ -140,7 +145,6 @@ const getSchemaValidationDate = (bloquerDateFuture?: boolean): Yup.ObjectSchema<
         const dateActuelle = new Date();
         switch (true) {
           case !date.mois:
-            console.log("On passe au bon endroit, et on doit return true : ", Number(date.annee) > dateActuelle.getFullYear());
             return Number(date.annee) > dateActuelle.getFullYear();
 
           case !date.jour:
@@ -156,6 +160,8 @@ const getSchemaValidationDate = (bloquerDateFuture?: boolean): Yup.ObjectSchema<
       return estDateFuture ? erreurSurDateEntiere(messagesErreur.DATE_FUTURE, error.path) : true;
     });
 
+/* v8 ignore start A RETIRER LORSQUE LE FORMULAIRE RMC SORTIRA DE VIEWS*/
+
 const estChampRenseigne = (valeur: any): boolean => {
   if (valeur === null || valeur === undefined || valeur === "") return false;
 
@@ -166,21 +172,33 @@ const estChampRenseigne = (valeur: any): boolean => {
   return true;
 };
 
+const getValeursRenseigneesFormulaire = (valeur: string | boolean | object | null, cleExclue?: string): string[] => {
+  if (valeur == null || typeof valeur === "boolean") return [];
+
+  if (typeof valeur === "object") {
+    return Object.entries(valeur).flatMap(([cle, value]) => {
+      return cle === cleExclue ? [] : getValeursRenseigneesFormulaire(value, cleExclue);
+    });
+  }
+
+  return [valeur];
+};
+
 const champSeulInterdit = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>(
   schema: TSchemaChamp,
   cheminErreurSpecifique?: string,
-  messageErreurSpecifique?: string
+  messageErreurSpecifique?: string,
+  limiterAuBloc?: boolean
 ) =>
   schema.test("champSeulInvalide", (valeur, context) => {
-    const champActuel = context.path.split(".").pop();
+    const cleChampActuel = context.path.split(".").pop();
 
-    const estSeulChampRempli =
-      Object.entries(context.parent)
-        .filter(([cle]) => cle !== champActuel)
-        .map(([_, valeur]) => valeur)
-        .filter(estChampRenseigne).length === 0;
+    const autresValeursFormulaire = getValeursRenseigneesFormulaire(
+      limiterAuBloc ? context.parent : context.options.context,
+      cleChampActuel
+    );
 
-    if (estChampRenseigne(valeur) && estSeulChampRempli) {
+    if (estChampRenseigne(valeur) && autresValeursFormulaire.filter(estChampRenseigne).length === 0) {
       const cheminErreur = cheminErreurSpecifique ? `${context.path}.${cheminErreurSpecifique}` : context.path;
 
       return context.createError({
@@ -191,6 +209,7 @@ const champSeulInterdit = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>(
 
     return true;
   });
+/* v8 ignore stop */
 
 const gestionObligation = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>({
   schema,
@@ -199,9 +218,18 @@ const gestionObligation = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>({
   conditionOu,
   interditSeul
 }: TGestionObligationParams<TSchemaChamp>): TSchemaChamp => {
+  /* v8 ignore start A RETIRER LORSQUE LE FORMULAIRE RMC SORTIRA DE VIEWS*/
+
   if (interditSeul?.estInterditSeul) {
-    schema = champSeulInterdit(schema, interditSeul.cheminErreurSpecifique, interditSeul.messageErreurSpecifique);
+    schema = champSeulInterdit(
+      schema,
+      interditSeul.cheminErreurSpecifique,
+      interditSeul.messageErreurSpecifique,
+      interditSeul.limiterAuBloc
+    );
   }
+  /* v8 ignore stop */
+
   if (typeof obligatoire === "boolean") {
     return obligatoire ? actionObligation() : schema;
   }
@@ -232,7 +260,7 @@ const SchemaValidation = {
 
     if (schemaParams.listeRegexp?.length)
       schemaParams.listeRegexp.forEach(regexp => {
-        schema = schema.matches(regexp.valeur, regexp.message ?? "⚠ La valeur n'est pas conforme'");
+        schema = schema.matches(regexp.valeur, regexp.message ?? "⚠ La valeur n'est pas conforme");
       });
 
     return gestionObligation({

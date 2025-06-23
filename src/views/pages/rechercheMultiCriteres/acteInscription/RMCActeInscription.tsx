@@ -5,12 +5,14 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { stockageDonnees } from "@util/stockageDonnees";
 import { Formulaire } from "@widget/formulaire/Formulaire";
-import React, { useState } from "react";
+import { useMemo } from "react";
 import * as Yup from "yup";
 import ChampDate from "../../../../composants/commun/champs/ChampDate";
 import ChampTexte from "../../../../composants/commun/champs/ChampTexte";
 import { ChampsNomPrenomInterchangeables } from "../../../../composants/commun/champs/ChampsNomPrenomInterchangeables";
 import ConteneurAvecBordure from "../../../../composants/commun/conteneurs/formulaire/ConteneurAvecBordure";
+import BlocFiltreEvenement from "../../../../composants/pages/rmc/formulaire/BlocFiltreEvenement";
+import BoutonsRMC from "../../../../composants/pages/rmc/formulaire/BoutonsRMC";
 import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import RMCBoutons from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
@@ -57,8 +59,6 @@ interface RMCActeInscriptionProps {
 }
 
 export const RMCActeInscription: React.FC<RMCActeInscriptionProps> = props => {
-  const [afficherNouveauBloc, setAfficherNouveauBloc] = useState(false);
-
   const blocsForm: JSX.Element[] = [getFormTitulaire(props.titulaires), getRegistreRepertoire(), getFormDatesDebutFinAnnee()];
 
   const onSubmitRMCActeInscription = (values: any): void => {
@@ -68,6 +68,8 @@ export const RMCActeInscription: React.FC<RMCActeInscriptionProps> = props => {
   const rappelCriteres = () => {
     return stockageDonnees.recupererCriteresRMCActeInspt();
   };
+
+  const afficherNouvelleRMC = useMemo(() => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_UTILISER_NOUVELLE_RMC), []);
 
   useTitreDeLaFenetre(titreForm);
 
@@ -79,42 +81,44 @@ export const RMCActeInscription: React.FC<RMCActeInscriptionProps> = props => {
       onSubmit={onSubmitRMCActeInscription}
     >
       <div className="FormulaireRMCAI grid grid-cols-2">
-        {afficherNouveauBloc && gestionnaireFeatureFlag.estActif(FeatureFlag.FF_UTILISER_NOUVELLE_RMC) ? (
+        {afficherNouvelleRMC ? (
           <>
-            <ConteneurAvecBordure
-              titreEnTete="Filtre titulaire"
-              className="mt-8"
-            >
-              <ChampsNomPrenomInterchangeables
-                cheminNom="titulaire.nom"
-                cheminPrenom="titulaire.prenom"
-              />
-              <div className="grid grid-cols-2 gap-4 pt-4">
-                <ChampDate
-                  name="titulaire.dateNaissance"
-                  libelle="Date de naissance"
-                  avecBoutonReinitialiser
+            <div>
+              <ConteneurAvecBordure
+                titreEnTete="Filtre titulaire"
+                className="mt-8"
+              >
+                <ChampsNomPrenomInterchangeables
+                  cheminNom="titulaire.nom"
+                  cheminPrenom="titulaire.prenom"
                 />
-                <ChampTexte
-                  name="titulaire.paysNaissance"
-                  libelle="Pays de naissance"
-                />
-              </div>
-            </ConteneurAvecBordure>
-            {getRegistreRepertoire()} {getFormDatesDebutFinAnnee()}
+                <div className="grid grid-cols-2 gap-4 pt-4">
+                  <ChampDate
+                    name="titulaire.dateNaissance"
+                    libelle="Date de naissance"
+                    avecBoutonReinitialiser
+                  />
+                  <ChampTexte
+                    name="titulaire.paysNaissance"
+                    libelle="Pays de naissance"
+                  />
+                </div>
+              </ConteneurAvecBordure>
+              <BlocFiltreEvenement />
+              {getFormDatesDebutFinAnnee()}
+            </div>
+
+            {getRegistreRepertoire(afficherNouvelleRMC)}
           </>
         ) : (
           blocsForm
         )}
       </div>
-      <RMCBoutons rappelCriteres={rappelCriteres} />
-      <button
-        onClick={() => setAfficherNouveauBloc(!afficherNouveauBloc)}
-        className={`absolute bottom-5 right-5 ${!afficherNouveauBloc ? "bg-green-600" : "bg-red-600"}`}
-        type="button"
-      >
-        {afficherNouveauBloc ? "<< Utiliser l'ancienne version" : ">> Utiliser la nouvelle version"}
-      </button>
+      {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_UTILISER_NOUVELLE_RMC) ? (
+        <BoutonsRMC rappelCriteres={rappelCriteres} />
+      ) : (
+        <RMCBoutons rappelCriteres={rappelCriteres} />
+      )}
     </Formulaire>
   );
 };
@@ -145,9 +149,10 @@ function getFormDatesDebutFinAnnee(): JSX.Element {
   );
 }
 
-function getRegistreRepertoire(): JSX.Element {
+function getRegistreRepertoire(afficherNouvelleRMC?: boolean): JSX.Element {
   const registreRepertoireFiltreFiltreProps = {
-    nomFiltre: REGISTRE_REPERTOIRE
+    nomFiltre: REGISTRE_REPERTOIRE,
+    afficherNouvelleRMC
   } as RegistreRepertoireFiltreProps;
   return (
     <RegistreRepertoireFiltre

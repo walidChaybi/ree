@@ -5,7 +5,7 @@ import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IRe
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
-import React from "react";
+import { forwardRef } from "react";
 import "../scss/RMCActeInscriptionResultats.scss";
 import { RMCTableauActes } from "./RMCTableauActes";
 import { TypeRMC } from "./RMCTableauCommun";
@@ -40,79 +40,87 @@ interface RMCActeInscriptionResultatsProps {
   dataTableauRMCFicheInscription?: IParamsTableau;
 }
 
-export const RMCActeInscriptionResultats: React.FC<RMCActeInscriptionResultatsProps> = ({
-  typeRMC,
-  dataAlertes,
-  dataRequete,
-  dataRMCActe,
-  dataTableauRMCActe,
-  dataRMCInscription,
-  dataTableauRMCInscription,
-  setRangeActe,
-  setRangeInscription,
-  resetRMC,
-  onClickCheckboxTableauActes,
-  onClickCheckboxTableauInscriptions,
-  nbLignesParPageActe,
-  nbLignesParAppelActe,
-  nbLignesParPageInscription,
-  nbLignesParAppelInscription,
-  // Données propre à une fiche Acte pour sa pagination/navigation
-  getLignesSuivantesOuPrecedentesActe,
-  idFicheActe,
-  dataRMCFicheActe,
-  dataTableauRMCFicheActe,
-  // Données propre à une fiche Inscription pour sa pagination/navigation
-  getLignesSuivantesOuPrecedentesInscription,
-  idFicheInscription,
-  dataRMCFicheInscription,
-  dataTableauRMCFicheInscription
-}) => {
-  return (
-    <div className={`ResultatsRMC${typeRMC}`}>
-      <Fieldset titre={"Résultats de la recherche multi-critères"}>
-        <div className="SubResultatsRMC">
-          <div className="SousTitre">
-            <span>{"Recherche dans les registres d'état civil"}</span>
+export const RMCActeInscriptionResultats = forwardRef<HTMLDivElement, RMCActeInscriptionResultatsProps>(
+  (
+    {
+      typeRMC,
+      dataAlertes,
+      dataRequete,
+      dataRMCActe,
+      dataTableauRMCActe,
+      dataRMCInscription,
+      dataTableauRMCInscription,
+      setRangeActe,
+      setRangeInscription,
+      resetRMC,
+      onClickCheckboxTableauActes,
+      onClickCheckboxTableauInscriptions,
+      nbLignesParPageActe,
+      nbLignesParAppelActe,
+      nbLignesParPageInscription,
+      nbLignesParAppelInscription,
+      // Données propre à une fiche Acte pour sa pagination/navigation
+      getLignesSuivantesOuPrecedentesActe,
+      idFicheActe,
+      dataRMCFicheActe,
+      dataTableauRMCFicheActe,
+      // Données propre à une fiche Inscription pour sa pagination/navigation
+      getLignesSuivantesOuPrecedentesInscription,
+      idFicheInscription,
+      dataRMCFicheInscription,
+      dataTableauRMCFicheInscription
+    },
+    refTableau
+  ) => {
+    return (
+      <div
+        className={`ResultatsRMC${typeRMC}`}
+        ref={refTableau}
+      >
+        <Fieldset titre={"Résultats de la recherche multi-critères"}>
+          <div className="SubResultatsRMC">
+            <div className="SousTitre">
+              <span>{"Recherche dans les registres d'état civil"}</span>
+            </div>
+            <RMCTableauActes
+              typeRMC={typeRMC}
+              dataRequete={dataRequete}
+              dataAlertes={dataAlertes}
+              dataRMCActe={dataRMCActe}
+              dataTableauRMCActe={dataTableauRMCActe}
+              setRangeActe={setRangeActe}
+              resetTableauActe={resetRMC}
+              onClickCheckboxCallBack={onClickCheckboxTableauActes}
+              nbLignesParPage={nbLignesParPageActe}
+              nbLignesParAppel={nbLignesParAppelActe}
+              getLignesSuivantesOuPrecedentesActe={getLignesSuivantesOuPrecedentesActe}
+              idFicheActe={idFicheActe}
+              dataRMCFicheActe={dataRMCFicheActe}
+              dataTableauRMCFicheActe={dataTableauRMCFicheActe}
+            />
           </div>
-          <RMCTableauActes
-            typeRMC={typeRMC}
-            dataRequete={dataRequete}
-            dataAlertes={dataAlertes}
-            dataRMCActe={dataRMCActe}
-            dataTableauRMCActe={dataTableauRMCActe}
-            setRangeActe={setRangeActe}
-            resetTableauActe={resetRMC}
-            onClickCheckboxCallBack={onClickCheckboxTableauActes}
-            nbLignesParPage={nbLignesParPageActe}
-            nbLignesParAppel={nbLignesParAppelActe}
-            getLignesSuivantesOuPrecedentesActe={getLignesSuivantesOuPrecedentesActe}
-            idFicheActe={idFicheActe}
-            dataRMCFicheActe={dataRMCFicheActe}
-            dataTableauRMCFicheActe={dataTableauRMCFicheActe}
-          />
-        </div>
-        <div className="SubResultatsRMC">
-          <div className="SousTitre">
-            <span>{"Recherche dans les répertoires de greffe et registre des PACS des étrangers nés à l'étranger"}</span>
+          <div className="SubResultatsRMC">
+            <div className="SousTitre">
+              <span>{"Recherche dans les répertoires de greffe et registre des PACS des étrangers nés à l'étranger"}</span>
+            </div>
+            <RMCTableauInscriptions
+              typeRMC={typeRMC}
+              dataRequete={dataRequete}
+              dataRMCInscription={dataRMCInscription}
+              dataTableauRMCInscription={dataTableauRMCInscription}
+              setRangeInscription={setRangeInscription}
+              resetTableauInscription={resetRMC}
+              onClickCheckboxCallBack={onClickCheckboxTableauInscriptions}
+              nbLignesParPage={nbLignesParPageInscription}
+              nbLignesParAppel={nbLignesParAppelInscription}
+              getLignesSuivantesOuPrecedentesInscription={getLignesSuivantesOuPrecedentesInscription}
+              idFicheInscription={idFicheInscription}
+              dataRMCFicheInscription={dataRMCFicheInscription}
+              dataTableauRMCFicheInscription={dataTableauRMCFicheInscription}
+            />
           </div>
-          <RMCTableauInscriptions
-            typeRMC={typeRMC}
-            dataRequete={dataRequete}
-            dataRMCInscription={dataRMCInscription}
-            dataTableauRMCInscription={dataTableauRMCInscription}
-            setRangeInscription={setRangeInscription}
-            resetTableauInscription={resetRMC}
-            onClickCheckboxCallBack={onClickCheckboxTableauInscriptions}
-            nbLignesParPage={nbLignesParPageInscription}
-            nbLignesParAppel={nbLignesParAppelInscription}
-            getLignesSuivantesOuPrecedentesInscription={getLignesSuivantesOuPrecedentesInscription}
-            idFicheInscription={idFicheInscription}
-            dataRMCFicheInscription={dataRMCFicheInscription}
-            dataTableauRMCFicheInscription={dataTableauRMCFicheInscription}
-          />
-        </div>
-      </Fieldset>
-    </div>
-  );
-};
+        </Fieldset>
+      </div>
+    );
+  }
+);

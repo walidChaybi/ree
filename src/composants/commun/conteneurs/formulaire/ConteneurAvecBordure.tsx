@@ -1,16 +1,20 @@
+import { Replay } from "@mui/icons-material";
 import React from "react";
+import BoutonIcon from "../../bouton/BoutonIcon";
 
 interface IConteneurAvecBordureProps {
   titreEnTete?: string;
   sansMargeHorizontale?: boolean;
   className?: string;
+  reinitialiserDonneesBloc?: () => void;
 }
 
 const ConteneurAvecBordure: React.FC<React.PropsWithChildren<IConteneurAvecBordureProps>> = ({
   children,
   titreEnTete,
-  sansMargeHorizontale = false,
-  className
+  sansMargeHorizontale,
+  className,
+  reinitialiserDonneesBloc
 }) => (
   <div {...(className ? { className: className } : {})}>
     <div
@@ -18,6 +22,18 @@ const ConteneurAvecBordure: React.FC<React.PropsWithChildren<IConteneurAvecBordu
     >
       {titreEnTete && (
         <span className="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre">{titreEnTete}</span>
+      )}
+
+      {reinitialiserDonneesBloc && (
+        <BoutonIcon
+          className="absolute -top-4 right-8 rounded-md border border-solid border-blue-200 shadow-md hover:border-rouge"
+          styleBouton="suppression"
+          title="Réinitialiser les données du bloc"
+          iconeSeule
+          onClick={reinitialiserDonneesBloc}
+        >
+          <Replay />
+        </BoutonIcon>
       )}
       {children}
     </div>

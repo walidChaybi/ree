@@ -70,7 +70,7 @@ export function officierDroitConsulterSurLeTypeRegistre(utilisateurConnecte: IOf
   return res;
 }
 
-function officierDroitDelivrerSurLeTypeRegistre(idTypeRegistre: string, utilisateurConnecte: IOfficier) {
+function officierDroitDelivrerSurLeTypeRegistre(idTypeRegistre: string, utilisateurConnecte: IOfficier): boolean {
   let estHabilite = false;
 
   if (utilisateurConnecte) {
@@ -78,15 +78,12 @@ function officierDroitDelivrerSurLeTypeRegistre(idTypeRegistre: string, utilisat
     while (!estHabilite && i < utilisateurConnecte.habilitations.length) {
       const habilitationOfficier = utilisateurConnecte.habilitations[i];
       if (Habilitation.aDroitDelivrerEtDelivrerComedecSurPerimetre(habilitationOfficier, idTypeRegistre)) {
-        if (Habilitation.aDroitDelivrerEtDelivrerComedecSurPerimetre(habilitationOfficier, idTypeRegistre)) {
-          estHabilite = true;
-        }
-        i++;
+        estHabilite = true;
       }
+      i++;
     }
-
-    return estHabilite;
   }
+  return estHabilite;
 }
 
 export function officierDroitConsulterSurLeTypeRegistreOuDroitMAE(utilisateurConnecte: IOfficier, idTypeRegistre?: string) {

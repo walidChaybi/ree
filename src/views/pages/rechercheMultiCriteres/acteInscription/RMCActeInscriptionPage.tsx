@@ -5,7 +5,6 @@ import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IR
 import messageManager, { TOASTCONTAINER_PRINCIPAL } from "@util/messageManager";
 import { stockageDonnees } from "@util/stockageDonnees";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
-import { AutoScroll } from "@widget/autoScroll/autoScroll";
 import {
   NB_LIGNES_PAR_APPEL_ACTE,
   NB_LIGNES_PAR_APPEL_INSCRIPTION,
@@ -28,18 +27,19 @@ interface RMCActeInscriptionPageProps {
 const TOASTCONTAINER_EXTERNE = "toastContainer-externe";
 
 export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({ noAutoScroll, dansFenetreExterne }) => {
-  // STATEs
   const [opEnCours, setOpEnCours] = useState<boolean>(false);
   const [valuesRMCActeInscription, setValuesRMCActeInscription] = useState<IRMCActeInscription>({});
   const [nouvelleRMCActeInscription, setNouvelleRMCActeInscription] = useState<boolean>(false);
   const [criteresRechercheActe, setCriteresRechercheActe] = useState<ICriteresRechercheActeInscription>();
   const [criteresRechercheInscription, setCriteresRechercheInscription] = useState<ICriteresRechercheActeInscription>();
+
   // Critères de recherche pour alimenter les données des fiches Acte en effet leur pagination/navigation est indépendante du tableau de résultats
   const [criteresRechercheFicheActe, setCriteresRechercheFicheActe] = useState<ICriteresRechercheActeInscription>();
   // Critères de recherche pour alimenter les données des fiches Inscription en effet leur pagination/navigation est indépendante du tableau de résultats
   const [criteresRechercheFicheInscription, setCriteresRechercheFicheInscription] = useState<ICriteresRechercheActeInscription>();
 
-  // HOOKs
+  const tableauResultatRef = useRef<HTMLDivElement | null>(null);
+
   const { dataRMCActe, dataTableauRMCActe } = useRMCActeApiHook(criteresRechercheActe);
   const { dataRMCInscription, dataTableauRMCInscription } = useRMCInscriptionApiHook(criteresRechercheInscription);
   /** Récupération des résultats rmc pour une fiche Acte lors d'une navigation */
@@ -137,8 +137,11 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({ 
     },
     [dansFenetreExterne]
   );
+  useEffect(() => {
+    if (dataRMCActe && dataTableauRMCActe && dataRMCInscription && dataTableauRMCInscription)
+      tableauResultatRef?.current?.scrollIntoView({ behavior: "smooth" });
+  }, [dataRMCActe, dataTableauRMCActe, dataRMCInscription, dataTableauRMCInscription]);
 
-  const RMCActeInscriptionRef = useRef();
   return (
     <>
       <OperationEnCours
@@ -146,15 +149,10 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({ 
         onTimeoutEnd={() => setOpEnCours(false)}
       ></OperationEnCours>
       <RMCActeInscription onSubmit={onSubmitRMCActeInscription} />
-      {!noAutoScroll && (
-        <AutoScroll
-          autoScroll={nouvelleRMCActeInscription}
-          baliseRef={RMCActeInscriptionRef}
-        />
-      )}
 
       {dataRMCActe && dataTableauRMCActe && dataRMCInscription && dataTableauRMCInscription && (
         <RMCActeInscriptionResultats
+          ref={tableauResultatRef}
           typeRMC="Classique"
           dataRMCActe={dataRMCActe}
           dataTableauRMCActe={dataTableauRMCActe}
