@@ -1,4 +1,4 @@
-import { TITULAIRE } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
+import { TITULAIRE } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscription";
 import RMCBoutons, { RMCBoutonsProps } from "@pages/rechercheMultiCriteres/boutons/RMCBoutons";
 import TitulaireFiltre, {
   TitulaireDefaultValues,

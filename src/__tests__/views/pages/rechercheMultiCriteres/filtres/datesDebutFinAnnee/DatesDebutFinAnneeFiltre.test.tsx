@@ -1,4 +1,4 @@
-import { DATES_DEBUT_FIN_ANNEE } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
+import { DATES_DEBUT_FIN_ANNEE } from "@composant/formulaire/ConstantesNomsForm";
 import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,
   DatesDebutFinAnneeFiltreProps
@@ -30,7 +30,11 @@ const HookDatesDebutFinAnneeFiltre: React.FC = () => {
       <Form>
         <DatesDebutFinAnneeFiltre {...datesDebutFinAnneeFiltreProps} />
         <button type="submit">Rechercher</button>
-        <Field as="textarea" value={result} data-testid="result" />
+        <Field
+          as="textarea"
+          value={result}
+          data-testid="result"
+        />
       </Form>
     </Formik>
   );
@@ -39,24 +43,12 @@ const HookDatesDebutFinAnneeFiltre: React.FC = () => {
 test("render composant DatesDebutFinAnneeFiltre", () => {
   render(<HookDatesDebutFinAnneeFiltre />);
 
-  const inputJour = screen.getByLabelText(
-    "datesDebutFinAnnee.dateDebut.jour"
-  ) as HTMLInputElement;
-  const inputMois = screen.getByLabelText(
-    "datesDebutFinAnnee.dateDebut.mois"
-  ) as HTMLInputElement;
-  const inputAnnee = screen.getByLabelText(
-    "datesDebutFinAnnee.dateDebut.annee"
-  ) as HTMLInputElement;
-  const inputJourFin = screen.getByLabelText(
-    "datesDebutFinAnnee.dateFin.jour"
-  ) as HTMLInputElement;
-  const inputMoisFin = screen.getByLabelText(
-    "datesDebutFinAnnee.dateFin.mois"
-  ) as HTMLInputElement;
-  const inputAnneeFin = screen.getByLabelText(
-    "datesDebutFinAnnee.dateFin.annee"
-  ) as HTMLInputElement;
+  const inputJour = screen.getByLabelText("datesDebutFinAnnee.dateDebut.jour") as HTMLInputElement;
+  const inputMois = screen.getByLabelText("datesDebutFinAnnee.dateDebut.mois") as HTMLInputElement;
+  const inputAnnee = screen.getByLabelText("datesDebutFinAnnee.dateDebut.annee") as HTMLInputElement;
+  const inputJourFin = screen.getByLabelText("datesDebutFinAnnee.dateFin.jour") as HTMLInputElement;
+  const inputMoisFin = screen.getByLabelText("datesDebutFinAnnee.dateFin.mois") as HTMLInputElement;
+  const inputAnneeFin = screen.getByLabelText("datesDebutFinAnnee.dateFin.annee") as HTMLInputElement;
 
   fireEvent.input(inputJour, {
     target: {

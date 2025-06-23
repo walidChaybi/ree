@@ -1,18 +1,20 @@
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { Formik } from "formik";
 import { describe, expect, test } from "vitest";
 import ChampDate from "../../../../composants/commun/champs/ChampDate";
 
 describe("ChampDate", () => {
-  const renderComponent = (name = "test", libelle = "Date") => {
+  const renderComponent = (avecBoutonReinitialiser?: boolean) => {
     return render(
       <Formik
         initialValues={{ test: { jour: "", mois: "", annee: "" } }}
         onSubmit={() => {}}
       >
         <ChampDate
-          name={name}
-          libelle={libelle}
+          name={"test"}
+          libelle={"Date"}
+          avecBoutonReinitialiser={avecBoutonReinitialiser}
         />
       </Formik>
     );
@@ -47,15 +49,39 @@ describe("ChampDate", () => {
     });
   });
 
-  test.skip("Change le focus du champ lorsque les deux chiffres sont entrés", async () => {
+  test("Change le focus du champ lorsque les deux chiffres sont entrés", async () => {
     renderComponent();
     const moisInput = screen.getByPlaceholderText("MM");
-    fireEvent.change(moisInput, { target: { value: "06" } });
+    await userEvent.type(moisInput, "06");
     fireEvent.blur(moisInput);
 
     await waitFor(() => {
       const anneeInput = screen.getByPlaceholderText("AAAA");
       expect(document.activeElement).toBe(anneeInput);
+    });
+  });
+
+  test("LORSQUE le bouton reset est cliqué, ALORS les champs sont vidés", async () => {
+    await act(async () => renderComponent(true));
+
+    expect(screen.getByLabelText("Date")).toBeDefined();
+
+    const jourInput: HTMLInputElement = screen.getByPlaceholderText("JJ");
+    fireEvent.change(jourInput, { target: { value: "12" } });
+
+    const moisInput: HTMLInputElement = screen.getByPlaceholderText("MM");
+    fireEvent.change(moisInput, { target: { value: "06" } });
+
+    const anneeInput: HTMLInputElement = screen.getByPlaceholderText("AAAA");
+    fireEvent.change(anneeInput, { target: { value: "2024" } });
+
+    const boutonReinitialiser: HTMLButtonElement = screen.getByTitle("Réinitialiser la date");
+    fireEvent.click(boutonReinitialiser);
+
+    await waitFor(() => {
+      expect(jourInput.value).toBe("");
+      expect(moisInput.value).toBe("");
+      expect(anneeInput.value).toBe("");
     });
   });
 });
@@ -98,19 +124,19 @@ describe("ChampHeure", () => {
     });
   });
 
-  test.skip("Change le focus du champ année lorsque les 4 chiffres sont entrés", async () => {
+  test("Change le focus du champ année lorsque les 4 chiffres sont entrés", async () => {
     renderComponent();
     const anneeInput = screen.getByPlaceholderText("AAAA");
     const heureInput = screen.getByPlaceholderText("HH");
-    fireEvent.change(anneeInput, { target: { value: "1991" } });
+    await userEvent.type(anneeInput, "1991");
     expect(document.activeElement).toBe(heureInput);
   });
 
-  test.skip("Change le focus du champ heure lorsque les deux chiffres sont entrés", async () => {
+  test("Change le focus du champ heure lorsque les deux chiffres sont entrés", async () => {
     renderComponent();
     const heureInput = screen.getByPlaceholderText("HH");
     const minuteInput = screen.getByPlaceholderText("MN");
-    fireEvent.change(heureInput, { target: { value: "11" } });
+    await userEvent.type(heureInput, "11");
     expect(document.activeElement).toBe(minuteInput);
   });
 });

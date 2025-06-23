@@ -5,7 +5,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
 import React from "react";
-import { RMCActeInscriptionForm } from "../acteInscription/RMCActeInscriptionForm";
+import { RMCActeInscription } from "../acteInscription/RMCActeInscription";
 import "./scss/PopinNouvelleRMCActeInscription.scss";
 
 interface PopinNouvelleRMCActeInscriptionProps {
@@ -15,9 +15,7 @@ interface PopinNouvelleRMCActeInscriptionProps {
   titulaires?: ITitulaireRequete[];
 }
 
-export const PopinNouvelleRMCActeInscription: React.FC<
-  PopinNouvelleRMCActeInscriptionProps
-> = props => {
+export const PopinNouvelleRMCActeInscription: React.FC<PopinNouvelleRMCActeInscriptionProps> = props => {
   const handleClose = () => {
     props.setPopinAffichee(false);
   };
@@ -40,7 +38,7 @@ export const PopinNouvelleRMCActeInscription: React.FC<
         </IconButton>
       </DialogTitle>
       <DialogContent>
-        <RMCActeInscriptionForm
+        <RMCActeInscription
           onSubmit={props.nouvelleRMCActeInscription}
           titulaires={props.titulaires}
         />

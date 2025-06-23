@@ -220,7 +220,7 @@ export class MetaModeleTypeMention {
             case "crpcen":
               return SchemaValidation.texte({
                 obligatoire: champ.estObligatoire,
-                regexp: { valeur: new RegExp(/^\d{5}$/), message: "⚠ Saisir 5 caractères numériques" }
+                listeRegexp: [{ valeur: new RegExp(/^\d{5}$/), message: "⚠ Saisir 5 caractères numériques" }]
               });
             case "int":
               return SchemaValidation.entier({ obligatoire: champ.estObligatoire });

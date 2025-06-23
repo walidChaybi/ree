@@ -1,6 +1,6 @@
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
-import { TITULAIRE } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
+import { TITULAIRE } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscription";
 import TitulaireFiltre, {
   TitulaireDefaultValues,
   TitulaireFiltreProps

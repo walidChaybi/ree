@@ -1,6 +1,8 @@
+import Delete from "@mui/icons-material/Delete";
 import { useField } from "formik";
 import { useEffect, useMemo, useRef } from "react";
 import { messagesErreur } from "../../../utils/SchemaValidation";
+import BoutonIcon from "../bouton/BoutonIcon";
 import { CHAMP_EN_ERREUR } from "../formulaire/ScrollVersErreur";
 
 type TChampDateProps = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -9,6 +11,7 @@ type TChampDateProps = React.InputHTMLAttributes<HTMLInputElement> & {
   className?: string;
   estObligatoire?: boolean | string;
   desactiverCorrectionAutomatique?: boolean;
+  avecBoutonReinitialiser?: boolean;
 };
 
 const idElementActif = () => document.activeElement?.getAttribute("id");
@@ -20,6 +23,7 @@ const ChampDate: React.FC<TChampDateProps> = ({
   className = "",
   estObligatoire,
   desactiverCorrectionAutomatique = true,
+  avecBoutonReinitialiser,
   ...props
 }) => {
   const champsDate = useMemo(
@@ -32,6 +36,7 @@ const ChampDate: React.FC<TChampDateProps> = ({
     }),
     [name]
   );
+
   const [fieldJour, metaJour, helpersJour] = useField(champsDate.jour);
   const [fieldMois, metaMois, helpersMois] = useField(champsDate.mois);
   const [fieldAnnee, metaAnnee, helpersAnnee] = useField(champsDate.annee);
@@ -78,6 +83,25 @@ const ChampDate: React.FC<TChampDateProps> = ({
   useEffect(() => {
     metaHeure?.value?.length === 2 && idElementActif() === champsDate.heure && refMinute.current?.focus();
   }, [metaHeure?.value]);
+
+  const resetDate = () => {
+    helpersAnnee.setValue("");
+    helpersAnnee.setTouched(false);
+
+    helpersMois.setValue("");
+    helpersMois.setTouched(false);
+
+    helpersJour.setValue("");
+    helpersJour.setTouched(false);
+
+    if (avecHeure) {
+      helpersHeure.setValue("");
+      helpersHeure.setTouched(false);
+
+      helpersMinute.setValue("");
+      helpersMinute.setTouched(false);
+    }
+  };
 
   return (
     <div {...(erreurs.length ? { className: CHAMP_EN_ERREUR } : {})}>
@@ -243,6 +267,17 @@ const ChampDate: React.FC<TChampDateProps> = ({
             />
             <span className="mx-1 text-xl">{"min"}</span>
           </>
+        )}
+        {avecBoutonReinitialiser && (
+          <BoutonIcon
+            title="Réinitialiser la date"
+            className="ml-1"
+            styleBouton="suppression"
+            iconeSeule
+            onClick={resetDate}
+          >
+            <Delete />
+          </BoutonIcon>
         )}
       </div>
       {Boolean(erreurs.length) && <div className="text-start text-sm text-rouge">{erreurs[0]}</div>}

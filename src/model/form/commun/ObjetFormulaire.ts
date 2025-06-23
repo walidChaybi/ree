@@ -21,6 +21,25 @@ export type TValeurFormulaire =
 export const ObjetFormulaire = {
   depuisValeurs: (valeurs: object): TObjetFormulaire => valeurs as TObjetFormulaire,
 
+  remplacerChaineVideParUndefined<T>(valeur: T): T {
+    if (valeur === null || typeof valeur !== "object") {
+      return valeur;
+    }
+
+    return Object.fromEntries(
+      Object.entries(valeur).map(([cle, value]) => {
+        if (value === "") {
+          return [cle, undefined];
+        }
+        if (typeof value === "object" && valeur !== null) {
+          return [cle, ObjetFormulaire.remplacerChaineVideParUndefined(value)];
+        }
+
+        return [cle, value];
+      })
+    ) as T;
+  },
+
   recupererValeur: ({ valeurs, cleAttribut }: { valeurs: TObjetFormulaire; cleAttribut: string }) =>
     cleAttribut
       .split(".")

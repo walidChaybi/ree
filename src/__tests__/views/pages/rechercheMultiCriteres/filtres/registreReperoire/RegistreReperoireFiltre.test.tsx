@@ -1,4 +1,4 @@
-import { REGISTRE_REPERTOIRE } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
+import { REGISTRE_REPERTOIRE } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscription";
 import RegistreRepertoireFiltre, {
   RegistreRepertoireDefaultValues,
   RegistreRepertoireFiltreProps
@@ -31,28 +31,18 @@ test("renders filtre Registre et Repertoire", () => {
 
   waitFor(() => {
     expect(screen.getAllByText(getLibelle("Filtre registre"))).toHaveLength(1);
-    expect(screen.getAllByText(getLibelle("Filtre répertoire"))).toHaveLength(
-      1
-    );
+    expect(screen.getAllByText(getLibelle("Filtre répertoire"))).toHaveLength(1);
     expect(screen.getAllByText(getLibelle("Filtre évènement"))).toHaveLength(1);
   });
 
   // Test du grisé/dégrisé des registres et répertoires
-  const natureActe = screen.getByTestId(
-    "registreRepertoire.registre.natureActe"
-  ) as HTMLInputElement;
+  const natureActe = screen.getByTestId("registreRepertoire.registre.natureActe") as HTMLInputElement;
 
-  const numeroInscription = screen.getByLabelText(
-    "registreRepertoire.repertoire.numeroInscription"
-  ) as HTMLInputElement;
+  const numeroInscription = screen.getByLabelText("registreRepertoire.repertoire.numeroInscription") as HTMLInputElement;
 
-  const typeRepertoire = screen.getByTestId(
-    "registreRepertoire.repertoire.typeRepertoire"
-  ) as HTMLInputElement;
+  const typeRepertoire = screen.getByTestId("registreRepertoire.repertoire.typeRepertoire") as HTMLInputElement;
 
-  const paysEvenement = screen.getByLabelText(
-    "registreRepertoire.evenement.paysEvenement"
-  ) as HTMLInputElement;
+  const paysEvenement = screen.getByLabelText("registreRepertoire.evenement.paysEvenement") as HTMLInputElement;
 
   waitFor(() => {
     expect(natureActe).toBeDefined();
@@ -131,5 +121,3 @@ function fireEventChange(component: any, value: any) {
     }
   });
 }
-
-

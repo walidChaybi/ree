@@ -1,9 +1,16 @@
+import { IRMCActeInscriptionForm, RMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { MIN_YEAR } from "@util/DateUtils";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { stockageDonnees } from "@util/stockageDonnees";
 import { Formulaire } from "@widget/formulaire/Formulaire";
-import React from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
+import ChampDate from "../../../../composants/commun/champs/ChampDate";
+import ChampTexte from "../../../../composants/commun/champs/ChampTexte";
+import { ChampsNomPrenomInterchangeables } from "../../../../composants/commun/champs/ChampsNomPrenomInterchangeables";
+import ConteneurAvecBordure from "../../../../composants/commun/conteneurs/formulaire/ConteneurAvecBordure";
 import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import RMCBoutons from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
@@ -29,14 +36,14 @@ export const DATES_DEBUT_FIN_ANNEE = "datesDebutFinAnnee";
 export const REGISTRE_REPERTOIRE = "registreRepertoire";
 
 // Valeurs par défaut des champs
-const DefaultValuesRMCActeInscription = {
+export const DefaultValuesRMCActeInscription = {
   [TITULAIRE]: TitulaireDefaultValues,
   [DATES_DEBUT_FIN_ANNEE]: DatesDebutFinAnneeDefaultValues,
   [REGISTRE_REPERTOIRE]: RegistreRepertoireDefaultValues
 };
 
 // Schéma de validation en sortie de champs
-const ValidationSchemaRMCActeInscription = Yup.object({
+export const ValidationSchemaRMCActeInscription = Yup.object({
   [TITULAIRE]: TitulaireValidationSchema,
   [DATES_DEBUT_FIN_ANNEE]: DatesDebutFinAnneeValidationSchema,
   [REGISTRE_REPERTOIRE]: RegistreRepertoireValidationSchema
@@ -44,12 +51,14 @@ const ValidationSchemaRMCActeInscription = Yup.object({
 
 export const titreForm = "Critères de recherche d'un acte et d'une inscription";
 
-interface RMCActeInscriptionFormProps {
+interface RMCActeInscriptionProps {
   onSubmit: (values: any) => void;
   titulaires?: ITitulaireRequete[];
 }
 
-export const RMCActeInscriptionForm: React.FC<RMCActeInscriptionFormProps> = props => {
+export const RMCActeInscription: React.FC<RMCActeInscriptionProps> = props => {
+  const [afficherNouveauBloc, setAfficherNouveauBloc] = useState(false);
+
   const blocsForm: JSX.Element[] = [getFormTitulaire(props.titulaires), getRegistreRepertoire(), getFormDatesDebutFinAnnee()];
 
   const onSubmitRMCActeInscription = (values: any): void => {
@@ -63,14 +72,49 @@ export const RMCActeInscriptionForm: React.FC<RMCActeInscriptionFormProps> = pro
   useTitreDeLaFenetre(titreForm);
 
   return (
-    <Formulaire
+    <Formulaire<IRMCActeInscriptionForm>
       titre={titreForm}
-      formDefaultValues={DefaultValuesRMCActeInscription}
-      formValidationSchema={ValidationSchemaRMCActeInscription}
+      formDefaultValues={RMCActeInscriptionForm.valeursInitiales()}
+      formValidationSchema={RMCActeInscriptionForm.schemaValidation()}
       onSubmit={onSubmitRMCActeInscription}
     >
-      <div className="DeuxColonnes FormulaireRMCAI">{blocsForm}</div>
+      <div className="FormulaireRMCAI grid grid-cols-2">
+        {afficherNouveauBloc && gestionnaireFeatureFlag.estActif(FeatureFlag.FF_UTILISER_NOUVELLE_RMC) ? (
+          <>
+            <ConteneurAvecBordure
+              titreEnTete="Filtre titulaire"
+              className="mt-8"
+            >
+              <ChampsNomPrenomInterchangeables
+                cheminNom="titulaire.nom"
+                cheminPrenom="titulaire.prenom"
+              />
+              <div className="grid grid-cols-2 gap-4 pt-4">
+                <ChampDate
+                  name="titulaire.dateNaissance"
+                  libelle="Date de naissance"
+                  avecBoutonReinitialiser
+                />
+                <ChampTexte
+                  name="titulaire.paysNaissance"
+                  libelle="Pays de naissance"
+                />
+              </div>
+            </ConteneurAvecBordure>
+            {getRegistreRepertoire()} {getFormDatesDebutFinAnnee()}
+          </>
+        ) : (
+          blocsForm
+        )}
+      </div>
       <RMCBoutons rappelCriteres={rappelCriteres} />
+      <button
+        onClick={() => setAfficherNouveauBloc(!afficherNouveauBloc)}
+        className={`absolute bottom-5 right-5 ${!afficherNouveauBloc ? "bg-green-600" : "bg-red-600"}`}
+        type="button"
+      >
+        {afficherNouveauBloc ? "<< Utiliser l'ancienne version" : ">> Utiliser la nouvelle version"}
+      </button>
     </Formulaire>
   );
 };

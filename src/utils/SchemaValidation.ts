@@ -7,6 +7,7 @@ import * as Yup from "yup";
 interface ISchemaCommunParams {
   obligatoire: boolean | ConditionChamp[];
   operateurConditionsOu?: boolean;
+  interditSeul?: TInterditSeul;
 }
 
 type TValeurChamp = string | boolean | number | undefined;
@@ -21,6 +22,16 @@ type TValidationEntier = TValidation & {
 
 type TValidationText = TValidation & {
   valeur: RegExp;
+};
+
+type TInterditSeul = { estInterditSeul: boolean; cheminErreurSpecifique?: string; messageErreurSpecifique?: string };
+
+type TGestionObligationParams<TSchemaChamp extends Yup.AnySchema = Yup.AnySchema> = {
+  schema: TSchemaChamp;
+  obligatoire: boolean | ConditionChamp[];
+  actionObligation: () => TSchemaChamp;
+  conditionOu?: boolean;
+  interditSeul?: TInterditSeul;
 };
 
 type TDateChamp = {
@@ -45,7 +56,13 @@ export const messagesErreur = {
   DOIT_ETRE_ENTIER: "⚠ La valeur doit être un entier",
   CHAMP_OBLIGATOIRE: "⚠ La saisie du champ est obligatoire",
   CHAMP_INVALIDE: "⚠ Le champ est invalide",
-  PRENOM_OBLIGATOIRE: "⚠ La saisie du prénom est obligatoire"
+  PRENOM_OBLIGATOIRE: "⚠ La saisie du prénom est obligatoire",
+  CHAMP_SEUL_INVALIDE: "⚠ Le champ ne peut être utilisé seul",
+
+  CARACTERES_INTERDITS: "⚠ Le champ contient des caractères interdits dans l'état civil",
+  ASTERISQUE_PRECEDE_DE_UN: "⚠ L'astérisque doit être précédé d'au moins un caractère",
+  ASTERISQUE_PRECEDE_DE_DEUX: "⚠ L'astérisque doit être précédé d'au moins deux caractères",
+  CARACTERES_POST_ASTERISQUE: "⚠ L'astérisque ne doit être suivi d'aucun caractère"
 };
 
 const erreurSurDateEntiere = (message: string, baseChemin: string) =>
@@ -123,6 +140,7 @@ const getSchemaValidationDate = (bloquerDateFuture?: boolean): Yup.ObjectSchema<
         const dateActuelle = new Date();
         switch (true) {
           case !date.mois:
+            console.log("On passe au bon endroit, et on doit return true : ", Number(date.annee) > dateActuelle.getFullYear());
             return Number(date.annee) > dateActuelle.getFullYear();
 
           case !date.jour:
@@ -138,12 +156,52 @@ const getSchemaValidationDate = (bloquerDateFuture?: boolean): Yup.ObjectSchema<
       return estDateFuture ? erreurSurDateEntiere(messagesErreur.DATE_FUTURE, error.path) : true;
     });
 
-const gestionObligation = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>(
+const estChampRenseigne = (valeur: any): boolean => {
+  if (valeur === null || valeur === undefined || valeur === "") return false;
+
+  if (typeof valeur === "object" && !Array.isArray(valeur)) {
+    return Object.values(valeur).some(estChampRenseigne);
+  }
+
+  return true;
+};
+
+const champSeulInterdit = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>(
   schema: TSchemaChamp,
-  obligatoire: boolean | ConditionChamp[],
-  actionObligation: () => TSchemaChamp,
-  conditionOu?: boolean
-): TSchemaChamp => {
+  cheminErreurSpecifique?: string,
+  messageErreurSpecifique?: string
+) =>
+  schema.test("champSeulInvalide", (valeur, context) => {
+    const champActuel = context.path.split(".").pop();
+
+    const estSeulChampRempli =
+      Object.entries(context.parent)
+        .filter(([cle]) => cle !== champActuel)
+        .map(([_, valeur]) => valeur)
+        .filter(estChampRenseigne).length === 0;
+
+    if (estChampRenseigne(valeur) && estSeulChampRempli) {
+      const cheminErreur = cheminErreurSpecifique ? `${context.path}.${cheminErreurSpecifique}` : context.path;
+
+      return context.createError({
+        path: cheminErreur,
+        message: messageErreurSpecifique ?? messagesErreur.CHAMP_SEUL_INVALIDE
+      });
+    }
+
+    return true;
+  });
+
+const gestionObligation = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>({
+  schema,
+  obligatoire,
+  actionObligation,
+  conditionOu,
+  interditSeul
+}: TGestionObligationParams<TSchemaChamp>): TSchemaChamp => {
+  if (interditSeul?.estInterditSeul) {
+    schema = champSeulInterdit(schema, interditSeul.cheminErreurSpecifique, interditSeul.messageErreurSpecifique);
+  }
   if (typeof obligatoire === "boolean") {
     return obligatoire ? actionObligation() : schema;
   }
@@ -169,22 +227,25 @@ const gestionObligation = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>(
 const SchemaValidation = {
   objet: (objet: { [cle: string]: Yup.AnySchema }) => Yup.object().shape(objet),
 
-  texte: (schemaParams: ISchemaCommunParams & { regexp?: TValidationText }) => {
+  texte: (schemaParams: ISchemaCommunParams & { listeRegexp?: TValidationText[] }): Yup.StringSchema => {
     let schema = Yup.string();
 
-    if (schemaParams.regexp)
-      schema = schema.matches(schemaParams.regexp.valeur, schemaParams.regexp.message ?? "⚠ La valeur n'est pas conforme'");
+    if (schemaParams.listeRegexp?.length)
+      schemaParams.listeRegexp.forEach(regexp => {
+        schema = schema.matches(regexp.valeur, regexp.message ?? "⚠ La valeur n'est pas conforme'");
+      });
 
-    return gestionObligation(
-      schema,
-      schemaParams.obligatoire,
-      () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE),
-      schemaParams.operateurConditionsOu
-    ) as Yup.StringSchema;
+    return gestionObligation({
+      schema: schema,
+      obligatoire: schemaParams.obligatoire,
+      actionObligation: () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE),
+      conditionOu: schemaParams.operateurConditionsOu,
+      interditSeul: schemaParams.interditSeul
+    });
   },
 
-  entier: (schemaParams: ISchemaCommunParams & { min?: TValidationEntier; max?: TValidationEntier }) => {
-    let schema = Yup.number().integer(messagesErreur.DOIT_ETRE_ENTIER).nullable();
+  entier: (schemaParams: ISchemaCommunParams & { min?: TValidationEntier; max?: TValidationEntier }): Yup.NumberSchema => {
+    let schema = Yup.number().integer(messagesErreur.DOIT_ETRE_ENTIER);
     schemaParams.min &&
       (schema = schema.min(
         schemaParams.min.valeur,
@@ -196,18 +257,30 @@ const SchemaValidation = {
         schemaParams.max.message ?? `⚠ La valeur ne peut pas être supérieure à ${schemaParams.max.valeur}`
       ));
 
-    return gestionObligation(schema, schemaParams.obligatoire, () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE)) as Yup.NumberSchema;
+    return gestionObligation({
+      schema: schema,
+      obligatoire: schemaParams.obligatoire,
+      actionObligation: () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE),
+      conditionOu: schemaParams.operateurConditionsOu,
+      interditSeul: schemaParams.interditSeul
+    });
   },
 
-  booleen: (schemaParams: ISchemaCommunParams) => {
+  booleen: (schemaParams: ISchemaCommunParams): Yup.BooleanSchema => {
     let schema = Yup.boolean();
 
-    return gestionObligation(schema, schemaParams.obligatoire, () =>
-      schema.required(messagesErreur.CHAMP_OBLIGATOIRE)
-    ) as Yup.BooleanSchema;
+    return gestionObligation({
+      schema: schema,
+      obligatoire: schemaParams.obligatoire,
+      actionObligation: () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE),
+      conditionOu: schemaParams.operateurConditionsOu,
+      interditSeul: schemaParams.interditSeul
+    });
   },
 
-  listeDeroulante: (schemaParams: ISchemaCommunParams & { options?: string[]; valeursPossibles?: ValeursConditionneesMetaModele[] }) => {
+  listeDeroulante: (
+    schemaParams: ISchemaCommunParams & { options?: string[]; valeursPossibles?: ValeursConditionneesMetaModele[] }
+  ): Yup.StringSchema => {
     let schema = Yup.string();
 
     if (schemaParams.options) {
@@ -234,10 +307,16 @@ const SchemaValidation = {
       });
     }
 
-    return gestionObligation(schema, schemaParams.obligatoire, () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE)) as Yup.StringSchema;
+    return gestionObligation({
+      schema: schema,
+      obligatoire: schemaParams.obligatoire,
+      actionObligation: () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE),
+      conditionOu: schemaParams.operateurConditionsOu,
+      interditSeul: schemaParams.interditSeul
+    });
   },
 
-  dateComplete: (schemaParams: ISchemaCommunParams & { bloquerDateFuture: boolean }) => {
+  dateComplete: (schemaParams: ISchemaCommunParams & { bloquerDateFuture?: boolean }) => {
     let schema = getSchemaValidationDate(schemaParams.bloquerDateFuture)
       .test("dateCompleteObligatoireJour", (date, error) =>
         !date.jour && (Boolean(date.mois) || Boolean(date.annee))
@@ -264,11 +343,16 @@ const SchemaValidation = {
           : true
       );
 
-    return gestionObligation(schema, schemaParams.obligatoire, () =>
-      schema.test("dateEntiereObligatoire", (date, error) =>
-        !date.jour && !date.mois && !date.annee ? erreurSurDateEntiere(messagesErreur.DATE_OBLIGATOIRE, error.path) : true
-      )
-    );
+    return gestionObligation({
+      schema: schema,
+      obligatoire: schemaParams.obligatoire,
+      actionObligation: () =>
+        schema.test("dateEntiereObligatoire", (date, error) =>
+          !date.jour && !date.mois && !date.annee ? erreurSurDateEntiere(messagesErreur.DATE_OBLIGATOIRE, error.path) : true
+        ),
+      conditionOu: schemaParams.operateurConditionsOu,
+      interditSeul: schemaParams.interditSeul
+    });
   },
 
   dateIncomplete: (schemaParams: Omit<ISchemaCommunParams, "libelle"> & { bloquerDateFuture?: boolean }) => {
@@ -286,17 +370,21 @@ const SchemaValidation = {
             })
           : true;
       });
-
-    return gestionObligation(schema, schemaParams.obligatoire, () =>
-      schema.test("anneeToujoursObligatoire", (date, error) =>
-        !date.annee
-          ? error.createError({
-              path: `${error.path}.annee`,
-              message: messagesErreur.DATE_OBLIGATOIRE
-            })
-          : true
-      )
-    );
+    return gestionObligation({
+      schema: schema,
+      obligatoire: schemaParams.obligatoire,
+      actionObligation: () =>
+        schema.test("anneeToujoursObligatoire", (date, error) =>
+          !date.annee
+            ? error.createError({
+                path: `${error.path}.annee`,
+                message: messagesErreur.DATE_OBLIGATOIRE
+              })
+            : true
+        ),
+      conditionOu: schemaParams.operateurConditionsOu,
+      interditSeul: schemaParams.interditSeul
+    });
   },
 
   annee: (schemaParams: ISchemaCommunParams) =>
@@ -314,16 +402,21 @@ const SchemaValidation = {
       nomPartie2: Yup.string()
     });
 
-    return gestionObligation(schema, schemaParams.obligatoire, () =>
-      schema.test("nomSecableObligatoire", ({ nom }, error) =>
-        !nom
-          ? error.createError({
-              path: `${error.path}.nom`,
-              message: messagesErreur.CHAMP_OBLIGATOIRE
-            })
-          : true
-      )
-    ) as Yup.ObjectSchema<TNomSecableChamp>;
+    return gestionObligation({
+      schema: schema,
+      obligatoire: schemaParams.obligatoire,
+      actionObligation: () =>
+        schema.test("nomSecableObligatoire", ({ nom }, error) =>
+          !nom
+            ? error.createError({
+                path: `${error.path}.nom`,
+                message: messagesErreur.CHAMP_OBLIGATOIRE
+              })
+            : true
+        ),
+      conditionOu: schemaParams.operateurConditionsOu,
+      interditSeul: schemaParams.interditSeul
+    }) as Yup.ObjectSchema<TNomSecableChamp>;
   },
 
   prenoms: (prefix: string) => {
@@ -361,8 +454,16 @@ const SchemaValidation = {
       });
 
       if (index === 0) {
-        schemaAnnee = gestionObligation(schemaAnnee, obligatoire, () => schemaAnnee.required(messagesErreur.CHAMP_OBLIGATOIRE));
-        schemaNumero = gestionObligation(schemaNumero, obligatoire, () => schemaNumero.required(messagesErreur.CHAMP_OBLIGATOIRE));
+        schemaAnnee = gestionObligation({
+          schema: schemaAnnee,
+          obligatoire: obligatoire,
+          actionObligation: () => schemaAnnee.required(messagesErreur.CHAMP_OBLIGATOIRE)
+        });
+        schemaNumero = gestionObligation({
+          schema: schemaNumero,
+          obligatoire: obligatoire,
+          actionObligation: () => schemaNumero.required(messagesErreur.CHAMP_OBLIGATOIRE)
+        });
       }
 
       const numerosSuivants = Array.from({ length: tailleMax - 1 - index }).map((_, idx) => `$${prefix}${idx + index + 2}`);

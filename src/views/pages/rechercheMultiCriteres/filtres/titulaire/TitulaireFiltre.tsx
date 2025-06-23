@@ -13,7 +13,7 @@ import { ComponentFiltreProps, FormikComponentProps, reinitialiserChamps, withNa
 import { connect } from "formik";
 import React from "react";
 import * as Yup from "yup";
-import { AsterisqueRecherche, CaracteresAutorisesRecherche } from "../../../../../ressources/Regex";
+import { ASTERISQUE_PRECEDEE_DEUX, CARACTERES_POST_ASTERISQUE, CaracteresAutorisesRecherche } from "../../../../../ressources/Regex";
 import "../scss/FiltreRMC.scss";
 import { BoutonsRappelTitulaire } from "./BoutonsRappelTitulaire";
 
@@ -36,14 +36,19 @@ export const TitulaireValidationSchema = Yup.object()
   .shape({
     [NOM]: Yup.string()
       .matches(CaracteresAutorisesRecherche, CARACTERES_AUTORISES_MESSAGE)
-      .matches(AsterisqueRecherche, ASTERISQUE_MESSAGE),
+      .matches(ASTERISQUE_PRECEDEE_DEUX, ASTERISQUE_MESSAGE)
+      .matches(CARACTERES_POST_ASTERISQUE, ASTERISQUE_MESSAGE),
+
     [PRENOM]: Yup.string()
       .matches(CaracteresAutorisesRecherche, CARACTERES_AUTORISES_MESSAGE)
-      .matches(AsterisqueRecherche, ASTERISQUE_MESSAGE),
+      .matches(ASTERISQUE_PRECEDEE_DEUX, ASTERISQUE_MESSAGE)
+      .matches(CARACTERES_POST_ASTERISQUE, ASTERISQUE_MESSAGE),
+
     [DATE_NAISSANCE]: DateValidationSchema,
     [PAYS_NAISSANCE]: Yup.string()
       .matches(CaracteresAutorisesRecherche, CARACTERES_AUTORISES_MESSAGE)
-      .matches(AsterisqueRecherche, ASTERISQUE_MESSAGE)
+      .matches(ASTERISQUE_PRECEDEE_DEUX, ASTERISQUE_MESSAGE)
+      .matches(CARACTERES_POST_ASTERISQUE, ASTERISQUE_MESSAGE)
   })
   .test("prenomInvalide", function (value, error) {
     const nom = value[NOM] as string;

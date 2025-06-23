@@ -1,7 +1,7 @@
 import { idFicheActe1 } from "@mock/data/ficheActe";
 import { idFichePacs } from "@mock/data/fichePACS";
 import { userDroitConsulterPerimetreTousRegistres } from "@mock/data/mockConnectedUserAvecDroit";
-import { titreForm } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionForm";
+import { titreForm } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscription";
 import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import * as TableauPaginationConstantes from "@widget/tableau/TableauRece/TableauPaginationConstantes";

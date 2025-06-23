@@ -6,9 +6,15 @@ export const CaracteresAutorisesAvecVirgule = new RegExp(/^[0-9a-zA-ZÂÄÀÊË�
 // Formulaire de recherche (RMC)
 export const CaracteresAutorisesRecherche = new RegExp(/^[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .*-]+$/);
 
-export const AsterisqueRecherche = new RegExp(
-  /^([0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .-]|[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .-]{2,}\*?)$/
+export const ASTERISQUE_PRECEDEE_DEUX = new RegExp(
+  /^(?![^*]{0,1}\*)[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .-]*(?<!\s)\*?[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .-]*$/
 );
+
+export const ASTERISQUE_PRECEDEE_UN = new RegExp(
+  /^(?!\*)([0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .-]*(?<!\s)\*?[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .-]*)$/
+);
+
+export const CARACTERES_POST_ASTERISQUE = new RegExp(/^([0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .-]+)\*?$/);
 
 export const NumeroInscription = new RegExp(/^\d{4}(-\d+)?$/);
 
