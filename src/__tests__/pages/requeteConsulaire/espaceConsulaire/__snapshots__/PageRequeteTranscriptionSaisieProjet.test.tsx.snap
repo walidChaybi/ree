@@ -773,7 +773,7 @@ pays
                             </span>
                           </label>
                           <div
-                            class="flex flex-nowrap gap-1"
+                            class="flex flex-wrap gap-2"
                           >
                             <input
                               class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
@@ -807,34 +807,36 @@ pays
                               value="1963"
                             />
                             <span
-                              class="mx-1 text-xl"
+                              class="mx-2 text-xl"
                             >
                               à
                             </span>
-                            <input
-                              class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                              id="titulaire.dateNaissance.heure"
-                              maxlength="2"
-                              placeholder="HH"
-                              value=""
-                            />
-                            <span
-                              class="mx-1 text-xl"
-                            >
-                              h
-                            </span>
-                            <input
-                              class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                              id="titulaire.dateNaissance.minute"
-                              maxlength="2"
-                              placeholder="MN"
-                              value=""
-                            />
-                            <span
-                              class="mx-1 text-xl"
-                            >
-                              min
-                            </span>
+                            <div>
+                              <input
+                                class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="titulaire.dateNaissance.heure"
+                                maxlength="2"
+                                placeholder="HH"
+                                value=""
+                              />
+                              <span
+                                class="mx-2 text-xl"
+                              >
+                                h
+                              </span>
+                              <input
+                                class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="titulaire.dateNaissance.minute"
+                                maxlength="2"
+                                placeholder="MN"
+                                value=""
+                              />
+                              <span
+                                class="mx-2 text-xl"
+                              >
+                                min
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -1133,7 +1135,7 @@ pays
                                 Date de naissance
                               </label>
                               <div
-                                class="flex flex-nowrap gap-1"
+                                class="flex flex-wrap gap-2"
                               >
                                 <input
                                   class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
@@ -1748,7 +1750,7 @@ pays
                                 Date de naissance
                               </label>
                               <div
-                                class="flex flex-nowrap gap-1"
+                                class="flex flex-wrap gap-2"
                               >
                                 <input
                                   class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
@@ -2276,7 +2278,7 @@ pays
                           Date d'enregistrement
                         </label>
                         <div
-                          class="flex flex-nowrap gap-1"
+                          class="flex flex-wrap gap-2"
                         >
                           <input
                             class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"

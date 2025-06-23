@@ -117,7 +117,7 @@ const ChampDate: React.FC<TChampDateProps> = ({
           </span>
         )}
       </label>
-      <div className="flex flex-nowrap gap-1">
+      <div className="flex flex-wrap gap-2">
         <input
           {...props}
           id={champsDate.jour}
@@ -202,70 +202,73 @@ const ChampDate: React.FC<TChampDateProps> = ({
 
         {avecHeure && (
           <>
-            <span className="mx-1 text-xl">{"à"}</span>
-            <input
-              {...props}
-              id={champsDate.heure}
-              ref={refHeure}
-              className={`border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${metaHeure.error && erreurs.length ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
-              placeholder="HH"
-              maxLength={2}
-              value={fieldHeure.value}
-              onChange={event => {
-                event.target.value = event.target.value.replace(/\D/, "");
-                fieldHeure.onChange(event);
-              }}
-              onBlur={() => {
-                const heure = String(fieldHeure.value ?? "");
+            <span className="mx-2 text-xl">{"à"}</span>
+            <div>
+              <input
+                {...props}
+                id={champsDate.heure}
+                ref={refHeure}
+                className={`border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${metaHeure.error && erreurs.length ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
+                placeholder="HH"
+                maxLength={2}
+                value={fieldHeure.value}
+                onChange={event => {
+                  event.target.value = event.target.value.replace(/\D/, "");
+                  fieldHeure.onChange(event);
+                }}
+                onBlur={() => {
+                  const heure = String(fieldHeure.value ?? "");
 
-                let valeurHeure = "";
-                switch (true) {
-                  case heure.length === 1:
-                    valeurHeure = `0${heure}`;
-                    break;
-                  case !desactiverCorrectionAutomatique && Number(heure) > 23:
-                    valeurHeure = "23";
-                    break;
-                  default:
-                    valeurHeure = heure;
-                    break;
-                }
+                  let valeurHeure = "";
+                  switch (true) {
+                    case heure.length === 1:
+                      valeurHeure = `0${heure}`;
+                      break;
+                    case !desactiverCorrectionAutomatique && Number(heure) > 23:
+                      valeurHeure = "23";
+                      break;
+                    default:
+                      valeurHeure = heure;
+                      break;
+                  }
 
-                helpersHeure.setValue(valeurHeure);
-              }}
-            />
-            <span className="mx-1 text-xl">{"h"}</span>
-            <input
-              {...props}
-              id={champsDate.minute}
-              ref={refMinute}
-              className={`border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${metaMinute.error && erreurs.length ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
-              placeholder="MN"
-              maxLength={2}
-              value={fieldMinute.value}
-              onChange={event => {
-                event.target.value = event.target.value.replace(/\D/, "");
-                fieldMinute.onChange(event);
-              }}
-              onBlur={() => {
-                const minute = String(fieldMinute.value ?? "");
+                  helpersHeure.setValue(valeurHeure);
+                }}
+              />
 
-                let valeurMinute = "";
-                switch (true) {
-                  case minute.length === 1:
-                    valeurMinute = `0${minute}`;
-                    break;
-                  case !desactiverCorrectionAutomatique && Number(minute) > 60:
-                    valeurMinute = "59";
-                    break;
-                  default:
-                    valeurMinute = minute;
-                    break;
-                }
-                helpersMinute.setValue(valeurMinute);
-              }}
-            />
-            <span className="mx-1 text-xl">{"min"}</span>
+              <span className="mx-2 text-xl">{"h"}</span>
+              <input
+                {...props}
+                id={champsDate.minute}
+                ref={refMinute}
+                className={`border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${metaMinute.error && erreurs.length ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
+                placeholder="MN"
+                maxLength={2}
+                value={fieldMinute.value}
+                onChange={event => {
+                  event.target.value = event.target.value.replace(/\D/, "");
+                  fieldMinute.onChange(event);
+                }}
+                onBlur={() => {
+                  const minute = String(fieldMinute.value ?? "");
+
+                  let valeurMinute = "";
+                  switch (true) {
+                    case minute.length === 1:
+                      valeurMinute = `0${minute}`;
+                      break;
+                    case !desactiverCorrectionAutomatique && Number(minute) > 59:
+                      valeurMinute = "59";
+                      break;
+                    default:
+                      valeurMinute = minute;
+                      break;
+                  }
+                  helpersMinute.setValue(valeurMinute);
+                }}
+              />
+              <span className="mx-2 text-xl">{"min"}</span>
+            </div>
           </>
         )}
         {avecBoutonReinitialiser && (
