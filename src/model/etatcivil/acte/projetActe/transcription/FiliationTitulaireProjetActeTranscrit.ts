@@ -8,13 +8,13 @@ export interface IFiliationTitulaireProjetActeTranscritDto {
   ordre: number;
   nom: string;
   prenoms: string[];
-  sexe: keyof typeof ESexe | null;
-  naissance: IEvenementProjetActeTranscritDto | null;
-  age: number | null;
-  sansProfession: boolean | null;
-  profession: string | null;
-  domicile: IAdresse | null;
-  domicileCommun: boolean | null;
+  sexe?: keyof typeof ESexe;
+  naissance?: IEvenementProjetActeTranscritDto;
+  age?: number;
+  sansProfession: boolean;
+  profession?: string;
+  domicile?: IAdresse;
+  domicileCommun?: boolean;
 }
 
 export interface IFiliationsTitulaireProjetActeTranscrit {
@@ -27,16 +27,16 @@ export class FiliationTitulaireProjetActeTranscrit {
 
   private constructor(
     public readonly lienParente: keyof typeof LienParente,
+    public readonly sansProfession: boolean,
     public readonly ordre: number,
     public readonly nom: string,
     public readonly prenoms: string[],
-    public readonly sexe: keyof typeof ESexe | null,
-    public readonly naissance: EvenementProjetActeTranscrit | null,
-    public readonly age: number | null,
-    public readonly sansProfession: boolean | null,
-    public readonly profession: string | null,
-    public readonly domicile: IAdresse | null,
-    public readonly domicileCommun: boolean | null
+    public readonly sexe?: keyof typeof ESexe,
+    public readonly naissance?: EvenementProjetActeTranscrit,
+    public readonly domicile?: IAdresse,
+    public readonly age?: number,
+    public readonly profession?: string,
+    public readonly domicileCommun?: boolean
   ) {}
 
   public static readonly depuisDto = (
@@ -59,15 +59,15 @@ export class FiliationTitulaireProjetActeTranscrit {
 
     return new FiliationTitulaireProjetActeTranscrit(
       filiation.lienParente,
+      filiation.sansProfession,
       filiation.ordre,
       filiation.nom,
       filiation.prenoms,
       filiation.sexe,
       filiation.naissance && EvenementProjetActeTranscrit.depuisDto(filiation.naissance),
-      filiation.age,
-      filiation.sansProfession,
-      filiation.profession,
       filiation.domicile,
+      filiation.age,
+      filiation.profession,
       filiation.domicileCommun
     );
   };

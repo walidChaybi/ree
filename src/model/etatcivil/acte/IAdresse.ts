@@ -1,7 +1,7 @@
 export interface IAdresse {
   voie?: string;
-  ville: string;
+  ville?: string;
   arrondissement?: string;
-  region: string;
-  pays: string;
+  region?: string;
+  pays?: string;
 }

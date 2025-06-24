@@ -1,27 +1,38 @@
 import { PrenomsForm } from "@model/form/commun/PrenomsForm";
-import { IParentTranscription } from "@model/requete/IParentsRequeteTranscription";
+import { IParentTranscriptionForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Formik } from "formik";
 import { describe, expect, test } from "vitest";
 import BlocParent from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisieProjet/BlocParent";
 
 describe("BlocParents", () => {
-  const parent2: IParentTranscription = {
-    sexe: "Feminin",
+  const parent2: IParentTranscriptionForm = {
+    sexe: "FEMININ",
     nom: "",
     prenomsChemin: PrenomsForm.valeursInitiales(),
-    dateNaissance: undefined,
+    profession: "",
+    dateNaissance: {
+      annee: "",
+      mois: "",
+      jour: ""
+    },
     lieuNaissance: { typeLieu: "" },
     sansProfession: false,
     domicile: { typeLieu: "" },
     renseignerAge: false,
     age: ""
   };
-  const parent1: IParentTranscription = {
-    sexe: "Masculin",
+
+  const parent1: IParentTranscriptionForm = {
+    sexe: "MASCULIN",
     nom: "",
     prenomsChemin: PrenomsForm.valeursInitiales(),
-    dateNaissance: undefined,
+    dateNaissance: {
+      annee: "",
+      mois: "",
+      jour: ""
+    },
+    profession: "",
     lieuNaissance: { typeLieu: "" },
     sansProfession: false,
     domicile: { typeLieu: "" },
@@ -52,8 +63,8 @@ describe("BlocParents", () => {
     test("doit afficher les formulaires des deux parents avec les champs appropriés", async () => {
       renderComponent();
       await waitFor(() => {
-        expect(screen.getByText("Parent 1")).toBeDefined();
-        expect(screen.getByText("Parent 2")).toBeDefined();
+        expect(screen.getByText("Père (Parent 1)")).toBeDefined();
+        expect(screen.getByText("Mère (Parent 2)")).toBeDefined();
       });
 
       const dateFields1 = {

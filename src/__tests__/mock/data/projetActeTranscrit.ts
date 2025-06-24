@@ -1,3 +1,4 @@
+import { declarantTranscritDtoVide } from "@model/etatcivil/acte/projetActe/transcription/DeclarantProjetActeTranscrit";
 import {
   IProjetActeTranscritDto,
   IProjetActeTranscritPatchDto,
@@ -38,7 +39,7 @@ export const projetActeNaissanceDto: IProjetActeTranscritDto = {
       prenoms: ["Michel"],
       sexe: "MASCULIN",
       naissance: {
-        id: null,
+        id: undefined,
         annee: 1966,
         ville: "Nantes",
         neDansLeMariage: true,
@@ -114,8 +115,8 @@ export const projetActeNaissanceDto: IProjetActeTranscritDto = {
     qualite: "le copain",
     adresseDomicile: { ville: "Tunis", pays: "Tunisie", region: "", arrondissement: "" },
     sansProfession: false,
-    profession: null,
-    complementDeclarant: null
+    profession: undefined,
+    complementDeclarant: undefined
   },
   formuleFinale: {
     identiteDemandeur: "PARENT_1",
@@ -124,20 +125,22 @@ export const projetActeNaissanceDto: IProjetActeTranscritDto = {
     identiteTransmetteur: "LE_REQUERANT",
     nomDemandeur: "nom formule finale",
     prenomDemandeur: "Rachid,Antoine",
-    qualiteDemandeur: null,
-    legalisation: null,
-    autresPieces: null,
-    nomTransmetteur: null
+    qualiteDemandeur: undefined,
+    legalisation: undefined,
+    autresPieces: undefined,
+    nomTransmetteur: undefined
   },
   acteEtranger: {
     typeActeEtranger: "ACTE_DRESSE",
     cadreNaissance: "NE_DANS_LE_MARIAGE",
-    texteEnonciations: null,
-    adresseEnregistrement: null,
+    texteEnonciations: undefined,
+    adresseEnregistrement: {
+      region: ""
+    },
     redacteur: "redacteur acte",
     reference: "referenceComplement acte",
-    complement: null,
-    mentions: null
+    complement: undefined,
+    mentions: undefined
   },
   visibiliteArchiviste: "",
   mentions: []
@@ -147,7 +150,7 @@ export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
   acteEtranger: {
     texteEnonciations: "tewt tewxt",
     typeActeEtranger: "ACTE_DRESSE",
-    infoTypeActe: "",
+    infoTypeActe: undefined,
     cadreNaissance: "NE_DANS_LE_MARIAGE",
     jourEnregistrement: "15",
     moisEnregistrement: "12",
@@ -160,34 +163,22 @@ export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
   },
   formuleFinale: {
     identiteDemandeur: "PARENT_1",
-    nomDemandeur: "",
-    prenomDemandeur: null,
-    qualiteDemandeur: "",
+    nomDemandeur: undefined,
+    prenomDemandeur: undefined,
+    qualiteDemandeur: undefined,
     pieceProduite: "COPIES",
     legalisation: "LEGALISATION",
     autresPieces: "passeport",
     modeDepot: "REMISE",
     identiteTransmetteur: "LE_REQUERANT",
-    nomTransmetteur: null
+    nomTransmetteur: undefined
   },
-  declarant: {
-    identiteDeclarant: "TIERS",
-    adresseDomicile: null,
-    age: null,
-    complementDeclarant: null,
-    nom: "",
-    prenoms: [],
-    profession: "",
-    qualite: "",
-    sansProfession: null,
-    sexe: "INCONNU"
-  },
+  declarant: declarantTranscritDtoVide,
   titulaires: [
     {
-      domicile: null,
       filiations: [
         {
-          age: null,
+          age: undefined,
           domicile: {
             pays: "France",
             arrondissement: "13",
@@ -195,44 +186,42 @@ export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
             region: "departement",
             voie: "11 place du boulodrôme"
           },
-          domicileCommun: null,
           lienParente: LienParente.PARENT,
           naissance: {
             annee: 2000,
-            departement: null,
-            heure: null,
+            arrondissement: undefined,
+            departement: undefined,
+            heure: undefined,
             jour: 10,
-            minute: null,
+            minute: undefined,
             mois: 10,
-            neDansLeMariage: null,
-            pays: null,
-            arrondissement: null,
-            voie: null,
-            region: null,
-            ville: null
+            pays: undefined,
+            voie: undefined,
+            region: undefined,
+            ville: undefined
           },
           nom: "Greenwald",
           ordre: 1,
           prenoms: ["cassandra"],
-          profession: "",
+          profession: undefined,
           sansProfession: true,
-          sexe: "MASCULIN"
+          sexe: "MASCULIN",
+          domicileCommun: undefined
         },
         {
           age: 34,
-          domicile: null,
+          domicile: undefined,
           domicileCommun: true,
           lienParente: LienParente.PARENT,
           naissance: {
-            annee: null,
+            annee: 1966,
             departement: "loire atlantique",
-            heure: null,
-            jour: null,
-            minute: null,
-            mois: null,
-            neDansLeMariage: null,
+            heure: undefined,
+            jour: undefined,
+            minute: undefined,
+            mois: undefined,
             pays: "France",
-            arrondissement: null,
+            arrondissement: undefined,
             voie: "hopital chu nantes",
             region: "loire atlantique",
             ville: "Nantes"
@@ -247,14 +236,12 @@ export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
       ],
       naissance: {
         annee: 2024,
-        departement: null,
-        heure: null,
+        heure: undefined,
         jour: 3,
-        minute: null,
+        minute: undefined,
         mois: 12,
         neDansLeMariage: true,
         pays: "Chine",
-        arrondissement: null,
         voie: "Place du riz",
         region: "China",
         ville: "Bejin"
@@ -274,14 +261,12 @@ export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
   nature: "NAISSANCE",
   evenement: {
     annee: 2024,
-    departement: null,
-    heure: null,
+    heure: undefined,
     jour: 3,
-    minute: null,
+    minute: undefined,
     mois: 12,
     neDansLeMariage: true,
     pays: "Chine",
-    arrondissement: null,
     voie: "Place du riz",
     region: "China",
     ville: "Bejin"
@@ -296,7 +281,7 @@ export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
   acteEtranger: {
     texteEnonciations: "tewt tewxt",
     typeActeEtranger: "ACTE_DRESSE",
-    infoTypeActe: "",
+    infoTypeActe: undefined,
     cadreNaissance: "NE_DANS_LE_MARIAGE",
     jourEnregistrement: "15",
     moisEnregistrement: "12",
@@ -309,34 +294,22 @@ export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
   },
   formuleFinale: {
     identiteDemandeur: "PARENT_1",
-    nomDemandeur: "",
-    prenomDemandeur: null,
-    qualiteDemandeur: "",
+    nomDemandeur: undefined,
+    prenomDemandeur: undefined,
+    qualiteDemandeur: undefined,
     pieceProduite: "COPIES",
     legalisation: "LEGALISATION",
     autresPieces: "passeport",
     modeDepot: "REMISE",
     identiteTransmetteur: "LE_REQUERANT",
-    nomTransmetteur: null
+    nomTransmetteur: undefined
   },
-  declarant: {
-    identiteDeclarant: "TIERS",
-    adresseDomicile: null,
-    age: null,
-    complementDeclarant: null,
-    nom: "",
-    prenoms: [],
-    profession: "",
-    qualite: "",
-    sansProfession: null,
-    sexe: "INCONNU"
-  },
+  declarant: declarantTranscritDtoVide,
   titulaires: [
     {
-      domicile: null,
       filiations: [
         {
-          age: null,
+          age: undefined,
           domicile: {
             pays: "France",
             arrondissement: "13",
@@ -344,44 +317,42 @@ export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
             region: "departement",
             voie: "11 place du boulodrôme"
           },
-          domicileCommun: null,
+          domicileCommun: undefined,
           lienParente: LienParente.PARENT,
           naissance: {
             annee: 2000,
-            departement: null,
-            heure: null,
+            departement: undefined,
+            heure: undefined,
             jour: 10,
-            minute: null,
+            minute: undefined,
             mois: 10,
-            neDansLeMariage: null,
-            pays: null,
-            arrondissement: null,
-            voie: null,
-            region: null,
-            ville: null
+            pays: undefined,
+            arrondissement: undefined,
+            voie: undefined,
+            region: undefined,
+            ville: undefined
           },
           nom: "Greenwald",
           ordre: 1,
           prenoms: ["cassandra"],
-          profession: "",
+          profession: undefined,
           sansProfession: true,
           sexe: "MASCULIN"
         },
         {
           age: 34,
-          domicile: null,
+          domicile: undefined,
           domicileCommun: true,
           lienParente: LienParente.PARENT,
           naissance: {
-            annee: null,
+            annee: 1966,
             departement: "loire atlantique",
-            heure: null,
-            jour: null,
-            minute: null,
-            mois: null,
-            neDansLeMariage: null,
+            heure: undefined,
+            jour: undefined,
+            minute: undefined,
+            mois: undefined,
             pays: "France",
-            arrondissement: null,
+            arrondissement: undefined,
             voie: "hopital chu nantes",
             region: "loire atlantique",
             ville: "Nantes"
@@ -396,14 +367,12 @@ export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
       ],
       naissance: {
         annee: 2024,
-        departement: null,
-        heure: null,
+        heure: undefined,
         jour: 3,
-        minute: null,
+        minute: undefined,
         mois: 12,
         neDansLeMariage: true,
         pays: "Chine",
-        arrondissement: null,
         voie: "Place du riz",
         region: "China",
         ville: "Bejin"
@@ -424,14 +393,12 @@ export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
   evenement: {
     id: "61905dd2-5451-4360-94de-17fada9685c8",
     annee: 2024,
-    departement: null,
-    heure: null,
+    heure: undefined,
     jour: 3,
-    minute: null,
+    minute: undefined,
     mois: 12,
     neDansLeMariage: true,
     pays: "Chine",
-    arrondissement: null,
     voie: "Place du riz",
     region: "China",
     ville: "Bejin"

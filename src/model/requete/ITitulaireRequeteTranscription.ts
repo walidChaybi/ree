@@ -4,7 +4,7 @@ import { TitulaireProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/t
 import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { IDateForm } from "@model/form/commun/DateForm";
 import { PrenomsForm, TPrenomsForm } from "@model/form/commun/PrenomsForm";
-import { ITitulaireTranscription } from "@model/form/creation/transcription/IProjetActeTranscritForm";
+import { ITitulaireTranscriptionForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { INationalite } from "./INationalite";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
 import { ITitulaireRequete } from "./ITitulaireRequete";
@@ -37,7 +37,7 @@ export const TitulaireRequeteTranscription = {
     titulaireRequete?: ITitulaireRequeteTranscription,
     titulaireProjetActe?: TitulaireProjetActeTranscrit,
     evenement?: EvenementProjetActeTranscrit
-  ): ITitulaireTranscription => {
+  ): ITitulaireTranscriptionForm => {
     return {
       nomActeEtranger: titulaireProjetActe?.nomActeEtranger ?? titulaireRequete?.nomNaissance ?? "",
       nomRetenuOEC: titulaireProjetActe?.nom ?? titulaireProjetActe?.nom ?? "",

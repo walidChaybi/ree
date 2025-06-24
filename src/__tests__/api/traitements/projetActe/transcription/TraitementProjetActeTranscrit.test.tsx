@@ -5,6 +5,7 @@ import { CONFIG_PATCH_STATUT_REQUETE_CREATION } from "@api/configurations/requet
 import TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT from "@api/traitements/projetActe/transcription/TraitementEnregistrerProjetActeTranscrit";
 import { MockApi } from "@mock/appelsApi/MockApi";
 import { projetActe, projetActeNaissanceDto } from "@mock/data/projetActeTranscrit";
+import { PrenomsForm } from "@model/form/commun/PrenomsForm";
 import {
   IProjetActeTranscritForm,
   ProjetActeNaissanceTranscriptionForm
@@ -29,7 +30,7 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
         nomPartie2: "prenomTrois",
         secable: true
       },
-      prenomsChemin: undefined,
+      prenomsChemin: PrenomsForm.valeursInitiales(),
       sexe: "FEMININ",
       dateNaissance: {
         jour: "19",
@@ -46,9 +47,9 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
     declarant: {
       identite: "TIERS",
       nom: "LeTiers",
-      prenomsChemin: undefined,
+      prenomsChemin: PrenomsForm.valeursInitiales(),
       sexe: "MASCULIN",
-      age: 45,
+      age: "45",
       qualite: "La grand frère",
       profession: "plombier",
       sansProfession: false,
@@ -63,12 +64,9 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
     },
     parents: {
       parent1: {
-        id: "c7e0e767-438c-4e42-83c1-e0c74d6bbd9d",
-        position: 1,
         sexe: "MASCULIN",
-        nomNaissance: "Patamob",
         nom: "Patamob",
-        prenomsChemin: undefined,
+        prenomsChemin: PrenomsForm.valeursInitiales(),
         dateNaissance: {
           jour: "",
           mois: "",
@@ -98,12 +96,9 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
         age: "34"
       },
       parent2: {
-        id: "",
-        position: 0,
         sexe: "FEMININ",
-        nomNaissance: "",
         nom: "Patamob",
-        prenomsChemin: undefined,
+        prenomsChemin: PrenomsForm.valeursInitiales(),
         dateNaissance: {
           jour: "10",
           mois: "10",
@@ -131,7 +126,8 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
         },
         renseignerAge: false,
         age: ""
-      }
+      },
+      domicileCommun: false
     },
     acteEtranger: {
       typeActe: "AUTRE",
@@ -144,7 +140,8 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
       },
       lieuEnregistrement: {
         ville: "Pekin",
-        pays: "Chine"
+        pays: "Chine",
+        etatProvince: ""
       },
       redacteur: "officier"
     },
@@ -154,7 +151,7 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
     formuleFinale: {
       identiteDemandeur: "TIERS",
       nom: "nomDemandeur",
-      prenomsChemin: undefined,
+      prenomsChemin: PrenomsForm.valeursInitiales(),
       qualite: "Agent",
       pieceProduite: "COPIE",
       autresPieces: "",

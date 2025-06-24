@@ -10,16 +10,16 @@ export enum ETypeActeEtranger {
 }
 
 export interface IActeEtrangerDto {
-  texteEnonciations: string | null;
+  texteEnonciations?: string;
   typeActeEtranger: keyof typeof ETypeActeEtranger;
-  infoTypeActe?: string | null;
-  cadreNaissance: string | null;
-  jourEnregistrement?: string | null;
-  moisEnregistrement?: string | null;
-  anneeEnregistrement?: string | null;
-  adresseEnregistrement: IAdresse | null;
-  redacteur: string | null;
-  reference: string | null;
-  complement: string | null;
-  mentions: string | null;
+  infoTypeActe?: string;
+  cadreNaissance?: string;
+  jourEnregistrement?: string;
+  moisEnregistrement?: string;
+  anneeEnregistrement?: string;
+  adresseEnregistrement: IAdresse;
+  redacteur?: string;
+  reference?: string;
+  complement?: string;
+  mentions?: string;
 }

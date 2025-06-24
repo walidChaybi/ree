@@ -1,10 +1,10 @@
-import { IActeEtrangerTranscription } from "@model/form/creation/transcription/IProjetActeTranscritForm";
+import { IActeEtrangerTranscriptionForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Formik } from "formik";
 import { describe, expect, test } from "vitest";
 import BlocActeEtranger from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisieProjet/BlocActeEtranger";
 
-const renderComponent = (valeursInitiales: IActeEtrangerTranscription) => {
+const renderComponent = (valeursInitiales: IActeEtrangerTranscriptionForm) => {
   return render(
     <Formik
       initialValues={{ acteEtranger: valeursInitiales }}
@@ -16,7 +16,7 @@ const renderComponent = (valeursInitiales: IActeEtrangerTranscription) => {
 };
 
 describe("BlocActeEtranger", () => {
-  const valeursInitiales: IActeEtrangerTranscription = {
+  const valeursInitiales: IActeEtrangerTranscriptionForm = {
     typeActe: "ACTE_DRESSE",
     infoTypeActe: "",
     dateEnregistrement: { jour: "", mois: "", annee: "" },

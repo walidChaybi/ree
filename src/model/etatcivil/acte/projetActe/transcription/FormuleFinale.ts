@@ -18,15 +18,15 @@ export enum EIdentiteTransmetteur {
 
 export interface IFormuleFinaleDto {
   identiteDemandeur: keyof typeof EIdentiteDemandeur;
-  nomDemandeur: string | null;
-  prenomDemandeur: string | null;
-  qualiteDemandeur: string | null;
+  nomDemandeur?: string;
+  prenomDemandeur?: string;
+  qualiteDemandeur?: string;
   pieceProduite: keyof typeof EPieceProduite;
-  legalisation: keyof typeof ELegalisationApostille | null;
-  autresPieces: string | null;
+  legalisation?: keyof typeof ELegalisationApostille;
+  autresPieces?: string;
   modeDepot: keyof typeof EModeDepot;
   identiteTransmetteur: keyof typeof EIdentiteTransmetteur;
-  nomTransmetteur: string | null;
+  nomTransmetteur?: string;
 }
 
 export class FormuleFinale {
@@ -38,16 +38,16 @@ export class FormuleFinale {
   ];
 
   private constructor(
-    public readonly identiteDemandeur: keyof typeof EIdentiteDemandeur,
-    public readonly nomDemandeur: string | null,
-    public readonly prenomDemandeur: string | null,
-    public readonly qualiteDemandeur: string | null,
     public readonly pieceProduite: keyof typeof EPieceProduite,
-    public readonly legalisation: keyof typeof ELegalisationApostille | null,
-    public readonly autresPieces: string | null,
-    public readonly modeDepot: keyof typeof EModeDepot,
+    public readonly identiteDemandeur: keyof typeof EIdentiteDemandeur,
     public readonly identiteTransmetteur: keyof typeof EIdentiteTransmetteur,
-    public readonly nomTransmetteur: string | null
+    public readonly modeDepot: keyof typeof EModeDepot,
+    public readonly nomDemandeur?: string,
+    public readonly prenomDemandeur?: string,
+    public readonly qualiteDemandeur?: string,
+    public readonly legalisation?: keyof typeof ELegalisationApostille,
+    public readonly autresPieces?: string,
+    public readonly nomTransmetteur?: string
   ) {}
 
   public static readonly depuisDto = (formuleFinale: IFormuleFinaleDto): FormuleFinale | null => {
@@ -78,15 +78,15 @@ export class FormuleFinale {
     }
 
     return new FormuleFinale(
+      formuleFinale.pieceProduite,
       formuleFinale.identiteDemandeur,
+      formuleFinale.identiteTransmetteur,
+      formuleFinale.modeDepot,
       formuleFinale.nomDemandeur,
       formuleFinale.prenomDemandeur,
       formuleFinale.qualiteDemandeur,
-      formuleFinale.pieceProduite,
       formuleFinale.legalisation,
       formuleFinale.autresPieces,
-      formuleFinale.modeDepot,
-      formuleFinale.identiteTransmetteur,
       formuleFinale.nomTransmetteur
     );
   };

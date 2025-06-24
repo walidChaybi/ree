@@ -13,26 +13,26 @@ export interface IDeclarantProjetActeTranscritDto {
   identiteDeclarant: keyof typeof EIdentiteDeclarant;
   sexe: keyof typeof ESexe;
   prenoms: IPrenomOrdonneDto[];
-  nom: string | null;
-  age: number | null;
-  qualite: string | null;
-  sansProfession: boolean | null;
-  profession: string | null;
-  adresseDomicile: IAdresse | null;
-  complementDeclarant: string | null;
+  nom?: string;
+  age?: number;
+  qualite?: string;
+  sansProfession?: boolean;
+  profession?: string;
+  adresseDomicile?: IAdresse;
+  complementDeclarant?: string;
 }
 
 export const declarantTranscritDtoVide: IDeclarantProjetActeTranscritDto = {
   identiteDeclarant: "PERE",
-  nom: null,
+  nom: undefined,
   prenoms: [],
   sexe: "INCONNU",
-  age: null,
-  qualite: null,
-  profession: null,
-  sansProfession: null,
-  adresseDomicile: null,
-  complementDeclarant: null
+  age: undefined,
+  qualite: undefined,
+  profession: undefined,
+  sansProfession: undefined,
+  adresseDomicile: undefined,
+  complementDeclarant: undefined
 };
 
 export class DeclarantProjetActeTranscrit {
@@ -42,13 +42,13 @@ export class DeclarantProjetActeTranscrit {
     public readonly identiteDeclarant: keyof typeof EIdentiteDeclarant,
     public readonly sexe: keyof typeof ESexe,
     public readonly prenoms: IPrenomOrdonneDto[],
-    public readonly nom: string | null,
-    public readonly age: number | null,
-    public readonly qualite: string | null,
-    public readonly sansProfession: boolean | null,
-    public readonly profession: string | null,
-    public readonly adresseDomicile: IAdresse | null,
-    public readonly complementDeclarant: string | null
+    public readonly nom?: string,
+    public readonly age?: number,
+    public readonly qualite?: string,
+    public readonly sansProfession?: boolean,
+    public readonly profession?: string,
+    public readonly adresseDomicile?: IAdresse,
+    public readonly complementDeclarant?: string
   ) {}
 
   public static readonly depuisDto = (declarant: IDeclarantProjetActeTranscritDto): DeclarantProjetActeTranscrit | null => {

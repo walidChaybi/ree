@@ -15,9 +15,9 @@ export interface ITitulaireProjetActeTranscritDto {
   sexe: keyof typeof ESexe;
   naissance: IEvenementProjetActeTranscritDto;
   filiations: IFiliationTitulaireProjetActeTranscritDto[];
-  domicile: IAdresse | null;
-  nomPartie1: string | null;
-  nomPartie2: string | null;
+  domicile?: IAdresse;
+  nomPartie1?: string;
+  nomPartie2?: string;
   pasDePrenom: boolean | null;
 }
 
@@ -38,12 +38,12 @@ export class TitulaireProjetActeTranscrit {
     public readonly ordre: number,
     public readonly prenoms: string[],
     public readonly sexe: keyof typeof ESexe,
+    public readonly pasDePrenom: boolean | null,
     public readonly naissance: EvenementProjetActeTranscrit,
     public readonly filiations: IFiliationsTitulaireProjetActeTranscrit,
-    public readonly domicile: IAdresse | null,
-    public readonly nomPartie1: string | null,
-    public readonly nomPartie2: string | null,
-    public readonly pasDePrenom: boolean | null
+    public readonly domicile?: IAdresse,
+    public readonly nomPartie1?: string,
+    public readonly nomPartie2?: string
   ) {}
 
   public static readonly depuisDto = (
@@ -70,6 +70,7 @@ export class TitulaireProjetActeTranscrit {
       titulaireProjetActeTranscrit.ordre,
       titulaireProjetActeTranscrit.prenoms,
       titulaireProjetActeTranscrit.sexe,
+      titulaireProjetActeTranscrit.pasDePrenom,
       titulaireProjetActeTranscrit.naissance && EvenementProjetActeTranscrit.depuisDto(titulaireProjetActeTranscrit.naissance),
       {
         parent1: filiations.find(filiation => filiation.ordre === 1) ?? null,
@@ -77,8 +78,7 @@ export class TitulaireProjetActeTranscrit {
       },
       titulaireProjetActeTranscrit.domicile,
       titulaireProjetActeTranscrit.nomPartie1,
-      titulaireProjetActeTranscrit.nomPartie2,
-      titulaireProjetActeTranscrit.pasDePrenom
+      titulaireProjetActeTranscrit.nomPartie2
     );
   };
 }

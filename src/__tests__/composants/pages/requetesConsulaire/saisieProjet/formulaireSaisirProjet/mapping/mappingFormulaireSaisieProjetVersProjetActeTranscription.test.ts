@@ -1,6 +1,6 @@
 import { projetActeNaissanceDto, projetActeNaissancePatchDto, projetActeNaissancePostDto } from "@mock/data/projetActeTranscrit";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
-import { ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
+import { IProjetActeTranscritPostDto, ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
 import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { PrenomsForm } from "@model/form/commun/PrenomsForm";
@@ -36,11 +36,12 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
       adresseNaissance: "Place du riz"
     },
     declarant: {
-      identite: "TIERS",
+      identite: "PERE",
+      complement: "",
       nom: "",
       prenomsChemin: PrenomsForm.valeursInitiales(),
-      sexe: null,
-      age: null,
+      sexe: "INCONNU",
+      age: "",
       qualite: "",
       profession: "",
       sansProfession: false,
@@ -50,10 +51,7 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
     },
     parents: {
       parent1: {
-        id: "c7651e32-560b-4227-be01-0c88a299b69c",
-        position: 1,
         sexe: "MASCULIN",
-        nomNaissance: "Greenwald",
         nom: "Greenwald",
         prenomsChemin: PrenomsForm.depuisStringDto(["cassandra"]),
         dateNaissance: {
@@ -85,16 +83,13 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
         age: ""
       },
       parent2: {
-        id: "",
-        position: 0,
         sexe: "FEMININ",
-        nomNaissance: "",
         nom: "Xi Phun Bin",
         prenomsChemin: PrenomsForm.depuisStringDto(["Maman"]),
         dateNaissance: {
           jour: "",
           mois: "",
-          annee: ""
+          annee: "1966"
         },
         lieuNaissance: {
           typeLieu: "France",
@@ -170,7 +165,7 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
   test("DOIT faire le mapping correctement avec les valeurs initiales", () => {
     const valeursInitialesProjetActe = ProjetActeNaissanceTranscriptionForm.valeursInitiales(requeteCreationTranscription, projetActe);
 
-    const valeursInitialesAttendues = {
+    const valeursInitialesAttendues: IProjetActeTranscritForm = {
       titulaire: {
         nomActeEtranger: "Toto",
         nomRetenuOEC: "Jo",
@@ -334,7 +329,7 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
           prenom9: ""
         },
         sexe: "INCONNU",
-        age: 52,
+        age: "52",
         qualite: "le copain",
         profession: "",
         sansProfession: false,
@@ -434,7 +429,7 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
       nom: "LeTiers",
       prenomsChemin: PrenomsForm.depuisStringDto(["Prenom"]),
       sexe: "MASCULIN",
-      age: 45,
+      age: "45",
       qualite: "La grand frère",
       profession: "plombier",
       sansProfession: false,
@@ -449,16 +444,13 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
     },
     parents: {
       parent1: {
-        id: "c7e0e767-438c-4e42-83c1-e0c74d6bbd9d",
-        position: 1,
         sexe: "MASCULIN",
-        nomNaissance: "Patamob",
         nom: "Patamob",
         prenomsChemin: PrenomsForm.depuisStringDto(["cassandra"]),
         dateNaissance: {
           jour: "",
           mois: "",
-          annee: ""
+          annee: "1966"
         },
         lieuNaissance: {
           typeLieu: "Étranger",
@@ -484,10 +476,7 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
         age: "34"
       },
       parent2: {
-        id: "",
-        position: 0,
         sexe: "FEMININ",
-        nomNaissance: "",
         nom: "Patamob",
         prenomsChemin: PrenomsForm.depuisStringDto(["Maman"]),
         dateNaissance: {
@@ -517,7 +506,8 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
         },
         renseignerAge: false,
         age: ""
-      }
+      },
+      domicileCommun: false
     },
     acteEtranger: {
       typeActe: "AUTRE",
@@ -530,7 +520,8 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
       },
       lieuEnregistrement: {
         ville: "Pekin",
-        pays: "Chine"
+        pays: "Chine",
+        etatProvince: ""
       },
       redacteur: "officier"
     },
@@ -554,12 +545,12 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
   };
 
   test("mappingSaisieProjetTitulaireFormVersProjetActe doit renvoyer l'objet 'projetActeTranscription' au format attendu donné 'TIERS'", () => {
-    const projetActeTranscriptionTiers = {
+    const projetActeTranscriptionTiers: IProjetActeTranscritPostDto = {
       acteEtranger: {
         adresseEnregistrement: {
           pays: "Chine",
           ville: "Pekin",
-          region: ""
+          region: undefined
         },
         anneeEnregistrement: "2025",
         cadreNaissance: "NE_DANS_LE_MARIAGE",
@@ -576,7 +567,7 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
       analyseMarginales: [],
       declarant: {
         adresseDomicile: {
-          arrondissement: "",
+          arrondissement: undefined,
           pays: "Chine",
           region: "china",
           ville: "Pekin",
@@ -594,25 +585,23 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
         ],
         profession: "plombier",
         qualite: "La grand frère",
-        sansProfession: null,
+        sansProfession: undefined,
         sexe: "MASCULIN"
       },
       evenement: {
         annee: 2025,
-        departement: null,
         heure: 9,
         jour: 19,
         minute: 42,
         mois: 1,
         neDansLeMariage: true,
-        pays: null,
-        region: null,
-        ville: null,
-        arrondissement: null,
-        voie: null
+        pays: undefined,
+        region: undefined,
+        ville: undefined,
+        voie: undefined
       },
       formuleFinale: {
-        autresPieces: "",
+        autresPieces: undefined,
         identiteDemandeur: "TIERS",
         identiteTransmetteur: "LE_REQUERANT",
         legalisation: "APOSTILLE",
@@ -626,7 +615,6 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
       mentions: [],
       titulaires: [
         {
-          domicile: null,
           filiations: [
             {
               age: 34,
@@ -634,23 +622,22 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
                 arrondissement: undefined,
                 voie: undefined,
                 pays: "",
-                ville: "",
+                ville: undefined,
                 region: ""
               },
-              domicileCommun: null,
+              domicileCommun: undefined,
               lienParente: LienParente.PARENT,
               naissance: {
-                annee: null,
-                departement: null,
-                heure: null,
-                jour: null,
-                minute: null,
-                mois: null,
-                neDansLeMariage: null,
+                annee: 1966,
+                departement: undefined,
+                heure: undefined,
+                jour: undefined,
+                minute: undefined,
+                mois: undefined,
                 pays: "Chine",
-                arrondissement: null,
-                voie: null,
-                region: null,
+                arrondissement: undefined,
+                voie: undefined,
+                region: undefined,
                 ville: "Pekin"
               },
               nom: "Patamob",
@@ -661,7 +648,7 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
               sexe: "MASCULIN"
             },
             {
-              age: null,
+              age: undefined,
               domicile: {
                 arrondissement: undefined,
                 pays: "France",
@@ -669,21 +656,20 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
                 ville: "Nantes",
                 voie: "36 tour Lu"
               },
-              domicileCommun: null,
+              domicileCommun: undefined,
               lienParente: LienParente.PARENT,
               naissance: {
                 annee: 2000,
                 departement: "Loire atlantique",
-                heure: null,
+                heure: undefined,
                 jour: 10,
-                minute: null,
+                minute: undefined,
                 mois: 10,
-                neDansLeMariage: null,
                 pays: "France",
                 region: "Loire atlantique",
                 ville: "Nantes",
-                arrondissement: null,
-                voie: null
+                arrondissement: undefined,
+                voie: undefined
               },
               nom: "Patamob",
               ordre: 2,
@@ -695,17 +681,15 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
           ],
           naissance: {
             annee: 2025,
-            departement: null,
             heure: 9,
             jour: 19,
             minute: 42,
             mois: 1,
+            pays: undefined,
+            voie: undefined,
             neDansLeMariage: true,
-            pays: null,
-            arrondissement: null,
-            voie: null,
-            region: null,
-            ville: null
+            region: undefined,
+            ville: undefined
           },
           nom: "prenomUn prenomDeux prenomTrois",
           nomActeEtranger: "greenwald",

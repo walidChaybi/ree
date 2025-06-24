@@ -1,41 +1,41 @@
 export type IEvenementProjetActeTranscritDto = {
-  id?: string | null;
-  jour: number | null;
-  mois: number | null;
-  annee: number | null;
-  voie: string | null;
-  ville: string | null;
-  arrondissement: string | null;
-  region: string | null;
-  departement?: string | null;
-  pays: string | null;
-  heure: number | null;
-  minute: number | null;
-  neDansLeMariage: boolean | null;
+  id?: string;
+  jour?: number;
+  mois?: number;
+  annee?: number;
+  voie?: string;
+  ville?: string;
+  arrondissement?: string;
+  region?: string;
+  departement?: string;
+  pays?: string;
+  heure?: number;
+  minute?: number;
+  neDansLeMariage?: boolean;
 };
 
 export class EvenementProjetActeTranscrit {
   private constructor(
-    public readonly id: string | null,
-    public readonly jour: number | null,
-    public readonly mois: number | null,
-    public readonly annee: number | null,
-    public readonly voie: string | null,
-    public readonly ville: string | null,
-    public readonly arrondissement: string | null,
-    public readonly region: string | null,
-    public readonly pays: string | null,
-    public readonly heure: number | null,
-    public readonly minute: number | null,
-    public readonly neDansLeMariage: boolean | null
+    public readonly annee?: number,
+    public readonly id?: string,
+    public readonly jour?: number,
+    public readonly mois?: number,
+    public readonly voie?: string,
+    public readonly ville?: string,
+    public readonly arrondissement?: string,
+    public readonly region?: string,
+    public readonly pays?: string,
+    public readonly heure?: number,
+    public readonly minute?: number,
+    public readonly neDansLeMariage?: boolean
   ) {}
 
   public static readonly depuisDto = (evenement: IEvenementProjetActeTranscritDto): EvenementProjetActeTranscrit => {
     return new EvenementProjetActeTranscrit(
-      evenement.id ?? null,
+      evenement.annee,
+      evenement.id ?? "",
       evenement.jour,
       evenement.mois,
-      evenement.annee,
       evenement.voie,
       evenement.ville,
       evenement.arrondissement,

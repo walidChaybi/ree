@@ -1,6 +1,6 @@
 import { CONFIG_POST_COMPOSITION_ACTE_TEXTE } from "@api/configurations/composition/PostCompositionActeTexteApiConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
-import { projetActeNaissanceDto } from "@mock/data/ProjetActe";
+import { projetActeNaissanceDto } from "@mock/data/projetActeTranscrit";
 import { ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, test, vi } from "vitest";

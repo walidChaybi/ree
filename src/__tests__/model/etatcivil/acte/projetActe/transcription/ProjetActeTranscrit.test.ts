@@ -1,4 +1,4 @@
-import { projetActeNaissanceDto } from "@mock/data/ProjetActe";
+import { projetActeNaissanceDto } from "@mock/data/projetActeTranscrit";
 import { AnalyseMarginaleProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/AnalyseMarginaleProjetActeTranscrit";
 import { DeclarantProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/DeclarantProjetActeTranscrit";
 import { EvenementProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/EvenementProjetActeTranscrit";

@@ -1,16 +1,15 @@
 import { PrenomsForm, TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import {
-  IParentRequeteTranscription,
-  IParentTranscription,
-  ParentsRequeteTranscription
-} from "@model/requete/IParentsRequeteTranscription";
+  IParentTranscriptionForm,
+  mappingParentTranscriptionVersParentForm
+} from "@model/form/creation/transcription/IProjetActeTranscritForm";
+import { IParentRequeteTranscription } from "@model/requete/IParentsRequeteTranscription";
 import { describe, expect, test } from "vitest";
 
-describe("Interface ParentsRequeteTranscription.mappingParentRequeteTranscriptionVersParentForm", () => {
+describe("Interface ParentsRequeteTranscription.mappingParentTranscriptionVersParentForm", () => {
   const prenomCheminVide: TPrenomsForm = PrenomsForm.valeursInitiales();
 
-
-  const parentTranscriptionVide: IParentTranscription = {
+  const parentTranscriptionVide: IParentTranscriptionForm = {
     sexe: "",
     nom: "",
     prenomsChemin: prenomCheminVide,
@@ -43,7 +42,7 @@ describe("Interface ParentsRequeteTranscription.mappingParentRequeteTranscriptio
     age: ""
   };
   test("doit retourner un mapping avec des valeurs par défaut quand parent est undefined", () => {
-    const result = ParentsRequeteTranscription.mappingParentRequeteTranscriptionVersParentForm(undefined);
+    const result = mappingParentTranscriptionVersParentForm();
 
     expect(result).toEqual(parentTranscriptionVide);
   });
@@ -75,7 +74,7 @@ describe("Interface ParentsRequeteTranscription.mappingParentRequeteTranscriptio
       }
     };
 
-    const result = ParentsRequeteTranscription.mappingParentRequeteTranscriptionVersParentForm(parent);
+    const result = mappingParentTranscriptionVersParentForm(parent);
 
     expect(result).toEqual({
       sexe: "MASCULIN",
@@ -119,7 +118,7 @@ describe("Interface ParentsRequeteTranscription.mappingParentRequeteTranscriptio
   test("doit mapper correctement un parent né à l'étranger", () => {
     const parent: IParentRequeteTranscription = {
       sexe: "FEMININ",
-      nomUsage: "",
+      nomUsage: "Smith",
       nomNaissance: "Smith",
       jourNaissance: 15,
       moisNaissance: 3,
@@ -140,7 +139,7 @@ describe("Interface ParentsRequeteTranscription.mappingParentRequeteTranscriptio
       }
     };
 
-    const result = ParentsRequeteTranscription.mappingParentRequeteTranscriptionVersParentForm(parent);
+    const result = mappingParentTranscriptionVersParentForm(parent);
 
     expect(result).toEqual({
       sexe: "FEMININ",
@@ -189,7 +188,7 @@ describe("Interface ParentsRequeteTranscription.mappingParentRequeteTranscriptio
       prenoms: [{ numeroOrdre: 1, prenom: "Pierre" }]
     };
 
-    const result = ParentsRequeteTranscription.mappingParentRequeteTranscriptionVersParentForm(parent);
+    const result = mappingParentTranscriptionVersParentForm(parent);
 
     expect(result).toEqual({
       ...parentTranscriptionVide,
@@ -211,20 +210,24 @@ describe("Interface ParentsRequeteTranscription.mappingParentRequeteTranscriptio
   test("doit préférer nomUsage sur nomNaissance quand les deux sont présents", () => {
     const parent: IParentRequeteTranscription = {
       nomUsage: "Martin",
-      nomNaissance: "Dubois"
+      nomNaissance: "Dubois",
+      prenoms: [],
+      sexe: "MASCULIN"
     };
 
-    const result = ParentsRequeteTranscription.mappingParentRequeteTranscriptionVersParentForm(parent);
+    const result = mappingParentTranscriptionVersParentForm(parent);
 
     expect(result.nom).toBe("Martin");
   });
 
   test("doit utiliser nomNaissance quand nomUsage est absent", () => {
     const parent: IParentRequeteTranscription = {
-      nomNaissance: "Dubois"
+      nomNaissance: "Dubois",
+      prenoms: [],
+      sexe: "MASCULIN"
     };
 
-    const result = ParentsRequeteTranscription.mappingParentRequeteTranscriptionVersParentForm(parent);
+    const result = mappingParentTranscriptionVersParentForm(parent);
 
     expect(result.nom).toBe("Dubois");
   });

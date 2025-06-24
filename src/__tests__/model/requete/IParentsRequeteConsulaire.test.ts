@@ -4,7 +4,7 @@ import { describe, expect, test } from "vitest";
 
 describe("ParentsRequeteConsulaire", () => {
   test("doit retourner undefined quand pas de titulaires", () => {
-    expect(ParentsRequeteTranscription.getParentsRequeteTranscription()).toBeUndefined();
+    expect(ParentsRequeteTranscription.getDepuisTitulairesRequeteTranscription()).toBeUndefined();
   });
 
   test("doit formatter parents avec une seule mère", () => {
@@ -16,10 +16,10 @@ describe("ParentsRequeteConsulaire", () => {
       }
     ] as ITitulaireRequeteCreation[];
 
-    const result = ParentsRequeteTranscription.getParentsRequeteTranscription(titulaires);
+    const result = ParentsRequeteTranscription.getDepuisTitulairesRequeteTranscription(titulaires);
 
     expect(result).toEqual({
-      parent1: {},
+      parent1: { prenoms: [] },
       parent2: titulaires[0]
     });
   });
@@ -38,7 +38,7 @@ describe("ParentsRequeteConsulaire", () => {
       }
     ] as ITitulaireRequeteCreation[];
 
-    const result = ParentsRequeteTranscription.getParentsRequeteTranscription(titulaires);
+    const result = ParentsRequeteTranscription.getDepuisTitulairesRequeteTranscription(titulaires);
 
     expect(result).toEqual({
       parent1: titulaires[0],
