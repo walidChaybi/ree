@@ -82,6 +82,7 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
             name={nomChamp}
             libelle={champ.libelle}
             disabled={estLectureSeule}
+            typeRedimensionnement="vertical"
             sansRetourChariot={champ.sansRetourChariot}
           />
         </ChampFormAideSaisie>

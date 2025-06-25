@@ -22,7 +22,13 @@ const getClasseRedimensionnement = (typeRedimensionnement?: TRedimensionnement) 
   }
 };
 
-const ChampZoneTexte: React.FC<TChampsZoneTexteProps> = ({ name, libelle, typeRedimensionnement, sansRetourChariot, ...props }) => {
+const ChampZoneTexte: React.FC<TChampsZoneTexteProps> = ({
+  name,
+  libelle,
+  typeRedimensionnement = "fixe",
+  sansRetourChariot,
+  ...props
+}) => {
   const [field, meta] = useField(name as string);
   const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
 
