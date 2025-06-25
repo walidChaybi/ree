@@ -1,50 +1,53 @@
-import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
-import { MockApi } from "@mock/appelsApi/MockApi";
-import { ficheActe2 } from "@mock/data/ficheActe";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import AnalyseMarginaleFormulaire from "../../../../../../composants/pages/requetesMiseAJour/formulaires/mentions/AnalyseMarginaleFormulaire/AnalyseMarginaleFormulaire";
-import { EditionMiseAJourContext, IEditionMiseAJourContext } from "../../../../../../contexts/EditionMiseAJourContextProvider";
 
 describe("Tests du formulaire AnalyseMarginaleFormulaire", () => {
-  const ID_ACTE = "1010";
   const setDonneesAnalyseMarginale = vi.fn();
   const setAnalyseMarginaleModifiee = vi.fn();
+  const VALEURS_INITALES = {
+    nom: "GREENWALD",
+    nomSecable: false,
+    nomPartie1: "false",
+    nomPartie2: "",
+    prenoms: {
+      nombrePrenomsAffiches: 3,
+      prenom1: "marie-paulita",
+      prenom2: "zaria",
+      prenom3: "léna",
+      prenom4: "",
+      prenom5: "",
+      prenom6: "",
+      prenom7: "",
+      prenom8: "",
+      prenom9: "",
+      prenom10: "",
+      prenom11: "",
+      prenom12: "",
+      prenom13: "",
+      prenom14: "",
+      prenom15: ""
+    },
+    motif: "motif de test"
+  };
 
   const renderSnapshot = async (): Promise<ChildNode | null> => {
     const { container } = await act(async () =>
       render(
         <div>
-          <EditionMiseAJourContext.Valeurs.Provider value={{ idActe: ID_ACTE } as IEditionMiseAJourContext}>
-            <AnalyseMarginaleFormulaire
-              setDonneesAnalyseMarginale={setDonneesAnalyseMarginale}
-              setAnalyseMarginaleModifiee={setAnalyseMarginaleModifiee}
-              motif="motif de test"
-            />
-          </EditionMiseAJourContext.Valeurs.Provider>
+          <AnalyseMarginaleFormulaire
+            setDonneesAnalyseMarginale={setDonneesAnalyseMarginale}
+            setAnalyseMarginaleModifiee={setAnalyseMarginaleModifiee}
+            motif="motif de test"
+            valeursInitiales={VALEURS_INITALES}
+          />
         </div>
       )
     );
 
     return container.firstChild;
   };
-
-  beforeEach(() => {
-    MockApi.deployer(
-      CONFIG_GET_RESUME_ACTE,
-      { path: { idActe: ID_ACTE }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
-      {
-        data: ficheActe2.data as unknown as IFicheActe
-      }
-    );
-  });
-
-  afterEach(() => {
-    MockApi.stopMock();
-    vi.clearAllMocks();
-  });
 
   test("Doit afficher le formulaire avec les valeurs par défaut et correspondre au snapshot", async () => {
     const snapshot = await renderSnapshot();

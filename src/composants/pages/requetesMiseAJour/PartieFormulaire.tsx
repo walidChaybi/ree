@@ -1,12 +1,14 @@
 import { CONFIG_PUT_ANALYSE_MARGINALE_ET_MENTIONS } from "@api/configurations/etatCivil/PutAnalyseMarginaleEtMentionsConfigApi";
 import { CONFIG_PUT_MISE_A_JOUR_ANALYSE_MARGINALE } from "@api/configurations/etatCivil/PutMiseAJourAnalyseMarginaleConfigApi";
-import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
 import { TErreurApi } from "@model/api/Api";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import AnalyseMarginaleForm from "@model/form/AnalyseMarginale/AnalyseMarginaleForm";
 import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { TPrenomsForm } from "@model/form/commun/PrenomsForm";
 
+import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
+import { mapActe } from "@hook/repertoires/MappingRepertoires";
+import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import MiseAJourForm from "@model/form/miseAJour/MiseAJourForm";
 import messageManager from "@util/messageManager";
 import { useContext, useEffect, useState } from "react";
@@ -65,7 +67,6 @@ const PartieFormulaire: React.FC = () => {
   const { appelApi: appelApiMisAJourAnalyseMarginale, enAttenteDeReponseApi: enAttenteMiseAJourAnalyseMarginale } = useFetchApi(
     CONFIG_PUT_MISE_A_JOUR_ANALYSE_MARGINALE
   );
-  const { appelApi: appelResumeActe, enAttenteDeReponseApi: enAttenteResumeActe } = useFetchApi(CONFIG_GET_RESUME_ACTE);
   const [afficherAnalyseMarginale, setAfficherAnalyseMarginale] = useState(!estMiseAJourAvecMentions);
 
   const [sexeTitulaire, setSexeTitulaire] = useState<Sexe | null>(null);
@@ -75,6 +76,11 @@ const PartieFormulaire: React.FC = () => {
   const [analyseMarginaleModifiee, setAnalyseMarginaleModifiee] = useState<boolean>(false);
   const [donneesMentions, setDonneesMentions] = useState<IMentionMiseAJour[]>([]);
   const [motif, setMotif] = useState<string | null>(null);
+
+  const [acte, setActe] = useState<IFicheActe | null>(null);
+  const { appelApi: appelResumeActe } = useFetchApi(CONFIG_GET_RESUME_ACTE, true);
+  const [valeursInitialesFormulaireAnalyseMarginale, setValeursInitialesFormulaireAnalyseMarginale] =
+    useState<IAnalyseMarginaleMiseAJour | null>(null);
 
   useEffect(() => {
     const apresRetour = {
@@ -124,10 +130,34 @@ const PartieFormulaire: React.FC = () => {
     }
   }, [donneesAnalyseMarginale, donneesMentions]);
 
+  useEffect(() => {
+    appelResumeActe({
+      parametres: {
+        path: { idActe: idActe },
+        query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true }
+      },
+      apresSucces: acteDto => {
+        const acteTransforme = mapActe(acteDto);
+        setActe(acteTransforme);
+
+        const sexe = acteTransforme.titulaires[0]?.sexe ?? null;
+        setSexeTitulaire(sexe);
+      },
+      apresErreur: () => messageManager.showError("Une erreur est survenue lors de la récupération des informations de l'acte")
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!acte) return;
+
+    const analyseMarginale = (FicheActe.getAnalyseMarginaleLaPlusRecente(acte) ?? acte)?.titulaires[0];
+
+    setValeursInitialesFormulaireAnalyseMarginale(AnalyseMarginaleForm.genererValeursDefautFormulaire(analyseMarginale, motif));
+  }, [motif, acte]);
+
   return (
     <>
-      {(enAttenteResumeActe || enAttenteMiseAJourAnalyseMarginale || enAttenteMiseAJourAnalyseMarginaleEtMention) && <PageChargeur />}
-
+      {(enAttenteMiseAJourAnalyseMarginale || enAttenteMiseAJourAnalyseMarginaleEtMention) && <PageChargeur />}
       <div className="w-1/2">
         <OngletsBouton<ECleOngletsMiseAJour>
           onglets={[
@@ -173,6 +203,7 @@ const PartieFormulaire: React.FC = () => {
               <AnalyseMarginaleFormulaire
                 setDonneesAnalyseMarginale={setDonneesAnalyseMarginale}
                 setAnalyseMarginaleModifiee={setAnalyseMarginaleModifiee}
+                valeursInitiales={valeursInitialesFormulaireAnalyseMarginale}
                 motif={motif}
               />
             </OngletsContenu>
