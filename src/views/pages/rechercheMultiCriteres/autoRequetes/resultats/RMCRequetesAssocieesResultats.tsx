@@ -124,9 +124,10 @@ export const determinerCriteresRMCAutoRequeteDepuisTitulaire = (titulaires?: ITi
 
 export const criteresAvecDonneesTitulaireSuffisantes = (criteresRMCAuto: ICritereRMCAutoRequete[]): boolean =>
   Boolean(
-    criteresRMCAuto?.[0].nomTitulaire !== SNP ||
-      (criteresRMCAuto?.[0].prenomTitulaire &&
-        criteresRMCAuto?.[0].anneeNaissance &&
-        criteresRMCAuto?.[0].moisNaissance &&
-        criteresRMCAuto?.[0].jourNaissance)
+    criteresRMCAuto?.[0] &&
+      (criteresRMCAuto[0].nomTitulaire !== SNP ||
+        (criteresRMCAuto[0].prenomTitulaire &&
+          criteresRMCAuto[0].anneeNaissance &&
+          criteresRMCAuto[0].moisNaissance &&
+          criteresRMCAuto[0].jourNaissance))
   );
