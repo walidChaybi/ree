@@ -270,10 +270,11 @@ export const RMCActeInscriptionForm = {
           }),
           paysEvenement: SchemaValidation.texte({
             obligatoire: false,
+            listeRegexp: [{ valeur: CaracteresAutorisesRecherche, message: messagesErreur.CARACTERES_INTERDITS }],
             interditSeul: {
               estInterditSeul: true
             }
-          }).matches(CaracteresAutorisesRecherche, CARACTERES_AUTORISES_MESSAGE)
+          })
         })
       }),
       datesDebutFinAnnee: SchemaValidation.objet({
