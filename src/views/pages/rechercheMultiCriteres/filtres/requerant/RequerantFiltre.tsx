@@ -6,7 +6,7 @@ import { ComponentFiltreProps, FormikComponentProps, withNamespace } from "@widg
 import { connect } from "formik";
 import React from "react";
 import * as Yup from "yup";
-import { ASTERISQUE_PRECEDEE_DEUX, CARACTERES_POST_ASTERISQUE, CaracteresAutorisesRecherche } from "../../../../../ressources/Regex";
+import { ASTERISQUE_PRECEDE_DEUX, CARACTERES_POST_ASTERISQUE, CaracteresAutorisesRecherche } from "../../../../../ressources/Regex";
 import "../scss/FiltreRMC.scss";
 
 // Noms des champs
@@ -23,12 +23,12 @@ export const RequerantDefaultValues = {
 export const RequerantValidationSchema = Yup.object({
   [NOM]: Yup.string()
     .matches(CaracteresAutorisesRecherche, CARACTERES_AUTORISES_MESSAGE)
-    .matches(ASTERISQUE_PRECEDEE_DEUX, ASTERISQUE_MESSAGE)
+    .matches(ASTERISQUE_PRECEDE_DEUX, ASTERISQUE_MESSAGE)
     .matches(CARACTERES_POST_ASTERISQUE, ASTERISQUE_MESSAGE),
 
   [RAISON_SOCIALE]: Yup.string()
     .matches(CaracteresAutorisesRecherche, CARACTERES_AUTORISES_MESSAGE)
-    .matches(ASTERISQUE_PRECEDEE_DEUX, ASTERISQUE_MESSAGE)
+    .matches(ASTERISQUE_PRECEDE_DEUX, ASTERISQUE_MESSAGE)
     .matches(CARACTERES_POST_ASTERISQUE, ASTERISQUE_MESSAGE)
 });
 

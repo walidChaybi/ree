@@ -10,6 +10,7 @@ export const ChampFormAideSaisie: React.FC<React.PropsWithChildren<{ typeChamp: 
       case "sousTitre":
       case "nomSecable":
       case "numeroInscriptionRcRca":
+      case "zoneDeTexte":
         return "col-span-2";
       default:
         return null;

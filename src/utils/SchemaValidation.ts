@@ -67,6 +67,7 @@ export const messagesErreur = {
   CARACTERES_INTERDITS: "⚠ Le champ contient des caractères interdits dans l'état civil",
   ASTERISQUE_PRECEDE_DE_UN: "⚠ L'astérisque doit être précédé d'au moins un caractère",
   ASTERISQUE_PRECEDE_DE_DEUX: "⚠ L'astérisque doit être précédé d'au moins deux caractères",
+  ASTERISQUE_PRECEDE_ESPACE: "⚠ L'astérisque doit être accolé à un vocable",
   CARACTERES_POST_ASTERISQUE: "⚠ L'astérisque ne doit être suivi d'aucun caractère"
 };
 

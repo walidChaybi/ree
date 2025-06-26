@@ -1,7 +1,8 @@
 import { CARACTERES_AUTORISES_MESSAGE, NUMERO_INSCRIPTION_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import {
-  ASTERISQUE_PRECEDEE_DEUX,
-  ASTERISQUE_PRECEDEE_UN,
+  ASTERISQUE_PRECEDE_DEUX,
+  ASTERISQUE_PRECEDE_ESPACE,
+  ASTERISQUE_PRECEDE_UN,
   CARACTERES_POST_ASTERISQUE,
   CaracteresAutorises,
   CaracteresAutorisesRecherche,
@@ -219,6 +220,11 @@ export const RMCActeInscriptionForm = {
 
   /* v8 ignore start A RETIRER LORSQUE LE FORMULAIRE RMC SERA SORTI DE VIEWS, A LA FIN DE LA REFONTE DES BLOCS */
   schemaValidation: () => {
+    const ENSEMBLE_REGEX_CHAMP_ASTERISQUE = [
+      { valeur: CaracteresAutorisesRecherche, message: messagesErreur.CARACTERES_INTERDITS },
+      { valeur: CARACTERES_POST_ASTERISQUE, message: messagesErreur.CARACTERES_POST_ASTERISQUE },
+      { valeur: ASTERISQUE_PRECEDE_ESPACE, message: messagesErreur.ASTERISQUE_PRECEDE_ESPACE }
+    ];
     return SchemaValidation.objet({
       registreRepertoire: SchemaValidation.objet({
         registre: SchemaValidation.objet({
@@ -284,25 +290,22 @@ export const RMCActeInscriptionForm = {
             }
           ]),
           listeRegexp: [
-            { valeur: CaracteresAutorisesRecherche, message: messagesErreur.CARACTERES_INTERDITS },
-            { valeur: ASTERISQUE_PRECEDEE_DEUX, message: messagesErreur.ASTERISQUE_PRECEDE_DE_DEUX },
-            { valeur: CARACTERES_POST_ASTERISQUE, message: messagesErreur.CARACTERES_POST_ASTERISQUE }
+            { valeur: ASTERISQUE_PRECEDE_DEUX, message: messagesErreur.ASTERISQUE_PRECEDE_DE_DEUX },
+            ...ENSEMBLE_REGEX_CHAMP_ASTERISQUE
           ]
         }),
         prenom: SchemaValidation.texte({
           obligatoire: false,
           listeRegexp: [
-            { valeur: CaracteresAutorisesRecherche, message: messagesErreur.CARACTERES_INTERDITS },
-            { valeur: ASTERISQUE_PRECEDEE_UN, message: messagesErreur.ASTERISQUE_PRECEDE_DE_UN },
-            { valeur: CARACTERES_POST_ASTERISQUE, message: messagesErreur.CARACTERES_POST_ASTERISQUE }
+            { valeur: ASTERISQUE_PRECEDE_UN, message: messagesErreur.ASTERISQUE_PRECEDE_DE_UN },
+            ...ENSEMBLE_REGEX_CHAMP_ASTERISQUE
           ]
         }),
         paysNaissance: SchemaValidation.texte({
           obligatoire: false,
           listeRegexp: [
-            { valeur: CaracteresAutorisesRecherche, message: messagesErreur.CARACTERES_INTERDITS },
-            { valeur: ASTERISQUE_PRECEDEE_DEUX, message: messagesErreur.ASTERISQUE_PRECEDE_DE_DEUX },
-            { valeur: CARACTERES_POST_ASTERISQUE, message: messagesErreur.CARACTERES_POST_ASTERISQUE }
+            { valeur: ASTERISQUE_PRECEDE_DEUX, message: messagesErreur.ASTERISQUE_PRECEDE_DE_DEUX },
+            ...ENSEMBLE_REGEX_CHAMP_ASTERISQUE
           ],
           interditSeul: {
             estInterditSeul: true,

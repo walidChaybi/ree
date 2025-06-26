@@ -4,11 +4,11 @@ import BoutonIcon from "../bouton/BoutonIcon";
 import ChampTexte from "./ChampTexte";
 
 export const ChampsNomPrenomInterchangeables: React.FC<{ cheminNom: string; cheminPrenom: string }> = ({ cheminNom, cheminPrenom }) => {
-  const { values, setFieldValue } = useFormikContext();
+  const { values, setFieldValue, setFieldTouched } = useFormikContext();
 
   const intervertir = () => {
-    setFieldValue(cheminNom, getIn(values, cheminPrenom));
-    setFieldValue(cheminPrenom, getIn(values, cheminNom));
+    setFieldValue(cheminNom, getIn(values, cheminPrenom)).finally(() => setFieldTouched(cheminNom, true));
+    setFieldValue(cheminPrenom, getIn(values, cheminNom)).finally(() => setFieldTouched(cheminPrenom, true));
   };
 
   return (
