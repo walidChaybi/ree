@@ -56,6 +56,7 @@ type TNomSecableChamp = {
 
 export const messagesErreur = {
   DATE_INVALIDE: "⚠ La date est invalide",
+  DATE_INCOMPLETE: "⚠ La date est incomplète",
   DATE_OBLIGATOIRE: "⚠ La saisie de la date est obligatoire",
   DATE_FUTURE: "⚠ La date ne peut pas être supérieure à la date du jour",
   DOIT_ETRE_ENTIER: "⚠ La valeur doit être un entier",
@@ -112,6 +113,7 @@ const getSchemaValidationDate = (bloquerDateFuture?: boolean): Yup.ObjectSchema<
           })
         : true;
     })
+
     .test("heureValide", (date, error) => {
       if (!date.heure && !date.minute) {
         return true;
@@ -351,7 +353,7 @@ const SchemaValidation = {
         !date.jour && (Boolean(date.mois) || Boolean(date.annee))
           ? error.createError({
               path: `${error.path}.jour`,
-              message: messagesErreur.DATE_INVALIDE
+              message: messagesErreur.DATE_INCOMPLETE
             })
           : true
       )
@@ -359,7 +361,7 @@ const SchemaValidation = {
         !date.mois && (Boolean(date.jour) || Boolean(date.annee))
           ? error.createError({
               path: `${error.path}.mois`,
-              message: messagesErreur.DATE_INVALIDE
+              message: messagesErreur.DATE_INCOMPLETE
             })
           : true
       )
@@ -367,7 +369,7 @@ const SchemaValidation = {
         !date.annee && (Boolean(date.jour) || Boolean(date.mois))
           ? error.createError({
               path: `${error.path}.annee`,
-              message: messagesErreur.DATE_INVALIDE
+              message: messagesErreur.DATE_INCOMPLETE
             })
           : true
       );
@@ -388,14 +390,14 @@ const SchemaValidation = {
     let schema = getSchemaValidationDate(schemaParams.bloquerDateFuture)
       .test("anneeObligatoireSiDateSaisie", (date, error) =>
         (Boolean(date.jour) || Boolean(date.mois)) && !date.annee
-          ? error.createError({ path: `${error.path}.annee`, message: messagesErreur.DATE_INVALIDE })
+          ? error.createError({ path: `${error.path}.annee`, message: messagesErreur.DATE_INCOMPLETE })
           : true
       )
       .test("jourSansMois", (date, error) => {
         return Boolean(date.jour) && !date.mois
           ? error.createError({
               path: `${error.path}.mois`,
-              message: messagesErreur.DATE_INVALIDE
+              message: messagesErreur.DATE_INCOMPLETE
             })
           : true;
       });

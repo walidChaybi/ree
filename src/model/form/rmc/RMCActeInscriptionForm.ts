@@ -260,7 +260,7 @@ export const RMCActeInscriptionForm = {
           })
         }),
         evenement: SchemaValidation.objet({
-          dateEvenement: SchemaValidation.dateComplete({
+          dateEvenement: SchemaValidation.dateIncomplete({
             obligatoire: false,
             bloquerDateFuture: true,
             interditSeul: {
