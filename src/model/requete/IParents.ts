@@ -1,4 +1,4 @@
-import { IDateForm } from "@model/form/commun/DateForm";
+import { IDateHeureForm } from "@model/form/commun/DateForm";
 import { DEUX, formatNom, formatPrenoms, UN } from "@util/Utils";
 import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
@@ -21,7 +21,7 @@ export interface IParent {
   nom?: string;
   prenoms?: IPrenomOrdonnes[];
   prenomsChemin?: { [prenom: string]: string };
-  dateNaissance?: IDateForm | null;
+  dateNaissance?: IDateHeureForm | null;
   lieuNaissance?: ILocalisation;
   profession?: string;
   sansProfession?: boolean;

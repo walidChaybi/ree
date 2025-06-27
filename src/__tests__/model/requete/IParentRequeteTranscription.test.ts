@@ -1,8 +1,5 @@
 import { PrenomsForm, TPrenomsForm } from "@model/form/commun/PrenomsForm";
-import {
-  IParentTranscriptionForm,
-  mappingParentTranscriptionVersParentForm
-} from "@model/form/creation/transcription/IProjetActeTranscritForm";
+import { IParentTranscriptionForm, mappingParentRequeteVersParentForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { IParentRequeteTranscription } from "@model/requete/IParentsRequeteTranscription";
 import { describe, expect, test } from "vitest";
 
@@ -21,7 +18,7 @@ describe("Interface ParentsRequeteTranscription.mappingParentTranscriptionVersPa
     lieuNaissance: {
       typeLieu: "Inconnu",
       ville: "",
-      departement: undefined,
+      departement: "",
       arrondissement: "",
       pays: "",
       etatProvince: "",
@@ -42,7 +39,7 @@ describe("Interface ParentsRequeteTranscription.mappingParentTranscriptionVersPa
     age: ""
   };
   test("doit retourner un mapping avec des valeurs par défaut quand parent est undefined", () => {
-    const result = mappingParentTranscriptionVersParentForm();
+    const result = mappingParentRequeteVersParentForm();
 
     expect(result).toEqual(parentTranscriptionVide);
   });
@@ -74,7 +71,7 @@ describe("Interface ParentsRequeteTranscription.mappingParentTranscriptionVersPa
       }
     };
 
-    const result = mappingParentTranscriptionVersParentForm(parent);
+    const result = mappingParentRequeteVersParentForm(parent);
 
     expect(result).toEqual({
       sexe: "MASCULIN",
@@ -96,7 +93,7 @@ describe("Interface ParentsRequeteTranscription.mappingParentTranscriptionVersPa
         departement: "Ile-de-France",
         arrondissement: "8ème",
         pays: "FRANCE",
-        etatProvince: "Ile-de-France",
+        etatProvince: "",
         adresse: ""
       },
       sansProfession: false,
@@ -139,7 +136,7 @@ describe("Interface ParentsRequeteTranscription.mappingParentTranscriptionVersPa
       }
     };
 
-    const result = mappingParentTranscriptionVersParentForm(parent);
+    const result = mappingParentRequeteVersParentForm(parent);
 
     expect(result).toEqual({
       sexe: "FEMININ",
@@ -158,7 +155,7 @@ describe("Interface ParentsRequeteTranscription.mappingParentTranscriptionVersPa
       lieuNaissance: {
         typeLieu: "Étranger",
         ville: "New York",
-        departement: "New York",
+        departement: "",
         arrondissement: "",
         pays: "ETATS-UNIS",
         etatProvince: "New York",
@@ -188,7 +185,7 @@ describe("Interface ParentsRequeteTranscription.mappingParentTranscriptionVersPa
       prenoms: [{ numeroOrdre: 1, prenom: "Pierre" }]
     };
 
-    const result = mappingParentTranscriptionVersParentForm(parent);
+    const result = mappingParentRequeteVersParentForm(parent);
 
     expect(result).toEqual({
       ...parentTranscriptionVide,
@@ -215,7 +212,7 @@ describe("Interface ParentsRequeteTranscription.mappingParentTranscriptionVersPa
       sexe: "MASCULIN"
     };
 
-    const result = mappingParentTranscriptionVersParentForm(parent);
+    const result = mappingParentRequeteVersParentForm(parent);
 
     expect(result.nom).toBe("Martin");
   });
@@ -227,7 +224,7 @@ describe("Interface ParentsRequeteTranscription.mappingParentTranscriptionVersPa
       sexe: "MASCULIN"
     };
 
-    const result = mappingParentTranscriptionVersParentForm(parent);
+    const result = mappingParentRequeteVersParentForm(parent);
 
     expect(result.nom).toBe("Dubois");
   });

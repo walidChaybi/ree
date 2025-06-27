@@ -1,7 +1,7 @@
 /* v8 ignore start A TESTER 03/25 */
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { ConditionChamp, EOperateurCondition } from "@model/form/commun/ConditionChamp";
-import { DateForm, IDateForm } from "@model/form/commun/DateForm";
+import { DateHeureFormUtils, IDateHeureForm } from "@model/form/commun/DateForm";
 import { INationalitesForm, NationalitesForm } from "@model/form/commun/NationalitesForm";
 import { PrenomsForm, TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import { IRequeteConsulaire } from "@model/requete/IRequeteConsulaire";
@@ -24,7 +24,7 @@ export interface IParentFormRCTC {
   nom: string;
   prenoms: TPrenomsForm;
   sexe: string;
-  dateNaissance: IDateForm;
+  dateNaissance: IDateHeureForm;
   naissance: {
     typeLieu: string;
     ville: string;
@@ -54,7 +54,7 @@ const ParentRCTCForm = {
       nom: parent?.nomNaissance ?? "",
       prenoms: PrenomsForm.valeursInitiales(parent?.prenoms),
       sexe: parent?.sexe ?? "",
-      dateNaissance: DateForm.valeursDefauts(
+      dateNaissance: DateHeureFormUtils.valeursDefauts(
         parent
           ? {
               jour: `${parent.jourNaissance ?? ""}`,
@@ -146,7 +146,7 @@ export interface ISaisieRequeteRCTCForm {
     prenoms: TPrenomsForm;
     sexe: string;
     naissance: {
-      date: IDateForm;
+      date: IDateHeureForm;
       ville: string;
       etatProvince: string;
       pays: string;
@@ -160,7 +160,7 @@ export interface ISaisieRequeteRCTCForm {
       idMariageParent1?: string;
       idMariageParent2?: string;
       parentsMaries: string;
-      date: IDateForm;
+      date: IDateHeureForm;
       lieu: string;
       ville: string;
       pays: string;
@@ -168,7 +168,7 @@ export interface ISaisieRequeteRCTCForm {
     reconnaissance: {
       identifiant: string;
       titulaireReconnu: string;
-      date: IDateForm;
+      date: IDateHeureForm;
       lieu: string;
       ville: string;
       region: string;
@@ -246,7 +246,7 @@ export const SaisieRequeteRCTCForm = {
         prenoms: PrenomsForm.valeursInitiales(titulaire?.prenoms),
         sexe: titulaire?.sexe ?? "",
         naissance: {
-          date: DateForm.valeursDefauts(
+          date: DateHeureFormUtils.valeursDefauts(
             titulaire
               ? {
                   jour: `${titulaire.jourNaissance ?? ""}`,
@@ -268,7 +268,7 @@ export const SaisieRequeteRCTCForm = {
           idMariageParent1: mariageParent1?.id,
           idMariageParent2: mariageParent2?.id,
           parentsMaries: mariageParent1 ? "oui" : "",
-          date: DateForm.valeursDefauts(
+          date: DateHeureFormUtils.valeursDefauts(
             mariageParent1
               ? {
                   jour: `${mariageParent1.jour ?? ""}`,
@@ -293,7 +293,7 @@ export const SaisieRequeteRCTCForm = {
         reconnaissance: {
           identifiant: reconnaissance?.id ?? "",
           titulaireReconnu: reconnaissance ? "oui" : "",
-          date: DateForm.valeursDefauts(
+          date: DateHeureFormUtils.valeursDefauts(
             reconnaissance
               ? {
                   jour: `${reconnaissance.jour ?? ""}`,

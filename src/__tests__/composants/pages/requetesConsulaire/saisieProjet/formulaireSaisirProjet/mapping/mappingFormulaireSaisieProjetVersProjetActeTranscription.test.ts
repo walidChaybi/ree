@@ -1,6 +1,6 @@
-import { projetActeNaissanceDto, projetActeNaissancePatchDto, projetActeNaissancePostDto } from "@mock/data/projetActeTranscrit";
+import { projetActe, projetActeNaissancePatchDto, projetActeNaissancePostDto } from "@mock/data/projetActeTranscrit";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
-import { IProjetActeTranscritPostDto, ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
+import { IProjetActeTranscritPostDto } from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
 import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { PrenomsForm } from "@model/form/commun/PrenomsForm";
@@ -150,8 +150,6 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
       enonciations: "tewt tewxt"
     }
   };
-
-  const projetActe = ProjetActeTranscrit.depuisDto(projetActeNaissanceDto);
   test("DOIT retourner les bonnes valeurs lors de l'appel de versDtoPost", () => {
     expect(ProjetActeNaissanceTranscriptionForm.versDtoPost(saisieProjetActeTranscriptionForm)).toStrictEqual(projetActeNaissancePostDto);
   });
@@ -226,7 +224,7 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
           lieuNaissance: {
             adresse: "",
             arrondissement: "",
-            departement: undefined,
+            departement: "",
             etatProvince: "",
             pays: "France",
             typeLieu: "France",
@@ -275,7 +273,7 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
           lieuNaissance: {
             adresse: "",
             arrondissement: "",
-            departement: undefined,
+            departement: "",
             etatProvince: "",
             pays: "",
             typeLieu: "Inconnu",

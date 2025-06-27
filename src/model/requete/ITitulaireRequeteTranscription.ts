@@ -2,7 +2,7 @@
 import { EvenementProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/EvenementProjetActeTranscrit";
 import { TitulaireProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/TitulaireProjetActeTranscrit";
 import { ESexe } from "@model/etatcivil/enum/Sexe";
-import { IDateForm } from "@model/form/commun/DateForm";
+import { IDateHeureForm } from "@model/form/commun/DateForm";
 import { PrenomsForm, TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import { ITitulaireTranscriptionForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { INationalite } from "./INationalite";
@@ -19,7 +19,7 @@ interface ITitulaireRequeteTranscription extends ITitulaireRequete {
   nomActuel?: string;
   nomSouhaite?: string;
   typeObjetTitulaire?: TypeObjetTitulaire;
-  dateNaissance?: IDateForm;
+  dateNaissance?: IDateHeureForm;
   nomRetenuOEC?: string;
 }
 
