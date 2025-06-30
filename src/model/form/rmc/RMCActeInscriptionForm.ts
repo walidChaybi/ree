@@ -5,7 +5,8 @@ import {
   ASTERISQUE_PRECEDE_UN,
   CARACTERES_POST_ASTERISQUE,
   CaracteresAutorises,
-  CaracteresAutorisesRecherche,
+  CaracteresAutorisesRechercheNomPrenom,
+  CaracteresAutorisesRecherchePays,
   NumeroInscription
 } from "../../../ressources/Regex";
 import SchemaValidation, { messagesErreur } from "../../../utils/SchemaValidation";
@@ -221,7 +222,7 @@ export const RMCActeInscriptionForm = {
   /* v8 ignore start A RETIRER LORSQUE LE FORMULAIRE RMC SERA SORTI DE VIEWS, A LA FIN DE LA REFONTE DES BLOCS */
   schemaValidation: () => {
     const ENSEMBLE_REGEX_CHAMP_ASTERISQUE = [
-      { valeur: CaracteresAutorisesRecherche, message: messagesErreur.CARACTERES_INTERDITS },
+      { valeur: CaracteresAutorisesRechercheNomPrenom, message: messagesErreur.CARACTERES_INTERDITS },
       { valeur: CARACTERES_POST_ASTERISQUE, message: messagesErreur.CARACTERES_POST_ASTERISQUE },
       { valeur: ASTERISQUE_PRECEDE_ESPACE, message: messagesErreur.ASTERISQUE_PRECEDE_ESPACE }
     ];
@@ -270,7 +271,7 @@ export const RMCActeInscriptionForm = {
           }),
           paysEvenement: SchemaValidation.texte({
             obligatoire: false,
-            listeRegexp: [{ valeur: CaracteresAutorisesRecherche, message: messagesErreur.CARACTERES_INTERDITS }],
+            listeRegexp: [{ valeur: CaracteresAutorisesRecherchePays, message: messagesErreur.CARACTERES_INTERDITS }],
             interditSeul: {
               estInterditSeul: true
             }
@@ -304,10 +305,7 @@ export const RMCActeInscriptionForm = {
         }),
         paysNaissance: SchemaValidation.texte({
           obligatoire: false,
-          listeRegexp: [
-            { valeur: ASTERISQUE_PRECEDE_DEUX, message: messagesErreur.ASTERISQUE_PRECEDE_DE_DEUX },
-            ...ENSEMBLE_REGEX_CHAMP_ASTERISQUE
-          ],
+          listeRegexp: [{ valeur: CaracteresAutorisesRecherchePays, message: messagesErreur.CARACTERES_INTERDITS }],
           interditSeul: {
             estInterditSeul: true,
             messageErreurSpecifique: "⚠ Le champ ne peut être utilisé sans au moins un autre critère du titulaire",
