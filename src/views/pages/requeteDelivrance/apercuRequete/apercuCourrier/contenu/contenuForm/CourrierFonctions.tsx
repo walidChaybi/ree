@@ -37,7 +37,6 @@ import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { Options } from "@util/Type";
 import { OptionCourrierFormDefaultValues } from "./sousFormulaires/OptionsCourrierForm";
 
@@ -79,7 +78,7 @@ function getTypesCourrierActeNonDetenuAuScec(sousType: SousTypeDelivrance) {
   return typesCourrier;
 }
 
-export const getTypesCourrier = (requete: IRequeteDelivrance, acteSelected?: IResultatRMCActe[]): Options => {
+export const getTypesCourrier = (requete: IRequeteDelivrance): Options => {
   let typesCourrier: Options = [];
   switch (requete.choixDelivrance) {
     case ChoixDelivrance.REP_SANS_DEL_EC_REQUETE_INCOMPLETE:

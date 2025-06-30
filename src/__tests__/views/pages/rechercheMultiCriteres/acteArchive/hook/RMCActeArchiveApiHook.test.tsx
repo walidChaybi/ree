@@ -24,11 +24,11 @@ const criteres: ICriteresRechercheActeArchive = {
 };
 
 const HookConsummerRMCActe: React.FC = () => {
-  const { dataRMCActe } = useRMCActeArchiveApiHook(criteres);
+  const resultatRMCActe = useRMCActeArchiveApiHook(criteres);
   return (
     <>
-      {dataRMCActe && dataRMCActe.length > 0 && (
-        <div data-testid="test-rmc-acte-hook">{dataRMCActe[0].idActe}</div>
+      {resultatRMCActe?.dataRMCActe && resultatRMCActe.dataRMCActe.length > 0 && (
+        <div data-testid="test-rmc-acte-hook">{resultatRMCActe.dataRMCActe[0].id}</div>
       )}
     </>
   );
@@ -38,10 +38,6 @@ test("l'appel au WS fonctionne correctement pour la Recherche Multi Critères Ac
   render(<HookConsummerRMCActe />);
 
   waitFor(() => {
-    expect(screen.getByTestId("test-rmc-acte-hook").textContent).toEqual(
-      "d8708d77-a359-4553-be72-1eb5f246d4da"
-    );
+    expect(screen.getByTestId("test-rmc-acte-hook").textContent).toEqual("d8708d77-a359-4553-be72-1eb5f246d4da");
   });
 });
-
-

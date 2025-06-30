@@ -4,8 +4,8 @@ import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivra
 import { ITitulaireRequete, TitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import {
-  ICriteresRMCAutoActeInscription,
-  IRMCRequestActesInscriptions
+  ICriteresRMCActesInscriptions,
+  ICriteresRMCAutoActeInscription
 } from "@model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import {
   PATH_APERCU_REQ_PRISE,
@@ -40,9 +40,9 @@ export const getCriteresRMCAuto = (requete: TRequete | IRequeteTableauDelivrance
   criteres: criteresRMCAutoMapper(requete?.titulaires)
 });
 
-const criteresRMCAutoMapper = (titulaires?: ITitulaireRequete[] | ITitulaireRequeteTableau[]): IRMCRequestActesInscriptions[] =>
-  titulaires?.map<IRMCRequestActesInscriptions>(
-    (titulaire: ITitulaireRequete | ITitulaireRequeteTableau): IRMCRequestActesInscriptions => ({
+const criteresRMCAutoMapper = (titulaires?: ITitulaireRequete[] | ITitulaireRequeteTableau[]): ICriteresRMCActesInscriptions[] =>
+  titulaires?.map<ICriteresRMCActesInscriptions>(
+    (titulaire: ITitulaireRequete | ITitulaireRequeteTableau): ICriteresRMCActesInscriptions => ({
       nomTitulaire: getNomTitulaire(titulaire),
       prenomTitulaire: getPrenomTitulaire(titulaire),
       jourNaissance: titulaire.jourNaissance?.toString(),

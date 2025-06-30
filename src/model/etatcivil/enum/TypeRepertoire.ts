@@ -1,7 +1,11 @@
-/* istanbul ignore file */
-
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 import { Options } from "@util/Type";
+
+export enum ETypeRepertoire {
+  PACS = "PACS",
+  RC = "RC",
+  RCA = "RCA"
+}
 
 export class TypeRepertoire extends EnumWithLibelle {
   public static readonly PACS = new TypeRepertoire("PACS");

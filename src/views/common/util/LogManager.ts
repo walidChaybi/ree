@@ -21,40 +21,38 @@ export function logError(logErrorMgs: LogErrorMsg) {
   if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_LOG_SERVEUR)) {
     logErrorOnServer(logErrorMgs);
   }
-  /* istanbul ignore next */
   if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
     logErrorOnConsole(logErrorMgs);
   }
   if (logErrorMgs.error?.status === HTTP_PAYLOAD_TOO_LARGE) {
-    logErrorOnScreen(
+    messageManager.showErrorAndClose(
       `La recherche multi-critères ramène trop de résultats, veuillez affiner vos critères.\n(${logErrorMgs.messageUtilisateur})`
     );
   } else if (logErrorMgs.error?.status === HTTP_REQUEST_TIME_OUT) {
-    logErrorOnScreen(`Le service est momentanément indisponible, veuillez réessayer ultérieurement\n(${logErrorMgs.messageUtilisateur})`);
+    messageManager.showErrorAndClose(
+      `Le service est momentanément indisponible, veuillez réessayer ultérieurement\n(${logErrorMgs.messageUtilisateur})`
+    );
   } else if (logErrorMgs.messageUtilisateur) {
     const messageDuServeur = getMessageDuServeur(logErrorMgs);
 
-    logErrorOnScreen(messageDuServeur ? `${logErrorMgs.messageUtilisateur}\n(${messageDuServeur})` : logErrorMgs.messageUtilisateur);
+    messageManager.showErrorAndClose(
+      messageDuServeur ? `${logErrorMgs.messageUtilisateur}\n(${messageDuServeur})` : logErrorMgs.messageUtilisateur
+    );
   }
 }
 
-function getMessageDuServeur(logErrorMgs: LogErrorMsg) {
-  let messageDuServeur;
+function getMessageDuServeur(logErrorMgs: LogErrorMsg): string {
   if (logErrorMgs?.error?.message) {
     try {
       const objMessageServeur = JSON.parse(logErrorMgs?.error?.message);
       if (objMessageServeur?.errors) {
-        messageDuServeur = objMessageServeur?.errors[0]?.message;
+        return objMessageServeur?.errors[0]?.message;
       }
     } catch (e) {
-      messageDuServeur = "";
+      return "";
     }
   }
-  return messageDuServeur;
-}
-
-function logErrorOnScreen(errorMessage: string) {
-  messageManager.showErrorAndClose(errorMessage);
+  return "";
 }
 
 function logErrorOnConsole(logErrorMgs: LogErrorMsg) {

@@ -7,8 +7,8 @@ import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { ETypeInscriptionRcRca } from "@model/etatcivil/enum/ETypeInscriptionRcRca";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { aplatirTableau } from "@util/Utils";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import React, { useCallback, useEffect, useState } from "react";
@@ -21,7 +21,7 @@ interface ApercuRequetePriseEnChargePartieDroiteProps {
 
 export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePriseEnChargePartieDroiteProps> = ({ detailRequete }) => {
   /* Etat actes sélectionnés */
-  const [actesSelectionnes, setActesSelectionnes] = useState<IResultatRMCActe[]>([]);
+  const [actesSelectionnes, setActesSelectionnes] = useState<ResultatRMCActe[]>([]);
 
   /* Etat alertes associées aux aajoutAlertePossible actes sélectionnés */
   const [alertes, setAlertes] = useState<Map<string, IAlerte[]>>(new Map([]));
@@ -50,26 +50,26 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
 
   /* Gestion du clic sur une colonne de type checkbox dans le tableau des actes */
   const onClickCheckboxActe = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>, data: IResultatRMCActe): void => {
+    (event: React.ChangeEvent<HTMLInputElement>, data: ResultatRMCActe): void => {
       let nouveauxActesSelectionnes = [...actesSelectionnes];
       const estCoche: boolean = event?.target.checked;
       if (estCoche) {
         nouveauxActesSelectionnes.push(data);
       } else {
-        nouveauxActesSelectionnes = decocheElementDuTableauActe(actesSelectionnes, data.idActe);
+        nouveauxActesSelectionnes = decocheElementDuTableauActe(actesSelectionnes, data.id);
       }
-      setAddActe({ idActe: data.idActe, isChecked: estCoche });
+      setAddActe({ idActe: data.id, isChecked: estCoche });
       setActesSelectionnes(nouveauxActesSelectionnes);
       setNbrTitulairesActeHookParameters({
-        idActe: data?.idActe,
+        idActe: data.id,
         isChecked: estCoche
       });
       setTitulairesActeHookParameters({
-        idActe: data?.idActe,
+        idActe: data.id,
         isChecked: estCoche
       });
       setAlertesActeHookParameters({
-        idActe: data?.idActe,
+        idActe: data.id,
         isChecked: estCoche
       });
     },
@@ -160,6 +160,6 @@ function decocheElementDuTableauInscription(inscriptions: IResultatRMCInscriptio
   return inscriptions.filter(inscription => inscription.idInscription !== id);
 }
 
-function decocheElementDuTableauActe(actes: IResultatRMCActe[], id: string): IResultatRMCActe[] {
-  return actes.filter(inscription => inscription.idActe !== id);
+function decocheElementDuTableauActe(actes: ResultatRMCActe[], id: string): ResultatRMCActe[] {
+  return actes.filter(inscription => inscription.id !== id);
 }

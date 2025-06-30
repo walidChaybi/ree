@@ -22,7 +22,7 @@ import requeteDelivrance, {
 } from "@mock/data/requeteDelivrance";
 import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
 import { ChoixAction } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/ChoixAction";
 import {
@@ -143,8 +143,8 @@ describe("Menu réponse sans délivrance", () => {
 
   test("test de création réponse sans délivrance mariage", async () => {
     const acte = {
-      idActe: acteMariage.id
-    } as IResultatRMCActe;
+      id: acteMariage.id
+    } as ResultatRMCActe;
     const reponseSansDelivranceCS = await createReponseSansDelivranceCSPourCompositionApiMariage(requeteDelivrance, acte);
 
     expect(reponseSansDelivranceCS).toStrictEqual(reponseSansDelivranceCSMariage);
@@ -152,15 +152,15 @@ describe("Menu réponse sans délivrance", () => {
     // Test comportement entrée vide
     const reponseSansDelivranceCS2 = await createReponseSansDelivranceCSPourCompositionApiMariage(
       {} as IRequeteDelivrance,
-      {} as IResultatRMCActe
+      {} as ResultatRMCActe
     );
     expect(reponseSansDelivranceCS2).toStrictEqual({});
   });
 
   test("test de création réponse sans délivrance mariage electronique", async () => {
     const acte = {
-      idActe: acteMariageElectronique.id
-    } as IResultatRMCActe;
+      id: acteMariageElectronique.id
+    } as ResultatRMCActe;
     const reponseSansDelivranceCS = await createReponseSansDelivranceCSPourCompositionApiMariage(requeteDelivrance, acte);
 
     expect(reponseSansDelivranceCS).toStrictEqual(reponseSansDelivranceCSMariageElectronique);

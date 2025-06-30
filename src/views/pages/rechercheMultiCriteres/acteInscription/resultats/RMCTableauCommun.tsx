@@ -1,3 +1,5 @@
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
+import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { HeaderTableauRMC } from "@model/rmc/headerTableau/HeaderTableauRMC";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 
@@ -29,6 +31,8 @@ export const commonHeadersTableauRMC = [
   new TableauTypeColumn({
     keys: [HeaderTableauRMC.NATURE.nom],
     title: HeaderTableauRMC.NATURE.libelle,
+    align: "left",
+    getElement: (acte: ResultatRMCActe) => <span>{ENatureActe[acte.nature]}</span>,
     className: "ColOverflow"
   })
 ];

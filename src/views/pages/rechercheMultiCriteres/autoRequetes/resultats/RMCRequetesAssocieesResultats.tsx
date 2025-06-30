@@ -64,8 +64,8 @@ export const RMCRequetesAssocieesResultats: React.FC<RMCRequetesAssocieesResulta
         setParamsTableau(getParamsTableauDepuisHeaders(headers as unknown as IHeadersAvecParamsTableau));
       },
       apresErreur: messageErreur => {
-        console.error(`Erreur lors de la RMC requête auto : ${messageErreur}`);
-        messageManager.showError("Une erreur est survenue lors de la RMC de requêtes automatique");
+        console.error("Erreur lors de la RMC requête auto :", messageErreur);
+        messageManager.showError("Une erreur est survenue lors de la RMC automatique de requêtes");
       }
     });
   }, [requete]);

@@ -1,4 +1,4 @@
-import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 
 import { Fieldset } from "@widget/fieldset/Fieldset";
@@ -8,7 +8,7 @@ import { RMCTableauActes } from "../../acteInscription/resultats/RMCTableauActes
 import "../scss/RMCActeArchiveResultats.scss";
 
 interface RMCActeArchiveResultatsProps {
-  dataRMCActeArchive: IResultatRMCActe[];
+  dataRMCActeArchive: ResultatRMCActe[];
   dataTableauRMCActeArchive: IParamsTableau;
   setRangeActeArchive?: (range: string) => void;
   resetRMC?: boolean;
@@ -17,7 +17,7 @@ interface RMCActeArchiveResultatsProps {
   // Données propre à une fiche Acte pour sa pagination/navigation
   getLignesSuivantesOuPrecedentesActe?: (ficheIdentifiant: string, lien: string) => void;
   idFicheActe?: string;
-  dataRMCFicheActe?: IResultatRMCActe[];
+  dataRMCFicheActe?: ResultatRMCActe[];
   dataTableauRMCFicheActe?: IParamsTableau;
 }
 

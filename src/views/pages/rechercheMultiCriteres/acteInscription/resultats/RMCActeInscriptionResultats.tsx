@@ -1,7 +1,7 @@
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { TRequete } from "@model/requete/IRequete";
-import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
@@ -15,14 +15,14 @@ interface RMCActeInscriptionResultatsProps {
   typeRMC: TypeRMC;
   dataAlertes?: IAlerte[];
   dataRequete?: TRequete;
-  dataRMCActe: IResultatRMCActe[];
+  dataRMCActe: ResultatRMCActe[];
   dataTableauRMCActe: IParamsTableau;
   dataRMCInscription: IResultatRMCInscription[];
   dataTableauRMCInscription: IParamsTableau;
   setRangeActe?: (range: string) => void;
   setRangeInscription?: (range: string) => void;
   resetRMC?: boolean;
-  onClickCheckboxTableauActes?: (event: TChangeEventSurHTMLInputElement, data: IResultatRMCActe) => void;
+  onClickCheckboxTableauActes?: (event: TChangeEventSurHTMLInputElement, data: ResultatRMCActe) => void;
   onClickCheckboxTableauInscriptions?: (event: TChangeEventSurHTMLInputElement, data: IResultatRMCInscription) => void;
   nbLignesParPageActe: number;
   nbLignesParAppelActe: number;
@@ -31,7 +31,7 @@ interface RMCActeInscriptionResultatsProps {
   // Données propre à une fiche Acte pour sa pagination/navigation
   getLignesSuivantesOuPrecedentesActe?: (ficheIdentifiant: string, lien: string) => void;
   idFicheActe?: string;
-  dataRMCFicheActe?: IResultatRMCActe[];
+  dataRMCFicheActe?: ResultatRMCActe[];
   dataTableauRMCFicheActe?: IParamsTableau;
   // Données propre à une fiche Inscription pour sa pagination/navigation
   getLignesSuivantesOuPrecedentesInscription?: (ficheIdentifiant: string, lien: string) => void;

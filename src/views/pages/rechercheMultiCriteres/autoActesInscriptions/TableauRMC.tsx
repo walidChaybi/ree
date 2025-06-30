@@ -1,7 +1,7 @@
-import { useRMCActeApiHook } from "@hook/rmcActeInscription/RMCActeApiHook";
+import { CONFIG_POST_RMC_AUTO_ACTE } from "@api/configurations/etatCivil/acte/PostRMCAutoActeConfigApi";
 import { ICriteresRechercheActeInscription } from "@hook/rmcActeInscription/RMCActeInscriptionUtils";
 import { useRMCInscriptionApiHook } from "@hook/rmcActeInscription/RMCInscriptionApiHook";
-import { useRMCAutoActeApiHook } from "@hook/rmcAuto/RMCAutoActeApiHook";
+import { getCriteresRMCAuto } from "@hook/rmcAuto/RMCAutoActesInscriptionsUtils";
 import { IRMCAutoInscriptionParams, useRMCAutoInscriptionApiHook } from "@hook/rmcAuto/RMCAutoInscriptionApiHook";
 import {
   ITraitementAutoRDCSParams,
@@ -13,10 +13,11 @@ import { TRequete } from "@model/requete/IRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
-import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
-import { IParamsTableau } from "@util/GestionDesLiensApi";
+import { IParamsTableau, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
+import { logError } from "@util/LogManager";
 import messageManager from "@util/messageManager";
 import { stockageDonnees } from "@util/stockageDonnees";
 import {
@@ -30,6 +31,8 @@ import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/col
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router";
 import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
+import useFetchApi from "../../../../hooks/api/FetchApiHook";
+import { useRMCActeApiHook } from "../../../../hooks/rmc/RMCActeApiHook";
 import { RMCActeInscriptionResultats } from "../acteInscription/resultats/RMCActeInscriptionResultats";
 import { goToLinkRMC } from "../acteInscription/resultats/RMCTableauCommun";
 import { getMessageSiVerificationRestrictionRmcActeInscriptionCriteresEnErreur } from "../acteInscription/validation/VerificationRestrictionRmcActeInscription";
@@ -38,7 +41,7 @@ import { BoutonNouvelleRMCActeInscription } from "./BoutonNouvelleRMCActeInscrip
 interface ITableauRMCProps {
   requete?: TRequete;
   dataAlertes?: IAlerte[];
-  onClickCheckboxTableauActes?: (event: TChangeEventSurHTMLInputElement, data: IResultatRMCActe) => void;
+  onClickCheckboxTableauActes?: (event: TChangeEventSurHTMLInputElement, data: ResultatRMCActe) => void;
   onClickCheckboxTableauInscriptions?: (event: TChangeEventSurHTMLInputElement, data: IResultatRMCInscription) => void;
   reset?: () => void;
 }
@@ -48,7 +51,7 @@ export const TableauRMC: React.FC<ITableauRMCProps> = props => {
   const [popinAffichee, setPopinAffichee] = useState<boolean>(false);
 
   /* Etats RMC Auto */
-  const [rmcAutoActe, setRmcAutoActe] = useState<IResultatRMCActe[] | undefined>();
+  const [rmcAutoActe, setRmcAutoActe] = useState<ResultatRMCActe[] | undefined>();
   const [tableauRMCAutoActe, setTableauRMCAutoActe] = useState<IParamsTableau | undefined>();
   const [rmcAutoInscription, setRmcAutoInscription] = useState<IResultatRMCInscription[] | undefined>();
   const [tableauRMCAutoInscription, setTableauRMCAutoInscription] = useState<IParamsTableau | undefined>();
@@ -77,11 +80,33 @@ export const TableauRMC: React.FC<ITableauRMCProps> = props => {
     });
   }, [props.requete]);
 
-  /* Hooks RMC Auto */
-  const { dataRMCAutoActe, dataTableauRMCAutoActe } = useRMCAutoActeApiHook({
-    requete: paramsRMCAuto?.requete,
-    range: `0-${NB_LIGNES_PAR_APPEL_ACTE}`
-  });
+  /* RMC Auto Actes */
+  const [dataRMCAutoActe, setDataRMCAutoActe] = useState<ResultatRMCActe[]>();
+
+  const { appelApi: appelRMCAutoActe } = useFetchApi(CONFIG_POST_RMC_AUTO_ACTE);
+
+  useEffect(() => {
+    if (!paramsRMCAuto?.requete) return;
+
+    const criteresRMCAutoActe = getCriteresRMCAuto(paramsRMCAuto?.requete);
+
+    appelRMCAutoActe({
+      parametres: { body: criteresRMCAutoActe, query: { range: `0-${NB_LIGNES_PAR_APPEL_ACTE}` } },
+      apresSucces: (actes, headers) => {
+        setDataRMCAutoActe(actes.map(ResultatRMCActe.depuisDto).filter((acte): acte is ResultatRMCActe => acte !== null));
+        setTableauRMCAutoActe(getParamsTableauDepuisHeaders(headers));
+      },
+      apresErreur: erreurs => {
+        console.error("Erreur lors de la RMC auto acte :", erreurs);
+        messageManager.showError("Une erreur est survenue lors de la recherche multi-critères automatique d'actes");
+        logError({
+          messageUtilisateur: "Impossible de récupérer les actes de la recherche multi-critères automatique"
+        });
+      }
+    });
+  }, [paramsRMCAuto?.requete]);
+
+  /* RMC Auto Inscriptions */
   const { dataRMCAutoInscription, dataTableauRMCAutoInscription } = useRMCAutoInscriptionApiHook(paramsRMCAuto);
 
   /* Hook traitement auto RDCS*/
@@ -107,16 +132,15 @@ export const TableauRMC: React.FC<ITableauRMCProps> = props => {
   const traitementAutoRDCSEnCours = useTraitementAutoRDCSHook(traitementAutoRDCSParams);
 
   /* Hooks RMC manuelle */
-  const { dataRMCActe, dataTableauRMCActe } = useRMCActeApiHook(criteresRechercheActe);
+  const resultatsRMCActe = useRMCActeApiHook(criteresRechercheActe);
   const { dataRMCInscription, dataTableauRMCInscription } = useRMCInscriptionApiHook(criteresRechercheInscription);
 
   /* Actualisation des résultats de la RMC */
   useEffect(() => {
-    if (dataRMCAutoActe && dataTableauRMCAutoActe) {
+    if (dataRMCAutoActe) {
       setRmcAutoActe(dataRMCAutoActe);
-      setTableauRMCAutoActe(dataTableauRMCAutoActe);
     }
-  }, [dataRMCAutoActe, dataTableauRMCAutoActe]);
+  }, [dataRMCAutoActe]);
 
   useEffect(() => {
     if (dataRMCAutoInscription && dataTableauRMCAutoInscription) {
@@ -126,11 +150,10 @@ export const TableauRMC: React.FC<ITableauRMCProps> = props => {
   }, [dataRMCAutoInscription, dataTableauRMCAutoInscription]);
 
   useEffect(() => {
-    if (dataRMCActe && dataTableauRMCActe) {
-      setRmcAutoActe(dataRMCActe);
-      setTableauRMCAutoActe(dataTableauRMCActe);
-    }
-  }, [dataRMCActe, dataTableauRMCActe]);
+    if (!resultatsRMCActe) return;
+    setRmcAutoActe(resultatsRMCActe.dataRMCActe);
+    setTableauRMCAutoActe(resultatsRMCActe.dataTableauRMCActe);
+  }, [resultatsRMCActe]);
 
   useEffect(() => {
     if (dataRMCInscription && dataTableauRMCInscription) {

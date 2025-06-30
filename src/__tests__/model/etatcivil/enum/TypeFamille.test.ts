@@ -1,26 +1,6 @@
 import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
 import { expect, test } from "vitest";
 
-test("Attendu: estTypeFamilleProjetActe de TypeFamille fonctionne correctement", () => {
-  expect(TypeFamille.estTypeFamilleProjetActe(TypeFamille.AFF)).toBeTruthy();
-  expect(TypeFamille.estTypeFamilleProjetActe(TypeFamille.OPT)).toBeTruthy();
-  expect(TypeFamille.estTypeFamilleProjetActe(TypeFamille.PR)).toBeTruthy();
-  expect(TypeFamille.estTypeFamilleProjetActe(TypeFamille.XDX)).toBeTruthy();
-
-  expect(TypeFamille.estTypeFamilleProjetActe(TypeFamille.ACQ)).toBeFalsy();
-  expect(TypeFamille.estTypeFamilleProjetActe(TypeFamille.CSL)).toBeFalsy();
-  expect(TypeFamille.estTypeFamilleProjetActe(TypeFamille.DEP)).toBeFalsy();
-  expect(TypeFamille.estTypeFamilleProjetActe(TypeFamille.COL)).toBeFalsy();
-  expect(TypeFamille.estTypeFamilleProjetActe(TypeFamille.AR2)).toBeFalsy();
-  expect(TypeFamille.estTypeFamilleProjetActe(TypeFamille.AR3)).toBeFalsy();
-  expect(TypeFamille.estTypeFamilleProjetActe(TypeFamille.OP2)).toBeFalsy();
-  expect(TypeFamille.estTypeFamilleProjetActe(TypeFamille.OP3)).toBeFalsy();
-  expect(TypeFamille.estTypeFamilleProjetActe(TypeFamille.JUG)).toBeFalsy();
-  expect(TypeFamille.estTypeFamilleProjetActe(TypeFamille.MAR)).toBeFalsy();
-  expect(TypeFamille.estTypeFamilleProjetActe(TypeFamille.CPN)).toBeFalsy();
-  expect(TypeFamille.estTypeFamilleProjetActe(TypeFamille.PAC)).toBeFalsy();
-});
-
 test.each([
   {
     cle: "ACQ",
@@ -53,9 +33,6 @@ test.each([
     cle: "PAC",
     libelle: "Etranger ayant conclu un PACS en France"
   }
-])(
-  "DOIT afficher le libelle '$libelle' QUAND le clé de l'enum TypeFamille est '$cle'",
-  async params => {
-    expect(TypeFamille.getEnumFor(params.cle).libelle).toBe(params.libelle);
-  }
-);
+])("DOIT afficher le libelle '$libelle' QUAND le clé de l'enum TypeFamille est '$cle'", async params => {
+  expect(TypeFamille.getEnumFor(params.cle).libelle).toBe(params.libelle);
+});

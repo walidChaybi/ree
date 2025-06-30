@@ -1,8 +1,8 @@
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { A_NE_PAS_DELIVRER, DESCRIPTION_SAGA, TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
-import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import {
   ErreurResult,
   IndexAction,
@@ -103,12 +103,12 @@ test("aGenreIndetermine", () => {
 // Contrôles -------------------------------------------------------------
 
 type casType = {
-  actes?: IResultatRMCActe[];
+  actes?: ResultatRMCActe[];
   inscriptions?: IResultatRMCInscription[];
 };
 
 test("nombreActesSelectionnesDifferentDeUn", () => {
-  const acte = "test" as unknown as IResultatRMCActe;
+  const acte = "test" as unknown as ResultatRMCActe;
   const inscription = "test" as unknown as IResultatRMCInscription;
   const casOK: casType[] = [
     {
@@ -143,7 +143,7 @@ test("nombreActesSelectionnesDifferentDeUn", () => {
 });
 
 test("choixDifferentNonDetenuEtnombreActesSelectionnesDifferentDeUnOuZero", () => {
-  const acte = "test" as unknown as IResultatRMCActe;
+  const acte = "test" as unknown as ResultatRMCActe;
   const inscription = "test" as unknown as IResultatRMCInscription;
   const casOK: (casType & { indexMenu: number })[] = [
     {

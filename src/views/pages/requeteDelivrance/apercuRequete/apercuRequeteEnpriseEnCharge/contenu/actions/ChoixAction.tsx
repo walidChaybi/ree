@@ -6,9 +6,8 @@ import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
-import { getLibelle } from "@util/Utils";
+import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import React, { useContext } from "react";
 import { MenuDelivrerCS } from "./MenuDelivrerCS";
@@ -19,11 +18,10 @@ import "./scss/ChoixAction.scss";
 
 export interface IChoixActionDelivranceProps {
   requete: IRequeteDelivrance;
-  actes?: IResultatRMCActe[];
+  actes?: ResultatRMCActe[];
   inscriptions?: IResultatRMCInscription[];
   inscriptionsRC?: IInscriptionRc[];
   dataHistory?: any;
-  menuFermer?: boolean;
   titulairesActe?: Map<string, ITitulaireActe[]>;
   nbrTitulairesActe?: Map<string, number>;
   alertesActe?: IAlerte[];
@@ -32,10 +30,8 @@ export interface IChoixActionDelivranceProps {
 export const ChoixAction: React.FC<IChoixActionDelivranceProps> = props => {
   const { utilisateurConnecte } = useContext(RECEContextData);
   const checkSiMenuTransferer = () => {
-    const statutPriseEnCharge =
-      props.requete.statutCourant.statut === StatutRequete.PRISE_EN_CHARGE;
-    const mAppartient =
-      utilisateurConnecte?.idUtilisateur === props.requete.idUtilisateur;
+    const statutPriseEnCharge = props.requete.statutCourant.statut === StatutRequete.PRISE_EN_CHARGE;
+    const mAppartient = utilisateurConnecte?.idUtilisateur === props.requete.idUtilisateur;
 
     const utilisateurDansSCEC = utilisateurConnecte?.service?.estDansScec;
 
@@ -44,7 +40,7 @@ export const ChoixAction: React.FC<IChoixActionDelivranceProps> = props => {
   const sousType = props.requete.sousType;
 
   return (
-    <Fieldset titre={getLibelle("Actions")}>
+    <Fieldset titre={"Actions"}>
       <div className="ChoixAction">
         {SousTypeDelivrance.estRDDouRDCouRDDP(sousType) && (
           <>

@@ -1,14 +1,16 @@
 import { EStatutFiche } from "@model/etatcivil/enum/EStatutFiche";
 import { ETypeInscriptionRcRca } from "@model/etatcivil/enum/ETypeInscriptionRcRca";
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { NatureRca } from "@model/etatcivil/enum/NatureRca";
-import { TypeRepertoire } from "@model/etatcivil/enum/TypeRepertoire";
-import { IRMCRequestActesInscriptions } from "@model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
+import { ETypeFamille } from "@model/etatcivil/enum/TypeFamille";
+import { ETypeRepertoire, TypeRepertoire } from "@model/etatcivil/enum/TypeRepertoire";
+import { ICriteresRMCActesInscriptions } from "@model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { RMCRepertoire } from "@model/rmc/acteInscription/rechercheForm/IRMCRepertoire";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import DateUtils from "@util/DateUtils";
-import { formatNom, formatNoms, formatPrenoms, getValeurOuUndefined, getValeurOuVide } from "@util/Utils";
+import { formatNom, formatNoms, formatPrenoms, getValeurOuVide } from "@util/Utils";
 import { getCriteresTitulaire } from "./mapping/RMCMappingUtil";
 
 export interface ICriteresRechercheActeInscription {
@@ -21,7 +23,7 @@ export interface ICriteresRechercheActeInscription {
 }
 
 /** Critères de recherche: mapping avant appel d'api */
-export function mappingCriteres(criteres: IRMCActeInscription): IRMCRequestActesInscriptions {
+export const mappingCriteres = (criteres: IRMCActeInscription): ICriteresRMCActesInscriptions => {
   return {
     // Filtre Titulaire
     ...getCriteresTitulaire(criteres),
@@ -29,25 +31,25 @@ export function mappingCriteres(criteres: IRMCActeInscription): IRMCRequestActes
     dateCreationDebut: DateUtils.getDateDebutFromDateCompose(criteres.datesDebutFinAnnee?.dateDebut),
     dateCreationFin: DateUtils.getDateFinFromDateCompose(criteres.datesDebutFinAnnee?.dateFin),
 
-    // Filtre Registre & Réppertoire Civile
-    natureActe: getValeurOuUndefined(criteres.registreRepertoire?.registre?.natureActe),
-    familleRegistre: getValeurOuUndefined(criteres.registreRepertoire?.registre?.familleRegistre),
-    posteOuPocopa: getValeurOuUndefined(criteres.registreRepertoire?.registre?.pocopa?.cle),
-    numeroActe: getValeurOuUndefined(criteres.registreRepertoire?.registre?.numeroActe?.numeroActeOuOrdre),
-    anneeRegistre: getValeurOuUndefined(criteres.registreRepertoire?.registre?.anneeRegistre),
-    numeroBisTer: getValeurOuUndefined(criteres.registreRepertoire?.registre?.numeroActe?.numeroBisTer),
-    aPartirDeNumeroActe: getValeurOuUndefined(criteres.registreRepertoire?.registre?.numeroActe?.aPartirDe),
-    support1: getValeurOuUndefined(criteres.registreRepertoire?.registre?.registreSupport?.supportUn),
-    support2: getValeurOuUndefined(criteres.registreRepertoire?.registre?.registreSupport?.supportDeux),
-    numeroInscription: getValeurOuUndefined(criteres.registreRepertoire?.repertoire?.numeroInscription),
-    typeRepertoire: getValeurOuUndefined(criteres.registreRepertoire?.repertoire?.typeRepertoire),
+    // Filtre Registre & Répertoire Civil
+    natureActe: (criteres.registreRepertoire?.registre?.natureActe as keyof typeof ENatureActe) || undefined,
+    familleRegistre: (criteres.registreRepertoire?.registre?.familleRegistre as keyof typeof ETypeFamille) || undefined,
+    posteOuPocopa: criteres.registreRepertoire?.registre?.pocopa?.cle || undefined,
+    numeroActe: criteres.registreRepertoire?.registre?.numeroActe?.numeroActeOuOrdre || undefined,
+    anneeRegistre: criteres.registreRepertoire?.registre?.anneeRegistre || undefined,
+    numeroBisTer: criteres.registreRepertoire?.registre?.numeroActe?.numeroBisTer || undefined,
+    aPartirDeNumeroActe: criteres.registreRepertoire?.registre?.numeroActe?.aPartirDe || undefined,
+    support1: criteres.registreRepertoire?.registre?.registreSupport?.supportUn || undefined,
+    support2: criteres.registreRepertoire?.registre?.registreSupport?.supportDeux || undefined,
+    numeroInscription: criteres.registreRepertoire?.repertoire?.numeroInscription || undefined,
+    typeRepertoire: (criteres.registreRepertoire?.repertoire?.typeRepertoire as keyof typeof ETypeRepertoire) || undefined,
     natureRcRca: RMCRepertoire.getNatureRcRca(criteres.registreRepertoire?.repertoire),
-    jourDateEvenement: getValeurOuUndefined(criteres.registreRepertoire?.evenement?.dateEvenement?.jour),
-    moisDateEvenement: getValeurOuUndefined(criteres.registreRepertoire?.evenement?.dateEvenement?.mois),
-    anneeDateEvenement: getValeurOuUndefined(criteres.registreRepertoire?.evenement?.dateEvenement?.annee),
-    paysEvenement: getValeurOuUndefined(criteres.registreRepertoire?.evenement?.paysEvenement)
+    jourDateEvenement: criteres.registreRepertoire?.evenement?.dateEvenement?.jour || undefined,
+    moisDateEvenement: criteres.registreRepertoire?.evenement?.dateEvenement?.mois || undefined,
+    anneeDateEvenement: criteres.registreRepertoire?.evenement?.dateEvenement?.annee || undefined,
+    paysEvenement: criteres.registreRepertoire?.evenement?.paysEvenement || undefined
   };
-}
+};
 
 /** RC/RCA/PACS: mapping après appel d'api */
 export function mappingInscriptions(data: any): IResultatRMCInscription[] {
@@ -75,13 +77,12 @@ export function mappingInscriptions(data: any): IResultatRMCInscription[] {
   });
 }
 
-export function rechercherRepertoireAutorise(criteres: IRMCRequestActesInscriptions): boolean {
+export function rechercherRepertoireAutorise(criteres: ICriteresRMCActesInscriptions): boolean {
   return !(criteres.natureActe || criteres.familleRegistre || criteres.posteOuPocopa || criteres.numeroActe || criteres.anneeRegistre);
 }
 
-export function rechercherActeAutorise(criteres: IRMCRequestActesInscriptions): boolean {
-  return !(criteres.typeRepertoire || criteres.natureRcRca || criteres.numeroInscription);
-}
+export const rmcActeAutorisee = (criteres: ICriteresRMCActesInscriptions): boolean =>
+  !(criteres.typeRepertoire || criteres.natureRcRca || criteres.numeroInscription);
 
 function getNatureInscription(categorie: string, nature: string): string {
   switch (categorie?.toUpperCase()) {

@@ -20,6 +20,17 @@ export interface IDateCompose {
   minute?: string;
 }
 
+export interface IDateHeureDto extends IDateDto {
+  heure?: number;
+  minute?: number;
+}
+
+export interface IDateDto {
+  jour?: number;
+  mois?: number;
+  annee?: number;
+}
+
 export type TDateArrayDTO = [annee: number, mois: number, jour: number];
 
 export enum FormatDate {

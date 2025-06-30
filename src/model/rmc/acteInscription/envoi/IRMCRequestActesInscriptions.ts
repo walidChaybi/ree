@@ -1,11 +1,11 @@
-import { NatureActe } from "../../../etatcivil/enum/NatureActe";
-import { TypeFamille } from "../../../etatcivil/enum/TypeFamille";
-import { TypeRepertoire } from "../../../etatcivil/enum/TypeRepertoire";
+import { ENatureActe } from "../../../etatcivil/enum/NatureActe";
+import { ETypeFamille } from "../../../etatcivil/enum/TypeFamille";
+import { ETypeRepertoire } from "../../../etatcivil/enum/TypeRepertoire";
 
 export interface ICriteresRMCAutoActeInscription {
-  criteres: IRMCRequestActesInscriptions[];
+  criteres: ICriteresRMCActesInscriptions[];
 }
-export interface IRMCRequestActesInscriptions {
+export interface ICriteresRMCActesInscriptions {
   // Filtre Titulaire
   nomTitulaire?: string;
   prenomTitulaire?: string;
@@ -19,10 +19,10 @@ export interface IRMCRequestActesInscriptions {
   dateCreationDebut?: Date;
   dateCreationFin?: Date;
 
-  // Filtre Registre & Réppertoire Civile
+  // Filtres Registre & Répertoire Civil
   // Registre
-  natureActe?: NatureActe;
-  familleRegistre?: TypeFamille;
+  natureActe?: keyof typeof ENatureActe;
+  familleRegistre?: keyof typeof ETypeFamille;
   posteOuPocopa?: string;
   numeroActe?: string;
   aPartirDeNumeroActe?: boolean;
@@ -32,7 +32,7 @@ export interface IRMCRequestActesInscriptions {
   support2?: string;
   //Repertoire
   numeroInscription?: string;
-  typeRepertoire?: TypeRepertoire;
+  typeRepertoire?: keyof typeof ETypeRepertoire;
   natureRcRca?: string;
   // Evenement
   jourDateEvenement?: string;

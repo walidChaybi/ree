@@ -3,8 +3,8 @@ import { IActionOption } from "@model/requete/IActionOption";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
 import { estRenseigne } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
@@ -30,7 +30,7 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
   const refs = useRef([]);
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [actes, setActes] = useState<IResultatRMCActe[] | undefined>();
+  const [actes, setActes] = useState<ResultatRMCActe[] | undefined>();
   const [inscriptions, setInscriptions] = useState<IResultatRMCInscription[] | undefined>();
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
@@ -53,7 +53,7 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
       redirection({
         navigate,
         location,
-        idActe: actes?.[0] ? actes[0].idActe : "",
+        idActe: actes?.[0] ? actes[0].id : "",
         idRequete: updateChoixDelivranceResultat?.idRequete,
         index
       });
@@ -81,7 +81,7 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
       setCourrierEcParams({
         ...compositionCourrierAutomatique(choixDelivrance, options, props.requete),
         requete: requeteAvecChoixDelivrance,
-        idActe: actes[0]?.idActe,
+        idActe: actes[0]?.id,
         handleDocumentEnregistre: redirectionCallback,
         setOperationEnCours
       });

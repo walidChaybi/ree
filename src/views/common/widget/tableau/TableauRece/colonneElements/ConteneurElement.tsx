@@ -5,84 +5,46 @@ import React, { PropsWithChildren, useEffect, useState } from "react";
 import { ConteneurElementContext } from "./ConteneurElementContext";
 import "./scss/ColonneElements.scss";
 
-interface IConteneurElementProps<
-  TData,
-  TIdentifiant,
-  TEvenement extends React.SyntheticEvent
-> {
+interface IConteneurElementProps<TData, TIdentifiant, TEvenement extends React.SyntheticEvent> {
   identifiantCourant: TIdentifiant;
   data: TData;
-  handleInteractionUtilisateur?: (
-    event: TEvenement,
-    data: TData,
-    cle?: string
-  ) => void;
+  handleInteractionUtilisateur?: (event: TEvenement, data: TData, cle?: string) => void;
   handleEstSelectionne?: (data: TData) => boolean;
   handleEstDesactive?: (data: TData) => boolean;
-  handleAfficheAvertissement?: (
-    estSelectionne: boolean,
-    data: TData
-  ) => boolean;
+  handleAfficheAvertissement?: (estSelectionne: boolean, data: TData) => boolean;
   messageInfoBulleEstDesactive?: string;
 }
 
-export type IConteneurElementPropsPartielles<
-  TData,
-  TIdentifiant,
-  TEvenement extends React.SyntheticEvent
-> = PropsPartielles<
+export type IConteneurElementPropsPartielles<TData, TIdentifiant, TEvenement extends React.SyntheticEvent> = PropsPartielles<
   IConteneurElementProps<TData, TIdentifiant, TEvenement>,
   "identifiantCourant" | "data"
 >;
 
-const ConteneurElement = <
-  TData,
-  TIdentifiant,
-  TEvenement extends React.SyntheticEvent
->({
+const ConteneurElement = <TData, TIdentifiant, TEvenement extends React.SyntheticEvent>({
   data: dataProps,
   handleEstSelectionne: handleEstSelectionneProps,
   handleEstDesactive: handleEstDesactiveProps,
   handleAfficheAvertissement: handleAfficheAvertissementProps,
   ...props
-}: PropsWithChildren<
-  IConteneurElementProps<TData, TIdentifiant, TEvenement>
->): React.ReactElement => {
+}: PropsWithChildren<IConteneurElementProps<TData, TIdentifiant, TEvenement>>): React.ReactElement => {
   const [estSelectionne, setEstSelectionne] = useState<boolean>(false);
   const [estDesactive, setEstDesactive] = useState<boolean>(false);
-  const [afficheAvertissement, setAfficheAvertissement] =
-    useState<boolean>(false);
+  const [afficheAvertissement, setAfficheAvertissement] = useState<boolean>(false);
 
-  const handleInteractionUtilisateur: (
-    event: TEvenement,
-    data: TData,
-    cle?: string
-  ) => void =
-    props.handleInteractionUtilisateur ??
-    ((event: TEvenement, data: TData, cle?: string) => {});
+  const handleInteractionUtilisateur: (event: TEvenement, data: TData, cle?: string) => void =
+    props.handleInteractionUtilisateur ?? ((event: TEvenement, data: TData, cle?: string) => {});
 
   useEffect(() => {
-    handleEstSelectionneProps &&
-      setEstSelectionne(handleEstSelectionneProps(dataProps));
+    handleEstSelectionneProps && setEstSelectionne(handleEstSelectionneProps(dataProps));
   }, [handleEstSelectionneProps, dataProps]);
 
   useEffect(() => {
-    handleEstDesactiveProps &&
-      setEstDesactive(handleEstDesactiveProps(dataProps));
+    handleEstDesactiveProps && setEstDesactive(handleEstDesactiveProps(dataProps));
   }, [handleEstDesactiveProps, dataProps]);
 
   useEffect(() => {
-    handleAfficheAvertissementProps &&
-      !estDesactive &&
-      setAfficheAvertissement(
-        handleAfficheAvertissementProps(estSelectionne, dataProps)
-      );
-  }, [
-    handleAfficheAvertissementProps,
-    dataProps,
-    estSelectionne,
-    estDesactive
-  ]);
+    handleAfficheAvertissementProps && !estDesactive && setAfficheAvertissement(handleAfficheAvertissementProps(estSelectionne, dataProps));
+  }, [handleAfficheAvertissementProps, dataProps, estSelectionne, estDesactive]);
 
   return (
     <ConteneurElementContext.Provider
@@ -100,24 +62,14 @@ const ConteneurElement = <
       >
         {props.children}
         {afficheAvertissement && <WarningIcon className="WarningIcon" />}
-        {estDesactive && props.messageInfoBulleEstDesactive && (
-          <InfoIcon className="InfoIcon" />
-        )}
+        {estDesactive && props.messageInfoBulleEstDesactive && <InfoIcon className="InfoIcon" />}
       </div>
     </ConteneurElementContext.Provider>
   );
 };
 
-export function getConteneurAvecElement<
-  TData,
-  TIdentifiant,
-  TEvenement extends React.SyntheticEvent
->(
-  conteneurPropsPartielles: IConteneurElementPropsPartielles<
-    TData,
-    TIdentifiant,
-    TEvenement
-  >,
+export function getConteneurAvecElement<TData, TIdentifiant, TEvenement extends React.SyntheticEvent>(
+  conteneurPropsPartielles: IConteneurElementPropsPartielles<TData, TIdentifiant, TEvenement>,
   getIdentifiant: (data: TData) => TIdentifiant,
   filtreAffichageElement: (data: TData) => boolean,
   getElement: (data: TData) => JSX.Element,

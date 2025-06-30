@@ -2,21 +2,20 @@ import { reinitialiserOnClick } from "@composant/menuTransfert/MenuTransfertUtil
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { TypeActe } from "@model/etatcivil/enum/TypeActe";
 import { A_NE_PAS_DELIVRER, TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
+import { IActionOption } from "@model/requete/IActionOption";
+import { OptionCourrier, OptionsCourrier } from "@model/requete/IOptionCourrier";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { DocumentEC } from "@model/requete/enum/DocumentEC";
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { IActionOption } from "@model/requete/IActionOption";
-import { OptionCourrier, OptionsCourrier } from "@model/requete/IOptionCourrier";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { PATH_EDITION } from "@router/ReceUrls";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { IBoutonPopin } from "@widget/popin/ConfirmationPopin";
@@ -47,7 +46,7 @@ export const enum IndexAction {
 type BoutonsActionPopinType = [string, () => void];
 type ControleCoherenceType = {
   indexMenu: number;
-  actes?: IResultatRMCActe[];
+  actes?: ResultatRMCActe[];
   inscriptions?: IResultatRMCInscription[];
   requete?: IRequeteDelivrance;
   titulairesActeMap?: Map<string, ITitulaireActe[]>;
@@ -59,7 +58,7 @@ type ControleCoherenceType = {
 };
 type ErreurType = {
   indexMenu: number;
-  acte?: IResultatRMCActe;
+  acte?: ResultatRMCActe;
   titulaires?: ITitulaireActe[];
 };
 export type ErreurResult = {
@@ -269,7 +268,7 @@ export const nombreActesSelectionnesDifferentDeUn = ({
   actes,
   inscriptions
 }: {
-  actes?: IResultatRMCActe[];
+  actes?: ResultatRMCActe[];
   inscriptions?: IResultatRMCInscription[];
 }): ErreurResult => {
   return {
@@ -282,7 +281,7 @@ export const nombreActesSelectionnesDifferentDeUn = ({
 
 export const choixDifferentNonDetenuEtnombreActesSelectionnesDifferentDeUnOuZero = (
   props: Pick<ErreurType, "indexMenu"> & {
-    actes?: IResultatRMCActe[];
+    actes?: ResultatRMCActe[];
     inscriptions?: IResultatRMCInscription[];
   }
 ): ErreurResult => {
@@ -298,7 +297,7 @@ export const choixDifferentNonDetenuEtnombreActesSelectionnesDifferentDeUnOuZero
 
 const corpsActeNonDisponible = (props: Pick<ErreurType, "acte">): ErreurResult => {
   return {
-    enErreur: props.acte?.type === TypeActe.INCONNU.libelle,
+    enErreur: props.acte?.type === "INCONNU",
     popinErreur: {
       message: "Il n'y a pas de corps disponible pour l'acte sélectionné, sa délivrance n'est pas possible à ce jour."
     }
@@ -322,7 +321,7 @@ const titulairesMultiples = (
 
 const delivranceActeDeces = (props: Omit<ErreurType, "titulaires">): ErreurResult => {
   return {
-    enErreur: estChoixExtraitAvecOuSansFiliation(props.indexMenu) && props.acte?.nature === NatureActeRequete.DECES.libelle,
+    enErreur: estChoixExtraitAvecOuSansFiliation(props.indexMenu) && props.acte?.nature === "DECES",
     popinErreur: {
       message: "Pas de délivrance d'extrait avec ou sans filiation pour un acte de décès."
     }
@@ -350,7 +349,7 @@ const genresIndeterminesOuIdentiquesNaissance = (props: ErreurType): ErreurResul
       estChoixExtraitPlurilingue(props.indexMenu) &&
       (aGenreIdentique(genres.parents[0], genres.parents[1]) ||
         aGenreIndetermine([genres.titulaire, genres.parents[0], genres.parents[1]])) &&
-      props.acte?.nature === NatureActeRequete.NAISSANCE.libelle,
+      props.acte?.nature === "NAISSANCE",
     popinErreur: {
       message: "Pas de délivrance d'extrait plurilingue de naissance avec une personne de genre indéterminé ou des parents de même sexe."
     }
@@ -363,7 +362,7 @@ const genresIndeterminesOuIdentiquesMariage = (props: ErreurType): ErreurResult 
     enErreur:
       estChoixExtraitPlurilingue(props.indexMenu) &&
       (aGenreIdentique(genres.titulaire, genres.conjoint) || aGenreIndetermine([genres.titulaire, genres.conjoint])) &&
-      props.acte?.nature === NatureActeRequete.MARIAGE.libelle,
+      props.acte?.nature === "MARIAGE",
     popinErreur: {
       message: "Pas de délivrance d'extrait plurilingue de mariage pour des personnes de même sexe ou de genre indéterminé."
     }
@@ -377,7 +376,7 @@ const genresIndeterminesOuIdentiquesDeces = (props: ErreurType): ErreurResult =>
       estChoixExtraitPlurilingue(props.indexMenu) &&
       (aGenreIdentique(genres.parents[0], genres.parents[1]) ||
         aGenreIndetermine([genres.titulaire, genres.parents[0], genres.parents[1]])) &&
-      props.acte?.nature === NatureActeRequete.DECES.libelle,
+      props.acte?.nature === "DECES",
     popinErreur: {
       message: "Pas de délivrance d'extrait plurilingue de décès avec une personne de genre indéterminé ou des parents de même sexe."
     }
@@ -416,8 +415,8 @@ export const controleCoherenceEntreDocumentSelectionneEtActionDelivrer = ({
     const continuer = () => setMessagesBloquant([]);
 
     const acte = actes?.[0];
-    const nbTitulaires = acte ? nbTitulairesActeMap?.get(acte.idActe) : 0;
-    const titulaires = acte ? titulairesActeMap?.get(acte.idActe) : undefined;
+    const nbTitulaires = acte ? nbTitulairesActeMap?.get(acte.id) : 0;
+    const titulaires = acte ? titulairesActeMap?.get(acte.id) : undefined;
     const boutonOK = getBoutonsActionPopin([["OK", fermer]]);
     const boutonsOuiNon = getBoutonsActionPopin([
       ["Oui", continuer],

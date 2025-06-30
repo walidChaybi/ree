@@ -1,3 +1,4 @@
+import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { RMCActeInscriptionResultats } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCActeInscriptionResultats";
 import { render, screen } from "@testing-library/react";
 import {
@@ -7,14 +8,14 @@ import {
   NB_LIGNES_PAR_PAGE_INSCRIPTION
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { expect, test } from "vitest";
-import { DataRMCActeAvecResultat, DataTableauActe } from "../../../../../mock/data/RMCActe";
+import { DataRMCActeAvecResultatDto, DataTableauActe } from "../../../../../mock/data/RMCActe";
 import { DataRMCInscriptionAvecResultat, DataTableauInscription } from "../../../../../mock/data/RMCInscription";
 
 test("renders Fielset Recherche Multi Critères => Seulement des actes", () => {
   const { container } = render(
     <RMCActeInscriptionResultats
       typeRMC="Classique"
-      dataRMCActe={DataRMCActeAvecResultat}
+      dataRMCActe={DataRMCActeAvecResultatDto.map(ResultatRMCActe.depuisDto).filter((acte): acte is ResultatRMCActe => acte !== null)}
       dataTableauRMCActe={DataTableauActe}
       dataRMCInscription={[]}
       dataTableauRMCInscription={{}}

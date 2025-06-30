@@ -1,15 +1,20 @@
+import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { RMCTableauActes } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauActes";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { NB_LIGNES_PAR_APPEL_ACTE, NB_LIGNES_PAR_PAGE_ACTE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { RouterProvider } from "react-router";
 import { beforeAll, expect, test } from "vitest";
 import { createTestingRouter, mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
-import { DataRMCActeAvecResultat, DataTableauActe } from "../../../../../mock/data/RMCActe";
+import { DataRMCActeAvecResultatDto, DataTableauActe } from "../../../../../mock/data/RMCActe";
 import requeteDelivrance from "../../../../../mock/data/requeteDelivrance";
 
 beforeAll(() => {
   mockFenetreFicheTestFunctions();
 });
+
+const resultatsRMCActe: ResultatRMCActe[] = DataRMCActeAvecResultatDto.map(ResultatRMCActe.depuisDto).filter(
+  (acte): acte is ResultatRMCActe => acte !== null
+);
 
 test("renders Resultat Acte Recherche Multi Critères => Avec résultat.", () => {
   const router = createTestingRouter(
@@ -19,7 +24,7 @@ test("renders Resultat Acte Recherche Multi Critères => Avec résultat.", () =>
         element: (
           <RMCTableauActes
             typeRMC="Classique"
-            dataRMCActe={DataRMCActeAvecResultat}
+            dataRMCActe={resultatsRMCActe}
             dataTableauRMCActe={DataTableauActe}
             nbLignesParPage={NB_LIGNES_PAR_PAGE_ACTE}
             nbLignesParAppel={NB_LIGNES_PAR_APPEL_ACTE}
@@ -43,7 +48,7 @@ test.skip("Ouverture d'un acte.", () => {
         element: (
           <RMCTableauActes
             typeRMC="Classique"
-            dataRMCActe={DataRMCActeAvecResultat}
+            dataRMCActe={resultatsRMCActe}
             dataTableauRMCActe={DataTableauActe}
             nbLignesParPage={NB_LIGNES_PAR_PAGE_ACTE}
             nbLignesParAppel={NB_LIGNES_PAR_APPEL_ACTE}
@@ -74,7 +79,7 @@ test.skip("Ouverture d'un acte et navigation via bouton Suivant.", () => {
         element: (
           <RMCTableauActes
             typeRMC="Classique"
-            dataRMCActe={DataRMCActeAvecResultat}
+            dataRMCActe={resultatsRMCActe}
             dataTableauRMCActe={DataTableauActe}
             nbLignesParPage={NB_LIGNES_PAR_PAGE_ACTE}
             nbLignesParAppel={NB_LIGNES_PAR_APPEL_ACTE}
@@ -112,7 +117,7 @@ test.skip("Ouverture d'un acte et navigation via bouton Précédent.", () => {
         element: (
           <RMCTableauActes
             typeRMC="Classique"
-            dataRMCActe={DataRMCActeAvecResultat}
+            dataRMCActe={resultatsRMCActe}
             dataTableauRMCActe={DataTableauActe}
             nbLignesParPage={NB_LIGNES_PAR_PAGE_ACTE}
             nbLignesParAppel={NB_LIGNES_PAR_APPEL_ACTE}
@@ -159,7 +164,7 @@ test("renders Resultat Acte Recherche Multi Critères Auto => Avec résultat.", 
     <RMCTableauActes
       typeRMC="Auto"
       dataRequete={requeteDelivrance}
-      dataRMCActe={DataRMCActeAvecResultat}
+      dataRMCActe={resultatsRMCActe}
       dataTableauRMCActe={DataTableauActe}
       nbLignesParPage={NB_LIGNES_PAR_PAGE_ACTE}
       nbLignesParAppel={NB_LIGNES_PAR_APPEL_ACTE}

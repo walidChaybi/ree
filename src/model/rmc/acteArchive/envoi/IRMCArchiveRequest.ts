@@ -1,5 +1,5 @@
-import { NatureActe } from "../../../etatcivil/enum/NatureActe";
-import { TypeFamille } from "../../../etatcivil/enum/TypeFamille";
+import { ENatureActe } from "../../../etatcivil/enum/NatureActe";
+import { ETypeFamille } from "../../../etatcivil/enum/TypeFamille";
 
 export interface IRMCArchiveRequest {
   // Filtre Titulaire
@@ -15,8 +15,8 @@ export interface IRMCArchiveRequest {
   dateCreationFin?: Date;
 
   // Filtre Registre
-  natureActe?: NatureActe;
-  familleRegistre?: TypeFamille;
+  natureActe?: keyof typeof ENatureActe;
+  familleRegistre?: keyof typeof ETypeFamille;
   posteOuPocopa?: string;
   numeroActe?: string;
   anneeRegistre?: string;

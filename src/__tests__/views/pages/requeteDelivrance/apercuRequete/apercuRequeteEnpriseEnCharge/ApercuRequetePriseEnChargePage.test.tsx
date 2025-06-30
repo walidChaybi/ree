@@ -13,8 +13,6 @@ import PageEditionRequeteDelivrance from "../../../../../../pages/requetesDelivr
 import { createTestingRouter, mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 import MockRECEContextProvider from "../../../../../mock/context/MockRECEContextProvider";
 import { LISTE_UTILISATEURS } from "../../../../../mock/data/ListeUtilisateurs";
-import { DataRMCActeAvecResultat, DataTableauActe } from "../../../../../mock/data/RMCActe";
-import { DataRMCInscriptionAvecResultat, DataTableauInscription } from "../../../../../mock/data/RMCInscription";
 
 beforeAll(() => {
   mockFenetreFicheTestFunctions();
@@ -63,12 +61,6 @@ test.skip("renders ApercuRequetePriseEnChargePage", async () => {
         element: (
           <Navigate
             to={getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID, "a4cefb71-8457-4f6b-937e-34b49335d884")}
-            state={{
-              dataRMCAutoActe: DataRMCActeAvecResultat,
-              dataTableauRMCAutoActe: { DataTableauActe },
-              dataRMCAutoInscription: DataRMCInscriptionAvecResultat,
-              dataTableauRMCAutoInscription: { DataTableauInscription }
-            }}
           />
         )
       }
@@ -143,12 +135,6 @@ test.skip("redirection requete RDD", async () => {
         element: (
           <Navigate
             to={getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID, "a4cefb71-8457-4f6b-937e-34b49335d884")}
-            state={{
-              dataRMCAutoActe: DataRMCActeAvecResultat,
-              dataTableauRMCAutoActe: { DataTableauActe },
-              dataRMCAutoInscription: DataRMCInscriptionAvecResultat,
-              dataTableauRMCAutoInscription: { DataTableauInscription }
-            }}
           />
         )
       }
@@ -195,12 +181,6 @@ test.skip("redirection requete RDC", async () => {
         element: (
           <Navigate
             to={getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID, "a4cefb71-8457-4f6b-937e-34b49335d884")}
-            state={{
-              dataRMCAutoActe: DataRMCActeAvecResultat,
-              dataTableauRMCAutoActe: { DataTableauActe },
-              dataRMCAutoInscription: DataRMCInscriptionAvecResultat,
-              dataTableauRMCAutoInscription: { DataTableauInscription }
-            }}
           />
         )
       }
@@ -246,12 +226,6 @@ test.skip("ignorer requete", async () => {
         element: (
           <Navigate
             to={getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID, "a4cefb71-8457-4f6b-937e-34b49335d666")}
-            state={{
-              dataRMCAutoActe: DataRMCActeAvecResultat,
-              dataTableauRMCAutoActe: { DataTableauActe },
-              dataRMCAutoInscription: DataRMCInscriptionAvecResultat,
-              dataTableauRMCAutoInscription: { DataTableauInscription }
-            }}
           />
         )
       }

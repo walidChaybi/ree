@@ -14,8 +14,4 @@ export class TypeActe extends EnumWithLibelle {
   public static getEnumFor(str: string) {
     return EnumWithLibelle.getEnumFor(str, TypeActe);
   }
-
-  public static estImage(obj?: TypeActe): boolean {
-    return obj === TypeActe.IMAGE;
-  }
 }

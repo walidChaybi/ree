@@ -16,12 +16,11 @@ import {
   IReponseSansDelivranceCSPACSNonInscritComposition,
   ReponseSansDelivranceCSPACSNonInscritComposition
 } from "@model/composition/IReponseSansDelivranceCSPACSNonInscritComposition";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import messageManager from "@util/messageManager";
 
 const ERREUR_PAS_DE_REQUERENT = "Erreur inattendue: Pas de requérant pour la requête";
@@ -63,10 +62,10 @@ export const createReponseSansDelivranceCSPourCompositionApiFrancais = (
 /** TRACE_MARIAGE_ACTIF */
 export const createReponseSansDelivranceCSPourCompositionApiMariage = async (
   requete: IRequeteDelivrance,
-  acte: IResultatRMCActe | undefined
+  acte: ResultatRMCActe | undefined
 ): Promise<IReponseSansDelivranceCSMariageComposition> => {
   if (requete?.requerant && acte) {
-    const infoActe = await getInformationsFicheActe(acte.idActe);
+    const infoActe = await getInformationsFicheActe(acte.id);
     return ReponseSansDelivranceCSMariageComposition.creerReponseSansDelivranceCS(requete, mapActe(infoActe.body.data));
   }
   messageManager.showErrorAndClose(ERREUR_PAS_DE_REQUERENT);
@@ -75,7 +74,7 @@ export const createReponseSansDelivranceCSPourCompositionApiMariage = async (
 
 export function estSeulementActeMariage(
   requete: IRequeteDelivrance,
-  actes: IResultatRMCActe[] | undefined,
+  actes: ResultatRMCActe[] | undefined,
   inscriptions: IResultatRMCInscription[] | undefined
 ): boolean {
   if (requete?.type === TypeRequete.DELIVRANCE) {
@@ -89,5 +88,5 @@ export function estSeulementActeMariage(
   return true;
 }
 
-const estSeulementActeMariageSelectionne = (actes: IResultatRMCActe[] | undefined): boolean =>
-  actes?.length === 1 && actes[0].nature === NatureActe.MARIAGE.libelle;
+const estSeulementActeMariageSelectionne = (actes: ResultatRMCActe[] | undefined): boolean =>
+  actes?.length === 1 && actes[0].nature === "MARIAGE";

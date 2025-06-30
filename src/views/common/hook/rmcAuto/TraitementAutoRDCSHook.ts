@@ -10,8 +10,8 @@ import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivra
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { mappingRequeteTableauVersRequeteDelivrance } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { PATH_APERCU_REQ_TRAITEMENT } from "@router/ReceUrls";
 import messageManager from "@util/messageManager";
@@ -31,7 +31,7 @@ import {
 export interface ITraitementAutoRDCSParams {
   requete: IRequeteTableauDelivrance;
   urlCourante: string;
-  dataRMCAutoActe: IResultatRMCActe[];
+  dataRMCAutoActe: ResultatRMCActe[];
   dataRMCAutoInscription: IResultatRMCInscription[];
 }
 
@@ -107,7 +107,7 @@ export const useTraitementAutoRDCSHook = (params: ITraitementAutoRDCSParams | nu
 };
 
 const getNbInscriptionsInfos = (
-  dataRMCAutoActe?: IResultatRMCActe[],
+  dataRMCAutoActe?: ResultatRMCActe[],
   dataRMCAutoInscription?: IResultatRMCInscription[]
 ): INbInscriptionsInfos => {
   const infos: INbInscriptionsInfos = {

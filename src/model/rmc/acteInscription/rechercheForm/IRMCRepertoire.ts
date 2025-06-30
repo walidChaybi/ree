@@ -1,25 +1,19 @@
-import { INatureRca } from "@model/etatcivil/enum/NatureRca";
-import { getValeurOuUndefined } from "@util/Utils";
-import { INatureRc } from "../../../etatcivil/enum/NatureRc";
-import { TypeRepertoire } from "../../../etatcivil/enum/TypeRepertoire";
+import { ETypeRepertoire } from "../../../etatcivil/enum/TypeRepertoire";
 
 export interface IRMCRepertoire {
   numeroInscription?: string;
   typeRepertoire?: string;
-  natureInscription?: INatureRc | INatureRca;
+  natureInscription?: string;
 }
 
 export const RMCRepertoire = {
-  getNatureRcRca(repertoire?: IRMCRepertoire) {
-    let res;
+  getNatureRcRca(repertoire?: IRMCRepertoire): string | undefined {
     if (
-      repertoire &&
-      repertoire.typeRepertoire &&
-      (TypeRepertoire.getEnumFor(repertoire.typeRepertoire) === TypeRepertoire.RC ||
-        TypeRepertoire.getEnumFor(repertoire.typeRepertoire) === TypeRepertoire.RCA)
+      repertoire?.typeRepertoire &&
+      (repertoire.typeRepertoire === ETypeRepertoire.RC || repertoire.typeRepertoire === ETypeRepertoire.RCA)
     ) {
-      res = getValeurOuUndefined(repertoire.natureInscription);
+      return repertoire.natureInscription || undefined;
     }
-    return res;
+    return undefined;
   }
 };

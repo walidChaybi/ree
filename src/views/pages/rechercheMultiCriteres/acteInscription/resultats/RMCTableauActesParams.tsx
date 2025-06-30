@@ -33,23 +33,12 @@ const columnsTableauRmc = [
 export function getColonnesTableauActes<TData, TIdentifiant>(
   typeRMC: TypeRMC,
   colonneCaseACocherParamsActes: IColonneCaseACocherParams<TData, TIdentifiant>,
-  conteneurCaseACocherPropsPartielle: IConteneurElementPropsPartielles<
-    TData,
-    TIdentifiant,
-    TChangeEventSurHTMLInputElement
-  >,
+  conteneurCaseACocherPropsPartielle: IConteneurElementPropsPartielles<TData, TIdentifiant, TChangeEventSurHTMLInputElement>,
   typeRequete?: TypeRequete
 ) {
   // Les checkbox s'affichent que pour la RMC Auto d'une requête de délivrance
   if (typeRMC === "Auto" && typeRequete === TypeRequete.DELIVRANCE) {
-    return [
-      ...columnsTableauRmc,
-      getColonneCasesACocher(
-        colonneCaseACocherParamsActes,
-        undefined,
-        conteneurCaseACocherPropsPartielle
-      )
-    ];
+    return [...columnsTableauRmc, getColonneCasesACocher(colonneCaseACocherParamsActes, undefined, conteneurCaseACocherPropsPartielle)];
   }
   return columnsTableauRmc;
 }

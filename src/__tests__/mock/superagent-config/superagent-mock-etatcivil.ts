@@ -384,7 +384,7 @@ export const configEtatcivil = [
         else {
           return {
             headers: {
-              "content-range": "0-15/" + ReponseAppelRMCActe.data.registres.length,
+              "content-range": "0-15/" + ReponseAppelRMCActe.data.length,
               link: '<http://localhost:80/rece/rece-etatcivil-api/acte/rmc?range=0-100>;rel="next"'
             },
             data: ReponseAppelRMCActe.data
@@ -614,7 +614,7 @@ export const configEtatcivil = [
       if (match[1] === "/acte/rmcauto?range=0-100") {
         return {
           headers: {
-            "content-range": "0-15/" + ReponseAppelRMCActe.data.registres.length,
+            "content-range": "0-15/" + ReponseAppelRMCActe.data.length,
             link: '<http://localhost:80/rece/rece-etatcivil-api/acte/rmcauto?range=0-100>;rel="next"'
           },
           data: ReponseAppelRMCActe.data

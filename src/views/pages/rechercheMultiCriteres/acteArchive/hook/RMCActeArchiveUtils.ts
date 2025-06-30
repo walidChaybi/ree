@@ -1,11 +1,12 @@
 import { getCriteresTitulaire } from "@hook/rmcActeInscription/mapping/RMCMappingUtil";
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
+import { ETypeFamille } from "@model/etatcivil/enum/TypeFamille";
 import { IRMCArchiveRequest } from "@model/rmc/acteArchive/envoi/IRMCArchiveRequest";
 import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import DateUtils from "@util/DateUtils";
-import { getValeurOuUndefined } from "@util/Utils";
 
 /** Critères de recherche: mapping avant appel d'api */
-export function mappingCriteres(criteres: IRMCActeArchive): IRMCArchiveRequest {
+export function mappingCriteresRMCArchive(criteres: IRMCActeArchive): IRMCArchiveRequest {
   return {
     // Filtre Titulaire
     ...getCriteresTitulaire(criteres),
@@ -14,17 +15,17 @@ export function mappingCriteres(criteres: IRMCActeArchive): IRMCArchiveRequest {
     dateCreationFin: DateUtils.getDateFinFromDateCompose(criteres.datesDebutFinAnnee?.dateFin),
 
     // Filtre Registre Civile
-    natureActe: getValeurOuUndefined(criteres.registreArchive?.registre?.natureActe),
-    familleRegistre: getValeurOuUndefined(criteres.registreArchive?.registre?.familleRegistre),
-    posteOuPocopa: getValeurOuUndefined(criteres.registreArchive?.registre?.pocopa?.cle),
-    numeroActe: getValeurOuUndefined(criteres.registreArchive?.registre?.numeroActe?.numeroActeOuOrdre),
-    anneeRegistre: getValeurOuUndefined(criteres.registreArchive?.registre?.anneeRegistre),
-    numeroBisTer: getValeurOuUndefined(criteres.registreArchive?.registre?.numeroActe?.numeroBisTer),
-    support1: getValeurOuUndefined(criteres.registreArchive?.registre?.registreSupport?.supportUn),
-    support2: getValeurOuUndefined(criteres.registreArchive?.registre?.registreSupport?.supportDeux),
-    jourDateEvenement: getValeurOuUndefined(criteres.registreArchive?.evenement?.dateEvenement?.jour),
-    moisDateEvenement: getValeurOuUndefined(criteres.registreArchive?.evenement?.dateEvenement?.mois),
-    anneeDateEvenement: getValeurOuUndefined(criteres.registreArchive?.evenement?.dateEvenement?.annee),
-    paysEvenement: getValeurOuUndefined(criteres.registreArchive?.evenement?.paysEvenement)
+    natureActe: criteres.registreArchive?.registre?.natureActe as keyof typeof ENatureActe,
+    familleRegistre: criteres.registreArchive?.registre?.familleRegistre as keyof typeof ETypeFamille,
+    posteOuPocopa: criteres.registreArchive?.registre?.pocopa?.cle || undefined,
+    numeroActe: criteres.registreArchive?.registre?.numeroActe?.numeroActeOuOrdre || undefined,
+    anneeRegistre: criteres.registreArchive?.registre?.anneeRegistre || undefined,
+    numeroBisTer: criteres.registreArchive?.registre?.numeroActe?.numeroBisTer || undefined,
+    support1: criteres.registreArchive?.registre?.registreSupport?.supportUn || undefined,
+    support2: criteres.registreArchive?.registre?.registreSupport?.supportDeux || undefined,
+    jourDateEvenement: criteres.registreArchive?.evenement?.dateEvenement?.jour || undefined,
+    moisDateEvenement: criteres.registreArchive?.evenement?.dateEvenement?.mois || undefined,
+    anneeDateEvenement: criteres.registreArchive?.evenement?.dateEvenement?.annee || undefined,
+    paysEvenement: criteres.registreArchive?.evenement?.paysEvenement || undefined
   };
 }

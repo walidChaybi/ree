@@ -1,4 +1,5 @@
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
 import { MenuDelivrerCS } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrerCS";
 import {
@@ -13,7 +14,7 @@ import { describe, expect, test } from "vitest";
 import { createTestingRouter } from "../../../../../../../__tests__utils__/testsUtil";
 import MockRECEContextProvider from "../../../../../../../mock/context/MockRECEContextProvider";
 import { DOCUMENT_DELIVRANCE } from "../../../../../../../mock/data/NomenclatureDocumentDelivrance";
-import { DataRMCActeAvecResultat } from "../../../../../../../mock/data/RMCActe";
+import { DataRMCActeAvecResultatDto } from "../../../../../../../mock/data/RMCActe";
 import { DataRMCInscriptionAvecUnRCA } from "../../../../../../../mock/data/RMCInscription";
 import { idRequeteRDC, idRequeteRDCSC, requeteRDCSC } from "../../../../../../../mock/data/requeteDelivrance";
 
@@ -158,7 +159,7 @@ describe("Test MenuDelivrerCS", () => {
             <MenuDelivrerCS
               requete={requete}
               inscriptions={DataRMCInscriptionAvecUnRCA}
-              actes={DataRMCActeAvecResultat}
+              actes={DataRMCActeAvecResultatDto.map(ResultatRMCActe.depuisDto).filter((acte): acte is ResultatRMCActe => acte !== null)}
             />
           )
         }

@@ -7,8 +7,8 @@ import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import {
-  ICriteresRMCAutoActeInscription,
-  IRMCRequestActesInscriptions
+  ICriteresRMCActesInscriptions,
+  ICriteresRMCAutoActeInscription
 } from "@model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import { IRMCAutoPersonneRequest } from "@model/rmc/personne/IRMCAutoPersonneRequest";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
@@ -27,7 +27,6 @@ const URL_RESUME = "/resume";
 const URL_COUNT_TITULAIRE = "/count/titulaire";
 const URL_ETAT_CIVIL = "/repertoirecivil";
 const URL_ETAT_CIVIL_RMC = "/repertoirecivil/rmc";
-const URL_ACTE_RMC = "/acte/rmc";
 // Utilisé pour visualiser les images de l'acte dans la fiche Acte (renvoie un "InputStreamResource")
 const URL_CORPS_IMAGE = "/corps-image";
 const URL_DONNEES_POUR_COMPOSITION_ACTE_TEXTE = "/donnees-pour-composition-acte-texte";
@@ -37,7 +36,6 @@ const URL_POCOPAS_DEBUTENT_PAR = "/acte/pocopas/debutentPar";
 export const URL_MENTION = "/mentions";
 const URL_CORPS_TEXTE = "/corpstexte";
 const URL_ETAT_CIVIL_RMC_AUTO = "/repertoirecivil/rmcauto";
-const URL_ACTE_RMC_AUTO = "/acte/rmcauto";
 const URL_ALERTES_ACTE = "/alertes";
 const URL_ALERTE_ACTE = "/alerte";
 const URL_DERNIERE_DELIVRANCE_RC_RCA_PACS = "/repertoirecivil/datedernieredelivrance";
@@ -243,20 +241,7 @@ export function getInscriptionsRC(identifiant: string): Promise<any> {
   );
 }
 
-export function rechercheMultiCriteresActes(criteres: IRMCRequestActesInscriptions, range?: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.POST,
-      uri: `${URL_ACTE_RMC}`,
-      data: criteres,
-      parameters: {
-        range
-      }
-    })
-  );
-}
-
-export function rechercheMultiCriteresInscriptions(criteres: IRMCRequestActesInscriptions, range?: string): Promise<any> {
+export function rechercheMultiCriteresInscriptions(criteres: ICriteresRMCActesInscriptions, range?: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -391,19 +376,6 @@ export async function postCorpsTexte(idActe: string, corpsExtrait: string, type:
       uri: `${URL_ACTE}/${idActe}${URL_CORPS_TEXTE}`,
       parameters: { type: type.nom },
       data: { corpsExtrait }
-    })
-  );
-}
-
-export function rechercheMultiCriteresAutoActes(criteres: ICriteresRMCAutoActeInscription, range?: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.POST,
-      uri: `${URL_ACTE_RMC_AUTO}`,
-      data: criteres,
-      parameters: {
-        range
-      }
     })
   );
 }

@@ -1,4 +1,5 @@
 import { IPrenom } from "@model/etatcivil/fiche/IPrenom";
+import { IPrenomOrdonneDto } from "@model/form/commun/PrenomsForm";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { OPTION_VIDE, Option } from "./Type";
 
@@ -208,19 +209,23 @@ export const premiereLettreEnMajuscule = (str?: string) => {
   return res;
 };
 
-// Tous les autre(s) nom(s) sont affichés en majuscule et sont séparés par une ","
+/** Tous les autre(s) nom(s) sont affichés en majuscule et sont séparés par une "," */
 export const formatNoms = (noms?: string[]): string => {
   return noms ? joint(noms.map(n => n?.toLocaleUpperCase() ?? "")) : "";
 };
 
-// Tous les prénom(s)/autre(s) prénom(s) sont affichés dans l'ordre et séparés par une ","
+/** Tous les prénom(s)/autre(s) prénom(s) sont affichés dans l'ordre et séparés par une "," */
 export const formatPrenoms = (prenoms?: string[], prenomParDefaut = SANS_PRENOM_CONNU, enMajuscules = true): string => {
   return prenoms ? joint(prenoms.map(p => formatPrenom(p, prenomParDefaut, enMajuscules))) : "";
 };
 
-// Tous les prénom(s)/autre(s) prénom(s) sont affichés dans l'ordre et séparés par une ","
-export const jointPrenoms = (prenoms?: IPrenom[]): string => {
-  return prenoms ? joint(prenoms.sort((p1, p2) => compareNombre(p1.numeroOrdre, p2.numeroOrdre)).map(p => formatPrenom(p.valeur))) : "";
+/**  Tous les prénom(s)/autre(s) prénom(s) sont affichés dans l'ordre et séparés par une ","*/
+export const jointPrenoms = (prenoms?: IPrenom[] | IPrenomOrdonnes[] | IPrenomOrdonneDto[]): string => {
+  return prenoms
+    ? joint(
+        prenoms.sort((p1, p2) => compareNombre(p1.numeroOrdre, p2.numeroOrdre)).map(p => formatPrenom("valeur" in p ? p.valeur : p.prenom))
+      )
+    : "";
 };
 
 /**  @deprecated fonction inutile */
@@ -257,10 +262,6 @@ export const changeLaPlaceDunElement = (tab: any[], index: number, nouvelIndex: 
 
 export const finirAvec3petitsPoints = (texte: string, charactereAvantPoints: number) => {
   return texte.length > charactereAvantPoints ? `${texte.slice(0, charactereAvantPoints - "...".length)}...` : texte;
-};
-
-export const supprimerNullEtUndefinedDuTableau = (elements?: any[]) => {
-  return elements?.filter((el: any) => el != null);
 };
 
 export const replaceIndexByValue = (phrase: string, values: (string | number)[]) => {

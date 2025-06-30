@@ -59,7 +59,7 @@ export const RMCArchivePage: React.FC = () => {
   // Critères de recherche pour alimenter les données des fiches Acte en effet leur pagination/navigation est indépendante du tableau de résultats
   const [criteresRechercheFicheActe, setCriteresRechercheFicheActe] = useState<ICriteresRechercheActeArchive>();
 
-  const { dataRMCActe, dataTableauRMCActe } = useRMCActeArchiveApiHook(criteresRechercheActe);
+  const resultatRMCActe = useRMCActeArchiveApiHook(criteresRechercheActe);
 
   /** Récupération des résultats rmc pour une fiche Acte lors d'une navigation */
   const resultatRMCFicheActe = useRMCActeArchiveApiHook(criteresRechercheFicheActe);
@@ -119,10 +119,10 @@ export const RMCArchivePage: React.FC = () => {
         <div className="DeuxColonnes FormulaireRMCAI">{blocsForm}</div>
         <RMCBoutons {...boutonsProps} />
       </Formulaire>
-      {dataRMCActe && dataTableauRMCActe && (
+      {resultatRMCActe?.dataRMCActe && resultatRMCActe.dataTableauRMCActe && (
         <RMCActeArchiveResultats
-          dataRMCActeArchive={dataRMCActe}
-          dataTableauRMCActeArchive={dataTableauRMCActe}
+          dataRMCActeArchive={resultatRMCActe.dataRMCActe}
+          dataTableauRMCActeArchive={resultatRMCActe.dataTableauRMCActe}
           setRangeActeArchive={setRangeActeArchive}
           resetRMC={nouvelleRecherche}
           nbLignesParAppel={NB_LIGNES_PAR_APPEL_ACTE}

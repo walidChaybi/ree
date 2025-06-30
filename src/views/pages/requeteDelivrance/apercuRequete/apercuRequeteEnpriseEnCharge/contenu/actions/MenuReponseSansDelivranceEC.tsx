@@ -1,10 +1,10 @@
 import { reinitialiserOnClick } from "@composant/menuTransfert/MenuTransfertUtil";
 import { IActionOption } from "@model/requete/IActionOption";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
-import { estRenseigne, getLibelle } from "@util/Utils";
+import { estRenseigne } from "@util/Utils";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import { ConfirmationPopin, IBoutonPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useCallback, useEffect, useRef, useState } from "react";
@@ -26,7 +26,7 @@ export const MenuReponseSansDelivranceEC: React.FC<IChoixActionDelivranceProps> 
   const navigate = useNavigate();
   const refs = useRef([]);
 
-  const [actes, setActes] = useState<IResultatRMCActe[] | undefined>();
+  const [actes, setActes] = useState<ResultatRMCActe[] | undefined>();
   const [inscriptions, setInscriptions] = useState<IResultatRMCInscription[] | undefined>();
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
@@ -47,7 +47,7 @@ export const MenuReponseSansDelivranceEC: React.FC<IChoixActionDelivranceProps> 
       redirection({
         navigate,
         location,
-        idActe: actes?.[0] ? actes[0].idActe : "",
+        idActe: actes?.[0] ? actes[0].id : "",
         idRequete: updateChoixDelivranceResultat?.idRequete,
         index
       });
@@ -101,7 +101,7 @@ export const MenuReponseSansDelivranceEC: React.FC<IChoixActionDelivranceProps> 
   return (
     <>
       <GroupeBouton
-        titre={getLibelle("Réponse sans délivrance")}
+        titre={"Réponse sans délivrance"}
         listeActions={actions}
         onSelect={handleReponseSansDelivranceMenu}
         refs={refs}

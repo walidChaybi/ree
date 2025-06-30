@@ -1,4 +1,3 @@
-import { useRMCActeApiHook } from "@hook/rmcActeInscription/RMCActeApiHook";
 import { ICriteresRechercheActeInscription } from "@hook/rmcActeInscription/RMCActeInscriptionUtils";
 import { useRMCInscriptionApiHook } from "@hook/rmcActeInscription/RMCInscriptionApiHook";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
@@ -13,6 +12,7 @@ import {
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ToastContainer } from "react-toastify";
+import { useRMCActeApiHook } from "../../../../hooks/rmc/RMCActeApiHook";
 import { RMCActeInscription } from "./RMCActeInscription";
 import { RMCActeInscriptionResultats } from "./resultats/RMCActeInscriptionResultats";
 import { goToLinkRMC } from "./resultats/RMCTableauCommun";
@@ -40,7 +40,7 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({ 
 
   const tableauResultatRef = useRef<HTMLDivElement | null>(null);
 
-  const { dataRMCActe, dataTableauRMCActe } = useRMCActeApiHook(criteresRechercheActe);
+  const resultatRMCActe = useRMCActeApiHook(criteresRechercheActe);
   const { dataRMCInscription, dataTableauRMCInscription } = useRMCInscriptionApiHook(criteresRechercheInscription);
   /** Récupération des résultats rmc pour une fiche Acte lors d'une navigation */
   const resultatRMCFicheActe = useRMCActeApiHook(criteresRechercheFicheActe);
@@ -138,9 +138,9 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({ 
     [dansFenetreExterne]
   );
   useEffect(() => {
-    if (dataRMCActe && dataTableauRMCActe && dataRMCInscription && dataTableauRMCInscription)
+    if (resultatRMCActe?.dataRMCActe && resultatRMCActe.dataTableauRMCActe && dataRMCInscription && dataTableauRMCInscription)
       tableauResultatRef?.current?.scrollIntoView({ behavior: "smooth" });
-  }, [dataRMCActe, dataTableauRMCActe, dataRMCInscription, dataTableauRMCInscription]);
+  }, [resultatRMCActe, dataRMCInscription, dataTableauRMCInscription]);
 
   return (
     <>
@@ -150,12 +150,12 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({ 
       ></OperationEnCours>
       <RMCActeInscription onSubmit={onSubmitRMCActeInscription} />
 
-      {dataRMCActe && dataTableauRMCActe && dataRMCInscription && dataTableauRMCInscription && (
+      {resultatRMCActe?.dataRMCActe && resultatRMCActe.dataTableauRMCActe && dataRMCInscription && dataTableauRMCInscription && (
         <RMCActeInscriptionResultats
           ref={tableauResultatRef}
           typeRMC="Classique"
-          dataRMCActe={dataRMCActe}
-          dataTableauRMCActe={dataTableauRMCActe}
+          dataRMCActe={resultatRMCActe.dataRMCActe}
+          dataTableauRMCActe={resultatRMCActe.dataTableauRMCActe}
           dataRMCInscription={dataRMCInscription}
           dataTableauRMCInscription={dataTableauRMCInscription}
           setRangeInscription={setRangeInscription}

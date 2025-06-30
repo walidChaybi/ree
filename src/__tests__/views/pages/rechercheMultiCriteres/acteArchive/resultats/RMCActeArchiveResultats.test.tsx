@@ -1,13 +1,16 @@
+import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { RMCActeArchiveResultats } from "@pages/rechercheMultiCriteres/acteArchive/resultats/RMCActeArchiveResultats";
 import { render, screen } from "@testing-library/react";
 import { NB_LIGNES_PAR_APPEL_REQUETE, NB_LIGNES_PAR_PAGE_REQUETE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { expect, test } from "vitest";
-import { DataRMCActeAvecResultat, DataTableauActe } from "../../../../../mock/data/RMCActe";
+import { DataRMCActeAvecResultatDto, DataTableauActe } from "../../../../../mock/data/RMCActe";
 
 test("renders Fielset Recherche Multi Critères => Seulement des actes", () => {
   const { container } = render(
     <RMCActeArchiveResultats
-      dataRMCActeArchive={DataRMCActeAvecResultat}
+      dataRMCActeArchive={DataRMCActeAvecResultatDto.map(ResultatRMCActe.depuisDto).filter(
+        (acte): acte is ResultatRMCActe => acte !== null
+      )}
       dataTableauRMCActeArchive={DataTableauActe}
       nbLignesParAppel={NB_LIGNES_PAR_APPEL_REQUETE}
       nbLignesParPage={NB_LIGNES_PAR_PAGE_REQUETE}

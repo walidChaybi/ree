@@ -1,29 +1,33 @@
 import { CONFIG_POST_RMC_ACTE } from "@api/configurations/etatCivil/acte/PostRMCActeConfigApi";
-import { IRMCActeApiHookResultat } from "@hook/rmcActeInscription/RMCActeEtActeArchiveHookUtil";
-import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
-import { getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
+import { PARAMS_TABLEAU_VIDE, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import messageManager from "@util/messageManager";
 import { useEffect, useState } from "react";
-import useFetchApi from "../../../../../hooks/api/FetchApiHook";
-import { mappingCriteresRMCArchive } from "./RMCActeArchiveUtils";
+import { IRMCActeApiHookResultat } from "../../views/common/hook/rmcActeInscription/RMCActeEtActeArchiveHookUtil";
+import {
+  ICriteresRechercheActeInscription,
+  mappingCriteres,
+  rmcActeAutorisee
+} from "../../views/common/hook/rmcActeInscription/RMCActeInscriptionUtils";
+import useFetchApi from "../api/FetchApiHook";
 
-export interface ICriteresRechercheActeArchive {
-  valeurs: IRMCActeArchive;
-  range?: string;
-  // Ajout de l'identifiant de la fiche qui a demandé la rmc (lors d'une navigation qui nécessite le rappel de la rmc pour obtenir les actes suivants ou précédents)
-  ficheIdentifiant?: string;
-}
-
-export function useRMCActeArchiveApiHook(criteres?: ICriteresRechercheActeArchive): IRMCActeApiHookResultat | null {
+export const useRMCActeApiHook = (criteres?: ICriteresRechercheActeInscription): IRMCActeApiHookResultat | null => {
   const [resultat, setResultat] = useState<IRMCActeApiHookResultat | null>(null);
   const { appelApi: rmcActe } = useFetchApi(CONFIG_POST_RMC_ACTE);
 
   useEffect(() => {
     if (!criteres?.valeurs) return;
 
-    const criteresRMC = mappingCriteresRMCArchive(criteres.valeurs);
+    const criteresRMC = mappingCriteres(criteres.valeurs);
+
+    if (!rmcActeAutorisee(criteresRMC)) {
+      setResultat({
+        dataRMCActe: [],
+        dataTableauRMCActe: PARAMS_TABLEAU_VIDE
+      });
+      return;
+    }
 
     rmcActe({
       parametres: { query: { range: criteres.range }, body: criteresRMC },
@@ -35,6 +39,7 @@ export function useRMCActeArchiveApiHook(criteres?: ICriteresRechercheActeArchiv
           //  de la fiche acte pour sa pagination/navigation
           ficheIdentifiant: criteres.ficheIdentifiant
         });
+        criteres.onFinTraitement?.();
       },
       apresErreur: e => {
         console.error("Erreur lors de la RMC acte :", e);
@@ -42,9 +47,10 @@ export function useRMCActeArchiveApiHook(criteres?: ICriteresRechercheActeArchiv
         logError({
           messageUtilisateur: "Impossible de récupérer les actes de la recherche multi-critères"
         });
+        criteres?.onErreur?.();
       }
     });
   }, [criteres]);
 
   return resultat;
-}
+};

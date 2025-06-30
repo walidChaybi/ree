@@ -9,7 +9,6 @@ import { IActionOption } from "@model/requete/IActionOption";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { receUrl } from "@router/ReceUrls";
 import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
-import { getLibelle, supprimerNullEtUndefinedDuTableau } from "@util/Utils";
 import { replaceUrl } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
@@ -80,8 +79,8 @@ export const MenuReponseSansDelivranceCS: React.FC<IChoixActionDelivranceProps> 
         });
         break;
       case INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.MARIAGE_EN_COURS_DE_VALIDITE:
-        const actes = supprimerNullEtUndefinedDuTableau(props.actes);
-        const inscriptions = supprimerNullEtUndefinedDuTableau(props.inscriptions);
+        const actes = props.actes ?? [];
+        const inscriptions = props.inscriptions?.filter(inscription => inscription !== null) ?? [];
         if (!estSeulementActeMariage(props.requete, actes, inscriptions)) {
           setHasMessageBloquant(true);
         } else {
@@ -132,10 +131,10 @@ export const MenuReponseSansDelivranceCS: React.FC<IChoixActionDelivranceProps> 
       />
       <ConfirmationPopin
         estOuvert={hasMessageBloquant}
-        messages={[getLibelle("Votre sélection n'est pas cohérente avec le choix de l'action de réponse négative.")]}
+        messages={["Votre sélection n'est pas cohérente avec le choix de l'action de réponse négative."]}
         boutons={[
           {
-            label: getLibelle("OK"),
+            label: "OK",
             action: () => {
               setHasMessageBloquant(false);
               reinitialiserOnClick(refs);

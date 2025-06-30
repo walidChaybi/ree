@@ -3,11 +3,10 @@ import { RECEContextData } from "@core/contexts/RECEContext";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { IActionOption } from "@model/requete/IActionOption";
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { receUrl } from "@router/ReceUrls";
 import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
-import { estRenseigne, supprimerNullEtUndefinedDuTableau } from "@util/Utils";
+import { estRenseigne } from "@util/Utils";
 import { replaceUrl } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
@@ -34,7 +33,6 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
 
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [actes, setActes] = useState<IResultatRMCActe[] | undefined>();
   const [inscriptionRcRadiation, setInscriptionRcRadiation] = useState<IInscriptionRc | undefined>();
   const [inscriptions, setInscriptions] = useState<IResultatRMCInscription[] | undefined>();
   const boutonsPopin = {
@@ -61,7 +59,6 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
     props.requete.documentDemande?.code ?? "",
     mappingRequeteDelivranceToRequeteTableau(props.requete),
     inscriptions,
-    actes,
     inscriptionRcRadiation
   );
 
@@ -74,8 +71,7 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
       setMessagesBloquant([messageBloquant]);
     } else {
       setOperationEnCours(true);
-      setInscriptions(props.inscriptions ? supprimerNullEtUndefinedDuTableau(props.inscriptions) : []);
-      setActes(props.actes ? supprimerNullEtUndefinedDuTableau(props.actes) : []);
+      setInscriptions(props.inscriptions ? props.inscriptions.filter(inscription => inscription !== null) : []);
     }
   };
 

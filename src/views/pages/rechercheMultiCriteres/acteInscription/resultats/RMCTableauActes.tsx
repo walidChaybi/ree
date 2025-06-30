@@ -1,14 +1,14 @@
-import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
+import { typesFamilleProjetActe } from "@model/etatcivil/enum/TypeFamille";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { Alerte, IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { TRequete } from "@model/requete/IRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IResultatRMCActe } from "@model/rmc/acteInscription/resultat/IResultatRMCActe";
+import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { IFenetreFicheActe } from "@pages/rechercheMultiCriteres/common/IFenetreFicheActeInscription";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
-import { getValeurOuVide, supprimeElement } from "@util/Utils";
+import { supprimeElement } from "@util/Utils";
 import { CompteurElementsCoches } from "@widget/compteurElementsCoches/CompteurElementsCoches";
 import { getLigneTableauVide } from "@widget/tableau/TableUtils";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
@@ -20,21 +20,22 @@ import { FenetreFiche } from "../../../fiche/FenetreFiche";
 import { IDataFicheProps } from "../../../fiche/FichePage";
 import { getColonnesTableauActes } from "./RMCTableauActesParams";
 import { TypeRMC, goToLinkRMC } from "./RMCTableauCommun";
+
 interface RMCResultatActeProps {
   typeRMC: TypeRMC;
   dataRequete?: TRequete;
   dataAlertes?: IAlerte[];
-  dataRMCActe: IResultatRMCActe[];
+  dataRMCActe: ResultatRMCActe[];
   dataTableauRMCActe: IParamsTableau;
   setRangeActe?: (range: string) => void;
   resetTableauActe?: boolean;
-  onClickCheckboxCallBack?: (event: TChangeEventSurHTMLInputElement, data: IResultatRMCActe) => void;
+  onClickCheckboxCallBack?: (event: TChangeEventSurHTMLInputElement, data: ResultatRMCActe) => void;
   nbLignesParPage: number;
   nbLignesParAppel: number;
   // Données propre à une fiche acte pour sa pagination/navigation
   getLignesSuivantesOuPrecedentesActe?: (ficheIdentifiant: string, lien: string) => void;
   idFicheActe?: string;
-  dataRMCFicheActe?: IResultatRMCActe[];
+  dataRMCFicheActe?: ResultatRMCActe[];
   dataTableauRMCFicheActe?: IParamsTableau;
 }
 
@@ -102,7 +103,7 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
       const etatFenetreTrouve = etatFenetres.find(etatFenetre => etatFenetre.idActe === idFicheActe);
       if (etatFenetreTrouve) {
         const datasFiches = dataRMCFicheActe.map(data => ({
-          identifiant: getValeurOuVide(data.idActe),
+          identifiant: data.id,
           categorie: TypeFiche.ACTE,
           lienSuivant: dataTableauRMCFicheActe?.nextDataLinkState,
           lienPrecedent: dataTableauRMCFicheActe?.previousDataLinkState
@@ -111,17 +112,17 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
         setEtatFenetres([...etatFenetres]);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idFicheActe, dataRMCFicheActe, dataTableauRMCFicheActe]);
 
   useEffect(() => {
-    const datasFiches = dataRMCActe.map(data => ({
-      identifiant: data.idActe,
-      categorie: TypeFiche.ACTE,
-      lienSuivant: dataTableauRMCActe?.nextDataLinkState,
-      lienPrecedent: dataTableauRMCActe?.previousDataLinkState
-    }));
-    setDatasFichesCourantes(datasFiches);
+    setDatasFichesCourantes(
+      dataRMCActe.map(data => ({
+        identifiant: data.id,
+        categorie: TypeFiche.ACTE,
+        lienSuivant: dataTableauRMCActe?.nextDataLinkState,
+        lienPrecedent: dataTableauRMCActe?.previousDataLinkState
+      }))
+    );
   }, [dataRMCActe, dataTableauRMCActe]);
 
   // Gestion du clic sur une colonne de type checkbox
@@ -141,7 +142,7 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
   );
 
   const handleCaseACocherActeEstDesactive = useCallback(
-    (data: IResultatRMCActe): boolean => {
+    (data: ResultatRMCActe): boolean => {
       return estProjetActe(dataRequete, data);
     },
     [dataRequete]
@@ -151,13 +152,13 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
     setIdActeSelectionnes([]);
   }, [resetTableauActe]);
 
-  const colonneCaseACocherActesParams: IColonneCaseACocherParams<IResultatRMCActe, string> = {
+  const colonneCaseACocherActesParams: IColonneCaseACocherParams<ResultatRMCActe, string> = {
     identifiantsSelectionnes: idActeSelectionnes,
     setIdentifiantsSelectionnes: setIdActeSelectionnes,
-    getIdentifiant: (data: IResultatRMCActe) => data.idActe
+    getIdentifiant: (data: ResultatRMCActe) => data.id
   };
 
-  const conteneurCaseACocherProps: IConteneurElementPropsPartielles<IResultatRMCActe, string, TChangeEventSurHTMLInputElement> = {
+  const conteneurCaseACocherProps: IConteneurElementPropsPartielles<ResultatRMCActe, string, TChangeEventSurHTMLInputElement> = {
     handleInteractionUtilisateur: onClickCheckboxCallBack,
     handleEstDesactive: handleCaseACocherActeEstDesactive,
     handleAfficheAvertissement: handleCaseACocherActeAfficheAvertissement,
@@ -185,37 +186,32 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
         <CompteurElementsCoches nombreElements={idActeSelectionnes.length} />
       )}
 
-      {etatFenetres && etatFenetres.length > 0 && (
-        <>
-          {etatFenetres.map((fenetreFicheActe: IFenetreFicheActe) => {
-            return (
-              fenetreFicheActe && (
-                <FenetreFiche
-                  estConsultation={typeRMC === "Classique"}
-                  key={`fiche${fenetreFicheActe.idActe}${fenetreFicheActe.index}`}
-                  identifiant={fenetreFicheActe.idActe}
-                  categorie={TypeFiche.ACTE}
-                  datasFiches={fenetreFicheActe.datasFiches}
-                  numeroRequete={fenetreFicheActe.numeroRequete}
-                  onClose={closeFenetre}
-                  index={fenetreFicheActe.index}
-                  nbLignesTotales={dataTableauRMCActe.rowsNumberState || 0}
-                  getLignesSuivantesOuPrecedentes={getLignesSuivantesOuPrecedentesActe}
-                  nbLignesParAppel={nbLignesParAppel}
-                />
-              )
-            );
-          })}
-        </>
+      {etatFenetres?.map(
+        (fenetreFicheActe: IFenetreFicheActe) =>
+          fenetreFicheActe && (
+            <FenetreFiche
+              estConsultation={typeRMC === "Classique"}
+              key={`fiche${fenetreFicheActe.idActe}${fenetreFicheActe.index.value}`}
+              identifiant={fenetreFicheActe.idActe}
+              categorie={TypeFiche.ACTE}
+              datasFiches={fenetreFicheActe.datasFiches}
+              numeroRequete={fenetreFicheActe.numeroRequete}
+              onClose={closeFenetre}
+              index={fenetreFicheActe.index}
+              nbLignesTotales={dataTableauRMCActe.rowsNumberState ?? 0}
+              getLignesSuivantesOuPrecedentes={getLignesSuivantesOuPrecedentesActe}
+              nbLignesParAppel={nbLignesParAppel}
+            />
+          )
       )}
     </>
   );
 };
 
-function estProjetActe(dataRequete: TRequete | undefined, data: IResultatRMCActe): boolean {
-  if (dataRequete?.type === TypeRequete.DELIVRANCE) {
-    const requeteDelivrance = dataRequete as IRequeteDelivrance;
-    if (SousTypeDelivrance.estRDDouRDCouRDDP(requeteDelivrance?.sousType) && TypeFamille.estTypeFamilleProjetActe(data.familleRegistre)) {
+function estProjetActe(requete: TRequete | undefined, acte: ResultatRMCActe): boolean {
+  if (requete?.type === TypeRequete.DELIVRANCE) {
+    const requeteDelivrance = requete as IRequeteDelivrance;
+    if (SousTypeDelivrance.estRDDouRDCouRDDP(requeteDelivrance?.sousType) && typesFamilleProjetActe.includes(acte.familleRegistre)) {
       return true;
     }
   }
