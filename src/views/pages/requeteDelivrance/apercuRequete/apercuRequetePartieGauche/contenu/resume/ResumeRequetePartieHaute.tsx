@@ -2,7 +2,7 @@ import { IAdresseRequerant } from "@model/requete/IAdresseRequerant";
 import { EvenementRequete, IEvenementRequete } from "@model/requete/IEvenementRequete";
 import { ILienRequerant } from "@model/requete/ILienRequerant";
 import { IMandant } from "@model/requete/IMandant";
-import { IParent } from "@model/requete/IParents";
+import { IParent } from "@model/requete/IParent";
 import { IQualiteRequerant, QualiteRequerant } from "@model/requete/IQualiteRequerant";
 import { IRequerant } from "@model/requete/IRequerant";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";

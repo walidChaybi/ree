@@ -39,6 +39,7 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
         heure: "09",
         minute: "42"
       },
+      prepositionLieuNaissance: "A",
       villeNaissance: "",
       regionNaissance: "",
       paysNaissance: "",
@@ -141,7 +142,8 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
       lieuEnregistrement: {
         ville: "Pekin",
         pays: "Chine",
-        etatProvince: ""
+        etatProvince: "",
+        preposition: "A"
       },
       redacteur: "officier"
     },

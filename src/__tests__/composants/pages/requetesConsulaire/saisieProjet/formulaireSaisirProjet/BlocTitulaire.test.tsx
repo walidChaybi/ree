@@ -61,6 +61,7 @@ describe("SaisirProjet - BlocTitulaire", () => {
     const inputPays: HTMLInputElement = screen.getByLabelText("Pays");
     const inputAdresse: HTMLInputElement = screen.getByLabelText("Adresse");
     const inputRadioMasculin: HTMLInputElement = screen.getByLabelText("Masculin");
+    const selectPreposition = screen.getByLabelText("Préposition");
 
     await userEvent.tab();
     expect(document.activeElement).toBe(inputNomActeEtranger);
@@ -141,6 +142,11 @@ describe("SaisirProjet - BlocTitulaire", () => {
     await userEvent.tab();
     await waitFor(() => {
       expect(document.activeElement).toStrictEqual(minutesInput);
+    });
+
+    await userEvent.tab();
+    await waitFor(() => {
+      expect(document.activeElement).toStrictEqual(selectPreposition);
     });
 
     await userEvent.tab();

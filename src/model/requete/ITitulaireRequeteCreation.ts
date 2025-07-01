@@ -1,3 +1,4 @@
+import { ILocalisation } from "@model/etatcivil/acte/ILocalisation";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { DateCoordonneesType } from "@model/requete/DateCoordonneesType";
 import { SANS_NOM_CONNU, SANS_PRENOM_CONNU, SNP, SPC } from "@util/Utils";
@@ -6,7 +7,6 @@ import { IDomiciliation } from "./IDomiciliation";
 import { IEnfantTitulaireActeTranscritDresse } from "./IEnfantTitulaireActeTranscritDresse";
 import { IEvenementUnion } from "./IEvenementUnion";
 import { INationalite } from "./INationalite";
-import { ILocalisation } from "./IParents";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
 import { IRetenueSdanf } from "./IRetenueSdanf";
 import { ISuiviDossier } from "./ISuiviDossier";

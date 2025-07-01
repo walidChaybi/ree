@@ -20,7 +20,7 @@ describe("BlocActeEtranger", () => {
     typeActe: "ACTE_DRESSE",
     infoTypeActe: "",
     dateEnregistrement: { jour: "", mois: "", annee: "" },
-    lieuEnregistrement: { ville: "", etatProvince: "", pays: "" },
+    lieuEnregistrement: { ville: "", etatProvince: "", pays: "", preposition: "A" },
     redacteur: "",
     referenceComplement: ""
   };

@@ -22,7 +22,8 @@ describe("Interface ParentsRequeteTranscription.mappingParentTranscriptionVersPa
       arrondissement: "",
       pays: "",
       etatProvince: "",
-      adresse: ""
+      adresse: "",
+      preposition: "A"
     },
     sansProfession: false,
     profession: "",
@@ -33,7 +34,8 @@ describe("Interface ParentsRequeteTranscription.mappingParentTranscriptionVersPa
       departement: "",
       arrondissement: "",
       pays: "",
-      etatProvince: ""
+      etatProvince: "",
+      preposition: "A"
     },
     renseignerAge: false,
     age: ""
@@ -94,7 +96,8 @@ describe("Interface ParentsRequeteTranscription.mappingParentTranscriptionVersPa
         arrondissement: "8ème",
         pays: "FRANCE",
         etatProvince: "",
-        adresse: ""
+        adresse: "",
+        preposition: "A"
       },
       sansProfession: false,
       profession: "",
@@ -105,7 +108,8 @@ describe("Interface ParentsRequeteTranscription.mappingParentTranscriptionVersPa
         departement: "Rhone",
         arrondissement: "2ème",
         pays: "France",
-        etatProvince: ""
+        etatProvince: "",
+        preposition: "A"
       },
       renseignerAge: false,
       age: ""
@@ -159,7 +163,8 @@ describe("Interface ParentsRequeteTranscription.mappingParentTranscriptionVersPa
         arrondissement: "",
         pays: "ETATS-UNIS",
         etatProvince: "New York",
-        adresse: ""
+        adresse: "",
+        preposition: "A"
       },
       sansProfession: false,
       profession: "",
@@ -170,7 +175,8 @@ describe("Interface ParentsRequeteTranscription.mappingParentTranscriptionVersPa
         departement: "",
         arrondissement: "",
         pays: "Allemagne",
-        etatProvince: "Berlin"
+        etatProvince: "Berlin",
+        preposition: "A"
       },
       renseignerAge: false,
       age: ""

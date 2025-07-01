@@ -30,6 +30,7 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
         heure: "",
         minute: ""
       },
+      prepositionLieuNaissance: "A",
       villeNaissance: "Bejin",
       regionNaissance: "China",
       paysNaissance: "Chine",
@@ -128,7 +129,8 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
       lieuEnregistrement: {
         ville: "Pekin",
         etatProvince: "china",
-        pays: "Chine"
+        pays: "Chine",
+        preposition: "A"
       },
       redacteur: "Ambassador"
     },
@@ -199,6 +201,7 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
           heure: "10",
           minute: "10"
         },
+        prepositionLieuNaissance: "A",
         villeNaissance: "Nantes",
         regionNaissance: "",
         paysNaissance: "France",
@@ -219,7 +222,8 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
             etatProvince: "",
             pays: "France",
             typeLieu: "France",
-            ville: ""
+            ville: "",
+            preposition: "A"
           },
           lieuNaissance: {
             adresse: "",
@@ -228,7 +232,8 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
             etatProvince: "",
             pays: "France",
             typeLieu: "France",
-            ville: "Nantes"
+            ville: "Nantes",
+            preposition: "A"
           },
           nom: "Perez",
           prenomsChemin: {
@@ -268,7 +273,8 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
             etatProvince: "",
             pays: "",
             typeLieu: "Inconnu",
-            ville: ""
+            ville: "",
+            preposition: "A"
           },
           lieuNaissance: {
             adresse: "",
@@ -277,7 +283,8 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
             etatProvince: "",
             pays: "",
             typeLieu: "Inconnu",
-            ville: ""
+            ville: "",
+            preposition: "A"
           },
           nom: "",
           prenomsChemin: {
@@ -356,7 +363,8 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
         lieuEnregistrement: {
           ville: "",
           etatProvince: "",
-          pays: ""
+          pays: "",
+          preposition: "A"
         },
         redacteur: "redacteur acte",
         referenceComplement: "referenceComplement acte"
@@ -417,6 +425,7 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
         heure: "09",
         minute: "42"
       },
+      prepositionLieuNaissance: "A",
       villeNaissance: "",
       regionNaissance: "",
       paysNaissance: "",
@@ -519,7 +528,8 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
       lieuEnregistrement: {
         ville: "Pekin",
         pays: "Chine",
-        etatProvince: ""
+        etatProvince: "",
+        preposition: "A"
       },
       redacteur: "officier"
     },

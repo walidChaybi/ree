@@ -6,7 +6,7 @@ import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { EvenementRequete } from "@model/requete/IEvenementRequete";
 import { IMandant, Mandant } from "@model/requete/IMandant";
-import { IParent, Parent } from "@model/requete/IParents";
+import { IParent, Parent } from "@model/requete/IParent";
 import { IRequerant, Requerant } from "@model/requete/IRequerant";
 import { Requete } from "@model/requete/IRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";

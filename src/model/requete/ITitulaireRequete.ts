@@ -5,7 +5,7 @@ import { DEUX, formatNom, getValeurOuVide, numberToString, UN } from "@util/Util
 import { Nationalite } from "../etatcivil/enum/Nationalite";
 import { Sexe } from "../etatcivil/enum/Sexe";
 import { INationalite } from "./INationalite";
-import { IParent } from "./IParents";
+import { IParent } from "./IParent";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
 
 export interface ITitulaireRequete {

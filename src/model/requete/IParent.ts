@@ -1,17 +1,8 @@
+import { ILocalisation } from "@model/etatcivil/acte/ILocalisation";
 import { IDateHeureForm } from "@model/form/commun/DateForm";
 import { DEUX, formatNom, formatPrenoms, UN } from "@util/Utils";
 import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
-
-export interface ILocalisation {
-  typeLieu?: "France" | "Étranger" | "Inconnu" | "";
-  ville?: string;
-  arrondissement?: string;
-  departement?: string;
-  etatProvince?: string;
-  pays?: string;
-  adresse?: string;
-}
 
 export interface IParent {
   id?: string;

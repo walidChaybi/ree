@@ -1,4 +1,5 @@
 import { ETypeActeEtranger } from "@model/etatcivil/acte/IActeEtrangerDto";
+import { EPrepositionLieu } from "@model/etatcivil/enum/EPreposition";
 import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { Option } from "@util/Type";
 import { enumVersOptions } from "@util/Utils";
@@ -12,6 +13,7 @@ import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/Conte
 import SeparateurSection from "../../../../commun/conteneurs/formulaire/SeparateurSection";
 
 const optionsTypeActe: Option[] = enumVersOptions(ETypeActeEtranger);
+const optionsPreposition = enumVersOptions(EPrepositionLieu);
 
 const BlocActeEtranger: React.FC = () => {
   const { values, setFieldValue } = useFormikContext<IProjetActeTranscritForm>();
@@ -45,7 +47,12 @@ const BlocActeEtranger: React.FC = () => {
 
       <SeparateurSection titre="Lieu d'enregistrement" />
 
-      <div className="mb-4 grid grid-cols-3 gap-4">
+      <div className="mb-4 grid grid-cols-[100px_1fr_1fr_1fr] gap-4">
+        <ChampListeDeroulante
+          name="acteEtranger.lieuEnregistrement.preposition"
+          libelle="Préposition"
+          options={optionsPreposition}
+        />
         <ChampTexte
           name="acteEtranger.lieuEnregistrement.ville"
           libelle="Ville"

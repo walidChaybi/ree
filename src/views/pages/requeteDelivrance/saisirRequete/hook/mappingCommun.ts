@@ -49,7 +49,7 @@ import {
   ISaisieRequerant,
   Prenoms
 } from "@model/form/delivrance/ISaisirRequetePageForm";
-import { IParent } from "@model/requete/IParents";
+import { IParent } from "@model/requete/IParent";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { IRequerant, Requerant } from "@model/requete/IRequerant";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";

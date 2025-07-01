@@ -361,8 +361,44 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                 </div>
               </div>
               <div
-                class="grid grid-cols-2 gap-4"
+                class="grid grid-cols-[100px_1fr_1fr] gap-4 pt-4"
               >
+                <div
+                  class="text-start"
+                >
+                  <label
+                    class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                    for="titulaire.prepositionLieuNaissance"
+                  >
+                    Préposition
+                  </label>
+                  <select
+                    class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                    id="titulaire.prepositionLieuNaissance"
+                    name="titulaire.prepositionLieuNaissance"
+                  >
+                    <option
+                      value="A"
+                    >
+                      à
+                    </option>
+                    <option
+                      value="EN"
+                    >
+                      en
+                    </option>
+                    <option
+                      value="AU"
+                    >
+                      au
+                    </option>
+                    <option
+                      value="AUX"
+                    >
+                      aux
+                    </option>
+                  </select>
+                </div>
                 <div
                   class="flex w-full flex-col text-start"
                 >
@@ -407,6 +443,10 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                     />
                   </div>
                 </div>
+              </div>
+              <div
+                class="grid grid-cols-2 gap-4 pt-4"
+              >
                 <div
                   class="flex w-full flex-col text-start"
                 >
@@ -1629,8 +1669,44 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                 </div>
               </div>
               <div
-                class="mb-4 grid grid-cols-3 gap-4"
+                class="mb-4 grid grid-cols-[100px_1fr_1fr_1fr] gap-4"
               >
+                <div
+                  class="text-start"
+                >
+                  <label
+                    class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                    for="acteEtranger.lieuEnregistrement.preposition"
+                  >
+                    Préposition
+                  </label>
+                  <select
+                    class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                    id="acteEtranger.lieuEnregistrement.preposition"
+                    name="acteEtranger.lieuEnregistrement.preposition"
+                  >
+                    <option
+                      value="A"
+                    >
+                      à
+                    </option>
+                    <option
+                      value="EN"
+                    >
+                      en
+                    </option>
+                    <option
+                      value="AU"
+                    >
+                      au
+                    </option>
+                    <option
+                      value="AUX"
+                    >
+                      aux
+                    </option>
+                  </select>
+                </div>
                 <div
                   class="flex w-full flex-col text-start"
                 >

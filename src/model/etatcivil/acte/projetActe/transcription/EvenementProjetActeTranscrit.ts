@@ -1,4 +1,6 @@
-export type IEvenementProjetActeTranscritDto = {
+import { EPrepositionLieu } from "@model/etatcivil/enum/EPreposition";
+
+export interface IEvenementProjetActeTranscritDto {
   id?: string;
   jour?: number;
   mois?: number;
@@ -12,7 +14,8 @@ export type IEvenementProjetActeTranscritDto = {
   heure?: number;
   minute?: number;
   neDansLeMariage?: boolean;
-};
+  preposition?: keyof typeof EPrepositionLieu;
+}
 
 export class EvenementProjetActeTranscrit {
   private constructor(
@@ -27,7 +30,8 @@ export class EvenementProjetActeTranscrit {
     public readonly pays?: string,
     public readonly heure?: number,
     public readonly minute?: number,
-    public readonly neDansLeMariage?: boolean
+    public readonly neDansLeMariage?: boolean,
+    public readonly preposition?: keyof typeof EPrepositionLieu
   ) {}
 
   public static readonly depuisDto = (evenement: IEvenementProjetActeTranscritDto): EvenementProjetActeTranscrit => {
@@ -43,7 +47,9 @@ export class EvenementProjetActeTranscrit {
       evenement.pays,
       evenement.heure,
       evenement.minute,
-      evenement.neDansLeMariage
+      evenement.neDansLeMariage,
+      evenement.preposition
     );
   };
 }
+export { EPrepositionLieu };

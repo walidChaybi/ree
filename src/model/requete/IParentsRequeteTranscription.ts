@@ -1,5 +1,5 @@
+import { ILocalisation } from "@model/etatcivil/acte/ILocalisation";
 import { ESexe } from "@model/etatcivil/enum/Sexe";
-import { ILocalisation } from "./IParents";
 import { IPrenomOrdonnes } from "./IPrenomOrdonnes";
 import { ITitulaireRequeteCreation as ITitulaireRequeteTranscription } from "./ITitulaireRequeteCreation";
 import { TypeObjetTitulaire } from "./enum/TypeObjetTitulaire";
