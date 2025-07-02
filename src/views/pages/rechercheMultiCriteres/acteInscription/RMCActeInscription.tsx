@@ -1,18 +1,9 @@
-import { IRMCActeInscriptionForm, RMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { MIN_YEAR } from "@util/DateUtils";
-import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { stockageDonnees } from "@util/stockageDonnees";
 import { Formulaire } from "@widget/formulaire/Formulaire";
-import { useMemo } from "react";
+import React from "react";
 import * as Yup from "yup";
-import ChampDate from "../../../../composants/commun/champs/ChampDate";
-import ChampTexte from "../../../../composants/commun/champs/ChampTexte";
-import { ChampsNomPrenomInterchangeables } from "../../../../composants/commun/champs/ChampsNomPrenomInterchangeables";
-import ConteneurAvecBordure from "../../../../composants/commun/conteneurs/formulaire/ConteneurAvecBordure";
-import BlocFiltreEvenement from "../../../../composants/pages/rmc/formulaire/BlocFiltreEvenement";
-import BoutonsRMC from "../../../../composants/pages/rmc/formulaire/BoutonsRMC";
 import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import RMCBoutons from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
@@ -53,12 +44,12 @@ export const ValidationSchemaRMCActeInscription = Yup.object({
 
 export const titreForm = "Critères de recherche d'un acte et d'une inscription";
 
-interface RMCActeInscriptionProps {
+interface RMCActeInscriptionFormProps {
   onSubmit: (values: any) => void;
   titulaires?: ITitulaireRequete[];
 }
 
-export const RMCActeInscription: React.FC<RMCActeInscriptionProps> = props => {
+export const RMCActeInscription: React.FC<RMCActeInscriptionFormProps> = props => {
   const blocsForm: JSX.Element[] = [getFormTitulaire(props.titulaires), getRegistreRepertoire(), getFormDatesDebutFinAnnee()];
 
   const onSubmitRMCActeInscription = (values: any): void => {
@@ -69,56 +60,17 @@ export const RMCActeInscription: React.FC<RMCActeInscriptionProps> = props => {
     return stockageDonnees.recupererCriteresRMCActeInspt();
   };
 
-  const afficherNouvelleRMC = useMemo(() => gestionnaireFeatureFlag.estActif(FeatureFlag.FF_UTILISER_NOUVELLE_RMC), []);
-
   useTitreDeLaFenetre(titreForm);
 
   return (
-    <Formulaire<IRMCActeInscriptionForm>
+    <Formulaire
       titre={titreForm}
-      formDefaultValues={RMCActeInscriptionForm.valeursInitiales()}
-      formValidationSchema={RMCActeInscriptionForm.schemaValidation()}
+      formDefaultValues={DefaultValuesRMCActeInscription}
+      formValidationSchema={ValidationSchemaRMCActeInscription}
       onSubmit={onSubmitRMCActeInscription}
     >
-      <div className="FormulaireRMCAI grid grid-cols-2">
-        {afficherNouvelleRMC ? (
-          <>
-            <div>
-              <ConteneurAvecBordure
-                titreEnTete="Filtre titulaire"
-                className="mt-8"
-              >
-                <ChampsNomPrenomInterchangeables
-                  cheminNom="titulaire.nom"
-                  cheminPrenom="titulaire.prenom"
-                />
-                <div className="grid grid-cols-2 gap-4 pt-4">
-                  <ChampDate
-                    name="titulaire.dateNaissance"
-                    libelle="Date de naissance"
-                    avecBoutonReinitialiser
-                  />
-                  <ChampTexte
-                    name="titulaire.paysNaissance"
-                    libelle="Pays de naissance"
-                  />
-                </div>
-              </ConteneurAvecBordure>
-              <BlocFiltreEvenement />
-              {getFormDatesDebutFinAnnee()}
-            </div>
-
-            {getRegistreRepertoire(afficherNouvelleRMC)}
-          </>
-        ) : (
-          blocsForm
-        )}
-      </div>
-      {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_UTILISER_NOUVELLE_RMC) ? (
-        <BoutonsRMC rappelCriteres={rappelCriteres} />
-      ) : (
-        <RMCBoutons rappelCriteres={rappelCriteres} />
-      )}
+      <div className="DeuxColonnes FormulaireRMCAI">{blocsForm}</div>
+      <RMCBoutons rappelCriteres={rappelCriteres} />
     </Formulaire>
   );
 };
@@ -149,10 +101,9 @@ function getFormDatesDebutFinAnnee(): JSX.Element {
   );
 }
 
-function getRegistreRepertoire(afficherNouvelleRMC?: boolean): JSX.Element {
+function getRegistreRepertoire(): JSX.Element {
   const registreRepertoireFiltreFiltreProps = {
-    nomFiltre: REGISTRE_REPERTOIRE,
-    afficherNouvelleRMC
+    nomFiltre: REGISTRE_REPERTOIRE
   } as RegistreRepertoireFiltreProps;
   return (
     <RegistreRepertoireFiltre

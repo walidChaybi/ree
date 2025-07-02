@@ -12,8 +12,7 @@ const ratioHeight = 1;
 
 export const BoutonRechercheRmc: React.FC = () => {
   const [rmcExterne, setRmcExterne] = useState<boolean>(false);
-  const [fenetreExterneUtil, setFenetreExterneUtil] =
-    useState<FenetreExterneUtil>();
+  const [fenetreExterneUtil, setFenetreExterneUtil] = useState<FenetreExterneUtil>();
 
   const handleClick = () => {
     if (!rmcExterne) {
@@ -29,7 +28,10 @@ export const BoutonRechercheRmc: React.FC = () => {
         onClick={handleClick}
         title={getLibelle("Recherche acte/inscription")}
       >
-        <FontAwesomeIcon className="loupeChampsRecherche" icon={faSearch} />
+        <FontAwesomeIcon
+          className="loupeChampsRecherche"
+          icon={faSearch}
+        />
       </Button>
       {rmcExterne && (
         <FenetreExterne

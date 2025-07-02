@@ -1,19 +1,11 @@
 /* v8 ignore start SERA TESTEE LORSQUE LA RMC ACTE INSCRIPTION SERA SORTIE DE VIEWS*/
 import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
-import RMCBoutonRappelCriteres, { RMCBoutonRappelCriteresProps } from "@pages/rechercheMultiCriteres/boutons/RMCBoutonRappelCriteres";
+import RMCBoutonRappelCriteres from "@pages/rechercheMultiCriteres/boutons/RMCBoutonRappelCriteres";
 import { useFormikContext } from "formik";
 import Bouton from "../../../commun/bouton/Bouton";
 
-export interface IRMCBoutonsProps {
-  rappelCriteres?: () => any;
-}
-
-const BoutonsRMC: React.FC<IRMCBoutonsProps> = ({ rappelCriteres }) => {
+const BoutonsRMC: React.FC = () => {
   const { isValid, dirty, resetForm } = useFormikContext<IRMCActeInscriptionForm>();
-
-  const rmcBoutonRappelCriteresProps = {
-    rappelCriteres: rappelCriteres
-  } as RMCBoutonRappelCriteresProps;
 
   return (
     <>
@@ -28,7 +20,7 @@ const BoutonsRMC: React.FC<IRMCBoutonsProps> = ({ rappelCriteres }) => {
       </div>
       <div className="BoutonsRechercheMulti">
         <div className="rappelEtReinitialiser">
-          {rappelCriteres && <RMCBoutonRappelCriteres {...rmcBoutonRappelCriteresProps} />}
+          <RMCBoutonRappelCriteres />
 
           <button
             type="reset"

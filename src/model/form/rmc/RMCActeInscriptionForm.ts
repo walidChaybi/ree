@@ -11,20 +11,23 @@ import {
 } from "../../../ressources/Regex";
 import SchemaValidation, { messagesErreur } from "../../../utils/SchemaValidation";
 import { ConditionChamp, EOperateurCondition } from "../commun/ConditionChamp";
+import { IDateHeureForm } from "../commun/DateForm";
 import { ObjetFormulaire } from "../commun/ObjetFormulaire";
 
 export interface IRMCActeInscriptionForm {
+  titulaire: {
+    nom: string;
+    prenom: string;
+    paysNaissance: string;
+    dateNaissance: {
+      jour: string;
+      mois: string;
+      annee: string;
+    };
+  };
   datesDebutFinAnnee: {
-    dateDebut: {
-      jour: string;
-      mois: string;
-      annee: string;
-    };
-    dateFin: {
-      jour: string;
-      mois: string;
-      annee: string;
-    };
+    dateDebut: IDateHeureForm;
+    dateFin: IDateHeureForm;
   };
   registreRepertoire: {
     registre: {
@@ -58,23 +61,8 @@ export interface IRMCActeInscriptionForm {
       };
     };
     evenement: {
-      dateEvenement: {
-        jour: string;
-        mois: string;
-        annee: string;
-      };
+      dateEvenement: IDateHeureForm;
       paysEvenement: string;
-    };
-  };
-
-  titulaire: {
-    nom: string;
-    prenom: string;
-    paysNaissance: string;
-    dateNaissance: {
-      jour: string;
-      mois: string;
-      annee: string;
     };
   };
 }

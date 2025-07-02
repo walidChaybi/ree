@@ -30,6 +30,7 @@ import PageRequetesServiceConsulaire from "../../pages/requetesConsulaire/PageRe
 import PageSaisieCourrierTranscription from "../../pages/requetesConsulaire/PageSaisieCourrierTranscription";
 import PageEditionRequeteDelivrance from "../../pages/requetesDelivrance/PageEditionRequeteDelivrance";
 import PageEditionRequeteMiseAJour from "../../pages/requetesMiseAJour/PageEditionRequeteMiseAJour";
+import { PageRMCActeInscription } from "../../pages/rmc/PageRMCActeInscription";
 import {
   URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID,
   URL_MES_REQUETES_CONSULAIRE,
@@ -272,7 +273,7 @@ export const routesRece: IRoute[] = [
   //////////////////////////////////////////
   {
     url: URL_RECHERCHE_ACTE_INSCRIPTION,
-    component: RMCActeInscriptionPage,
+    component: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_UTILISER_NOUVELLE_RMC) ? PageRMCActeInscription : RMCActeInscriptionPage,
     libelle: "Recherche acte et inscription",
     auMoinsUnDesDroits: [Droit.CONSULTER]
   },

@@ -8,7 +8,7 @@ import ChampDate from "../../../commun/champs/ChampDate";
 import ChampTexte from "../../../commun/champs/ChampTexte";
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 
-const BlocFiltreEvenement: React.FC = () => {
+const BlocEvenementRMC: React.FC = () => {
   const { values, setValues } = useFormikContext<IRMCActeInscriptionForm>();
 
   const reinitialiserValeurs = () => {
@@ -50,5 +50,5 @@ const BlocFiltreEvenement: React.FC = () => {
   );
 };
 
-export default BlocFiltreEvenement;
+export default BlocEvenementRMC;
 /* v8 ignore stop */

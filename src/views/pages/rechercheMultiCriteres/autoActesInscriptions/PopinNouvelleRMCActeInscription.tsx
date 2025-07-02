@@ -4,8 +4,11 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import React from "react";
-import { RMCActeInscription } from "../acteInscription/RMCActeInscription";
+import { RMCActeInscription } from "../../../../composants/pages/rmc/formulaire/RMCActeInscription";
+import { RMCActeInscription as RMCActeInscriptionOld } from "../acteInscription/RMCActeInscription";
 import "./scss/PopinNouvelleRMCActeInscription.scss";
 
 interface PopinNouvelleRMCActeInscriptionProps {
@@ -38,10 +41,14 @@ export const PopinNouvelleRMCActeInscription: React.FC<PopinNouvelleRMCActeInscr
         </IconButton>
       </DialogTitle>
       <DialogContent>
-        <RMCActeInscription
-          onSubmit={props.nouvelleRMCActeInscription}
-          titulaires={props.titulaires}
-        />
+        {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_UTILISER_NOUVELLE_RMC) ? (
+          <RMCActeInscription onSubmit={props.nouvelleRMCActeInscription} />
+        ) : (
+          <RMCActeInscriptionOld
+            onSubmit={props.nouvelleRMCActeInscription}
+            titulaires={props.titulaires}
+          />
+        )}
       </DialogContent>
     </Dialog>
   );
