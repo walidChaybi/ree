@@ -1,4 +1,4 @@
-import { EPrepositionLieu } from "@model/etatcivil/enum/EPreposition";
+import { EPrepositionLieu } from "@model/etatcivil/enum/EPrepositionLieu";
 
 export interface IEvenementProjetActeTranscritDto {
   id?: string;

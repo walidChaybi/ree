@@ -1,4 +1,4 @@
-import { EPrepositionLieu } from "../enum/EPreposition";
+import { EPrepositionLieu } from "../enum/EPrepositionLieu";
 
 export interface ILocalisation {
   typeLieu?: "France" | "Étranger" | "Inconnu" | "";

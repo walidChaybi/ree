@@ -84,6 +84,7 @@ describe("Test du Helper de modele texte", () => {
       "page-2": ["ligne2", "ligne3"]
     });
   });
+
   test("DOIT convertir les retours à la ligne en balises <br/>", () => {
     const modele = "{{#valeur monTexte/avecRetourChariot}}";
     const valeurs = {
@@ -104,5 +105,17 @@ describe("Test du Helper de modele texte", () => {
     const result = ModeleTexte.creer(modele).generer(valeurs);
 
     expect(result).toBe("Ligne 1<br/>Ligne 3<br/>Ligne 6");
+  });
+
+  test("DOIT renvoyer le libelle de la préposition du lieu depuis la cle", () => {
+    const modele = "{{#valeur preposition/prepositionLieu}} {{#valeur pays}}";
+    const valeurs = {
+      preposition: "AU",
+      pays: "Canada"
+    };
+
+    const result = ModeleTexte.creer(modele).generer(valeurs);
+
+    expect(result).toBe("au Canada");
   });
 });

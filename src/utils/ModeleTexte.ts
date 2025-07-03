@@ -1,3 +1,4 @@
+import { EPrepositionLieu } from "@model/etatcivil/enum/EPrepositionLieu";
 import { INumeroRcRca } from "@model/form/commun/NumeroInscriptionRcRcaForm";
 import { ObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { PrenomsForm, TPrenomsForm } from "@model/form/commun/PrenomsForm";
@@ -282,6 +283,8 @@ class ModeleTexte {
           .split("\n")
           .filter(ligne => ligne.trim())
           .join("<br/>");
+      case options.includes("prepositionLieu"):
+        return EPrepositionLieu[valeur as keyof typeof EPrepositionLieu] ?? EPrepositionLieu.A;
       default:
         return valeur;
     }

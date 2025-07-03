@@ -1,5 +1,5 @@
 import { ETypeActeEtranger } from "@model/etatcivil/acte/IActeEtrangerDto";
-import { EPrepositionLieu } from "@model/etatcivil/enum/EPreposition";
+import { EPrepositionLieu } from "@model/etatcivil/enum/EPrepositionLieu";
 import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { Option } from "@util/Type";
 import { enumVersOptions } from "@util/Utils";
