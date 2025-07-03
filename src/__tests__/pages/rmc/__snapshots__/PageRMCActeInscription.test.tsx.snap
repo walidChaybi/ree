@@ -332,10 +332,17 @@ exports[`Le formulaire s'affiche correctement 1`] = `
           </div>
         </div>
         <div
-          class="flex-end flex w-full flex-col items-end"
+          class="mt-12 flex w-full justify-end gap-4"
         >
           <button
-            class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc mr-8 mt-6"
+            class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-blanc text-bleu-sombre hover:text-bleu hover:border-bleu focus:text-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
+            disabled=""
+            type="reset"
+          >
+            Réinitialiser les critères
+          </button>
+          <button
+            class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
             disabled=""
             type="submit"
           >
@@ -354,11 +361,6 @@ exports[`Le formulaire s'affiche correctement 1`] = `
               type="button"
             >
               Rappel critères
-            </button>
-            <button
-              type="reset"
-            >
-              Réinitialiser les critères
             </button>
           </div>
         </div>

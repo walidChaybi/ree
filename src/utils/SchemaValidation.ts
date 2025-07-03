@@ -163,8 +163,6 @@ const getSchemaValidationDate = (bloquerDateFuture?: boolean): Yup.ObjectSchema<
       return estDateFuture ? erreurSurDateEntiere(messagesErreur.DATE_FUTURE, error.path) : true;
     });
 
-/* v8 ignore start A RETIRER LORSQUE LE FORMULAIRE RMC SORTIRA DE VIEWS*/
-
 const estChampRenseigne = (valeur: any): boolean => {
   if (valeur === null || valeur === undefined || valeur === "") return false;
 
@@ -212,7 +210,6 @@ const champSeulInterdit = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>(
 
     return true;
   });
-/* v8 ignore stop */
 
 const gestionObligation = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>({
   schema,
@@ -221,8 +218,6 @@ const gestionObligation = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>({
   conditionOu,
   interditSeul
 }: TGestionObligationParams<TSchemaChamp>): TSchemaChamp => {
-  /* v8 ignore start A RETIRER LORSQUE LE FORMULAIRE RMC SORTIRA DE VIEWS*/
-
   if (interditSeul?.estInterditSeul) {
     schema = champSeulInterdit(
       schema,
@@ -231,7 +226,6 @@ const gestionObligation = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>({
       interditSeul.limiterAuBloc
     );
   }
-  /* v8 ignore stop */
 
   if (typeof obligatoire === "boolean") {
     return obligatoire ? actionObligation() : schema;

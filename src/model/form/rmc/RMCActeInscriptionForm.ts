@@ -1,13 +1,10 @@
-import { CARACTERES_AUTORISES_MESSAGE, NUMERO_INSCRIPTION_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import {
   ASTERISQUE_PRECEDE_DEUX,
   ASTERISQUE_PRECEDE_ESPACE,
   ASTERISQUE_PRECEDE_UN,
   CARACTERES_POST_ASTERISQUE,
-  CaracteresAutorises,
   CaracteresAutorisesRechercheNomPrenom,
-  CaracteresAutorisesRecherchePays,
-  NumeroInscription
+  CaracteresAutorisesRecherchePays
 } from "../../../ressources/Regex";
 import SchemaValidation, { messagesErreur } from "../../../utils/SchemaValidation";
 import { ConditionChamp, EOperateurCondition } from "../commun/ConditionChamp";
@@ -207,7 +204,6 @@ export const RMCActeInscriptionForm = {
       }
     }),
 
-  /* v8 ignore start A RETIRER LORSQUE LE FORMULAIRE RMC SERA SORTI DE VIEWS, A LA FIN DE LA REFONTE DES BLOCS */
   schemaValidation: () => {
     const ENSEMBLE_REGEX_CHAMP_ASTERISQUE = [
       { valeur: CaracteresAutorisesRechercheNomPrenom, message: messagesErreur.CARACTERES_INTERDITS },
@@ -216,38 +212,37 @@ export const RMCActeInscriptionForm = {
     ];
     return SchemaValidation.objet({
       registreRepertoire: SchemaValidation.objet({
-        registre: SchemaValidation.objet({
-          natureActe: SchemaValidation.texte({ obligatoire: false }),
-          familleRegistre: SchemaValidation.texte({ obligatoire: false }),
-          anneeRegistre: SchemaValidation.texte({ obligatoire: false }),
-          registreSupport: SchemaValidation.objet({
-            supportUn: SchemaValidation.texte({ obligatoire: false }),
-            supportDeux: SchemaValidation.texte({ obligatoire: false })
-          }),
-          numeroActe: SchemaValidation.objet({
-            numeroActeOuOrdre: SchemaValidation.texte({ obligatoire: false }),
-            numeroBisTer: SchemaValidation.texte({ obligatoire: false }),
-            aPartirDe: SchemaValidation.booleen({ obligatoire: false })
-          })
-        }),
-        repertoire: SchemaValidation.objet({
-          numeroInscription: SchemaValidation.texte({ obligatoire: false })
-            .matches(NumeroInscription, NUMERO_INSCRIPTION_MESSAGE)
-            .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
-          typeRepertoire: SchemaValidation.texte({ obligatoire: false }),
-          natureInscription: SchemaValidation.objet({
-            //?
-            id: SchemaValidation.texte({ obligatoire: false }),
-            nom: SchemaValidation.texte({ obligatoire: false }),
-            code: SchemaValidation.texte({ obligatoire: false }),
-            libelle: SchemaValidation.texte({ obligatoire: false }),
-            article: SchemaValidation.texte({ obligatoire: false }),
-            type: SchemaValidation.texte({ obligatoire: false }),
-            categorieRCRCA: SchemaValidation.texte({ obligatoire: false }),
-            decisionCouple: SchemaValidation.booleen({ obligatoire: false }),
-            estActif: SchemaValidation.booleen({ obligatoire: false })
-          })
-        }),
+        // registre: SchemaValidation.objet({
+        //   natureActe: SchemaValidation.texte({ obligatoire: false }),
+        //   familleRegistre: SchemaValidation.texte({ obligatoire: false }),
+        //   anneeRegistre: SchemaValidation.texte({ obligatoire: false }),
+        //   registreSupport: SchemaValidation.objet({
+        //     supportUn: SchemaValidation.texte({ obligatoire: false }),
+        //     supportDeux: SchemaValidation.texte({ obligatoire: false })
+        //   }),
+        //   numeroActe: SchemaValidation.objet({
+        //     numeroActeOuOrdre: SchemaValidation.texte({ obligatoire: false }),
+        //     numeroBisTer: SchemaValidation.texte({ obligatoire: false }),
+        //     aPartirDe: SchemaValidation.booleen({ obligatoire: false })
+        //   })
+        // }),
+        // repertoire: SchemaValidation.objet({
+        //   numeroInscription: SchemaValidation.texte({ obligatoire: false })
+        //     .matches(NumeroInscription, NUMERO_INSCRIPTION_MESSAGE)
+        //     .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
+        //   typeRepertoire: SchemaValidation.texte({ obligatoire: false }),
+        //   natureInscription: SchemaValidation.objet({
+        //     id: SchemaValidation.texte({ obligatoire: false }),
+        //     nom: SchemaValidation.texte({ obligatoire: false }),
+        //     code: SchemaValidation.texte({ obligatoire: false }),
+        //     libelle: SchemaValidation.texte({ obligatoire: false }),
+        //     article: SchemaValidation.texte({ obligatoire: false }),
+        //     type: SchemaValidation.texte({ obligatoire: false }),
+        //     categorieRCRCA: SchemaValidation.texte({ obligatoire: false }),
+        //     decisionCouple: SchemaValidation.booleen({ obligatoire: false }),
+        //     estActif: SchemaValidation.booleen({ obligatoire: false })
+        //   })
+        // }),
         evenement: SchemaValidation.objet({
           dateEvenement: SchemaValidation.dateIncomplete({
             obligatoire: false,
@@ -266,10 +261,10 @@ export const RMCActeInscriptionForm = {
           })
         })
       }),
-      datesDebutFinAnnee: SchemaValidation.objet({
-        dateDebut: SchemaValidation.dateIncomplete({ obligatoire: false }),
-        dateFin: SchemaValidation.dateIncomplete({ obligatoire: false })
-      }),
+      // datesDebutFinAnnee: SchemaValidation.objet({
+      //   dateDebut: SchemaValidation.dateIncomplete({ obligatoire: false }),
+      //   dateFin: SchemaValidation.dateIncomplete({ obligatoire: false })
+      // }),
       titulaire: SchemaValidation.objet({
         nom: SchemaValidation.texte({
           obligatoire: ConditionChamp.depuisTableau([
@@ -312,5 +307,5 @@ export const RMCActeInscriptionForm = {
         })
       })
     });
-  } /* v8 ignore stop */
+  }
 };

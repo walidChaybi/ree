@@ -1,4 +1,3 @@
-/* v8 ignore start SERA TESTEE LORSQUE LA RMC ACTE INSCRIPTION SERA SORTIE DE VIEWS*/
 import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
 import RMCBoutonRappelCriteres from "@pages/rechercheMultiCriteres/boutons/RMCBoutonRappelCriteres";
 import { useFormikContext } from "formik";
@@ -9,9 +8,16 @@ const BoutonsRMC: React.FC = () => {
 
   return (
     <>
-      <div className="flex-end flex w-full flex-col items-end">
+      <div className="mt-12 flex w-full justify-end gap-4">
         <Bouton
-          className="mr-8 mt-6"
+          styleBouton="secondaire"
+          disabled={!isValid || !dirty}
+          type="reset"
+          onClick={() => resetForm()}
+        >
+          {"Réinitialiser les critères"}
+        </Bouton>
+        <Bouton
           disabled={!isValid || !dirty}
           type="submit"
         >
@@ -21,13 +27,6 @@ const BoutonsRMC: React.FC = () => {
       <div className="BoutonsRechercheMulti">
         <div className="rappelEtReinitialiser">
           <RMCBoutonRappelCriteres />
-
-          <button
-            type="reset"
-            onClick={() => resetForm()}
-          >
-            {"Réinitialiser les critères"}
-          </button>
         </div>
       </div>
     </>
@@ -35,4 +34,3 @@ const BoutonsRMC: React.FC = () => {
 };
 
 export default BoutonsRMC;
-/* v8 ignore stop */

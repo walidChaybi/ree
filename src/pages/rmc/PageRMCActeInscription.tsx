@@ -57,7 +57,7 @@ export const PageRMCActeInscription: React.FC<PageRMCActeInscriptionProps> = ({ 
     }
   }, []);
 
-  const appelApiRMCActe = (valeursRMCActeInscription: IRMCActeInscription, range: string, ficheIdentifiant?: string) => {
+  const appelApiRMCActe = useCallback((valeursRMCActeInscription: IRMCActeInscription, range: string, ficheIdentifiant?: string) => {
     const criteres = mappingCriteres(valeursRMCActeInscription);
 
     if (!rmcActeAutorisee(criteres)) {
@@ -82,7 +82,7 @@ export const PageRMCActeInscription: React.FC<PageRMCActeInscriptionProps> = ({ 
         messageManager.showErrorAndClose("Impossible de récupérer les actes de la recherche multi-critères");
       }
     });
-  };
+  }, []);
 
   const setRangeActe = useCallback(
     (range: string) => {
@@ -130,7 +130,7 @@ export const PageRMCActeInscription: React.FC<PageRMCActeInscriptionProps> = ({ 
 
   const onSubmitRMCActeInscription = useCallback(
     (valeurs: IRMCActeInscriptionForm) => {
-      //** Le refacto s'arrête ici pour l'instant, pour retirer le as il faut attendre la tâche de refacto technique de la soumission du formulaire RMC*/
+      //** Le refacto s'arrête ici pour l'instant, pour retirer le as il faut attendre la tâche de refacto technique de la soumission du formulaire RMC */
       const values = valeurs as unknown as IRMCActeInscription;
       const messageErreur = getMessageSiVerificationRestrictionRmcActeInscriptionCriteresEnErreur(values);
       if (messageErreur) {
