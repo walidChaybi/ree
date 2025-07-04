@@ -1,6 +1,6 @@
 import { HTTP_BAD_REQUEST, HTTP_STATUS_OK } from "@api/ApiManager";
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { IOfficier } from "@model/agent/IOfficier";
+import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { IModifierStatutRequeteApresSignature } from "@model/requete/IModifierStatutRequeteApresSignature";
 import { IComposerDocumentFinalApiHookResultat } from "@model/signature/IComposerDocumentFinalApiHookResultat";
 import { IEtatTraitementSignature } from "@model/signature/IEtatTraitementSignature";
@@ -12,21 +12,12 @@ import DOCUMENT_VIDE_A_SIGNER from "../../../../../ressources/DocumentVideASigne
 export interface IResultatComposerDocumentFinalHook {
   documentASigner: string;
   etatTraitementSignature: IEtatTraitementSignature;
-  onSuccesSignatureAppNative: (
-    document: string,
-    informationsCarte: IInfosCarteSignature
-  ) => void;
+  onSuccesSignatureAppNative: (document: string, informationsCarte: IInfosCarteSignature) => void;
   onTraitementSignatureTermine: () => void;
 }
 
-export interface ISuccesSignatureEtAppelApi<
-  TResultat extends IComposerDocumentFinalApiHookResultat | number
-> {
-  onSuccesSignatureAppNative: (
-    document: string,
-    informationCarte: IInfosCarteSignature,
-    utilisateurConnecte: IOfficier
-  ) => void;
+export interface ISuccesSignatureEtAppelApi<TResultat extends IComposerDocumentFinalApiHookResultat | number> {
+  onSuccesSignatureAppNative: (document: string, informationCarte: IInfosCarteSignature, utilisateurConnecte: UtilisateurConnecte) => void;
   reinitialiserParamsApiHook: () => void;
   resultatApiHook?: TResultat;
 }
@@ -42,14 +33,11 @@ const useComposerEtIntegrerDocumentFinalHook = (
   integrerDocumentApresSignature: ISuccesSignatureEtAppelApi<number>,
   mettreAJourStatutRequeteApresIntegration: IMettreAJourStatutRequeteApresIntegration
 ): IResultatComposerDocumentFinalHook => {
-  const [etatTraitementSignature, setEtatTraitementSignature] =
-    useState<IEtatTraitementSignature>({ termine: false });
+  const [etatTraitementSignature, setEtatTraitementSignature] = useState<IEtatTraitementSignature>({ termine: false });
 
   // On initialise le state avec un document "vide", dans le but de récupérer
   // les informations de la carte de signature lors d'une première signature "fictive".
-  const [documentASigner, setDocumentASigner] = useState<string>(
-    DOCUMENT_VIDE_A_SIGNER
-  );
+  const [documentASigner, setDocumentASigner] = useState<string>(DOCUMENT_VIDE_A_SIGNER);
 
   const { utilisateurConnecte } = useContext(RECEContextData);
 
@@ -57,19 +45,13 @@ const useComposerEtIntegrerDocumentFinalHook = (
   // afin de signer notre document final.
   useEffect(() => {
     if (composerDocumentApresSignature.resultatApiHook) {
-      if (
-        composerDocumentApresSignature.resultatApiHook.codeReponse !==
-        HTTP_STATUS_OK
-      ) {
+      if (composerDocumentApresSignature.resultatApiHook.codeReponse !== HTTP_STATUS_OK) {
         setEtatTraitementSignature({
           termine: true,
           erreur: composerDocumentApresSignature.resultatApiHook.erreur
         });
       } else {
-        setDocumentASigner(
-          composerDocumentApresSignature.resultatApiHook
-            .documentRecomposeASigner
-        );
+        setDocumentASigner(composerDocumentApresSignature.resultatApiHook.documentRecomposeASigner);
       }
     }
   }, [composerDocumentApresSignature.resultatApiHook]);
@@ -84,9 +66,7 @@ const useComposerEtIntegrerDocumentFinalHook = (
         setEtatTraitementSignature({
           termine: true,
           erreur: {
-            code:
-              integrerDocumentApresSignature.resultatApiHook.toString() ||
-              HTTP_BAD_REQUEST.toString(),
+            code: integrerDocumentApresSignature.resultatApiHook.toString() || HTTP_BAD_REQUEST.toString(),
             message: ""
           }
         });
@@ -114,21 +94,12 @@ const useComposerEtIntegrerDocumentFinalHook = (
   // Si aucun résultat n'a été reçu de l'appel à la composition du document final,
   // c'est qu'on n'est pas passé par l'étape de composition.
   // Sinon, nous sommes à l'étape de l'intégration du document
-  const onSuccesSignatureAppNative = (
-    document: string,
-    informationsCarte: IInfosCarteSignature
-  ): void => {
+  const onSuccesSignatureAppNative = (document: string, informationsCarte: IInfosCarteSignature): void => {
     if (!composerDocumentApresSignature.resultatApiHook) {
-      composerDocumentApresSignature.onSuccesSignatureAppNative(
-        document,
-        informationsCarte,
-        utilisateurConnecte
-      );
+      composerDocumentApresSignature.onSuccesSignatureAppNative(document, informationsCarte, utilisateurConnecte);
     } else {
       integrerDocumentApresSignature.onSuccesSignatureAppNative(
-        process.env.NODE_ENV === "development"
-          ? DOCUMENT_SIGNE_VALIDE
-          : document,
+        process.env.NODE_ENV === "development" ? DOCUMENT_SIGNE_VALIDE : document,
         informationsCarte,
         utilisateurConnecte
       );
@@ -139,10 +110,8 @@ const useComposerEtIntegrerDocumentFinalHook = (
   // cette fonction sera appelée dans PopinSignature.
   const onTraitementSignatureTermine = () => {
     setEtatTraitementSignature({ termine: false });
-    composerDocumentApresSignature.resultatApiHook &&
-      composerDocumentApresSignature.reinitialiserParamsApiHook();
-    integrerDocumentApresSignature.resultatApiHook &&
-      integrerDocumentApresSignature.reinitialiserParamsApiHook();
+    composerDocumentApresSignature.resultatApiHook && composerDocumentApresSignature.reinitialiserParamsApiHook();
+    integrerDocumentApresSignature.resultatApiHook && integrerDocumentApresSignature.reinitialiserParamsApiHook();
   };
 
   return {

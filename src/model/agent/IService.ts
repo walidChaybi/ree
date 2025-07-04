@@ -11,7 +11,6 @@ export interface IService {
   code: string;
   libelleService: string;
   hierarchieService?: IHierarchieService[];
-  utilisateur?: any;
   estDansScec?: boolean;
 }
 
@@ -22,8 +21,7 @@ export const Service = {
     libelleService: serviceDto.libelleService ?? "",
     type: TypeService.depuisString(serviceDto.type ?? ""),
     estDansScec: Boolean(serviceDto.estDansScec),
-    hierarchieService: (serviceDto.hierarchieService as IHierarchieService[] | undefined) ?? [],
-    utilisateur: serviceDto.utilisateur
+    hierarchieService: (serviceDto.hierarchieService as IHierarchieService[] | undefined) ?? []
   }),
 
   trouverEtablissement: (listeServices: IService[]) => listeServices.find(service => service.code === CODE_SERVICE_ETABLISSEMENT),

@@ -31,8 +31,6 @@ export const SuiviObservationsRequete: React.FC<SuiviObservationsRequeteProps> =
 
   const { utilisateurConnecte } = useContext(RECEContextData);
 
-  const idUtilisateurConnecte = utilisateurConnecte?.idUtilisateur;
-
   const resultatSuppression = useSuppressionObservationApi(observationASupprimer);
 
   const resultatCreation = useCreationObservationApi(creationObservation);
@@ -78,8 +76,8 @@ export const SuiviObservationsRequete: React.FC<SuiviObservationsRequeteProps> =
           ...observations,
           {
             id: resultatCreation.id,
-            trigramme: `${utilisateurConnecte?.nom} ${utilisateurConnecte?.prenom}`,
-            idUtilisateur: idUtilisateurConnecte,
+            trigramme: utilisateurConnecte.prenomNom,
+            idUtilisateur: utilisateurConnecte.id,
             texte: creationObservation?.texteObservation,
             numeroOrdre: getNumeroOrdreMax(observations) + 1,
             dateObservation: Date.now()
@@ -105,7 +103,7 @@ export const SuiviObservationsRequete: React.FC<SuiviObservationsRequeteProps> =
   }, [resultatSuppression]);
 
   const onClickSupprimer = (ob: IObservation) => {
-    if (idUtilisateurConnecte === ob.idUtilisateur && !props.disabled) {
+    if (utilisateurConnecte.id === ob.idUtilisateur && !props.disabled) {
       setObservationASupprimer({ idObservation: ob.id });
     } else {
       logError({
@@ -115,7 +113,7 @@ export const SuiviObservationsRequete: React.FC<SuiviObservationsRequeteProps> =
   };
 
   const onClickModifier = (ob: IObservation) => {
-    if (idUtilisateurConnecte === ob.idUtilisateur && !props.disabled) {
+    if (utilisateurConnecte.id === ob.idUtilisateur && !props.disabled) {
       setIdObservationAModifier(ob.id);
       setTexteObservation(ob.texte);
       setIsOpen(true);

@@ -1,4 +1,5 @@
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { ResumeRequete } from "@pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequete";
 import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
@@ -6,7 +7,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router";
 import { beforeAll, describe, expect, test } from "vitest";
-import { createTestingRouter, elementAvecContexte, mockFenetreFicheTestFunctions } from "../../../../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, mockFenetreFicheTestFunctions } from "../../../../../../../__tests__utils__/testsUtil";
 import {
   ReponseAppelDetailRequeteDelivrance,
   detailRequeteDelivranceAvecRequerantQualiteAutreProfessionnel,
@@ -35,7 +36,11 @@ describe("ResumeRequetePartieHaute", () => {
       [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID, "a4cefb71-8457-4f6b-937e-34b49335d404")]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />));
+    render(
+      <MockRECEContextProvider>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     waitFor(() => {
       expect(screen.getByText("Description requête")).toBeDefined();
@@ -55,7 +60,11 @@ describe("ResumeRequetePartieHaute", () => {
       [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID, "a4cefb71-8457-4f6b-937e-34b49335d423")]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />));
+    render(
+      <MockRECEContextProvider>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     waitFor(() => {
       expect(screen.getByText("Description requête")).toBeDefined();
@@ -77,7 +86,11 @@ describe("ResumeRequetePartieHaute", () => {
       [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID, "a4cefb71-8457-4f6b-937e-34b49335d412")]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />));
+    render(
+      <MockRECEContextProvider>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     waitFor(() => {
       expect(screen.getByText("Description requête")).toBeDefined();
@@ -97,7 +110,11 @@ describe("ResumeRequetePartieHaute", () => {
       [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID, "a4cefb71-8457-4f6b-937e-34b49335d412")]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />));
+    render(
+      <MockRECEContextProvider>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     waitFor(() => {
       expect(screen.getByText("Description requête")).toBeDefined();

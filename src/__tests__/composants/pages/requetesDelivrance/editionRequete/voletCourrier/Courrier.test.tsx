@@ -1,13 +1,21 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { expect, test } from "vitest";
 import { Courrier } from "../../../../../../composants/pages/requetesDelivrance/editionRequete/partieDocument/voletCourrier/Courrier";
-import { elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
 import { LISTE_UTILISATEURS } from "../../../../../mock/data/ListeUtilisateurs";
-import { userDroitnonCOMEDEC } from "../../../../../mock/data/mockConnectedUserAvecDroit";
 import { requeteDelivranceRDC } from "../../../../../mock/data/requeteDelivrance";
 
 test("renders courrier", async () => {
-  render(elementAvecContexte(<Courrier requete={requeteDelivranceRDC} />, userDroitnonCOMEDEC, LISTE_UTILISATEURS));
+  render(
+    <MockRECEContextProvider
+      utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER).generer()}
+      utilisateurs={LISTE_UTILISATEURS}
+    >
+      <Courrier requete={requeteDelivranceRDC} />
+    </MockRECEContextProvider>
+  );
 
   await waitFor(() => {
     expect(screen.getByText(/Numéro, type et nom de la voie/i)).toBeDefined();
@@ -15,17 +23,24 @@ test("renders courrier", async () => {
     expect(screen.getByText(/Valider/i)).toBeDefined();
     expect(screen.getByText(/Réinitialiser/i)).toBeDefined();
     expect(screen.getByTestId("choixCourrier.courrier")).toBeDefined();
-    expect((screen.getByText(/Valider/i) as HTMLButtonElement).disabled).toBeFalsy();
+    expect(screen.getByText<HTMLButtonElement>(/Valider/i).disabled).toBeFalsy();
   });
 });
 
 test("créer courrier", () => {
-  render(elementAvecContexte(<Courrier requete={requeteDelivranceRDC} />, userDroitnonCOMEDEC, LISTE_UTILISATEURS));
+  render(
+    <MockRECEContextProvider
+      utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER).generer()}
+      utilisateurs={LISTE_UTILISATEURS}
+    >
+      <Courrier requete={requeteDelivranceRDC} />
+    </MockRECEContextProvider>
+  );
 
-  const adresseInput = screen.getByLabelText("Numéro, type et nom de la voie") as HTMLInputElement;
+  const adresseInput = screen.getByLabelText<HTMLInputElement>("Numéro, type et nom de la voie");
   fireEvent.change(adresseInput, { target: { value: "123 rue de l'exemple" } });
 
-  const nombreExemplairesInput = screen.getByLabelText("Nombre d'exemplaires") as HTMLInputElement;
+  const nombreExemplairesInput = screen.getByLabelText<HTMLInputElement>("Nombre d'exemplaires");
   fireEvent.change(nombreExemplairesInput, { target: { value: "2" } });
 
   fireEvent.click(screen.getByText("Valider"));

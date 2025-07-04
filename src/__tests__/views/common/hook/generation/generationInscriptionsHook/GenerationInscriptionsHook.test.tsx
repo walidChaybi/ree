@@ -1,11 +1,11 @@
 import { useGenerationInscriptionsHook } from "@hook/generation/generationInscriptionsHook/GenerationInscriptionsHook";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { expect, test } from "vitest";
-import { elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
 import { idDocumentsReponse2 } from "../../../../../mock/data/DocumentReponse";
 import {
   DataRMCInscriptionAvecUnPACS,
@@ -36,15 +36,15 @@ const dataRMCAutoInscription = [...DataRMCInscriptionAvecUnRC, ...DataRMCInscrip
 const HookConsummer: React.FC = () => {
   const res = useGenerationInscriptionsHook(requete, dataRMCAutoInscription, true);
 
-  return (
-    <>
-      <div data-testid="resulatIdDoc">{res?.idDocumentsReponse && <>{`idDocumentsReponse=${res?.idDocumentsReponse}`}</>}</div>
-    </>
-  );
+  return <div data-testid="resulatIdDoc">{res?.idDocumentsReponse && <>{`idDocumentsReponse=${res?.idDocumentsReponse}`}</>}</div>;
 };
 
 test("Attendu: la génération d'un certificat d'inscription RC", () => {
-  render(elementAvecContexte(<HookConsummer></HookConsummer>));
+  render(
+    <MockRECEContextProvider>
+      <HookConsummer></HookConsummer>
+    </MockRECEContextProvider>
+  );
   const resulatIdDoc = screen.getByTestId("resulatIdDoc");
 
   waitFor(() => {

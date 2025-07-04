@@ -1,12 +1,9 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import {
-  IOfficier,
-  aDroitConsulterApercuRequeteInformation,
-  aDroitConsulterRequeteCreation,
-  aDroitConsulterRequeteDelivrance
-} from "@model/agent/IOfficier";
+import { UtilisateurConnecte } from "@model/agent/Utilisateur";
+import { Droit } from "@model/agent/enum/Droit";
+import { Perimetre } from "@model/agent/enum/Perimetre";
 import { TRequeteTableau } from "@model/requete/IRequeteTableau";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { ESousTypeCreation, SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { ELibelleSousTypeRequete, TSousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { ETypeRequete, TypeRequete } from "@model/requete/enum/TypeRequete";
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
@@ -137,18 +134,33 @@ export const RMCTableauRequetesAssociees: React.FC<IRMCTableauRequetesAssocieesP
 export const utilisateurADroitOuvrirRequete = <TTypeRequete extends keyof typeof ETypeRequete>(
   typeRequete: string | TTypeRequete,
   sousTypeRequete: string | TSousTypeRequete<TTypeRequete>,
-  utilisateurConnecte: IOfficier
+  utilisateurConnecte: UtilisateurConnecte
 ): boolean => {
   switch (typeRequete) {
     case TypeRequete.DELIVRANCE.libelle:
     case "DELIVRANCE":
-      return aDroitConsulterRequeteDelivrance(utilisateurConnecte);
+      return utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER });
     case TypeRequete.CREATION.libelle:
     case "CREATION":
-      return aDroitConsulterRequeteCreation(sousTypeRequete, utilisateurConnecte);
+      return (() => {
+        const sousTypeCreation = SousTypeCreation.getEnumFromLibelleCourt(sousTypeRequete);
+
+        switch (true) {
+          case sousTypeCreation === SousTypeCreation.RCEXR || (sousTypeRequete as ESousTypeCreation) === ESousTypeCreation.RCEXR:
+            return utilisateurConnecte.estHabilitePour({
+              leDroit: Droit.CREER_ACTE_ETABLI,
+              surUnDesPerimetres: [Perimetre.TOUS_REGISTRES, Perimetre.ETAX]
+            });
+          case [SousTypeCreation.RCTD, SousTypeCreation.RCTC].includes(sousTypeCreation) ||
+            [ESousTypeCreation.RCTD, ESousTypeCreation.RCTC].includes(sousTypeRequete as ESousTypeCreation):
+            return utilisateurConnecte.estHabilitePour({ leDroit: Droit.CREER_ACTE_TRANSCRIT });
+          default:
+            return false;
+        }
+      })();
     case TypeRequete.INFORMATION.libelle:
     case "INFORMATION":
-      return aDroitConsulterApercuRequeteInformation(utilisateurConnecte);
+      return utilisateurConnecte.estHabilitePour({ leDroit: Droit.INFORMER_USAGER });
     default:
       return false;
   }

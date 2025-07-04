@@ -1,5 +1,5 @@
-import { IOfficier } from "@model/agent/IOfficier";
-import { IUtilisateur } from "@model/agent/IUtilisateur";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { URL_MES_REQUETES_CONSULAIRE } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router";
@@ -7,22 +7,16 @@ import { describe, expect, test } from "vitest";
 import PageMesRequetesConsulaires from "../../../../pages/requetesConsulaire/PageMesRequetesConsulaires";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 import MockRECEContextProvider from "../../../mock/context/MockRECEContextProvider";
-import mockConnectedUser from "../../../mock/data/connectedUser.json";
 
 describe("Test PageMesRequetesConsulaires", () => {
-  let u: any = mockConnectedUser;
-
   const mockRouterPageRequetesConsulaire = () => {
-    const utilisateurConnecte = u as IOfficier;
-
     const router = createTestingRouter(
       [
         {
           path: URL_MES_REQUETES_CONSULAIRE,
           element: (
             <MockRECEContextProvider
-              utilisateurConnecte={{ ...utilisateurConnecte } as IOfficier}
-              utilisateurs={[{} as IUtilisateur]}
+              utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.CREER_ACTE_TRANSCRIT).generer()}
             >
               <PageMesRequetesConsulaires />
             </MockRECEContextProvider>
@@ -33,12 +27,14 @@ describe("Test PageMesRequetesConsulaires", () => {
     );
     return <RouterProvider router={router} />;
   };
+
   test("DOIT afficher correctement la page PageMesRequetesConsulaires", async () => {
     render(mockRouterPageRequetesConsulaire());
     await waitFor(() => {
       expect(screen.getByText("Mes requêtes consulaires")).toBeDefined();
     });
   });
+
   test.skip("DOIT afficher le tableau", async () => {
     render(mockRouterPageRequetesConsulaire());
 
@@ -54,6 +50,7 @@ describe("Test PageMesRequetesConsulaires", () => {
       expect(screen.getByText("Statut")).toBeDefined();
     });
   });
+
   test.skip("Le taleau doit contenir", async () => {
     render(mockRouterPageRequetesConsulaire());
     await waitFor(() => {

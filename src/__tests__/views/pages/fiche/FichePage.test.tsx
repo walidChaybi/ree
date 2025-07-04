@@ -1,3 +1,5 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { FichePage } from "@pages/fiche/FichePage";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
@@ -6,9 +8,8 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { RouterProvider } from "react-router";
 import { beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
-import { createTestingRouter, elementAvecContexte } from "../../../__tests__utils__/testsUtil";
+import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 import { idFicheActe1 } from "../../../mock/data/ficheActe";
-import { userDroitCOMEDEC, userDroitConsulterPerimetreTUNIS } from "../../../mock/data/mockConnectedUserAvecDroit";
 
 describe("Test du composant Fiche page", () => {
   const fct = vi.fn();
@@ -52,7 +53,6 @@ describe("Test du composant Fiche page", () => {
   });
 
   test("Attendu: le bouton 'demander la délivrance' est affiché et le clic effectue le traitement demandé'", async () => {
-    const utilisateurConnecte = userDroitCOMEDEC;
     const router = createTestingRouter(
       [
         {
@@ -76,7 +76,11 @@ describe("Test du composant Fiche page", () => {
       ["/"]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte));
+    render(
+      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().generer()}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     await expect.poll(() => screen.getByLabelText("Demander la délivrance")).toBeDefined();
     fireEvent.click(screen.getByLabelText("Demander la délivrance"));
@@ -96,8 +100,6 @@ describe("Test du composant Fiche page", () => {
   });
 
   test("Attendu: le bouton 'demander la délivrance' n'est pas affiché lorsque l'utilisateur est habilité", async () => {
-    const utilisateurConnecte = userDroitConsulterPerimetreTUNIS;
-
     const router = createTestingRouter(
       [
         {
@@ -121,7 +123,11 @@ describe("Test du composant Fiche page", () => {
       ["/"]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte));
+    render(
+      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().generer()}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     const boutonDemanderDelivrance = screen.queryByLabelText("Demander la délivrance") as HTMLButtonElement;
 

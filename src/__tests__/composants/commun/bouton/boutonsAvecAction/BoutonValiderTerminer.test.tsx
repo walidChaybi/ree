@@ -1,3 +1,6 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -8,8 +11,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router";
 import { expect, test } from "vitest";
 import { BoutonValiderTerminer } from "../../../../../composants/pages/requetesDelivrance/editionRequete/boutons/BoutonValiderTerminer";
-import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
-import { userDroitnonCOMEDEC } from "../../../../mock/data/mockConnectedUserAvecDroit";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 import { idRequeteRDCSC } from "../../../../mock/data/requeteDelivrance";
 
 const requeteTestCOURRIER = {
@@ -58,8 +60,12 @@ test("est à A_VALIDER et provient de COURRIER", () => {
     [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]
   );
 
-  render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC));
-  const bouttonSigner = screen.getByText(/Valider et terminer/i) as HTMLButtonElement;
+  render(
+    <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER).generer()}>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
+  const bouttonSigner = screen.getByText<HTMLButtonElement>(/Valider et terminer/i);
 
   waitFor(() => {
     expect(bouttonSigner.disabled).toBeFalsy();

@@ -1,4 +1,4 @@
-import { IOfficier } from "@model/agent/IOfficier";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { ApercuRequeteEtablissementSaisieDeProjetPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/ApercuRequeteEtablissementSaisieDeProjetPage";
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET,
@@ -149,7 +149,11 @@ function afficherPageRequeteCreationEtablissment(idUtilisateur?: string, idReque
   );
 
   render(
-    <MockRECEContextProvider utilisateurConnecte={idUtilisateur ? ({ idUtilisateur } as IOfficier) : undefined}>
+    <MockRECEContextProvider
+      utilisateurConnecte={
+        idUtilisateur ? MockUtilisateurBuilder.utilisateurConnecte().avecAttributs({ id: idUtilisateur }).generer() : undefined
+      }
+    >
       <RouterProvider router={router} />
     </MockRECEContextProvider>
   );

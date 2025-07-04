@@ -1,3 +1,6 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
@@ -14,12 +17,11 @@ import userEvent from "@testing-library/user-event";
 import { act } from "react";
 import { describe, expect, test } from "vitest";
 import VoletDocumentDelivre from "../../../../../../composants/pages/requetesDelivrance/editionRequete/partieDocument/voletDocuments/VoletDocumentDelivre";
-import { elementAvecContexte, elementAvecEditionDelivranceContexte } from "../../../../../__tests__utils__/testsUtil";
+import { elementAvecEditionDelivranceContexte } from "../../../../../__tests__utils__/testsUtil";
 import { DOCUMENT_DELIVRANCE } from "../../../../../mock/data/NomenclatureDocumentDelivrance";
 import { NATURE_MENTION } from "../../../../../mock/data/NomenclatureNatureMention";
 import { TYPE_MENTION } from "../../../../../mock/data/NomenclatureTypeMention";
 import { acte, acteNaissance } from "../../../../../mock/data/ficheEtBandeau/ficheActe";
-import { userDroitDelivrer } from "../../../../../mock/data/mockConnectedUserAvecDroit";
 import requeteDelivrance from "../../../../../mock/data/requeteDelivrance";
 
 describe("VoletDocumentDelivre", () => {
@@ -53,8 +55,8 @@ describe("VoletDocumentDelivre", () => {
 
   test("Render correctement avec l'onglet actif de base à 'Document édité'", async () => {
     render(
-      elementAvecContexte(
-        elementAvecEditionDelivranceContexte(
+      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER).generer()}>
+        {elementAvecEditionDelivranceContexte(
           <VoletDocumentDelivre
             documentDelivre={{
               ...documentReponse,
@@ -70,8 +72,8 @@ describe("VoletDocumentDelivre", () => {
             nature: NatureActe.NAISSANCE,
             mentions: []
           }
-        )
-      )
+        )}
+      </MockRECEContextProvider>
     );
     await waitFor(() => {
       expect(screen.getByText("Saisir l'extrait")).toBeDefined();
@@ -84,8 +86,8 @@ describe("VoletDocumentDelivre", () => {
 
   test("Reset l'onglet actif à 'Document édité' quand resetOngletActif est true", async () => {
     const { rerender } = render(
-      elementAvecContexte(
-        elementAvecEditionDelivranceContexte(
+      <MockRECEContextProvider>
+        {elementAvecEditionDelivranceContexte(
           <VoletDocumentDelivre
             documentDelivre={{
               ...documentReponse,
@@ -98,13 +100,13 @@ describe("VoletDocumentDelivre", () => {
             ...acte,
             id: "19c0d767-64e5-4376-aa1f-6d781a2a235a"
           }
-        )
-      )
+        )}
+      </MockRECEContextProvider>
     );
 
     rerender(
-      elementAvecContexte(
-        elementAvecEditionDelivranceContexte(
+      <MockRECEContextProvider>
+        {elementAvecEditionDelivranceContexte(
           <VoletDocumentDelivre
             documentDelivre={{
               ...documentReponse,
@@ -117,8 +119,8 @@ describe("VoletDocumentDelivre", () => {
             ...acte,
             id: "19c0d767-64e5-4376-aa1f-6d781a2a235a"
           }
-        )
-      )
+        )}
+      </MockRECEContextProvider>
     );
 
     await waitFor(() => {
@@ -129,8 +131,8 @@ describe("VoletDocumentDelivre", () => {
   // TOREFACTOR : Test de composants legacy, à supprimer in fine
   test("Reset l'onglet actif à 'Document édité' quand modification de mention validée", async () => {
     render(
-      elementAvecContexte(
-        elementAvecEditionDelivranceContexte(
+      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER).generer()}>
+        {elementAvecEditionDelivranceContexte(
           <VoletDocumentDelivre
             documentDelivre={documentReponse}
             resetOngletActif={false}
@@ -141,9 +143,8 @@ describe("VoletDocumentDelivre", () => {
             id: "19c0d767-64e5-4376-aa1f-6d781a2a235a",
             nature: NatureActe.NAISSANCE
           }
-        ),
-        userDroitDelivrer
-      )
+        )}
+      </MockRECEContextProvider>
     );
 
     await waitFor(() => {

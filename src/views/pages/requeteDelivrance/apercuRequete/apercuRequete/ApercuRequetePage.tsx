@@ -3,7 +3,7 @@ import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
-import { IOfficier } from "@model/agent/IOfficier";
+import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -96,6 +96,6 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({ idRequeteA
   );
 };
 
-function afficherBoutonFinConsultation(statut: StatutRequete, idUtilisateur: string, utilisateurConnecte: IOfficier) {
-  return statut === StatutRequete.TRAITE_REPONDU && utilisateurConnecte?.idUtilisateur === idUtilisateur;
+function afficherBoutonFinConsultation(statut: StatutRequete, idUtilisateur: string, utilisateurConnecte: UtilisateurConnecte) {
+  return statut === StatutRequete.TRAITE_REPONDU && utilisateurConnecte.id === idUtilisateur;
 }

@@ -1,4 +1,4 @@
-import { estUtilisateurSysteme } from "@model/agent/IOfficier";
+import { UTILISATEUR_SYSTEME } from "@model/agent/Utilisateur";
 import { IAction } from "@model/requete/IActions";
 import { TagPriorisation } from "@model/requete/enum/TagPriorisation";
 import DateUtils from "@util/DateUtils";
@@ -68,12 +68,10 @@ const ItemRequete: React.FC<ItemRequeteProps> = props => {
 
   const texteSpecificite = formatLigneSpecificite([props.natureDANF, specificite], " • ");
 
-  const getFormatLigneHistoriqueSdanf = (libelle: string, date?: string, nomUtilisateur?: string, prenomUtilisateur?: string) => {
-    if (estUtilisateurSysteme(nomUtilisateur, prenomUtilisateur)) {
-      return `${libelle} - ${date}`;
-    }
-    return `${libelle} - ${date} - ${nomUtilisateur} ${prenomUtilisateur}`;
-  };
+  const getFormatLigneHistoriqueSdanf = (libelle: string, date?: string, nomUtilisateur?: string, prenomUtilisateur?: string) =>
+    `${libelle} - ${date}`.concat(
+      `${prenomUtilisateur} ${nomUtilisateur}` === UTILISATEUR_SYSTEME ? "" : `- ${prenomUtilisateur} ${nomUtilisateur}`
+    );
 
   const TitreTag = () => {
     return (

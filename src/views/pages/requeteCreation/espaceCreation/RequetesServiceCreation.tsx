@@ -11,7 +11,7 @@ import {
   useCreationActionMiseAjourStatutEtRedirectionHook
 } from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { TransfertParLotParams, useTransfertsApi } from "@hook/requete/TransfertHook";
-import { IUtilisateur } from "@model/agent/IUtilisateur";
+import { Utilisateur } from "@model/agent/Utilisateur";
 import { IFiltreServiceRequeteCreationFormValues } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
@@ -124,7 +124,7 @@ export const RequetesServiceCreation: React.FC<RequetesServiceCreationProps> = p
     } as TransfertParLotParams);
   };
 
-  const getUtilisateursAsOptions = (requetes: IRequeteTableauCreation[], utilisateurs: IUtilisateur[]): Options => {
+  const getUtilisateursAsOptions = (requetes: IRequeteTableauCreation[], utilisateurs: Utilisateur[]): Options => {
     return filtrerRequetesChecked(requetes).reduce((listeUtilisateurs, requete) => {
       const options = listeUtilisateursToOptionsBis(
         TypeRequete.CREATION,

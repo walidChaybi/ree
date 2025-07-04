@@ -2,9 +2,8 @@
 import { CONFIG_GET_UTILISATEUR_CONNECTE } from "@api/configurations/agent/utilisateur/GetUtilisateurConnecteConfigApi";
 import { TRAITEMENT_GET_DONNEES_CONTEXT } from "@api/traitements/RECEContext/TraitementGetDonneesContext";
 import { TRAITEMENT_GET_NOMENCLATURES } from "@api/traitements/RECEContext/TraitementGetNomenclatures";
-import { IOfficier, mappingOfficier } from "@model/agent/IOfficier";
 import { IService } from "@model/agent/IService";
-import { IUtilisateur } from "@model/agent/IUtilisateur";
+import { Utilisateur, UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { IDecret } from "@model/etatcivil/commun/IDecret";
 import { gestionnaireDoubleOuverture } from "@util/GestionnaireDoubleOuverture";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
@@ -20,12 +19,12 @@ export interface IErreurConnexion {
 }
 
 interface IDonneesContext {
-  utilisateurs: IUtilisateur[];
+  utilisateurs: Utilisateur[];
   services: IService[];
   decrets: IDecret[];
 }
 export interface IRECEContext extends IDonneesContext {
-  utilisateurConnecte: IOfficier;
+  utilisateurConnecte: UtilisateurConnecte;
   isDirty: boolean;
   setIsDirty: React.Dispatch<React.SetStateAction<boolean>>;
   erreurConnexion: IErreurConnexion | null;
@@ -35,7 +34,7 @@ const RECEContextData = React.createContext<Omit<IRECEContext, "setIsDirty">>({}
 const RECEContextActions = React.createContext<Pick<IRECEContext, "setIsDirty">>({} as IRECEContext);
 
 const RECEContextProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const [utilisateurConnecte, setUtilisateurConnecte] = useState<IOfficier | null>(null);
+  const [utilisateurConnecte, setUtilisateurConnecte] = useState<UtilisateurConnecte | null>(null);
   const [erreurConnexion, setErreurConnexion] = useState<IErreurConnexion | null>(null);
   const [isDirty, setIsDirty] = useState<boolean>(false);
   const [donneesContext, setDonneesContext] = useState<IDonneesContext>({
@@ -51,19 +50,28 @@ const RECEContextProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   useEffect(() => {
     appelApiLogin({
       apresSucces: (officierLogin, headers) => {
-        const officier = mappingOfficier(headers, officierLogin);
-
-        gestionnaireFeatureFlag.positionneFlagsAPartirDuHeader(headers, officier.idSSO);
-        GestionnaireARetraiterDansSaga.init();
+        const utilisateur = UtilisateurConnecte.depuisDto(officierLogin);
         gestionnaireDoubleOuverture.init();
+        if (!utilisateur) {
+          setNomenclaturesChargees(true);
+          setUtilisateurConnecte(UtilisateurConnecte.inconnu());
+          setErreurConnexion({
+            avecErreur: true
+          });
 
-        setUtilisateurConnecte(officier);
+          return;
+        }
+
+        gestionnaireFeatureFlag.positionneFlagsAPartirDuHeader(headers, utilisateur.idArobas);
+        GestionnaireARetraiterDansSaga.init();
+
+        setUtilisateurConnecte(utilisateur);
         chargerNomenclature({ apresSucces: () => setNomenclaturesChargees(true) });
         recupererDonneesContext({ apresSucces: donneesContext => setDonneesContext(donneesContext) });
       },
       apresErreur: (erreurs, statut) => {
         gestionnaireDoubleOuverture.init();
-        setUtilisateurConnecte({} as IOfficier);
+        setUtilisateurConnecte(UtilisateurConnecte.inconnu());
         setNomenclaturesChargees(true);
         setErreurConnexion({
           avecErreur: Boolean(erreurs.length),
@@ -75,7 +83,7 @@ const RECEContextProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
 
   const contextValue = useMemo(
     () => ({
-      utilisateurConnecte: utilisateurConnecte ?? ({} as IOfficier),
+      utilisateurConnecte: utilisateurConnecte ?? UtilisateurConnecte.inconnu(),
       isDirty,
       erreurConnexion,
       ...donneesContext

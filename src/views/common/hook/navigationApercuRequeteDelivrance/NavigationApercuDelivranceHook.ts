@@ -21,7 +21,7 @@ export const useNavigationApercuDelivrance = (params: INavigationApercuDelivranc
     if (!params) return "";
 
     // Si la requete est attribuée à l'utilisateur connecté
-    return utilisateurConnecte?.idUtilisateur === params.requete.idUtilisateur &&
+    return utilisateurConnecte?.id === params.requete.idUtilisateur &&
       params.requete.statut &&
       params.requete.type === TypeRequete.DELIVRANCE.libelle
       ? redirectionSelonStatutRequete(utilisateurConnecte, params.requete, params.urlCourante)

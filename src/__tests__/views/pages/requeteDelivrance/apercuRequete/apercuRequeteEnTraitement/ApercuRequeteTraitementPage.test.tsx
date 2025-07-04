@@ -1,3 +1,6 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
 import { URL_MES_REQUETES_DELIVRANCE, URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
@@ -5,9 +8,10 @@ import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFl
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router";
 import { afterAll, beforeAll, beforeEach, expect, test } from "vitest";
-import { createTestingRouter, elementAvecContexte, mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 import { LISTE_UTILISATEURS } from "../../../../../mock/data/ListeUtilisateurs";
-import { userDroitnonCOMEDEC } from "../../../../../mock/data/mockConnectedUserAvecDroit";
+
+const UTILISATEUR_CONNECTE = MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER).generer();
 
 beforeAll(() => {
   mockFenetreFicheTestFunctions();
@@ -36,7 +40,14 @@ test.skip("DOIT afficher un loader TANT QUE la requete n'est pas encore chargée
     [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID, "a4cefb71-8457-4f6b-937e-34b49335d494")]
   );
 
-  const { container } = render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC, LISTE_UTILISATEURS));
+  const { container } = render(
+    <MockRECEContextProvider
+      utilisateurConnecte={UTILISATEUR_CONNECTE}
+      utilisateurs={LISTE_UTILISATEURS}
+    >
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
 
   waitFor(() => {
     expect(container.getElementsByClassName("OperationLocaleEnCoursSimple").length).toBe(1);
@@ -58,7 +69,14 @@ test.skip("renders ApercuRequeteTraitementPage", () => {
     [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID, "a4cefb71-8457-4f6b-937e-34b49335d494")]
   );
 
-  render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC, LISTE_UTILISATEURS));
+  render(
+    <MockRECEContextProvider
+      utilisateurConnecte={UTILISATEUR_CONNECTE}
+      utilisateurs={LISTE_UTILISATEURS}
+    >
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
 
   const bandeau = screen.getByText("Requête à signer le 14/07/2020 par Ashley YOUNG");
   const actions = screen.getByText(/Suivi requête/i);
@@ -91,7 +109,14 @@ test.skip("renders document réponses", () => {
     [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID, "a4cefb71-8457-4f6b-937e-34b49335d494")]
   );
 
-  render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC, LISTE_UTILISATEURS));
+  render(
+    <MockRECEContextProvider
+      utilisateurConnecte={UTILISATEUR_CONNECTE}
+      utilisateurs={LISTE_UTILISATEURS}
+    >
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
 
   const title = screen.getByText(/Documents à délivrer/i);
   const doc1 = screen.getByText(/^Courrier$/);
@@ -120,7 +145,14 @@ test.skip("transmettre à valideur", () => {
     [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID, "a4cefb71-8457-4f6b-937e-34b49335d494")]
   );
 
-  render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC, LISTE_UTILISATEURS));
+  render(
+    <MockRECEContextProvider
+      utilisateurConnecte={UTILISATEUR_CONNECTE}
+      utilisateurs={LISTE_UTILISATEURS}
+    >
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
 
   waitFor(() => {
     expect(screen.getByText("Transmettre à valideur")).toBeDefined();
@@ -173,7 +205,14 @@ test.skip("retour approuvé", () => {
     [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID, "a4cefb71-8457-4f6b-937e-34b49335d495")]
   );
 
-  render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC, LISTE_UTILISATEURS));
+  render(
+    <MockRECEContextProvider
+      utilisateurConnecte={UTILISATEUR_CONNECTE}
+      utilisateurs={LISTE_UTILISATEURS}
+    >
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
 
   waitFor(() => {
     expect(screen.getByText("Relecture commentée")).toBeDefined();
@@ -209,7 +248,14 @@ test.skip("reprendre traitement", () => {
     [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID, "a4cefb71-8457-4f6b-937e-34b49335d495")]
   );
 
-  render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC, LISTE_UTILISATEURS));
+  render(
+    <MockRECEContextProvider
+      utilisateurConnecte={UTILISATEUR_CONNECTE}
+      utilisateurs={LISTE_UTILISATEURS}
+    >
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
 
   waitFor(() => {
     expect(screen.getByText("Reprendre le traitement")).toBeDefined();

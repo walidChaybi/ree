@@ -1,4 +1,6 @@
-import { mappingOfficier } from "@model/agent/IOfficier";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { ApercuRequetePriseEnChargePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
@@ -12,24 +14,14 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getLastPathElem, getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
-import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 import { DOCUMENT_DELIVRANCE } from "../../../../mock/data/NomenclatureDocumentDelivrance";
-import {
-  resultatHeaderUtilistateurLaurenceBourdeau,
-  resultatRequeteUtilistateurLaurenceBourdeau,
-  userDroitnonCOMEDEC
-} from "../../../../mock/data/mockConnectedUserAvecDroit";
 import { idRequeteRDCPourModification, idRequeteRDCPourModificationMaCorbeille } from "../../../../mock/data/requeteDelivrance";
 
 describe("Test de la page EditionExtraitCopie", () => {
+  const UTILISATEUR_CONNECTE = MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER).generer();
+
   DocumentDelivrance.init(DOCUMENT_DELIVRANCE);
-
-  const utilisateurConnecteSaisie = userDroitnonCOMEDEC; // Droit DELIVRER
-
-  const utilisateurConnecteModification = mappingOfficier(
-    resultatHeaderUtilistateurLaurenceBourdeau,
-    resultatRequeteUtilistateurLaurenceBourdeau.data
-  );
 
   const getInput = (label: string): HTMLInputElement => screen.getByLabelText(label);
 
@@ -51,7 +43,11 @@ describe("Test de la page EditionExtraitCopie", () => {
       [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecteSaisie));
+    render(
+      <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     const titre = SousTypeDelivrance.getEnumFor("RDC").libelle;
 
@@ -72,7 +68,11 @@ describe("Test de la page EditionExtraitCopie", () => {
       [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID, idRequeteRDCPourModification)]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecteModification));
+    render(
+      <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
     const inputNomNaissance = getInput("titulaire1.noms.nomNaissance");
     const inputPrenomNaissance = getInput("titulaire1.prenoms.prenom1");
 
@@ -93,7 +93,11 @@ describe("Test de la page EditionExtraitCopie", () => {
       [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID, idRequeteRDCPourModification)]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecteModification));
+    render(
+      <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
     const inputNomNaissance = getInput("titulaire1.noms.nomNaissance");
     const buttonChampEnMajuscule = screen.getAllByTestId("BoutonChampEnMajuscule")[0] as HTMLButtonElement;
 
@@ -124,7 +128,11 @@ describe("Test de la page EditionExtraitCopie", () => {
       [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID, idRequeteRDCPourModificationMaCorbeille)]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecteModification));
+    render(
+      <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
     const inputNomNaissance = getInput("titulaire1.noms.nomNaissance");
     const buttonValider: HTMLButtonElement = screen.getByText(/Valider/i);
 
@@ -157,7 +165,11 @@ describe("Test de la page EditionExtraitCopie", () => {
       [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecteSaisie));
+    render(
+      <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
     const inputNatureActe: HTMLSelectElement = screen.getByTestId("requete.natureActe");
 
     await waitFor(() => {
@@ -188,7 +200,11 @@ describe("Test de la page EditionExtraitCopie", () => {
       [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecteSaisie));
+    render(
+      <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
     // Mandataire
     const inputMandataire = getInput("requerant.typerequerant.mandataire");
 
@@ -242,7 +258,11 @@ describe("Test de la page EditionExtraitCopie", () => {
       [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecteSaisie));
+    render(
+      <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
     // Champs Requete
     const inputNatureActe: HTMLSelectElement = screen.getByTestId("requete.natureActe");
     const inputDocumentDemande: HTMLSelectElement = screen.getByTestId("requete.documentDemande");
@@ -322,7 +342,11 @@ describe("Test de la page EditionExtraitCopie", () => {
       [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecteSaisie));
+    render(
+      <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
     const submit = screen.getByText(/Prendre en charge/i);
 
     // Champs Requete

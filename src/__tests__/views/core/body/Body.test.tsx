@@ -1,13 +1,15 @@
 import { Body } from "@core/body/Body";
-import { IOfficier } from "@model/agent/IOfficier";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { AccueilPage } from "@pages/accueil/AccueilPage";
 import { URL_BASE } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { storeRece } from "@util/storeRece";
 import { RouterProvider } from "react-router";
 import { afterEach, expect, test } from "vitest";
-import { createTestingRouter, elementAvecContexte } from "../../../__tests__utils__/testsUtil";
-import officier from "../../../mock/data/connectedUser.json";
+import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
+
+const UTILISATEUR_CONNECTE = MockUtilisateurBuilder.utilisateurConnecte().generer();
 
 afterEach(() => {
   // Réactivation de la log après chaque test (certains tests la désactive car les erreurs logguées sont normales)
@@ -25,21 +27,19 @@ test("renders BoutonDeconnexion", async () => {
     [URL_BASE]
   );
 
-  const off = { idSSO: officier.id_sso, ...officier };
-  off.profils = [...off.profils];
-  off.profils.push("RECE_ADMIN");
-
-  render(elementAvecContexte(<RouterProvider router={router} />, off as unknown as IOfficier));
+  render(
+    <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
 
   await waitFor(() => {
-    const boutonElement = screen.getByText(/prenomConnectedUser nomConnectedUser/i);
+    const boutonElement = screen.getByText(/Prénom NOM/i);
     expect(boutonElement).toBeDefined();
   });
 });
 
 test("renders Body", async () => {
-  officier.profils.push("RECE_ADMIN");
-
   const router = createTestingRouter(
     [
       {
@@ -51,10 +51,9 @@ test("renders Body", async () => {
   );
 
   render(
-    elementAvecContexte(<RouterProvider router={router} />, {
-      idSSO: officier.id_sso,
-      ...officier
-    } as unknown as IOfficier)
+    <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
   );
 
   await waitFor(() => {
@@ -75,7 +74,11 @@ test("renders Body Connexion en cours", async () => {
     [URL_BASE]
   );
 
-  render(elementAvecContexte(<RouterProvider router={router} />));
+  render(
+    <MockRECEContextProvider>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
 
   await waitFor(() => {
     const titre = screen.getByText(/Connexion en cours/i);
@@ -85,7 +88,6 @@ test("renders Body Connexion en cours", async () => {
 
 test("renders Body avec erreur de login", async () => {
   storeRece.logErrorDesactive = true;
-  officier.profils.push("RECE_ADMIN");
 
   const router = createTestingRouter(
     [
@@ -98,10 +100,12 @@ test("renders Body avec erreur de login", async () => {
   );
 
   render(
-    elementAvecContexte(<RouterProvider router={router} />, officier as unknown as IOfficier, undefined, undefined, undefined, {
-      statut: 0,
-      avecErreur: true
-    })
+    <MockRECEContextProvider
+      utilisateurConnecte={UTILISATEUR_CONNECTE}
+      erreurConnexion={{ statut: 0, avecErreur: true }}
+    >
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
   );
 
   await waitFor(() => {
@@ -123,10 +127,12 @@ test("renders Body 403", async () => {
   );
 
   render(
-    elementAvecContexte(<RouterProvider router={router} />, officier as unknown as IOfficier, undefined, undefined, undefined, {
-      statut: 403,
-      avecErreur: true
-    })
+    <MockRECEContextProvider
+      utilisateurConnecte={UTILISATEUR_CONNECTE}
+      erreurConnexion={{ statut: 403, avecErreur: true }}
+    >
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
   );
 
   const titre = screen.getByText(/Vous n'avez pas les droits pour utiliser RECE, veuillez contacter le service BIMO/i);

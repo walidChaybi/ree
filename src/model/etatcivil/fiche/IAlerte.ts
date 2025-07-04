@@ -1,4 +1,4 @@
-import { IUtilisateur, getNomPrenomUtilisateurAPartirId } from "@model/agent/IUtilisateur";
+import { Utilisateur } from "@model/agent/Utilisateur";
 import { compactObject } from "@util/Utils";
 import { A_NE_PAS_DELIVRER, DESCRIPTION_SAGA, ITypeAlerte, TypeCodeCouleur } from "../enum/TypeAlerte";
 
@@ -27,7 +27,7 @@ const dotCharacter = "\u2022";
 const RECE = "RECE";
 
 export const Alerte = {
-  toReferenceString(alerte: IAlerte, utilisateurs: IUtilisateur[]): string {
+  toReferenceString(alerte: IAlerte, utilisateurs: Utilisateur[]): string {
     const registre: any = {
       famille: alerte?.famille,
       pocopa: alerte?.pocopa,
@@ -39,7 +39,7 @@ export const Alerte = {
     };
     const trigramme =
       alerte.idUtilisateur && alerte.trigrammeUtilisateur !== RECE
-        ? ` - ${getNomPrenomUtilisateurAPartirId(alerte?.idUtilisateur, utilisateurs)}`
+        ? ` - ${utilisateurs.find(utilisateur => utilisateur.id === alerte?.idUtilisateur)?.prenomNom ?? ""}`
         : "";
     const complementDescription = alerte.complementDescription ? ` - ${alerte?.complementDescription}` : "";
     return `${dotCharacter} ${Object.values(compactObject(registre)).join(
@@ -47,10 +47,10 @@ export const Alerte = {
     )} - ${alerte.description}${complementDescription}${trigramme} - ${alerte?.dateCreationStr}`;
   },
 
-  toAlertString(alerte: IAlerte, utilisateurs: IUtilisateur[]): string {
+  toAlertString(alerte: IAlerte, utilisateurs: Utilisateur[]): string {
     const trigramme =
       alerte.idUtilisateur && alerte.trigrammeUtilisateur !== RECE
-        ? ` - ${getNomPrenomUtilisateurAPartirId(alerte?.idUtilisateur, utilisateurs)}`
+        ? ` - ${utilisateurs.find(utilisateur => utilisateur.id === alerte?.idUtilisateur)?.prenomNom ?? ""}`
         : "";
     const complementDescription = alerte.complementDescription ? ` - ${alerte?.complementDescription}` : "";
     return `${dotCharacter} ${alerte?.description}${complementDescription}${trigramme} - ${alerte?.dateCreationStr}`;

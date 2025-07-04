@@ -2,8 +2,10 @@ import { CONFIG_PUT_ANALYSE_MARGINALE_ET_MENTIONS } from "@api/configurations/et
 import { CONFIG_PUT_MISE_A_JOUR_ANALYSE_MARGINALE } from "@api/configurations/etatCivil/PutMiseAJourAnalyseMarginaleConfigApi";
 import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
 import { ficheActe2 } from "@mock/data/ficheActe";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { act, fireEvent, render, screen } from "@testing-library/react";
@@ -73,7 +75,13 @@ describe("Tests PartieFormulaire", () => {
       { initialEntries: ["/test"] }
     );
 
-    const { container } = await act(async () => render(<RouterProvider router={router} />));
+    const { container } = await act(async () =>
+      render(
+        <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().generer()}>
+          <RouterProvider router={router} />
+        </MockRECEContextProvider>
+      )
+    );
 
     return container.firstChild;
   };

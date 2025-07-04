@@ -4,14 +4,8 @@ import {
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
 import { IDetailRequeteParams, useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
-import {
-  IOfficier,
-  appartientAMonServiceOuServicesParentsOuServicesFils,
-  appartientAUtilisateurConnecteOuPersonne,
-  officierHabiliterPourLeDroit
-} from "@model/agent/IOfficier";
 import { IService } from "@model/agent/IService";
-import { IUtilisateur } from "@model/agent/IUtilisateur";
+import { Utilisateur, UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { IRequete } from "@model/requete/IRequete";
@@ -98,21 +92,23 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<ApercuReqCreatio
       : [];
   }
 
-  const estPresentBoutonPrendreEnCharge = (utilisateurConnecte: IOfficier): boolean => {
+  const estPresentBoutonPrendreEnCharge = (utilisateurConnecte: UtilisateurConnecte): boolean => {
     if (requete) {
       return (
         SousTypeCreation.estRCTDOuRCTC(requete.sousType) &&
         StatutRequete.estATraiterOuTransferee(requete.statutCourant?.statut) &&
-        officierHabiliterPourLeDroit(utilisateurConnecte, Droit.CREER_ACTE_TRANSCRIT) &&
-        appartientAUtilisateurConnecteOuPersonne(utilisateurConnecte, requete.idUtilisateur) &&
-        appartientAMonServiceOuServicesParentsOuServicesFils(utilisateurConnecte, requete.idService)
+        utilisateurConnecte.estHabilitePour({ leDroit: Droit.CREER_ACTE_TRANSCRIT }) &&
+        (!requete.idUtilisateur || utilisateurConnecte.id === requete.idUtilisateur) &&
+        [utilisateurConnecte.idService, ...utilisateurConnecte.idServicesFils, ...utilisateurConnecte.idServicesParent].includes(
+          requete.idService
+        )
       );
     } else {
       return false;
     }
   };
 
-  function handlePrendreEnCharge(utilisateurs: IUtilisateur[], services: IService[]) {
+  function handlePrendreEnCharge(utilisateurs: Utilisateur[], services: IService[]) {
     setCreationActionMiseAjourStatut({
       libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
       statutRequete: StatutRequete.PRISE_EN_CHARGE,

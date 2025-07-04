@@ -1,6 +1,6 @@
 import { pacsModificationNotaireMap } from "@mock/data/fichePACS";
 import { ficheRca } from "@mock/data/ficheRCA";
-import { IOfficier } from "@model/agent/IOfficier";
+import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { StatutFiche } from "@model/etatcivil/fiche/StatutFiche";
 import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
@@ -32,7 +32,7 @@ test("ficheUtils setFiche PACS works", () => {
     categorie: TypeFiche.PACS
   };
 
-  const fiche = setFiche({} as IOfficier, dataFiche, FichePacs.depuisDto(pacsModificationNotaireMap));
+  const fiche = setFiche(UtilisateurConnecte.inconnu(), dataFiche, FichePacs.depuisDto(pacsModificationNotaireMap));
 
   expect(fiche.bandeauFiche.titreFenetre).toBe("PACS - DUREL Marie Charlotte et DUPE Louis-Philippe - N° 2018 - 123456");
   expect(fiche.bandeauFiche.statutsFiche).toStrictEqual([
@@ -60,7 +60,7 @@ test("ficheUtils setFiche RCA works", () => {
 
   const data = FicheRcRca.RcaDepuisDto(ficheRca.data);
 
-  const fiche = setFiche({} as IOfficier, dataFiche, data);
+  const fiche = setFiche(UtilisateurConnecte.inconnu(), dataFiche, data);
 
   expect(fiche.bandeauFiche.titreFenetre).toBe("RCA - FLECK Léo - N° 2020 - 4093");
   expect(fiche.bandeauFiche.annee).toBe("2020");

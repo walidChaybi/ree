@@ -1,18 +1,11 @@
 import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
 import { RECEContextData } from "@core/contexts/RECEContext";
-import {
-  IReponseRequeteInfo,
-  ReponseRequeteInfo
-} from "@model/requete/IReponseRequeteInfo";
+import { IReponseRequeteInfo, ReponseRequeteInfo } from "@model/requete/IReponseRequeteInfo";
 import { BesoinUsager } from "@model/requete/enum/BesoinUsager";
 import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
-import {
-  ObjetRequeteInfo,
-  getObjetRequeteInfoLibelle
-} from "@model/requete/enum/ObjetRequeteInfo";
+import { ObjetRequeteInfo, getObjetRequeteInfoLibelle } from "@model/requete/enum/ObjetRequeteInfo";
 import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { getLibelle } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import React, { useContext, useEffect, useState } from "react";
 import { RequeteInfoProps } from "./ResumeReqInfo";
@@ -38,33 +31,26 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
   };
 
   const { utilisateurConnecte } = useContext(RECEContextData);
-  const [reponseChoisie, setReponseChoisie] =
-    useState<IReponseRequeteInfo>(SAISIE_LIBRE_REPONSE);
+  const [reponseChoisie, setReponseChoisie] = useState<IReponseRequeteInfo>(SAISIE_LIBRE_REPONSE);
 
   const [lesBoutonsDisabled, setLesBoutonsDisabled] = useState(false);
   const [formulaireDisabled, setFormulaireDisabled] = useState(false);
   const [retourVisible, setRetourVisible] = useState(false);
   const [tousLesBoutonsVisibles, setTousLesBoutonsVisibles] = useState(true);
-  const [lesBoutonsReponsesVisibles, setLesBoutonsReponsesVisibles] =
-    useState(true);
+  const [lesBoutonsReponsesVisibles, setLesBoutonsReponsesVisibles] = useState(true);
 
   useEffect(() => {
-    const mauvaisUtilisateur =
-      requete.idUtilisateur !== utilisateurConnecte?.idUtilisateur;
+    const mauvaisUtilisateur = requete.idUtilisateur !== utilisateurConnecte.id;
 
     const rejetOuTraiteRepondu =
-      requete.statutCourant.statut === StatutRequete.REJET ||
-      requete.statutCourant.statut === StatutRequete.TRAITE_REPONDU;
+      requete.statutCourant.statut === StatutRequete.REJET || requete.statutCourant.statut === StatutRequete.TRAITE_REPONDU;
 
     const completerDemande =
-      requete.besoinUsager === BesoinUsager.COMPLETER_DEMANDE &&
-      requete.sousType === SousTypeInformation.COMPLETION_REQUETE_EN_COURS;
+      requete.besoinUsager === BesoinUsager.COMPLETER_DEMANDE && requete.sousType === SousTypeInformation.COMPLETION_REQUETE_EN_COURS;
 
     setRetourVisible(!disabled);
-    setLesBoutonsDisabled(disabled ? disabled : mauvaisUtilisateur);
-    setFormulaireDisabled(
-      disabled ? disabled : mauvaisUtilisateur || rejetOuTraiteRepondu
-    );
+    setLesBoutonsDisabled(disabled || mauvaisUtilisateur);
+    setFormulaireDisabled(disabled || mauvaisUtilisateur || rejetOuTraiteRepondu);
     setTousLesBoutonsVisibles(!rejetOuTraiteRepondu);
     setLesBoutonsReponsesVisibles(!completerDemande);
   }, [requete, disabled]);
@@ -75,23 +61,16 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
     if (requete.reponseChoisie?.corpsMail) {
       setReponseChoisie({
         ...requete.reponseChoisie,
-        libelle:
-          ReponseRequeteInfo.getLibelleNomenclatureReponseRequeteInfoFromId(
-            requete.reponseChoisie,
-            reponsesReqInfo
-          )
+        libelle: ReponseRequeteInfo.getLibelleNomenclatureReponseRequeteInfoFromId(requete.reponseChoisie, reponsesReqInfo)
       });
-    } else if (
-      requete.sousType === SousTypeInformation.COMPLETION_REQUETE_EN_COURS
-    ) {
-      const reponseLibre =
-        ReponseRequeteInfo.getNomenclatureReponseRequetInfoFromObjetEtComplementObjet(
-          {
-            objet: ObjetRequeteInfo.COMPLETION_REQUETE_EN_COURS,
-            complementObjet: ComplementObjetRequete.REPONSE_LIBRE_AGENT.nom
-          },
-          reponsesReqInfo
-        );
+    } else if (requete.sousType === SousTypeInformation.COMPLETION_REQUETE_EN_COURS) {
+      const reponseLibre = ReponseRequeteInfo.getNomenclatureReponseRequetInfoFromObjetEtComplementObjet(
+        {
+          objet: ObjetRequeteInfo.COMPLETION_REQUETE_EN_COURS,
+          complementObjet: ComplementObjetRequete.REPONSE_LIBRE_AGENT.nom
+        },
+        reponsesReqInfo
+      );
 
       if (reponseLibre) {
         setReponseChoisie(reponseLibre);
@@ -102,7 +81,7 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
   }, [reponsesReqInfo]);
 
   useEffect(() => {
-    if (requete.idUtilisateur !== utilisateurConnecte?.idUtilisateur) {
+    if (requete.idUtilisateur !== utilisateurConnecte?.id) {
       setLesBoutonsDisabled(true);
     }
   }, [requete.idUtilisateur]);
@@ -112,53 +91,51 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
   };
 
   return (
-    <>
-      <Fieldset titre={getLibelle("Choix de la réponse")}>
-        <div>
-          {!affichageBoutonPrendreEnCharge && tousLesBoutonsVisibles && (
-            <div className="BoutonsReponse">
-              {lesBoutonsReponsesVisibles && (
-                <>
-                  <MenuReponsesProposees
-                    listeReponse={reponsesReqInfo}
-                    requete={requete}
-                    onClick={onClick}
-                    disabled={lesBoutonsDisabled}
-                  />
-                  <MenuToutesLesReponses
-                    listeReponse={reponsesReqInfo}
-                    onClick={onClick}
-                    disabled={lesBoutonsDisabled}
-                  />
-                  <BoutonReponseLibre
-                    onClick={onClick}
-                    reponse={SAISIE_LIBRE_REPONSE}
-                    disabled={lesBoutonsDisabled}
-                  ></BoutonReponseLibre>
-                </>
-              )}
-              <MenuTransfert
-                idRequete={requete.id}
-                sousTypeRequete={requete.sousType}
-                typeRequete={requete.type}
-                estTransfert={true}
-                menuFermer={true}
-                disabled={lesBoutonsDisabled}
-                idUtilisateurRequete={requete.idUtilisateur}
-              />
-            </div>
-          )}
-          <ReponseReqInfoForm
-            reponse={reponseChoisie}
-            requete={requete}
-            formulaireDisabled={formulaireDisabled}
-            boutonVisible={tousLesBoutonsVisibles}
-            retourVisible={retourVisible}
-            affichageBoutonPrendreEnCharge={affichageBoutonPrendreEnCharge}
-            onclickPrendreEnCharge={onclickPrendreEnCharge}
-          />
-        </div>
-      </Fieldset>
-    </>
+    <Fieldset titre={"Choix de la réponse"}>
+      <div>
+        {!affichageBoutonPrendreEnCharge && tousLesBoutonsVisibles && (
+          <div className="BoutonsReponse">
+            {lesBoutonsReponsesVisibles && (
+              <>
+                <MenuReponsesProposees
+                  listeReponse={reponsesReqInfo}
+                  requete={requete}
+                  onClick={onClick}
+                  disabled={lesBoutonsDisabled}
+                />
+                <MenuToutesLesReponses
+                  listeReponse={reponsesReqInfo}
+                  onClick={onClick}
+                  disabled={lesBoutonsDisabled}
+                />
+                <BoutonReponseLibre
+                  onClick={onClick}
+                  reponse={SAISIE_LIBRE_REPONSE}
+                  disabled={lesBoutonsDisabled}
+                ></BoutonReponseLibre>
+              </>
+            )}
+            <MenuTransfert
+              idRequete={requete.id}
+              sousTypeRequete={requete.sousType}
+              typeRequete={requete.type}
+              estTransfert={true}
+              menuFermer={true}
+              disabled={lesBoutonsDisabled}
+              idUtilisateurRequete={requete.idUtilisateur}
+            />
+          </div>
+        )}
+        <ReponseReqInfoForm
+          reponse={reponseChoisie}
+          requete={requete}
+          formulaireDisabled={formulaireDisabled}
+          boutonVisible={tousLesBoutonsVisibles}
+          retourVisible={retourVisible}
+          affichageBoutonPrendreEnCharge={affichageBoutonPrendreEnCharge}
+          onclickPrendreEnCharge={onclickPrendreEnCharge}
+        />
+      </div>
+    </Fieldset>
   );
 };

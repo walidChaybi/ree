@@ -1,11 +1,7 @@
 import { VisionneuseActe } from "@composant/visionneuseActe/VisionneuseActe";
-import {
-  IOfficier,
-  officierDroitConsulterSurLeTypeRegistre,
-  officierDroitConsulterSurLeTypeRegistreOuDroitMAE,
-  officierHabiliterPourLeDroit
-} from "@model/agent/IOfficier";
+import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
+import { Perimetre } from "@model/agent/enum/Perimetre";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { TypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteArchiviste";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
@@ -15,17 +11,10 @@ import { getFichesPersonneActe } from "../personne/FichePersonne";
 import { getEvenement } from "./EvenementActeUtils";
 import { getTitulairesAM } from "./TitulairesActeUtils";
 
-export function getPanelsActe(acte: IFicheActe, utilisateurConnecte: IOfficier): IAccordionReceSection {
+export function getPanelsActe(acte: IFicheActe, utilisateurConnecte: UtilisateurConnecte): IAccordionReceSection {
   const idTypeRegistre = acte?.registre?.type?.id;
-  const paramsAffichage = getParamsAffichageFicheActe(
-    idTypeRegistre,
-    acte.visibiliteArchiviste,
-    utilisateurConnecte
-  );
-  const fichesPersonne: SectionPanelProps[] = getFichesPersonneActe(
-    acte?.personnes,
-    paramsAffichage
-  );
+  const paramsAffichage = getParamsAffichageFicheActe(idTypeRegistre, acte.visibiliteArchiviste, utilisateurConnecte);
+  const fichesPersonne: SectionPanelProps[] = getFichesPersonneActe(acte?.personnes, paramsAffichage);
 
   return {
     panels: [
@@ -50,10 +39,7 @@ export function getPanelsActe(acte: IFicheActe, utilisateurConnecte: IOfficier):
   };
 }
 
-function getPanelAreasActeImage(
-  acte: IFicheActe,
-  params: IParamsAffichage
-): SectionPanelAreaProps[] {
+function getPanelAreasActeImage(acte: IFicheActe, params: IParamsAffichage): SectionPanelAreaProps[] {
   if (params.visuActe === "classique" || params.visuActe === "filigrane") {
     return [
       {
@@ -61,9 +47,7 @@ function getPanelAreasActeImage(
           <VisionneuseActe
             idActe={acte.id}
             typeActe={acte.type}
-            estReecrit={
-              params.visuActe === "classique" ? acte.estReecrit : undefined
-            }
+            estReecrit={params.visuActe === "classique" ? acte.estReecrit : undefined}
           ></VisionneuseActe>
         ),
         nbColonne: 1
@@ -84,7 +68,7 @@ export interface IParamsAffichage {
 export function getParamsAffichageFicheActe(
   idTypeRegistre: string | undefined,
   typeVisibiliteArchiviste: TypeVisibiliteArchiviste,
-  utilisateurConnecte: IOfficier
+  utilisateurConnecte: UtilisateurConnecte
 ): IParamsAffichage {
   const params: IParamsAffichage = {
     visuBoutonAlertes: false,
@@ -97,8 +81,9 @@ export function getParamsAffichageFicheActe(
   // ou
   // S'il a le droit CONSULTER sur le périmètre de l'acte et le type de registre est présent dans ce périmètre
   if (
-    officierDroitConsulterSurLeTypeRegistreOuDroitMAE(utilisateurConnecte, idTypeRegistre) ||
-    officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER_COMEDEC)
+    utilisateurConnecte.estHabilitePour({ leDroit: Droit.CONSULTER, pourIdTypeRegistre: idTypeRegistre }) ||
+    utilisateurConnecte.estHabilitePour({ leDroit: Droit.CONSULTER, surLePerimetre: Perimetre.TOUS_REGISTRES }) ||
+    utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER_COMEDEC })
   ) {
     params.visuBoutonAlertes = true;
     params.visuActe = "classique";
@@ -108,7 +93,7 @@ export function getParamsAffichageFicheActe(
   // Si c'est un acte archive et qu'il a le droit CONSULTER_ARCHIVE
   else if (
     typeVisibiliteArchiviste !== TypeVisibiliteArchiviste.NON &&
-    officierHabiliterPourLeDroit(utilisateurConnecte, Droit.CONSULTER_ARCHIVES)
+    utilisateurConnecte.estHabilitePour({ leDroit: Droit.CONSULTER_ARCHIVES })
   ) {
     params.visuBoutonAlertes = false;
     params.visuActe = "filigrane";
@@ -117,12 +102,7 @@ export function getParamsAffichageFicheActe(
 
   // S'il a un droit CONSULTER mais pas sur le périmètre de l'acte
   // ou Si le type de registre n'est présent dans le périmètre de l'acte
-  else if (
-    !officierDroitConsulterSurLeTypeRegistre(
-      utilisateurConnecte,
-      idTypeRegistre
-    )
-  ) {
+  else if (!utilisateurConnecte.estHabilitePour({ leDroit: Droit.CONSULTER, pourIdTypeRegistre: idTypeRegistre })) {
     params.visuBoutonAlertes = false;
     params.visuActe = "disabled";
     params.personnes = "disabled";

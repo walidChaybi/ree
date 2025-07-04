@@ -37,11 +37,11 @@ const MenuUtilisateur: React.FC = () => {
     };
   }, []);
 
-  if (!utilisateurConnecte.idSSO && !erreurConnexion?.avecErreur) {
+  if (!utilisateurConnecte.idArobas && !erreurConnexion?.avecErreur) {
     return <></>;
   }
 
-  return utilisateurConnecte.idSSO ? (
+  return utilisateurConnecte.idArobas ? (
     <>
       <button
         className="h-12 min-w-0 bg-transparent pl-4 pr-2"
@@ -64,9 +64,9 @@ const MenuUtilisateur: React.FC = () => {
             <div className="flex gap-4 pt-3.5">
               <AccountCircleOutlined fontSize="large" />
               <div className="text-start">
-                <div className="text-2xl font-bold">{`${utilisateurConnecte.prenom ?? ""} ${utilisateurConnecte.nom ?? ""}`}</div>
-                {utilisateurConnecte.fonctionAgent && (
-                  <div className="italic">{Texte.premiereLettreMajuscule(utilisateurConnecte.fonctionAgent.libelleFonction)}</div>
+                <div className="text-2xl font-bold">{utilisateurConnecte.prenomNom}</div>
+                {utilisateurConnecte.fonction && (
+                  <div className="italic">{Texte.premiereLettreMajuscule(utilisateurConnecte.fonction)}</div>
                 )}
               </div>
             </div>

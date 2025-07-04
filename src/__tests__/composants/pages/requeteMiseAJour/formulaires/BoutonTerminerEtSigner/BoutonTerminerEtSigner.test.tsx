@@ -1,6 +1,6 @@
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
-import { IOfficier } from "@model/agent/IOfficier";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { render, screen } from "@testing-library/react";
 import { act } from "react";
@@ -9,20 +9,14 @@ import BoutonTerminerEtSigner from "../../../../../../composants/pages/requetesM
 import { EditionMiseAJourContext, IEditionMiseAJourContext } from "../../../../../../contexts/EditionMiseAJourContextProvider";
 
 const ID_ACTE = "1010";
-const mockUtilisateurSansDroit = {
-  idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55"
-} as IOfficier;
+const mockUtilisateurSansDroit = MockUtilisateurBuilder.utilisateurConnecte().generer();
 
-const utilisateurAvecDroitSigner = {
-  idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55",
-  habilitations: [
-    {
-      profil: { droits: [{ nom: Droit.SIGNER_MENTION } as IDroit, { nom: Droit.METTRE_A_JOUR_ACTE } as IDroit] } as IProfil
-    } as IHabilitation
-  ]
-} as IOfficier;
+const utilisateurAvecDroitSigner = MockUtilisateurBuilder.utilisateurConnecte()
+  .avecAttributs({ id: "7a091a3b-6835-4824-94fb-527d68926d55" })
+  .avecDroits([Droit.SIGNER_MENTION, Droit.METTRE_A_JOUR_ACTE])
+  .generer();
 
-const renderSnapshot = async (mockUtilisateur: IOfficier, saisieMentionEnCours: boolean): Promise<ChildNode | null> => {
+const renderSnapshot = async (mockUtilisateur: UtilisateurConnecte, saisieMentionEnCours: boolean): Promise<ChildNode | null> => {
   const { container } = await act(async () =>
     render(
       <div>

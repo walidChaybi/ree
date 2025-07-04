@@ -1,5 +1,8 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -16,10 +19,8 @@ import {
   expectEstTexteAbsent,
   expectEstTextePresent
 } from "../../../../../../../__tests__utils__/expectUtils";
-import { elementAvecContexte } from "../../../../../../../__tests__utils__/testsUtil";
 import { requeteAvecDocs } from "../../../../../../../mock/data/DetailRequeteDelivrance";
 import { ficheActeMariage, ficheActeMariage2 } from "../../../../../../../mock/data/ficheActe";
-import { userDroitnonCOMEDEC } from "../../../../../../../mock/data/mockConnectedUserAvecDroit";
 
 const acteMariage = mapActe(ficheActeMariage2.data);
 const requete = {
@@ -28,12 +29,13 @@ const requete = {
 } as IRequeteDelivrance;
 
 const saisirExtraitFormAvecContexte = (acte: IFicheActe, requete: IRequeteDelivrance): any => {
-  return elementAvecContexte(
-    <SaisirExtraitForm
-      acte={acte}
-      requete={requete}
-    />,
-    userDroitnonCOMEDEC
+  return (
+    <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER).generer()}>
+      <SaisirExtraitForm
+        acte={acte}
+        requete={requete}
+      />
+    </MockRECEContextProvider>
   );
 };
 

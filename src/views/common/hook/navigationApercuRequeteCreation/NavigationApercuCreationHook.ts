@@ -1,5 +1,5 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { IOfficier, appartientAUtilisateurConnecte } from "@model/agent/IOfficier";
+import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import {
@@ -42,7 +42,7 @@ export function useNavigationApercuCreation(params?: NavigationApercuReqCreation
 
 function redirectionEtablissement(
   navigate: NavigateFunction,
-  utilisateurConnecte: IOfficier,
+  utilisateurConnecte: UtilisateurConnecte,
   idRequete: string,
   statut: StatutRequete,
   idUtilisateur?: string
@@ -56,7 +56,7 @@ function redirectionEtablissement(
     StatutRequete.PROJET_VALIDE,
     StatutRequete.A_SIGNER
   ];
-  if (appartientAUtilisateurConnecte(utilisateurConnecte, idUtilisateur) && statutsQuiRedirigentVersLeSuiviDossier.includes(statut)) {
+  if (utilisateurConnecte.id === idUtilisateur && statutsQuiRedirigentVersLeSuiviDossier.includes(statut)) {
     path = PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER;
   } else {
     path = PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE;
@@ -66,17 +66,18 @@ function redirectionEtablissement(
 
 function redirectionTranscription(
   navigate: NavigateFunction,
-  utilisateurConnecte: IOfficier,
+  utilisateurConnecte: UtilisateurConnecte,
   idRequete: string,
   statut?: StatutRequete,
   idUtilisateur?: string
 ) {
   let path: string;
-  if (!appartientAUtilisateurConnecte(utilisateurConnecte, idUtilisateur) && StatutRequete.estATraiter(statut)) {
+  const appartientAUtilisateurConnecte = utilisateurConnecte.id === idUtilisateur;
+  if (!appartientAUtilisateurConnecte && StatutRequete.estATraiter(statut)) {
     path = PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE;
-  } else if (appartientAUtilisateurConnecte(utilisateurConnecte, idUtilisateur) && StatutRequete.estPriseEnCharge(statut)) {
+  } else if (appartientAUtilisateurConnecte && StatutRequete.estPriseEnCharge(statut)) {
     path = PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE;
-  } else if (appartientAUtilisateurConnecte(utilisateurConnecte, idUtilisateur) && StatutRequete.estEnTraitement(statut)) {
+  } else if (appartientAUtilisateurConnecte && StatutRequete.estEnTraitement(statut)) {
     path = PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET;
   } else {
     path = PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE;

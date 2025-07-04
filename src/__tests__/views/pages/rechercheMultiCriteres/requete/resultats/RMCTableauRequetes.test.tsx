@@ -1,3 +1,6 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { RMCTableauRequetes } from "@pages/rechercheMultiCriteres/requete/resultats/RMCTableauRequetes";
 import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
 import {
@@ -10,9 +13,8 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getLastPathElem, getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router";
 import { describe, expect, test, vi } from "vitest";
-import { createTestingRouter, elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
+import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 import { DataRMCRequeteAvecResultat, DataTableauRequete } from "../../../../../mock/data/RMCRequete";
-import { userDroitConsulterPerimetreTousRegistres } from "../../../../../mock/data/mockConnectedUserAvecDroit";
 
 describe("Test RMCTableauRequetes", () => {
   test("renders Resultat Requetes Recherche Multi Critères => Avec résultat", async () => {
@@ -139,8 +141,6 @@ describe("Test RMCTableauRequetes", () => {
   });
 
   test("Clic sur une Requête Délivrance au statut 'Prise en charge'", async () => {
-    userDroitConsulterPerimetreTousRegistres.idUtilisateur = "d49e7b2d-7cec-4f6a-854c-3cbd6148dc7a";
-
     const router = createTestingRouter(
       [
         {
@@ -162,7 +162,11 @@ describe("Test RMCTableauRequetes", () => {
       [URL_RECHERCHE_REQUETE]
     );
 
-    const { getByTestId } = render(elementAvecContexte(<RouterProvider router={router} />, userDroitConsulterPerimetreTousRegistres));
+    const { getByTestId } = render(
+      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.CONSULTER).generer()}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     const ligne = getByTestId("8ef11b8b-652c-4c6a-ad27-a544fce635d1");
 
@@ -177,8 +181,6 @@ describe("Test RMCTableauRequetes", () => {
   });
 
   test("Clic sur une Requête avec des titulaires", async () => {
-    userDroitConsulterPerimetreTousRegistres.idUtilisateur = "d49e7b2d-7cec-4f6a-854c-3cbd6148dc7a";
-
     const router = createTestingRouter(
       [
         {
@@ -200,7 +202,11 @@ describe("Test RMCTableauRequetes", () => {
       [URL_RECHERCHE_REQUETE]
     );
 
-    const { getByTestId } = render(elementAvecContexte(<RouterProvider router={router} />, userDroitConsulterPerimetreTousRegistres));
+    const { getByTestId } = render(
+      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.CONSULTER).generer()}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     const ligne = getByTestId("4578e56c-421c-4e6a-b587-a238a665daf9");
 
@@ -215,8 +221,6 @@ describe("Test RMCTableauRequetes", () => {
   });
 
   test("Changement de page", async () => {
-    userDroitConsulterPerimetreTousRegistres.idUtilisateur = "d49e7b2d-7cec-4f6a-854c-3cbd6148dc7a";
-
     const router = createTestingRouter(
       [
         {
@@ -234,7 +238,11 @@ describe("Test RMCTableauRequetes", () => {
       [URL_RECHERCHE_REQUETE]
     );
 
-    const { getByTestId } = render(elementAvecContexte(<RouterProvider router={router} />, userDroitConsulterPerimetreTousRegistres));
+    const { getByTestId } = render(
+      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.CONSULTER).generer()}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     const pageSuivante = screen.getByTitle("Page suivante");
 

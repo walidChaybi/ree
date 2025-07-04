@@ -1,7 +1,8 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE } from "@model/agent/IOfficier";
+import { Droit } from "@model/agent/enum/Droit";
+import { Perimetre } from "@model/agent/enum/Perimetre";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useContext, useState } from "react";
 import { IAjouterAlerteFormValue, PopinAjouterAlertes } from "./contenu/PopinAjouterAlertes";
@@ -18,7 +19,13 @@ export const BoutonAjouterAlerte: React.FC<BoutonAjouterAlerteProps> = ({ ajoute
   const { utilisateurConnecte } = useContext(RECEContextData);
 
   const onClick = (): void => {
-    if (officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE(utilisateurConnecte, idTypeRegistre)) {
+    if (
+      utilisateurConnecte.estHabilitePour({ unDesDroits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC], pourIdTypeRegistre: idTypeRegistre }) ||
+      utilisateurConnecte.estHabilitePour({
+        unDesDroits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC],
+        surLePerimetre: Perimetre.TOUS_REGISTRES
+      })
+    ) {
       setIsOpen(true);
     } else {
       setHasMessageBloquant(true);

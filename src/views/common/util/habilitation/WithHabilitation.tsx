@@ -1,40 +1,19 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import {
-  estOfficierHabiliterPourSeulementLesDroits,
-  estOfficierHabiliterPourTousLesDroits,
-  estOfficierHabiliterPourUnDesDroits,
-  IOfficier
-} from "@model/agent/IOfficier";
+import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import * as React from "react";
 import { useContext } from "react";
-import {
-  habilitationsDescription,
-  IHabiliationDescription,
-  NomComposant
-} from "./habilitationsDescription";
+import { IHabiliationDescription, NomComposant, habilitationsDescription } from "./habilitationsDescription";
 
-function getHabilitationPourLeComposant(
-  nomComposant: string,
-  habsDesc: IHabiliationDescription[]
-) {
+function getHabilitationPourLeComposant(nomComposant: string, habsDesc: IHabiliationDescription[]) {
   return habsDesc.find(habDesc => habDesc.nomComposant === nomComposant);
 }
 
-function getComportement(
-  habilitationPourLeComposant: IHabiliationDescription,
-  utilisateurConnecte: IOfficier
-) {
+function getComportement(habilitationPourLeComposant: IHabiliationDescription, utilisateurConnecte: UtilisateurConnecte) {
   const authorise = habilitationPourLeComposant.tousLesDroits
-    ? estOfficierHabiliterPourTousLesDroits(
-        utilisateurConnecte,
-        habilitationPourLeComposant.tousLesDroits
-      )
+    ? utilisateurConnecte.estHabilitePour({ tousLesDroits: habilitationPourLeComposant.tousLesDroits })
     : habilitationPourLeComposant.unDesDroits
-    ? estOfficierHabiliterPourUnDesDroits(
-        utilisateurConnecte,
-        habilitationPourLeComposant.unDesDroits
-      )
-    : true;
+      ? utilisateurConnecte.estHabilitePour({ unDesDroits: habilitationPourLeComposant.unDesDroits })
+      : true;
   return authorise
     ? habilitationPourLeComposant.comportementSiAutorise
       ? habilitationPourLeComposant.comportementSiAutorise
@@ -59,26 +38,21 @@ const WithHabilitation = (
     if (utilisateurConnecte) {
       const habilitationPourLeComposant = getHabilitationPourLeComposant(
         composantId,
-        specifiquesHabilitationsDescription
-          ? specifiquesHabilitationsDescription
-          : habilitationsDescription
+        specifiquesHabilitationsDescription ? specifiquesHabilitationsDescription : habilitationsDescription
       );
       if (habilitationPourLeComposant) {
-        comportementComposant = getComportement(
-          habilitationPourLeComposant,
-          utilisateurConnecte
-        );
-        composantEstVisible = visibiliteComposant(
-          habilitationPourLeComposant,
-          utilisateurConnecte
-        );
+        comportementComposant = getComportement(habilitationPourLeComposant, utilisateurConnecte);
+        composantEstVisible = visibiliteComposant(habilitationPourLeComposant, utilisateurConnecte);
       }
     }
 
     return (
       <>
         {composantEstVisible && (
-          <ComponentToWrap {...comportementComposant} {...props} />
+          <ComponentToWrap
+            {...comportementComposant}
+            {...props}
+          />
         )}
       </>
     );
@@ -88,24 +62,18 @@ const WithHabilitation = (
 
 export default WithHabilitation;
 
-function visibiliteComposant(
-  habilitationPourLeComposant: IHabiliationDescription,
-  utilisateurConnecte: IOfficier
-): boolean {
+function visibiliteComposant(habilitationPourLeComposant: IHabiliationDescription, utilisateurConnecte: UtilisateurConnecte): boolean {
   if (
     habilitationPourLeComposant.visiblePourLesDroits &&
-    !estOfficierHabiliterPourUnDesDroits(
-      utilisateurConnecte,
-      habilitationPourLeComposant.visiblePourLesDroits
-    )
+    !utilisateurConnecte.estHabilitePour({ unDesDroits: habilitationPourLeComposant.visiblePourLesDroits })
   ) {
     return false;
   }
   if (
     habilitationPourLeComposant.visibleSeulementPourLesDroits &&
-    !estOfficierHabiliterPourSeulementLesDroits(
-      utilisateurConnecte,
-      habilitationPourLeComposant.visibleSeulementPourLesDroits
+    !(
+      utilisateurConnecte.nombreHabilitations === habilitationPourLeComposant.visibleSeulementPourLesDroits.length &&
+      utilisateurConnecte.estHabilitePour({ tousLesDroits: habilitationPourLeComposant.visibleSeulementPourLesDroits })
     )
   ) {
     return false;

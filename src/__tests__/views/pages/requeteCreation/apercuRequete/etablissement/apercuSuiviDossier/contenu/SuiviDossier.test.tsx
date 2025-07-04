@@ -1,5 +1,5 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
-import { IOfficier } from "@model/agent/IOfficier";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { IEchange } from "@model/requete/IEchange";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
@@ -33,7 +33,11 @@ interface HookConsumerSuiviDossierProps {
 const HookConsumerSuiviDossier: React.FC<HookConsumerSuiviDossierProps> = props => {
   return (
     <MockRECEContextProvider
-      utilisateurConnecte={props.idUtilisateurConnecte ? ({ idUtilisateur: props.idUtilisateurConnecte } as IOfficier) : undefined}
+      utilisateurConnecte={
+        props.idUtilisateurConnecte
+          ? MockUtilisateurBuilder.utilisateurConnecte().avecAttributs({ id: props.idUtilisateurConnecte }).generer()
+          : undefined
+      }
     >
       <MemoryRouter
         initialEntries={[getUrlWithParam(URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID, props.requete?.id || "")]}

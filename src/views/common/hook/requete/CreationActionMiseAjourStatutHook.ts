@@ -35,7 +35,7 @@ export function useCreationActionMiseAjourStatut(params?: ICreationActionMiseAjo
       // Mise à jour du statut de la requête après l'appel à "usePostCreationActionEtMiseAjourStatutApi"
       params.requete.statut = params?.statutRequete.libelle;
       // Mise à jour de l'id utilisateur
-      params.requete.idUtilisateur = utilisateurConnecte?.idUtilisateur;
+      params.requete.idUtilisateur = utilisateurConnecte.id;
       if (params.callback) {
         params.callback();
       }

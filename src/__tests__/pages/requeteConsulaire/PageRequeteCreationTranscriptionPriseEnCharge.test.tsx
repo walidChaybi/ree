@@ -1,6 +1,6 @@
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
-import { IOfficier } from "@model/agent/IOfficier";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router";
 import request from "superagent";
@@ -14,10 +14,6 @@ describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
   }));
 
   test("affiche PartieGauche et PartieDroite après récupération de la requête", async () => {
-    const mockUtilisateurConnecte = {
-      idUtilisateur: "test-utilisateur-id"
-    } as any as IOfficier;
-
     const superagentMock = require("superagent-mock")(request, [
       {
         pattern: "http://localhost/rece/rece-requete-api/v2/requetes(.*)",
@@ -38,7 +34,9 @@ describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
     );
 
     const { container } = render(
-      <MockRECEContextProvider utilisateurConnecte={mockUtilisateurConnecte}>
+      <MockRECEContextProvider
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecAttributs({ id: "test-utilisateur-id" }).generer()}
+      >
         <RouterProvider router={router} />
       </MockRECEContextProvider>
     );

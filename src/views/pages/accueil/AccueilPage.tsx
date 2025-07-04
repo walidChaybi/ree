@@ -1,8 +1,7 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import { faChartBar, faGavel, faLandmark, faPlusCircle, faSearch, faSync } from "@fortawesome/free-solid-svg-icons";
-import { IOfficier } from "@model/agent/IOfficier";
-import { getCodesHierarchieService } from "@model/agent/IUtilisateur";
+import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import React, { useContext, useEffect, useState } from "react";
 import { useTitreDeLaFenetre } from "../../../hooks/utilitaires/TitreDeLaFenetreHook";
@@ -51,7 +50,6 @@ export const AccueilPage: React.FC = () => {
         alt="Logo RECE"
       />
       <div className="Titre">{getBienvenueOfficier(utilisateurConnecte)}</div>
-      <div className="Affectation">{getAffectation(utilisateurConnecte)}</div>
       <div className="MenuAccueil">
         <BoutonAccueilEspaceDelivrance
           libelle="Délivrance"
@@ -119,30 +117,10 @@ export const AccueilPage: React.FC = () => {
   );
 };
 
-const getBienvenueOfficier = (officier?: IOfficier): string => {
+const getBienvenueOfficier = (officier?: UtilisateurConnecte): string => {
   let msgBienvenue = "Bienvenue";
   if (officier) {
-    msgBienvenue = `${msgBienvenue} ${officier.prenom} ${officier.nom}`;
+    msgBienvenue = `${msgBienvenue} ${officier.prenomNom}`;
   }
   return msgBienvenue;
-};
-
-const getAffectation = (utilisateurConnecte?: IOfficier): string => {
-  const hierarchie = getHierarchie(utilisateurConnecte);
-  let buildHierarchie = "";
-  if (hierarchie.length > 0) {
-    buildHierarchie = hierarchie.join(" - ");
-  }
-  return buildHierarchie;
-};
-
-const getHierarchie = (utilisateurConnecte?: IOfficier): string[] => {
-  const hierarchie: string[] = [];
-  const serviceOfficier = utilisateurConnecte?.service;
-
-  if (serviceOfficier) {
-    hierarchie.push(...getCodesHierarchieService(serviceOfficier));
-  }
-
-  return hierarchie;
 };

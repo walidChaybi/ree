@@ -1,7 +1,6 @@
 import { TransfertUnitaireParams } from "@hook/requete/TransfertHook";
-import { IOfficier } from "@model/agent/IOfficier";
 import { IService } from "@model/agent/IService";
-import { IUtilisateur, utilisateurADroit, utilisateurALeDroitSurUnDesPerimetres } from "@model/agent/IUtilisateur";
+import { Utilisateur, UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
@@ -46,14 +45,14 @@ export function onValidateAgent(
   props: React.PropsWithChildren<IMenuTransfertProps>,
   setAgentPopinOpen: React.Dispatch<React.SetStateAction<boolean>>,
   setOperationEnCours: (operation: boolean) => void,
-  utilisateurs: IUtilisateur[],
+  utilisateurs: Utilisateur[],
   agent?: Option
 ) {
   setOperationEnCours(true);
   if (agent) {
     setParam({
       idRequete: props.idRequete,
-      idService: utilisateurs.find(utilisateur => utilisateur.idUtilisateur === agent.cle)?.service?.idService,
+      idService: utilisateurs.find(utilisateur => utilisateur.id === agent.cle)?.idService,
       idUtilisateur: agent.cle,
       statutRequete: props.estTransfert ? StatutRequete.TRANSFEREE : StatutRequete.A_TRAITER,
       libelleAction: `${props.estTransfert ? "Transférée" : "Attribuée"} à ${agent.libelle}`,
@@ -79,9 +78,9 @@ export const listeUtilisateursToOptionsBis = (
   typeRequete: TypeRequete,
   sousTypeRequete: SousTypeRequete,
   idUtilisateurRequete: string,
-  utilisateurConnecte: IOfficier,
+  utilisateurConnecte: UtilisateurConnecte,
   estTransfert: boolean,
-  utilisateurs: IUtilisateur[]
+  utilisateurs: Utilisateur[]
 ): Options => {
   return [
     { cle: "", libelle: "" },
@@ -89,17 +88,17 @@ export const listeUtilisateursToOptionsBis = (
       .filter(utilisateur =>
         filterUtilisateur(utilisateur, typeRequete, sousTypeRequete, idUtilisateurRequete, utilisateurConnecte, estTransfert)
       )
-      .sort((a, b) => a.nom.localeCompare(b.nom))
+      .sort((a, b) => a.prenomNom.localeCompare(b.prenomNom))
       .map(utilisateur => mapUtilisateurToOption(utilisateur))
   ];
 };
 
 const filterUtilisateur = (
-  utilisateur: IUtilisateur,
+  utilisateur: Utilisateur,
   typeRequete: TypeRequete,
   sousTypeRequete: SousTypeRequete,
   idUtilisateurRequete: string,
-  utilisateurConnecte: IOfficier,
+  utilisateurConnecte: UtilisateurConnecte,
   estTransfert: boolean
 ): boolean => {
   switch (typeRequete) {
@@ -114,96 +113,87 @@ const filterUtilisateur = (
   }
 };
 
-const filtreUtilisateurRequeteCreation = (utilisateur: IUtilisateur, idUtilisateurRequete: string, utilisateurConnecte: IOfficier) => {
-  const aDroit: boolean = utilisateurALeDroitSurUnDesPerimetres(
-    Droit.CREER_ACTE_ETABLI,
-    [Perimetre.TOUS_REGISTRES, Perimetre.ETAX],
-    utilisateur
-  );
+const filtreUtilisateurRequeteCreation = (
+  utilisateur: Utilisateur,
+  idUtilisateurRequete: string,
+  utilisateurConnecte: UtilisateurConnecte
+) => {
+  const aDroit: boolean = utilisateur.estHabilitePour({
+    leDroit: Droit.CREER_ACTE_ETABLI,
+    surUnDesPerimetres: [Perimetre.TOUS_REGISTRES, Perimetre.ETAX]
+  });
   let estDansMonServiceOuServiceFils = false;
-  if (utilisateur.service) {
-    estDansMonServiceOuServiceFils =
-      estDansServiceFils(utilisateur.service.idService, utilisateurConnecte) ||
-      utilisateur.service.idService === utilisateurConnecte?.service?.idService;
+  if (utilisateur.idService) {
+    estDansMonServiceOuServiceFils = utilisateur.estDansUnDesServices([
+      utilisateurConnecte.idService,
+      ...utilisateurConnecte.idServicesFils
+    ]);
   }
-  return Boolean(estDansMonServiceOuServiceFils && aDroit && idUtilisateurRequete !== utilisateur.idUtilisateur);
+  return Boolean(estDansMonServiceOuServiceFils && aDroit && idUtilisateurRequete !== utilisateur.id);
 };
 
 const filtreUtilisateurRequeteInformation = (
-  utilisateur: IUtilisateur,
+  utilisateur: Utilisateur,
   estTransfert: boolean,
   idUtilisateurRequete: string,
-  utilisateurConnecte: IOfficier
+  utilisateurConnecte: UtilisateurConnecte
 ): boolean => {
-  const estDuSCEC = utilisateur.service?.estDansScec;
-  const aDroit = utilisateurADroit(Droit.INFORMER_USAGER, utilisateur);
   let estDansMonServiceOuServiceFils = true;
-  if (!estTransfert && utilisateur.service) {
-    estDansMonServiceOuServiceFils =
-      estDansServiceFils(utilisateur.service?.idService, utilisateurConnecte) ||
-      utilisateur.service.idService === utilisateurConnecte?.service?.idService;
+  if (!estTransfert && utilisateur.idService) {
+    estDansMonServiceOuServiceFils = utilisateur.estDansUnDesServices([
+      utilisateurConnecte.idService,
+      ...utilisateurConnecte.idServicesFils
+    ]);
   }
 
-  return Boolean(estDuSCEC && aDroit && idUtilisateurRequete !== utilisateur.idUtilisateur && estDansMonServiceOuServiceFils);
+  return Boolean(
+    utilisateur.estDuSCEC &&
+      utilisateur.estHabilitePour({ leDroit: Droit.INFORMER_USAGER }) &&
+      idUtilisateurRequete !== utilisateur.id &&
+      estDansMonServiceOuServiceFils
+  );
 };
 
 const filtreUtilisateurRequeteDelivrance = (
-  utilisateur: IUtilisateur,
+  utilisateur: Utilisateur,
   sousTypeRequete: SousTypeRequete,
   estTransfert: boolean,
   idUtilisateurRequete: string,
-  utilisateurConnecte: IOfficier
+  utilisateurConnecte: UtilisateurConnecte
 ): boolean => {
-  const estDuSCEC = utilisateur.service?.estDansScec;
-  const aDroit =
-    sousTypeRequete === SousTypeDelivrance.RDDCO
-      ? utilisateurADroit(Droit.DELIVRER_COMEDEC, utilisateur)
-      : utilisateurADroit(Droit.DELIVRER, utilisateur);
   let estDansMonServiceOuServiceFils = true;
-  if (!estTransfert && utilisateur.service) {
-    estDansMonServiceOuServiceFils =
-      estDansServiceFils(utilisateur.service?.idService, utilisateurConnecte) ||
-      utilisateur.service.idService === utilisateurConnecte?.service?.idService;
+  if (!estTransfert && utilisateur.idService) {
+    estDansMonServiceOuServiceFils = utilisateur.estDansUnDesServices([
+      utilisateurConnecte.idService,
+      ...utilisateurConnecte.idServicesFils
+    ]);
   }
 
-  return Boolean(estDuSCEC && aDroit && idUtilisateurRequete !== utilisateur.idUtilisateur && estDansMonServiceOuServiceFils);
+  return Boolean(
+    utilisateur.estDuSCEC &&
+      utilisateur.estHabilitePour({ leDroit: sousTypeRequete === SousTypeDelivrance.RDDCO ? Droit.DELIVRER_COMEDEC : Droit.DELIVRER }) &&
+      idUtilisateurRequete !== utilisateur.id &&
+      estDansMonServiceOuServiceFils
+  );
 };
 
-function filtrerValideur(utilisateur: IUtilisateur, idUtilisateurRequete?: string): boolean {
-  const estDuSCEC = utilisateur.service?.estDansScec;
-  const aDroit = utilisateurADroit(Droit.DELIVRER, utilisateur);
+const filtrerValideur = (utilisateur: Utilisateur, idUtilisateurRequete?: string): boolean =>
+  Boolean(utilisateur.estDuSCEC && utilisateur.estHabilitePour({ leDroit: Droit.DELIVRER }) && idUtilisateurRequete !== utilisateur.id);
 
-  return Boolean(estDuSCEC && aDroit && idUtilisateurRequete !== utilisateur.idUtilisateur);
-}
-
-export function listeValideurToOptions(utilisateurs: IUtilisateur[], idUtilisateurRequete?: string): Options {
+export function listeValideurToOptions(utilisateurs: Utilisateur[], idUtilisateurRequete?: string): Options {
   return [
     { cle: "", libelle: "" },
     ...utilisateurs
       .filter(utilisateur => filtrerValideur(utilisateur, idUtilisateurRequete))
-      .sort((a, b) => a.nom.localeCompare(b.nom))
+      .sort((a, b) => a.prenomNom.localeCompare(b.prenomNom))
       .map(utilisateur => mapUtilisateurToOption(utilisateur))
   ];
 }
 
-function mapUtilisateurToOption(utilisateur: IUtilisateur): Option {
+function mapUtilisateurToOption(utilisateur: Utilisateur): Option {
   return {
-    cle: utilisateur.idUtilisateur,
-    libelle: `${utilisateur.nom} ${utilisateur.prenom}`
+    cle: utilisateur.id,
+    libelle: utilisateur.prenomNom
   };
-}
-
-function estDansServiceFils(idService: string, utilisateurConnecte: IOfficier): boolean {
-  return Boolean(utilisateurConnecte?.servicesFils?.some(el => el.idService === idService));
-}
-export function getServicesAsOptions(utilisateurConnecte: IOfficier): Options {
-  return (
-    utilisateurConnecte?.servicesFils?.map(service => {
-      return {
-        cle: service.idService,
-        libelle: service.libelleService
-      };
-    }) || ([] as Options)
-  );
 }
 /* v8 ignore end */

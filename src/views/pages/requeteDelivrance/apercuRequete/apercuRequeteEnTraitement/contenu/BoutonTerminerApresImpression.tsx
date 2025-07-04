@@ -1,13 +1,11 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import { Droit } from "@model/agent/enum/Droit";
-import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
-import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
@@ -48,10 +46,10 @@ export const BoutonTerminerApresImpression: React.FC<BoutonTerminerApresImpressi
   const afficherBouton = requeteCourrier && estAValiderOuASigner;
 
   function estActif() {
-    const mAppartient = props.requete.idUtilisateur === utilisateurConnecte?.idUtilisateur;
+    const mAppartient = props.requete.idUtilisateur === utilisateurConnecte?.id;
     return (
       mAppartient &&
-      officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER) &&
+      utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER }) &&
       DocumentReponse.verifierDocumentsValides(props.requete.documentsReponses)
     );
   }
@@ -64,7 +62,7 @@ export const BoutonTerminerApresImpression: React.FC<BoutonTerminerApresImpressi
           estDesactive={!estActif()}
           checkDirtyActive={true}
         >
-          {getLibelle("Terminer après impression locale")}
+          {"Terminer après impression locale"}
         </BoutonOperationEnCours>
       )}
     </>

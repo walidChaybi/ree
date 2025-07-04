@@ -1,12 +1,11 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
-import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { IBoutonProps } from "../../../../commun/bouton/Bouton";
 import { BoutonAvecChargement } from "../../../../commun/bouton/BoutonAvecChargement";
@@ -19,6 +18,13 @@ export const BoutonTerminerApresImpression: React.FC<BoutonTerminerApresImpressi
   const navigate = useNavigate();
   const location = useLocation();
   const { utilisateurConnecte } = useContext(RECEContextData);
+  const boutonActif = useMemo(
+    () =>
+      requete.idUtilisateur === utilisateurConnecte.id &&
+      utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER }) &&
+      DocumentReponse.verifierDocumentsValides(requete.documentsReponses),
+    [requete, utilisateurConnecte]
+  );
 
   const [postCreationActionEtMiseAJourStatutParams, setPostCreationActionEtMiseAJourStatutParams] = useState<
     ICreationActionEtMiseAjourStatutParams | undefined
@@ -40,23 +46,14 @@ export const BoutonTerminerApresImpression: React.FC<BoutonTerminerApresImpressi
     }
   }, [idAction, location.pathname, navigate]);
 
-  function estActif() {
-    const mAppartient = requete.idUtilisateur === utilisateurConnecte?.idUtilisateur;
-    return (
-      mAppartient &&
-      officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER) &&
-      DocumentReponse.verifierDocumentsValides(requete.documentsReponses)
-    );
-  }
-
   return (
     <BoutonAvecChargement
       executerApresClick={miseAJourStatutRequeteEtAjoutAction}
       activerVerificationDirty={true}
-      disabled={!estActif()}
+      disabled={!boutonActif}
       {...props}
     >
-      Terminer après impression locale
+      {"Terminer après impression locale"}
     </BoutonAvecChargement>
   );
 };

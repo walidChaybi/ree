@@ -1,17 +1,14 @@
-import { IOfficier } from "@model/agent/IOfficier";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { AccueilPage } from "@pages/accueil/AccueilPage";
 import { render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router";
 import { expect, test } from "vitest";
 import MockRECEContextProvider from "../../../mock/context/MockRECEContextProvider";
-import mockConnectedUser from "../../../mock/data/connectedUser.json";
-
-const u: any = mockConnectedUser;
 
 test("renders page d'accueil", async () => {
   render(
     <Router>
-      <MockRECEContextProvider utilisateurConnecte={u as IOfficier}>
+      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().generer()}>
         <AccueilPage />
       </MockRECEContextProvider>
     </Router>

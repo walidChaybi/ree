@@ -1,5 +1,6 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -11,7 +12,6 @@ import {
   expectEstPresentAvecValeur,
   expectEstPresentAvecValeurEtDisabled
 } from "../../../../../../../__tests__utils__/expectUtils";
-import { elementAvecContexte } from "../../../../../../../__tests__utils__/testsUtil";
 import { requeteAvecDocs } from "../../../../../../../mock/data/DetailRequeteDelivrance";
 import { ficheActeDeces2 } from "../../../../../../../mock/data/ficheActe";
 
@@ -21,11 +21,13 @@ const requete = {
 } as IRequeteDelivrance;
 
 const saisirExtraitFormAvecContexte = (acte: IFicheActe, requete: IRequeteDelivrance): any => {
-  return elementAvecContexte(
-    <SaisirExtraitForm
-      acte={acte}
-      requete={requete}
-    />
+  return (
+    <MockRECEContextProvider>
+      <SaisirExtraitForm
+        acte={acte}
+        requete={requete}
+      />
+    </MockRECEContextProvider>
   );
 };
 

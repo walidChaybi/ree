@@ -1,4 +1,4 @@
-import { IOfficier } from "@model/agent/IOfficier";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { ApercuRequeteEtablissementSuiviDossierPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/ApercuRequeteEtablissementSuiviDossierPage";
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER,
@@ -32,7 +32,11 @@ describe("Test de la page Aperçu requête etablissement suivi dossier", () => {
     );
 
     render(
-      <MockRECEContextProvider utilisateurConnecte={{ idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d55" } as IOfficier}>
+      <MockRECEContextProvider
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte()
+          .avecAttributs({ id: "7a091a3b-6835-4824-94fb-527d68926d55" })
+          .generer()}
+      >
         <RouterProvider router={router} />
       </MockRECEContextProvider>
     );

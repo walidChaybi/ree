@@ -1,7 +1,8 @@
 import { CONFIG_PATCH_STATUT_REQUETE_CREATION } from "@api/configurations/requete/creation/PatchStatutRequeteCreationConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
-import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
-import { IOfficier } from "@model/agent/IOfficier";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -10,42 +11,29 @@ import { RouterProvider } from "react-router";
 import { describe, expect, test, vi } from "vitest";
 import { ConteneurParentModales } from "../../../../composants/commun/conteneurs/modale/ConteneurModale";
 import { BoutonChangerStatutRequete } from "../../../../composants/pages/requetesEtablissement/BoutonChangerStatutRequete";
-import { createTestingRouter, elementAvecContexte } from "../../../__tests__utils__/testsUtil";
+import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 
 describe("Test de la fonctionnalité de changement de statut d'une requête", () => {
-  const utilisateurAvecDroit = {
-    habilitations: [
-      {
-        profil: {
-          droits: [{ nom: "FORCER_STATUT_REQUETE_ETABLISSEMENT" }, { nom: "CREER_ACTE_ETABLI" }] as IDroit[]
-        } as IProfil
-      }
-    ] as IHabilitation[]
-  } as IOfficier;
-
-  const utilisateurSansDroit = {
-    habilitations: [
-      {
-        profil: {
-          droits: [] as IDroit[]
-        } as IProfil
-      }
-    ] as IHabilitation[]
-  } as IOfficier;
-
   const requete = { id: "3ed9aa4e-921b-489f-b8fe-531dd703c60c" };
 
-  const routerBoutonChangerStatutAvecDroit = (utilisateur?: IOfficier) =>
+  const routerBoutonChangerStatutAvecDroit = (sansDroit: boolean = false) =>
     createTestingRouter(
       [
         {
           path: "/",
-          element: elementAvecContexte(
-            <div>
+          element: (
+            <MockRECEContextProvider
+              utilisateurConnecte={
+                sansDroit
+                  ? MockUtilisateurBuilder.utilisateurConnecte().generer()
+                  : MockUtilisateurBuilder.utilisateurConnecte()
+                      .avecDroits([Droit.FORCER_STATUT_REQUETE_ETABLISSEMENT, Droit.CREER_ACTE_ETABLI])
+                      .generer()
+              }
+            >
               <BoutonChangerStatutRequete idRequete={requete.id} />
               <ConteneurParentModales />
-            </div>,
-            utilisateur
+            </MockRECEContextProvider>
           )
         }
       ],
@@ -53,7 +41,7 @@ describe("Test de la fonctionnalité de changement de statut d'une requête", ()
     );
 
   test("LORSQUE l'utilisateur ne possède pas les bons droits ALORS le bouton n'apparait pas", () => {
-    render(<RouterProvider router={routerBoutonChangerStatutAvecDroit(utilisateurSansDroit)} />);
+    render(<RouterProvider router={routerBoutonChangerStatutAvecDroit(true)} />);
 
     const boutonChangerStatut: HTMLButtonElement | null = screen.queryByRole<HTMLButtonElement>("button", { name: /Changer Statut/i });
 
@@ -61,7 +49,7 @@ describe("Test de la fonctionnalité de changement de statut d'une requête", ()
   });
 
   test("LORSQUE l'utilisateur possède les bons droits ALORS le bouton apparait", async () => {
-    render(<RouterProvider router={routerBoutonChangerStatutAvecDroit(utilisateurAvecDroit)} />);
+    render(<RouterProvider router={routerBoutonChangerStatutAvecDroit()} />);
 
     const boutonChangerStatut: HTMLButtonElement = await screen.findByRole("button", { name: /Changer Statut/i });
 
@@ -69,7 +57,7 @@ describe("Test de la fonctionnalité de changement de statut d'une requête", ()
   });
 
   test("LORSQUE l'utilisateur click sur le bouton ALORS la modal s'ouvre", async () => {
-    render(<RouterProvider router={routerBoutonChangerStatutAvecDroit(utilisateurAvecDroit)} />);
+    render(<RouterProvider router={routerBoutonChangerStatutAvecDroit()} />);
 
     await waitFor(() => {
       expect(screen.queryByRole("button", { name: /Changer Statut/i })).toBeDefined();
@@ -87,7 +75,7 @@ describe("Test de la fonctionnalité de changement de statut d'une requête", ()
   });
 
   test("LORSQUE l'utilisateur annule le formulaire ALORS la modal se ferme", async () => {
-    render(<RouterProvider router={routerBoutonChangerStatutAvecDroit(utilisateurAvecDroit)} />);
+    render(<RouterProvider router={routerBoutonChangerStatutAvecDroit()} />);
 
     await waitFor(() => {
       expect(screen.queryByRole("button", { name: /Changer Statut/i })).toBeDefined();
@@ -107,7 +95,7 @@ describe("Test de la fonctionnalité de changement de statut d'une requête", ()
   });
 
   test("LORSQUE l'utilisateur clique sur le champ de selection des statut ALORS tous les statuts disponible s'affiche en options", async () => {
-    render(<RouterProvider router={routerBoutonChangerStatutAvecDroit(utilisateurAvecDroit)} />);
+    render(<RouterProvider router={routerBoutonChangerStatutAvecDroit()} />);
 
     await waitFor(() => {
       expect(screen.queryByRole("button", { name: /Changer Statut/i })).toBeDefined();
@@ -130,7 +118,7 @@ describe("Test de la fonctionnalité de changement de statut d'une requête", ()
   });
 
   test("LORSQUE l'utilisateur valide le formulaire sans l'avoir rempli ALORS pas de soumission", async () => {
-    render(<RouterProvider router={routerBoutonChangerStatutAvecDroit(utilisateurAvecDroit)} />);
+    render(<RouterProvider router={routerBoutonChangerStatutAvecDroit()} />);
 
     await waitFor(() => {
       expect(screen.queryByRole("button", { name: /Changer Statut/i })).toBeDefined();
@@ -159,7 +147,7 @@ describe("Test de la fonctionnalité de changement de statut d'une requête", ()
     );
     const mockApi = MockApi.getMock();
 
-    render(<RouterProvider router={routerBoutonChangerStatutAvecDroit(utilisateurAvecDroit)} />);
+    render(<RouterProvider router={routerBoutonChangerStatutAvecDroit()} />);
     const logMessageSucces = vi.fn();
     messageManager.showSuccessAndClose = logMessageSucces;
 
@@ -212,7 +200,7 @@ describe("Test de la fonctionnalité de changement de statut d'une requête", ()
     );
     const mockApi = MockApi.getMock();
 
-    render(<RouterProvider router={routerBoutonChangerStatutAvecDroit(utilisateurAvecDroit)} />);
+    render(<RouterProvider router={routerBoutonChangerStatutAvecDroit()} />);
 
     await waitFor(() => {
       expect(screen.queryByRole("button", { name: /Changer Statut/i })).toBeDefined();

@@ -1,5 +1,5 @@
 import { RECEContextActions, RECEContextData } from "@core/contexts/RECEContext";
-import { IOfficier, officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
+import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
@@ -8,7 +8,7 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { validerMentionsPlusieursDocuments } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
-import { checkDirty, getLibelle } from "@util/Utils";
+import { checkDirty } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
@@ -34,7 +34,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({ requete, acte 
 
   const afficheBoutonTransmettreAValideur = possibleDeTransmettreAValideur(requete.statutCourant.statut);
 
-  const mAppartient = requete.idUtilisateur === utilisateurConnecte?.idUtilisateur;
+  const mAppartient = requete.idUtilisateur === utilisateurConnecte.id;
 
   if (mAppartient && aDroitSignerEtStatutSigner && DocumentReponse.verifierDocumentsValides(requete.documentsReponses) && estDisabled) {
     setEstDisabled(false);
@@ -68,7 +68,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({ requete, acte 
           />
           {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) && (
             <BoutonDoubleSubmit
-              title={getLibelle("Terminer")}
+              title={"Terminer"}
               onClick={onClickTerminer}
               disabled={estDisabled}
             >
@@ -86,9 +86,13 @@ const afficherBoutonValiderTerminer = (requete: IRequeteDelivrance) =>
     SousTypeDelivrance.estRDDouRDCouRDDP(requete?.sousType)) ||
   (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATION) && SousTypeDelivrance.estRDCSDouRDCSC(requete.sousType));
 
-const estPossibleDeSigner = (statut: StatutRequete, sousTypeDelivrance: SousTypeDelivrance, utilisateurConnecte: IOfficier): boolean => {
+const estPossibleDeSigner = (
+  statut: StatutRequete,
+  sousTypeDelivrance: SousTypeDelivrance,
+  utilisateurConnecte: UtilisateurConnecte
+): boolean => {
   return (
-    officierHabiliterPourLeDroit(utilisateurConnecte, Droit.SIGNER_DELIVRANCE_DEMAT) &&
+    utilisateurConnecte.estHabilitePour({ leDroit: Droit.SIGNER_DELIVRANCE_DEMAT }) &&
     StatutRequete.estASigner(statut) &&
     SousTypeDelivrance.estSousTypeSignable(sousTypeDelivrance)
   );

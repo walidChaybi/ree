@@ -3,7 +3,6 @@ import {
   INavigationApercuDelivranceParams,
   useNavigationApercuDelivrance
 } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceHook";
-import { IOfficier } from "@model/agent/IOfficier";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { URL_MES_REQUETES_DELIVRANCE, URL_REQUETES_DELIVRANCE_SERVICE } from "@router/ReceUrls";
@@ -25,7 +24,7 @@ interface LocalProps {
   selectedTab?: number;
 }
 
-const getElementEntreDeux = (selectedTabState: number, officier: IOfficier) => {
+const getElementEntreDeux = (selectedTabState: number) => {
   return (
     <>
       {gestionnaireFeatureFlag.auMoinUnEstActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES, FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATION) && (
@@ -74,7 +73,7 @@ const getOnglets = (
 const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
   const [toggleReloadCompteur, setToggleReloadCompteur] = useState<boolean>(true);
 
-  const { utilisateurConnecte, decrets } = useContext(RECEContextData);
+  const { decrets } = useContext(RECEContextData);
 
   const miseAJourCompteur = () => {
     setToggleReloadCompteur(!toggleReloadCompteur);
@@ -96,19 +95,15 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
   return (
     <div>
       <OperationEnCours visible={!decrets} />
-      {utilisateurConnecte && (
-        <>
-          {selectedTabState === 0 && <CompteurRequete reloadCompteur={toggleReloadCompteur} />}
-          <BoiteAOnglets
-            selectedTab={selectedTabState}
-            onglets={getOnglets(miseAJourCompteur, recuperationParamsRMCAuto)}
-            elementEntreTitreEtContenu={getElementEntreDeux(selectedTabState, utilisateurConnecte)}
-            titre="Menu espace délivrance"
-            classOnglet="ongletPageEspace"
-            classOngletPrincipale="headerOngletPageEspace"
-          />
-        </>
-      )}
+      {selectedTabState === 0 && <CompteurRequete reloadCompteur={toggleReloadCompteur} />}
+      <BoiteAOnglets
+        selectedTab={selectedTabState}
+        onglets={getOnglets(miseAJourCompteur, recuperationParamsRMCAuto)}
+        elementEntreTitreEtContenu={getElementEntreDeux(selectedTabState)}
+        titre="Menu espace délivrance"
+        classOnglet="ongletPageEspace"
+        classOngletPrincipale="headerOngletPageEspace"
+      />
     </div>
   );
 };

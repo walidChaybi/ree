@@ -1,5 +1,5 @@
 import { IService } from "@model/agent/IService";
-import { IUtilisateur } from "@model/agent/IUtilisateur";
+import { Utilisateur } from "@model/agent/Utilisateur";
 import DateUtils from "@util/DateUtils";
 import { IRequeteConsulaire } from "./IRequeteConsulaire";
 import { IRequeteTableau } from "./IRequeteTableau";
@@ -25,7 +25,7 @@ export interface IRequeteTableauConsulaire extends IRequeteTableau {
 export const mappingRequetesTableauConsulaire = (
   resultatsRecherche: IRequeteConsulaire[],
   mappingSupplementaire: boolean,
-  utilisateurs: IUtilisateur[],
+  utilisateurs: Utilisateur[],
   services: IService[]
 ): IRequeteTableauConsulaire[] => {
   return resultatsRecherche?.map(requete => {
@@ -36,7 +36,7 @@ export const mappingRequetesTableauConsulaire = (
 const mappingUneRequeteTableauConsulaire = (
   requete: any,
   mappingSupplementaire: boolean,
-  utilisateurs: IUtilisateur[],
+  utilisateurs: Utilisateur[],
   services: IService[]
 ): IRequeteTableauConsulaire => {
   return {

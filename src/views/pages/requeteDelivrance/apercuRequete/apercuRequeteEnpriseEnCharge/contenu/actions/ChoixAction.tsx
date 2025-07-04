@@ -31,9 +31,9 @@ export const ChoixAction: React.FC<IChoixActionDelivranceProps> = props => {
   const { utilisateurConnecte } = useContext(RECEContextData);
   const checkSiMenuTransferer = () => {
     const statutPriseEnCharge = props.requete.statutCourant.statut === StatutRequete.PRISE_EN_CHARGE;
-    const mAppartient = utilisateurConnecte?.idUtilisateur === props.requete.idUtilisateur;
+    const mAppartient = utilisateurConnecte?.id === props.requete.idUtilisateur;
 
-    const utilisateurDansSCEC = utilisateurConnecte?.service?.estDansScec;
+    const utilisateurDansSCEC = utilisateurConnecte.estDuSCEC;
 
     return statutPriseEnCharge && mAppartient && utilisateurDansSCEC;
   };

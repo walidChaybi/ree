@@ -1,13 +1,7 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import requeteDelivrance from "@mock/data/requeteDelivrance";
-import { IDroit } from "@model/agent/Habilitation";
-import { INomenclatureAgentApi } from "@model/agent/INomenclatureAgentApi";
-import {
-  IOfficier,
-  aDroitConsulterApercuRequeteInformation,
-  aDroitConsulterRequeteCreation,
-  aDroitConsulterRequeteDelivrance
-} from "@model/agent/IOfficier";
-import { IPerimetre } from "@model/agent/IPerimetre";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import {
   RMCRequetesAssocieesResultats,
@@ -32,13 +26,7 @@ import { SNP } from "@util/Utils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
-import { createTestingRouter, elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
-import {
-  userDroitCreerActeEtabliPerimetreTousRegistres,
-  userDroitCreerActeTranscritPerimetreTousRegistres,
-  userDroitDelivrer,
-  userDroitInformerUsager
-} from "../../../../../mock/data/mockConnectedUserAvecDroit";
+import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 import { requeteInformation } from "../../../../../mock/data/requeteInformation";
 
 describe("RMCRequetesAssocieesResultats", () => {
@@ -60,207 +48,34 @@ describe("RMCRequetesAssocieesResultats", () => {
     });
   });
 
-  test("DOIT retourner true QUAND l'utilisateur à le droit de consulter une requête de délivrance", () => {
-    const utilisateurConnecteMock = {
-      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
-      prenom: "Ashley",
-      nom: "Young",
-      trigramme: "Young Ashley",
-      service: { estDansScec: true },
-      habilitations: [
-        {
-          idHabilitation: "idHabilitation",
-          profil: {
-            idProfil: "idProfil",
-            nom: {
-              idNomenclature: "string",
-              categorie: "string",
-              code: "string",
-              libelle: "string",
-              estActif: true
-            } as INomenclatureAgentApi,
-            droits: [
-              {
-                idDroit: "idDroit",
-                nom: "DELIVRER"
-              } as IDroit
-            ]
-          },
-          perimetre: {
-            idPerimetre: "idPerimetre",
-            description: "descPérimètre",
-            estActif: true,
-            listePays: ["paysPérimètre"],
-            nom: "TOUS_REGISTRES",
-            listeIdTypeRegistre: ["idlisteIdTypeRegistre"]
-          } as IPerimetre
-        }
-      ]
-    } as IOfficier;
-
-    const aDroitConsulter = aDroitConsulterRequeteDelivrance(utilisateurConnecteMock);
-
-    expect(aDroitConsulter).toBe(true);
-  });
-
-  test("DOIT retourner true QUAND l'utilisateur à le droit de consulter une requête de création Etablissement", () => {
-    const utilisateurConnecteMock = {
-      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
-      prenom: "Ashley",
-      nom: "Young",
-      trigramme: "Young Ashley",
-      service: { estDansScec: true },
-      habilitations: [
-        {
-          idHabilitation: "idHabilitation",
-          profil: {
-            idProfil: "idProfil",
-            nom: {
-              idNomenclature: "string",
-              categorie: "string",
-              code: "string",
-              libelle: "string",
-              estActif: true
-            } as INomenclatureAgentApi,
-            droits: [
-              {
-                idDroit: "idDroit",
-                nom: "CREER_ACTE_ETABLI"
-              } as IDroit
-            ]
-          },
-          perimetre: {
-            idPerimetre: "idPerimetre",
-            description: "descPérimètre",
-            estActif: true,
-            listePays: ["paysPérimètre"],
-            nom: "TOUS_REGISTRES",
-            listeIdTypeRegistre: ["idlisteIdTypeRegistre"]
-          } as IPerimetre
-        }
-      ]
-    } as IOfficier;
-    const libelleCourtEtablissement = "Acte Etab X (d)";
-    const aDroitConsulter = aDroitConsulterRequeteCreation(libelleCourtEtablissement, utilisateurConnecteMock);
-
-    expect(aDroitConsulter).toBe(true);
-  });
-
-  test("DOIT retourner true QUAND l'utilisateur à le droit de consulter une requête de création Transcription", () => {
-    const utilisateurConnecteMock = userDroitCreerActeTranscritPerimetreTousRegistres;
-    const libelleCourtTranscription = "Acte Transcrit (c)";
-    const aDroitConsulter = aDroitConsulterRequeteCreation(libelleCourtTranscription, utilisateurConnecteMock);
-
-    expect(aDroitConsulter).toBe(true);
-  });
-
-  test("DOIT retourner false QUAND l'utilisateur n'a le droit de consulter une requête de création Transcription", () => {
-    const utilisateurConnecteSansDroitTranscritMock = {
-      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
-      prenom: "Ashley",
-      nom: "Young",
-      trigramme: "Young Ashley",
-      service: { estDansScec: true },
-      habilitations: [
-        {
-          idHabilitation: "idHabilitation",
-          profil: {
-            idProfil: "idProfil",
-            nom: {
-              idNomenclature: "string",
-              categorie: "string",
-              code: "string",
-              libelle: "string",
-              estActif: true
-            } as INomenclatureAgentApi,
-            droits: [
-              {
-                idDroit: "idDroit",
-                nom: "CREER_ACTE_ETABLI"
-              } as IDroit
-            ]
-          },
-          perimetre: {
-            idPerimetre: "idPerimetre",
-            description: "descPérimètre",
-            estActif: true,
-            listePays: ["paysPérimètre"],
-            nom: "TOUS_REGISTRES",
-            listeIdTypeRegistre: ["idlisteIdTypeRegistre"]
-          } as IPerimetre
-        }
-      ]
-    } as IOfficier;
-
-    const libelleCourtTranscription = "Acte Transcrit (c)";
-    const aDroitConsulter = aDroitConsulterRequeteCreation(libelleCourtTranscription, utilisateurConnecteSansDroitTranscritMock);
-
-    expect(aDroitConsulter).toBe(false);
-  });
-
-  test("DOIT retourner true QUAND l'utilisateur à le droit de consulter une requête d'information'", () => {
-    const utilisateurConnecteAvecDroitInformerUsagerMock = {
-      idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
-      prenom: "Ashley",
-      nom: "Young",
-      trigramme: "Young Ashley",
-      service: { estDansScec: true },
-      habilitations: [
-        {
-          idHabilitation: "idHabilitation",
-          profil: {
-            idProfil: "idProfil",
-            nom: {
-              idNomenclature: "string",
-              categorie: "string",
-              code: "string",
-              libelle: "string",
-              estActif: true
-            } as INomenclatureAgentApi,
-            droits: [
-              {
-                idDroit: "idDroit",
-                nom: "INFORMER_USAGER"
-              } as IDroit
-            ]
-          },
-          perimetre: {
-            idPerimetre: "idPerimetre",
-            description: "descPérimètre",
-            estActif: true,
-            listePays: ["paysPérimètre"],
-            nom: "TOUS_REGISTRES",
-            listeIdTypeRegistre: ["idlisteIdTypeRegistre"]
-          } as IPerimetre
-        }
-      ]
-    } as IOfficier;
-
-    const aDroitConsulter = aDroitConsulterApercuRequeteInformation(utilisateurConnecteAvecDroitInformerUsagerMock);
-
-    expect(aDroitConsulter).toBe(true);
-  });
-
   test("DOIT retourner true QUAND l'utilisateur à le droit de consulter une requête de création'", () => {
     const sousTypeRequete = "Acte Etab X (d)";
 
     const aDroitConsulter = utilisateurADroitOuvrirRequete(
       TypeRequete.CREATION.libelle,
       sousTypeRequete,
-      userDroitCreerActeEtabliPerimetreTousRegistres
+      MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.CREER_ACTE_ETABLI).generer()
     );
 
     expect(aDroitConsulter).toBe(true);
   });
 
   test("DOIT retourner true QUAND l'utilisateur à le droit de consulter une requête de délivrance'", () => {
-    const aDroitConsulter = utilisateurADroitOuvrirRequete(TypeRequete.DELIVRANCE.libelle, "", userDroitDelivrer);
+    const aDroitConsulter = utilisateurADroitOuvrirRequete(
+      TypeRequete.DELIVRANCE.libelle,
+      "",
+      MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER).generer()
+    );
 
     expect(aDroitConsulter).toBe(true);
   });
 
   test("DOIT retourner true QUAND l'utilisateur à pas le droit de consulter une requête d'information'", () => {
-    const aDroitConsulter = utilisateurADroitOuvrirRequete(TypeRequete.INFORMATION.libelle, "", userDroitInformerUsager);
+    const aDroitConsulter = utilisateurADroitOuvrirRequete(
+      TypeRequete.INFORMATION.libelle,
+      "",
+      MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.INFORMER_USAGER).generer()
+    );
 
     expect(aDroitConsulter).toBe(true);
   });
@@ -283,7 +98,13 @@ describe("RMCRequetesAssocieesResultats", () => {
       [getUrlWithParam(URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID, requeteSelectionnee.idRequete)]
     );
 
-    const { container } = render(elementAvecContexte(<RouterProvider router={router} />, userDroitInformerUsager));
+    const { container } = render(
+      <MockRECEContextProvider
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.INFORMER_USAGER).generer()}
+      >
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     expect(container.getElementsByClassName("ApercuRequete").length).toBe(1);
   });
@@ -305,7 +126,13 @@ describe("RMCRequetesAssocieesResultats", () => {
       [getUrlWithParam(URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_REQUETE_SIMPLE_ID, requeteSelectionnee.idRequete)]
     );
 
-    const { container } = render(elementAvecContexte(<RouterProvider router={router} />, userDroitInformerUsager));
+    const { container } = render(
+      <MockRECEContextProvider
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.INFORMER_USAGER).generer()}
+      >
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     expect(container.getElementsByClassName("ApercuReqCreationEtablissementSimplePage").length).toBe(1);
   });
@@ -329,7 +156,11 @@ describe("RMCRequetesAssocieesResultats", () => {
     );
 
     const { container } = render(
-      elementAvecContexte(<RouterProvider router={router} />, userDroitCreerActeTranscritPerimetreTousRegistres)
+      <MockRECEContextProvider
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.CREER_ACTE_TRANSCRIT).generer()}
+      >
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
     );
 
     expect(container.getElementsByClassName("ApercuReqCreationTranscriptionSimplePage").length).toBe(1);
@@ -353,7 +184,13 @@ describe("RMCRequetesAssocieesResultats", () => {
       [getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, requeteSelectionnee.idRequete)]
     );
 
-    const { container } = render(elementAvecContexte(<RouterProvider router={router} />, userDroitInformerUsager));
+    const { container } = render(
+      <MockRECEContextProvider
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.INFORMER_USAGER).generer()}
+      >
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
     expect(container.getElementsByClassName("ApercuRequete").length).toBe(1);
   });
 

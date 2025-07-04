@@ -1,10 +1,9 @@
 import { BoutonRechercheRmc } from "@core/header/BoutonRechercheRmc";
-import { IOfficier } from "@model/agent/IOfficier";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 import { beforeAll, expect, test } from "vitest";
-import { elementAvecContexte, mockFenetreFicheTestFunctions } from "../../../__tests__utils__/testsUtil";
-import officier from "../../../mock/data/connectedUser.json";
+import { mockFenetreFicheTestFunctions } from "../../../__tests__utils__/testsUtil";
 
 let boutonElement: HTMLElement;
 
@@ -14,13 +13,11 @@ beforeAll(async () => {
 
 test.skip("renders click bouton rmc", async () => {
   render(
-    elementAvecContexte(
+    <MockRECEContextProvider>
       <MemoryRouter>
         <BoutonRechercheRmc></BoutonRechercheRmc>
-      </MemoryRouter>,
-
-      { idSSO: officier.id_sso, ...officier } as unknown as IOfficier
-    )
+      </MemoryRouter>
+    </MockRECEContextProvider>
   );
   boutonElement = screen.getByTitle("Recherche acte/inscription");
   await waitFor(() => {

@@ -1,4 +1,7 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { MesRequetesCreation } from "@pages/requeteCreation/espaceCreation/MesRequetesCreation";
 import { statutsRequetesCreation } from "@pages/requeteCreation/espaceCreation/params/EspaceCreationParams";
 import { URL_MES_REQUETES_CREATION } from "@router/ReceUrls";
@@ -6,8 +9,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { RouterProvider } from "react-router";
 import { expect, test } from "vitest";
-import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
-import { userDroitCreerActeTranscritPerimetreTousRegistres } from "../../../../mock/data/mockConnectedUserAvecDroit";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 const queryParametersPourRequetes = {
   statuts: statutsRequetesCreation,
@@ -27,7 +29,13 @@ test("Doit rendre le tableau des requêtes création", () => {
     [URL_MES_REQUETES_CREATION]
   );
 
-  render(elementAvecContexte(elementAvecContexte(<RouterProvider router={router} />, userDroitCreerActeTranscritPerimetreTousRegistres)));
+  render(
+    <MockRECEContextProvider
+      utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.CREER_ACTE_TRANSCRIT).generer()}
+    >
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
 
   waitFor(() => {
     expect(screen.getByText("Alerte")).toBeDefined();

@@ -32,7 +32,7 @@ export function useCreationAction(params: CreationActionHookParams | undefined) 
   useEffect(() => {
     if (idAction && params?.requete) {
       // Mise à jour de l'id utilisateur
-      params.requete.idUtilisateur = utilisateurConnecte?.idUtilisateur;
+      params.requete.idUtilisateur = utilisateurConnecte.id;
       if (params.callback) {
         params.callback();
       }

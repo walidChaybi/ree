@@ -3,9 +3,11 @@ import {
   estEligibleAuTraitementAutoRDCS,
   useTraitementAutoRDCSHook
 } from "@hook/rmcAuto/TraitementAutoRDCSHook";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
-import { userDroitCOMEDEC } from "@mock/data/mockConnectedUserAvecDroit";
 import { requeteRDCSC, requeteRDCSCCertificatSituationRCA } from "@mock/data/requeteDelivrance";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { Qualite } from "@model/requete/enum/Qualite";
@@ -21,7 +23,7 @@ import React from "react";
 import { RouterProvider } from "react-router";
 import request from "superagent";
 import { describe, expect, test } from "vitest";
-import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 describe("Test TraitementAutoRDCSHook", () => {
   DocumentDelivrance.init(DOCUMENT_DELIVRANCE);
@@ -67,7 +69,13 @@ describe("Test TraitementAutoRDCSHook", () => {
       [
         {
           path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID,
-          element: elementAvecContexte(<HookTraitementAutoApercuRequete />, userDroitCOMEDEC)
+          element: (
+            <MockRECEContextProvider
+              utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER_COMEDEC).generer()}
+            >
+              <HookTraitementAutoApercuRequete />
+            </MockRECEContextProvider>
+          )
         },
         {
           path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_TRAITEMENT_ID,

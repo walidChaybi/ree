@@ -1,4 +1,4 @@
-import { IUtilisateur } from "@model/agent/IUtilisateur";
+import { Utilisateur } from "@model/agent/Utilisateur";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, test, vi } from "vitest";
@@ -24,7 +24,7 @@ describe("PartieActeRequete", () => {
 
   test("Affiche les deux onglets lorsque les deux id existent", async () => {
     render(
-      <MockRECEContextProvider utilisateurs={[{} as IUtilisateur]}>
+      <MockRECEContextProvider utilisateurs={[{} as Utilisateur]}>
         <EditionDelivranceContextProvider
           idRequeteParam={idRequete}
           idActeParam={idActe}
@@ -64,7 +64,7 @@ describe("PartieActeRequete", () => {
 
   test("change l'onglet actif lors du clic sur un autre onglet", async () => {
     render(
-      <MockRECEContextProvider utilisateurs={[{} as IUtilisateur]}>
+      <MockRECEContextProvider utilisateurs={[{} as Utilisateur]}>
         <EditionDelivranceContextProvider
           idRequeteParam={idRequete}
           idActeParam={idActe}

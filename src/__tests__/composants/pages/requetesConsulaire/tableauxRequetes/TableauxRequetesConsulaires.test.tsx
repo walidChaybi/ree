@@ -1,6 +1,5 @@
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
-import { IOfficier } from "@model/agent/IOfficier";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { URL_MES_REQUETES_CONSULAIRE_SAISIR_RCTC } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
@@ -12,7 +11,7 @@ import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 describe("Test des boutons d'actions des tableaux de requêtes consulaire", () => {
   test("Le bouton ne s'affiche pas si l'utilisateur n'a pas le droit de saisir une requête", () => {
     render(
-      <MockRECEContextProvider>
+      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().generer()}>
         <BoutonsTableauConsulaire />
       </MockRECEContextProvider>
     );
@@ -30,13 +29,7 @@ describe("Test des boutons d'actions des tableaux de requêtes consulaire", () =
     );
 
     render(
-      <MockRECEContextProvider
-        utilisateurConnecte={
-          {
-            habilitations: [{ profil: { droits: [{ idDroit: "", nom: Droit.SAISIR_REQUETE } as IDroit] } as IProfil } as IHabilitation]
-          } as IOfficier
-        }
-      >
+      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.SAISIR_REQUETE).generer()}>
         <RouterProvider router={router} />
       </MockRECEContextProvider>
     );

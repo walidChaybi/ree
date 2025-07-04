@@ -1,23 +1,13 @@
-import { mappingOfficier } from "@model/agent/IOfficier";
-import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
 import { URL_REQUETES_CREATION_SERVICE } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router";
 import { expect, test } from "vitest";
-import IHabilitationDto from "../../../../../dto/etatcivil/agent/IHabilitationDto";
-import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
-import {
-  resultatHeaderUtilistateurLeBiannic,
-  resultatRequeteUtilistateurLeBiannic
-} from "../../../../mock/data/mockConnectedUserAvecDroit";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 test("renders creationPage", async () => {
-  const utilisateurCourant = mappingOfficier(resultatHeaderUtilistateurLeBiannic, resultatRequeteUtilistateurLeBiannic.data);
-  utilisateurCourant.habilitations = mapHabilitationsUtilisateur(
-    resultatRequeteUtilistateurLeBiannic.data.habilitations as unknown as IHabilitationDto[]
-  );
-
   const router = createTestingRouter(
     [
       {
@@ -28,7 +18,11 @@ test("renders creationPage", async () => {
     [URL_REQUETES_CREATION_SERVICE]
   );
 
-  render(elementAvecContexte(<RouterProvider router={router} />, utilisateurCourant));
+  render(
+    <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().generer()}>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
   const title = "Espace création";
   const mesRequetes = screen.getByText(/Mes requêtes de création/i);
   const requetesService = screen.getByText(/Les requêtes de création de mon service/i);

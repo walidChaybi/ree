@@ -1,5 +1,5 @@
 import { mapAlertesActe } from "@hook/alertes/MappingAlertesActe";
-import { IOfficier } from "@model/agent/IOfficier";
+import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
@@ -34,7 +34,7 @@ export const getFicheTitle = (categorie: string, annee: string, numero: string, 
   return typeFiche === TypeFiche.ACTE ? title : title + ` - N° ${annee} - ${numero}`;
 };
 
-export const setFiche = (utilisateurConnecte: IOfficier, dataFiche?: IDataFicheProps, data?: any): IFiche => {
+export const setFiche = (utilisateurConnecte: UtilisateurConnecte, dataFiche?: IDataFicheProps, data?: any): IFiche => {
   const fiche = {} as IFiche;
 
   if (dataFiche?.categorie && data && dataFiche.identifiant === data.id) {

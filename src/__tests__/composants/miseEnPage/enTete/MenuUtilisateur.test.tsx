@@ -1,7 +1,8 @@
 import { CONFIG_GET_NOMBRE_REQUETE } from "@api/configurations/requete/compteur/GetNombreRequeteConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { IOfficier } from "@model/agent/IOfficier";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { URL_DECONNEXION, URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
@@ -13,13 +14,21 @@ import MenuUtilisateur from "../../../../composants/miseEnPage/enTete/MenuUtilis
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 
 describe("test du composant MenuUtilisateur", () => {
+  const UTILISATEUR_CONNECTE = MockUtilisateurBuilder.utilisateurConnecte()
+    .avecAttributs({
+      prenom: "Prénom",
+      nom: "NOM",
+      fonction: "fonction"
+    })
+    .generer();
+
   const REDIRECTION_DECONNEXION = "Utilisateur déconnecté";
   const REDIRECTION_DELIVRANCE = "Requêtes délivrances utilisateur";
 
   const mockArretVerificationDoubleOuverture = vi.fn();
   gestionnaireDoubleOuverture.arreterVerification = mockArretVerificationDoubleOuverture;
 
-  const snapshotMenuUtilisateur = (utilisateur: Partial<IOfficier> = {}, avecErreur: boolean = false): ChildNode | null => {
+  const snapshotMenuUtilisateur = (utilisateur?: UtilisateurConnecte, avecErreur: boolean = false): ChildNode | null => {
     const router = createTestingRouter(
       [
         {
@@ -41,7 +50,7 @@ describe("test du composant MenuUtilisateur", () => {
     const { container } = render(
       <div>
         <MockRECEContextProvider
-          utilisateurConnecte={utilisateur as IOfficier}
+          utilisateurConnecte={utilisateur ?? UtilisateurConnecte.inconnu()}
           erreurConnexion={{ avecErreur }}
         >
           <RouterProvider router={router} />
@@ -60,18 +69,13 @@ describe("test du composant MenuUtilisateur", () => {
   });
 
   test("Le bouton déconnexion s'affiche si erreur de connexion", () => {
-    const snapshot = snapshotMenuUtilisateur({}, true);
+    const snapshot = snapshotMenuUtilisateur(undefined, true);
 
     expect(snapshot).toMatchSnapshot();
   });
 
   test("Le bouton s'affiche correctement et ouvre le menu", () => {
-    const snapshot = snapshotMenuUtilisateur({
-      idSSO: "idSSO",
-      nom: "NOM",
-      prenom: "Prénom",
-      fonctionAgent: { idFonctionAgent: "", utilisateur: {}, libelleFonction: "fonction" }
-    });
+    const snapshot = snapshotMenuUtilisateur(UTILISATEUR_CONNECTE);
 
     expect(snapshot).toMatchSnapshot();
 
@@ -82,12 +86,7 @@ describe("test du composant MenuUtilisateur", () => {
 
   test("L'utilisateur est déconnecté si aucune requête à signer", async () => {
     MockApi.deployer(CONFIG_GET_NOMBRE_REQUETE, { query: { statuts: StatutRequete.A_SIGNER.nom } }, { data: 0 });
-    snapshotMenuUtilisateur({
-      idSSO: "idSSO",
-      nom: "NOM",
-      prenom: "Prénom",
-      fonctionAgent: { idFonctionAgent: "", utilisateur: {}, libelleFonction: "fonction" }
-    });
+    snapshotMenuUtilisateur(UTILISATEUR_CONNECTE);
 
     fireEvent.click(screen.getByTitle("Menu utilisateur"));
     fireEvent.click(screen.getByTitle("Déconnexion"));
@@ -102,12 +101,7 @@ describe("test du composant MenuUtilisateur", () => {
 
   test("L'utilisateur peut se déconnecter si il y a des requêtes à signer", async () => {
     MockApi.deployer(CONFIG_GET_NOMBRE_REQUETE, { query: { statuts: StatutRequete.A_SIGNER.nom } }, { data: 1 });
-    const snapshot = snapshotMenuUtilisateur({
-      idSSO: "idSSO",
-      nom: "NOM",
-      prenom: "Prénom",
-      fonctionAgent: { idFonctionAgent: "", utilisateur: {}, libelleFonction: "fonction" }
-    });
+    const snapshot = snapshotMenuUtilisateur(UTILISATEUR_CONNECTE);
 
     fireEvent.click(screen.getByTitle("Menu utilisateur"));
     fireEvent.click(screen.getByTitle("Déconnexion"));
@@ -127,12 +121,7 @@ describe("test du composant MenuUtilisateur", () => {
 
   test("L'utilisateur peut consulter ses requêtes à signer au lieu de se déconnecter", async () => {
     MockApi.deployer(CONFIG_GET_NOMBRE_REQUETE, { query: { statuts: StatutRequete.A_SIGNER.nom } }, { data: 1 });
-    snapshotMenuUtilisateur({
-      idSSO: "idSSO",
-      nom: "NOM",
-      prenom: "Prénom",
-      fonctionAgent: { idFonctionAgent: "", utilisateur: {}, libelleFonction: "fonction" }
-    });
+    snapshotMenuUtilisateur(UTILISATEUR_CONNECTE);
 
     fireEvent.click(screen.getByTitle("Menu utilisateur"));
     fireEvent.click(screen.getByTitle("Déconnexion"));

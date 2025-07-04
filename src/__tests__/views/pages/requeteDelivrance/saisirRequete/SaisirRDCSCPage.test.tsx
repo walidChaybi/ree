@@ -1,3 +1,6 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SaisirRDCSCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
@@ -6,11 +9,12 @@ import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { getLastPathElem, getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
-import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 import { DOCUMENT_DELIVRANCE } from "../../../../mock/data/NomenclatureDocumentDelivrance";
-import { userDroitConsulterArchive, userDroitnonCOMEDEC } from "../../../../mock/data/mockConnectedUserAvecDroit";
 
 describe("Test de la page saisie RDCSC", () => {
+  const UTILISATEUR_CONNECTE = MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER).generer();
+
   DocumentDelivrance.init(DOCUMENT_DELIVRANCE);
 
   test("renders formulaire de saisie d'une Requête de Délivrance Certificat de Situation Courrier", async () => {
@@ -24,7 +28,11 @@ describe("Test de la page saisie RDCSC", () => {
       [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC));
+    render(
+      <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     const titre = SousTypeDelivrance.getEnumFor("RDCSC").libelle;
     await waitFor(() => {
@@ -48,7 +56,11 @@ describe("Test de la page saisie RDCSC", () => {
       [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC));
+    render(
+      <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
     const inputDocumentDemande: HTMLSelectElement = screen.getByTestId("document");
     const inputPaysNaissance: HTMLInputElement = screen.getByLabelText("titulaires.titulaire1.naissance.paysEvenement");
     const inputVilleNaissance: HTMLInputElement = screen.getByLabelText("titulaires.titulaire1.naissance.villeEvenement");
@@ -101,7 +113,11 @@ describe("Test de la page saisie RDCSC", () => {
       [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC));
+    render(
+      <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
     const inputDocumentDemande: HTMLSelectElement = screen.getByTestId("document");
     const inputPaysNaissance: HTMLInputElement = screen.getByLabelText("titulaires.titulaire1.naissance.paysEvenement");
 
@@ -153,7 +169,11 @@ describe("Test de la page saisie RDCSC", () => {
       [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC));
+    render(
+      <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
     const inputDocumentDemande: HTMLSelectElement = screen.getByTestId("document");
     const inputPaysNaissance: HTMLInputElement = screen.getByLabelText("titulaires.titulaire1.naissance.paysEvenement");
 
@@ -208,7 +228,13 @@ describe("Test de la page saisie RDCSC", () => {
       [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, userDroitConsulterArchive));
+    render(
+      <MockRECEContextProvider
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.CONSULTER_ARCHIVES).generer()}
+      >
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
     const inputDocumentDemande: HTMLSelectElement = screen.getByTestId("document");
     const inputPaysNaissance: HTMLInputElement = screen.getByLabelText("titulaires.titulaire1.naissance.paysEvenement");
     const inputVilleNaissance: HTMLInputElement = screen.getByLabelText("titulaires.titulaire1.naissance.villeEvenement");
@@ -267,7 +293,11 @@ describe("Test de la page saisie RDCSC", () => {
       [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC));
+    render(
+      <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     const inputDocumentDemande: HTMLSelectElement = screen.getByTestId("document");
     const inputPaysNaissance: HTMLInputElement = screen.getByLabelText("titulaires.titulaire1.naissance.paysEvenement");
@@ -314,7 +344,11 @@ describe("Test de la page saisie RDCSC", () => {
       [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC));
+    render(
+      <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
     const inputDocumentDemande: ChildNode = screen.getByTestId(Labels.documentDemande);
     let boutonAjoutTitulaire: HTMLElement | null = screen.queryByLabelText(Labels.titulaire.ajout);
     let boutonSupprimerTitulaire: HTMLElement | null = screen.queryByLabelText(Labels.titulaire.suppr);
@@ -348,7 +382,11 @@ describe("Test de la page saisie RDCSC", () => {
       [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC));
+    render(
+      <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
     const inputDocumentDemande: ChildNode = screen.getByTestId(Labels.documentDemande);
     let boutonAjoutTitulaire: HTMLElement | null = screen.queryByLabelText(Labels.titulaire.ajout);
     let boutonSupprimerTitulaire: HTMLElement | null = screen.queryByLabelText(Labels.titulaire.suppr);
@@ -387,7 +425,11 @@ describe("Test de la page saisie RDCSC", () => {
       [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC));
+    render(
+      <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
     const inputDocumentDemande: ChildNode = screen.getByTestId(Labels.documentDemande);
     let boutonAjoutTitulaire: HTMLElement | null = screen.queryByLabelText(Labels.titulaire.ajout);
     let boutonSupprimerTitulaire: HTMLElement | null = screen.queryByLabelText(Labels.titulaire.suppr);
@@ -433,7 +475,11 @@ describe("Test de la page saisie RDCSC", () => {
       [URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC));
+    render(
+      <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
     let boutonAjoutTitulaire: HTMLElement | null = screen.queryByLabelText(Labels.titulaire.ajout);
     let boutonSupprimerTitulaire: HTMLElement | null = screen.queryByLabelText(Labels.titulaire.suppr);
     let nomNaissanceTitulaire2: HTMLElement | null = screen.queryByLabelText(Labels.titulaire2.nom);

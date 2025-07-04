@@ -9,7 +9,18 @@ const Texte = {
       .replace(/[\u0300-\u036f]/g, "")
       .trim(),
 
-  premiereLettreMajuscule: (texte: string): string => (texte.length ? texte.charAt(0).toUpperCase() + texte.slice(1) : "")
+  premiereLettreMajuscule: (texte: string): string => texte && `${texte.charAt(0).toLocaleUpperCase()}${texte.slice(1)}`,
+
+  nomPropre: (texte: string) =>
+    texte
+      ? texte
+          .split(" ")
+          .map(partieTexte => Texte.premiereLettreMajuscule(partieTexte))
+          .join(" ")
+          .split("-")
+          .map(partieTexte => Texte.premiereLettreMajuscule(partieTexte))
+          .join("-")
+      : ""
 } as const;
 
 export default Texte;

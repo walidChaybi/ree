@@ -1,4 +1,6 @@
-import { IOfficier } from "@model/agent/IOfficier";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
 import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
 import EspaceInformationPage from "@pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
@@ -7,17 +9,14 @@ import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router";
 import { describe, expect, test, vi } from "vitest";
-import { createTestingRouter, elementAvecContexte, mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
 import { ReponseAppelDetailRequeteInformationSansCorbeilleAgent } from "../../../../mock/data/DetailRequeteInformation";
 import { LISTE_UTILISATEURS } from "../../../../mock/data/ListeUtilisateurs";
 import { NOMENCLATURE_REPONSE } from "../../../../mock/data/NomenclatureReponse";
-import { userDroitConsulterPerimetreTousRegistres } from "../../../../mock/data/mockConnectedUserAvecDroit";
 import { NORESULT, configRequetesInformation } from "../../../../mock/superagent-config/superagent-mock-requetes-information";
 
 describe("Test ApercuReqInfoPage", () => {
-  const utilisateurConnecte = {
-    idUtilisateur: LISTE_UTILISATEURS[3].idUtilisateur
-  } as IOfficier;
+  const UTILISATEUR_CONNECTE = MockUtilisateurBuilder.utilisateurConnecte().generer();
 
   configRequetesInformation[0].compteurRequeteInformation = 0;
 
@@ -38,7 +37,14 @@ describe("Test ApercuReqInfoPage", () => {
       [getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856")]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte, LISTE_UTILISATEURS));
+    render(
+      <MockRECEContextProvider
+        utilisateurConnecte={UTILISATEUR_CONNECTE}
+        utilisateurs={LISTE_UTILISATEURS}
+      >
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     await waitFor(() => {
       expect(screen.getByText(/Requête transférée à Benoît TANGUY - Le : 20\/10\/2021/i)).toBeDefined();
@@ -152,7 +158,14 @@ describe("Test ApercuReqInfoPage", () => {
       [URL_MES_REQUETES_INFORMATION, getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856")]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte, LISTE_UTILISATEURS));
+    render(
+      <MockRECEContextProvider
+        utilisateurConnecte={UTILISATEUR_CONNECTE}
+        utilisateurs={LISTE_UTILISATEURS}
+      >
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     await waitFor(() => {
       expect(screen.getByText(/Retour espace information/i)).toBeDefined();
@@ -182,7 +195,14 @@ describe("Test ApercuReqInfoPage", () => {
       [getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856")]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte, LISTE_UTILISATEURS));
+    render(
+      <MockRECEContextProvider
+        utilisateurConnecte={UTILISATEUR_CONNECTE}
+        utilisateurs={LISTE_UTILISATEURS}
+      >
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     await waitFor(() => expect(screen.getByText(/LRU1A5/i)).toBeDefined());
 
@@ -204,7 +224,14 @@ describe("Test ApercuReqInfoPage", () => {
       [getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856")]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte, LISTE_UTILISATEURS));
+    render(
+      <MockRECEContextProvider
+        utilisateurConnecte={UTILISATEUR_CONNECTE}
+        utilisateurs={LISTE_UTILISATEURS}
+      >
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     await waitFor(() => screen.getByPlaceholderText("Mail de la réponse"));
 
@@ -232,7 +259,14 @@ describe("Test ApercuReqInfoPage", () => {
       [getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, "bbd05aed-8ea9-45ba-a7d7-b8d55ad10557")]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte, LISTE_UTILISATEURS));
+    render(
+      <MockRECEContextProvider
+        utilisateurConnecte={UTILISATEUR_CONNECTE}
+        utilisateurs={LISTE_UTILISATEURS}
+      >
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     await waitFor(() => expect(screen.getByDisplayValue("Réponse libre agent")).toBeDefined());
   });
@@ -248,7 +282,14 @@ describe("Test ApercuReqInfoPage", () => {
       [getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856")]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte, LISTE_UTILISATEURS));
+    render(
+      <MockRECEContextProvider
+        utilisateurConnecte={UTILISATEUR_CONNECTE}
+        utilisateurs={LISTE_UTILISATEURS}
+      >
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     await waitFor(() => {
       const boutonReponses = screen.getByText(/Toutes les réponses disponibles/i);
@@ -293,7 +334,16 @@ describe("Test ApercuReqInfoPage", () => {
       [getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, "bbd05aed-8ea9-45ba-a7d7-b8d55ad10856")]
     );
 
-    await act(async () => render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte, LISTE_UTILISATEURS)));
+    await act(async () =>
+      render(
+        <MockRECEContextProvider
+          utilisateurConnecte={UTILISATEUR_CONNECTE}
+          utilisateurs={LISTE_UTILISATEURS}
+        >
+          <RouterProvider router={router} />
+        </MockRECEContextProvider>
+      )
+    );
 
     await expect.poll(() => screen.getByText("Nouvelle recherche multi-critères")).toBeDefined();
 
@@ -361,7 +411,14 @@ describe("Test ApercuReqInfoPage", () => {
       [getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, ReponseAppelDetailRequeteInformationSansCorbeilleAgent.data.id)]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, userDroitConsulterPerimetreTousRegistres, LISTE_UTILISATEURS));
+    render(
+      <MockRECEContextProvider
+        utilisateurConnecte={UTILISATEUR_CONNECTE}
+        utilisateurs={LISTE_UTILISATEURS}
+      >
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
   };
 
   test("Attendu: le bouton 'prendre en charge' est affiché, si la requête n'appartient pas à l'utilisateur, mais à son Service", async () => {
@@ -408,7 +465,14 @@ describe("Test ApercuReqInfoPage", () => {
       [URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, userDroitConsulterPerimetreTousRegistres, LISTE_UTILISATEURS));
+    render(
+      <MockRECEContextProvider
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.CONSULTER).generer()}
+        utilisateurs={LISTE_UTILISATEURS}
+      >
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     await waitFor(() => expect(screen.queryByLabelText(Labels.prendreEnCharge)).toBeNull());
   });

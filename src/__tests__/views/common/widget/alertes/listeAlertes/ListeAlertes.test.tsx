@@ -1,21 +1,21 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { ListeAlertes } from "@widget/alertes/listeAlertes/ListeAlertes";
 import { expect, test, vi } from "vitest";
-import { elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
 import { Alertes } from "../../../../../mock/data/Alertes";
-import { userDroitCOMEDEC, userDroitConsulterPerimetreTUNIS } from "../../../../../mock/data/mockConnectedUserAvecDroit";
 
 test("render ListeAlertes avec droit suppression alerte : test ouverture / fermeture popin", async () => {
   render(
-    elementAvecContexte(
+    <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER_COMEDEC).generer()}>
       <ListeAlertes
         idTypeRegistre="salut"
         alertes={Alertes}
         displayReference={false}
         supprimerAlerteCallBack={vi.fn()}
-      />,
-      userDroitCOMEDEC
-    )
+      />
+    </MockRECEContextProvider>
   );
 
   const boutonsSupprimerAlerte: HTMLButtonElement[] = screen.getAllByTitle("Supprimer l'alerte");
@@ -45,15 +45,14 @@ test("render ListeAlertes avec droit suppression alerte : test ouverture / ferme
 
 test("render ListeAlertes avec droit suppression alerte : test soumission formulaire", async () => {
   render(
-    elementAvecContexte(
+    <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER_COMEDEC).generer()}>
       <ListeAlertes
         idTypeRegistre="salut"
         alertes={Alertes}
         displayReference={false}
         supprimerAlerteCallBack={vi.fn()}
-      />,
-      userDroitCOMEDEC
-    )
+      />
+    </MockRECEContextProvider>
   );
 
   await waitFor(() => {
@@ -81,15 +80,18 @@ test("render ListeAlertes avec droit suppression alerte : test soumission formul
 
 test("render ListeAlertes sans droit suppression alerte", async () => {
   render(
-    elementAvecContexte(
+    <MockRECEContextProvider
+      utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte()
+        .avecDroit(Droit.CONSULTER, { perimetres: ["TUNIS"] })
+        .generer()}
+    >
       <ListeAlertes
         idTypeRegistre="salut"
         alertes={Alertes}
         displayReference={false}
         supprimerAlerteCallBack={vi.fn()}
-      />,
-      userDroitConsulterPerimetreTUNIS
-    )
+      />
+    </MockRECEContextProvider>
   );
 
   await waitFor(() => {

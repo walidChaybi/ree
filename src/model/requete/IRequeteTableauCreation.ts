@@ -1,6 +1,6 @@
 /* v8 ignore start */
 import { IService } from "@model/agent/IService";
-import { IUtilisateur } from "@model/agent/IUtilisateur";
+import { Utilisateur } from "@model/agent/Utilisateur";
 import DateUtils from "@util/DateUtils";
 import { getValeurOuUndefined, getValeurOuVide } from "@util/Utils";
 import { IRequeteTableau } from "./IRequeteTableau";
@@ -30,7 +30,7 @@ export interface IRequeteTableauCreation extends IRequeteTableau {
 export function mappingUneRequeteTableauCreation(
   requete: any,
   mappingSupplementaire: boolean,
-  utilisateurs: IUtilisateur[],
+  utilisateurs: Utilisateur[],
   services: IService[]
 ): IRequeteTableauCreation {
   const titulaires = mapTitulaires(filtrerUniquementTitulairesHorsFamille(requete?.titulaires), mappingSupplementaire);

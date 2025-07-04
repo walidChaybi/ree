@@ -4,10 +4,11 @@ import {
   useDerniereDelivranceRcRcaPacsApiHook
 } from "@hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
 import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
-import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "@model/agent/IOfficier";
+import { Droit } from "@model/agent/enum/Droit";
 import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { Provenance } from "@model/requete/enum/Provenance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
@@ -108,14 +109,13 @@ export const BoutonValiderTerminer: React.FC<BoutonValiderTerminerProps> = ({ re
 
   const estAValider = requete.statutCourant.statut === StatutRequete.A_VALIDER;
 
-  const mAppartient = requete.idUtilisateur === utilisateurConnecte?.idUtilisateur;
+  const mAppartient = requete.idUtilisateur === utilisateurConnecte.id;
 
   if (
     mAppartient &&
-    provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
-      utilisateurConnecte,
-      requeteDelivrance.provenanceRequete.provenance.libelle
-    ) &&
+    ((requeteDelivrance.provenanceRequete.provenance.libelle === Provenance.COMEDEC.libelle &&
+      utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER_COMEDEC })) ||
+      utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER })) &&
     DocumentReponse.verifierDocumentsValides(requete.documentsReponses) &&
     estDisabled
   ) {

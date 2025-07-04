@@ -78,28 +78,24 @@ const getOnglets = (popinAttribuerAOuvert: boolean, setPopinAttribuerAOuvert: Fu
 };
 
 const EspaceCreationPage: React.FC<LocalProps> = ({ selectedTab }) => {
-  const selectedTabState = selectedTab || 0;
+  const selectedTabState = selectedTab ?? 0;
   const [popinAttribuerAOuvert, setPopinAttribuerAOuvert] = useState<boolean>(false);
 
-  const { utilisateurConnecte, utilisateurs } = useContext(RECEContextData);
+  const { utilisateurs } = useContext(RECEContextData);
 
   useTitreDeLaFenetre("Espace création");
 
   return (
     <div>
-      {utilisateurConnecte && (
-        <>
-          <OperationEnCours visible={!utilisateurs} />
-          <BoiteAOnglets
-            selectedTab={selectedTabState}
-            onglets={getOnglets(popinAttribuerAOuvert, setPopinAttribuerAOuvert)}
-            elementEntreTitreEtContenu={getBlocBoutons(selectedTabState, setPopinAttribuerAOuvert)}
-            titre="Menu espace création"
-            classOnglet="ongletPageEspace"
-            classOngletPrincipale="headerOngletPageEspace"
-          />
-        </>
-      )}
+      <OperationEnCours visible={!utilisateurs} />
+      <BoiteAOnglets
+        selectedTab={selectedTabState}
+        onglets={getOnglets(popinAttribuerAOuvert, setPopinAttribuerAOuvert)}
+        elementEntreTitreEtContenu={getBlocBoutons(selectedTabState, setPopinAttribuerAOuvert)}
+        titre="Menu espace création"
+        classOnglet="ongletPageEspace"
+        classOngletPrincipale="headerOngletPageEspace"
+      />
     </div>
   );
 };

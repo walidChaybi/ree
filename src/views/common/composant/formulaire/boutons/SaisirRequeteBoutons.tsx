@@ -1,5 +1,4 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { estOfficierHabiliterPourTousLesDroits, officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { UN } from "@util/Utils";
 import { GestionnaireBlockErreur } from "@widget/formulaire/GestionnaireBlockErreur";
@@ -22,8 +21,8 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
   const navigate = useNavigate();
   const { utilisateurConnecte } = useContext(RECEContextData);
   const utilisateurSansBrouillon =
-    (officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER) ||
-      estOfficierHabiliterPourTousLesDroits(utilisateurConnecte, [Droit.SAISIR_REQUETE, Droit.CREER_ACTE_TRANSCRIT])) ??
+    (utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER }) ||
+      utilisateurConnecte.estHabilitePour({ tousLesDroits: [Droit.SAISIR_REQUETE, Droit.CREER_ACTE_TRANSCRIT] })) ??
     true;
   const annuler = () => {
     navigate(-UN);

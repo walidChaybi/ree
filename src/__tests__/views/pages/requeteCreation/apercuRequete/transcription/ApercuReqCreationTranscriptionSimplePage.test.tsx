@@ -1,3 +1,6 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
 import {
   PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE,
@@ -10,8 +13,7 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
 import PageRequeteCreationTranscriptionPriseEnCharge from "../../../../../../pages/requetesConsulaire/PageRequeteCreationTranscriptionPriseEnCharge";
-import { createTestingRouter, elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
-import { userDroitCreerActeTranscritPerimetreTousRegistres } from "../../../../../mock/data/mockConnectedUserAvecDroit";
+import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 
 describe.skip("Test de la page Aperçu requête transcription simple", () => {
   test("DOIT rendre le composant ApercuReqCreationTranscriptionSimplePage correctement", async () => {
@@ -161,7 +163,13 @@ describe.skip("Test du rendu du composant RMCRequeteAssociees", () => {
       ]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, userDroitCreerActeTranscritPerimetreTousRegistres));
+    render(
+      <MockRECEContextProvider
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.CREER_ACTE_TRANSCRIT).generer()}
+      >
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     await waitFor(() => {
       expect(screen.queryByText("Prendre en charge")).toBeDefined();

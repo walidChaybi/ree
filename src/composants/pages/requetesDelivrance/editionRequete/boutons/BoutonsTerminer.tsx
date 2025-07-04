@@ -1,5 +1,4 @@
 import { RECEContextActions, RECEContextData } from "@core/contexts/RECEContext";
-import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
@@ -38,7 +37,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({ requete, acte 
   );
   const utilisateurPeut = useMemo(() => {
     const signer =
-      officierHabiliterPourLeDroit(utilisateurConnecte, Droit.SIGNER_DELIVRANCE_DEMAT) &&
+      utilisateurConnecte.estHabilitePour({ leDroit: Droit.SIGNER_DELIVRANCE_DEMAT }) &&
       StatutRequete.estASigner(requete.statutCourant.statut) &&
       SousTypeDelivrance.estSousTypeSignable(requete.sousType);
     const validerEtTerminer =
@@ -58,9 +57,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({ requete, acte 
         [SousTypeDelivrance.RDC, SousTypeDelivrance.RDCSC].includes(requete.sousType),
 
       terminer:
-        requete.idUtilisateur === utilisateurConnecte.idUtilisateur &&
-        signer &&
-        DocumentReponse.verifierDocumentsValides(requete.documentsReponses)
+        requete.idUtilisateur === utilisateurConnecte.id && signer && DocumentReponse.verifierDocumentsValides(requete.documentsReponses)
     };
   }, [requete, utilisateurConnecte, FFEstActif]);
 

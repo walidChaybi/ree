@@ -1,5 +1,3 @@
-import mockConnectedUser from "../data/connectedUser.json";
-
 export const configOutiltech = [
   {
     /**
@@ -17,7 +15,7 @@ export const configOutiltech = [
      */
     fixtures: function (match: any, params: any, headers: any, context: any) {
       if (match[1] === "/log") {
-        return { headers: mockConnectedUser, data: null };
+        return { data: null };
       }
 
       const error = { msg: "url api outiltech non mockée", url: match[1] };

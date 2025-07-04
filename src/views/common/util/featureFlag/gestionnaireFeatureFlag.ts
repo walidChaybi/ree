@@ -2,7 +2,7 @@ import { estRenseigne } from "@util/Utils";
 import { FeatureFlag } from "./FeatureFlag";
 const CANARY_TESTING = "CANARY_TESTING";
 
-interface IdSSOEtFeaturesFlags {
+interface idArobasEtFeaturesFlags {
   [key: string]: string[];
 }
 
@@ -16,9 +16,9 @@ class GestionnaireFeatureFlag {
     return featureFlags.some(ff => this.estActif(ff));
   }
 
-  positionneFlagsAPartirDuHeader(header: any, idSSOUtilisateur: string) {
+  positionneFlagsAPartirDuHeader(header: any, idArobasUtilisateur: string) {
     // Exemple canary testing '[{"0123456": ["FF_DELIVRANCE_EXTRAITS_COPIES"]}, {"0456255": ["FF_DELIVRANCE_CERTIFS_SITUATION"]}]';
-    const idSSOsEtFeaturesFlags: IdSSOEtFeaturesFlags[] | undefined = this.getIdSSOsEtFeaturesFlags(header);
+    const idArobassEtFeaturesFlags: idArobasEtFeaturesFlags[] | undefined = this.getIdArobasEtFeaturesFlags(header);
 
     this.supprimeTousLesFlags([FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATION, FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES]);
 
@@ -30,7 +30,7 @@ class GestionnaireFeatureFlag {
       }
     });
 
-    const featuresFlagsUtilisateurConnecte = this.getFeatureFlagsAPartirIdSSO(idSSOsEtFeaturesFlags, idSSOUtilisateur);
+    const featuresFlagsUtilisateurConnecte = this.getFeatureFlagsAPartirIdArobas(idArobassEtFeaturesFlags, idArobasUtilisateur);
 
     if (featuresFlagsUtilisateurConnecte) {
       featuresFlagsUtilisateurConnecte.forEach((featureFlag: string) => {
@@ -39,26 +39,26 @@ class GestionnaireFeatureFlag {
     }
   }
 
-  private getFeatureFlagsAPartirIdSSO(idSSOsEtFeaturesFlags: IdSSOEtFeaturesFlags[] | undefined, idSSO: string): string[] {
-    const idSSOEtFeaturesFlagsTrouve = idSSOsEtFeaturesFlags?.find(idSSOEtFeaturesFlags => idSSOEtFeaturesFlags.hasOwnProperty(idSSO));
+  private getFeatureFlagsAPartirIdArobas(idArobasEtFeaturesFlags: idArobasEtFeaturesFlags[] | undefined, idArobas: string): string[] {
+    const idArobasEtFeaturesFlagsTrouve = idArobasEtFeaturesFlags?.find(idOuFeatureFlag => idOuFeatureFlag.hasOwnProperty(idArobas));
 
-    return idSSOEtFeaturesFlagsTrouve ? idSSOEtFeaturesFlagsTrouve[idSSO] : [];
+    return idArobasEtFeaturesFlagsTrouve ? idArobasEtFeaturesFlagsTrouve[idArobas] : [];
   }
 
-  private getIdSSOsEtFeaturesFlags(header: any): IdSSOEtFeaturesFlags[] | undefined {
+  private getIdArobasEtFeaturesFlags(header: any): idArobasEtFeaturesFlags[] | undefined {
     const canaryTestingHeader = this.getValeurFlagHeader(header, CANARY_TESTING);
     return estRenseigne(canaryTestingHeader) ? this.parseJson(canaryTestingHeader) : undefined;
   }
 
-  private parseJson(json: string): IdSSOEtFeaturesFlags[] | undefined {
-    let idSSOsEtFeaturesFlags: IdSSOEtFeaturesFlags[] | undefined;
+  private parseJson(json: string): idArobasEtFeaturesFlags[] | undefined {
+    let idArobasEtFeaturesFlags: idArobasEtFeaturesFlags[] | undefined;
 
     try {
-      idSSOsEtFeaturesFlags = JSON.parse(json);
+      idArobasEtFeaturesFlags = JSON.parse(json);
     } catch (error) {
       window.alert(`Erreur lors du parsing du json du Header CANARY_TESTING: ${error}`);
     }
-    return idSSOsEtFeaturesFlags;
+    return idArobasEtFeaturesFlags;
   }
 
   private getValeurFlagHeader(header: any, prop: string) {

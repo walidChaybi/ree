@@ -1,6 +1,6 @@
 import * as EtatCivilApi from "@api/appels/etatcivilApi";
 import * as RequeteApi from "@api/appels/requeteApi";
-import { IOfficier } from "@model/agent/IOfficier";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { TypePopinSignature } from "@model/signature/ITypePopinSignature";
 import { ApercuRequeteEtablissementActeRegistrePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuActeRegistre/ApercuRequeteEtablissementActeRegistrePage";
 import {
@@ -13,9 +13,8 @@ import { createEvent, fireEvent, render, screen, waitFor } from "@testing-librar
 import { PopinSignatureCreationEtablissement } from "@widget/signature/PopinSignatureCreationEtablissement";
 import { RouterProvider } from "react-router";
 import { describe, expect, test, vi } from "vitest";
-import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 import { TYPE_POPIN_SIGNATURE } from "../../../../mock/data/NomenclatureTypePopinSignature";
-import mockConnectedUser from "../../../../mock/data/connectedUser.json";
 
 describe("Doit afficher la popin de signature lors de la création d'un acte", () => {
   TypePopinSignature.init(TYPE_POPIN_SIGNATURE);
@@ -104,7 +103,6 @@ describe("Doit afficher la popin de signature lors de la création d'un acte", (
 
 describe("Doit signer le document QUAND on valide le code pin.", () => {
   test.skip("DOIT composer le document final, puis enregistrer le document final signé, puis modifier le statut de la requete et l'avancement du projet d'acte", async () => {
-    const utilisateurCourant = mockConnectedUser as any as IOfficier;
     const composerDocumentFinalSpy = vi.spyOn(EtatCivilApi, "composerDocumentFinal");
     const integrerActeSigneSpy = vi.spyOn(EtatCivilApi, "integrerActeSigne");
     const mettreAJourStatutApresSignatureSpy = vi.spyOn(RequeteApi, "mettreAJourStatutApresSignature");
@@ -131,7 +129,11 @@ describe("Doit signer le document QUAND on valide le code pin.", () => {
       ]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, utilisateurCourant));
+    render(
+      <MockRECEContextProvider>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     // Simulation d'une signature réussie.
     fireEvent(

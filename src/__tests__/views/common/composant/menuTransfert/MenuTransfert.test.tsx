@@ -1,7 +1,7 @@
 import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
-import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { IService } from "@model/agent/IService";
-import { IUtilisateur } from "@model/agent/IUtilisateur";
+import { Utilisateur } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { ETypeService } from "@model/agent/enum/ETypeService";
 import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
@@ -25,45 +25,18 @@ import { requeteInformation } from "../../../../mock/data/requeteInformation";
 
 describe("Test MenuTransfert", () => {
   const listeUtilisateurs = [
-    {
-      service: { estDansScec: true, idService: "123" } as IService,
-      prenom: "",
-      nom: "str1",
-      habilitations: [
-        {
-          profil: {
-            droits: [{ nom: Droit.DELIVRER } as IDroit]
-          } as IProfil
-        } as IHabilitation
-      ],
-      idUtilisateur: "1234"
-    } as IUtilisateur,
-    {
-      service: { estDansScec: true, idService: "1234" } as IService,
-      prenom: "",
-      nom: "str2",
-      habilitations: [
-        {
-          profil: {
-            droits: [{ nom: Droit.DELIVRER } as IDroit]
-          } as IProfil
-        } as IHabilitation
-      ],
-      idUtilisateur: "12345"
-    } as IUtilisateur,
-    {
-      service: { estDansScec: true, idService: "1234" } as IService,
-      prenom: "",
-      nom: "str3",
-      habilitations: [
-        {
-          profil: {
-            droits: [{ nom: Droit.INFORMER_USAGER } as IDroit]
-          } as IProfil
-        } as IHabilitation
-      ],
-      idUtilisateur: "12345"
-    } as IUtilisateur
+    MockUtilisateurBuilder.utilisateur({ idUtilisateur: "1234", prenom: "str1", nom: "" })
+      .avecAttributs({ idService: "123", estDuSCEC: true })
+      .avecDroit(Droit.DELIVRER)
+      .generer(),
+    MockUtilisateurBuilder.utilisateur({ idUtilisateur: "12345", prenom: "str2", nom: "" })
+      .avecAttributs({ idService: "123", estDuSCEC: true })
+      .avecDroit(Droit.DELIVRER)
+      .generer(),
+    MockUtilisateurBuilder.utilisateur({ idUtilisateur: "123456", prenom: "str3", nom: "" })
+      .avecAttributs({ idService: "1234", estDuSCEC: true })
+      .avecDroit(Droit.DELIVRER)
+      .generer()
   ];
 
   const listeServices = [
@@ -83,7 +56,7 @@ describe("Test MenuTransfert", () => {
     }
   ];
 
-  const routerAvecContexte = (router: any, utilisateurs?: IUtilisateur[], services?: IService[]): any => {
+  const routerAvecContexte = (router: any, utilisateurs?: Utilisateur[], services?: IService[]): any => {
     return (
       <MockRECEContextProvider
         utilisateurs={utilisateurs}
@@ -94,7 +67,7 @@ describe("Test MenuTransfert", () => {
     );
   };
 
-  const afficheComposant = (utilisateurs?: IUtilisateur[], services?: IService[]) => {
+  const afficheComposant = (utilisateurs?: Utilisateur[], services?: IService[]) => {
     const router = createTestingRouter(
       [
         {

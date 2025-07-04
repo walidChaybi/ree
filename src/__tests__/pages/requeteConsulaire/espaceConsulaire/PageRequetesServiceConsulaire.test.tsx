@@ -1,5 +1,5 @@
-import { IOfficier } from "@model/agent/IOfficier";
-import { IUtilisateur } from "@model/agent/IUtilisateur";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { URL_REQUETES_CONSULAIRE_SERVICE } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router";
@@ -7,21 +7,17 @@ import { expect, test } from "vitest";
 import PageRequetesServiceConsulaire from "../../../../pages/requetesConsulaire/PageRequetesServiceConsulaire";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 import MockRECEContextProvider from "../../../mock/context/MockRECEContextProvider";
-import mockConnectedUser from "../../../mock/data/connectedUser.json";
-
-let u: any = mockConnectedUser;
 
 test("DOIT afficher correctement la page PageRequetesServiceConsulaire", async () => {
-  const utilisateurConnecte = u as IOfficier;
-
   const router = createTestingRouter(
     [
       {
         path: URL_REQUETES_CONSULAIRE_SERVICE,
         element: (
           <MockRECEContextProvider
-            utilisateurConnecte={{ ...utilisateurConnecte } as IOfficier}
-            utilisateurs={[{} as IUtilisateur]}
+            utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte()
+              .avecDroits([Droit.CREER_ACTE_TRANSCRIT, Droit.ATTRIBUER_REQUETE])
+              .generer()}
           >
             <PageRequetesServiceConsulaire query={undefined} />
           </MockRECEContextProvider>

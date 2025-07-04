@@ -3,7 +3,6 @@ import {
   RetourSDANFParams,
   useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook
 } from "@hook/requete/creation/EnvoyerMessageSdanfEtMiseAJourStatutApiHook";
-import { IOfficier } from "@model/agent/IOfficier";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IEchange } from "@model/requete/IEchange";
 import { estSuperieurA500Caracteres, getLibelle } from "@util/Utils";
@@ -19,29 +18,16 @@ interface ListeActionsRetourSDANFProps {
   modeConsultation?: boolean;
 }
 
-export const getPrenomEtNom = (utilisateurConnecte: IOfficier) => {
-  let nomPrenom;
-  const prenom = utilisateurConnecte?.prenom || "";
-  const nom = utilisateurConnecte?.nom || "";
-  nomPrenom = `${prenom} ${nom}`;
-  return nomPrenom;
-};
-
-export const ListeActionsRetourSDANF: React.FC<
-  ListeActionsRetourSDANFProps
-> = props => {
+export const ListeActionsRetourSDANF: React.FC<ListeActionsRetourSDANFProps> = props => {
   const [param, setParam] = useState<RetourSDANFParams>();
-  const messageRetourSDANFAPI: IEchange =
-    useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook(param);
+  const messageRetourSDANFAPI: IEchange = useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook(param);
   const { utilisateurConnecte } = useContext(RECEContextData);
   const [isOpen, setIsOpen] = React.useState(false);
   const [title, setTitle] = React.useState("");
   const [buttonValidateDisabled, setButtonValidateDisabled] = useState(true);
   const [messageSDANF, setMessageSDANF] = useState("");
   const [messageErreur, setMessageErreur] = useState("");
-  const [disabledActions, setDisabledActions] = useState(
-    estPasStatutPriseEnChargeOuMAppartientPasOuModeConsultation()
-  );
+  const [disabledActions, setDisabledActions] = useState(estPasStatutPriseEnChargeOuMAppartientPasOuModeConsultation());
 
   const ACTE_IRRECEVABLE = 0;
   const ELEMENT_MANQUANT = 1;
@@ -78,13 +64,10 @@ export const ListeActionsRetourSDANF: React.FC<
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messageRetourSDANFAPI]);
 
-  function estPasStatutPriseEnChargeOuMAppartientPasOuModeConsultation():
-    | boolean
-    | undefined {
+  function estPasStatutPriseEnChargeOuMAppartientPasOuModeConsultation(): boolean | undefined {
     return (
-      StatutRequete.getEnumFor(props.statusRequete) !==
-        StatutRequete.PRISE_EN_CHARGE ||
-      props.idRequeteCorbeilleAgent !== utilisateurConnecte?.idUtilisateur ||
+      StatutRequete.getEnumFor(props.statusRequete) !== StatutRequete.PRISE_EN_CHARGE ||
+      props.idRequeteCorbeilleAgent !== utilisateurConnecte?.id ||
       props.modeConsultation
     );
   }
@@ -125,9 +108,7 @@ export const ListeActionsRetourSDANF: React.FC<
   };
 
   const envoyerMessageRetourSDANF = () => {
-    const message = `${title} - ${messageSDANF} - ${getPrenomEtNom(
-      utilisateurConnecte
-    )}`;
+    const message = `${title} - ${messageSDANF} - ${utilisateurConnecte.prenomNom}`;
     setParam({
       idRequete: props.idRequeteParam,
       message: {

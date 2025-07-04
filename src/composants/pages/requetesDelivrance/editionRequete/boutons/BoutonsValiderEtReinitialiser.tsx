@@ -1,5 +1,4 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { useFormikContext } from "formik";
 import React, { useContext } from "react";
@@ -34,7 +33,7 @@ const BoutonsValiderEtReinitialiser: React.FC<BoutonsValiderEtReinitialiserProps
         styleBouton={styleBoutonValider}
         className={`${styleBoutonValider === "secondaire" && "hover:bg-bleu hover:text-white"}`}
         type="submit"
-        disabled={desactiverBoutonValider || !officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER)}
+        disabled={desactiverBoutonValider || !utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER })}
         aria-label="Valider"
       >
         Valider

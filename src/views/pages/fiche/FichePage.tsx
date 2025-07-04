@@ -2,8 +2,8 @@ import { CONFIG_POST_REQUETE_MISE_A_JOUR } from "@api/configurations/requete/mis
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { AddAlerteActeApiHookParameters, useAddAlerteActeApiHook } from "@hook/alertes/AddAlerteActeHookApi";
 import { DeleteAlerteActeApiHookParameters, useDeleteAlerteActeApiHook } from "@hook/alertes/DeleteAlerteActeHookApi";
-import { officierDroitConsulterSurLeTypeRegistreOuDroitMAE, officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
+import { Perimetre } from "@model/agent/enum/Perimetre";
 import { EOrigineActe } from "@model/etatcivil/enum/EOrigineActe";
 import { EOptionMiseAJourActe, OptionMiseAJourActe } from "@model/etatcivil/enum/OptionMiseAJourActe";
 import { TitulaireRequeteMiseAJour } from "@model/requete/ITitulaireRequeteMiseAJour";
@@ -110,8 +110,8 @@ export const FichePage: React.FC<FichePageProps> = ({
   const { bandeauFiche, panelsFiche, alertes, visuBoutonAlertes } = setFiche(utilisateurConnecte, dataFicheCourante, dataFicheState.data);
 
   const droitsMiseAJour = useMemo(() => {
-    const droitMentions = officierHabiliterPourLeDroit(utilisateurConnecte, Droit.METTRE_A_JOUR_ACTE);
-    const droitAnalyseMarginale = officierHabiliterPourLeDroit(utilisateurConnecte, Droit.MODIFIER_ANALYSE_MARGINALE);
+    const droitMentions = utilisateurConnecte.estHabilitePour({ leDroit: Droit.METTRE_A_JOUR_ACTE });
+    const droitAnalyseMarginale = utilisateurConnecte.estHabilitePour({ leDroit: Droit.MODIFIER_ANALYSE_MARGINALE });
 
     return {
       autorise:
@@ -309,7 +309,12 @@ export const FichePage: React.FC<FichePageProps> = ({
                 />
               )}
               {dataFicheState.data &&
-                !officierDroitConsulterSurLeTypeRegistreOuDroitMAE(utilisateurConnecte, dataFicheState.data.registre?.type?.id) &&
+                !(
+                  utilisateurConnecte.estHabilitePour({
+                    leDroit: Droit.CONSULTER,
+                    pourIdTypeRegistre: dataFicheState.data.registre?.type?.id
+                  }) || utilisateurConnecte.estHabilitePour({ leDroit: Droit.CONSULTER, surLePerimetre: Perimetre.TOUS_REGISTRES })
+                ) &&
                 gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) && (
                   <BoutonCreationRDD
                     label="Demander la délivrance"

@@ -4,7 +4,6 @@ import React, { useContext, useMemo, useState } from "react";
 import useTraitementApi from "../../../../../hooks/api/TraitementApiHook";
 
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import {
   IProjetActeTranscritForm,
@@ -36,9 +35,7 @@ const FormulaireSaisieProjet: React.FC = () => {
 
   const { utilisateurConnecte } = useContext(RECEContextData);
 
-  const peutSigner = useMemo(() => {
-    return officierHabiliterPourLeDroit(utilisateurConnecte, Droit.SIGNER_ACTE);
-  }, [utilisateurConnecte]);
+  const peutSigner = useMemo(() => utilisateurConnecte.estHabilitePour({ leDroit: Droit.SIGNER_ACTE }), [utilisateurConnecte]);
 
   const { lancerTraitement: lancerEnregistrement, traitementEnCours: enregistrementEnCours } = useTraitementApi(
     TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT

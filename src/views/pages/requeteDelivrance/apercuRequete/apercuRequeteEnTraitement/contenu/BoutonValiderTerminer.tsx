@@ -4,14 +4,14 @@ import {
   useDerniereDelivranceRcRcaPacsApiHook
 } from "@hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
 import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
-import { provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer } from "@model/agent/IOfficier";
+import { Droit } from "@model/agent/enum/Droit";
 import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
+import { Provenance } from "@model/requete/enum/Provenance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
-import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
@@ -82,14 +82,13 @@ export const BoutonValiderTerminer: React.FC<BoutonValiderTerminerProps> = props
 
   const estAValider = props.requete.statutCourant.statut === StatutRequete.A_VALIDER;
 
-  const mAppartient = props.requete.idUtilisateur === utilisateurConnecte?.idUtilisateur;
+  const mAppartient = props.requete.idUtilisateur === utilisateurConnecte?.id;
 
   if (
     mAppartient &&
-    provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(
-      utilisateurConnecte,
-      requeteDelivrance.provenanceRequete.provenance.libelle
-    ) &&
+    ((requeteDelivrance.provenanceRequete.provenance.libelle === Provenance.COMEDEC.libelle &&
+      utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER_COMEDEC })) ||
+      utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER })) &&
     DocumentReponse.verifierDocumentsValides(props.requete.documentsReponses) &&
     estDisabled
   ) {
@@ -104,7 +103,7 @@ export const BoutonValiderTerminer: React.FC<BoutonValiderTerminerProps> = props
           estDesactive={estDisabled}
           checkDirtyActive={true}
         >
-          {getLibelle("Valider et terminer")}
+          {"Valider et terminer"}
         </BoutonOperationEnCours>
       )}
     </>

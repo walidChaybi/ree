@@ -1,6 +1,5 @@
-import { IDroit } from "@model/agent/Habilitation";
-import { IOfficier } from "@model/agent/IOfficier";
-import { IUtilisateur } from "@model/agent/IUtilisateur";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Utilisateur } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { ID, ID_ACTE, URL_BASE, URL_MES_REQUETES_DELIVRANCE_EDITION_ID } from "@router/ReceUrls";
@@ -15,6 +14,10 @@ import { idRequeteRDDASigner } from "../../mock/data/requeteDelivrance";
 
 describe("Test de la page aperçu requête edition analyse marginale", () => {
   TypeAlerte.init(TYPE_ALERTE);
+  const utilisateurConnecte = MockUtilisateurBuilder.utilisateurConnecte()
+    .avecDroit(Droit.SIGNER_DELIVRANCE_DEMAT)
+    .avecAttributs({ id: "67374c0f-17a0-4673-aa7d-4ae94c424162" })
+    .generer();
 
   const idActe = "b41079a5-9e8f-478a-b04c-c4c2ac671123";
   const idRequete = "9d00fe88-9d21-482e-bb02-223636f78386";
@@ -24,7 +27,10 @@ describe("Test de la page aperçu requête edition analyse marginale", () => {
         {
           path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
           element: (
-            <MockRECEContextProvider utilisateurs={[{} as IUtilisateur]}>
+            <MockRECEContextProvider
+              utilisateurConnecte={utilisateurConnecte}
+              utilisateurs={[{} as Utilisateur]}
+            >
               <PageEditionRequeteDelivrance />
             </MockRECEContextProvider>
           )
@@ -45,7 +51,14 @@ describe("Test de la page aperçu requête edition analyse marginale", () => {
       [
         {
           path: `${URL_BASE}/test`,
-          element: <PageEditionRequeteDelivrance />
+          element: (
+            <MockRECEContextProvider
+              utilisateurConnecte={utilisateurConnecte}
+              utilisateurs={[{} as Utilisateur]}
+            >
+              <PageEditionRequeteDelivrance />
+            </MockRECEContextProvider>
+          )
         },
         {
           path: URL_BASE,
@@ -67,7 +80,10 @@ describe("Test de la page aperçu requête edition analyse marginale", () => {
         {
           path: `${URL_BASE}/:idRequeteParam`,
           element: (
-            <MockRECEContextProvider utilisateurs={[{} as IUtilisateur]}>
+            <MockRECEContextProvider
+              utilisateurConnecte={utilisateurConnecte}
+              utilisateurs={[{} as Utilisateur]}
+            >
               <PageEditionRequeteDelivrance />
             </MockRECEContextProvider>
           )
@@ -91,7 +107,10 @@ describe("Test de la page aperçu requête edition analyse marginale", () => {
         {
           path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
           element: (
-            <MockRECEContextProvider utilisateurs={[{} as IUtilisateur]}>
+            <MockRECEContextProvider
+              utilisateurConnecte={utilisateurConnecte}
+              utilisateurs={[{} as Utilisateur]}
+            >
               <PageEditionRequeteDelivrance />
             </MockRECEContextProvider>
           )
@@ -115,13 +134,8 @@ describe("Test de la page aperçu requête edition analyse marginale", () => {
           path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
           element: (
             <MockRECEContextProvider
-              utilisateurConnecte={
-                {
-                  idUtilisateur: "67374c0f-17a0-4673-aa7d-4ae94c424162",
-                  habilitations: [{ profil: { droits: [{ nom: Droit.SIGNER_DELIVRANCE_DEMAT } as IDroit] } }]
-                } as IOfficier
-              }
-              utilisateurs={[{} as IUtilisateur]}
+              utilisateurConnecte={utilisateurConnecte}
+              utilisateurs={[{} as Utilisateur]}
             >
               <PageEditionRequeteDelivrance />
             </MockRECEContextProvider>

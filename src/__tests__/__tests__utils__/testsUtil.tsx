@@ -1,16 +1,10 @@
-import { IErreurConnexion } from "@core/contexts/RECEContext";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
-import { IOfficier } from "@model/agent/IOfficier";
-import { IService } from "@model/agent/IService";
-import { IUtilisateur } from "@model/agent/IUtilisateur";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { IDecret } from "@model/etatcivil/commun/IDecret";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { RouteObject, createMemoryRouter } from "react-router";
 import { vi } from "vitest";
 import { EditionDelivranceContext } from "../../contexts/EditionDelivranceContextProvider";
-import MockRECEContextProvider from "../mock/context/MockRECEContextProvider";
 import { urlImagePngVideBase64 } from "../mock/data/ImagePng";
 import { acte as acteMock } from "../mock/data/ficheEtBandeau/ficheActe";
 import requeteDelivrance from "../mock/data/requeteDelivrance";
@@ -73,27 +67,6 @@ export function createTestingRouter(routes: RouteObject[], initialEntries: strin
     }
   );
 }
-
-export const elementAvecContexte = (
-  children: React.ReactElement,
-  utilisateurConnecte?: IOfficier,
-  utilisateurs?: IUtilisateur[],
-  services?: IService[],
-  decrets?: IDecret[],
-  erreurConnexion?: IErreurConnexion | null
-): any => {
-  return (
-    <MockRECEContextProvider
-      utilisateurConnecte={utilisateurConnecte}
-      utilisateurs={utilisateurs}
-      services={services}
-      decrets={decrets}
-      erreurConnexion={erreurConnexion}
-    >
-      {children}
-    </MockRECEContextProvider>
-  );
-};
 
 export const elementAvecEditionDelivranceContexte = (
   children: React.ReactElement,

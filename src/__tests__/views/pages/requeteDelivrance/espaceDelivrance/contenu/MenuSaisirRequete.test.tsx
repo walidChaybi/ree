@@ -1,3 +1,6 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import MenuSaisirRequete from "@pages/requeteDelivrance/espaceDelivrance/contenu/MenuSaisirRequete";
 import { SaisirRDCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCPage";
 import { SaisirRDCSCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
@@ -16,8 +19,7 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { RouterProvider } from "react-router";
 import { describe, expect, test, vi } from "vitest";
-import { createTestingRouter, elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
-import { userDroitnonCOMEDEC } from "../../../../../mock/data/mockConnectedUserAvecDroit";
+import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 
 window.alert = vi.fn();
 
@@ -150,7 +152,11 @@ describe.skip("MenuSaisirRequete - ", () => {
       [URL_REQUETES_DELIVRANCE_SERVICE]
     );
 
-    render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC));
+    render(
+      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER).generer()}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     const boutonMenu = screen.getByText(/Saisir requête courrier/i);
 

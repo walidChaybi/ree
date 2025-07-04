@@ -1,5 +1,4 @@
-import { IOfficier } from "@model/agent/IOfficier";
-import { IUtilisateur } from "@model/agent/IUtilisateur";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import {
   PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET,
   URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
@@ -12,10 +11,9 @@ import { describe, expect, test } from "vitest";
 import PageRequeteTranscriptionSaisieProjet from "../../../../../../pages/requetesConsulaire/PageRequeteTranscriptionSaisieProjet";
 import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 import MockRECEContextProvider from "../../../../../mock/context/MockRECEContextProvider";
-import mockConnectedUser from "../../../../../mock/data/connectedUser.json";
 
-let u: any = mockConnectedUser;
-const utilisateurConnecte = u as IOfficier;
+const UTILISATEUR_CONNECTE = MockUtilisateurBuilder.utilisateurConnecte().generer();
+
 describe.skip("Test de la page Aperçu requête transcription en saisie de projet", () => {
   test("DOIT rendre le composant PageRequeteTranscriptionSaisieProjet correctement", async () => {
     await act(async () => {
@@ -24,10 +22,7 @@ describe.skip("Test de la page Aperçu requête transcription en saisie de proje
           {
             path: URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
             element: (
-              <MockRECEContextProvider
-                utilisateurConnecte={{ ...utilisateurConnecte } as IOfficier}
-                utilisateurs={[{} as IUtilisateur]}
-              >
+              <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
                 <PageRequeteTranscriptionSaisieProjet />
               </MockRECEContextProvider>
             )
@@ -54,10 +49,7 @@ describe.skip("Test de la page Aperçu requête transcription en saisie de proje
           {
             path: URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
             element: (
-              <MockRECEContextProvider
-                utilisateurConnecte={{ ...utilisateurConnecte } as IOfficier}
-                utilisateurs={[{} as IUtilisateur]}
-              >
+              <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
                 <PageRequeteTranscriptionSaisieProjet />
               </MockRECEContextProvider>
             )
@@ -96,10 +88,7 @@ describe.skip("Test de la page Aperçu requête transcription en saisie de proje
           {
             path: URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
             element: (
-              <MockRECEContextProvider
-                utilisateurConnecte={{ ...utilisateurConnecte } as IOfficier}
-                utilisateurs={[{} as IUtilisateur]}
-              >
+              <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
                 <PageRequeteTranscriptionSaisieProjet />
               </MockRECEContextProvider>
             )
@@ -140,10 +129,7 @@ describe.skip("Test de la précense du composant RMCRequeteAssociees", () => {
           {
             path: URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
             element: (
-              <MockRECEContextProvider
-                utilisateurConnecte={{ ...utilisateurConnecte } as IOfficier}
-                utilisateurs={[{} as IUtilisateur]}
-              >
+              <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
                 <PageRequeteTranscriptionSaisieProjet />
               </MockRECEContextProvider>
             )

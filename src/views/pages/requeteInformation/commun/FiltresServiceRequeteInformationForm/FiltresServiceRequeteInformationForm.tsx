@@ -1,4 +1,3 @@
-import { getServicesAsOptions } from "@composant/menuTransfert/MenuTransfertUtil";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -11,7 +10,6 @@ import { TypeRequerantInformation } from "@model/requete/enum/TypeRequerantInfor
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import Button from "@mui/material/Button";
 import { Options } from "@util/Type";
-import { getValeurOuUndefined } from "@util/Utils";
 import { ChampRechercheField } from "@widget/formulaire/champRecherche/ChampRechercheField";
 import { OptionVide, SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { Formik } from "formik";
@@ -48,19 +46,18 @@ const FiltresServiceRequeteInformationForm: React.FC<IFiltresServiceRequeteInfor
   const typeRequerantOptions: Options = useMemo(() => TypeRequerantInformation.getAllEnumsAsOptions(), []);
 
   const listeAgents: Options = useMemo(() => {
-    const listeServicesEtServicesFils = [utilisateurConnecte?.service]
-      .concat(utilisateurConnecte?.servicesFils)
-      .map(service => getValeurOuUndefined(service?.idService));
+    const listeServicesEtServicesFils = [utilisateurConnecte.idService].concat(utilisateurConnecte.idServicesFils);
+
     return utilisateurs
-      .filter(utilisateur => listeServicesEtServicesFils.indexOf(getValeurOuUndefined(utilisateur.service?.idService)) >= 0)
+      .filter(utilisateur => listeServicesEtServicesFils.indexOf(utilisateur.idService) >= 0)
       .map(utilisateur => ({
-        cle: utilisateur.idUtilisateur,
-        libelle: `${utilisateur.nom} ${utilisateur.prenom}`
+        cle: utilisateur.id,
+        libelle: utilisateur.prenomNom
       }))
       .sort((a, b) => a.libelle.localeCompare(b.libelle));
   }, []);
 
-  const listeServices = useMemo(() => getServicesAsOptions(utilisateurConnecte).sort((a, b) => a.libelle.localeCompare(b.libelle)), []);
+  const listeServices = useMemo(() => utilisateurConnecte.optionsServicesFils, []);
 
   return (
     <Formik

@@ -1,6 +1,5 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
-import { appartientAUtilisateurConnecte } from "@model/agent/IOfficier";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
@@ -44,10 +43,7 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { dataTableau } = useTableauSuiviDossierHook(
-    appartientAUtilisateurConnecte(utilisateurConnecte, props.requete.idUtilisateur),
-    props.requete.titulaires
-  );
+  const { dataTableau } = useTableauSuiviDossierHook(utilisateurConnecte.id === props.requete.idUtilisateur, props.requete.titulaires);
 
   // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 

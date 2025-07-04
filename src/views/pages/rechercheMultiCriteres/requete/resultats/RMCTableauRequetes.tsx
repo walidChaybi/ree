@@ -15,7 +15,7 @@ import {
   ICreationActionMiseAjourStatutEtRedirectionParams,
   useCreationActionMiseAjourStatutEtRedirectionHook
 } from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
-import { IOfficier, officierALeDroitSurUnDesPerimetres, officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
+import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { TRequeteTableau } from "@model/requete/IRequeteTableau";
@@ -129,17 +129,20 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
   };
 
   function estRequeteRCTDOuRCTCEtALeDroitActeTranscrit(sousType: SousTypeCreation) {
-    return SousTypeCreation.estRCTDOuRCTC(sousType) && officierHabiliterPourLeDroit(utilisateurConnecte, Droit.CREER_ACTE_TRANSCRIT);
+    return SousTypeCreation.estRCTDOuRCTC(sousType) && utilisateurConnecte.estHabilitePour({ leDroit: Droit.CREER_ACTE_TRANSCRIT });
   }
 
   function estRequeteRCEXREtALeDroitActeEtabli(sousType: SousTypeCreation) {
     return (
       SousTypeCreation.estRCEXR(sousType) &&
-      officierALeDroitSurUnDesPerimetres(Droit.CREER_ACTE_ETABLI, [Perimetre.TOUS_REGISTRES, Perimetre.ETAX], utilisateurConnecte)
+      utilisateurConnecte.estHabilitePour({
+        leDroit: Droit.CREER_ACTE_ETABLI,
+        surUnDesPerimetres: [Perimetre.TOUS_REGISTRES, Perimetre.ETAX]
+      })
     );
   }
 
-  const onClickReqCreation = (requete: IRequeteTableauCreation, utilisateurConnecte: IOfficier) => {
+  const onClickReqCreation = (requete: IRequeteTableauCreation, utilisateurConnecte: UtilisateurConnecte) => {
     const sousType = SousTypeCreation.getEnumFromLibelleCourt(requete.sousType);
     if (estRequeteRCTDOuRCTCEtALeDroitActeTranscrit(sousType) || estRequeteRCEXREtALeDroitActeEtabli(sousType)) {
       setOperationEnCours(true);

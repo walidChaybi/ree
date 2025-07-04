@@ -1,6 +1,5 @@
 import { postTransfertRequete } from "@api/appels/requeteApi";
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { getServiceParUtilisateurId } from "@model/agent/IUtilisateur";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { logError } from "@util/LogManager";
 import { getValeurOuVide } from "@util/Utils";
@@ -57,7 +56,9 @@ export function useTransfertsApi(params?: TransfertParLotParams) {
         params.idRequetes.map((idRequete, idx) =>
           postTransfertRequete(
             idRequete,
-            params.idService ? params.idService : (getServiceParUtilisateurId(params.idUtilisateur, utilisateurs)?.idService as string),
+            params.idService
+              ? params.idService
+              : (utilisateurs.find(utilisateur => utilisateur.id === params.idUtilisateur)?.idService as string),
             params.idUtilisateur,
             params.libelleAction,
             params.statutRequete[idx],

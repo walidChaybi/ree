@@ -1,11 +1,12 @@
 import { AlertesActes } from "@composant/alertesActe/AlertesActes";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { act } from "react";
 import { describe, expect, test, vi } from "vitest";
-import { elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
 import { TYPE_ALERTE } from "../../../../mock/data/NomenclatureTypeAlerte";
-import { userDroitCOMEDEC } from "../../../../mock/data/mockConnectedUserAvecDroit";
 import requeteDelivrance from "../../../../mock/data/requeteDelivrance";
 
 describe("Test de AlertesActes", () => {
@@ -13,7 +14,9 @@ describe("Test de AlertesActes", () => {
 
   test("render texte du bouton d'ajout d'alerte", async () => {
     render(
-      elementAvecContexte(
+      <MockRECEContextProvider
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER_COMEDEC).generer()}
+      >
         <AlertesActes
           detailRequete={requeteDelivrance}
           ajoutAlerte={vi.fn()}
@@ -21,9 +24,8 @@ describe("Test de AlertesActes", () => {
             isChecked: true,
             idActe: "b41079a5-9e8d-478c-b04c-c4c2ac67134f"
           }}
-        />,
-        userDroitCOMEDEC
-      )
+        />
+      </MockRECEContextProvider>
     );
 
     await waitFor(() => {

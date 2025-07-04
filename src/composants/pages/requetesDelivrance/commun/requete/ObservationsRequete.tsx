@@ -8,7 +8,7 @@ import Edit from "@mui/icons-material/Edit";
 import DateUtils from "@util/DateUtils";
 import { UN, ZERO } from "@util/Utils";
 import { Formulaire } from "@widget/formulaire/Formulaire";
-import { useContext, useMemo, useState } from "react";
+import { useContext, useState } from "react";
 import * as Yup from "yup";
 import PageChargeur from "../../../../commun/chargeurs/PageChargeur";
 import ConteneurModale from "../../../../commun/conteneurs/modale/ConteneurModale";
@@ -21,9 +21,8 @@ interface IObservationsRequeteProps {
 
 const ObservationsRequete: React.FC<IObservationsRequeteProps> = ({ requete }) => {
   const { utilisateurConnecte } = useContext(RECEContextData);
-  const idOfficier: string | undefined = useMemo(() => utilisateurConnecte?.idUtilisateur, []);
   const [observations, setObservations] = useState<IObservation[]>(
-    requete.observations?.sort((observationA, observationB) => observationA.numeroOrdre - observationB.numeroOrdre) ?? []
+    () => requete.observations?.sort((observationA, observationB) => observationA.numeroOrdre - observationB.numeroOrdre) ?? []
   );
   const [observationModifiee, setObservationModifiee] = useState<IObservation | null>(null);
   const [modaleObservationOuverte, setModaleObservationOuverte] = useState<boolean>(false);
@@ -72,8 +71,8 @@ const ObservationsRequete: React.FC<IObservationsRequeteProps> = ({ requete }) =
             id: idObservation,
             texte: texteObservation,
             dateObservation: Date.now(),
-            idUtilisateur: idOfficier,
-            trigramme: `${utilisateurConnecte?.nom} ${utilisateurConnecte?.prenom}`
+            idUtilisateur: utilisateurConnecte.id,
+            trigramme: utilisateurConnecte.prenomNom
           } as IObservation);
         }
 
@@ -131,7 +130,7 @@ const ObservationsRequete: React.FC<IObservationsRequeteProps> = ({ requete }) =
                 </span>
                 <span className="whitespace-nowrap">&nbsp;{`- ${DateUtils.getFormatDateFromTimestamp(observation.dateObservation)}`}</span>
                 <span className="whitespace-nowrap">&nbsp;{observation.trigramme ? `- ${observation.trigramme}` : ""}</span>
-                {observation.idUtilisateur === idOfficier && (
+                {observation.idUtilisateur === utilisateurConnecte.id && (
                   <div className="boutons-observation">
                     <button
                       className="bouton-modifier"

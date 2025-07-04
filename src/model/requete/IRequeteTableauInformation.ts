@@ -1,7 +1,7 @@
 /* v8 ignore start */
 
 import { IService } from "@model/agent/IService";
-import { IUtilisateur } from "@model/agent/IUtilisateur";
+import { Utilisateur } from "@model/agent/Utilisateur";
 import DateUtils from "@util/DateUtils";
 import { IRequeteTableau } from "./IRequeteTableau";
 import { mapAttribueA } from "./IRequeteTableauDelivrance";
@@ -28,7 +28,7 @@ export interface IRequeteTableauInformation extends IRequeteTableau {
 export function mappingRequetesTableauInformation(
   resultatsRecherche: any,
   mappingSupplementaire: boolean,
-  utilisateurs: IUtilisateur[],
+  utilisateurs: Utilisateur[],
   services: IService[]
 ): IRequeteTableauInformation[] {
   return resultatsRecherche?.map((requete: any) => {
@@ -39,7 +39,7 @@ export function mappingRequetesTableauInformation(
 export function mappingUneRequeteTableauInformation(
   requete: any,
   mappingSupplementaire: boolean,
-  utilisateurs: IUtilisateur[],
+  utilisateurs: Utilisateur[],
   services: IService[]
 ): IRequeteTableauInformation {
   return {

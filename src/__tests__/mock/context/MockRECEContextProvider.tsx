@@ -1,22 +1,21 @@
 import { IErreurConnexion, RECEContextActions, RECEContextData } from "@core/contexts/RECEContext";
-import { IOfficier } from "@model/agent/IOfficier";
 import { IService } from "@model/agent/IService";
-import { IUtilisateur } from "@model/agent/IUtilisateur";
+import { Utilisateur, UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { IDecret } from "@model/etatcivil/commun/IDecret";
 import React, { useMemo, useState } from "react";
 import { servicesALL } from "../data/servicesALL";
 
 interface IMockRECEContextProviderProps {
-  utilisateurConnecte?: IOfficier;
-  utilisateurs?: IUtilisateur[];
+  utilisateurConnecte?: UtilisateurConnecte;
+  utilisateurs?: Utilisateur[];
   services?: IService[];
   decrets?: IDecret[];
   erreurConnexion?: IErreurConnexion | null;
 }
 
 const MockRECEContextProvider: React.FC<React.PropsWithChildren<IMockRECEContextProviderProps>> = ({
-  utilisateurConnecte = {} as IOfficier,
-  utilisateurs = [] as IUtilisateur[],
+  utilisateurConnecte = UtilisateurConnecte.inconnu(),
+  utilisateurs = [] as Utilisateur[],
   services = servicesALL.data as any as IService[],
   decrets = [] as IDecret[],
   erreurConnexion = null,

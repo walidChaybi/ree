@@ -1,3 +1,6 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -10,8 +13,7 @@ import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls"
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
-import { createTestingRouter, elementAvecContexte } from "../../../../../../__tests__utils__/testsUtil";
-import { userDroitnonCOMEDEC } from "../../../../../../mock/data/mockConnectedUserAvecDroit";
+import { createTestingRouter } from "../../../../../../__tests__utils__/testsUtil";
 import { idRequeteRDCSC } from "../../../../../../mock/data/requeteDelivrance";
 
 const requeteTestCOURRIER = {
@@ -62,7 +64,11 @@ describe.skip("BoutonModifierTraitement - ", () => {
       [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]
     );
 
-    const { getByText } = render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC));
+    const { getByText } = render(
+      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER).generer()}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     const bouttonModifierTraitement = getByText(/Modifier le traitement/i) as HTMLButtonElement;
 
@@ -90,7 +96,11 @@ describe.skip("BoutonModifierTraitement - ", () => {
       [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]
     );
 
-    const { getByText } = render(elementAvecContexte(<RouterProvider router={router} />, userDroitnonCOMEDEC));
+    const { getByText } = render(
+      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER).generer()}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
 
     const bouttonModifierTraitement = getByText(/Modifier le traitement/i) as HTMLButtonElement;
 

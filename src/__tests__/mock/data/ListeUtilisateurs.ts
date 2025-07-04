@@ -1,37 +1,10 @@
-import { IUtilisateur } from "@model/agent/IUtilisateur";
-import { MockMappedHabilitation } from "./mockMappedHabilitations";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Utilisateur } from "@model/agent/Utilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 
-export const LISTE_UTILISATEURS = [
-  {
-    idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
-    prenom: "Ashley",
-    nom: "Young",
-    trigramme: "Young Ashley",
-    habilitations: MockMappedHabilitation.habilitations,
-    service: { estDansScec: true }
-  },
-  {
-    idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985894",
-    prenom: "John",
-    nom: "Lennon",
-    trigramme: "Lennon John",
-    habilitations: MockMappedHabilitation.habilitations,
-    service: { estDansScec: true }
-  },
-  {
-    idUtilisateur: "204b8563-c7f8-4748-9daa-f26558985895",
-    prenom: "Bob",
-    nom: "Dylan",
-    trigramme: "Dylan Bob",
-    habilitations: MockMappedHabilitation.habilitations,
-    service: { estDansScec: true }
-  },
-  {
-    idUtilisateur: "90c6aee1-21be-4ba6-9e55-fc8831252646",
-    prenom: "Benoît",
-    nom: "Tanguy",
-    trigramme: "Tanguy Benoît",
-    habilitations: MockMappedHabilitation.habilitations,
-    service: { estDansScec: true }
-  }
-] as any as IUtilisateur[];
+export const LISTE_UTILISATEURS: Utilisateur[] = Array.from({ length: 4 }, (index: number) =>
+  MockUtilisateurBuilder.utilisateur({ idUtilisateur: `idUtilisateur${index + 1}`, prenom: `prenom${index + 1}`, nom: `NOM${index + 1}` })
+    .avecAttributs({ idService: "idService", estDuSCEC: true })
+    .avecDroits([Droit.DELIVRER, Droit.ATTRIBUER_REQUETE, Droit.CONSULTER, Droit.INFORMER_USAGER])
+    .generer()
+);

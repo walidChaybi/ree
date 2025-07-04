@@ -111,7 +111,7 @@ const AVANCEMENT: { [EtatAvancement in Exclude<TStatutSignature, "attente-pin" |
             parametres: {
               idActe: idActe,
               codePin: donneesSignature.codePin,
-              agent: { nom: utilisateurConnecte.nom, prenom: utilisateurConnecte.prenom },
+              prenomNomAgent:  utilisateurConnecte.prenomNom,
               estMiseAJour: signature.estMiseAJour
             },
             apresSucces: informations => {
@@ -214,7 +214,7 @@ const AVANCEMENT: { [EtatAvancement in Exclude<TStatutSignature, "attente-pin" |
               body: {
                 documentPadesBase64: donneesSignature.documentSigne,
                 signature: { infosSignature: donneesSignature.informationsCarte },
-                modeAuthentification: utilisateurConnecte.modeAuthentification
+                modeAuthentification: "AROBAS_MDP"
               }
             },
             apresSucces: () => {

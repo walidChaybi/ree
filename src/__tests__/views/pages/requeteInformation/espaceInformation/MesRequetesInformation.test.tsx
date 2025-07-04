@@ -1,4 +1,5 @@
-import { IOfficier } from "@model/agent/IOfficier";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
 import EspaceInformationPage from "@pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
 import { URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, URL_MES_REQUETES_INFORMATION } from "@router/ReceUrls";
@@ -6,8 +7,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router";
 import { expect, test } from "vitest";
-import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
-import officier from "../../../../mock/data/connectedUser.json";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 test("renders Page requete information et clique sur une TRANSFEREE", async () => {
   const router = createTestingRouter(
@@ -25,10 +25,9 @@ test("renders Page requete information et clique sur une TRANSFEREE", async () =
   );
 
   render(
-    elementAvecContexte(<RouterProvider router={router} />, {
-      idSSO: officier.id_sso,
-      ...officier
-    } as unknown as IOfficier)
+    <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().generer()}>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
   );
   const titreNumero = screen.getByText("N° requête");
   const pageSuivante = screen.getByTitle("Page suivante");
@@ -69,10 +68,9 @@ test("renders Requête Service Info, Clic requête au statut PRISE_EN_CHARGE", a
   );
 
   render(
-    elementAvecContexte(<RouterProvider router={router} />, {
-      idSSO: officier.id_sso,
-      ...officier
-    } as unknown as IOfficier)
+    <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().generer()}>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
   );
 
   await waitFor(() => {

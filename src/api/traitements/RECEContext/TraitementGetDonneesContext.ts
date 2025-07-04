@@ -3,29 +3,29 @@ import { CONFIG_GET_TOUS_UTILISATEURS } from "@api/configurations/agent/utilisat
 import { CONFIG_GET_DECRETS } from "@api/configurations/etatCivil/repertoireCivil/GetDecretsConfigApi";
 import { gereErreur } from "@hook/requete/PrendreEnChargeAleatoirementApiHook";
 import { IService, Service } from "@model/agent/IService";
-import { IUtilisateur, Utilisateur } from "@model/agent/IUtilisateur";
+import { IUtilisateurDto, Utilisateur } from "@model/agent/Utilisateur";
 import { THeader } from "@model/api/Api";
 import { Decret, IDecret } from "@model/etatcivil/commun/IDecret";
 import { UN, ZERO } from "@util/Utils";
 import { useEffect, useState } from "react";
 import IServiceDto, { ServiceDto } from "../../../dto/etatcivil/agent/IServiceDto";
-import IUtilisateurDto, { UtilisateurDto } from "../../../dto/etatcivil/agent/IUtilisateurDto";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import { TRAITEMENT_SANS_ERREUR, TTraitementApi } from "../TTraitementApi";
 
 interface IReponseSucces {
-  utilisateurs: IUtilisateur[];
+  utilisateurs: Utilisateur[];
   services: IService[];
   decrets: IDecret[];
 }
 
 const PLAGE_IMPORT = 100;
 
-const ajouterUtilisateurs = (utilisateurDtos: IUtilisateurDto[], utilisateurs: IUtilisateur[]): IUtilisateur[] => [
+const ajouterUtilisateurs = (utilisateurDtos: IUtilisateurDto[], utilisateurs: Utilisateur[]): Utilisateur[] => [
   ...utilisateurs,
-  ...utilisateurDtos.reduce((nouveauxUtilisateurs: IUtilisateur[], utilisateurDto: IUtilisateurDto) => {
-    if (!UtilisateurDto.estDejaPresent(utilisateurDto, utilisateurs)) {
-      nouveauxUtilisateurs.push(Utilisateur.depuiDto(utilisateurDto));
+  ...utilisateurDtos.reduce((nouveauxUtilisateurs: Utilisateur[], utilisateurDto: IUtilisateurDto) => {
+    if (utilisateurDto.idUtilisateur && !utilisateurs.find(utilisateur => utilisateur.id === utilisateurDto.idUtilisateur)) {
+      const nouvelUtilisateur = Utilisateur.depuisDto(utilisateurDto);
+      nouvelUtilisateur && nouveauxUtilisateurs.push(nouvelUtilisateur);
     }
 
     return nouveauxUtilisateurs;

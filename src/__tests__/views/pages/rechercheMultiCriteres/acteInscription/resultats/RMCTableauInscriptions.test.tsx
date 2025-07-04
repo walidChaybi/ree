@@ -1,12 +1,15 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { RMCTableauInscriptions } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauInscriptions";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { NB_LIGNES_PAR_APPEL_INSCRIPTION, NB_LIGNES_PAR_PAGE_INSCRIPTION } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { MemoryRouter } from "react-router";
 import { beforeAll, expect, test } from "vitest";
-import { elementAvecContexte, mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
+import { mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
 import { DataRMCInscriptionAvecResultat, DataTableauInscription } from "../../../../../mock/data/RMCInscription";
-import { userDroitConsulterPerimetreTousRegistres } from "../../../../../mock/data/mockConnectedUserAvecDroit";
-import requeteDelivrance from "../../../../../mock/data/requeteDelivrance";
+
+const UTILISATEUR_CONNECTE = MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.CONSULTER).generer();
 
 beforeAll(() => {
   mockFenetreFicheTestFunctions();
@@ -14,16 +17,15 @@ beforeAll(() => {
 
 test("renders Resultat Inscription Recherche Multi Critères => Avec résultat", () => {
   render(
-    elementAvecContexte(
+    <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
       <RMCTableauInscriptions
         typeRMC="Classique"
         dataRMCInscription={DataRMCInscriptionAvecResultat}
         dataTableauRMCInscription={DataTableauInscription}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_INSCRIPTION}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_INSCRIPTION}
-      />,
-      userDroitConsulterPerimetreTousRegistres
-    )
+      />
+    </MockRECEContextProvider>
   );
 
   const rose = screen.getAllByText("ROSE");
@@ -32,16 +34,15 @@ test("renders Resultat Inscription Recherche Multi Critères => Avec résultat",
 
 test("Navigation dans les pages du tableau Resultat Inscription Recherche Multi Critères => Avec résultat", () => {
   render(
-    elementAvecContexte(
+    <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
       <RMCTableauInscriptions
         typeRMC="Classique"
         dataRMCInscription={DataRMCInscriptionAvecResultat}
         dataTableauRMCInscription={DataTableauInscription}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_INSCRIPTION}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_INSCRIPTION}
-      />,
-      userDroitConsulterPerimetreTousRegistres
-    )
+      />
+    </MockRECEContextProvider>
   );
 
   const nbElementPage1 = screen.getAllByText("ROSE");
@@ -56,8 +57,8 @@ test("Navigation dans les pages du tableau Resultat Inscription Recherche Multi 
 
 test.skip("Ouverture d'une inscription", () => {
   const { getByTestId } = render(
-    elementAvecContexte(
-      <MemoryRouter>
+    <MemoryRouter>
+      <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
         <RMCTableauInscriptions
           typeRMC="Classique"
           dataRMCInscription={DataRMCInscriptionAvecResultat}
@@ -65,9 +66,8 @@ test.skip("Ouverture d'une inscription", () => {
           nbLignesParPage={NB_LIGNES_PAR_PAGE_INSCRIPTION}
           nbLignesParAppel={NB_LIGNES_PAR_APPEL_INSCRIPTION}
         />
-      </MemoryRouter>,
-      userDroitConsulterPerimetreTousRegistres
-    )
+      </MockRECEContextProvider>
+    </MemoryRouter>
   );
 
   const ligne = getByTestId("89c9d030-26c3-41d3-bdde-8b4dcc0420e0");
@@ -88,16 +88,15 @@ test.skip("Ouverture d'une inscription", () => {
 
 test("renders Resultat Inscription Recherche Multi Critères => Sans résultat", () => {
   render(
-    elementAvecContexte(
+    <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
       <RMCTableauInscriptions
         typeRMC="Classique"
         dataRMCInscription={[]}
         dataTableauRMCInscription={{}}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_INSCRIPTION}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_INSCRIPTION}
-      />,
-      userDroitConsulterPerimetreTousRegistres
-    )
+      />
+    </MockRECEContextProvider>
   );
 
   expect(screen.getByText(/Aucune inscription n'a été trouvée/i)).toBeDefined();
@@ -105,17 +104,15 @@ test("renders Resultat Inscription Recherche Multi Critères => Sans résultat",
 
 test("renders Resultat Inscription Recherche Multi Critères Auto => Avec résultat", () => {
   render(
-    elementAvecContexte(
+    <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
       <RMCTableauInscriptions
         typeRMC="Auto"
-        dataRequete={requeteDelivrance}
         dataRMCInscription={DataRMCInscriptionAvecResultat}
         dataTableauRMCInscription={DataTableauInscription}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_INSCRIPTION}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_INSCRIPTION}
-      />,
-      userDroitConsulterPerimetreTousRegistres
-    )
+      />
+    </MockRECEContextProvider>
   );
 
   const checkboxColumns: HTMLElement[] = screen.getAllByRole("checkbox");

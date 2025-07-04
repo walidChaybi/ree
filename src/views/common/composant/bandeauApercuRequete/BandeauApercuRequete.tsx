@@ -1,18 +1,9 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { IService, Service } from "@model/agent/IService";
-import {
-  IUtilisateur,
-  getNomUtilisateurAPartirID,
-  getPrenomUtilisateurAPartirID
-} from "@model/agent/IUtilisateur";
+import { Utilisateur } from "@model/agent/Utilisateur";
 import { TRequete } from "@model/requete/IRequete";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import DateUtils from "@util/DateUtils";
-import {
-  formatNom,
-  getLibelle,
-  premiereLettreEnMajusculeLeResteEnMinuscule
-} from "@util/Utils";
 import classNames from "classnames";
 import React, { useContext } from "react";
 import "./scss/BandeauApercuRequete.scss";
@@ -26,28 +17,18 @@ export const BandeauRequete: React.FC<BandeauRequeteProps> = ({ requete }) => {
   const styles = classNames(getClassName(statut));
   return (
     <div className="BandeauRequete">
-      <h2 className={styles}>
-        {getStatutLibellePourRequete(requete, utilisateurs, services)}
-      </h2>
+      <h2 className={styles}>{getStatutLibellePourRequete(requete, utilisateurs, services)}</h2>
     </div>
   );
 };
 
 const getRequeteTraiteeLibelle = (responsable: string, requete: TRequete) => {
-  return getLibelle(
-    `Requête traitée par : ${responsable} - Le : ${DateUtils.getFormatDateFromTimestamp(
-      requete.statutCourant.dateEffet
-    )}`
-  );
+  return `Requête traitée par : ${responsable} - Le : ${DateUtils.getFormatDateFromTimestamp(requete.statutCourant.dateEffet)}`;
 };
 
 const getRequetePriseEnCharge = (responsable: string, requete: TRequete) => {
   if (requete && responsable) {
-    return getLibelle(
-      `Requête prise en charge par : ${responsable} - Le : ${DateUtils.getFormatDateFromTimestamp(
-        requete.statutCourant.dateEffet
-      )}`
-    );
+    return `Requête prise en charge par : ${responsable} - Le : ${DateUtils.getFormatDateFromTimestamp(requete.statutCourant.dateEffet)}`;
   } else {
     return "WARN ! Non spécifié";
   }
@@ -55,118 +36,61 @@ const getRequetePriseEnCharge = (responsable: string, requete: TRequete) => {
 
 const getRequeteATraiter = (responsable: string, requete: TRequete) => {
   if (requete && responsable) {
-    return getLibelle(
-      `Requête à traiter, attribuée à ${responsable} - Le : ${DateUtils.getFormatDateFromTimestamp(
-        requete.statutCourant.dateEffet
-      )}`
-    );
+    return `Requête à traiter, attribuée à ${responsable} - Le : ${DateUtils.getFormatDateFromTimestamp(requete.statutCourant.dateEffet)}`;
   } else {
-    return getLibelle(
-      `Requête à traiter non attribuée - Créée le ${DateUtils.getFormatDateFromTimestamp(
-        requete.dateCreation
-      )}`
-    );
+    return `Requête à traiter non attribuée - Créée le ${DateUtils.getFormatDateFromTimestamp(requete.dateCreation)}`;
   }
 };
 
 const getRequeteAValider = (responsable: string, requete: TRequete) => {
   if (requete && responsable) {
-    return getLibelle(
-      `Requête à valider, attribuée à ${responsable} - Le : ${DateUtils.getFormatDateFromTimestamp(
-        requete.statutCourant.dateEffet
-      )}`
-    );
+    return `Requête à valider, attribuée à ${responsable} - Le : ${DateUtils.getFormatDateFromTimestamp(requete.statutCourant.dateEffet)}`;
   } else {
-    return getLibelle(
-      `Requête à valider non attribuée - Créée le ${DateUtils.getFormatDateFromTimestamp(
-        requete.dateCreation
-      )}`
-    );
+    return `Requête à valider non attribuée - Créée le ${DateUtils.getFormatDateFromTimestamp(requete.dateCreation)}`;
   }
 };
 
 const getRequeteDoublon = (requete: TRequete) => {
   if (requete.numero) {
-    return getLibelle(
-      `Requête en doublon, requête déjà en cours avec le N° suivant : ${
-        requete.numeroRequeteOrigine
-      } - Le : ${DateUtils.getFormatDateFromTimestamp(requete.dateCreation)}`
-    );
+    return `Requête en doublon, requête déjà en cours avec le N° suivant : ${
+      requete.numeroRequeteOrigine
+    } - Le : ${DateUtils.getFormatDateFromTimestamp(requete.dateCreation)}`;
   } else {
     return "WARN ! Non spécifié";
   }
 };
 
 const getRequeteTransferee = (responsable: string, requete: TRequete) => {
-  return getLibelle(
-    `Requête transférée à ${responsable} - Le : ${DateUtils.getFormatDateFromTimestamp(
-      requete.statutCourant.dateEffet
-    )}`
-  );
+  return `Requête transférée à ${responsable} - Le : ${DateUtils.getFormatDateFromTimestamp(requete.statutCourant.dateEffet)}`;
 };
 
 const getRequeteASigner = (responsable: string, requete: TRequete) => {
-  return getLibelle(
-    `Requête à signer le ${DateUtils.getFormatDateFromTimestamp(
-      requete.statutCourant.dateEffet
-    )} par ${responsable}`
-  );
+  return `Requête à signer le ${DateUtils.getFormatDateFromTimestamp(requete.statutCourant.dateEffet)} par ${responsable}`;
 };
 
-const getRequeteTransmiseAValideur = (
-  responsable: string,
-  requete: TRequete
-) => {
-  return getLibelle(
-    `Requête transmise à valideur le ${DateUtils.getFormatDateFromTimestamp(
-      requete.statutCourant.dateEffet
-    )} par ${responsable}`
-  );
+const getRequeteTransmiseAValideur = (responsable: string, requete: TRequete) => {
+  return `Requête transmise à valideur le ${DateUtils.getFormatDateFromTimestamp(requete.statutCourant.dateEffet)} par ${responsable}`;
 };
 
 const getRequeteBrouillon = (responsable: string, requete: TRequete) => {
-  return getLibelle(
-    `Requête au statut brouillon initiée par ${responsable} - Le : ${DateUtils.getFormatDateFromTimestamp(
-      requete.statutCourant.dateEffet
-    )}`
-  );
+  return `Requête au statut brouillon initiée par ${responsable} - Le : ${DateUtils.getFormatDateFromTimestamp(requete.statutCourant.dateEffet)}`;
 };
 
 const getRequeteIgnoree = (responsable: string, requete: TRequete) => {
-  return getLibelle(
-    `Requête ignorée le ${DateUtils.getFormatDateFromTimestamp(
-      requete.statutCourant.dateEffet
-    )} par ${responsable}`
-  );
+  return `Requête ignorée le ${DateUtils.getFormatDateFromTimestamp(requete.statutCourant.dateEffet)} par ${responsable}`;
 };
 
 const getRequeteRejet = (responsable: string, requete: TRequete) => {
-  return getLibelle(
-    `Requête rejetée le ${DateUtils.getFormatDateFromTimestamp(
-      requete.statutCourant.dateEffet
-    )} par ${responsable}`
-  );
+  return `Requête rejetée le ${DateUtils.getFormatDateFromTimestamp(requete.statutCourant.dateEffet)} par ${responsable}`;
 };
 
 const getRequeteRejetImpression = (responsable: string, requete: TRequete) => {
-  return getLibelle(
-    `Requête en rejet impression - Le ${DateUtils.getFormatDateFromTimestamp(
-      requete.statutCourant.dateEffet
-    )}`
-  );
+  return `Requête en rejet impression - Le ${DateUtils.getFormatDateFromTimestamp(requete.statutCourant.dateEffet)}`;
 };
 
-const getStatutLibellePourRequete = (
-  requete: TRequete,
-  utilisateurs: IUtilisateur[],
-  services: IService[]
-) => {
+const getStatutLibellePourRequete = (requete: TRequete, utilisateurs: Utilisateur[], services: IService[]) => {
   let responsable = requete.idUtilisateur
-    ? `${premiereLettreEnMajusculeLeResteEnMinuscule(
-        getPrenomUtilisateurAPartirID(requete.idUtilisateur, utilisateurs)
-      )} ${formatNom(
-        getNomUtilisateurAPartirID(requete.idUtilisateur, utilisateurs)
-      )}`
+    ? (utilisateurs.find(utilisateur => utilisateur.id === requete.idUtilisateur)?.prenomNom ?? "")
     : Service.libelleDepuisId(requete.idService, services);
 
   return getStatutLibelle(requete, responsable ?? "");
@@ -245,12 +169,7 @@ function getStatutLibelleSuite(requete: TRequete, responsable: string) {
 }
 
 const getClassName = (statut: StatutRequete) => ({
-  bleu: [
-    StatutRequete.A_TRAITER,
-    StatutRequete.A_VALIDER,
-    StatutRequete.PRISE_EN_CHARGE,
-    StatutRequete.TRANSFEREE
-  ].includes(statut),
+  bleu: [StatutRequete.A_TRAITER, StatutRequete.A_VALIDER, StatutRequete.PRISE_EN_CHARGE, StatutRequete.TRANSFEREE].includes(statut),
   gris: [
     StatutRequete.BROUILLON,
     StatutRequete.REJET,

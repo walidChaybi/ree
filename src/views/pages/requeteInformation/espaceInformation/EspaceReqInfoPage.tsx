@@ -1,10 +1,9 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { URL_MES_REQUETES_INFORMATION, URL_REQUETES_INFORMATION_SERVICE } from "@router/ReceUrls";
 import { NomComposant } from "@util/habilitation/habilitationsDescription";
 import { BoiteAOnglets, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import React, { useContext } from "react";
+import React from "react";
 import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import BoutonPrendreEnChargeAleatoirementInformation from "./BoutonPrendreEnChargeAleatoirementInformation";
 import { StatutsRequetesInformation } from "./EspaceReqInfoParams";
@@ -48,33 +47,27 @@ const getOnglets = (): IOngletProps[] => {
 };
 
 const EspaceInformationPage: React.FC<LocalProps> = ({ selectedTab }) => {
-  const { utilisateurConnecte } = useContext(RECEContextData);
-
-  const selectedTabState = selectedTab || 0;
+  const selectedTabState = selectedTab ?? 0;
 
   useTitreDeLaFenetre("Espace information");
 
   return (
     <div>
-      {utilisateurConnecte && (
-        <>
-          {selectedTabState === 0}
-          <BoiteAOnglets
-            selectedTab={selectedTabState}
-            onglets={getOnglets()}
-            elementEntreTitreEtContenu={
-              <div className="EspaceInformationPage">
-                <div className="BoutonPrendreEnChargeAleatoirementRequeteInformation">
-                  <BoutonPrendreEnChargeAleatoirementInformation />
-                </div>
-              </div>
-            }
-            titre="Menu espace requête d'information"
-            classOnglet="ongletPageEspace"
-            classOngletPrincipale="headerOngletPageEspace"
-          />
-        </>
-      )}
+      {selectedTabState === 0}
+      <BoiteAOnglets
+        selectedTab={selectedTabState}
+        onglets={getOnglets()}
+        elementEntreTitreEtContenu={
+          <div className="EspaceInformationPage">
+            <div className="BoutonPrendreEnChargeAleatoirementRequeteInformation">
+              <BoutonPrendreEnChargeAleatoirementInformation />
+            </div>
+          </div>
+        }
+        titre="Menu espace requête d'information"
+        classOnglet="ongletPageEspace"
+        classOngletPrincipale="headerOngletPageEspace"
+      />
     </div>
   );
 };

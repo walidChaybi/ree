@@ -1,6 +1,6 @@
 import { getDetailRequete } from "@api/appels/requeteApi";
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { IUtilisateur, getNomPrenomUtilisateurAPartirId } from "@model/agent/IUtilisateur";
+import { Utilisateur } from "@model/agent/Utilisateur";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { CategorieDocument } from "@model/requete/CategorieDocument";
 import { IAction } from "@model/requete/IActions";
@@ -90,11 +90,11 @@ export function useAvecRejeuDetailRequeteApiHook(params?: IDetailRequeteParams) 
   };
 }
 
- async function fetchDetailRequete(
+async function fetchDetailRequete(
   setDetailRequeteState: any,
   estConsultation = false,
   estConsultationHistoriqueAction = false,
-  utilisateurs?: IUtilisateur[],
+  utilisateurs?: Utilisateur[],
   idRequete?: string
 ) {
   try {
@@ -127,7 +127,7 @@ export function useAvecRejeuDetailRequeteApiHook(params?: IDetailRequeteParams) 
   }
 }
 
-export function mappingRequeteDelivrance(data: any, utilisateurs?: IUtilisateur[]): IRequeteDelivrance {
+export function mappingRequeteDelivrance(data: any, utilisateurs?: Utilisateur[]): IRequeteDelivrance {
   return {
     // Partie Requête
     id: data.id,
@@ -180,11 +180,11 @@ function mapPiecesJustificatives(pieces?: any): IPieceJustificative[] {
   return pieces?.map((pj: any) => mapUnePieceJustificative(pj));
 }
 
-function getActions(actions: any, utilisateurs?: IUtilisateur[]): IAction[] {
+function getActions(actions: any, utilisateurs?: Utilisateur[]): IAction[] {
   const actionsRequete: IAction[] = [];
   actions.forEach((a: any) => {
     const action = a as IAction;
-    const trigramme = getNomPrenomUtilisateurAPartirId(action.idUtilisateur, utilisateurs ?? []);
+    const trigramme = utilisateurs?.find(utilisateur => utilisateur.id === action?.idUtilisateur)?.prenomNom ?? "";
     action.trigramme = trigramme ?? "";
     action.nomUtilisateur = a.nomUtilisateur ? a.nomUtilisateur : "";
     action.prenomUtilisateur = a.prenomUtilisateur ? a.prenomUtilisateur : "";
@@ -193,11 +193,11 @@ function getActions(actions: any, utilisateurs?: IUtilisateur[]): IAction[] {
   return actionsRequete;
 }
 
-function getObservations(observations: any, utilisateurs?: IUtilisateur[]): IObservation[] {
+function getObservations(observations: any, utilisateurs?: Utilisateur[]): IObservation[] {
   const observationsRequete: IObservation[] = [];
   observations.forEach((a: any) => {
     const observation = a as IObservation;
-    const trigramme = getNomPrenomUtilisateurAPartirId(observation.idUtilisateur, utilisateurs ?? []);
+    const trigramme = utilisateurs?.find(utilisateur => utilisateur.id === observation?.idUtilisateur)?.prenomNom ?? "";
     observation.trigramme = trigramme ?? "RECE";
     observationsRequete.push(observation);
   });
@@ -255,7 +255,7 @@ function getEvenement(evenement: any): IEvenementRequete {
   };
 }
 
-function mappingRequete(data: any, utilisateurs?: IUtilisateur[]) {
+function mappingRequete(data: any, utilisateurs?: Utilisateur[]) {
   return {
     // Partie Requête
     id: data.id,
@@ -274,7 +274,7 @@ function mappingRequete(data: any, utilisateurs?: IUtilisateur[]) {
   };
 }
 
-function mappingRequeteInformation(data: any, utilisateurs?: IUtilisateur[]): IRequeteInformation {
+function mappingRequeteInformation(data: any, utilisateurs?: Utilisateur[]): IRequeteInformation {
   return {
     ...mappingRequete(data, utilisateurs),
     //Partie Requête Delivrance
@@ -352,7 +352,7 @@ function mapDocumentPJ(documents?: any): IDocumentPJ[] {
   return DocumentPJ.trie(documents?.map((document: any): IDocumentPJ => mapUnDocumentPJ(document) as IDocumentPJ));
 }
 
-export function mappingRequeteCreation(data: any, utilisateurs?: IUtilisateur[]): IRequeteCreation {
+export function mappingRequeteCreation(data: any, utilisateurs?: Utilisateur[]): IRequeteCreation {
   const requete = mappingRequete(data, utilisateurs);
 
   const natureActeTranscrit = data.natureActeTranscrit;

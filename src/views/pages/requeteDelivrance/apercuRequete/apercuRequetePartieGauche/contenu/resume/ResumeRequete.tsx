@@ -2,7 +2,6 @@ import { ListePiecesJointes } from "@composant/piecesJointes/ListePiecesJointes"
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { appartientAUtilisateurConnecte } from "@model/agent/IOfficier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -55,7 +54,7 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
   };
 
   const afficherBoutonModifierRequete =
-    appartientAUtilisateurConnecte(utilisateurConnecte, props.requete.idUtilisateur) &&
+    utilisateurConnecte.id === props.requete.idUtilisateur &&
     SousTypeDelivrance.estRDCouRDCSC(props.requete.sousType) &&
     StatutRequete.estPriseEnCharge(props.requete.statutCourant.statut) &&
     !props.disabledActions;

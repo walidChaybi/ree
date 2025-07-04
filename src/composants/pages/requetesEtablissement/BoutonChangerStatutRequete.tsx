@@ -1,6 +1,5 @@
 import { CONFIG_PATCH_STATUT_REQUETE_CREATION } from "@api/configurations/requete/creation/PatchStatutRequeteCreationConfigApi";
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Option } from "@util/Type";
@@ -51,12 +50,10 @@ export const BoutonChangerStatutRequete: React.FC<IBoutonChangerStatutRequetePro
   const [modaleChangementDeStatutOuverte, setModaleChangementDeStatutOuverte] = useState<boolean>(false);
   const { appelApi: appelMajStatut, enAttenteDeReponseApi: enAttenteMajStatut } = useFetchApi(CONFIG_PATCH_STATUT_REQUETE_CREATION, true);
 
-  const peutChangerStatut = useMemo(() => {
-    return (
-      officierHabiliterPourLeDroit(utilisateurConnecte, Droit.FORCER_STATUT_REQUETE_ETABLISSEMENT) &&
-      officierHabiliterPourLeDroit(utilisateurConnecte, Droit.CREER_ACTE_ETABLI)
-    );
-  }, [utilisateurConnecte]);
+  const peutChangerStatut = useMemo(
+    () => utilisateurConnecte.estHabilitePour({ tousLesDroits: [Droit.FORCER_STATUT_REQUETE_ETABLISSEMENT, Droit.CREER_ACTE_ETABLI] }),
+    [utilisateurConnecte]
+  );
 
   return (
     <>

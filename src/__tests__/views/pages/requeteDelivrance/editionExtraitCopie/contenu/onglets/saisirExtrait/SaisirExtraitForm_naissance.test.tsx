@@ -1,5 +1,8 @@
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IFiliation } from "@model/etatcivil/acte/IFiliation";
@@ -28,14 +31,12 @@ import {
   expectEstSelectPresentAvecValeur,
   expectSelectEstAbsent
 } from "../../../../../../../__tests__utils__/expectUtils";
-import { elementAvecContexte } from "../../../../../../../__tests__utils__/testsUtil";
 import { requeteAvecDocs, requeteAvecDocsPlurilingue } from "../../../../../../../mock/data/DetailRequeteDelivrance";
 import {
   ficheActe1,
   ficheActe1_avecTitulaireAyantDeuxParents,
   ficheActe1_avecTitulaireAyantDeuxParentsDeMemeSexe
 } from "../../../../../../../mock/data/ficheActe";
-import { userDroitnonCOMEDEC } from "../../../../../../../mock/data/mockConnectedUserAvecDroit";
 
 const acte = mapActe(ficheActe1.data);
 const requete = {
@@ -43,12 +44,13 @@ const requete = {
 } as IRequeteDelivrance;
 
 const saisirExtraitFormAvecContexte = (acte: IFicheActe, requete: IRequeteDelivrance): any => {
-  return elementAvecContexte(
-    <SaisirExtraitForm
-      acte={acte}
-      requete={requete}
-    />,
-    userDroitnonCOMEDEC
+  return (
+    <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER).generer()}>
+      <SaisirExtraitForm
+        acte={acte}
+        requete={requete}
+      />
+    </MockRECEContextProvider>
   );
 };
 

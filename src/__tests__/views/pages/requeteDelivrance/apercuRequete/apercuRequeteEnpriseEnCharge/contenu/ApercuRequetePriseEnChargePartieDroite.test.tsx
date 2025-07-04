@@ -1,3 +1,6 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { ApercuRequetePriseEnChargePartieDroite } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/ApercuRequetePriseEnChargePartieDroite";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
@@ -5,8 +8,6 @@ import { COMPLEMENT_DESCRIPTION, ID_TYPE_ALERTE } from "@widget/alertes/ajouterA
 import { act } from "react";
 import { MemoryRouter } from "react-router";
 import { describe, expect, test } from "vitest";
-import { elementAvecContexte } from "../../../../../../__tests__utils__/testsUtil";
-import { userDroitnonCOMEDEC } from "../../../../../../mock/data/mockConnectedUserAvecDroit";
 import { ReponseAppelNomenclatureTypeAlerte } from "../../../../../../mock/data/nomenclatures";
 import requeteDelivrance from "../../../../../../mock/data/requeteDelivrance";
 
@@ -60,12 +61,11 @@ describe("Test ApercuRequetePriseEnChargePartieDroite", () => {
 
   test("render ApercuRequetePriseEnChargePartieDroite : gestion des alertes acte", async () => {
     render(
-      elementAvecContexte(
+      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER).generer()}>
         <MemoryRouter>
           <ApercuRequetePriseEnChargePartieDroite detailRequete={requeteDelivrance} />
-        </MemoryRouter>,
-        userDroitnonCOMEDEC
-      )
+        </MemoryRouter>
+      </MockRECEContextProvider>
     );
 
     const checkboxColumns: HTMLElement[] = screen.getAllByRole("checkbox");

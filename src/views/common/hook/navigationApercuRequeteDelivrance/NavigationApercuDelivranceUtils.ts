@@ -1,5 +1,5 @@
 import { redirectionVersRequetePriseEnCharge } from "@hook/rmcAuto/RMCAutoActesInscriptionsUtils";
-import { IOfficier } from "@model/agent/IOfficier";
+import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
@@ -12,7 +12,7 @@ import { autorisePrendreEnChargeReqTableauDelivrance } from "@util/RequetesUtils
 import { getUrlPrecedente } from "@util/route/UrlUtil";
 
 export const redirectionSelonStatutRequete = (
-  utilisateurConnecte: IOfficier,
+  utilisateurConnecte: UtilisateurConnecte,
   requete: IRequeteTableauDelivrance,
   urlCourante: string
 ): string => {
@@ -51,7 +51,11 @@ const redirectionAValider = (urlCourante: string, requete: IRequeteTableauDelivr
   }
 };
 
-const redirectionATraiterTransferee = (utilisateurConnecte: IOfficier, requete: IRequeteTableauDelivrance, urlCourante: string): string =>
+const redirectionATraiterTransferee = (
+  utilisateurConnecte: UtilisateurConnecte,
+  requete: IRequeteTableauDelivrance,
+  urlCourante: string
+): string =>
   autorisePrendreEnChargeReqTableauDelivrance(utilisateurConnecte, requete)
     ? redirectionVersRequetePriseEnCharge(requete, urlCourante)
     : getUrlApercuRequete(urlCourante, requete.idRequete);

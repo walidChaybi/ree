@@ -1,6 +1,7 @@
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import MockSaisieProjetActeContextProvider from "@mock/context/MockSaisieProjetActeContextProvider";
-import { userDroitSignerActe } from "@mock/data/mockConnectedUserAvecDroit";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { render, screen } from "@testing-library/react";
@@ -19,7 +20,7 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
 
   test("Doit afficher le formulaire de saisie de projet d'acte", async () => {
     const { container } = render(
-      <MockRECEContextProvider utilisateurConnecte={userDroitSignerActe}>
+      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.SIGNER_ACTE).generer()}>
         <MockSaisieProjetActeContextProvider
           projetActe={null}
           requete={
@@ -42,7 +43,7 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
 
   test("Doit afficher le bouton submit QUAND le statut de la requete est en traitement", () => {
     render(
-      <MockRECEContextProvider utilisateurConnecte={userDroitSignerActe}>
+      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.SIGNER_ACTE).generer()}>
         <MockSaisieProjetActeContextProvider
           projetActe={null}
           requete={
@@ -66,7 +67,7 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
 
   test("Doit afficher le bouton submit QUAND les valeurs initiales sont modifiées", async () => {
     render(
-      <MockRECEContextProvider utilisateurConnecte={userDroitSignerActe}>
+      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.SIGNER_ACTE).generer()}>
         <MockSaisieProjetActeContextProvider
           projetActe={null}
           requete={

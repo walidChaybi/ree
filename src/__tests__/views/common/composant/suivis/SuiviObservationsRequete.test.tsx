@@ -1,20 +1,22 @@
 import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { expect, test } from "vitest";
-import { elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
 import { observations0, observations1 } from "../../../../mock/data/Observations";
-import { userDroitnonCOMEDEC } from "../../../../mock/data/mockConnectedUserAvecDroit";
 import DONNEES_REQUETE from "../../../../mock/data/requete";
+
+const UTILISATEUR_CONNECTE = MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER).generer();
 
 test("renders suivi des observations requete", () => {
   render(
-    elementAvecContexte(
+    <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
       <SuiviObservationsRequete
         observations={DONNEES_REQUETE.observations}
         idRequete="123"
-      />,
-      userDroitnonCOMEDEC
-    )
+      />
+    </MockRECEContextProvider>
   );
   const titre = screen.getByText(/Observations requête/i);
   let elem1: HTMLElement;
@@ -31,13 +33,12 @@ test("renders suivi des observations requete", () => {
 
 test("ajouter observation", async () => {
   render(
-    elementAvecContexte(
+    <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
       <SuiviObservationsRequete
         observations={DONNEES_REQUETE.observations}
         idRequete="123"
-      />,
-      userDroitnonCOMEDEC
-    )
+      />
+    </MockRECEContextProvider>
   );
 
   fireEvent.click(screen.getByText("Ajouter une observation"));
@@ -59,13 +60,12 @@ test("ajouter observation", async () => {
 
 test("modifier observation", async () => {
   render(
-    elementAvecContexte(
+    <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
       <SuiviObservationsRequete
         observations={observations0}
         idRequete="123"
-      />,
-      userDroitnonCOMEDEC
-    )
+      />
+    </MockRECEContextProvider>
   );
 
   fireEvent.click(screen.getByText(/C'est vraiment dur/i));
@@ -95,13 +95,12 @@ test("modifier observation", async () => {
 
 test("supprimer observation", async () => {
   render(
-    elementAvecContexte(
+    <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
       <SuiviObservationsRequete
         observations={observations1}
         idRequete="123"
-      />,
-      userDroitnonCOMEDEC
-    )
+      />
+    </MockRECEContextProvider>
   );
 
   fireEvent.click(screen.getByText("Supprimer l'observation"));

@@ -1,13 +1,15 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { idFicheActe1 } from "@mock/data/ficheActe";
 import { idFichePacs } from "@mock/data/fichePACS";
-import { userDroitConsulterPerimetreTousRegistres } from "@mock/data/mockConnectedUserAvecDroit";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { titreForm } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscription";
 import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import * as TableauPaginationConstantes from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { RouterProvider } from "react-router";
 import { afterEach, beforeAll, expect, test } from "vitest";
-import { createTestingRouter, elementAvecContexte, mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
+import { createTestingRouter, mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
 
 beforeAll(async () => {
   mockFenetreFicheTestFunctions();
@@ -148,7 +150,11 @@ test.skip("La pagination (avec changement de plage) entre les fiches rc/rca/pacs
     ["/"]
   );
 
-  render(elementAvecContexte(<RouterProvider router={router} />, userDroitConsulterPerimetreTousRegistres));
+  render(
+    <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.CONSULTER).generer()}>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
 
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
 
@@ -253,7 +259,11 @@ test.skip("La pagination (avec changement de plage) entre les fiches acte s'effe
     ["/"]
   );
 
-  render(elementAvecContexte(<RouterProvider router={router} />, userDroitConsulterPerimetreTousRegistres));
+  render(
+    <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.CONSULTER).generer()}>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
 
   const inputNom = screen.getByLabelText("Nom") as HTMLInputElement;
 

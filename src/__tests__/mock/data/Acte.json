@@ -1,9 +1,0 @@
-{
-  "hasTechnicalError": false,
-  "hasBusinessError": false,
-  "status": 200,
-  "url": "/rece/rece-requete-api/v1/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f",
-  "data": {
-    "id": "b41079a5-9e8d-478c-b04c-c4c2ac67134f"
-  }
-}

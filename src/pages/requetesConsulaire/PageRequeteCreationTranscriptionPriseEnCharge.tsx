@@ -2,7 +2,6 @@ import { CONFIG_GET_DETAIL_REQUETE } from "@api/configurations/requete/GetDetail
 import { CONFIG_POST_MAJ_STATUT_ET_ACTION } from "@api/configurations/requete/actions/PostMajStatutEtActionConfigApi";
 import { RECEContextActions, RECEContextData } from "@core/contexts/RECEContext";
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
-import { appartientAUtilisateurConnecte } from "@model/agent/IOfficier";
 import { IRequete } from "@model/requete/IRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
@@ -47,13 +46,13 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
     useFetchApi(CONFIG_POST_MAJ_STATUT_ET_ACTION);
 
   const afficherBoutonModifierRequete = useMemo(() => {
-    const statutActuel = requete?.statutCourant?.statut?.libelle;
+    const statutActuel = requete?.statutCourant?.statut?.libelle ?? "";
+
     return (
       requete &&
       SousTypeCreation.estRCTC(requete?.sousType) &&
-      appartientAUtilisateurConnecte(utilisateurConnecte, requete?.idUtilisateur) &&
-      statutActuel !== StatutRequete.EN_TRAITEMENT.libelle &&
-      statutActuel !== StatutRequete.A_SIGNER.libelle
+      utilisateurConnecte.id === requete?.idUtilisateur &&
+      ![StatutRequete.EN_TRAITEMENT.libelle, StatutRequete.A_SIGNER.libelle].includes(statutActuel)
     );
   }, [requete, utilisateurConnecte]);
 
@@ -77,9 +76,8 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
         setRequete(mappingRequeteCreation(data) as IRequeteCreationTranscription);
         setIsDirty(false);
       },
-      apresErreur: messageErreur => {
+      apresErreur: () => {
         messageManager.showError("Une erreur est survenue lors de la récupération des informations de l'acte");
-        console.error(`Erreur lors de la récupération de la requete: ${messageErreur}`);
         navigate(-1);
       }
     });

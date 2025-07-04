@@ -1,9 +1,6 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { IRMCAutoPersonneParams, useRMCAutoPersonneApiAvecCacheHook } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
-import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
-import { Droit } from "@model/agent/enum/Droit";
-import { Perimetre } from "@model/agent/enum/Perimetre";
 import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
@@ -12,11 +9,10 @@ import { IDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/
 import { TableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonne";
 import { mapDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
 import { getPostulantNationaliteOuTitulaireActeTranscritDresse } from "@pages/requeteCreation/commun/requeteCreationUtils";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import React, { useEffect, useState } from "react";
 import { beforeAll, expect, test } from "vitest";
 import { mockFenetreFicheTestFunctions } from "../../../../__tests__utils__/testsUtil";
-import { userDroitConsulterArchive } from "../../../../mock/data/mockConnectedUserAvecDroit";
 import { requeteCreationTranscription } from "../../../../mock/data/requeteCreationTranscription";
 
 beforeAll(() => {
@@ -109,32 +105,3 @@ const tableauRMCMock: IDataTableauRMCPersonne[] = [
     sexe: ""
   }
 ];
-
-test("Ouverture d'un acte", async () => {
-  render(
-    <TableauRMCPersonne
-      dataTableauRMCPersonne={tableauRMCMock}
-      identifiantsPersonnesSelectionnees={[]}
-      natureActeRequete={NatureActeRequete.NAISSANCE}
-      identifiantsActesInscriptionsSelectionnes={[]}
-      onClickBoutonAjouterPersonneOuActeInscription={() => {}}
-      typeRedactionActe={"" as ETypeRedactionActe}
-    />
-  );
-
-  const ligne = screen.getByText("RC - 2020 - 14");
-
-  const vue = screen.queryByText("Visualisation du RC");
-  expect(vue).toBeNull();
-
-  fireEvent.click(ligne);
-
-  await waitFor(() => {
-    const vue = screen.queryByText("Visualisation du RC");
-    if (officierALeDroitSurLePerimetre(Droit.CONSULTER, Perimetre.TOUS_REGISTRES, userDroitConsulterArchive)) {
-      expect(vue).toBeDefined();
-    } else {
-      expect(vue).toBeNull();
-    }
-  });
-});

@@ -1,11 +1,11 @@
-import { IOfficier } from "@model/agent/IOfficier";
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
 import { URL_MES_REQUETES_DELIVRANCE, URL_REQUETES_DELIVRANCE_SERVICE } from "@router/ReceUrls";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router";
 import { expect, test } from "vitest";
-import { createTestingRouter, elementAvecContexte } from "../../../../__tests__utils__/testsUtil";
-import officier from "../../../../mock/data/connectedUser.json";
+import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 test.skip("renders delivrancePage", async () => {
   await act(async () => {
@@ -24,10 +24,9 @@ test.skip("renders delivrancePage", async () => {
     );
 
     render(
-      elementAvecContexte(<RouterProvider router={router} />, {
-        idSSO: officier.id_sso,
-        ...officier
-      } as unknown as IOfficier)
+      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().generer()}>
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
     );
   });
 

@@ -68,10 +68,7 @@ interface IRecupererInformationsParams {
   parametres: {
     idActe: string;
     codePin: string;
-    agent: {
-      nom: string;
-      prenom: string;
-    };
+    prenomNomAgent: string;
     estMiseAJour: boolean;
   };
   apresSucces: (informations: IInformationsCarte) => void;
@@ -135,7 +132,7 @@ const ModeDeveloppement = {
             infosSignature: pinIncorrect
               ? undefined
               : ({
-                  entiteCertificat: `CN=${recupereInformationParams.parametres.agent.prenom} ${recupereInformationParams.parametres.agent.nom.toUpperCase()},test`,
+                  entiteCertificat: `CN=${recupereInformationParams.parametres.prenomNomAgent},test`,
                   issuerCertificat: "AAE"
                 } as IInformationsCarte)
           }

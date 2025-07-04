@@ -3,7 +3,6 @@ import { ZERO } from "@util/Utils";
 import IAdresseServiceDto from "./IAdresseServiceDto";
 import IHierarchieServiceDto from "./IHierarchieServiceDto";
 import IMemoCourrierDto from "./IMemoCourrierDto";
-import IUtilisateurDto from "./IUtilisateurDto";
 
 interface IServiceDto {
   idService?: string;
@@ -12,7 +11,6 @@ interface IServiceDto {
   libelleService?: string;
   siteInternet?: string;
   hierarchieService?: IHierarchieServiceDto[];
-  utilisateur?: IUtilisateurDto[];
   memoCourrier?: IMemoCourrierDto;
   adresseService?: IAdresseServiceDto;
   estDansScec?: boolean;

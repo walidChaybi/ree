@@ -1,10 +1,7 @@
-import { mappingOfficier } from "@model/agent/IOfficier";
 import { ReponseAppelMesRequetes } from "../../../../../mock/data/EspaceDelivrance";
-import {
-  resultatHeaderUtilistateurLaurenceBourdeau,
-  resultatRequeteUtilistateurLaurenceBourdeau
-} from "../../../../../mock/data/mockConnectedUserAvecDroit";
 
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { ApercuRequeteEtablissementSuiviDossierPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/ApercuRequeteEtablissementSuiviDossierPage";
 import { BoutonPrendreEnChargeAleatoirement } from "@pages/requeteDelivrance/espaceDelivrance/contenu/BoutonPrendreEnChargeAleatoirement";
 import { URL_MES_REQUETES_DELIVRANCE, URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_PRISE_EN_CHARGE_ID } from "@router/ReceUrls";
@@ -12,11 +9,9 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router";
 import { expect, test } from "vitest";
-import { createTestingRouter, elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
+import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 
 test.skip("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement dans l'espace Délivrance", () => {
-  const utilisateurConnecte = mappingOfficier(resultatHeaderUtilistateurLaurenceBourdeau, resultatRequeteUtilistateurLaurenceBourdeau.data);
-
   const router = createTestingRouter(
     [
       {
@@ -31,7 +26,11 @@ test.skip("Attendu: BoutonPrendreEnChargeAleatoirement fonctionne correctement d
     [URL_MES_REQUETES_DELIVRANCE]
   );
 
-  render(elementAvecContexte(<RouterProvider router={router} />, utilisateurConnecte));
+  render(
+    <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().generer()}>
+      <RouterProvider router={router} />
+    </MockRECEContextProvider>
+  );
 
   const bouttonPrendreEnCharge = screen.getByText(/Prendre en charge/i) as HTMLButtonElement;
 

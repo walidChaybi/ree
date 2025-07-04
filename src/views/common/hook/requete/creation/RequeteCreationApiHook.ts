@@ -1,7 +1,7 @@
 import { getRequetesCreation, IQueryParametersPourRequetes, postRequetesServiceCreation, TypeAppelRequete } from "@api/appels/requeteApi";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { IService } from "@model/agent/IService";
-import { IUtilisateur } from "@model/agent/IUtilisateur";
+import { Utilisateur } from "@model/agent/Utilisateur";
 import {
   IFiltreServiceRequeteCreationFormValues,
   IFiltresServiceRequeteCreation,
@@ -69,7 +69,7 @@ export function useRequeteCreationApiHook(
 function mappingRequetesTableauCreation(
   resultatsRecherche: any,
   mappingSupplementaire: boolean,
-  utilisateurs: IUtilisateur[],
+  utilisateurs: Utilisateur[],
   services: IService[]
 ): IRequeteTableauCreation[] {
   return resultatsRecherche?.map((requete: any) => {

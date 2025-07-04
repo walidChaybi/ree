@@ -1,6 +1,5 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
-import { utilisateurADroit } from "@model/agent/IUtilisateur";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import {
   URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
@@ -14,7 +13,6 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import { Option, Options } from "@util/Type";
-import { getLibelle } from "@util/Utils";
 import { BoutonMenu } from "@widget/boutonMenu/BoutonMenu";
 import React, { useContext } from "react";
 import { useNavigate } from "react-router";
@@ -30,7 +28,7 @@ const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
     if (props.indexTabPanel === 1) {
       switch (nomRequete) {
         case "RDCSC":
-          if (utilisateurConnecte && utilisateurADroit(Droit.DELIVRER, utilisateurConnecte)) {
+          if (utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER })) {
             navigate(URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC);
           } else {
             alert("Vous n'avez pas les droits pour ce type de requête");
@@ -73,7 +71,7 @@ const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
   return (
     <BoutonMenu
       className="MenuSaisirRequete"
-      boutonLibelle={getLibelle("Saisir requête courrier")}
+      boutonLibelle={"Saisir requête courrier"}
       options={listeRequeteCourrier}
       onClickOption={clickMenuItem}
       anchorOrigin={{

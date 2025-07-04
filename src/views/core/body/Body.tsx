@@ -40,11 +40,11 @@ export const Body: React.FC = () => {
 
   return (
     <main className="AppBody">
-      {erreurConnexion || !utilisateurConnecte?.idSSO || appliDejaOuverte ? (
+      {erreurConnexion || !utilisateurConnecte?.idArobas || appliDejaOuverte ? (
         <PageMessage message={getMessageErreur(erreurConnexion, appliDejaOuverte)} />
       ) : (
         <>
-          {utilisateurConnecte?.idSSO && <GestionnaireFermeture urlRedirection={URL_MES_REQUETES_DELIVRANCE}></GestionnaireFermeture>}
+          {utilisateurConnecte?.idArobas && <GestionnaireFermeture urlRedirection={URL_MES_REQUETES_DELIVRANCE}></GestionnaireFermeture>}
           <FilAriane routes={routesRece} />
           <Outlet />
         </>

@@ -158,7 +158,7 @@ export const RenderCellRequerant = (data: any): JSX.Element => {
   const { services, utilisateurs } = useContext(RECEContextData);
   if (data.idUtilisateurRequerant) {
     const codeService = services?.find(
-      el => el.idService === utilisateurs?.find(ut => ut.idUtilisateur === data.idUtilisateurRequerant)?.service?.idService
+      el => el.idService === utilisateurs?.find(ut => ut.id === data.idUtilisateurRequerant)?.idService
     )?.code;
     return <span>{`${data.nomCompletRequerant} (${codeService})`}</span>;
   } else {

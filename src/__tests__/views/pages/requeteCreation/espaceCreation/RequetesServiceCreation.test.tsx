@@ -1,12 +1,7 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
-import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
-import { mappingOfficier } from "@model/agent/IOfficier";
-import { IPerimetre } from "@model/agent/IPerimetre";
-import { IService } from "@model/agent/IService";
-import { IUtilisateur, mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Utilisateur } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
-import { ETypeService } from "@model/agent/enum/ETypeService";
-import { Perimetre } from "@model/agent/enum/Perimetre";
 import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
 import { RequetesServiceCreation } from "@pages/requeteCreation/espaceCreation/RequetesServiceCreation";
 import { statutsRequetesCreation } from "@pages/requeteCreation/espaceCreation/params/EspaceCreationParams";
@@ -18,50 +13,20 @@ import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauP
 import React, { act, useState } from "react";
 import { RouterProvider } from "react-router";
 import { expect, test } from "vitest";
-import IHabilitationDto from "../../../../../dto/etatcivil/agent/IHabilitationDto";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 import MockRECEContextProvider from "../../../../mock/context/MockRECEContextProvider";
-import {
-  resultatHeaderUtilistateurLeBiannic,
-  resultatRequeteUtilistateurLeBiannic
-} from "../../../../mock/data/mockConnectedUserAvecDroit";
 
-const utilisateurs = [
-  {
-    idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56",
-    prenom: "Ashley",
-    nom: "Young",
-    trigramme: "Young Ashley",
-    habilitations: [
-      {
-        idHabilitation: "123",
-        profil: {
-          droits: [{ nom: Droit.CREER_ACTE_ETABLI } as IDroit]
-        } as IProfil,
-        perimetre: {
-          nom: Perimetre.TOUS_REGISTRES,
-          listeIdTypeRegistre: ["meae"]
-        } as IPerimetre
-      } as IHabilitation
-    ],
-    service: {
-      idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d",
-      type: ETypeService.SECTION,
-      code: "Assistance Informatique",
-      libelleService: "BAG Assitance Informatique"
-    } as IService
-  } as IUtilisateur
-] as IUtilisateur[];
-
-const utilisateurConnecte = mappingOfficier(resultatHeaderUtilistateurLeBiannic, resultatRequeteUtilistateurLeBiannic.data);
-utilisateurConnecte.habilitations = mapHabilitationsUtilisateur(
-  resultatRequeteUtilistateurLeBiannic.data.habilitations as unknown as IHabilitationDto[]
-);
+const utilisateurs: Utilisateur[] = [
+  MockUtilisateurBuilder.utilisateur({ idUtilisateur: "7a091a3b-6835-4824-94fb-527d68926d56", prenom: "Ashley", nom: "Young" })
+    .avecAttributs({ idService: "6737d2f8-f2af-450d-a376-f22f6df6ff1d" })
+    .avecDroit(Droit.CREER_ACTE_ETABLI)
+    .generer()
+];
 
 const routerAvecContexte = (router: any): any => {
   return (
     <MockRECEContextProvider
-      utilisateurConnecte={utilisateurConnecte}
+      utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().generer()}
       utilisateurs={utilisateurs}
     >
       <RouterProvider router={router} />
@@ -195,11 +160,11 @@ test.skip("DOIT correctement afficher l'attribution des requêtes de service QUA
     target: { value: "Y" }
   });
 
-  const libelle: HTMLInputElement = screen.getByText("Young Ashley");
+  const libelle: HTMLInputElement = screen.getByText("Ashley Young");
 
   expect(libelle.disabled).toBeTruthy();
 
-  fireEvent.click(screen.getByText("Young Ashley"));
+  fireEvent.click(screen.getByText("Ashley Young"));
   fireEvent.click(screen.getByText("Valider"));
 
   expect(getPopinAttribution()).not.toBeDefined();

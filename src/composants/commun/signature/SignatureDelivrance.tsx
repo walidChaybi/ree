@@ -1,7 +1,6 @@
 import { CONFIG_POST_RECUPERER_DOCUMENTS_REPONSES_A_SIGNER } from "@api/configurations/requete/documentsReponses/PostRecupererDocumentsReponsesASignerConfigApi";
 import TRAITEMENT_ENREGISTRER_DOCUMENTS_SIGNES from "@api/traitements/signature/TraitementEnregistrerDocumentsSignes";
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { utilisateurADroit } from "@model/agent/IUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
@@ -97,7 +96,10 @@ const SignatureDelivrance: React.FC<ISignatureDelivranceProps> = ({
   chargerDocumentsAuClic = false
 }) => {
   const { utilisateurConnecte } = useContext(RECEContextData);
-  const aDroitSigner = useMemo(() => utilisateurADroit(Droit.SIGNER_DELIVRANCE_DEMAT, utilisateurConnecte), [utilisateurConnecte]);
+  const aDroitSigner = useMemo(
+    () => utilisateurConnecte.estHabilitePour({ leDroit: Droit.SIGNER_DELIVRANCE_DEMAT }),
+    [utilisateurConnecte]
+  );
   const [informationsSignature, setInformationsSignature] = useState<IInformationsSignature>({ ...INFORMATIONS_SIGNATURE_DEFAUT });
   const { appelApi: appelRecupererDocumentsReponses, enAttenteDeReponseApi: enRecuperationDocuments } = useFetchApi(
     CONFIG_POST_RECUPERER_DOCUMENTS_REPONSES_A_SIGNER

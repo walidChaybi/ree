@@ -1,7 +1,7 @@
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import ObservationsRequete from "../../../../../../composants/pages/requetesDelivrance/commun/requete/ObservationsRequete";
 
-import { IOfficier } from "@model/agent/IOfficier";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import request from "superagent";
@@ -10,8 +10,8 @@ import { ConteneurParentModales } from "../../../../../../composants/commun/cont
 import MockRECEContextProvider from "../../../../../mock/context/MockRECEContextProvider";
 
 describe("ObservationsRequete", () => {
-  const NOM_UTILISATEUR = "Nomtest";
-  const PRENOM_UTILISATEUR = "Prenomtest";
+  const UTILISATEUR_CONNECTE = MockUtilisateurBuilder.utilisateurConnecte().generer();
+  const PRENOM_NOM_UTILISATEUR = UTILISATEUR_CONNECTE.prenomNom;
   const TEXTE_OBSERVATION = "coucou test";
 
   const requeteMock: IRequeteDelivrance = {
@@ -22,8 +22,8 @@ describe("ObservationsRequete", () => {
         numeroOrdre: 1,
         texte: TEXTE_OBSERVATION,
         dateObservation: 1732095376916,
-        idUtilisateur: "idUtilisateur",
-        trigramme: `${NOM_UTILISATEUR} ${PRENOM_UTILISATEUR}`
+        idUtilisateur: UTILISATEUR_CONNECTE.id,
+        trigramme: PRENOM_NOM_UTILISATEUR
       }
     ]
   } as IRequeteDelivrance;
@@ -55,16 +55,26 @@ describe("ObservationsRequete", () => {
   afterAll(() => superagentMock.unset());
 
   test("Affiche l'observation, la date et l'observateur", async () => {
-    render(<ObservationsRequete requete={requeteMock} />);
+    render(
+      <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
+        <ObservationsRequete requete={requeteMock} />
+      </MockRECEContextProvider>
+    );
     await waitFor(() => {
       expect(screen.getByText(TEXTE_OBSERVATION)).toBeDefined();
       expect(screen.getByText("- 20/11/2024")).toBeDefined();
-      expect(screen.getByText(`- ${NOM_UTILISATEUR} ${PRENOM_UTILISATEUR}`)).toBeDefined();
+      expect(screen.getByText(`- ${PRENOM_NOM_UTILISATEUR}`)).toBeDefined();
     });
   });
 
   test("Suppression et modification impossible si agent différent", async () => {
-    render(<ObservationsRequete requete={requeteMock} />);
+    render(
+      <MockRECEContextProvider
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecAttributs({ id: "idAutreAgent" }).generer()}
+      >
+        <ObservationsRequete requete={requeteMock} />
+      </MockRECEContextProvider>
+    );
 
     await waitFor(() => {
       expect(screen.queryByTitle("Supprimer l'observation")).toBeNull();
@@ -74,7 +84,7 @@ describe("ObservationsRequete", () => {
 
   test("Ajout d'une observation", async () => {
     render(
-      <MockRECEContextProvider utilisateurConnecte={{ nom: NOM_UTILISATEUR, prenom: PRENOM_UTILISATEUR } as IOfficier}>
+      <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
         <ObservationsRequete requete={requeteMock} />
         <ConteneurParentModales />
       </MockRECEContextProvider>
@@ -97,13 +107,13 @@ describe("ObservationsRequete", () => {
 
     await waitFor(() => {
       expect(screen.queryByText(MESSAGE)).toBeDefined();
-      expect(screen.queryByText(`- ${NOM_UTILISATEUR} ${PRENOM_UTILISATEUR}`)).toBeDefined();
+      expect(screen.queryByText(`- ${PRENOM_NOM_UTILISATEUR}`)).toBeDefined();
     });
   });
 
   test("Suppression d'une observation", async () => {
     render(
-      <MockRECEContextProvider utilisateurConnecte={{ idUtilisateur: requeteMock.observations?.[0].idUtilisateur } as IOfficier}>
+      <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
         <ObservationsRequete requete={requeteMock} />
         <ConteneurParentModales />
       </MockRECEContextProvider>
@@ -119,17 +129,13 @@ describe("ObservationsRequete", () => {
     await waitFor(() => {
       expect(screen.queryByText(TEXTE_OBSERVATION)).toBeNull();
       expect(screen.queryByText("- 20/11/2024")).toBeNull();
-      expect(screen.queryByText(`- ${NOM_UTILISATEUR} ${PRENOM_UTILISATEUR}`)).toBeNull();
+      expect(screen.queryByText(`- ${PRENOM_NOM_UTILISATEUR}`)).toBeNull();
     });
   });
 
   test("Modification d'une observation", async () => {
     render(
-      <MockRECEContextProvider
-        utilisateurConnecte={
-          { nom: NOM_UTILISATEUR, prenom: PRENOM_UTILISATEUR, idUtilisateur: requeteMock.observations?.[0].idUtilisateur } as IOfficier
-        }
-      >
+      <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
         <ObservationsRequete requete={requeteMock} />
         <ConteneurParentModales />
       </MockRECEContextProvider>
@@ -152,7 +158,7 @@ describe("ObservationsRequete", () => {
 
     await waitFor(() => {
       expect(screen.queryByText(`${TEXTE_OBSERVATION}${MESSAGE}`)).toBeDefined();
-      expect(screen.queryByText(`- ${NOM_UTILISATEUR} ${PRENOM_UTILISATEUR}`)).toBeDefined();
+      expect(screen.queryByText(`- ${PRENOM_NOM_UTILISATEUR}`)).toBeDefined();
     });
   });
 });

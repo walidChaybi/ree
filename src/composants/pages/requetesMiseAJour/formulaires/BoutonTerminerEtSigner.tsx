@@ -1,5 +1,4 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { estOfficierHabiliterPourTousLesDroits } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import messageManager from "@util/messageManager";
 import { useContext, useMemo, useState } from "react";
@@ -17,7 +16,7 @@ const BoutonTerminerEtSigner: React.FC<IBoutonTerminerEtSignerProps> = ({ saisie
   const { idActe, idRequete, miseAJourEffectuee } = useContext(EditionMiseAJourContext.Valeurs);
   const { setEstActeSigne, desactiverBlocker, changerOnglet } = useContext(EditionMiseAJourContext.Actions);
   const aDroitSigner = useMemo<boolean>(
-    () => estOfficierHabiliterPourTousLesDroits(utilisateurConnecte, [Droit.SIGNER_MENTION, Droit.METTRE_A_JOUR_ACTE]),
+    () => utilisateurConnecte.estHabilitePour({ tousLesDroits: [Droit.SIGNER_MENTION, Droit.METTRE_A_JOUR_ACTE] }),
     [utilisateurConnecte]
   );
   const [modaleOuverte, setModaleOuverte] = useState<boolean>(false);

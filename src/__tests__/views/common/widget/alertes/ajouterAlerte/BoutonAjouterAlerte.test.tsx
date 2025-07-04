@@ -1,10 +1,11 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BoutonAjouterAlerte } from "@widget/alertes/ajouterAlerte/BoutonAjouterAlerte";
 import { COMPLEMENT_DESCRIPTION, ID_TYPE_ALERTE } from "@widget/alertes/ajouterAlerte/contenu/PopinAjouterAlertes";
 import { beforeEach, expect, test, vi } from "vitest";
-import { elementAvecContexte } from "../../../../../__tests__utils__/testsUtil";
-import { userDroitCOMEDEC } from "../../../../../mock/data/mockConnectedUserAvecDroit";
 import { ReponseAppelNomenclatureTypeAlerte } from "../../../../../mock/data/nomenclatures";
 
 beforeEach(() => {
@@ -13,13 +14,12 @@ beforeEach(() => {
 
 test("render BoutonAjouterAlerte avec ajout alerte possible : test ouverture / fermeture popin", async () => {
   render(
-    elementAvecContexte(
+    <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER_COMEDEC).generer()}>
       <BoutonAjouterAlerte
         ajouterAlerteCallBack={vi.fn()}
         idTypeRegistre="salut"
-      />,
-      userDroitCOMEDEC
-    )
+      />
+    </MockRECEContextProvider>
   );
 
   expect(screen.getByTitle("Ajouter une alerte")).toBeDefined();
@@ -44,13 +44,12 @@ test("render BoutonAjouterAlerte avec ajout alerte possible : test ouverture / f
 
 test("render BoutonAjouterAlerte avec ajout alerte possible : test soumission formulaire", async () => {
   render(
-    elementAvecContexte(
+    <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER_COMEDEC).generer()}>
       <BoutonAjouterAlerte
         ajouterAlerteCallBack={vi.fn()}
         idTypeRegistre="salut"
-      />,
-      userDroitCOMEDEC
-    )
+      />
+    </MockRECEContextProvider>
   );
 
   expect(screen.getByTitle("Ajouter une alerte")).toBeDefined();
@@ -93,6 +92,6 @@ test("render BoutonAjouterAlerte avec ajout alerte possible : test soumission fo
   //     screen.getByRole("dialog", {
   //       hidden: true
   //     })
-  //   ).not.toBeDefined();
+  //   ).not.toBeDefined();e
   // });
 });

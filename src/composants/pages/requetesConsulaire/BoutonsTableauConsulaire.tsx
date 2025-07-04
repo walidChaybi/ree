@@ -1,5 +1,4 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { utilisateurADroit } from "@model/agent/IUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import Add from "@mui/icons-material/Add";
 import { URL_MES_REQUETES_CONSULAIRE_SAISIR_RCTC } from "@router/ReceUrls";
@@ -9,7 +8,7 @@ import BoutonListeDeroulante from "../../commun/bouton/BoutonListeDeroulante";
 
 const BoutonsTableauConsulaire: React.FC = () => {
   const { utilisateurConnecte } = useContext(RECEContextData);
-  const peutSaisirRequete = useMemo(() => utilisateurADroit(Droit.SAISIR_REQUETE, utilisateurConnecte), [utilisateurConnecte]);
+  const peutSaisirRequete = useMemo(() => utilisateurConnecte.estHabilitePour({ leDroit: Droit.SAISIR_REQUETE }), [utilisateurConnecte]);
 
   return peutSaisirRequete ? (
     <div className="flex justify-end">

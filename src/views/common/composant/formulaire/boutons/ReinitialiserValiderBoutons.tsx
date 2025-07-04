@@ -1,5 +1,4 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { GestionnaireBlockErreur } from "@widget/formulaire/GestionnaireBlockErreur";
@@ -25,6 +24,7 @@ export const ReinitialiserValiderBoutons: React.FC<IReinitialiserValiderBoutonsP
   titreBoutons
 }) => {
   const { utilisateurConnecte } = useContext(RECEContextData);
+
   return (
     <>
       {afficherBouton && (
@@ -41,7 +41,7 @@ export const ReinitialiserValiderBoutons: React.FC<IReinitialiserValiderBoutonsP
           <BoutonDoubleSubmit
             type="button"
             onClick={onClickValider}
-            disabled={validerDisabled || !officierHabiliterPourLeDroit(utilisateurConnecte, Droit.DELIVRER)}
+            disabled={validerDisabled || !utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER })}
             aria-label="Valider"
             title={titreBoutons ? `Valider ${titreBoutons}` : undefined}
           >

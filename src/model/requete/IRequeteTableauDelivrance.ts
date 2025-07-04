@@ -1,7 +1,6 @@
 import { IService, Service } from "@model/agent/IService";
-import { IUtilisateur, getNomUtilisateurAPartirID, getPrenomUtilisateurAPartirID } from "@model/agent/IUtilisateur";
+import { Utilisateur } from "@model/agent/Utilisateur";
 import DateUtils from "@util/DateUtils";
-import { formatNom, formatPrenom } from "@util/Utils";
 import { NatureActe } from "../etatcivil/enum/NatureActe";
 import { IDocumentReponse } from "./IDocumentReponse";
 import { IRequerant, Requerant } from "./IRequerant";
@@ -45,7 +44,7 @@ export interface IRequeteTableauDelivrance extends IRequeteTableau {
 export function mappingRequetesTableauDelivrance(
   resultatsRecherche: any,
   mappingSupplementaire: boolean,
-  utilisateurs: IUtilisateur[],
+  utilisateurs: Utilisateur[],
   services: IService[]
 ): IRequeteTableauDelivrance[] {
   return resultatsRecherche?.map((requete: any) => {
@@ -56,7 +55,7 @@ export function mappingRequetesTableauDelivrance(
 export function mappingUneRequeteTableauDelivrance(
   requete: any,
   mappingSupplementaire: boolean,
-  utilisateurs: IUtilisateur[],
+  utilisateurs: Utilisateur[],
   services: IService[]
 ): IRequeteTableauDelivrance {
   const requerant = requete?.requerant ? Requerant.mappingRequerant(requete?.requerant) : undefined;
@@ -105,12 +104,10 @@ function getSousType(type: string, sousType: string) {
   }
 }
 
-export function mapAttribueA(requete: any, utilisateurs: IUtilisateur[], services: IService[]): string | null {
+export function mapAttribueA(requete: any, utilisateurs: Utilisateur[], services: IService[]): string | null {
   let attribueA: string | null = null;
   if (requete?.idUtilisateur) {
-    attribueA = `${formatPrenom(getPrenomUtilisateurAPartirID(requete?.idUtilisateur, utilisateurs))} ${formatNom(
-      getNomUtilisateurAPartirID(requete?.idUtilisateur, utilisateurs)
-    )}`;
+    attribueA = `${utilisateurs.find(utilisateur => utilisateur.id === requete?.idUtilisateur)?.prenomNom ?? ""}`;
   } else if (requete?.idService) {
     attribueA = Service.libelleDepuisId(requete.idService, services);
   }

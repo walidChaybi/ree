@@ -1,13 +1,16 @@
 import { redirectionSelonStatutRequete } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceUtils";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { describe, expect, test } from "vitest";
-import { userDroitCOMEDEC } from "../../../mock/data/mockConnectedUserAvecDroit";
 
 describe("test NavigationApercuDelivranceUtils", () => {
+  const UTILISATEUR_CONNECTE = MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER_COMEDEC).generer();
+
   const requeteATraiter: IRequeteTableauDelivrance = {
     idRequete: "0",
     type: TypeRequete.DELIVRANCE.libelle,
@@ -19,7 +22,7 @@ describe("test NavigationApercuDelivranceUtils", () => {
   };
 
   test("QUAND la requête est au statut A TRAITER et utilisateur non autorisé, ALORS redirection vers apercurequetedelivrance", () => {
-    const url = redirectionSelonStatutRequete(userDroitCOMEDEC, requeteATraiter, "/rece/rece-ui/mesrequetes");
+    const url = redirectionSelonStatutRequete(UTILISATEUR_CONNECTE, requeteATraiter, "/rece/rece-ui/mesrequetes");
     expect(url).toEqual("/rece/rece-ui/mesrequetes/apercurequetedelivrance/0");
   });
 
@@ -31,7 +34,7 @@ describe("test NavigationApercuDelivranceUtils", () => {
   };
 
   test("QUAND la requête RDCS est au statut BROUILLON, ALORS redirection vers saisircertificatsituation", async () => {
-    const url = redirectionSelonStatutRequete(userDroitCOMEDEC, requeteBrouillon, "/rece/rece-ui/mesrequetes");
+    const url = redirectionSelonStatutRequete(UTILISATEUR_CONNECTE, requeteBrouillon, "/rece/rece-ui/mesrequetes");
     expect(url).toEqual("/rece/rece-ui/mesrequetes/saisircertificatsituation/0");
   });
 
@@ -43,7 +46,7 @@ describe("test NavigationApercuDelivranceUtils", () => {
   };
 
   test("QUAND la requête RDCS est au statut DOUBLON, ALORS redirection vers apercurequetedelivrance", async () => {
-    const url = redirectionSelonStatutRequete(userDroitCOMEDEC, requeteDoublon, "/rece/rece-ui/mesrequetes/saisirextraitcopie");
+    const url = redirectionSelonStatutRequete(UTILISATEUR_CONNECTE, requeteDoublon, "/rece/rece-ui/mesrequetes/saisirextraitcopie");
     expect(url).toEqual("/rece/rece-ui/mesrequetes/apercurequetedelivrance/0");
   });
 
@@ -55,7 +58,7 @@ describe("test NavigationApercuDelivranceUtils", () => {
   };
 
   test("QUAND la requête RDCS est au statut A VALIDER, ALORS redirection vers apercurequetetraitement", async () => {
-    const url = redirectionSelonStatutRequete(userDroitCOMEDEC, requeteAValider, "/rece/rece-ui/mesrequetes");
+    const url = redirectionSelonStatutRequete(UTILISATEUR_CONNECTE, requeteAValider, "/rece/rece-ui/mesrequetes");
     expect(url).toEqual("/rece/rece-ui/mesrequetes/apercurequetetraitement/0");
   });
 });

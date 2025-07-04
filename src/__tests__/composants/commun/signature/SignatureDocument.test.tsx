@@ -3,9 +3,9 @@ import { CONFIG_PATCH_INTEGRER_DOCUMENT_MENTION_SIGNER } from "@api/configuratio
 import { CONFIG_PATCH_STATUT_REQUETE_MISE_A_JOUR } from "@api/configurations/requete/miseAJour/PatchStatutRequeteMiseAjourConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { IDroit, IHabilitation, IProfil } from "@model/agent/Habilitation";
-import { IOfficier } from "@model/agent/IOfficier";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
+import { Perimetre } from "@model/agent/enum/Perimetre";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -15,9 +15,6 @@ import { IInformationsCarte } from "../../../../utils/Signature";
 
 describe("Test du composant SignatureDocument", () => {
   const apreSignature = vi.fn();
-  const utilisateurAvecDroitSigner = {
-    habilitations: [{ profil: { droits: [{ nom: Droit.SIGNER_MENTION } as IDroit] } as IProfil } as IHabilitation]
-  } as IOfficier;
 
   const listenerSignature = (valeurRetour: object[]) => {
     const retourSignature = (() => {
@@ -31,7 +28,15 @@ describe("Test du composant SignatureDocument", () => {
 
   const renderSnapshot = (avecUtilisateur: boolean = true): ChildNode | null => {
     const { container } = render(
-      <MockRECEContextProvider {...(avecUtilisateur ? { utilisateurConnecte: utilisateurAvecDroitSigner } : {})}>
+      <MockRECEContextProvider
+        {...(avecUtilisateur
+          ? {
+              utilisateurConnecte: MockUtilisateurBuilder.utilisateurConnecte()
+                .avecDroit(Droit.SIGNER_DELIVRANCE_DEMAT, { perimetres: [Perimetre.TOUS_REGISTRES] })
+                .generer()
+            }
+          : {})}
+      >
         <div>
           <SignatureDocument
             typeSignature="MISE_A_JOUR"

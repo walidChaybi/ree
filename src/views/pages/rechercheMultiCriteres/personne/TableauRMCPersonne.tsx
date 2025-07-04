@@ -1,7 +1,6 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
-import { officierALeDroitSurLePerimetre } from "@model/agent/IOfficier";
 import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
@@ -112,7 +111,7 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
       !dataLigne.estDataPersonne &&
       idActeInscription &&
       (DataTableauRMCPersonne.estActe(dataLigne) ||
-        officierALeDroitSurLePerimetre(Droit.CONSULTER, Perimetre.TOUS_REGISTRES, utilisateurConnecte))
+        utilisateurConnecte.estHabilitePour({ leDroit: Droit.CONSULTER, surLePerimetre: Perimetre.TOUS_REGISTRES }))
     ) {
       const nouvelEtatFenetre: IFenetreFicheActeInscription = {
         index: { value: index },

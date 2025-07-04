@@ -1,12 +1,6 @@
-import {
-  IOfficier,
-  appartientAMonServiceOuServicesParentsOuServicesFils,
-  appartientAUtilisateurConnecte,
-  appartientAUtilisateurConnecteOuPersonne,
-  provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer
-} from "@model/agent/IOfficier";
 import { IService } from "@model/agent/IService";
-import { IUtilisateur } from "@model/agent/IUtilisateur";
+import { Utilisateur, UtilisateurConnecte } from "@model/agent/Utilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { IActionOption } from "@model/requete/IActionOption";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
@@ -15,6 +9,7 @@ import { TRequeteTableau } from "@model/requete/IRequeteTableau";
 import { IRequeteTableauCreation, mappingUneRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { IRequeteTableauDelivrance, mappingUneRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { IRequeteTableauInformation, mappingUneRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
+import { Provenance } from "@model/requete/enum/Provenance";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -27,18 +22,22 @@ export const indexParamsReq = {
   Range: 3
 };
 
-export const autorisePrendreEnChargeDelivrance = (utilisateurConnecte: IOfficier, requete: IRequeteDelivrance) => {
+export const autorisePrendreEnChargeDelivrance = (utilisateurConnecte: UtilisateurConnecte, requete: IRequeteDelivrance) => {
   return (
     TypeRequete.estDelivrance(requete.type) &&
     StatutRequete.estATraiterOuTransferee(requete.statutCourant.statut) &&
-    appartientAUtilisateurConnecteOuPersonne(utilisateurConnecte, requete.idUtilisateur) &&
-    appartientAMonServiceOuServicesParentsOuServicesFils(utilisateurConnecte, requete.idService) &&
-    provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(utilisateurConnecte, requete.provenanceRequete.provenance.libelle)
+    (!requete.idUtilisateur || utilisateurConnecte.id === requete.idUtilisateur) &&
+    [utilisateurConnecte.idService, ...utilisateurConnecte.idServicesFils, ...utilisateurConnecte.idServicesParent].includes(
+      requete.idService
+    ) &&
+    ((requete.provenanceRequete.provenance.libelle === Provenance.COMEDEC.libelle &&
+      utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER_COMEDEC })) ||
+      utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER }))
   );
 };
 
 export const autorisePrendreEnChargeReqTableauDelivrance = (
-  utilisateurConnecte: IOfficier,
+  utilisateurConnecte: UtilisateurConnecte,
   requete: IRequeteTableauDelivrance
 ): boolean => {
   const type = requete.type ? TypeRequete.getEnumFromLibelle(requete.type) : "";
@@ -46,23 +45,28 @@ export const autorisePrendreEnChargeReqTableauDelivrance = (
   const statut = StatutRequete.getEnumFromLibelle(requete.statut);
 
   return (
-    TypeRequete.estDelivrance(type) &&
-    SousTypeDelivrance.estPossibleAPrendreEnCharge(sousType) &&
-    StatutRequete.estATraiterOuTransferee(statut) &&
-    appartientAUtilisateurConnecte(utilisateurConnecte, requete.idUtilisateur) &&
-    appartientAMonServiceOuServicesParentsOuServicesFils(utilisateurConnecte, requete.idService) &&
-    provenanceCOMEDECDroitDelivrerCOMEDECouNonCOMEDECDroitDelivrer(utilisateurConnecte, requete.provenance)
+    (TypeRequete.estDelivrance(type) &&
+      SousTypeDelivrance.estPossibleAPrendreEnCharge(sousType) &&
+      StatutRequete.estATraiterOuTransferee(statut) &&
+      utilisateurConnecte.id === requete.idUtilisateur &&
+      [utilisateurConnecte.idService, ...utilisateurConnecte.idServicesFils, ...utilisateurConnecte.idServicesParent].includes(
+        requete.idService ?? ""
+      ) &&
+      requete.provenance === Provenance.COMEDEC.libelle &&
+      utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER_COMEDEC })) ||
+    utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER })
   );
 };
 
-export const autorisePrendreEnChargeReqTableauInformation = (utilisateurConnecte: IOfficier, requete: IRequeteTableauInformation) => {
+export const autorisePrendreEnChargeReqTableauInformation = (
+  utilisateurConnecte: UtilisateurConnecte,
+  requete: IRequeteTableauInformation
+) => {
   const type = requete.type ? TypeRequete.getEnumFromLibelle(requete.type) : "";
   const statut = StatutRequete.getEnumFromLibelle(requete.statut);
 
   return (
-    TypeRequete.estInformation(type) &&
-    StatutRequete.estATraiterOuTransferee(statut) &&
-    appartientAUtilisateurConnecte(utilisateurConnecte, requete.idUtilisateur)
+    TypeRequete.estInformation(type) && StatutRequete.estATraiterOuTransferee(statut) && utilisateurConnecte.id === requete.idUtilisateur
   );
 };
 
@@ -70,25 +74,31 @@ const estRequeteCreationAuStatutATraiter = (type: TypeRequete, sousType: SousTyp
   return TypeRequete.estCreation(type) && SousTypeCreation.estRCEXROuRCTDOuRCTC(sousType) && StatutRequete.estATraiter(statut);
 };
 
-export const autorisePrendreEnChargeDepuisPageCreation = (utilisateurConnecte: IOfficier, requete?: IRequeteCreation): boolean => {
+export const autorisePrendreEnChargeDepuisPageCreation = (
+  utilisateurConnecte: UtilisateurConnecte,
+  requete?: IRequeteCreation
+): boolean => {
   if (requete) {
     return (
       estRequeteCreationAuStatutATraiter(requete.type, requete.sousType, requete.statutCourant.statut) &&
-      appartientAMonServiceOuServicesParentsOuServicesFils(utilisateurConnecte, requete.idService)
+      [utilisateurConnecte.idService, ...utilisateurConnecte.idServicesParent, ...utilisateurConnecte.idServicesFils].includes(
+        requete.idService
+      )
     );
   } else {
     return false;
   }
 };
 
-export const autorisePrendreEnChargeReqTableauCreation = (requete: IRequeteTableauCreation, utilisateurConnecte: IOfficier): boolean => {
+export const autorisePrendreEnChargeReqTableauCreation = (
+  requete: IRequeteTableauCreation,
+  utilisateurConnecte: UtilisateurConnecte
+): boolean => {
   const type = requete.type ? TypeRequete.getEnumFromLibelle(requete.type) : "";
   const sousType = SousTypeCreation.getEnumFromLibelleCourt(requete.sousType);
   const statut = StatutRequete.getEnumFromLibelle(requete.statut);
 
-  return (
-    estRequeteCreationAuStatutATraiter(type, sousType, statut) && appartientAUtilisateurConnecte(utilisateurConnecte, requete.idUtilisateur)
-  );
+  return estRequeteCreationAuStatutATraiter(type, sousType, statut) && utilisateurConnecte.id === requete.idUtilisateur;
 };
 
 export const filtrerListeActionsParSousTypes = (requete: IRequeteDelivrance, listeOptions: IActionOption[]): IActionOption[] => {
@@ -116,7 +126,7 @@ export function getIdDocumentReponseAAfficher(requete?: IRequeteDelivrance): str
 export function mappingRequetesTableau(
   resultatsRecherche: any,
   mappingSupplementaire: boolean,
-  utilisateurs: IUtilisateur[],
+  utilisateurs: Utilisateur[],
   services: IService[]
 ): TRequeteTableau[] {
   return resultatsRecherche?.map((requete: TRequeteTableau) => {

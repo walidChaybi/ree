@@ -1,15 +1,9 @@
-import {
-  IComposerDocumentFinalApiHookParams,
-  useComposerDocumentFinalApiHook
-} from "@hook/acte/ComposerDocumentFinalApiHook";
-import {
-  IIntegrerActeSigneApiHookParams,
-  useIntegrerActeSigneApiHook
-} from "@hook/acte/IntegrerActeSigneApiHook";
+import { IComposerDocumentFinalApiHookParams, useComposerDocumentFinalApiHook } from "@hook/acte/ComposerDocumentFinalApiHook";
+import { IIntegrerActeSigneApiHookParams, useIntegrerActeSigneApiHook } from "@hook/acte/IntegrerActeSigneApiHook";
 import useMettreAJourStatutApresSignatureApiHook, {
   IMettreAJourStatutApresSignatureParams
 } from "@hook/requete/MettreAJourStatutApresSignatureApiHook";
-import { IOfficier } from "@model/agent/IOfficier";
+import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import { useState } from "react";
 import useComposerEtIntegrerDocumentFinalHook, {
@@ -24,32 +18,18 @@ export const useSignatureCreationEtablisementHook = (
   idRequete?: string,
   idSuiviDossier?: string
 ): IResultatComposerDocumentFinalHook => {
-  const [composerDocumentFinalParams, setComposerDocumentFinalParams] =
-    useState<IComposerDocumentFinalApiHookParams>();
-  const [integrerActeSigneParams, setIntegrerActeSigneParams] =
-    useState<IIntegrerActeSigneApiHookParams>();
-  const [
-    mettreAJourStatutApresSignatureParams,
-    setMettreAJourStatutApresSignatureParams
-  ] = useState<IMettreAJourStatutApresSignatureParams>();
+  const [composerDocumentFinalParams, setComposerDocumentFinalParams] = useState<IComposerDocumentFinalApiHookParams>();
+  const [integrerActeSigneParams, setIntegrerActeSigneParams] = useState<IIntegrerActeSigneApiHookParams>();
+  const [mettreAJourStatutApresSignatureParams, setMettreAJourStatutApresSignatureParams] =
+    useState<IMettreAJourStatutApresSignatureParams>();
 
-  const [
-    composerDocumentFinalResultat,
-    reinitialiserComposerDocumentFinalResultat
-  ] = useComposerDocumentFinalApiHook(composerDocumentFinalParams);
-  const {
-    codeReponseResultat: codeReponseIntegrerActeSigne,
-    reinitialiserParamsApiHook: reinitialiserCodeReponseIntegrerActeSigne
-  } = useIntegrerActeSigneApiHook(integrerActeSigneParams);
-  const mettreAJourStatutApresSignatureResultat =
-    useMettreAJourStatutApresSignatureApiHook(
-      mettreAJourStatutApresSignatureParams
-    );
+  const [composerDocumentFinalResultat, reinitialiserComposerDocumentFinalResultat] =
+    useComposerDocumentFinalApiHook(composerDocumentFinalParams);
+  const { codeReponseResultat: codeReponseIntegrerActeSigne, reinitialiserParamsApiHook: reinitialiserCodeReponseIntegrerActeSigne } =
+    useIntegrerActeSigneApiHook(integrerActeSigneParams);
+  const mettreAJourStatutApresSignatureResultat = useMettreAJourStatutApresSignatureApiHook(mettreAJourStatutApresSignatureParams);
 
-  const handleComposerDocumentFinal = (
-    document: string,
-    informationsCarte: IInfosCarteSignature
-  ): void => {
+  const handleComposerDocumentFinal = (document: string, informationsCarte: IInfosCarteSignature): void => {
     setComposerDocumentFinalParams({
       idActe,
       issuerCertificat: informationsCarte.issuerCertificat,
@@ -60,14 +40,14 @@ export const useSignatureCreationEtablisementHook = (
   const handleIntegrerDocumentSigne = (
     document: string,
     informationsCarte: IInfosCarteSignature,
-    utilisateurConnecte: IOfficier
+    utilisateurConnecte: UtilisateurConnecte
   ) => {
     if (idActe && utilisateurConnecte) {
       setIntegrerActeSigneParams({
         idActe,
         document,
         infosCarteSignature: informationsCarte,
-        modeAuthentification: utilisateurConnecte.modeAuthentification
+        modeAuthentification: "AROBAS_MDP"
       });
     }
   };
@@ -79,28 +59,23 @@ export const useSignatureCreationEtablisementHook = (
     });
   };
 
-  const composerDocumentApresSignature: ISuccesSignatureEtAppelApi<
-    Exclude<typeof composerDocumentFinalResultat, undefined>
-  > = {
+  const composerDocumentApresSignature: ISuccesSignatureEtAppelApi<Exclude<typeof composerDocumentFinalResultat, undefined>> = {
     onSuccesSignatureAppNative: handleComposerDocumentFinal,
     reinitialiserParamsApiHook: reinitialiserComposerDocumentFinalResultat,
     resultatApiHook: composerDocumentFinalResultat
   };
 
-  const integrerDocumentApresSignature: ISuccesSignatureEtAppelApi<
-    Exclude<typeof codeReponseIntegrerActeSigne, undefined>
-  > = {
+  const integrerDocumentApresSignature: ISuccesSignatureEtAppelApi<Exclude<typeof codeReponseIntegrerActeSigne, undefined>> = {
     onSuccesSignatureAppNative: handleIntegrerDocumentSigne,
     reinitialiserParamsApiHook: reinitialiserCodeReponseIntegrerActeSigne,
     resultatApiHook: codeReponseIntegrerActeSigne
   };
 
-  const mettreAJourStatutApresIntegration: IMettreAJourStatutRequeteApresIntegration =
-    {
-      resultatApiHook: mettreAJourStatutApresSignatureResultat,
-      handleSetParamsApiHook: handleMiseAJourStatutRequeteApresIntegration,
-      handleMiseAJourReussie: redirectionApresSuccesTraitementSignature
-    };
+  const mettreAJourStatutApresIntegration: IMettreAJourStatutRequeteApresIntegration = {
+    resultatApiHook: mettreAJourStatutApresSignatureResultat,
+    handleSetParamsApiHook: handleMiseAJourStatutRequeteApresIntegration,
+    handleMiseAJourReussie: redirectionApresSuccesTraitementSignature
+  };
 
   return useComposerEtIntegrerDocumentFinalHook(
     composerDocumentApresSignature,

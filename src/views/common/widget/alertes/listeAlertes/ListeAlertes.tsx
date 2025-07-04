@@ -1,7 +1,8 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE } from "@model/agent/IOfficier";
+import { Droit } from "@model/agent/enum/Droit";
+import { Perimetre } from "@model/agent/enum/Perimetre";
 import { Alerte, IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
@@ -33,10 +34,16 @@ export const ListeAlertes: React.FC<ListeAlertesProps> = ({ alertes, displayRefe
   const { utilisateurs, utilisateurConnecte } = useContext(RECEContextData);
 
   const onClick = (alerte: IAlerte): void => {
-    if (officierDroitDelivrerSurLeTypeRegistreOuDroitMEAE(utilisateurConnecte, idTypeRegistre)) {
+    if (
+      utilisateurConnecte.estHabilitePour({ unDesDroits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC], pourIdTypeRegistre: idTypeRegistre }) ||
+      utilisateurConnecte.estHabilitePour({
+        unDesDroits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC],
+        surLePerimetre: Perimetre.TOUS_REGISTRES
+      })
+    ) {
       setPopinSupprimerAlerteState({
-        idAlerteActe: alerte?.id || "",
-        idActe: alerte?.idActe || "",
+        idAlerteActe: alerte?.id ?? "",
+        idActe: alerte?.idActe ?? "",
         isOpen: true
       });
     } else {

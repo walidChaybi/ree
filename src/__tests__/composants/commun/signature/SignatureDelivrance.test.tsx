@@ -1,5 +1,4 @@
-import { IHabilitation, IProfil } from "@model/agent/Habilitation";
-import { IOfficier } from "@model/agent/IOfficier";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IRegistre } from "@model/etatcivil/acte/IRegistre";
@@ -98,15 +97,9 @@ describe("Test du composant Signature délivrance", () => {
     render(
       <MockRECEContextProvider
         utilisateurConnecte={
-          {
-            habilitations: avecDroit
-              ? [
-                  {
-                    profil: { droits: [{ idDroit: "id", nom: Droit.SIGNER_DELIVRANCE_DEMAT }] } as IProfil
-                  } as IHabilitation
-                ]
-              : []
-          } as unknown as IOfficier
+          avecDroit
+            ? MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.SIGNER_DELIVRANCE_DEMAT).generer()
+            : MockUtilisateurBuilder.utilisateurConnecte().generer()
         }
       >
         <SignatureDelivrance

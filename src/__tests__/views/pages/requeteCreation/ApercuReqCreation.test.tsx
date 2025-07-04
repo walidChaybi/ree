@@ -1,5 +1,3 @@
-import { mappingOfficier } from "@model/agent/IOfficier";
-import { mapHabilitationsUtilisateur } from "@model/agent/IUtilisateur";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { ApercuRequeteEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSimple/ApercuRequeteEtablissementSimplePage";
 import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
@@ -11,18 +9,11 @@ import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
-import IHabilitationDto from "../../../../dto/etatcivil/agent/IHabilitationDto";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 import { TYPE_PIECE_JUSTIFICATIVE } from "../../../mock/data/NomenclatureTypePieceJustificative";
-import { resultatHeaderUtilistateurLeBiannic, resultatRequeteUtilistateurLeBiannic } from "../../../mock/data/mockConnectedUserAvecDroit";
 
 describe("Test ApercuReqCreation", () => {
   TypePieceJustificative.init(TYPE_PIECE_JUSTIFICATIVE);
-
-  let utilisateurConnecte = mappingOfficier(resultatHeaderUtilistateurLeBiannic, resultatRequeteUtilistateurLeBiannic.data);
-  utilisateurConnecte.habilitations = mapHabilitationsUtilisateur(
-    resultatRequeteUtilistateurLeBiannic.data.habilitations as unknown as IHabilitationDto[]
-  );
 
   test("renders VoletPiecesJustificatives Etablissement", async () => {
     const router = createTestingRouter(

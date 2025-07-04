@@ -54,7 +54,7 @@ export const BoutonTransmettreAValideur: React.FC<BoutonTransmettreAValideurProp
         onValidate={(valeurs: ITransfertPopinForm) => onValidate(valeurs.optionChoisie, valeurs.texte)}
         open={open}
         onClose={() => setOpen(false)}
-        options={listeValideurToOptions(utilisateurs, utilisateurConnecte?.idUtilisateur)}
+        options={listeValideurToOptions(utilisateurs, utilisateurConnecte.id)}
         titre="Transmettre à valideur"
         placeholder="Pour vérification"
         libelleAvantTexte="Message pour valideur :"

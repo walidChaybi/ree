@@ -1,4 +1,4 @@
-import { getServicesAsOptions, listeUtilisateursToOptionsBis } from "@composant/menuTransfert/MenuTransfertUtil";
+import { listeUtilisateursToOptionsBis } from "@composant/menuTransfert/MenuTransfertUtil";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { faCircleXmark, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,7 +10,6 @@ import { Provenance } from "@model/requete/enum/Provenance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import Button from "@mui/material/Button";
-import { getLibelle } from "@util/Utils";
 import { ChampRechercheField } from "@widget/formulaire/champRecherche/ChampRechercheField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { Formik } from "formik";
@@ -54,19 +53,19 @@ export const FiltreServiceRequeteDelivranceForm: React.FC<IFiltreServiceRequeteD
         {({ values, handleReset }) => (
           <div className="container">
             <SelectField
-              label={getLibelle("Sous-Type")}
+              label={"Sous-Type"}
               name="sousType"
               options={SousTypeDelivrance.getAllEnumsAsOptions()}
             />
             <SelectField
               name="provenance"
-              label={getLibelle("Provenance")}
+              label={"Provenance"}
               options={Provenance.getAllEnumsAsOptions()}
             />
             <ChampRechercheField
               componentName="filtreAttribuerAAgent"
               name="attribueA"
-              label={getLibelle("Attribué à un agent")}
+              label={"Attribué à un agent"}
               options={listeUtilisateursToOptionsBis(
                 TypeRequete.DELIVRANCE,
                 SousTypeDelivrance.RDC,
@@ -79,12 +78,12 @@ export const FiltreServiceRequeteDelivranceForm: React.FC<IFiltreServiceRequeteD
             <ChampRechercheField
               componentName="filtreAttribuerAuService"
               name="attribueAuService"
-              label={getLibelle("Attribué à un service")}
-              options={getServicesAsOptions(utilisateurConnecte)}
+              label={"Attribué à un service"}
+              options={utilisateurConnecte.optionsServicesFils}
             />
             <SelectField
               name="statut"
-              label={getLibelle("Statut")}
+              label={"Statut"}
               options={FILTRES_SERVICE_STATUTS_REQUETE_DELIVRANCE}
             />
             <Button

@@ -12,30 +12,26 @@ interface IPageRequetesServiceConsulaireProps {
 
 const PageRequetesServiceConsulaire: React.FC<IPageRequetesServiceConsulaireProps> = () => {
   useTitreDeLaFenetre("Espace consulaire");
-  const { utilisateurConnecte, utilisateurs } = useContext(RECEContextData);
+  const { utilisateurs } = useContext(RECEContextData);
 
   return (
     <div>
-      {utilisateurConnecte && (
-        <>
-          {!utilisateurs && <PageChargeur />}
-          <OngletsLien
-            liens={[
-              {
-                libelle: "Mes requêtes consulaires",
-                url: URL_MES_REQUETES_CONSULAIRE
-              },
-              {
-                libelle: "Les requêtes consulaires de mon service"
-              }
-            ]}
-          />
+      {!utilisateurs && <PageChargeur />}
+      <OngletsLien
+        liens={[
+          {
+            libelle: "Mes requêtes consulaires",
+            url: URL_MES_REQUETES_CONSULAIRE
+          },
+          {
+            libelle: "Les requêtes consulaires de mon service"
+          }
+        ]}
+      />
 
-          <BoutonsTableauConsulaire />
+      <BoutonsTableauConsulaire />
 
-          <div>RequetesServiceConsulaire</div>
-        </>
-      )}
+      <div>RequetesServiceConsulaire</div>
     </div>
   );
 };

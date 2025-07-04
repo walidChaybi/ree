@@ -1,6 +1,6 @@
 import { NavigationApercuReqCreationParams } from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
 import { ICreationActionMiseAjourStatutEtRedirectionParams } from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
-import { IOfficier } from "@model/agent/IOfficier";
+import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
@@ -12,7 +12,7 @@ export function getOnClickSurLigneTableauEspaceCreation(
   setOperationEnCours: React.Dispatch<React.SetStateAction<boolean>>,
   setParamsMiseAJour: React.Dispatch<React.SetStateAction<ICreationActionMiseAjourStatutEtRedirectionParams | undefined>>,
   setParamsCreation: React.Dispatch<React.SetStateAction<NavigationApercuReqCreationParams | undefined>>,
-  utilisateurConnecte: IOfficier
+  utilisateurConnecte: UtilisateurConnecte
 ) {
   return (idRequete: string, data: IRequeteTableauCreation[], idx: number) => {
     setOperationEnCours(true);

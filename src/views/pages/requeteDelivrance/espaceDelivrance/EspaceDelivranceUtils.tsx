@@ -1,6 +1,6 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
 import { ICreationActionMiseAjourStatutEtRedirectionParams } from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
-import { IOfficier } from "@model/agent/IOfficier";
+import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
@@ -34,7 +34,7 @@ export const miseAjourOuRedirection = (
   data: IRequeteTableauDelivrance[],
   idx: number,
   url: string,
-  utilisateurConnecte: IOfficier
+  utilisateurConnecte: UtilisateurConnecte
 ) => {
   const aPrendreEnCharge = autorisePrendreEnChargeReqTableauDelivrance(utilisateurConnecte, requeteSelect);
   const statutARevoir = requeteSelect.statut === StatutRequete.A_REVOIR.libelle;

@@ -10,7 +10,6 @@ import {
   IModifierAvancementProjetActeParams,
   useModifierAvancementSuiviDossierApiHook
 } from "@hook/requete/ModifierAvancementSuiviDossierApiHook";
-import { appartientAUtilisateurConnecte } from "@model/agent/IOfficier";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { TUuidSuiviDossierParams } from "@model/params/TUuidSuiviDossierParams";
@@ -30,7 +29,7 @@ import {
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
   URL_RECHERCHE_REQUETE
 } from "@router/ReceUrls";
-import { DEUX, UN, getLibelle } from "@util/Utils";
+import { DEUX, UN } from "@util/Utils";
 import messageManager from "@util/messageManager";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
@@ -129,7 +128,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
 
   useEffect(() => {
     if (detailRequeteState) {
-      if (!appartientAUtilisateurConnecte(utilisateurConnecte, detailRequeteState.idUtilisateur)) {
+      if (utilisateurConnecte.id !== detailRequeteState.idUtilisateur) {
         const url = getApercuSimpleUrl(location.pathname, detailRequeteState.id);
         navigate(url);
         messageManager.showWarningAndClose("Ouverture impossible. Vous n'êtes pas en charge de ce dossier");
@@ -237,7 +236,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
 
   const listeOngletsGauche: ItemListe[] = [
     {
-      titre: getLibelle("RMC"),
+      titre: "RMC",
       component: (
         <OngletRMCPersonne
           resultatRMCPersonne={resultatRMCAutoPersonne ?? []}
@@ -254,7 +253,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
       index: 0
     },
     {
-      titre: getLibelle("Pièces justificatives / Annexes"),
+      titre: "Pièces justificatives / Annexes",
       component: (
         <OngletPiecesJustificatives
           rechargerRequete={rechargerRequete}
@@ -266,7 +265,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
       index: 1
     },
     {
-      titre: getLibelle("Apercu du projet"),
+      titre: "Apercu du projet",
       component: <ApercuProjet documentAAfficher={documentComposer} />,
       index: 2
     }
@@ -274,7 +273,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
 
   const listeOngletsDroit: ItemListe[] = [
     {
-      titre: getLibelle("Postulant"),
+      titre: "Postulant",
       component: (
         <>
           {titulaireProjetActe && (
@@ -284,7 +283,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
               valeursForm={getValeursPostulantForm(titulaireProjetActe)}
               avancementProjet={dossierProjetActe?.avancement}
               onSubmitSaisieProjetForm={onSubmitSaisieProjetForm}
-              affichageActualiserEtVisualiser={appartientAUtilisateurConnecte(utilisateurConnecte, requete?.idUtilisateur)}
+              affichageActualiserEtVisualiser={utilisateurConnecte.id === requete?.idUtilisateur}
             />
           )}
         </>
@@ -292,7 +291,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
       index: 0
     },
     {
-      titre: getLibelle("Echanges"),
+      titre: "Echanges",
       component: <Echanges />,
       index: 1
     }
@@ -321,9 +320,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
             <BoutonsApercuRequeteCreationEtablissement
               requete={requete}
               conditionAffichageBoutonsApercuActe={
-                ongletSelectionne === DEUX &&
-                Boolean(documentComposer) &&
-                appartientAUtilisateurConnecte(utilisateurConnecte, requete?.idUtilisateur)
+                ongletSelectionne === DEUX && Boolean(documentComposer) && utilisateurConnecte.id === requete?.idUtilisateur
               }
               avancement={dossierProjetActe?.avancement}
               estRegistreOuvert={estOuvertRegistrePapier(
@@ -356,7 +353,14 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
                   : [])
               ]}
               estOuvert={estPopinValiderProjetOuverte}
-              messages={getTextePopinValiderProjetActe(isDirty)}
+              messages={
+                isDirty
+                  ? [
+                      `Des modifications du projet d'acte ne sont pas enregistrées.`,
+                      `Veuillez actualiser le projet d'acte avant sa validation.`
+                    ]
+                  : [`Confirmez-vous la validation du projet pour envoi du BI à la SDANF ?`]
+              }
             />
           </div>
           <div className="OngletsApercuCreationEtablissement">
@@ -371,12 +375,6 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
       )}
     </div>
   );
-};
-
-const getTextePopinValiderProjetActe = (formIsDirty: boolean): string[] => {
-  return formIsDirty
-    ? [`Des modifications du projet d'acte ne sont pas enregistrées.`, `Veuillez actualiser le projet d'acte avant sa validation.`]
-    : [`Confirmez-vous la validation du projet pour envoi du BI à la SDANF ?`];
 };
 
 const getApercuSimpleUrl = (pathname: string, idRequete: string): string => {

@@ -1,4 +1,4 @@
-import { getServicesAsOptions, listeUtilisateursToOptionsBis } from "@composant/menuTransfert/MenuTransfertUtil";
+import { listeUtilisateursToOptionsBis } from "@composant/menuTransfert/MenuTransfertUtil";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { faCircleXmark, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -96,7 +96,7 @@ export const FiltreServiceRequeteCreationForm: React.FC<FiltreServiceRequeteCrea
               componentName="filtreAttribuerAuService"
               name="attribueAuService"
               label={"Attribué à un service"}
-              options={getServicesAsOptions(utilisateurConnecte)}
+              options={utilisateurConnecte.optionsServicesFils}
               disabled={Boolean(values.numeroDossierNational)}
             />
             <SelectField

@@ -1,5 +1,4 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { officierHabiliterPourLeDroit } from "@model/agent/IOfficier";
 import { Droit } from "@model/agent/enum/Droit";
 import { URL_ACCUEIL } from "@router/ReceUrls";
 import React, { useContext } from "react";
@@ -37,7 +36,7 @@ export const Header: React.FC<HeaderProps> = ({ onClick }) => {
       <h1>{"Registre d'État Civil Électronique"}</h1>
 
       <div className="coteDroit">
-        {officierHabiliterPourLeDroit(utilisateurConnecte, Droit.CONSULTER) && (
+        {utilisateurConnecte.estHabilitePour({ leDroit: Droit.CONSULTER }) && (
           <>
             <BoutonRechercheRmc />
             <div className="traitVerticalConteneur">

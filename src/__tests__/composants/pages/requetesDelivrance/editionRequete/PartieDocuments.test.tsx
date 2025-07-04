@@ -1,3 +1,5 @@
+import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IProvenanceRece } from "@model/requete/IProvenanceRece";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -9,7 +11,7 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, test, vi } from "vitest";
 import PartieDocuments from "../../../../../composants/pages/requetesDelivrance/editionRequete/partieDocument/PartieDocuments";
-import { elementAvecContexte, elementAvecEditionDelivranceContexte } from "../../../../__tests__utils__/testsUtil";
+import { elementAvecEditionDelivranceContexte } from "../../../../__tests__utils__/testsUtil";
 import { DOCUMENT_DELIVRANCE } from "../../../../mock/data/NomenclatureDocumentDelivrance";
 import { acte } from "../../../../mock/data/ficheEtBandeau/ficheActe";
 import requeteDelivrance from "../../../../mock/data/requeteDelivrance";
@@ -60,12 +62,14 @@ describe("Partie Documents", () => {
 
   test("La page s'affiche correctement avec l'onglet 'Courrier'", async () => {
     render(
-      elementAvecEditionDelivranceContexte(
-        <PartieDocuments
-          ongletActif={""}
-          setOngletActif={() => {}}
-        />
-      )
+      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().generer()}>
+        {elementAvecEditionDelivranceContexte(
+          <PartieDocuments
+            ongletActif={""}
+            setOngletActif={() => {}}
+          />
+        )}
+      </MockRECEContextProvider>
     );
 
     await waitFor(() => {
@@ -77,16 +81,16 @@ describe("Partie Documents", () => {
 
   test("La page affiche les onglets principaux et secondaires correctements'", async () => {
     render(
-      elementAvecContexte(
-        elementAvecEditionDelivranceContexte(
+      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().generer()}>
+        {elementAvecEditionDelivranceContexte(
           <PartieDocuments
             ongletActif={""}
             setOngletActif={() => {}}
           />,
           mockRequete,
           { ...acte, id: idActe }
-        )
-      )
+        )}
+      </MockRECEContextProvider>
     );
 
     await waitFor(() => {
