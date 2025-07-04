@@ -14,11 +14,9 @@ export interface IMiseAJourAnalyseMarginaleDto {
   }[];
 }
 
-export const CONFIG_PUT_MISE_A_JOUR_ANALYSE_MARGINALE: TConfigurationApi<
-  typeof URI,
-  IMiseAJourAnalyseMarginaleDto
-> = {
+export const CONFIG_PUT_MISE_A_JOUR_ANALYSE_MARGINALE: TConfigurationApi<typeof URI, IMiseAJourAnalyseMarginaleDto> = {
   api: ETATCIVIL_API,
   methode: "PUT",
-  uri: URI
+  uri: URI,
+  avecAxios: true
 };

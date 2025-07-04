@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Tests PartieFormulaire > Doit correspondre au snapshot onglet Analyse marginale 1`] = `
+exports[`Tests PartieFormulaire > Ajouter une mention simple, ajouter une mention liée à l'analyse marginale, modifier le formulaire et vérifier l'appel API 1`] = `
 <div
   class="w-1/2"
 >
@@ -10,10 +10,10 @@ exports[`Tests PartieFormulaire > Doit correspondre au snapshot onglet Analyse m
     <button
       class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre false m-0 h-11 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
       disabled=""
-      title="Analyse Marginale"
+      title="Mentions"
       type="button"
     >
-      Analyse Marginale
+      Mentions
     </button>
   </div>
   <div
@@ -29,601 +29,85 @@ exports[`Tests PartieFormulaire > Doit correspondre au snapshot onglet Analyse m
           <div
             class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
           >
-            <div
-              class="pb-4 pt-3"
+            <span
+              class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
             >
-              <div
-                class="grid gap-6"
+              Mention(s) ajoutée(s)
+            </span>
+            <div
+              class="grid gap-2 pt-3"
+            >
+              <span
+                class="text-start text-sm italic"
               >
-                <div>
-                  <div
-                    class="grid gap-4"
-                  >
-                    <div
-                      class="flex items-start gap-4"
-                    >
-                      <div
-                        class="flex w-full flex-col text-start"
-                      >
-                        <label
-                          aria-label="aria-label-nom"
-                          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                          for="nom"
-                        >
-                          Nom
-                          <span
-                            class="ml-1 text-rouge"
-                          >
-                            *
-                          </span>
-                        </label>
-                        <div
-                          class="relative flex rounded-md shadow-sm"
-                        >
-                          <input
-                            class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                            id="nom"
-                            maxlength="100"
-                            name="nom"
-                            value="GREENWALD"
-                          />
-                        </div>
-                      </div>
-                      <div
-                        class="flex flex-nowrap items-center gap-3 pt-8"
-                      >
-                        <label
-                          class="flex w-fit text-start cursor-default opacity-60"
-                        >
-                          <input
-                            class="cursor-default"
-                            disabled=""
-                            name="nomSecable"
-                            type="checkbox"
-                            value="false"
-                          />
-                          <span
-                            class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
-                          >
-                            Nom sécable
-                          </span>
-                        </label>
-                        <span
-                          class="flex h-6 w-6 cursor-help items-center justify-center rounded-full bg-bleu-sombre text-center font-semibold text-blanc"
-                          title="Gestion du nom sécable pour la délivrance des extraits"
-                        >
-                          ?
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="grid grid-cols-2 gap-4"
-                >
-                  <div
-                    class="flex w-full flex-col text-start w-full"
-                  >
-                    <label
-                      aria-label="aria-label-prenoms.prenom1"
-                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                      for="prenoms.prenom1"
-                    >
-                      Prénom 1
-                    </label>
-                    <div
-                      class="relative flex rounded-md shadow-sm"
-                    >
-                      <input
-                        class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                        id="prenoms.prenom1"
-                        maxlength="100"
-                        name="prenoms.prenom1"
-                        type="text"
-                        value="marie-paulita"
-                      />
-                    </div>
-                  </div>
-                  <div
-                    class="pt-[1.6rem]"
-                  >
-                    <button
-                      class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out  bg-bleu-sombre text-blanc hover:bg-bleu focus-visible:bg-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-gris-sombre disabled:cursor-not-allowed"
-                      title="Ajouter un prénom"
-                      type="button"
-                    >
-                      <div
-                        class="flex items-center gap-4 px-2"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                          data-testid="AddCircleIcon"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
-                          />
-                        </svg>
-                        <span
-                          class="font-noto-sans-ui text-sm font-bold"
-                        >
-                          Ajouter un prénom
-                        </span>
-                      </div>
-                    </button>
-                  </div>
-                  <div>
-                    <div
-                      class="flex w-full flex-col text-start w-full"
-                    >
-                      <label
-                        aria-label="aria-label-prenoms.prenom2"
-                        class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                        for="prenoms.prenom2"
-                      >
-                        Prénom 2
-                      </label>
-                      <div
-                        class="relative flex rounded-md shadow-sm"
-                      >
-                        <input
-                          class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                          id="prenoms.prenom2"
-                          maxlength="100"
-                          name="prenoms.prenom2"
-                          value="zaria"
-                        />
-                        <button
-                          class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out hover:bg-rouge focus-visible:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 disabled:cursor-not-allowed group absolute right-0 h-full rounded-l-none bg-transparent"
-                          title="Supprimer ce prénom"
-                          type="button"
-                        >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium text-rouge group-hover:text-blanc group-focus-visible:text-blanc css-i4bv87-MuiSvgIcon-root"
-                            data-testid="DeleteIcon"
-                            focusable="false"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <div
-                      class="flex w-full flex-col text-start w-full"
-                    >
-                      <label
-                        aria-label="aria-label-prenoms.prenom3"
-                        class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                        for="prenoms.prenom3"
-                      >
-                        Prénom 3
-                      </label>
-                      <div
-                        class="relative flex rounded-md shadow-sm"
-                      >
-                        <input
-                          class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                          id="prenoms.prenom3"
-                          maxlength="100"
-                          name="prenoms.prenom3"
-                          value="léna"
-                        />
-                        <button
-                          class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out hover:bg-rouge focus-visible:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 disabled:cursor-not-allowed group absolute right-0 h-full rounded-l-none bg-transparent"
-                          title="Supprimer ce prénom"
-                          type="button"
-                        >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium text-rouge group-hover:text-blanc group-focus-visible:text-blanc css-i4bv87-MuiSvgIcon-root"
-                            data-testid="DeleteIcon"
-                            focusable="false"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="flex w-full flex-col text-start champs-motif"
-                >
-                  <label
-                    aria-label="aria-label-motif"
-                    class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                    for="motif"
-                  >
-                    Motif
-                    <span
-                      class="ml-1 text-rouge"
-                    >
-                      *
-                    </span>
-                  </label>
-                  <div
-                    class="relative flex rounded-md shadow-sm"
-                  >
-                    <input
-                      class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                      id="motif"
-                      maxlength="100"
-                      name="motif"
-                      type="text"
-                      value=""
-                    />
-                  </div>
-                </div>
-              </div>
-              <div
-                class="sticky bottom-8 mt-8 flex w-full justify-between"
-              >
-                <div
-                  class="w-fit text-start"
-                >
-                  <button
-                    class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
-                    disabled=""
-                    type="button"
-                  >
-                    Annuler la saisie en cours
-                  </button>
-                </div>
-                <div
-                  class="w-fit text-end"
-                >
-                  <button
-                    class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
-                    disabled=""
-                    type="submit"
-                  >
-                    Modifier l'analyse marginale
-                  </button>
-                </div>
-              </div>
+                Aucune mention ajoutée
+              </span>
             </div>
+            <div
+              aria-atomic="true"
+              aria-live="assertive"
+              role="log"
+              style="position: absolute; width: 1px; height: 1px; margin: -1px; border: 0px; padding: 0px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); clip-path: inset(100%);"
+            />
           </div>
         </div>
       </form>
-    </div>
-    <div
-      class="undefined fixed bottom-0 right-0 pr-16 flex gap-4 py-4 undefined"
-    >
-      <button
-        class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
-        title="Valider et terminer"
-        type="button"
-      >
-        Valider et terminer
-      </button>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Tests PartieFormulaire > Doit correspondre au snapshot onglet Analyse marginale et act mise à jour 1`] = `
-<div
-  class="w-1/2"
->
-  <div
-    class="flex items-end border-0 border-b border-solid border-gris"
-  >
-    <button
-      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-blanc text-bleu-sombre hover:text-bleu hover:border-bleu focus:text-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc m-0 h-10 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
-      title="Analyse Marginale"
-      type="button"
-    >
-      Analyse Marginale
-    </button>
-  </div>
-  <div
-    class="mt-4 flex h-[calc(100vh-16rem)] flex-col overflow-y-auto"
-  >
-    <div
-      class="gap-2 py-4 hidden"
-    >
-      <form
-        action="#"
+      <div
+        class="mt-4"
       >
         <div>
           <div
             class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
           >
-            <div
-              class="pb-4 pt-3"
+            <span
+              class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
             >
-              <div
-                class="grid gap-6"
-              >
-                <div>
-                  <div
-                    class="grid gap-4"
-                  >
-                    <div
-                      class="flex items-start gap-4"
-                    >
-                      <div
-                        class="flex w-full flex-col text-start"
-                      >
-                        <label
-                          aria-label="aria-label-nom"
-                          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                          for="nom"
-                        >
-                          Nom
-                          <span
-                            class="ml-1 text-rouge"
-                          >
-                            *
-                          </span>
-                        </label>
-                        <div
-                          class="relative flex rounded-md shadow-sm"
-                        >
-                          <input
-                            class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                            id="nom"
-                            maxlength="100"
-                            name="nom"
-                            value="GREENWALD"
-                          />
-                        </div>
-                      </div>
-                      <div
-                        class="flex flex-nowrap items-center gap-3 pt-8"
-                      >
-                        <label
-                          class="flex w-fit text-start cursor-default opacity-60"
-                        >
-                          <input
-                            class="cursor-default"
-                            disabled=""
-                            name="nomSecable"
-                            type="checkbox"
-                            value="false"
-                          />
-                          <span
-                            class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
-                          >
-                            Nom sécable
-                          </span>
-                        </label>
-                        <span
-                          class="flex h-6 w-6 cursor-help items-center justify-center rounded-full bg-bleu-sombre text-center font-semibold text-blanc"
-                          title="Gestion du nom sécable pour la délivrance des extraits"
-                        >
-                          ?
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="grid grid-cols-2 gap-4"
+              Ajout d'une mention
+            </span>
+            <form
+              action="#"
+              class="grid gap-9 px-1 pt-3"
+            >
+              <div>
+                <label
+                  class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                  for="idTypeMention"
                 >
-                  <div
-                    class="flex w-full flex-col text-start w-full"
-                  >
-                    <label
-                      aria-label="aria-label-prenoms.prenom1"
-                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                      for="prenoms.prenom1"
-                    >
-                      Prénom 1
-                    </label>
-                    <div
-                      class="relative flex rounded-md shadow-sm"
-                    >
-                      <input
-                        class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                        id="prenoms.prenom1"
-                        maxlength="100"
-                        name="prenoms.prenom1"
-                        type="text"
-                        value="marie-paulita"
-                      />
-                    </div>
-                  </div>
-                  <div
-                    class="pt-[1.6rem]"
-                  >
-                    <button
-                      class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out  bg-bleu-sombre text-blanc hover:bg-bleu focus-visible:bg-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-gris-sombre disabled:cursor-not-allowed"
-                      title="Ajouter un prénom"
-                      type="button"
-                    >
-                      <div
-                        class="flex items-center gap-4 px-2"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                          data-testid="AddCircleIcon"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
-                          />
-                        </svg>
-                        <span
-                          class="font-noto-sans-ui text-sm font-bold"
-                        >
-                          Ajouter un prénom
-                        </span>
-                      </div>
-                    </button>
-                  </div>
-                  <div>
-                    <div
-                      class="flex w-full flex-col text-start w-full"
-                    >
-                      <label
-                        aria-label="aria-label-prenoms.prenom2"
-                        class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                        for="prenoms.prenom2"
-                      >
-                        Prénom 2
-                      </label>
-                      <div
-                        class="relative flex rounded-md shadow-sm"
-                      >
-                        <input
-                          class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                          id="prenoms.prenom2"
-                          maxlength="100"
-                          name="prenoms.prenom2"
-                          value="zaria"
-                        />
-                        <button
-                          class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out hover:bg-rouge focus-visible:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 disabled:cursor-not-allowed group absolute right-0 h-full rounded-l-none bg-transparent"
-                          title="Supprimer ce prénom"
-                          type="button"
-                        >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium text-rouge group-hover:text-blanc group-focus-visible:text-blanc css-i4bv87-MuiSvgIcon-root"
-                            data-testid="DeleteIcon"
-                            focusable="false"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <div
-                      class="flex w-full flex-col text-start w-full"
-                    >
-                      <label
-                        aria-label="aria-label-prenoms.prenom3"
-                        class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                        for="prenoms.prenom3"
-                      >
-                        Prénom 3
-                      </label>
-                      <div
-                        class="relative flex rounded-md shadow-sm"
-                      >
-                        <input
-                          class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                          id="prenoms.prenom3"
-                          maxlength="100"
-                          name="prenoms.prenom3"
-                          value="léna"
-                        />
-                        <button
-                          class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out hover:bg-rouge focus-visible:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 disabled:cursor-not-allowed group absolute right-0 h-full rounded-l-none bg-transparent"
-                          title="Supprimer ce prénom"
-                          type="button"
-                        >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium text-rouge group-hover:text-blanc group-focus-visible:text-blanc css-i4bv87-MuiSvgIcon-root"
-                            data-testid="DeleteIcon"
-                            focusable="false"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                  Type mention
+                </label>
                 <div
-                  class="flex w-full flex-col text-start champs-motif"
+                  class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-ka7ti6-MuiAutocomplete-root"
                 >
-                  <label
-                    aria-label="aria-label-motif"
-                    class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                    for="motif"
-                  >
-                    Motif
-                    <span
-                      class="ml-1 text-rouge"
-                    >
-                      *
-                    </span>
-                  </label>
-                  <div
-                    class="relative flex rounded-md shadow-sm"
-                  >
+                  <div>
                     <input
-                      class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                      id="motif"
-                      maxlength="100"
-                      name="motif"
+                      aria-autocomplete="list"
+                      aria-expanded="false"
+                      autocapitalize="none"
+                      autocomplete="off"
+                      class="border-1 flex w-[98%] flex-grow rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                      id=":r0:"
+                      placeholder="Recherche..."
+                      role="combobox"
+                      spellcheck="false"
                       type="text"
                       value=""
                     />
                   </div>
                 </div>
               </div>
-              <div
-                class="sticky bottom-8 mt-8 flex w-full justify-between"
-              >
-                <div
-                  class="w-fit text-start"
-                >
-                  <button
-                    class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
-                    disabled=""
-                    type="button"
-                  >
-                    Annuler la saisie en cours
-                  </button>
-                </div>
-                <div
-                  class="w-fit text-end"
-                >
-                  <button
-                    class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
-                    disabled=""
-                    type="submit"
-                  >
-                    Modifier l'analyse marginale
-                  </button>
-                </div>
-              </div>
-            </div>
+            </form>
           </div>
         </div>
-      </form>
+      </div>
     </div>
     <div
       class="undefined fixed bottom-0 right-0 pr-16 flex gap-4 py-4 undefined"
-    >
-      <button
-        class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
-        title="Valider et terminer"
-        type="button"
-      >
-        Valider et terminer
-      </button>
-    </div>
+    />
   </div>
 </div>
 `;
 
-exports[`Tests PartieFormulaire > Doit correspondre au snapshot onglet mention 1`] = `
+exports[`Tests PartieFormulaire > Mettre à jour le formulaire d'analyse marginale et s'assurer que l'appel API est correct 1`] = `
 <div
   class="w-1/2"
 >

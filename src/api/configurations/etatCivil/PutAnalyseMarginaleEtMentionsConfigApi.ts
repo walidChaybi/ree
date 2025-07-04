@@ -31,5 +31,6 @@ export interface IEnregistrerAnalyseMarginaleEtMentionDto {
 export const CONFIG_PUT_ANALYSE_MARGINALE_ET_MENTIONS: TConfigurationApi<typeof URI, IEnregistrerAnalyseMarginaleEtMentionDto> = {
   api: ETATCIVIL_API,
   methode: "PUT",
-  uri: URI
+  uri: URI,
+  avecAxios: true
 };
