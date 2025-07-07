@@ -1,4 +1,4 @@
-import { EPrepositionLieu } from "@model/etatcivil/acte/projetActe/transcription/EvenementProjetActeTranscrit";
+import { EPrepositionLieu } from "@model/etatcivil/enum/EPrepositionLieu";
 import { enumVersOptions, genererArrondissements } from "@util/Utils";
 import { getIn, useField, useFormikContext } from "formik";
 import React, { memo, useEffect, useMemo } from "react";

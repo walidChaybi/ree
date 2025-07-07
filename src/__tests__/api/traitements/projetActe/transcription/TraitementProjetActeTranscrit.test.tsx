@@ -14,8 +14,6 @@ import { act, renderHook, waitFor } from "@testing-library/react";
 import { beforeEach } from "node:test";
 import { afterEach, describe, expect, test, vi } from "vitest";
 
-const mockMettreAJourDonneesContext = vi.fn();
-
 describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
   const terminerTraitement = vi.fn();
   const appelPostProjetActeTranscription = vi.fn();
@@ -39,11 +37,13 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
         heure: "09",
         minute: "42"
       },
-      prepositionLieuNaissance: "A",
-      villeNaissance: "",
-      regionNaissance: "",
-      paysNaissance: "",
-      adresseNaissance: ""
+      lieuNaissance: {
+        preposition: "A",
+        ville: "",
+        region: "",
+        pays: "",
+        adresse: ""
+      }
     },
     declarant: {
       identite: "TIERS",

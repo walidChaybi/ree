@@ -14,7 +14,7 @@ export interface IEvenementProjetActeTranscritDto {
   heure?: number;
   minute?: number;
   neDansLeMariage?: boolean;
-  preposition?: keyof typeof EPrepositionLieu;
+  prepositionLieu?: keyof typeof EPrepositionLieu;
 }
 
 export class EvenementProjetActeTranscrit {
@@ -48,8 +48,7 @@ export class EvenementProjetActeTranscrit {
       evenement.heure,
       evenement.minute,
       evenement.neDansLeMariage,
-      evenement.preposition
+      evenement.prepositionLieu
     );
   };
 }
-export { EPrepositionLieu };

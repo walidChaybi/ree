@@ -1,4 +1,4 @@
-import { EPrepositionLieu } from "./projetActe/transcription/EvenementProjetActeTranscrit";
+import { EPrepositionLieu } from "../enum/EPrepositionLieu";
 
 export interface IAdresse {
   voie?: string;
@@ -6,5 +6,5 @@ export interface IAdresse {
   arrondissement?: string;
   region?: string;
   pays?: string;
-  preposition?: keyof typeof EPrepositionLieu;
+  prepositionLieu?: keyof typeof EPrepositionLieu;
 }

@@ -368,14 +368,14 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                 >
                   <label
                     class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                    for="titulaire.prepositionLieuNaissance"
+                    for="titulaire.lieuNaissance.preposition"
                   >
                     Préposition
                   </label>
                   <select
                     class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
-                    id="titulaire.prepositionLieuNaissance"
-                    name="titulaire.prepositionLieuNaissance"
+                    id="titulaire.lieuNaissance.preposition"
+                    name="titulaire.lieuNaissance.preposition"
                   >
                     <option
                       value="A"
@@ -403,9 +403,9 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                   class="flex w-full flex-col text-start"
                 >
                   <label
-                    aria-label="aria-label-titulaire.villeNaissance"
+                    aria-label="aria-label-titulaire.lieuNaissance.ville"
                     class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                    for="titulaire.villeNaissance"
+                    for="titulaire.lieuNaissance.ville"
                   >
                     Ville
                   </label>
@@ -414,9 +414,9 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                   >
                     <input
                       class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                      id="titulaire.villeNaissance"
+                      id="titulaire.lieuNaissance.ville"
                       maxlength="100"
-                      name="titulaire.villeNaissance"
+                      name="titulaire.lieuNaissance.ville"
                       value=""
                     />
                   </div>
@@ -425,9 +425,9 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                   class="flex w-full flex-col text-start"
                 >
                   <label
-                    aria-label="aria-label-titulaire.regionNaissance"
+                    aria-label="aria-label-titulaire.lieuNaissance.region"
                     class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                    for="titulaire.regionNaissance"
+                    for="titulaire.lieuNaissance.region"
                   >
                     État, canton, province
                   </label>
@@ -436,9 +436,9 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                   >
                     <input
                       class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                      id="titulaire.regionNaissance"
+                      id="titulaire.lieuNaissance.region"
                       maxlength="100"
-                      name="titulaire.regionNaissance"
+                      name="titulaire.lieuNaissance.region"
                       value=""
                     />
                   </div>
@@ -451,9 +451,9 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                   class="flex w-full flex-col text-start"
                 >
                   <label
-                    aria-label="aria-label-titulaire.paysNaissance"
+                    aria-label="aria-label-titulaire.lieuNaissance.pays"
                     class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                    for="titulaire.paysNaissance"
+                    for="titulaire.lieuNaissance.pays"
                   >
                     Pays
                   </label>
@@ -462,9 +462,9 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                   >
                     <input
                       class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                      id="titulaire.paysNaissance"
+                      id="titulaire.lieuNaissance.pays"
                       maxlength="100"
-                      name="titulaire.paysNaissance"
+                      name="titulaire.lieuNaissance.pays"
                       value=""
                     />
                   </div>
@@ -473,9 +473,9 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                   class="flex w-full flex-col text-start"
                 >
                   <label
-                    aria-label="aria-label-titulaire.adresseNaissance"
+                    aria-label="aria-label-titulaire.lieuNaissance.adresse"
                     class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                    for="titulaire.adresseNaissance"
+                    for="titulaire.lieuNaissance.adresse"
                   >
                     Adresse
                   </label>
@@ -484,9 +484,9 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                   >
                     <input
                       class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                      id="titulaire.adresseNaissance"
+                      id="titulaire.lieuNaissance.adresse"
                       maxlength="100"
-                      name="titulaire.adresseNaissance"
+                      name="titulaire.lieuNaissance.adresse"
                       value=""
                     />
                   </div>

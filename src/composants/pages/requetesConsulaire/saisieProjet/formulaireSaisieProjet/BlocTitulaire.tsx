@@ -1,4 +1,4 @@
-import { EPrepositionLieu } from "@model/etatcivil/acte/projetActe/transcription/EvenementProjetActeTranscrit";
+import { EPrepositionLieu } from "@model/etatcivil/enum/EPrepositionLieu";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { enumVersOptions } from "@util/Utils";
@@ -78,29 +78,29 @@ const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
 
       <div className="grid grid-cols-[100px_1fr_1fr] gap-4 pt-4">
         <ChampListeDeroulante
-          name="titulaire.prepositionLieuNaissance"
+          name="titulaire.lieuNaissance.preposition"
           libelle="Préposition"
           options={optionsPreposition}
         />
         <ChampTexte
-          name="titulaire.villeNaissance"
+          name="titulaire.lieuNaissance.ville"
           libelle="Ville"
           optionFormatage="PREMIER_MAJUSCULE"
         />
         <ChampTexte
-          name="titulaire.regionNaissance"
+          name="titulaire.lieuNaissance.region"
           libelle="État, canton, province"
         />
       </div>
 
       <div className="grid grid-cols-2 gap-4 pt-4">
         <ChampTexte
-          name="titulaire.paysNaissance"
+          name="titulaire.lieuNaissance.pays"
           libelle="Pays"
           optionFormatage="PREMIER_MAJUSCULE"
         />
         <ChampTexte
-          name="titulaire.adresseNaissance"
+          name="titulaire.lieuNaissance.adresse"
           libelle="Adresse"
         />
       </div>

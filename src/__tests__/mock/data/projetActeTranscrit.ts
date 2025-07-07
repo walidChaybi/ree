@@ -113,7 +113,7 @@ export const projetActeNaissanceDto: IProjetActeTranscritDto = {
     nom: "Garcion",
     age: 52,
     qualite: "le copain",
-    adresseDomicile: { ville: "Tunis", pays: "Tunisie", region: "", arrondissement: "" },
+    adresseDomicile: { ville: "Tunis", pays: "Tunisie", region: "", arrondissement: "", prepositionLieu: "A" },
     sansProfession: false,
     profession: undefined,
     complementDeclarant: undefined
@@ -155,7 +155,7 @@ export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
     jourEnregistrement: "15",
     moisEnregistrement: "12",
     anneeEnregistrement: "2024",
-    adresseEnregistrement: { ville: "Pekin", region: "china", pays: "Chine" },
+    adresseEnregistrement: { ville: "Pekin", region: "china", pays: "Chine", prepositionLieu: "A" },
     redacteur: "Ambassador",
     reference: "ref.2024.12.pek",
     complement: "ref.2024.12.pek",
@@ -184,7 +184,8 @@ export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
             arrondissement: "13",
             ville: "Marseille",
             region: "departement",
-            voie: "11 place du boulodrôme"
+            voie: "11 place du boulodrôme",
+            prepositionLieu: "A"
           },
           lienParente: LienParente.PARENT,
           naissance: {
@@ -198,7 +199,8 @@ export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
             pays: undefined,
             voie: undefined,
             region: undefined,
-            ville: undefined
+            ville: undefined,
+            prepositionLieu: undefined
           },
           nom: "Greenwald",
           ordre: 1,
@@ -224,7 +226,8 @@ export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
             arrondissement: undefined,
             voie: "hopital chu nantes",
             region: "loire atlantique",
-            ville: "Nantes"
+            ville: "Nantes",
+            prepositionLieu: "A"
           },
           nom: "Xi Phun Bin",
           ordre: 2,
@@ -240,6 +243,7 @@ export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
         jour: 3,
         minute: undefined,
         mois: 12,
+        prepositionLieu: "A",
         neDansLeMariage: true,
         pays: "Chine",
         voie: "Place du riz",
@@ -269,7 +273,8 @@ export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
     pays: "Chine",
     voie: "Place du riz",
     region: "China",
-    ville: "Bejin"
+    ville: "Bejin",
+    prepositionLieu: "A"
   },
   analyseMarginales: [],
   mentions: []
@@ -286,7 +291,7 @@ export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
     jourEnregistrement: "15",
     moisEnregistrement: "12",
     anneeEnregistrement: "2024",
-    adresseEnregistrement: { ville: "Pekin", region: "china", pays: "Chine" },
+    adresseEnregistrement: { ville: "Pekin", region: "china", pays: "Chine", prepositionLieu: "A" },
     redacteur: "Ambassador",
     reference: "ref.2024.12.pek",
     complement: "ref.2024.12.pek",
@@ -315,7 +320,8 @@ export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
             arrondissement: "13",
             ville: "Marseille",
             region: "departement",
-            voie: "11 place du boulodrôme"
+            voie: "11 place du boulodrôme",
+            prepositionLieu: "A"
           },
           domicileCommun: undefined,
           lienParente: LienParente.PARENT,
@@ -330,7 +336,8 @@ export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
             arrondissement: undefined,
             voie: undefined,
             region: undefined,
-            ville: undefined
+            ville: undefined,
+            prepositionLieu: undefined
           },
           nom: "Greenwald",
           ordre: 1,
@@ -355,7 +362,8 @@ export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
             arrondissement: undefined,
             voie: "hopital chu nantes",
             region: "loire atlantique",
-            ville: "Nantes"
+            ville: "Nantes",
+            prepositionLieu: "A"
           },
           nom: "Xi Phun Bin",
           ordre: 2,
@@ -375,7 +383,8 @@ export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
         pays: "Chine",
         voie: "Place du riz",
         region: "China",
-        ville: "Bejin"
+        ville: "Bejin",
+        prepositionLieu: "A"
       },
       nom: "Xi phun bin",
       nomActeEtranger: "Xi-phun bin",
@@ -401,7 +410,8 @@ export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
     pays: "Chine",
     voie: "Place du riz",
     region: "China",
-    ville: "Bejin"
+    ville: "Bejin",
+    prepositionLieu: "A"
   },
   analyseMarginales: [
     {

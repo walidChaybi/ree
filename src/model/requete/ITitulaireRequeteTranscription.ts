@@ -1,4 +1,4 @@
-import { EPrepositionLieu } from "@model/etatcivil/acte/projetActe/transcription/EvenementProjetActeTranscrit";
+import { EPrepositionLieu } from "@model/etatcivil/enum/EPrepositionLieu";
 import { IDateHeureForm } from "@model/form/commun/DateForm";
 import { TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import { INationalite } from "./INationalite";

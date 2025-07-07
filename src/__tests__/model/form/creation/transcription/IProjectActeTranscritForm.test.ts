@@ -30,11 +30,13 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
         heure: "",
         minute: ""
       },
-      prepositionLieuNaissance: "A",
-      villeNaissance: "Bejin",
-      regionNaissance: "China",
-      paysNaissance: "Chine",
-      adresseNaissance: "Place du riz"
+      lieuNaissance: {
+        preposition: "A",
+        ville: "Bejin",
+        region: "China",
+        pays: "Chine",
+        adresse: "Place du riz"
+      }
     },
     declarant: {
       identite: "PERE",
@@ -67,7 +69,8 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
           departement: "",
           arrondissement: "",
           pays: "",
-          etatProvince: ""
+          etatProvince: "",
+          preposition: "A"
         },
         sansProfession: true,
         profession: "",
@@ -78,7 +81,8 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
           departement: "departement",
           arrondissement: "13",
           pays: "",
-          etatProvince: ""
+          etatProvince: "",
+          preposition: "A"
         },
         renseignerAge: false,
         age: ""
@@ -99,7 +103,8 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
           departement: "loire atlantique",
           arrondissement: "",
           pays: "",
-          etatProvince: ""
+          etatProvince: "",
+          preposition: "A"
         },
         sansProfession: false,
         profession: "Artiste",
@@ -201,11 +206,13 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
           heure: "10",
           minute: "10"
         },
-        prepositionLieuNaissance: "A",
-        villeNaissance: "Nantes",
-        regionNaissance: "",
-        paysNaissance: "France",
-        adresseNaissance: ""
+        lieuNaissance: {
+          preposition: "A",
+          ville: "Nantes",
+          region: "",
+          pays: "France",
+          adresse: ""
+        }
       },
       parents: {
         parent1: {
@@ -345,7 +352,8 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
           etatProvince: "",
           pays: "Tunisie",
           adresse: "",
-          arrondissement: ""
+          arrondissement: "",
+          preposition: "A"
         },
         complement: ""
       },
@@ -425,11 +433,13 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
         heure: "09",
         minute: "42"
       },
-      prepositionLieuNaissance: "A",
-      villeNaissance: "",
-      regionNaissance: "",
-      paysNaissance: "",
-      adresseNaissance: ""
+      lieuNaissance: {
+        preposition: "A",
+        ville: "",
+        region: "",
+        pays: "",
+        adresse: ""
+      }
     },
     declarant: {
       identite: "TIERS",
@@ -558,7 +568,8 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
         adresseEnregistrement: {
           pays: "Chine",
           ville: "Pekin",
-          region: undefined
+          region: undefined,
+          prepositionLieu: "A"
         },
         anneeEnregistrement: "2025",
         cadreNaissance: "NE_DANS_LE_MARIAGE",
@@ -579,7 +590,8 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
           pays: "Chine",
           region: "china",
           ville: "Pekin",
-          voie: "21 jump street"
+          voie: "21 jump street",
+          prepositionLieu: undefined
         },
         age: 45,
         complementDeclarant: "Chez qui...",
@@ -606,7 +618,8 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
         pays: undefined,
         region: undefined,
         ville: undefined,
-        voie: undefined
+        voie: undefined,
+        prepositionLieu: undefined
       },
       formuleFinale: {
         autresPieces: undefined,
@@ -629,9 +642,10 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
               domicile: {
                 arrondissement: undefined,
                 voie: undefined,
-                pays: "",
+                pays: undefined,
                 ville: undefined,
-                region: ""
+                region: undefined,
+                prepositionLieu: undefined
               },
               domicileCommun: undefined,
               lienParente: LienParente.PARENT,
@@ -646,7 +660,8 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
                 arrondissement: undefined,
                 voie: undefined,
                 region: undefined,
-                ville: "Pekin"
+                ville: "Pekin",
+                prepositionLieu: undefined
               },
               nom: "Patamob",
               ordre: 1,
@@ -662,7 +677,8 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
                 pays: "France",
                 region: "loire atlantique",
                 ville: "Nantes",
-                voie: "36 tour Lu"
+                voie: "36 tour Lu",
+                prepositionLieu: undefined
               },
               domicileCommun: undefined,
               lienParente: LienParente.PARENT,
@@ -677,7 +693,8 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
                 region: "Loire atlantique",
                 ville: "Nantes",
                 arrondissement: undefined,
-                voie: undefined
+                voie: undefined,
+                prepositionLieu: undefined
               },
               nom: "Patamob",
               ordre: 2,
@@ -697,7 +714,8 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
             voie: undefined,
             neDansLeMariage: true,
             region: undefined,
-            ville: undefined
+            ville: undefined,
+            prepositionLieu: undefined
           },
           nom: "prenomUn prenomDeux prenomTrois",
           nomActeEtranger: "greenwald",

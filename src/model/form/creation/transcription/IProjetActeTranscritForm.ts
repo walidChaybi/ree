@@ -6,10 +6,7 @@ import {
   IDeclarantProjetActeTranscritDto,
   declarantTranscritDtoVide
 } from "@model/etatcivil/acte/projetActe/transcription/DeclarantProjetActeTranscrit";
-import {
-  EPrepositionLieu,
-  IEvenementProjetActeTranscritDto
-} from "@model/etatcivil/acte/projetActe/transcription/EvenementProjetActeTranscrit";
+import { IEvenementProjetActeTranscritDto } from "@model/etatcivil/acte/projetActe/transcription/EvenementProjetActeTranscrit";
 import {
   FiliationTitulaireProjetActeTranscrit,
   IFiliationTitulaireProjetActeTranscritDto
@@ -26,6 +23,7 @@ import { CadreNaissance } from "@model/etatcivil/enum/CadreNaissance";
 import { ELegalisationApostille } from "@model/etatcivil/enum/ELegalisationApostille";
 import { EModeDepot } from "@model/etatcivil/enum/EModeDepot";
 import { EPieceProduite } from "@model/etatcivil/enum/EPieceProduite";
+import { EPrepositionLieu } from "@model/etatcivil/enum/EPrepositionLieu";
 import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { LienParente } from "@model/etatcivil/enum/LienParente";
@@ -74,11 +72,13 @@ export interface ITitulaireTranscriptionForm {
   nomSecable: NomSecable;
   sexe: keyof typeof ESexe;
   dateNaissance: IDateHeureForm;
-  prepositionLieuNaissance: keyof typeof EPrepositionLieu;
-  villeNaissance: string;
-  regionNaissance: string;
-  paysNaissance: string;
-  adresseNaissance: string;
+  lieuNaissance: {
+    preposition: keyof typeof EPrepositionLieu;
+    ville: string;
+    region: string;
+    pays: string;
+    adresse: string;
+  };
 }
 
 export interface IParentTranscriptionForm {
@@ -162,11 +162,13 @@ export const ProjetActeNaissanceTranscriptionForm = {
                 },
                 true
               ),
-              prepositionLieuNaissance: titulaireProjetActe?.naissance.preposition ?? "A",
-              villeNaissance: titulaireProjetActe?.naissance.ville ?? "",
-              regionNaissance: titulaireProjetActe?.naissance.region ?? "",
-              paysNaissance: titulaireProjetActe?.naissance.pays ?? "",
-              adresseNaissance: titulaireProjetActe?.naissance.voie ?? ""
+              lieuNaissance: {
+                preposition: titulaireProjetActe?.naissance.preposition ?? "A",
+                ville: titulaireProjetActe?.naissance.ville ?? "",
+                region: titulaireProjetActe?.naissance.region ?? "",
+                pays: titulaireProjetActe?.naissance.pays ?? "",
+                adresse: titulaireProjetActe?.naissance.voie ?? ""
+              }
             },
             parents: {
               parent1: mappingParentProjetActeVersParentForm(titulaireProjetActe.filiations.parent1),
@@ -199,11 +201,13 @@ export const ProjetActeNaissanceTranscriptionForm = {
                 },
                 true
               ),
-              prepositionLieuNaissance: "A",
-              villeNaissance: titulaire?.villeNaissance ?? "",
-              regionNaissance: titulaire?.regionNaissance ?? "",
-              paysNaissance: titulaire?.paysNaissance ?? "",
-              adresseNaissance: ""
+              lieuNaissance: {
+                preposition: "A",
+                ville: titulaire?.villeNaissance ?? "",
+                region: titulaire?.regionNaissance ?? "",
+                pays: titulaire?.paysNaissance ?? "",
+                adresse: ""
+              }
             },
             parents: {
               parent1: mappingParentRequeteVersParentForm(parents?.parent1),
@@ -246,7 +250,8 @@ export const ProjetActeNaissanceTranscriptionForm = {
               : "",
           pays: projetActe?.declarant?.adresseDomicile?.pays ?? "",
           adresse: projetActe?.declarant?.adresseDomicile?.voie ?? "",
-          arrondissement: projetActe?.declarant?.adresseDomicile?.arrondissement ?? ""
+          arrondissement: projetActe?.declarant?.adresseDomicile?.arrondissement ?? "",
+          preposition: projetActe?.declarant.adresseDomicile?.prepositionLieu ?? "A"
         },
 
         complement: projetActe?.declarant.complementDeclarant ?? ""
@@ -266,7 +271,7 @@ export const ProjetActeNaissanceTranscriptionForm = {
           ville: projetActe?.acteEtranger?.adresseEnregistrement?.ville ?? "",
           etatProvince: projetActe?.acteEtranger?.adresseEnregistrement?.region ?? "",
           pays: projetActe?.acteEtranger?.adresseEnregistrement?.pays ?? "",
-          preposition: projetActe?.acteEtranger?.adresseEnregistrement?.preposition ?? "A"
+          preposition: projetActe?.acteEtranger?.adresseEnregistrement?.prepositionLieu ?? "A"
         },
         redacteur: projetActe?.acteEtranger?.redacteur ?? "",
         referenceComplement: projetActe?.acteEtranger?.reference ?? projetActe?.acteEtranger?.complement ?? ""
@@ -512,11 +517,12 @@ export const ProjetActeNaissanceTranscriptionForm = {
       jour: Number(valeursSaisies.titulaire?.dateNaissance?.jour) || undefined,
       heure: valeursSaisies.titulaire?.dateNaissance?.heure ? Number(valeursSaisies.titulaire.dateNaissance.heure) : undefined,
       minute: valeursSaisies.titulaire?.dateNaissance?.minute ? Number(valeursSaisies.titulaire.dateNaissance.minute) : undefined,
-      pays: valeursSaisies.titulaire?.paysNaissance || undefined,
-      ville: valeursSaisies.titulaire?.villeNaissance || undefined,
-      region: valeursSaisies.titulaire?.regionNaissance || undefined,
-      voie: valeursSaisies.titulaire?.adresseNaissance || undefined,
-      neDansLeMariage: true
+      pays: valeursSaisies.titulaire?.lieuNaissance.pays || undefined,
+      ville: valeursSaisies.titulaire?.lieuNaissance.ville || undefined,
+      region: valeursSaisies.titulaire?.lieuNaissance.region || undefined,
+      voie: valeursSaisies.titulaire?.lieuNaissance.adresse || undefined,
+      neDansLeMariage: true,
+      prepositionLieu: getPrepositionLieu(valeursSaisies.titulaire.lieuNaissance)
     };
 
     return {
@@ -588,11 +594,12 @@ const localisationVersAdresse = (domicile: ILocalisation | undefined): IAdresse 
   if (LieuxUtils.estPaysInconnu(domicile?.typeLieu)) return null;
 
   return {
-    ville: domicile?.ville || undefined,
+    ville: domicile?.ville ?? undefined,
     arrondissement: (LieuxUtils.estPaysFrance(domicile?.typeLieu) && domicile?.arrondissement) || undefined,
     voie: domicile?.adresse ?? undefined,
     region: getRegionDomicile(domicile) ?? undefined,
-    pays: (LieuxUtils.estPaysFrance(domicile?.typeLieu) ? "France" : domicile?.pays) ?? undefined
+    pays: (LieuxUtils.estPaysFrance(domicile?.typeLieu) ? "France" : domicile?.pays) ?? undefined,
+    prepositionLieu: (domicile && getPrepositionLieu(domicile)) || undefined
   };
 };
 
@@ -641,13 +648,14 @@ const mapFiliationDomicile = (parentForm: IParentTranscriptionForm): IAdresse =>
   const lieuDomicileEstFrance = LieuxUtils.estPaysFrance(parentForm.domicile?.typeLieu);
 
   return {
-    pays: (lieuDomicileConnu && (lieuDomicileEstFrance ? EtrangerFrance.FRANCE.libelle : parentForm.domicile?.pays)) || "",
+    pays: (lieuDomicileConnu && (lieuDomicileEstFrance ? EtrangerFrance.FRANCE.libelle : parentForm.domicile?.pays)) || undefined,
     ville: (lieuDomicileConnu && parentForm.domicile?.ville) || undefined,
-    region: getRegionDomicile(parentForm.domicile),
+    region: getRegionDomicile(parentForm.domicile) || undefined,
     arrondissement:
       (lieuDomicileEstFrance && LieuxUtils.estVilleMarseilleLyonParis(parentForm.domicile?.ville) && parentForm.domicile?.arrondissement) ||
       undefined,
-    voie: (lieuDomicileConnu && parentForm.domicile?.adresse) || undefined
+    voie: (lieuDomicileConnu && parentForm.domicile?.adresse) || undefined,
+    prepositionLieu: getPrepositionLieu(parentForm.domicile)
   };
 };
 
@@ -662,6 +670,11 @@ const getRegionDomicile = (domicile?: ILocalisation): string => {
     default:
       return "";
   }
+};
+
+const getPrepositionLieu = (champsLocalisation: ILocalisation): keyof typeof EPrepositionLieu | undefined => {
+  const { departement, etatProvince, ville, pays, preposition } = champsLocalisation;
+  return ((departement || etatProvince || ville || pays) && preposition) || undefined;
 };
 
 const mapFiliationNaissance = (parentForm: IParentTranscriptionForm): IEvenementProjetActeTranscritDto => {
@@ -681,6 +694,7 @@ const mapFiliationNaissance = (parentForm: IParentTranscriptionForm): IEvenement
         parentForm.lieuNaissance?.arrondissement) ||
       undefined,
     region: getRegionNaissanceFiliation(parentForm),
+    prepositionLieu: getPrepositionLieu(parentForm.lieuNaissance),
     pays: (lieuNaissanceConnu && (lieuNaissanceEstFrance ? EtrangerFrance.FRANCE.libelle : parentForm.lieuNaissance?.pays)) || undefined,
     voie: (lieuNaissanceConnu && parentForm.lieuNaissance?.adresse) || undefined,
     departement:
@@ -743,7 +757,8 @@ const mapActeEtranger = (projetActe: IProjetActeTranscritForm): IActeEtrangerDto
     adresseEnregistrement: {
       ville: projetActe.acteEtranger.lieuEnregistrement?.ville || undefined,
       region: projetActe.acteEtranger.lieuEnregistrement?.etatProvince || undefined,
-      pays: projetActe.acteEtranger.lieuEnregistrement?.pays || undefined
+      pays: projetActe.acteEtranger.lieuEnregistrement?.pays || undefined,
+      prepositionLieu: getPrepositionLieu(projetActe.acteEtranger.lieuEnregistrement)
     },
     redacteur: projetActe.acteEtranger?.redacteur || undefined,
     reference: projetActe.acteEtranger?.referenceComplement || undefined,
@@ -853,7 +868,7 @@ const mappingParentProjetActeVersParentForm = (
     profession: parentProjetActe?.profession ?? "",
     domicile: {
       typeLieu: estDomicileFranceOuEtranger,
-      preposition: parentProjetActe?.domicile?.preposition ?? "A",
+      preposition: parentProjetActe?.domicile?.prepositionLieu ?? "A",
       ville: parentProjetActe?.domicile?.ville ?? "",
       adresse: parentProjetActe?.domicile?.voie ?? "",
       departement: estDomicileFranceOuEtranger === "France" ? parentProjetActe?.domicile?.region : "",
