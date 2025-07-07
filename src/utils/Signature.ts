@@ -1,4 +1,6 @@
 import { ModeSignature, ModeSignatureUtil } from "@model/requete/ModeSignature";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { gestionnaireSignatureFlag } from "@util/signatureFlag/gestionnaireSignatureFlag";
 import dayjs from "dayjs";
 import DOCUMENT_VALIDE from "../ressources/DocumentSigneValide";
@@ -114,7 +116,10 @@ const ModeDeveloppement = {
     erreur: "2222"
   } as { [cle: string]: string },
 
-  ignorer: (codePin: string) => process.env.NODE_ENV !== "development" || !Object.values(ModeDeveloppement.CODES_PIN).includes(codePin),
+  ignorer: (codePin: string) =>
+    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_SIMULER_SIGNATURE)
+      ? !Object.values(ModeDeveloppement.CODES_PIN).includes(codePin)
+      : true,
 
   reponseRecupererInformations: (recupereInformationParams: IRecupererInformationsParams) => {
     if (ModeDeveloppement.ignorer(recupereInformationParams.parametres.codePin)) {
