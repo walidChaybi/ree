@@ -337,6 +337,13 @@ exports[`Le formulaire s'affiche correctement 1`] = `
           <button
             class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-blanc text-bleu-sombre hover:text-bleu hover:border-bleu focus:text-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
             disabled=""
+            type="button"
+          >
+            Rappel critères
+          </button>
+          <button
+            class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-blanc text-bleu-sombre hover:text-bleu hover:border-bleu focus:text-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
+            disabled=""
             type="reset"
           >
             Réinitialiser les critères
@@ -348,21 +355,6 @@ exports[`Le formulaire s'affiche correctement 1`] = `
           >
             Rechercher
           </button>
-        </div>
-        <div
-          class="BoutonsRechercheMulti"
-        >
-          <div
-            class="rappelEtReinitialiser"
-          >
-            <button
-              class="RappelBouton"
-              disabled=""
-              type="button"
-            >
-              Rappel critères
-            </button>
-          </div>
         </div>
       </div>
     </div>

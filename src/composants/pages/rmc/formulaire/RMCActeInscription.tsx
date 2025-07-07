@@ -9,7 +9,7 @@ import BoutonsRMC from "./BoutonsRMC";
 const titreForm = "Critères de recherche d'un acte et d'une inscription";
 
 interface RMCActeInscriptionProps {
-  onSubmit: (values: IRMCActeInscriptionForm) => void;
+  onSubmit: (valeursFormulaire: IRMCActeInscriptionForm) => void;
 }
 
 export const RMCActeInscription: React.FC<RMCActeInscriptionProps> = ({ onSubmit }) => {

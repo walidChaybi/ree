@@ -1,7 +1,6 @@
 import { useRMCInscriptionApiHook } from "@hook/rmcActeInscription/RMCInscriptionApiHook";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
-import messageManager, { TOASTCONTAINER_PRINCIPAL } from "@util/messageManager";
-import { stockageDonnees } from "@util/stockageDonnees";
+import messageManager from "@util/messageManager";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import {
   NB_LIGNES_PAR_APPEL_ACTE,
@@ -18,10 +17,10 @@ import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm"
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { RMCActeInscriptionResultats } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCActeInscriptionResultats";
 import { goToLinkRMC } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauCommun";
-import { getMessageSiVerificationRestrictionRmcActeInscriptionCriteresEnErreur } from "@pages/rechercheMultiCriteres/acteInscription/validation/VerificationRestrictionRmcActeInscription";
 import { IParamsTableau, PARAMS_TABLEAU_VIDE, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
 import { RMCActeInscription } from "../../composants/pages/rmc/formulaire/RMCActeInscription";
 import useFetchApi from "../../hooks/api/FetchApiHook";
+import { StockageLocal } from "../../utils/StockageLocal";
 
 interface PageRMCActeInscriptionProps {
   dansFenetreExterne: boolean;
@@ -31,7 +30,7 @@ const TOASTCONTAINER_EXTERNE = "toastContainer-externe";
 
 export const PageRMCActeInscription: React.FC<PageRMCActeInscriptionProps> = ({ dansFenetreExterne }) => {
   const [opEnCours, setOpEnCours] = useState<boolean>(false);
-  const [valuesRMCActeInscription, setValuesRMCActeInscription] = useState<IRMCActeInscription>({});
+  const [valuesRMCActeInscription, setValuesRMCActeInscription] = useState<IRMCActeInscriptionForm | null>(null);
   const [nouvelleRMCActeInscription, setNouvelleRMCActeInscription] = useState<boolean>(false);
   const [criteresRechercheInscription, setCriteresRechercheInscription] = useState<ICriteresRechercheActeInscription>();
   const [dataRMCActe, setDataRMCActe] = useState<ResultatRMCActe[] | null>(null);
@@ -44,7 +43,6 @@ export const PageRMCActeInscription: React.FC<PageRMCActeInscriptionProps> = ({ 
   const tableauResultatRef = useRef<HTMLDivElement | null>(null);
 
   const { dataRMCInscription, dataTableauRMCInscription } = useRMCInscriptionApiHook(criteresRechercheInscription);
-
   const { appelApi: getRMCActe, enAttenteDeReponseApi: enAttenteRMCActe } = useFetchApi(CONFIG_POST_RMC_ACTE);
 
   const resultatRMCFicheInscription = useRMCInscriptionApiHook(criteresRechercheFicheInscription);
@@ -57,8 +55,8 @@ export const PageRMCActeInscription: React.FC<PageRMCActeInscriptionProps> = ({ 
     }
   }, []);
 
-  const appelApiRMCActe = useCallback((valeursRMCActeInscription: IRMCActeInscription, range: string, ficheIdentifiant?: string) => {
-    const criteres = mappingCriteres(valeursRMCActeInscription);
+  const appelApiRMCActe = useCallback((valeursformulaire: IRMCActeInscriptionForm, range: string, ficheIdentifiant?: string) => {
+    const criteres = mappingCriteres(valeursformulaire as unknown as IRMCActeInscription);
 
     if (!rmcActeAutorisee(criteres)) {
       setDataRMCActe([]);
@@ -86,9 +84,7 @@ export const PageRMCActeInscription: React.FC<PageRMCActeInscriptionProps> = ({ 
 
   const setRangeActe = useCallback(
     (range: string) => {
-      if (valuesRMCActeInscription && range !== "") {
-        appelApiRMCActe(valuesRMCActeInscription, range);
-      }
+      if (valuesRMCActeInscription && range !== "") appelApiRMCActe(valuesRMCActeInscription, range);
     },
     [valuesRMCActeInscription]
   );
@@ -96,7 +92,7 @@ export const PageRMCActeInscription: React.FC<PageRMCActeInscriptionProps> = ({ 
   const setRangeInscription = (range: string) => {
     if (valuesRMCActeInscription && range !== "") {
       setCriteresRechercheInscription({
-        valeurs: valuesRMCActeInscription,
+        valeurs: valuesRMCActeInscription as unknown as IRMCActeInscription,
         range,
         onErreur: () => setOpEnCours(false),
         onFinTraitement: () => setOpEnCours(false)
@@ -113,13 +109,12 @@ export const PageRMCActeInscription: React.FC<PageRMCActeInscriptionProps> = ({ 
     },
     [valuesRMCActeInscription]
   );
-
   const getLignesSuivantesOuPrecedentesInscription = useCallback(
     (ficheIdentifiant: string, lien: string) => {
       const range = goToLinkRMC(lien);
       if (valuesRMCActeInscription && range) {
         setCriteresRechercheFicheInscription({
-          valeurs: valuesRMCActeInscription,
+          valeurs: valuesRMCActeInscription as unknown as IRMCActeInscription,
           range,
           ficheIdentifiant
         });
@@ -128,30 +123,22 @@ export const PageRMCActeInscription: React.FC<PageRMCActeInscriptionProps> = ({ 
     [valuesRMCActeInscription]
   );
 
-  const onSubmitRMCActeInscription = useCallback(
-    (valeurs: IRMCActeInscriptionForm) => {
-      //** Le refacto s'arrête ici pour l'instant, pour retirer le as il faut attendre la tâche de refacto technique de la soumission du formulaire RMC */
-      const values = valeurs as unknown as IRMCActeInscription;
-      const messageErreur = getMessageSiVerificationRestrictionRmcActeInscriptionCriteresEnErreur(values);
-      if (messageErreur) {
-        messageManager.showErrorAndClose(messageErreur, dansFenetreExterne ? TOASTCONTAINER_EXTERNE : TOASTCONTAINER_PRINCIPAL);
-      } else {
-        setOpEnCours(true);
-        setNouvelleRMCActeInscription(true);
-        setValuesRMCActeInscription(values);
-        appelApiRMCActe(values, `0-${NB_LIGNES_PAR_APPEL_ACTE}`);
-        setCriteresRechercheInscription({
-          valeurs: values,
-          range: `0-${NB_LIGNES_PAR_APPEL_INSCRIPTION}`,
-          onErreur: () => setOpEnCours(false),
-          onFinTraitement: () => setOpEnCours(false)
-        });
-        stockageDonnees.stockerCriteresRMCActeInspt(values);
-        setNouvelleRMCActeInscription(false);
-      }
-    },
-    [dansFenetreExterne]
-  );
+  const onSubmitRMCActeInscription = async (valeurs: IRMCActeInscriptionForm) => {
+    StockageLocal.stocker("CRITERES_RMC_ACTE_INSCRIPTION", valeurs);
+    appelApiRMCActe(valeurs, `0-${NB_LIGNES_PAR_APPEL_ACTE}`);
+
+    setOpEnCours(true);
+    setNouvelleRMCActeInscription(true);
+    setValuesRMCActeInscription(valeurs);
+    setCriteresRechercheInscription({
+      valeurs: valeurs as unknown as IRMCActeInscription,
+      range: `0-${NB_LIGNES_PAR_APPEL_INSCRIPTION}`,
+      onErreur: () => setOpEnCours(false),
+      onFinTraitement: () => setOpEnCours(false)
+    });
+    setNouvelleRMCActeInscription(false);
+  };
+
   useEffect(() => {
     if (dataRMCActe && dataTableauRMCActe && dataRMCInscription && dataTableauRMCInscription)
       tableauResultatRef?.current?.scrollIntoView({ behavior: "smooth" });
@@ -159,10 +146,7 @@ export const PageRMCActeInscription: React.FC<PageRMCActeInscriptionProps> = ({ 
 
   return (
     <>
-      <OperationEnCours
-        visible={opEnCours || enAttenteRMCActe}
-        onTimeoutEnd={() => setOpEnCours(false)}
-      ></OperationEnCours>
+      <OperationEnCours visible={opEnCours || enAttenteRMCActe}></OperationEnCours>
 
       <RMCActeInscription onSubmit={onSubmitRMCActeInscription} />
 
@@ -183,8 +167,8 @@ export const PageRMCActeInscription: React.FC<PageRMCActeInscriptionProps> = ({ 
           nbLignesParAppelInscription={NB_LIGNES_PAR_APPEL_INSCRIPTION}
           getLignesSuivantesOuPrecedentesActe={getLignesSuivantesOuPrecedentesActe}
           idFicheActe={idFicheActe}
-          dataRMCFicheActe={dataRMCActe}
-          dataTableauRMCFicheActe={dataTableauRMCActe}
+          dataRMCFicheActe={dataRMCActe!}
+          dataTableauRMCFicheActe={dataTableauRMCActe!}
           getLignesSuivantesOuPrecedentesInscription={getLignesSuivantesOuPrecedentesInscription}
           idFicheInscription={resultatRMCFicheInscription?.ficheIdentifiant}
           dataRMCFicheInscription={resultatRMCFicheInscription?.dataRMCInscription}

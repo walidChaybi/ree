@@ -230,7 +230,7 @@ describe("La boutons du formulaire fonctionne correctement ", () => {
 
     MockApi.stopMock();
   });
-  test("LORSQUE l'utilisateur clique sur le bouton RECHERCHER, ALORS la soumission du formulaire s'effectue correctement", async () => {
+  test("LORSQUE l'utilisateur clique sur le bouton RAPPEL DES CRITERES, ALORS la récdupération de données pour le formulaire s'effectue correctement", async () => {
     render(<PageRMCActeInscription dansFenetreExterne={false}></PageRMCActeInscription>);
 
     const InputNom: HTMLInputElement = await screen.findByLabelText("Nom");

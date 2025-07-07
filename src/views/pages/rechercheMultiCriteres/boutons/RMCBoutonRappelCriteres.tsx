@@ -1,4 +1,3 @@
-import { stockageDonnees } from "@util/stockageDonnees";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
@@ -11,7 +10,7 @@ interface IRMCBoutonRappelCriteresPropsProps {
 export type RMCBoutonRappelCriteresProps = IRMCBoutonRappelCriteresPropsProps & FormikComponentProps;
 
 const RMCBoutonRappelCriteres: React.FC<RMCBoutonRappelCriteresProps> = props => {
-  const values = stockageDonnees.recupererCriteresRMCActeInspt();
+  const values = props.rappelCriteres();
   return (
     <button
       className="RappelBouton"
