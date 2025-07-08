@@ -54,16 +54,14 @@ export const autorisePrendreEnChargeReqTableauDelivrance = (
   }
 
   return (
-    (type === "DELIVRANCE" &&
-      SousTypeDelivranceUtils.estPossibleAPrendreEnCharge(sousType) &&
-      ["A_TRAITER", "TRANSFEREE"].includes(statut) &&
-      utilisateurConnecte.id === (requete.idUtilisateur ?? undefined) &&
-      [utilisateurConnecte.idService, ...utilisateurConnecte.idServicesParent, ...utilisateurConnecte.idServicesFils].includes(
-        requete.idService ?? ""
-      ) &&
-      requete.provenance === EProvenance.COMEDEC &&
-      utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER_COMEDEC })) ||
-    (requete.provenance !== EProvenance.COMEDEC && utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER }))
+    type === "DELIVRANCE" &&
+    SousTypeDelivranceUtils.estPossibleAPrendreEnCharge(sousType) &&
+    ["A_TRAITER", "TRANSFEREE"].includes(statut) &&
+    utilisateurConnecte.id === (requete.idUtilisateur ?? undefined) &&
+    [utilisateurConnecte.idService, ...utilisateurConnecte.idServicesParent, ...utilisateurConnecte.idServicesFils].includes(
+      requete.idService ?? ""
+    ) &&
+    utilisateurConnecte.estHabilitePour({ leDroit: requete.provenance === EProvenance.COMEDEC ? Droit.DELIVRER_COMEDEC : Droit.DELIVRER })
   );
 };
 
