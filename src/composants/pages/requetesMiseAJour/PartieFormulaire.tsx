@@ -1,7 +1,6 @@
 import { CONFIG_PUT_ANALYSE_MARGINALE_ET_MENTIONS } from "@api/configurations/etatCivil/PutAnalyseMarginaleEtMentionsConfigApi";
 import { CONFIG_PUT_MISE_A_JOUR_ANALYSE_MARGINALE } from "@api/configurations/etatCivil/PutMiseAJourAnalyseMarginaleConfigApi";
 import { TErreurApi } from "@model/api/Api";
-import { Sexe } from "@model/etatcivil/enum/Sexe";
 import AnalyseMarginaleForm from "@model/form/AnalyseMarginale/AnalyseMarginaleForm";
 import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { TPrenomsForm } from "@model/form/commun/PrenomsForm";
@@ -20,7 +19,7 @@ import OngletsBouton from "../../commun/onglets/OngletsBouton";
 import OngletsContenu from "../../commun/onglets/OngletsContenu";
 import BoutonTerminerEtSigner from "./formulaires/BoutonTerminerEtSigner";
 import BoutonValiderEtTerminer from "./formulaires/BoutonValiderEtTerminer";
-import MentionForm from "./formulaires/MentionForm";
+import MentionForm, { IInfoTitulaire } from "./formulaires/MentionForm";
 import AnalyseMarginaleFormulaire from "./formulaires/mentions/AnalyseMarginaleFormulaire/AnalyseMarginaleFormulaire";
 import ListeMentionsFormulaire from "./formulaires/mentions/ListeMentionsFormulaire/ListeMentionsFormulaire";
 
@@ -69,7 +68,7 @@ const PartieFormulaire: React.FC = () => {
   );
   const [afficherAnalyseMarginale, setAfficherAnalyseMarginale] = useState(!estMiseAJourAvecMentions);
 
-  const [sexeTitulaire, setSexeTitulaire] = useState<Sexe | null>(null);
+  const [titulaire, setTitulaire] = useState<IInfoTitulaire | null>(null);
   const [formulaireMentionEnCoursDeSaisie, setFormulaireMentionEnCoursDeSaisie] = useState<boolean>(false);
 
   const [donneesAnalyseMarginale, setDonneesAnalyseMarginale] = useState<IAnalyseMarginaleMiseAJour | null>(null);
@@ -140,8 +139,15 @@ const PartieFormulaire: React.FC = () => {
         const acteTransforme = mapActe(acteDto);
         setActe(acteTransforme);
 
-        const sexe = acteTransforme.titulaires[0]?.sexe ?? null;
-        setSexeTitulaire(sexe);
+        const titulaireRep = acteTransforme.titulaires?.[0] || {};
+
+        setTitulaire({
+          nom: titulaireRep.nom ?? "",
+          nomPartie1: titulaireRep.nomPartie1 ?? "",
+          nomPartie2: titulaireRep.nomPartie2 ?? "",
+          nomSecable: Boolean(titulaireRep.nomPartie1 && titulaireRep.nomPartie2),
+          sexe: titulaireRep.sexe ?? null
+        });
       },
       apresErreur: () => messageManager.showError("Une erreur est survenue lors de la récupération des informations de l'acte")
     });
@@ -192,7 +198,13 @@ const PartieFormulaire: React.FC = () => {
                 setMotif={setMotif}
               />
               <MentionForm
-                infoTitulaire={{ sexe: sexeTitulaire }}
+                infoTitulaire={{
+                  nom: titulaire?.nom ?? "",
+                  nomPartie1: titulaire?.nomPartie1 ?? "",
+                  nomPartie2: titulaire?.nomPartie2 ?? "",
+                  nomSecable: titulaire?.nomSecable ?? false,
+                  sexe: titulaire?.sexe ?? null
+                }}
                 setEnCoursDeSaisie={estEnCours => setFormulaireMentionEnCoursDeSaisie(estEnCours)}
               />
             </OngletsContenu>

@@ -1,3 +1,14 @@
+import { IEvenement } from "@model/etatcivil/acte/IEvenement";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { ILieuEvenement } from "@model/etatcivil/commun/ILieuEvenement";
+import { LienParente } from "@model/etatcivil/enum/LienParente";
+import { Nationalite } from "@model/etatcivil/enum/Nationalite";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { ETypeActe, TypeActe } from "@model/etatcivil/enum/TypeActe";
+import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
+import { TypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteArchiviste";
+import { IDateCompose } from "@util/DateUtils";
 import { imagePngVideBase64 } from "./ImagePng";
 
 export const idFicheActe1 = "923a10fb-0b15-452d-83c0-d24c76d1de8d";
@@ -1115,8 +1126,142 @@ export const ficheActe2 = {
     numeroProjet: "a0",
     corpsExtraitRectifications: [],
     corpsImage: null,
-    analyseMarginales: []
+    analyseMarginales: [],
+    type: ETypeActe.TEXTE,
+    origine: "origine"
   }
+};
+
+export const ficheActe3: IFicheActe = {
+  id: idFicheActe2,
+  referenceActe: "ACQ.X.1951.1.483",
+  dateCreation: undefined,
+  nature: NatureActe.NAISSANCE,
+  numero: "483",
+  numeroBisTer: "",
+  dateDerniereDelivrance: undefined,
+  dateDerniereMaj: undefined,
+  visibiliteArchiviste: TypeVisibiliteArchiviste.NON,
+  evenement: {
+    minute: 20,
+    heure: 3,
+    jour: 15,
+    mois: 9,
+    annee: 2015,
+    voie: "",
+    ville: "Seoul",
+    arrondissement: "",
+    region: "Sudogwon",
+    pays: "Corée du sud",
+    lieuReprise: ""
+  },
+  mentions: [],
+  titulaires: [
+    {
+      nom: "GREENWALD",
+      prenoms: ["marie-paulita", "zaria", "léna"],
+      ordre: 729,
+      sexe: Sexe.FEMININ,
+      naissance: {
+        minute: 0,
+        heure: 1,
+        jour: 1,
+        mois: 3,
+        annee: 1948,
+        voie: undefined,
+        ville: "Milan",
+        arrondissement: undefined,
+        region: "Lombardie",
+        pays: "Italie",
+        lieuReprise: undefined
+      },
+      profession: "POMPIER",
+      age: undefined,
+      domicile: {
+        voie: "7 Rue du Noyer",
+        ville: "Bruxelles",
+        arrondissement: undefined,
+        region: "Flandre",
+        pays: "BELGIQUE"
+      },
+      filiations: [
+        {
+          ordre: 752,
+          nom: "Sacken",
+          sexe: Sexe.MASCULIN,
+          naissance: {} as IEvenement,
+          profession: "Informaticien",
+          age: 10,
+          domicile: {
+            voie: "16 avenue des Palmiers",
+            ville: "Djibouti",
+            arrondissement: undefined,
+            region: undefined,
+            pays: "DJIBOUTI"
+          },
+          prenoms: ["Carmela", "Linzy"],
+          lienParente: LienParente.PARENT
+        }
+      ]
+    }
+  ],
+  personnes: [
+    {
+      id: "e7114c54-d00d-48ad-bbee-af2b01e2da74",
+      nom: "HU",
+      sexe: Sexe.MASCULIN,
+      nationalite: Nationalite.FRANCAISE,
+      autresNoms: [],
+      prenoms: ["Jean-Louis"],
+      autresPrenoms: ["jules", "mœry"],
+      parents: [],
+      enfants: [],
+      rcs: [],
+      rcas: [],
+      pacss: [],
+      actes: [
+        {
+          id: "b41079a3-9e8d-478c-b04c-c4c2ac47134f",
+          numero: "483",
+          nature: NatureActe.NAISSANCE,
+          referenceComplete: ""
+        }
+      ],
+      lieuNaissance: {} as ILieuEvenement,
+      dateNaissance: {} as IDateCompose
+    }
+  ],
+  estReecrit: undefined,
+  detailMariage: undefined,
+  registre: {
+    id: "e60432a7-7fb1-41d9-b6ad-a01fffbd223b",
+    famille: "ACQ",
+    pocopa: "X",
+    annee: "1951",
+    support1: "1",
+    support2: "",
+    numeroDernierActe: "4564",
+    pvOuverture: "pv_ouverture",
+    dateOuverture: new Date(1995, 11, 25),
+    pvFermeture: "pv_fermeture",
+    dateFermeture: new Date(1990, 1, 20),
+    decret2017: false,
+    type: {
+      id: "d5f36d96-f1f8-437e-8371-86dba9837339",
+      famille: TypeFamille.ACQ,
+      pocopa: "TUNIS",
+      paysPocopa: "TUNISIE",
+      dateRattachement: new Date(1993, 6, 6),
+      dateTransfertScec: new Date(1969, 2, 16),
+      gereScec: true,
+      estOuvert: true
+    }
+  },
+  corpsExtraitRectifications: [],
+  corpsImage: undefined,
+  analyseMarginales: [],
+  type: TypeActe.TEXTE,
+  origine: "origine"
 };
 
 export const idFicheActeMariage = "b41079a5-9e8d-478c-b04c-c4c2ac67134b";

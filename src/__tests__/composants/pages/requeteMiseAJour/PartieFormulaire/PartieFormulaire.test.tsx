@@ -1,14 +1,16 @@
 import { CONFIG_PUT_ANALYSE_MARGINALE_ET_MENTIONS } from "@api/configurations/etatCivil/PutAnalyseMarginaleEtMentionsConfigApi";
 import { CONFIG_PUT_MISE_A_JOUR_ANALYSE_MARGINALE } from "@api/configurations/etatCivil/PutMiseAJourAnalyseMarginaleConfigApi";
 import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
+import { CONFIG_GET_METAMODELE_TYPE_MENTION } from "@api/configurations/requete/miseAJour/GetMetamodeleTypeMentionConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
-import { ficheActe2 } from "@mock/data/ficheActe";
+import { ficheActe3 } from "@mock/data/ficheActe";
+import { MetaModeleAideSaisieMariageEnFrance } from "@mock/data/mentions";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { RouterProvider, createMemoryRouter } from "react-router";
 import { afterEach, beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
@@ -25,6 +27,7 @@ describe("Tests PartieFormulaire", () => {
     actes: ECleOngletsMiseAJour.ACTE,
     formulaires: ECleOngletsMiseAJour.MENTIONS
   };
+  const ID_TYPE_MENTION = "b03c0e14-bad0-40a7-a895-8169e2b7f38e";
 
   const activerOngletActeMisAJour = vi.fn();
   const changerOnglet = vi.fn();
@@ -95,7 +98,7 @@ describe("Tests PartieFormulaire", () => {
       CONFIG_GET_RESUME_ACTE,
       { path: { idActe: ID_ACTE }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
       {
-        data: ficheActe2.data as unknown as IFicheActe
+        data: ficheActe3 as IFicheActe
       }
     );
 
@@ -118,6 +121,14 @@ describe("Tests PartieFormulaire", () => {
       { path: { idActe: ID_ACTE } },
       {
         data: null
+      }
+    );
+
+    MockApi.deployer(
+      CONFIG_GET_METAMODELE_TYPE_MENTION,
+      { path: { idTypeMention: ID_TYPE_MENTION } },
+      {
+        data: MetaModeleAideSaisieMariageEnFrance
       }
     );
   });
@@ -185,5 +196,89 @@ describe("Tests PartieFormulaire", () => {
 
     expect(mock.history.put.length).toBe(3);
     expect(mock.history.put[2].url).toContain("/acte/mentions-et-analyse-marginale");
+  });
+
+  test("Ajouter une mention 'Mariage - en France(marie)' + validation et envoi fomulaire", async () => {
+    const snapshot = await renderSnapshot(ONGLETS_ACTIFS_MENTION, true);
+    expect(snapshot).toMatchSnapshot();
+
+    await userEvent.click(await screen.findByPlaceholderText("Recherche..."));
+    fireEvent.click(await screen.findByRole("option", { name: "1 Mariage" }));
+
+    await waitFor(() => expect(screen.getByRole("option", { name: "1-1 en France (mairie)" })).toBeDefined());
+
+    fireEvent.click(screen.getByRole("option", { name: "1-1 en France (mairie)" }));
+
+    //await waitFor(() => screen.debug);
+    await waitFor(() => expect(screen.getByText("LIEU <ÉVÉNEMENT>")).toBeDefined());
+
+    // On vérifie le remplissage de l'aide à la saisie
+    const inputVille = screen.getByRole("textbox", { name: /evenementFrance.ville/i });
+    const inputDepartement = screen.getByRole("textbox", { name: /evenementFrance.departement/i });
+    const inputNom = screen.getByRole("textbox", { name: /conjoint.nom/i });
+    const inputJourEvenement = screen.getByPlaceholderText("JJ");
+    const inputMoisEvenement = screen.getByPlaceholderText("MM");
+    const inputAnneeEvenement = screen.getByPlaceholderText("AAAA");
+    const boutonValidation = screen.getByRole("button", { name: "Ajouter mention" });
+
+    await waitFor(() => {
+      expect(inputVille).toBeDefined();
+      expect(inputDepartement).toBeDefined();
+      expect(inputNom).toBeDefined();
+      expect(inputJourEvenement).toBeDefined();
+      expect(inputMoisEvenement).toBeDefined();
+      expect(inputAnneeEvenement).toBeDefined();
+      expect(boutonValidation).toBeDefined();
+    });
+
+    // Les champs se mettent correctement en erreur
+    fireEvent.click(boutonValidation);
+
+    await waitFor(() => expect(screen.getAllByText(/⚠ La saisie du champ est obligatoire/i)).toBeDefined());
+
+    // Le remplissage du texte d'aide à la saisie fonctionne
+    await userEvent.type(inputVille, "superVille");
+    await userEvent.type(inputDepartement, "superDepartement");
+    await userEvent.type(inputJourEvenement, "12");
+    await userEvent.type(inputMoisEvenement, "09");
+    await userEvent.type(inputAnneeEvenement, "2000");
+    await userEvent.type(inputNom, "superNom");
+
+    await waitFor(() => {
+      expect(screen.getByText("superVille (superDepartement)")).toBeDefined();
+      expect(screen.getByText("le 12 septembre 2000")).toBeDefined();
+    });
+
+    // La soumission de la mention fonctionne
+    fireEvent.click(boutonValidation);
+
+    await waitFor(() => {
+      expect(screen.getByText("Marié à")).toBeDefined();
+      expect(screen.getByText("superVille (superDepartement)")).toBeDefined();
+      expect(screen.getByText("le 12 septembre 2000")).toBeDefined();
+      expect(screen.getByText("avec")).toBeDefined();
+      expect(screen.getByText("superNom")).toBeDefined();
+    });
+  });
+
+  test("S'assurer que l'appel API de recuperation d'acte est correct avec data titulaires vide ", async () => {
+    let actAvecTitulaireVide = ficheActe3;
+    actAvecTitulaireVide.titulaires = [];
+
+    MockApi.deployer(
+      CONFIG_GET_RESUME_ACTE,
+      { path: { idActe: ID_ACTE }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
+      {
+        data: actAvecTitulaireVide as IFicheActe
+      }
+    );
+
+    const snapshot = await renderSnapshot(ONGLETS_ACTIFS_MENTION, false);
+    expect(snapshot).toMatchSnapshot();
+
+    const mock = MockApi.getMock();
+
+    expect(mock.history.get.length).toBe(1);
+    expect(mock.history.get[0].url).toContain("/acte/1010/resume");
   });
 });

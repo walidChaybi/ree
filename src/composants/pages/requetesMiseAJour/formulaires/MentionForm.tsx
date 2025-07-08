@@ -5,7 +5,7 @@ import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IMetaModeleTypeMentionDto, MetaModeleTypeMention } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
 import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
-import { logError } from "@util/LogManager";
+import messageManager from "@util/messageManager";
 import { Form, Formik } from "formik";
 import { useEffect, useMemo, useState } from "react";
 import * as Yup from "yup";
@@ -21,7 +21,11 @@ import { IMentionEnCours } from "../PartieFormulaire";
 import AideALaSaisieMention from "./mentions/AideALaSaisieMentionForm";
 import ChampTypeMention from "./mentions/ChampTypeMention";
 
-interface IInfoTitulaire {
+export interface IInfoTitulaire {
+  nom: string;
+  nomPartie1: string;
+  nomPartie2: string;
+  nomSecable: boolean;
   sexe: Sexe | null;
 }
 
@@ -153,7 +157,13 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
           setMetamodeleTypeMention(modele);
           setValeurDefaut({
             ...modele.valeursInitiales(mentionModifiee?.mention.donneesAideSaisie?.champs),
-            titulaire: { sexe: infoTitulaire.sexe?.libelle ?? "" },
+            titulaire: {
+              nom: infoTitulaire.nom,
+              nomPartie1: infoTitulaire.nomPartie1,
+              nomPartie2: infoTitulaire.nomPartie2,
+              nomSecable: infoTitulaire.nomSecable,
+              sexe: infoTitulaire.sexe?.libelle ?? ""
+            },
             idTypeMention: typeMentionChoisi.id,
             texteMention: mentionModifiee?.mention.texte ?? "",
             textesEdites: mentionModifiee?.mention.donneesAideSaisie?.textesEdites ?? {},
@@ -161,9 +171,7 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
           });
         },
         apresErreur: () => {
-          logError({
-            messageUtilisateur: "Impossible de récupérer les metamodeles"
-          });
+          messageManager.showError("Impossible de récupérer les metamodeles");
           setValeurDefaut((prec: any) => ({ ...prec, texteMention: "" }));
         }
       });

@@ -7,5 +7,6 @@ const URI = "/types-mentions/:idTypeMention/metamodele-aide-a-saisie";
 export const CONFIG_GET_METAMODELE_TYPE_MENTION: TConfigurationApi<typeof URI, undefined, undefined, IMetaModeleTypeMentionDto> = {
   api: ETATCIVIL_API,
   methode: "GET",
-  uri: URI
+  uri: URI,
+  avecAxios: true
 };

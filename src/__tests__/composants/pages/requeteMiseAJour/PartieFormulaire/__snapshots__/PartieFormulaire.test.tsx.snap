@@ -1,5 +1,112 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Tests PartieFormulaire > Ajouter une mention 'Mariage - en France(marie)' + validation et envoi fomulaire 1`] = `
+<div
+  class="w-1/2"
+>
+  <div
+    class="flex items-end border-0 border-b border-solid border-gris"
+  >
+    <button
+      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre false m-0 h-11 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
+      disabled=""
+      title="Mentions"
+      type="button"
+    >
+      Mentions
+    </button>
+  </div>
+  <div
+    class="mt-4 flex h-[calc(100vh-16rem)] flex-col overflow-y-auto"
+  >
+    <div
+      class="gap-2 py-4 grid"
+    >
+      <form
+        action="#"
+      >
+        <div>
+          <div
+            class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+          >
+            <span
+              class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+            >
+              Mention(s) ajoutée(s)
+            </span>
+            <div
+              class="grid gap-2 pt-3"
+            >
+              <span
+                class="text-start text-sm italic"
+              >
+                Aucune mention ajoutée
+              </span>
+            </div>
+            <div
+              aria-atomic="true"
+              aria-live="assertive"
+              role="log"
+              style="position: absolute; width: 1px; height: 1px; margin: -1px; border: 0px; padding: 0px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); clip-path: inset(100%);"
+            />
+          </div>
+        </div>
+      </form>
+      <div
+        class="mt-4"
+      >
+        <div>
+          <div
+            class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+          >
+            <span
+              class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+            >
+              Ajout d'une mention
+            </span>
+            <form
+              action="#"
+              class="grid gap-9 px-1 pt-3"
+            >
+              <div>
+                <label
+                  class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                  for="idTypeMention"
+                >
+                  Type mention
+                </label>
+                <div
+                  class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-ka7ti6-MuiAutocomplete-root"
+                >
+                  <div>
+                    <input
+                      aria-autocomplete="list"
+                      aria-expanded="false"
+                      autocapitalize="none"
+                      autocomplete="off"
+                      class="border-1 flex w-[98%] flex-grow rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                      id=":r1:"
+                      placeholder="Recherche..."
+                      role="combobox"
+                      spellcheck="false"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="undefined fixed bottom-0 right-0 pr-16 flex gap-4 py-4 undefined"
+    />
+  </div>
+</div>
+`;
+
 exports[`Tests PartieFormulaire > Ajouter une mention simple, ajouter une mention liée à l'analyse marginale, modifier le formulaire et vérifier l'appel API 1`] = `
 <div
   class="w-1/2"
@@ -416,4 +523,10 @@ exports[`Tests PartieFormulaire > Mettre à jour le formulaire d'analyse margina
     </div>
   </div>
 </div>
+`;
+
+exports[`Tests PartieFormulaire > S'assurer que l'appel API de recuperation d'acte est correct avec data titulaires vide  1`] = `
+<h2>
+  Unexpected Application Error!
+</h2>
 `;
