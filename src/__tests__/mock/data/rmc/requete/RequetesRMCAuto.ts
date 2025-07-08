@@ -1,4 +1,4 @@
-import { IRequeteRMCAutoDto } from "@model/rmc/requete/RequeteRMCAuto";
+import { IRequeteRMCAutoDto } from "@api/configurations/requete/rmc/PostRMCAutoRequeteConfigApi";
 
 export const REQUETE_CREATION_RMC_AUTO_DTO: IRequeteRMCAutoDto<"CREATION"> = {
   id: "requeteCreation",

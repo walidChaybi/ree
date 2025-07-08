@@ -1,8 +1,5 @@
 import { getLibelle } from "@util/Utils";
-import {
-  RenderCellTitulaires,
-  RenderIconPrioriteRequete
-} from "@util/tableauRequete/TableauRequeteUtils";
+import { RenderCellTitulaires, RenderIconePrioriteRequeteRMC } from "@util/tableauRequete/TableauRequeteUtils";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 
 export enum HeaderTableauRequete {
@@ -95,7 +92,7 @@ export const dateStatutColumnHeaders = [
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.PrioriteRequete],
     title: getLibelle("Priorité"),
-    getElement: RenderIconPrioriteRequete,
+    getElement: RenderIconePrioriteRequeteRMC,
     align: "center",
     sortable: true,
     style: { width: "3rem" }

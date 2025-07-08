@@ -2,8 +2,8 @@ import { NavigationApercuReqCreationParams } from "@hook/navigationApercuRequete
 import { ICreationActionMiseAjourStatutEtRedirectionParams } from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { ESousTypeCreation, SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { URL_MES_REQUETES_CREATION } from "@router/ReceUrls";
 import { autorisePrendreEnChargeReqTableauCreation } from "@util/RequetesUtils";
 import { setParamsUseApercuCreation } from "../commun/requeteCreationUtils";
@@ -19,14 +19,20 @@ export function getOnClickSurLigneTableauEspaceCreation(
     const requeteSelect = data[idx];
     if (autorisePrendreEnChargeReqTableauCreation(requeteSelect, utilisateurConnecte)) {
       setParamsMiseAJour({
-        libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
-        statutRequete: StatutRequete.PRISE_EN_CHARGE,
+        libelleAction: EStatutRequete.PRISE_EN_CHARGE,
+        statutRequete: "PRISE_EN_CHARGE",
         requete: requeteSelect,
         urlCourante: URL_MES_REQUETES_CREATION,
-        typeRequete: TypeRequete.CREATION
+        typeRequete: "CREATION"
       });
     } else {
-      setParamsUseApercuCreation(idRequete, setParamsCreation, requeteSelect.sousType, requeteSelect.statut, requeteSelect.idUtilisateur);
+      setParamsUseApercuCreation(
+        idRequete,
+        setParamsCreation,
+        SousTypeCreation.getEnumFromLibelleCourt(requeteSelect.sousType).nom as keyof typeof ESousTypeCreation,
+        StatutRequete.getEnumFromLibelle(requeteSelect.statut).nom as keyof typeof EStatutRequete,
+        requeteSelect.idUtilisateur
+      );
     }
   };
 }

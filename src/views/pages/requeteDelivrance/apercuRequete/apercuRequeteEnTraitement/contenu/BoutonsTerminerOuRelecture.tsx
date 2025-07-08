@@ -8,7 +8,7 @@ import { IRetourValideurParams, useRetourValideurApiHook } from "@hook/requete/R
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useEffect, useState } from "react";
@@ -49,10 +49,9 @@ export const BoutonsTerminerOuRelecture: React.FC<BoutonsTerminerOuRelectureProp
     if (idActionRetour) {
       replaceUrl(navigate, getUrlPrecedente(location.pathname));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idActionRetour]);
 
-  function onClickReprise(statut: StatutRequete) {
+  const onClickReprise = (statut: keyof typeof EStatutRequete) => {
     setRegenerationParams({
       requete: props.requete,
       regenererCourrier: true,
@@ -65,7 +64,7 @@ export const BoutonsTerminerOuRelecture: React.FC<BoutonsTerminerOuRelectureProp
           requete: mappingRequeteDelivranceToRequeteTableau(props.requete)
         })
     });
-  }
+  };
 
   return (
     <>
@@ -73,11 +72,7 @@ export const BoutonsTerminerOuRelecture: React.FC<BoutonsTerminerOuRelectureProp
         <>
           {!SousTypeDelivrance.estRDCSDouRDCSC(props.requete.sousType) && (
             <BoutonDoubleSubmit
-              onClick={() =>
-                onClickReprise(
-                  props.requete.documentsReponses.some(document => document.avecCtv) ? StatutRequete.A_SIGNER : StatutRequete.A_VALIDER
-                )
-              }
+              onClick={() => onClickReprise(props.requete.documentsReponses.some(document => document.avecCtv) ? "A_SIGNER" : "A_VALIDER")}
             >
               {"Reprendre le traitement"}
             </BoutonDoubleSubmit>

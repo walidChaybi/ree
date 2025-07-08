@@ -1,3 +1,4 @@
+import { RequeteTableauRMC, TRequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 import { RMCRequeteResultats } from "@pages/rechercheMultiCriteres/requete/resultats/RMCRequeteResultats";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { render, screen } from "@testing-library/react";
@@ -13,7 +14,9 @@ test("renders Fielset Recherche Multi Critères Requêtes", () => {
         path: URL_RECHERCHE_REQUETE,
         element: (
           <RMCRequeteResultats
-            dataRMCRequete={DataRMCRequeteAvecResultat}
+            dataRMCRequete={DataRMCRequeteAvecResultat.map(requeteDto => RequeteTableauRMC.depuisDto(requeteDto, [], [])).filter(
+              (requete): requete is TRequeteTableauRMC => requete !== null
+            )}
             dataTableauRMCRequete={DataTableauRequete}
             setRangeRequete={vi.fn()}
             resetRMC={true}

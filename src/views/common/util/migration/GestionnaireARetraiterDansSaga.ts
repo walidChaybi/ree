@@ -1,9 +1,10 @@
 /* istanbul ignore file */
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { RequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 import { FeatureFlag } from "../featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "../featureFlag/gestionnaireFeatureFlag";
 
@@ -24,17 +25,12 @@ export class GestionnaireARetraiterDansSaga {
 
   public static init() {
     if (
-      !gestionnaireFeatureFlag.estActif(
-        FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
-      ) &&
+      !gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) &&
       // @ts-ignore
       !StatutRequete[A_RETRAITER]
     ) {
       // @ts-ignore
-      StatutRequete[A_RETRAITER] = new StatutRequete(
-        A_RETRAITER,
-        "A retraiter dans Saga"
-      );
+      StatutRequete[A_RETRAITER] = new StatutRequete(A_RETRAITER, "A retraiter dans Saga");
     }
   }
 
@@ -51,43 +47,28 @@ export class GestionnaireARetraiterDansSaga {
     const statut = requete.statutCourant.statut;
     const sousType = requete.sousType;
     return (
-      !gestionnaireFeatureFlag.estActif(
-        FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES
-      ) &&
-      ((SousTypeDelivrance.estRDD(sousType) &&
-        StatutRequete.estAuStatutTraiteADelivrerDematOuASigner(statut)) ||
-        (SousTypeDelivrance.estRDC(sousType) &&
-          StatutRequete.estAuStatutTraiteAImprimer(statut)))
+      !gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) &&
+      ((SousTypeDelivrance.estRDD(sousType) && StatutRequete.estAuStatutTraiteADelivrerDematOuASigner(statut)) ||
+        (SousTypeDelivrance.estRDC(sousType) && StatutRequete.estAuStatutTraiteAImprimer(statut)))
     );
   }
 
   public static possedeDocumentSigne(requete: IRequeteDelivrance) {
     // Les RDD signées au statut TRAITE_A_DELIVRER_DEMAT ne doivent pas pouvoir être retraitées dans SAGA
-    return requete.documentsReponses.find(
-      doc =>
-        doc.documentASignerElec &&
-        doc.documentASignerElec.dateSignatureElectronique
-    );
+    return requete.documentsReponses.find(doc => doc.documentASignerElec?.dateSignatureElectronique);
   }
 
-  public static estARetraiterSagaRequeteTableau(
-    requete: IRequeteTableauDelivrance
-  ) {
+  public static estARetraiterSagaRequeteTableau(requete: IRequeteTableauDelivrance | RequeteTableauRMC<"DELIVRANCE">) {
     const requeteDelivrance = {
       sousType: SousTypeDelivrance.getEnumFromLibelleCourt(requete.sousType),
       statutCourant: {
-        statut: requete.statut
-          ? StatutRequete.getEnumFromLibelle(requete.statut)
-          : undefined
+        statut: requete.statut ? StatutRequete.getEnumFromLibelle(requete.statut) : undefined
       }
     } as IRequeteDelivrance;
     return GestionnaireARetraiterDansSaga.estARetraiterSaga(requeteDelivrance);
   }
 
-  public static estARetraiterSagaStatutSousType(
-    statut?: StatutRequete,
-    sousType?: SousTypeRequete
-  ) {
+  public static estARetraiterSagaStatutSousType(statut?: StatutRequete, sousType?: SousTypeRequete) {
     const requeteDelivrance = {
       sousType,
       statutCourant: {

@@ -8,7 +8,7 @@ import { IRetourValideurParams, useRetourValideurApiHook } from "@hook/requete/R
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { getDefaultValuesCourrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
@@ -53,7 +53,7 @@ export const BoutonsTerminerOuRelecture: React.FC<BoutonsTerminerOuRelectureProp
     }
   }, [idActionRetour]);
 
-  function onClickReprise(statut: StatutRequete) {
+  function onClickReprise(statut: keyof typeof EStatutRequete) {
     setRegenerationParams({
       requete: requete,
       regenererCourrier: true,
@@ -75,11 +75,7 @@ export const BoutonsTerminerOuRelecture: React.FC<BoutonsTerminerOuRelectureProp
           {!SousTypeDelivrance.estRDCSDouRDCSC(requete.sousType) && (
             <Bouton
               styleBouton="secondaire"
-              onClick={() =>
-                onClickReprise(
-                  requete.documentsReponses.some(document => document.avecCtv) ? StatutRequete.A_SIGNER : StatutRequete.A_VALIDER
-                )
-              }
+              onClick={() => onClickReprise(requete.documentsReponses.some(document => document.avecCtv) ? "A_SIGNER" : "A_VALIDER")}
             >
               Reprendre le traitement
             </Bouton>

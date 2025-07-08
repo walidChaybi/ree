@@ -9,7 +9,7 @@ import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjou
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { useEffect, useState } from "react";
 import { useSupprimerAnciensDocumentsReponseHook } from "./SupprimerAnciensDocumentsReponseHook";
@@ -48,8 +48,8 @@ export function useDelivrerCertificatSituationHook(
     if (resultGenerationInscription) {
       if (codeDocumentDemande === ECodeDocumentDelivrance.CODE_ATTESTATION_PACS) {
         setParamsMajStatut({
-          libelleAction: StatutRequete.A_VALIDER.libelle,
-          statutRequete: StatutRequete.A_VALIDER,
+          libelleAction: EStatutRequete.A_VALIDER,
+          statutRequete: "A_VALIDER",
           requeteId: requete?.idRequete
         });
       } else {

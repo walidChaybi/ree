@@ -11,7 +11,7 @@ import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { Requete, TRequete } from "@model/requete/IRequete";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import React, { useCallback, useContext, useEffect, useState } from "react";
@@ -72,8 +72,8 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
   const onclickPrendreEnCharge = useCallback(() => {
     if (detailRequeteParams && Requete.estDeTypeInformation(detailRequeteState)) {
       setParamsMAJReqInfo({
-        libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
-        statutRequete: StatutRequete.PRISE_EN_CHARGE,
+        libelleAction: EStatutRequete.PRISE_EN_CHARGE,
+        statutRequete: "PRISE_EN_CHARGE",
         requete: {
           idRequete: detailRequeteState?.id,
           statut: detailRequeteState?.statutCourant.statut

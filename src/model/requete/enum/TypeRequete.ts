@@ -31,14 +31,6 @@ export class TypeRequete extends EnumWithComplete {
     return EnumWithLibelle.getKey(TypeRequete, obj);
   }
 
-  public static estDelivrance(typeRequete?: TypeRequete): boolean {
-    return typeRequete === TypeRequete.DELIVRANCE;
-  }
-
-  public static estInformation(typeRequete?: TypeRequete): boolean {
-    return typeRequete === TypeRequete.INFORMATION;
-  }
-
   public static estCreation(typeRequete?: TypeRequete): boolean {
     return typeRequete === TypeRequete.CREATION;
   }

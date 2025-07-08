@@ -7,6 +7,7 @@ import {
   ICriteresRMCActesInscriptions,
   ICriteresRMCAutoActeInscription
 } from "@model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
+import { RequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 import {
   PATH_APERCU_REQ_PRISE,
   receUrl,
@@ -16,17 +17,22 @@ import {
 } from "@router/ReceUrls";
 import { getUrlPrecedente } from "@util/route/UrlUtil";
 
-export const redirectionVersRequetePriseEnCharge = (requete: IRequeteTableauDelivrance, urlCourante: string): string => {
+export const redirectionVersRequetePriseEnCharge = (
+  requete: IRequeteTableauDelivrance | RequeteTableauRMC<"DELIVRANCE">,
+  urlCourante: string
+): string => {
   switch (true) {
     case estUrlEspaceDelivranceOuRMCRequete(urlCourante):
-      return `${urlCourante}/${PATH_APERCU_REQ_PRISE}/${requete.idRequete}`;
+      return `${urlCourante}/${PATH_APERCU_REQ_PRISE}/${"idRequete" in requete ? requete.idRequete : requete.id}`;
 
     case receUrl.estUrlSaisirCourrier(urlCourante):
     case receUrl.estUrlApercuRequete(urlCourante):
     case receUrl.estUrlEdition(urlCourante):
     case receUrl.estUrlApercuTraitementRequete(urlCourante) &&
-      StatutRequete.getEnumFromLibelle(requete.statut) === StatutRequete.PRISE_EN_CHARGE:
-      return `${getUrlPrecedente(urlCourante)}/${PATH_APERCU_REQ_PRISE}/${requete.idRequete}`;
+      ("idRequete" in requete
+        ? StatutRequete.getEnumFromLibelle(requete.statut) === StatutRequete.PRISE_EN_CHARGE
+        : requete.statut === "PRISE_EN_CHARGE"):
+      return `${getUrlPrecedente(urlCourante)}/${PATH_APERCU_REQ_PRISE}/${"idRequete" in requete ? requete.idRequete : requete.id}`;
 
     default:
       return "";

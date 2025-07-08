@@ -1,6 +1,7 @@
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
+import { RequeteTableauRMC, TRequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 import { RMCTableauRequetes } from "@pages/rechercheMultiCriteres/requete/resultats/RMCTableauRequetes";
 import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
 import {
@@ -24,7 +25,9 @@ describe("Test RMCTableauRequetes", () => {
           path: URL_RECHERCHE_REQUETE,
           element: (
             <RMCTableauRequetes
-              dataRMCRequete={DataRMCRequeteAvecResultat}
+              dataRMCRequete={DataRMCRequeteAvecResultat.map(requeteDto => RequeteTableauRMC.depuisDto(requeteDto, [], [])).filter(
+                (requete): requete is TRequeteTableauRMC => requete !== null
+              )}
               dataTableauRMCRequete={DataTableauRequete}
               setRangeRequete={vi.fn()}
               resetTableauRequete={true}
@@ -56,7 +59,9 @@ describe("Test RMCTableauRequetes", () => {
           path: URL_RECHERCHE_REQUETE,
           element: (
             <RMCTableauRequetes
-              dataRMCRequete={DataRMCRequeteAvecResultat}
+              dataRMCRequete={DataRMCRequeteAvecResultat.map(requeteDto => RequeteTableauRMC.depuisDto(requeteDto, [], [])).filter(
+                (requete): requete is TRequeteTableauRMC => requete !== null
+              )}
               dataTableauRMCRequete={DataTableauRequete}
               setRangeRequete={vi.fn()}
               resetTableauRequete={true}
@@ -89,7 +94,9 @@ describe("Test RMCTableauRequetes", () => {
           path: URL_RECHERCHE_REQUETE,
           element: (
             <RMCTableauRequetes
-              dataRMCRequete={DataRMCRequeteAvecResultat}
+              dataRMCRequete={DataRMCRequeteAvecResultat.map(requeteDto => RequeteTableauRMC.depuisDto(requeteDto, [], [])).filter(
+                (requete): requete is TRequeteTableauRMC => requete !== null
+              )}
               dataTableauRMCRequete={DataTableauRequete}
               setRangeRequete={vi.fn()}
               resetTableauRequete={true}
@@ -147,7 +154,9 @@ describe("Test RMCTableauRequetes", () => {
           path: URL_RECHERCHE_REQUETE,
           element: (
             <RMCTableauRequetes
-              dataRMCRequete={DataRMCRequeteAvecResultat}
+              dataRMCRequete={DataRMCRequeteAvecResultat.map(requeteDto => RequeteTableauRMC.depuisDto(requeteDto, [], [])).filter(
+                (requete): requete is TRequeteTableauRMC => requete !== null
+              )}
               dataTableauRMCRequete={DataTableauRequete}
               setRangeRequete={vi.fn()}
               resetTableauRequete={true}
@@ -187,7 +196,9 @@ describe("Test RMCTableauRequetes", () => {
           path: URL_RECHERCHE_REQUETE,
           element: (
             <RMCTableauRequetes
-              dataRMCRequete={DataRMCRequeteAvecResultat}
+              dataRMCRequete={DataRMCRequeteAvecResultat.map(requeteDto => RequeteTableauRMC.depuisDto(requeteDto, [], [])).filter(
+                (requete): requete is TRequeteTableauRMC => requete !== null
+              )}
               dataTableauRMCRequete={DataTableauRequete}
               setRangeRequete={vi.fn()}
               resetTableauRequete={true}
@@ -227,7 +238,9 @@ describe("Test RMCTableauRequetes", () => {
           path: URL_RECHERCHE_REQUETE,
           element: (
             <RMCTableauRequetes
-              dataRMCRequete={DataRMCRequeteAvecResultat}
+              dataRMCRequete={DataRMCRequeteAvecResultat.map(requeteDto => RequeteTableauRMC.depuisDto(requeteDto, [], [])).filter(
+                (requete): requete is TRequeteTableauRMC => requete !== null
+              )}
               dataTableauRMCRequete={DataTableauRequete}
               setRangeRequete={vi.fn()}
               resetTableauRequete={true}

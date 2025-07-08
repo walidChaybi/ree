@@ -8,7 +8,6 @@ import {
   requeteCreationTranscriptionStatutATraiter
 } from "../data/requeteCreationTranscription";
 import { requetesServiceCreationTableauResultatQuery } from "../data/requetesServiceCreation";
-import { ReponseAppelRMCRequete } from "../data/RMCRequete";
 
 export const configRequetesCreation = [
   {
@@ -149,18 +148,6 @@ export const configRequetesCreation = [
             "content-range": "0-100/2"
           },
           data: mesRequetesConsulaire
-        };
-      }
-      ///////////////////////////////
-      // RMC Auto Requete //
-      ///////////////////////////////
-      if (match[1] === "/requetes/rmcauto?range=0-105") {
-        return {
-          headers: {
-            "content-range": "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
-          },
-          data: ReponseAppelRMCRequete.data
         };
       }
 

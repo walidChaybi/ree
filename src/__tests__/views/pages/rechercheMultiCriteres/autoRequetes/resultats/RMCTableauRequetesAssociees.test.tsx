@@ -1,3 +1,4 @@
+import RequeteAssociee, { TRequeteAssociee } from "@model/rmc/requete/RequeteAssociee";
 import { RMCTableauRequetesAssociees } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCTableauRequetesAssociees";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
@@ -8,13 +9,13 @@ test("renders Resultat Recherche requêtes associées aux titulaires => Avec ré
   const { getAllByText } = render(
     <MemoryRouter>
       <RMCTableauRequetesAssociees
-        dataRMCRequete={DataRMCRequeteAvecResultat}
+        dataRMCRequete={DataRMCRequeteAvecResultat.map(RequeteAssociee.depuisDto).filter(
+          (requete): requete is TRequeteAssociee => requete !== null
+        )}
         dataTableauRMCRequete={DataTableauRequete}
         setRangeRequete={vi.fn()}
-        setNouvelleRMCRequete={vi.fn()}
         setValuesRMCRequete={vi.fn()}
         setCriteresRechercheRequete={vi.fn()}
-        resetTableauRequete={true}
       />
     </MemoryRouter>
   );
@@ -36,10 +37,8 @@ test("renders Resultat Recherche requêtes associées aux titulaires => Sans ré
         dataRMCRequete={[]}
         dataTableauRMCRequete={{}}
         setRangeRequete={vi.fn()}
-        setNouvelleRMCRequete={vi.fn()}
         setValuesRMCRequete={vi.fn()}
         setCriteresRechercheRequete={vi.fn()}
-        resetTableauRequete={true}
       />
     </MemoryRouter>
   );

@@ -6,7 +6,7 @@ import {
   useCreationActionMiseAjourStatutEtRedirectionHook
 } from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
@@ -106,8 +106,8 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
   const finDeConsultation = useCallback((id: string, event: any) => {
     event.stopPropagation();
     setLancerMajRequeteBouton({
-      libelleAction: StatutRequete.TRAITE_DELIVRE_DEMAT.libelle,
-      statutRequete: StatutRequete.TRAITE_DELIVRE_DEMAT,
+      libelleAction: EStatutRequete.TRAITE_DELIVRE_DEMAT,
+      statutRequete: "TRAITE_DELIVRE_DEMAT",
       requeteId: id
     });
   }, []);

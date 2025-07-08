@@ -2,7 +2,7 @@ import { RECEContextData } from "@core/contexts/RECEContext";
 import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import { Droit } from "@model/agent/enum/Droit";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
@@ -25,8 +25,8 @@ export const BoutonTerminerApresImpression: React.FC<BoutonTerminerApresImpressi
   const setActionEtUpdateStatut = () => {
     setMajStatutParams({
       requeteId: props.requete.id,
-      libelleAction: StatutRequete.TRAITE_IMPRIME_LOCAL.libelle,
-      statutRequete: StatutRequete.TRAITE_IMPRIME_LOCAL
+      libelleAction: EStatutRequete.TRAITE_IMPRIME_LOCAL,
+      statutRequete: "TRAITE_IMPRIME_LOCAL"
     });
   };
 

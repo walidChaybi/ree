@@ -1,11 +1,12 @@
-import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
-import { StatutRequete } from "../../requete/enum/StatutRequete";
+import { TSousTypeRequete } from "@model/requete/enum/SousTypeRequete";
+import { ETypeRequete } from "@model/requete/enum/TypeRequete";
+import { EStatutRequete } from "../../requete/enum/StatutRequete";
 
-export interface IRMCFiltreRequete {
-  numeroRequete?: string;
-  typeRequete?: string;
-  sousTypeRequete?: SousTypeRequete;
-  statutRequete?: StatutRequete;
-  numeroTeledossier?: string;
-  numeroDossierNational?: string;
+export interface IRMCFiltreRequete<TTypeRequete extends keyof typeof ETypeRequete | ""> {
+  numeroRequete: string;
+  typeRequete: TTypeRequete;
+  sousTypeRequete: TTypeRequete extends keyof typeof ETypeRequete ? TSousTypeRequete<TTypeRequete> : "";
+  statutRequete: keyof typeof EStatutRequete;
+  numeroTeledossier: string;
+  numeroDossierNational: string;
 }

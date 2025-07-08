@@ -1,14 +1,10 @@
-import {
-  ICreationActionEtMiseAjourStatutParams,
-  usePostCreationActionEtMiseAjourStatutApi
-} from "@hook/requete/ActionHook";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { expect, test } from "vitest";
 const params: ICreationActionEtMiseAjourStatutParams = {
   libelleAction: "libelleAction",
-  statutRequete: StatutRequete.A_VALIDER,
+  statutRequete: "A_VALIDER",
   requeteId: "12345"
 };
 
@@ -26,5 +22,3 @@ test("Attendu: usePostCreationActionEtMiseAjourStatutApi fonctionne correctement
     expect(screen.getByText("123456789")).not.toBeNull();
   });
 });
-
-

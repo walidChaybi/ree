@@ -2,8 +2,6 @@ import {
   NavigationApercuReqCreationParams,
   useNavigationApercuCreation
 } from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { ApercuRequeteEtablissementSuiviDossierPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/ApercuRequeteEtablissementSuiviDossierPage";
 import { ApercuRequeteEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSimple/ApercuRequeteEtablissementSimplePage";
 import {
@@ -47,8 +45,8 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
   test("Doit rediriger sur l'aperçu de requête création transcription simple quand le sousType est RCTC et que le statut est A_TRAITER", () => {
     const paramsCreation: NavigationApercuReqCreationParams = {
       idRequete: ID_REQUETE,
-      sousType: SousTypeCreation.RCTC,
-      statut: StatutRequete.A_TRAITER
+      sousType: "RCTC",
+      statut: "A_TRAITER"
     };
 
     const router = createTestingRouter(
@@ -79,8 +77,8 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
   test("Doit rediriger sur l'aperçu de requête création transcription prise en charge quand le sousType est RCTC et que le statut est A_TRAITER", () => {
     const paramsCreation: NavigationApercuReqCreationParams = {
       idRequete: ID_REQUETE,
-      sousType: SousTypeCreation.RCTC,
-      statut: StatutRequete.A_TRAITER
+      sousType: "RCTC",
+      statut: "A_TRAITER"
     };
 
     const router = createTestingRouter(
@@ -107,8 +105,8 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
   test("Doit rediriger sur l'aperçu de requête création transcription prise en charge quand le sousType est RCTD et que le statut est PRISE_EN_CHARGE", () => {
     const paramsCreation: NavigationApercuReqCreationParams = {
       idRequete: ID_REQUETE,
-      sousType: SousTypeCreation.RCTD,
-      statut: StatutRequete.PRISE_EN_CHARGE
+      sousType: "RCTD",
+      statut: "PRISE_EN_CHARGE"
     };
     const router = createTestingRouter(
       [
@@ -134,8 +132,8 @@ describe("Doit rediriger sur le bon aperçu de requête de transcription en fonc
   test("Doit rediriger sur l'aperçu de requête création transcription en traitement quand le sousType est RCTD et que le statut est EN_TRAITEMENT", () => {
     const paramsCreation: NavigationApercuReqCreationParams = {
       idRequete: ID_REQUETE,
-      sousType: SousTypeCreation.RCTD,
-      statut: StatutRequete.EN_TRAITEMENT
+      sousType: "RCTD",
+      statut: "EN_TRAITEMENT"
     };
     const router = createTestingRouter(
       [
@@ -168,8 +166,8 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
   test("Doit rediriger sur l'aperçu de requête de création suivi dossier QUAND le sousType est RCEXR et au statut À traiter", () => {
     const paramsCreation: NavigationApercuReqCreationParams = {
       idRequete: ID_REQUETE,
-      sousType: SousTypeCreation.RCEXR,
-      statut: StatutRequete.A_TRAITER
+      sousType: "RCEXR",
+      statut: "A_TRAITER"
     };
 
     const router = createTestingRouter(
@@ -196,8 +194,8 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
   test("Doit rediriger sur l'aperçu de requête de création suivi dossier QUAND le sousType est RCEXR et au statut Prise en charge", () => {
     const paramsCreation: NavigationApercuReqCreationParams = {
       idRequete: ID_REQUETE,
-      sousType: SousTypeCreation.RCEXR,
-      statut: StatutRequete.PRISE_EN_CHARGE
+      sousType: "RCEXR",
+      statut: "PRISE_EN_CHARGE"
     };
 
     const router = createTestingRouter(
@@ -224,8 +222,8 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
   test("Doit rediriger sur l'aperçu de requête de création simple QUAND le sousType est RCEXR et au statut Traité", () => {
     const paramsCreation: NavigationApercuReqCreationParams = {
       idRequete: ID_REQUETE,
-      sousType: SousTypeCreation.RCEXR,
-      statut: StatutRequete.TRAITE
+      sousType: "RCEXR",
+      statut: "TRAITE"
     };
     const router = createTestingRouter(
       [
@@ -249,8 +247,8 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
   test("Doit rediriger sur l'aperçu de requête de création suivi dossier QUAND le sousType est RCEXR et au statut Projet Validé", () => {
     const paramsCreation: NavigationApercuReqCreationParams = {
       idRequete: ID_REQUETE,
-      sousType: SousTypeCreation.RCEXR,
-      statut: StatutRequete.PROJET_VALIDE
+      sousType: "RCEXR",
+      statut: "PROJET_VALIDE"
     };
     const router = createTestingRouter(
       [
@@ -276,8 +274,8 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
   test("Doit rediriger sur l'aperçu de requête de création suivi dossier QUAND le sousType est RCEXR et au statut Retour SDANF", () => {
     const paramsCreation: NavigationApercuReqCreationParams = {
       idRequete: ID_REQUETE,
-      sousType: SousTypeCreation.RCEXR,
-      statut: StatutRequete.RETOUR_SDANF
+      sousType: "RCEXR",
+      statut: "RETOUR_SDANF"
     };
     const router = createTestingRouter(
       [
@@ -303,8 +301,8 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
   test("Doit rediriger sur l'aperçu de requête de création suivi dossier QUAND le sousType est RCEXR et au statut BI Validé", () => {
     const paramsCreation: NavigationApercuReqCreationParams = {
       idRequete: ID_REQUETE,
-      sousType: SousTypeCreation.RCEXR,
-      statut: StatutRequete.BI_VALIDE
+      sousType: "RCEXR",
+      statut: "BI_VALIDE"
     };
     const router = createTestingRouter(
       [
@@ -330,8 +328,8 @@ describe("Doit rediriger sur le bon aperçu de requête d'établissement en fonc
   test("Doit rediriger sur l'aperçu de requête de création suivi dossier QUAND le sousType est RCEXR et au statut A Signer", () => {
     const paramsCreation: NavigationApercuReqCreationParams = {
       idRequete: ID_REQUETE,
-      sousType: SousTypeCreation.RCEXR,
-      statut: StatutRequete.A_SIGNER
+      sousType: "RCEXR",
+      statut: "A_SIGNER"
     };
     const router = createTestingRouter(
       [

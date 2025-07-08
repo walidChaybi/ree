@@ -1,8 +1,9 @@
 import { redirectionVersRequetePriseEnCharge } from "@hook/rmcAuto/RMCAutoActesInscriptionsUtils";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { RequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 import { PATH_APERCU_REQ_DEL, PATH_APERCU_REQ_TRAITEMENT, PATH_EDITION, PATH_SAISIR_RDCSC } from "@router/ReceUrls";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
@@ -11,12 +12,16 @@ import { GestionnaireARetraiterDansSaga } from "@util/migration/GestionnaireARet
 import { autorisePrendreEnChargeReqTableauDelivrance } from "@util/RequetesUtils";
 import { getUrlPrecedente } from "@util/route/UrlUtil";
 
+// TODO : se débarrasser des type guard "idRequete" quand IRequeteTableauDelivrance sera supprimé
+
 export const redirectionSelonStatutRequete = (
   utilisateurConnecte: UtilisateurConnecte,
-  requete: IRequeteTableauDelivrance,
+  requete: IRequeteTableauDelivrance | RequeteTableauRMC<"DELIVRANCE">,
   urlCourante: string
 ): string => {
-  switch (requete.statut) {
+  const idRequete: string = "idRequete" in requete ? requete.idRequete : requete.id;
+  const statut: string | undefined = "idRequete" in requete ? requete.statut : EStatutRequete[requete.statut];
+  switch (statut) {
     case StatutRequete.TRANSFEREE.libelle:
     case StatutRequete.A_TRAITER.libelle:
       return redirectionATraiterTransferee(utilisateurConnecte, requete, urlCourante);
@@ -30,39 +35,50 @@ export const redirectionSelonStatutRequete = (
     case StatutRequete.BROUILLON.libelle:
       return redirectionBrouillon(requete, urlCourante);
     case StatutRequete.DOUBLON.libelle:
-      return redirectionRequeteDoublon(urlCourante, requete.idRequete);
+      return redirectionRequeteDoublon(urlCourante, idRequete);
     default:
       return GestionnaireARetraiterDansSaga.estARetraiterSagaRequeteTableau(requete)
-        ? getUrlApercuTraitement(urlCourante, requete.idRequete)
-        : getUrlApercuRequete(urlCourante, requete.idRequete);
+        ? getUrlApercuTraitement(urlCourante, idRequete)
+        : getUrlApercuRequete(urlCourante, idRequete);
   }
 };
 
-const redirectionAValider = (urlCourante: string, requete: IRequeteTableauDelivrance): string => {
+const redirectionAValider = (urlCourante: string, requete: IRequeteTableauDelivrance | RequeteTableauRMC<"DELIVRANCE">): string => {
   if (
     gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) &&
-    (requete.sousType === SousTypeDelivrance.RDDP.libelleCourt ||
-      requete.sousType === SousTypeDelivrance.RDD.libelleCourt ||
-      requete.sousType === SousTypeDelivrance.RDC.libelleCourt)
+    [
+      SousTypeDelivrance.RDDP.libelleCourt,
+      SousTypeDelivrance.RDD.libelleCourt,
+      SousTypeDelivrance.RDC.libelleCourt,
+      "RDDP",
+      "RDD",
+      "RDC"
+    ].includes(requete.sousType)
   ) {
-    return `${urlCourante}/${PATH_EDITION}/${requete.idRequete}`;
+    return `${urlCourante}/${PATH_EDITION}/${"idRequete" in requete ? requete.idRequete : requete.id}`;
   } else {
-    return getUrlApercuTraitement(urlCourante, requete.idRequete);
+    return getUrlApercuTraitement(urlCourante, "idRequete" in requete ? requete.idRequete : requete.id);
   }
 };
 
 const redirectionATraiterTransferee = (
   utilisateurConnecte: UtilisateurConnecte,
-  requete: IRequeteTableauDelivrance,
+
+  requete: IRequeteTableauDelivrance | RequeteTableauRMC<"DELIVRANCE">,
+
   urlCourante: string
 ): string =>
   autorisePrendreEnChargeReqTableauDelivrance(utilisateurConnecte, requete)
     ? redirectionVersRequetePriseEnCharge(requete, urlCourante)
-    : getUrlApercuRequete(urlCourante, requete.idRequete);
+    : getUrlApercuRequete(urlCourante, "idRequete" in requete ? requete.idRequete : requete.id);
 
-const redirectionBrouillon = (requete: IRequeteTableauDelivrance, urlCourante: string): string =>
-  requete.sousType === SousTypeDelivrance.RDCSC.libelleCourt ? `${urlCourante}/${PATH_SAISIR_RDCSC}/${requete.idRequete}` : "";
-
+const redirectionBrouillon = (requete: IRequeteTableauDelivrance | RequeteTableauRMC<"DELIVRANCE">, urlCourante: string): string => {
+  if ("idRequete" in requete) {
+    return requete.sousType === SousTypeDelivrance.RDCSC.libelleCourt ? `${urlCourante}/${PATH_SAISIR_RDCSC}/${requete.idRequete}` : "";
+  } else {
+    return requete.sousType === "RDCSC" ? `${urlCourante}/${PATH_SAISIR_RDCSC}/${requete.id}` : "";
+  }
+};
 const redirectionRequeteDoublon = (urlCourante: string, idRequete: string): string => {
   messageManager.showSuccessAndClose("La requête a bien été enregistrée");
   return `${getUrlPrecedente(urlCourante)}/${PATH_APERCU_REQ_DEL}/${idRequete}`;

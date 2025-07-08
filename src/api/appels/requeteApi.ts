@@ -4,9 +4,8 @@ import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IEchange } from "@model/requete/IEchange";
 import { IFiltresServiceRequeteInformationFormValues } from "@model/requete/IFiltreServiceRequeteInformation";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
-import { IRMCRequestRequete } from "@model/rmc/requete/IRMCRequestRequete";
 import { SortOrder } from "@widget/tableau/TableUtils";
 import { HttpMethod } from "../ApiManager";
 import { URL_MENTION } from "./etatcivilApi";
@@ -21,7 +20,6 @@ const URL_MES_REQUETES_CREATION = "/requetes/creation/mes-requetes";
 const URL_CREATION = "/requetes/creation/";
 const URL_SAUVEGARDER_REPONSE_REQINFO = "/requetes/information/reponse";
 export const URL_REQUETES_COUNT = "/requetes/count";
-const URL_REQUETES_RMC = "/requetes/rmc";
 const URL_NOMENCLATURE = "/nomenclature";
 const URL_REQUETES_DELIVRANCE = "/requetes/delivrance";
 const URL_REQUETES_CREATION = "/requetes/creation";
@@ -233,19 +231,6 @@ export function getDetailRequete(idRequete: string, estConsultation = false, est
   return getApiManager().then(api => api.fetch(config));
 }
 
-export function rechercheMultiCriteresRequetes(criteres: IRMCRequestRequete, range?: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.POST,
-      uri: `${URL_REQUETES_RMC}`,
-      data: criteres,
-      parameters: {
-        range
-      }
-    })
-  );
-}
-
 export function getCompteurRequetes(statuts: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
@@ -453,7 +438,7 @@ export function postCreationAction(idRequete: string, libelleAction: string) {
   );
 }
 
-export function postCreationActionEtMiseAjourStatut(idRequete: string, libelleAction: string, statutRequete: StatutRequete) {
+export function postCreationActionEtMiseAjourStatut(idRequete: string, libelleAction: string, statutRequete: keyof typeof EStatutRequete) {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
@@ -461,7 +446,7 @@ export function postCreationActionEtMiseAjourStatut(idRequete: string, libelleAc
       parameters: {
         idRequete,
         libelleAction,
-        statutRequete: StatutRequete.getKey(statutRequete)
+        statutRequete: statutRequete
       }
     })
   );

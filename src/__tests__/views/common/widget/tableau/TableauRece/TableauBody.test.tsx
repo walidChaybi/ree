@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { RenderIconPrioriteRequete } from "@util/tableauRequete/TableauRequeteUtils";
+import { RenderIconePrioriteRequeteRMC } from "@util/tableauRequete/TableauRequeteUtils";
 import { TableauBody } from "@widget/tableau/TableauRece/TableauBody";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import { BrowserRouter as Router } from "react-router";
@@ -86,7 +86,7 @@ test("test des prioritées des requêtes", () => {
               new TableauTypeColumn({
                 keys: ["priorite"],
                 title: "Priorité",
-                getElement: RenderIconPrioriteRequete
+                getElement: RenderIconePrioriteRequeteRMC
               })
             ]}
             onClickOnLine={(identifiant: string) => "urlBack"}

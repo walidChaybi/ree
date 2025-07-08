@@ -5,10 +5,8 @@ import {
 } from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { autorisePrendreEnChargeDelivrance } from "@util/RequetesUtils";
-import { getLibelle } from "@util/Utils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useContext, useState } from "react";
@@ -30,10 +28,10 @@ export const BoutonPrendreEnCharge: React.FC<BoutonPrendreEnChargeProps> = props
   const setActionEtUpdateStatut = () => {
     setParams({
       requete: mapRequeteRmcAuto(props.requete),
-      libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
-      statutRequete: StatutRequete.PRISE_EN_CHARGE,
+      libelleAction: EStatutRequete.PRISE_EN_CHARGE,
+      statutRequete: "PRISE_EN_CHARGE",
       urlCourante: getUrlWithParam(location.pathname, props.requete.id),
-      typeRequete: TypeRequete.DELIVRANCE
+      typeRequete: "DELIVRANCE"
     });
   };
 
@@ -45,7 +43,7 @@ export const BoutonPrendreEnCharge: React.FC<BoutonPrendreEnChargeProps> = props
       class="BoutonPrendreEnCharge"
       estDesactive={!autorisePrendreEnChargeDelivrance(utilisateurConnecte, props.requete) || props.disabled}
     >
-      {getLibelle("Prendre en charge")}
+      {"Prendre en charge"}
     </BoutonOperationEnCours>
   );
 };

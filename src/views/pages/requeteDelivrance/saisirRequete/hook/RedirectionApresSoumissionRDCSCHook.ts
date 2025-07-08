@@ -12,7 +12,7 @@ import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "@model/composition/IRepon
 import { CreationRequeteRDCSC, IComplementCreationUpdateRequete, UpdateRequeteRDCSC } from "@model/form/delivrance/ISaisirRDCSCPageForm";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import messageManager from "@util/messageManager";
 import { useCallback, useState } from "react";
@@ -86,7 +86,7 @@ export const useRedirectionApresSoumissionRDCSCHook = (
     if (statutFinal && statutFinal !== futurStatut) {
       setCreationActionMiseAjourStatutParams({
         libelleAction: statutFinal.libelle,
-        statutRequete: statutFinal,
+        statutRequete: statutFinal.nom as keyof typeof EStatutRequete,
         requete: {
           idRequete: requeteRDCSCResultat?.requete.id
         } as IRequeteTableauDelivrance,

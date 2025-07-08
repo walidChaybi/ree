@@ -3,7 +3,7 @@ import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjou
 import { Droit } from "@model/agent/enum/Droit";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
@@ -33,8 +33,8 @@ export const BoutonTerminerApresImpression: React.FC<BoutonTerminerApresImpressi
   const miseAJourStatutRequeteEtAjoutAction = () => {
     setPostCreationActionEtMiseAJourStatutParams({
       requeteId: requete.id,
-      libelleAction: StatutRequete.TRAITE_IMPRIME_LOCAL.libelle,
-      statutRequete: StatutRequete.TRAITE_IMPRIME_LOCAL
+      libelleAction: EStatutRequete.TRAITE_IMPRIME_LOCAL,
+      statutRequete: "TRAITE_IMPRIME_LOCAL"
     });
   };
 

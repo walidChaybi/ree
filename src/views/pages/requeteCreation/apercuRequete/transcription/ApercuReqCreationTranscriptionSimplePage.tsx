@@ -12,11 +12,10 @@ import { IRequete } from "@model/requete/IRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { mappingUneRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { OngletProps } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import { URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID, URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
-import { getLibelle } from "@util/Utils";
 import { getUrlPrecedente, getUrlWithParam } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
@@ -42,7 +41,7 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<ApercuReqCreatio
   const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>();
   const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
 
-  const [paramsCreationActionMiseAjourStatut, setCreationActionMiseAjourStatut] = useState<
+  const [paramsCreationActionMiseAjourStatut, setParamsCreationActionMiseAjourStatut] = useState<
     ICreationActionMiseAjourStatutHookParams | undefined
   >();
 
@@ -109,9 +108,9 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<ApercuReqCreatio
   };
 
   function handlePrendreEnCharge(utilisateurs: Utilisateur[], services: IService[]) {
-    setCreationActionMiseAjourStatut({
-      libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
-      statutRequete: StatutRequete.PRISE_EN_CHARGE,
+    setParamsCreationActionMiseAjourStatut({
+      libelleAction: EStatutRequete.PRISE_EN_CHARGE,
+      statutRequete: "PRISE_EN_CHARGE",
       requete: mappingUneRequeteTableauCreation(requete, false, utilisateurs, services),
       callback: redirectApercuRequetePriseEnCharge
     });
@@ -152,7 +151,7 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<ApercuReqCreatio
                     handlePrendreEnCharge(utilisateurs, services);
                   }}
                 >
-                  {getLibelle("Prendre en charge")}
+                  {"Prendre en charge"}
                 </BoutonDoubleSubmit>
               )}
             </div>

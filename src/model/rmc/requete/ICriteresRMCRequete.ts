@@ -1,7 +1,8 @@
-import { IRMCRequete } from "./IRMCRequete";
+import { ETypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRMCRequeteForm } from "./IRMCRequete";
 
 export interface ICriteresRMCRequete {
-  valeurs: IRMCRequete;
+  valeurs: IRMCRequeteForm<keyof typeof ETypeRequete | "">;
   range?: string;
   onErreur?: () => void;
 }

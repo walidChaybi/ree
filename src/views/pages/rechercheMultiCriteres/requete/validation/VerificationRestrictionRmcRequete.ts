@@ -1,4 +1,5 @@
-import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
+import { ETypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRMCRequeteForm } from "@model/rmc/requete/IRMCRequete";
 import {
   getMessageSiVerificationEnErreur,
   IVerificationErreur
@@ -11,17 +12,12 @@ import {
   messageErreurPrenomSaisiSansNom,
   prenomSaisiSansNom
 } from "@pages/rechercheMultiCriteres/common/validation/VerificationRestrictionRegles";
-import {
-  aucuneProprieteRenseignee,
-  estNonRenseigne,
-  estRenseigne
-} from "@util/Utils";
+import { aucuneProprieteRenseignee, estNonRenseigne, estRenseigne } from "@util/Utils";
 
 const verificationsRestrictionCriteresErreurs: IVerificationErreur[] = [
   {
     test: typeRequeteSaisiSansSousTypeOuStatut,
-    messageErreur:
-      "Les critères Type, sous-type et statut de requête doivent être renseignés ensemble"
+    messageErreur: "Les critères Type, sous-type et statut de requête doivent être renseignés ensemble"
   },
   {
     test: prenomSaisiSansNom,
@@ -29,8 +25,7 @@ const verificationsRestrictionCriteresErreurs: IVerificationErreur[] = [
   },
   {
     test: dateOuPaysNaissanceSaisiSansCritereDuBlocTitulaire,
-    messageErreur:
-      messageErreurDateOuPaysNaissanceSaisiSansCritereDuBlocTitulaire
+    messageErreur: messageErreurDateOuPaysNaissanceSaisiSansCritereDuBlocTitulaire
   },
   {
     test: filtreDateCreationInformatiqueSaisiSeul,
@@ -39,17 +34,12 @@ const verificationsRestrictionCriteresErreurs: IVerificationErreur[] = [
 ];
 
 export function getMessageSiVerificationRestrictionRmcRequeteEnErreur(
-  rMCSaisie: IRMCRequete
+  rMCSaisie: IRMCRequeteForm<keyof typeof ETypeRequete | "">
 ): string | undefined {
-  return getMessageSiVerificationEnErreur(
-    rMCSaisie,
-    verificationsRestrictionCriteresErreurs
-  );
+  return getMessageSiVerificationEnErreur(rMCSaisie, verificationsRestrictionCriteresErreurs);
 }
 
-export function filtreDateCreationInformatiqueSaisiSeul(
-  rMCSaisie: IRMCRequete
-): boolean {
+export function filtreDateCreationInformatiqueSaisiSeul(rMCSaisie: IRMCRequeteForm<keyof typeof ETypeRequete | "">): boolean {
   return (
     filtreDateCreationInformatiqueSaisi(rMCSaisie) &&
     aucuneProprieteRenseignee(rMCSaisie.requerant) &&
@@ -58,12 +48,9 @@ export function filtreDateCreationInformatiqueSaisiSeul(
   );
 }
 
-export function typeRequeteSaisiSansSousTypeOuStatut(
-  rMCSaisie: IRMCRequete
-): boolean {
+export function typeRequeteSaisiSansSousTypeOuStatut(rMCSaisie: IRMCRequeteForm<keyof typeof ETypeRequete | "">): boolean {
   return (
     estRenseigne(rMCSaisie.requete?.typeRequete) &&
-    (estNonRenseigne(rMCSaisie.requete?.sousTypeRequete) ||
-      estNonRenseigne(rMCSaisie.requete?.statutRequete))
+    (estNonRenseigne(rMCSaisie.requete?.sousTypeRequete) || estNonRenseigne(rMCSaisie.requete?.statutRequete))
   );
 }

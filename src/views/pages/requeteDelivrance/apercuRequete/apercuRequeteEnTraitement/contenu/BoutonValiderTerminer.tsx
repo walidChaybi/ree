@@ -7,7 +7,7 @@ import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjou
 import { Droit } from "@model/agent/enum/Droit";
 import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
 import { Provenance } from "@model/requete/enum/Provenance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -34,26 +34,24 @@ export const BoutonValiderTerminer: React.FC<BoutonValiderTerminerProps> = props
   >();
   const [pasDeMajDateDerniereDelivrance, setPasDeMajDateDerniereDelivrance] = useState(false);
 
-  let futurStatut: StatutRequete;
-  switch (props.requete.canal) {
-    case TypeCanal.COURRIER:
-      futurStatut = StatutRequete.TRAITE_A_IMPRIMER;
-      break;
-    case TypeCanal.INTERNET:
-      futurStatut = StatutRequete.TRAITE_A_DELIVRER_DEMAT;
-      break;
-    case TypeCanal.RECE:
-      futurStatut = StatutRequete.TRAITE_REPONDU;
-      break;
-    default:
-      futurStatut = StatutRequete.TRAITE_A_DELIVRER_DEMAT;
-  }
+  const futurStatut = ((): keyof typeof EStatutRequete => {
+    switch (props.requete.canal) {
+      case TypeCanal.COURRIER:
+        return "TRAITE_A_IMPRIMER";
+      case TypeCanal.INTERNET:
+        return "TRAITE_A_DELIVRER_DEMAT";
+      case TypeCanal.RECE:
+        return "TRAITE_REPONDU";
+      default:
+        return "TRAITE_A_DELIVRER_DEMAT";
+    }
+  })();
 
   // 1 - Ajout de l'action et mise à jour du statut
   const setActionEtUpdateStatut = () => {
     setMajStatutParams({
       requeteId: props.requete.id,
-      libelleAction: futurStatut.libelle,
+      libelleAction: EStatutRequete[futurStatut],
       statutRequete: futurStatut
     });
   };

@@ -10,7 +10,7 @@ import {
 import { CreationRequeteRDC, IComplementCreationUpdateRequete, UpdateRequeteRDC } from "@model/form/delivrance/ISaisirRDCPageForm";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import messageManager from "@util/messageManager";
 import { useState } from "react";
@@ -58,7 +58,7 @@ export const useRedirectionApresSoumissionRDCHook = (
     if (statutFinal && statutFinal !== futurStatut) {
       setCreationActionMiseAjourStatutParams({
         libelleAction: statutFinal.libelle,
-        statutRequete: statutFinal,
+        statutRequete: statutFinal.nom as keyof typeof EStatutRequete,
         requete: {
           idRequete: requeteRDCResultat?.requete.id
         } as IRequeteTableauDelivrance,

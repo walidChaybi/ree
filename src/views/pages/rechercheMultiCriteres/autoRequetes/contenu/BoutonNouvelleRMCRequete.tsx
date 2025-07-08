@@ -1,8 +1,8 @@
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ETypeRequete } from "@model/requete/enum/TypeRequete";
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
-import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
-import { getLibelle } from "@util/Utils";
+import { IRMCRequeteForm } from "@model/rmc/requete/IRMCRequete";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useCallback, useState } from "react";
 import "./../scss/BoutonNouvelleRMCRequete.scss";
@@ -10,15 +10,11 @@ import { PopinNouvelleRMCRequete } from "./PopinNouvelleRMCRequete";
 
 interface BoutonNouvelleRMCRequeteProps {
   setNouvelleRMCRequete: React.Dispatch<React.SetStateAction<boolean>>;
-  setValuesRMCRequete: React.Dispatch<React.SetStateAction<IRMCRequete>>;
-  setCriteresRechercheRequete: React.Dispatch<
-    React.SetStateAction<ICriteresRMCRequete | undefined>
-  >;
+  setValuesRMCRequete: React.Dispatch<React.SetStateAction<IRMCRequeteForm<keyof typeof ETypeRequete | ""> | null>>;
+  setCriteresRechercheRequete: React.Dispatch<React.SetStateAction<ICriteresRMCRequete | undefined>>;
 }
 
-export const BoutonNouvelleRMCRequete: React.FC<
-  BoutonNouvelleRMCRequeteProps
-> = ({
+export const BoutonNouvelleRMCRequete: React.FC<BoutonNouvelleRMCRequeteProps> = ({
   setNouvelleRMCRequete,
   setValuesRMCRequete,
   setCriteresRechercheRequete
@@ -41,7 +37,7 @@ export const BoutonNouvelleRMCRequete: React.FC<
     <>
       <BoutonDoubleSubmit
         onClick={handleClickNouvelleRMC}
-        aria-label={getLibelle("Nouvelle recherche multi critères")}
+        aria-label={"Nouvelle recherche multi critères"}
       >
         <FontAwesomeIcon
           aria-label="NouvelleRMCRequete"

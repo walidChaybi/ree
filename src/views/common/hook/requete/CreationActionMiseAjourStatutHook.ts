@@ -1,15 +1,22 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
+import { RequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 import { useContext, useEffect, useState } from "react";
 
 export interface ICreationActionMiseAjourStatutHookParams {
-  statutRequete: StatutRequete;
+  statutRequete: keyof typeof EStatutRequete;
   libelleAction: string;
-  requete?: IRequeteTableauInformation | IRequeteTableauDelivrance | IRequeteTableauCreation;
+  requete?:
+    | IRequeteTableauInformation
+    | IRequeteTableauDelivrance
+    | IRequeteTableauCreation
+    | RequeteTableauRMC<"DELIVRANCE">
+    | RequeteTableauRMC<"CREATION">
+    | RequeteTableauRMC<"INFORMATION">;
   callback?: () => void;
 }
 
@@ -21,9 +28,9 @@ export function useCreationActionMiseAjourStatut(params?: ICreationActionMiseAjo
   useEffect(() => {
     if (params) {
       setCreationActionEtMiseAjourStatutParams({
-        libelleAction: params?.libelleAction,
-        statutRequete: params?.statutRequete,
-        requeteId: params?.requete?.idRequete
+        libelleAction: params.libelleAction,
+        statutRequete: params.statutRequete,
+        requeteId: params.requete && "idRequete" in params.requete ? params?.requete?.idRequete : params?.requete?.id
       });
     }
   }, [params]);
@@ -33,12 +40,10 @@ export function useCreationActionMiseAjourStatut(params?: ICreationActionMiseAjo
   useEffect(() => {
     if (idAction && params?.requete) {
       // Mise à jour du statut de la requête après l'appel à "usePostCreationActionEtMiseAjourStatutApi"
-      params.requete.statut = params?.statutRequete.libelle;
+      params.requete.statut = EStatutRequete[params?.statutRequete];
       // Mise à jour de l'id utilisateur
       params.requete.idUtilisateur = utilisateurConnecte.id;
-      if (params.callback) {
-        params.callback();
-      }
+      params.callback?.();
     }
   }, [idAction, params]);
 }

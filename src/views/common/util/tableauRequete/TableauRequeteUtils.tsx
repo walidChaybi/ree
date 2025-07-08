@@ -1,12 +1,15 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { PrenomsForm } from "@model/form/commun/PrenomsForm";
-import { TRequeteTableau } from "@model/requete/IRequeteTableau";
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import { AlerteRequete } from "@model/requete/enum/AlerteRequete";
-import { Priorite } from "@model/requete/enum/Priorite";
+import { EPriorite } from "@model/requete/enum/EPriorite";
 import { ELibelleSousTypeRequete } from "@model/requete/enum/SousTypeRequete";
-import { TRequeteRMCAuto } from "@model/rmc/requete/RequeteRMCAuto";
-import { ITitulaireRmcAutoRequeteDto, TitulaireRmcAutoRequete } from "@model/rmc/requete/TitulaireRmcAutoRequete";
+import { EStatutRequete } from "@model/requete/enum/StatutRequete";
+import { ETypeRequete } from "@model/requete/enum/TypeRequete";
+import { TRequeteAssociee } from "@model/rmc/requete/RequeteAssociee";
+import { TRequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
+import { ITitulaireRequeteAssocieeDto, TitulaireRequeteAssociee } from "@model/rmc/requete/TitulaireRequeteAssociee";
+import { TitulaireRequeteTableauRMC } from "@model/rmc/requete/TitulaireRequeteTableauRMC";
 import ClearIcon from "@mui/icons-material/Clear";
 import ErrorIcon from "@mui/icons-material/Error";
 import LabelIcon from "@mui/icons-material/Label";
@@ -14,29 +17,27 @@ import ReportIcon from "@mui/icons-material/Report";
 import Box from "@mui/material/Box";
 import { getLigneTableauVide } from "@widget/tableau/TableUtils";
 import { useContext } from "react";
-import DateUtils from "../DateUtils";
 import "./scss/RequeteUtils.scss";
 
-function prioriteDeLaRequete(priorite: string): string {
-  switch (Priorite.getEnumFor(priorite)) {
-    case Priorite.BASSE:
+const prioriteDeLaRequete = (priorite: keyof typeof EPriorite): string => {
+  switch (priorite) {
+    case "BASSE":
       return "PrioriteBasse";
-    case Priorite.MOYENNE:
+    case "MOYENNE":
       return "PrioriteMoyenne";
-    case Priorite.HAUTE:
+    case "HAUTE":
       return "PrioriteHaute";
     default:
       return "";
   }
-}
+};
 
-export const RenderIconPrioriteRequete = (data: any): JSX.Element => {
-  const priorite = data.priorite;
-  if (priorite && priorite !== "") {
+export const RenderIconePrioriteRequeteRMC = ({ priorite }: TRequeteTableauRMC): JSX.Element => {
+  if (priorite) {
     return (
       <Box
-        title={Priorite.getEnumFor(priorite).libelle}
-        aria-label={Priorite.getEnumFor(priorite).libelle}
+        title={EPriorite[priorite]}
+        aria-label={EPriorite[priorite]}
         aria-hidden={true}
       >
         <LabelIcon className={prioriteDeLaRequete(priorite)} />
@@ -55,22 +56,15 @@ export const RenderIconPrioriteRequete = (data: any): JSX.Element => {
   }
 };
 
-export const RenderObservationsNumeroRequete = (data: any): JSX.Element => {
+export const RenderObservationsNumeroRequete = (data: TRequeteTableauRMC): JSX.Element => {
   const observations = data.observations;
-  let titleObservations = "";
-
-  if (observations != null && observations.length >= 1) {
-    observations.forEach((observation: string) => {
-      titleObservations += `${observation}\n`;
-    });
-  }
 
   return (
     <>
-      {titleObservations !== "" && (
+      {Boolean(observations.length) && (
         <Box
-          title={titleObservations}
-          aria-label={titleObservations}
+          title={observations.join("\n")}
+          aria-label={observations.join("\n")}
           aria-hidden={true}
         >
           <ReportIcon className="ReportIcon" />
@@ -81,14 +75,14 @@ export const RenderObservationsNumeroRequete = (data: any): JSX.Element => {
 };
 
 export const RenderCellTitulaires = (data: any): JSX.Element => {
-  const titulaires = data.titulaires as ITitulaireRequeteTableau[] | TitulaireRmcAutoRequete[];
+  const titulaires = data.titulaires as ITitulaireRequeteTableau[] | TitulaireRequeteAssociee[] | TitulaireRequeteTableauRMC[];
   let titleTitulaires = "";
   const celluleTitulaires: string[] = [];
 
   if (titulaires != null && titulaires.length >= 1) {
-    titulaires.forEach((titulaire: ITitulaireRequeteTableau | ITitulaireRmcAutoRequeteDto) => {
+    titulaires.forEach((titulaire: ITitulaireRequeteTableau | ITitulaireRequeteAssocieeDto) => {
       if (
-        ((t: ITitulaireRequeteTableau | ITitulaireRmcAutoRequeteDto): t is ITitulaireRmcAutoRequeteDto =>
+        ((t: ITitulaireRequeteTableau | ITitulaireRequeteAssocieeDto): t is ITitulaireRequeteAssocieeDto =>
           typeof titulaire.prenoms[0] !== typeof "")(titulaire)
       ) {
         const prenoms: string[] = PrenomsForm.versPrenomsStringDto(PrenomsForm.valeursInitiales(titulaire.prenoms));
@@ -117,37 +111,26 @@ export const RenderCellTitulaires = (data: any): JSX.Element => {
   );
 };
 
-export const RenderCellSousType = (requete: TRequeteTableau | TRequeteRMCAuto): JSX.Element => {
-  return (
-    <span>
-      {"nomCompletRequerant" in requete
-        ? requete.sousType
-        : ELibelleSousTypeRequete[requete.sousType as keyof typeof ELibelleSousTypeRequete].court}
-    </span>
-  );
+export const RenderCellSousType = (requete: TRequeteTableauRMC | TRequeteAssociee): JSX.Element => {
+  return <span>{ELibelleSousTypeRequete[requete.sousType].court}</span>;
 };
 
-export const RenderCellDatesNaissancesTitulaires = (data: any): JSX.Element => {
-  const titulaires = data.titulaires;
-  let titleDatesNaissances = "";
-  const celluleDatesNaissances: string[] = [];
+export const RenderCellType = (requete: TRequeteTableauRMC): JSX.Element => {
+  return <span>{ETypeRequete[requete.type]}</span>;
+};
 
-  if (titulaires != null && titulaires.length >= 1) {
-    titulaires.forEach((t: ITitulaireRequeteTableau) => {
-      const date = DateUtils.getDateStringFromDateCompose({
-        jour: t.jourNaissance.toString(),
-        mois: t.moisNaissance.toString(),
-        annee: t.anneeNaissance.toString()
-      });
+export const RenderCellStatut = (requete: TRequeteTableauRMC): JSX.Element => {
+  return <span>{EStatutRequete[requete.statut]}</span>;
+};
 
-      celluleDatesNaissances.push(date);
-      titleDatesNaissances += `${date}\n`;
-    });
-  }
+export const RenderCellDatesNaissancesTitulaires = ({ titulaires }: TRequeteTableauRMC): JSX.Element => {
+  if (!titulaires.length) return <></>;
+
+  const datesNaissance = titulaires.map(titulaire => titulaire.dateNaissance);
 
   return (
-    <div title={titleDatesNaissances}>
-      {celluleDatesNaissances.map((date: string, index: number) => {
+    <div title={datesNaissance.join("\n")}>
+      {datesNaissance.map((date: string, index: number) => {
         return <div key={`${date}${index}`}>{date}</div>;
       })}
     </div>

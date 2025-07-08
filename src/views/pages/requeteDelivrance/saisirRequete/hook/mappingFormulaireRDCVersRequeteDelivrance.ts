@@ -1,7 +1,4 @@
-import {
-  ISaisieAdresse,
-  ISaisieIdentite
-} from "@model/form/delivrance/ISaisirRequetePageForm";
+import { ISaisieAdresse, ISaisieIdentite } from "@model/form/delivrance/ISaisirRequetePageForm";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { Provenance } from "@model/requete/enum/Provenance";
@@ -9,22 +6,14 @@ import { Qualite } from "@model/requete/enum/Qualite";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import {
-  IPieceJustificative,
-  mapPieceJustificative
-} from "@model/requete/pieceJointe/IPieceJustificative";
+import { IPieceJustificative, mapPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import DateUtils from "@util/DateUtils";
 import { DEUX, SNP, UN, auMoinsUneProprieteEstRenseigne, getValeurOuVide } from "@util/Utils";
-import { supprimeProprietesVides } from "@util/supprimeProprietesVides";
-import {
-  CreationRequeteRDC,
-  SaisieRequeteRDC
-} from "../../../../../model/form/delivrance/ISaisirRDCPageForm";
+import { nettoyerAttributsDto } from "../../../../../dto/commun/dtoUtils";
+import { CreationRequeteRDC, SaisieRequeteRDC } from "../../../../../model/form/delivrance/ISaisirRDCPageForm";
 import { getPrenomsTableauStringVersPrenomsOrdonnes } from "./mappingCommun";
 
-export function mappingFormulaireRDCVersRequeteDelivrance(
-  requeteRDC: CreationRequeteRDC
-): IRequeteDelivrance {
+export function mappingFormulaireRDCVersRequeteDelivrance(requeteRDC: CreationRequeteRDC): IRequeteDelivrance {
   const requete = {
     type: TypeRequete.DELIVRANCE.nom,
     sousType: SousTypeDelivrance.RDC.nom,
@@ -41,24 +30,19 @@ export function mappingFormulaireRDCVersRequeteDelivrance(
     piecesJustificatives: getPiecesJustificativesAGarder(requeteRDC.saisie)
   } as any as IRequeteDelivrance;
 
-  return supprimeProprietesVides(requete);
+  return nettoyerAttributsDto(requete);
 }
 
 // Renvoie des PJs déjà intégrées (sans contenu base64String) afin de gérer les suppressions
 function getPiecesJustificativesAGarder(saisie: SaisieRequeteRDC) {
   const piecesJustificatives: IPieceJustificative[] = [];
-  saisie?.piecesJointes
-    ?.filter(pj => !pj.base64File.base64String)
-    .forEach(pj => piecesJustificatives.push(mapPieceJustificative(pj)));
+  saisie?.piecesJointes?.filter(pj => !pj.base64File.base64String).forEach(pj => piecesJustificatives.push(mapPieceJustificative(pj)));
   return piecesJustificatives;
 }
 
 function getEvenement(saisie: SaisieRequeteRDC) {
   // Si Acte de type NAISSANCE alors l'événement de la requête utilise les infos du titulaire 1
-  if (
-    NatureActeRequete.NAISSANCE ===
-    NatureActeRequete.getEnumFor(saisie.requete.natureActe)
-  ) {
+  if (NatureActeRequete.NAISSANCE === NatureActeRequete.getEnumFor(saisie.requete.natureActe)) {
     const titulaire1 = saisie.titulaire1;
     return {
       natureActe: saisie.requete.natureActe,
@@ -93,10 +77,7 @@ function getTitulairesRequete(saisie: SaisieRequeteRDC) {
 
   newTitulaires.push(getTitulaire(titulaire1, 1));
 
-  if (
-    NatureActeRequete.MARIAGE === natureActe &&
-    !titulaire2estVide(titulaire2)
-  ) {
+  if (NatureActeRequete.MARIAGE === natureActe && !titulaire2estVide(titulaire2)) {
     newTitulaires.push(getTitulaire(titulaire2, DEUX));
   }
   return newTitulaires;
@@ -105,9 +86,7 @@ function getTitulairesRequete(saisie: SaisieRequeteRDC) {
 function getTitulaire(titulaire: ISaisieIdentite, position: number) {
   return {
     position,
-    nomNaissance: titulaire.noms?.nomNaissance
-      ? titulaire.noms.nomNaissance
-      : SNP,
+    nomNaissance: titulaire.noms?.nomNaissance ? titulaire.noms.nomNaissance : SNP,
     nomUsage: titulaire.noms?.nomUsage,
     prenoms: getPrenomsTableauStringVersPrenomsOrdonnes(titulaire.prenoms),
     jourNaissance: titulaire.naissance.dateEvenement.jour,
@@ -126,23 +105,15 @@ function getFiliation(titulaire: ISaisieIdentite) {
   if (auMoinsUneProprieteEstRenseigne(titulaire.parent1)) {
     parents.push({
       position: UN,
-      nomNaissance: titulaire.parent1.nomNaissance
-        ? titulaire.parent1.nomNaissance
-        : SNP,
-      prenoms: getPrenomsTableauStringVersPrenomsOrdonnes(
-        titulaire.parent1.prenoms
-      )
+      nomNaissance: titulaire.parent1.nomNaissance ? titulaire.parent1.nomNaissance : SNP,
+      prenoms: getPrenomsTableauStringVersPrenomsOrdonnes(titulaire.parent1.prenoms)
     });
   }
   if (auMoinsUneProprieteEstRenseigne(titulaire.parent2)) {
     parents.push({
       position: DEUX,
-      nomNaissance: titulaire.parent2.nomNaissance
-        ? titulaire.parent2.nomNaissance
-        : SNP,
-      prenoms: getPrenomsTableauStringVersPrenomsOrdonnes(
-        titulaire.parent2.prenoms
-      )
+      nomNaissance: titulaire.parent2.nomNaissance ? titulaire.parent2.nomNaissance : SNP,
+      prenoms: getPrenomsTableauStringVersPrenomsOrdonnes(titulaire.parent2.prenoms)
     });
   }
   return parents;
@@ -217,9 +188,7 @@ function getInstitutionnel(saisie: SaisieRequeteRDC) {
 function getParticulier(saisie: SaisieRequeteRDC) {
   const requerant = saisie.requerant;
   return {
-    nomFamille: requerant.particulier.nomNaissance
-      ? requerant.particulier.nomNaissance
-      : SNP,
+    nomFamille: requerant.particulier.nomNaissance ? requerant.particulier.nomNaissance : SNP,
     prenom: getValeurOuVide(requerant.particulier.prenom),
     courriel: saisie.adresse.adresseCourriel,
     telephone: saisie.adresse.numeroTelephone,
@@ -231,10 +200,7 @@ function getParticulier(saisie: SaisieRequeteRDC) {
   };
 }
 
-function getRequerantTitulaire(
-  titulaire: ISaisieIdentite,
-  adresse: ISaisieAdresse
-) {
+function getRequerantTitulaire(titulaire: ISaisieIdentite, adresse: ISaisieAdresse) {
   return {
     nomFamille: titulaire.noms?.nomNaissance,
     prenom: titulaire.prenoms.prenom1,
@@ -263,10 +229,7 @@ function getAutreProfessionnel(saisie: SaisieRequeteRDC) {
 }
 
 function getLienRequerant(saisie: SaisieRequeteRDC) {
-  if (
-    saisie.requerant.typeRequerant !== "INSTITUTIONNEL" &&
-    saisie.requerant.typeRequerant !== "AUTRE_PROFESSIONNEL"
-  ) {
+  if (saisie.requerant.typeRequerant !== "INSTITUTIONNEL" && saisie.requerant.typeRequerant !== "AUTRE_PROFESSIONNEL") {
     return {
       typeLienRequerant: saisie.lienTitulaire.lien,
       natureLien: saisie.lienTitulaire.natureLien

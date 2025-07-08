@@ -1,5 +1,6 @@
+import { ETypeRequete } from "@model/requete/enum/TypeRequete";
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
-import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
+import { IRMCRequeteForm } from "@model/rmc/requete/IRMCRequete";
 import CloseIcon from "@mui/icons-material/Close";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
@@ -13,15 +14,11 @@ interface PopinNouvelleRMCRequeteProps {
   open: boolean;
   onClose: (isOpen: boolean) => void;
   setNouvelleRMCRequete: React.Dispatch<React.SetStateAction<boolean>>;
-  setValuesRMCRequete: React.Dispatch<React.SetStateAction<IRMCRequete>>;
-  setCriteresRechercheRequete: React.Dispatch<
-    React.SetStateAction<ICriteresRMCRequete | undefined>
-  >;
+  setValuesRMCRequete: React.Dispatch<React.SetStateAction<IRMCRequeteForm<keyof typeof ETypeRequete | ""> | null>>;
+  setCriteresRechercheRequete: React.Dispatch<React.SetStateAction<ICriteresRMCRequete | undefined>>;
 }
 
-export const PopinNouvelleRMCRequete: React.FC<
-  PopinNouvelleRMCRequeteProps
-> = ({
+export const PopinNouvelleRMCRequete: React.FC<PopinNouvelleRMCRequeteProps> = ({
   open,
   onClose,
   setNouvelleRMCRequete,

@@ -18,13 +18,9 @@ import {
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
-import { TRequeteTableau } from "@model/requete/IRequeteTableau";
-import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
-import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { ESousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { EStatutRequete } from "@model/requete/enum/StatutRequete";
+import { RequeteTableauRMC, TRequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 import { setParamsUseApercuCreation } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
@@ -38,7 +34,7 @@ import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";
 import { columnsTableauRequete } from "./RMCTableauRequetesParams";
 
 interface RMCResultatRequetesProps {
-  dataRMCRequete: IRequeteTableauDelivrance[];
+  dataRMCRequete: TRequeteTableauRMC[];
   dataTableauRMCRequete: IParamsTableau;
   setRangeRequete: (range: string) => void;
   resetTableauRequete: boolean;
@@ -84,32 +80,32 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
     setOperationEnCours(false);
   };
 
-  const onClickOnLine = (idRequete: string, data: TRequeteTableau[], idx: number) => {
-    const requeteSelect = data[idx];
-    switch (requeteSelect.type) {
-      case TypeRequete.DELIVRANCE.libelle:
-        onClickReqDelivrance(requeteSelect as IRequeteTableauDelivrance);
+  const onClickOnLine = (idRequete: string, requetes: TRequeteTableauRMC[], idx: number) => {
+    const requeteCliquee = requetes[idx];
+    switch (requeteCliquee.type) {
+      case "DELIVRANCE":
+        onClickReqDelivrance(requeteCliquee);
         break;
-      case TypeRequete.INFORMATION.libelle:
-        onClickReqInformation(requeteSelect as IRequeteTableauInformation);
+      case "INFORMATION":
+        onClickReqInformation(requeteCliquee);
         break;
-      case TypeRequete.CREATION.libelle:
-        onClickReqCreation(requeteSelect as IRequeteTableauCreation, utilisateurConnecte);
+      case "CREATION":
+        onClickReqCreation(requeteCliquee, utilisateurConnecte);
         break;
     }
   };
 
   const urlCourante = URL_RECHERCHE_REQUETE;
 
-  const onClickReqDelivrance = (requete: IRequeteTableauDelivrance) => {
+  const onClickReqDelivrance = (requete: RequeteTableauRMC<"DELIVRANCE">) => {
     setOperationEnCours(true);
     if (autorisePrendreEnChargeReqTableauDelivrance(utilisateurConnecte, requete)) {
       setParamsMiseAJour({
-        libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
-        statutRequete: StatutRequete.PRISE_EN_CHARGE,
+        libelleAction: EStatutRequete.PRISE_EN_CHARGE,
+        statutRequete: "PRISE_EN_CHARGE",
         requete,
         urlCourante,
-        typeRequete: TypeRequete.DELIVRANCE
+        typeRequete: "DELIVRANCE"
       });
     } else {
       setNavigationApercuDelivranceParams({
@@ -119,7 +115,7 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
     }
   };
 
-  const onClickReqInformation = (requete: IRequeteTableauInformation) => {
+  const onClickReqInformation = (requete: RequeteTableauRMC<"INFORMATION">) => {
     setOperationEnCours(true);
     setParamsNavReqInfo({
       requete,
@@ -128,34 +124,22 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
     });
   };
 
-  function estRequeteRCTDOuRCTCEtALeDroitActeTranscrit(sousType: SousTypeCreation) {
-    return SousTypeCreation.estRCTDOuRCTC(sousType) && utilisateurConnecte.estHabilitePour({ leDroit: Droit.CREER_ACTE_TRANSCRIT });
-  }
-
-  function estRequeteRCEXREtALeDroitActeEtabli(sousType: SousTypeCreation) {
-    return (
-      SousTypeCreation.estRCEXR(sousType) &&
-      utilisateurConnecte.estHabilitePour({
-        leDroit: Droit.CREER_ACTE_ETABLI,
-        surUnDesPerimetres: [Perimetre.TOUS_REGISTRES, Perimetre.ETAX]
-      })
-    );
-  }
-
-  const onClickReqCreation = (requete: IRequeteTableauCreation, utilisateurConnecte: UtilisateurConnecte) => {
-    const sousType = SousTypeCreation.getEnumFromLibelleCourt(requete.sousType);
-    if (estRequeteRCTDOuRCTCEtALeDroitActeTranscrit(sousType) || estRequeteRCEXREtALeDroitActeEtabli(sousType)) {
+  const onClickReqCreation = (requete: RequeteTableauRMC<"CREATION">, utilisateurConnecte: UtilisateurConnecte) => {
+    if (
+      estRequeteRCTDOuRCTCEtALeDroitActeTranscrit(requete.sousType, utilisateurConnecte) ||
+      estRequeteRCEXREtALeDroitActeEtabli(requete.sousType, utilisateurConnecte)
+    ) {
       setOperationEnCours(true);
       if (autorisePrendreEnChargeReqTableauCreation(requete, utilisateurConnecte)) {
         setParamsMiseAJour({
-          libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
-          statutRequete: StatutRequete.PRISE_EN_CHARGE,
+          libelleAction: EStatutRequete.PRISE_EN_CHARGE,
+          statutRequete: "PRISE_EN_CHARGE",
           requete,
           urlCourante,
-          typeRequete: TypeRequete.CREATION
+          typeRequete: "CREATION"
         });
       } else {
-        setParamsUseApercuCreation(requete.idRequete, setParamsCreation, requete.sousType, requete.statut, requete.idUtilisateur);
+        setParamsUseApercuCreation(requete.id, setParamsCreation, requete.sousType, requete.statut, requete.idUtilisateur ?? undefined);
       }
     }
   };
@@ -180,3 +164,12 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
     </>
   );
 };
+
+const estRequeteRCTDOuRCTCEtALeDroitActeTranscrit = (
+  sousType: keyof typeof ESousTypeCreation,
+  utilisateurConnecte: UtilisateurConnecte
+): boolean => ["RCTC", "RCTD"].includes(sousType) && utilisateurConnecte.estHabilitePour({ leDroit: Droit.CREER_ACTE_TRANSCRIT });
+
+const estRequeteRCEXREtALeDroitActeEtabli = (sousType: keyof typeof ESousTypeCreation, utilisateurConnecte: UtilisateurConnecte): boolean =>
+  sousType === "RCEXR" &&
+  utilisateurConnecte.estHabilitePour({ leDroit: Droit.CREER_ACTE_ETABLI, surUnDesPerimetres: [Perimetre.TOUS_REGISTRES, Perimetre.ETAX] });

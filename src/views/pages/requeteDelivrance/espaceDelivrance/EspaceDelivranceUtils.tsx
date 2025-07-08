@@ -2,8 +2,7 @@ import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
 import { ICreationActionMiseAjourStatutEtRedirectionParams } from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { autorisePrendreEnChargeReqTableauDelivrance, indexParamsReq } from "@util/RequetesUtils";
 import { DEUX, UN, ZERO } from "@util/Utils";
 import { SortOrder } from "@widget/tableau/TableUtils";
@@ -41,23 +40,23 @@ export const miseAjourOuRedirection = (
   const aDocumentASigner = requeteSelect.documentsReponses?.some(document => document.avecCtv);
 
   if (aPrendreEnCharge || statutARevoir) {
-    const statutFutur = (() => {
+    const statutFutur = ((): keyof typeof EStatutRequete => {
       switch (true) {
         case aPrendreEnCharge:
-          return StatutRequete.PRISE_EN_CHARGE;
+          return "PRISE_EN_CHARGE";
         case aDocumentASigner:
-          return StatutRequete.A_SIGNER;
+          return "A_SIGNER";
         default:
-          return StatutRequete.A_VALIDER;
+          return "A_VALIDER";
       }
     })();
 
     setParamsMiseAJour({
-      libelleAction: statutFutur.libelle,
+      libelleAction: EStatutRequete[statutFutur],
       statutRequete: statutFutur,
       requete: requeteSelect,
       urlCourante: url,
-      typeRequete: TypeRequete.DELIVRANCE
+      typeRequete: "DELIVRANCE"
     });
   } else {
     setNavigationApercuDelivranceParams(data[idx], url);

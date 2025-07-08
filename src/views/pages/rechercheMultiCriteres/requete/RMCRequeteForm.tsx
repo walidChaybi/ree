@@ -1,6 +1,7 @@
 import { DATES_DEBUT_FIN_ANNEE, REQUERANT, REQUETE, TITULAIRE } from "@composant/formulaire/ConstantesNomsForm";
+import { ETypeRequete } from "@model/requete/enum/TypeRequete";
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
-import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
+import { IRMCRequeteForm } from "@model/rmc/requete/IRMCRequete";
 import { MEP_YEAR } from "@util/DateUtils";
 import messageManager from "@util/messageManager";
 import { stockageDonnees } from "@util/stockageDonnees";
@@ -50,7 +51,7 @@ export const titreForm = "Critères de recherche d'une requête";
 interface RMCRequeteFormProps {
   closePopIn?: () => void;
   setNouvelleRMCRequete: React.Dispatch<React.SetStateAction<boolean>>;
-  setValuesRMCRequete: React.Dispatch<React.SetStateAction<IRMCRequete>>;
+  setValuesRMCRequete: React.Dispatch<React.SetStateAction<IRMCRequeteForm<keyof typeof ETypeRequete | ""> | null>>;
   setCriteresRechercheRequete: (criteres: ICriteresRMCRequete) => void;
 }
 

@@ -1,6 +1,7 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { EStatutRequete } from "@model/requete/enum/StatutRequete";
+import { RequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 import { PATH_APERCU_REQ_INFO } from "@router/ReceUrls";
 import { autorisePrendreEnChargeReqTableauInformation } from "@util/RequetesUtils";
 import { getUrlWithParam } from "@util/route/UrlUtil";
@@ -9,7 +10,7 @@ import { useNavigate } from "react-router";
 import { ICreationActionMiseAjourStatutHookParams, useCreationActionMiseAjourStatut } from "../requete/CreationActionMiseAjourStatutHook";
 
 export interface INavigationApercuReqInfoParams {
-  requete: IRequeteTableauInformation;
+  requete: IRequeteTableauInformation | RequeteTableauRMC<"INFORMATION">;
   callback?: () => void;
   urlCourante: string;
 }
@@ -25,7 +26,7 @@ export function useNavigationApercuInformation(params?: INavigationApercuReqInfo
   const redirectionVersApercu = useCallback(() => {
     if (params) {
       const url = `${params.urlCourante}/${PATH_APERCU_REQ_INFO}/:idRequete`;
-      navigate(getUrlWithParam(url, params.requete.idRequete));
+      navigate(getUrlWithParam(url, "idRequete" in params.requete ? params.requete.idRequete : params.requete.id));
     }
   }, [params, navigate]);
 
@@ -33,8 +34,8 @@ export function useNavigationApercuInformation(params?: INavigationApercuReqInfo
     if (params?.requete) {
       if (autorisePrendreEnChargeReqTableauInformation(utilisateurConnecte, params.requete)) {
         setParamsMAJReqInfo({
-          libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
-          statutRequete: StatutRequete.PRISE_EN_CHARGE,
+          libelleAction: EStatutRequete.PRISE_EN_CHARGE,
+          statutRequete: "PRISE_EN_CHARGE",
           requete: params.requete,
           callback: () => {
             redirectionVersApercu();

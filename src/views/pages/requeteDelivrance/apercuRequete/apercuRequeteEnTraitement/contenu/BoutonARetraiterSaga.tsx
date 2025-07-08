@@ -1,9 +1,8 @@
-/* istanbul ignore file */
 /*
  * fichier non testé car composant à supprimer dans étape 2
  */
 import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
-import { getLibelle } from "@util/Utils";
+import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { GestionnaireARetraiterDansSaga } from "@util/migration/GestionnaireARetraiterDansSaga";
 import { goBack } from "@util/route/UrlUtil";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
@@ -26,13 +25,12 @@ export const BoutonARetraiterSaga: React.FC<BoutonARetraiterSagaProps> = ({ idRe
     if (idActionCreee) {
       goBack(navigate);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idActionCreee]);
 
   const handleClickARetraiterSaga = () => {
     setCreationActionEtMiseAjourStatutParams({
       requeteId: idRequete,
-      statutRequete: GestionnaireARetraiterDansSaga.getStatutARetraiter(),
+      statutRequete: GestionnaireARetraiterDansSaga.getStatutARetraiter().nom as keyof typeof EStatutRequete,
       libelleAction: "À retraiter dans Saga"
     });
   };
@@ -42,7 +40,7 @@ export const BoutonARetraiterSaga: React.FC<BoutonARetraiterSagaProps> = ({ idRe
       className="boutonARetraiterSaga"
       onClick={handleClickARetraiterSaga}
     >
-      {getLibelle("À retraiter dans SAGA")}
+      {"À retraiter dans SAGA"}
     </BoutonDoubleSubmit>
   );
 };

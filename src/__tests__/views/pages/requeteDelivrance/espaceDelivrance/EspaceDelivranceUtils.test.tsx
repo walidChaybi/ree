@@ -1,7 +1,8 @@
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TRequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 import { goToLinkRequete } from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { render, screen } from "@testing-library/react";
-import { RenderIconPrioriteRequete } from "@util/tableauRequete/TableauRequeteUtils";
+import { RenderIconePrioriteRequeteRMC } from "@util/tableauRequete/TableauRequeteUtils";
 import { expect, test } from "vitest";
 
 test("espace delivrance utils goToLinkRequete", () => {
@@ -16,9 +17,9 @@ test("espace delivrance utils goToLinkRequete", () => {
 });
 
 test("espace delivrance utils getIconPrioriteRequete ", () => {
-  const result = RenderIconPrioriteRequete({
+  const result = RenderIconePrioriteRequeteRMC({
     priorite: "HAUTE"
-  });
+  } as TRequeteTableauRMC);
   render(result);
   expect(screen.getByTitle(/Priorité haute/i)).toBeDefined();
 });

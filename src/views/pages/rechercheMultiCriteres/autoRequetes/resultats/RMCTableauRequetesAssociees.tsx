@@ -2,13 +2,12 @@ import { RECEContextData } from "@core/contexts/RECEContext";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
-import { TRequeteTableau } from "@model/requete/IRequeteTableau";
 import { ESousTypeCreation, SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { ELibelleSousTypeRequete, TSousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { ETypeRequete, TypeRequete } from "@model/requete/enum/TypeRequete";
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
-import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
-import { TRequeteRMCAuto } from "@model/rmc/requete/RequeteRMCAuto";
+import { IRMCRequeteForm } from "@model/rmc/requete/IRMCRequete";
+import { TRequeteAssociee } from "@model/rmc/requete/RequeteAssociee";
 import { ApercuRequeteEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSimple/ApercuRequeteEtablissementSimplePage";
 import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
 import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
@@ -30,13 +29,11 @@ const width = 1100;
 const height = 600;
 
 interface IRMCTableauRequetesAssocieesProps {
-  dataRMCRequete: TRequeteTableau[] | TRequeteRMCAuto[];
+  dataRMCRequete: TRequeteAssociee[];
   dataTableauRMCRequete: IParamsTableau;
   setRangeRequete: (range: string) => void;
-  setNouvelleRMCRequete: React.Dispatch<React.SetStateAction<boolean>>;
-  setValuesRMCRequete: React.Dispatch<React.SetStateAction<IRMCRequete>>;
+  setValuesRMCRequete: React.Dispatch<React.SetStateAction<IRMCRequeteForm<keyof typeof ETypeRequete | ""> | null>>;
   setCriteresRechercheRequete: React.Dispatch<React.SetStateAction<ICriteresRMCRequete | undefined>>;
-  resetTableauRequete: boolean;
 }
 
 export interface IInfoRequeteSelectionnee {
@@ -50,11 +47,11 @@ export const RMCTableauRequetesAssociees: React.FC<IRMCTableauRequetesAssocieesP
   dataRMCRequete,
   dataTableauRMCRequete,
   setRangeRequete,
-  setNouvelleRMCRequete,
   setValuesRMCRequete,
-  setCriteresRechercheRequete,
-  resetTableauRequete
+  setCriteresRechercheRequete
 }) => {
+  const [nouvelleRMCRequete, setNouvelleRMCRequete] = useState<boolean>(false);
+
   const { utilisateurConnecte } = useContext(RECEContextData);
   // Gestion du tableau
   const [requeteSelectionnee, setRequeteSelectionnee] = useState<IInfoRequeteSelectionnee>();
@@ -73,7 +70,7 @@ export const RMCTableauRequetesAssociees: React.FC<IRMCTableauRequetesAssocieesP
     setRequeteSelectionnee(undefined);
   };
 
-  const onClickOnLine = (idRequete: string, data: TRequeteTableau[] | TRequeteRMCAuto[], idx: number) => {
+  const onClickOnLine = (idRequete: string, data: TRequeteAssociee[], idx: number) => {
     const requeteCliquee = data[idx];
     const utilisateurPeutOuvrirLaRequete = utilisateurADroitOuvrirRequete(
       requeteCliquee.type ?? "",
@@ -81,19 +78,12 @@ export const RMCTableauRequetesAssociees: React.FC<IRMCTableauRequetesAssocieesP
       utilisateurConnecte
     );
     if (utilisateurPeutOuvrirLaRequete) {
-      "nomCompletRequerant" in requeteCliquee // Type guard temporaire en attendant le nettoyage du DTO de RequeteTableau
-        ? setRequeteSelectionnee({
-            idRequete: requeteCliquee.idRequete,
-            numeroFonctionnel: requeteCliquee.numero,
-            type: requeteCliquee.type ?? "",
-            sousType: requeteCliquee.sousType
-          })
-        : setRequeteSelectionnee({
-            idRequete: requeteCliquee.idRequete,
-            numeroFonctionnel: requeteCliquee.numero,
-            type: ETypeRequete[(requeteCliquee as TRequeteRMCAuto).type],
-            sousType: ELibelleSousTypeRequete[(requeteCliquee as TRequeteRMCAuto).sousType].court
-          });
+      setRequeteSelectionnee({
+        idRequete: requeteCliquee.id,
+        numeroFonctionnel: requeteCliquee.numero,
+        type: ETypeRequete[requeteCliquee.type],
+        sousType: ELibelleSousTypeRequete[requeteCliquee.sousType].court
+      });
     }
   };
 
@@ -106,7 +96,7 @@ export const RMCTableauRequetesAssociees: React.FC<IRMCTableauRequetesAssocieesP
         dataState={dataRMCRequete}
         paramsTableau={dataTableauRMCRequete}
         goToLink={goToLink}
-        resetTableau={resetTableauRequete}
+        resetTableau={nouvelleRMCRequete}
         noRows={RenderMessageZeroRequete()}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_REQUETE_ASSOCIEES}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_REQUETE_ASSOCIEES}

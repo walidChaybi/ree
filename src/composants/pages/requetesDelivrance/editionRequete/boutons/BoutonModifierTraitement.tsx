@@ -3,8 +3,6 @@ import {
   useCreationActionMiseAjourStatutEtRedirectionHook
 } from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { PATH_APERCU_REQ_PRISE } from "@router/ReceUrls";
 import { getUrlPrecedente, getUrlWithParam, replaceUrl } from "@util/route/UrlUtil";
@@ -28,11 +26,11 @@ export const BoutonModifierTraitement: React.FC<BoutonModifierTraitementProps> =
   const setActionEtUpdateStatut = () => {
     if (requete.documentsReponses?.length > 0) {
       setParamsCreerActionMAJEtRedirection({
-        statutRequete: StatutRequete.PRISE_EN_CHARGE,
+        statutRequete: "PRISE_EN_CHARGE",
         libelleAction: "Revue du traitement",
         urlCourante: getUrlWithParam(location.pathname, requete.id),
         requete: mappingRequeteDelivranceToRequeteTableau(requete),
-        typeRequete: TypeRequete.DELIVRANCE,
+        typeRequete: "DELIVRANCE",
         autoriserTraitementAutoRDCS: false
       });
     } else {

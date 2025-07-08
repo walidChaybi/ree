@@ -3,11 +3,10 @@ import {
   useCreationActionMiseAjourStatutEtRedirectionHook
 } from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { IRequeteAleatoireResultat, useGetRequeteAleatoire } from "@hook/requete/PrendreEnChargeAleatoirementApiHook";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import messageManager from "@util/messageManager";
-import { getLibelle } from "@util/Utils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
@@ -25,13 +24,13 @@ export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
       if (requeteAleatoireResultat.requete) {
         setParamsDelivrance({
           requete: requeteAleatoireResultat.requete,
-          libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
-          statutRequete: StatutRequete.PRISE_EN_CHARGE,
+          libelleAction: EStatutRequete.PRISE_EN_CHARGE,
+          statutRequete: "PRISE_EN_CHARGE",
           urlCourante: location.pathname,
-          typeRequete: TypeRequete.DELIVRANCE
+          typeRequete: "DELIVRANCE"
         });
       } else if (!requeteAleatoireResultat.requete) {
-        messageManager.showInfoAndClose(getLibelle("Il n'existe plus de requêtes disponibles à la prise en charge"));
+        messageManager.showInfoAndClose("Il n'existe plus de requêtes disponibles à la prise en charge");
       }
       setPrendreEnCharge(false);
       setOperationEnCours(false);
@@ -51,7 +50,7 @@ export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
       estDesactive={props.disabled}
       toileDeFondVisible={operationEnCours}
     >
-      {getLibelle("Prendre en charge requête suivante")}
+      {"Prendre en charge requête suivante"}
     </BoutonOperationEnCours>
   );
 };

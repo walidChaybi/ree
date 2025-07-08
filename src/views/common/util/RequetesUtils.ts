@@ -1,19 +1,18 @@
-import { IService } from "@model/agent/IService";
-import { Utilisateur, UtilisateurConnecte } from "@model/agent/Utilisateur";
+import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { IActionOption } from "@model/requete/IActionOption";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { IRequeteDelivrance, RequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { TRequeteTableau } from "@model/requete/IRequeteTableau";
-import { IRequeteTableauCreation, mappingUneRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
-import { IRequeteTableauDelivrance, mappingUneRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import { IRequeteTableauInformation, mappingUneRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
-import { Provenance } from "@model/requete/enum/Provenance";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
+import { EProvenance, Provenance } from "@model/requete/enum/Provenance";
+import { ESousTypeCreation, SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { ESousTypeDelivrance, SousTypeDelivrance, SousTypeDelivranceUtils } from "@model/requete/enum/SousTypeDelivrance";
+import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
+import { ETypeRequete, TypeRequete } from "@model/requete/enum/TypeRequete";
+import { RequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 
 export const indexParamsReq = {
   Statut: 0,
@@ -24,7 +23,7 @@ export const indexParamsReq = {
 
 export const autorisePrendreEnChargeDelivrance = (utilisateurConnecte: UtilisateurConnecte, requete: IRequeteDelivrance) => {
   return (
-    TypeRequete.estDelivrance(requete.type) &&
+    requete.type === TypeRequete.DELIVRANCE &&
     StatutRequete.estATraiterOuTransferee(requete.statutCourant.statut) &&
     (!requete.idUtilisateur || utilisateurConnecte.id === requete.idUtilisateur) &&
     [utilisateurConnecte.idService, ...utilisateurConnecte.idServicesFils, ...utilisateurConnecte.idServicesParent].includes(
@@ -38,67 +37,98 @@ export const autorisePrendreEnChargeDelivrance = (utilisateurConnecte: Utilisate
 
 export const autorisePrendreEnChargeReqTableauDelivrance = (
   utilisateurConnecte: UtilisateurConnecte,
-  requete: IRequeteTableauDelivrance
+  requete: IRequeteTableauDelivrance | RequeteTableauRMC<"DELIVRANCE">
 ): boolean => {
-  const type = requete.type ? TypeRequete.getEnumFromLibelle(requete.type) : "";
-  const sousType = SousTypeDelivrance.getEnumFromLibelleCourt(requete.sousType);
-  const statut = StatutRequete.getEnumFromLibelle(requete.statut);
+  let type: keyof typeof ETypeRequete | "";
+  let sousType: keyof typeof ESousTypeDelivrance | "";
+  let statut: keyof typeof EStatutRequete | "";
+
+  if ("idRequete" in requete) {
+    type = requete.type ? TypeRequete.getEnumFromLibelle(requete.type) : "";
+    sousType = (SousTypeDelivrance.getEnumFromLibelleCourt(requete.sousType)?.nom as keyof typeof ESousTypeDelivrance) ?? "";
+    statut = (StatutRequete.getEnumFromLibelle(requete.statut)?.nom as keyof typeof EStatutRequete) ?? "";
+  } else {
+    type = requete.type;
+    sousType = requete.sousType;
+    statut = requete.statut;
+  }
 
   return (
-    (TypeRequete.estDelivrance(type) &&
-      SousTypeDelivrance.estPossibleAPrendreEnCharge(sousType) &&
-      StatutRequete.estATraiterOuTransferee(statut) &&
-      utilisateurConnecte.id === requete.idUtilisateur &&
-      [utilisateurConnecte.idService, ...utilisateurConnecte.idServicesFils, ...utilisateurConnecte.idServicesParent].includes(
+    (type === "DELIVRANCE" &&
+      SousTypeDelivranceUtils.estPossibleAPrendreEnCharge(sousType) &&
+      ["A_TRAITER", "TRANSFEREE"].includes(statut) &&
+      utilisateurConnecte.id === (requete.idUtilisateur ?? undefined) &&
+      [utilisateurConnecte.idService, ...utilisateurConnecte.idServicesParent, ...utilisateurConnecte.idServicesFils].includes(
         requete.idService ?? ""
       ) &&
-      requete.provenance === Provenance.COMEDEC.libelle &&
+      requete.provenance === EProvenance.COMEDEC &&
       utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER_COMEDEC })) ||
-    utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER })
+    (requete.provenance !== EProvenance.COMEDEC && utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER }))
   );
 };
 
 export const autorisePrendreEnChargeReqTableauInformation = (
   utilisateurConnecte: UtilisateurConnecte,
-  requete: IRequeteTableauInformation
+  requete: IRequeteTableauInformation | RequeteTableauRMC<"INFORMATION">
 ) => {
-  const type = requete.type ? TypeRequete.getEnumFromLibelle(requete.type) : "";
-  const statut = StatutRequete.getEnumFromLibelle(requete.statut);
+  let type: keyof typeof ETypeRequete | "";
+  let statut: keyof typeof EStatutRequete | "";
+
+  // Type gard à supprimer quand IRequeteTableauInformation sera supprimé
+  if ("idRequete" in requete) {
+    type = ((TypeRequete.getEnumFromLibelle(requete.type ?? "") as TypeRequete)?.nom as keyof typeof ETypeRequete) ?? "";
+    statut = (StatutRequete.getEnumFromLibelle(requete.statut)?.nom as keyof typeof EStatutRequete) ?? "";
+  } else {
+    type = requete.type;
+    statut = requete.statut;
+  }
 
   return (
-    TypeRequete.estInformation(type) && StatutRequete.estATraiterOuTransferee(statut) && utilisateurConnecte.id === requete.idUtilisateur
+    type === "INFORMATION" &&
+    ["A_TRAITER", "TRANSFEREE"].includes(statut) &&
+    utilisateurConnecte.id === (requete.idUtilisateur ?? undefined)
   );
 };
 
-const estRequeteCreationAuStatutATraiter = (type: TypeRequete, sousType: SousTypeCreation, statut: StatutRequete) => {
-  return TypeRequete.estCreation(type) && SousTypeCreation.estRCEXROuRCTDOuRCTC(sousType) && StatutRequete.estATraiter(statut);
-};
+const estRequeteCreationAuStatutATraiter = (
+  type: keyof typeof ETypeRequete,
+  sousType: keyof typeof ESousTypeCreation,
+  statut: keyof typeof EStatutRequete
+) => type === "CREATION" && ["RCEXR", "RCTD", "RCTC"].includes(sousType) && statut === "A_TRAITER";
 
-export const autorisePrendreEnChargeDepuisPageCreation = (
-  utilisateurConnecte: UtilisateurConnecte,
-  requete?: IRequeteCreation
-): boolean => {
-  if (requete) {
-    return (
-      estRequeteCreationAuStatutATraiter(requete.type, requete.sousType, requete.statutCourant.statut) &&
+export const autorisePrendreEnChargeDepuisPageCreation = (utilisateurConnecte: UtilisateurConnecte, requete?: IRequeteCreation): boolean =>
+  Boolean(
+    requete &&
+      estRequeteCreationAuStatutATraiter(
+        requete.type.nom as keyof typeof ETypeRequete,
+        requete.sousType.nom as keyof typeof ESousTypeCreation,
+        requete.statutCourant.statut.nom as keyof typeof EStatutRequete
+      ) &&
       [utilisateurConnecte.idService, ...utilisateurConnecte.idServicesParent, ...utilisateurConnecte.idServicesFils].includes(
-        requete.idService
+        requete.idService ?? ""
       )
-    );
-  } else {
-    return false;
-  }
-};
+  );
 
 export const autorisePrendreEnChargeReqTableauCreation = (
-  requete: IRequeteTableauCreation,
+  requete: IRequeteTableauCreation | RequeteTableauRMC<"CREATION">,
   utilisateurConnecte: UtilisateurConnecte
 ): boolean => {
-  const type = requete.type ? TypeRequete.getEnumFromLibelle(requete.type) : "";
-  const sousType = SousTypeCreation.getEnumFromLibelleCourt(requete.sousType);
-  const statut = StatutRequete.getEnumFromLibelle(requete.statut);
+  let type: keyof typeof ETypeRequete | "";
+  let sousType: keyof typeof ESousTypeCreation | "";
+  let statut: keyof typeof EStatutRequete | "";
+  if ("idRequete" in requete) {
+    type = requete.type ? TypeRequete.getEnumFromLibelle(requete.type) : "";
+    sousType = (SousTypeCreation.getEnumFromLibelleCourt(requete.sousType)?.nom as keyof typeof ESousTypeCreation) ?? "";
+    statut = (StatutRequete.getEnumFromLibelle(requete.statut)?.nom as keyof typeof EStatutRequete) ?? "";
+  } else {
+    type = requete.type;
+    sousType = requete.sousType;
+    statut = requete.statut;
+  }
 
-  return estRequeteCreationAuStatutATraiter(type, sousType, statut) && utilisateurConnecte.id === requete.idUtilisateur;
+  return Boolean(
+    type && estRequeteCreationAuStatutATraiter(type, sousType, statut) && utilisateurConnecte.id === (requete.idUtilisateur ?? undefined)
+  );
 };
 
 export const filtrerListeActionsParSousTypes = (requete: IRequeteDelivrance, listeOptions: IActionOption[]): IActionOption[] => {
@@ -121,22 +151,4 @@ export function getIdDocumentReponseAAfficher(requete?: IRequeteDelivrance): str
     }
   }
   return idDocumentAAfficher;
-}
-
-export function mappingRequetesTableau(
-  resultatsRecherche: any,
-  mappingSupplementaire: boolean,
-  utilisateurs: Utilisateur[],
-  services: IService[]
-): TRequeteTableau[] {
-  return resultatsRecherche?.map((requete: TRequeteTableau) => {
-    if (requete.type && TypeRequete.getEnumFor(requete.type ?? "") === TypeRequete.DELIVRANCE) {
-      return mappingUneRequeteTableauDelivrance(requete, mappingSupplementaire, utilisateurs, services);
-    } else if (requete.type && TypeRequete.getEnumFor(requete.type) === TypeRequete.INFORMATION) {
-      return mappingUneRequeteTableauInformation(requete, mappingSupplementaire, utilisateurs, services);
-    } else {
-      // TODO Mapping provisoire pour les autres Type Requete ( CREATION et MISE_A_JOUR )
-      return mappingUneRequeteTableauCreation(requete, mappingSupplementaire, utilisateurs, services);
-    }
-  });
 }

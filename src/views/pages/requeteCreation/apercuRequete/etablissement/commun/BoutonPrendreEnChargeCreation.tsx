@@ -3,13 +3,11 @@ import {
   ICreationActionMiseAjourStatutEtRedirectionParams,
   useCreationActionMiseAjourStatutEtRedirectionHook
 } from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { mappingUneRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import "@pages/requeteDelivrance/apercuRequete/apercuRequete/contenu/scss/BoutonPrendreEnCharge.scss";
 import { getUrlPrecedente } from "@util/route/UrlUtil";
-import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useContext, useState } from "react";
@@ -30,11 +28,11 @@ export const BoutonPrendreEnChargeCreation: React.FC<BoutonPrendreEnChargeCreati
   const setActionEtUpdateStatut = () => {
     setOperationEnCours(true);
     setParams({
-      libelleAction: StatutRequete.PRISE_EN_CHARGE.libelle,
-      statutRequete: StatutRequete.PRISE_EN_CHARGE,
+      libelleAction: EStatutRequete.PRISE_EN_CHARGE,
+      statutRequete: "PRISE_EN_CHARGE",
       requete: mappingUneRequeteTableauCreation(props.requete, false, utilisateurs, services),
       urlCourante: getUrlPrecedente(location.pathname),
-      typeRequete: TypeRequete.CREATION,
+      typeRequete: "CREATION",
       handleTraitementTermine: () => {
         if (props.onClick) {
           props.onClick();
@@ -58,7 +56,7 @@ export const BoutonPrendreEnChargeCreation: React.FC<BoutonPrendreEnChargeCreati
         className="BoutonPrendreEnChargeCreation"
         disabled={props.disabled}
       >
-        {getLibelle("Prendre en charge")}
+        {"Prendre en charge"}
       </BoutonDoubleSubmit>
     </>
   );

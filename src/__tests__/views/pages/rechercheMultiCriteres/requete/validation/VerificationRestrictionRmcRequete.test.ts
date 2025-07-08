@@ -1,6 +1,7 @@
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
+import { ESousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { EStatutRequete } from "@model/requete/enum/StatutRequete";
+import { ETypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRMCRequeteForm } from "@model/rmc/requete/IRMCRequete";
 import {
   filtreDateCreationInformatiqueSaisiSeul,
   getMessageSiVerificationRestrictionRmcRequeteEnErreur,
@@ -8,14 +9,15 @@ import {
 } from "@pages/rechercheMultiCriteres/requete/validation/VerificationRestrictionRmcRequete";
 import { expect, test } from "vitest";
 
-const SOMETHING = "something";
-
 test("Attendu: getMessageSiVerificationRestrictionRmcRequeteEnErreur fonctionne correctement", () => {
-  const rmcSaisieTypeRequete: IRMCRequete = {
+  const rmcSaisieTypeRequete: IRMCRequeteForm<keyof typeof ETypeRequete> = {
     requete: {
-      typeRequete: SOMETHING,
-      sousTypeRequete: undefined,
-      numeroTeledossier: ""
+      typeRequete: "DELIVRANCE",
+      sousTypeRequete: "RDD",
+      numeroTeledossier: "",
+      numeroRequete: "",
+      statutRequete: "BROUILLON",
+      numeroDossierNational: ""
     },
     titulaire: {
       nom: ""
@@ -27,28 +29,27 @@ test("Attendu: getMessageSiVerificationRestrictionRmcRequeteEnErreur fonctionne 
         mois: "10",
         annee: "2022"
       }
-    }
+    },
+    requerant: {}
   };
-  expect(
-    getMessageSiVerificationRestrictionRmcRequeteEnErreur(rmcSaisieTypeRequete)
-  ).toBe(
+  expect(getMessageSiVerificationRestrictionRmcRequeteEnErreur(rmcSaisieTypeRequete)).toBe(
     "Les critères Type, sous-type et statut de requête doivent être renseignés ensemble"
   );
 
-  rmcSaisieTypeRequete.requete!.sousTypeRequete = SousTypeDelivrance.RDD;
-  rmcSaisieTypeRequete.requete!.statutRequete = StatutRequete.A_SIGNER;
-  expect(
-    getMessageSiVerificationRestrictionRmcRequeteEnErreur(rmcSaisieTypeRequete)
-  ).toBeUndefined();
+  rmcSaisieTypeRequete.requete.sousTypeRequete = "RDD";
+  rmcSaisieTypeRequete.requete.statutRequete = "A_SIGNER";
+  expect(getMessageSiVerificationRestrictionRmcRequeteEnErreur(rmcSaisieTypeRequete)).toBeUndefined();
 });
 
 test("Attendu: typeRequeteSaisiSansSousTypeOuStatut fonctionne correctement", () => {
-  const rmcSaisieTypeRequete: IRMCRequete = {
+  const rmcSaisieTypeRequete: IRMCRequeteForm<keyof typeof ETypeRequete> = {
     requete: {
-      typeRequete: SOMETHING,
-      sousTypeRequete: undefined,
+      typeRequete: "DELIVRANCE",
+      sousTypeRequete: undefined as unknown as keyof typeof ESousTypeDelivrance,
       numeroTeledossier: "",
-      statutRequete: undefined
+      statutRequete: undefined as unknown as keyof typeof EStatutRequete,
+      numeroRequete: "",
+      numeroDossierNational: ""
     },
     titulaire: {
       nom: ""
@@ -60,29 +61,27 @@ test("Attendu: typeRequeteSaisiSansSousTypeOuStatut fonctionne correctement", ()
         mois: "10",
         annee: "2022"
       }
-    }
+    },
+    requerant: {}
   };
-  expect(
-    typeRequeteSaisiSansSousTypeOuStatut(rmcSaisieTypeRequete)
-  ).toBeTruthy();
+  expect(typeRequeteSaisiSansSousTypeOuStatut(rmcSaisieTypeRequete)).toBeTruthy();
 
-  rmcSaisieTypeRequete.requete!.sousTypeRequete = SousTypeDelivrance.RDD;
-  expect(
-    typeRequeteSaisiSansSousTypeOuStatut(rmcSaisieTypeRequete)
-  ).toBeTruthy();
+  rmcSaisieTypeRequete.requete.sousTypeRequete = "RDD";
+  expect(typeRequeteSaisiSansSousTypeOuStatut(rmcSaisieTypeRequete)).toBeTruthy();
 
-  rmcSaisieTypeRequete.requete!.statutRequete = StatutRequete.A_SIGNER;
-  expect(
-    typeRequeteSaisiSansSousTypeOuStatut(rmcSaisieTypeRequete)
-  ).toBeFalsy();
+  rmcSaisieTypeRequete.requete.statutRequete = "A_SIGNER";
+  expect(typeRequeteSaisiSansSousTypeOuStatut(rmcSaisieTypeRequete)).toBeFalsy();
 });
 
 test("Attendu: filtreDateCreationInformatiqueSaisiSeul fonctionne correctement", () => {
-  const rmcSaisieTypeRequete: IRMCRequete = {
+  const rmcSaisieTypeRequete: IRMCRequeteForm<keyof typeof ETypeRequete> = {
     requete: {
-      typeRequete: "",
-      sousTypeRequete: undefined,
-      numeroTeledossier: ""
+      typeRequete: "DELIVRANCE",
+      sousTypeRequete: "RDCSC",
+      numeroTeledossier: "",
+      numeroRequete: "",
+      statutRequete: "BROUILLON",
+      numeroDossierNational: ""
     },
     titulaire: {
       nom: "",
@@ -95,14 +94,11 @@ test("Attendu: filtreDateCreationInformatiqueSaisiSeul fonctionne correctement",
         mois: "10",
         annee: "2022"
       }
-    }
+    },
+    requerant: {}
   };
-  expect(
-    filtreDateCreationInformatiqueSaisiSeul(rmcSaisieTypeRequete)
-  ).toBeTruthy();
+  expect(filtreDateCreationInformatiqueSaisiSeul(rmcSaisieTypeRequete)).toBeTruthy();
 
-  rmcSaisieTypeRequete.titulaire!.dateNaissance!.annee = "2010";
-  expect(
-    filtreDateCreationInformatiqueSaisiSeul(rmcSaisieTypeRequete)
-  ).toBeFalsy();
+  rmcSaisieTypeRequete.titulaire.dateNaissance!.annee = "2010";
+  expect(filtreDateCreationInformatiqueSaisiSeul(rmcSaisieTypeRequete)).toBeFalsy();
 });

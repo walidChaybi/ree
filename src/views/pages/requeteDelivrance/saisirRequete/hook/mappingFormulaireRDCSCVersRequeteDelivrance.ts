@@ -8,7 +8,7 @@ import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IPieceJustificative, mapPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import { SNP, getValeurOuVide } from "@util/Utils";
-import { supprimeProprietesVides } from "@util/supprimeProprietesVides";
+import { nettoyerAttributsDto } from "../../../../../dto/commun/dtoUtils";
 import { limitesTitulaires } from "../SaisirRDCSCPage";
 import { getPrenomsTableauStringVersPrenomsOrdonnes } from "./mappingCommun";
 
@@ -29,7 +29,7 @@ export function mappingFormulaireRDCSCVersRequeteDelivrance(
     requerant: getRequerant(requeteRDCSC.saisie),
     piecesJustificatives: getPiecesJustificativesAGarder(requeteRDCSC.saisie)
   } as any as IRequeteDelivrance;
-  return supprimeProprietesVides(requete);
+  return nettoyerAttributsDto(requete);
 }
 
 // Renvoie des PJs déjà intégrées (sans contenu base64String) afin de gérer les suppressions

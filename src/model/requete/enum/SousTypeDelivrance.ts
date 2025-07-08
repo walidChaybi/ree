@@ -1,4 +1,4 @@
-import { TEnumAvecDeuxLibelles } from "@model/commun/EnumAvecDeuxLibelles";
+import { constructeurEnumAvecDeuxLibellesUtils, TEnumAvecDeuxLibelles } from "@model/commun/EnumAvecDeuxLibelles";
 import { EnumWithComplete } from "@util/enum/EnumWithComplete";
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
@@ -44,6 +44,14 @@ export const ELibelleSousTypeDelivrance: TEnumAvecDeuxLibelles<ESousTypeDelivran
     court: "Délivrance LF (c)",
     long: "Délivrance Livret de famille courrier"
   }
+};
+
+export const SousTypeDelivranceUtils = {
+  ...constructeurEnumAvecDeuxLibellesUtils(ELibelleSousTypeDelivrance),
+
+  estPossibleAPrendreEnCharge: (sousType: keyof typeof ESousTypeDelivrance): boolean =>
+    (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) && ["RDD", "RDC", "RDDP"].includes(sousType)) ||
+    (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATION) && ["RDCSD", "RDCSC"].includes(sousType))
 };
 
 export class SousTypeDelivrance extends EnumWithComplete {

@@ -13,11 +13,7 @@ import {
 } from "../data/EspaceInformation";
 import { NOMENCLATURE_OPTION_COURRIER } from "../data/NomenclatureOptionCourrier";
 import { NOMENCLATURE_REPONSE } from "../data/NomenclatureReponse";
-import {
-  ReponseAppelNomenclatureDocummentDelivrance,
-  ReponseAppelNomenclatureTypePiecesJustificative
-} from "../data/nomenclatures";
-import { ReponseAppelRMCRequete } from "../data/RMCRequete";
+import { ReponseAppelNomenclatureDocummentDelivrance, ReponseAppelNomenclatureTypePiecesJustificative } from "../data/nomenclatures";
 
 export const NORESULT = "NORESULT";
 
@@ -56,70 +52,59 @@ export const configRequetesInformation = [
 
       // Requetes d'information de mon service (espace information)
       if (
-        match[1] ===
-          "/requetes/information/requetes-de-mon-service?tri=dateCreation&sens=ASC&range=0-105" &&
+        match[1] === "/requetes/information/requetes-de-mon-service?tri=dateCreation&sens=ASC&range=0-105" &&
         params.sousType === "INFORMATION"
       ) {
         return {
           data: ReponseRequetesInfoServiceFiltreSousType,
           headers: {
-            "content-range":
-              "0-15/" + ReponseRequetesInfoServiceFiltreSousType.length,
+            "content-range": "0-15/" + ReponseRequetesInfoServiceFiltreSousType.length,
             link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetesService?tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
 
       if (
-        match[1] ===
-          "/requetes/information/requetes-de-mon-service?tri=dateCreation&sens=ASC&range=0-105" &&
+        match[1] === "/requetes/information/requetes-de-mon-service?tri=dateCreation&sens=ASC&range=0-105" &&
         params.objet === "DEMANDE_COPIE_ACTE"
       ) {
         return {
           data: ReponseRequetesInfoServiceFiltreObjet,
           headers: {
-            "content-range":
-              "0-15/" + ReponseRequetesInfoServiceFiltreObjet.length,
+            "content-range": "0-15/" + ReponseRequetesInfoServiceFiltreObjet.length,
             link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetesService?tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
 
       if (
-        match[1] ===
-          "/requetes/information/requetes-de-mon-service?tri=dateCreation&sens=ASC&range=0-105" &&
+        match[1] === "/requetes/information/requetes-de-mon-service?tri=dateCreation&sens=ASC&range=0-105" &&
         params.typeRequerant === "AVOCAT"
       ) {
         return {
           data: ReponseRequetesInfoServiceFiltreTypeRequerant,
           headers: {
-            "content-range":
-              "0-15/" + ReponseRequetesInfoServiceFiltreTypeRequerant.length,
+            "content-range": "0-15/" + ReponseRequetesInfoServiceFiltreTypeRequerant.length,
             link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetesService?tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
 
       if (
-        match[1] ===
-          "/requetes/information/requetes-de-mon-service?tri=dateCreation&sens=ASC&range=0-105" &&
+        match[1] === "/requetes/information/requetes-de-mon-service?tri=dateCreation&sens=ASC&range=0-105" &&
         params.statuts.length === 1 &&
         params.statuts[0] === "PRISE_EN_CHARGE"
       ) {
         return {
           data: ReponseRequetesInfoServiceFiltreStatut,
           headers: {
-            "content-range":
-              "0-15/" + ReponseRequetesInfoServiceFiltreStatut.length,
+            "content-range": "0-15/" + ReponseRequetesInfoServiceFiltreStatut.length,
             link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetesService?tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
 
-      if (
-        match[1] ===
-        "/requetes/information/requetes-de-mon-service?tri=dateCreation&sens=ASC&range=0-105"
-      ) {
+      if (match[1] === "/requetes/information/requetes-de-mon-service?tri=dateCreation&sens=ASC&range=0-105") {
         return {
           data: ReponseRequetesInfoService,
           headers: {
@@ -130,25 +115,16 @@ export const configRequetesInformation = [
       }
 
       // Détail requête Information
-      if (
-        match[1] === "/requetes/0b7a1f7b-b4f1-4163-8a81-e5adf53cbf63" ||
-        match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
-      ) {
+      if (match[1] === "/requetes/0b7a1f7b-b4f1-4163-8a81-e5adf53cbf63" || match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10856") {
         return { data: ReponseAppelDetailRequeteInformation.data };
       }
-      if (
-        match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10857" &&
-        this.compteurRequeteInformation === 0
-      ) {
+      if (match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10857" && this.compteurRequeteInformation === 0) {
         this.compteurRequeteInformation++;
         return {
           data: ReponseAppelDetailRequeteInformationSansCorbeilleAgent.data
         };
       }
-      if (
-        match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10857" &&
-        this.compteurRequeteInformation === 1
-      ) {
+      if (match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10857" && this.compteurRequeteInformation === 1) {
         this.compteurRequeteInformation = 0;
         return {
           data: {
@@ -157,10 +133,7 @@ export const configRequetesInformation = [
           }
         };
       }
-      if (
-        match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10557" ||
-        match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10555"
-      ) {
+      if (match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10557" || match[1] === "/requetes/bbd05aed-8ea9-45ba-a7d7-b8d55ad10555") {
         return { data: ReponseAppelDetailRequeteCompletion.data };
       }
 
@@ -183,10 +156,7 @@ export const configRequetesInformation = [
       }
 
       // Sauvegarde réponse
-      if (
-        match[1] ===
-        "/requetes/information/reponse/bbd05aed-8ea9-45ba-a7d7-b8d55ad10856"
-      ) {
+      if (match[1] === "/requetes/information/reponse/bbd05aed-8ea9-45ba-a7d7-b8d55ad10856") {
         return { data: "12345" };
       }
 
@@ -218,18 +188,6 @@ export const configRequetesInformation = [
         context.method === "post"
       ) {
         return { data: "123456789" };
-      }
-
-      // RMC Auto Requete
-      if (match[1] === "/requetes/rmcauto?range=0-105") {
-        return {
-          headers: {
-            "content-range":
-              "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
-          },
-          data: ReponseAppelRMCRequete.data
-        };
       }
     },
 

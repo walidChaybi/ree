@@ -1,27 +1,55 @@
+import { CONFIG_POST_RMC_REQUETE } from "@api/configurations/requete/rmc/PostRMCRequeteConfigApi";
+import { RECEContextData } from "@core/contexts/RECEContext";
+import { ETypeRequete } from "@model/requete/enum/TypeRequete";
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
-import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
+import { mappingCriteresRMCRequeteVersDto } from "@model/rmc/requete/ICriteresRMCRequeteDto";
+import { IRMCRequeteForm } from "@model/rmc/requete/IRMCRequete";
+import { RequeteTableauRMC, TRequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
+import { IParamsTableau, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
+import messageManager from "@util/messageManager";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { AutoScroll } from "@widget/autoScroll/autoScroll";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useRMCRequeteApiHook } from "./hook/RMCRequeteApiHook";
-import { RMCRequeteResultats } from "./resultats/RMCRequeteResultats";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import useFetchApi from "../../../../hooks/api/FetchApiHook";
 import { RMCRequeteForm } from "./RMCRequeteForm";
+import { RMCRequeteResultats } from "./resultats/RMCRequeteResultats";
 import "./scss/RMCRequetePage.scss";
 
 export const RMCRequetePage: React.FC = () => {
   const [nouvelleRMCRequete, setNouvelleRMCRequete] = useState<boolean>(false);
-  const [valuesRMCRequete, setValuesRMCRequete] = useState<IRMCRequete>({});
+  const [valuesRMCRequete, setValuesRMCRequete] = useState<IRMCRequeteForm<keyof typeof ETypeRequete | ""> | null>(null);
   const [opEnCours, setOpEnCours] = useState<boolean>(false);
-  const [criteresRechercheRequete, setCriteresRechercheRequete] =
-    useState<ICriteresRMCRequete>();
+  const [criteresRMCRequete, setCriteresRMCRequete] = useState<ICriteresRMCRequete>();
 
-  const { dataRMCRequete, dataTableauRMCRequete } = useRMCRequeteApiHook(
-    criteresRechercheRequete
-  );
+  const [dataRMCRequete, setDataRMCRequete] = useState<TRequeteTableauRMC[]>();
+  const [dataTableauRMCRequete, setDataTableauRMCRequete] = useState<IParamsTableau>();
+  const { utilisateurs, services } = useContext(RECEContextData);
+  const { appelApi: rechercheRequetes } = useFetchApi(CONFIG_POST_RMC_REQUETE);
+
+  useEffect(() => {
+    if (!criteresRMCRequete?.valeurs) return;
+
+    rechercheRequetes({
+      parametres: { query: { range: criteresRMCRequete.range }, body: mappingCriteresRMCRequeteVersDto(criteresRMCRequete.valeurs) },
+      apresSucces: (requetes, headers) => {
+        setDataRMCRequete(
+          requetes
+            ?.map(requete => RequeteTableauRMC.depuisDto(requete, utilisateurs, services))
+            .filter((requete): requete is TRequeteTableauRMC => requete !== null)
+        );
+        setDataTableauRMCRequete(getParamsTableauDepuisHeaders(headers));
+      },
+      apresErreur: erreurs => {
+        console.error("Erreur lors de la RMC requête auto :", erreurs);
+        messageManager.showError("Impossible de récupérer les requetes de la recherche multi-critères");
+        criteresRMCRequete?.onErreur?.();
+      }
+    });
+  }, [criteresRMCRequete]);
 
   const setRangeRequete = (rangeRequete: string) => {
     if (valuesRMCRequete && rangeRequete !== "") {
-      setCriteresRechercheRequete({
+      setCriteresRMCRequete({
         valeurs: valuesRMCRequete,
         range: rangeRequete,
         onErreur: () => setOpEnCours(false)
@@ -31,7 +59,7 @@ export const RMCRequetePage: React.FC = () => {
 
   const lancerRercherche = useCallback((criteres: ICriteresRMCRequete) => {
     setOpEnCours(true);
-    setCriteresRechercheRequete({
+    setCriteresRMCRequete({
       ...criteres,
       onErreur: () => setOpEnCours(false)
     });
@@ -56,7 +84,10 @@ export const RMCRequetePage: React.FC = () => {
         setValuesRMCRequete={setValuesRMCRequete}
         setCriteresRechercheRequete={lancerRercherche}
       />
-      <AutoScroll autoScroll={nouvelleRMCRequete} baliseRef={RMCRequeteRef} />
+      <AutoScroll
+        autoScroll={nouvelleRMCRequete}
+        baliseRef={RMCRequeteRef}
+      />
       {dataRMCRequete && dataTableauRMCRequete && (
         <RMCRequeteResultats
           dataRMCRequete={dataRMCRequete}

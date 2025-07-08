@@ -56,7 +56,6 @@ import {
   requeteRDCPourModificationMaCorbeille,
   requeteRDDASigner
 } from "../data/requeteDelivrance";
-import { DataRMCRequeteRechercheViaNumeroDossierNational, ReponseAppelRMCRequete } from "../data/RMCRequete";
 import { CreationRDCSC, UpdateRDC, UpdateRDCMaCorbeille, UpdateRDCSC } from "../data/SaisirRequeteDelivrance";
 import { configFakeUrl } from "./superagent-mock-fake-url";
 import { configRequetesCreation } from "./superagent-mock-requetes-creation";
@@ -393,26 +392,6 @@ export const configRequetes = [
             data: { resultatsRecherche: [] }
           };
         }
-        // RMC manuelle => recherche via N°SDANF
-        else if (params.numeroDossierNational === "2022X 200156") {
-          return {
-            headers: {
-              "content-range": "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
-              link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-100>;rel="next"'
-            },
-            data: DataRMCRequeteRechercheViaNumeroDossierNational
-          };
-        }
-        // RMC Manuelle (vue RMCRequetePage)
-        else {
-          return {
-            headers: {
-              "content-range": "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
-              link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmc?range=0-100>;rel="next"'
-            },
-            data: ReponseAppelRMCRequete.data
-          };
-        }
       }
 
       // Détail requête Délivrance
@@ -666,17 +645,6 @@ export const configRequetes = [
 
       if (match[1] === "/requetes/delivrance/d19650ed-012b-41ec-b7be-9e6ea9101eaa/choixdelivrance?choixDelivrance") {
         return { data: "d19650ed-012b-41ec-b7be-9e6ea9101eaa" };
-      }
-
-      // RMC Auto Requete
-      if (match[1] === "/requetes/rmcauto?range=0-105") {
-        return {
-          headers: {
-            "content-range": "0-15/" + ReponseAppelRMCRequete.data.resultatsRecherche.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/rmcauto?range=0-105>;rel="next"'
-          },
-          data: ReponseAppelRMCRequete.data
-        };
       }
 
       // Récupération d'un document par son id

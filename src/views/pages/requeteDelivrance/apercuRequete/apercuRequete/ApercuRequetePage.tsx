@@ -7,7 +7,7 @@ import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
@@ -50,8 +50,8 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({ idRequeteA
   const finDeConsultation = useCallback(() => {
     if (requete) {
       setLancerMajRequete({
-        libelleAction: StatutRequete.TRAITE_DELIVRE_DEMAT.libelle,
-        statutRequete: StatutRequete.TRAITE_DELIVRE_DEMAT,
+        libelleAction: EStatutRequete.TRAITE_DELIVRE_DEMAT,
+        statutRequete: "TRAITE_DELIVRE_DEMAT",
         requete: mappingRequeteDelivranceToRequeteTableau(requete),
         callback: () => {
           replaceUrl(navigate, getUrlPrecedente(location.pathname));

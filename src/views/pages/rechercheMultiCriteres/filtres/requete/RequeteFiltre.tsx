@@ -1,7 +1,7 @@
 import { SousTypeRequeteUtil } from "@model/requete/enum/SousTypeRequete";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
+import { ETypeRequete, TypeRequete } from "@model/requete/enum/TypeRequete";
+import { IRMCRequeteForm } from "@model/rmc/requete/IRMCRequete";
 import { Options } from "@util/Type";
 import { estRenseigne } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
@@ -81,9 +81,9 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
   };
 
   useEffect(() => {
-    setSousTypeRequeteInactif(!estTypeRequeteDirty(props.formik.values as IRMCRequete));
+    setSousTypeRequeteInactif(!estTypeRequeteDirty(props.formik.values as IRMCRequeteForm<keyof typeof ETypeRequete | "">));
 
-    setStatutRequeteInactif(!esSousTypeRequeteDirty(props.formik.values as IRMCRequete));
+    setStatutRequeteInactif(!esSousTypeRequeteDirty(props.formik.values as IRMCRequeteForm<keyof typeof ETypeRequete | "">));
 
     const type = getIn(props.formik.values, withNamespace(props.nomFiltre, TYPE_REQUETE));
     gestionTypeRequeteOptions(type);
@@ -135,11 +135,11 @@ const RequeteFiltre: React.FC<RequeteFiltreProps> = props => {
   );
 };
 
-function estTypeRequeteDirty(values: IRMCRequete) {
+function estTypeRequeteDirty(values: IRMCRequeteForm<keyof typeof ETypeRequete | "">) {
   return values.requete?.typeRequete !== "";
 }
 
-function esSousTypeRequeteDirty(values: IRMCRequete): boolean {
+function esSousTypeRequeteDirty(values: IRMCRequeteForm<keyof typeof ETypeRequete | "">): boolean {
   return estRenseigne(values.requete?.sousTypeRequete);
 }
 

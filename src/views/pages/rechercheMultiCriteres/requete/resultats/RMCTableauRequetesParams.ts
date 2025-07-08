@@ -1,8 +1,11 @@
 import {
   RenderCellDatesNaissancesTitulaires,
   RenderCellRequerant,
+  RenderCellSousType,
+  RenderCellStatut,
   RenderCellTitulaires,
-  RenderIconPrioriteRequete,
+  RenderCellType,
+  RenderIconePrioriteRequeteRMC,
   RenderObservationsNumeroRequete
 } from "@util/tableauRequete/TableauRequeteUtils";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
@@ -19,7 +22,7 @@ enum HeaderTableauRequete {
   Titulaires = "titulaires",
   DatesNaissancesTitulaires = "datesNaissancesTitulaires",
   Requerant = "requerant",
-  AttribueA = "attribueA",
+  AttribueeA = "attribueeA",
   DateCreation = "dateCreation",
   DateDerniereMaj = "dateDerniereMaj",
   Statut = "statut",
@@ -49,12 +52,14 @@ export const columnsTableauRequete = [
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.Type],
     title: "Type",
-    align: "center"
+    align: "center",
+    getElement: RenderCellType
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.SousType],
     title: "Sous-Type",
-    align: "center"
+    align: "center",
+    getElement: RenderCellSousType
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.Priorisation],
@@ -88,7 +93,7 @@ export const columnsTableauRequete = [
     align: "center"
   }),
   new TableauTypeColumn({
-    keys: [HeaderTableauRequete.AttribueA],
+    keys: [HeaderTableauRequete.AttribueeA],
     title: "Attribuée à",
     align: "center"
   }),
@@ -105,13 +110,14 @@ export const columnsTableauRequete = [
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.Statut],
     title: "Statut",
-    align: "center"
+    align: "center",
+    getElement: RenderCellStatut
   }),
   new TableauTypeColumn({
     keys: [HeaderTableauRequete.Priorite],
     title: "Priorité",
     align: "center",
-    getElement: RenderIconPrioriteRequete,
+    getElement: RenderIconePrioriteRequeteRMC,
     style: { width: "100px" }
   })
 ];

@@ -1,8 +1,8 @@
 import { NavigationApercuReqCreationParams } from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
 import { Requete } from "@model/requete/IRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { ESousTypeCreation, SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { UN } from "@util/Utils";
 import { IRequeteCreationEtablissement } from "./../../../../model/requete/IRequeteCreationEtablissement";
@@ -11,16 +11,14 @@ import { ITitulaireRequeteCreation } from "./../../../../model/requete/ITitulair
 export function setParamsUseApercuCreation(
   idRequete: string,
   setParamsCreation: (params: NavigationApercuReqCreationParams) => void,
-  sousType: string,
-  statut?: string,
+  sousType: keyof typeof ESousTypeCreation,
+  statut: keyof typeof EStatutRequete,
   idUtilisateur?: string
 ) {
-  const sousTypeRequete = SousTypeCreation.getEnumFromLibelleCourt(sousType);
-  const statutRequete = StatutRequete.getEnumFromLibelle(statut);
   return setParamsCreation({
     idRequete: idRequete,
-    sousType: sousTypeRequete,
-    statut: statutRequete,
+    sousType: sousType,
+    statut: statut,
     idUtilisateur: idUtilisateur
   });
 }

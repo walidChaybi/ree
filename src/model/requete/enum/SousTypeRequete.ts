@@ -15,14 +15,14 @@ export type TSousTypeRequete<TTypeRequete extends keyof typeof ETypeRequete> = T
         ? keyof typeof ESousTypeInformation
         : never;
 
-export type SousTypeRequete = SousTypeCreation | SousTypeDelivrance | SousTypeInformation | SousTypeMiseAJour;
-
 export const ELibelleSousTypeRequete = {
   ...ELibelleSousTypeCreation,
   ...ELibelleSousTypeDelivrance,
   ...ELibelleSousTypeMiseAJour,
   ...ELibelleSousTypeInformation
 };
+
+export type SousTypeRequete = SousTypeCreation | SousTypeDelivrance | SousTypeInformation | SousTypeMiseAJour;
 
 export const SousTypeRequeteUtil = {
   getOptionsAPartirTypeRequete: (type: TypeRequete): Option[] => {

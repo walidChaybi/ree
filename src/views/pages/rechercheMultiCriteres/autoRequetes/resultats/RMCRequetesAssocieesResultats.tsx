@@ -1,10 +1,12 @@
 import { CONFIG_POST_RMC_AUTO_REQUETE } from "@api/configurations/requete/rmc/PostRMCAutoRequeteConfigApi";
+import { CONFIG_POST_RMC_REQUETE } from "@api/configurations/requete/rmc/PostRMCRequeteConfigApi";
 import { IRequete } from "@model/requete/IRequete";
-import { TRequeteTableau } from "@model/requete/IRequeteTableau";
 import { ITitulaireRequete, TitulaireRequete } from "@model/requete/ITitulaireRequete";
+import { ETypeRequete } from "@model/requete/enum/TypeRequete";
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
-import { IRMCRequete } from "@model/rmc/requete/IRMCRequete";
-import RequeteRMCAuto, { TRequeteRMCAuto } from "@model/rmc/requete/RequeteRMCAuto";
+import { mappingCriteresRMCRequeteVersDto } from "@model/rmc/requete/ICriteresRMCRequeteDto";
+import { IRMCRequeteForm } from "@model/rmc/requete/IRMCRequete";
+import RequeteAssociee, { TRequeteAssociee } from "@model/rmc/requete/RequeteAssociee";
 import { IHeadersAvecParamsTableau, IParamsTableau, PARAMS_TABLEAU_VIDE, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
 import { SNP } from "@util/Utils";
 import messageManager from "@util/messageManager";
@@ -12,7 +14,6 @@ import { Fieldset } from "@widget/fieldset/Fieldset";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useEffect, useState } from "react";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
-import { useRMCRequeteApiHook } from "../../requete/hook/RMCRequeteApiHook";
 import "../scss/RMCRequetesAssocieesResultats.scss";
 import { RMCTableauRequetesAssociees } from "./RMCTableauRequetesAssociees";
 
@@ -22,25 +23,38 @@ interface RMCRequetesAssocieesResultatsProps {
 
 export const RMCRequetesAssocieesResultats: React.FC<RMCRequetesAssocieesResultatsProps> = ({ requete }) => {
   /* Etats RMC */
-  const [requetesTableau, setRequetesTableau] = useState<TRequeteTableau[] | TRequeteRMCAuto[]>();
+  const [requetesTableau, setRequetesTableau] = useState<TRequeteAssociee[]>();
   const [paramsTableau, setParamsTableau] = useState<IParamsTableau>();
 
   /* Etats RMC manuelle*/
-  const [nouvelleRMCRequete, setNouvelleRMCRequete] = useState<boolean>(false);
-  const [valuesRMCRequete, setValuesRMCRequete] = useState<IRMCRequete>({});
+  const [valuesRMCRequete, setValuesRMCRequete] = useState<IRMCRequeteForm<keyof typeof ETypeRequete | ""> | null>(null);
 
   const [criteresRechercheRequete, setCriteresRechercheRequete] = useState<ICriteresRMCRequete>();
 
   /* Hook d'appel de l'API RMC manuelle requêtes */
-  const { dataRMCRequete, dataTableauRMCRequete } = useRMCRequeteApiHook(criteresRechercheRequete);
+  const { appelApi: rmcManuelleRequetes } = useFetchApi(CONFIG_POST_RMC_REQUETE);
 
-  /* Actualisation des résultats de la RMC manuelle */
   useEffect(() => {
-    if (dataRMCRequete && dataTableauRMCRequete) {
-      setRequetesTableau(dataRMCRequete);
-      setParamsTableau(dataTableauRMCRequete);
-    }
-  }, [dataRMCRequete, dataTableauRMCRequete]);
+    if (!criteresRechercheRequete?.valeurs) return;
+
+    rmcManuelleRequetes({
+      parametres: {
+        query: { range: criteresRechercheRequete.range },
+        body: mappingCriteresRMCRequeteVersDto(criteresRechercheRequete.valeurs)
+      },
+      apresSucces: (requetes, headers) => {
+        setRequetesTableau(
+          requetes?.map(requete => RequeteAssociee.depuisDto(requete)).filter((requete): requete is TRequeteAssociee => requete !== null)
+        );
+        setParamsTableau(getParamsTableauDepuisHeaders(headers));
+      },
+      apresErreur: erreurs => {
+        console.error("Erreur lors de la RMC requête auto :", erreurs);
+        messageManager.showError("Impossible de récupérer les requetes de la recherche multi-critères");
+        criteresRechercheRequete?.onErreur?.();
+      }
+    });
+  }, [criteresRechercheRequete]);
 
   /* Appel de l'API RMC Auto requêtes */
   const { appelApi: rmcAutoRequetes } = useFetchApi(CONFIG_POST_RMC_AUTO_REQUETE);
@@ -57,10 +71,8 @@ export const RMCRequetesAssocieesResultats: React.FC<RMCRequetesAssocieesResulta
 
     rmcAutoRequetes({
       parametres: { body: criteresRMCAuto, query: { range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}` } },
-      apresSucces: ({ resultatsRecherche }, headers) => {
-        setRequetesTableau(
-          resultatsRecherche.map(RequeteRMCAuto.depuisDto).filter((requete): requete is TRequeteRMCAuto => requete !== null)
-        );
+      apresSucces: (requetes, headers) => {
+        setRequetesTableau(requetes.map(RequeteAssociee.depuisDto).filter((requete): requete is TRequeteAssociee => requete !== null));
         setParamsTableau(getParamsTableauDepuisHeaders(headers as unknown as IHeadersAvecParamsTableau));
       },
       apresErreur: messageErreur => {
@@ -88,10 +100,8 @@ export const RMCRequetesAssocieesResultats: React.FC<RMCRequetesAssocieesResulta
             dataRMCRequete={requetesTableau}
             dataTableauRMCRequete={paramsTableau}
             setRangeRequete={setRangeRequete}
-            setNouvelleRMCRequete={setNouvelleRMCRequete}
             setValuesRMCRequete={setValuesRMCRequete}
             setCriteresRechercheRequete={setCriteresRechercheRequete}
-            resetTableauRequete={nouvelleRMCRequete}
           />
         </div>
       </Fieldset>

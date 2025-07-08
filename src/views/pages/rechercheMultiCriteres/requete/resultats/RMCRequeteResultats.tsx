@@ -1,4 +1,4 @@
-import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
+import { TRequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import React from "react";
@@ -6,7 +6,7 @@ import "../scss/RMCRequeteResultats.scss";
 import { RMCTableauRequetes } from "./RMCTableauRequetes";
 
 interface RMCRequeteResultatsProps {
-  dataRMCRequete: IRequeteTableauDelivrance[];
+  dataRMCRequete: TRequeteTableauRMC[];
   dataTableauRMCRequete: IParamsTableau;
   setRangeRequete: (range: string) => void;
   resetRMC: boolean;

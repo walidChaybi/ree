@@ -1,7 +1,7 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { ESousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE,
   PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER,
@@ -15,8 +15,8 @@ import { NavigateFunction, useNavigate } from "react-router";
 
 export type NavigationApercuReqCreationParams = {
   idRequete: string;
-  sousType?: SousTypeCreation;
-  statut: StatutRequete;
+  sousType?: keyof typeof ESousTypeCreation;
+  statut: keyof typeof EStatutRequete;
   idUtilisateur?: string;
   handleTraitementTermine?: () => void;
 };
@@ -27,9 +27,9 @@ export function useNavigationApercuCreation(params?: NavigationApercuReqCreation
 
   useEffect(() => {
     if (params) {
-      if (SousTypeCreation.estRCEXR(params.sousType)) {
+      if (params.sousType === "RCEXR") {
         redirectionEtablissement(navigate, utilisateurConnecte, params.idRequete, params.statut, params.idUtilisateur);
-      } else if (SousTypeCreation.estSousTypeTranscription(params.sousType)) {
+      } else if (params.sousType && ["RCTD", "RCTC"].includes(params.sousType)) {
         redirectionTranscription(navigate, utilisateurConnecte, params.idRequete, params.statut, params.idUtilisateur);
       }
 
@@ -44,17 +44,17 @@ function redirectionEtablissement(
   navigate: NavigateFunction,
   utilisateurConnecte: UtilisateurConnecte,
   idRequete: string,
-  statut: StatutRequete,
+  statut: keyof typeof EStatutRequete,
   idUtilisateur?: string
 ) {
   let path: string;
-  const statutsQuiRedirigentVersLeSuiviDossier = [
-    StatutRequete.A_TRAITER,
-    StatutRequete.PRISE_EN_CHARGE,
-    StatutRequete.RETOUR_SDANF,
-    StatutRequete.BI_VALIDE,
-    StatutRequete.PROJET_VALIDE,
-    StatutRequete.A_SIGNER
+  const statutsQuiRedirigentVersLeSuiviDossier: (keyof typeof EStatutRequete)[] = [
+    "A_TRAITER",
+    "PRISE_EN_CHARGE",
+    "RETOUR_SDANF",
+    "BI_VALIDE",
+    "PROJET_VALIDE",
+    "A_SIGNER"
   ];
   if (utilisateurConnecte.id === idUtilisateur && statutsQuiRedirigentVersLeSuiviDossier.includes(statut)) {
     path = PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER;
@@ -68,16 +68,16 @@ function redirectionTranscription(
   navigate: NavigateFunction,
   utilisateurConnecte: UtilisateurConnecte,
   idRequete: string,
-  statut?: StatutRequete,
+  statut?: keyof typeof EStatutRequete,
   idUtilisateur?: string
 ) {
   let path: string;
   const appartientAUtilisateurConnecte = utilisateurConnecte.id === idUtilisateur;
-  if (!appartientAUtilisateurConnecte && StatutRequete.estATraiter(statut)) {
+  if (!appartientAUtilisateurConnecte && statut === "A_TRAITER") {
     path = PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE;
-  } else if (appartientAUtilisateurConnecte && StatutRequete.estPriseEnCharge(statut)) {
+  } else if (appartientAUtilisateurConnecte && statut === "PRISE_EN_CHARGE") {
     path = PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE;
-  } else if (appartientAUtilisateurConnecte && StatutRequete.estEnTraitement(statut)) {
+  } else if (appartientAUtilisateurConnecte && statut === "EN_TRAITEMENT") {
     path = PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET;
   } else {
     path = PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE;

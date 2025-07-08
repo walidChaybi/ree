@@ -9,17 +9,18 @@ import {
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
+import { ETypeRequete } from "@model/requete/enum/TypeRequete";
+import { RequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 import { useCallback, useEffect, useState } from "react";
 import { ICreationActionMiseAjourStatutHookParams, useCreationActionMiseAjourStatut } from "./CreationActionMiseAjourStatutHook";
 
 export interface ICreationActionMiseAjourStatutEtRedirectionParams {
-  statutRequete: StatutRequete;
+  statutRequete: keyof typeof EStatutRequete;
   libelleAction: string;
   urlCourante: string;
-  requete?: IRequeteTableauDelivrance | IRequeteTableauCreation;
-  typeRequete: TypeRequete;
+  requete?: IRequeteTableauDelivrance | IRequeteTableauCreation | RequeteTableauRMC<"DELIVRANCE"> | RequeteTableauRMC<"CREATION">;
+  typeRequete: keyof typeof ETypeRequete;
   handleTraitementTermine?: () => void;
   autoriserTraitementAutoRDCS?: boolean;
 }
@@ -49,12 +50,12 @@ export function useCreationActionMiseAjourStatutEtRedirectionHook(params: ICreat
     if (params?.requete) {
       const sousType = SousTypeCreation.getEnumFromLibelleCourt(params.requete?.sousType);
       const statut = StatutRequete.getEnumFromLibelle(params?.requete?.statut);
-      if (params.typeRequete === TypeRequete.CREATION) {
+      if (params.typeRequete === "CREATION") {
         setParamsCreation({
-          idRequete: params.requete.idRequete,
+          idRequete: "idRequete" in params.requete ? params.requete.idRequete : params.requete.id,
           sousType,
           statut,
-          idUtilisateur: params.requete.idUtilisateur,
+          idUtilisateur: params.requete.idUtilisateur ?? undefined,
           handleTraitementTermine: params.handleTraitementTermine
         });
       } else {
