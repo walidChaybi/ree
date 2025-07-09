@@ -4,7 +4,10 @@ import Button from "@mui/material/Button";
 import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import { FenetreExterne, FenetreExterneUtil } from "@util/FenetreExterne";
 import { getLibelle } from "@util/Utils";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import React, { useState } from "react";
+import { PageRMCActeInscription } from "../../../pages/rmc/PageRMCActeInscription";
 import "../../pages/rechercheMultiCriteres/acteInscription/scss/RMCActeInscriptionPage.scss";
 
 const width = 1200;
@@ -41,10 +44,14 @@ export const BoutonRechercheRmc: React.FC = () => {
           titre="Recherche acte et inscription"
           setFenetreExterneUtil={setFenetreExterneUtil}
         >
-          <RMCActeInscriptionPage
-            noAutoScroll={true}
-            dansFenetreExterne={true}
-          ></RMCActeInscriptionPage>
+          {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_UTILISER_NOUVELLE_RMC) ? (
+            <PageRMCActeInscription dansFenetreExterne={true} />
+          ) : (
+            <RMCActeInscriptionPage
+              noAutoScroll={true}
+              dansFenetreExterne={true}
+            ></RMCActeInscriptionPage>
+          )}
         </FenetreExterne>
       )}
     </>
