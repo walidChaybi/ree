@@ -6,6 +6,7 @@ import useTraitementApi from "../../../../../hooks/api/TraitementApiHook";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import {
+  EActionFormulaireProjetActeTranscrit,
   IProjetActeTranscritForm,
   ProjetActeNaissanceTranscriptionForm
 } from "@model/form/creation/transcription/IProjetActeTranscritForm";
@@ -41,7 +42,12 @@ const FormulaireSaisieProjet: React.FC = () => {
     TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT
   );
 
-  const enregistrerEtVisualiser = (valeursSaisies: IProjetActeTranscritForm) => {
+  const terminerEtSigner = (valeursSaisies: IProjetActeTranscritForm) => {
+    if (!valeursSaisies.soumissionFormulaire.avecEnregistrement && !valeursSaisies.soumissionFormulaire.avecMajStatut) {
+      setModaleOuverte(true);
+      return;
+    }
+
     lancerEnregistrement({
       parametres: {
         valeursSaisies: valeursSaisies,
@@ -49,11 +55,35 @@ const FormulaireSaisieProjet: React.FC = () => {
         idRequete: requete.id,
         idSuiviDossier: requete.titulaires?.[0]?.suiviDossiers?.[0]?.idSuiviDossier ?? ""
       },
-      apresSucces: projetActe => {
-        messageManager.showSuccessAndClose("Le projet d'acte a bien été enregistré");
+      apresSucces: projetActeReponse => {
+        mettreAJourDonneesContext(
+          projetActeReponse || projetActe,
+          requete.statutCourant.statut !== StatutRequete.A_SIGNER ? StatutRequete.A_SIGNER : null
+        );
 
-        mettreAJourDonneesContext(projetActe, requete.statutCourant.statut !== StatutRequete.A_SIGNER ? StatutRequete.A_SIGNER : null);
         setModaleOuverte(true);
+        messageManager.showSuccessAndClose("Le projet d'acte a bien été enregistré");
+      },
+      apresErreur: messageErreur => {
+        console.error(`Erreur: ${messageErreur}`);
+        messageManager.showError("Une erreur est survenue lors du traitement");
+      }
+    });
+  };
+
+  const enregistrer = (valeursSaisies: IProjetActeTranscritForm) => {
+    if (!valeursSaisies.soumissionFormulaire.avecEnregistrement) return;
+
+    lancerEnregistrement({
+      parametres: {
+        valeursSaisies: valeursSaisies,
+        projetActe: projetActe,
+        idRequete: requete.id,
+        idSuiviDossier: requete.titulaires?.[0]?.suiviDossiers?.[0]?.idSuiviDossier ?? ""
+      },
+      apresSucces: projetActeReponse => {
+        mettreAJourDonneesContext(projetActeReponse || projetActe, null);
+        messageManager.showSuccessAndClose("Le projet d'acte a bien été enregistré");
       },
       apresErreur: messageErreur => {
         console.error(`Erreur: ${messageErreur}`);
@@ -66,102 +96,125 @@ const FormulaireSaisieProjet: React.FC = () => {
     <Formik<IProjetActeTranscritForm>
       validationSchema={ProjetActeNaissanceTranscriptionForm.schemaValidation()}
       initialValues={valeursInitiales}
-      onSubmit={values => {
-        enregistrerEtVisualiser(values);
-      }}
       enableReinitialize
+      onSubmit={(values, helper) => {
+        if (values.soumissionFormulaire.action === EActionFormulaireProjetActeTranscrit.ENREGISTRER) {
+          enregistrer(values);
+        } else {
+          terminerEtSigner(values);
+        }
+
+        helper.resetForm({
+          values: values
+        });
+      }}
     >
-      {({ dirty }) => (
-        <Form>
-          <>
-            <ValeursVersApercuProjet />
+      {({ setFieldValue, dirty, submitForm }) => {
+        return (
+          <Form>
+            <>
+              {enregistrementEnCours && <PageChargeur />}
 
-            <ConteneurAccordeon
-              titre="Titulaire"
-              ouvertParDefaut
-            >
-              <BlocTitulaire />
-            </ConteneurAccordeon>
+              <ValeursVersApercuProjet />
 
-            <ConteneurAccordeon
-              titre="Parents"
-              ouvertParDefaut
-            >
-              <BlocParent estParent1 />
-              <BlocParent />
-            </ConteneurAccordeon>
+              <ConteneurAccordeon
+                titre="Titulaire"
+                ouvertParDefaut
+              >
+                <BlocTitulaire />
+              </ConteneurAccordeon>
 
-            <ConteneurAccordeon
-              titre="Déclarant"
-              ouvertParDefaut
-            >
-              <BlocDeclarant />
-            </ConteneurAccordeon>
+              <ConteneurAccordeon
+                titre="Parents"
+                ouvertParDefaut
+              >
+                <BlocParent estParent1 />
+                <BlocParent />
+              </ConteneurAccordeon>
 
-            <ConteneurAccordeon
-              titre="Autres énonciations intéressant l'état civil"
-              ouvertParDefaut
-            >
-              <BlocAutresEnonciations />
-            </ConteneurAccordeon>
+              <ConteneurAccordeon
+                titre="Déclarant"
+                ouvertParDefaut
+              >
+                <BlocDeclarant />
+              </ConteneurAccordeon>
 
-            <ConteneurAccordeon
-              titre="Acte étranger"
-              ouvertParDefaut
-            >
-              <BlocActeEtranger />
-            </ConteneurAccordeon>
+              <ConteneurAccordeon
+                titre="Autres énonciations intéressant l'état civil"
+                ouvertParDefaut
+              >
+                <BlocAutresEnonciations />
+              </ConteneurAccordeon>
 
-            <ConteneurAccordeon
-              titre="Mentions figurant dans l'acte étranger"
-              ouvertParDefaut
-            >
-              <BlocMentions />
-            </ConteneurAccordeon>
+              <ConteneurAccordeon
+                titre="Acte étranger"
+                ouvertParDefaut
+              >
+                <BlocActeEtranger />
+              </ConteneurAccordeon>
 
-            <ConteneurAccordeon
-              titre="Formule finale"
-              ouvertParDefaut
-            >
-              <BlocFormuleFinale />
-            </ConteneurAccordeon>
+              <ConteneurAccordeon
+                titre="Mentions figurant dans l'acte étranger"
+                ouvertParDefaut
+              >
+                <BlocMentions />
+              </ConteneurAccordeon>
 
-            {enregistrementEnCours && <PageChargeur />}
+              <ConteneurAccordeon
+                titre="Formule finale"
+                ouvertParDefaut
+              >
+                <BlocFormuleFinale />
+              </ConteneurAccordeon>
 
-            <ConteneurBoutonBasDePage position="droite">
-              {peutSigner && (
-                <>
-                  {dirty || requete.statutCourant.statut === StatutRequete.EN_TRAITEMENT ? (
-                    <Bouton
-                      title="Terminer et signer"
-                      type="submit"
-                      disabled={enregistrementEnCours}
-                    >
-                      {"Terminer et signer"}
-                    </Bouton>
-                  ) : (
-                    <Bouton
-                      title="Terminer et signer"
-                      type="button"
-                      onClick={() => setModaleOuverte(true)}
-                    >
-                      {"Terminer et signer"}
-                    </Bouton>
-                  )}
-                </>
+              <ConteneurBoutonBasDePage position="droite">
+                <Bouton
+                  title="Enregistrer"
+                  type="button"
+                  disabled={enregistrementEnCours}
+                  onClick={() => {
+                    setFieldValue("soumissionFormulaire", {
+                      action: EActionFormulaireProjetActeTranscrit.ENREGISTRER,
+                      avecEnregistrement: dirty
+                    }).then(() => {
+                      submitForm();
+                    });
+                  }}
+                >
+                  {"Enregistrer"}
+                </Bouton>
+
+                {peutSigner && (
+                  <Bouton
+                    title="Terminer et signer"
+                    type="button"
+                    disabled={enregistrementEnCours}
+                    onClick={() => {
+                      setFieldValue("soumissionFormulaire", {
+                        action: EActionFormulaireProjetActeTranscrit.TERMINER_SIGNER,
+                        avecEnregistrement: dirty,
+                        avecMajStatut: requete.statutCourant.statut !== StatutRequete.A_SIGNER
+                      }).then(() => {
+                        submitForm();
+                      });
+                    }}
+                  >
+                    {"Terminer et signer"}
+                  </Bouton>
+                )}
+              </ConteneurBoutonBasDePage>
+
+              {modaleOuverte && projetActe && (
+                <ModaleProjetActe
+                  projetActe={projetActe}
+                  fermerModale={() => setModaleOuverte(false)}
+                />
               )}
-            </ConteneurBoutonBasDePage>
-
-            {modaleOuverte && projetActe && (
-              <ModaleProjetActe
-                projetActe={projetActe}
-                fermerModale={() => setModaleOuverte(false)}
-              />
-            )}
-          </>
-          <ScrollVersErreur />
-        </Form>
-      )}
+            </>
+            <ScrollVersErreur />
+          </Form>
+        );
+      }}
     </Formik>
   );
 };

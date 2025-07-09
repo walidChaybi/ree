@@ -48,7 +48,7 @@ const TRAITEMENT_CHARGER_REQUETE_TRANSCRIPTION_ET_PROJET_ACTE_TRANSCRIT: TTraite
           setRequeteEtProjetActe(valeurPrecedente => ({ ...valeurPrecedente, requete: requeteTranscription }));
 
           if (
-            requeteTranscription.statutCourant.statut === StatutRequete.A_SIGNER &&
+            [StatutRequete.A_SIGNER, StatutRequete.EN_TRAITEMENT].includes(requeteTranscription.statutCourant.statut) &&
             requeteTranscription.titulaires?.[0].suiviDossiers?.[0].idActe
           ) {
             getProjetActe({

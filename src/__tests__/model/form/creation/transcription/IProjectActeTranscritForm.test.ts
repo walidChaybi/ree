@@ -155,6 +155,11 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
     },
     autresEnonciations: {
       enonciations: "tewt tewxt"
+    },
+    soumissionFormulaire: {
+      avecEnregistrement: false,
+      action: null,
+      avecMajStatut: false
     }
   };
   test("DOIT retourner les bonnes valeurs lors de l'appel de versDtoPost", () => {
@@ -225,17 +230,17 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
           domicile: {
             adresse: "",
             arrondissement: "",
-            departement: "",
+            departement: "Loire-atlantique",
             etatProvince: "",
             pays: "France",
             typeLieu: "France",
-            ville: "",
+            ville: "Nantes",
             preposition: "A"
           },
           lieuNaissance: {
             adresse: "",
             arrondissement: "",
-            departement: "",
+            departement: "Loire-atlantique",
             etatProvince: "",
             pays: "France",
             typeLieu: "France",
@@ -407,6 +412,11 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
         legalisationApostille: "",
         modeDepot: "TRANSMISE",
         identiteTransmetteur: "LE_REQUERANT"
+      },
+      soumissionFormulaire: {
+        avecEnregistrement: false,
+        action: null,
+        avecMajStatut: false
       }
     };
 
@@ -559,6 +569,11 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
     },
     autresEnonciations: {
       enonciations: "RAS"
+    },
+    soumissionFormulaire: {
+      avecEnregistrement: false,
+      action: null,
+      avecMajStatut: false
     }
   };
 

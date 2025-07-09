@@ -57,7 +57,7 @@ export const projetActeNaissanceDto: IProjetActeTranscritDto = {
           nom: "Perez",
           prenoms: ["Joseph"],
           age: 12,
-          domicile: { pays: "France", region: "", ville: "" },
+          domicile: { pays: "France", region: "Loire-atlantique", ville: "Nantes" },
           sexe: "MASCULIN",
           naissance: {
             annee: 2010,
@@ -70,7 +70,7 @@ export const projetActeNaissanceDto: IProjetActeTranscritDto = {
             neDansLeMariage: false,
             mois: 5,
             pays: "France",
-            region: "",
+            region: "Loire-atlantique",
             ville: "Nantes"
           },
           domicileCommun: false,

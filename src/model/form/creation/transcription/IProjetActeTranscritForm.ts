@@ -38,6 +38,11 @@ import { TitulaireRequeteTranscription } from "@model/requete/ITitulaireRequeteT
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import SchemaValidation from "../../../../utils/SchemaValidation";
 
+export enum EActionFormulaireProjetActeTranscrit {
+  ENREGISTRER = "ENREGISTRER",
+  TERMINER_SIGNER = "TERMINER_SIGNER"
+}
+
 export interface IProjetActeTranscritForm {
   titulaire: ITitulaireTranscriptionForm;
   declarant: IDeclarantTranscriptionForm;
@@ -46,6 +51,11 @@ export interface IProjetActeTranscritForm {
   formuleFinale: IFormuleFinaleTranscriptionForm;
   acteEtranger: IActeEtrangerTranscriptionForm;
   autresEnonciations: { enonciations: string };
+  soumissionFormulaire: {
+    avecEnregistrement: boolean;
+    action: EActionFormulaireProjetActeTranscrit | null;
+    avecMajStatut: boolean;
+  };
 }
 
 export interface IActeEtrangerTranscriptionForm {
@@ -289,6 +299,11 @@ export const ProjetActeNaissanceTranscriptionForm = {
         legalisationApostille: projetActe?.formuleFinale.legalisation ?? "",
         modeDepot: projetActe?.formuleFinale.modeDepot ?? "TRANSMISE",
         identiteTransmetteur: projetActe?.formuleFinale.identiteTransmetteur ?? "LE_REQUERANT"
+      },
+      soumissionFormulaire: {
+        avecEnregistrement: false,
+        action: null,
+        avecMajStatut: false
       }
     };
   },

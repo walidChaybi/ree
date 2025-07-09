@@ -163,6 +163,11 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
     },
     autresEnonciations: {
       enonciations: "RAS"
+    },
+    soumissionFormulaire: {
+      avecEnregistrement: false,
+      action: null,
+      avecMajStatut: false
     }
   };
 
@@ -173,6 +178,7 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
   afterEach(() => {
     vi.resetAllMocks();
   });
+
   test("DOIT terminer sans appeler les API QUAND l'id de la requête n'est pas présent", () => {
     const { result } = renderHook(() => TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT.Lancer(terminerTraitement));
 
@@ -189,7 +195,7 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
     expect(terminerTraitement).toHaveBeenCalled();
   });
 
-  test("DOIT appeler la méthode patch QUAND l'id du projet d'acte est présent", async () => {
+  test("DOIT appeler la méthode patch QUAND l'id du projet d'acte est présent et que des modification sur le formulaire sont faites", async () => {
     const { result } = renderHook(() => TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT.Lancer(terminerTraitement));
 
     MockApi.deployer(
@@ -207,7 +213,14 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
         idRequete: "12345",
         idSuiviDossier: "123",
         projetActe: projetActe,
-        valeursSaisies: saisieProjetActeTranscription
+        valeursSaisies: {
+          ...saisieProjetActeTranscription,
+          soumissionFormulaire: {
+            avecEnregistrement: true,
+            action: null,
+            avecMajStatut: false
+          }
+        }
       });
     });
 
@@ -226,6 +239,7 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
       { body: ProjetActeNaissanceTranscriptionForm.versDtoPost(saisieProjetActeTranscription) },
       { data: projetActeNaissanceDto }
     );
+
     MockApi.deployer(CONFIG_PATCH_ID_ACTE_SUIVI_DOSSIER, { path: { idSuivi: "12563", idActe: "6190b304-18dc-43e5-a53a-02612dbadeae" } });
 
     MockApi.deployer(CONFIG_PATCH_STATUT_REQUETE_CREATION);
@@ -236,7 +250,14 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
       result.current.lancer({
         idSuiviDossier: "12563",
         projetActe: null,
-        valeursSaisies: saisieProjetActeTranscription,
+        valeursSaisies: {
+          ...saisieProjetActeTranscription,
+          soumissionFormulaire: {
+            avecEnregistrement: true,
+            action: null,
+            avecMajStatut: true
+          }
+        },
         idRequete: "789"
       });
     });
@@ -248,6 +269,85 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
       expect(mockApi.history.patch[0].url).toContain(`statut=A_SIGNER`);
       expect(mockApi.history.patch[1].url).toContain(`/suiviDossier/12563`);
       expect(mockApi.history.patch[1].url).toContain(`/acte/6190b304-18dc-43e5-a53a-02612dbadeae`);
+    });
+
+    MockApi.stopMock();
+  });
+
+  test("DOIT pas lancer la mise à jour du statut de la requête QUAND l'utilisateur ne possède pas le droit signer_acte", async () => {
+    const { result } = renderHook(() => TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT.Lancer(terminerTraitement));
+
+    MockApi.deployer(
+      CONFIG_PATCH_PROJET_ACTE_TRANSCRIPTION,
+      {
+        body: undefined
+      },
+      { data: projetActeNaissanceDto }
+    );
+
+    MockApi.deployer(CONFIG_PATCH_STATUT_REQUETE_CREATION);
+
+    const mockApi = MockApi.getMock();
+
+    act(() => {
+      result.current.lancer({
+        idRequete: "12345",
+        idSuiviDossier: "12563",
+        projetActe: projetActe,
+        valeursSaisies: {
+          ...saisieProjetActeTranscription,
+          soumissionFormulaire: {
+            avecEnregistrement: true,
+            action: null,
+            avecMajStatut: false
+          }
+        }
+      });
+    });
+
+    await waitFor(() => {
+      expect(mockApi.history.patch.length).toBe(1);
+    });
+
+    MockApi.stopMock();
+  });
+
+  test("DOIT lancer la mise à jour du statut de la requete QUAND le projet d'acte existe et que le statut est EN_TRAITEMENT", async () => {
+    const { result } = renderHook(() => TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT.Lancer(terminerTraitement));
+
+    MockApi.deployer(
+      CONFIG_POST_PROJET_ACTE_TRANSCRIPTION,
+      {
+        body: ProjetActeNaissanceTranscriptionForm.versDtoPost(saisieProjetActeTranscription)
+      },
+      { data: projetActeNaissanceDto }
+    );
+
+    MockApi.deployer(CONFIG_PATCH_ID_ACTE_SUIVI_DOSSIER, { path: { idSuivi: "12563", idActe: "6190b304-18dc-43e5-a53a-02612dbadeae" } });
+
+    MockApi.deployer(CONFIG_PATCH_STATUT_REQUETE_CREATION);
+
+    const mockApi = MockApi.getMock();
+
+    act(() => {
+      result.current.lancer({
+        idRequete: "12345",
+        idSuiviDossier: "12563",
+        projetActe: null,
+        valeursSaisies: {
+          ...saisieProjetActeTranscription,
+          soumissionFormulaire: {
+            avecEnregistrement: false,
+            action: null,
+            avecMajStatut: true
+          }
+        }
+      });
+    });
+
+    await waitFor(() => {
+      expect(mockApi.history.patch.length).toBe(1);
+      expect(mockApi.history.patch[0].url).toContain(`statut=A_SIGNER`);
     });
 
     MockApi.stopMock();

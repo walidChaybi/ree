@@ -49,51 +49,75 @@ const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetAc
         return;
       }
 
-      if (parametres.projetActe?.id) {
-        appelPatchProjetActeTranscription({
-          parametres: {
-            body: ProjetActeNaissanceTranscriptionForm.versDtoPatch(parametres.valeursSaisies, parametres.projetActe)
-          },
-          apresSucces: (projetActe: IProjetActeTranscritDto) => {
-            setProjetActe(ProjetActeTranscrit.depuisDto(projetActe));
-            terminerTraitement();
-          },
-          apresErreur: erreur => {
-            console.error(erreur);
-            setErreurTraitement({
-              enEchec: true,
-              message: "Impossible de modifier le projet d'acte transcrit"
-            });
-            terminerTraitement();
-          }
-        });
+      switch (true) {
+        case Boolean(parametres.projetActe?.id && parametres.valeursSaisies.soumissionFormulaire.avecEnregistrement):
+          appelPatchProjetActeTranscription({
+            parametres: {
+              body: ProjetActeNaissanceTranscriptionForm.versDtoPatch(parametres.valeursSaisies, parametres.projetActe!)
+            },
+            apresSucces: (projetActe: IProjetActeTranscritDto) => {
+              setProjetActe(ProjetActeTranscrit.depuisDto(projetActe));
 
-        return;
-      }
+              setDonneesTraitement({
+                idActe: projetActe.id ?? "",
+                idRequete: idRequete,
+                idSuiviDossier: parametres.idSuiviDossier,
+                appelStatutRequete: parametres.valeursSaisies.soumissionFormulaire.avecMajStatut ? "EN_ATTENTE" : "TERMINE",
+                appelSuiviDossier: "TERMINE"
+              });
+            },
+            apresErreur: erreur => {
+              console.error(erreur);
+              setErreurTraitement({
+                enEchec: true,
+                message: "Impossible de modifier le projet d'acte transcrit"
+              });
+              terminerTraitement();
+            }
+          });
 
-      appelPostProjetActeTranscription({
-        parametres: {
-          body: ProjetActeNaissanceTranscriptionForm.versDtoPost(parametres.valeursSaisies)
-        },
-        apresSucces: (projetActe: IProjetActeTranscritDto) => {
-          setProjetActe(ProjetActeTranscrit.depuisDto(projetActe));
+          return;
+        case Boolean(
+          parametres.valeursSaisies.soumissionFormulaire.avecMajStatut && !parametres.valeursSaisies.soumissionFormulaire.avecEnregistrement
+        ):
           setDonneesTraitement({
-            idActe: projetActe.id ?? "",
-            idRequete: idRequete,
+            idActe: parametres.projetActe?.id ?? "",
+            idRequete: idRequete ?? "",
             idSuiviDossier: parametres.idSuiviDossier,
             appelStatutRequete: "EN_ATTENTE",
-            appelSuiviDossier: "EN_ATTENTE"
+            appelSuiviDossier: "TERMINE"
           });
-        },
-        apresErreur: erreur => {
-          console.error(erreur);
-          setErreurTraitement({
-            enEchec: true,
-            message: "Impossible d'enregister le projet d'acte transcrit"
+
+          return;
+        case Boolean(!parametres.projetActe?.id):
+          appelPostProjetActeTranscription({
+            parametres: {
+              body: ProjetActeNaissanceTranscriptionForm.versDtoPost(parametres.valeursSaisies)
+            },
+            apresSucces: (projetActe: IProjetActeTranscritDto) => {
+              setProjetActe(ProjetActeTranscrit.depuisDto(projetActe));
+              setDonneesTraitement({
+                idActe: projetActe.id ?? "",
+                idRequete: idRequete ?? "",
+                idSuiviDossier: parametres.idSuiviDossier,
+                appelStatutRequete: parametres.valeursSaisies.soumissionFormulaire.avecMajStatut ? "EN_ATTENTE" : "TERMINE",
+                appelSuiviDossier: "EN_ATTENTE"
+              });
+            },
+            apresErreur: erreur => {
+              console.error(erreur);
+              setErreurTraitement({
+                enEchec: true,
+                message: "Impossible d'enregister le projet d'acte transcrit"
+              });
+              terminerTraitement();
+            }
           });
+
+          return;
+        default:
           terminerTraitement();
-        }
-      });
+      }
     };
 
     useEffect(() => {
@@ -107,8 +131,11 @@ const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetAc
         return;
       }
 
-      if (donneesTraitement.appelSuiviDossier === "EN_ATTENTE" && donneesTraitement.appelStatutRequete === "EN_ATTENTE") {
+      if (donneesTraitement.appelStatutRequete === "EN_ATTENTE") {
         lancerPatchCreationStatutRequete();
+      }
+
+      if (donneesTraitement.appelSuiviDossier === "EN_ATTENTE") {
         lancerPatchIdActeSuiviDossier();
       }
     }, [donneesTraitement]);
