@@ -6,12 +6,7 @@ export const REQUETE_CREATION_RMC_AUTO_DTO: IRequeteRMCAutoDto<"CREATION"> = {
   titulaires: [
     {
       nom: "NOM CREATION",
-      prenoms: [
-        {
-          prenom: "PrénomCréation",
-          numeroOrdre: 1
-        }
-      ]
+      prenom: "PrénomCréation"
     }
   ],
   type: "CREATION",
@@ -26,12 +21,7 @@ export const REQUETE_DELIVRANCE_RMC_AUTO_DTO: IRequeteRMCAutoDto<"DELIVRANCE"> =
   titulaires: [
     {
       nom: "NOM DELIVRANCE",
-      prenoms: [
-        {
-          prenom: "PrénomDélivrance",
-          numeroOrdre: 1
-        }
-      ]
+      prenom: "PrénomDélivrance"
     }
   ],
   type: "DELIVRANCE",
@@ -46,12 +36,7 @@ export const REQUETE_INFORMATION_RMC_AUTO_DTO: IRequeteRMCAutoDto<"INFORMATION">
   titulaires: [
     {
       nom: "NOM INFORMATION",
-      prenoms: [
-        {
-          prenom: "PrénomInformation",
-          numeroOrdre: 1
-        }
-      ]
+      prenom: "PrénomInformation"
     }
   ],
   type: "INFORMATION",
@@ -66,12 +51,7 @@ export const REQUETE_MAJ_RMC_AUTO_DTO: IRequeteRMCAutoDto<"MISE_A_JOUR"> = {
   titulaires: [
     {
       nom: "NOM MAJ",
-      prenoms: [
-        {
-          prenom: "PrénomMaJ",
-          numeroOrdre: 1
-        }
-      ]
+      prenom: "PrénomMaJ"
     }
   ],
   type: "MISE_A_JOUR",

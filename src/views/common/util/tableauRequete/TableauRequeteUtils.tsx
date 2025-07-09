@@ -1,5 +1,4 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { PrenomsForm } from "@model/form/commun/PrenomsForm";
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import { AlerteRequete } from "@model/requete/enum/AlerteRequete";
 import { EPriorite } from "@model/requete/enum/EPriorite";
@@ -8,7 +7,7 @@ import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { ETypeRequete } from "@model/requete/enum/TypeRequete";
 import { TRequeteAssociee } from "@model/rmc/requete/RequeteAssociee";
 import { TRequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
-import { ITitulaireRequeteAssocieeDto, TitulaireRequeteAssociee } from "@model/rmc/requete/TitulaireRequeteAssociee";
+import { TitulaireRequeteAssociee } from "@model/rmc/requete/TitulaireRequeteAssociee";
 import { TitulaireRequeteTableauRMC } from "@model/rmc/requete/TitulaireRequeteTableauRMC";
 import ClearIcon from "@mui/icons-material/Clear";
 import ErrorIcon from "@mui/icons-material/Error";
@@ -80,25 +79,18 @@ export const RenderCellTitulaires = (data: any): JSX.Element => {
   const celluleTitulaires: string[] = [];
 
   if (titulaires != null && titulaires.length >= 1) {
-    titulaires.forEach((titulaire: ITitulaireRequeteTableau | ITitulaireRequeteAssocieeDto) => {
+    titulaires.forEach(titulaire => {
       if (
-        ((t: ITitulaireRequeteTableau | ITitulaireRequeteAssocieeDto): t is ITitulaireRequeteAssocieeDto =>
-          typeof titulaire.prenoms[0] !== typeof "")(titulaire)
+        ((
+          t: ITitulaireRequeteTableau | TitulaireRequeteAssociee | TitulaireRequeteTableauRMC
+        ): t is TitulaireRequeteAssociee | TitulaireRequeteTableauRMC => "prenom" in titulaire)(titulaire)
       ) {
-        const prenoms: string[] = PrenomsForm.versPrenomsStringDto(PrenomsForm.valeursInitiales(titulaire.prenoms));
-        celluleTitulaires.push(`${titulaire.nom} ${prenoms[0] ?? ""}`);
-        titleTitulaires += `${titulaire.nom}`;
-        prenoms.forEach((p: string) => {
-          titleTitulaires += p ? ` ${p}` : "";
-        });
+        celluleTitulaires.push(`${titulaire.nom} ${titulaire.prenom}`);
+        titleTitulaires += `${titulaire.nom} ${titulaire.prenom}\n`;
       } else {
         celluleTitulaires.push(`${titulaire.nom} ${titulaire.prenoms[0] ?? ""}`);
-        titleTitulaires += `${titulaire.nom}`;
-        titulaire.prenoms.forEach((p: string) => {
-          titleTitulaires += p ? ` ${p}` : "";
-        });
+        titleTitulaires += `${titulaire.nom} ${titulaire.prenoms[0] ?? ""}\n`;
       }
-      titleTitulaires += `\n`;
     });
   }
 

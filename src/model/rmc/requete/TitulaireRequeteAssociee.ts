@@ -1,16 +1,14 @@
-import { IPrenomOrdonneDto } from "@model/form/commun/PrenomsForm";
-
 export interface ITitulaireRequeteAssocieeDto {
   nom: string;
-  prenoms: Omit<IPrenomOrdonneDto, "estPrenomFrRetenuSdanf">[];
+  prenom?: string;
 }
 
 export class TitulaireRequeteAssociee {
-  private static readonly champsObligatoires: (keyof ITitulaireRequeteAssocieeDto)[] = ["nom", "prenoms"];
+  private static readonly champsObligatoires: (keyof ITitulaireRequeteAssocieeDto)[] = ["nom"];
 
   protected constructor(
     public readonly nom: string,
-    public readonly prenoms: Omit<IPrenomOrdonneDto, "estPrenomFrRetenuSdanf">[]
+    public readonly prenom: string
   ) {}
 
   public static readonly depuisDto = (titulaire: ITitulaireRequeteAssocieeDto): TitulaireRequeteAssociee | null => {
@@ -19,10 +17,10 @@ export class TitulaireRequeteAssociee {
       return null;
     }
 
-    return new TitulaireRequeteAssociee(titulaire.nom, titulaire.prenoms);
+    return new TitulaireRequeteAssociee(titulaire.nom, titulaire.prenom ?? "");
   };
 
-  protected get attributs(): [nom: string, prenoms: Omit<IPrenomOrdonneDto, "estPrenomFrRetenuSdanf">[]] {
-    return [this.nom, this.prenoms];
+  protected get attributs(): [nom: string, prenom: string] {
+    return [this.nom, this.prenom];
   }
 }

@@ -16,7 +16,7 @@ export class TitulaireRequeteTableauRMC extends TitulaireRequeteAssociee {
   }
 
   public static readonly depuisDto = (titulaire: ITitulaireRequeteTableauRMCDto): TitulaireRequeteTableauRMC | null => {
-    const titulaireRequeteAssociee = TitulaireRequeteAssociee.depuisDto({ nom: titulaire.nom, prenoms: titulaire.prenoms });
+    const titulaireRequeteAssociee = TitulaireRequeteAssociee.depuisDto({ nom: titulaire.nom, prenom: titulaire.prenom });
 
     return (
       titulaireRequeteAssociee &&

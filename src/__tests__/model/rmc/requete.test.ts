@@ -146,10 +146,7 @@ describe("Test TitulaireRequeteAssociee", () => {
   test("TitulaireRequeteAssociee depuisDto valide", () => {
     const titulaireDto: ITitulaireRequeteAssocieeDto = {
       nom: "NomTitulaire",
-      prenoms: [
-        { prenom: "prenom1", numeroOrdre: 1 },
-        { prenom: "prenom2", numeroOrdre: 2 }
-      ]
+      prenom: "prenom1"
     };
     const titulaire = TitulaireRequeteAssociee.depuisDto(titulaireDto);
 

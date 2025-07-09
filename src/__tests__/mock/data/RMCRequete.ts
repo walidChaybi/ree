@@ -25,7 +25,7 @@ export const MOCK_REQUETE_TABLEAU_RMC_CREATION: IRequeteTableauRMCDto<"CREATION"
   titulaires: [
     {
       nom: "Garcia",
-      prenoms: [{ prenom: "Hugo", numeroOrdre: 1 }],
+      prenom: "Hugo",
       dateNaissance: {
         jour: 31,
         mois: 12,
@@ -34,11 +34,7 @@ export const MOCK_REQUETE_TABLEAU_RMC_CREATION: IRequeteTableauRMCDto<"CREATION"
     },
     {
       nom: "Rossi",
-      prenoms: [
-        { prenom: "Giulia", numeroOrdre: 1 },
-        { prenom: "Clara", numeroOrdre: 2 },
-        { prenom: "Maria", numeroOrdre: 3 }
-      ],
+      prenom: "Giulia",
       dateNaissance: {
         jour: 16,
         mois: 8,
@@ -116,7 +112,7 @@ export const DataRMCRequeteAvecResultat: TRequeteTableauRMCDto[] = [
     titulaires: [
       {
         nom: "Garcia",
-        prenoms: [{ prenom: "Hugo", numeroOrdre: 1 }],
+        prenom: "Hugo",
 
         dateNaissance: {
           jour: 31,
@@ -126,11 +122,7 @@ export const DataRMCRequeteAvecResultat: TRequeteTableauRMCDto[] = [
       },
       {
         nom: "Rossi",
-        prenoms: [
-          { prenom: "Giulia", numeroOrdre: 1 },
-          { prenom: "Clara", numeroOrdre: 2 },
-          { prenom: "Maria", numeroOrdre: 3 }
-        ],
+        prenom: "Giulia",
         dateNaissance: {
           jour: 16,
           mois: 8,
@@ -170,7 +162,7 @@ export const DataRMCRequeteAvecResultat: TRequeteTableauRMCDto[] = [
     titulaires: [
       {
         nom: "Garcia",
-        prenoms: [{ prenom: "Hugo", numeroOrdre: 1 }],
+        prenom: "Hugo",
         dateNaissance: {
           jour: 31,
           mois: 12,
@@ -179,11 +171,7 @@ export const DataRMCRequeteAvecResultat: TRequeteTableauRMCDto[] = [
       },
       {
         nom: "Rossi",
-        prenoms: [
-          { prenom: "Giulia", numeroOrdre: 1 },
-          { prenom: "Clara", numeroOrdre: 2 },
-          { prenom: "Maria", numeroOrdre: 3 }
-        ],
+        prenom: "Giulia",
         dateNaissance: {
           jour: 16,
           mois: 8,
@@ -223,7 +211,7 @@ export const DataRMCRequeteAvecResultat: TRequeteTableauRMCDto[] = [
     titulaires: [
       {
         nom: "Garcia",
-        prenoms: [{ prenom: "Hugo", numeroOrdre: 1 }],
+        prenom: "Hugo",
         dateNaissance: {
           jour: 31,
           mois: 12,
@@ -232,11 +220,7 @@ export const DataRMCRequeteAvecResultat: TRequeteTableauRMCDto[] = [
       },
       {
         nom: "Rossi",
-        prenoms: [
-          { prenom: "Giulia", numeroOrdre: 1 },
-          { prenom: "Clara", numeroOrdre: 2 },
-          { prenom: "Maria", numeroOrdre: 3 }
-        ],
+        prenom: "Giulia",
         dateNaissance: {
           jour: 16,
           mois: 8,
