@@ -23,3 +23,5 @@ export const NumeroInscription = new RegExp(/^\d{4}(-\d+)?$/);
 export const CaracteresAlphanumeriques = new RegExp(/^[0-9a-zA-Z]+$/);
 
 export const NumeroTelephone = new RegExp(/^[+]*[(]?\d{1,4}[)]?[-\s./0-9]*$/);
+
+export const REGEX_ANNEE_QUATRE_CHIFFRES = new RegExp(/^[1-9]\d{3}$/);

@@ -3,6 +3,7 @@ import { ConditionChamp } from "@model/form/commun/ConditionChamp";
 import { INumeroRcRcaPacs } from "@model/form/commun/NumeroRcRcaPacsForm";
 import dayjs from "dayjs";
 import * as Yup from "yup";
+import { REGEX_ANNEE_QUATRE_CHIFFRES } from "../ressources/Regex";
 
 interface ISchemaCommunParams {
   obligatoire: boolean | ConditionChamp[];
@@ -56,6 +57,8 @@ type TNomSecableChamp = {
 
 export const messagesErreur = {
   DATE_INVALIDE: "⚠ La date est invalide",
+  ANNEE_INVALIDE: "⚠ L'année est invalide",
+  ANNEE_SUR_QUATRE_CHIFFRES: "⚠ L'année doit être sur 4 chiffres",
   DATE_INCOMPLETE: "⚠ La date est incomplète",
   DATE_OBLIGATOIRE: "⚠ La saisie de la date est obligatoire",
   DATE_FUTURE: "⚠ La date ne peut pas être supérieure à la date du jour",
@@ -85,7 +88,9 @@ const getSchemaValidationDate = (bloquerDateFuture?: boolean): Yup.ObjectSchema<
     .shape({
       jour: Yup.string(),
       mois: Yup.string(),
-      annee: Yup.string().length(4, "⚠ L'année doit être sur 4 chiffres"),
+      annee: Yup.string()
+        .length(4, messagesErreur.ANNEE_SUR_QUATRE_CHIFFRES)
+        .matches(REGEX_ANNEE_QUATRE_CHIFFRES, messagesErreur.ANNEE_INVALIDE),
       heure: Yup.string(),
       minute: Yup.string()
     })
@@ -102,6 +107,7 @@ const getSchemaValidationDate = (bloquerDateFuture?: boolean): Yup.ObjectSchema<
           })
         : true;
     })
+
     .test("moisValide", (date, error) => {
       if (!date.mois || !date.annee) {
         return true;
