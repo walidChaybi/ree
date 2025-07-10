@@ -1,5 +1,5 @@
 import { ChampMetaModele } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
-import { NumeroInscriptionRcRcaForm } from "@model/form/commun/NumeroInscriptionRcRcaForm";
+import { NumeroRcRcaPacsForm } from "@model/form/commun/NumeroRcRcaPacsForm";
 import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { useFormikContext } from "formik";
 import { useCallback, useEffect, useMemo } from "react";
@@ -9,7 +9,7 @@ import ChampRecherchePocopas from "../../../../../commun/champs/ChampRecherchePo
 import ChampTexte from "../../../../../commun/champs/ChampTexte";
 import ChampZoneTexte from "../../../../../commun/champs/ChampZoneTexte";
 import ChampsNomSecable from "../../../../../commun/champs/ChampsNomSecable";
-import ChampNumeroInscriptionRCRCA from "../../../../../commun/champs/ChampsNumeroInscriptionRcRca";
+import ChampNumeroRcRcaPacs from "../../../../../commun/champs/ChampsNumeroRcRcaPacs";
 import SeparateurSection from "../../../../../commun/conteneurs/formulaire/SeparateurSection";
 import { TMentionForm } from "../../MentionForm";
 import { ChampConditionneAideSaisie } from "./ChampConditionneAideSaisie";
@@ -43,7 +43,7 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
         setFieldValue(nomChamp, { nom: "", secable: false, nomPartie1: "", nomPartie2: "" });
         return;
       case "numeroInscriptionRcRca":
-        setFieldValue(nomChamp, NumeroInscriptionRcRcaForm.valeursInitiales());
+        setFieldValue(nomChamp, NumeroRcRcaPacsForm.valeursInitiales());
         return;
       default:
         setFieldValue(nomChamp, "");
@@ -156,10 +156,10 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
     case champ.type === "numeroInscriptionRcRca" && estAffiche:
       return (
         <ChampFormAideSaisie typeChamp={champ.type}>
-          <ChampNumeroInscriptionRCRCA
+          <ChampNumeroRcRcaPacs
             libelle={champ.libelle}
-            cheminNumeroInscriptionRcRca={nomChamp}
-            prefixeNumeroInscriptionRcRca={"ligne"}
+            cheminNumeroRcRcaPacs={nomChamp}
+            prefixeNumeroRcRcaPacs={"ligne"}
             tailleMax={champ.tailleMax || 1}
           />
         </ChampFormAideSaisie>

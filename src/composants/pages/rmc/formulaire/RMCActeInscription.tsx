@@ -3,6 +3,7 @@ import { Form, Formik } from "formik";
 import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import BlocEvenementRMC from "./BlocEvenementRMC";
+import BlocRepertoire from "./BlocRepertoire";
 import BlocTitulaireRMC from "./BlocTitulaireRMC";
 import BoutonsRMC from "./BoutonsRMC";
 
@@ -30,6 +31,7 @@ export const RMCActeInscription: React.FC<RMCActeInscriptionProps> = ({ onSubmit
             <div>
               <BlocTitulaireRMC />
               <BlocEvenementRMC />
+              <BlocRepertoire />
             </div>
           </div>
           <BoutonsRMC />

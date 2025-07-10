@@ -13,7 +13,7 @@ import { ToastContainer } from "react-toastify";
 
 import { CONFIG_POST_RMC_ACTE } from "@api/configurations/etatCivil/acte/PostRMCActeConfigApi";
 import { ICriteresRechercheActeInscription, mappingCriteres, rmcActeAutorisee } from "@hook/rmcActeInscription/RMCActeInscriptionUtils";
-import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
+import { IRMCActeInscriptionForm, RMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { RMCActeInscriptionResultats } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCActeInscriptionResultats";
 import { goToLinkRMC } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauCommun";
@@ -23,12 +23,12 @@ import useFetchApi from "../../hooks/api/FetchApiHook";
 import { StockageLocal } from "../../utils/StockageLocal";
 
 interface PageRMCActeInscriptionProps {
-  dansFenetreExterne: boolean;
+  dansFenetreExterne?: boolean;
 }
 
 const TOASTCONTAINER_EXTERNE = "toastContainer-externe";
 
-export const PageRMCActeInscription: React.FC<PageRMCActeInscriptionProps> = ({ dansFenetreExterne }) => {
+export const PageRMCActeInscription: React.FC<PageRMCActeInscriptionProps> = ({ dansFenetreExterne = false }) => {
   const [opEnCours, setOpEnCours] = useState<boolean>(false);
   const [valuesRMCActeInscription, setValuesRMCActeInscription] = useState<IRMCActeInscriptionForm | null>(null);
   const [nouvelleRMCActeInscription, setNouvelleRMCActeInscription] = useState<boolean>(false);
@@ -56,7 +56,7 @@ export const PageRMCActeInscription: React.FC<PageRMCActeInscriptionProps> = ({ 
   }, []);
 
   const appelApiRMCActe = useCallback((valeursformulaire: IRMCActeInscriptionForm, range: string, ficheIdentifiant?: string) => {
-    const criteres = mappingCriteres(valeursformulaire as unknown as IRMCActeInscription);
+    const criteres = mappingCriteres(RMCActeInscriptionForm.versDto(valeursformulaire) as IRMCActeInscription);
 
     if (!rmcActeAutorisee(criteres)) {
       setDataRMCActe([]);
@@ -131,7 +131,7 @@ export const PageRMCActeInscription: React.FC<PageRMCActeInscriptionProps> = ({ 
     setNouvelleRMCActeInscription(true);
     setValuesRMCActeInscription(valeurs);
     setCriteresRechercheInscription({
-      valeurs: valeurs as unknown as IRMCActeInscription,
+      valeurs: RMCActeInscriptionForm.versDto(valeurs) as IRMCActeInscription,
       range: `0-${NB_LIGNES_PAR_APPEL_INSCRIPTION}`,
       onErreur: () => setOpEnCours(false),
       onFinTraitement: () => setOpEnCours(false)

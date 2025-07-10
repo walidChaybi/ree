@@ -5,14 +5,14 @@ import { describe, expect, test } from "vitest";
 import { PageRMCActeInscription } from "../../../pages/rmc/PageRMCActeInscription";
 
 test("Le formulaire s'affiche correctement", async () => {
-  const { container } = render(<PageRMCActeInscription dansFenetreExterne={false}></PageRMCActeInscription>);
+  const { container } = render(<PageRMCActeInscription></PageRMCActeInscription>);
 
   expect(container).toMatchSnapshot();
 });
 
 describe("Le bloc titulaire fonctionne correctement ", () => {
   test("La validation du nom et prénom titulaire fonctionne correctement", async () => {
-    render(<PageRMCActeInscription dansFenetreExterne={false}></PageRMCActeInscription>);
+    render(<PageRMCActeInscription></PageRMCActeInscription>);
 
     const InputNom: HTMLInputElement = await screen.findByLabelText("Nom");
     const InputPrenom: HTMLInputElement = await screen.findByLabelText("Prénom");
@@ -64,7 +64,7 @@ describe("Le bloc titulaire fonctionne correctement ", () => {
   });
 
   test("La validation de la date titulaire fonctionne correctement", async () => {
-    render(<PageRMCActeInscription dansFenetreExterne={false}></PageRMCActeInscription>);
+    render(<PageRMCActeInscription></PageRMCActeInscription>);
 
     const InputJour = (await screen.findAllByPlaceholderText("JJ")).find(input => input.id === "titulaire.dateNaissance.jour")!;
     const InputAnnee = (await screen.findAllByPlaceholderText("AAAA")).find(input => input.id === "titulaire.dateNaissance.annee")!;
@@ -104,7 +104,7 @@ describe("Le bloc titulaire fonctionne correctement ", () => {
 
 describe("Le bloc evenement fonctionne correctement ", () => {
   test("La validation du pays de l'évènement fonctionne correctement", async () => {
-    render(<PageRMCActeInscription dansFenetreExterne={false}></PageRMCActeInscription>);
+    render(<PageRMCActeInscription></PageRMCActeInscription>);
 
     const InputEvenement: HTMLInputElement = await screen.findByLabelText("Pays de l'évènement");
 
@@ -131,7 +131,7 @@ describe("Le bloc evenement fonctionne correctement ", () => {
   });
 
   test("La validation de la date d'évènement fonctionne correctement", async () => {
-    render(<PageRMCActeInscription dansFenetreExterne={false}></PageRMCActeInscription>);
+    render(<PageRMCActeInscription></PageRMCActeInscription>);
 
     const InputJour = (await screen.findAllByPlaceholderText("JJ")).find(input => input.id === "titulaire.dateNaissance.jour")!;
     const InputAnnee = (await screen.findAllByPlaceholderText("AAAA")).find(input => input.id === "titulaire.dateNaissance.annee")!;
@@ -212,7 +212,7 @@ describe("La boutons du formulaire fonctionne correctement ", () => {
       }
     );
 
-    render(<PageRMCActeInscription dansFenetreExterne={false}></PageRMCActeInscription>);
+    render(<PageRMCActeInscription></PageRMCActeInscription>);
 
     const InputNom: HTMLInputElement = await screen.findByLabelText("Nom");
     const BoutonRechercher = await screen.getByRole("button", { name: "Rechercher" });
@@ -231,7 +231,7 @@ describe("La boutons du formulaire fonctionne correctement ", () => {
     MockApi.stopMock();
   });
   test("LORSQUE l'utilisateur clique sur le bouton RAPPEL DES CRITERES, ALORS la récdupération de données pour le formulaire s'effectue correctement", async () => {
-    render(<PageRMCActeInscription dansFenetreExterne={false}></PageRMCActeInscription>);
+    render(<PageRMCActeInscription></PageRMCActeInscription>);
 
     const InputNom: HTMLInputElement = await screen.findByLabelText("Nom");
     const BoutonRappelCriteres = await screen.getByRole("button", { name: "Rappel critères" });

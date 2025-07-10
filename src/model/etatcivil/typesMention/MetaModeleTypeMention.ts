@@ -1,5 +1,5 @@
 import { ConditionChamp, IConditionChampDto } from "@model/form/commun/ConditionChamp";
-import { NumeroInscriptionRcRcaForm } from "@model/form/commun/NumeroInscriptionRcRcaForm";
+import { NumeroRcRcaPacsForm } from "@model/form/commun/NumeroRcRcaPacsForm";
 import { ObjetFormulaire, TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import SchemaValidation from "../../../utils/SchemaValidation";
 
@@ -241,7 +241,7 @@ export class MetaModeleTypeMention {
             case "nomSecable":
               return SchemaValidation.nomSecable({ obligatoire: champ.estObligatoire });
             case "numeroInscriptionRcRca":
-              return SchemaValidation.numerosInscriptionRcRca({
+              return SchemaValidation.numerosRcRcaPacs({
                 prefix: `${bloc.id}.${champ.id}.ligne`,
                 tailleMax: champ.tailleMax || 8,
                 obligatoire: champ.estObligatoire
@@ -291,7 +291,7 @@ export class MetaModeleTypeMention {
                         annee: ""
                       };
                     case "numeroInscriptionRcRca":
-                      return NumeroInscriptionRcRcaForm.valeursInitiales();
+                      return NumeroRcRcaPacsForm.valeursInitiales();
 
                     case "nomSecable":
                       return {

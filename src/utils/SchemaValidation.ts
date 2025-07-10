@@ -1,13 +1,13 @@
 import { ValeursConditionneesMetaModele } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
 import { ConditionChamp } from "@model/form/commun/ConditionChamp";
-import { INumeroRcRca } from "@model/form/commun/NumeroInscriptionRcRcaForm";
+import { INumeroRcRcaPacs } from "@model/form/commun/NumeroRcRcaPacsForm";
 import dayjs from "dayjs";
 import * as Yup from "yup";
 
 interface ISchemaCommunParams {
   obligatoire: boolean | ConditionChamp[];
   operateurConditionsOu?: boolean;
-  interditSeul?: TInterditSeul;
+  interditSeul?: boolean | TInterditSeul;
 }
 
 type TValeurChamp = string | boolean | number | undefined;
@@ -25,8 +25,8 @@ type TValidationText = TValidation & {
 };
 
 type TInterditSeul = {
-  estInterditSeul: boolean;
-  cheminErreurSpecifique?: string;
+  champsEnErreur?: string[];
+  champsAIgnorer?: string[];
   messageErreurSpecifique?: string;
   limiterAuBloc?: boolean;
 };
@@ -36,7 +36,7 @@ type TGestionObligationParams<TSchemaChamp extends Yup.AnySchema = Yup.AnySchema
   obligatoire: boolean | ConditionChamp[];
   actionObligation: () => TSchemaChamp;
   conditionOu?: boolean;
-  interditSeul?: TInterditSeul;
+  interditSeul?: boolean | TInterditSeul;
 };
 
 type TDateChamp = {
@@ -62,6 +62,7 @@ export const messagesErreur = {
   DOIT_ETRE_ENTIER: "⚠ La valeur doit être un entier",
   CHAMP_OBLIGATOIRE: "⚠ La saisie du champ est obligatoire",
   CHAMP_INVALIDE: "⚠ Le champ est invalide",
+  CHAMP_INCOMPLET: "⚠ Le champ est incomplet",
   PRENOM_OBLIGATOIRE: "⚠ La saisie du prénom est obligatoire",
   CHAMP_SEUL_INVALIDE: "⚠ Le champ ne peut être utilisé seul",
 
@@ -173,12 +174,12 @@ const estChampRenseigne = (valeur: any): boolean => {
   return true;
 };
 
-const getValeursRenseigneesFormulaire = (valeur: string | boolean | object | null, cleExclue?: string): string[] => {
+const getValeursRenseigneesFormulaire = (valeur: string | boolean | object | null, clesExclues: string[]): string[] => {
   if (valeur == null || typeof valeur === "boolean") return [];
 
   if (typeof valeur === "object") {
     return Object.entries(valeur).flatMap(([cle, value]) => {
-      return cle === cleExclue ? [] : getValeursRenseigneesFormulaire(value, cleExclue);
+      return clesExclues.includes(cle) ? [] : getValeursRenseigneesFormulaire(value, clesExclues);
     });
   }
 
@@ -187,25 +188,36 @@ const getValeursRenseigneesFormulaire = (valeur: string | boolean | object | nul
 
 const champSeulInterdit = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>(
   schema: TSchemaChamp,
-  cheminErreurSpecifique?: string,
-  messageErreurSpecifique?: string,
-  limiterAuBloc?: boolean
+  { champsEnErreur, champsAIgnorer, messageErreurSpecifique, limiterAuBloc }: TInterditSeul
 ) =>
   schema.test("champSeulInvalide", (valeur, context) => {
+    const errors: Yup.ValidationError[] = [];
     const cleChampActuel = context.path.split(".").pop();
+    let clesChampsAFiltrer: string[] = cleChampActuel ? [cleChampActuel] : [];
+    if (champsAIgnorer) clesChampsAFiltrer = [...clesChampsAFiltrer, ...champsAIgnorer];
 
     const autresValeursFormulaire = getValeursRenseigneesFormulaire(
       limiterAuBloc ? context.parent : context.options.context,
-      cleChampActuel
+      clesChampsAFiltrer
     );
 
     if (estChampRenseigne(valeur) && autresValeursFormulaire.filter(estChampRenseigne).length === 0) {
-      const cheminErreur = cheminErreurSpecifique ? `${context.path}.${cheminErreurSpecifique}` : context.path;
-
-      return context.createError({
-        path: cheminErreur,
-        message: messageErreurSpecifique ?? messagesErreur.CHAMP_SEUL_INVALIDE
+      if (!champsEnErreur) {
+        return context.createError({
+          path: context.path,
+          message: messageErreurSpecifique ?? messagesErreur.CHAMP_SEUL_INVALIDE
+        });
+      }
+      champsEnErreur.forEach(champ => {
+        return errors.push(
+          context.createError({
+            path: `${context.path}.${champ}`,
+            message: messageErreurSpecifique ?? messagesErreur.CHAMP_SEUL_INVALIDE
+          })
+        );
       });
+
+      return new Yup.ValidationError(errors);
     }
 
     return true;
@@ -218,13 +230,8 @@ const gestionObligation = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>({
   conditionOu,
   interditSeul
 }: TGestionObligationParams<TSchemaChamp>): TSchemaChamp => {
-  if (interditSeul?.estInterditSeul) {
-    schema = champSeulInterdit(
-      schema,
-      interditSeul.cheminErreurSpecifique,
-      interditSeul.messageErreurSpecifique,
-      interditSeul.limiterAuBloc
-    );
+  if (interditSeul) {
+    schema = champSeulInterdit(schema, typeof interditSeul === "boolean" ? {} : interditSeul);
   }
 
   if (typeof obligatoire === "boolean") {
@@ -416,7 +423,8 @@ const SchemaValidation = {
     SchemaValidation.entier({
       obligatoire: schemaParams.obligatoire,
       min: { valeur: 1000, message: "⚠ L'année doit être sur 4 chiffres" },
-      max: { valeur: dayjs().get("year"), message: "⚠ L'année ne peut pas être supérieure à l'année actuelle" }
+      max: { valeur: dayjs().get("year"), message: "⚠ L'année ne peut pas être supérieure à l'année actuelle" },
+      interditSeul: schemaParams.interditSeul
     }),
 
   nomSecable: (schemaParams: ISchemaCommunParams) => {
@@ -463,7 +471,41 @@ const SchemaValidation = {
     return SchemaValidation.objet(schemaPrenoms);
   },
 
-  numerosInscriptionRcRca: ({ prefix, tailleMax, obligatoire }: { prefix: string; tailleMax: number } & ISchemaCommunParams) => {
+  numeroRcRcaPacs: ({ obligatoire, operateurConditionsOu, interditSeul }: ISchemaCommunParams) => {
+    let schema = SchemaValidation.objet({
+      numero: SchemaValidation.entier({ obligatoire: obligatoire }),
+      anneeInscription: SchemaValidation.annee({ obligatoire: obligatoire })
+    })
+
+      .test("numeroIncompletInterditAnnee", (numeroRcRcaPacs, error) => {
+        return Boolean(numeroRcRcaPacs.numero) && !Boolean(numeroRcRcaPacs.anneeInscription)
+          ? error.createError({
+              path: `${error.path}.anneeInscription`,
+              message: messagesErreur.CHAMP_INCOMPLET
+            })
+          : true;
+      })
+      .test("numeroIncompletInterditNumero", (numeroRcRcaPacs, error) => {
+        return !Boolean(numeroRcRcaPacs.numero) && Boolean(numeroRcRcaPacs.anneeInscription)
+          ? error.createError({
+              path: `${error.path}.numero`,
+              message: messagesErreur.CHAMP_INCOMPLET
+            })
+          : true;
+      });
+
+    return gestionObligation({
+      schema: schema,
+      obligatoire: obligatoire,
+      actionObligation: () => {
+        return schema;
+      },
+      conditionOu: operateurConditionsOu,
+      interditSeul: interditSeul
+    });
+  },
+
+  numerosRcRcaPacs: ({ prefix, tailleMax, obligatoire }: { prefix: string; tailleMax: number } & ISchemaCommunParams) => {
     const schemaNumeros: { [cle: string]: Yup.AnyObjectSchema } = {};
 
     Array.from({ length: tailleMax }).forEach((_, index) => {
@@ -493,11 +535,11 @@ const SchemaValidation = {
 
       const numerosSuivants = Array.from({ length: tailleMax - 1 - index }).map((_, idx) => `$${prefix}${idx + index + 2}`);
       schemaAnnee = schemaAnnee.when(numerosSuivants, {
-        is: (...valeur: (INumeroRcRca | undefined)[]) => valeur.some(val => Boolean(val?.anneeInscription) && Boolean(val?.numero)),
+        is: (...valeur: (INumeroRcRcaPacs | undefined)[]) => valeur.some(val => Boolean(val?.anneeInscription) && Boolean(val?.numero)),
         then: schemaAnnee.required(messagesErreur.CHAMP_OBLIGATOIRE)
       });
       schemaNumero = schemaNumero.when(numerosSuivants, {
-        is: (...valeur: (INumeroRcRca | undefined)[]) => valeur.some(val => Boolean(val?.anneeInscription) && Boolean(val?.numero)),
+        is: (...valeur: (INumeroRcRcaPacs | undefined)[]) => valeur.some(val => Boolean(val?.anneeInscription) && Boolean(val?.numero)),
         then: schemaNumero.required(messagesErreur.CHAMP_OBLIGATOIRE)
       });
 

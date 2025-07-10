@@ -19,19 +19,9 @@ const valeursInitialesRMCActeInscriptionAttendues = {
       }
     },
     repertoire: {
-      numeroInscription: "",
+      numeroInscription: { anneeInscription: "", numero: "" },
       typeRepertoire: "",
-      natureInscription: {
-        id: "",
-        nom: "",
-        code: "",
-        libelle: "",
-        article: "",
-        type: "",
-        categorieRCRCA: "",
-        decisionCouple: false,
-        estActif: false
-      }
+      natureInscription: ""
     },
     evenement: {
       dateEvenement: {
@@ -84,19 +74,9 @@ const mockValeursRMCActeInscription: IRMCActeInscriptionForm = {
       }
     },
     repertoire: {
-      numeroInscription: "98765",
+      numeroInscription: { anneeInscription: "2000", numero: "1" },
       typeRepertoire: "PRINCIPAL",
-      natureInscription: {
-        id: "1",
-        nom: "Extrait de naissance",
-        code: "EXN",
-        libelle: "Extrait de naissance",
-        article: "Article 25",
-        type: "Acte civil",
-        categorieRCRCA: "CIV",
-        decisionCouple: false,
-        estActif: true
-      }
+      natureInscription: "contestation"
     },
     evenement: {
       dateEvenement: {
@@ -149,19 +129,9 @@ const mockDtoRMCActeInscription: IRMCActeInscriptionDto = {
       }
     },
     repertoire: {
-      numeroInscription: "98765",
+      numeroInscription: "2000-1",
       typeRepertoire: "PRINCIPAL",
-      natureInscription: {
-        id: "1",
-        nom: "Extrait de naissance",
-        code: "EXN",
-        libelle: "Extrait de naissance",
-        article: "Article 25",
-        type: "Acte civil",
-        categorieRCRCA: "CIV",
-        decisionCouple: false,
-        estActif: true
-      }
+      natureInscription: "contestation"
     },
     evenement: {
       dateEvenement: {

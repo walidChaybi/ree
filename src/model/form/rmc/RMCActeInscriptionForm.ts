@@ -9,6 +9,7 @@ import {
 import SchemaValidation, { messagesErreur } from "../../../utils/SchemaValidation";
 import { ConditionChamp, EOperateurCondition } from "../commun/ConditionChamp";
 import { IDateHeureForm } from "../commun/DateForm";
+import { INumeroRcRcaPacs, numeroRcRcaPacsVersDto } from "../commun/NumeroRcRcaPacsForm";
 import { ObjetFormulaire } from "../commun/ObjetFormulaire";
 
 export interface IRMCActeInscriptionForm {
@@ -43,19 +44,9 @@ export interface IRMCActeInscriptionForm {
       };
     };
     repertoire: {
-      numeroInscription: string;
+      numeroInscription: INumeroRcRcaPacs;
       typeRepertoire: string;
-      natureInscription: {
-        id: string;
-        nom: string;
-        code: string;
-        libelle: string;
-        article: string;
-        type: string;
-        categorieRCRCA: string;
-        decisionCouple: boolean;
-        estActif: boolean;
-      };
+      natureInscription: string;
     };
     evenement: {
       dateEvenement: IDateHeureForm;
@@ -68,7 +59,15 @@ type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
 
-export type IRMCActeInscriptionDto = DeepPartial<IRMCActeInscriptionForm>;
+export type IRMCActeInscriptionDto = DeepPartial<
+  Omit<IRMCActeInscriptionForm, "registreRepertoire"> & {
+    registreRepertoire: Omit<IRMCActeInscriptionForm["registreRepertoire"], "repertoire"> & {
+      repertoire: Omit<IRMCActeInscriptionForm["registreRepertoire"]["repertoire"], "numeroInscription"> & {
+        numeroInscription: string;
+      };
+    };
+  }
+>;
 
 export const RMCActeInscriptionForm = {
   valeursInitiales: (): IRMCActeInscriptionForm => {
@@ -90,19 +89,9 @@ export const RMCActeInscriptionForm = {
           }
         },
         repertoire: {
-          numeroInscription: "",
+          numeroInscription: { anneeInscription: "", numero: "" },
           typeRepertoire: "",
-          natureInscription: {
-            id: "",
-            nom: "",
-            code: "",
-            libelle: "",
-            article: "",
-            type: "",
-            categorieRCRCA: "",
-            decisionCouple: false,
-            estActif: false
-          }
+          natureInscription: ""
         },
         evenement: {
           dateEvenement: {
@@ -157,19 +146,9 @@ export const RMCActeInscriptionForm = {
           }
         },
         repertoire: {
-          numeroInscription: valeurs.registreRepertoire.repertoire.numeroInscription,
+          numeroInscription: numeroRcRcaPacsVersDto(valeurs.registreRepertoire.repertoire.numeroInscription),
           typeRepertoire: valeurs.registreRepertoire.repertoire.typeRepertoire,
-          natureInscription: {
-            id: valeurs.registreRepertoire.repertoire.natureInscription.id,
-            nom: valeurs.registreRepertoire.repertoire.natureInscription.nom,
-            code: valeurs.registreRepertoire.repertoire.natureInscription.code,
-            libelle: valeurs.registreRepertoire.repertoire.natureInscription.libelle,
-            article: valeurs.registreRepertoire.repertoire.natureInscription.article,
-            type: valeurs.registreRepertoire.repertoire.natureInscription.type,
-            categorieRCRCA: valeurs.registreRepertoire.repertoire.natureInscription.categorieRCRCA,
-            decisionCouple: Boolean(valeurs.registreRepertoire.repertoire.natureInscription.decisionCouple),
-            estActif: Boolean(valeurs.registreRepertoire.repertoire.natureInscription.estActif)
-          }
+          natureInscription: valeurs.registreRepertoire.repertoire.natureInscription
         },
         evenement: {
           dateEvenement: {
@@ -226,38 +205,40 @@ export const RMCActeInscriptionForm = {
         //     aPartirDe: SchemaValidation.booleen({ obligatoire: false })
         //   })
         // }),
-        // repertoire: SchemaValidation.objet({
-        //   numeroInscription: SchemaValidation.texte({ obligatoire: false })
-        //     .matches(NumeroInscription, NUMERO_INSCRIPTION_MESSAGE)
-        //     .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
-        //   typeRepertoire: SchemaValidation.texte({ obligatoire: false }),
-        //   natureInscription: SchemaValidation.objet({
-        //     id: SchemaValidation.texte({ obligatoire: false }),
-        //     nom: SchemaValidation.texte({ obligatoire: false }),
-        //     code: SchemaValidation.texte({ obligatoire: false }),
-        //     libelle: SchemaValidation.texte({ obligatoire: false }),
-        //     article: SchemaValidation.texte({ obligatoire: false }),
-        //     type: SchemaValidation.texte({ obligatoire: false }),
-        //     categorieRCRCA: SchemaValidation.texte({ obligatoire: false }),
-        //     decisionCouple: SchemaValidation.booleen({ obligatoire: false }),
-        //     estActif: SchemaValidation.booleen({ obligatoire: false })
-        //   })
-        // }),
+        repertoire: SchemaValidation.objet({
+          numeroInscription: SchemaValidation.numeroRcRcaPacs({
+            obligatoire: false,
+            interditSeul: {
+              champsEnErreur: ["anneeInscription", "numero"]
+            }
+          }),
+          typeRepertoire: SchemaValidation.texte({
+            obligatoire: false,
+            interditSeul: {
+              champsAIgnorer: ["natureInscription"],
+              messageErreurSpecifique: "⚠ Ne peut être utilisé seul ni seulement avec Nature de l'inscription"
+            }
+          }),
+          natureInscription: SchemaValidation.texte({
+            obligatoire: false,
+            interditSeul: {
+              champsAIgnorer: ["typeRepertoire"],
+              messageErreurSpecifique: "⚠ Ne peut être utilisé seul ni seulement avec Type de répertoire"
+            }
+          })
+        }),
         evenement: SchemaValidation.objet({
           dateEvenement: SchemaValidation.dateIncomplete({
             obligatoire: false,
             bloquerDateFuture: true,
             interditSeul: {
-              estInterditSeul: true,
-              cheminErreurSpecifique: "annee"
+              champsEnErreur: ["annee"]
             }
           }),
           paysEvenement: SchemaValidation.texte({
             obligatoire: false,
             listeRegexp: [{ valeur: CaracteresAutorisesRecherchePays, message: messagesErreur.CARACTERES_INTERDITS }],
-            interditSeul: {
-              estInterditSeul: true
-            }
+            interditSeul: true
           })
         })
       }),
@@ -290,7 +271,6 @@ export const RMCActeInscriptionForm = {
           obligatoire: false,
           listeRegexp: [{ valeur: CaracteresAutorisesRecherchePays, message: messagesErreur.CARACTERES_INTERDITS }],
           interditSeul: {
-            estInterditSeul: true,
             messageErreurSpecifique: "⚠ Le champ ne peut être utilisé sans au moins un autre critère du titulaire",
             limiterAuBloc: true
           }
@@ -298,8 +278,7 @@ export const RMCActeInscriptionForm = {
         dateNaissance: SchemaValidation.dateIncomplete({
           obligatoire: false,
           interditSeul: {
-            estInterditSeul: true,
-            cheminErreurSpecifique: "annee",
+            champsEnErreur: ["annee"],
             messageErreurSpecifique: "⚠ Le champ ne peut être utilisé sans au moins un autre critère du titulaire",
             limiterAuBloc: true
           },

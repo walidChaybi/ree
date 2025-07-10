@@ -1,12 +1,12 @@
 import { ConditionChamp, EOperateurCondition, IConditionChampDto } from "@model/form/commun/ConditionChamp";
-import { NumeroInscriptionRcRcaForm } from "@model/form/commun/NumeroInscriptionRcRcaForm";
+import { NumeroRcRcaPacsForm } from "@model/form/commun/NumeroRcRcaPacsForm";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import dayjs from "dayjs";
 import { Form, Formik } from "formik";
 import { describe, expect, test } from "vitest";
 import ChampsNomSecable from "../../composants/commun/champs/ChampsNomSecable";
-import ChampsNumeroInscriptionRcRca from "../../composants/commun/champs/ChampsNumeroInscriptionRcRca";
+import ChampNumeroRcRcaPacs from "../../composants/commun/champs/ChampsNumeroRcRcaPacs";
 import SchemaValidation from "../../utils/SchemaValidation";
 
 const conditionToujoursObligatoire = (idChampReference: string): ConditionChamp[] | boolean => [
@@ -56,23 +56,23 @@ describe("Schema de validation: nomSecable", () => {
   });
 });
 
-describe("Schema de validation: champsNumeroInscriptionRcRca", () => {
+describe("Schema de validation: champsNumeroRcRcaPacs", () => {
   test("LORSQUE le formulaire est soumis et que le champ n'est pas valide, ALORS une erreur apparait", async () => {
     const { container } = render(
       <MockFormulaire
-        valeursInitiales={{ numero: NumeroInscriptionRcRcaForm.valeursInitiales() }}
+        valeursInitiales={{ numero: NumeroRcRcaPacsForm.valeursInitiales() }}
         schemaDeValidation={SchemaValidation.objet({
-          numero: SchemaValidation.numerosInscriptionRcRca({
+          numero: SchemaValidation.numerosRcRcaPacs({
             prefix: `numero.ligne`,
             tailleMax: 1,
             obligatoire: conditionToujoursObligatoire("numero.ligne1")
           })
         })}
       >
-        <ChampsNumeroInscriptionRcRca
+        <ChampNumeroRcRcaPacs
           libelle={"Numéro"}
-          cheminNumeroInscriptionRcRca={"numero"}
-          prefixeNumeroInscriptionRcRca={"ligne"}
+          cheminNumeroRcRcaPacs={"numero"}
+          prefixeNumeroRcRcaPacs={"ligne"}
           tailleMax={1}
         />
       </MockFormulaire>
@@ -103,19 +103,19 @@ describe("Schema de validation: champsNumeroInscriptionRcRca", () => {
   test("LORSQUE plusieurs champs sont présents, ALORS les bonnes erreurs apparaissent sur les bons champs", async () => {
     const { container } = render(
       <MockFormulaire
-        valeursInitiales={{ numero: { ...NumeroInscriptionRcRcaForm.valeursInitiales() } }}
+        valeursInitiales={{ numero: { ...NumeroRcRcaPacsForm.valeursInitiales() } }}
         schemaDeValidation={SchemaValidation.objet({
-          numero: SchemaValidation.numerosInscriptionRcRca({
+          numero: SchemaValidation.numerosRcRcaPacs({
             prefix: `numero.ligne`,
             tailleMax: 6,
             obligatoire: conditionToujoursObligatoire("numero.ligne1")
           })
         })}
       >
-        <ChampsNumeroInscriptionRcRca
+        <ChampNumeroRcRcaPacs
           libelle={"Numéro"}
-          cheminNumeroInscriptionRcRca={"numero"}
-          prefixeNumeroInscriptionRcRca={"ligne"}
+          cheminNumeroRcRcaPacs={"numero"}
+          prefixeNumeroRcRcaPacs={"ligne"}
           tailleMax={6}
         />
       </MockFormulaire>

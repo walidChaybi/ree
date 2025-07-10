@@ -5,7 +5,7 @@ import { StockageLocal } from "../../../../utils/StockageLocal";
 import Bouton from "../../../commun/bouton/Bouton";
 
 const BoutonsRMC: React.FC = () => {
-  const { isValid, dirty, resetForm, setValues, isSubmitting } = useFormikContext<IRMCActeInscriptionForm>();
+  const { dirty, resetForm, setValues, isSubmitting } = useFormikContext<IRMCActeInscriptionForm>();
 
   const derniersCriteresUtilises = useMemo(() => StockageLocal.recuperer("CRITERES_RMC_ACTE_INSCRIPTION"), [isSubmitting]);
 
@@ -29,7 +29,7 @@ const BoutonsRMC: React.FC = () => {
           {"Réinitialiser les critères"}
         </Bouton>
         <Bouton
-          disabled={!isValid || !dirty}
+          disabled={!dirty}
           type="submit"
         >
           {"Rechercher"}

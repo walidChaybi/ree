@@ -1,7 +1,7 @@
 // A tester Alex 5/02/25
 
 import { IDateHeureForm } from "./DateForm";
-import { INumeroRcRca } from "./NumeroInscriptionRcRcaForm";
+import { INumeroRcRcaPacs } from "./NumeroRcRcaPacsForm";
 import { TPrenomsForm } from "./PrenomsForm";
 
 /* v8 ignore start */
@@ -15,7 +15,7 @@ export type TValeurFormulaire =
   | TObjetFormulaire
   | IDateHeureForm
   | TPrenomsForm
-  | INumeroRcRca
+  | INumeroRcRcaPacs
   | undefined;
 
 export const ObjetFormulaire = {
@@ -106,7 +106,7 @@ export const ObjetFormulaire = {
     return typeof valeur === "object" && "prenom1" in valeur;
   },
 
-  estNumeroRcRca: (valeur: TValeurFormulaire): valeur is INumeroRcRca => {
+  estNumeroRcRca: (valeur: TValeurFormulaire): valeur is INumeroRcRcaPacs => {
     return typeof valeur === "object" && "anneeInscription" in valeur;
   }
 } as const;

@@ -1,5 +1,5 @@
 import { EPrepositionLieu } from "@model/etatcivil/enum/EPrepositionLieu";
-import { INumeroRcRca } from "@model/form/commun/NumeroInscriptionRcRcaForm";
+import { INumeroRcRcaPacs } from "@model/form/commun/NumeroRcRcaPacsForm";
 import { ObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { PrenomsForm, TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import DateRECE, { TFormatDate, TOptionPrefixe } from "./DateRECE";
@@ -294,7 +294,7 @@ class ModeleTexte {
     return PrenomsForm.versPrenomsStringDto(prenomsForm).join(", ");
   }
 
-  private static formaterNumeroRcRca(numeroForm: INumeroRcRca): string {
+  private static formaterNumeroRcRca(numeroForm: INumeroRcRcaPacs): string {
     return numeroForm.anneeInscription && numeroForm.numero ? `${numeroForm.anneeInscription}-${numeroForm.numero}` : "";
   }
 
