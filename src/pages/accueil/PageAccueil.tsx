@@ -170,13 +170,14 @@ const PageAccueil: React.FC = () => {
       ),
     [nombreRequetes, nombreRequetesInformation]
   );
+  const largeurContenaire = donneesMenu.length <= 4 ? "32%" : "31%";
 
   return (
     <div className="container mx-auto max-w-[1470px] pt-6">
       <div className="flex flex-wrap justify-center gap-x-10 gap-y-14">
         {donneesMenu.map(element => (
           <div
-            className={`sm:basis-[${donneesMenu.length <= 4 ? "32%" : "31%"}]`}
+            className={`sm:basis-[${largeurContenaire}]`}
             key={"rubrique-accueil-" + element.libelle}
           >
             <div className="min-h-44 max-w-[433px] basis-full select-none rounded-xl border border-solid border-bleu-transparent bg-blanc p-6 pb-3 text-white shadow-lg transition-colors duration-300">
