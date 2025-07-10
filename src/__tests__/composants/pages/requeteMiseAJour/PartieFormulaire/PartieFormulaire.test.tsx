@@ -98,7 +98,7 @@ describe("Tests PartieFormulaire", () => {
       CONFIG_GET_RESUME_ACTE,
       { path: { idActe: ID_ACTE }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
       {
-        data: ficheActe3 as IFicheActe
+        data: ficheActe3
       }
     );
 

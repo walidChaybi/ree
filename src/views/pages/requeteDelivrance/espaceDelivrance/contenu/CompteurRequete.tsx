@@ -1,24 +1,25 @@
+import { CONFIG_GET_NOMBRE_REQUETES } from "@api/configurations/requete/GetNombreRequetesConfigApi";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { getLibelle } from "@util/Utils";
-import React from "react";
-import { useCompteurRequeteHook } from "../hook/CompteurRequeteHook";
+import messageManager from "@util/messageManager";
+import React, { useEffect, useState } from "react";
+import useFetchApi from "../../../../../hooks/api/FetchApiHook";
 import "./scss/CompteurRequete.scss";
 
 interface CompteurRequeteProps {
   reloadCompteur: boolean;
 }
 
-const STATUT_REQUETE_A_SIGNER = [StatutRequete.A_SIGNER.nom]; 
-
 export const CompteurRequete: React.FC<CompteurRequeteProps> = props => {
-  const { nombreRequetesState } = useCompteurRequeteHook(
-    props.reloadCompteur,
-    STATUT_REQUETE_A_SIGNER
-  );
+  const [nombreRequetes, setNombreRequetes] = useState<number>(0);
+  const { appelApi: getNombreRequetes } = useFetchApi(CONFIG_GET_NOMBRE_REQUETES);
 
-  return (
-    <span className={"compteur-requetes"}>
-      {`${getLibelle("Total de requêtes à signer : ")} ${nombreRequetesState}`}
-    </span>
-  );
+  useEffect(() => {
+    getNombreRequetes({
+      parametres: { query: { statuts: StatutRequete.A_SIGNER.nom } },
+      apresSucces: nombre => setNombreRequetes(nombre),
+      apresErreur: () => messageManager.showError("Erreur lors de la récupération du nombre de requêtes")
+    });
+  }, [props.reloadCompteur]);
+
+  return <span className={"compteur-requetes"}>{`${"Total de requêtes à signer : "} ${nombreRequetes}`}</span>;
 };

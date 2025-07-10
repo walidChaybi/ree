@@ -17,7 +17,6 @@ export type NomComposant =
   | "LinkTabRequetesDelivranceService"
   | "LinkTabRequetesInfoService"
   | "LinkTabRequetesCreationService"
-  | "BoutonAccueilEspaceMiseAjour"
   | "BoutonAccueilEspaceCreation"
   | "BoutonAccueilEspaceConsulaire"
   | "BoutonAccueilCommunication"
@@ -26,7 +25,6 @@ export type NomComposant =
   | "BoutonAccueilTableauDeBord"
   | "BoutonAccueilEspaceDelivrance"
   | "BoutonAccueilRechercheActe"
-  | "BoutonAccueilTableau"
   | "MenuSaisirRequete"
   | "TabPanelRequetesDelivranceService"
   | "TabPanelRequetesInfoService"
@@ -35,6 +33,8 @@ export type NomComposant =
   | "BoutonPrendreEnChargeAleatoirementInformation"
   | "BoutonPrendreEnChargePlusAncienneCreation"
   | "BoutonSignerLeLot"
+  | "BoutonAccueilEspaceMiseAjour"
+  | "BoutonAccueilTableau"
   | "MenuSaisirRequeteCreation";
 type NomComposantOuFonction = NomComposant | NomFonction;
 
@@ -75,12 +75,6 @@ export const habilitationsDescription: IHabiliationDescription[] = [
     visiblePourLesDroits: droitsSaufConsulterArchives
   },
   {
-    nomComposant: "BoutonAccueilEspaceMiseAjour",
-    unDesDroits: [Droit.METTRE_A_JOUR_ACTE, Droit.METTRE_A_JOUR_RC_RCA_PACS],
-    comportementSiNonAutorise: { disabled: true },
-    visiblePourLesDroits: droitsSaufConsulterArchives
-  },
-  {
     nomComposant: "BoutonAccueilEspaceCreation",
     unDesDroits: [Droit.CREER_ACTE_TRANSCRIT, Droit.CREER_ACTE_DRESSE, Droit.CREER_ACTE_ETABLI],
     comportementSiNonAutorise: { disabled: true },
@@ -115,11 +109,6 @@ export const habilitationsDescription: IHabiliationDescription[] = [
     tousLesDroits: [Droit.CONSULTER_ARCHIVES],
     comportementSiNonAutorise: { disabled: true },
     visibleSeulementPourLesDroits: [Droit.CONSULTER_ARCHIVES]
-  },
-  {
-    nomComposant: "BoutonAccueilTableau",
-    tousLesDroits: [],
-    comportementSiNonAutorise: { disabled: true }
   },
   {
     nomComposant: "MenuSaisirRequete",
@@ -163,6 +152,17 @@ export const habilitationsDescription: IHabiliationDescription[] = [
   {
     nomComposant: "BoutonPrendreEnChargePlusAncienneCreation",
     unDesDroits: [Droit.CREER_ACTE_DRESSE, Droit.CREER_ACTE_TRANSCRIT, Droit.CREER_ACTE_ETABLI],
+    comportementSiNonAutorise: { disabled: true }
+  },
+  {
+    nomComposant: "BoutonAccueilEspaceMiseAjour",
+    unDesDroits: [Droit.METTRE_A_JOUR_ACTE, Droit.METTRE_A_JOUR_RC_RCA_PACS],
+    comportementSiNonAutorise: { disabled: true },
+    visiblePourLesDroits: droitsSaufConsulterArchives
+  },
+  {
+    nomComposant: "BoutonAccueilTableau",
+    tousLesDroits: [],
     comportementSiNonAutorise: { disabled: true }
   }
 ];

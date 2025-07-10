@@ -1,0 +1,176 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Test page d'accueil > il faut afficher les rubriques / boutons si l'utilisateur a les droits nécessaires 1`] = `
+<div
+  class="container mx-auto max-w-[1470px] pt-6"
+>
+  <div
+    class="flex flex-wrap justify-center gap-x-10 gap-y-14"
+  >
+    <div
+      class="sm:basis-[32%]"
+    >
+      <div
+        class="min-h-44 max-w-[433px] basis-full select-none rounded-xl border border-solid border-bleu-transparent bg-blanc p-6 pb-3 text-white shadow-lg transition-colors duration-300"
+      >
+        <div
+          class="mb-4 flex items-start"
+        >
+          <div
+            class="pm-5 aspect-square h-20 shrink-0 items-center justify-center rounded-md bg-bleu"
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-gavel IconeBouton mt-4 text-5xl text-white"
+              data-icon="gavel"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M318.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-120 120c-12.5 12.5-12.5 32.8 0 45.3l16 16c12.5 12.5 32.8 12.5 45.3 0l4-4L325.4 293.4l-4 4c-12.5 12.5-12.5 32.8 0 45.3l16 16c12.5 12.5 32.8 12.5 45.3 0l120-120c12.5-12.5 12.5-32.8 0-45.3l-16-16c-12.5-12.5-32.8-12.5-45.3 0l-4 4L330.6 74.6l4-4c12.5-12.5 12.5-32.8 0-45.3l-16-16zm-152 288c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l48 48c12.5 12.5 32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-1.4-1.4L272 285.3 226.7 240 168 298.7l-1.4-1.4z"
+                fill="currentColor"
+              />
+            </svg>
+          </div>
+          <div
+            class="ml-6 flex-1 overflow-hidden"
+          >
+            <h2
+              class="text-shadow mb-0 mt-6 break-words text-2xl font-semibold leading-tight text-bleu"
+            >
+              Délivrance
+            </h2>
+          </div>
+        </div>
+        <ul
+          class="list-none rounded-xl px-0 text-left transition-colors duration-300"
+        >
+          <li>
+            <a
+              class="rounded-md border border-solid px-4 py-2 font-noto-sans-ui-bold no-underline transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc mb-4 flex items-center"
+              data-discover="true"
+              href="/rece/rece-ui/mesrequetes"
+              title="Mes requêtes"
+            >
+              <div
+                class="w-[48px]"
+              />
+              <div
+                class="flex-1 text-center"
+              >
+                Mes requêtes
+              </div>
+              <div
+                class="flex w-[48px] justify-end"
+              >
+                <span
+                  class="inline-flex h-[18px] items-center justify-center rounded-xl bg-red-600 px-2 text-xs text-white"
+                >
+                  4
+                </span>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div
+      class="sm:basis-[32%]"
+    >
+      <div
+        class="min-h-44 max-w-[433px] basis-full select-none rounded-xl border border-solid border-bleu-transparent bg-blanc p-6 pb-3 text-white shadow-lg transition-colors duration-300"
+      >
+        <div
+          class="mb-4 flex items-start"
+        >
+          <div
+            class="pm-5 aspect-square h-20 shrink-0 items-center justify-center rounded-md bg-bleu"
+          >
+            <svg
+              aria-hidden="true"
+              class="svg-inline--fa fa-magnifying-glass IconeBouton mt-4 text-5xl text-white"
+              data-icon="magnifying-glass"
+              data-prefix="fas"
+              focusable="false"
+              role="img"
+              viewBox="0 0 512 512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"
+                fill="currentColor"
+              />
+            </svg>
+          </div>
+          <div
+            class="ml-6 flex-1 overflow-hidden"
+          >
+            <h2
+              class="text-shadow mb-0 mt-6 break-words text-2xl font-semibold leading-tight text-bleu"
+            >
+              Recherche
+            </h2>
+          </div>
+        </div>
+        <ul
+          class="list-none rounded-xl px-0 text-left transition-colors duration-300"
+        >
+          <li>
+            <a
+              class="rounded-md border border-solid px-4 py-2 font-noto-sans-ui-bold no-underline transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc mb-4 flex items-center"
+              data-discover="true"
+              href="/rece/rece-ui/rechercherequete"
+              title="Requête"
+            >
+              <div
+                class="w-[48px]"
+              />
+              <div
+                class="flex-1 text-center"
+              >
+                Requête
+              </div>
+              <div
+                class="flex w-[48px] justify-end"
+              />
+            </a>
+          </li>
+          <li>
+            <a
+              class="rounded-md border border-solid px-4 py-2 font-noto-sans-ui-bold no-underline transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc mb-4 flex items-center"
+              data-discover="true"
+              href="/rece/rece-ui/rechercheacteinscription"
+              title="Acte et Inscription"
+            >
+              <div
+                class="w-[48px]"
+              />
+              <div
+                class="flex-1 text-center"
+              >
+                Acte et Inscription
+              </div>
+              <div
+                class="flex w-[48px] justify-end"
+              />
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Test page d'accueil > il ne faut pas afficher les rubriques / boutons si l'utilisateur n'a pas les droits nécessaires 1`] = `
+<div
+  class="container mx-auto max-w-[1470px] pt-6"
+>
+  <div
+    class="flex flex-wrap justify-center gap-x-10 gap-y-14"
+  />
+</div>
+`;
