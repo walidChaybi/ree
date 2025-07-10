@@ -25,6 +25,7 @@ import BlocFormuleFinale from "./BlocFormuleFinale";
 import BlocMentions from "./BlocMentions";
 import BlocParent from "./BlocParent";
 import BlocTitulaire from "./BlocTitulaire";
+import { BloqueurNavigationSaisieProjet } from "./BloqueurNavigationSaisieProjet";
 import ModaleProjetActe from "./ModaleProjetActe";
 import ValeursVersApercuProjet from "./ValeursVersApercuProjet";
 
@@ -71,24 +72,38 @@ const FormulaireSaisieProjet: React.FC = () => {
     });
   };
 
-  const enregistrer = (valeursSaisies: IProjetActeTranscritForm) => {
-    if (!valeursSaisies.soumissionFormulaire.avecEnregistrement) return;
+  const enregistrer = (valeursSaisies: IProjetActeTranscritForm): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      const valeursAvecSoumission = {
+        ...valeursSaisies,
+        soumissionFormulaire: {
+          ...valeursSaisies.soumissionFormulaire,
+          avecEnregistrement: true
+        }
+      };
 
-    lancerEnregistrement({
-      parametres: {
-        valeursSaisies: valeursSaisies,
-        projetActe: projetActe,
-        idRequete: requete.id,
-        idSuiviDossier: requete.titulaires?.[0]?.suiviDossiers?.[0]?.idSuiviDossier ?? ""
-      },
-      apresSucces: projetActeReponse => {
-        mettreAJourDonneesContext(projetActeReponse || projetActe, null);
-        messageManager.showSuccessAndClose("Le projet d'acte a bien été enregistré");
-      },
-      apresErreur: messageErreur => {
-        console.error(`Erreur: ${messageErreur}`);
-        messageManager.showError("Une erreur est survenue lors du traitement");
+      if (!valeursAvecSoumission.soumissionFormulaire.avecEnregistrement) {
+        resolve();
+        return;
       }
+      lancerEnregistrement({
+        parametres: {
+          valeursSaisies: valeursAvecSoumission,
+          projetActe: projetActe,
+          idRequete: requete.id,
+          idSuiviDossier: requete.titulaires?.[0]?.suiviDossiers?.[0]?.idSuiviDossier ?? ""
+        },
+        apresSucces: projetActeReponse => {
+          mettreAJourDonneesContext(projetActeReponse || projetActe, null);
+          messageManager.showSuccessAndClose("Le projet d'acte a bien été enregistré");
+          resolve();
+        },
+        apresErreur: messageErreur => {
+          console.error(`Erreur: ${messageErreur}`);
+          messageManager.showError("Une erreur est survenue lors du traitement");
+          reject(new Error(messageErreur));
+        }
+      });
     });
   };
 
@@ -111,8 +126,8 @@ const FormulaireSaisieProjet: React.FC = () => {
     >
       {({ setFieldValue, dirty, submitForm }) => {
         return (
-          <Form>
-            <>
+          <BloqueurNavigationSaisieProjet onEnregistrer={enregistrer}>
+            <Form>
               {enregistrementEnCours && <PageChargeur />}
 
               <ValeursVersApercuProjet />
@@ -210,9 +225,10 @@ const FormulaireSaisieProjet: React.FC = () => {
                   fermerModale={() => setModaleOuverte(false)}
                 />
               )}
-            </>
-            <ScrollVersErreur />
-          </Form>
+
+              <ScrollVersErreur />
+            </Form>
+          </BloqueurNavigationSaisieProjet>
         );
       }}
     </Formik>
