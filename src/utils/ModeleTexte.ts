@@ -158,9 +158,12 @@ class ModeleTexte {
           const valeurSaisie = Texte.normalise(
             ObjetFormulaire.recupererValeurTexte({ valeurs: valeursFormulaire, cleAttribut: cle.replace("!", "") })
           );
-          const comparaison = valeurAttendue.length
-            ? valeurSaisie === Texte.normalise(valeurAttendue.join(" "))
-            : Boolean(valeurSaisie) && valeurSaisie !== "false";
+          const valeurComparee = Texte.normalise(
+            valeurAttendue[0]?.startsWith("$")
+              ? ObjetFormulaire.recupererValeurTexte({ valeurs: valeursFormulaire, cleAttribut: valeurAttendue[0].replace("$", "") })
+              : valeurAttendue.join(" ")
+          );
+          const comparaison = valeurAttendue.length ? valeurSaisie === valeurComparee : Boolean(valeurSaisie) && valeurSaisie !== "false";
 
           return negation ? !comparaison : comparaison;
         });
