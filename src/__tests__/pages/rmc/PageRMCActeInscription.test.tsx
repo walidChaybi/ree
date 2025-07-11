@@ -1,7 +1,8 @@
 import { CONFIG_POST_RMC_ACTE } from "@api/configurations/etatCivil/acte/PostRMCActeConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
+import { NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import { PageRMCActeInscription } from "../../../pages/rmc/PageRMCActeInscription";
 
 test("Le formulaire s'affiche correctement", async () => {
@@ -166,6 +167,111 @@ describe("Le bloc evenement fonctionne correctement ", () => {
     await waitFor(() => {
       expect(screen.queryByText("⚠")).toBeNull();
     });
+  });
+});
+
+describe("Le bloc RC/RCA/PAC fonctionne correctement ", () => {
+  test("La Nature de l'inscription est grisée tant que RC ou RCA ne sont pas selectionnes", async () => {
+    render(<PageRMCActeInscription></PageRMCActeInscription>);
+
+    const InputNatureInscription: HTMLInputElement = await screen.findByLabelText("Nature de l'inscription");
+
+    await waitFor(() => {
+      expect(InputNatureInscription.disabled).toBeTruthy();
+    });
+
+    const InputTypeRepertoire: HTMLSelectElement = await screen.findByLabelText("Type de répertoire");
+
+    fireEvent.change(InputTypeRepertoire, { target: { value: "RC" } });
+
+    await waitFor(() => {
+      expect(InputNatureInscription.disabled).toBeFalsy();
+    });
+
+    fireEvent.change(InputTypeRepertoire, { target: { value: "PACS" } });
+
+    await waitFor(() => {
+      expect(InputNatureInscription.disabled).toBeTruthy();
+    });
+  });
+
+  test("La Nature de l'inscription et le Type de registre ne sont pas utilisables sans un autre champ", async () => {
+    vi.spyOn(NatureRc, "versOptions").mockReturnValue([
+      {
+        cle: "curatelle",
+        libelle: "curatelle"
+      }
+    ]);
+
+    render(<PageRMCActeInscription></PageRMCActeInscription>);
+
+    const InputNatureInscription: HTMLInputElement = await screen.findByLabelText("Nature de l'inscription");
+    const InputTypeRepertoire: HTMLSelectElement = await screen.findByLabelText("Type de répertoire");
+
+    fireEvent.change(InputTypeRepertoire, { target: { value: "RC" } });
+    fireEvent.blur(InputTypeRepertoire);
+
+    await waitFor(() => {
+      expect(screen.getByText("⚠ Ne peut être utilisé seul ni seulement avec Nature de l'inscription")).toBeDefined();
+    });
+
+    fireEvent.change(InputNatureInscription, { target: { value: "curatelle" } });
+    fireEvent.blur(InputNatureInscription);
+
+    await waitFor(() => {
+      expect(screen.getByText("⚠ Ne peut être utilisé seul ni seulement avec Nature de l'inscription")).toBeDefined();
+      expect(screen.getByText("⚠ Ne peut être utilisé seul ni seulement avec Type de répertoire")).toBeDefined();
+    });
+
+    const InputPrenom: HTMLInputElement = await screen.findByLabelText("Prénom");
+
+    fireEvent.change(InputPrenom, { target: { value: "Goku" } });
+    fireEvent.blur(InputPrenom);
+
+    await waitFor(() => {
+      expect(screen.queryByText("⚠ Ne peut être utilisé seul ni seulement avec Nature de l'inscription")).toBeNull();
+      expect(screen.queryByText("⚠ Ne peut être utilisé seul ni seulement avec Type de répertoire")).toBeNull();
+    });
+  });
+
+  test("Le N° de l'inscription / N° du PACS fonctionnent correctement", async () => {
+    render(<PageRMCActeInscription></PageRMCActeInscription>);
+
+    const InputAnnee = (await screen.findAllByPlaceholderText("AAAA")).find(
+      input => input.id === "registreRepertoire.repertoire.numeroInscription.anneeInscription"
+    )!;
+    const InputNumero = (await screen.findAllByPlaceholderText("XXXXX")).find(
+      input => input.id === "registreRepertoire.repertoire.numeroInscription.numero"
+    )!;
+
+    fireEvent.change(InputAnnee, { target: { value: "1234" } });
+    fireEvent.blur(InputAnnee);
+
+    await waitFor(() => {
+      expect(screen.getByText("⚠ Le champ ne peut être utilisé seul")).toBeDefined();
+    });
+
+    const InputNom: HTMLInputElement = await screen.findByLabelText("Nom");
+
+    fireEvent.change(InputNom, { target: { value: "Goku" } });
+    fireEvent.blur(InputNom);
+    fireEvent.blur(InputNumero);
+
+    await waitFor(() => {
+      expect(screen.getByText("⚠ Le champ est incomplet")).toBeDefined();
+    });
+
+    fireEvent.change(InputAnnee, { target: { value: "" } });
+    fireEvent.change(InputNumero, { target: { value: "1" } });
+    fireEvent.blur(InputNumero);
+
+    await waitFor(() => {
+      expect(screen.getByText("⚠ Le champ est incomplet")).toBeDefined();
+    });
+    fireEvent.change(InputAnnee, { target: { value: "1234" } });
+    fireEvent.blur(InputAnnee);
+
+    expect(screen.queryByText("⚠")).toBeNull();
   });
 });
 
