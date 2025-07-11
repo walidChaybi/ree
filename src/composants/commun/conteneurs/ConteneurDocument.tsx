@@ -1,23 +1,12 @@
 import Print from "@mui/icons-material/Print";
+import PolicesEtStylesRECE from "../../../utils/PolicesEtStylesRECE";
 
 const imprimerDocument = () => {
   const pagesDocumentTexte = document.querySelectorAll(".contenu-document-texte");
   const fenetreImpression = window.open("", "_blank", "left=0,top=0,width=800,height=800,toolbar=0,scrollbars=0,status=0");
   if (!fenetreImpression || !pagesDocumentTexte.length) return;
 
-  Array.from(document.styleSheets || []).forEach(styleSheet => {
-    if (!styleSheet.cssRules) return;
-
-    const elementStyle = document.createElement("style");
-    Array.from(styleSheet.cssRules).forEach(cssRule => {
-      elementStyle.appendChild(document.createTextNode(cssRule.cssText));
-    });
-    fenetreImpression?.document.head.appendChild(elementStyle);
-  });
-
-  document.fonts?.forEach(police => {
-    fenetreImpression?.document.fonts.add(police);
-  });
+  PolicesEtStylesRECE.copieDansFenetreExterne(fenetreImpression);
 
   pagesDocumentTexte.forEach(page => {
     let elem = fenetreImpression.document.createElement("div");

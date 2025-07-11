@@ -1,7 +1,7 @@
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
-import { FenetreExterne } from "@util/FenetreExterne";
 import { VisionneuseAvecTitre } from "@widget/visionneuseDocument/VisionneuseAvecTitre";
 import React from "react";
+import FenetreExterne from "../../../../../../../composants/commun/conteneurs/FenetreExterne";
 
 interface DocumentReponseProps {
   numRequete: string;
@@ -17,11 +17,11 @@ export const FenetreDocumentReponse: React.FC<DocumentReponseProps> = props => {
   return (
     <FenetreExterne
       titre={`${props.nom} - Req N°${props.numRequete}`}
-      onCloseHandler={() => {
+      apresfermeture={() => {
         onClose(props);
       }}
-      ratioWidth={ratioWidth}
-      ratioHeight={ratioHeight}
+      ratioLargeur={ratioWidth}
+      ratioHauteur={ratioHeight}
     >
       {props.contenuPiece && (
         <VisionneuseAvecTitre

@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Test du composant FenetreExterne > La fenêtre externe affiche correctement son contenu 1`] = `
+<div
+  class="App"
+>
+  <div>
+    Contenu fenêtre externe
+  </div>
+</div>
+`;

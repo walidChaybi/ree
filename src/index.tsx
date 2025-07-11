@@ -2,9 +2,9 @@
 import App from "@core/App";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import PolicesRECE from "./utils/PolicesRECE";
+import PolicesEtStylesRECE from "./utils/PolicesEtStylesRECE";
 
-PolicesRECE.charger();
+PolicesEtStylesRECE.chargerPolices();
 
 const container = document.getElementById("root");
 const root = createRoot(container!); // createRoot(container!) if you use TypeScript

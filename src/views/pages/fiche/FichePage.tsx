@@ -15,7 +15,6 @@ import {
   URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE_ID,
   URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID
 } from "@router/ReceUrls";
-import { FenetreExterneUtil } from "@util/FenetreExterne";
 import { logError } from "@util/LogManager";
 import { UN, ZERO } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
@@ -29,6 +28,7 @@ import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
 import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
+import { IFenetreExterneRef } from "../../../composants/commun/conteneurs/FenetreExterne";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import { FicheUtil, TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
 import { BoutonCreationRDD } from "./BoutonCreationRDD/BoutonCreationRDD";
@@ -50,7 +50,7 @@ interface FichePageProps {
   datasFiches: IDataFicheProps[];
   index: IIndex;
   numeroRequete?: string;
-  fenetreExterneUtil?: FenetreExterneUtil;
+  fenetreExterneRef?: IFenetreExterneRef;
   nbLignesTotales: number;
   nbLignesParAppel: number;
   getLignesSuivantesOuPrecedentes?: (ficheIdentifiant: string, lien: string) => void;
@@ -69,7 +69,7 @@ export const FichePage: React.FC<FichePageProps> = ({
   datasFiches,
   numeroRequete,
   index,
-  fenetreExterneUtil,
+  fenetreExterneRef,
   nbLignesTotales,
   nbLignesParAppel,
   getLignesSuivantesOuPrecedentes
@@ -177,11 +177,11 @@ export const FichePage: React.FC<FichePageProps> = ({
           window.top.dispatchEvent(event);
         }
       }
-      if (fenetreExterneUtil && bandeauFiche) {
-        fenetreExterneUtil.ref.document.title = bandeauFiche.titreFenetre;
+      if (fenetreExterneRef && bandeauFiche) {
+        fenetreExterneRef.ref.document.title = bandeauFiche.titreFenetre;
       }
     }
-  }, [dataFicheState.data, fenetreExterneUtil, bandeauFiche, dataFicheCourante]);
+  }, [dataFicheState.data, fenetreExterneRef, bandeauFiche, dataFicheCourante]);
 
   const obtenirFicheSuivante = useCallback(
     (idxLocal: number, idx: number) => {

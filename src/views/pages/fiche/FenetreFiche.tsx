@@ -1,6 +1,6 @@
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { FenetreExterne, FenetreExterneUtil } from "@util/FenetreExterne";
 import React, { useState } from "react";
+import FenetreExterne, { IFenetreExterneRef } from "../../../composants/commun/conteneurs/FenetreExterne";
 import { FichePage, IDataFicheProps, IIndex } from "./FichePage";
 import "./scss/LienFiche.scss";
 
@@ -14,10 +14,7 @@ interface IFenetreFicheProps {
   index: IIndex;
   nbLignesTotales: number;
   nbLignesParAppel: number;
-  getLignesSuivantesOuPrecedentes?: (
-    ficheIdentifiant: string,
-    lien: string
-  ) => void;
+  getLignesSuivantesOuPrecedentes?: (ficheIdentifiant: string, lien: string) => void;
 }
 
 export const FenetreFiche: React.FC<IFenetreFicheProps> = ({
@@ -33,8 +30,7 @@ export const FenetreFiche: React.FC<IFenetreFicheProps> = ({
   getLignesSuivantesOuPrecedentes
 }) => {
   const [fenetreOuverteState, setFenetreOuverteState] = useState(true);
-  const [fenetreExterneUtil, setFenetreExterneUtil] =
-    useState<FenetreExterneUtil>();
+  const [fenetreExterneRef, setFenetreExterneRef] = useState<IFenetreExterneRef>();
 
   function closeFenetre() {
     setFenetreOuverteState(!fenetreOuverteState);
@@ -45,15 +41,15 @@ export const FenetreFiche: React.FC<IFenetreFicheProps> = ({
     <>
       {fenetreOuverteState && (
         <FenetreExterne
-          onCloseHandler={closeFenetre}
-          setFenetreExterneUtil={setFenetreExterneUtil}
+          apresfermeture={closeFenetre}
+          setFenetreExterneRef={ref => setFenetreExterneRef(ref)}
         >
           <FichePage
             estConsultation={estConsultation}
             numeroRequete={numeroRequete}
             datasFiches={datasFiches}
             dataFicheIdentifiant={identifiant}
-            fenetreExterneUtil={fenetreExterneUtil}
+            fenetreExterneRef={fenetreExterneRef}
             index={index}
             nbLignesTotales={nbLignesTotales}
             nbLignesParAppel={nbLignesParAppel}

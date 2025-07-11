@@ -12,7 +12,6 @@ import { ApercuRequeteEtablissementSimplePage } from "@pages/requeteCreation/ape
 import { ApercuReqCreationTranscriptionSimplePage } from "@pages/requeteCreation/apercuRequete/transcription/ApercuReqCreationTranscriptionSimplePage";
 import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
 import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
-import { FenetreExterne } from "@util/FenetreExterne";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import {
@@ -21,6 +20,7 @@ import {
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useContext, useState } from "react";
+import FenetreExterne from "../../../../../composants/commun/conteneurs/FenetreExterne";
 import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";
 import { BoutonNouvelleRMCRequete } from "../contenu/BoutonNouvelleRMCRequete";
 import { columnsTableauRequeteAssociees } from "./RMCTableauRequetesAssocieesParams";
@@ -110,9 +110,9 @@ export const RMCTableauRequetesAssociees: React.FC<IRMCTableauRequetesAssocieesP
       {requeteSelectionnee && (
         <FenetreExterne
           titre={`Détails requête : N°${requeteSelectionnee.numeroFonctionnel}`}
-          onCloseHandler={onClose}
-          height={height}
-          width={width}
+          apresfermeture={onClose}
+          hauteur={height}
+          largeur={width}
         >
           {getApercuRequeteSimple(requeteSelectionnee)}
         </FenetreExterne>

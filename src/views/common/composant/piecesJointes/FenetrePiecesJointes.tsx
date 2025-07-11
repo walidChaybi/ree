@@ -1,8 +1,8 @@
 import { useGetPieceJointeApi } from "@hook/requete/piecesJointes/GetPieceJointeHook";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
-import { FenetreExterne } from "@util/FenetreExterne";
 import { VisionneuseAvecTitre } from "@widget/visionneuseDocument/VisionneuseAvecTitre";
 import React from "react";
+import FenetreExterne from "../../../../composants/commun/conteneurs/FenetreExterne";
 
 interface FenetrePieceProps {
   idPiece: string;
@@ -20,19 +20,15 @@ export const FenetrePiecesJointes: React.FC<FenetrePieceProps> = props => {
   return (
     <FenetreExterne
       titre={`${props.nom} - Req N°${props.numRequete}`}
-      onCloseHandler={() => {
+      apresfermeture={() => {
         onClose(props);
       }}
-      ratioWidth={RATIO_WIDTH}
-      ratioHeight={RATIO_HEIGHT}
+      ratioLargeur={RATIO_WIDTH}
+      ratioHauteur={RATIO_HEIGHT}
     >
       {contenuPiece && (
         <VisionneuseAvecTitre
-          titre={
-            props.typePiece === TypePieceJointe.PIECE_COMPLEMENT_INFORMATION
-              ? "Pièces Complémentaires"
-              : "Pièces Justificatives"
-          }
+          titre={props.typePiece === TypePieceJointe.PIECE_COMPLEMENT_INFORMATION ? "Pièces Complémentaires" : "Pièces Justificatives"}
           contenuBase64={contenuPiece.contenu}
           typeMime={contenuPiece.mimeType}
         />

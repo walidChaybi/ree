@@ -1,7 +1,7 @@
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import Link from "@mui/material/Link";
-import { FenetreExterne } from "@util/FenetreExterne";
 import React, { useState } from "react";
+import FenetreExterne from "../../../../../composants/commun/conteneurs/FenetreExterne";
 import { ApercuRequetePage } from "../../../requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
 import { ApercuReqInfoPage } from "../ApercuReqInfoPage";
 
@@ -14,9 +14,7 @@ interface FenetreApercuRequeteLieeProps {
   typeRequeteLiee: TypeRequete;
 }
 
-export const FenetreApercuRequeteLiee: React.FC<
-  FenetreApercuRequeteLieeProps
-> = props => {
+export const FenetreApercuRequeteLiee: React.FC<FenetreApercuRequeteLieeProps> = props => {
   const [fenetreExterne, setFenetreExterne] = useState<boolean>(false);
 
   const onClickNumero = () => {
@@ -49,9 +47,9 @@ export const FenetreApercuRequeteLiee: React.FC<
       {fenetreExterne && (
         <FenetreExterne
           titre={`Aperçu requête : N°${props.numeroRequeteLiee}`}
-          onCloseHandler={onClose}
-          height={height}
-          width={width}
+          apresfermeture={onClose}
+          hauteur={height}
+          largeur={width}
         >
           {navigationRequeteLiee(props.typeRequeteLiee, props.idRequeteLiee)}
         </FenetreExterne>

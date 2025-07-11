@@ -2,11 +2,10 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons/faSearch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "@mui/material/Button";
 import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
-import { FenetreExterne, FenetreExterneUtil } from "@util/FenetreExterne";
-import { getLibelle } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import React, { useState } from "react";
+import FenetreExterne, { IFenetreExterneRef } from "../../../composants/commun/conteneurs/FenetreExterne";
 import { PageRMCActeInscription } from "../../../pages/rmc/PageRMCActeInscription";
 import "../../pages/rechercheMultiCriteres/acteInscription/scss/RMCActeInscriptionPage.scss";
 
@@ -15,13 +14,13 @@ const ratioHeight = 1;
 
 export const BoutonRechercheRmc: React.FC = () => {
   const [rmcExterne, setRmcExterne] = useState<boolean>(false);
-  const [fenetreExterneUtil, setFenetreExterneUtil] = useState<FenetreExterneUtil>();
+  const [fenetreExterne, setFenetreExterne] = useState<IFenetreExterneRef | null>(null);
 
   const handleClick = () => {
     if (!rmcExterne) {
       setRmcExterne(true);
     } else {
-      fenetreExterneUtil?.ref.focus();
+      fenetreExterne?.ref.focus();
     }
   };
 
@@ -29,7 +28,7 @@ export const BoutonRechercheRmc: React.FC = () => {
     <>
       <Button
         onClick={handleClick}
-        title={getLibelle("Recherche acte/inscription")}
+        title={"Recherche acte/inscription"}
       >
         <FontAwesomeIcon
           className="loupeChampsRecherche"
@@ -38,11 +37,12 @@ export const BoutonRechercheRmc: React.FC = () => {
       </Button>
       {rmcExterne && (
         <FenetreExterne
-          onCloseHandler={() => setRmcExterne(false)}
-          width={width}
-          ratioHeight={ratioHeight}
+          apresfermeture={() => setRmcExterne(false)}
+          largeur={width}
+          ratioHauteur={ratioHeight}
+          ratioLargeur={1}
           titre="Recherche acte et inscription"
-          setFenetreExterneUtil={setFenetreExterneUtil}
+          setFenetreExterneRef={ref => setFenetreExterne(ref)}
         >
           {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_UTILISER_NOUVELLE_RMC) ? (
             <PageRMCActeInscription dansFenetreExterne={true} />

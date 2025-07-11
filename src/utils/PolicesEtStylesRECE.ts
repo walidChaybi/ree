@@ -7,8 +7,8 @@ const LIBERATION = [
   { nom: "BoldItalic", style: "italic", weight: "700" }
 ];
 
-class PolicesRECE {
-  static charger() {
+class PolicesEtStylesRECE {
+  static chargerPolices() {
     const publicUrl = import.meta.env.BASE_URL;
     POLICES.forEach(police =>
       new FontFace(police, `url('${publicUrl}/fonts/${police}.ttf')`)
@@ -27,6 +27,20 @@ class PolicesRECE {
         .catch(() => console.error(`Erreur lors du chargement de la police "Liberation ${policeLiberation.nom}".`))
     );
   }
+
+  static copieDansFenetreExterne(autreFenetre: Window) {
+    document.fonts?.forEach(police => autreFenetre.document.fonts.add(police));
+
+    Array.from(document.styleSheets || []).forEach(styleSheet => {
+      if (!styleSheet.cssRules) return;
+
+      const elementStyle = document.createElement("style");
+      Array.from(styleSheet.cssRules).forEach(cssRule => {
+        elementStyle.appendChild(document.createTextNode(cssRule.cssText));
+      });
+      autreFenetre.document.head.appendChild(elementStyle);
+    });
+  }
 }
 
-export default PolicesRECE;
+export default PolicesEtStylesRECE;

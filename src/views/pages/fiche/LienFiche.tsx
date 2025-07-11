@@ -1,7 +1,7 @@
 import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import Link from "@mui/material/Link";
-import { FenetreExterne, FenetreExterneUtil } from "@util/FenetreExterne";
 import React, { useState } from "react";
+import FenetreExterne, { IFenetreExterneRef } from "../../../composants/commun/conteneurs/FenetreExterne";
 import { FichePage } from "./FichePage";
 import "./scss/LienFiche.scss";
 
@@ -16,8 +16,7 @@ interface IDataLienFicheProps {
 
 export const LienFiche: React.FC<IDataLienFicheProps> = props => {
   const [fenetreOuverteState, setFenetreOuverteState] = useState(false);
-  const [fenetreExterneUtil, setFenetreExterneUtil] =
-    useState<FenetreExterneUtil>();
+  const [fenetreExterneRef, setFenetreExterneRef] = useState<IFenetreExterneRef>();
 
   const onClick = () => {
     toggleFenetre();
@@ -42,10 +41,10 @@ export const LienFiche: React.FC<IDataLienFicheProps> = props => {
       {fenetreOuverteState && (
         <FenetreExterne
           titre={props.title}
-          onCloseHandler={() => {
+          apresfermeture={() => {
             toggleFenetre();
           }}
-          setFenetreExterneUtil={setFenetreExterneUtil}
+          setFenetreExterneRef={ref => setFenetreExterneRef(ref)}
         >
           <FichePage
             dataFicheIdentifiant={props.identifiant}
@@ -55,7 +54,7 @@ export const LienFiche: React.FC<IDataLienFicheProps> = props => {
                 categorie: props.categorie
               }
             ]}
-            fenetreExterneUtil={fenetreExterneUtil}
+            fenetreExterneRef={fenetreExterneRef}
             index={{ value: 0 }}
             nbLignesTotales={1}
             nbLignesParAppel={1}
