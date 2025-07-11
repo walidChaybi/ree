@@ -1,5 +1,5 @@
 import { IconDefinition, faEnvelope, faGavel, faLandmark, faPlusCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
-import React, { Fragment, useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 
 import { CONFIG_GET_NOMBRE_REQUETES } from "../../api/configurations/requete/GetNombreRequetesConfigApi";
 import { CONFIG_GET_NOMBRE_REQUETES_INFORMATION } from "../../api/configurations/requete/GetNombreRequetesInformationConfigApi";
@@ -170,68 +170,56 @@ const PageAccueil: React.FC = () => {
       ),
     [nombreRequetes, nombreRequetesInformation]
   );
-  const largeurContenaire = donneesMenu.length <= 4 ? "32%" : "31%";
 
   return (
-    <div className="container mx-auto max-w-[1470px] pt-6">
-      <div className="flex flex-wrap justify-center gap-x-10 gap-y-14">
-        {donneesMenu.map(element => (
-          <div
-            className={`sm:basis-[${largeurContenaire}]`}
-            key={"rubrique-accueil-" + element.libelle}
-          >
-            <div className="min-h-44 max-w-[433px] basis-full select-none rounded-xl border border-solid border-bleu-transparent bg-blanc p-6 pb-3 text-white shadow-lg transition-colors duration-300">
-              <div className="mb-4 flex items-start">
-                <div className="pm-5 aspect-square h-20 shrink-0 items-center justify-center rounded-md bg-bleu">
-                  <FontAwesomeIcon
-                    className="IconeBouton mt-4 text-5xl text-white"
-                    icon={element.icone}
-                  />
-                </div>
-
-                <div className="ml-6 flex-1 overflow-hidden">
-                  <h2 className="text-shadow mb-0 mt-6 break-words text-2xl font-semibold leading-tight text-bleu">{element.libelle}</h2>
-                </div>
-              </div>
-              {element.liens && (
-                <ul className="list-none rounded-xl px-0 text-left transition-colors duration-300">
-                  {element.liens.map(lienElement =>
-                    lienElement.auMoinsUnDesDroits ? (
-                      <AccessibleAvecDroits
-                        droits={lienElement.droits}
-                        auMoinsUnDesDroits={lienElement.auMoinsUnDesDroits}
-                        key={"bouton-accueil-" + element.libelle + lienElement.libelle}
-                      >
-                        <li>
-                          <Bouton
-                            lienVers={lienElement.urlPage}
-                            className="mb-4 flex items-center"
-                            title={lienElement.libelle}
-                          >
-                            <div className="w-[48px]" />
-
-                            <div className="flex-1 text-center">{lienElement.libelle}</div>
-
-                            <div className="flex w-[48px] justify-end">
-                              {Number(lienElement.compteurNotifications) > 0 && (
-                                <span className="inline-flex h-[18px] items-center justify-center rounded-xl bg-red-600 px-2 text-xs text-white">
-                                  {lienElement.compteurNotifications}
-                                </span>
-                              )}
-                            </div>
-                          </Bouton>
-                        </li>
-                      </AccessibleAvecDroits>
-                    ) : (
-                      <Fragment key={lienElement.libelle}></Fragment>
-                    )
-                  )}
-                </ul>
-              )}
+    <div
+      className={`container mx-auto flex flex-wrap justify-center gap-x-10 gap-y-14 ${donneesMenu.length < 5 ? "max-w-[60vw]" : ""} pt-14`}
+    >
+      {donneesMenu.map(element => (
+        <div
+          key={"rubrique-accueil-" + element.libelle}
+          className="min-h-44 w-[23vw] select-none rounded-xl border border-solid border-bleu-transparent bg-blanc p-6 pb-3 text-white shadow-lg transition-colors duration-300"
+        >
+          <div className="mb-4 flex items-center gap-6">
+            <div className="grid aspect-square h-20 place-content-center rounded-md bg-bleu">
+              <FontAwesomeIcon
+                className="text-5xl text-white"
+                icon={element.icone}
+              />
             </div>
+            <h2 className="text-shadow m-0 break-words text-2xl font-semibold leading-tight text-bleu">{element.libelle}</h2>
           </div>
-        ))}
-      </div>
+          {element.liens && (
+            <ul className="list-none rounded-xl px-0 text-left transition-colors duration-300">
+              {element.liens.map(lienElement => (
+                <AccessibleAvecDroits
+                  droits={lienElement.droits}
+                  auMoinsUnDesDroits={lienElement.auMoinsUnDesDroits}
+                  key={"bouton-accueil-" + element.libelle + lienElement.libelle}
+                >
+                  <li>
+                    <Bouton
+                      lienVers={lienElement.urlPage}
+                      className="mb-4 flex items-center"
+                      title={lienElement.libelle}
+                    >
+                      <div className="w-[48px]" />
+                      <div className="flex-1 text-center">{lienElement.libelle}</div>
+                      <div className="flex w-[48px] justify-end">
+                        {Number(lienElement.compteurNotifications) > 0 && (
+                          <span className="inline-flex h-[18px] items-center justify-center rounded-xl bg-red-600 px-2 text-xs text-white">
+                            {lienElement.compteurNotifications}
+                          </span>
+                        )}
+                      </div>
+                    </Bouton>
+                  </li>
+                </AccessibleAvecDroits>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
     </div>
   );
 };
