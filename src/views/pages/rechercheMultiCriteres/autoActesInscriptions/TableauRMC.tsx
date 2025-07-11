@@ -9,6 +9,7 @@ import {
   useTraitementAutoRDCSHook
 } from "@hook/rmcAuto/TraitementAutoRDCSHook";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
+import { RMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
 import { TRequete } from "@model/requete/IRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
@@ -18,6 +19,8 @@ import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMC
 import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { IParamsTableau, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import messageManager from "@util/messageManager";
 import { stockageDonnees } from "@util/stockageDonnees";
 import {
@@ -33,6 +36,7 @@ import { useLocation } from "react-router";
 import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
 import { useRMCActeApiHook } from "../../../../hooks/rmc/RMCActeApiHook";
+import { StockageLocal } from "../../../../utils/StockageLocal";
 import { RMCActeInscriptionResultats } from "../acteInscription/resultats/RMCActeInscriptionResultats";
 import { goToLinkRMC } from "../acteInscription/resultats/RMCTableauCommun";
 import { getMessageSiVerificationRestrictionRmcActeInscriptionCriteresEnErreur } from "../acteInscription/validation/VerificationRestrictionRmcActeInscription";
@@ -226,14 +230,16 @@ export const TableauRMC: React.FC<ITableauRMCProps> = props => {
         setResetRMCActeInscription(true);
         setValuesRMCActeInscription(values);
         setCriteresRechercheActe({
-          valeurs: values,
+          valeurs: RMCActeInscriptionForm.versDto(values) as IRMCActeInscription,
           range: `0-${NB_LIGNES_PAR_APPEL_ACTE}`
         });
         setCriteresRechercheInscription({
-          valeurs: values,
+          valeurs: RMCActeInscriptionForm.versDto(values) as IRMCActeInscription,
           range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
         });
-        stockageDonnees.stockerCriteresRMCActeInspt(values);
+        gestionnaireFeatureFlag.estActif(FeatureFlag.FF_UTILISER_NOUVELLE_RMC)
+          ? StockageLocal.stocker("CRITERES_RMC_ACTE_INSCRIPTION", values)
+          : stockageDonnees.stockerCriteresRMCActeInspt(values);
         setResetRMCActeInscription(false);
         props.reset?.();
       }
