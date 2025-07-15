@@ -167,7 +167,7 @@ export const RequetesServiceCreation: React.FC<RequetesServiceCreationProps> = p
         onClick={finOpEnCours}
       />
       <FiltreServiceRequeteCreationForm onSubmit={soumettreFiltre} />
-      {enChargement ? (
+      {estTableauARafraichir ? (
         <PageChargeur />
       ) : (
         <TableauRece
@@ -184,10 +184,8 @@ export const RequetesServiceCreation: React.FC<RequetesServiceCreationProps> = p
           nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
           nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
           onChangementDePage={() => setIdRequetesSelectionneesAttribueeA([])}
-          resetTableau={estTableauARafraichir}
         />
       )}
-
       <TransfertPopin
         open={props.popinAttribuerAOuvert}
         onClose={onClosePopinAttribuerA}

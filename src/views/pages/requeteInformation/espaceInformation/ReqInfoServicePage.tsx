@@ -16,6 +16,7 @@ import { NB_LIGNES_PAR_APPEL_DEFAUT, NB_LIGNES_PAR_PAGE_DEFAUT } from "@widget/t
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useState } from "react";
 import { useLocation } from "react-router";
+import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import FiltresServiceRequeteInformationForm, {
   VALEUR_FILTRE_INFORMATION_DEFAUT
@@ -116,22 +117,25 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({ parametresReqInfo }) 
         onClick={finOperationEnCours}
       />
       <FiltresServiceRequeteInformationForm onSubmit={onSubmit} />
-      <TableauRece
-        idKey={"idRequete"}
-        sortOrderByState={linkParameters.tri}
-        sortOrderState={linkParameters.sens}
-        onClickOnLine={onClickOnLine}
-        columnHeaders={requeteInformationRequetesServiceColumnHeaders}
-        dataState={dataState}
-        icone={{ keyColonne: "iconeAssigne", getIcone }}
-        paramsTableau={paramsTableau}
-        goToLink={goToLink}
-        noRows={RenderMessageSaisirFiltreOuZeroRequete(rechercheEffectuee)}
-        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
-        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
-        handleChangeSort={handleChangeSort}
-        resetTableau={tableauDoitReset}
-      />
+      {tableauDoitReset ? (
+        <PageChargeur />
+      ) : (
+        <TableauRece
+          idKey={"idRequete"}
+          sortOrderByState={linkParameters.tri}
+          sortOrderState={linkParameters.sens}
+          onClickOnLine={onClickOnLine}
+          columnHeaders={requeteInformationRequetesServiceColumnHeaders}
+          dataState={dataState}
+          icone={{ keyColonne: "iconeAssigne", getIcone }}
+          paramsTableau={paramsTableau}
+          goToLink={goToLink}
+          noRows={RenderMessageSaisirFiltreOuZeroRequete(rechercheEffectuee)}
+          nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
+          nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+          handleChangeSort={handleChangeSort}
+        />
+      )}
       <BoutonRetour />
     </>
   );
