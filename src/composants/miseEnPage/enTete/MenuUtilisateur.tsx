@@ -6,9 +6,7 @@ import Close from "@mui/icons-material/Close";
 import InfoOutlined from "@mui/icons-material/InfoOutlined";
 import Logout from "@mui/icons-material/Logout";
 import { URL_DECONNEXION, URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
-import { gestionnaireDoubleOuverture } from "@util/GestionnaireDoubleOuverture";
-import { logError } from "@util/LogManager";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import Texte from "../../../utils/Texte";
@@ -21,11 +19,6 @@ const MenuUtilisateur: React.FC = () => {
   const [menuOuvert, setMenuOuvert] = useState<boolean>(false);
   const [nombreRequeteASigner, setNombreRequeteASigner] = useState<number>(0);
   const { appelApi: appelNombreRequete, enAttenteDeReponseApi: enAttenteNombreRequete } = useFetchApi(CONFIG_GET_NOMBRE_REQUETE);
-
-  const deconnexion = useCallback(() => {
-    gestionnaireDoubleOuverture.arreterVerification();
-    navigate(URL_DECONNEXION);
-  }, []);
 
   useEffect(() => {
     const fermerMenu = () => setMenuOuvert(false);
@@ -85,14 +78,8 @@ const MenuUtilisateur: React.FC = () => {
             onClick={() =>
               appelNombreRequete({
                 parametres: { query: { statuts: StatutRequete.A_SIGNER.nom } },
-                apresSucces: nombreRequete => (nombreRequete > 0 ? setNombreRequeteASigner(nombreRequete) : deconnexion()),
-                apresErreur: erreur => {
-                  logError({
-                    error: erreur[0].message ?? ""
-                  });
-
-                  deconnexion();
-                }
+                apresSucces: nombreRequete => (nombreRequete > 0 ? setNombreRequeteASigner(nombreRequete) : navigate(URL_DECONNEXION)),
+                apresErreur: () => navigate(URL_DECONNEXION)
               })
             }
           >
@@ -138,7 +125,7 @@ const MenuUtilisateur: React.FC = () => {
                 title="Oui, me déconnecter"
                 onClick={() => {
                   setNombreRequeteASigner(0);
-                  deconnexion();
+                  navigate(URL_DECONNEXION);
                 }}
               >
                 {"Oui"}
@@ -151,7 +138,7 @@ const MenuUtilisateur: React.FC = () => {
   ) : (
     <button
       className="m-0 flex min-w-0 items-center justify-center gap-4 rounded-lg bg-transparent px-4 py-3"
-      onClick={deconnexion}
+      onClick={() => navigate(URL_DECONNEXION)}
       title="Déconnexion"
     >
       <span>{"Déconnexion"}</span>

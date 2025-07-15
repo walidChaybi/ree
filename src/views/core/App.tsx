@@ -3,7 +3,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { receRouter } from "@router/ReceRouter";
 import "@scss/_colors.scss";
 import "@scss/_library.scss";
-import { CHROME, FIREFOX, SeulementNavigateur } from "@util/detectionNavigateur/DetectionNavigateur";
+import { FIREFOX, SeulementNavigateur } from "@util/detectionNavigateur/DetectionNavigateur";
 import { ErrorManager } from "@util/ErrorManager";
 import { TOASTCONTAINER_PRINCIPAL } from "@util/messageManager";
 import fr from "date-fns/locale/fr";
@@ -12,6 +12,7 @@ import { registerLocale, setDefaultLocale } from "react-datepicker";
 import { RouterProvider } from "react-router";
 import { ToastContainer } from "react-toastify";
 import { ConteneurParentModales } from "../../composants/commun/conteneurs/modale/ConteneurModale";
+import ProtectionDoubleOuverture from "../../composants/commun/conteneurs/ProtectionDoubleOuverture";
 import "../../index.css";
 import "./App.scss";
 import { RECEContextProvider } from "./contexts/RECEContext";
@@ -34,33 +35,35 @@ const theme = createTheme({
 const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
-      <SeulementNavigateur navigateurs={process.env.NODE_ENV === "development" ? [FIREFOX, CHROME] : [FIREFOX]}>
-        <ErrorManager>
-          <div className="App">
-            <RECEContextProvider>
-              <>
-                <ToastContainer
-                  containerId={TOASTCONTAINER_PRINCIPAL}
-                  className={"toast-container"}
-                  position="top-center"
-                  hideProgressBar={false}
-                  newestOnTop={true}
-                  closeOnClick={true}
-                  rtl={false}
-                  draggable={true}
-                  pauseOnHover={true}
-                  enableMultiContainer={true}
-                />
-                <RouterProvider router={receRouter} />
-                <ConteneurParentModales />
-              </>
-            </RECEContextProvider>
-          </div>
-        </ErrorManager>
+      <SeulementNavigateur navigateurs={[FIREFOX]}>
+        <ProtectionDoubleOuverture>
+          <ErrorManager>
+            <div className="App">
+              <RECEContextProvider>
+                <>
+                  <ToastContainer
+                    containerId={TOASTCONTAINER_PRINCIPAL}
+                    className={"toast-container"}
+                    position="top-center"
+                    hideProgressBar={false}
+                    newestOnTop={true}
+                    closeOnClick={true}
+                    rtl={false}
+                    draggable={true}
+                    pauseOnHover={true}
+                    enableMultiContainer={true}
+                  />
+                  <RouterProvider router={receRouter} />
+                  <ConteneurParentModales />
+                </>
+              </RECEContextProvider>
+            </div>
+          </ErrorManager>
+        </ProtectionDoubleOuverture>
       </SeulementNavigateur>
     </ThemeProvider>
   );
 };
 
 export default App;
-/* v8 ignore end */
+/* v8 ignore stop */

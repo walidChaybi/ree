@@ -6,9 +6,8 @@ import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { URL_DECONNEXION, URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { gestionnaireDoubleOuverture } from "@util/GestionnaireDoubleOuverture";
 import { RouterProvider } from "react-router";
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, test } from "vitest";
 import { ConteneurParentModales } from "../../../../composants/commun/conteneurs/modale/ConteneurModale";
 import MenuUtilisateur from "../../../../composants/miseEnPage/enTete/MenuUtilisateur";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
@@ -24,9 +23,6 @@ describe("test du composant MenuUtilisateur", () => {
 
   const REDIRECTION_DECONNEXION = "Utilisateur déconnecté";
   const REDIRECTION_DELIVRANCE = "Requêtes délivrances utilisateur";
-
-  const mockArretVerificationDoubleOuverture = vi.fn();
-  gestionnaireDoubleOuverture.arreterVerification = mockArretVerificationDoubleOuverture;
 
   const snapshotMenuUtilisateur = (utilisateur?: UtilisateurConnecte, avecErreur: boolean = false): ChildNode | null => {
     const router = createTestingRouter(
@@ -92,7 +88,6 @@ describe("test du composant MenuUtilisateur", () => {
     fireEvent.click(screen.getByTitle("Déconnexion"));
 
     await waitFor(() => {
-      expect(mockArretVerificationDoubleOuverture).toHaveBeenCalled();
       expect(screen.getByText(REDIRECTION_DECONNEXION)).toBeDefined();
     });
 
@@ -112,7 +107,6 @@ describe("test du composant MenuUtilisateur", () => {
     fireEvent.click(screen.getByTitle("Oui, me déconnecter"));
 
     await waitFor(() => {
-      expect(mockArretVerificationDoubleOuverture).toHaveBeenCalled();
       expect(screen.getByText(REDIRECTION_DECONNEXION)).toBeDefined();
     });
 
