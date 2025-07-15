@@ -15,17 +15,22 @@ import useFetchApi from "../api/FetchApiHook";
 export const useRMCActeApiHook = (criteres?: ICriteresRechercheActeInscription): IRMCActeApiHookResultat | null => {
   const [resultat, setResultat] = useState<IRMCActeApiHookResultat | null>(null);
   const { appelApi: rmcActe } = useFetchApi(CONFIG_POST_RMC_ACTE);
+  const [opEnCours, setOpEnCours] = useState<boolean>(false);
 
   useEffect(() => {
     if (!criteres?.valeurs) return;
+
+    setOpEnCours(true);
 
     const criteresRMC = mappingCriteres(criteres.valeurs);
 
     if (!rmcActeAutorisee(criteresRMC)) {
       setResultat({
         dataRMCActe: [],
-        dataTableauRMCActe: PARAMS_TABLEAU_VIDE
+        dataTableauRMCActe: PARAMS_TABLEAU_VIDE,
+        opEnCours: false
       });
+      setOpEnCours(false);
       return;
     }
 
@@ -48,9 +53,12 @@ export const useRMCActeApiHook = (criteres?: ICriteresRechercheActeInscription):
           messageUtilisateur: "Impossible de récupérer les actes de la recherche multi-critères"
         });
         criteres?.onErreur?.();
+      },
+      finalement() {
+        setOpEnCours(false);
       }
     });
   }, [criteres]);
 
-  return resultat;
+  return resultat ? { ...resultat, opEnCours } : null;
 };

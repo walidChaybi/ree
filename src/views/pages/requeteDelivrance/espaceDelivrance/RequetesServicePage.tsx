@@ -24,6 +24,7 @@ import {
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import React, { useCallback, useContext, useEffect, useState } from "react";
+import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
 import { HeaderTableauRequete, dateStatutColumnHeaders, requeteColumnHeaders } from "./EspaceDelivranceParams";
 import { goToLinkRequete, miseAjourOuRedirection } from "./EspaceDelivranceUtils";
 import { FiltreServiceRequeteDelivranceForm } from "./contenu/FiltreServiceRequeteDelivranceForm";
@@ -157,23 +158,26 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
         onClick={finOperationEnCours}
       />
       <FiltreServiceRequeteDelivranceForm onSubmit={onSubmitFiltreServiceRequeteDelivrance} />
-      <TableauRece
-        idKey={"idRequete"}
-        sortOrderByState={parametresLienRequete?.tri}
-        sortOrderState={parametresLienRequete?.sens}
-        onClickOnLine={onClickOnLine}
-        columnHeaders={columnsRequestesService}
-        dataState={dataState}
-        icone={{ keyColonne: "iconeAssigne", getIcone: getIconeAssigneeA }}
-        paramsTableau={paramsTableau}
-        goToLink={goToLink}
-        handleChangeSort={handleChangeSort}
-        noRows={RenderMessageZeroRequete()}
-        enChargement={enChargement}
-        nbLignesParPage={NB_LIGNES_PAR_PAGE_ESPACE_DELIVRANCE}
-        nbLignesParAppel={NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}
-        resetTableau={estTableauARafraichir}
-      />
+      {enChargement ? (
+        <PageChargeur />
+      ) : (
+        <TableauRece
+          idKey={"idRequete"}
+          sortOrderByState={parametresLienRequete?.tri}
+          sortOrderState={parametresLienRequete?.sens}
+          onClickOnLine={onClickOnLine}
+          columnHeaders={columnsRequestesService}
+          dataState={dataState}
+          icone={{ keyColonne: "iconeAssigne", getIcone: getIconeAssigneeA }}
+          paramsTableau={paramsTableau}
+          goToLink={goToLink}
+          handleChangeSort={handleChangeSort}
+          noRows={RenderMessageZeroRequete()}
+          nbLignesParPage={NB_LIGNES_PAR_PAGE_ESPACE_DELIVRANCE}
+          nbLignesParAppel={NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}
+          resetTableau={estTableauARafraichir}
+        />
+      )}
       <BoutonRetour />
     </>
   );

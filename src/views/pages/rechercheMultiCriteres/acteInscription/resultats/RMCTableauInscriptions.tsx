@@ -85,7 +85,7 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
   }
 
   const onClickOnLine = (idInscription: string, data: any, index: number) => {
-    if ( utilisateurConnecte.estHabilitePour({leDroit: Droit.CONSULTER, surLePerimetre: Perimetre.TOUS_REGISTRES})) {
+    if (utilisateurConnecte.estHabilitePour({ leDroit: Droit.CONSULTER, surLePerimetre: Perimetre.TOUS_REGISTRES })) {
       const etatFenetreTrouve = etatFenetres.find(etatFenetre => etatFenetre.idInscription === idInscription);
       if (datasFichesCourantes) {
         if (!etatFenetreTrouve) {

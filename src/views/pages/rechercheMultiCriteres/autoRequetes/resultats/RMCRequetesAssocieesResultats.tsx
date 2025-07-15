@@ -13,6 +13,7 @@ import messageManager from "@util/messageManager";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useEffect, useState } from "react";
+import PageChargeur from "../../../../../composants/commun/chargeurs/PageChargeur";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
 import "../scss/RMCRequetesAssocieesResultats.scss";
 import { RMCTableauRequetesAssociees } from "./RMCTableauRequetesAssociees";
@@ -32,7 +33,7 @@ export const RMCRequetesAssocieesResultats: React.FC<RMCRequetesAssocieesResulta
   const [criteresRechercheRequete, setCriteresRechercheRequete] = useState<ICriteresRMCRequete>();
 
   /* Hook d'appel de l'API RMC manuelle requêtes */
-  const { appelApi: rmcManuelleRequetes } = useFetchApi(CONFIG_POST_RMC_REQUETE);
+  const { appelApi: rmcManuelleRequetes, enAttenteDeReponseApi: opEnCours } = useFetchApi(CONFIG_POST_RMC_REQUETE);
 
   useEffect(() => {
     if (!criteresRechercheRequete?.valeurs) return;
@@ -93,19 +94,25 @@ export const RMCRequetesAssocieesResultats: React.FC<RMCRequetesAssocieesResulta
   };
 
   return (
-    (requetesTableau && paramsTableau && (
-      <Fieldset titre={"Autres requêtes associées au titulaire"}>
-        <div className="RMCRequetesAssocieesResultats">
-          <RMCTableauRequetesAssociees
-            dataRMCRequete={requetesTableau}
-            dataTableauRMCRequete={paramsTableau}
-            setRangeRequete={setRangeRequete}
-            setValuesRMCRequete={setValuesRMCRequete}
-            setCriteresRechercheRequete={setCriteresRechercheRequete}
-          />
-        </div>
-      </Fieldset>
-    )) || <></>
+    <>
+      {requetesTableau &&
+        paramsTableau &&
+        (opEnCours ? (
+          <PageChargeur />
+        ) : (
+          <Fieldset titre={"Autres requêtes associées au titulaire"}>
+            <div className="RMCRequetesAssocieesResultats">
+              <RMCTableauRequetesAssociees
+                dataRMCRequete={requetesTableau}
+                dataTableauRMCRequete={paramsTableau}
+                setRangeRequete={setRangeRequete}
+                setValuesRMCRequete={setValuesRMCRequete}
+                setCriteresRechercheRequete={setCriteresRechercheRequete}
+              />
+            </div>
+          </Fieldset>
+        ))}
+    </>
   );
 };
 

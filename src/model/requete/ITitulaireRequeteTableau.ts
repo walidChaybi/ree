@@ -1,15 +1,15 @@
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { formatNom } from "@util/Utils";
 import { Sexe } from "../etatcivil/enum/Sexe";
-import { QualiteFamille } from "./enum/QualiteFamille";
 import { SEPARATOR_NUMERO_ELEMENT } from "./IRequeteTableauDelivrance";
+import { QualiteFamille } from "./enum/QualiteFamille";
 
 export interface ITitulaireRequeteTableau {
   nom: string;
   prenoms: string[];
-  jourNaissance: number;
-  moisNaissance: number;
-  anneeNaissance: number;
+  jourNaissance?: number;
+  moisNaissance?: number;
+  anneeNaissance?: number;
   villeNaissance?: string;
   paysNaissance?: string;
   sexe?: Sexe;
@@ -18,10 +18,7 @@ export interface ITitulaireRequeteTableau {
   position: number;
 }
 
-export function mapTitulaires(
-  titulaires: any,
-  mappingSupplementaire: boolean
-): ITitulaireRequeteTableau[] {
+export function mapTitulaires(titulaires: any, mappingSupplementaire: boolean): ITitulaireRequeteTableau[] {
   return titulaires?.map((t: any) => {
     const titulaire = {} as ITitulaireRequeteTableau;
     titulaire.nom = formatNom(t?.nom);

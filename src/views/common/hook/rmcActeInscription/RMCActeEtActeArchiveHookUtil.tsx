@@ -5,4 +5,5 @@ export interface IRMCActeApiHookResultat {
   dataRMCActe: ResultatRMCActe[];
   dataTableauRMCActe?: IParamsTableau;
   ficheIdentifiant?: string;
+  opEnCours?: boolean;
 }

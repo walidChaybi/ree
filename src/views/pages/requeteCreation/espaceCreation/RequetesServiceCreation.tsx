@@ -25,6 +25,7 @@ import { NB_LIGNES_PAR_APPEL_DEFAUT, NB_LIGNES_PAR_PAGE_DEFAUT } from "@widget/t
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
 import React, { useCallback, useContext, useEffect, useState } from "react";
+import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
 import { useRequeteCreationApiHook } from "../../../common/hook/requete/creation/RequeteCreationApiHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { FiltreServiceRequeteCreationForm } from "../commun/composants/FiltreServiceRequeteCreationForm/FiltreServiceRequeteCreationForm";
@@ -166,23 +167,26 @@ export const RequetesServiceCreation: React.FC<RequetesServiceCreationProps> = p
         onClick={finOpEnCours}
       />
       <FiltreServiceRequeteCreationForm onSubmit={soumettreFiltre} />
-      <TableauRece
-        idKey={"idRequete"}
-        sortOrderByState={parametresLienRequete?.tri}
-        sortOrderState={parametresLienRequete?.sens}
-        onClickOnLine={getOnClickSurLigneTableauEspaceCreation(setOpEnCours, setParamsMiseAJour, setParamsCreation, utilisateurConnecte)}
-        columnHeaders={columnHeaders}
-        dataState={dataState}
-        paramsTableau={paramsTableau}
-        goToLink={changementDePage}
-        handleChangeSort={handleChangeSortTableau}
-        noRows={RenderMessageZeroRequete()}
-        enChargement={enChargement}
-        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
-        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
-        onChangementDePage={() => setIdRequetesSelectionneesAttribueeA([])}
-        resetTableau={estTableauARafraichir}
-      />
+      {enChargement ? (
+        <PageChargeur />
+      ) : (
+        <TableauRece
+          idKey={"idRequete"}
+          sortOrderByState={parametresLienRequete?.tri}
+          sortOrderState={parametresLienRequete?.sens}
+          onClickOnLine={getOnClickSurLigneTableauEspaceCreation(setOpEnCours, setParamsMiseAJour, setParamsCreation, utilisateurConnecte)}
+          columnHeaders={columnHeaders}
+          dataState={dataState}
+          paramsTableau={paramsTableau}
+          goToLink={changementDePage}
+          handleChangeSort={handleChangeSortTableau}
+          noRows={RenderMessageZeroRequete()}
+          nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
+          nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+          onChangementDePage={() => setIdRequetesSelectionneesAttribueeA([])}
+          resetTableau={estTableauARafraichir}
+        />
+      )}
 
       <TransfertPopin
         open={props.popinAttribuerAOuvert}

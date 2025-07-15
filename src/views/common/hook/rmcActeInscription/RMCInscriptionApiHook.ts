@@ -16,17 +16,20 @@ interface IRMCInscriptionApiHookResultat {
   dataTableauRMCInscription?: IParamsTableau;
   ficheIdentifiant?: string;
   errors?: any[];
+  opEnCours?: boolean;
 }
 
 const RESULTAT_NON_DEFINIT: IRMCInscriptionApiHookResultat = {};
 
 export function useRMCInscriptionApiHook(criteres?: ICriteresRechercheActeInscription): IRMCInscriptionApiHookResultat {
   const [resultat, setResultat] = useState<IRMCInscriptionApiHookResultat>(RESULTAT_NON_DEFINIT);
+  const [opEnCours, setOpEnCours] = useState<boolean>(false);
 
   useEffect(() => {
     async function fetchInscriptions() {
       try {
-        if (criteres != null && criteres.valeurs != null) {
+        if (criteres?.valeurs != null) {
+          setOpEnCours(true);
           const criteresRecherche = mappingCriteres(criteres.valeurs);
           if (rechercherRepertoireAutorise(criteresRecherche)) {
             const result = await rechercheMultiCriteresInscriptions(criteresRecherche, criteres.range);
@@ -53,6 +56,8 @@ export function useRMCInscriptionApiHook(criteres?: ICriteresRechercheActeInscri
           error
         });
         criteres?.onErreur?.();
+      } finally {
+        setOpEnCours(false);
       }
     }
     fetchInscriptions();
@@ -64,5 +69,5 @@ export function useRMCInscriptionApiHook(criteres?: ICriteresRechercheActeInscri
     }
   }, [resultat.errors]);
 
-  return resultat;
+  return { ...resultat, opEnCours };
 }

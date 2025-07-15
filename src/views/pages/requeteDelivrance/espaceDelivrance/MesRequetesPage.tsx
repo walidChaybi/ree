@@ -15,6 +15,7 @@ import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { SortOrder } from "@widget/tableau/TableUtils";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useContext, useEffect, useState } from "react";
+import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
 import SignatureDelivrance from "../../../../composants/commun/signature/SignatureDelivrance";
 import { dateStatutColumnHeaders, requeteColumnHeaders } from "./EspaceDelivranceParams";
 import { goToLinkRequete, miseAjourOuRedirection } from "./EspaceDelivranceUtils";
@@ -145,33 +146,36 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
         onTimeoutEnd={finOperationEnCours}
         onClick={finOperationEnCours}
       />
-      <TableauRece
-        idKey={"idRequete"}
-        sortOrderByState={linkParameters.tri}
-        sortOrderState={linkParameters.sens}
-        onClickOnLine={onClickOnLine}
-        columnHeaders={columnsMesRequestes}
-        dataState={dataState}
-        paramsTableau={paramsTableau}
-        goToLink={goToLink}
-        handleChangeSort={handleChangeSort}
-        handleReload={handleReload}
-        noRows={RenderMessageZeroRequete()}
-        enChargement={enChargement}
-        icone={{ keyColonne: "actions", getIcone: getBoutonFinConsultation }}
-        nbLignesParPage={NOMBRE_REQUETES.parPage}
-        nbLignesParAppel={NOMBRE_REQUETES.parAppel}
-      >
-        <SignatureDelivrance
-          titreBouton="Signer le lot"
-          titreModale="Signature des documents"
-          numerosFonctionnel={dataState
-            .slice(0, NOMBRE_REQUETES.parPage)
-            .filter(requete => requete.numero && requete.statut === StatutRequete.A_SIGNER.libelle)
-            .map(requete => requete.numero as string)}
-          apreSignature={() => handleReload()}
-        />
-      </TableauRece>
+      {enChargement ? (
+        <PageChargeur />
+      ) : (
+        <TableauRece
+          idKey={"idRequete"}
+          sortOrderByState={linkParameters.tri}
+          sortOrderState={linkParameters.sens}
+          onClickOnLine={onClickOnLine}
+          columnHeaders={columnsMesRequestes}
+          dataState={dataState}
+          paramsTableau={paramsTableau}
+          goToLink={goToLink}
+          handleChangeSort={handleChangeSort}
+          handleReload={handleReload}
+          noRows={RenderMessageZeroRequete()}
+          icone={{ keyColonne: "actions", getIcone: getBoutonFinConsultation }}
+          nbLignesParPage={NOMBRE_REQUETES.parPage}
+          nbLignesParAppel={NOMBRE_REQUETES.parAppel}
+        >
+          <SignatureDelivrance
+            titreBouton="Signer le lot"
+            titreModale="Signature des documents"
+            numerosFonctionnel={dataState
+              .slice(0, NOMBRE_REQUETES.parPage)
+              .filter(requete => requete.numero && requete.statut === StatutRequete.A_SIGNER.libelle)
+              .map(requete => requete.numero as string)}
+            apreSignature={() => handleReload()}
+          />
+        </TableauRece>
+      )}
 
       <BoutonRetour />
     </>

@@ -137,7 +137,11 @@ export const TableauRMC: React.FC<ITableauRMCProps> = props => {
 
   /* Hooks RMC manuelle */
   const resultatsRMCActe = useRMCActeApiHook(criteresRechercheActe);
-  const { dataRMCInscription, dataTableauRMCInscription } = useRMCInscriptionApiHook(criteresRechercheInscription);
+  const {
+    dataRMCInscription,
+    dataTableauRMCInscription,
+    opEnCours: opEnCoursRMCInscription
+  } = useRMCInscriptionApiHook(criteresRechercheInscription);
 
   /* Actualisation des résultats de la RMC */
   useEffect(() => {
@@ -275,6 +279,8 @@ export const TableauRMC: React.FC<ITableauRMCProps> = props => {
           idFicheInscription={resultatRMCFicheInscription?.ficheIdentifiant}
           dataRMCFicheInscription={resultatRMCFicheInscription?.dataRMCInscription}
           dataTableauRMCFicheInscription={resultatRMCFicheInscription?.dataTableauRMCInscription}
+          opEnCoursRMCActe={resultatsRMCActe?.opEnCours}
+          opEnCoursRMCInscription={opEnCoursRMCInscription}
         />
       )}
       <BoutonNouvelleRMCActeInscription

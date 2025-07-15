@@ -127,7 +127,6 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({ parametresReqInfo }) 
         paramsTableau={paramsTableau}
         goToLink={goToLink}
         noRows={RenderMessageSaisirFiltreOuZeroRequete(rechercheEffectuee)}
-        enChargement={enChargement}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
         handleChangeSort={handleChangeSort}

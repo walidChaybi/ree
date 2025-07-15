@@ -15,6 +15,7 @@ import { SortOrder } from "@widget/tableau/TableUtils";
 import { NB_LIGNES_PAR_APPEL_DEFAUT, NB_LIGNES_PAR_PAGE_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useContext, useState } from "react";
+import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
 import { useRequeteCreationApiHook } from "../../../common/hook/requete/creation/RequeteCreationApiHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { getOnClickSurLigneTableauEspaceCreation } from "./EspaceCreationUtils";
@@ -69,26 +70,29 @@ export const MesRequetesCreation: React.FC<MesRequetesCreationProps> = props => 
         onTimeoutEnd={finOperationEnCours}
         onClick={finOperationEnCours}
       />
-      <TableauRece
-        idKey={"idRequete"}
-        sortOrderByState={linkParameters.tri}
-        sortOrderState={linkParameters.sens}
-        onClickOnLine={getOnClickSurLigneTableauEspaceCreation(
-          setOperationEnCours,
-          setParamsMiseAJour,
-          setParamsCreation,
-          utilisateurConnecte
-        )}
-        columnHeaders={colonnesTableauMesRequetesCreation}
-        dataState={dataState}
-        paramsTableau={paramsTableau}
-        goToLink={goToLink}
-        handleChangeSort={handleChangeSort}
-        noRows={RenderMessageZeroRequete()}
-        enChargement={enChargement}
-        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
-        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
-      />
+      {enChargement ? (
+        <PageChargeur />
+      ) : (
+        <TableauRece
+          idKey={"idRequete"}
+          sortOrderByState={linkParameters.tri}
+          sortOrderState={linkParameters.sens}
+          onClickOnLine={getOnClickSurLigneTableauEspaceCreation(
+            setOperationEnCours,
+            setParamsMiseAJour,
+            setParamsCreation,
+            utilisateurConnecte
+          )}
+          columnHeaders={colonnesTableauMesRequetesCreation}
+          dataState={dataState}
+          paramsTableau={paramsTableau}
+          goToLink={goToLink}
+          handleChangeSort={handleChangeSort}
+          noRows={RenderMessageZeroRequete()}
+          nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
+          nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+        />
+      )}
       <BoutonRetour />
     </>
   );

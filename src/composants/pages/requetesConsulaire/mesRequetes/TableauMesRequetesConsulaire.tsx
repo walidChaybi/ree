@@ -164,32 +164,35 @@ const TableauMesRequetesConsulaire: React.FC = () => {
 
   return (
     <div className="m-0 mt-4">
-      {(enRecuperation || enAttenteDeReponseApi) && <PageChargeur />}
-      <Tableau
-        enTetes={EN_TETE_MES_REQUETES_CONSULAIRES}
-        lignes={lignesTableau ? (getPortionTableau(lignesTableau, parametresPagination.pageActuelle) as any) : undefined}
-        messageAucuneLigne="Aucune requête n'a été trouvée."
-        parametresTri={{
-          cle: parametresTableau.tri,
-          sens: parametresTableau.sens,
-          onChangeTri: (cle: string, sens: TSensTri) =>
-            setParametresTableau({
-              ...parametresTableau,
-              tri: cle,
-              sens: sens,
-              range: `0-${PAGINATION_PLAGE_MAX}`
-            })
-        }}
-        parametresPagination={{
-          ...parametresPagination,
-          lignesParPage: LIGNE_PAR_PAGE,
-          onChangePage: (pageSuivante: boolean) =>
-            setParametresPagination({
-              ...parametresPagination,
-              pageActuelle: parametresPagination.pageActuelle + (pageSuivante ? UN : -UN)
-            })
-        }}
-      />
+      {enRecuperation || enAttenteDeReponseApi ? (
+        <PageChargeur />
+      ) : (
+        <Tableau
+          enTetes={EN_TETE_MES_REQUETES_CONSULAIRES}
+          lignes={lignesTableau ? (getPortionTableau(lignesTableau, parametresPagination.pageActuelle) as any) : undefined}
+          messageAucuneLigne="Aucune requête n'a été trouvée."
+          parametresTri={{
+            cle: parametresTableau.tri,
+            sens: parametresTableau.sens,
+            onChangeTri: (cle: string, sens: TSensTri) =>
+              setParametresTableau({
+                ...parametresTableau,
+                tri: cle,
+                sens: sens,
+                range: `0-${PAGINATION_PLAGE_MAX}`
+              })
+          }}
+          parametresPagination={{
+            ...parametresPagination,
+            lignesParPage: LIGNE_PAR_PAGE,
+            onChangePage: (pageSuivante: boolean) =>
+              setParametresPagination({
+                ...parametresPagination,
+                pageActuelle: parametresPagination.pageActuelle + (pageSuivante ? UN : -UN)
+              })
+          }}
+        />
+      )}
     </div>
   );
 };

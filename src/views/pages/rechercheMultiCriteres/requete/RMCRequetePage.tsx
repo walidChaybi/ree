@@ -10,6 +10,7 @@ import messageManager from "@util/messageManager";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { AutoScroll } from "@widget/autoScroll/autoScroll";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
 import { RMCRequeteForm } from "./RMCRequeteForm";
 import { RMCRequeteResultats } from "./resultats/RMCRequeteResultats";
@@ -88,14 +89,19 @@ export const RMCRequetePage: React.FC = () => {
         autoScroll={nouvelleRMCRequete}
         baliseRef={RMCRequeteRef}
       />
-      {dataRMCRequete && dataTableauRMCRequete && (
-        <RMCRequeteResultats
-          dataRMCRequete={dataRMCRequete}
-          dataTableauRMCRequete={dataTableauRMCRequete}
-          setRangeRequete={setRangeRequete}
-          resetRMC={nouvelleRMCRequete}
-        />
-      )}
+
+      {dataRMCRequete &&
+        dataTableauRMCRequete &&
+        (opEnCours ? (
+          <PageChargeur />
+        ) : (
+          <RMCRequeteResultats
+            dataRMCRequete={dataRMCRequete}
+            dataTableauRMCRequete={dataTableauRMCRequete}
+            setRangeRequete={setRangeRequete}
+            resetRMC={nouvelleRMCRequete}
+          />
+        ))}
     </>
   );
 };

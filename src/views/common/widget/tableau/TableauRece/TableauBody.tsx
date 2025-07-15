@@ -3,7 +3,6 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import { chiffreEstPair } from "@util/Utils";
 import React from "react";
-import { OperationLocaleEnCours } from "../../attente/OperationLocaleEnCours";
 import { TableauBodyCell } from "./TableauBodyCell";
 import { IconeParams } from "./TableauRece";
 import { TableauTypeColumn } from "./TableauTypeColumn";
@@ -16,21 +15,11 @@ interface TableauBodyProps {
   columnHeaders: TableauTypeColumn[];
   onClickOnLine: (identifiant: string, idx: number) => void;
   noRows?: JSX.Element;
-  enChargement?: boolean;
   icone?: IconeParams;
   getRowClassName?: (data: any) => string;
 }
 
-export const TableauBody: React.FC<TableauBodyProps> = ({
-  data,
-  idKey,
-  columnHeaders,
-  onClickOnLine,
-  noRows,
-  enChargement,
-  icone,
-  getRowClassName
-}) => {
+export const TableauBody: React.FC<TableauBodyProps> = ({ data, idKey, columnHeaders, onClickOnLine, noRows, icone, getRowClassName }) => {
   function onClickRowHandler(identifiant: string, idx: number) {
     onClickOnLine(identifiant, idx);
   }
@@ -47,10 +36,7 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
                   onClickRowHandler(row[idKey], idx);
                 }}
                 data-testid={row[idKey]}
-                className={
-                  (getRowClassName && getRowClassName(row)) ??
-                  `${chiffreEstPair(idx) ? "lignePaire" : "ligneImpaire"}`
-                }
+                className={(getRowClassName && getRowClassName(row)) ?? `${chiffreEstPair(idx) ? "lignePaire" : "ligneImpaire"}`}
               >
                 {getRowRender(columnHeaders, row, idx, icone)}
               </TableRow>
@@ -58,14 +44,11 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
           })
         ) : (
           <TableRow className={noRows && "ligneVide"}>
-            <TableCell align="center" colSpan={columnHeaders.length}>
-              {enChargement ? (
-                <OperationLocaleEnCours visible={true} />
-              ) : noRows ? (
-                noRows
-              ) : (
-                ""
-              )}
+            <TableCell
+              align="center"
+              colSpan={columnHeaders.length}
+            >
+              {noRows ? noRows : ""}
             </TableCell>
           </TableRow>
         )}
@@ -74,12 +57,7 @@ export const TableauBody: React.FC<TableauBodyProps> = ({
   );
 };
 
-function getRowRender(
-  columnHeaders: TableauTypeColumn[],
-  row: any,
-  idx: number,
-  icone?: IconeParams
-): JSX.Element[] {
+function getRowRender(columnHeaders: TableauTypeColumn[], row: any, idx: number, icone?: IconeParams): JSX.Element[] {
   const tableauBodyCellList = [];
 
   for (const column of columnHeaders) {
@@ -98,12 +76,7 @@ function getRowRender(
     } else {
       let iconeAAfficher = <></>;
       if (column.keys[0] === icone?.keyColonne) {
-        iconeAAfficher = icone.getIcone(
-          row.idRequete,
-          row.sousType,
-          row.idUtilisateur,
-          row.statut
-        );
+        iconeAAfficher = icone.getIcone(row.idRequete, row.sousType, row.idUtilisateur, row.statut);
       }
       tableauBodyCellList.push(
         <TableauBodyCell

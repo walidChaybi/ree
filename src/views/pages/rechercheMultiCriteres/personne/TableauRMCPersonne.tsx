@@ -16,6 +16,7 @@ import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import { getLigneTableauVide } from "@widget/tableau/TableUtils";
 import React, { useContext, useState } from "react";
+import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
 import { IFenetreFicheActeInscription } from "../common/IFenetreFicheActeInscription";
 import { DataTableauRMCPersonne, IDataTableauRMCPersonne } from "./IDataTableauRMCPersonne";
 import "./scss/TableauRMCPersonne.scss";
@@ -137,7 +138,9 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
 
   return (
     <div className="resultatsRMCPersonne">
-      {
+      {props.enChargement ? (
+        <PageChargeur />
+      ) : (
         <TableauRece
           idKey={"idPersonneOuActeInscription"}
           columnHeaders={columnHeaders}
@@ -149,9 +152,8 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
           noRows={getLigneTableauVide("Aucun résultat trouvé pour ces critères de recherche.")}
           getRowClassName={getLigneClassName}
           stickyHeader={true}
-          enChargement={props.enChargement}
         />
-      }
+      )}
       {etatFenetres && etatFenetres.length > ZERO && (
         <>
           {etatFenetres.map((fenetreFicheActe: IFenetreFicheActeInscription) => {

@@ -40,7 +40,6 @@ interface TableauReceProps {
   nbLignesParAppel: number;
   resetTableau?: boolean;
   noRows?: JSX.Element;
-  enChargement?: boolean;
   stickyHeader?: boolean;
   getRowClassName?: (data: any) => string;
   onChangementDePage?: () => void;
@@ -69,15 +68,8 @@ export const TableauRece: React.FC<React.PropsWithChildren<TableauReceProps>> = 
   const [dataBody, setdataBody] = React.useState<any[]>(processData(props.dataState, pageState));
 
   useEffect(() => {
-    let page = pageState;
-    if (props.resetTableau) {
-      page = 0;
-      setMultiplicateur(1);
-    }
-    setPageState(page);
-    setdataBody(processData(props.dataState, page));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.dataState, pageState, props.resetTableau]);
+    setdataBody(processData(props.dataState, pageState));
+  }, [props.dataState, pageState]);
 
   const handleColumnSort = (event: React.MouseEvent<unknown>, columnKey: string) => {
     if (props.sortOrderByState && props.sortOrderState && props.handleChangeSort) {
@@ -169,7 +161,6 @@ export const TableauRece: React.FC<React.PropsWithChildren<TableauReceProps>> = 
             columnHeaders={props.columnHeaders}
             onClickOnLine={onClickOnLine}
             noRows={props.noRows}
-            enChargement={props.enChargement}
             icone={props.icone}
             getRowClassName={props.getRowClassName}
           />
