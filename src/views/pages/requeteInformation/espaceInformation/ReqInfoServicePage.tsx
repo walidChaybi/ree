@@ -117,7 +117,7 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({ parametresReqInfo }) 
         onClick={finOperationEnCours}
       />
       <FiltresServiceRequeteInformationForm onSubmit={onSubmit} />
-      {tableauDoitReset ? (
+      {enChargement ? (
         <PageChargeur />
       ) : (
         <TableauRece
