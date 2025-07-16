@@ -212,15 +212,21 @@ describe("Le bloc RC/RCA/PAC fonctionne correctement ", () => {
     fireEvent.blur(InputTypeRepertoire);
 
     await waitFor(() => {
-      expect(screen.getByText("⚠ Ne peut être utilisé seul ni seulement avec Nature de l'inscription")).toBeDefined();
+      expect(
+        screen.getByText("⚠ Le champ ne peut être utilisé seul, ni être le seul champ renseigné avec Nature de l'inscription")
+      ).toBeDefined();
     });
 
     fireEvent.change(InputNatureInscription, { target: { value: "curatelle" } });
     fireEvent.blur(InputNatureInscription);
 
     await waitFor(() => {
-      expect(screen.getByText("⚠ Ne peut être utilisé seul ni seulement avec Nature de l'inscription")).toBeDefined();
-      expect(screen.getByText("⚠ Ne peut être utilisé seul ni seulement avec Type de répertoire")).toBeDefined();
+      expect(
+        screen.getByText("⚠ Le champ ne peut être utilisé seul, ni être le seul champ renseigné avec Nature de l'inscription")
+      ).toBeDefined();
+      expect(
+        screen.getByText("⚠ Le champ ne peut être utilisé seul, ni être le seul champ renseigné avec Type de répertoire")
+      ).toBeDefined();
     });
 
     const InputPrenom: HTMLInputElement = await screen.findByLabelText("Prénom");
@@ -229,8 +235,12 @@ describe("Le bloc RC/RCA/PAC fonctionne correctement ", () => {
     fireEvent.blur(InputPrenom);
 
     await waitFor(() => {
-      expect(screen.queryByText("⚠ Ne peut être utilisé seul ni seulement avec Nature de l'inscription")).toBeNull();
-      expect(screen.queryByText("⚠ Ne peut être utilisé seul ni seulement avec Type de répertoire")).toBeNull();
+      expect(
+        screen.queryByText("⚠ Le champ ne peut être utilisé seul, ni être le seul champ renseigné avec Nature de l'inscription")
+      ).toBeNull();
+      expect(
+        screen.queryByText("⚠ Le champ ne peut être utilisé seul, ni être le seul champ renseigné avec Type de répertoire")
+      ).toBeNull();
     });
   });
 

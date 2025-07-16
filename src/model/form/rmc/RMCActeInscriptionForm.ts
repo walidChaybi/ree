@@ -216,14 +216,14 @@ export const RMCActeInscriptionForm = {
             obligatoire: false,
             interditSeul: {
               champsAIgnorer: ["natureInscription"],
-              messageErreurSpecifique: "⚠ Ne peut être utilisé seul ni seulement avec Nature de l'inscription"
+              messageErreurSpecifique: "⚠ Le champ ne peut être utilisé seul, ni être le seul champ renseigné avec Nature de l'inscription"
             }
           }),
           natureInscription: SchemaValidation.texte({
             obligatoire: false,
             interditSeul: {
               champsAIgnorer: ["typeRepertoire"],
-              messageErreurSpecifique: "⚠ Ne peut être utilisé seul ni seulement avec Type de répertoire"
+              messageErreurSpecifique: "⚠ Le champ ne peut être utilisé seul, ni être le seul champ renseigné avec Type de répertoire"
             }
           })
         }),
