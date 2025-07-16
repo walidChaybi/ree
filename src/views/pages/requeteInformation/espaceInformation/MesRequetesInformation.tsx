@@ -12,6 +12,7 @@ import { NB_LIGNES_PAR_APPEL_DEFAUT, NB_LIGNES_PAR_PAGE_DEFAUT } from "@widget/t
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useState } from "react";
 import { useLocation } from "react-router";
+import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { StatutsRequetesInformation, requeteInformationMesRequetesColumnHeaders } from "./EspaceReqInfoParams";
 import { useRequeteInformationApi } from "./hook/DonneesRequeteInformationApiHook";
@@ -71,20 +72,24 @@ export const MesRequetesInformationPage: React.FC<LocalProps> = ({ parametresReq
         onTimeoutEnd={finOperationEnCours}
         onClick={finOperationEnCours}
       />
-      <TableauRece
-        idKey={"idRequete"}
-        sortOrderByState={linkParameters.tri}
-        sortOrderState={linkParameters.sens}
-        onClickOnLine={onClickOnLine}
-        columnHeaders={requeteInformationMesRequetesColumnHeaders}
-        dataState={dataState}
-        paramsTableau={paramsTableau}
-        goToLink={goToLink}
-        noRows={RenderMessageZeroRequete()}
-        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
-        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
-        handleChangeSort={handleChangeSort}
-      ></TableauRece>
+      {enChargement ? (
+        <PageChargeur />
+      ) : (
+        <TableauRece
+          idKey={"idRequete"}
+          sortOrderByState={linkParameters.tri}
+          sortOrderState={linkParameters.sens}
+          onClickOnLine={onClickOnLine}
+          columnHeaders={requeteInformationMesRequetesColumnHeaders}
+          dataState={dataState}
+          paramsTableau={paramsTableau}
+          goToLink={goToLink}
+          noRows={RenderMessageZeroRequete()}
+          nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
+          nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+          handleChangeSort={handleChangeSort}
+        ></TableauRece>
+      )}
       <BoutonRetour />
     </>
   );
