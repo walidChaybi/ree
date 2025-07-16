@@ -159,7 +159,8 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
     soumissionFormulaire: {
       avecEnregistrement: false,
       action: null,
-      avecMajStatut: false
+      avecMajStatut: false,
+      apresEnregistrement: false
     }
   };
   test("DOIT retourner les bonnes valeurs lors de l'appel de versDtoPost", () => {
@@ -416,7 +417,8 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
       soumissionFormulaire: {
         avecEnregistrement: false,
         action: null,
-        avecMajStatut: false
+        avecMajStatut: false,
+        apresEnregistrement: false
       }
     };
 
@@ -573,7 +575,8 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
     soumissionFormulaire: {
       avecEnregistrement: false,
       action: null,
-      avecMajStatut: false
+      avecMajStatut: false,
+      apresEnregistrement: false
     }
   };
 

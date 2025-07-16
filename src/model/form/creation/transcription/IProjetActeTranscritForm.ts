@@ -55,6 +55,7 @@ export interface IProjetActeTranscritForm {
     avecEnregistrement: boolean;
     action: EActionFormulaireProjetActeTranscrit | null;
     avecMajStatut: boolean;
+    apresEnregistrement: (() => void) | false;
   };
 }
 
@@ -303,7 +304,8 @@ export const ProjetActeNaissanceTranscriptionForm = {
       soumissionFormulaire: {
         avecEnregistrement: false,
         action: null,
-        avecMajStatut: false
+        avecMajStatut: false,
+        apresEnregistrement: false
       }
     };
   },

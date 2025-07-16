@@ -167,7 +167,8 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
     soumissionFormulaire: {
       avecEnregistrement: false,
       action: null,
-      avecMajStatut: false
+      avecMajStatut: false,
+      apresEnregistrement: false
     }
   };
 
@@ -218,7 +219,8 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
           soumissionFormulaire: {
             avecEnregistrement: true,
             action: null,
-            avecMajStatut: false
+            avecMajStatut: false,
+            apresEnregistrement: false
           }
         }
       });
@@ -255,7 +257,8 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
           soumissionFormulaire: {
             avecEnregistrement: true,
             action: null,
-            avecMajStatut: true
+            avecMajStatut: true,
+            apresEnregistrement: false
           }
         },
         idRequete: "789"
@@ -299,7 +302,8 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
           soumissionFormulaire: {
             avecEnregistrement: true,
             action: null,
-            avecMajStatut: false
+            avecMajStatut: false,
+            apresEnregistrement: false
           }
         }
       });
@@ -339,7 +343,8 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
           soumissionFormulaire: {
             avecEnregistrement: false,
             action: null,
-            avecMajStatut: true
+            avecMajStatut: true,
+            apresEnregistrement: false
           }
         }
       });

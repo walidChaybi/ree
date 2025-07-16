@@ -1,9 +1,10 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Mock, beforeEach, describe, expect, test, vi } from "vitest";
 
-import * as Formik from "formik";
-import { BloqueurNavigationSaisieProjet } from "../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisieProjet/BloqueurNavigationSaisieProjet";
+import BloqueurNavigationSaisieProjet from "../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisieProjet/BloqueurNavigationSaisieProjet";
+
+import { EActionFormulaireProjetActeTranscrit } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 
 import * as ReactRouter from "react-router";
 
@@ -16,13 +17,16 @@ vi.mock("react-router", async () => {
   };
 });
 
-vi.mock("formik", async () => {
-  const actual = await vi.importActual("formik");
-  return {
-    ...actual,
-    useFormikContext: vi.fn()
-  };
-});
+const mockSubmitForm = vi.fn();
+const mockSetFieldValue = vi.fn().mockResolvedValue(undefined);
+
+vi.mock("formik", () => ({
+  useFormikContext: () => ({
+    submitForm: mockSubmitForm,
+    setFieldValue: mockSetFieldValue,
+    dirty: true
+  })
+}));
 
 describe("GestionnaireNavigationFormik", () => {
   const mockBlocker = {
@@ -34,22 +38,10 @@ describe("GestionnaireNavigationFormik", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     (ReactRouter.useBlocker as Mock).mockReturnValue(mockBlocker);
-
-    (Formik.useFormikContext as Mock).mockReturnValue({
-      values: { nomOEC: "" },
-      dirty: true,
-      validateForm: () => Promise.resolve({})
-    });
   });
 
-  const onEnregistrer = vi.fn();
-
   function renderComponent() {
-    return render(
-      <BloqueurNavigationSaisieProjet onEnregistrer={onEnregistrer}>
-        <button data-testid="child-button">Test</button>
-      </BloqueurNavigationSaisieProjet>
-    );
+    return render(<BloqueurNavigationSaisieProjet></BloqueurNavigationSaisieProjet>);
   }
 
   test("ouvre la modale quand blocker.state est 'blocked' et dirty=true", () => {
@@ -59,23 +51,30 @@ describe("GestionnaireNavigationFormik", () => {
     expect(screen.getByText("Des modifications ont été apportées au projet. Que souhaitez-vous faire ?")).toBeDefined();
   });
 
-  test("Le bouton 'Enregistrer et quitter' appelle onEnregistrer puis blocker.proceed()", async () => {
+  test("Le bouton 'Enregistrer et quitter' appelle la fonction enregistrer", async () => {
     renderComponent();
 
     const btnSave = screen.getByRole("button", { name: /Enregistrer et quitter/i });
     await userEvent.click(btnSave);
 
-    expect(onEnregistrer).toHaveBeenCalledWith({ nomOEC: "" });
-    expect(mockBlocker.proceed).toHaveBeenCalled();
+    expect(mockSetFieldValue).toHaveBeenCalledWith("soumissionFormulaire", {
+      action: EActionFormulaireProjetActeTranscrit.ENREGISTRER,
+      avecEnregistrement: true,
+      apresEnregistrement: expect.any(Function)
+    });
+
+    await waitFor(() => {
+      expect(mockSetFieldValue).toHaveBeenCalled();
+      expect(mockSubmitForm).toHaveBeenCalled();
+    });
   });
 
-  test("Le bouton 'Quitter sans enregistrer' appelle blocker.proceed() sans onEnregistrer", async () => {
+  test("Le bouton 'Quitter sans enregistrer' appelle blocker.proceed()", async () => {
     renderComponent();
 
     const btnQuit = screen.getByRole("button", { name: /Quitter sans enregistrer/i });
     await userEvent.click(btnQuit);
 
-    expect(onEnregistrer).not.toHaveBeenCalled();
     expect(mockBlocker.proceed).toHaveBeenCalled();
   });
 
