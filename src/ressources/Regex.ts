@@ -8,7 +8,7 @@ export const CaracteresAutorisesRecherche = new RegExp(/^[0-9a-zA-ZÂÄÀÊËÉ�
 
 export const CaracteresAutorisesRechercheNomPrenom = new RegExp(/^[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ '.\-*]+$/);
 
-export const CaracteresAutorisesRecherchePays = new RegExp(/^[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ '.\-,;/()°:]+$/);
+export const CaracteresAutorisesRecherchePays = new RegExp(/^[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ '.\-,;/()°:"«»]+$/);
 
 export const ASTERISQUE_PRECEDE_DEUX = new RegExp(/^ *(?:[^*]*$|[^_* ][^*]*[^_* ][^*]*\*.*)$/);
 
