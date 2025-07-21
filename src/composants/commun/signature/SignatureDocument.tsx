@@ -111,7 +111,8 @@ const AVANCEMENT: { [EtatAvancement in Exclude<TStatutSignature, "attente-pin" |
             parametres: {
               idActe: idActe,
               codePin: donneesSignature.codePin,
-              prenomNomAgent:  utilisateurConnecte.prenomNom,
+              idAgent: utilisateurConnecte.id,
+              prenomNomAgent: utilisateurConnecte.prenomNom,
               estMiseAJour: signature.estMiseAJour
             },
             apresSucces: informations => {
@@ -178,6 +179,7 @@ const AVANCEMENT: { [EtatAvancement in Exclude<TStatutSignature, "attente-pin" |
           Signature.signerDocument({
             parametres: {
               idActe: idActe,
+              idAgent: utilisateurConnecte.id,
               document: donneesSignature.documentASigner,
               codePin: donneesSignature.codePin,
               estMiseAJour: signature.estMiseAJour
@@ -190,7 +192,7 @@ const AVANCEMENT: { [EtatAvancement in Exclude<TStatutSignature, "attente-pin" |
                 ? console.error(
                     `[SIGNATURE] Erreur lors de la signature du document : ${reponse.erreur?.code ?? "CODE_INCONNU"} - ${messageErreur} - ${reponse.erreur?.detail ?? "AUCUN DETAIL"}`
                   )
-                : console.info(`[SIGNATURE] Signature du document éffectuée`);
+                : console.info(`[SIGNATURE] Signature du document effectuée`);
 
               setDonneesSignature(prec => ({
                 ...prec,

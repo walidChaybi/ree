@@ -24,6 +24,11 @@ export const TELEVERIFICATION_API: TApi = {
   version: "v1"
 };
 
+export const OUTILTECH_API: TApi = {
+  nom: "rece-outiltech-api",
+  version: "v1"
+};
+
 export const GEO_API: TApi = {
   nom: "https://geo.api.gouv.fr",
   version: "",

@@ -1,5 +1,6 @@
 import { CONFIG_PATCH_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES } from "@api/configurations/etatCivil/acte/PatchComposerDocumentMentionsUlterieuresConfigApi";
 import { CONFIG_PATCH_INTEGRER_DOCUMENT_MENTION_SIGNER } from "@api/configurations/etatCivil/acte/PatchIntegrerDocumentMentionSigneConfigApi";
+import { CONFIG_POST_LOGS } from "@api/configurations/outilTech/PostLogsConfigApi";
 import { CONFIG_PATCH_STATUT_REQUETE_MISE_A_JOUR } from "@api/configurations/requete/miseAJour/PatchStatutRequeteMiseAjourConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
@@ -53,6 +54,8 @@ describe("Test du composant SignatureDocument", () => {
   };
 
   test("La modale de signature affiche correctement une erreur de récupération d'information", async () => {
+    MockApi.deployer(CONFIG_POST_LOGS);
+
     const snapshot = renderSnapshot();
     const demonterListener = listenerSignature([{ erreur: { code: "CODE_ERR", libelle: "Erreur récupération informations" } }]);
 
@@ -60,7 +63,12 @@ describe("Test du composant SignatureDocument", () => {
     await userEvent.click(screen.getByTitle("Valider"));
 
     expect(snapshot).toMatchSnapshot();
+
+    // Teste l'appel au serveur de log outiltech-api
+    expect(MockApi.getMock().history.post.length).toStrictEqual(1);
+
     demonterListener();
+    MockApi.stopMock();
   });
 
   test("La modale de signature affiche correctement une erreur de composition du document", async () => {
@@ -68,8 +76,7 @@ describe("Test du composant SignatureDocument", () => {
       CONFIG_PATCH_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES,
       { path: { idActe: "idActe" }, body: { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } } },
       { erreurs: [{ code: "TECH_16021", message: "Erreur composition", type: "TechnicalException" }], codeHttp: 500 }
-    );
-    const mockApi = MockApi.getMock();
+    ).deployer(CONFIG_POST_LOGS);
 
     const snapshot = renderSnapshot();
     const demonterListener = listenerSignature([
@@ -81,8 +88,11 @@ describe("Test du composant SignatureDocument", () => {
     await userEvent.click(screen.getByTitle("Valider"));
 
     await waitFor(() => {
-      expect(mockApi.history.patch.length).toBe(1);
+      expect(MockApi.getMock().history.patch.length).toBe(1);
     });
+
+    // Teste aucun appel au serveur de log outiltech-api car l'erreur ne vient pas de la webext de signature
+    expect(MockApi.getMock().history.post.length).toStrictEqual(0);
 
     expect(snapshot).toMatchSnapshot();
     demonterListener();
@@ -94,8 +104,7 @@ describe("Test du composant SignatureDocument", () => {
       CONFIG_PATCH_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES,
       { path: { idActe: "idActe" }, body: { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } } },
       { data: "documentASigner" }
-    );
-    const mockApi = MockApi.getMock();
+    ).deployer(CONFIG_POST_LOGS);
 
     const snapshot = renderSnapshot();
     const demonterListener = listenerSignature([
@@ -107,7 +116,10 @@ describe("Test du composant SignatureDocument", () => {
     await userEvent.click(screen.getByTitle("Valider"));
 
     await waitFor(() => {
-      expect(mockApi.history.patch.length).toBe(1);
+      // Teste l'appel au serveur de log outiltech-api
+      expect(MockApi.getMock().history.post.length).toStrictEqual(1);
+
+      expect(MockApi.getMock().history.patch.length).toBe(1);
     });
 
     expect(snapshot).toMatchSnapshot();
@@ -120,20 +132,20 @@ describe("Test du composant SignatureDocument", () => {
       CONFIG_PATCH_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES,
       { path: { idActe: "idActe" }, body: { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } } },
       { data: "documentASigner" }
-    );
-    MockApi.deployer(
-      CONFIG_PATCH_INTEGRER_DOCUMENT_MENTION_SIGNER,
-      {
-        path: { idActe: "idActe" },
-        body: {
-          documentPadesBase64: "documentSigne",
-          signature: { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } as IInformationsCarte },
-          modeAuthentification: "AROBAS_MDP"
-        }
-      },
-      { erreurs: [{ code: "TECH_16021", message: "Erreur enregistrement", type: "TechnicalException" }], codeHttp: 500 }
-    );
-    const mockApi = MockApi.getMock();
+    )
+      .deployer(
+        CONFIG_PATCH_INTEGRER_DOCUMENT_MENTION_SIGNER,
+        {
+          path: { idActe: "idActe" },
+          body: {
+            documentPadesBase64: "documentSigne",
+            signature: { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } as IInformationsCarte },
+            modeAuthentification: "AROBAS_MDP"
+          }
+        },
+        { erreurs: [{ code: "TECH_16021", message: "Erreur enregistrement", type: "TechnicalException" }], codeHttp: 500 }
+      )
+      .deployer(CONFIG_POST_LOGS);
 
     const snapshot = renderSnapshot();
     const demonterListener = listenerSignature([
@@ -145,7 +157,9 @@ describe("Test du composant SignatureDocument", () => {
     await userEvent.click(screen.getByTitle("Valider"));
 
     await waitFor(() => {
-      expect(mockApi.history.patch.length).toBe(2);
+      // Teste aucun appel au serveur de log outiltech-api car l'erreur ne vient pas de la webext de signature
+      expect(MockApi.getMock().history.post.length).toStrictEqual(0);
+      expect(MockApi.getMock().history.patch.length).toBe(2);
     });
 
     expect(snapshot).toMatchSnapshot();
@@ -158,21 +172,20 @@ describe("Test du composant SignatureDocument", () => {
       CONFIG_PATCH_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES,
       { path: { idActe: "idActe" }, body: { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } } },
       { data: "documentASigner" }
-    );
-    MockApi.deployer(CONFIG_PATCH_INTEGRER_DOCUMENT_MENTION_SIGNER, {
-      path: { idActe: "idActe" },
-      body: {
-        documentPadesBase64: "documentSigne",
-        signature: { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } as IInformationsCarte },
-        modeAuthentification: "AROBAS_MDP"
-      }
-    });
-    MockApi.deployer(
-      CONFIG_PATCH_STATUT_REQUETE_MISE_A_JOUR,
-      { path: { idRequete: "idRequete", statut: StatutRequete.TRAITEE_MIS_A_JOUR.nom } },
-      { erreurs: [{ code: "TECH_16021", message: "Erreur modification statut", type: "TechnicalException" }], codeHttp: 500 }
-    );
-    const mockApi = MockApi.getMock();
+    )
+      .deployer(CONFIG_PATCH_INTEGRER_DOCUMENT_MENTION_SIGNER, {
+        path: { idActe: "idActe" },
+        body: {
+          documentPadesBase64: "documentSigne",
+          signature: { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } as IInformationsCarte },
+          modeAuthentification: "AROBAS_MDP"
+        }
+      })
+      .deployer(
+        CONFIG_PATCH_STATUT_REQUETE_MISE_A_JOUR,
+        { path: { idRequete: "idRequete", statut: StatutRequete.TRAITEE_MIS_A_JOUR.nom } },
+        { erreurs: [{ code: "TECH_16021", message: "Erreur modification statut", type: "TechnicalException" }], codeHttp: 500 }
+      );
 
     const snapshot = renderSnapshot();
     const demonterListener = listenerSignature([
@@ -184,7 +197,7 @@ describe("Test du composant SignatureDocument", () => {
     await userEvent.click(screen.getByTitle("Valider"));
 
     await waitFor(() => {
-      expect(mockApi.history.patch.length).toBe(3);
+      expect(MockApi.getMock().history.patch.length).toBe(3);
     });
 
     expect(snapshot).toMatchSnapshot();
@@ -193,6 +206,7 @@ describe("Test du composant SignatureDocument", () => {
   });
 
   test("La fermeture de la modale de signature après erreur n'appelle pas apresSignature avec erreur", async () => {
+    MockApi.deployer(CONFIG_POST_LOGS);
     const snapshot = renderSnapshot();
     const demonterListener = listenerSignature([{ erreur: { code: "CODE_ERR", libelle: "Erreur récupération informations" } }]);
 
@@ -206,7 +220,11 @@ describe("Test du composant SignatureDocument", () => {
       expect(apreSignature).toHaveBeenCalledWith(false);
     });
 
+    // Teste l'appel au serveur de log outiltech-api
+    expect(MockApi.getMock().history.post.length).toStrictEqual(1);
+
     demonterListener();
+    MockApi.stopMock();
   });
 
   test("La signature se déroule correctement et appel la fonction apresSignature sans erreur", async () => {
@@ -214,19 +232,18 @@ describe("Test du composant SignatureDocument", () => {
       CONFIG_PATCH_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES,
       { path: { idActe: "idActe" }, body: { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } } },
       { data: "documentASigner" }
-    );
-    MockApi.deployer(CONFIG_PATCH_INTEGRER_DOCUMENT_MENTION_SIGNER, {
-      path: { idActe: "idActe" },
-      body: {
-        documentPadesBase64: "documentSigne",
-        signature: { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } as IInformationsCarte },
-        modeAuthentification: "AROBAS_MDP"
-      }
-    });
-    MockApi.deployer(CONFIG_PATCH_STATUT_REQUETE_MISE_A_JOUR, {
-      path: { idRequete: "idRequete", statut: StatutRequete.TRAITEE_MIS_A_JOUR.nom }
-    });
-    const mockApi = MockApi.getMock();
+    )
+      .deployer(CONFIG_PATCH_INTEGRER_DOCUMENT_MENTION_SIGNER, {
+        path: { idActe: "idActe" },
+        body: {
+          documentPadesBase64: "documentSigne",
+          signature: { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } as IInformationsCarte },
+          modeAuthentification: "AROBAS_MDP"
+        }
+      })
+      .deployer(CONFIG_PATCH_STATUT_REQUETE_MISE_A_JOUR, {
+        path: { idRequete: "idRequete", statut: StatutRequete.TRAITEE_MIS_A_JOUR.nom }
+      });
 
     const snapshot = renderSnapshot();
     const demonterListener = listenerSignature([
@@ -238,7 +255,7 @@ describe("Test du composant SignatureDocument", () => {
     await userEvent.click(screen.getByTitle("Valider"));
 
     await waitFor(() => {
-      expect(mockApi.history.patch.length).toBe(3);
+      expect(MockApi.getMock().history.patch.length).toBe(3);
     });
 
     expect(snapshot).toMatchSnapshot();

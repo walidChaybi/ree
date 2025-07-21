@@ -39,14 +39,12 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({ parametresReqInfo }) 
   const [rechercheEffectuee, setRechercheEffectuee] = useState<boolean>(false);
   const [filtresSelectionne, setFiltresSelectionne] =
     useState<IFiltresServiceRequeteInformationFormValues>(VALEUR_FILTRE_INFORMATION_DEFAUT);
-  const [tableauDoitReset, setTableauDoitReset] = useState<boolean>(false);
   const { dataState, paramsTableau } = useRequeteInformationApi(
     linkParameters,
     TypeAppelRequete.REQUETE_INFO_SERVICE,
     setEnChargement,
     filtresSelectionne,
-    rechercheEffectuee,
-    setTableauDoitReset
+    rechercheEffectuee
   );
 
   useNavigationApercuInformation(paramsNavReqInfo);

@@ -1,26 +1,15 @@
-import { HTTP_PAYLOAD_TOO_LARGE, HTTP_REQUEST_TIME_OUT, ID_CORRELATION_HEADER_NAME } from "@api/ApiManager";
-import { IQueryParameterPostLog, postLog } from "@api/appels/outiltechApi";
-import dayjs from "dayjs";
-import { FeatureFlag } from "./featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "./featureFlag/gestionnaireFeatureFlag";
+import { HTTP_PAYLOAD_TOO_LARGE, HTTP_REQUEST_TIME_OUT } from "@api/ApiManager";
 import messageManager from "./messageManager";
 import { storeRece } from "./storeRece";
 
-const TIME_OUT_MS = 2000;
-
-let listLog = [] as Array<IQueryParameterPostLog>;
-
-let isWaiting = false;
 export interface LogErrorMsg {
   messageUtilisateur?: string;
   error?: any;
   errorInfo?: React.ErrorInfo | string;
 }
 
+/**@deprecated fonction vétuste. à remplacer par une fonction typée*/
 export function logError(logErrorMgs: LogErrorMsg) {
-  if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_LOG_SERVEUR)) {
-    logErrorOnServer(logErrorMgs);
-  }
   if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
     logErrorOnConsole(logErrorMgs);
   }
@@ -69,28 +58,4 @@ function logErrorOnConsole(logErrorMgs: LogErrorMsg) {
       throw new Error(logErrorMgs.messageUtilisateur);
     }
   }
-}
-
-function logErrorOnServer(logErrorMgs: LogErrorMsg) {
-  listLog.push({
-    date: dayjs().unix(),
-    idCorrelation: logErrorMgs.error.response?.req?.header?.[ID_CORRELATION_HEADER_NAME],
-    message: logErrorMgs.error.response?.error?.message ?? logErrorMgs.error?.message ?? logErrorMgs.messageUtilisateur
-  });
-
-  // Attente de quelques secondes afin de regrouper les logs
-  if (!isWaiting) {
-    isWaiting = true;
-    setTimeout(sendToServer, TIME_OUT_MS);
-  }
-}
-
-function sendToServer() {
-  isWaiting = false;
-
-  postLog(listLog)
-    .then(result => {})
-    .catch(error => {});
-
-  listLog = [];
 }

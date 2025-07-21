@@ -1,7 +1,11 @@
 // DEV seulement
 /* v8 ignore start */
+
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
+import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+
 const InformationsDeveloppeur: React.FC = () =>
-  process.env.NODE_ENV === "development" ? (
+  gestionnaireFeatureFlag.estActif(FeatureFlag.FF_SIMULER_SIGNATURE) ? (
     <div className="pb-2 text-start text-sm text-orange">
       <div>
         {"⚠ Vous êtes en mode développement."}
@@ -30,4 +34,4 @@ const InformationsDeveloppeur: React.FC = () =>
   );
 
 export default InformationsDeveloppeur;
-/* v8 ignore end */
+/* v8 ignore stop */

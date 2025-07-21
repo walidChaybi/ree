@@ -12,8 +12,7 @@ export const useRequeteInformationApi = (
   typeRequete: TypeAppelRequete,
   setEnChargement: (enChargement: boolean) => void,
   filtresRequetes?: IFiltresServiceRequeteInformationFormValues,
-  peutChercher?: boolean,
-  setTableauDoitReset?: React.Dispatch<React.SetStateAction<boolean>>
+  peutChercher?: boolean
 ) => {
   const [dataState, setDataState] = useState<IRequeteTableauInformation[]>([]);
   const [paramsTableau, setParamsTableau] = useState<IParamsTableau>({});
@@ -43,14 +42,8 @@ export const useRequeteInformationApi = (
           messageUtilisateur: "Impossible de récupérer les requêtes d'information",
           error
         });
-      })
-      .finally(() => {
-        if (setTableauDoitReset && estTypeRequeteInfoService && filtresRequetes) {
-          setTableauDoitReset(true);
-          setTableauDoitReset(false);
-        }
       });
-  }, [queryParameters, typeRequete, setEnChargement, filtresRequetes, peutChercher, setTableauDoitReset]);
+  }, [queryParameters, typeRequete, setEnChargement, filtresRequetes, peutChercher]);
 
   return {
     dataState,

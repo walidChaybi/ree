@@ -1,3 +1,5 @@
+import { CONFIG_POST_LOGS } from "@api/configurations/outilTech/PostLogsConfigApi";
+import { MockApi } from "@mock/appelsApi/MockApi";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
@@ -11,7 +13,7 @@ import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import request from "superagent";
-import { afterAll, describe, expect, test } from "vitest";
+import { afterAll, afterEach, beforeAll, describe, expect, test } from "vitest";
 import { ConteneurParentModales } from "../../../../composants/commun/conteneurs/modale/ConteneurModale";
 import SignatureDelivrance from "../../../../composants/commun/signature/SignatureDelivrance";
 import { CODES_ERREUR_BLOQUANTS, CODE_PIN_INVALIDE, IDocumentASigner } from "../../../../utils/Signature";
@@ -87,7 +89,16 @@ describe("Test du composant Signature délivrance", () => {
     }
   ]);
 
-  afterAll(() => superagentMock.unset());
+  beforeAll(() => {
+    MockApi.deployer(CONFIG_POST_LOGS);
+  });
+
+  afterEach(() => MockApi.getMock().resetHistory());
+
+  afterAll(() => {
+    superagentMock.unset();
+    MockApi.stopMock();
+  });
 
   const renderComposant = (
     numerosFonctionnel: string[] = [],
@@ -157,6 +168,10 @@ describe("Test du composant Signature délivrance", () => {
     fireEvent.click(boutonValider);
 
     await waitFor(() => expect(screen.getByText("Le code pin est incorrect")).toBeDefined());
+
+    // Teste l'appel au serveur de log outiltech-api
+    expect(MockApi.getMock().history.post.length).toStrictEqual(1);
+
     demonterListener();
   });
 
@@ -180,10 +195,13 @@ describe("Test du composant Signature délivrance", () => {
       expect(screen.getByText(LIBELLE_BLOQUANT)).toBeDefined();
     });
 
+    // Teste l'appel au serveur de log outiltech-api
+    expect(MockApi.getMock().history.post.length).toStrictEqual(1);
+
     demonterListener();
   });
 
-  test("Une erreur non bloquante sur tout les documents met en echec la signature", async () => {
+  test("Une erreur non bloquante sur tous les documents met en echec la signature", async () => {
     renderComposant([NUM_AVEC_DOC, NUM_AVEC_DOC]);
 
     const boutonSigner: HTMLButtonElement = screen.getByTitle(TITRE_BOUTON);
@@ -201,6 +219,10 @@ describe("Test du composant Signature délivrance", () => {
     fireEvent.click(boutonValider);
 
     await waitFor(() => expect(() => screen.queryByText("Aucun document n'a pu être signé")).toBeDefined());
+
+    // Teste l'appel au serveur de log outiltech-api
+    expect(MockApi.getMock().history.post.length).toStrictEqual(2);
+
     demonterListener();
   });
 
@@ -229,9 +251,12 @@ describe("Test du composant Signature délivrance", () => {
     await waitFor(() => expect(screen.getByTitle("Fermer")).toBeDefined());
     fireEvent.click(screen.getByTitle("Fermer"));
     await waitFor(() => expect(screen.queryByText(TITRE_MODALE)).toBeNull());
+
+    // Teste un appel au serveur de log outiltech-api
+    expect(MockApi.getMock().history.post.length).toStrictEqual(2);
   });
 
-  test("Un avertissement consernant les mentions s'affiche", async () => {
+  test("Un avertissement concernant les mentions s'affiche", async () => {
     const acte: IFicheActe = {
       id: "idActe",
       registre: { famille: "ACQ" } as IRegistre,

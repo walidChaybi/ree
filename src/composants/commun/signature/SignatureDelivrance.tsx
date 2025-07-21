@@ -163,7 +163,8 @@ const SignatureDelivrance: React.FC<ISignatureDelivranceProps> = ({
       Signature.signerDocumentDelivrance({
         parametres: {
           document: documentASigner,
-          codePin: informationsSignature.codePin
+          codePin: informationsSignature.codePin,
+          idAgent: utilisateurConnecte.id
         },
         apresReponse: documentSigne => {
           switch (true) {

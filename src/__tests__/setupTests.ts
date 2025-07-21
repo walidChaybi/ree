@@ -1,8 +1,5 @@
-// jest-dom adds custom jest matchers for asserting on DOM nodes.
-// allows you to do things like:
-// expect(element).toHaveTextContent(/react/i)
-// learn more: https://github.com/testing-library/jest-dom
 import { Request, Response, fetch } from "@remix-run/web-fetch";
+import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import React from "react";
 import request from "superagent";
 import { afterAll, beforeAll, beforeEach, vi } from "vitest";
@@ -16,7 +13,7 @@ import { configRequetes } from "./mock/superagent-config/superagent-mock-requete
 import { configTeleverification } from "./mock/superagent-config/superagent-mock-televerification";
 
 export const localStorageFeatureFlagMock = (() => {
-  let store: any = {
+  let store: Partial<Record<keyof typeof FeatureFlag, string>> = {
     FF_DELIVRANCE_CERTIFS_SITUATION: "true",
     FF_DELIVRANCE_EXTRAITS_COPIES: "true",
     FF_LOG_SERVEUR: "true",
@@ -24,16 +21,16 @@ export const localStorageFeatureFlagMock = (() => {
     FF_SIGNER_ACTE_ETABLISSEMENT: "true"
   };
   return {
-    getItem(key: string) {
+    getItem(key: keyof typeof FeatureFlag) {
       return store[key];
     },
-    setItem(key: string, value: string) {
+    setItem(key: keyof typeof FeatureFlag, value: string) {
       store[key] = value.toString();
     },
     clear() {
       store = {};
     },
-    removeItem(key: string) {
+    removeItem(key: keyof typeof FeatureFlag) {
       delete store[key];
     }
   };

@@ -1,3 +1,4 @@
+import { CONFIG_POST_LOGS } from "@api/configurations/outilTech/PostLogsConfigApi";
 import { ModeSignature, ModeSignatureUtil } from "@model/requete/ModeSignature";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
@@ -5,6 +6,7 @@ import { gestionnaireSignatureFlag } from "@util/signatureFlag/gestionnaireSigna
 import dayjs from "dayjs";
 import DOCUMENT_VALIDE from "../ressources/DocumentSigneValide";
 import DOCUMENT_VIDE_A_SIGNER from "../ressources/DocumentVideASigner";
+import { appelApiAvecAxios } from "./AppelApi";
 
 export interface IInformationsCarte {
   noSerieCarte: string;
@@ -52,6 +54,7 @@ interface ISignerDelivranceParams {
   parametres: {
     document: IDocumentASigner;
     codePin: string;
+    idAgent: string;
   };
   apresReponse: (reponse: IDocumentSigne) => void;
 }
@@ -59,6 +62,7 @@ interface ISignerDelivranceParams {
 interface ISignerParams {
   parametres: {
     idActe: string;
+    idAgent: string;
     document: string;
     codePin: string;
     estMiseAJour: boolean;
@@ -70,6 +74,7 @@ interface IRecupererInformationsParams {
   parametres: {
     idActe: string;
     codePin: string;
+    idAgent: string;
     prenomNomAgent: string;
     estMiseAJour: boolean;
   };
@@ -217,15 +222,29 @@ const Signature = {
 
     const timeout = setTimeout(() => {
       supprimerListener();
+      postLogsErreurSurServeurOutilTech(
+        ERREUR_WEBEXT_INDISPONIBLE,
+        recupererInformationsParams.parametres.idAgent,
+        recupererInformationsParams.parametres.idActe,
+        recupererInformationsParams.parametres.estMiseAJour ? "MISE A JOUR" : "CREATION"
+      );
       recupererInformationsParams.apresErreur(ERREUR_WEBEXT_INDISPONIBLE);
     }, TIMEOUT_WEBEXT);
 
     reponseWebext.then((reponse: IReponseDocumentSigne) => {
       clearTimeout(timeout);
       supprimerListener();
-      reponse.erreur
-        ? recupererInformationsParams.apresErreur(reponse.erreur)
-        : recupererInformationsParams.apresSucces(reponse.infosSignature as IInformationsCarte);
+      if (reponse.erreur) {
+        postLogsErreurSurServeurOutilTech(
+          reponse.erreur,
+          recupererInformationsParams.parametres.idAgent,
+          recupererInformationsParams.parametres.idActe,
+          recupererInformationsParams.parametres.estMiseAJour ? "MISE A JOUR" : "CREATION"
+        );
+        recupererInformationsParams.apresErreur(reponse.erreur);
+      } else {
+        recupererInformationsParams.apresSucces(reponse.infosSignature!);
+      }
     });
 
     const modeSignatureFF = gestionnaireSignatureFlag.getModeSignature();
@@ -271,6 +290,12 @@ const Signature = {
 
     const timeout = setTimeout(() => {
       supprimerListener();
+      postLogsErreurSurServeurOutilTech(
+        ERREUR_WEBEXT_INDISPONIBLE,
+        signerParams.parametres.idAgent,
+        signerParams.parametres.document.id,
+        "DELIVRANCE"
+      );
       signerParams.apresReponse({
         id: signerParams.parametres.document.id,
         idRequete: signerParams.parametres.document.idRequete,
@@ -283,6 +308,13 @@ const Signature = {
     reponseWebext.then((documentSigne: IDocumentSigne) => {
       clearTimeout(timeout);
       supprimerListener();
+      documentSigne.erreur &&
+        postLogsErreurSurServeurOutilTech(
+          documentSigne.erreur,
+          signerParams.parametres.idAgent,
+          signerParams.parametres.document.id,
+          "DELIVRANCE"
+        );
       signerParams.apresReponse(documentSigne);
     });
 
@@ -322,6 +354,12 @@ const Signature = {
 
     const timeout = setTimeout(() => {
       supprimerListener();
+      postLogsErreurSurServeurOutilTech(
+        ERREUR_WEBEXT_INDISPONIBLE,
+        signerParams.parametres.idAgent,
+        signerParams.parametres.idActe,
+        signerParams.parametres.estMiseAJour ? "MISE A JOUR" : "CREATION"
+      );
       signerParams.apresReponse({
         erreur: ERREUR_WEBEXT_INDISPONIBLE
       });
@@ -330,6 +368,13 @@ const Signature = {
     reponseWebext.then((documentSigne: IReponseDocumentSigne) => {
       clearTimeout(timeout);
       supprimerListener();
+      documentSigne.erreur &&
+        postLogsErreurSurServeurOutilTech(
+          documentSigne.erreur,
+          signerParams.parametres.idAgent,
+          signerParams.parametres.idActe,
+          signerParams.parametres.estMiseAJour ? "MISE A JOUR" : "CREATION"
+        );
       signerParams.apresReponse(documentSigne);
     });
 
@@ -352,5 +397,23 @@ const Signature = {
     );
   }
 } as const;
+
+const postLogsErreurSurServeurOutilTech = (
+  erreurSignature: IErreurSignature,
+  idUtilisateur: string,
+  idDocument: string,
+  typeSignature: "DELIVRANCE" | "MISE A JOUR" | "CREATION"
+) => {
+  if (!gestionnaireFeatureFlag.estActif(FeatureFlag.FF_LOG_SERVEUR)) return;
+
+  appelApiAvecAxios(CONFIG_POST_LOGS, {
+    body: [
+      {
+        date: dayjs().unix(),
+        message: `Erreur signature ${typeSignature}: [${erreurSignature.code}] ${erreurSignature.libelle} - utilisateur ${idUtilisateur} - document ${idDocument} - ${erreurSignature.detail ?? "AUCUN DETAIL"}`
+      }
+    ]
+  });
+};
 
 export default Signature;

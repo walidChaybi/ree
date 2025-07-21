@@ -1,4 +1,13 @@
-import { TApiAutorisee, TBaseUri, TConfigurationRequeteHttp, THeader, TReponseApiEchec, TReponseApiSucces } from "@model/api/Api";
+import {
+  TApiAutorisee,
+  TBaseUri,
+  TConfigurationApi,
+  TConfigurationRequeteHttp,
+  THeader,
+  TParametres,
+  TReponseApiEchec,
+  TReponseApiSucces
+} from "@model/api/Api";
 import { CSRF_HEADER_NAME, getCsrfCookieValue } from "@util/CsrfUtil";
 import messageManager from "@util/messageManager";
 import axios from "axios";
@@ -102,5 +111,24 @@ const API = {
         return Promise.reject<TReponseApiEchec>(erreur);
       })
 } as const;
+
+export const appelApiAvecAxios = <
+  TUri extends TBaseUri,
+  TBody extends object | undefined = undefined,
+  TQuery extends object | undefined = undefined,
+  TResultat = unknown
+>(
+  configuration: TConfigurationApi<TUri, TBody, TQuery, TResultat>,
+  parametres: TParametres<TUri, TBody, TQuery>
+) => {
+  API.appel({
+    api: configuration.api,
+    configurationRequete: {
+      methode: configuration.methode,
+      uri: configuration.uri,
+      ...parametres
+    }
+  });
+};
 
 export default API;
