@@ -5,7 +5,6 @@ import { Option } from "./Type";
 const DATA_URL_BASE_64 = ";base64,";
 const NB_BYTES_IN_KILOBYTES = 1000;
 
-
 export const FILE_TYPES: ExtensionDocumentTypeMime[] = [
   { extension: "png", mimeType: "image/png" },
   { extension: "pdf", mimeType: "application/pdf" },
@@ -33,12 +32,8 @@ export interface Base64File {
   identifiantSwift?: string;
 }
 
-export function getPiecesJointesNonVides(
-  formulairePiecesJointes?: PieceJointe[]
-) {
-  return formulairePiecesJointes?.filter(
-    formulairePj => formulairePj.base64File.base64String
-  );
+export function getPiecesJointesNonVides(formulairePiecesJointes?: PieceJointe[]) {
+  return formulairePiecesJointes?.filter(formulairePj => formulairePj.base64File.base64String);
 }
 
 function toBase64String(file: File): Promise<string> {
@@ -75,16 +70,9 @@ export async function getBase64FileAndValidate(
   extensionsEtTypeMimeAutorisees?: ExtensionDocumentTypeMime[]
 ): Promise<Base64File> {
   const base64String = await toBase64String(file);
-
   const { mime, ext } = await getMimeTypeEtExtension(file);
 
-  validateFile(
-    file.size,
-    ext,
-    mime,
-    maxSizeKB ? maxSizeKB * NB_BYTES_IN_KILOBYTES : maxSizeKB,
-    extensionsEtTypeMimeAutorisees
-  );
+  validateFile(file.size, ext, mime, maxSizeKB ? maxSizeKB * NB_BYTES_IN_KILOBYTES : maxSizeKB, extensionsEtTypeMimeAutorisees);
 
   return {
     fileName: file?.name,
@@ -98,6 +86,10 @@ export async function getBase64FileAndValidate(
 async function getMimeTypeEtExtension(file: File) {
   const fileAsArrayBuffer = await toArrayBuffer(file);
   const fileInfos = filetypeinfo(new Uint8Array(fileAsArrayBuffer))[0];
+
+  if (!fileInfos) {
+    throw Error(`Le fichier n’a pas pu être lu. Veuillez réessayer avec un autre fichier si le problème persiste.`);
+  }
   return {
     mime: fileInfos.mime,
     ext: fileInfos.extension
@@ -112,34 +104,16 @@ export function validateFile(
   extensionsEtTypeMimeAutorisees?: ExtensionDocumentTypeMime[]
 ) {
   if (maxSizeBytes && maxSizeBytes < fileSizeBytes) {
-    throw Error(
-      `La taille du fichier ne peut pas excéder ${
-        maxSizeBytes / NB_BYTES_IN_KILOBYTES
-      } KB`
-    );
+    throw Error(`La taille du fichier ne peut pas excéder ${maxSizeBytes / NB_BYTES_IN_KILOBYTES} KB`);
   }
   if (extensionsEtTypeMimeAutorisees) {
-    if (
-      !extensionsEtTypeMimeAutorisees.find(
-        extTypeMime => extTypeMime.extension === fileExtension
-      )
-    ) {
+    if (!extensionsEtTypeMimeAutorisees.find(extTypeMime => extTypeMime.extension === fileExtension)) {
       throw Error(
-        `Les types d'extensions acceptés sont ${extensionsEtTypeMimeAutorisees
-          .map(extTypeMime => extTypeMime.extension)
-          .join(", ")}`
+        `Les types d'extensions acceptés sont ${extensionsEtTypeMimeAutorisees.map(extTypeMime => extTypeMime.extension).join(", ")}`
       );
     }
-    if (
-      !extensionsEtTypeMimeAutorisees.find(
-        extTypeMime => extTypeMime.mimeType === fileMimeType
-      )
-    ) {
-      throw Error(
-        `Les types mime acceptés sont ${extensionsEtTypeMimeAutorisees
-          .map(extTypeMime => extTypeMime.mimeType)
-          .join(", ")}`
-      );
+    if (!extensionsEtTypeMimeAutorisees.find(extTypeMime => extTypeMime.mimeType === fileMimeType)) {
+      throw Error(`Les types mime acceptés sont ${extensionsEtTypeMimeAutorisees.map(extTypeMime => extTypeMime.mimeType).join(", ")}`);
     }
   }
 }
