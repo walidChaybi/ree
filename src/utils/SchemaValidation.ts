@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { REGEX_ANNEE_QUATRE_CHIFFRES } from "../ressources/Regex";
 
 interface ISchemaCommunParams {
-  obligatoire: boolean | ConditionChamp[];
+  obligatoire?: boolean | ConditionChamp[];
   operateurConditionsOu?: boolean;
   interditSeul?: boolean | TInterditSeul;
 }
@@ -265,7 +265,7 @@ const gestionObligation = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>({
 const SchemaValidation = {
   objet: (objet: { [cle: string]: Yup.AnySchema }) => Yup.object().shape(objet),
 
-  texte: (schemaParams: ISchemaCommunParams & { listeRegexp?: TValidationText[] }): Yup.StringSchema => {
+  texte: (schemaParams: ISchemaCommunParams & { listeRegexp?: TValidationText[] } = {}): Yup.StringSchema => {
     let schema = Yup.string();
 
     if (schemaParams.listeRegexp?.length)
@@ -275,14 +275,14 @@ const SchemaValidation = {
 
     return gestionObligation({
       schema: schema,
-      obligatoire: schemaParams.obligatoire,
+      obligatoire: schemaParams.obligatoire ?? false,
       actionObligation: () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE),
       conditionOu: schemaParams.operateurConditionsOu,
       interditSeul: schemaParams.interditSeul
     });
   },
 
-  entier: (schemaParams: ISchemaCommunParams & { min?: TValidationEntier; max?: TValidationEntier }): Yup.NumberSchema => {
+  entier: (schemaParams: ISchemaCommunParams & { min?: TValidationEntier; max?: TValidationEntier } = {}): Yup.NumberSchema => {
     let schema = Yup.number().integer(messagesErreur.DOIT_ETRE_ENTIER);
     schemaParams.min &&
       (schema = schema.min(
@@ -297,19 +297,19 @@ const SchemaValidation = {
 
     return gestionObligation({
       schema: schema,
-      obligatoire: schemaParams.obligatoire,
+      obligatoire: schemaParams.obligatoire ?? false,
       actionObligation: () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE),
       conditionOu: schemaParams.operateurConditionsOu,
       interditSeul: schemaParams.interditSeul
     });
   },
 
-  booleen: (schemaParams: ISchemaCommunParams): Yup.BooleanSchema => {
+  booleen: (schemaParams: ISchemaCommunParams = {}): Yup.BooleanSchema => {
     let schema = Yup.boolean();
 
     return gestionObligation({
       schema: schema,
-      obligatoire: schemaParams.obligatoire,
+      obligatoire: schemaParams.obligatoire ?? false,
       actionObligation: () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE),
       conditionOu: schemaParams.operateurConditionsOu,
       interditSeul: schemaParams.interditSeul
@@ -347,7 +347,7 @@ const SchemaValidation = {
 
     return gestionObligation({
       schema: schema,
-      obligatoire: schemaParams.obligatoire,
+      obligatoire: schemaParams.obligatoire ?? false,
       actionObligation: () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE),
       conditionOu: schemaParams.operateurConditionsOu,
       interditSeul: schemaParams.interditSeul
@@ -383,7 +383,7 @@ const SchemaValidation = {
 
     return gestionObligation({
       schema: schema,
-      obligatoire: schemaParams.obligatoire,
+      obligatoire: schemaParams.obligatoire ?? false,
       actionObligation: () =>
         schema.test("dateEntiereObligatoire", (date, error) =>
           !date.jour && !date.mois && !date.annee ? erreurSurDateEntiere(messagesErreur.DATE_OBLIGATOIRE, error.path) : true
@@ -393,7 +393,7 @@ const SchemaValidation = {
     });
   },
 
-  dateIncomplete: (schemaParams: Omit<ISchemaCommunParams, "libelle"> & { bloquerDateFuture?: boolean }) => {
+  dateIncomplete: (schemaParams: Omit<ISchemaCommunParams, "libelle"> & { bloquerDateFuture?: boolean } = {}) => {
     let schema = getSchemaValidationDate(schemaParams.bloquerDateFuture)
       .test("anneeObligatoireSiDateSaisie", (date, error) =>
         (Boolean(date.jour) || Boolean(date.mois)) && !date.annee
@@ -410,7 +410,7 @@ const SchemaValidation = {
       });
     return gestionObligation({
       schema: schema,
-      obligatoire: schemaParams.obligatoire,
+      obligatoire: schemaParams.obligatoire ?? false,
       actionObligation: () =>
         schema.test("anneeToujoursObligatoire", (date, error) =>
           !date.annee
@@ -443,7 +443,7 @@ const SchemaValidation = {
 
     return gestionObligation({
       schema: schema,
-      obligatoire: schemaParams.obligatoire,
+      obligatoire: schemaParams.obligatoire ?? false,
       actionObligation: () =>
         schema.test("nomSecableObligatoire", ({ nom }, error) =>
           !nom
@@ -502,7 +502,7 @@ const SchemaValidation = {
 
     return gestionObligation({
       schema: schema,
-      obligatoire: obligatoire,
+      obligatoire: obligatoire ?? false,
       actionObligation: () => {
         return schema;
       },
@@ -529,12 +529,12 @@ const SchemaValidation = {
       if (index === 0) {
         schemaAnnee = gestionObligation({
           schema: schemaAnnee,
-          obligatoire: obligatoire,
+          obligatoire: obligatoire ?? false,
           actionObligation: () => schemaAnnee.required(messagesErreur.CHAMP_OBLIGATOIRE)
         });
         schemaNumero = gestionObligation({
           schema: schemaNumero,
-          obligatoire: obligatoire,
+          obligatoire: obligatoire ?? false,
           actionObligation: () => schemaNumero.required(messagesErreur.CHAMP_OBLIGATOIRE)
         });
       }

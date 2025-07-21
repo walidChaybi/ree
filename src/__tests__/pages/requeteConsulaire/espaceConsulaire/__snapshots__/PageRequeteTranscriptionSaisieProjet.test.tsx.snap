@@ -547,6 +547,11 @@ pays
                             for="titulaire.nomActeEtranger"
                           >
                             Nom sur l'acte étranger
+                            <span
+                              class="ml-1 text-rouge"
+                            >
+                              *
+                            </span>
                           </label>
                           <div
                             class="relative flex rounded-md shadow-sm"

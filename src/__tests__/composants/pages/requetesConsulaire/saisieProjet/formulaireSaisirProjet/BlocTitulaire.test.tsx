@@ -18,7 +18,7 @@ describe("SaisirProjet - BlocTitulaire", () => {
 
   test("render le composant correctement", () => {
     renderComponent();
-    expect(screen.getByLabelText("Nom sur l'acte étranger")).toBeDefined();
+    expect(screen.getByLabelText("Nom sur l'acte étranger*")).toBeDefined();
     expect(screen.getByLabelText("Nom retenu par l'OEC*")).toBeDefined();
     expect(screen.getByLabelText("Nom souhaité")).toBeDefined();
     expect(screen.getByText("Sexe")).toBeDefined();
@@ -44,7 +44,7 @@ describe("SaisirProjet - BlocTitulaire", () => {
 
   test("Vérifier la navigation à la tabulation", async () => {
     renderComponent();
-    const inputNomActeEtranger: HTMLInputElement = screen.getByLabelText("Nom sur l'acte étranger");
+    const inputNomActeEtranger: HTMLInputElement = screen.getByRole("textbox", { name: /titulaire.nomActeEtranger/i });
     const inputNomSouhait: HTMLInputElement = screen.getByLabelText("Nom souhaité");
     const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /titulaire.nomRetenuOEC/i });
     const checkboxSecable = screen.getAllByRole("checkbox")[0] as HTMLInputElement;

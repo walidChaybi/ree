@@ -311,20 +311,20 @@ export const ProjetActeNaissanceTranscriptionForm = {
   },
   schemaValidation: () => {
     const TitulaireSchemaValidationFormulaire = SchemaValidation.objet({
-      nomActeEtranger: SchemaValidation.texte({ obligatoire: false }),
+      nomActeEtranger: SchemaValidation.texte({ obligatoire: true }),
       nomRetenuOEC: SchemaValidation.texte({ obligatoire: true }),
       prenomsChemin: SchemaValidation.prenoms("titulaire.prenomsChemin.prenom"),
-      sexe: SchemaValidation.texte({ obligatoire: false }),
+      sexe: SchemaValidation.texte({ obligatoire: true }),
       dateNaissance: SchemaValidation.dateIncomplete({ obligatoire: true }),
-      villeNaissance: SchemaValidation.texte({ obligatoire: false }),
-      regionNaissance: SchemaValidation.texte({ obligatoire: false }),
-      paysNaissance: SchemaValidation.texte({ obligatoire: false }),
-      adresseNaissance: SchemaValidation.texte({ obligatoire: false })
+      villeNaissance: SchemaValidation.texte(),
+      regionNaissance: SchemaValidation.texte(),
+      paysNaissance: SchemaValidation.texte(),
+      adresseNaissance: SchemaValidation.texte()
     });
 
     const AdresseSchemaValidationFormulaire = (prefix: string, estDeclarant = false) =>
       SchemaValidation.objet({
-        typeLieu: SchemaValidation.texte({ obligatoire: false }),
+        typeLieu: SchemaValidation.texte(),
         ville: SchemaValidation.texte({
           obligatoire: ConditionChamp.depuisTableau([
             {
@@ -343,7 +343,7 @@ export const ProjetActeNaissanceTranscriptionForm = {
               : [])
           ])
         }),
-        adresse: SchemaValidation.texte({ obligatoire: false }),
+        adresse: SchemaValidation.texte(),
         departement: SchemaValidation.texte({
           obligatoire: ConditionChamp.depuisTableau([
             {
@@ -367,9 +367,9 @@ export const ProjetActeNaissanceTranscriptionForm = {
               : [])
           ])
         }).transform(val => val?.toLowerCase?.()),
-        arrondissement: SchemaValidation.texte({ obligatoire: false }),
-        pays: SchemaValidation.texte({ obligatoire: false }),
-        etatProvince: SchemaValidation.texte({ obligatoire: false })
+        arrondissement: SchemaValidation.texte(),
+        pays: SchemaValidation.texte(),
+        etatProvince: SchemaValidation.texte()
       }).test("au-moins-un-champ-etranger", "La saisie d'au moins un champ est obligatoire", function (adresse, context) {
         if (adresse.typeLieu !== "Étranger") {
           return true;
@@ -398,7 +398,7 @@ export const ProjetActeNaissanceTranscriptionForm = {
               : false
         }),
         prenomsChemin: SchemaValidation.prenoms(`${parentPrefix}.prenomsChemin.prenom`),
-        sexe: SchemaValidation.texte({ obligatoire: false }).test(
+        sexe: SchemaValidation.texte().test(
           "sexe-required-if-nom-or-prenom",
           "Le sexe est obligatoire lorsque le nom ou le prénom est renseigné",
           function (valeurSexe) {
@@ -414,12 +414,12 @@ export const ProjetActeNaissanceTranscriptionForm = {
             return true;
           }
         ),
-        dateNaissance: SchemaValidation.dateIncomplete({ obligatoire: false }),
-        renseignerAge: SchemaValidation.booleen({ obligatoire: false }),
-        age: SchemaValidation.entier({ obligatoire: false }),
+        dateNaissance: SchemaValidation.dateIncomplete(),
+        renseignerAge: SchemaValidation.booleen(),
+        age: SchemaValidation.entier(),
         lieuNaissance: AdresseSchemaValidationFormulaire(`${parentPrefix}.lieuNaissance`),
-        profession: SchemaValidation.texte({ obligatoire: false }),
-        sansProfession: SchemaValidation.booleen({ obligatoire: false }),
+        profession: SchemaValidation.texte(),
+        sansProfession: SchemaValidation.booleen(),
         domicile: AdresseSchemaValidationFormulaire(`${parentPrefix}.domicile`)
       });
     };
@@ -441,15 +441,15 @@ export const ProjetActeNaissanceTranscriptionForm = {
         ])
       }),
       prenomsChemin: SchemaValidation.prenoms("declarant.prenomsChemin.prenom"),
-      age: SchemaValidation.entier({ obligatoire: false }),
-      qualite: SchemaValidation.texte({ obligatoire: false }),
-      profession: SchemaValidation.texte({ obligatoire: false }),
+      age: SchemaValidation.entier(),
+      qualite: SchemaValidation.texte(),
+      profession: SchemaValidation.texte(),
       domicile: AdresseSchemaValidationFormulaire("declarant.domicile", true),
-      complement: SchemaValidation.texte({ obligatoire: false })
+      complement: SchemaValidation.texte()
     });
 
     const MentionsSchemaValidationFormulaire = SchemaValidation.objet({
-      mentions: SchemaValidation.texte({ obligatoire: false })
+      mentions: SchemaValidation.texte()
     });
 
     const FormuleFinaleSchemaValidationFormulaire = SchemaValidation.objet({
@@ -464,9 +464,9 @@ export const ProjetActeNaissanceTranscriptionForm = {
         ])
       }),
       prenomsChemin: SchemaValidation.prenoms("mentionsEtFormuleFinale.prenomsChemin.prenom"),
-      qualite: SchemaValidation.texte({ obligatoire: false }),
+      qualite: SchemaValidation.texte(),
       pieceProduite: SchemaValidation.texte({ obligatoire: true }),
-      legalisationApostille: SchemaValidation.texte({ obligatoire: false }),
+      legalisationApostille: SchemaValidation.texte(),
       autresPieces: SchemaValidation.texte({
         obligatoire: ConditionChamp.depuisTableau([
           {
@@ -481,15 +481,9 @@ export const ProjetActeNaissanceTranscriptionForm = {
     });
 
     const LieuEnregistrementSchemaValidation = SchemaValidation.objet({
-      ville: SchemaValidation.texte({
-        obligatoire: false
-      }),
-      etatProvince: SchemaValidation.texte({
-        obligatoire: false
-      }),
-      pays: SchemaValidation.texte({
-        obligatoire: false
-      })
+      ville: SchemaValidation.texte(),
+      etatProvince: SchemaValidation.texte(),
+      pays: SchemaValidation.texte()
     });
 
     const ActeEtrangerSchemaValidationFormulaire = SchemaValidation.objet({
@@ -506,17 +500,10 @@ export const ProjetActeNaissanceTranscriptionForm = {
           }
         ])
       }),
-      dateEnregistrement: SchemaValidation.dateIncomplete({
-        obligatoire: false,
-        bloquerDateFuture: true
-      }),
+      dateEnregistrement: SchemaValidation.dateIncomplete({ bloquerDateFuture: true }),
       lieuEnregistrement: LieuEnregistrementSchemaValidation,
-      redacteur: SchemaValidation.texte({
-        obligatoire: false
-      }),
-      referenceComplement: SchemaValidation.texte({
-        obligatoire: false
-      })
+      redacteur: SchemaValidation.texte(),
+      referenceComplement: SchemaValidation.texte()
     });
     return SchemaValidation.objet({
       titulaire: TitulaireSchemaValidationFormulaire,

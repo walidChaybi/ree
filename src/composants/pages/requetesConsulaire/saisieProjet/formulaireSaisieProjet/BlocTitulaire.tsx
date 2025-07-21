@@ -25,6 +25,7 @@ const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
         <ChampTexte
           name="titulaire.nomActeEtranger"
           libelle="Nom sur l'acte étranger"
+          estObligatoire
         />
         <div className="grid w-full gap-4 text-start">
           <ChampTexte
