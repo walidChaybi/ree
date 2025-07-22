@@ -2207,6 +2207,11 @@ pays
                               name="declarant.identite"
                             >
                               <option
+                                value="INCONNU"
+                              >
+                                Inconnu
+                              </option>
+                              <option
                                 value="PERE"
                               >
                                 Le père
@@ -2220,6 +2225,11 @@ pays
                                 value="PERE_ET_MERE"
                               >
                                 Le père et la mère
+                              </option>
+                              <option
+                                value="LES_PARENTS"
+                              >
+                                Les parents
                               </option>
                               <option
                                 value="TIERS"

@@ -3,9 +3,11 @@ import { IPrenomOrdonneDto } from "@model/form/commun/PrenomsForm";
 import { IAdresse } from "../../IAdresse";
 
 export enum EIdentiteDeclarant {
+  INCONNU = "Inconnu",
   PERE = "Le père",
   MERE = "La mère",
   PERE_ET_MERE = "Le père et la mère",
+  LES_PARENTS = "Les parents",
   TIERS = "Un tiers"
 }
 

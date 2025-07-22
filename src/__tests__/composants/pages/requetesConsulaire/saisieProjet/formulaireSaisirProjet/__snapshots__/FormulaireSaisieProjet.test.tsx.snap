@@ -1437,6 +1437,11 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       name="declarant.identite"
                     >
                       <option
+                        value="INCONNU"
+                      >
+                        Inconnu
+                      </option>
+                      <option
                         value="PERE"
                       >
                         Le père
@@ -1450,6 +1455,11 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                         value="PERE_ET_MERE"
                       >
                         Le père et la mère
+                      </option>
+                      <option
+                        value="LES_PARENTS"
+                      >
+                        Les parents
                       </option>
                       <option
                         value="TIERS"
