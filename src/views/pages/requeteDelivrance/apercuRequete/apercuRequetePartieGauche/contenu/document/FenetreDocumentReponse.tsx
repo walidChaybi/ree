@@ -17,7 +17,7 @@ export const FenetreDocumentReponse: React.FC<DocumentReponseProps> = props => {
   return (
     <FenetreExterne
       titre={`${props.nom} - Req N°${props.numRequete}`}
-      apresfermeture={() => {
+      apresFermeture={() => {
         onClose(props);
       }}
       ratioLargeur={ratioWidth}

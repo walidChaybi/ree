@@ -47,7 +47,7 @@ export const FenetreApercuRequeteLiee: React.FC<FenetreApercuRequeteLieeProps> =
       {fenetreExterne && (
         <FenetreExterne
           titre={`Aperçu requête : N°${props.numeroRequeteLiee}`}
-          apresfermeture={onClose}
+          apresFermeture={onClose}
           hauteur={height}
           largeur={width}
         >

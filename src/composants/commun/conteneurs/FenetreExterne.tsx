@@ -1,6 +1,6 @@
 import createCache from "@emotion/cache";
 import { CacheProvider, EmotionCache } from "@emotion/react";
-import { useEffect, useMemo, useState } from "react";
+import { useLayoutEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import PolicesEtStylesRECE from "../../../utils/PolicesEtStylesRECE";
 
@@ -10,7 +10,7 @@ export interface IFenetreExterneRef {
 
 interface IFenetreExterneProps {
   setFenetreExterneRef?: (fentreExterneRef: IFenetreExterneRef) => void;
-  apresfermeture?: () => void;
+  apresFermeture?: () => void;
   largeur?: number;
   hauteur?: number;
   haut?: number;
@@ -22,7 +22,7 @@ interface IFenetreExterneProps {
 
 const FenetreExterne: React.FC<React.PropsWithChildren<IFenetreExterneProps>> = ({
   setFenetreExterneRef,
-  apresfermeture,
+  apresFermeture,
   largeur,
   hauteur,
   haut,
@@ -40,7 +40,7 @@ const FenetreExterne: React.FC<React.PropsWithChildren<IFenetreExterneProps>> = 
   }, []);
   const [cache, setCache] = useState<EmotionCache | null>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const fenetre = {
       largeur: (largeur ?? (window.innerWidth || document.documentElement.clientWidth || window.screen.width)) * (ratioLargeur ?? 0.5),
       hauteur: (hauteur ?? (window.innerHeight || document.documentElement.clientHeight || window.screen.height)) * (ratioHauteur ?? 0.94),
@@ -56,7 +56,7 @@ const FenetreExterne: React.FC<React.PropsWithChildren<IFenetreExterneProps>> = 
 
     fenetreExterne?.addEventListener("load", () => {
       setFenetreExterneRef?.({ ref: fenetreExterne });
-      apresfermeture && fenetreExterne.addEventListener("beforeunload", apresfermeture);
+      apresFermeture && fenetreExterne.addEventListener("beforeunload", apresFermeture);
       titre && (fenetreExterne.document.title = titre);
       fenetreExterne.document.body.appendChild(conteneurFenetreExterne);
 
@@ -72,9 +72,9 @@ const FenetreExterne: React.FC<React.PropsWithChildren<IFenetreExterneProps>> = 
     });
 
     return () => {
-      apresfermeture && fenetreExterne?.removeEventListener("beforeunload", apresfermeture);
+      apresFermeture && fenetreExterne?.removeEventListener("beforeunload", apresFermeture);
+      apresFermeture?.();
       fenetreExterne?.close();
-      apresfermeture?.();
     };
   }, []);
 

@@ -41,7 +41,7 @@ export const FenetreFiche: React.FC<IFenetreFicheProps> = ({
     <>
       {fenetreOuverteState && (
         <FenetreExterne
-          apresfermeture={closeFenetre}
+          apresFermeture={closeFenetre}
           setFenetreExterneRef={ref => setFenetreExterneRef(ref)}
         >
           <FichePage

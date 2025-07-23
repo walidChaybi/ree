@@ -37,7 +37,7 @@ export const BoutonRechercheRmc: React.FC = () => {
       </Button>
       {rmcExterne && (
         <FenetreExterne
-          apresfermeture={() => setRmcExterne(false)}
+          apresFermeture={() => setRmcExterne(false)}
           largeur={width}
           ratioHauteur={ratioHeight}
           ratioLargeur={1}

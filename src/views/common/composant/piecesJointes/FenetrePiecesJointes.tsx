@@ -20,7 +20,7 @@ export const FenetrePiecesJointes: React.FC<FenetrePieceProps> = props => {
   return (
     <FenetreExterne
       titre={`${props.nom} - Req N°${props.numRequete}`}
-      apresfermeture={() => {
+      apresFermeture={() => {
         onClose(props);
       }}
       ratioLargeur={RATIO_WIDTH}

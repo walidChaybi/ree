@@ -41,7 +41,7 @@ export const LienFiche: React.FC<IDataLienFicheProps> = props => {
       {fenetreOuverteState && (
         <FenetreExterne
           titre={props.title}
-          apresfermeture={() => {
+          apresFermeture={() => {
             toggleFenetre();
           }}
           setFenetreExterneRef={ref => setFenetreExterneRef(ref)}

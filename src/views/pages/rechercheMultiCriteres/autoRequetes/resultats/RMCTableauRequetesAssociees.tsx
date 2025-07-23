@@ -110,7 +110,7 @@ export const RMCTableauRequetesAssociees: React.FC<IRMCTableauRequetesAssocieesP
       {requeteSelectionnee && (
         <FenetreExterne
           titre={`Détails requête : N°${requeteSelectionnee.numeroFonctionnel}`}
-          apresfermeture={onClose}
+          apresFermeture={onClose}
           hauteur={height}
           largeur={width}
         >
