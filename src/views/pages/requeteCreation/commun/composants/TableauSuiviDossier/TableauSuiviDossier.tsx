@@ -1,7 +1,7 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
@@ -103,7 +103,7 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
             datasFiches: [
               {
                 identifiant: ligneSelectionnee.idActe || "",
-                categorie: TypeFiche.ACTE
+                categorie: ETypeFiche.ACTE
               }
             ]
           };
@@ -163,7 +163,7 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
                     estConsultation={true}
                     key={`fiche${fenetreFicheActe.idActe}${fenetreFicheActe.index}`}
                     identifiant={fenetreFicheActe.idActe}
-                    categorie={TypeFiche.ACTE}
+                    categorie={ETypeFiche.ACTE}
                     datasFiches={fenetreFicheActe.datasFiches}
                     numeroRequete={fenetreFicheActe.numeroRequete}
                     onClose={closeFenetre}

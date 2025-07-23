@@ -1,4 +1,4 @@
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { LienFiche } from "@pages/fiche/LienFiche";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
@@ -14,7 +14,7 @@ test.skip("renders Lien fiche fonctionne correctement", () => {
     <MemoryRouter>
       <LienFiche
         identifiant={"7566e16c-2b0e-11eb-adc1-0242ac120002"}
-        categorie={TypeFiche.RC}
+        categorie={ETypeFiche.RC}
         numero={"56533"}
         title={"titre"}
       />

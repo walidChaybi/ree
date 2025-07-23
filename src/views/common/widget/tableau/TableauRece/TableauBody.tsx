@@ -68,7 +68,7 @@ function getRowRender(columnHeaders: TableauTypeColumn[], row: any, idx: number,
         <TableCell
           style={column.style}
           align={column?.align ? column?.align : "center"}
-          key={`row-${idx}-${column.keys[0]}`}
+          key={`row-${idx}-${column.keys.join("-")}`}
         >
           {column.getElement(row)}
         </TableCell>
@@ -80,7 +80,7 @@ function getRowRender(columnHeaders: TableauTypeColumn[], row: any, idx: number,
       }
       tableauBodyCellList.push(
         <TableauBodyCell
-          key={`row-${idx}-${column.keys[0]}`}
+          key={`row-${idx}-${column.keys.join("-")}`}
           valueAtKey={valueAtKey}
           column={column}
         >

@@ -1,14 +1,14 @@
 import { CONFIG_GET_INFORMATIONS_FICHES_REPERTOIRE } from "@api/configurations/etatCivil/repertoireCivil/GetInformationsFicheRepertoire";
 import { Orientation } from "@model/composition/enum/Orientation";
 import { TypeCertificatComposition } from "@model/composition/type/TypeCertificatCompoistion";
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
+import { ETypePacsRcRca } from "@model/etatcivil/enum/ETypePacsRcRca";
 import { FichePacs, IFichePacsDto } from "@model/etatcivil/pacs/FichePacs";
 import { FicheRcRca, IFicheRcDto, IFicheRcaDto } from "@model/etatcivil/rcrca/FicheRcRca";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 import useFetchApi from "../../../../../../hooks/api/FetchApiHook";
@@ -26,13 +26,13 @@ import {
 } from "./GenerationCertificatGestionTypeCertificat";
 
 export function useGenerationCertificatPACSOuRCOuRCAHook(
-  typeCertificat: TypePacsRcRca,
+  typeCertificat: ETypePacsRcRca,
   requete?: IRequeteTableauDelivrance,
-  listePacsRcRca?: IResultatRMCInscription[],
+  listePacsRcRca?: TResultatRMCInscription[],
   inscriptionsRcRadiation?: IInscriptionRc
 ): IResultGenerationInscriptions | undefined {
   const [certificatComposition, setCertificatComposition] = useState<TypeCertificatComposition>();
-  const [listePacsRcRcaATraiter, setListePacsRcRcaATraiter] = useState<IResultatRMCInscription[]>();
+  const [listePacsRcRcaATraiter, setListePacsRcRcaATraiter] = useState<TResultatRMCInscription[]>();
   const [documentsReponsePourStockage, setDocumentsReponsePourStockage] = useState<IDocumentReponse[]>(); // Ne contiendra qu'un seul IDocumentReponse (on stock les doc un par un)
 
   const [fichePacsRcRcaTraiter, setFichePacsRcRcaTraiter] = useState<TFiche[]>([]);
@@ -58,20 +58,20 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
   // 1- Récupération des informations sur le PACS/RC/RCA courant
   const { appelApi } = useFetchApi(CONFIG_GET_INFORMATIONS_FICHES_REPERTOIRE);
   useEffect(() => {
-    if (!(typeCertificat && pacsRcRcaCourant?.idInscription)) return;
+    if (!(typeCertificat && pacsRcRcaCourant?.id)) return;
 
     appelApi({
-      parametres: { path: { typeFiche: getTypeFiche(typeCertificat)?.toLowerCase() ?? "", idFiche: pacsRcRcaCourant?.idInscription } },
+      parametres: { path: { typeFiche: getTypeFiche(typeCertificat)?.toLowerCase() ?? "", idFiche: pacsRcRcaCourant?.id } },
       apresSucces: informationsFicheRepertoire => {
         let ficheRepertoire: FichePacs | FicheRcRca | null = null;
         switch (getTypeFiche(typeCertificat)) {
-          case TypeFiche.RC:
+          case ETypeFiche.RC:
             ficheRepertoire = mapRcRca(informationsFicheRepertoire as IFicheRcDto);
             break;
-          case TypeFiche.RCA:
+          case ETypeFiche.RCA:
             ficheRepertoire = mapRcRca(informationsFicheRepertoire as IFicheRcaDto);
             break;
-          case TypeFiche.PACS:
+          case ETypeFiche.PACS:
             ficheRepertoire = FichePacs.depuisDto(informationsFicheRepertoire as IFichePacsDto);
             break;
         }
@@ -88,7 +88,7 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
         });
       }
     });
-  }, [typeCertificat, pacsRcRcaCourant?.idInscription]);
+  }, [typeCertificat, pacsRcRcaCourant?.id]);
 
   const certificatPacsRcRca = useConstructionCertificatPacsRcRca(typeCertificat, informationsPacsRcRca, requete, inscriptionsRcRadiation);
 
@@ -116,9 +116,9 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
           typeDocument: getTypeDocument(typeCertificat),
           nbPages: compositionData.nbPages,
           orientation: Orientation.PORTRAIT,
-          idPacs: recupererIdByTypeRcRcaPacs(TypePacsRcRca.PACS, pacsRcRcaCourant),
-          idRc: recupererIdByTypeRcRcaPacs(TypePacsRcRca.RC, pacsRcRcaCourant),
-          idRca: recupererIdByTypeRcRcaPacs(TypePacsRcRca.RCA, pacsRcRcaCourant)
+          idPacs: recupererIdByTypeRcRcaPacs(ETypePacsRcRca.PACS, pacsRcRcaCourant),
+          idRc: recupererIdByTypeRcRcaPacs(ETypePacsRcRca.RC, pacsRcRcaCourant),
+          idRca: recupererIdByTypeRcRcaPacs(ETypePacsRcRca.RCA, pacsRcRcaCourant)
         } as IDocumentReponse
       ]);
     }
@@ -148,6 +148,6 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
   return resultGenerationCertificat;
 }
 
-function recupererIdByTypeRcRcaPacs(type: TypePacsRcRca, pacsRcRcaCourant?: IResultatRMCInscription | undefined) {
-  return pacsRcRcaCourant?.categorie?.toUpperCase() === type ? pacsRcRcaCourant.idInscription : null;
-}
+const recupererIdByTypeRcRcaPacs = (type: ETypePacsRcRca, pacsRcRcaCourant?: TResultatRMCInscription): string | null => {
+  return pacsRcRcaCourant?.categorie === type ? pacsRcRcaCourant.id : null;
+};

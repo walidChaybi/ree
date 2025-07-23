@@ -1,7 +1,7 @@
 import { IElementsJasperCertificatRCA } from "@model/composition/ICertificatRCAComposition";
 import { IDecret } from "@model/etatcivil/commun/IDecret";
 import { ETypeDecision } from "@model/etatcivil/enum/ETypeDecision";
-import { ETypeInscriptionRcRca } from "@model/etatcivil/enum/ETypeInscriptionRcRca";
+import { ETypeInscriptionRca } from "@model/etatcivil/enum/ETypeInscriptionRca";
 import { TypeAutoriteUtil } from "@model/etatcivil/enum/TypeAutorite";
 import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import DateUtils from "@util/DateUtils";
@@ -27,13 +27,13 @@ function getParagrapheDecisionRecue(infosRCA: FicheRcRca) {
       infosRCA.decision?.autorite.arrondissement
     );
     // Si la décision au RCA est une décision ONAC et de type inscription "Inscription",
-    if (infosRCA.decision?.type === ETypeDecision.ONAC && infosRCA.typeInscription === ETypeInscriptionRcRca.INSCRIPTION) {
+    if (infosRCA.decision?.type === ETypeDecision.ONAC && infosRCA.typeInscription === ETypeInscriptionRca.INSCRIPTION) {
       decisionRecue = getDecisionONACInscription(infosRCA, dateDecision);
     }
     // Si la décision au RCA est une décision de Juridiction et de type inscription "Inscription"
     else if (
       TypeAutoriteUtil.isJuridiction(infosRCA.decision?.autorite.typeAutorite) &&
-      infosRCA.typeInscription === ETypeInscriptionRcRca.INSCRIPTION
+      infosRCA.typeInscription === ETypeInscriptionRca.INSCRIPTION
     ) {
       decisionRecue = getDecisionJuridiction(infosRCA, dateDecision, localite);
       decisionRecue += ` concernant ${infosRCA.nature.article} ${infosRCA.nature.libelle} de : `;
@@ -41,7 +41,7 @@ function getParagrapheDecisionRecue(infosRCA: FicheRcRca) {
     // Si la décision au RCA est une décision de Notaire et de type inscription "Inscription"
     else if (
       TypeAutoriteUtil.isNotaire(infosRCA.decision?.autorite.typeAutorite) &&
-      infosRCA.typeInscription === ETypeInscriptionRcRca.INSCRIPTION
+      infosRCA.typeInscription === ETypeInscriptionRca.INSCRIPTION
     ) {
       decisionRecue = getDecisionNotaire(infosRCA, dateDecision, localite);
       decisionRecue += ` concernant ${infosRCA.nature.article} ${infosRCA.nature.libelle} de : `;

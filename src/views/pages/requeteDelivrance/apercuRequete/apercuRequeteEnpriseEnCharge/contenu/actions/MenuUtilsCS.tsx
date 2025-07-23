@@ -1,11 +1,11 @@
-import { ETypeInscriptionRcRca } from "@model/etatcivil/enum/ETypeInscriptionRcRca";
+import { ETypeInscriptionRc } from "@model/etatcivil/enum/ETypeInscriptionRc";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { IActionOption } from "@model/requete/IActionOption";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 
 export enum INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE {
   REQUETE_INCOMPLETE_ILLISIBLE,
@@ -116,7 +116,7 @@ export function getInscriptionsRCDeTypeRadiation(inscriptionsRC?: IInscriptionRc
   let inscriptionRC: IInscriptionRc[] = [];
   if (inscriptionsRC) {
     inscriptionRC = inscriptionsRC.filter(inscription => {
-      return inscription.typeInscription === ETypeInscriptionRcRca.RADIATION;
+      return inscription.typeInscription === ETypeInscriptionRc.RADIATION;
     });
   }
 
@@ -127,18 +127,15 @@ export function getInscriptionsRCDeTypeModification(inscriptionsRC?: IInscriptio
   let inscriptionRC: IInscriptionRc[] = [];
   if (inscriptionsRC) {
     inscriptionRC = inscriptionsRC.filter(inscription => {
-      return inscription.typeInscription === ETypeInscriptionRcRca.MODIFICATION;
+      return inscription.typeInscription === ETypeInscriptionRc.MODIFICATION;
     });
   }
 
   return inscriptionRC;
 }
 
-export const estPresentRcTypeModification = (inscriptions?: IResultatRMCInscription[]): IResultatRMCInscription | undefined => {
-  if (inscriptions) {
-    return inscriptions.find(inscription => inscription.typeInscription === ETypeInscriptionRcRca.MODIFICATION);
-  }
-};
+export const estPresentRcTypeModification = (inscriptions?: TResultatRMCInscription[]): TResultatRMCInscription | undefined =>
+  inscriptions?.find(inscription => inscription.type === "MODIFICATION");
 
 export function getInscriptionsDeTypeModificationEtRadiation(inscriptionsRC?: IInscriptionRc[]) {
   const inscrptionsRCModification = getInscriptionsRCDeTypeModification(inscriptionsRC);

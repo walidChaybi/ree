@@ -1,11 +1,11 @@
 import { updateDateDerniereDelivranceRcRcaPacs } from "@api/appels/etatcivilApi";
-import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
+import { ETypePacsRcRca } from "@model/etatcivil/enum/ETypePacsRcRca";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 
 export interface IDerniereDelivranceRcRcaPacsParams {
   idRepertoire: string;
-  typeRepertoire: TypePacsRcRca;
+  typeRepertoire: ETypePacsRcRca;
 }
 
 interface IDerniereDelivranceRcRcaPacsResultat {

@@ -1,6 +1,6 @@
 import { IElementsJasperCertificatRC } from "@model/composition/ICertificatRCComposition";
 import { IDecret } from "@model/etatcivil/commun/IDecret";
-import { ETypeInscriptionRcRca } from "@model/etatcivil/enum/ETypeInscriptionRcRca";
+import { ETypeInscriptionRc } from "@model/etatcivil/enum/ETypeInscriptionRc";
 import { NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { TypeAutoriteUtil } from "@model/etatcivil/enum/TypeAutorite";
 import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
@@ -43,12 +43,9 @@ function getParagrapheDecisionRecue1(infosRC: FicheRcRca) {
 function getParagrapheDecisionRecue2(infosRC: FicheRcRca) {
   let decisionRecue = "";
   if (infosRC.decision) {
-    if (
-      infosRC.typeInscription === ETypeInscriptionRcRca.RENOUVELLEMENT ||
-      infosRC.typeInscription === ETypeInscriptionRcRca.MODIFICATION
-    ) {
+    if (infosRC.typeInscription === ETypeInscriptionRc.RENOUVELLEMENT || infosRC.typeInscription === ETypeInscriptionRc.MODIFICATION) {
       decisionRecue = "concernant : ";
-    } else if (infosRC.typeInscription === ETypeInscriptionRcRca.INSCRIPTION) {
+    } else if (infosRC.typeInscription === ETypeInscriptionRc.INSCRIPTION) {
       if (infosRC.nature.type === "Protection des majeurs") {
         decisionRecue = `concernant le placement de : `;
       } else {
@@ -64,7 +61,7 @@ function getParagrapheDecisionRecue2(infosRC: FicheRcRca) {
 
 function getResume(data: FicheRcRca) {
   let resume = undefined;
-  if (data.typeInscription === ETypeInscriptionRcRca.INSCRIPTION && data.nature.type === "Protection des majeurs") {
+  if (data.typeInscription === ETypeInscriptionRc.INSCRIPTION && data.nature.type === "Protection des majeurs") {
     resume = `sous le régime ${formatDe(data.nature.libelle)}${data.nature.libelle}`;
   }
   return resume;
@@ -73,9 +70,9 @@ function getResume(data: FicheRcRca) {
 function getRenouvellementModification(data?: FicheRcRca, inscriptionsRcRadiation?: IInscriptionRc): string | undefined {
   let renouvellementModification;
   if (data) {
-    if (inscriptionsRcRadiation && data.typeInscription === ETypeInscriptionRcRca.MODIFICATION) {
+    if (inscriptionsRcRadiation && data.typeInscription === ETypeInscriptionRc.MODIFICATION) {
       renouvellementModification = getModificationJasper(data, inscriptionsRcRadiation);
-    } else if (data.typeInscription === ETypeInscriptionRcRca.RENOUVELLEMENT) {
+    } else if (data.typeInscription === ETypeInscriptionRc.RENOUVELLEMENT) {
       renouvellementModification = getRenouvellementJasper(data);
     }
   }

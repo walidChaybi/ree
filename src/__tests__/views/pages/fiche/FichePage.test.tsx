@@ -1,6 +1,6 @@
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { FichePage } from "@pages/fiche/FichePage";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { UN, ZERO } from "@util/Utils";
@@ -36,7 +36,7 @@ describe("Test du composant Fiche page", () => {
               datasFiches={[
                 {
                   identifiant: "7566e16c-2b0e-11eb-adc1-0242ac120002",
-                  categorie: TypeFiche.RC
+                  categorie: ETypeFiche.RC
                 }
               ]}
             />
@@ -66,7 +66,7 @@ describe("Test du composant Fiche page", () => {
               datasFiches={[
                 {
                   identifiant: idFicheActe1,
-                  categorie: TypeFiche.ACTE
+                  categorie: ETypeFiche.ACTE
                 }
               ]}
             />
@@ -113,7 +113,7 @@ describe("Test du composant Fiche page", () => {
               datasFiches={[
                 {
                   identifiant: idFicheActe1,
-                  categorie: TypeFiche.ACTE
+                  categorie: ETypeFiche.ACTE
                 }
               ]}
             />

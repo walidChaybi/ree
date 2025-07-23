@@ -1,11 +1,11 @@
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { FournisseurDonneesBandeau } from "@pages/fiche/contenu/fournisseurDonneesBandeau/FournisseurDonneesBandeau";
 import { fournisseurDonneesBandeauFactory } from "@pages/fiche/contenu/fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
 import { expect, test } from "vitest";
 import { acte, acteElectronique } from "../../../../../mock/data/ficheEtBandeau/ficheActe";
 
 test("Attendu: fournisseur de donnée bandeau pour acte fonctionne correctement", () => {
-  const fournisseurDonneesdActe: FournisseurDonneesBandeau = fournisseurDonneesBandeauFactory.createFournisseur(TypeFiche.ACTE, acte);
+  const fournisseurDonneesdActe: FournisseurDonneesBandeau = fournisseurDonneesBandeauFactory.createFournisseur(ETypeFiche.ACTE, acte);
 
   expect(fournisseurDonneesdActe.getSimplePersonnes()[0].nom).toBe("GREENWALD");
   expect(fournisseurDonneesdActe.getSimplePersonnes()[1].nom).toBe("DUPE");
@@ -20,7 +20,7 @@ test("Attendu: fournisseur de donnée bandeau pour acte fonctionne correctement"
 
 test("Attendu: Un acte electronique modifie l'affichage du registre", () => {
   const fournisseurDonneesdActe: FournisseurDonneesBandeau = fournisseurDonneesBandeauFactory.createFournisseur(
-    TypeFiche.ACTE,
+    ETypeFiche.ACTE,
     acteElectronique
   );
 

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { nettoyerAttributsDto, valeurDtoAbsenteDansEnum } from "../../../dto/commun/dtoUtils";
+import { champsObligatoiresDuDtoAbsents, nettoyerAttributsDto, valeurDtoAbsenteDansEnum } from "../../../dto/commun/dtoUtils";
 
 describe("test nettoyerAttributsDto", () => {
   test("test objet simple", () => {
@@ -186,5 +186,27 @@ describe("test valeurDtoAbsenteDansEnum", () => {
       animal: "CERF" as keyof typeof EAnimal
     };
     expect(valeurDtoAbsenteDansEnum("MonDto", monDto, "animal", EAnimal)).toBeTruthy();
+  });
+});
+
+describe("test champsObligatoiresAbsents", () => {
+  interface IMonDto {
+    objet: {};
+    nom: string;
+    age: number;
+    optionnel?: string;
+  }
+  test("Cas passant", () => {
+    const monDto: IMonDto = {
+      objet: {},
+      nom: "CHAT",
+      age: 15
+    };
+    expect(champsObligatoiresDuDtoAbsents("MonDto", monDto, ["age", "objet", "nom"])).toBeFalsy();
+  });
+
+  test("Cas bloquant", () => {
+    const monDto: IMonDto = {} as IMonDto;
+    expect(champsObligatoiresDuDtoAbsents("MonDto", monDto, ["age", "objet", "nom"])).toBeTruthy();
   });
 });

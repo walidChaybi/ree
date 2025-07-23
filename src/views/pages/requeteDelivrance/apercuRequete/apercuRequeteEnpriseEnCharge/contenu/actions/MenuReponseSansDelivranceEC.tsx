@@ -1,8 +1,8 @@
 import { reinitialiserOnClick } from "@composant/menuTransfert/MenuTransfertUtil";
 import { IActionOption } from "@model/requete/IActionOption";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
+import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
 import { estRenseigne } from "@util/Utils";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
@@ -27,7 +27,7 @@ export const MenuReponseSansDelivranceEC: React.FC<IChoixActionDelivranceProps> 
   const refs = useRef([]);
 
   const [actes, setActes] = useState<ResultatRMCActe[] | undefined>();
-  const [inscriptions, setInscriptions] = useState<IResultatRMCInscription[] | undefined>();
+  const [inscriptions, setInscriptions] = useState<TResultatRMCInscription[] | undefined>();
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
   const [choixDelivrance, setChoixDelivrance] = useState<ChoixDelivrance>();

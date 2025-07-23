@@ -1,5 +1,5 @@
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 
 export interface IRMCPersonneResultat {
   personne: IPersonneRMCPersonne;
@@ -21,6 +21,6 @@ export interface IActeInscriptionRMCPersonne {
   nature: string;
   statut: string;
   reference: string;
-  typeFiche: TypeFiche;
+  typeFiche: ETypeFiche;
   statutOuType: string;
 }

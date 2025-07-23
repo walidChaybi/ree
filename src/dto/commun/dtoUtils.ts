@@ -11,6 +11,21 @@ export const valeurDtoAbsenteDansEnum = <TType extends object, TEnum extends { [
   return false;
 };
 
+export const champsObligatoiresDuDtoAbsents = <TType extends object>(
+  nomDto: string,
+  dto: TType,
+  champsObligatoires: keyof TType extends string ? (keyof TType)[] : never
+): boolean =>
+  champsObligatoires
+    .map(cle => {
+      if (dto[cle] === undefined) {
+        console.error(`Le champ obligatoire ${cle} d'un ${nomDto} n'est pas défini.`);
+        return true;
+      }
+      return false;
+    })
+    .some(valeur => valeur);
+
 export const nettoyerAttributsDto = <TObjet extends any[] | { [cle: string]: any }>(objet: TObjet): TObjet => {
   return (
     Array.isArray(objet) ? supprimeElementsVidesTableau(objet) : supprimeAttributsVidesObjet(objet as { [cle: string]: any })

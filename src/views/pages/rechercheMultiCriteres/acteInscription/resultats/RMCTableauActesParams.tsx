@@ -1,5 +1,6 @@
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { HeaderTableauRMCActe } from "@model/rmc/headerTableau/HeaderTableauRMCActe";
+import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import {
   getColonneCasesACocher,
   IColonneCaseACocherParams
@@ -12,19 +13,26 @@ import { commonHeadersTableauRMC, TypeRMC } from "./RMCTableauCommun";
 const columnsTableauRmc = [
   ...commonHeadersTableauRMC,
   new TableauTypeColumn({
-    keys: [HeaderTableauRMCActe.DATE_EVENEMENT.nom],
-    title: HeaderTableauRMCActe.DATE_EVENEMENT.libelle,
+    keys: ["nature"],
+    title: "Nature",
+    align: "left",
+    getElement: (acte: ResultatRMCActe) => <span>{ENatureActe[acte.nature]}</span>,
     className: "ColOverflow"
   }),
   new TableauTypeColumn({
-    keys: [HeaderTableauRMCActe.REGISTRE_ELECTRONIQUE.nom],
-    title: HeaderTableauRMCActe.REGISTRE_ELECTRONIQUE.libelle,
+    keys: ["dateEvenement"],
+    title: "Date d'événement",
+    className: "ColOverflow"
+  }),
+  new TableauTypeColumn({
+    keys: ["referenceRece"],
+    title: "Réf. RECE",
     className: "ColOverflow",
     style: { width: "200px" }
   }),
   new TableauTypeColumn({
-    keys: [HeaderTableauRMCActe.REGISTRE_PAPIER.nom],
-    title: HeaderTableauRMCActe.REGISTRE_PAPIER.libelle,
+    keys: ["referenceRegistre"],
+    title: "Réf. registre",
     className: "ColOverflow",
     style: { width: "200px" }
   })

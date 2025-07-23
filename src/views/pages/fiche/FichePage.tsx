@@ -30,7 +30,7 @@ import React, { useCallback, useContext, useEffect, useMemo, useState } from "re
 import { useNavigate } from "react-router";
 import { IFenetreExterneRef } from "../../../composants/commun/conteneurs/FenetreExterne";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
-import { FicheUtil, TypeFiche } from "../../../model/etatcivil/enum/TypeFiche";
+import { ETypeFiche } from "../../../model/etatcivil/enum/ETypeFiche";
 import { BoutonCreationRDD } from "./BoutonCreationRDD/BoutonCreationRDD";
 import { setFiche } from "./FicheUtils";
 import { BandeauAlertesActe } from "./contenu/BandeauAlertesActe";
@@ -58,7 +58,7 @@ interface FichePageProps {
 
 export interface IDataFicheProps {
   identifiant: string;
-  categorie: TypeFiche;
+  categorie: ETypeFiche;
   lienSuivant?: string;
   lienPrecedent?: string;
 }
@@ -266,7 +266,7 @@ export const FichePage: React.FC<FichePageProps> = ({
           <BandeauFiche
             dataBandeau={bandeauFiche}
             elementNumeroLigne={
-              FicheUtil.isActe(dataFicheCourante.categorie) ? (
+              dataFicheCourante.categorie === ETypeFiche.ACTE ? (
                 <BandeauFicheActeNumero dataBandeau={bandeauFiche} />
               ) : (
                 <BandeauFicheRcRcaPacsNumero dataBandeau={bandeauFiche} />
@@ -284,7 +284,7 @@ export const FichePage: React.FC<FichePageProps> = ({
             </div>
           )}
 
-          {dataFicheCourante.categorie === TypeFiche.ACTE && (
+          {dataFicheCourante.categorie === ETypeFiche.ACTE && (
             <div className="headerFichePage">
               <BandeauAlertesActe
                 alertes={alertes}

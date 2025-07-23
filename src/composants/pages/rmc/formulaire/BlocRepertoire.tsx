@@ -1,6 +1,6 @@
+import { ETypePacsRcRca } from "@model/etatcivil/enum/ETypePacsRcRca";
 import { NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { NatureRca } from "@model/etatcivil/enum/NatureRca";
-import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
 import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
 import { enumVersOptions } from "@util/Utils";
 import { getIn, useFormikContext } from "formik";
@@ -49,7 +49,7 @@ const BlocRepertoire: React.FC = () => {
         <ChampListeDeroulante
           name="registreRepertoire.repertoire.typeRepertoire"
           libelle="Type de répertoire"
-          options={[{ cle: "", libelle: "" }, ...enumVersOptions(TypePacsRcRca)]}
+          options={[{ cle: "", libelle: "" }, ...enumVersOptions(ETypePacsRcRca)]}
         />
         <ChampRcRcaPacs
           name="registreRepertoire.repertoire.numeroInscription"

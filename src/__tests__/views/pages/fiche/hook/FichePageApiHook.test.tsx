@@ -1,29 +1,29 @@
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { useFichePageApiHook } from "@pages/fiche/hook/FichePageApiHook";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
 import { expect, test } from "vitest";
 
 const HookConsummerRc: React.FC = () => {
-  const { dataFicheState } = useFichePageApiHook(false, TypeFiche.RC, "7566e16c-2b0e-11eb-adc1-0242ac120002");
+  const { dataFicheState } = useFichePageApiHook(false, ETypeFiche.RC, "7566e16c-2b0e-11eb-adc1-0242ac120002");
 
   return <>{dataFicheState?.data && <div data-testid={"test-fiche-hook"}>{dataFicheState.data.id}</div>}</>;
 };
 
 const HookConsummerRca: React.FC = () => {
-  const { dataFicheState } = useFichePageApiHook(false, TypeFiche.RCA, "135e4dfe-9757-4d5d-8715-359c6e73289b");
+  const { dataFicheState } = useFichePageApiHook(false, ETypeFiche.RCA, "135e4dfe-9757-4d5d-8715-359c6e73289b");
 
   return <>{dataFicheState?.data && <div data-testid={"test-fiche-hook-rca"}>{dataFicheState.data.id}</div>}</>;
 };
 
 const HookConsummerPacs: React.FC = () => {
-  const { dataFicheState } = useFichePageApiHook(false, TypeFiche.PACS, "89c9d030-26c3-41d3-bdde-8b4dcc0420e0");
+  const { dataFicheState } = useFichePageApiHook(false, ETypeFiche.PACS, "89c9d030-26c3-41d3-bdde-8b4dcc0420e0");
 
   return <>{dataFicheState?.data && <div data-testid={"test-fiche-hook-pacs"}>{dataFicheState.data.id}</div>}</>;
 };
 
 const HookConsummerActe: React.FC = () => {
-  const { dataFicheState } = useFichePageApiHook(false, TypeFiche.ACTE, "b41079a5-9e8d-478c-b04c-c4c2ac67134f");
+  const { dataFicheState } = useFichePageApiHook(false, ETypeFiche.ACTE, "b41079a5-9e8d-478c-b04c-c4c2ac67134f");
 
   return <>{dataFicheState?.data && <div data-testid={"test-fiche-hook-acte"}>{dataFicheState.data.id}</div>}</>;
 };

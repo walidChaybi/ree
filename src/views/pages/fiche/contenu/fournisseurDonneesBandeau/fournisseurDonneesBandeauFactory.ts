@@ -1,22 +1,22 @@
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
 import { FournisseurDonneeBandeauActe } from "./FournisseurDonneesBandeauActe";
 import { FournisseurDonneeBandeauPacs } from "./FournisseurDonneesBandeauPacs";
 import { FournisseurDonneesBandeauRcRca } from "./FournisseurDonneesBandeauRcRca";
 
 class FournisseurDonneesBandeauFactory {
-  createFournisseur(categorie: TypeFiche, data: any) {
+  createFournisseur(categorie: ETypeFiche, data: any) {
     let fournisseur: FournisseurDonneesBandeau;
 
     switch (categorie) {
-      case TypeFiche.RC:
-      case TypeFiche.RCA:
+      case ETypeFiche.RC:
+      case ETypeFiche.RCA:
         fournisseur = new FournisseurDonneesBandeauRcRca(data);
         break;
-      case TypeFiche.PACS:
+      case ETypeFiche.PACS:
         fournisseur = new FournisseurDonneeBandeauPacs(data);
         break;
-      case TypeFiche.ACTE:
+      case ETypeFiche.ACTE:
         fournisseur = new FournisseurDonneeBandeauActe(data);
         break;
 

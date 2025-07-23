@@ -1,9 +1,9 @@
-import { ETypeInscriptionRcRca } from "../enum/ETypeInscriptionRcRca";
+import { ETypeInscriptionRc } from "../enum/ETypeInscriptionRc";
 
 export interface IInscriptionLiee {
   id: string;
   annee: string;
   numero: string;
-  typeInscription: keyof typeof ETypeInscriptionRcRca;
+  typeInscription: keyof typeof ETypeInscriptionRc;
   nature: string;
 }

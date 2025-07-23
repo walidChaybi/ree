@@ -1,8 +1,7 @@
 import { CONFIG_POST_RMC_ACTE } from "@api/configurations/etatCivil/acte/PostRMCActeConfigApi";
-import { IRMCActeApiHookResultat } from "@hook/rmcActeInscription/RMCActeEtActeArchiveHookUtil";
 import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
-import { getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
+import { IParamsTableau, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
 import { logError } from "@util/LogManager";
 import messageManager from "@util/messageManager";
 import { useEffect, useState } from "react";
@@ -16,8 +15,14 @@ export interface ICriteresRechercheActeArchive {
   ficheIdentifiant?: string;
 }
 
-export function useRMCActeArchiveApiHook(criteres?: ICriteresRechercheActeArchive): IRMCActeApiHookResultat | null {
-  const [resultat, setResultat] = useState<IRMCActeApiHookResultat | null>(null);
+interface IRMCActeArchiveApiHookResultat {
+  dataRMCActe: ResultatRMCActe[];
+  dataTableauRMCActe?: IParamsTableau;
+  ficheIdentifiant?: string;
+}
+
+export function useRMCActeArchiveApiHook(criteres?: ICriteresRechercheActeArchive): IRMCActeArchiveApiHookResultat | null {
+  const [resultat, setResultat] = useState<IRMCActeArchiveApiHookResultat | null>(null);
   const { appelApi: rmcActe } = useFetchApi(CONFIG_POST_RMC_ACTE);
 
   useEffect(() => {

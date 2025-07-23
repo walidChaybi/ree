@@ -1,5 +1,5 @@
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
 import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
@@ -28,11 +28,11 @@ class SpecificationDeliver {
     let phrasesLiees: string | undefined;
     phrasesLiees = "";
 
-    phrasesLiees = this.nextPhrase(phrasesLiees, this.demande.pacs, infosInscription.infosPacs, sexe, TypeFiche.PACS);
+    phrasesLiees = this.nextPhrase(phrasesLiees, this.demande.pacs, infosInscription.infosPacs, sexe, ETypeFiche.PACS);
 
-    phrasesLiees = this.nextPhrase(phrasesLiees, this.demande.rc, infosInscription.infosRc, sexe, TypeFiche.RC);
+    phrasesLiees = this.nextPhrase(phrasesLiees, this.demande.rc, infosInscription.infosRc, sexe, ETypeFiche.RC);
 
-    phrasesLiees = this.nextPhrase(phrasesLiees, this.demande.rca, infosInscription.infosRca, sexe, TypeFiche.RCA);
+    phrasesLiees = this.nextPhrase(phrasesLiees, this.demande.rca, infosInscription.infosRca, sexe, ETypeFiche.RCA);
 
     let phrasesPiecesJointes: string | undefined;
 
@@ -43,7 +43,7 @@ class SpecificationDeliver {
     return { phrasesLiees, phrasesPiecesJointes };
   }
 
-  nextPhrase(phrases: string, demande: boolean, infosInscription: FichePacs[] | FicheRcRca[], sexe: Sexe, type: TypeFiche) {
+  nextPhrase(phrases: string, demande: boolean, infosInscription: FichePacs[] | FicheRcRca[], sexe: Sexe, type: ETypeFiche) {
     const messages = this.getText(type);
     let phraseSuivante = "";
     if (demande && infosInscription.length > 0) {
@@ -77,32 +77,32 @@ class SpecificationDeliver {
     }
   }
 
-  getInfoComplementaire(type: TypeFiche, info: FichePacs | FicheRcRca) {
+  getInfoComplementaire(type: ETypeFiche, info: FichePacs | FicheRcRca) {
     let infoComplementaire = "";
-    if (type === TypeFiche.PACS) {
+    if (type === ETypeFiche.PACS) {
       infoComplementaire = ` (${(info as FichePacs).statut.toLowerCase()})`;
     }
 
     return infoComplementaire;
   }
 
-  getText(type: TypeFiche) {
+  getText(type: ETypeFiche) {
     switch (type) {
-      case TypeFiche.PACS:
+      case ETypeFiche.PACS:
         return {
           inscrite: INSCRITE_PACS,
           inscrit: INSCRIT_PACS,
           pasInscrite: PAS_INSCRITE_PACS,
           pasInscrit: PAS_INSCRIT_PACS
         };
-      case TypeFiche.RC:
+      case ETypeFiche.RC:
         return {
           inscrite: INSCRITE_RC,
           inscrit: INSCRIT_RC,
           pasInscrite: PAS_INSCRITE_RC,
           pasInscrit: PAS_INSCRIT_RC
         };
-      case TypeFiche.RCA:
+      case ETypeFiche.RCA:
         return {
           inscrite: INSCRITE_RCA,
           inscrit: INSCRIT_RCA,

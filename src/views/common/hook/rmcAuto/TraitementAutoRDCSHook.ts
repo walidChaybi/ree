@@ -2,16 +2,14 @@ import { useReponseSansDelivranceCS } from "@hook/reponseSansDelivrance/ChoixRep
 import { createReponseSansDelivranceCSPourCompositionApiPACSNonInscrit } from "@hook/reponseSansDelivrance/ReponseSansDelivranceCSFonctions";
 import { IReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
 import { NOM_DOCUMENT_REFUS_PACS_NON_INSCRIT } from "@model/composition/IReponseSansDelivranceCSPACSNonInscritComposition";
-import { EStatutFiche } from "@model/etatcivil/enum/EStatutFiche";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
-import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
+import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { mappingRequeteTableauVersRequeteDelivrance } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { PATH_APERCU_REQ_TRAITEMENT } from "@router/ReceUrls";
 import messageManager from "@util/messageManager";
@@ -32,7 +30,7 @@ export interface ITraitementAutoRDCSParams {
   requete: IRequeteTableauDelivrance;
   urlCourante: string;
   dataRMCAutoActe: ResultatRMCActe[];
-  dataRMCAutoInscription: IResultatRMCInscription[];
+  dataRMCAutoInscription: TResultatRMCInscription[];
 }
 
 export const useTraitementAutoRDCSHook = (params: ITraitementAutoRDCSParams | null): boolean => {
@@ -108,7 +106,7 @@ export const useTraitementAutoRDCSHook = (params: ITraitementAutoRDCSParams | nu
 
 const getNbInscriptionsInfos = (
   dataRMCAutoActe?: ResultatRMCActe[],
-  dataRMCAutoInscription?: IResultatRMCInscription[]
+  dataRMCAutoInscription?: TResultatRMCInscription[]
 ): INbInscriptionsInfos => {
   const infos: INbInscriptionsInfos = {
     nbActe: dataRMCAutoActe?.length ?? 0,
@@ -117,16 +115,15 @@ const getNbInscriptionsInfos = (
     nbPacs: 0
   };
 
-  dataRMCAutoInscription?.forEach(data => {
-    const typeFiche: TypeFiche = FicheUtil.getTypeFicheFromString(data.categorie);
-    switch (typeFiche) {
-      case TypeFiche.RC:
+  dataRMCAutoInscription?.forEach(inscription => {
+    switch (inscription.categorie) {
+      case "RC":
         infos.nbRc++;
         break;
-      case TypeFiche.RCA:
+      case "RCA":
         infos.nbRca++;
         break;
-      case TypeFiche.PACS:
+      case "PACS":
         infos.nbPacs++;
         break;
     }
@@ -135,13 +132,9 @@ const getNbInscriptionsInfos = (
   return infos;
 };
 
-const contientPacsAuStatutActif = (resulatatInscriptionPacs?: IResultatRMCInscription[]): boolean =>
+const contientPacsAuStatutActif = (resulatatInscriptionPacs?: TResultatRMCInscription[]): boolean =>
   resulatatInscriptionPacs
-    ? resulatatInscriptionPacs.some(inscription =>
-        Boolean(
-          FicheUtil.getTypeFicheFromString(inscription.categorie) === TypeFiche.PACS && inscription.statutInscription === EStatutFiche.ACTIF
-        )
-      )
+    ? resulatatInscriptionPacs.some(inscription => inscription.categorie === "PACS" && inscription.statut === "ACTIF")
     : false;
 
 export const estEligibleAuTraitementAutoRDCS = (requete: IRequeteDelivrance): boolean => {

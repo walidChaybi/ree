@@ -29,8 +29,8 @@ describe("Test RMCAutoApiHook", () => {
     const resultatRMCActe = useRMCActeApiHook(criteres);
     return (
       <>
-        {resultatRMCActe?.dataRMCActe && resultatRMCActe?.dataRMCActe.length > 0 && (
-          <div data-testid="test-rmc-acte-hook">{resultatRMCActe.dataRMCActe[0].id}</div>
+        {resultatRMCActe.resultat?.dataRMCActe && resultatRMCActe.resultat.dataRMCActe.length > 0 && (
+          <div data-testid="test-rmc-acte-hook">{resultatRMCActe.resultat.dataRMCActe[0].id}</div>
         )}
       </>
     );
@@ -73,7 +73,7 @@ describe("Test RMCAutoApiHook", () => {
 
     return (
       <>
-        {resultatRMCActe?.dataRMCActe && resultatRMCActe.dataRMCActe.length === 0 && (
+        {resultatRMCActe.resultat?.dataRMCActe && resultatRMCActe.resultat.dataRMCActe.length === 0 && (
           <div data-testid="test-rmc-acte-hook">Recherche non autorisée</div>
         )}
       </>

@@ -1,4 +1,5 @@
 import DateUtils, { TDateArrayDTO } from "@util/DateUtils";
+import { champsObligatoiresDuDtoAbsents } from "../../../dto/commun/dtoUtils";
 import { IPersonneDTO, Personne } from "../commun/Personne";
 import { IAlerte } from "../fiche/IAlerte";
 import { IStatutFicheDTO, StatutFiche } from "../fiche/StatutFiche";
@@ -46,10 +47,7 @@ export class FicheInscription {
   ) {}
 
   protected static readonly inscriptionDepuisDto = (ficheInscription: IFicheInscriptionDto): FicheInscription | null => {
-    if (FicheInscription.champsObligatoires.some(cle => ficheInscription[cle] === undefined)) {
-      console.error(`Un champ obligatoire d'une FicheInscription n'est pas défini.`);
-      return null;
-    }
+    if (champsObligatoiresDuDtoAbsents("FicheInscription", ficheInscription, this.champsObligatoires)) return null;
 
     return new FicheInscription(
       ficheInscription.id,

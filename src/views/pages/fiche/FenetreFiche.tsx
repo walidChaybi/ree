@@ -1,4 +1,4 @@
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import React, { useState } from "react";
 import FenetreExterne, { IFenetreExterneRef } from "../../../composants/commun/conteneurs/FenetreExterne";
 import { FichePage, IDataFicheProps, IIndex } from "./FichePage";
@@ -7,7 +7,7 @@ import "./scss/LienFiche.scss";
 interface IFenetreFicheProps {
   estConsultation?: boolean;
   identifiant: string;
-  categorie: TypeFiche;
+  categorie: ETypeFiche;
   onClose: (id: string, index: number) => void;
   datasFiches: IDataFicheProps[];
   numeroRequete?: string;

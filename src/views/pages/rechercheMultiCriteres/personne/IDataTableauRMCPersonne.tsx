@@ -1,4 +1,4 @@
-import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 
 export interface IDataTableauRMCPersonne {
   idPersonneOuActeInscription: string;
@@ -12,7 +12,7 @@ export interface IDataTableauRMCPersonne {
   nature: string;
   statut: string;
   reference: string;
-  typeFiche?: TypeFiche;
+  typeFiche?: ETypeFiche;
   statutOuType: string;
 }
 
@@ -24,7 +24,7 @@ export const DataTableauRMCPersonne = {
   estActe(data: IDataTableauRMCPersonne): boolean {
     let estActe = false;
     if (data.typeFiche) {
-      estActe = FicheUtil.isActe(data.typeFiche);
+      estActe = data.typeFiche === ETypeFiche.ACTE;
     }
     return estActe;
   }

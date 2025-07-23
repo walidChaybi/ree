@@ -1,7 +1,7 @@
 import { acte } from "@mock/data/ficheEtBandeau/ficheActe";
 import { fichePacsPourBandeau } from "@mock/data/fichePACS";
 import { FicheRcPourBandeauFiche } from "@mock/data/ficheRC";
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
 import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import { IDataFicheProps } from "@pages/fiche/FichePage";
@@ -11,7 +11,7 @@ import { expect, test } from "vitest";
 test("bandeauFicheUtils setDataBandeau fonctionne pour RC/RCA", () => {
   const dataFiche = {
     identifiant: "d994e5c1-6bcd-44cd-af7a-41da6bab4669",
-    categorie: TypeFiche.RC
+    categorie: ETypeFiche.RC
   } as IDataFicheProps;
 
   const ficheRc = FicheRcRca.RcDepuisDto(FicheRcPourBandeauFiche);
@@ -28,7 +28,7 @@ test("bandeauFicheUtils setDataBandeau fonctionne pour RC/RCA", () => {
 test("bandeauFicheUtils setDataBandeau fonctionne pour PACS", () => {
   const dataFiche = {
     identifiant: "d994e5c1-6bcd-44cd-af7a-41da6bab4669",
-    categorie: TypeFiche.PACS
+    categorie: ETypeFiche.PACS
   } as IDataFicheProps;
 
   const fichePacs = FichePacs.depuisDto(fichePacsPourBandeau);
@@ -44,7 +44,7 @@ test("bandeauFicheUtils setDataBandeau fonctionne pour PACS", () => {
 test("bandeauFicheUtils setDataBandeau works Acte", () => {
   const dataFiche = {
     identifiant: "d994e5c1-6bcd-44cd-af7a-41da6bab4669",
-    categorie: TypeFiche.ACTE
+    categorie: ETypeFiche.ACTE
   } as IDataFicheProps;
 
   const data = acte;

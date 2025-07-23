@@ -6,8 +6,8 @@ import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
+import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import React, { useContext } from "react";
 import { MenuDelivrerCS } from "./MenuDelivrerCS";
@@ -19,7 +19,7 @@ import "./scss/ChoixAction.scss";
 export interface IChoixActionDelivranceProps {
   requete: IRequeteDelivrance;
   actes?: ResultatRMCActe[];
-  inscriptions?: IResultatRMCInscription[];
+  inscriptions?: TResultatRMCInscription[];
   inscriptionsRC?: IInscriptionRc[];
   dataHistory?: any;
   titulairesActe?: Map<string, ITitulaireActe[]>;

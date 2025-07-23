@@ -2,7 +2,7 @@ import { IFamille } from "@model/etatcivil/commun/IFamille";
 import { IFicheLien } from "@model/etatcivil/commun/IFicheLien";
 import { IFicheLienActes } from "@model/etatcivil/commun/IFicheLienActes";
 import { IPersonne, Personne, PersonneUtils } from "@model/etatcivil/commun/Personne";
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { remplaceSNP, remplaceSPC } from "@util/Utils";
 import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
@@ -269,7 +269,7 @@ function getActesPersonne(actes: IFicheLienActes[]): SectionContentProps {
   const liensActes = actes?.map(acte => (
     <div key={`acte-${acte.numero}`}>
       <LienFiche
-        categorie={TypeFiche.ACTE}
+        categorie={ETypeFiche.ACTE}
         numero={acte.referenceComplete}
         identifiant={acte.id}
       />
@@ -286,7 +286,7 @@ function getRcsPersonne(rcs: IFicheLien[]): SectionContentProps {
     return (
       <div key={`rc-${rc.numero}`}>
         <LienFiche
-          categorie={TypeFiche.RC}
+          categorie={ETypeFiche.RC}
           numero={rc.referenceComplete}
           identifiant={rc.id}
         />
@@ -304,7 +304,7 @@ function getRcasPersonne(rcas: IFicheLien[]): SectionContentProps {
     return (
       <div key={`rca-${rca.numero}`}>
         <LienFiche
-          categorie={TypeFiche.RCA}
+          categorie={ETypeFiche.RCA}
           numero={rca.referenceComplete}
           identifiant={rca.id}
         />
@@ -322,7 +322,7 @@ function getPacssPersonne(pacss: IFicheLien[]): SectionContentProps {
     return (
       <div key={`pacs-${pacs.numero}`}>
         <LienFiche
-          categorie={TypeFiche.PACS}
+          categorie={ETypeFiche.PACS}
           numero={pacs.referenceComplete}
           identifiant={pacs.id}
         />

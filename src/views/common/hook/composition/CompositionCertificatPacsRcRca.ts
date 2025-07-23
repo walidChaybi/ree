@@ -1,34 +1,25 @@
 import { compositionApi } from "@api/appels/compositionApi";
 import { IDonneesComposition } from "@model/composition/commun/retourApiComposition/IDonneesComposition";
 import { TypeCertificatComposition } from "@model/composition/type/TypeCertificatCompoistion";
-import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
+import { ETypePacsRcRca } from "@model/etatcivil/enum/ETypePacsRcRca";
 import { logError } from "@util/LogManager";
 import { getLibelle } from "@util/Utils";
 import { useEffect, useState } from "react";
 
-export function useCertificatPacsRcRcaApiHook(
-  typeCertificat: TypePacsRcRca,
-  certificatComposition?: TypeCertificatComposition
-) {
-  const [donneesComposition, setDonneesComposition] =
-    useState<IDonneesComposition>();
+export function useCertificatPacsRcRcaApiHook(typeCertificat: ETypePacsRcRca, certificatComposition?: TypeCertificatComposition) {
+  const [donneesComposition, setDonneesComposition] = useState<IDonneesComposition>();
 
   useEffect(() => {
     if (certificatComposition) {
       compositionApi
-        .getCompositionCertificatPacsRcRca(
-          certificatComposition,
-          typeCertificat
-        )
+        .getCompositionCertificatPacsRcRca(certificatComposition, typeCertificat)
         .then(result => {
           setDonneesComposition(result.body.data);
         })
         .catch(error => {
           logError({
             error,
-            messageUtilisateur: getLibelle(
-              "Impossible de créer le document de certificat PACS"
-            )
+            messageUtilisateur: getLibelle("Impossible de créer le document de certificat PACS")
           });
         });
     }

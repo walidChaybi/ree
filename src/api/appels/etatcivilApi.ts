@@ -4,12 +4,8 @@ import { DeleteAlerteActeApiHookParameters } from "@hook/alertes/DeleteAlerteAct
 import { IDerniereDelivranceRcRcaPacsParams } from "@hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
 import { TModeAuthentification } from "@model/agent/types";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import {
-  ICriteresRMCActesInscriptions,
-  ICriteresRMCAutoActeInscription
-} from "@model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import { IRMCAutoPersonneRequest } from "@model/rmc/personne/IRMCAutoPersonneRequest";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import { IActeInscriptionSauvegardeDto } from "../../dto/etatcivil/acte/actesInscriptionsSauvegardes/IActeInscriptionSauvegardeDto";
@@ -26,7 +22,6 @@ const URL_TITULAIRE = "/titulaire";
 const URL_RESUME = "/resume";
 const URL_COUNT_TITULAIRE = "/count/titulaire";
 const URL_ETAT_CIVIL = "/repertoirecivil";
-const URL_ETAT_CIVIL_RMC = "/repertoirecivil/rmc";
 // Utilisé pour visualiser les images de l'acte dans la fiche Acte (renvoie un "InputStreamResource")
 const URL_CORPS_IMAGE = "/corps-image";
 const URL_DONNEES_POUR_COMPOSITION_ACTE_TEXTE = "/donnees-pour-composition-acte-texte";
@@ -35,7 +30,6 @@ const URL_DONNEES_POUR_COMPOSITION_ACTE_AVANT_SIGNATURE_MENTIONS = "/donnees-pou
 const URL_POCOPAS_DEBUTENT_PAR = "/acte/pocopas/debutentPar";
 export const URL_MENTION = "/mentions";
 const URL_CORPS_TEXTE = "/corpstexte";
-const URL_ETAT_CIVIL_RMC_AUTO = "/repertoirecivil/rmcauto";
 const URL_ALERTES_ACTE = "/alertes";
 const URL_ALERTE_ACTE = "/alerte";
 const URL_DERNIERE_DELIVRANCE_RC_RCA_PACS = "/repertoirecivil/datedernieredelivrance";
@@ -56,8 +50,8 @@ const URL_ACTE_RECOMPOSER_APRES_SIGNATURE = "/recomposer-document-final";
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
  */
-export function getInformationsFiche(typeFiche: TypeFiche, identifiant: string, estConsultation = false): Promise<any> {
-  if (typeFiche === TypeFiche.ACTE) {
+export function getInformationsFiche(typeFiche: ETypeFiche, identifiant: string, estConsultation = false): Promise<any> {
+  if (typeFiche === ETypeFiche.ACTE) {
     return getInformationsFicheActe(identifiant, false, estConsultation, false);
   } else {
     return getInformationsFicheRepertoire(typeFiche, identifiant);
@@ -167,7 +161,7 @@ export function getRegistrePapierParIdProjetActe(idActe: string): Promise<any> {
 /**
  * Récupération des informations des Fiches RC/RCA/PACS
  */
-export function getInformationsFicheRepertoire(typeFiche: TypeFiche, identifiant: string): Promise<any> {
+export function getInformationsFicheRepertoire(typeFiche: ETypeFiche, identifiant: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
@@ -237,19 +231,6 @@ export function getInscriptionsRC(identifiant: string): Promise<any> {
     api.fetch({
       method: HttpMethod.GET,
       uri: `${URL_PERSONNES}/${identifiant}${URL_RC}`
-    })
-  );
-}
-
-export function rechercheMultiCriteresInscriptions(criteres: ICriteresRMCActesInscriptions, range?: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.POST,
-      uri: `${URL_ETAT_CIVIL_RMC}`,
-      data: criteres,
-      parameters: {
-        range
-      }
     })
   );
 }
@@ -376,19 +357,6 @@ export async function postCorpsTexte(idActe: string, corpsExtrait: string, type:
       uri: `${URL_ACTE}/${idActe}${URL_CORPS_TEXTE}`,
       parameters: { type: type.nom },
       data: { corpsExtrait }
-    })
-  );
-}
-
-export function rechercheMultiCriteresAutoInscription(criteres: ICriteresRMCAutoActeInscription, range?: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.POST,
-      uri: `${URL_ETAT_CIVIL_RMC_AUTO}`,
-      data: criteres,
-      parameters: {
-        range
-      }
     })
   );
 }

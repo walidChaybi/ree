@@ -1,5 +1,5 @@
 import { getInscriptionsRC } from "@api/appels/etatcivilApi";
-import { ETypeInscriptionRcRca } from "@model/etatcivil/enum/ETypeInscriptionRcRca";
+import { ETypeInscriptionRc } from "@model/etatcivil/enum/ETypeInscriptionRc";
 import { INatureRc, NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { logError } from "@util/LogManager";
@@ -29,7 +29,7 @@ export function mappingInscriptionsRC(data: any): IInscriptionRc[] {
     return {
       idInscription: inscription?.id,
       nature: NatureRc.depuisId(inscription?.nature.id) as INatureRc,
-      typeInscription: ETypeInscriptionRcRca[inscription?.typeInscription as keyof typeof ETypeInscriptionRcRca],
+      typeInscription: ETypeInscriptionRc[inscription?.typeInscription as keyof typeof ETypeInscriptionRc],
       dateInscription: new Date(inscription?.dateInscription)
     };
   });

@@ -1,8 +1,8 @@
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { IRMCAutoPersonneParams, useRMCAutoPersonneApiAvecCacheHook } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/IDataTableauRMCPersonne";
@@ -95,7 +95,7 @@ const tableauRMCMock: IDataTableauRMCPersonne[] = [
     nature: "tutelle aménagée",
     statut: "ACTIF",
     reference: "RC - 2020 - 14",
-    typeFiche: TypeFiche.RC,
+    typeFiche: ETypeFiche.RC,
     statutOuType: "Inscription",
     nom: "",
     autresNoms: "",

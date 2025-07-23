@@ -1,39 +1,29 @@
-import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
-import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
-import { HeaderTableauRMC } from "@model/rmc/headerTableau/HeaderTableauRMC";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 
 export type TypeRMC = "Classique" | "Auto";
 
 export const commonHeadersTableauRMC = [
   new TableauTypeColumn({
-    keys: [HeaderTableauRMC.NOM.nom],
-    title: HeaderTableauRMC.NOM.libelle
+    keys: ["nom"],
+    title: "Nom"
   }),
   new TableauTypeColumn({
-    keys: [HeaderTableauRMC.AUTRES_NOMS.nom],
-    title: HeaderTableauRMC.AUTRES_NOMS.libelle,
+    keys: ["autresNoms"],
+    title: "Autres noms",
     className: "ColOverflow"
   }),
   new TableauTypeColumn({
-    keys: [HeaderTableauRMC.PRENOMS.nom],
-    title: HeaderTableauRMC.PRENOMS.libelle,
+    keys: ["prenoms"],
+    title: "Prénoms",
     className: "ColOverflow"
   }),
   new TableauTypeColumn({
-    keys: [HeaderTableauRMC.DATE_NAISSANCE.nom],
-    title: HeaderTableauRMC.DATE_NAISSANCE.libelle
+    keys: ["dateNaissance"],
+    title: "Date de naissance"
   }),
   new TableauTypeColumn({
-    keys: [HeaderTableauRMC.PAYS_NAISSANCE.nom],
-    title: HeaderTableauRMC.PAYS_NAISSANCE.libelle
-  }),
-  new TableauTypeColumn({
-    keys: [HeaderTableauRMC.NATURE.nom],
-    title: HeaderTableauRMC.NATURE.libelle,
-    align: "left",
-    getElement: (acte: ResultatRMCActe) => <span>{ENatureActe[acte.nature]}</span>,
-    className: "ColOverflow"
+    keys: ["paysNaissance"],
+    title: "Pays de naissance"
   })
 ];
 

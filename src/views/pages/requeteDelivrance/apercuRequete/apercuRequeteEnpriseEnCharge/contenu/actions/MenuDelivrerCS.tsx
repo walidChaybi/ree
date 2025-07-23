@@ -3,7 +3,7 @@ import { RECEContextData } from "@core/contexts/RECEContext";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { IActionOption } from "@model/requete/IActionOption";
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { receUrl } from "@router/ReceUrls";
 import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
 import { estRenseigne } from "@util/Utils";
@@ -34,7 +34,7 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [inscriptionRcRadiation, setInscriptionRcRadiation] = useState<IInscriptionRc | undefined>();
-  const [inscriptions, setInscriptions] = useState<IResultatRMCInscription[] | undefined>();
+  const [inscriptions, setInscriptions] = useState<TResultatRMCInscription[] | undefined>();
   const boutonsPopin = {
     label: "OK",
     action: () => {

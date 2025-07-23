@@ -1,5 +1,5 @@
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { typesFamilleProjetActe } from "@model/etatcivil/enum/TypeFamille";
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { Alerte, IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { TRequete } from "@model/requete/IRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -104,7 +104,7 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
       if (etatFenetreTrouve) {
         const datasFiches = dataRMCFicheActe.map(data => ({
           identifiant: data.id,
-          categorie: TypeFiche.ACTE,
+          categorie: ETypeFiche.ACTE,
           lienSuivant: dataTableauRMCFicheActe?.nextDataLinkState,
           lienPrecedent: dataTableauRMCFicheActe?.previousDataLinkState
         }));
@@ -118,7 +118,7 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
     setDatasFichesCourantes(
       dataRMCActe.map(data => ({
         identifiant: data.id,
-        categorie: TypeFiche.ACTE,
+        categorie: ETypeFiche.ACTE,
         lienSuivant: dataTableauRMCActe?.nextDataLinkState,
         lienPrecedent: dataTableauRMCActe?.previousDataLinkState
       }))
@@ -193,7 +193,7 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
               estConsultation={typeRMC === "Classique"}
               key={`fiche${fenetreFicheActe.idActe}${fenetreFicheActe.index.value}`}
               identifiant={fenetreFicheActe.idActe}
-              categorie={TypeFiche.ACTE}
+              categorie={ETypeFiche.ACTE}
               datasFiches={fenetreFicheActe.datasFiches}
               numeroRequete={fenetreFicheActe.numeroRequete}
               onClose={closeFenetre}

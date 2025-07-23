@@ -1,7 +1,7 @@
 import { pacsModificationNotaireMap } from "@mock/data/fichePACS";
 import { ficheRca } from "@mock/data/ficheRCA";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { StatutFiche } from "@model/etatcivil/fiche/StatutFiche";
 import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
 import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
@@ -18,18 +18,18 @@ test("ficheUtils getFicheTitle works", () => {
       { nom: "nom1", prenom: "" },
       { nom: "nom2", prenom: "" }
     ],
-    TypeFiche.ACTE
+    ETypeFiche.ACTE
   );
   expect(title).toBe("CATEGORIE - nom1 et nom2");
 
-  const title2 = getFicheTitle("categorie", "2020", "numero", [{ nom: "nom1", prenom: "prenom" }], TypeFiche.PACS);
+  const title2 = getFicheTitle("categorie", "2020", "numero", [{ nom: "nom1", prenom: "prenom" }], ETypeFiche.PACS);
   expect(title2).toBe("CATEGORIE - nom1 prenom - N° 2020 - numero");
 });
 
 test("ficheUtils setFiche PACS works", () => {
   const dataFiche: IDataFicheProps = {
     identifiant: "89c9d030-26c3-41d3-bdde-8b4dcc0420e0",
-    categorie: TypeFiche.PACS
+    categorie: ETypeFiche.PACS
   };
 
   const fiche = setFiche(UtilisateurConnecte.inconnu(), dataFiche, FichePacs.depuisDto(pacsModificationNotaireMap));
@@ -55,7 +55,7 @@ test("ficheUtils setFiche PACS works", () => {
 test("ficheUtils setFiche RCA works", () => {
   const dataFiche: IDataFicheProps = {
     identifiant: "8c9ea77f-55dc-494f-8e75-b136ac7ce63d",
-    categorie: TypeFiche.RCA
+    categorie: ETypeFiche.RCA
   };
 
   const data = FicheRcRca.RcaDepuisDto(ficheRca.data);

@@ -1,5 +1,7 @@
 import { CONFIG_POST_RMC_ACTE } from "@api/configurations/etatCivil/acte/PostRMCActeConfigApi";
+import { CONFIG_POST_RMC_INSCRIPTION } from "@api/configurations/etatCivil/acte/PostRMCInscriptionConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
+import { MOCK_RESULTAT_RMC_INSCRIPTION_RC } from "@mock/data/RMCInscription";
 import { NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, test, vi } from "vitest";
@@ -325,6 +327,24 @@ describe("La boutons du formulaire fonctionne correctement ", () => {
             type: "TEXTE"
           }
         ]
+      }
+    );
+
+    MockApi.deployer(
+      CONFIG_POST_RMC_INSCRIPTION,
+      { query: { range: "0-105" } },
+      {
+        data: [MOCK_RESULTAT_RMC_INSCRIPTION_RC],
+        codeHttp: 200
+      }
+    );
+
+    MockApi.deployer(
+      CONFIG_POST_RMC_INSCRIPTION,
+      { query: { range: "0-105" } },
+      {
+        data: [MOCK_RESULTAT_RMC_INSCRIPTION_RC],
+        codeHttp: 200
       }
     );
 

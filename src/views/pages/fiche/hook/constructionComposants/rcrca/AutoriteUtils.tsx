@@ -1,6 +1,6 @@
 import { Autorite, IAutorite } from "@model/etatcivil/commun/IAutorite";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { TypeAutorite, TypeAutoriteUtil } from "@model/etatcivil/enum/TypeAutorite";
-import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import { formatNom, formatPrenom, getValeurOuVide } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
@@ -32,7 +32,7 @@ export function getAutorite(rcrca: FicheRcRca): SectionPartProps[] {
   return autorite;
 }
 
-function getContentAutorite(autorite: IAutorite, typeFiche: TypeFiche): SectionContentProps[] {
+function getContentAutorite(autorite: IAutorite, typeFiche: keyof typeof ETypeFiche): SectionContentProps[] {
   if (LieuxUtils.estPaysFrance(autorite.pays)) {
     return getContentAutoriteFrance(autorite, typeFiche);
   } else if (TypeAutoriteUtil.isJuridiction(autorite.typeAutorite)) {
@@ -44,12 +44,12 @@ function getContentAutorite(autorite: IAutorite, typeFiche: TypeFiche): SectionC
   }
 }
 
-function getContentAutoriteFrance(autorite: IAutorite, typeFiche: TypeFiche): SectionContentProps[] {
+function getContentAutoriteFrance(autorite: IAutorite, typeFiche: keyof typeof ETypeFiche): SectionContentProps[] {
   if (TypeAutoriteUtil.isJuridiction(autorite.typeAutorite)) {
     return getContentJuridictionEtFrance(autorite);
   } else if (TypeAutoriteUtil.isNotaire(autorite.typeAutorite)) {
     return getContentNotaireEtFrance(autorite);
-  } else if (TypeAutoriteUtil.isOnac(autorite.typeAutorite) && FicheUtil.isFicheRca(typeFiche)) {
+  } else if (TypeAutoriteUtil.isOnac(autorite.typeAutorite) && typeFiche === "RCA") {
     return getContentOnacEtFrance(autorite);
   } else {
     return [];

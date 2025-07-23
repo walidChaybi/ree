@@ -1,4 +1,4 @@
-export enum ETypeInscriptionRcRca {
+export enum ETypeInscriptionRc {
   INSCRIPTION = "Inscription",
   RENOUVELLEMENT = "Renouvellement",
   MODIFICATION = "Modification",

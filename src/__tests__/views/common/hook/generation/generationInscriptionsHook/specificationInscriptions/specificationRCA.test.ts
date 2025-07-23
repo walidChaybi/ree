@@ -6,8 +6,8 @@ import {
   ficheRcaDecisionNotaireConvention
 } from "@mock/data/ficheRCA";
 import { DocumentDecret, IDecret } from "@model/etatcivil/commun/IDecret";
+import { ETypePacsRcRca } from "@model/etatcivil/enum/ETypePacsRcRca";
 import { NatureRca } from "@model/etatcivil/enum/NatureRca";
-import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
 import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import { describe, expect, test } from "vitest";
 
@@ -19,7 +19,7 @@ describe("Test specificationRCA", () => {
       document: DocumentDecret.CERTIFICAT_INSCRIPTION_RCA,
       ordre: 1,
       principal: true,
-      type: TypePacsRcRca.RCA
+      type: ETypePacsRcRca.RCA
     } as IDecret
   ];
 

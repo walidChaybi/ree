@@ -1,4 +1,4 @@
-export enum TypePacsRcRca {
+export enum ETypePacsRcRca {
   PACS = "PACS",
   RC = "RC",
   RCA = "RCA"

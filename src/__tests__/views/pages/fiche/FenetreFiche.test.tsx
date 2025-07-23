@@ -1,4 +1,4 @@
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { FenetreFiche } from "@pages/fiche/FenetreFiche";
 import { render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
@@ -16,12 +16,12 @@ test.skip("renders Lien fiche fonctionne correctement", () => {
     <MemoryRouter>
       <FenetreFiche
         identifiant={"7566e16c-2b0e-11eb-adc1-0242ac120002"}
-        categorie={TypeFiche.RC}
+        categorie={ETypeFiche.RC}
         onClose={onClose}
         datasFiches={[
           {
             identifiant: "7566e16c-2b0e-11eb-adc1-0242ac120002",
-            categorie: TypeFiche.RC
+            categorie: ETypeFiche.RC
           }
         ]}
         index={{ value: 0 }}

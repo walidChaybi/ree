@@ -1,7 +1,7 @@
 import { Decret, IDecret } from "@model/etatcivil/commun/IDecret";
 import { DECISIONS_JURIDICTION, ETypeDecision } from "@model/etatcivil/enum/ETypeDecision";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { LienParente } from "@model/etatcivil/enum/LienParente";
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import { IMariageInteresse } from "@model/etatcivil/rcrca/IMariageInteresse";
 import { IParent } from "@model/etatcivil/rcrca/IParent";
@@ -82,10 +82,10 @@ export function getDecisionNotaire(infos: FicheRcRca, dateDecision: string, loca
 export function getParagrapheFin(infosRcRca: FicheRcRca, decrets: IDecret[]) {
   let paragrapheFin = `Conformément à l'`;
 
-  if (infosRcRca.categorie === TypeFiche.RCA) {
+  if (infosRcRca.categorie === ETypeFiche.RCA) {
     const decret = Decret.getDecretInscriptionRCA(decrets)?.libelle;
     paragrapheFin += `${decret},`;
-  } else if (infosRcRca.categorie === TypeFiche.RC) {
+  } else if (infosRcRca.categorie === ETypeFiche.RC) {
     const decret = Decret.getDecretInscriptionRC(decrets)?.libelle;
     paragrapheFin += `${decret},`;
   }
@@ -104,9 +104,9 @@ export function getParagrapheFin(infosRcRca: FicheRcRca, decrets: IDecret[]) {
 
   const dateInscription = infosRcRca.dateInscription ? DateUtils.getDateFormatJasper(infosRcRca.dateInscription) : "";
 
-  if (infosRcRca.categorie === TypeFiche.RCA) {
+  if (infosRcRca.categorie === ETypeFiche.RCA) {
     paragrapheFin += ` une inscription a été prise au répertoire civil annexe le ${dateInscription} sous la référence : RCA n°${infosRcRca.annee} - ${infosRcRca.numero}.`;
-  } else if (infosRcRca.categorie === TypeFiche.RC) {
+  } else if (infosRcRca.categorie === ETypeFiche.RC) {
     paragrapheFin += ` une inscription a été prise au répertoire civil le ${dateInscription} sous la référence : RC n°${infosRcRca.annee} - ${infosRcRca.numero}.`;
   }
 
@@ -199,7 +199,7 @@ function getLignesMariageInteresses(data: IMariageInteresse): string {
 export function getInteressesDecision(data: FicheRcRca): string {
   let interesses = "";
 
-  const showDeces = data.categorie === TypeFiche.RCA && data.decision?.type === ETypeDecision.ONAC;
+  const showDeces = data.categorie === ETypeFiche.RCA && data.decision?.type === ETypeDecision.ONAC;
   // Partie Interesses
   data.interesses.sort((n1, n2) => compareNombre(n1.numeroOrdreSaisi, n2.numeroOrdreSaisi));
   data.interesses.forEach(interesse => {

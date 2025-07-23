@@ -1,4 +1,4 @@
-export enum EStatutFiche {
+export enum EStatutRcRcaPacs {
   ACTIF = "Actif",
   INACTIF = "Inactif"
 }

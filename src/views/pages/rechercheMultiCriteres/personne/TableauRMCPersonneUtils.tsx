@@ -10,7 +10,7 @@ import { HeaderTableauRMCPersonne } from "@model/rmc/headerTableau/HeaderTableau
 import ReportIcon from "@mui/icons-material/Report";
 import DateUtils from "@util/DateUtils";
 import { Options } from "@util/Type";
-import { CINQ, formatNoms, formatPrenoms, getValeurOuVide, TROIS } from "@util/Utils";
+import { formatNoms, formatPrenoms, getValeurOuVide, TROIS } from "@util/Utils";
 import { getColonneBoutonMenu, IColonneBoutonMenuParams } from "@widget/tableau/TableauRece/colonneElements/boutonMenu/ColonneBoutonMenu";
 import { IConteneurElementPropsPartielles } from "@widget/tableau/TableauRece/colonneElements/ConteneurElement";
 import { TMouseEventSurHTMLButtonElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
@@ -60,7 +60,12 @@ export function getColonnesTableauPersonnes(): TableauTypeColumn[] {
 
 export function getColonnesTableauDocuments(): TableauTypeColumn[] {
   return [
-    commonHeadersTableauRMC[CINQ],
+    new TableauTypeColumn({
+      keys: [HeaderTableauRMCPersonne.NATURE.nom],
+      title: HeaderTableauRMCPersonne.NATURE.libelle,
+      align: "left",
+      className: "ColOverflow"
+    }),
     new TableauTypeColumn({
       keys: [HeaderTableauRMCPersonne.REFERENCE.nom],
       title: HeaderTableauRMCPersonne.REFERENCE.libelle,

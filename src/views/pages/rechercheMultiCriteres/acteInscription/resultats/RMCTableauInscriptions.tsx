@@ -1,14 +1,13 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
-import { EStatutFiche } from "@model/etatcivil/enum/EStatutFiche";
-import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { TRequete } from "@model/requete/IRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { supprimeElement } from "@util/Utils";
 import { getLigneTableauVide } from "@widget/tableau/TableUtils";
@@ -29,17 +28,17 @@ interface IFenetreFicheInscription {
 interface RMCResultatInscriptionProps {
   typeRMC: TypeRMC;
   dataRequete?: TRequete;
-  dataRMCInscription: IResultatRMCInscription[];
+  dataRMCInscription: TResultatRMCInscription[];
   dataTableauRMCInscription: IParamsTableau;
   setRangeInscription?: (range: string) => void;
   resetTableauInscription?: boolean;
-  onClickCheckboxCallBack?: (event: TChangeEventSurHTMLInputElement, data: IResultatRMCInscription) => void;
+  onClickCheckboxCallBack?: (event: TChangeEventSurHTMLInputElement, data: TResultatRMCInscription) => void;
   nbLignesParPage: number;
   nbLignesParAppel: number;
   // Données propre à une fiche Inscription pour sa pagination/navigation
   getLignesSuivantesOuPrecedentesInscription?: (ficheIdentifiant: string, lien: string) => void;
   idFicheInscription?: string;
-  dataRMCFicheInscription?: IResultatRMCInscription[];
+  dataRMCFicheInscription?: TResultatRMCInscription[];
   dataTableauRMCFicheInscription?: IParamsTableau;
 }
 
@@ -110,9 +109,9 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
     if (dataRMCFicheInscription) {
       const etatFenetreTrouve = etatFenetres.find(etatFenetre => etatFenetre.idInscription === idFicheInscription);
       if (etatFenetreTrouve) {
-        const datasFiches = dataRMCFicheInscription.map(data => ({
-          identifiant: data.idInscription,
-          categorie: getCategorieFiche(data.idInscription, dataRMCFicheInscription),
+        const datasFiches = dataRMCFicheInscription.map(inscription => ({
+          identifiant: inscription.id,
+          categorie: ETypeFiche[inscription.categorie],
           lienSuivant: dataTableauRMCFicheInscription?.nextDataLinkState,
           lienPrecedent: dataTableauRMCFicheInscription?.previousDataLinkState
         }));
@@ -124,9 +123,9 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
   }, [idFicheInscription, dataRMCFicheInscription, dataTableauRMCFicheInscription]);
 
   useEffect(() => {
-    const datasFiches = dataRMCInscription.map(data => ({
-      identifiant: data.idInscription,
-      categorie: getCategorieFiche(data.idInscription, dataRMCInscription),
+    const datasFiches: IDataFicheProps[] = dataRMCInscription.map(inscription => ({
+      identifiant: inscription.id,
+      categorie: ETypeFiche[inscription.categorie],
       lienSuivant: dataTableauRMCInscription?.nextDataLinkState,
       lienPrecedent: dataTableauRMCInscription?.previousDataLinkState
     }));
@@ -137,10 +136,10 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
   const [idInscriptionSelectionnees, setIdInscriptionSelectionnees] = useState<string[]>([]);
 
   const handleCaseACocherInscriptionEstDesactive = useCallback(
-    (data: IResultatRMCInscription): boolean => {
+    (data: TResultatRMCInscription): boolean => {
       if (dataRequete?.type === TypeRequete.DELIVRANCE) {
         const requeteDelivrance = dataRequete as IRequeteDelivrance;
-        if (data?.statutInscription === EStatutFiche.INACTIF) {
+        if (data.statut === "INACTIF") {
           return true;
         }
         if (
@@ -165,8 +164,8 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
     {
       identifiantsSelectionnes: idInscriptionSelectionnees,
       setIdentifiantsSelectionnes: setIdInscriptionSelectionnees,
-      getIdentifiant: (data: IResultatRMCInscription) =>
-        `${data.idInscription}-${data.nom}-${data.prenoms}-${data.dateNaissance}-${data.paysNaissance}-${data.statutInscription}`
+      getIdentifiant: (inscription: TResultatRMCInscription) =>
+        `${inscription.id}-${inscription.personne.nom}-${inscription.personne.prenoms}-${inscription.personne.dateNaissance}-${inscription.personne.paysNaissance}-${inscription.statut}`
     },
     {
       handleInteractionUtilisateur: onClickCheckboxCallBack,
@@ -179,7 +178,7 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
   return (
     <>
       <TableauRece
-        idKey={"idInscription"}
+        idKey={"id"}
         onClickOnLine={onClickOnLine}
         columnHeaders={columnHeaders}
         dataState={dataRMCInscription}
@@ -201,7 +200,7 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
             return (
               fenetreFicheInscription && (
                 <FenetreFiche
-                  key={`fiche${fenetreFicheInscription.idInscription}${fenetreFicheInscription.index}`}
+                  key={`fiche${fenetreFicheInscription.idInscription}${fenetreFicheInscription.index.value}`}
                   identifiant={fenetreFicheInscription.idInscription}
                   categorie={getCategorieFicheAPartirDatasFiches(
                     fenetreFicheInscription.idInscription,
@@ -223,22 +222,5 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
   );
 };
 
-function getCategorieFicheAPartirDatasFiches(id: string, datas: IDataFicheProps[]): TypeFiche {
-  let categorie = "";
-  datas.forEach(data => {
-    if (data.categorie && data.identifiant === id) {
-      categorie = data.categorie;
-    }
-  });
-  return FicheUtil.getTypeFicheFromString(categorie);
-}
-
-function getCategorieFiche(id: string, data: IResultatRMCInscription[]): TypeFiche {
-  let categorie = "";
-  data.forEach(repertoire => {
-    if (repertoire.categorie && repertoire.idInscription === id) {
-      categorie = repertoire.categorie;
-    }
-  });
-  return FicheUtil.getTypeFicheFromString(categorie);
-}
+const getCategorieFicheAPartirDatasFiches = (id: string, datas: IDataFicheProps[]): ETypeFiche =>
+  datas.find(data => data.categorie && data.identifiant === id)!.categorie;

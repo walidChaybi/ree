@@ -17,12 +17,12 @@ export interface INatureRc {
 export class NatureRc {
   private static liste: INatureRc[] | null = null;
 
-  public static init(naturesRca: INatureRc[]) {
+  public static init(naturesRc: INatureRc[]) {
     if (NatureRc.liste !== null) {
       return;
     }
 
-    NatureRc.liste = naturesRca;
+    NatureRc.liste = naturesRc;
   }
 
   public static depuisId(id: string): INatureRc | null {

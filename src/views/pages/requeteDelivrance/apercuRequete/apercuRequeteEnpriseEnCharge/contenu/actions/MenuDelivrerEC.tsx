@@ -3,8 +3,8 @@ import { IActionOption } from "@model/requete/IActionOption";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
+import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
 import { estRenseigne } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
@@ -31,7 +31,7 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [actes, setActes] = useState<ResultatRMCActe[] | undefined>();
-  const [inscriptions, setInscriptions] = useState<IResultatRMCInscription[] | undefined>();
+  const [inscriptions, setInscriptions] = useState<TResultatRMCInscription[] | undefined>();
   const [messagesBloquant, setMessagesBloquant] = useState<string[]>();
   const [boutonsPopin, setBoutonsPopin] = useState<IBoutonPopin[]>();
   const [choixDelivrance, setChoixDelivrance] = useState<ChoixDelivrance>();

@@ -1,6 +1,6 @@
 import { getInformationsFiche } from "@api/appels/etatcivilApi";
 import { mapActe, mapRcRca } from "@hook/repertoires/MappingRepertoires";
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
@@ -11,7 +11,7 @@ interface IDataFicheApi {
 
 export function useFichePageApiHook(
   actualisationInfosFiche: boolean,
-  typeFiche?: TypeFiche,
+  typeFiche?: ETypeFiche,
   identifiant?: string,
   estConsultation = false
 ) {
@@ -23,16 +23,16 @@ export function useFichePageApiHook(
           const dataFiche = {} as IDataFicheApi;
 
           switch (typeFiche) {
-            case TypeFiche.RC:
-            case TypeFiche.RCA:
+            case ETypeFiche.RC:
+            case ETypeFiche.RCA:
               dataFiche.data = mapRcRca(result.body.data);
               break;
 
-            case TypeFiche.PACS:
+            case ETypeFiche.PACS:
               dataFiche.data = FichePacs.depuisDto(result.body.data);
               break;
 
-            case TypeFiche.ACTE:
+            case ETypeFiche.ACTE:
               dataFiche.data = mapActe(result.body.data);
               break;
 

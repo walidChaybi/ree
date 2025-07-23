@@ -25,7 +25,7 @@ export const TableauHeader: React.FC<TableauReceProps> = props => {
   for (const column of props.columnHeaders) {
     listOfTableauHeaderCell.push(
       <TableauHeaderCell
-        key={column.keys[0]}
+        key={column.keys.join("-")}
         column={column}
         order={props.order}
         orderBy={props.orderBy}

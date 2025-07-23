@@ -1,8 +1,7 @@
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { A_NE_PAS_DELIVRER, DESCRIPTION_SAGA, TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
-import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
+import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import {
   ErreurResult,
   IndexAction,
@@ -73,9 +72,9 @@ test("estChoixIgnorerRequete", () => {
 // Utils -----------------------------------------------------------------
 
 test("aNombreTitulairesIncoherent", () => {
-  expect(aNombreTitulairesIncoherent(NatureActe.NAISSANCE.libelle, 2)).toBe(true);
-  expect(aNombreTitulairesIncoherent(NatureActe.DECES.libelle, 2)).toBe(true);
-  expect(aNombreTitulairesIncoherent(NatureActe.MARIAGE.libelle, 3)).toBe(true);
+  expect(aNombreTitulairesIncoherent("NAISSANCE", 2)).toBe(true);
+  expect(aNombreTitulairesIncoherent("DECES", 2)).toBe(true);
+  expect(aNombreTitulairesIncoherent("MARIAGE", 3)).toBe(true);
 });
 
 test("aGenreIdentique", () => {
@@ -104,12 +103,12 @@ test("aGenreIndetermine", () => {
 
 type casType = {
   actes?: ResultatRMCActe[];
-  inscriptions?: IResultatRMCInscription[];
+  inscriptions?: TResultatRMCInscription[];
 };
 
 test("nombreActesSelectionnesDifferentDeUn", () => {
   const acte = "test" as unknown as ResultatRMCActe;
-  const inscription = "test" as unknown as IResultatRMCInscription;
+  const inscription = "test" as unknown as TResultatRMCInscription;
   const casOK: casType[] = [
     {
       actes: undefined,
@@ -144,7 +143,7 @@ test("nombreActesSelectionnesDifferentDeUn", () => {
 
 test("choixDifferentNonDetenuEtnombreActesSelectionnesDifferentDeUnOuZero", () => {
   const acte = "test" as unknown as ResultatRMCActe;
-  const inscription = "test" as unknown as IResultatRMCInscription;
+  const inscription = "test" as unknown as TResultatRMCInscription;
   const casOK: (casType & { indexMenu: number })[] = [
     {
       indexMenu: IndexAction.REQUETE_INCOMPLETE,

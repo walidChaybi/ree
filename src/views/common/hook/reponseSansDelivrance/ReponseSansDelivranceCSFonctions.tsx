@@ -19,8 +19,8 @@ import {
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
+import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import messageManager from "@util/messageManager";
 
 const ERREUR_PAS_DE_REQUERENT = "Erreur inattendue: Pas de requérant pour la requête";
@@ -75,7 +75,7 @@ export const createReponseSansDelivranceCSPourCompositionApiMariage = async (
 export function estSeulementActeMariage(
   requete: IRequeteDelivrance,
   actes: ResultatRMCActe[] | undefined,
-  inscriptions: IResultatRMCInscription[] | undefined
+  inscriptions: TResultatRMCInscription[] | undefined
 ): boolean {
   if (requete?.type === TypeRequete.DELIVRANCE) {
     const sousType: string = requete?.sousType?.nom;

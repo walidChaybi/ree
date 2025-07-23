@@ -4,8 +4,8 @@ import { CertificatRCComposition, NOM_DOCUMENT_CERTIFICAT_RC } from "@model/comp
 import { CertificatPACSComposition, NOM_DOCUMENT_ATTESTATION_PACS } from "@model/composition/pacs/ICertificatPACSComposition";
 import { TypeCertificatComposition } from "@model/composition/type/TypeCertificatCompoistion";
 import { Decret } from "@model/etatcivil/commun/IDecret";
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
-import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
+import { ETypePacsRcRca } from "@model/etatcivil/enum/ETypePacsRcRca";
 import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
 import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
@@ -16,16 +16,16 @@ import { useContext } from "react";
 import SpecificationRC from "../specificationInscriptions/specificationRC";
 import { specificationRCA } from "../specificationInscriptions/specificationRCA";
 
-export function getNomDocument(typeCertificat: TypePacsRcRca): string | undefined {
+export function getNomDocument(typeCertificat: ETypePacsRcRca): string | undefined {
   let nomDocument: string | undefined;
   switch (typeCertificat) {
-    case TypePacsRcRca.PACS:
+    case ETypePacsRcRca.PACS:
       nomDocument = NOM_DOCUMENT_ATTESTATION_PACS;
       break;
-    case TypePacsRcRca.RC:
+    case ETypePacsRcRca.RC:
       nomDocument = NOM_DOCUMENT_CERTIFICAT_RC;
       break;
-    case TypePacsRcRca.RCA:
+    case ETypePacsRcRca.RCA:
       nomDocument = NOM_DOCUMENT_CERTIFICAT_RCA;
       break;
     default:
@@ -34,16 +34,16 @@ export function getNomDocument(typeCertificat: TypePacsRcRca): string | undefine
   return nomDocument;
 }
 
-export function getTypeDocument(typeCertificat: TypePacsRcRca): string | undefined {
+export function getTypeDocument(typeCertificat: ETypePacsRcRca): string | undefined {
   let uuidTypeDocument: string | undefined;
   switch (typeCertificat) {
-    case TypePacsRcRca.PACS:
+    case ETypePacsRcRca.PACS:
       uuidTypeDocument = DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_ATTESTATION_PACS);
       break;
-    case TypePacsRcRca.RC:
+    case ETypePacsRcRca.RC:
       uuidTypeDocument = DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_CERTIFICAT_INSCRIPTION_RC);
       break;
-    case TypePacsRcRca.RCA:
+    case ETypePacsRcRca.RCA:
       uuidTypeDocument = DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_CERTIFICAT_INSCRIPTION_RCA);
       break;
     default:
@@ -52,17 +52,17 @@ export function getTypeDocument(typeCertificat: TypePacsRcRca): string | undefin
   return uuidTypeDocument;
 }
 
-export function getTypeFiche(typeCertificat: TypePacsRcRca): TypeFiche | undefined {
-  let typeFiche: TypeFiche | undefined;
+export function getTypeFiche(typeCertificat: ETypePacsRcRca): ETypeFiche | undefined {
+  let typeFiche: ETypeFiche | undefined;
   switch (typeCertificat) {
-    case TypePacsRcRca.PACS:
-      typeFiche = TypeFiche.PACS;
+    case ETypePacsRcRca.PACS:
+      typeFiche = ETypeFiche.PACS;
       break;
-    case TypePacsRcRca.RC:
-      typeFiche = TypeFiche.RC;
+    case ETypePacsRcRca.RC:
+      typeFiche = ETypeFiche.RC;
       break;
-    case TypePacsRcRca.RCA:
-      typeFiche = TypeFiche.RCA;
+    case ETypePacsRcRca.RCA:
+      typeFiche = ETypeFiche.RCA;
       break;
     default:
       break;
@@ -71,7 +71,7 @@ export function getTypeFiche(typeCertificat: TypePacsRcRca): TypeFiche | undefin
 }
 
 export const useConstructionCertificatPacsRcRca = (
-  typeCertificat: TypePacsRcRca,
+  typeCertificat: ETypePacsRcRca,
   fichePacsOuRcRca?: FichePacs | FicheRcRca,
   requete?: IRequeteTableauDelivrance,
   inscriptionsRcRadiation?: IInscriptionRc
@@ -89,7 +89,7 @@ export const useConstructionCertificatPacsRcRca = (
   }
 
   switch (typeCertificat) {
-    case TypePacsRcRca.PACS:
+    case ETypePacsRcRca.PACS:
       certificatComposition = CertificatPACSComposition.creerCertificatPACS(
         Decret.getDecretsAttestationPacs(decrets),
         fichePacsOuRcRca as FichePacs,
@@ -98,7 +98,7 @@ export const useConstructionCertificatPacsRcRca = (
         requete.numero
       );
       break;
-    case TypePacsRcRca.RC:
+    case ETypePacsRcRca.RC:
       certificatComposition = CertificatRCComposition.creerCertificatRC(
         SpecificationRC.getElementsJasper(fichePacsOuRcRca as FicheRcRca, decrets, inscriptionsRcRadiation),
         requete?.canal,
@@ -107,7 +107,7 @@ export const useConstructionCertificatPacsRcRca = (
         titulaire
       );
       break;
-    case TypePacsRcRca.RCA:
+    case ETypePacsRcRca.RCA:
       certificatComposition = CertificatRCAComposition.creerCertificatRCA(
         specificationRCA.getElementsJasper(fichePacsOuRcRca as FicheRcRca, decrets),
         requete?.canal,

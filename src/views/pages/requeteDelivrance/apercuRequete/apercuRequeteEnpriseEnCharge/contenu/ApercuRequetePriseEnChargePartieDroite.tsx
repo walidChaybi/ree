@@ -4,11 +4,10 @@ import { IGetAlertesActeApiHookParameters, useGetAlertesActeApiHook } from "@hoo
 import { GetNbrTitulairesActeHookParameters, useGetNbrTitulairesActeApiHook } from "@hook/repertoires/NbrTitulairesActeHook";
 import { GetTitulairesActeHookParameters, useGetTitulairesActeApiHook } from "@hook/repertoires/TitulairesActeHook";
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
-import { ETypeInscriptionRcRca } from "@model/etatcivil/enum/ETypeInscriptionRcRca";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
+import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { aplatirTableau } from "@util/Utils";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import React, { useCallback, useEffect, useState } from "react";
@@ -27,7 +26,7 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
   const [alertes, setAlertes] = useState<Map<string, IAlerte[]>>(new Map([]));
 
   /* Etat inscriptions sélectionnées */
-  const [inscriptionsSelectionnees, setInscriptionsSelectionnees] = useState<IResultatRMCInscription[]>([]);
+  const [inscriptionsSelectionnees, setInscriptionsSelectionnees] = useState<TResultatRMCInscription[]>([]);
 
   /* Etat inscriptions sélectionnées */
   const [addActe, setAddActe] = useState<IGetAlertesActeApiHookParameters>();
@@ -78,17 +77,17 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
 
   /* Gestion du clic sur une colonne de type checkbox dans le tableau des inscriptions */
   const onClickCheckboxInscription = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>, data: IResultatRMCInscription): void => {
+    (event: React.ChangeEvent<HTMLInputElement>, inscription: TResultatRMCInscription): void => {
       let nouvellesInscriptionsSelectionnees = [...inscriptionsSelectionnees];
       if (event?.target.checked) {
-        nouvellesInscriptionsSelectionnees.push(data);
+        nouvellesInscriptionsSelectionnees.push(inscription);
       } else {
-        nouvellesInscriptionsSelectionnees = decocheElementDuTableauInscription(inscriptionsSelectionnees, data.idInscription);
+        nouvellesInscriptionsSelectionnees = decocheElementDuTableauInscription(inscriptionsSelectionnees, inscription.id);
       }
 
       setInscriptionsSelectionnees(nouvellesInscriptionsSelectionnees);
-      if (nouvellesInscriptionsSelectionnees.length && data.typeInscription === ETypeInscriptionRcRca.MODIFICATION) {
-        setIdPersonne(nouvellesInscriptionsSelectionnees[0].idPersonne);
+      if (nouvellesInscriptionsSelectionnees.length && inscription.type === "MODIFICATION") {
+        setIdPersonne(nouvellesInscriptionsSelectionnees[0].personne.id);
       }
     },
     [inscriptionsSelectionnees]
@@ -156,8 +155,8 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
   );
 };
 
-function decocheElementDuTableauInscription(inscriptions: IResultatRMCInscription[], id: string): IResultatRMCInscription[] {
-  return inscriptions.filter(inscription => inscription.idInscription !== id);
+function decocheElementDuTableauInscription(inscriptions: TResultatRMCInscription[], id: string): TResultatRMCInscription[] {
+  return inscriptions.filter(inscription => inscription.id !== id);
 }
 
 function decocheElementDuTableauActe(actes: ResultatRMCActe[], id: string): ResultatRMCActe[] {

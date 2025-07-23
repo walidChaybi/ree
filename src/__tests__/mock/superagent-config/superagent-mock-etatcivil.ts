@@ -12,11 +12,7 @@ import { imagePngVideBase64 } from "../data/ImagePng";
 import { decrets } from "../data/NomenclatureEtatCivilDecrets";
 import { ReponseAppelRMCActe, ReponseAppelRMCActe4DernierResultats, ReponseAppelRMCActe4PremiersResultats } from "../data/RMCActe";
 import { RMCAutoPersonneResponseAlpha, RMCAutoPersonneResponseBeta } from "../data/RMCAutoPersonne";
-import {
-  ReponseAppelRMCInscription,
-  ReponseAppelRMCInscription4DernierResultats,
-  ReponseAppelRMCInscription4PremiersResultats
-} from "../data/RMCInscription";
+import { ReponseAppelRMCInscription } from "../data/RMCInscription";
 import { getTitulairesActeAPI } from "../data/Titulaire";
 import { actesInscriptionsSauvegardes } from "../data/actesInscriptionsSauvegardes";
 import {
@@ -408,23 +404,15 @@ export const configEtatcivil = [
         else {
           return {
             headers: {
-              "content-range": "0-15/" + ReponseAppelRMCInscription.data.repertoiresCiviles.length,
+              "content-range": "0-15/" + ReponseAppelRMCInscription.length,
               link: '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmc?range=0-105>;rel="next"'
             },
-            data: ReponseAppelRMCInscription.data
+            data: ReponseAppelRMCInscription
           };
         }
       }
 
       ////////////////////////////////////////////////////////////////////////
-      // RMC Inscription: test de pagination (avec changement de plage) sur les fiches RC/RCA/PACS
-      if (match[1] === "/repertoirecivil/rmc?range=0-4") {
-        return ReponseAppelRMCInscription4PremiersResultats;
-      }
-      if (match[1] === "/repertoirecivil/rmc?range=1-4") {
-        return ReponseAppelRMCInscription4DernierResultats;
-      }
-
       // RMC Acte: test de pagination (avec changement de plage) sur les fiches Acte
       if (match[1] === "/acte/rmc?range=0-4") {
         return ReponseAppelRMCActe4PremiersResultats;
@@ -624,10 +612,10 @@ export const configEtatcivil = [
       if (match[1] === "/repertoirecivil/rmcauto?range=0-105") {
         return {
           headers: {
-            "content-range": "0-15/" + ReponseAppelRMCInscription.data.repertoiresCiviles.length,
+            "content-range": "0-15/" + ReponseAppelRMCInscription.length,
             link: '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmcauto?range=0-105>;rel="next"'
           },
-          data: ReponseAppelRMCInscription.data
+          data: ReponseAppelRMCInscription
         };
       }
 

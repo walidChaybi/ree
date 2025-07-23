@@ -3,14 +3,15 @@ import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
+import ResultatRMCInscription, { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { expect, test } from "vitest";
 import { idDocumentsReponse2 } from "../../../../../mock/data/DocumentReponse";
 import {
-  DataRMCInscriptionAvecUnPACS,
-  DataRMCInscriptionAvecUnRC,
-  DataRMCInscriptionAvecUnRCA
+  MOCK_RESULTAT_RMC_INSCRIPTION_PACS,
+  MOCK_RESULTAT_RMC_INSCRIPTION_RC,
+  MOCK_RESULTAT_RMC_INSCRIPTION_RCA
 } from "../../../../../mock/data/RMCInscription";
 import { ReponseAppelNomenclatureDocummentDelivrance } from "../../../../../mock/data/nomenclatures";
 import { idRequeteRDCSC } from "../../../../../mock/data/requeteDelivrance";
@@ -32,7 +33,10 @@ const requete = {
   titulaires: [titulaire]
 } as IRequeteTableauDelivrance;
 
-const dataRMCAutoInscription = [...DataRMCInscriptionAvecUnRC, ...DataRMCInscriptionAvecUnRCA, ...DataRMCInscriptionAvecUnPACS];
+const dataRMCAutoInscription = [MOCK_RESULTAT_RMC_INSCRIPTION_RC, MOCK_RESULTAT_RMC_INSCRIPTION_RCA, MOCK_RESULTAT_RMC_INSCRIPTION_PACS]
+  .map(ResultatRMCInscription.depuisDto)
+  .filter((inscription): inscription is TResultatRMCInscription => inscription !== null);
+
 const HookConsummer: React.FC = () => {
   const res = useGenerationInscriptionsHook(requete, dataRMCAutoInscription, true);
 

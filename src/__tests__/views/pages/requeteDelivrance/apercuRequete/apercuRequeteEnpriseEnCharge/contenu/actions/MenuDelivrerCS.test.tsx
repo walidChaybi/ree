@@ -1,5 +1,6 @@
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
+import ResultatRMCInscription from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
 import { MenuDelivrerCS } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/contenu/actions/MenuDelivrerCS";
 import {
@@ -15,7 +16,7 @@ import { createTestingRouter } from "../../../../../../../__tests__utils__/tests
 import MockRECEContextProvider from "../../../../../../../mock/context/MockRECEContextProvider";
 import { DOCUMENT_DELIVRANCE } from "../../../../../../../mock/data/NomenclatureDocumentDelivrance";
 import { DataRMCActeAvecResultatDto } from "../../../../../../../mock/data/RMCActe";
-import { DataRMCInscriptionAvecUnRCA } from "../../../../../../../mock/data/RMCInscription";
+import { MOCK_RESULTAT_RMC_INSCRIPTION_RCA } from "../../../../../../../mock/data/RMCInscription";
 import { idRequeteRDC, idRequeteRDCSC, requeteRDCSC } from "../../../../../../../mock/data/requeteDelivrance";
 
 describe("Test MenuDelivrerCS", () => {
@@ -38,7 +39,7 @@ describe("Test MenuDelivrerCS", () => {
           element: (
             <MenuDelivrerCS
               requete={requeteRDCSC}
-              inscriptions={DataRMCInscriptionAvecUnRCA}
+              inscriptions={[ResultatRMCInscription.depuisDto(MOCK_RESULTAT_RMC_INSCRIPTION_RCA)!]}
             />
           )
         },
@@ -78,7 +79,7 @@ describe("Test MenuDelivrerCS", () => {
           element: (
             <MenuDelivrerCS
               requete={requete}
-              inscriptions={DataRMCInscriptionAvecUnRCA}
+              inscriptions={[ResultatRMCInscription.depuisDto(MOCK_RESULTAT_RMC_INSCRIPTION_RCA)!]}
             />
           )
         },
@@ -158,7 +159,7 @@ describe("Test MenuDelivrerCS", () => {
           element: (
             <MenuDelivrerCS
               requete={requete}
-              inscriptions={DataRMCInscriptionAvecUnRCA}
+              inscriptions={[ResultatRMCInscription.depuisDto(MOCK_RESULTAT_RMC_INSCRIPTION_RCA)!]}
               actes={DataRMCActeAvecResultatDto.map(ResultatRMCActe.depuisDto).filter((acte): acte is ResultatRMCActe => acte !== null)}
             />
           )

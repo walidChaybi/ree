@@ -1,4 +1,5 @@
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
+import ResultatRMCInscription, { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { RMCActeInscriptionResultats } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCActeInscriptionResultats";
 import { render, screen } from "@testing-library/react";
 import {
@@ -9,7 +10,7 @@ import {
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { expect, test } from "vitest";
 import { DataRMCActeAvecResultatDto, DataTableauActe } from "../../../../../mock/data/RMCActe";
-import { DataRMCInscriptionAvecResultat, DataTableauInscription } from "../../../../../mock/data/RMCInscription";
+import { DataTableauInscription, MOCK_LISTE_RESULTAT_RMC_INSCRIPTION_DTO } from "../../../../../mock/data/RMCInscription";
 
 test("renders Fielset Recherche Multi Critères => Seulement des actes", () => {
   const { container } = render(
@@ -23,6 +24,8 @@ test("renders Fielset Recherche Multi Critères => Seulement des actes", () => {
       nbLignesParAppelActe={NB_LIGNES_PAR_APPEL_ACTE}
       nbLignesParPageInscription={NB_LIGNES_PAR_PAGE_INSCRIPTION}
       nbLignesParAppelInscription={NB_LIGNES_PAR_APPEL_INSCRIPTION}
+      rmcActeEnCours={false}
+      rmcInscriptionEnCours={false}
     />
   );
 
@@ -40,12 +43,16 @@ test("renders Fielset Recherche Multi Critères => Seulement des inscriptions", 
       typeRMC="Classique"
       dataRMCActe={[]}
       dataTableauRMCActe={{}}
-      dataRMCInscription={DataRMCInscriptionAvecResultat}
+      dataRMCInscription={MOCK_LISTE_RESULTAT_RMC_INSCRIPTION_DTO.map(ResultatRMCInscription.depuisDto).filter(
+        (inscription): inscription is TResultatRMCInscription => inscription !== null
+      )}
       dataTableauRMCInscription={DataTableauInscription}
       nbLignesParPageActe={NB_LIGNES_PAR_PAGE_ACTE}
       nbLignesParAppelActe={NB_LIGNES_PAR_APPEL_ACTE}
       nbLignesParPageInscription={NB_LIGNES_PAR_PAGE_INSCRIPTION}
       nbLignesParAppelInscription={NB_LIGNES_PAR_APPEL_INSCRIPTION}
+      rmcActeEnCours={false}
+      rmcInscriptionEnCours={false}
     />
   );
 

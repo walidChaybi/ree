@@ -186,7 +186,7 @@ describe("test FicheRcRca", () => {
 
       FicheRcRca.RcaDepuisDto(ficheRca);
 
-      expect(consoleErrorMock).toHaveBeenCalledWith("Un champ obligatoire d'une FicheRca n'est pas défini.");
+      expect(consoleErrorMock).toHaveBeenCalledWith("Le champ obligatoire decision d'un FicheRca n'est pas défini.");
 
       consoleErrorMock.mockRestore();
     });
@@ -198,7 +198,7 @@ describe("test FicheRcRca", () => {
 
       FicheRcRca.RcDepuisDto(ficheRc);
 
-      expect(consoleErrorMock).toHaveBeenCalledWith("Un champ obligatoire d'une FicheRc n'est pas défini.");
+      expect(consoleErrorMock).toHaveBeenCalledWith("Le champ obligatoire nature d'un FicheRc n'est pas défini.");
 
       consoleErrorMock.mockRestore();
     });
@@ -210,7 +210,7 @@ describe("test FicheRcRca", () => {
 
       FicheRcRca.RcDepuisDto(ficheRc);
 
-      expect(consoleErrorMock).toHaveBeenCalledWith("Un champ obligatoire d'une FicheInscription n'est pas défini.");
+      expect(consoleErrorMock).toHaveBeenCalledWith("Le champ obligatoire dateInscription d'un FicheInscription n'est pas défini.");
 
       expect(consoleErrorMock).toHaveBeenCalledWith("La fiche RC récupérée est incomplète, donc invalide.");
 
@@ -225,7 +225,7 @@ describe("test FicheRcRca", () => {
       FicheRcRca.RcaDepuisDto(ficheRca);
 
       expect(consoleErrorMock).toHaveBeenCalledWith(
-        "Le typeInscription de la FicheRca a la valeur nul au lieu d'une des suivantes : INSCRIPTION,RENOUVELLEMENT,MODIFICATION,RADIATION,MAIN_LEVEE,FIN_MESURE,CADUCITE,INCONNU."
+        "Le typeInscription d'un FicheRca a la valeur nul au lieu d'une des suivantes : INSCRIPTION"
       );
 
       consoleErrorMock.mockRestore();
@@ -239,7 +239,7 @@ describe("test FicheRcRca", () => {
       FicheRcRca.RcDepuisDto(ficheRc);
 
       expect(consoleErrorMock).toHaveBeenCalledWith(
-        "Le typeInscription de la FicheRc a la valeur nul au lieu d'une des suivantes : INSCRIPTION,RENOUVELLEMENT,MODIFICATION,RADIATION,MAIN_LEVEE,FIN_MESURE,CADUCITE,INCONNU."
+        "Le typeInscription d'un FicheRc a la valeur nul au lieu d'une des suivantes : INSCRIPTION,RENOUVELLEMENT,MODIFICATION,RADIATION,MAIN_LEVEE,FIN_MESURE,CADUCITE,INCONNU"
       );
 
       consoleErrorMock.mockRestore();

@@ -1,6 +1,7 @@
 import { reinitialiserOnClick } from "@composant/menuTransfert/MenuTransfertUtil";
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { LienParente } from "@model/etatcivil/enum/LienParente";
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { A_NE_PAS_DELIVRER, TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
@@ -12,10 +13,9 @@ import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { DocumentEC } from "@model/requete/enum/DocumentEC";
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
-import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
+import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { PATH_EDITION } from "@router/ReceUrls";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { IBoutonPopin } from "@widget/popin/ConfirmationPopin";
@@ -47,7 +47,7 @@ type BoutonsActionPopinType = [string, () => void];
 type ControleCoherenceType = {
   indexMenu: number;
   actes?: ResultatRMCActe[];
-  inscriptions?: IResultatRMCInscription[];
+  inscriptions?: TResultatRMCInscription[];
   requete?: IRequeteDelivrance;
   titulairesActeMap?: Map<string, ITitulaireActe[]>;
   nbTitulairesActeMap?: Map<string, number>;
@@ -205,14 +205,14 @@ export const compositionCourrierAutomatique = (
 
 // Utils -----------------------------------------------------------------
 
-export const aNombreTitulairesIncoherent = (natureActe?: string, nbTitulaires?: number) => {
+export const aNombreTitulairesIncoherent = (natureActe?: keyof typeof ENatureActe, nbTitulaires?: number) => {
   if (nbTitulaires) {
     switch (natureActe) {
-      case NatureActeRequete.NAISSANCE.libelle:
+      case "NAISSANCE":
         return nbTitulaires > MaxTitulaireDelivrance.NAISSANCE;
-      case NatureActeRequete.DECES.libelle:
+      case "DECES":
         return nbTitulaires > MaxTitulaireDelivrance.DECES;
-      case NatureActeRequete.MARIAGE.libelle:
+      case "MARIAGE":
         return nbTitulaires > MaxTitulaireDelivrance.MARIAGE;
       default:
         return false;
@@ -269,7 +269,7 @@ export const nombreActesSelectionnesDifferentDeUn = ({
   inscriptions
 }: {
   actes?: ResultatRMCActe[];
-  inscriptions?: IResultatRMCInscription[];
+  inscriptions?: TResultatRMCInscription[];
 }): ErreurResult => {
   return {
     enErreur: actes == null || actes.length !== 1 || (inscriptions != null && inscriptions.length !== 0),
@@ -282,7 +282,7 @@ export const nombreActesSelectionnesDifferentDeUn = ({
 export const choixDifferentNonDetenuEtnombreActesSelectionnesDifferentDeUnOuZero = (
   props: Pick<ErreurType, "indexMenu"> & {
     actes?: ResultatRMCActe[];
-    inscriptions?: IResultatRMCInscription[];
+    inscriptions?: TResultatRMCInscription[];
   }
 ): ErreurResult => {
   return {

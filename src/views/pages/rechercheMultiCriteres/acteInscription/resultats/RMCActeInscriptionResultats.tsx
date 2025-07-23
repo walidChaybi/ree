@@ -1,7 +1,7 @@
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { TRequete } from "@model/requete/IRequete";
-import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
+import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
@@ -12,19 +12,19 @@ import { RMCTableauActes } from "./RMCTableauActes";
 import { TypeRMC } from "./RMCTableauCommun";
 import { RMCTableauInscriptions } from "./RMCTableauInscriptions";
 
-interface RMCActeInscriptionResultatsProps {
+interface IRMCActeInscriptionResultatsProps {
   typeRMC: TypeRMC;
   dataAlertes?: IAlerte[];
   dataRequete?: TRequete;
   dataRMCActe: ResultatRMCActe[];
   dataTableauRMCActe: IParamsTableau;
-  dataRMCInscription: IResultatRMCInscription[];
+  dataRMCInscription: TResultatRMCInscription[];
   dataTableauRMCInscription: IParamsTableau;
   setRangeActe?: (range: string) => void;
   setRangeInscription?: (range: string) => void;
   resetRMC?: boolean;
   onClickCheckboxTableauActes?: (event: TChangeEventSurHTMLInputElement, data: ResultatRMCActe) => void;
-  onClickCheckboxTableauInscriptions?: (event: TChangeEventSurHTMLInputElement, data: IResultatRMCInscription) => void;
+  onClickCheckboxTableauInscriptions?: (event: TChangeEventSurHTMLInputElement, data: TResultatRMCInscription) => void;
   nbLignesParPageActe: number;
   nbLignesParAppelActe: number;
   nbLignesParPageInscription: number;
@@ -37,13 +37,13 @@ interface RMCActeInscriptionResultatsProps {
   // Données propre à une fiche Inscription pour sa pagination/navigation
   getLignesSuivantesOuPrecedentesInscription?: (ficheIdentifiant: string, lien: string) => void;
   idFicheInscription?: string;
-  dataRMCFicheInscription?: IResultatRMCInscription[];
+  dataRMCFicheInscription?: TResultatRMCInscription[];
   dataTableauRMCFicheInscription?: IParamsTableau;
-  opEnCoursRMCActe?: boolean;
-  opEnCoursRMCInscription?: boolean;
+  rmcActeEnCours: boolean;
+  rmcInscriptionEnCours: boolean;
 }
 
-export const RMCActeInscriptionResultats = forwardRef<HTMLDivElement, RMCActeInscriptionResultatsProps>(
+export const RMCActeInscriptionResultats = forwardRef<HTMLDivElement, IRMCActeInscriptionResultatsProps>(
   (
     {
       typeRMC,
@@ -72,8 +72,8 @@ export const RMCActeInscriptionResultats = forwardRef<HTMLDivElement, RMCActeIns
       idFicheInscription,
       dataRMCFicheInscription,
       dataTableauRMCFicheInscription,
-      opEnCoursRMCActe,
-      opEnCoursRMCInscription
+      rmcActeEnCours,
+      rmcInscriptionEnCours
     },
     refTableau
   ) => {
@@ -87,7 +87,7 @@ export const RMCActeInscriptionResultats = forwardRef<HTMLDivElement, RMCActeIns
             <div className="SousTitre">
               <span>{"Recherche dans les registres d'état civil"}</span>
             </div>
-            {opEnCoursRMCActe ? (
+            {rmcActeEnCours ? (
               <PageChargeur />
             ) : (
               <RMCTableauActes
@@ -112,7 +112,7 @@ export const RMCActeInscriptionResultats = forwardRef<HTMLDivElement, RMCActeIns
             <div className="SousTitre">
               <span>{"Recherche dans les répertoires de greffe et registre des PACS des étrangers nés à l'étranger"}</span>
             </div>
-            {opEnCoursRMCInscription ? (
+            {rmcInscriptionEnCours ? (
               <PageChargeur />
             ) : (
               <RMCTableauInscriptions

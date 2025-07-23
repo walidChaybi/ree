@@ -1,9 +1,9 @@
 import { EStatutActe } from "@model/etatcivil/enum/EStatutActe";
 import { EStatutPacs } from "@model/etatcivil/enum/EStatutPacs";
-import { ETypeInscriptionRcRca } from "@model/etatcivil/enum/ETypeInscriptionRcRca";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
+import { ETypeInscriptionRc } from "@model/etatcivil/enum/ETypeInscriptionRc";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { IRMCAutoPersonneRequest } from "@model/rmc/personne/IRMCAutoPersonneRequest";
 import DateUtils, { IDateCompose } from "@util/DateUtils";
@@ -74,23 +74,23 @@ function mapPersonne(personne: any): IPersonneRMCPersonne {
 
 function mapActeInscription(acteInscriptionLie: any): IActeInscriptionRMCPersonne {
   const typeFiche = acteInscriptionLie.categorieRepertoire
-    ? FicheUtil.getTypeFicheFromString(getValeurOuVide(acteInscriptionLie.categorieRepertoire))
-    : TypeFiche.ACTE;
+    ? ETypeFiche[(acteInscriptionLie.categorieRepertoire as string).toLocaleUpperCase() as keyof typeof ETypeFiche]
+    : ETypeFiche.ACTE;
   let statutOuType: string;
   let nature: string;
   switch (typeFiche) {
-    case TypeFiche.RC:
-    case TypeFiche.RCA:
+    case ETypeFiche.RC:
+    case ETypeFiche.RCA:
       nature = getValeurOuVide(acteInscriptionLie.nature);
-      statutOuType = ETypeInscriptionRcRca[acteInscriptionLie.typeInscription as keyof typeof ETypeInscriptionRcRca];
+      statutOuType = ETypeInscriptionRc[acteInscriptionLie.typeInscription as keyof typeof ETypeInscriptionRc];
       break;
-    case TypeFiche.PACS:
+    case ETypeFiche.PACS:
       nature = "";
       statutOuType = Object.keys(EStatutPacs).includes(acteInscriptionLie.statut)
         ? EStatutPacs[acteInscriptionLie.statut as keyof typeof EStatutPacs]
         : "";
       break;
-    case TypeFiche.ACTE:
+    case ETypeFiche.ACTE:
       nature = NatureActe.getEnumFor(getValeurOuVide(acteInscriptionLie.nature)).libelle;
       statutOuType = EStatutActe[acteInscriptionLie.statut as keyof typeof EStatutActe] ?? "";
       break;

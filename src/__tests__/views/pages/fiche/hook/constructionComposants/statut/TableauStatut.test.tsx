@@ -1,4 +1,4 @@
-import { EStatutFiche } from "@model/etatcivil/enum/EStatutFiche";
+import { EStatutRcRcaPacs } from "@model/etatcivil/enum/EStatutRcRcaPacs";
 import { StatutFiche } from "@model/etatcivil/fiche/StatutFiche";
 import { TableauStatut } from "@pages/fiche/hook/constructionComposants/statut/TableauStatut";
 import { render, screen } from "@testing-library/react";
@@ -6,7 +6,7 @@ import { expect, test } from "vitest";
 
 const statuts = [
   {
-    statut: "ACTIF" as keyof typeof EStatutFiche,
+    statut: "ACTIF" as keyof typeof EStatutRcRcaPacs,
     dateStatut: 1612166196,
     motif: "motif du statut",
     complementMotif: "complément du motif",
@@ -23,7 +23,7 @@ const statuts = [
     }
   },
   {
-    statut: "INACTIF" as keyof typeof EStatutFiche,
+    statut: "INACTIF" as keyof typeof EStatutRcRcaPacs,
     dateStatut: 1617263796,
     motif: "motif du statut",
     complementMotif: "complément du motif",
@@ -35,7 +35,7 @@ const statuts = [
     }
   },
   {
-    statut: "ACTIF" as keyof typeof EStatutFiche,
+    statut: "ACTIF" as keyof typeof EStatutRcRcaPacs,
     dateStatut: 1615166196,
     motif: "motif du statut",
     complementMotif: "complément du motif"

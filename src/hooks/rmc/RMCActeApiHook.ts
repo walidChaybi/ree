@@ -1,10 +1,8 @@
 import { CONFIG_POST_RMC_ACTE } from "@api/configurations/etatCivil/acte/PostRMCActeConfigApi";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
-import { PARAMS_TABLEAU_VIDE, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
-import { logError } from "@util/LogManager";
+import { IParamsTableau, PARAMS_TABLEAU_VIDE, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
 import messageManager from "@util/messageManager";
 import { useEffect, useState } from "react";
-import { IRMCActeApiHookResultat } from "../../views/common/hook/rmcActeInscription/RMCActeEtActeArchiveHookUtil";
 import {
   ICriteresRechercheActeInscription,
   mappingCriteres,
@@ -12,25 +10,28 @@ import {
 } from "../../views/common/hook/rmcActeInscription/RMCActeInscriptionUtils";
 import useFetchApi from "../api/FetchApiHook";
 
-export const useRMCActeApiHook = (criteres?: ICriteresRechercheActeInscription): IRMCActeApiHookResultat | null => {
-  const [resultat, setResultat] = useState<IRMCActeApiHookResultat | null>(null);
-  const { appelApi: rmcActe } = useFetchApi(CONFIG_POST_RMC_ACTE);
-  const [opEnCours, setOpEnCours] = useState<boolean>(false);
+interface IRetourRMCActeApiHook {
+  dataRMCActe: ResultatRMCActe[];
+  dataTableauRMCActe?: IParamsTableau;
+  ficheIdentifiant?: string;
+}
+
+export const useRMCActeApiHook = (
+  criteres?: ICriteresRechercheActeInscription
+): { resultat: IRetourRMCActeApiHook | null; rmcActeEnCours: boolean } => {
+  const [resultat, setResultat] = useState<IRetourRMCActeApiHook | null>(null);
+  const { appelApi: rmcActe, enAttenteDeReponseApi } = useFetchApi(CONFIG_POST_RMC_ACTE);
 
   useEffect(() => {
     if (!criteres?.valeurs) return;
-
-    setOpEnCours(true);
 
     const criteresRMC = mappingCriteres(criteres.valeurs);
 
     if (!rmcActeAutorisee(criteresRMC)) {
       setResultat({
         dataRMCActe: [],
-        dataTableauRMCActe: PARAMS_TABLEAU_VIDE,
-        opEnCours: false
+        dataTableauRMCActe: PARAMS_TABLEAU_VIDE
       });
-      setOpEnCours(false);
       return;
     }
 
@@ -49,16 +50,10 @@ export const useRMCActeApiHook = (criteres?: ICriteresRechercheActeInscription):
       apresErreur: e => {
         console.error("Erreur lors de la RMC acte :", e);
         messageManager.showError("Une erreur est survenue lors de la recherche multi-critères d'actes");
-        logError({
-          messageUtilisateur: "Impossible de récupérer les actes de la recherche multi-critères"
-        });
         criteres?.onErreur?.();
-      },
-      finalement() {
-        setOpEnCours(false);
       }
     });
   }, [criteres]);
 
-  return resultat ? { ...resultat, opEnCours } : null;
+  return { resultat, rmcActeEnCours: enAttenteDeReponseApi };
 };

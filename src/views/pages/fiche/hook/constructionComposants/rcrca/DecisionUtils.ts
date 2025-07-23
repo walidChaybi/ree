@@ -1,5 +1,5 @@
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { TypeAutoriteUtil } from "@model/etatcivil/enum/TypeAutorite";
-import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
 import { IDecisionRcRca } from "@model/etatcivil/rcrca/DecisionRcRca";
 import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import DateUtils from "@util/DateUtils";
@@ -14,7 +14,7 @@ export function getDecision(rcrca: FicheRcRca): SectionPartProps[] {
       contentsDecision = [...getContentJuridiction(rcrca.decision, rcrca.categorie)];
     } else if (
       TypeAutoriteUtil.isNotaire(rcrca.decision.autorite.typeAutorite) ||
-      (TypeAutoriteUtil.isOnac(rcrca.decision.autorite.typeAutorite) && FicheUtil.isFicheRca(rcrca.categorie))
+      (TypeAutoriteUtil.isOnac(rcrca.decision.autorite.typeAutorite) && rcrca.categorie === "RCA")
     ) {
       contentsDecision = [...getContentNotaire(rcrca.decision)];
     }
@@ -40,7 +40,7 @@ export function getDecision(rcrca: FicheRcRca): SectionPartProps[] {
   return decision;
 }
 
-function getContentJuridiction(decision: IDecisionRcRca, typeFiche: TypeFiche): SectionContentProps[] {
+function getContentJuridiction(decision: IDecisionRcRca, typeFiche: keyof typeof ETypeFiche): SectionContentProps[] {
   const result = [
     {
       libelle: "Type",
@@ -52,7 +52,7 @@ function getContentJuridiction(decision: IDecisionRcRca, typeFiche: TypeFiche): 
     }
   ];
 
-  if (FicheUtil.isFicheRca(typeFiche) && decision.dateDecisionEtrangere != null) {
+  if (typeFiche === "RCA" && decision.dateDecisionEtrangere != null) {
     result.push({
       libelle: "Date décision étrangère",
       value: decision.dateDecisionEtrangere ? DateUtils.getDateString(DateUtils.getDateFromTimestamp(decision.dateDecisionEtrangere)) : ""
@@ -84,7 +84,7 @@ function getContentNotaire(decision: IDecisionRcRca): SectionContentProps[] {
   ];
 }
 
-function getContentConfirmationDecision(decision: IDecisionRcRca, typeFiche: TypeFiche): SectionContentProps[] {
+function getContentConfirmationDecision(decision: IDecisionRcRca, typeFiche: keyof typeof ETypeFiche): SectionContentProps[] {
   if (TypeAutoriteUtil.isJuridiction(decision.sourceConfirmation?.autorite.typeAutorite)) {
     const confirmationDecision = [
       {
@@ -100,7 +100,7 @@ function getContentConfirmationDecision(decision: IDecisionRcRca, typeFiche: Typ
     ];
 
     if (
-      FicheUtil.isFicheRca(typeFiche) &&
+      typeFiche === "RCA" &&
       decision.sourceConfirmation?.dateDecisionEtrangere != null &&
       TypeAutoriteUtil.isJuridiction(decision.sourceConfirmation.autorite.typeAutorite)
     ) {

@@ -1,5 +1,4 @@
 import { ICriteresRechercheActeInscription } from "@hook/rmcActeInscription/RMCActeInscriptionUtils";
-import { useRMCInscriptionApiHook } from "@hook/rmcActeInscription/RMCInscriptionApiHook";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import messageManager, { TOASTCONTAINER_PRINCIPAL } from "@util/messageManager";
 import { stockageDonnees } from "@util/stockageDonnees";
@@ -14,6 +13,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
 import { useRMCActeApiHook } from "../../../../hooks/rmc/RMCActeApiHook";
+import { useRMCInscriptionApiHook } from "../../../../hooks/rmc/RMCInscriptionApiHook";
 import { RMCActeInscription } from "./RMCActeInscription";
 import { RMCActeInscriptionResultats } from "./resultats/RMCActeInscriptionResultats";
 import { goToLinkRMC } from "./resultats/RMCTableauCommun";
@@ -42,7 +42,7 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({ 
   const tableauResultatRef = useRef<HTMLDivElement | null>(null);
 
   const resultatRMCActe = useRMCActeApiHook(criteresRechercheActe);
-  const { dataRMCInscription, dataTableauRMCInscription } = useRMCInscriptionApiHook(criteresRechercheInscription);
+  const resultatRMCInscription = useRMCInscriptionApiHook(criteresRechercheInscription);
   /** Récupération des résultats rmc pour une fiche Acte lors d'une navigation */
   const resultatRMCFicheActe = useRMCActeApiHook(criteresRechercheFicheActe);
   /** Récupération des résultats rmc pour une fiche Inscription lors d'une navigation */
@@ -139,10 +139,14 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({ 
     [dansFenetreExterne]
   );
   useEffect(() => {
-    if (resultatRMCActe?.dataRMCActe && resultatRMCActe.dataTableauRMCActe && dataRMCInscription && dataTableauRMCInscription)
+    if (
+      resultatRMCActe.resultat?.dataRMCActe &&
+      resultatRMCActe.resultat.dataTableauRMCActe &&
+      resultatRMCInscription.resultat?.dataRMCInscription &&
+      resultatRMCInscription.resultat.dataTableauRMCInscription
+    )
       tableauResultatRef?.current?.scrollIntoView({ behavior: "smooth" });
-  }, [resultatRMCActe, dataRMCInscription, dataTableauRMCInscription]);
-
+  }, [resultatRMCActe, resultatRMCInscription]);
   return (
     <>
       <OperationEnCours
@@ -151,20 +155,20 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({ 
       ></OperationEnCours>
       <RMCActeInscription onSubmit={onSubmitRMCActeInscription} />
 
-      {resultatRMCActe?.dataRMCActe &&
-        resultatRMCActe?.dataTableauRMCActe &&
-        dataRMCInscription &&
-        dataTableauRMCInscription &&
+      {resultatRMCActe.resultat?.dataRMCActe &&
+        resultatRMCActe.resultat?.dataTableauRMCActe &&
+        resultatRMCInscription.resultat?.dataRMCInscription &&
+        resultatRMCInscription.resultat.dataTableauRMCInscription &&
         (opEnCours ? (
           <PageChargeur />
         ) : (
           <RMCActeInscriptionResultats
             ref={tableauResultatRef}
             typeRMC="Classique"
-            dataRMCActe={resultatRMCActe.dataRMCActe}
-            dataTableauRMCActe={resultatRMCActe.dataTableauRMCActe}
-            dataRMCInscription={dataRMCInscription}
-            dataTableauRMCInscription={dataTableauRMCInscription}
+            dataRMCActe={resultatRMCActe.resultat.dataRMCActe}
+            dataTableauRMCActe={resultatRMCActe.resultat.dataTableauRMCActe}
+            dataRMCInscription={resultatRMCInscription.resultat.dataRMCInscription}
+            dataTableauRMCInscription={resultatRMCInscription.resultat.dataTableauRMCInscription}
             setRangeInscription={setRangeInscription}
             setRangeActe={setRangeActe}
             resetRMC={nouvelleRMCActeInscription}
@@ -173,13 +177,15 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({ 
             nbLignesParPageInscription={NB_LIGNES_PAR_PAGE_INSCRIPTION}
             nbLignesParAppelInscription={NB_LIGNES_PAR_APPEL_INSCRIPTION}
             getLignesSuivantesOuPrecedentesActe={getLignesSuivantesOuPrecedentesActe}
-            idFicheActe={resultatRMCFicheActe?.ficheIdentifiant}
-            dataRMCFicheActe={resultatRMCFicheActe?.dataRMCActe}
-            dataTableauRMCFicheActe={resultatRMCFicheActe?.dataTableauRMCActe}
+            idFicheActe={resultatRMCFicheActe.resultat?.ficheIdentifiant}
+            dataRMCFicheActe={resultatRMCFicheActe.resultat?.dataRMCActe}
+            dataTableauRMCFicheActe={resultatRMCFicheActe.resultat?.dataTableauRMCActe}
             getLignesSuivantesOuPrecedentesInscription={getLignesSuivantesOuPrecedentesInscription}
-            idFicheInscription={resultatRMCFicheInscription?.ficheIdentifiant}
-            dataRMCFicheInscription={resultatRMCFicheInscription?.dataRMCInscription}
-            dataTableauRMCFicheInscription={resultatRMCFicheInscription?.dataTableauRMCInscription}
+            idFicheInscription={resultatRMCFicheInscription.resultat?.ficheIdentifiant}
+            dataRMCFicheInscription={resultatRMCFicheInscription.resultat?.dataRMCInscription}
+            dataTableauRMCFicheInscription={resultatRMCFicheInscription.resultat?.dataTableauRMCInscription}
+            rmcActeEnCours={resultatRMCActe.rmcActeEnCours || resultatRMCFicheActe.rmcActeEnCours}
+            rmcInscriptionEnCours={resultatRMCInscription.rmcInscriptionEnCours || resultatRMCFicheInscription.rmcInscriptionEnCours}
           />
         ))}
       {dansFenetreExterne && (

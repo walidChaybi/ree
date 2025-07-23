@@ -28,42 +28,42 @@ describe("Test RequeteAssociee", () => {
   });
 
   test("RequeteAssociee depuis IRequeteRMCAutoDto<'DELIVRANCE'>", () => {
-    const requeteCreation = RequeteAssociee.depuisDto(REQUETE_DELIVRANCE_RMC_AUTO_DTO);
+    const requeteDelivrance = RequeteAssociee.depuisDto(REQUETE_DELIVRANCE_RMC_AUTO_DTO);
 
-    expect(requeteCreation).not.toBeNull();
-    expect(requeteCreation?.dateCreation).toStrictEqual("05/06/2025");
-    expect(requeteCreation?.type).toStrictEqual("DELIVRANCE" as keyof typeof ETypeRequete);
+    expect(requeteDelivrance).not.toBeNull();
+    expect(requeteDelivrance?.dateCreation).toStrictEqual("05/06/2025");
+    expect(requeteDelivrance?.type).toStrictEqual("DELIVRANCE" as keyof typeof ETypeRequete);
   });
 
   test("RequeteAssociee depuis IRequeteRMCAutoDto<'MISE_A_JOUR'>", () => {
-    const requeteCreation = RequeteAssociee.depuisDto(REQUETE_MAJ_RMC_AUTO_DTO);
+    const requeteMiseAJour = RequeteAssociee.depuisDto(REQUETE_MAJ_RMC_AUTO_DTO);
 
-    expect(requeteCreation).not.toBeNull();
-    expect(requeteCreation?.dateCreation).toStrictEqual("05/06/2025");
-    expect(requeteCreation?.type).toStrictEqual("MISE_A_JOUR" as keyof typeof ETypeRequete);
+    expect(requeteMiseAJour).not.toBeNull();
+    expect(requeteMiseAJour?.dateCreation).toStrictEqual("05/06/2025");
+    expect(requeteMiseAJour?.type).toStrictEqual("MISE_A_JOUR" as keyof typeof ETypeRequete);
   });
 
   test("RequeteAssociee depuis IRequeteRMCAutoDto<'INFORMATION'>", () => {
-    const requeteCreation = RequeteAssociee.depuisDto(REQUETE_INFORMATION_RMC_AUTO_DTO);
+    const requeteInformation = RequeteAssociee.depuisDto(REQUETE_INFORMATION_RMC_AUTO_DTO);
 
-    expect(requeteCreation).not.toBeNull();
-    expect(requeteCreation?.dateCreation).toStrictEqual("05/06/2025");
-    expect(requeteCreation?.type).toStrictEqual("INFORMATION" as keyof typeof ETypeRequete);
+    expect(requeteInformation).not.toBeNull();
+    expect(requeteInformation?.dateCreation).toStrictEqual("05/06/2025");
+    expect(requeteInformation?.type).toStrictEqual("INFORMATION" as keyof typeof ETypeRequete);
   });
 
   test("DOIT retourner null QUAND un champ obligatoire manque", () => {
-    const requeteCreation = RequeteAssociee.depuisDto({} as IRequeteRMCAutoDto<"DELIVRANCE">);
+    const requete = RequeteAssociee.depuisDto({} as IRequeteRMCAutoDto<"DELIVRANCE">);
 
-    expect(requeteCreation).toBeNull();
+    expect(requete).toBeNull();
   });
 
   test("DOIT retourner null QUAND le type de la requête est invalide", () => {
-    const requeteCreation = RequeteAssociee.depuisDto({
+    const requete = RequeteAssociee.depuisDto({
       ...REQUETE_CREATION_RMC_AUTO_DTO,
       type: "NULL" as keyof typeof ETypeRequete
     } as IRequeteRMCAutoDto<"CREATION">);
 
-    expect(requeteCreation).toBeNull();
+    expect(requete).toBeNull();
   });
 
   test("DOIT retourner null QUAND le sous type de la requête ne correspond pas au type", () => {
@@ -86,27 +86,27 @@ describe("Test RequeteTableauRMC", () => {
   });
 
   test("RequeteTableauRMC depuis IRequeteRMCAutoDto<'DELIVRANCE'>", () => {
-    const requeteCreation = RequeteTableauRMC.depuisDto(MOCK_REQUETE_TABLEAU_RMC_DELIVRANCE, [], []);
+    const requeteDelivrance = RequeteTableauRMC.depuisDto(MOCK_REQUETE_TABLEAU_RMC_DELIVRANCE, [], []);
 
-    expect(requeteCreation).not.toBeNull();
-    expect(requeteCreation?.dateCreation).toStrictEqual("14/06/1928");
-    expect(requeteCreation?.type).toStrictEqual("DELIVRANCE" as keyof typeof ETypeRequete);
+    expect(requeteDelivrance).not.toBeNull();
+    expect(requeteDelivrance?.dateCreation).toStrictEqual("14/06/1928");
+    expect(requeteDelivrance?.type).toStrictEqual("DELIVRANCE" as keyof typeof ETypeRequete);
   });
 
   test("RequeteTableauRMC depuis IRequeteRMCAutoDto<'MISE_A_JOUR'>", () => {
-    const requeteCreation = RequeteTableauRMC.depuisDto(MOCK_REQUETE_TABLEAU_RMC_MISE_A_JOUR, [], []);
+    const requeteMiseAJour = RequeteTableauRMC.depuisDto(MOCK_REQUETE_TABLEAU_RMC_MISE_A_JOUR, [], []);
 
-    expect(requeteCreation).not.toBeNull();
-    expect(requeteCreation?.dateCreation).toStrictEqual("13/06/1915");
-    expect(requeteCreation?.type).toStrictEqual("MISE_A_JOUR" as keyof typeof ETypeRequete);
+    expect(requeteMiseAJour).not.toBeNull();
+    expect(requeteMiseAJour?.dateCreation).toStrictEqual("13/06/1915");
+    expect(requeteMiseAJour?.type).toStrictEqual("MISE_A_JOUR" as keyof typeof ETypeRequete);
   });
 
   test("RequeteTableauRMC depuis IRequeteRMCAutoDto<'INFORMATION'>", () => {
-    const requeteCreation = RequeteTableauRMC.depuisDto(MOCK_REQUETE_TABLEAU_RMC_INFORMATION, [], []);
+    const requeteInformation = RequeteTableauRMC.depuisDto(MOCK_REQUETE_TABLEAU_RMC_INFORMATION, [], []);
 
-    expect(requeteCreation).not.toBeNull();
-    expect(requeteCreation?.dateCreation).toStrictEqual("12/06/1929");
-    expect(requeteCreation?.type).toStrictEqual("INFORMATION" as keyof typeof ETypeRequete);
+    expect(requeteInformation).not.toBeNull();
+    expect(requeteInformation?.dateCreation).toStrictEqual("12/06/1929");
+    expect(requeteInformation?.type).toStrictEqual("INFORMATION" as keyof typeof ETypeRequete);
   });
 
   test("DOIT retourner null QUAND un champ obligatoire manque", () => {

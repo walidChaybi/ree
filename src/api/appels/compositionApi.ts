@@ -1,7 +1,7 @@
-import { IExtraitCopieComposition } from "@model/composition/extraitCopie/IExtraitCopieComposition";
 import { IContenuReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
+import { IExtraitCopieComposition } from "@model/composition/extraitCopie/IExtraitCopieComposition";
+import { ETypePacsRcRca } from "@model/etatcivil/enum/ETypePacsRcRca";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { TypePacsRcRca } from "@model/etatcivil/enum/TypePacsRcRca";
 import { ApiManager, HttpMethod } from "../ApiManager";
 
 export interface ICompositionDto {
@@ -11,32 +11,23 @@ export interface ICompositionDto {
 
 const api = ApiManager.getInstance("rece-composition-api", "v1");
 
-const URL_COMPOSITION_CERTIFICAT_SITUATION =
-  "/composition/CERTIFICAT_SITUATION/1";
-const URL_COMPOSITION_CERTIFICAT_RCA =
-  "/composition/CERTIFICAT_INSCRIPTION_RCA/1";
-const URL_COMPOSITION_CERTIFICAT_RC =
-  "/composition/CERTIFICAT_INSCRIPTION_RC/1";
+const URL_COMPOSITION_CERTIFICAT_SITUATION = "/composition/CERTIFICAT_SITUATION/1";
+const URL_COMPOSITION_CERTIFICAT_RCA = "/composition/CERTIFICAT_INSCRIPTION_RCA/1";
+const URL_COMPOSITION_CERTIFICAT_RC = "/composition/CERTIFICAT_INSCRIPTION_RC/1";
 
 const URL_COMPOSITION_ATTESTATION_PACS = "/composition/ATTESTATION_PACS/1";
-const URL_COMPOSITION_EXTRAIT_COPIE_ACTE_TEXTE =
-  "/composition/EXTAIT_COPIE_ACTE_TEXTE/1";
+const URL_COMPOSITION_EXTRAIT_COPIE_ACTE_TEXTE = "/composition/EXTAIT_COPIE_ACTE_TEXTE/1";
 
 const URL_COMPOSITION_COPIE_ACTE_IMAGE = "/composition/ACTE_IMAGE/1";
 const URL_COMPOSITION_ACTE_TEXTE = "/composition/ACTE_TEXTE/1";
 
-const URL_COMPOSITION_EXTRAIT_PLURILINGUE_NAISSANCE =
-  "/composition/ACTE_NAISSANCE/4";
-const URL_COMPOSITION_EXTRAIT_PLURILINGUE_MARIAGE =
-  "/composition/ACTE_MARIAGE/4";
+const URL_COMPOSITION_EXTRAIT_PLURILINGUE_NAISSANCE = "/composition/ACTE_NAISSANCE/4";
+const URL_COMPOSITION_EXTRAIT_PLURILINGUE_MARIAGE = "/composition/ACTE_MARIAGE/4";
 const URL_COMPOSITION_EXTRAIT_PLURILINGUE_DECES = "/composition/ACTE_DECES/4";
 
 const URL_COMPOSITION_PROJET_ACTE = "/composition/PROJET_ACTE/1";
 
-function getCompositionReponseSansDelivranceCS(
-  document: string,
-  reponseSansDelivranceCS: IContenuReponseSansDelivranceCS
-): Promise<any> {
+function getCompositionReponseSansDelivranceCS(document: string, reponseSansDelivranceCS: IContenuReponseSansDelivranceCS): Promise<any> {
   return getComposition(`/composition/${document}/1`, reponseSansDelivranceCS);
 }
 
@@ -44,21 +35,18 @@ function getCompositionCertificatSituation(obj: any): Promise<any> {
   return getComposition(URL_COMPOSITION_CERTIFICAT_SITUATION, obj);
 }
 
-function getCompositionCertificatPacsRcRca(
-  obj: any,
-  typeCertificat: TypePacsRcRca
-): Promise<any> {
+function getCompositionCertificatPacsRcRca(obj: any, typeCertificat: ETypePacsRcRca): Promise<any> {
   let fonctionAAppeler: any;
   switch (typeCertificat) {
-    case TypePacsRcRca.PACS:
+    case ETypePacsRcRca.PACS:
       fonctionAAppeler = getCompositionCertificatPACS;
       break;
 
-    case TypePacsRcRca.RC:
+    case ETypePacsRcRca.RC:
       fonctionAAppeler = getCompositionCertificatRC;
       break;
 
-    case TypePacsRcRca.RCA:
+    case ETypePacsRcRca.RCA:
       fonctionAAppeler = getCompositionCertificatRCA;
       break;
 
@@ -69,9 +57,7 @@ function getCompositionCertificatPacsRcRca(
   return fonctionAAppeler(obj);
 }
 
-function getCompositionExtraitPlurilingue(
-  obj: IExtraitCopieComposition
-): Promise<any> {
+function getCompositionExtraitPlurilingue(obj: IExtraitCopieComposition): Promise<any> {
   let fonctionAAppeler: any;
 
   switch (NatureActe.getEnumFor(obj.nature_acte)) {

@@ -1,13 +1,14 @@
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
+import ResultatRMCInscription, { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { RMCTableauInscriptions } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauInscriptions";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { NB_LIGNES_PAR_APPEL_INSCRIPTION, NB_LIGNES_PAR_PAGE_INSCRIPTION } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { MemoryRouter } from "react-router";
 import { beforeAll, expect, test } from "vitest";
 import { mockFenetreFicheTestFunctions } from "../../../../../__tests__utils__/testsUtil";
-import { DataRMCInscriptionAvecResultat, DataTableauInscription } from "../../../../../mock/data/RMCInscription";
+import { DataTableauInscription, MOCK_LISTE_RESULTAT_RMC_INSCRIPTION_DTO } from "../../../../../mock/data/RMCInscription";
 
 const UTILISATEUR_CONNECTE = MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.CONSULTER).generer();
 
@@ -20,7 +21,9 @@ test("renders Resultat Inscription Recherche Multi Critères => Avec résultat",
     <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
       <RMCTableauInscriptions
         typeRMC="Classique"
-        dataRMCInscription={DataRMCInscriptionAvecResultat}
+        dataRMCInscription={MOCK_LISTE_RESULTAT_RMC_INSCRIPTION_DTO.map(ResultatRMCInscription.depuisDto).filter(
+          (inscription): inscription is TResultatRMCInscription => inscription !== null
+        )}
         dataTableauRMCInscription={DataTableauInscription}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_INSCRIPTION}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_INSCRIPTION}
@@ -37,7 +40,9 @@ test("Navigation dans les pages du tableau Resultat Inscription Recherche Multi 
     <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
       <RMCTableauInscriptions
         typeRMC="Classique"
-        dataRMCInscription={DataRMCInscriptionAvecResultat}
+        dataRMCInscription={MOCK_LISTE_RESULTAT_RMC_INSCRIPTION_DTO.map(ResultatRMCInscription.depuisDto).filter(
+          (inscription): inscription is TResultatRMCInscription => inscription !== null
+        )}
         dataTableauRMCInscription={DataTableauInscription}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_INSCRIPTION}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_INSCRIPTION}
@@ -61,7 +66,9 @@ test.skip("Ouverture d'une inscription", () => {
       <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
         <RMCTableauInscriptions
           typeRMC="Classique"
-          dataRMCInscription={DataRMCInscriptionAvecResultat}
+          dataRMCInscription={MOCK_LISTE_RESULTAT_RMC_INSCRIPTION_DTO.map(ResultatRMCInscription.depuisDto).filter(
+            (inscription): inscription is TResultatRMCInscription => inscription !== null
+          )}
           dataTableauRMCInscription={DataTableauInscription}
           nbLignesParPage={NB_LIGNES_PAR_PAGE_INSCRIPTION}
           nbLignesParAppel={NB_LIGNES_PAR_APPEL_INSCRIPTION}
@@ -107,7 +114,9 @@ test("renders Resultat Inscription Recherche Multi Critères Auto => Avec résul
     <MockRECEContextProvider utilisateurConnecte={UTILISATEUR_CONNECTE}>
       <RMCTableauInscriptions
         typeRMC="Auto"
-        dataRMCInscription={DataRMCInscriptionAvecResultat}
+        dataRMCInscription={MOCK_LISTE_RESULTAT_RMC_INSCRIPTION_DTO.map(ResultatRMCInscription.depuisDto).filter(
+          (inscription): inscription is TResultatRMCInscription => inscription !== null
+        )}
         dataTableauRMCInscription={DataTableauInscription}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_INSCRIPTION}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_INSCRIPTION}

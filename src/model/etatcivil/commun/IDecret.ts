@@ -1,4 +1,4 @@
-import { TypePacsRcRca } from "../enum/TypePacsRcRca";
+import { ETypePacsRcRca } from "../enum/ETypePacsRcRca";
 
 export enum DocumentDecret {
   ATTESTATION_PACS = "ATTESTATION_PACS",
@@ -13,80 +13,60 @@ export interface IDecret {
   ordre: number;
   libelle: string;
   principal: boolean;
-  type: TypePacsRcRca;
+  type: ETypePacsRcRca;
 }
 
 export const Decret = {
   getDecrets(decrets: IDecret[], documentDecret: DocumentDecret): IDecret[] {
-    return decrets
-      .filter(d => d.document === documentDecret)
-      .sort((d1, d2) => d1.ordre - d2.ordre);
+    return decrets.filter(d => d.document === documentDecret).sort((d1, d2) => d1.ordre - d2.ordre);
   },
 
   getDecretsAttestationPacs(decrets: IDecret[]): IDecret[] {
     return this.getDecrets(decrets, DocumentDecret.ATTESTATION_PACS);
   },
 
-  getLibelleDecretPrincipalAttestationPacs(
-    decrets: IDecret[]
-  ): string | undefined {
-    return decrets
-      .filter(d => d.document === DocumentDecret.ATTESTATION_PACS)
-      .find(d => d.principal)?.libelle;
+  getLibelleDecretPrincipalAttestationPacs(decrets: IDecret[]): string | undefined {
+    return decrets.filter(d => d.document === DocumentDecret.ATTESTATION_PACS).find(d => d.principal)?.libelle;
   },
 
   getDecretsCertificatSituationPacs(decrets: IDecret[]): IDecret[] {
-    return this.getDecrets(decrets, DocumentDecret.CERTIFICAT_SITUATION).filter(
-      d => d.type === TypePacsRcRca.PACS
-    );
+    return this.getDecrets(decrets, DocumentDecret.CERTIFICAT_SITUATION).filter(d => d.type === ETypePacsRcRca.PACS);
   },
 
   getDecretsCertificatSituationRC(decrets: IDecret[]): IDecret[] {
-    return this.getDecrets(decrets, DocumentDecret.CERTIFICAT_SITUATION).filter(
-      d => d.type === TypePacsRcRca.RC
-    );
+    return this.getDecrets(decrets, DocumentDecret.CERTIFICAT_SITUATION).filter(d => d.type === ETypePacsRcRca.RC);
   },
 
   getDecretsCertificatSituationRCA(decrets: IDecret[]): IDecret[] {
-    return this.getDecrets(decrets, DocumentDecret.CERTIFICAT_SITUATION).filter(
-      d => d.type === TypePacsRcRca.RCA
-    );
+    return this.getDecrets(decrets, DocumentDecret.CERTIFICAT_SITUATION).filter(d => d.type === ETypePacsRcRca.RCA);
   },
 
   getDecretInscriptionRC(decrets: IDecret[]): IDecret {
-    return this.getDecrets(
-      decrets,
-      DocumentDecret.CERTIFICAT_INSCRIPTION_RC
-    )[0];
+    return this.getDecrets(decrets, DocumentDecret.CERTIFICAT_INSCRIPTION_RC)[0];
   },
 
   getDecretInscriptionRCA(decrets: IDecret[]): IDecret {
-    return this.getDecrets(
-      decrets,
-      DocumentDecret.CERTIFICAT_INSCRIPTION_RCA
-    )[0];
+    return this.getDecrets(decrets, DocumentDecret.CERTIFICAT_INSCRIPTION_RCA)[0];
   },
 
-  getEnumTypeDecretFrom(typeDecretStr: string): TypePacsRcRca | undefined {
-    let typeDecret: TypePacsRcRca | undefined;
+  getEnumTypeDecretFrom(typeDecretStr: string): ETypePacsRcRca | undefined {
+    let typeDecret: ETypePacsRcRca | undefined;
     switch (typeDecretStr) {
       case "RC":
-        typeDecret = TypePacsRcRca.RC;
+        typeDecret = ETypePacsRcRca.RC;
         break;
       case "RCA":
-        typeDecret = TypePacsRcRca.RCA;
+        typeDecret = ETypePacsRcRca.RCA;
         break;
       case "PACS":
-        typeDecret = TypePacsRcRca.PACS;
+        typeDecret = ETypePacsRcRca.PACS;
         break;
     }
 
     return typeDecret;
   },
 
-  getEnumDocumentDecretFrom(
-    documentDecretStr: string
-  ): DocumentDecret | undefined {
+  getEnumDocumentDecretFrom(documentDecretStr: string): DocumentDecret | undefined {
     let documentDecret: DocumentDecret | undefined;
     switch (documentDecretStr) {
       case "CERTIFICAT_INSCRIPTION_RC":
@@ -113,9 +93,7 @@ export const Decret = {
           ...d,
           type: Decret.getEnumTypeDecretFrom(d.type),
           document: Decret.getEnumDocumentDecretFrom(d.document)
-        } as IDecret)
+        }) as IDecret
     );
   }
 };
-
-

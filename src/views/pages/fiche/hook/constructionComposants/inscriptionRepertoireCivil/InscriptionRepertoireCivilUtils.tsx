@@ -1,4 +1,4 @@
-import { FicheUtil, TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import DateUtils from "@util/DateUtils";
 import { premiereLettreEnMajusculeLeResteEnMinuscule } from "@util/Utils";
@@ -10,8 +10,8 @@ import { InscriptionsLiees } from "./InscriptionsLiees";
 export function getInscriptionRepertoireCivil(rcrca: FicheRcRca): SectionPartProps {
   return {
     partContent: {
-      contents: FicheUtil.isFicheRca(rcrca.categorie) ? getInteresseRca(rcrca) : getInteresseRc(rcrca),
-      title: FicheUtil.isFicheRca(rcrca.categorie) ? "Inscription au répertoire civil annexe" : "Inscription au répertoire civil"
+      contents: rcrca.categorie === "RCA" ? getInteresseRca(rcrca) : getInteresseRc(rcrca),
+      title: rcrca.categorie === "RCA" ? "Inscription au répertoire civil annexe" : "Inscription au répertoire civil"
     }
   };
 }
@@ -79,7 +79,7 @@ function getTypeInscription(rcrca: FicheRcRca): JSX.Element {
           {`RC n°`}
           <LienFiche
             identifiant={inscription.id}
-            categorie={TypeFiche.RC}
+            categorie={ETypeFiche.RC}
             numero={`${inscription.annee} - ${inscription.numero}`}
           />
 

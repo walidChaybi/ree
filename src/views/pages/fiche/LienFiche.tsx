@@ -1,4 +1,4 @@
-import { TypeFiche } from "@model/etatcivil/enum/TypeFiche";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import Link from "@mui/material/Link";
 import React, { useState } from "react";
 import FenetreExterne, { IFenetreExterneRef } from "../../../composants/commun/conteneurs/FenetreExterne";
@@ -7,7 +7,7 @@ import "./scss/LienFiche.scss";
 
 interface IDataLienFicheProps {
   identifiant: string;
-  categorie: TypeFiche;
+  categorie: ETypeFiche;
   numero: string;
   title?: string;
 }

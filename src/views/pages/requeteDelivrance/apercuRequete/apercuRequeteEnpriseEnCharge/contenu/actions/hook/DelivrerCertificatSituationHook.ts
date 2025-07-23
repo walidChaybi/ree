@@ -10,7 +10,7 @@ import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
-import { IResultatRMCInscription } from "@model/rmc/acteInscription/resultat/IResultatRMCInscription";
+import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { useEffect, useState } from "react";
 import { useSupprimerAnciensDocumentsReponseHook } from "./SupprimerAnciensDocumentsReponseHook";
 
@@ -23,7 +23,7 @@ interface IResultDelivrerCertificatSituation {
 export function useDelivrerCertificatSituationHook(
   codeDocumentDemande: string,
   requete?: IRequeteTableauDelivrance,
-  dataRMCAutoInscription?: IResultatRMCInscription[],
+  dataRMCAutoInscription?: TResultatRMCInscription[],
   inscriptionsRcRadiation?: IInscriptionRc
 ) {
   const [resultDelivrerCertificatSituation, setResultDelivrerCertificatSituation] = useState<IResultDelivrerCertificatSituation>();
