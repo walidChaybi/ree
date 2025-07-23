@@ -5,6 +5,7 @@ import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscri
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import React, { useState } from "react";
+import { ToastContainer } from "react-toastify";
 import FenetreExterne, { IFenetreExterneRef } from "../../../composants/commun/conteneurs/FenetreExterne";
 import { PageRMCActeInscription } from "../../../pages/rmc/PageRMCActeInscription";
 import "../../pages/rechercheMultiCriteres/acteInscription/scss/RMCActeInscriptionPage.scss";
@@ -45,7 +46,21 @@ export const BoutonRechercheRmc: React.FC = () => {
           setFenetreExterneRef={ref => setFenetreExterne(ref)}
         >
           {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_UTILISER_NOUVELLE_RMC) ? (
-            <PageRMCActeInscription dansFenetreExterne={true} />
+            <>
+              <PageRMCActeInscription />
+              <ToastContainer
+                containerId={"toastContainer-externe"}
+                className={"toast-container"}
+                position="top-center"
+                hideProgressBar={false}
+                newestOnTop={true}
+                closeOnClick={true}
+                rtl={false}
+                draggable={true}
+                pauseOnHover={true}
+                enableMultiContainer={true}
+              />
+            </>
           ) : (
             <RMCActeInscriptionPage
               noAutoScroll={true}
