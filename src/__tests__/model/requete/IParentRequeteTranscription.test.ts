@@ -22,7 +22,6 @@ describe("Interface ParentsRequeteTranscription.mappingParentTranscriptionVersPa
       arrondissement: "",
       pays: "",
       etatProvince: "",
-      adresse: "",
       preposition: "A"
     },
     sansProfession: false,
@@ -96,7 +95,6 @@ describe("Interface ParentsRequeteTranscription.mappingParentTranscriptionVersPa
         arrondissement: "8ème",
         pays: "FRANCE",
         etatProvince: "",
-        adresse: "",
         preposition: "A"
       },
       sansProfession: false,
@@ -163,7 +161,6 @@ describe("Interface ParentsRequeteTranscription.mappingParentTranscriptionVersPa
         arrondissement: "",
         pays: "ETATS-UNIS",
         etatProvince: "New York",
-        adresse: "",
         preposition: "A"
       },
       sansProfession: false,

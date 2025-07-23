@@ -95,7 +95,10 @@ const BlocDeclarant: React.FC = () => {
             libellePour="declarant.domicile"
           />
 
-          <ChampsAdresse prefixe={"declarant.domicile"} />
+          <ChampsAdresse
+            prefixe={"declarant.domicile"}
+            avecLigneAdresse
+          />
 
           <SeparateurSection
             titre="Complément"

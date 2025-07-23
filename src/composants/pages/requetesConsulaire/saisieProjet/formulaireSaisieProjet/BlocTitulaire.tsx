@@ -77,24 +77,23 @@ const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
 
       <SeparateurSection titre="Lieu de naissance" />
 
-      <div className="grid grid-cols-[100px_1fr_1fr] gap-4 pt-4">
-        <ChampListeDeroulante
-          name="titulaire.lieuNaissance.preposition"
-          libelle="Préposition"
-          options={optionsPreposition}
-        />
-        <ChampTexte
-          name="titulaire.lieuNaissance.ville"
-          libelle="Ville"
-          optionFormatage="PREMIER_MAJUSCULE"
-        />
+      <div className="grid grid-cols-2 items-center gap-4">
+        <div className="flex gap-4">
+          <ChampListeDeroulante
+            name="titulaire.lieuNaissance.preposition"
+            libelle="Préposition"
+            options={optionsPreposition}
+          />
+          <ChampTexte
+            name="titulaire.lieuNaissance.ville"
+            libelle="Ville"
+            optionFormatage="PREMIER_MAJUSCULE"
+          />
+        </div>
         <ChampTexte
           name="titulaire.lieuNaissance.region"
           libelle="État, canton, province"
         />
-      </div>
-
-      <div className="grid grid-cols-2 gap-4 pt-4">
         <ChampTexte
           name="titulaire.lieuNaissance.pays"
           libelle="Pays"

@@ -366,64 +366,68 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                 </div>
               </div>
               <div
-                class="grid grid-cols-[100px_1fr_1fr] gap-4 pt-4"
+                class="grid grid-cols-2 items-center gap-4"
               >
                 <div
-                  class="text-start"
+                  class="flex gap-4"
                 >
-                  <label
-                    class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                    for="titulaire.lieuNaissance.preposition"
-                  >
-                    Préposition
-                  </label>
-                  <select
-                    class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
-                    id="titulaire.lieuNaissance.preposition"
-                    name="titulaire.lieuNaissance.preposition"
-                  >
-                    <option
-                      value="A"
-                    >
-                      à
-                    </option>
-                    <option
-                      value="EN"
-                    >
-                      en
-                    </option>
-                    <option
-                      value="AU"
-                    >
-                      au
-                    </option>
-                    <option
-                      value="AUX"
-                    >
-                      aux
-                    </option>
-                  </select>
-                </div>
-                <div
-                  class="flex w-full flex-col text-start"
-                >
-                  <label
-                    aria-label="aria-label-titulaire.lieuNaissance.ville"
-                    class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                    for="titulaire.lieuNaissance.ville"
-                  >
-                    Ville
-                  </label>
                   <div
-                    class="relative flex rounded-md shadow-sm"
+                    class="text-start"
                   >
-                    <input
-                      class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                      id="titulaire.lieuNaissance.ville"
-                      maxlength="100"
-                      name="titulaire.lieuNaissance.ville"
-                      value=""
-                    />
+                    <label
+                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                      for="titulaire.lieuNaissance.preposition"
+                    >
+                      Préposition
+                    </label>
+                    <select
+                      class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                      id="titulaire.lieuNaissance.preposition"
+                      name="titulaire.lieuNaissance.preposition"
+                    >
+                      <option
+                        value="A"
+                      >
+                        à
+                      </option>
+                      <option
+                        value="EN"
+                      >
+                        en
+                      </option>
+                      <option
+                        value="AU"
+                      >
+                        au
+                      </option>
+                      <option
+                        value="AUX"
+                      >
+                        aux
+                      </option>
+                    </select>
+                  </div>
+                  <div
+                    class="flex w-full flex-col text-start"
+                  >
+                    <label
+                      aria-label="aria-label-titulaire.lieuNaissance.ville"
+                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                      for="titulaire.lieuNaissance.ville"
+                    >
+                      Ville
+                    </label>
+                    <div
+                      class="relative flex rounded-md shadow-sm"
+                    >
+                      <input
+                        class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                        id="titulaire.lieuNaissance.ville"
+                        maxlength="100"
+                        name="titulaire.lieuNaissance.ville"
+                        value=""
+                      />
+                    </div>
                   </div>
                 </div>
                 <div
@@ -448,10 +452,6 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                     />
                   </div>
                 </div>
-              </div>
-              <div
-                class="grid grid-cols-2 gap-4 pt-4"
-              >
                 <div
                   class="flex w-full flex-col text-start"
                 >
@@ -1684,64 +1684,68 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                 </div>
               </div>
               <div
-                class="mb-4 grid grid-cols-[100px_1fr_1fr_1fr] gap-4"
+                class="grid grid-cols-2 items-center gap-4"
               >
                 <div
-                  class="text-start"
+                  class="flex gap-4"
                 >
-                  <label
-                    class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                    for="acteEtranger.lieuEnregistrement.preposition"
-                  >
-                    Préposition
-                  </label>
-                  <select
-                    class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
-                    id="acteEtranger.lieuEnregistrement.preposition"
-                    name="acteEtranger.lieuEnregistrement.preposition"
-                  >
-                    <option
-                      value="A"
-                    >
-                      à
-                    </option>
-                    <option
-                      value="EN"
-                    >
-                      en
-                    </option>
-                    <option
-                      value="AU"
-                    >
-                      au
-                    </option>
-                    <option
-                      value="AUX"
-                    >
-                      aux
-                    </option>
-                  </select>
-                </div>
-                <div
-                  class="flex w-full flex-col text-start"
-                >
-                  <label
-                    aria-label="aria-label-acteEtranger.lieuEnregistrement.ville"
-                    class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                    for="acteEtranger.lieuEnregistrement.ville"
-                  >
-                    Ville
-                  </label>
                   <div
-                    class="relative flex rounded-md shadow-sm"
+                    class="text-start"
                   >
-                    <input
-                      class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                      id="acteEtranger.lieuEnregistrement.ville"
-                      maxlength="100"
-                      name="acteEtranger.lieuEnregistrement.ville"
-                      value=""
-                    />
+                    <label
+                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                      for="acteEtranger.lieuEnregistrement.preposition"
+                    >
+                      Préposition
+                    </label>
+                    <select
+                      class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                      id="acteEtranger.lieuEnregistrement.preposition"
+                      name="acteEtranger.lieuEnregistrement.preposition"
+                    >
+                      <option
+                        value="A"
+                      >
+                        à
+                      </option>
+                      <option
+                        value="EN"
+                      >
+                        en
+                      </option>
+                      <option
+                        value="AU"
+                      >
+                        au
+                      </option>
+                      <option
+                        value="AUX"
+                      >
+                        aux
+                      </option>
+                    </select>
+                  </div>
+                  <div
+                    class="flex w-full flex-col text-start"
+                  >
+                    <label
+                      aria-label="aria-label-acteEtranger.lieuEnregistrement.ville"
+                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                      for="acteEtranger.lieuEnregistrement.ville"
+                    >
+                      Ville
+                    </label>
+                    <div
+                      class="relative flex rounded-md shadow-sm"
+                    >
+                      <input
+                        class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                        id="acteEtranger.lieuEnregistrement.ville"
+                        maxlength="100"
+                        name="acteEtranger.lieuEnregistrement.ville"
+                        value=""
+                      />
+                    </div>
                   </div>
                 </div>
                 <div
@@ -1790,7 +1794,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                 </div>
               </div>
               <div
-                class="flex w-full flex-col text-start mb-4"
+                class="flex w-full flex-col text-start my-4"
               >
                 <label
                   aria-label="aria-label-acteEtranger.redacteur"

@@ -65,7 +65,6 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
         lieuNaissance: {
           typeLieu: "Inconnu",
           ville: "",
-          adresse: "",
           departement: "",
           arrondissement: "",
           pays: "",
@@ -99,7 +98,6 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
         lieuNaissance: {
           typeLieu: "France",
           ville: "Nantes",
-          adresse: "hopital chu nantes",
           departement: "loire atlantique",
           arrondissement: "",
           pays: "",
@@ -239,7 +237,6 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
             preposition: "A"
           },
           lieuNaissance: {
-            adresse: "",
             arrondissement: "",
             departement: "Loire-atlantique",
             etatProvince: "",
@@ -290,7 +287,6 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
             preposition: "A"
           },
           lieuNaissance: {
-            adresse: "",
             arrondissement: "",
             departement: "",
             etatProvince: "",
@@ -484,7 +480,6 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
         lieuNaissance: {
           typeLieu: "Étranger",
           ville: "Pekin",
-          adresse: "",
           departement: "",
           arrondissement: "",
           pays: "Chine",
@@ -516,7 +511,6 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
         lieuNaissance: {
           typeLieu: "France",
           ville: "Nantes",
-          adresse: "",
           departement: "Loire atlantique",
           arrondissement: "",
           pays: "",
@@ -676,7 +670,6 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
                 mois: undefined,
                 pays: "Chine",
                 arrondissement: undefined,
-                voie: undefined,
                 region: undefined,
                 ville: "Pekin",
                 prepositionLieu: undefined
@@ -711,7 +704,6 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
                 region: "Loire atlantique",
                 ville: "Nantes",
                 arrondissement: undefined,
-                voie: undefined,
                 prepositionLieu: undefined
               },
               nom: "Patamob",

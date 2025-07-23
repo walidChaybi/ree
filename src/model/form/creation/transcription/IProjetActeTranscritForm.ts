@@ -700,7 +700,6 @@ const mapFiliationNaissance = (parentForm: IParentTranscriptionForm): IEvenement
     region: getRegionNaissanceFiliation(parentForm),
     prepositionLieu: getPrepositionLieu(parentForm.lieuNaissance),
     pays: (lieuNaissanceConnu && (lieuNaissanceEstFrance ? EtrangerFrance.FRANCE.libelle : parentForm.lieuNaissance?.pays)) || undefined,
-    voie: (lieuNaissanceConnu && parentForm.lieuNaissance?.adresse) || undefined,
     departement:
       (lieuNaissanceEstFrance && !LieuxUtils.estVilleParis(parentForm.lieuNaissance?.ville) && parentForm.lieuNaissance?.departement) ||
       undefined
@@ -812,8 +811,7 @@ export const mappingParentRequeteVersParentForm = (parentRequete?: IParentRequet
       departement: estNaissanceFranceOuEtranger === "France" ? parentRequete?.regionNaissance : "",
       etatProvince: estNaissanceFranceOuEtranger === "Étranger" ? parentRequete?.regionNaissance : "",
       arrondissement: parentRequete?.arrondissementNaissance ?? "",
-      pays: parentRequete?.paysNaissance ?? "",
-      adresse: ""
+      pays: parentRequete?.paysNaissance ?? ""
     },
     domicile: {
       typeLieu: estDomicileFranceOuEtranger,
@@ -865,8 +863,7 @@ const mappingParentProjetActeVersParentForm = (
       departement: estNaissanceFranceOuEtranger === "France" ? parentProjetActe?.naissance?.region : "",
       etatProvince: estNaissanceFranceOuEtranger === "Étranger" ? parentProjetActe?.naissance?.region : "",
       arrondissement: parentProjetActe?.naissance?.arrondissement ?? "",
-      pays: parentProjetActe?.naissance?.pays ?? "",
-      adresse: parentProjetActe?.naissance?.voie ?? ""
+      pays: parentProjetActe?.naissance?.pays ?? ""
     },
     sansProfession: parentProjetActe?.sansProfession ?? false,
     profession: parentProjetActe?.profession ?? "",

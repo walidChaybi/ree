@@ -47,17 +47,19 @@ const BlocActeEtranger: React.FC = () => {
 
       <SeparateurSection titre="Lieu d'enregistrement" />
 
-      <div className="mb-4 grid grid-cols-[100px_1fr_1fr_1fr] gap-4">
-        <ChampListeDeroulante
-          name="acteEtranger.lieuEnregistrement.preposition"
-          libelle="Préposition"
-          options={optionsPreposition}
-        />
-        <ChampTexte
-          name="acteEtranger.lieuEnregistrement.ville"
-          libelle="Ville"
-          optionFormatage="PREMIER_MAJUSCULE"
-        />
+      <div className="grid grid-cols-2 items-center gap-4">
+        <div className="flex gap-4">
+          <ChampListeDeroulante
+            name="acteEtranger.lieuEnregistrement.preposition"
+            libelle="Préposition"
+            options={optionsPreposition}
+          />
+          <ChampTexte
+            name="acteEtranger.lieuEnregistrement.ville"
+            libelle="Ville"
+            optionFormatage="PREMIER_MAJUSCULE"
+          />
+        </div>
         <ChampTexte
           name="acteEtranger.lieuEnregistrement.etatProvince"
           libelle="État, canton, province"
@@ -72,7 +74,7 @@ const BlocActeEtranger: React.FC = () => {
       <ChampTexte
         name="acteEtranger.redacteur"
         libelle="Rédacteur"
-        className="mb-4"
+        className="my-4"
         maxLength={300}
       />
 

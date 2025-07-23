@@ -31,12 +31,14 @@ const BlocRequerant: React.FC = () => (
         <ChampTexte
           name="requerant.adresse.complementDestinataire"
           libelle="Complément d'identification du destinataire"
+          placeholder="Appartement, boite aux lettres, escalier, chez..."
           maxLength={38}
         />
 
         <ChampTexte
           name="requerant.adresse.complementPointGeo"
           libelle="Complément d'identification du point géographique"
+          placeholder="Entrée, bâtiment, immeuble, résidence..."
           maxLength={38}
         />
 

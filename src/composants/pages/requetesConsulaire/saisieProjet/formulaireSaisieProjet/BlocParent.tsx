@@ -138,6 +138,7 @@ const BlocParent: React.FC<IBlocParentProps> = memo(({ estParent1 }) => {
           <ChampsAdresse
             key={`${prefixe}.domicile`}
             prefixe={`${prefixe}.domicile`}
+            avecLigneAdresse
           />
         )}
       </div>

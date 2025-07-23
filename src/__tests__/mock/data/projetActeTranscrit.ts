@@ -62,7 +62,6 @@ export const projetActeNaissanceDto: IProjetActeTranscritDto = {
           naissance: {
             annee: 2010,
             arrondissement: "",
-            voie: "",
             heure: 10,
             id: "456",
             jour: 5,
@@ -197,7 +196,6 @@ export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
             minute: undefined,
             mois: 10,
             pays: undefined,
-            voie: undefined,
             region: undefined,
             ville: undefined,
             prepositionLieu: undefined
@@ -224,7 +222,6 @@ export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
             mois: undefined,
             pays: "France",
             arrondissement: undefined,
-            voie: "hopital chu nantes",
             region: "loire atlantique",
             ville: "Nantes",
             prepositionLieu: "A"
@@ -246,9 +243,9 @@ export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
         prepositionLieu: "A",
         neDansLeMariage: true,
         pays: "Chine",
-        voie: "Place du riz",
         region: "China",
-        ville: "Bejin"
+        ville: "Bejin",
+        voie: "Place du riz"
       },
       nom: "Xi phun bin",
       nomActeEtranger: "Xi-phun bin",
@@ -334,7 +331,6 @@ export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
             mois: 10,
             pays: undefined,
             arrondissement: undefined,
-            voie: undefined,
             region: undefined,
             ville: undefined,
             prepositionLieu: undefined
@@ -360,7 +356,6 @@ export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
             mois: undefined,
             pays: "France",
             arrondissement: undefined,
-            voie: "hopital chu nantes",
             region: "loire atlantique",
             ville: "Nantes",
             prepositionLieu: "A"
@@ -381,10 +376,10 @@ export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
         mois: 12,
         neDansLeMariage: true,
         pays: "Chine",
-        voie: "Place du riz",
         region: "China",
         ville: "Bejin",
-        prepositionLieu: "A"
+        prepositionLieu: "A",
+        voie: "Place du riz"
       },
       nom: "Xi phun bin",
       nomActeEtranger: "Xi-phun bin",

@@ -14,7 +14,7 @@ interface Option {
 interface IChampsAdresseProps {
   prefixe: string;
   libelle?: string;
-  afficherAdresse?: boolean;
+  avecLigneAdresse?: boolean;
 }
 
 const TYPES_LIEU: Option[] = [
@@ -37,7 +37,7 @@ const ARRONDISSEMENTS_OPTIONS: Record<EVilleSpeciale, Option[]> = {
   lyon: [{ cle: "", libelle: "" }, ...genererArrondissements(9)]
 };
 
-const AdresseFrance = ({ prefixe }: { prefixe: string }) => {
+const AdresseFrance = ({ prefixe, avecLigneAdresse }: { prefixe: string; avecLigneAdresse?: boolean }) => {
   const [fieldVille] = useField(`${prefixe}.ville`);
   const { values, setFieldValue } = useFormikContext();
 
@@ -56,7 +56,50 @@ const AdresseFrance = ({ prefixe }: { prefixe: string }) => {
 
   return (
     <div className="mt-4 space-y-4">
-      <div className="grid grid-cols-[100px_1fr_1fr] gap-4">
+      <div className="mt-4 grid grid-cols-2 gap-4">
+        <div className="flex gap-4">
+          <ChampListeDeroulante
+            name={`${prefixe}.preposition`}
+            libelle="Préposition"
+            options={optionsPreposition}
+          />
+          <ChampTexte
+            name={`${prefixe}.ville`}
+            libelle="Ville"
+            optionFormatage="PREMIER_MAJUSCULE"
+            estObligatoire
+          />
+        </div>
+        {villeSpeciale && (
+          <ChampListeDeroulante
+            name={`${prefixe}.arrondissement`}
+            libelle="Arrondissement"
+            options={ARRONDISSEMENTS_OPTIONS[villeSpeciale]}
+            premiereLettreMajuscule
+          />
+        )}
+        {villeSpeciale !== EVilleSpeciale.PARIS && (
+          <ChampTexte
+            name={`${prefixe}.departement`}
+            libelle="Département"
+            estObligatoire
+          />
+        )}
+        {avecLigneAdresse && (
+          <ChampTexte
+            name={`${prefixe}.adresse`}
+            libelle="Adresse"
+          />
+        )}
+      </div>
+    </div>
+  );
+};
+
+const AdresseEtranger = ({ prefixe, avecLigneAdresse }: { prefixe: string; avecLigneAdresse?: boolean }) => (
+  <div>
+    <div className="mt-4 grid grid-cols-2 gap-4">
+      <div className="flex gap-4">
         <ChampListeDeroulante
           name={`${prefixe}.preposition`}
           libelle="Préposition"
@@ -66,70 +109,12 @@ const AdresseFrance = ({ prefixe }: { prefixe: string }) => {
           name={`${prefixe}.ville`}
           libelle="Ville"
           optionFormatage="PREMIER_MAJUSCULE"
-          estObligatoire
         />
-        {villeSpeciale && (
-          <ChampListeDeroulante
-            name={`${prefixe}.arrondissement`}
-            libelle="Arrondissement"
-            options={ARRONDISSEMENTS_OPTIONS[villeSpeciale]}
-            premiereLettreMajuscule
-          />
-        )}
-        {!villeSpeciale && (
-          <ChampTexte
-            name={`${prefixe}.departement`}
-            libelle="Département"
-            estObligatoire
-          />
-        )}
       </div>
-
-      {villeSpeciale ? (
-        <div className={`grid gap-4 ${villeSpeciale === EVilleSpeciale.PARIS ? "grid-cols-1" : "grid-cols-2"}`}>
-          {villeSpeciale !== EVilleSpeciale.PARIS && (
-            <ChampTexte
-              name={`${prefixe}.departement`}
-              libelle="Département"
-              estObligatoire
-            />
-          )}
-
-          <ChampTexte
-            name={`${prefixe}.adresse`}
-            libelle="Adresse"
-          />
-        </div>
-      ) : (
-        <ChampTexte
-          name={`${prefixe}.adresse`}
-          libelle="Adresse"
-        />
-      )}
-    </div>
-  );
-};
-
-const AdresseEtranger = ({ prefixe }: { prefixe: string }) => (
-  <div>
-    <div className="grid grid-cols-[100px_1fr_1fr] gap-4 pt-4">
-      <ChampListeDeroulante
-        name={`${prefixe}.preposition`}
-        libelle="Préposition"
-        options={optionsPreposition}
-      />
-      <ChampTexte
-        name={`${prefixe}.ville`}
-        libelle="Ville"
-        optionFormatage="PREMIER_MAJUSCULE"
-      />
       <ChampTexte
         name={`${prefixe}.etatProvince`}
         libelle="État, canton, province"
       />
-    </div>
-
-    <div className="mt-4 grid grid-cols-2 gap-4">
       <div>
         <ChampTexte
           name={`${prefixe}.pays`}
@@ -138,17 +123,19 @@ const AdresseEtranger = ({ prefixe }: { prefixe: string }) => (
         />
       </div>
 
-      <div>
-        <ChampTexte
-          name={`${prefixe}.adresse`}
-          libelle="Adresse"
-        />
-      </div>
+      {avecLigneAdresse && (
+        <div>
+          <ChampTexte
+            name={`${prefixe}.adresse`}
+            libelle="Adresse"
+          />
+        </div>
+      )}
     </div>
   </div>
 );
 
-const ChampsAdresse: React.FC<IChampsAdresseProps> = memo(({ prefixe, libelle }) => {
+const ChampsAdresse: React.FC<IChampsAdresseProps> = memo(({ prefixe, libelle, avecLigneAdresse }) => {
   const { values, setFieldValue } = useFormikContext();
   const valeursAdresse = useMemo(() => getIn(values, prefixe), [values, prefixe]);
 
@@ -172,9 +159,19 @@ const ChampsAdresse: React.FC<IChampsAdresseProps> = memo(({ prefixe, libelle })
         }
       />
 
-      {valeursAdresse.typeLieu === "France" && <AdresseFrance prefixe={prefixe} />}
+      {valeursAdresse.typeLieu === "France" && (
+        <AdresseFrance
+          prefixe={prefixe}
+          avecLigneAdresse={avecLigneAdresse}
+        />
+      )}
 
-      {valeursAdresse.typeLieu === "Étranger" && <AdresseEtranger prefixe={prefixe} />}
+      {valeursAdresse.typeLieu === "Étranger" && (
+        <AdresseEtranger
+          prefixe={prefixe}
+          avecLigneAdresse={avecLigneAdresse}
+        />
+      )}
     </div>
   );
 });
