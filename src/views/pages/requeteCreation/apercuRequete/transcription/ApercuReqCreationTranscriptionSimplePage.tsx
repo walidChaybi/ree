@@ -38,7 +38,7 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<ApercuReqCreatio
   const [requete, setRequete] = useState<IRequeteCreationTranscription>();
   const navigate = useNavigate();
   const location = useLocation();
-  const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>();
+  const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>({});
   const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
 
   const [paramsCreationActionMiseAjourStatut, setParamsCreationActionMiseAjourStatut] = useState<

@@ -23,7 +23,7 @@ export const ApercuRequeteTemplate: React.FC<React.PropsWithChildren<TemplatePro
   const [idRequete, setIdRequete] = useState<string>();
   const { idRequeteParam } = useParams<TUuidRequeteParams>();
   const location = useLocation();
-  const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>();
+  const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>({});
   const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
   const [requete, setRequete] = useState<IRequeteDelivrance>();
 

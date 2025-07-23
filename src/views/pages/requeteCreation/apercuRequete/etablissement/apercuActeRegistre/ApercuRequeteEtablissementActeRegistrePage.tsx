@@ -8,7 +8,7 @@ import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/compos
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
-import { DEUX, UN, ZERO, getLibelle } from "@util/Utils";
+import { DEUX, UN, ZERO } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
@@ -28,7 +28,7 @@ export const ApercuRequeteEtablissementActeRegistrePage: React.FC = () => {
   const { idRequeteParam, idActeParam } = useParams<TUuidActeParams>();
   const location = useLocation();
   const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
-  const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>();
+  const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>({});
 
   const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
 
@@ -73,7 +73,7 @@ export const ApercuRequeteEtablissementActeRegistrePage: React.FC = () => {
 
   const listeOngletsGauche: ItemListe[] = [
     {
-      titre: getLibelle("RMC"),
+      titre: "RMC",
       component: (
         <OngletRMCPersonne
           resultatRMCPersonne={resultatRMCAutoPersonne ?? []}
@@ -90,7 +90,7 @@ export const ApercuRequeteEtablissementActeRegistrePage: React.FC = () => {
       index: ZERO
     },
     {
-      titre: getLibelle("Pièces justificatives / Annexes"),
+      titre: "Pièces justificatives / Annexes",
       component: (
         <OngletPiecesJustificatives
           rechargerRequete={rechargerRequete}
@@ -102,7 +102,7 @@ export const ApercuRequeteEtablissementActeRegistrePage: React.FC = () => {
       index: UN
     },
     {
-      titre: getLibelle("Acte Registre"),
+      titre: "Acte Registre",
       component: (
         <ActeRegistre
           idActeAAfficher={idActeParam}
@@ -128,10 +128,6 @@ export const ApercuRequeteEtablissementActeRegistrePage: React.FC = () => {
               tousLesProjetsSontSignes={tousLesProjetsActesSontSignes()}
             />
           </div>
-          {/* TODO: remettre onglet "Echange" une fois que celui ci sera developpé (on le retire car vide donc inutile) */}
-          {/* <div className="OngletsApercuCreationEtablissement">
-            <VoletAvecOnglet liste={listeOngletsDroit} checkDirty={true} />
-          </div> */}
         </>
       ) : (
         <OperationLocaleEnCoursSimple />

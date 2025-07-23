@@ -22,15 +22,6 @@ export function createReponseSansDelivranceCS(requete?: IRequeteDelivrance) {
   return reponseSansDelivranceCS;
 }
 
-/** Elements Popin "Courrier de refus" */
-export function getMessagesPopin() {
-  return [
-    "Des données obligatoires de la naissance du titulaire sont manquantes.",
-    "Un courrier de refus va être automatiquement envoyé au requérant (Veuillez vérifier son adresse postale).",
-    "Voulez-vous valider le refus ?"
-  ];
-}
-
 export const creerTitulaire = (numTitulaire = 1) => {
   return {
     nom: withNamespace(TITULAIRES, `titulaire${numTitulaire}`),

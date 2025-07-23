@@ -17,7 +17,7 @@ import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJ
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { ELibelleSousTypeDelivrance, ESousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TYPE_LIEN_REQUERANT_POUR_TITULAIRE, TypeLienRequerant } from "@model/requete/enum/TypeLienRequerant";
 import { TypeRequerantRDC, UN_TITULAIRE } from "@model/requete/enum/TypeRequerantRDC";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
@@ -82,7 +82,7 @@ const ValidationSchemaRDCRequete = Yup.object({
   [ADRESSE]: AdresseFormValidationSchema
 });
 
-const titreForm = SousTypeDelivrance.getEnumFor("RDC").libelle;
+const titreForm = ELibelleSousTypeDelivrance[ESousTypeDelivrance.RDC].long;
 
 export const SaisirRDCPage: React.FC = () => {
   // Parametres
@@ -93,7 +93,7 @@ export const SaisirRDCPage: React.FC = () => {
   // Informations de la requête
   const [idRequete, setIdRequete] = useState<string>();
   const [requete, setRequete] = useState<SaisieRequeteRDC>();
-  const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>();
+  const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>({});
   const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
 
   // Etats champs du formulaire

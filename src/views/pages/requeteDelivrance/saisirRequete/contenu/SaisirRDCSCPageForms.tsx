@@ -1,10 +1,4 @@
-import {
-  ADRESSE,
-  DOCUMENT,
-  PIECES_JOINTES,
-  REQUERANT,
-  TITULAIRES
-} from "@composant/formulaire/ConstantesNomsForm";
+import { ADRESSE, DOCUMENT, PIECES_JOINTES, REQUERANT, TITULAIRES } from "@composant/formulaire/ConstantesNomsForm";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { TypeRequerant } from "@model/requete/enum/TypeRequerant";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
@@ -16,15 +10,16 @@ import PiecesJointesForm from "@widget/formulaire/piecesJointes/PiecesJointesFor
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { FormikProps, FormikValues } from "formik";
 import React from "react";
-import { limitesTitulaires, TitulairesStateType } from "../SaisirRDCSCPage";
+import { ITitulairesState, limitesTitulaires } from "../SaisirRDCSCPage";
 import IdentitesForm from "../sousFormulaires/identite/IdentitesForm";
 import RequerantForm from "../sousFormulaires/requerant/RequerantForm";
 
-export function getDocumentDemandeForm(
-  onChangeMaxTitulaires: (nb: number, formik: FormikProps<FormikValues>) => void
-): JSX.Element {
+export function getDocumentDemandeForm(onChangeMaxTitulaires: (nb: number, formik: FormikProps<FormikValues>) => void): JSX.Element {
   return (
-    <div className="DocumentInput" key={DOCUMENT}>
+    <div
+      className="DocumentInput"
+      key={DOCUMENT}
+    >
       <SelectField
         name={DOCUMENT}
         label={getLibelle("Document demandé")}
@@ -42,7 +37,7 @@ export function getDocumentDemandeForm(
 }
 
 export const getTitulairesForm = (
-  titulairesState: TitulairesStateType,
+  titulairesState: ITitulairesState,
   onAjoutTitulaire: (formik: FormikProps<FormikValues>) => void,
   onRetraitTitulaire: (formik: FormikProps<FormikValues>) => void,
   requeteState?: TRequete
@@ -59,22 +54,21 @@ export const getTitulairesForm = (
   );
 };
 
-export function getRequerantForm(
-  nbTitulaires: number,
-  requete?: TRequete
-): JSX.Element {
+export function getRequerantForm(nbTitulaires: number, requete?: TRequete): JSX.Element {
   const requerantFromProps = {
     nom: REQUERANT,
     titre: getLibelle("Identité du requérant"),
     options: TypeRequerant.getAllEnumsAsOptions({
-      exclusions:
-        nbTitulaires < limitesTitulaires.MAX
-          ? [TypeRequerant.TITULAIRE2]
-          : undefined
+      exclusions: nbTitulaires < limitesTitulaires.MAX ? [TypeRequerant.TITULAIRE2] : undefined
     }),
     requete
   } as SubFormProps;
-  return <RequerantForm key={REQUERANT} {...requerantFromProps} />;
+  return (
+    <RequerantForm
+      key={REQUERANT}
+      {...requerantFromProps}
+    />
+  );
 }
 
 export function getAdresseForm(): JSX.Element {
@@ -82,7 +76,12 @@ export function getAdresseForm(): JSX.Element {
     nom: ADRESSE,
     titre: getLibelle("Adresse postale du requérant")
   } as SubFormProps;
-  return <AdresseForm key={ADRESSE} {...adresseFormProps} />;
+  return (
+    <AdresseForm
+      key={ADRESSE}
+      {...adresseFormProps}
+    />
+  );
 }
 
 export function getPiecesJointesForm(): JSX.Element {

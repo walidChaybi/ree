@@ -17,7 +17,10 @@ export function useReponseSansDelivranceCS(
   reponseSansDelivranceCS?: IReponseSansDelivranceCS,
   requeteId?: string
 ) {
-  const [resultat, setResultat] = useState<any>();
+  const [resultat, setResultat] = useState<{
+    requeteId: string;
+    uuidDocumentReponse: string;
+  } | null>(null);
 
   const [stockerDocumentCreerActionMajStatutRequeteParams, setStockerDocumentCreerActionMajStatutRequeteParams] =
     useState<IStockerDocumentCreerActionMajStatutRequeteParams>();

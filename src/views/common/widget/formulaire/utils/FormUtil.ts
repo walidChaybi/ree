@@ -45,6 +45,7 @@ export interface INomForm {
 
 export type SubFormProps = ISubForm & FormikComponentProps;
 
+/**@deprecated Nom pas très explicite, fonction trop simple, et permet sûrement de cacher des types any */
 export function withNamespace(nomParent: string, nomChamp: string) {
   return nomParent ? `${nomParent}.${nomChamp}` : nomChamp;
 }

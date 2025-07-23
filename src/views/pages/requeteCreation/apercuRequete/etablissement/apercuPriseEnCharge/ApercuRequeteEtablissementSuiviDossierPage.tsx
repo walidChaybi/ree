@@ -7,7 +7,7 @@ import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/compos
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
-import { DEUX, getLibelle } from "@util/Utils";
+import { DEUX } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
@@ -38,7 +38,7 @@ export const ApercuRequeteEtablissementSuiviDossierPage: React.FC<ApercuRequeteE
   const location = useLocation();
   // States
   const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
-  const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>();
+  const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>({});
 
   // Hooks
   const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
@@ -76,7 +76,7 @@ export const ApercuRequeteEtablissementSuiviDossierPage: React.FC<ApercuRequeteE
 
   const liste: ItemListe[] = [
     {
-      titre: getLibelle("Pièces justificatives / Annexes"),
+      titre: "Pièces justificatives / Annexes",
       component: (
         <OngletPiecesJustificatives
           rechargerRequete={rechargerRequete}
@@ -88,7 +88,7 @@ export const ApercuRequeteEtablissementSuiviDossierPage: React.FC<ApercuRequeteE
       index: 0
     },
     {
-      titre: getLibelle("RMC"),
+      titre: "RMC",
       component: (
         <OngletRMCPersonne
           resultatRMCPersonne={resultatRMCAutoPersonne ?? []}
@@ -105,7 +105,7 @@ export const ApercuRequeteEtablissementSuiviDossierPage: React.FC<ApercuRequeteE
       index: 1
     },
     {
-      titre: getLibelle("Suivi dossier"),
+      titre: "Suivi dossier",
       component: (
         <SuiviDossier
           echanges={requete?.provenanceNatali?.echanges}
@@ -116,7 +116,7 @@ export const ApercuRequeteEtablissementSuiviDossierPage: React.FC<ApercuRequeteE
       index: 2
     },
     {
-      titre: getLibelle("Echanges"),
+      titre: "Echanges",
       component: <Echanges />,
       index: 3
     }

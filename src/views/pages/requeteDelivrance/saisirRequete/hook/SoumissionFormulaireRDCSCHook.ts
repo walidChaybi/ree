@@ -5,7 +5,7 @@ import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { DEUX } from "@util/Utils";
 import React, { useEffect, useRef, useState } from "react";
-import { TitulairesStateType } from "../SaisirRDCSCPage";
+import { ITitulairesState } from "../SaisirRDCSCPage";
 import { IdentiteSubFormProps } from "../sousFormulaires/identite/IdentiteForm";
 import { IComplementCreationUpdateRequete } from "./../../../../../model/form/delivrance/ISaisirRDCSCPageForm";
 import { useCreationRequeteDelivranceRDCSC } from "./CreerRDCSCApiHook";
@@ -21,7 +21,7 @@ export const useSoumissionFormulaireRDCSCHook = (
   setSaisieRequeteRDCSC: React.Dispatch<React.SetStateAction<SaisieRequeteRDCSC | undefined>>,
   setSaisieIncomplete: React.Dispatch<React.SetStateAction<boolean>>,
   setOperationEnCours: React.Dispatch<React.SetStateAction<boolean>>,
-  titulairesState: TitulairesStateType,
+  titulairesState: ITitulairesState,
   saisieRequeteRDCSC?: SaisieRequeteRDCSC,
   idRequete?: string
 ) => {

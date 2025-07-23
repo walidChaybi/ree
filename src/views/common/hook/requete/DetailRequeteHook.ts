@@ -55,26 +55,21 @@ export interface IDetailRequeteParams {
   estConsultationHistoriqueAction?: boolean;
 }
 
-export function useDetailRequeteApiHook(params?: IDetailRequeteParams) {
+export const useDetailRequeteApiHook = ({ idRequete, estConsultation, estConsultationHistoriqueAction }: IDetailRequeteParams) => {
   const [detailRequeteState, setDetailRequeteState] = useState<TRequete | undefined>();
 
   const { utilisateurs } = useContext(RECEContextData);
 
   useEffect(() => {
-    if (params?.idRequete) {
-      fetchDetailRequete(
-        setDetailRequeteState,
-        params.estConsultation,
-        params.estConsultationHistoriqueAction,
-        utilisateurs,
-        params.idRequete
-      );
+    if (idRequete) {
+      fetchDetailRequete(setDetailRequeteState, estConsultation, estConsultationHistoriqueAction, utilisateurs, idRequete);
     }
-  }, [params]);
+  }, [idRequete, estConsultation, estConsultationHistoriqueAction]);
+
   return {
     detailRequeteState
   };
-}
+};
 
 export function useAvecRejeuDetailRequeteApiHook(params?: IDetailRequeteParams) {
   const [detailRequeteState, setDetailRequeteState] = useState<TRequete | undefined>();

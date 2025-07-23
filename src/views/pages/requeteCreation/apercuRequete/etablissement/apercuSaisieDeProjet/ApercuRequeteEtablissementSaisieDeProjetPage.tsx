@@ -83,7 +83,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
   const [ongletSelectionne, setOngletSelectionne] = useState(UN);
   const [estPopinValiderProjetOuverte, setEstPopinValiderProjetOuverte] = useState<boolean>(false);
 
-  const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>();
+  const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>({});
   const [modifierAvancementProjetParams, setModifierAvancementProjetParams] = useState<IModifierAvancementProjetActeParams>();
 
   const [compositionProjetActeParams, setCompositionProjetActeParams] = useState<ICompositionProjetActeParams>();
@@ -141,7 +141,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
   useEffect(() => {
     if (projetEstValide) {
       navigate(
-        getUrlWithParam(URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID, idRequeteParam || ""),
+        getUrlWithParam(URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID, idRequeteParam ?? ""),
         // TODO: passage du state non fonctionnel ==> reussir a passer l'idSuiviDossier & le location.pathname a l'apercu suivi dossier
         { state: { idSuiviDossier: idSuiviDossierParam } }
       );

@@ -10,7 +10,6 @@ import {
   PATH_MODIFIER_RDCSC,
   PATH_SAISIR_RDCSC
 } from "@router/ReceUrls";
-import { getLibelle } from "@util/Utils";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { GestionnaireARetraiterDansSaga } from "../../migration/GestionnaireARetraiterDansSaga";
@@ -48,7 +47,7 @@ export const ProtectionApercu: React.FC<React.PropsWithChildren<ProtectionApercu
 
   return (
     <Protection
-      message={getLibelle("Le statut de la requête ne permet pas de la consulter sur cette page")}
+      message={"Le statut de la requête ne permet pas de la consulter sur cette page"}
       peutAfficher={estBonStatut}
     >
       {children}
