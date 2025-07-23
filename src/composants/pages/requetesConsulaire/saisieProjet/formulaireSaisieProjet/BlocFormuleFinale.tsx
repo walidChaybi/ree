@@ -22,7 +22,7 @@ const optionsLegalisationApostille: Option[] = enumVersOptions(ELegalisationApos
 const optionsModeDepot: Option[] = enumVersOptions(EModeDepot);
 
 const BlocFormuleFinale: React.FC = () => {
-  const { values, setFieldValue } = useFormikContext<IProjetActeTranscritForm>();
+  const { values, setFieldValue, setFieldTouched } = useFormikContext<IProjetActeTranscritForm>();
   const valeurIdentiteDemandeur = values.formuleFinale.identiteDemandeur;
   const parent2Complet = useMemo(
     () => Boolean(values.parents.parent2?.nom?.trim() || values.parents.parent2?.prenomsChemin?.prenom1?.trim()),
@@ -52,16 +52,17 @@ const BlocFormuleFinale: React.FC = () => {
           libelle="Identité du demandeur"
           options={optionsDemandeur}
           premiereLettreMajuscule
-          apresChangement={identiteDemandeur =>
+          apresChangement={identiteDemandeur => {
             identiteDemandeur !== "TIERS" &&
-            setFieldValue("formuleFinale", {
-              ...values.formuleFinale,
-              nom: "",
-              prenomsChemin: PrenomsForm.valeursInitiales(),
-              qualite: "",
-              identiteDemandeur
-            })
-          }
+              setFieldValue("formuleFinale", {
+                ...values.formuleFinale,
+                nom: "",
+                prenomsChemin: PrenomsForm.valeursInitiales(),
+                qualite: "",
+                identiteDemandeur
+              });
+            setFieldTouched("formuleFinale", false, false);
+          }}
         />
       </div>
 

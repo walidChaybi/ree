@@ -162,9 +162,6 @@ export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
   },
   formuleFinale: {
     identiteDemandeur: "PARENT_1",
-    nomDemandeur: undefined,
-    prenomDemandeur: undefined,
-    qualiteDemandeur: undefined,
     pieceProduite: "COPIES",
     legalisation: "LEGALISATION",
     autresPieces: "passeport",
@@ -296,9 +293,6 @@ export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
   },
   formuleFinale: {
     identiteDemandeur: "PARENT_1",
-    nomDemandeur: undefined,
-    prenomDemandeur: undefined,
-    qualiteDemandeur: undefined,
     pieceProduite: "COPIES",
     legalisation: "LEGALISATION",
     autresPieces: "passeport",

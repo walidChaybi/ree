@@ -140,6 +140,27 @@ export interface IFormuleFinaleTranscriptionForm {
   identiteTransmetteur: keyof typeof EIdentiteTransmetteur;
 }
 
+export const declarantTranscriptionFormVide: IDeclarantTranscriptionForm = {
+  identite: "PERE",
+  nom: "",
+  prenomsChemin: PrenomsForm.valeursInitiales(),
+  sexe: "INCONNU",
+  age: "",
+  qualite: "",
+  profession: "",
+  sansProfession: false,
+  domicile: {
+    adresse: "",
+    arrondissement: "",
+    departement: "",
+    etatProvince: "",
+    ville: "",
+    pays: "",
+    typeLieu: "Inconnu"
+  },
+  complement: ""
+};
+
 export const ProjetActeNaissanceTranscriptionForm = {
   valeursInitiales: (
     requete: IRequeteCreationTranscription,
@@ -735,10 +756,12 @@ const estParentRenseigne = (parent: IParentTranscriptionForm): boolean => {
 
 const mapFormuleFinale = (projetActe: IProjetActeTranscritForm): IFormuleFinaleDto => {
   return {
+    ...(projetActe.formuleFinale.identiteDemandeur === "TIERS" && {
+      nomDemandeur: projetActe.formuleFinale?.nom || undefined,
+      prenomDemandeur: PrenomsForm.versPrenomsStringDto(projetActe.formuleFinale?.prenomsChemin).join(", ") || undefined,
+      qualiteDemandeur: projetActe.formuleFinale?.qualite || undefined
+    }),
     identiteDemandeur: projetActe.formuleFinale.identiteDemandeur,
-    nomDemandeur: projetActe.formuleFinale?.nom || undefined,
-    prenomDemandeur: PrenomsForm.versPrenomsStringDto(projetActe.formuleFinale?.prenomsChemin).join(", ") || undefined,
-    qualiteDemandeur: projetActe.formuleFinale?.qualite || undefined,
     pieceProduite: projetActe.formuleFinale.pieceProduite,
     legalisation: (projetActe.formuleFinale.legalisationApostille as keyof typeof ELegalisationApostille) || undefined,
     autresPieces: projetActe.formuleFinale?.autresPieces || undefined,

@@ -1,6 +1,6 @@
 import { EIdentiteDeclarant } from "@model/etatcivil/acte/projetActe/transcription/DeclarantProjetActeTranscrit";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
+import { IProjetActeTranscritForm, declarantTranscriptionFormVide } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { Option } from "@util/Type";
 import { enumVersOptions } from "@util/Utils";
 import { useFormikContext } from "formik";
@@ -18,7 +18,7 @@ import SeparateurSection from "../../../../commun/conteneurs/formulaire/Separate
 const optionsDeclarant: Option[] = enumVersOptions(EIdentiteDeclarant);
 
 const BlocDeclarant: React.FC = () => {
-  const { values, setFieldValue } = useFormikContext<IProjetActeTranscritForm>();
+  const { values, setFieldValue, setFieldTouched } = useFormikContext<IProjetActeTranscritForm>();
 
   return (
     <ConteneurAvecBordure className="py-6">
@@ -29,6 +29,11 @@ const BlocDeclarant: React.FC = () => {
             libelle="Identité"
             options={optionsDeclarant}
             premiereLettreMajuscule
+            apresChangement={idenditeDeclarant => {
+              idenditeDeclarant !== "TIERS" &&
+                setFieldValue("declarant", { ...declarantTranscriptionFormVide, identite: idenditeDeclarant });
+              setFieldTouched("declarant", false, false);
+            }}
           />
         </div>
       </div>
