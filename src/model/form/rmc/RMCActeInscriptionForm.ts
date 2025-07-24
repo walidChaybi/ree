@@ -69,6 +69,8 @@ export type IRMCActeInscriptionDto = DeepPartial<
   }
 >;
 
+const MESSAGE_CARACTERES_INTERDITS_CHAMP_PAYS = "⚠ Les caractères spéciaux autorisés sont l'espace et les suivants : ' -";
+
 export const RMCActeInscriptionForm = {
   valeursInitiales: (): IRMCActeInscriptionForm => {
     return {
@@ -237,7 +239,7 @@ export const RMCActeInscriptionForm = {
           }),
           paysEvenement: SchemaValidation.texte({
             obligatoire: false,
-            listeRegexp: [{ valeur: CaracteresAutorisesRecherchePays, message: messagesErreur.CARACTERES_INTERDITS }],
+            listeRegexp: [{ valeur: CaracteresAutorisesRecherchePays, message: MESSAGE_CARACTERES_INTERDITS_CHAMP_PAYS }],
             interditSeul: true
           })
         })
@@ -269,7 +271,7 @@ export const RMCActeInscriptionForm = {
         }),
         paysNaissance: SchemaValidation.texte({
           obligatoire: false,
-          listeRegexp: [{ valeur: CaracteresAutorisesRecherchePays, message: messagesErreur.CARACTERES_INTERDITS }],
+          listeRegexp: [{ valeur: CaracteresAutorisesRecherchePays, message: MESSAGE_CARACTERES_INTERDITS_CHAMP_PAYS }],
           interditSeul: {
             messageErreurSpecifique: "⚠ Le champ ne peut être utilisé sans au moins un autre critère du titulaire",
             limiterAuBloc: true

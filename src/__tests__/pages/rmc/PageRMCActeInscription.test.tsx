@@ -115,7 +115,7 @@ describe("Le bloc evenement fonctionne correctement ", () => {
     fireEvent.blur(InputEvenement);
 
     await waitFor(() => {
-      expect(screen.getByText("⚠ Le champ contient des caractères interdits dans l'état civil")).toBeDefined();
+      expect(screen.getByText("⚠ Les caractères spéciaux autorisés sont l'espace et les suivants : ' -")).toBeDefined();
     });
 
     fireEvent.change(InputEvenement, { target: { value: "Capsule Corp" } });
