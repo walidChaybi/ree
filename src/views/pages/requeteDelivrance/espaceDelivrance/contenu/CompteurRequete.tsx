@@ -21,5 +21,5 @@ export const CompteurRequete: React.FC<CompteurRequeteProps> = props => {
     });
   }, [props.reloadCompteur]);
 
-  return <span className={"compteur-requetes"}>{`${"Total de requêtes à signer : "} ${nombreRequetes}`}</span>;
+  return <span className={"compteur-requetes"}>{`Total de requêtes à signer : ${nombreRequetes}`}</span>;
 };

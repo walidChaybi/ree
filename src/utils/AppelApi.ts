@@ -89,7 +89,7 @@ const API = {
         }
 
         return Promise.resolve<TReponseApiSucces<TResultat>>({
-          data: (appelParams.api.estExterne ? response.data : response.data?.data) || {},
+          data: (appelParams.api.estExterne ? response.data : response.data?.data) ?? null,
           avertissements: response.data?.errors ?? [],
           status: response.status,
           headers: response.headers as THeader

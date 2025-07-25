@@ -20,7 +20,7 @@ export enum ETypeFamille {
   PAC = "Etranger ayant conclu un PACS en France"
 }
 
-export const typesFamilleProjetActe: (keyof typeof ETypeFamille)[] = ["AFF", "OPT", "AFF", "PR"];
+export const typesFamilleProjetActe: (keyof typeof ETypeFamille)[] = ["AFF", "OPT", "PR", "XDX"];
 
 export class TypeFamille extends EnumWithLibelle {
   public static readonly ACQ = new TypeFamille("Acquisition de la nationalité française");
