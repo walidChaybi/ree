@@ -8,7 +8,8 @@ export type TApiAutorisee =
   | "rece-etatcivil-api"
   | "rece-composition-api"
   | "rece-televerification-api"
-  | "https://geo.api.gouv.fr";
+  | "https://geo.api.gouv.fr"
+  | "https://data.geopf.fr";
 
 export type TMethodeHttp = "GET" | "DELETE" | "PATCH" | "POST" | "PUT";
 

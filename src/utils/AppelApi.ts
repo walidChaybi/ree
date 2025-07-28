@@ -67,8 +67,8 @@ const API = {
       responseType: appelParams.configurationRequete.responseType,
       data: appelParams.configurationRequete.body ?? {},
       headers: {
-        [CSRF_HEADER_NAME]: getCsrfCookieValue(),
-        ...appelParams.configurationRequete.headers
+        ...appelParams.configurationRequete.headers,
+        ...(appelParams.api.estExterne ? {} : { [CSRF_HEADER_NAME]: getCsrfCookieValue() })
       }
     })
       .then(response => {

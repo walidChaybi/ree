@@ -1,9 +1,11 @@
+import { IAdresseDto } from "@api/configurations/adresse/GetAdressesConfigApi";
 import { ICommuneDto } from "@api/configurations/adresse/GetCommunesConfigApi";
 import { IDepartementDto } from "@api/configurations/adresse/GetDepartementsConfigApi";
 
 class CacheDonneesApiGeo {
   private static communes: Record<string, ICommuneDto[]> = {};
   private static departements: Record<string, IDepartementDto[]> = {};
+  private static adresses: Record<string, IAdresseDto[]> = {};
 
   public static getCommunes = (recherche: string): ICommuneDto[] | null => CacheDonneesApiGeo.communes[recherche] ?? null;
 
@@ -17,9 +19,15 @@ class CacheDonneesApiGeo {
     CacheDonneesApiGeo.departements[recherche] = departements;
   };
 
-  public static clearCommunes = () => (CacheDonneesApiGeo.communes = {});
+  public static getAdresses = (recherche: string): IAdresseDto[] | null => CacheDonneesApiGeo.adresses[recherche] ?? null;
 
+  public static setAdresses = (recherche: string, adresses: IAdresseDto[]): void => {
+    CacheDonneesApiGeo.adresses[recherche] = adresses;
+  };
+
+  public static clearCommunes = () => (CacheDonneesApiGeo.communes = {});
   public static clearDepartements = () => (CacheDonneesApiGeo.departements = {});
+  public static clearAdresses = () => (CacheDonneesApiGeo.adresses = {});
 }
 
 export default CacheDonneesApiGeo;

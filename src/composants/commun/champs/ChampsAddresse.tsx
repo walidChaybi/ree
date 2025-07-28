@@ -5,6 +5,9 @@ import React, { memo, useEffect, useMemo } from "react";
 import ChampListeDeroulante from "./ChampListeDeroulante";
 import ChampTexte from "./ChampTexte";
 import ChampsRadio from "./ChampsRadio";
+import ChampRechercheAdresse from "./geoApi/ChampRechercheAdresse";
+import ChampRechercheDepartement from "./geoApi/ChampRechercheDepartement";
+import ChampRechercheVille from "./geoApi/ChampRechercheVille";
 
 interface Option {
   cle: string;
@@ -43,16 +46,17 @@ const AdresseFrance = ({ prefixe, avecLigneAdresse }: { prefixe: string; avecLig
 
   const villeSpeciale = useMemo(() => {
     const villeSaisie = fieldVille.value?.toLowerCase().trim();
-
     return Object.values(EVilleSpeciale).includes(villeSaisie) ? (villeSaisie as EVilleSpeciale) : null;
   }, [fieldVille.value]);
 
   useEffect(() => {
-    if (!villeSpeciale && getIn(values, `${prefixe}.arrondissement`)) setFieldValue(`${prefixe}.arrondissement`, "");
+    if (!villeSpeciale && getIn(values, `${prefixe}.arrondissement`)) {
+      setFieldValue(`${prefixe}.arrondissement`, "");
+    }
     if (villeSpeciale === EVilleSpeciale.PARIS && getIn(values, `${prefixe}.departement`)) {
       setFieldValue(`${prefixe}.departement`, "");
     }
-  }, [villeSpeciale]);
+  }, [villeSpeciale, prefixe, values, setFieldValue]);
 
   return (
     <div className="mt-4 space-y-4">
@@ -63,13 +67,14 @@ const AdresseFrance = ({ prefixe, avecLigneAdresse }: { prefixe: string; avecLig
             libelle="Préposition"
             options={optionsPreposition}
           />
-          <ChampTexte
+          <ChampRechercheVille
             name={`${prefixe}.ville`}
             libelle="Ville"
-            optionFormatage="PREMIER_MAJUSCULE"
             estObligatoire
+            cheminChampDepartement={`${prefixe}.departement`}
           />
         </div>
+
         {villeSpeciale && (
           <ChampListeDeroulante
             name={`${prefixe}.arrondissement`}
@@ -78,17 +83,21 @@ const AdresseFrance = ({ prefixe, avecLigneAdresse }: { prefixe: string; avecLig
             premiereLettreMajuscule
           />
         )}
+
         {villeSpeciale !== EVilleSpeciale.PARIS && (
-          <ChampTexte
+          <ChampRechercheDepartement
             name={`${prefixe}.departement`}
             libelle="Département"
             estObligatoire
           />
         )}
+
         {avecLigneAdresse && (
-          <ChampTexte
+          <ChampRechercheAdresse
             name={`${prefixe}.adresse`}
             libelle="Adresse"
+            cheminChampVille={`${prefixe}.ville`}
+            cheminChampDepartement={`${prefixe}.departement`}
           />
         )}
       </div>
@@ -122,7 +131,6 @@ const AdresseEtranger = ({ prefixe, avecLigneAdresse }: { prefixe: string; avecL
           optionFormatage="PREMIER_MAJUSCULE"
         />
       </div>
-
       {avecLigneAdresse && (
         <div>
           <ChampTexte
@@ -154,18 +162,16 @@ const ChampsAdresse: React.FC<IChampsAdresseProps> = memo(({ prefixe, libelle, a
             etatProvince: "",
             ville: "",
             preposition: "A",
-            pays: typeLieu === "FRANCE" ? "France" : ""
+            pays: typeLieu === "France" ? "France" : ""
           })
         }
       />
-
       {valeursAdresse.typeLieu === "France" && (
         <AdresseFrance
           prefixe={prefixe}
           avecLigneAdresse={avecLigneAdresse}
         />
       )}
-
       {valeursAdresse.typeLieu === "Étranger" && (
         <AdresseEtranger
           prefixe={prefixe}

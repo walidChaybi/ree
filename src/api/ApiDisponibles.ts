@@ -9,6 +9,7 @@ export const COMPOSITION_API: TApi = {
   nom: "rece-composition-api",
   version: "v1"
 };
+
 export const AGENT_API: TApi = {
   nom: "rece-agent-api",
   version: "v1"
@@ -31,6 +32,12 @@ export const OUTILTECH_API: TApi = {
 
 export const GEO_API: TApi = {
   nom: "https://geo.api.gouv.fr",
+  version: "",
+  estExterne: true
+};
+
+export const ADRESSE_API: TApi = {
+  nom: "https://data.geopf.fr",
   version: "",
   estExterne: true
 };
