@@ -766,8 +766,7 @@ const mapFormuleFinale = (projetActe: IProjetActeTranscritForm): IFormuleFinaleD
     legalisation: (projetActe.formuleFinale.legalisationApostille as keyof typeof ELegalisationApostille) || undefined,
     autresPieces: projetActe.formuleFinale?.autresPieces || undefined,
     modeDepot: projetActe.formuleFinale.modeDepot,
-    identiteTransmetteur: projetActe.formuleFinale.identiteTransmetteur,
-    nomTransmetteur: projetActe.formuleFinale.nom || undefined
+    identiteTransmetteur: projetActe.formuleFinale.identiteTransmetteur
   };
 };
 

@@ -26,7 +26,6 @@ export interface IFormuleFinaleDto {
   autresPieces?: string;
   modeDepot: keyof typeof EModeDepot;
   identiteTransmetteur: keyof typeof EIdentiteTransmetteur;
-  nomTransmetteur?: string;
 }
 
 export class FormuleFinale {
@@ -46,8 +45,7 @@ export class FormuleFinale {
     public readonly prenomDemandeur?: string,
     public readonly qualiteDemandeur?: string,
     public readonly legalisation?: keyof typeof ELegalisationApostille,
-    public readonly autresPieces?: string,
-    public readonly nomTransmetteur?: string
+    public readonly autresPieces?: string
   ) {}
 
   public static readonly depuisDto = (formuleFinale: IFormuleFinaleDto): FormuleFinale | null => {
@@ -86,8 +84,7 @@ export class FormuleFinale {
       formuleFinale.prenomDemandeur,
       formuleFinale.qualiteDemandeur,
       formuleFinale.legalisation,
-      formuleFinale.autresPieces,
-      formuleFinale.nomTransmetteur
+      formuleFinale.autresPieces
     );
   };
 }

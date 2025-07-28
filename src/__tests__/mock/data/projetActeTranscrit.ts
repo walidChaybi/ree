@@ -126,8 +126,7 @@ export const projetActeNaissanceDto: IProjetActeTranscritDto = {
     prenomDemandeur: "Rachid,Antoine",
     qualiteDemandeur: undefined,
     legalisation: undefined,
-    autresPieces: undefined,
-    nomTransmetteur: undefined
+    autresPieces: undefined
   },
   acteEtranger: {
     typeActeEtranger: "ACTE_DRESSE",
@@ -166,8 +165,7 @@ export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
     legalisation: "LEGALISATION",
     autresPieces: "passeport",
     modeDepot: "REMISE",
-    identiteTransmetteur: "LE_REQUERANT",
-    nomTransmetteur: undefined
+    identiteTransmetteur: "LE_REQUERANT"
   },
   declarant: declarantTranscritDtoVide,
   titulaires: [
@@ -297,8 +295,7 @@ export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
     legalisation: "LEGALISATION",
     autresPieces: "passeport",
     modeDepot: "REMISE",
-    identiteTransmetteur: "LE_REQUERANT",
-    nomTransmetteur: undefined
+    identiteTransmetteur: "LE_REQUERANT"
   },
   declarant: declarantTranscritDtoVide,
   titulaires: [

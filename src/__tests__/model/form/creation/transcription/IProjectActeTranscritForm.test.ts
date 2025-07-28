@@ -640,7 +640,6 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
         legalisation: "APOSTILLE",
         modeDepot: "TRANSMISE",
         nomDemandeur: "nomDemandeur",
-        nomTransmetteur: "nomDemandeur",
         pieceProduite: "COPIE",
         prenomDemandeur: "Prenom, Demandeur",
         qualiteDemandeur: "Agent"
