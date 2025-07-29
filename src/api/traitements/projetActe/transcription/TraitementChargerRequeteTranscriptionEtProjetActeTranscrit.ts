@@ -29,6 +29,7 @@ const TRAITEMENT_CHARGER_REQUETE_TRANSCRIPTION_ET_PROJET_ACTE_TRANSCRIT: TTraite
 
     const { appelApi: getDetailRequete } = useFetchApi(CONFIG_GET_DETAIL_REQUETE);
     const { appelApi: getProjetActe } = useFetchApi(CONFIG_GET_PROJET_ACTE);
+    const STATUTS_PROJET_ACTE_VALIDES = [StatutRequete.A_SIGNER, StatutRequete.EN_TRAITEMENT, StatutRequete.PRISE_EN_CHARGE];
 
     const lancer = ({ idRequete, estModeConsultation }: IParamsChargement) => {
       if (!idRequete) terminerTraitement();
@@ -45,14 +46,14 @@ const TRAITEMENT_CHARGER_REQUETE_TRANSCRIPTION_ET_PROJET_ACTE_TRANSCRIT: TTraite
         },
         apresSucces: requeteDto => {
           const requeteTranscription = mappingRequeteCreation(requeteDto);
+          const idActe = requeteTranscription.titulaires?.[0].suiviDossiers?.[0]?.idActe;
+          const statutValide = STATUTS_PROJET_ACTE_VALIDES.includes(requeteTranscription.statutCourant.statut);
+
           setRequeteEtProjetActe(valeurPrecedente => ({ ...valeurPrecedente, requete: requeteTranscription }));
 
-          if (
-            [StatutRequete.A_SIGNER, StatutRequete.EN_TRAITEMENT].includes(requeteTranscription.statutCourant.statut) &&
-            requeteTranscription.titulaires?.[0].suiviDossiers?.[0].idActe
-          ) {
+          if (statutValide && idActe) {
             getProjetActe({
-              parametres: { path: { idActe: requeteTranscription.titulaires[0].suiviDossiers[0].idActe } },
+              parametres: { path: { idActe } },
               apresSucces: projetActeDto => {
                 setRequeteEtProjetActe(valeurPrecedente => ({
                   ...valeurPrecedente,
@@ -72,7 +73,7 @@ const TRAITEMENT_CHARGER_REQUETE_TRANSCRIPTION_ET_PROJET_ACTE_TRANSCRIT: TTraite
         },
         apresErreur: messageErreur => {
           setErreurTraitement({ enEchec: true, message: "Une erreur est survenue lors de la récupération de la requête de transcription" });
-          console.error(`Erreur lors de la récupération de la requete: ${messageErreur}`);
+          console.error(`Erreur lors de la récupération de la requête: ${messageErreur}`);
           terminerTraitement();
         }
       });
