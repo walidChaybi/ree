@@ -285,9 +285,36 @@ describe("Le bloc RC/RCA/PAC fonctionne correctement ", () => {
 
     expect(screen.queryByText("⚠")).toBeNull();
   });
+
+  test("La recherche d'inscriptions à partir d'un numéro fonctionne correctement", async () => {
+    render(<PageRMCActeInscription></PageRMCActeInscription>);
+    const checkboxInscriptionSuivantes: HTMLInputElement = await screen.findByLabelText("Et les inscriptions/PACS suivants du répertoire");
+
+    const InputAnnee = (await screen.findAllByPlaceholderText("AAAA")).find(
+      input => input.id === "registreRepertoire.repertoire.numeroInscription.anneeInscription"
+    )!;
+    const InputNumero = (await screen.findAllByPlaceholderText("XXXXX")).find(
+      input => input.id === "registreRepertoire.repertoire.numeroInscription.numero"
+    )!;
+
+    expect(checkboxInscriptionSuivantes.disabled).toBe(true);
+
+    fireEvent.change(InputAnnee, { target: { value: "2010" } });
+    fireEvent.change(InputNumero, { target: { value: "123456" } });
+
+    expect(checkboxInscriptionSuivantes.disabled).toBe(false);
+
+    fireEvent.click(checkboxInscriptionSuivantes);
+    expect(checkboxInscriptionSuivantes.value).toBe("true");
+
+    fireEvent.change(InputNumero, { target: { value: "" } });
+
+    expect(checkboxInscriptionSuivantes.disabled).toBe(true);
+    expect(checkboxInscriptionSuivantes.value).toBe("false");
+  });
 });
 
-describe("La boutons du formulaire fonctionne correctement ", () => {
+describe("Les boutons du formulaire fonctionnent correctement ", () => {
   test("LORSQUE l'utilisateur clique sur le bouton RECHERCHER, ALORS la soumission du formulaire s'effectue correctement", async () => {
     MockApi.deployer(
       CONFIG_POST_RMC_ACTE,

@@ -4,6 +4,7 @@ export interface IRMCRepertoire {
   numeroInscription?: string;
   typeRepertoire?: string;
   natureInscription?: string;
+  etInscriptionsSuivantes?: boolean;
 }
 
 export const RMCRepertoire = {

@@ -1,5 +1,5 @@
 import { CONFIG_POST_RMC_INSCRIPTION } from "@api/configurations/etatCivil/acte/PostRMCInscriptionConfigApi";
-import { mappingCriteres, rmcActeAutorisee as rmcInscriptionAutorisee } from "@hook/rmcActeInscription/RMCActeInscriptionUtils";
+import { mappingCriteres, rmcInscriptionAutorisee } from "@hook/rmcActeInscription/RMCActeInscriptionUtils";
 import { IRMCActeInscriptionForm, RMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import ResultatRMCInscription, { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";

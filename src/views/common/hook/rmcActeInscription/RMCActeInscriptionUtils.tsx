@@ -39,6 +39,7 @@ export const mappingCriteres = (criteres: IRMCActeInscription): ICriteresRMCActe
     numeroInscription: criteres.registreRepertoire?.repertoire?.numeroInscription,
     typeRepertoire: criteres.registreRepertoire?.repertoire?.typeRepertoire as keyof typeof ETypeRepertoire,
     natureRcRca: RMCRepertoire.getNatureRcRca(criteres.registreRepertoire?.repertoire),
+    etInscriptionsSuivantes: criteres.registreRepertoire?.repertoire?.etInscriptionsSuivantes,
     jourDateEvenement: criteres.registreRepertoire?.evenement?.dateEvenement?.jour,
     moisDateEvenement: criteres.registreRepertoire?.evenement?.dateEvenement?.mois,
     anneeDateEvenement: criteres.registreRepertoire?.evenement?.dateEvenement?.annee,

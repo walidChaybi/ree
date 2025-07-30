@@ -34,6 +34,7 @@ export interface ICriteresRMCActesInscriptions {
   numeroInscription?: string;
   typeRepertoire?: keyof typeof ETypeRepertoire;
   natureRcRca?: string;
+  etInscriptionsSuivantes?: boolean;
   // Evenement
   jourDateEvenement?: string;
   moisDateEvenement?: string;

@@ -47,6 +47,7 @@ export interface IRMCActeInscriptionForm {
       numeroInscription: INumeroRcRcaPacs;
       typeRepertoire: string;
       natureInscription: string;
+      etInscriptionsSuivantes: boolean;
     };
     evenement: {
       dateEvenement: IDateHeureForm;
@@ -93,7 +94,8 @@ export const RMCActeInscriptionForm = {
         repertoire: {
           numeroInscription: { anneeInscription: "", numero: "" },
           typeRepertoire: "",
-          natureInscription: ""
+          natureInscription: "",
+          etInscriptionsSuivantes: false
         },
         evenement: {
           dateEvenement: {
@@ -150,7 +152,8 @@ export const RMCActeInscriptionForm = {
         repertoire: {
           numeroInscription: numeroRcRcaPacsVersDto(valeurs.registreRepertoire.repertoire.numeroInscription),
           typeRepertoire: valeurs.registreRepertoire.repertoire.typeRepertoire,
-          natureInscription: valeurs.registreRepertoire.repertoire.natureInscription
+          natureInscription: valeurs.registreRepertoire.repertoire.natureInscription,
+          etInscriptionsSuivantes: valeurs.registreRepertoire.repertoire.etInscriptionsSuivantes
         },
         evenement: {
           dateEvenement: {

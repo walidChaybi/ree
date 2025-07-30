@@ -3,16 +3,21 @@ import { NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { NatureRca } from "@model/etatcivil/enum/NatureRca";
 import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
 import { enumVersOptions } from "@util/Utils";
-import { getIn, useFormikContext } from "formik";
-import { useMemo } from "react";
+import { useFormikContext } from "formik";
+import { useEffect, useMemo } from "react";
+import ChampCaseACocher from "../../../commun/champs/ChampCaseACocher";
 import ChampListeDeroulante from "../../../commun/champs/ChampListeDeroulante";
 import ChampRcRcaPacs from "../../../commun/champs/ChampNumeroRcRcaPacs";
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 
 const BlocRepertoire: React.FC = () => {
-  const { values, setValues } = useFormikContext<IRMCActeInscriptionForm>();
-
-  const typeRepertoire = useMemo(() => getIn(values, "registreRepertoire.repertoire.typeRepertoire"), [values]);
+  const { values, setValues, setFieldValue } = useFormikContext<IRMCActeInscriptionForm>();
+  const {
+    etInscriptionsSuivantes,
+    typeRepertoire,
+    numeroInscription: { anneeInscription, numero }
+  } = values.registreRepertoire.repertoire;
+  const estNumeroInscriptionIncomplet = !anneeInscription || !numero;
 
   const listeNatureInscription = useMemo(() => {
     switch (typeRepertoire) {
@@ -33,11 +38,18 @@ const BlocRepertoire: React.FC = () => {
         repertoire: {
           numeroInscription: { anneeInscription: "", numero: "" },
           typeRepertoire: "",
-          natureInscription: ""
+          natureInscription: "",
+          etInscriptionsSuivantes: false
         }
       }
     });
   };
+
+  useEffect(() => {
+    if (estNumeroInscriptionIncomplet && etInscriptionsSuivantes) {
+      setFieldValue("registreRepertoire.repertoire.etInscriptionsSuivantes", false);
+    }
+  }, [estNumeroInscriptionIncomplet]);
 
   return (
     <ConteneurAvecBordure
@@ -62,6 +74,14 @@ const BlocRepertoire: React.FC = () => {
           libelle="Nature de l'inscription"
           options={[{ cle: "", libelle: "" }, ...listeNatureInscription]}
           disabled={!["RC", "RCA"].includes(typeRepertoire)}
+        />
+      </div>
+
+      <div className="pt-4">
+        <ChampCaseACocher
+          name="registreRepertoire.repertoire.etInscriptionsSuivantes"
+          libelle="Et les inscriptions/PACS suivants du répertoire"
+          disabled={estNumeroInscriptionIncomplet}
         />
       </div>
     </ConteneurAvecBordure>

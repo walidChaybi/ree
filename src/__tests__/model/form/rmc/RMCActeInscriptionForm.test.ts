@@ -21,7 +21,8 @@ const valeursInitialesRMCActeInscriptionAttendues = {
     repertoire: {
       numeroInscription: { anneeInscription: "", numero: "" },
       typeRepertoire: "",
-      natureInscription: ""
+      natureInscription: "",
+      etInscriptionsSuivantes: false
     },
     evenement: {
       dateEvenement: {
@@ -76,7 +77,8 @@ const mockValeursRMCActeInscription: IRMCActeInscriptionForm = {
     repertoire: {
       numeroInscription: { anneeInscription: "2000", numero: "1" },
       typeRepertoire: "PRINCIPAL",
-      natureInscription: "contestation"
+      natureInscription: "contestation",
+      etInscriptionsSuivantes: false
     },
     evenement: {
       dateEvenement: {
@@ -131,7 +133,8 @@ const mockDtoRMCActeInscription: IRMCActeInscriptionDto = {
     repertoire: {
       numeroInscription: "2000-1",
       typeRepertoire: "PRINCIPAL",
-      natureInscription: "contestation"
+      natureInscription: "contestation",
+      etInscriptionsSuivantes: false
     },
     evenement: {
       dateEvenement: {

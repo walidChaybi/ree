@@ -429,6 +429,26 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                     </select>
                   </div>
                 </div>
+                <div
+                  class="pt-4"
+                >
+                  <label
+                    class="flex w-fit text-start cursor-default opacity-60"
+                  >
+                    <input
+                      class="cursor-default"
+                      disabled=""
+                      name="registreRepertoire.repertoire.etInscriptionsSuivantes"
+                      type="checkbox"
+                      value="false"
+                    />
+                    <span
+                      class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                    >
+                      Et les inscriptions/PACS suivants du répertoire
+                    </span>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
