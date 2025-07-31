@@ -137,7 +137,7 @@ export interface ISaisieRequeteRCTCForm {
   requete: {
     natureActe: string;
     lienRequerant: string;
-    registre: string;
+    villeRegistre: string;
   };
   titulaire: {
     identifiant: string;
@@ -237,7 +237,7 @@ export const SaisieRequeteRCTCForm = {
       requete: {
         natureActe: ENatureActeTranscrit.NAISSANCE_MINEUR,
         lienRequerant: TypeLienRequerantCreation.getKey(TypeLienRequerantCreation.PERE_MERE),
-        registre: requete?.villeRegistre ?? ""
+        villeRegistre: requete?.villeRegistre ?? ""
       },
       titulaire: {
         identifiant: titulaire?.id ?? "",
@@ -359,7 +359,7 @@ export const SaisieRequeteRCTCForm = {
       : undefined;
 
     return {
-      villeRegistre: valeurs.requete.registre,
+      villeRegistre: valeurs.requete.villeRegistre,
       canal: TypeCanal.COURRIER.nom,
       type: TypeRequete.CREATION.nom,
       sousType: SousTypeCreation.RCTC.nom,
@@ -443,7 +443,7 @@ export const SaisieRequeteRCTCForm = {
     requete: SchemaValidation.objet({
       natureActe: SchemaValidation.texte({ obligatoire: true }),
       lienRequerant: SchemaValidation.texte({ obligatoire: true }),
-      registre: SchemaValidation.texte({ obligatoire: true })
+      villeRegistre: SchemaValidation.texte({ obligatoire: true })
     }),
     titulaire: SchemaValidation.objet({
       nomActeEtranger: SchemaValidation.texte({ obligatoire: true }),

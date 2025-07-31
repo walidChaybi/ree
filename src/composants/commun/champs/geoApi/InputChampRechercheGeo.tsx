@@ -24,6 +24,7 @@ export const InputChampRecherche: React.FC<AutocompleteRenderInputParams & { enE
         <input
           className="flex-grow border-none bg-transparent p-0 pl-1 read-only:bg-gris-clair focus:border-none focus:outline-none focus:ring-0"
           type="text"
+          placeholder="Recherche..."
           {...props}
         />
       </div>

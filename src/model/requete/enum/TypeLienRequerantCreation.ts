@@ -1,6 +1,12 @@
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 import { Options } from "@util/Type";
 
+export enum ETypeLienRequerantCreation {
+  PERE_MERE = "Père ou mère",
+  REPRESENTANT_LEGAL = "Représentant(e) légal(e)",
+  TITULAIRE_ACTE_MINEUR_EMANCIPE = "Mineur(e) émancipé(e)"
+}
+
 export class TypeLienRequerantCreation extends EnumWithLibelle {
   public static readonly PERE_MERE = new TypeLienRequerantCreation("Père ou mère");
   public static readonly REPRESENTANT_LEGAL = new TypeLienRequerantCreation("Représentant(e) légal(e)");

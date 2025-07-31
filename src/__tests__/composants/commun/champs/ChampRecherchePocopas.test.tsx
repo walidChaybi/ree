@@ -1,53 +1,103 @@
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { OPTION_VIDE } from "@util/Type";
+import { CONFIG_GET_POCOPAS_PAR_FAMILLE_REGISTRE } from "@api/configurations/etatCivil/pocopa/GetPocopasParFamilleRegistreConfigApi";
+import { MockApi } from "@mock/appelsApi/MockApi";
+import { ITypeRegistreDto } from "@model/etatcivil/acte/ITypeRegistre";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Form, Formik } from "formik";
-import { describe, expect, test } from "vitest";
+import { useState } from "react";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import ChampRecherchePocopas from "../../../../composants/commun/champs/ChampRecherchePocopas";
+import CacheDonneesPocopa from "../../../../utils/CacheDonneesPocopa";
 
-describe("Test ChampRecherche", () => {
-  const MockForm = ({ initialValues }: any) => (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={() => {}}
-    >
-      <Form>
-        <ChampRecherchePocopas
-          name="autocomplete"
-          libelle="RecherchePocopa"
-          optionsRecherchePocopa={{ nombreResultatsMax: 15, familleRegistre: "CSL" }}
-        />
-      </Form>
-    </Formik>
-  );
+vi.mock("../../../../../hooks/utilitaires/UseDelai", () => ({
+  useDelai: (initialValue: string) => useState(initialValue)
+}));
+
+const mockPocopasDto: ITypeRegistreDto[] = [
+  { pocopa: "TUNIS", id: "1" },
+  { pocopa: "TURIN", id: "12" },
+  { pocopa: "TURIN ET GENES", id: "123" }
+];
+
+const MockForm: React.FC<{ villeRegistre: string }> = ({ villeRegistre }) => (
+  <Formik
+    initialValues={{ villeRegistre }}
+    onSubmit={() => {}}
+  >
+    <Form>
+      <ChampRecherchePocopas
+        name="villeRegistre"
+        libelle="Pocopa"
+        optionsRecherchePocopa={{ familleRegistre: "CSL", seulementPocopaOuvert: true }}
+      />
+    </Form>
+  </Formik>
+);
+
+describe("Test ChampRecherche Pocopa", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    CacheDonneesPocopa.clearPocopas();
+  });
+
+  afterEach(() => {
+    vi.resetAllMocks();
+  });
 
   test("La recherche pocopa fonctionne correctement", async () => {
-    render(<MockForm initialValues={{ autocomplete: OPTION_VIDE }} />);
+    MockApi.deployer(
+      CONFIG_GET_POCOPAS_PAR_FAMILLE_REGISTRE,
+      { path: { familleRegistre: "CSL" }, query: { seulementPocopaOuvert: true } },
+      { data: mockPocopasDto }
+    );
 
-    const inputChampRecherche: HTMLInputElement = screen.getByPlaceholderText("Recherche...");
+    render(<MockForm villeRegistre={""} />);
 
-    await waitFor(() => {
-      expect(inputChampRecherche).toBeDefined();
-    });
+    const mockApi = MockApi.getMock();
 
-    act(() => {
-      inputChampRecherche.focus();
-    });
-
-    fireEvent.change(inputChampRecherche, {
-      target: {
-        value: "tu"
-      }
-    });
+    const input: HTMLSelectElement = screen.getByRole("combobox");
 
     await waitFor(() => {
-      expect(screen.getByText("TUNIS")).toBeDefined();
+      expect(mockApi.history.get.length).toBe(1);
     });
 
-    fireEvent.keyDown(inputChampRecherche, { key: "ArrowDown" });
-    fireEvent.keyDown(inputChampRecherche, { key: "Enter" });
+    fireEvent.change(input, { target: { value: "t" } });
 
     await waitFor(() => {
-      expect(inputChampRecherche.value === "TUNIS").toBeTruthy();
+      const options = screen.queryAllByRole("option");
+      expect(options).toHaveLength(3);
     });
+
+    fireEvent.keyDown(input, { key: "ArrowDown" });
+    fireEvent.keyDown(input, { key: "Enter" });
+
+    await waitFor(() => {
+      expect(input.value).toBe("TUNIS");
+    });
+
+    MockApi.stopMock();
+  });
+
+  test("DOIT utiliser les données du cache QUAND les données sont disponibles", async () => {
+    vi.spyOn(CacheDonneesPocopa, "getPocopasFamilleRegistre");
+    CacheDonneesPocopa.setPocopasFamilleRegistre("CSL", mockPocopasDto);
+    render(<MockForm villeRegistre={""}></MockForm>);
+
+    const mockApi = MockApi.getMock();
+    const input: HTMLInputElement = screen.getByRole("combobox");
+
+    fireEvent.change(input, { target: { value: "t" } });
+
+    fireEvent.keyDown(input, { key: "ArrowDown" });
+    fireEvent.keyDown(input, { key: "Enter" });
+
+    await waitFor(() => {
+      expect(CacheDonneesPocopa.getPocopasFamilleRegistre).toHaveBeenCalledWith("CSL");
+    });
+
+    await waitFor(() => {
+      expect(mockApi.history.get.length).toBe(0);
+    });
+
+    MockApi.stopMock();
   });
 });

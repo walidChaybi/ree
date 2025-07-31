@@ -10,3 +10,8 @@ export interface ITypeRegistre {
   gereScec: boolean;
   estOuvert: boolean;
 }
+
+export interface ITypeRegistreDto {
+  pocopa: string;
+  id: string;
+}

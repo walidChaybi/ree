@@ -1,0 +1,242 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Test rendu du bloc requete en saisie courrier > DOIT afficher le champ select QUAND l'utilisateur n'éxerce pas sur le pémimètre TOUS_REGISTRE 1`] = `
+<form
+  action="#"
+>
+  <div>
+    <div
+      class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+    >
+      <span
+        class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+      >
+        REQUÊTE
+      </span>
+      <div
+        class="text-start"
+      >
+        <label
+          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+          for="requete.natureActe"
+        >
+          Acte à transcrire
+          <span
+            class="ml-1 text-rouge"
+          >
+            *
+          </span>
+        </label>
+        <select
+          class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+          id="requete.natureActe"
+          name="requete.natureActe"
+        >
+          <option
+            value="NAISSANCE_MINEUR"
+          >
+            Acte de naissance d'une personne mineure
+          </option>
+        </select>
+      </div>
+      <div
+        class="grid grid-cols-2 gap-4 pt-4"
+      >
+        <div
+          class="text-start"
+        >
+          <label
+            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+            for="requete.lienRequerant"
+          >
+            Requérant
+            <span
+              class="ml-1 text-rouge"
+            >
+              *
+            </span>
+          </label>
+          <select
+            class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+            id="requete.lienRequerant"
+            name="requete.lienRequerant"
+          >
+            <option
+              value="PERE_MERE"
+            >
+              Père ou mère
+            </option>
+            <option
+              value="REPRESENTANT_LEGAL"
+            >
+              Représentant(e) légal(e)
+            </option>
+            <option
+              value="TITULAIRE_ACTE_MINEUR_EMANCIPE"
+            >
+              Mineur(e) émancipé(e)
+            </option>
+          </select>
+        </div>
+        <div
+          class="text-start"
+        >
+          <label
+            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+            for="requete.villeRegistre"
+          >
+            Registre
+            <span
+              class="ml-1 text-rouge"
+            >
+              *
+            </span>
+          </label>
+          <select
+            class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+            id="requete.villeRegistre"
+            name="requete.villeRegistre"
+          >
+            <option
+              value="Test 1"
+            >
+              Test 1
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+`;
+
+exports[`Test rendu du bloc requete en saisie courrier > DOIT afficher le composant bloc requete de saisie de courrier 1`] = `
+<form
+  action="#"
+>
+  <div>
+    <div
+      class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+    >
+      <span
+        class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+      >
+        REQUÊTE
+      </span>
+      <div
+        class="text-start"
+      >
+        <label
+          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+          for="requete.natureActe"
+        >
+          Acte à transcrire
+          <span
+            class="ml-1 text-rouge"
+          >
+            *
+          </span>
+        </label>
+        <select
+          class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+          id="requete.natureActe"
+          name="requete.natureActe"
+        >
+          <option
+            value="NAISSANCE_MINEUR"
+          >
+            Acte de naissance d'une personne mineure
+          </option>
+        </select>
+      </div>
+      <div
+        class="grid grid-cols-2 gap-4 pt-4"
+      >
+        <div
+          class="text-start"
+        >
+          <label
+            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+            for="requete.lienRequerant"
+          >
+            Requérant
+            <span
+              class="ml-1 text-rouge"
+            >
+              *
+            </span>
+          </label>
+          <select
+            class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+            id="requete.lienRequerant"
+            name="requete.lienRequerant"
+          >
+            <option
+              value="PERE_MERE"
+            >
+              Père ou mère
+            </option>
+            <option
+              value="REPRESENTANT_LEGAL"
+            >
+              Représentant(e) légal(e)
+            </option>
+            <option
+              value="TITULAIRE_ACTE_MINEUR_EMANCIPE"
+            >
+              Mineur(e) émancipé(e)
+            </option>
+          </select>
+        </div>
+        <div
+          class="relative flex w-full flex-col text-start"
+        >
+          <label
+            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+            for="requete.villeRegistre"
+          >
+            Registre
+            <span
+              class="ml-1 text-rouge"
+            >
+              *
+            </span>
+          </label>
+          <div
+            class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-ka7ti6-MuiAutocomplete-root"
+          >
+            <div
+              class="flex items-center rounded-md border border-solid px-2 py-1 transition-colors focus-within:ring-2 focus-within:ring-opacity-70 border-gris focus-within:ring-bleu"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall text-gris css-ptiqhd-MuiSvgIcon-root"
+                data-testid="SearchIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                />
+              </svg>
+              <input
+                aria-autocomplete="list"
+                aria-expanded="false"
+                autocapitalize="none"
+                autocomplete="off"
+                class="flex-grow border-none bg-transparent p-0 pl-1 read-only:bg-gris-clair focus:border-none focus:outline-none focus:ring-0"
+                id="requete.villeRegistre"
+                placeholder="Recherche..."
+                role="combobox"
+                spellcheck="false"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+`;

@@ -1,6 +1,7 @@
-import { useRecherchePocopa } from "@hook/pocopa/RecherchePocopaApiHook";
+import { getPocopasOuvertsOuFermerParFamille, getPocopasParFamille } from "@api/appels/etatcivilApi";
 import { Option } from "@util/Type";
-import { premiereLettreEnMajusculeLeResteEnMinuscule } from "@util/Utils";
+import { estRenseigne, getValeurOuUndefined, premiereLettreEnMajusculeLeResteEnMinuscule } from "@util/Utils";
+import messageManager from "@util/messageManager";
 import { ChampRechercheField } from "@widget/formulaire/champRecherche/ChampRechercheField";
 import { INomForm, SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
@@ -33,6 +34,40 @@ const useDelai = <T,>(defaut: T, delai: number = 300): [T, Dispatch<SetStateActi
 
   return [valeurDelai, setValeur];
 };
+
+// A SUPPRIMER UNE FOIS LA NOUVELLE RMC EN PLACE
+function useRecherchePocopa(debutPocopa: string, familleRegistre: string, nombreResultatsMax: number, estOuvert: boolean | undefined) {
+  const [pocopasState, setPocopasState] = useState<string[]>();
+
+  useEffect(() => {
+    const fetchPocopas = async () => {
+      let pocopas: any;
+      if (debutPocopa) {
+        try {
+          if (estRenseigne(estOuvert)) {
+            pocopas = await getPocopasOuvertsOuFermerParFamille(
+              debutPocopa,
+              getValeurOuUndefined(familleRegistre),
+              nombreResultatsMax,
+              estOuvert
+            );
+          } else {
+            pocopas = await getPocopasParFamille(debutPocopa, getValeurOuUndefined(familleRegistre), nombreResultatsMax);
+          }
+        } catch (error) {
+          messageManager.showErrorAndClose("Une erreur est survenue lors de la récupération des pocopas");
+        }
+        setPocopasState(pocopas.body.data);
+      } else {
+        setPocopasState([]);
+      }
+    };
+
+    fetchPocopas();
+  }, [debutPocopa, familleRegistre, nombreResultatsMax, estOuvert]);
+
+  return pocopasState;
+}
 
 const RecherchePocopas: React.FC<RecherchePocopasSubForm> = ({
   familleRegistre,

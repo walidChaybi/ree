@@ -103,7 +103,7 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
           <ChampRecherchePocopas
             name={nomChamp}
             libelle={champ.libelle}
-            optionsRecherchePocopa={{ nombreResultatsMax: 15, familleRegistre: "CSL" }}
+            optionsRecherchePocopa={{ familleRegistre: "CSL", seulementPocopaOuvert: true }}
             disabled={estLectureSeule}
           />
         </ChampFormAideSaisie>

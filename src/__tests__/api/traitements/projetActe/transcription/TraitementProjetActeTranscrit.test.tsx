@@ -319,14 +319,6 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
   test("DOIT lancer la mise à jour du statut de la requete QUAND le projet d'acte existe et que le statut est EN_TRAITEMENT", async () => {
     const { result } = renderHook(() => TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT.Lancer(terminerTraitement));
 
-    MockApi.deployer(
-      CONFIG_POST_PROJET_ACTE_TRANSCRIPTION,
-      {
-        body: ProjetActeNaissanceTranscriptionForm.versDtoPost(saisieProjetActeTranscription)
-      },
-      { data: projetActeNaissanceDto }
-    );
-
     MockApi.deployer(CONFIG_PATCH_ID_ACTE_SUIVI_DOSSIER, { path: { idSuivi: "12563", idActe: "6190b304-18dc-43e5-a53a-02612dbadeae" } });
 
     MockApi.deployer(CONFIG_PATCH_STATUT_REQUETE_CREATION);
