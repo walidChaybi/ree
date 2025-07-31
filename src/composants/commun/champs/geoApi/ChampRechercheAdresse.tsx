@@ -93,6 +93,7 @@ const ChampRechercheAdresse: React.FC<TChampRechercheAdresse> = ({
         componentsProps={{
           popper: { sx: { "& .MuiAutocomplete-listbox": { padding: 0 } } }
         }}
+        onBlur={() => helpers.setValue(field.value.trim())}
         clearOnBlur={false}
         noOptionsText={field.value.length < 3 ? "Saisissez au moins 3 caractères" : `Aucune adresse trouvée pour ${field.value}`}
         getOptionLabel={option => option.properties?.label ?? ""}

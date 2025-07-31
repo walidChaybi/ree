@@ -88,6 +88,7 @@ const ChampRechercheVille: React.FC<TChampRechercheVille> = ({
             }
           }
         }}
+        onBlur={() => helpers.setValue(field.value.trim())}
         clearOnBlur={false}
         noOptionsText={!field.value ? "Aucun résultat" : `Aucune ville trouvée pour ${field.value}`}
         getOptionLabel={option => option.nom || ""}

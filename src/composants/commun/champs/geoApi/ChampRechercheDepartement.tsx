@@ -63,6 +63,7 @@ const ChampRechercheDepartement: React.FC<TChampRechercheDepartement> = ({ name,
         inputValue={field.value}
         loading={enAttenteDeReponseApi}
         loadingText="Recherche en cours..."
+        onBlur={() => helpers.setValue(field.value.trim())}
         clearOnBlur={false}
         noOptionsText={!field.value ? "Aucun résultat" : `Aucun département trouvé pour ${field.value}`}
         getOptionLabel={option => option.nom || ""}
