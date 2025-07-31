@@ -12,7 +12,6 @@ import { Qualite } from "@model/requete/enum/Qualite";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
-import { TypeLienRequerantCreation } from "@model/requete/enum/TypeLienRequerantCreation";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
@@ -236,7 +235,7 @@ export const SaisieRequeteRCTCForm = {
     return {
       requete: {
         natureActe: ENatureActeTranscrit.NAISSANCE_MINEUR,
-        lienRequerant: TypeLienRequerantCreation.getKey(TypeLienRequerantCreation.PERE_MERE),
+        lienRequerant: String(requete?.lienRequerant.typeLienRequerant),
         villeRegistre: requete?.villeRegistre ?? ""
       },
       titulaire: {
