@@ -68,6 +68,7 @@ export interface IQueryParametersPourRequetes {
   tri: string;
   sens: SortOrder;
   range?: string;
+  sousTypes?: string[];
 }
 
 async function getApiManager() {
@@ -183,7 +184,8 @@ export function getRequetesCreation(listeStatuts: string, queryParameters: IQuer
         statuts: listeStatuts,
         tri: queryParameters.tri !== "prioriteRequete" ? queryParameters.tri : "dateStatut",
         sens: queryParameters.sens,
-        range: queryParameters.range
+        range: queryParameters.range,
+        sousTypes: queryParameters.sousTypes
       }
     })
   );

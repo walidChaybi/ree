@@ -1,5 +1,6 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
 import { RECEContextData } from "@core/contexts/RECEContext";
+import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { URL_MES_REQUETES_CREATION, URL_REQUETES_CREATION_SERVICE } from "@router/ReceUrls";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
@@ -11,7 +12,6 @@ import { BoutonAttribuerRequete } from "./BoutonAttribuerRequete";
 import BoutonPrendreEnChargeRequeteSuivanteCreation from "./BoutonPrendreEnChargeRequeteSuivanteCreation";
 import { MesRequetesCreation } from "./MesRequetesCreation";
 import { RequetesServiceCreation } from "./RequetesServiceCreation";
-import MenuSaisirRequeteCreation from "./contenu/MenuSaisirRequeteCreation";
 import { statutsRequetesCreation } from "./params/EspaceCreationParams";
 
 interface LocalProps {
@@ -22,7 +22,10 @@ const queryParametersPourRequetesCreation = {
   statuts: statutsRequetesCreation,
   tri: "alerte",
   sens: "DESC",
-  range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
+  range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`,
+  sousTypes: Object.values(SousTypeCreation)
+    .filter(SousTypeCreation.estSousTypeEtablissement)
+    .map(sousType => sousType.nom)
 } as IQueryParametersPourRequetes;
 
 const queryParametersPourRequetesCreationService = {
@@ -39,7 +42,6 @@ const getBlocBoutons = (selectedTabState: number, setPopinAttribuerAOuvert: Func
 
   return (
     <div className="BlocBoutons">
-      <MenuSaisirRequeteCreation indexTabPanel={selectedTabState} />
       {selectedTabState === 1 && <BoutonAttribuerRequete onClick={ouvrirPopinAttribuerA} />}
       <BoutonPrendreEnChargeRequeteSuivanteCreation typeRequete={TypeRequete.CREATION} />
     </div>
