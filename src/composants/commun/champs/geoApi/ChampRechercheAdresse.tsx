@@ -106,7 +106,10 @@ const ChampRechercheAdresse: React.FC<TChampRechercheAdresse> = ({
         }}
         onInputChange={(_, valeurSaisie: string, raison: string) => {
           helpers.setValue(valeurSaisie ?? "");
-          if (raison === "input" && valeurSaisie.length >= 3) setAdresseRecherchee(valeurSaisie.trim());
+
+          if (raison === "input") {
+            setAdresseRecherchee(valeurSaisie.trim().toLowerCase() ?? "");
+          }
         }}
         renderInput={params => (
           <InputChampRecherche
@@ -122,20 +125,6 @@ const ChampRechercheAdresse: React.FC<TChampRechercheAdresse> = ({
             className="group flex cursor-pointer flex-col px-3 py-2 last:border-b-0 hover:bg-bleu hover:text-blanc [&.Mui-focused]:bg-bleu [&.Mui-focused]:text-blanc"
           >
             <span className="text-md font-semibold normal-case">{adresse.properties.label}</span>
-            <span className="text-sm font-normal text-gris-sombre group-hover:text-gray-200 group-[&.Mui-focused]:text-gray-200">
-              {(() => {
-                switch (adresse.properties.type) {
-                  case "housenumber":
-                    return "Numéro de voie";
-                  case "street":
-                    return "Voie";
-                  case "locality":
-                    return "Lieu-dit";
-                  default:
-                    return adresse.properties.type;
-                }
-              })()}{" "}
-            </span>
           </li>
         )}
       />

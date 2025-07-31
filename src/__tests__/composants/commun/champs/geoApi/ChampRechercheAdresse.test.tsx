@@ -350,26 +350,4 @@ describe("ChampRechercheAdresse - Fonctionnalités de recherche", () => {
       expect(screen.getByText("Saisissez au moins 3 caractères")).toBeDefined();
     });
   });
-
-  test("DOIT afficher les types d'adresse correctement", async () => {
-    render(<MockForm initialValues={{ adresse: "" }}></MockForm>);
-
-    MockApi.deployer(
-      CONFIG_GET_ADRESSES,
-      {
-        query: { q: "par", limit: 10 }
-      },
-      { data: { features: mockAdresses } }
-    );
-
-    const input: HTMLInputElement = screen.getByRole("combobox");
-
-    fireEvent.change(input, { target: { value: "par" } });
-
-    await waitFor(() => {
-      expect(screen.getByText("Voie")).toBeDefined();
-    });
-
-    MockApi.stopMock();
-  });
 });
