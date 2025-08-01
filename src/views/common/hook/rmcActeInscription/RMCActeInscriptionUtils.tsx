@@ -33,7 +33,7 @@ export const mappingCriteres = (criteres: IRMCActeInscription): ICriteresRMCActe
     numeroActe: criteres.registreRepertoire?.registre?.numeroActe?.numeroActeOuOrdre,
     anneeRegistre: criteres.registreRepertoire?.registre?.anneeRegistre,
     numeroBisTer: criteres.registreRepertoire?.registre?.numeroActe?.numeroBisTer,
-    aPartirDeNumeroActe: criteres.registreRepertoire?.registre?.numeroActe?.aPartirDe,
+    aPartirDeNumeroActe: criteres.registreRepertoire?.registre?.numeroActe?.etActesSuivants,
     support1: criteres.registreRepertoire?.registre?.registreSupport?.supportUn,
     support2: criteres.registreRepertoire?.registre?.registreSupport?.supportDeux,
     numeroInscription: criteres.registreRepertoire?.repertoire?.numeroInscription,

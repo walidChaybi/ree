@@ -2,9 +2,10 @@ import { IRMCActeInscriptionForm, RMCActeInscriptionForm } from "@model/form/rmc
 import { Form, Formik } from "formik";
 import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
-import BlocEvenementRMC from "./BlocEvenementRMC";
+import BlocActe from "./BlocActe";
+import BlocEvenement from "./BlocEvenement";
 import BlocRepertoire from "./BlocRepertoire";
-import BlocTitulaireRMC from "./BlocTitulaireRMC";
+import BlocTitulaire from "./BlocTitulaire";
 import BoutonsRMC from "./BoutonsRMC";
 
 const titreForm = "Critères de recherche d'un acte et d'une inscription";
@@ -29,9 +30,12 @@ export const RMCActeInscription: React.FC<RMCActeInscriptionProps> = ({ onSubmit
         >
           <div className="grid grid-cols-2">
             <div>
-              <BlocTitulaireRMC />
-              <BlocEvenementRMC />
+              <BlocTitulaire />
+              <BlocEvenement />
               <BlocRepertoire />
+            </div>
+            <div>
+              <BlocActe />
             </div>
           </div>
           <BoutonsRMC />

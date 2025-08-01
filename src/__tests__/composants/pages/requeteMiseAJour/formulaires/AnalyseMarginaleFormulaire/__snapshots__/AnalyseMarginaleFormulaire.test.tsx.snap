@@ -41,7 +41,7 @@ exports[`Tests du formulaire AnalyseMarginaleFormulaire > Doit afficher le formu
                       class="relative flex rounded-md shadow-sm"
                     >
                       <input
-                        class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                        class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                         id="nom"
                         maxlength="100"
                         name="nom"
@@ -52,22 +52,26 @@ exports[`Tests du formulaire AnalyseMarginaleFormulaire > Doit afficher le formu
                   <div
                     class="flex flex-nowrap items-center gap-3 pt-8"
                   >
-                    <label
-                      class="flex w-fit text-start cursor-default opacity-60"
+                    <div
+                      class=""
                     >
-                      <input
-                        class="cursor-default"
-                        disabled=""
-                        name="nomSecable"
-                        type="checkbox"
-                        value="false"
-                      />
-                      <span
-                        class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                      <label
+                        class="flex w-fit text-start cursor-default opacity-60"
                       >
-                        Nom sécable
-                      </span>
-                    </label>
+                        <input
+                          class="cursor-default"
+                          disabled=""
+                          name="nomSecable"
+                          type="checkbox"
+                          value="false"
+                        />
+                        <span
+                          class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                        >
+                          Nom sécable
+                        </span>
+                      </label>
+                    </div>
                     <span
                       class="flex h-6 w-6 cursor-help items-center justify-center rounded-full bg-bleu-sombre text-center font-semibold text-blanc"
                       title="Gestion du nom sécable pour la délivrance des extraits"
@@ -82,7 +86,7 @@ exports[`Tests du formulaire AnalyseMarginaleFormulaire > Doit afficher le formu
               class="grid grid-cols-2 gap-4"
             >
               <div
-                class="flex w-full flex-col text-start w-full"
+                class="flex w-full flex-col text-start  w-full"
               >
                 <label
                   aria-label="aria-label-prenoms.prenom1"
@@ -95,7 +99,7 @@ exports[`Tests du formulaire AnalyseMarginaleFormulaire > Doit afficher le formu
                   class="relative flex rounded-md shadow-sm"
                 >
                   <input
-                    class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                    class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                     id="prenoms.prenom1"
                     maxlength="100"
                     name="prenoms.prenom1"
@@ -136,7 +140,7 @@ exports[`Tests du formulaire AnalyseMarginaleFormulaire > Doit afficher le formu
               </div>
               <div>
                 <div
-                  class="flex w-full flex-col text-start w-full"
+                  class="flex w-full flex-col text-start  w-full"
                 >
                   <label
                     aria-label="aria-label-prenoms.prenom2"
@@ -149,7 +153,7 @@ exports[`Tests du formulaire AnalyseMarginaleFormulaire > Doit afficher le formu
                     class="relative flex rounded-md shadow-sm"
                   >
                     <input
-                      class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                      class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                       id="prenoms.prenom2"
                       maxlength="100"
                       name="prenoms.prenom2"
@@ -177,7 +181,7 @@ exports[`Tests du formulaire AnalyseMarginaleFormulaire > Doit afficher le formu
               </div>
               <div>
                 <div
-                  class="flex w-full flex-col text-start w-full"
+                  class="flex w-full flex-col text-start  w-full"
                 >
                   <label
                     aria-label="aria-label-prenoms.prenom3"
@@ -190,7 +194,7 @@ exports[`Tests du formulaire AnalyseMarginaleFormulaire > Doit afficher le formu
                     class="relative flex rounded-md shadow-sm"
                   >
                     <input
-                      class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                      class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                       id="prenoms.prenom3"
                       maxlength="100"
                       name="prenoms.prenom3"
@@ -218,7 +222,7 @@ exports[`Tests du formulaire AnalyseMarginaleFormulaire > Doit afficher le formu
               </div>
             </div>
             <div
-              class="flex w-full flex-col text-start champs-motif"
+              class="flex w-full flex-col text-start  champs-motif"
             >
               <label
                 aria-label="aria-label-motif"
@@ -236,7 +240,7 @@ exports[`Tests du formulaire AnalyseMarginaleFormulaire > Doit afficher le formu
                 class="relative flex rounded-md shadow-sm"
               >
                 <input
-                  class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                  class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                   id="motif"
                   maxlength="100"
                   name="motif"

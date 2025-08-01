@@ -9,7 +9,7 @@ const ChampCaseACocher: React.FC<TChampsCaseACocherProps> = ({ name, libelle, di
   const [field, meta] = useField(name as string);
 
   return (
-    <>
+    <div className={`${props.className ?? ""}`}>
       <label className={`flex w-fit text-start ${disabled ? "cursor-default opacity-60" : "cursor-pointer"}`.trim()}>
         <input
           type="checkbox"
@@ -30,7 +30,7 @@ const ChampCaseACocher: React.FC<TChampsCaseACocherProps> = ({ name, libelle, di
           <ErrorMessage name={name} />
         </div>
       )}
-    </>
+    </div>
   );
 };
 

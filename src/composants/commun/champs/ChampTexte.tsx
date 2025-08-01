@@ -11,7 +11,7 @@ interface IBoutonIcon {
 }
 
 type TChampsTexteProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  libelle: string;
+  libelle?: string;
   numerique?: boolean;
   optionFormatage?: TFormatChampsTexte;
   estObligatoire?: boolean;
@@ -73,19 +73,23 @@ const ChampTexte: React.FC<TChampsTexteProps> = ({
   const { onBlur, onChange, ...fieldProps } = field;
 
   return (
-    <div className={`flex w-full flex-col text-start ${className ?? ""} ${enErreur ? CHAMP_EN_ERREUR : ""}`.trim()}>
-      <label
-        className={`m-0 mb-1 ml-1 block w-fit text-start transition-colors ${enErreur ? "text-rouge" : "text-bleu-sombre"}`}
-        htmlFor={name as string}
-        aria-label={`aria-label-${name}`}
-      >
-        {libelle}
-        {estObligatoire && <span className="ml-1 text-rouge">*</span>}
-      </label>
+    <div
+      className={`flex w-full flex-col text-start ${libelle ? "" : "justify-end"} ${className ?? ""} ${enErreur ? CHAMP_EN_ERREUR : ""}`.trim()}
+    >
+      {libelle && (
+        <label
+          className={`m-0 mb-1 ml-1 block w-fit text-start transition-colors ${enErreur ? "text-rouge" : "text-bleu-sombre"}`}
+          htmlFor={name as string}
+          aria-label={`aria-label-${name}`}
+        >
+          {libelle}
+          {estObligatoire && <span className="ml-1 text-rouge">*</span>}
+        </label>
+      )}
       <div className="relative flex rounded-md shadow-sm">
         <input
           id={name}
-          className={`border-1 flex flex-grow rounded border border-solid px-2 py-1 ${boutonChamp?.estAGauche ? "pl-12" : ""} transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
+          className={`border-1 flex w-full flex-grow rounded border border-solid px-2 py-1 ${boutonChamp?.estAGauche ? "pl-12" : ""} transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
           maxLength={maxLength ?? CENT}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             const regexTexte = numerique ? /\D/ : regex;

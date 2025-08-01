@@ -6,7 +6,7 @@ const valeursInitialesRMCActeInscriptionAttendues = {
     registre: {
       natureActe: "",
       familleRegistre: "",
-      pocopa: { cle: "", libelle: "" },
+      pocopa: "",
       anneeRegistre: "",
       registreSupport: {
         supportUn: "",
@@ -15,7 +15,7 @@ const valeursInitialesRMCActeInscriptionAttendues = {
       numeroActe: {
         numeroActeOuOrdre: "",
         numeroBisTer: "",
-        aPartirDe: false
+        etActesSuivants: false
       }
     },
     repertoire: {
@@ -63,7 +63,7 @@ const mockValeursRMCActeInscription: IRMCActeInscriptionForm = {
       natureActe: "NAISSANCE",
       familleRegistre: "ÉTAT CIVIL",
       anneeRegistre: "2023",
-      pocopa: { cle: "", libelle: "" },
+      pocopa: "",
       registreSupport: {
         supportUn: "PAPIER",
         supportDeux: "NUMÉRIQUE"
@@ -71,7 +71,7 @@ const mockValeursRMCActeInscription: IRMCActeInscriptionForm = {
       numeroActe: {
         numeroActeOuOrdre: "42",
         numeroBisTer: "B",
-        aPartirDe: true
+        etActesSuivants: true
       }
     },
     repertoire: {
@@ -119,7 +119,7 @@ const mockDtoRMCActeInscription: IRMCActeInscriptionDto = {
       natureActe: "NAISSANCE",
       familleRegistre: "ÉTAT CIVIL",
       anneeRegistre: "2023",
-      pocopa: { cle: undefined, libelle: undefined },
+      pocopa: undefined,
       registreSupport: {
         supportUn: "PAPIER",
         supportDeux: "NUMÉRIQUE"
@@ -127,7 +127,7 @@ const mockDtoRMCActeInscription: IRMCActeInscriptionDto = {
       numeroActe: {
         numeroActeOuOrdre: "42",
         numeroBisTer: "B",
-        aPartirDe: true
+        etActesSuivants: true
       }
     },
     repertoire: {

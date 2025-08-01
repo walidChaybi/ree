@@ -18,7 +18,6 @@ import { useRmcActeApi } from "./useRmcActeApi";
 import { useRmcInscriptionApi } from "./useRmcInscriptionApi";
 
 export const PageRMCActeInscription: React.FC = () => {
-  /**  Obligatoire pour les styles qui sont chargés dynamiquement lorsque le select est dans une fenetre externe ...?*/
   useEffect(() => {
     const event = new CustomEvent("refreshStyles");
     if (window.top) {
@@ -26,13 +25,14 @@ export const PageRMCActeInscription: React.FC = () => {
     }
   }, []);
 
-  /** States (beaucoup trop nombreux) */
   const [valuesRMCActeInscription, setValuesRMCActeInscription] = useState<IRMCActeInscriptionForm | null>(null);
   const [nouvelleRMCActeInscription, setNouvelleRMCActeInscription] = useState<boolean>(false);
+
   const [dataRMCActe, setDataRMCActe] = useState<ResultatRMCActe[] | null>(null);
   const [dataTableauRMCActe, setDataTableauRMCActe] = useState<IParamsTableau | null>(null);
   const [dataRMCInscription, setDataRMCInscription] = useState<TResultatRMCInscription[] | null>(null);
   const [dataTableauRMCInscription, setDataTableauRMCInscription] = useState<IParamsTableau | null>(null);
+
   const [idFicheActe, setIdFicheActe] = useState<string>();
   const [idFicheInscription, setIdFicheInscription] = useState<string>();
 

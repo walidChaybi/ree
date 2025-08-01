@@ -557,7 +557,7 @@ pays
                             class="relative flex rounded-md shadow-sm"
                           >
                             <input
-                              class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               id="titulaire.nomActeEtranger"
                               maxlength="100"
                               name="titulaire.nomActeEtranger"
@@ -582,7 +582,7 @@ pays
                               class="relative flex rounded-md shadow-sm"
                             >
                               <input
-                                class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                 disabled=""
                                 id="titulaire.nomSouhaite"
                                 maxlength="100"
@@ -621,7 +621,7 @@ pays
                                 class="relative flex rounded-md shadow-sm"
                               >
                                 <input
-                                  class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                   id="titulaire.nomRetenuOEC"
                                   maxlength="100"
                                   name="titulaire.nomRetenuOEC"
@@ -632,22 +632,26 @@ pays
                             <div
                               class="flex flex-nowrap items-center gap-3 pt-8"
                             >
-                              <label
-                                class="flex w-fit text-start cursor-default opacity-60"
+                              <div
+                                class=""
                               >
-                                <input
-                                  class="cursor-default"
-                                  disabled=""
-                                  name="titulaire.nomSecable.secable"
-                                  type="checkbox"
-                                  value="false"
-                                />
-                                <span
-                                  class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                                <label
+                                  class="flex w-fit text-start cursor-default opacity-60"
                                 >
-                                  Nom sécable
-                                </span>
-                              </label>
+                                  <input
+                                    class="cursor-default"
+                                    disabled=""
+                                    name="titulaire.nomSecable.secable"
+                                    type="checkbox"
+                                    value="false"
+                                  />
+                                  <span
+                                    class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                                  >
+                                    Nom sécable
+                                  </span>
+                                </label>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -659,7 +663,7 @@ pays
                           class="grid grid-cols-2 gap-4"
                         >
                           <div
-                            class="flex w-full flex-col text-start w-full"
+                            class="flex w-full flex-col text-start  w-full"
                           >
                             <label
                               aria-label="aria-label-titulaire.prenomsChemin.prenom1"
@@ -672,7 +676,7 @@ pays
                               class="relative flex rounded-md shadow-sm"
                             >
                               <input
-                                class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                 id="titulaire.prenomsChemin.prenom1"
                                 maxlength="100"
                                 name="titulaire.prenomsChemin.prenom1"
@@ -874,7 +878,7 @@ pays
                               Préposition
                             </label>
                             <select
-                              class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                              class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
                               id="titulaire.lieuNaissance.preposition"
                               name="titulaire.lieuNaissance.preposition"
                             >
@@ -914,7 +918,7 @@ pays
                               class="relative flex rounded-md shadow-sm"
                             >
                               <input
-                                class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                 id="titulaire.lieuNaissance.ville"
                                 maxlength="100"
                                 name="titulaire.lieuNaissance.ville"
@@ -937,7 +941,7 @@ pays
                             class="relative flex rounded-md shadow-sm"
                           >
                             <input
-                              class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               id="titulaire.lieuNaissance.region"
                               maxlength="100"
                               name="titulaire.lieuNaissance.region"
@@ -959,7 +963,7 @@ pays
                             class="relative flex rounded-md shadow-sm"
                           >
                             <input
-                              class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               id="titulaire.lieuNaissance.pays"
                               maxlength="100"
                               name="titulaire.lieuNaissance.pays"
@@ -981,7 +985,7 @@ pays
                             class="relative flex rounded-md shadow-sm"
                           >
                             <input
-                              class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               id="titulaire.lieuNaissance.adresse"
                               maxlength="100"
                               name="titulaire.lieuNaissance.adresse"
@@ -1057,7 +1061,7 @@ pays
                             class="relative flex rounded-md shadow-sm"
                           >
                             <input
-                              class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               id="parents.parent1.nom"
                               maxlength="100"
                               name="parents.parent1.nom"
@@ -1069,7 +1073,7 @@ pays
                           class="grid grid-cols-2 gap-4"
                         >
                           <div
-                            class="flex w-full flex-col text-start w-full"
+                            class="flex w-full flex-col text-start  w-full"
                           >
                             <label
                               aria-label="aria-label-parents.parent1.prenomsChemin.prenom1"
@@ -1082,7 +1086,7 @@ pays
                               class="relative flex rounded-md shadow-sm"
                             >
                               <input
-                                class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                 id="parents.parent1.prenomsChemin.prenom1"
                                 maxlength="100"
                                 name="parents.parent1.prenomsChemin.prenom1"
@@ -1218,21 +1222,25 @@ pays
                             <div
                               class="pb-1"
                             >
-                              <label
-                                class="flex w-fit text-start cursor-pointer"
+                              <div
+                                class=""
                               >
-                                <input
-                                  class="cursor-pointer accent-bleu-sombre"
-                                  name="parents.parent1.renseignerAge"
-                                  type="checkbox"
-                                  value="false"
-                                />
-                                <span
-                                  class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                                <label
+                                  class="flex w-fit text-start cursor-pointer"
                                 >
-                                  Saisir l'âge
-                                </span>
-                              </label>
+                                  <input
+                                    class="cursor-pointer accent-bleu-sombre"
+                                    name="parents.parent1.renseignerAge"
+                                    type="checkbox"
+                                    value="false"
+                                  />
+                                  <span
+                                    class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                                  >
+                                    Saisir l'âge
+                                  </span>
+                                </label>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1325,7 +1333,7 @@ pays
                                   Préposition
                                 </label>
                                 <select
-                                  class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                                  class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
                                   id="parents.parent1.lieuNaissance.preposition"
                                   name="parents.parent1.lieuNaissance.preposition"
                                 >
@@ -1365,7 +1373,7 @@ pays
                                   class="relative flex rounded-md shadow-sm"
                                 >
                                   <input
-                                    class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                    class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                     id="parents.parent1.lieuNaissance.ville"
                                     maxlength="100"
                                     name="parents.parent1.lieuNaissance.ville"
@@ -1388,7 +1396,7 @@ pays
                                 class="relative flex rounded-md shadow-sm"
                               >
                                 <input
-                                  class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                   id="parents.parent1.lieuNaissance.etatProvince"
                                   maxlength="100"
                                   name="parents.parent1.lieuNaissance.etatProvince"
@@ -1411,7 +1419,7 @@ pays
                                   class="relative flex rounded-md shadow-sm"
                                 >
                                   <input
-                                    class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                    class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                     id="parents.parent1.lieuNaissance.pays"
                                     maxlength="100"
                                     name="parents.parent1.lieuNaissance.pays"
@@ -1441,18 +1449,13 @@ pays
                         class="grid grid-cols-2 items-center gap-4"
                       >
                         <div
-                          class="flex w-full flex-col text-start"
+                          class="flex w-full flex-col text-start justify-end"
                         >
-                          <label
-                            aria-label="aria-label-parents.parent1.profession"
-                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                            for="parents.parent1.profession"
-                          />
                           <div
                             class="relative flex rounded-md shadow-sm"
                           >
                             <input
-                              class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               data-testid="parents.parent1-profession"
                               id="parents.parent1.profession"
                               maxlength="100"
@@ -1461,21 +1464,25 @@ pays
                             />
                           </div>
                         </div>
-                        <label
-                          class="flex w-fit text-start cursor-pointer"
+                        <div
+                          class=""
                         >
-                          <input
-                            class="cursor-pointer accent-bleu-sombre"
-                            name="parents.parent1.sansProfession"
-                            type="checkbox"
-                            value="false"
-                          />
-                          <span
-                            class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                          <label
+                            class="flex w-fit text-start cursor-pointer"
                           >
-                            Sans profession
-                          </span>
-                        </label>
+                            <input
+                              class="cursor-pointer accent-bleu-sombre"
+                              name="parents.parent1.sansProfession"
+                              type="checkbox"
+                              value="false"
+                            />
+                            <span
+                              class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                            >
+                              Sans profession
+                            </span>
+                          </label>
+                        </div>
                       </div>
                       <div
                         class="pb-4 pt-8"
@@ -1568,7 +1575,7 @@ pays
                                     Préposition
                                   </label>
                                   <select
-                                    class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                                    class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
                                     id="parents.parent1.domicile.preposition"
                                     name="parents.parent1.domicile.preposition"
                                   >
@@ -1608,7 +1615,7 @@ pays
                                     class="relative flex rounded-md shadow-sm"
                                   >
                                     <input
-                                      class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                      class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                       id="parents.parent1.domicile.ville"
                                       maxlength="100"
                                       name="parents.parent1.domicile.ville"
@@ -1631,7 +1638,7 @@ pays
                                   class="relative flex rounded-md shadow-sm"
                                 >
                                   <input
-                                    class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                    class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                     id="parents.parent1.domicile.etatProvince"
                                     maxlength="100"
                                     name="parents.parent1.domicile.etatProvince"
@@ -1654,7 +1661,7 @@ pays
                                     class="relative flex rounded-md shadow-sm"
                                   >
                                     <input
-                                      class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                      class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                       id="parents.parent1.domicile.pays"
                                       maxlength="100"
                                       name="parents.parent1.domicile.pays"
@@ -1678,7 +1685,7 @@ pays
                                     class="relative flex rounded-md shadow-sm"
                                   >
                                     <input
-                                      class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                      class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                       id="parents.parent1.domicile.adresse"
                                       maxlength="100"
                                       name="parents.parent1.domicile.adresse"
@@ -1721,7 +1728,7 @@ pays
                             class="relative flex rounded-md shadow-sm"
                           >
                             <input
-                              class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               id="parents.parent2.nom"
                               maxlength="100"
                               name="parents.parent2.nom"
@@ -1733,7 +1740,7 @@ pays
                           class="grid grid-cols-2 gap-4"
                         >
                           <div
-                            class="flex w-full flex-col text-start w-full"
+                            class="flex w-full flex-col text-start  w-full"
                           >
                             <label
                               aria-label="aria-label-parents.parent2.prenomsChemin.prenom1"
@@ -1746,7 +1753,7 @@ pays
                               class="relative flex rounded-md shadow-sm"
                             >
                               <input
-                                class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                 id="parents.parent2.prenomsChemin.prenom1"
                                 maxlength="100"
                                 name="parents.parent2.prenomsChemin.prenom1"
@@ -1881,21 +1888,25 @@ pays
                             <div
                               class="pb-1"
                             >
-                              <label
-                                class="flex w-fit text-start cursor-pointer"
+                              <div
+                                class=""
                               >
-                                <input
-                                  class="cursor-pointer accent-bleu-sombre"
-                                  name="parents.parent2.renseignerAge"
-                                  type="checkbox"
-                                  value="false"
-                                />
-                                <span
-                                  class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                                <label
+                                  class="flex w-fit text-start cursor-pointer"
                                 >
-                                  Saisir l'âge
-                                </span>
-                              </label>
+                                  <input
+                                    class="cursor-pointer accent-bleu-sombre"
+                                    name="parents.parent2.renseignerAge"
+                                    type="checkbox"
+                                    value="false"
+                                  />
+                                  <span
+                                    class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                                  >
+                                    Saisir l'âge
+                                  </span>
+                                </label>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1990,18 +2001,13 @@ pays
                         class="grid grid-cols-2 items-center gap-4"
                       >
                         <div
-                          class="flex w-full flex-col text-start"
+                          class="flex w-full flex-col text-start justify-end"
                         >
-                          <label
-                            aria-label="aria-label-parents.parent2.profession"
-                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                            for="parents.parent2.profession"
-                          />
                           <div
                             class="relative flex rounded-md shadow-sm"
                           >
                             <input
-                              class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               data-testid="parents.parent2-profession"
                               id="parents.parent2.profession"
                               maxlength="100"
@@ -2010,21 +2016,25 @@ pays
                             />
                           </div>
                         </div>
-                        <label
-                          class="flex w-fit text-start cursor-pointer"
+                        <div
+                          class=""
                         >
-                          <input
-                            class="cursor-pointer accent-bleu-sombre"
-                            name="parents.parent2.sansProfession"
-                            type="checkbox"
-                            value="false"
-                          />
-                          <span
-                            class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                          <label
+                            class="flex w-fit text-start cursor-pointer"
                           >
-                            Sans profession
-                          </span>
-                        </label>
+                            <input
+                              class="cursor-pointer accent-bleu-sombre"
+                              name="parents.parent2.sansProfession"
+                              type="checkbox"
+                              value="false"
+                            />
+                            <span
+                              class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                            >
+                              Sans profession
+                            </span>
+                          </label>
+                        </div>
                       </div>
                       <div
                         class="pb-4 pt-8"
@@ -2042,21 +2052,25 @@ pays
                       <div
                         class="grid gap-4"
                       >
-                        <label
-                          class="flex w-fit text-start cursor-pointer"
+                        <div
+                          class=""
                         >
-                          <input
-                            class="cursor-pointer accent-bleu-sombre"
-                            name="parents.domicileCommun"
-                            type="checkbox"
-                            value="false"
-                          />
-                          <span
-                            class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                          <label
+                            class="flex w-fit text-start cursor-pointer"
                           >
-                            Domicile commun avec parent 1
-                          </span>
-                        </label>
+                            <input
+                              class="cursor-pointer accent-bleu-sombre"
+                              name="parents.domicileCommun"
+                              type="checkbox"
+                              value="false"
+                            />
+                            <span
+                              class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                            >
+                              Domicile commun avec parent 1
+                            </span>
+                          </label>
+                        </div>
                         <div>
                           <fieldset
                             class="m-0 flex w-full flex-col border-0 p-0 text-start"
@@ -2178,7 +2192,7 @@ pays
                               Identité
                             </label>
                             <select
-                              class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                              class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
                               id="declarant.identite"
                               name="declarant.identite"
                             >
@@ -2336,7 +2350,7 @@ pays
                             Type d'acte étranger
                           </label>
                           <select
-                            class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                            class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
                             id="acteEtranger.typeActe"
                             name="acteEtranger.typeActe"
                           >
@@ -2445,7 +2459,7 @@ pays
                               Préposition
                             </label>
                             <select
-                              class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                              class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
                               id="acteEtranger.lieuEnregistrement.preposition"
                               name="acteEtranger.lieuEnregistrement.preposition"
                             >
@@ -2485,7 +2499,7 @@ pays
                               class="relative flex rounded-md shadow-sm"
                             >
                               <input
-                                class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                 id="acteEtranger.lieuEnregistrement.ville"
                                 maxlength="100"
                                 name="acteEtranger.lieuEnregistrement.ville"
@@ -2508,7 +2522,7 @@ pays
                             class="relative flex rounded-md shadow-sm"
                           >
                             <input
-                              class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               id="acteEtranger.lieuEnregistrement.etatProvince"
                               maxlength="100"
                               name="acteEtranger.lieuEnregistrement.etatProvince"
@@ -2530,7 +2544,7 @@ pays
                             class="relative flex rounded-md shadow-sm"
                           >
                             <input
-                              class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               id="acteEtranger.lieuEnregistrement.pays"
                               maxlength="100"
                               name="acteEtranger.lieuEnregistrement.pays"
@@ -2540,7 +2554,7 @@ pays
                         </div>
                       </div>
                       <div
-                        class="flex w-full flex-col text-start my-4"
+                        class="flex w-full flex-col text-start  my-4"
                       >
                         <label
                           aria-label="aria-label-acteEtranger.redacteur"
@@ -2553,7 +2567,7 @@ pays
                           class="relative flex rounded-md shadow-sm"
                         >
                           <input
-                            class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                            class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                             id="acteEtranger.redacteur"
                             maxlength="300"
                             name="acteEtranger.redacteur"
@@ -2698,7 +2712,7 @@ pays
                             Identité du demandeur
                           </label>
                           <select
-                            class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                            class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
                             id="formuleFinale.identiteDemandeur"
                             name="formuleFinale.identiteDemandeur"
                           >
@@ -2753,7 +2767,7 @@ pays
                             Pièces produites
                           </label>
                           <select
-                            class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                            class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
                             id="formuleFinale.pieceProduite"
                             name="formuleFinale.pieceProduite"
                           >
@@ -2789,7 +2803,7 @@ pays
                             Légalisation / Apostille
                           </label>
                           <select
-                            class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                            class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
                             id="formuleFinale.legalisationApostille"
                             name="formuleFinale.legalisationApostille"
                           >
@@ -2880,7 +2894,7 @@ pays
                               Identité du transmetteur
                             </label>
                             <select
-                              class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                              class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
                               id="formuleFinale.identiteTransmetteur"
                               name="formuleFinale.identiteTransmetteur"
                             >

@@ -35,7 +35,6 @@ const useDelai = <T,>(defaut: T, delai: number = 300): [T, Dispatch<SetStateActi
   return [valeurDelai, setValeur];
 };
 
-// A SUPPRIMER UNE FOIS LA NOUVELLE RMC EN PLACE
 function useRecherchePocopa(debutPocopa: string, familleRegistre: string, nombreResultatsMax: number, estOuvert: boolean | undefined) {
   const [pocopasState, setPocopasState] = useState<string[]>();
 

@@ -27,7 +27,7 @@ const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({
   const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
 
   return (
-    <div className={`text-start ${className ?? ""}${enErreur ? CHAMP_EN_ERREUR : ""}`.trim()}>
+    <div className={`text-start ${className ?? ""} ${enErreur ? CHAMP_EN_ERREUR : ""}`.trim()}>
       <label
         className={`m-0 mb-1 ml-1 block w-fit text-start transition-colors ${enErreur ? "text-rouge" : "text-bleu-sombre"}`}
         htmlFor={name}
@@ -37,7 +37,7 @@ const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({
       </label>
       <select
         id={name}
-        className={`select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
+        className={`select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
         {...props}
         {...field}
         onChange={e => {

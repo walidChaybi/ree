@@ -77,14 +77,16 @@ export const ChampsNomPrenomInterchangeables: React.FC<{ cheminNom: string; chem
               : undefined
           }
         />
-        <BoutonIcon
-          title="Intervertir Nom et Prénom"
-          styleBouton="secondaire"
-          className="mt-7 h-8 w-12"
-          onClick={intervertir}
-        >
-          <CompareArrows />
-        </BoutonIcon>
+        <div className="flex items-end">
+          <BoutonIcon
+            title="Intervertir Nom et Prénom"
+            styleBouton="secondaire"
+            className="h-8 w-12"
+            onClick={intervertir}
+          >
+            <CompareArrows />
+          </BoutonIcon>
+        </div>
       </div>
       <ChampTexte
         name={cheminPrenom}

@@ -31,7 +31,7 @@ export interface IRMCActeInscriptionForm {
     registre: {
       natureActe: string;
       familleRegistre: string;
-      pocopa: { cle: string; libelle: string };
+      pocopa: string;
       anneeRegistre: string;
       registreSupport: {
         supportUn: string;
@@ -40,7 +40,7 @@ export interface IRMCActeInscriptionForm {
       numeroActe: {
         numeroActeOuOrdre: string;
         numeroBisTer: string;
-        aPartirDe: boolean;
+        etActesSuivants: boolean;
       };
     };
     repertoire: {
@@ -79,7 +79,7 @@ export const RMCActeInscriptionForm = {
         registre: {
           natureActe: "",
           familleRegistre: "",
-          pocopa: { cle: "", libelle: "" },
+          pocopa: "",
           anneeRegistre: "",
           registreSupport: {
             supportUn: "",
@@ -88,7 +88,7 @@ export const RMCActeInscriptionForm = {
           numeroActe: {
             numeroActeOuOrdre: "",
             numeroBisTer: "",
-            aPartirDe: false
+            etActesSuivants: false
           }
         },
         repertoire: {
@@ -146,7 +146,7 @@ export const RMCActeInscriptionForm = {
           numeroActe: {
             numeroActeOuOrdre: valeurs.registreRepertoire.registre.numeroActe.numeroActeOuOrdre,
             numeroBisTer: valeurs.registreRepertoire.registre.numeroActe.numeroBisTer,
-            aPartirDe: Boolean(valeurs.registreRepertoire.registre.numeroActe.aPartirDe)
+            etActesSuivants: Boolean(valeurs.registreRepertoire.registre.numeroActe.etActesSuivants)
           }
         },
         repertoire: {
@@ -194,22 +194,115 @@ export const RMCActeInscriptionForm = {
       { valeur: CARACTERES_POST_ASTERISQUE, message: messagesErreur.CARACTERES_POST_ASTERISQUE },
       { valeur: ASTERISQUE_PRECEDE_ESPACE, message: messagesErreur.ASTERISQUE_PRECEDE_ESPACE }
     ];
+
     return SchemaValidation.objet({
       registreRepertoire: SchemaValidation.objet({
-        // registre: SchemaValidation.objet({
-        //   natureActe: SchemaValidation.texte({ obligatoire: false }),
-        //   familleRegistre: SchemaValidation.texte({ obligatoire: false }),
-        //   anneeRegistre: SchemaValidation.texte({ obligatoire: false }),
-        //   registreSupport: SchemaValidation.objet({
-        //     supportUn: SchemaValidation.texte({ obligatoire: false }),
-        //     supportDeux: SchemaValidation.texte({ obligatoire: false })
-        //   }),
-        //   numeroActe: SchemaValidation.objet({
-        //     numeroActeOuOrdre: SchemaValidation.texte({ obligatoire: false }),
-        //     numeroBisTer: SchemaValidation.texte({ obligatoire: false }),
-        //     aPartirDe: SchemaValidation.booleen({ obligatoire: false })
-        //   })
-        // }),
+        registre: SchemaValidation.objet({
+          natureActe: SchemaValidation.texte({
+            obligatoire: ConditionChamp.depuisTableau([
+              {
+                idChampReference: "registreRepertoire.registre.anneeRegistre",
+                operateur: EOperateurCondition.DIFF,
+                valeurs: [""]
+              }
+            ])
+          }),
+          pocopa: SchemaValidation.listeDeroulante({
+            obligatoire: ConditionChamp.depuisTableau([
+              {
+                idChampReference: "registreRepertoire.registre.familleRegistre",
+                operateur: EOperateurCondition.EGAL,
+                valeurs: ["CSL", "ACQ"]
+              },
+              {
+                idChampReference: "registreRepertoire.registre.numeroActe.numeroActeOuOrdre",
+                operateur: EOperateurCondition.DIFF,
+                valeurs: [""]
+              }
+            ]),
+            valeursPossibles: [
+              {
+                valeurs: ["TR-ACTES"],
+                conditions: ConditionChamp.depuisTableau([
+                  {
+                    idChampReference: "registreRepertoire.registre.familleRegistre",
+                    operateur: EOperateurCondition.EGAL,
+                    valeurs: ["MAR"]
+                  }
+                ]),
+                sontUtilisables: () => true
+              }
+            ],
+            operateurConditionsOu: true
+          }),
+          familleRegistre: SchemaValidation.texte({
+            obligatoire: ConditionChamp.depuisTableau([
+              { idChampReference: "registreRepertoire.registre.anneeRegistre", operateur: EOperateurCondition.DIFF, valeurs: [""] },
+              { idChampReference: "registreRepertoire.registre.natureActe", operateur: EOperateurCondition.DIFF, valeurs: [""] },
+              { idChampReference: "registreRepertoire.registre.pocopa", operateur: EOperateurCondition.DIFF, valeurs: [""] },
+              {
+                idChampReference: "registreRepertoire.registre.registreSupport.supportUn",
+                operateur: EOperateurCondition.DIFF,
+                valeurs: [""]
+              },
+              {
+                idChampReference: "registreRepertoire.registre.numeroActe.numeroActeOuOrdre",
+                operateur: EOperateurCondition.DIFF,
+                valeurs: [""]
+              }
+            ]),
+            operateurConditionsOu: true,
+            interditSeul: {
+              messageErreurSpecifique: "⚠ Le champ ne peut pas être utilisé seul"
+            }
+          }),
+          anneeRegistre: SchemaValidation.texte({
+            obligatoire: ConditionChamp.depuisTableau([
+              {
+                idChampReference: "registreRepertoire.registre.natureActe",
+                operateur: EOperateurCondition.DIFF,
+                valeurs: [""]
+              }
+            ])
+          }),
+          registreSupport: SchemaValidation.objet({
+            supportUn: SchemaValidation.texte({
+              obligatoire: ConditionChamp.depuisTableau([
+                {
+                  idChampReference: "registreRepertoire.registre.registreSupport.supportDeux",
+                  operateur: EOperateurCondition.DIFF,
+                  valeurs: [""]
+                },
+                {
+                  idChampReference: "registreRepertoire.registre.numeroActe.etActesSuivants",
+                  operateur: EOperateurCondition.EGAL,
+                  valeurs: ["true"]
+                }
+              ]),
+              operateurConditionsOu: true
+            }),
+            supportDeux: SchemaValidation.texte({ obligatoire: false })
+          }),
+          numeroActe: SchemaValidation.objet({
+            numeroActeOuOrdre: SchemaValidation.texte({
+              obligatoire: ConditionChamp.depuisTableau([
+                {
+                  idChampReference: "registreRepertoire.registre.numeroActe.numeroBisTer",
+                  operateur: EOperateurCondition.DIFF,
+                  valeurs: [""]
+                },
+                {
+                  idChampReference: "registreRepertoire.registre.numeroActe.etActesSuivants",
+                  operateur: EOperateurCondition.EGAL,
+                  valeurs: ["true"]
+                }
+              ]),
+              operateurConditionsOu: true
+            }),
+            numeroBisTer: SchemaValidation.texte({ obligatoire: false }),
+            etActesSuivants: SchemaValidation.booleen({ obligatoire: false })
+          })
+        }),
         repertoire: SchemaValidation.objet({
           numeroInscription: SchemaValidation.numeroRcRcaPacs({
             obligatoire: false,
@@ -247,10 +340,6 @@ export const RMCActeInscriptionForm = {
           })
         })
       }),
-      // datesDebutFinAnnee: SchemaValidation.objet({
-      //   dateDebut: SchemaValidation.dateIncomplete({ obligatoire: false }),
-      //   dateFin: SchemaValidation.dateIncomplete({ obligatoire: false })
-      // }),
       titulaire: SchemaValidation.objet({
         nom: SchemaValidation.texte({
           obligatoire: ConditionChamp.depuisTableau([

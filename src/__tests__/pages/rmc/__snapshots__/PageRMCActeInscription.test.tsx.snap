@@ -68,7 +68,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                         class="relative flex rounded-md shadow-sm"
                       >
                         <input
-                          class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                          class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                           id="titulaire.nom"
                           maxlength="100"
                           name="titulaire.nom"
@@ -87,23 +87,27 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                         </button>
                       </div>
                     </div>
-                    <button
-                      class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out border border-solid border-bleu-sombre bg-blanc hover:bg-bleu hover:text-blanc hover:border-bleu focus-visible:bg-bleu focus-visible:text-blanc focus-visible:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 text-bleu-sombre disabled:cursor-not-allowed mt-7 h-8 w-12"
-                      title="Intervertir Nom et Prénom"
-                      type="button"
+                    <div
+                      class="flex items-end"
                     >
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                        data-testid="CompareArrowsIcon"
-                        focusable="false"
-                        viewBox="0 0 24 24"
+                      <button
+                        class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out border border-solid border-bleu-sombre bg-blanc hover:bg-bleu hover:text-blanc hover:border-bleu focus-visible:bg-bleu focus-visible:text-blanc focus-visible:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 text-bleu-sombre disabled:cursor-not-allowed h-8 w-12"
+                        title="Intervertir Nom et Prénom"
+                        type="button"
                       >
-                        <path
-                          d="M9.01 14H2v2h7.01v3L13 15l-3.99-4v3zm5.98-1v-3H22V8h-7.01V5L11 9l3.99 4z"
-                        />
-                      </svg>
-                    </button>
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                          data-testid="CompareArrowsIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M9.01 14H2v2h7.01v3L13 15l-3.99-4v3zm5.98-1v-3H22V8h-7.01V5L11 9l3.99 4z"
+                          />
+                        </svg>
+                      </button>
+                    </div>
                   </div>
                   <div
                     class="flex w-full flex-col text-start"
@@ -119,7 +123,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                       class="relative flex rounded-md shadow-sm"
                     >
                       <input
-                        class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                        class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                         id="titulaire.prenom"
                         maxlength="100"
                         name="titulaire.prenom"
@@ -216,7 +220,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                       class="relative flex rounded-md shadow-sm"
                     >
                       <input
-                        class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                        class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                         id="titulaire.paysNaissance"
                         maxlength="100"
                         name="titulaire.paysNaissance"
@@ -332,7 +336,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                       class="relative flex rounded-md shadow-sm"
                     >
                       <input
-                        class="border-1 flex flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                        class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                         id="registreRepertoire.evenement.paysEvenement"
                         maxlength="100"
                         name="registreRepertoire.evenement.paysEvenement"
@@ -384,7 +388,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                       Type de répertoire
                     </label>
                     <select
-                      class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                      class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
                       id="registreRepertoire.repertoire.typeRepertoire"
                       name="registreRepertoire.repertoire.typeRepertoire"
                     >
@@ -457,7 +461,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                       Nature de l'inscription
                     </label>
                     <select
-                      class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                      class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
                       disabled=""
                       id="registreRepertoire.repertoire.natureInscription"
                       name="registreRepertoire.repertoire.natureInscription"
@@ -471,20 +475,404 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                 <div
                   class="pt-4"
                 >
+                  <div
+                    class=""
+                  >
+                    <label
+                      class="flex w-fit text-start cursor-default opacity-60"
+                    >
+                      <input
+                        class="cursor-default"
+                        disabled=""
+                        name="registreRepertoire.repertoire.etInscriptionsSuivantes"
+                        type="checkbox"
+                        value="false"
+                      />
+                      <span
+                        class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                      >
+                        Et les inscriptions/PACS suivants du répertoire
+                      </span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              class="mt-8"
+            >
+              <div
+                class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+              >
+                <span
+                  class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                >
+                  Filtre acte
+                </span>
+                <button
+                  class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out text-rouge bg-blanc hover:bg-rouge hover:text-blanc focus-visible:text-blanc focus-visible:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 disabled:cursor-not-allowed absolute -top-4 right-8 rounded-md border border-solid border-blue-200 shadow-md hover:border-rouge"
+                  title="Réinitialiser les données du bloc"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="ReplayIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"
+                    />
+                  </svg>
+                </button>
+                <div
+                  class="grid grid-cols-2 gap-4 pt-4"
+                >
+                  <div
+                    class="text-start"
+                  >
+                    <label
+                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                      for="registreRepertoire.registre.familleRegistre"
+                    >
+                      Famille de registre
+                    </label>
+                    <select
+                      class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                      id="registreRepertoire.registre.familleRegistre"
+                      name="registreRepertoire.registre.familleRegistre"
+                    >
+                      <option
+                        value=""
+                      />
+                      <option
+                        value="ACQ"
+                      >
+                        (ACQ) Acquisition de la nationalité française
+                      </option>
+                      <option
+                        value="CSL"
+                      >
+                        (CSL) Acte consulaire
+                      </option>
+                      <option
+                        value="DEP"
+                      >
+                        (DEP) Acte déposé dans un pays voisin
+                      </option>
+                      <option
+                        value="COL"
+                      >
+                        (COL) Acte issu d'anciennes colonies
+                      </option>
+                      <option
+                        value="AR2"
+                      >
+                        (AR2) Acte reconstitué - Anciens territoires français (hors Algérie)
+                      </option>
+                      <option
+                        value="AR3"
+                      >
+                        (AR3) Acte reconstitué – Algérie
+                      </option>
+                      <option
+                        value="OP2"
+                      >
+                        (OP2) Actes d'optants à la nationalité (Afrique ou Indochine)
+                      </option>
+                      <option
+                        value="OP3"
+                      >
+                        (OP3) Actes d'optants à la nationalité (Algérie)
+                      </option>
+                      <option
+                        value="JUG"
+                      >
+                        (JUG) Transcription judiciaire
+                      </option>
+                      <option
+                        value="MAR"
+                      >
+                        (MAR) Acte dressé en mer ou aux armées
+                      </option>
+                      <option
+                        value="CPN"
+                      >
+                        (CPN) Changement de nom ou prénoms
+                      </option>
+                      <option
+                        value="AFF"
+                      >
+                        (AFF) Dossier d'affaire
+                      </option>
+                      <option
+                        value="XDX"
+                      >
+                        (XDX) Dossier pour acquisition
+                      </option>
+                      <option
+                        value="OPT"
+                      >
+                        (OPT) Dossier d'optants
+                      </option>
+                      <option
+                        value="PR"
+                      >
+                        (PR) Pré-dossier
+                      </option>
+                      <option
+                        value="PAC"
+                      >
+                        (PAC) Etranger ayant conclu un PACS en France
+                      </option>
+                    </select>
+                  </div>
+                  <div
+                    class="text-start"
+                  >
+                    <label
+                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                      for="registreRepertoire.registre.natureActe"
+                    >
+                      Nature de l'acte
+                    </label>
+                    <select
+                      class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                      id="registreRepertoire.registre.natureActe"
+                      name="registreRepertoire.registre.natureActe"
+                    >
+                      <option
+                        value=""
+                      />
+                      <option
+                        value="NAISSANCE"
+                      >
+                        Naissance
+                      </option>
+                      <option
+                        value="MARIAGE"
+                      >
+                        Mariage
+                      </option>
+                      <option
+                        value="DECES"
+                      >
+                        Décès
+                      </option>
+                      <option
+                        value="DIVORCE"
+                      >
+                        Divorce
+                      </option>
+                      <option
+                        value="SEPARATION"
+                      >
+                        Séparation
+                      </option>
+                      <option
+                        value="ADOPTION_SIMPLE"
+                      >
+                        Adoption simple
+                      </option>
+                      <option
+                        value="ABSENCE"
+                      >
+                        Absence
+                      </option>
+                      <option
+                        value="RECONNAISSANCE"
+                      >
+                        Reconnaissance
+                      </option>
+                      <option
+                        value="DIVERS"
+                      >
+                        Divers
+                      </option>
+                      <option
+                        value="ADOPTION_PLENIERE"
+                      >
+                        Adoption plénière
+                      </option>
+                      <option
+                        value="ADOPTION"
+                      >
+                        Adoption
+                      </option>
+                      <option
+                        value="ENFANT_SANS_VIE"
+                      >
+                        Enfant sans vie
+                      </option>
+                      <option
+                        value="DOSSIER"
+                      >
+                        Dossier
+                      </option>
+                      <option
+                        value="INCONNUE"
+                      >
+                        Inconnue
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div
+                  class="pt-4"
+                >
+                  <div
+                    class="relative flex w-full flex-col text-start"
+                  >
+                    <label
+                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                      for="registreRepertoire.registre.pocopa"
+                    >
+                      Type / Poste / Commune / Pays
+                    </label>
+                    <div
+                      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-ka7ti6-MuiAutocomplete-root"
+                    >
+                      <div
+                        class="flex items-center rounded-md border border-solid px-2 py-1 transition-colors focus-within:ring-2 focus-within:ring-opacity-70 border-gris focus-within:ring-bleu"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall text-gris css-ptiqhd-MuiSvgIcon-root"
+                          data-testid="SearchIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                          />
+                        </svg>
+                        <input
+                          aria-autocomplete="list"
+                          aria-expanded="false"
+                          autocapitalize="none"
+                          autocomplete="off"
+                          class="flex-grow border-none bg-transparent p-0 pl-1 read-only:bg-gris-clair focus:border-none focus:outline-none focus:ring-0"
+                          id="registreRepertoire.registre.pocopa"
+                          placeholder="Recherche..."
+                          role="combobox"
+                          spellcheck="false"
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="grid w-full grid-cols-5 gap-8 pt-4"
+                >
+                  <div
+                    class="col-span-1"
+                  >
+                    <div
+                      class="flex w-full flex-col text-start"
+                    >
+                      <label
+                        aria-label="aria-label-registreRepertoire.registre.anneeRegistre"
+                        class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                        for="registreRepertoire.registre.anneeRegistre"
+                      >
+                        Année
+                      </label>
+                      <div
+                        class="relative flex rounded-md shadow-sm"
+                      >
+                        <input
+                          class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                          id="registreRepertoire.registre.anneeRegistre"
+                          maxlength="100"
+                          name="registreRepertoire.registre.anneeRegistre"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="col-span-2"
+                  >
+                    <div>
+                      <label
+                        class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                        for="registreRepertoire.registre.registreSupport.supportUn"
+                      >
+                        Registre (support)
+                      </label>
+                      <div
+                        class="grid grid-cols-2 gap-3 rounded-md shadow-sm"
+                      >
+                        <input
+                          class="border-1 flex w-auto flex-grow rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                          data-testid="registreRepertoire.registre.registreSupport.supportUn"
+                          id="registreRepertoire.registre.registreSupport.supportUn"
+                          name="registreRepertoire.registre.registreSupport.supportUn"
+                          value=""
+                        />
+                        <input
+                          class="border-1 flex w-auto flex-grow rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                          data-testid="registreRepertoire.registre.registreSupport.supportDeux"
+                          id="registreRepertoire.registre.registreSupport.supportDeux"
+                          name="registreRepertoire.registre.registreSupport.supportDeux"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="col-span-2"
+                  >
+                    <div>
+                      <label
+                        class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                        for="registreRepertoire.registre.numeroActe.numeroActeOuOrdre"
+                      >
+                        N° d'acte
+                      </label>
+                      <div
+                        class="grid grid-cols-2 gap-3 rounded-md shadow-sm"
+                      >
+                        <input
+                          class="border-1 flex w-auto flex-grow rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                          data-testid="registreRepertoire.registre.numeroActe.numeroActeOuOrdre"
+                          id="registreRepertoire.registre.numeroActe.numeroActeOuOrdre"
+                          name="registreRepertoire.registre.numeroActe.numeroActeOuOrdre"
+                          value=""
+                        />
+                        <input
+                          class="border-1 flex w-auto flex-grow rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                          data-testid="registreRepertoire.registre.numeroActe.numeroBisTer"
+                          id="registreRepertoire.registre.numeroActe.numeroBisTer"
+                          name="registreRepertoire.registre.numeroActe.numeroBisTer"
+                          placeholder="N° Bis"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pt-8"
+                >
                   <label
-                    class="flex w-fit text-start cursor-default opacity-60"
+                    class="flex w-fit text-start cursor-pointer"
                   >
                     <input
-                      class="cursor-default"
-                      disabled=""
-                      name="registreRepertoire.repertoire.etInscriptionsSuivantes"
+                      class="cursor-pointer accent-bleu-sombre"
+                      name="registreRepertoire.registre.numeroActe.etActesSuivants"
                       type="checkbox"
                       value="false"
                     />
                     <span
                       class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
                     >
-                      Et les inscriptions/PACS suivants du répertoire
+                      Et les actes suivants du registre
                     </span>
                   </label>
                 </div>

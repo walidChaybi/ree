@@ -1,5 +1,3 @@
-/* v8 ignore start SERA TESTEE LORSQUE LA RMC ACTE INSCRIPTION SERA SORTIE DE VIEWS*/
-
 import { TypeRepertoire } from "@model/etatcivil/enum/TypeRepertoire";
 import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
 import { useFormikContext } from "formik";
@@ -8,7 +6,7 @@ import ChampDate from "../../../commun/champs/ChampDate";
 import ChampTexte from "../../../commun/champs/ChampTexte";
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 
-const BlocEvenementRMC: React.FC = () => {
+const BlocEvenement: React.FC = () => {
   const { values, setValues } = useFormikContext<IRMCActeInscriptionForm>();
 
   const reinitialiserValeurs = () => {
@@ -50,5 +48,4 @@ const BlocEvenementRMC: React.FC = () => {
   );
 };
 
-export default BlocEvenementRMC;
-/* v8 ignore stop */
+export default BlocEvenement;

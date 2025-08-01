@@ -378,7 +378,7 @@ describe("Les boutons du formulaire fonctionnent correctement ", () => {
     render(<PageRMCActeInscription></PageRMCActeInscription>);
 
     const InputNom: HTMLInputElement = await screen.findByLabelText("Nom");
-    const BoutonRechercher = await screen.getByRole("button", { name: "Rechercher" });
+    const BoutonRechercher = screen.getByRole("button", { name: "Rechercher" });
 
     fireEvent.change(InputNom, { target: { value: "Goku" } });
     fireEvent.click(BoutonRechercher);
@@ -397,7 +397,7 @@ describe("Les boutons du formulaire fonctionnent correctement ", () => {
     render(<PageRMCActeInscription></PageRMCActeInscription>);
 
     const InputNom: HTMLInputElement = await screen.findByLabelText("Nom");
-    const BoutonRappelCriteres = await screen.getByRole("button", { name: "Rappel critères" });
+    const BoutonRappelCriteres = screen.getByRole("button", { name: "Rappel critères" });
 
     fireEvent.click(BoutonRappelCriteres);
 

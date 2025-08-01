@@ -68,6 +68,7 @@ export const messagesErreur = {
   CHAMP_INCOMPLET: "⚠ Le champ est incomplet",
   PRENOM_OBLIGATOIRE: "⚠ La saisie du prénom est obligatoire",
   CHAMP_SEUL_INVALIDE: "⚠ Le champ ne peut être utilisé seul",
+  CHAMP_VALEUR_IMPOSEE: "⚠ Le champ ne peut pas contenir cette valeur",
 
   CARACTERES_INTERDITS: "⚠ Le champ contient des caractères interdits dans l'état civil",
   ASTERISQUE_PRECEDE_DE_UN: "⚠ L'astérisque doit être précédé d'au moins un caractère",
@@ -337,7 +338,7 @@ const SchemaValidation = {
             default:
               schema = schema.when(`$${obligation.idChampReference}`, {
                 is: (valeurChamp: TValeurChamp) => obligation.estRespecteePourValeur(valeurChamp),
-                then: schema.oneOf(valeurPossible.valeurs, messagesErreur.CHAMP_OBLIGATOIRE)
+                then: schema.oneOf(valeurPossible.valeurs, messagesErreur.CHAMP_VALEUR_IMPOSEE)
               });
               return false;
           }
