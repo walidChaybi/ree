@@ -13,6 +13,7 @@ import { RMCActeInscriptionResultats } from "@pages/rechercheMultiCriteres/acteI
 import { goToLinkRMC } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauCommun";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { RMCActeInscription } from "../../composants/pages/rmc/formulaire/RMCActeInscription";
+import { RMCContextProvider } from "../../contexts/RMCContextProvider";
 import { StockageLocal } from "../../utils/StockageLocal";
 import { useRmcActeApi } from "./useRmcActeApi";
 import { useRmcInscriptionApi } from "./useRmcInscriptionApi";
@@ -79,7 +80,9 @@ export const PageRMCActeInscription: React.FC = () => {
 
   return (
     <>
-      <RMCActeInscription onSubmit={onSubmitRMCActeInscription} />
+      <RMCContextProvider>
+        <RMCActeInscription onSubmit={onSubmitRMCActeInscription} />
+      </RMCContextProvider>
 
       {dataRMCActe && dataTableauRMCActe && dataRMCInscription && dataTableauRMCInscription && (
         <RMCActeInscriptionResultats

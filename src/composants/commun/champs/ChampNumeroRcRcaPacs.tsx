@@ -9,11 +9,12 @@ interface IChampRcRcaPacsProps {
   libelle: string;
   actionSuppression?: () => void;
   estObligatoire?: boolean;
+  disabled?: boolean;
 }
 
 const seulementNumerique = (texte: string) => texte.replace(/\D/, "");
 
-const ChampRcRcaPacs: React.FC<IChampRcRcaPacsProps> = ({ name, libelle, actionSuppression, estObligatoire }) => {
+const ChampRcRcaPacs: React.FC<IChampRcRcaPacsProps> = ({ name, libelle, actionSuppression, estObligatoire, disabled }) => {
   const champRcRcaPacs = useMemo(
     () => ({
       annee: `${name}.anneeInscription`,
@@ -53,6 +54,7 @@ const ChampRcRcaPacs: React.FC<IChampRcRcaPacsProps> = ({ name, libelle, actionS
             event.target.value = valeur;
             fieldAnnee.onChange(event);
           }}
+          disabled={disabled}
           {...(() => {
             const { onChange, ...autreProps } = fieldAnnee;
 
@@ -73,6 +75,7 @@ const ChampRcRcaPacs: React.FC<IChampRcRcaPacsProps> = ({ name, libelle, actionS
               event.target.value = valeur;
               fieldNumero.onChange(event);
             }}
+            disabled={disabled}
             {...(() => {
               const { onChange, ...autreProps } = fieldNumero;
 

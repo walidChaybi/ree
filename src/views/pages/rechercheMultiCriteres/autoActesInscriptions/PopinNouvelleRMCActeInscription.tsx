@@ -7,6 +7,7 @@ import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFl
 import React from "react";
 import BoutonIcon from "../../../../composants/commun/bouton/BoutonIcon";
 import { RMCActeInscription } from "../../../../composants/pages/rmc/formulaire/RMCActeInscription";
+import { RMCContextProvider } from "../../../../contexts/RMCContextProvider";
 import { RMCActeInscription as RMCActeInscriptionOld } from "../acteInscription/RMCActeInscription";
 
 interface PopinNouvelleRMCActeInscriptionProps {
@@ -43,7 +44,9 @@ export const PopinNouvelleRMCActeInscription: React.FC<PopinNouvelleRMCActeInscr
           <CloseIcon />
         </BoutonIcon>
         {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_UTILISER_NOUVELLE_RMC) ? (
-          <RMCActeInscription onSubmit={props.nouvelleRMCActeInscription} />
+          <RMCContextProvider>
+            <RMCActeInscription onSubmit={props.nouvelleRMCActeInscription} />
+          </RMCContextProvider>
         ) : (
           <RMCActeInscriptionOld
             onSubmit={props.nouvelleRMCActeInscription}

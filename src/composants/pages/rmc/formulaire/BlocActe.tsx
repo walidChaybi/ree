@@ -2,7 +2,8 @@ import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
 import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
 import { getIn, useFormikContext } from "formik";
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
+import { EBlocsRMC, RMCContext } from "../../../../contexts/RMCContextProvider";
 import useRMCBlocActe from "../../../../hooks/rmc/RMCBlocActeHook";
 import ChampCaseACocher from "../../../commun/champs/ChampCaseACocher";
 import ChampListeDeroulante from "../../../commun/champs/ChampListeDeroulante";
@@ -13,6 +14,7 @@ import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/Conteneu
 
 const BlocActe: React.FC = () => {
   const { values, setFieldValue, initialValues } = useFormikContext<IRMCActeInscriptionForm>();
+  const { blocsRenseignes } = useContext(RMCContext);
 
   const typeRepertoireSelectionne = useMemo(
     () => getIn(values.registreRepertoire.registre, "familleRegistre"),
@@ -25,6 +27,8 @@ const BlocActe: React.FC = () => {
     setFieldValue("registreRepertoire.registre", structuredClone(initialValues.registreRepertoire.registre));
   };
 
+  const blocRCRCAPACSAlimente = blocsRenseignes?.includes(EBlocsRMC.RCRCAPACS);
+
   return (
     <ConteneurAvecBordure
       titreEnTete="Filtre acte"
@@ -36,12 +40,13 @@ const BlocActe: React.FC = () => {
           name="registreRepertoire.registre.familleRegistre"
           libelle="Famille de registre"
           options={[{ cle: "", libelle: "" }, ...TypeFamille.getAllEnumsAsOptions()]}
+          disabled={blocRCRCAPACSAlimente}
         />
         <ChampListeDeroulante
           name="registreRepertoire.registre.natureActe"
           libelle="Nature de l'acte"
           options={[{ cle: "", libelle: "" }, ...NatureActe.getAllEnumsAsOptions()]}
-          disabled={champsDesactives.includes("natureActe")}
+          disabled={champsDesactives.includes("natureActe") || blocRCRCAPACSAlimente}
         />
       </div>
       <div className="pt-4">
@@ -52,7 +57,7 @@ const BlocActe: React.FC = () => {
             familleRegistre: typeRepertoireSelectionne,
             seulementPocopaOuvert: false
           }}
-          disabled={champsDesactives.includes("pocopa")}
+          disabled={champsDesactives.includes("pocopa") || blocRCRCAPACSAlimente}
         />
       </div>
       <div className="grid w-full grid-cols-5 gap-8 pt-4">
@@ -60,7 +65,7 @@ const BlocActe: React.FC = () => {
           <ChampTexte
             name={"registreRepertoire.registre.anneeRegistre"}
             libelle={"Année"}
-            disabled={champsDesactives.includes("anneeRegistre")}
+            disabled={champsDesactives.includes("anneeRegistre") || blocRCRCAPACSAlimente}
             numerique
           />
         </div>
@@ -68,11 +73,11 @@ const BlocActe: React.FC = () => {
           <ChampTexteDouble
             proprietesPremierChamp={{
               name: "registreRepertoire.registre.registreSupport.supportUn",
-              disabled: champsDesactives.includes("supportUn")
+              disabled: champsDesactives.includes("supportUn") || blocRCRCAPACSAlimente
             }}
             proprietesSecondChamp={{
               name: "registreRepertoire.registre.registreSupport.supportDeux",
-              disabled: champsDesactives.includes("supportDeux")
+              disabled: champsDesactives.includes("supportDeux") || blocRCRCAPACSAlimente
             }}
             libelle={"Registre (support)"}
           />
@@ -81,12 +86,12 @@ const BlocActe: React.FC = () => {
           <ChampTexteDouble
             proprietesPremierChamp={{
               name: "registreRepertoire.registre.numeroActe.numeroActeOuOrdre",
-              disabled: champsDesactives.includes("numeroActeOuOrdre")
+              disabled: champsDesactives.includes("numeroActeOuOrdre") || blocRCRCAPACSAlimente
             }}
             proprietesSecondChamp={{
               name: "registreRepertoire.registre.numeroActe.numeroBisTer",
               placeholder: "N° Bis",
-              disabled: champsDesactives.includes("numeroBisTer")
+              disabled: champsDesactives.includes("numeroBisTer") || blocRCRCAPACSAlimente
             }}
             libelle={"N° d'acte"}
           />
@@ -96,6 +101,7 @@ const BlocActe: React.FC = () => {
         name="registreRepertoire.registre.numeroActe.etActesSuivants"
         libelle={"Et les actes suivants du registre"}
         className="pt-8"
+        disabled={blocRCRCAPACSAlimente}
       />
     </ConteneurAvecBordure>
   );

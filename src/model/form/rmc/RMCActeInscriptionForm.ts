@@ -1,3 +1,4 @@
+import { EBlocsRMC } from "../../../contexts/RMCContextProvider";
 import {
   ASTERISQUE_PRECEDE_DEUX,
   ASTERISQUE_PRECEDE_ESPACE,
@@ -188,24 +189,35 @@ export const RMCActeInscriptionForm = {
       }
     }),
 
-  schemaValidation: () => {
+  schemaValidation: (blocsRenseignes?: (keyof typeof EBlocsRMC)[]) => {
     const ENSEMBLE_REGEX_CHAMP_ASTERISQUE = [
       { valeur: CaracteresAutorisesRechercheNomPrenom, message: messagesErreur.CARACTERES_INTERDITS },
       { valeur: CARACTERES_POST_ASTERISQUE, message: messagesErreur.CARACTERES_POST_ASTERISQUE },
       { valeur: ASTERISQUE_PRECEDE_ESPACE, message: messagesErreur.ASTERISQUE_PRECEDE_ESPACE }
     ];
 
+    const appliquerValidationSousCondition = <T>(validation: T, conditions: { blocsRetirantValidation: (keyof typeof EBlocsRMC)[] }) => {
+      if (!blocsRenseignes || !blocsRenseignes.length) return validation;
+
+      return blocsRenseignes.filter(blocRenseigne => conditions.blocsRetirantValidation.includes(blocRenseigne)).length
+        ? undefined
+        : validation;
+    };
+
     return SchemaValidation.objet({
       registreRepertoire: SchemaValidation.objet({
         registre: SchemaValidation.objet({
           natureActe: SchemaValidation.texte({
-            obligatoire: ConditionChamp.depuisTableau([
-              {
-                idChampReference: "registreRepertoire.registre.anneeRegistre",
-                operateur: EOperateurCondition.DIFF,
-                valeurs: [""]
-              }
-            ])
+            obligatoire: appliquerValidationSousCondition(
+              ConditionChamp.depuisTableau([
+                {
+                  idChampReference: "registreRepertoire.registre.anneeRegistre",
+                  operateur: EOperateurCondition.DIFF,
+                  valeurs: [""]
+                }
+              ]),
+              { blocsRetirantValidation: ["TITULAIRE", "EVENEMENT"] }
+            )
           }),
           pocopa: SchemaValidation.listeDeroulante({
             obligatoire: ConditionChamp.depuisTableau([
@@ -236,21 +248,24 @@ export const RMCActeInscriptionForm = {
             operateurConditionsOu: true
           }),
           familleRegistre: SchemaValidation.texte({
-            obligatoire: ConditionChamp.depuisTableau([
-              { idChampReference: "registreRepertoire.registre.anneeRegistre", operateur: EOperateurCondition.DIFF, valeurs: [""] },
-              { idChampReference: "registreRepertoire.registre.natureActe", operateur: EOperateurCondition.DIFF, valeurs: [""] },
-              { idChampReference: "registreRepertoire.registre.pocopa", operateur: EOperateurCondition.DIFF, valeurs: [""] },
-              {
-                idChampReference: "registreRepertoire.registre.registreSupport.supportUn",
-                operateur: EOperateurCondition.DIFF,
-                valeurs: [""]
-              },
-              {
-                idChampReference: "registreRepertoire.registre.numeroActe.numeroActeOuOrdre",
-                operateur: EOperateurCondition.DIFF,
-                valeurs: [""]
-              }
-            ]),
+            obligatoire: appliquerValidationSousCondition(
+              ConditionChamp.depuisTableau([
+                { idChampReference: "registreRepertoire.registre.anneeRegistre", operateur: EOperateurCondition.DIFF, valeurs: [""] },
+                { idChampReference: "registreRepertoire.registre.natureActe", operateur: EOperateurCondition.DIFF, valeurs: [""] },
+                { idChampReference: "registreRepertoire.registre.pocopa", operateur: EOperateurCondition.DIFF, valeurs: [""] },
+                {
+                  idChampReference: "registreRepertoire.registre.registreSupport.supportUn",
+                  operateur: EOperateurCondition.DIFF,
+                  valeurs: [""]
+                },
+                {
+                  idChampReference: "registreRepertoire.registre.numeroActe.numeroActeOuOrdre",
+                  operateur: EOperateurCondition.DIFF,
+                  valeurs: [""]
+                }
+              ]),
+              { blocsRetirantValidation: ["TITULAIRE", "EVENEMENT"] }
+            ),
             operateurConditionsOu: true,
             interditSeul: {
               messageErreurSpecifique: "⚠ Le champ ne peut pas être utilisé seul"
@@ -308,6 +323,12 @@ export const RMCActeInscriptionForm = {
             obligatoire: false,
             interditSeul: {
               champsEnErreur: ["anneeInscription", "numero"]
+            },
+            comparaisonValeurAutreChamp: {
+              cheminChampCompare: "registreRepertoire.evenement.dateEvenement.annee",
+              operateur: EOperateurCondition.DIFF,
+              champEnfantCompare: "anneeInscription",
+              messageErreurSpecifique: "⚠ Incohérence avec l'année de l'évènement"
             }
           }),
           typeRepertoire: SchemaValidation.texte({
@@ -329,14 +350,30 @@ export const RMCActeInscriptionForm = {
           dateEvenement: SchemaValidation.dateIncomplete({
             obligatoire: false,
             bloquerDateFuture: true,
-            interditSeul: {
-              champsEnErreur: ["annee"]
+            interditSeul: appliquerValidationSousCondition(
+              {
+                champsEnErreur: ["annee"]
+              },
+              { blocsRetirantValidation: ["TITULAIRE", "RCRCAPACS", "ACTE"] }
+            ),
+            comparaisonValeurAutreChamp: {
+              cheminChampCompare: "registreRepertoire.repertoire.numeroInscription.anneeInscription",
+              operateur: EOperateurCondition.DIFF,
+              champEnfantCompare: "annee",
+              messageErreurSpecifique: "⚠ Incohérence avec le numéro d'inscription / numéro PACS"
             }
           }),
           paysEvenement: SchemaValidation.texte({
             obligatoire: false,
             listeRegexp: [{ valeur: CaracteresAutorisesRecherchePays, message: MESSAGE_CARACTERES_INTERDITS_CHAMP_PAYS }],
-            interditSeul: true
+            interditSeul: appliquerValidationSousCondition(true, { blocsRetirantValidation: ["TITULAIRE", "RCRCAPACS", "ACTE"] }),
+            interditAvec: [
+              {
+                champExclusif: "registreRepertoire.repertoire.typeRepertoire",
+                valeursExclusives: ["RC", "RCA"],
+                messageErreurSpecifique: "⚠ Incompatible avec une recherche RC/RCA"
+              }
+            ]
           })
         })
       }),

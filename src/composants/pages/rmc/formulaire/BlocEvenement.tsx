@@ -1,4 +1,3 @@
-import { TypeRepertoire } from "@model/etatcivil/enum/TypeRepertoire";
 import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
 import { useFormikContext } from "formik";
 import React from "react";
@@ -41,7 +40,6 @@ const BlocEvenement: React.FC = () => {
         <ChampTexte
           name="registreRepertoire.evenement.paysEvenement"
           libelle="Pays de l'évènement"
-          disabled={[TypeRepertoire.RC.libelle, TypeRepertoire.RCA.libelle].includes(values.registreRepertoire.repertoire.typeRepertoire)}
         />
       </div>
     </ConteneurAvecBordure>

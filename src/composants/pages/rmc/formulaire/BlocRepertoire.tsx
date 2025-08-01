@@ -4,7 +4,8 @@ import { NatureRca } from "@model/etatcivil/enum/NatureRca";
 import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
 import { enumVersOptions } from "@util/Utils";
 import { useFormikContext } from "formik";
-import { useEffect, useMemo } from "react";
+import { useContext, useEffect, useMemo } from "react";
+import { EBlocsRMC, RMCContext } from "../../../../contexts/RMCContextProvider";
 import ChampCaseACocher from "../../../commun/champs/ChampCaseACocher";
 import ChampListeDeroulante from "../../../commun/champs/ChampListeDeroulante";
 import ChampRcRcaPacs from "../../../commun/champs/ChampNumeroRcRcaPacs";
@@ -12,6 +13,7 @@ import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/Conteneu
 
 const BlocRepertoire: React.FC = () => {
   const { values, setValues, setFieldValue } = useFormikContext<IRMCActeInscriptionForm>();
+  const { blocsRenseignes } = useContext(RMCContext);
   const {
     etInscriptionsSuivantes,
     typeRepertoire,
@@ -29,6 +31,8 @@ const BlocRepertoire: React.FC = () => {
         return [];
     }
   }, [typeRepertoire]);
+
+  const blocActeAlimente = blocsRenseignes?.includes(EBlocsRMC.ACTE);
 
   const reinitialiserValeurs = () => {
     setValues({
@@ -62,10 +66,12 @@ const BlocRepertoire: React.FC = () => {
           name="registreRepertoire.repertoire.typeRepertoire"
           libelle="Type de répertoire"
           options={[{ cle: "", libelle: "" }, ...enumVersOptions(ETypePacsRcRca)]}
+          disabled={blocActeAlimente}
         />
         <ChampRcRcaPacs
           name="registreRepertoire.repertoire.numeroInscription"
           libelle="N° de l'inscription / N° du PACS"
+          disabled={blocActeAlimente}
         />
       </div>
       <div className="pt-4">
@@ -73,7 +79,7 @@ const BlocRepertoire: React.FC = () => {
           name="registreRepertoire.repertoire.natureInscription"
           libelle="Nature de l'inscription"
           options={[{ cle: "", libelle: "" }, ...listeNatureInscription]}
-          disabled={!["RC", "RCA"].includes(typeRepertoire)}
+          disabled={!["RC", "RCA"].includes(typeRepertoire) || blocActeAlimente}
         />
       </div>
 

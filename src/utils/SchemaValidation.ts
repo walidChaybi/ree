@@ -1,7 +1,8 @@
 import { ValeursConditionneesMetaModele } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
-import { ConditionChamp } from "@model/form/commun/ConditionChamp";
+import { ConditionChamp, EOperateurCondition } from "@model/form/commun/ConditionChamp";
 import { INumeroRcRcaPacs } from "@model/form/commun/NumeroRcRcaPacsForm";
 import dayjs from "dayjs";
+import { getIn } from "formik";
 import * as Yup from "yup";
 import { REGEX_ANNEE_QUATRE_CHIFFRES } from "../ressources/Regex";
 
@@ -9,6 +10,8 @@ interface ISchemaCommunParams {
   obligatoire?: boolean | ConditionChamp[];
   operateurConditionsOu?: boolean;
   interditSeul?: boolean | TInterditSeul;
+  interditAvec?: TInterditAvec[];
+  comparaisonValeurAutreChamp?: TComparaisonValeurAutreChamp;
 }
 
 type TValeurChamp = string | boolean | number | undefined;
@@ -25,11 +28,24 @@ type TValidationText = TValidation & {
   valeur: RegExp;
 };
 
-type TInterditSeul = {
+export type TInterditSeul = {
   champsEnErreur?: string[];
   champsAIgnorer?: string[];
   messageErreurSpecifique?: string;
   limiterAuBloc?: boolean;
+};
+
+export type TInterditAvec = {
+  champExclusif: string;
+  valeursExclusives?: string[];
+  messageErreurSpecifique?: string;
+};
+
+export type TComparaisonValeurAutreChamp = {
+  cheminChampCompare: string;
+  operateur: EOperateurCondition;
+  champEnfantCompare?: string;
+  messageErreurSpecifique?: string;
 };
 
 type TGestionObligationParams<TSchemaChamp extends Yup.AnySchema = Yup.AnySchema> = {
@@ -38,6 +54,8 @@ type TGestionObligationParams<TSchemaChamp extends Yup.AnySchema = Yup.AnySchema
   actionObligation: () => TSchemaChamp;
   conditionOu?: boolean;
   interditSeul?: boolean | TInterditSeul;
+  interditAvec?: TInterditAvec[];
+  comparaisonValeurAutreChamp?: TComparaisonValeurAutreChamp;
 };
 
 type TDateChamp = {
@@ -56,9 +74,9 @@ type TNomSecableChamp = {
 };
 
 export const messagesErreur = {
-  DATE_INVALIDE: "⚠ La date est invalide",
   ANNEE_INVALIDE: "⚠ L'année est invalide",
   ANNEE_SUR_QUATRE_CHIFFRES: "⚠ L'année doit être sur 4 chiffres",
+  DATE_INVALIDE: "⚠ La date est invalide",
   DATE_INCOMPLETE: "⚠ La date est incomplète",
   DATE_OBLIGATOIRE: "⚠ La saisie de la date est obligatoire",
   DATE_FUTURE: "⚠ La date ne peut pas être supérieure à la date du jour",
@@ -66,15 +84,16 @@ export const messagesErreur = {
   CHAMP_OBLIGATOIRE: "⚠ La saisie du champ est obligatoire",
   CHAMP_INVALIDE: "⚠ Le champ est invalide",
   CHAMP_INCOMPLET: "⚠ Le champ est incomplet",
-  PRENOM_OBLIGATOIRE: "⚠ La saisie du prénom est obligatoire",
+  CHAMPS_INCOHERENTS: "⚠ Ces champs sont incohérents",
   CHAMP_SEUL_INVALIDE: "⚠ Le champ ne peut être utilisé seul",
   CHAMP_VALEUR_IMPOSEE: "⚠ Le champ ne peut pas contenir cette valeur",
-
+  CHAMP_EXCLUSIF: "⚠ Le champ est incompatible avec un autre champ du formulaire",
+  PRENOM_OBLIGATOIRE: "⚠ La saisie du prénom est obligatoire",
   CARACTERES_INTERDITS: "⚠ Le champ contient des caractères interdits dans l'état civil",
+  CARACTERES_POST_ASTERISQUE: "⚠ L'astérisque ne doit être suivi d'aucun caractère",
   ASTERISQUE_PRECEDE_DE_UN: "⚠ L'astérisque doit être précédé d'au moins un caractère",
   ASTERISQUE_PRECEDE_DE_DEUX: "⚠ L'astérisque doit être précédé d'au moins deux caractères",
-  ASTERISQUE_PRECEDE_ESPACE: "⚠ L'astérisque doit être accolé à un vocable",
-  CARACTERES_POST_ASTERISQUE: "⚠ L'astérisque ne doit être suivi d'aucun caractère"
+  ASTERISQUE_PRECEDE_ESPACE: "⚠ L'astérisque doit être accolé à un vocable"
 };
 
 const erreurSurDateEntiere = (message: string, baseChemin: string) =>
@@ -171,7 +190,7 @@ const getSchemaValidationDate = (bloquerDateFuture?: boolean): Yup.ObjectSchema<
       return estDateFuture ? erreurSurDateEntiere(messagesErreur.DATE_FUTURE, error.path) : true;
     });
 
-const estChampRenseigne = (valeur: any): boolean => {
+export const estChampRenseigne = (valeur: any): boolean => {
   if (valeur === null || valeur === undefined || valeur === "") return false;
 
   if (typeof valeur === "object" && !Array.isArray(valeur)) {
@@ -181,7 +200,7 @@ const estChampRenseigne = (valeur: any): boolean => {
   return true;
 };
 
-const getValeursRenseigneesFormulaire = (valeur: string | boolean | object | null, clesExclues: string[]): string[] => {
+export const getValeursRenseigneesFormulaire = (valeur: string | boolean | object | null, clesExclues: string[]): string[] => {
   if (valeur == null || typeof valeur === "boolean") return [];
 
   if (typeof valeur === "object") {
@@ -192,6 +211,36 @@ const getValeursRenseigneesFormulaire = (valeur: string | boolean | object | nul
 
   return [valeur];
 };
+
+// Retirer le retour en arrière dans N° inscription lorsque je supprime un numéro
+const comparerValeurChamps = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>(
+  schema: TSchemaChamp,
+  { cheminChampCompare, operateur, champEnfantCompare, messageErreurSpecifique }: TComparaisonValeurAutreChamp
+) =>
+  schema.test("valeursIncoherentes", (valeur, context) => {
+    const valeurChampCompare = getIn(context.options.context, cheminChampCompare);
+
+    if (!valeurChampCompare || !estChampRenseigne(valeur)) return true;
+
+    const erreurComparaison = context.createError({
+      path: champEnfantCompare ? `${context.path}.${champEnfantCompare}` : context.path,
+      message: messageErreurSpecifique ?? messagesErreur.CHAMPS_INCOHERENTS
+    });
+
+    switch (operateur) {
+      case "==":
+        if (champEnfantCompare ? +valeur[champEnfantCompare] === valeurChampCompare : valeur === valeurChampCompare)
+          return erreurComparaison;
+
+        break;
+      case "!=":
+        if (champEnfantCompare && valeur[champEnfantCompare] !== valeurChampCompare) return erreurComparaison;
+
+        break;
+    }
+
+    return true;
+  });
 
 const champSeulInterdit = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>(
   schema: TSchemaChamp,
@@ -230,15 +279,43 @@ const champSeulInterdit = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>(
     return true;
   });
 
+const champInterditAvec = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>(
+  schema: TSchemaChamp,
+  { champExclusif, valeursExclusives, messageErreurSpecifique }: TInterditAvec
+) =>
+  schema.test("champInterditAvec", (valeur, context) => {
+    const valeurChampExclusif = getIn(context.options.context, champExclusif);
+
+    if (!valeurChampExclusif || !estChampRenseigne(valeur) || (valeursExclusives && !valeursExclusives.includes(valeurChampExclusif)))
+      return true;
+
+    return context.createError({
+      path: context.path,
+      message: messageErreurSpecifique ?? messagesErreur.CHAMP_EXCLUSIF
+    });
+  });
+
 const gestionObligation = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>({
   schema,
   obligatoire,
   actionObligation,
   conditionOu,
-  interditSeul
+  interditSeul,
+  interditAvec,
+  comparaisonValeurAutreChamp
 }: TGestionObligationParams<TSchemaChamp>): TSchemaChamp => {
   if (interditSeul) {
     schema = champSeulInterdit(schema, typeof interditSeul === "boolean" ? {} : interditSeul);
+  }
+
+  if (interditAvec) {
+    interditAvec.forEach(conditionExclusivite => {
+      schema = champInterditAvec(schema, conditionExclusivite);
+    });
+  }
+
+  if (comparaisonValeurAutreChamp) {
+    schema = comparerValeurChamps(schema, comparaisonValeurAutreChamp);
   }
 
   if (typeof obligatoire === "boolean") {
@@ -279,7 +356,9 @@ const SchemaValidation = {
       obligatoire: schemaParams.obligatoire ?? false,
       actionObligation: () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE),
       conditionOu: schemaParams.operateurConditionsOu,
-      interditSeul: schemaParams.interditSeul
+      interditSeul: schemaParams.interditSeul,
+      interditAvec: schemaParams.interditAvec,
+      comparaisonValeurAutreChamp: schemaParams.comparaisonValeurAutreChamp
     });
   },
 
@@ -301,7 +380,9 @@ const SchemaValidation = {
       obligatoire: schemaParams.obligatoire ?? false,
       actionObligation: () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE),
       conditionOu: schemaParams.operateurConditionsOu,
-      interditSeul: schemaParams.interditSeul
+      interditSeul: schemaParams.interditSeul,
+      interditAvec: schemaParams.interditAvec,
+      comparaisonValeurAutreChamp: schemaParams.comparaisonValeurAutreChamp
     });
   },
 
@@ -313,7 +394,9 @@ const SchemaValidation = {
       obligatoire: schemaParams.obligatoire ?? false,
       actionObligation: () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE),
       conditionOu: schemaParams.operateurConditionsOu,
-      interditSeul: schemaParams.interditSeul
+      interditSeul: schemaParams.interditSeul,
+      interditAvec: schemaParams.interditAvec,
+      comparaisonValeurAutreChamp: schemaParams.comparaisonValeurAutreChamp
     });
   },
 
@@ -351,7 +434,9 @@ const SchemaValidation = {
       obligatoire: schemaParams.obligatoire ?? false,
       actionObligation: () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE),
       conditionOu: schemaParams.operateurConditionsOu,
-      interditSeul: schemaParams.interditSeul
+      interditSeul: schemaParams.interditSeul,
+      interditAvec: schemaParams.interditAvec,
+      comparaisonValeurAutreChamp: schemaParams.comparaisonValeurAutreChamp
     });
   },
 
@@ -390,7 +475,9 @@ const SchemaValidation = {
           !date.jour && !date.mois && !date.annee ? erreurSurDateEntiere(messagesErreur.DATE_OBLIGATOIRE, error.path) : true
         ),
       conditionOu: schemaParams.operateurConditionsOu,
-      interditSeul: schemaParams.interditSeul
+      interditSeul: schemaParams.interditSeul,
+      interditAvec: schemaParams.interditAvec,
+      comparaisonValeurAutreChamp: schemaParams.comparaisonValeurAutreChamp
     });
   },
 
@@ -409,6 +496,7 @@ const SchemaValidation = {
             })
           : true;
       });
+
     return gestionObligation({
       schema: schema,
       obligatoire: schemaParams.obligatoire ?? false,
@@ -422,7 +510,9 @@ const SchemaValidation = {
             : true
         ),
       conditionOu: schemaParams.operateurConditionsOu,
-      interditSeul: schemaParams.interditSeul
+      interditSeul: schemaParams.interditSeul,
+      interditAvec: schemaParams.interditAvec,
+      comparaisonValeurAutreChamp: schemaParams.comparaisonValeurAutreChamp
     });
   },
 
@@ -431,7 +521,9 @@ const SchemaValidation = {
       obligatoire: schemaParams.obligatoire,
       min: { valeur: 1000, message: "⚠ L'année doit être sur 4 chiffres" },
       max: { valeur: dayjs().get("year"), message: "⚠ L'année ne peut pas être supérieure à l'année actuelle" },
-      interditSeul: schemaParams.interditSeul
+      interditSeul: schemaParams.interditSeul,
+      interditAvec: schemaParams.interditAvec,
+      comparaisonValeurAutreChamp: schemaParams.comparaisonValeurAutreChamp
     }),
 
   nomSecable: (schemaParams: ISchemaCommunParams) => {
@@ -455,7 +547,9 @@ const SchemaValidation = {
             : true
         ),
       conditionOu: schemaParams.operateurConditionsOu,
-      interditSeul: schemaParams.interditSeul
+      interditSeul: schemaParams.interditSeul,
+      interditAvec: schemaParams.interditAvec,
+      comparaisonValeurAutreChamp: schemaParams.comparaisonValeurAutreChamp
     }) as Yup.ObjectSchema<TNomSecableChamp>;
   },
 
@@ -478,12 +572,17 @@ const SchemaValidation = {
     return SchemaValidation.objet(schemaPrenoms);
   },
 
-  numeroRcRcaPacs: ({ obligatoire, operateurConditionsOu, interditSeul }: ISchemaCommunParams) => {
+  numeroRcRcaPacs: ({
+    obligatoire,
+    operateurConditionsOu,
+    interditSeul,
+    interditAvec,
+    comparaisonValeurAutreChamp
+  }: ISchemaCommunParams) => {
     let schema = SchemaValidation.objet({
       numero: SchemaValidation.entier({ obligatoire: obligatoire }),
       anneeInscription: SchemaValidation.annee({ obligatoire: obligatoire })
     })
-
       .test("numeroIncompletInterditAnnee", (numeroRcRcaPacs, error) => {
         return Boolean(numeroRcRcaPacs.numero) && !Boolean(numeroRcRcaPacs.anneeInscription)
           ? error.createError({
@@ -508,7 +607,9 @@ const SchemaValidation = {
         return schema;
       },
       conditionOu: operateurConditionsOu,
-      interditSeul: interditSeul
+      interditSeul: interditSeul,
+      interditAvec: interditAvec,
+      comparaisonValeurAutreChamp: comparaisonValeurAutreChamp
     });
   },
 
