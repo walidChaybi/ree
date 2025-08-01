@@ -31,6 +31,23 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                 >
                   Filtre titulaire
                 </span>
+                <button
+                  class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out text-rouge bg-blanc hover:bg-rouge hover:text-blanc focus-visible:text-blanc focus-visible:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 disabled:cursor-not-allowed absolute -top-4 right-8 rounded-md border border-solid border-blue-200 shadow-md hover:border-rouge"
+                  title="Réinitialiser les données du bloc"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="ReplayIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"
+                    />
+                  </svg>
+                </button>
                 <div
                   class="grid grid-cols-2 gap-4 pt-4"
                 >
@@ -57,6 +74,17 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                           name="titulaire.nom"
                           value=""
                         />
+                        <button
+                          class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out  bg-bleu-sombre text-blanc hover:bg-bleu focus-visible:bg-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-gris-sombre disabled:cursor-not-allowed group absolute right-0 top-0 h-full rounded-l-none"
+                          title="Appauvrir le nom"
+                          type="button"
+                        >
+                          <span
+                            class="mt-1 px-2"
+                          >
+                            *
+                          </span>
+                        </button>
                       </div>
                     </div>
                     <button
@@ -97,6 +125,17 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                         name="titulaire.prenom"
                         value=""
                       />
+                      <button
+                        class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out  bg-bleu-sombre text-blanc hover:bg-bleu focus-visible:bg-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-gris-sombre disabled:cursor-not-allowed group absolute right-0 top-0 flex h-full rounded-l-none"
+                        title="Appauvrir le prénom"
+                        type="button"
+                      >
+                        <span
+                          class="mt-1 px-2"
+                        >
+                          *
+                        </span>
+                      </button>
                     </div>
                   </div>
                 </div>

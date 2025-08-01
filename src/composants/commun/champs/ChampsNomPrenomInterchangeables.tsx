@@ -3,12 +3,29 @@ import { getIn, useFormikContext } from "formik";
 import BoutonIcon from "../bouton/BoutonIcon";
 import ChampTexte from "./ChampTexte";
 
-export const ChampsNomPrenomInterchangeables: React.FC<{ cheminNom: string; cheminPrenom: string }> = ({ cheminNom, cheminPrenom }) => {
+export const ChampsNomPrenomInterchangeables: React.FC<{ cheminNom: string; cheminPrenom: string; avecAppauvrissement?: boolean }> = ({
+  cheminNom,
+  cheminPrenom,
+  avecAppauvrissement = false
+}) => {
   const { values, setFieldValue, setFieldTouched } = useFormikContext();
 
   const intervertir = () => {
     setFieldValue(cheminNom, getIn(values, cheminPrenom)).finally(() => setFieldTouched(cheminNom, true));
     setFieldValue(cheminPrenom, getIn(values, cheminNom)).finally(() => setFieldTouched(cheminPrenom, true));
+  };
+
+  const appauvrirValeur = (cheminValeur: string, nombreCaracteres = 2) => {
+    const valeurActuelle = getIn(values, cheminValeur);
+    const valeurSansEspaces = valeurActuelle.replace(/\s/g, "");
+
+    if (!valeurActuelle || valeurSansEspaces.length < nombreCaracteres) return;
+
+    const regex = new RegExp(`^((?:\\s*[^\\s]){${nombreCaracteres}})`);
+
+    if (valeurActuelle.match(regex)) {
+      setFieldValue(cheminValeur, valeurActuelle.match(regex)[0] + "*");
+    }
   };
 
   const placerNomEtPrenomDansLesBonsChamps = (event: React.ClipboardEvent<HTMLInputElement>): void => {
@@ -43,6 +60,22 @@ export const ChampsNomPrenomInterchangeables: React.FC<{ cheminNom: string; chem
           name={cheminNom}
           libelle="Nom"
           onPaste={placerNomEtPrenomDansLesBonsChamps}
+          boutonChamp={
+            avecAppauvrissement
+              ? {
+                  composant: (
+                    <BoutonIcon
+                      className="group absolute right-0 top-0 h-full rounded-l-none"
+                      type="button"
+                      title="Appauvrir le nom"
+                      onClick={() => appauvrirValeur(cheminNom)}
+                    >
+                      <span className="mt-1 px-2">*</span>
+                    </BoutonIcon>
+                  )
+                }
+              : undefined
+          }
         />
         <BoutonIcon
           title="Intervertir Nom et Prénom"
@@ -56,6 +89,22 @@ export const ChampsNomPrenomInterchangeables: React.FC<{ cheminNom: string; chem
       <ChampTexte
         name={cheminPrenom}
         libelle="Prénom"
+        boutonChamp={
+          avecAppauvrissement
+            ? {
+                composant: (
+                  <BoutonIcon
+                    className={`group absolute right-0 top-0 flex h-full rounded-l-none`}
+                    type="button"
+                    title="Appauvrir le prénom"
+                    onClick={() => appauvrirValeur(cheminPrenom, 1)}
+                  >
+                    <span className="mt-1 px-2">*</span>
+                  </BoutonIcon>
+                )
+              }
+            : undefined
+        }
       />
     </div>
   );
