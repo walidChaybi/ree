@@ -449,7 +449,7 @@ export const controleCoherenceEntreDocumentSelectionneEtActionDelivrer = ({
       }),
       natureActeDemandeSelectionneDifferents({
         acte,
-        natureActeRequete: requete?.evenement?.natureActe?.libelle
+        natureActeRequete: requete?.evenement?.natureActe?.nom
       }),
       acteAvecAlerteDeTypeANePasDelivrer(alertesActe)
     ]);
