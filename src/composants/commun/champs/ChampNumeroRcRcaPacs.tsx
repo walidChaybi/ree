@@ -25,7 +25,6 @@ const ChampRcRcaPacs: React.FC<IChampRcRcaPacsProps> = ({ name, libelle, actionS
 
   const [fieldAnnee, metaAnnee] = useField(champRcRcaPacs.annee);
   const [fieldNumero, metaNumero] = useField(champRcRcaPacs.numero);
-  const [refAnnee, setRefAnnee] = useState<HTMLInputElement | null>(null);
   const [refNumero, setRefNumero] = useState<HTMLInputElement | null>(null);
   const enErreur = useMemo(
     () => (Boolean(metaAnnee.error) && metaAnnee.touched) || (Boolean(metaNumero.error) && metaNumero.touched),
@@ -43,7 +42,6 @@ const ChampRcRcaPacs: React.FC<IChampRcRcaPacsProps> = ({ name, libelle, actionS
       </label>
       <div className="flex items-center gap-1">
         <input
-          ref={setRefAnnee}
           id={champRcRcaPacs.annee}
           className={`border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${Boolean(metaAnnee.error) && metaAnnee.touched ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
           maxLength={4}
@@ -70,9 +68,7 @@ const ChampRcRcaPacs: React.FC<IChampRcRcaPacsProps> = ({ name, libelle, actionS
             maxLength={5}
             placeholder="XXXXX"
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              const valeur = seulementNumerique(event.target.value);
-              !valeur.length && fieldNumero.value.length && refAnnee?.focus();
-              event.target.value = valeur;
+              event.target.value = seulementNumerique(event.target.value);
               fieldNumero.onChange(event);
             }}
             disabled={disabled}
