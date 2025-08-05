@@ -9,12 +9,12 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { Form, Formik } from "formik";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import BlocRequete from "../../../../../composants/pages/requetesConsulaire/saisieCourrier/BlocRequete";
-import CacheDonneesPocopa from "../../../../../utils/CacheDonneesPocopa";
+import CacheOptionsPocopa from "../../../../../utils/CacheOptionsPocopa";
 
 describe("Test rendu du bloc requete en saisie courrier", async () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    CacheDonneesPocopa.clearPocopas();
+    CacheOptionsPocopa.clearPocopas();
   });
 
   afterEach(() => {

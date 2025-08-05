@@ -4,7 +4,7 @@ import { IDetailMariage } from "@model/etatcivil/acte/IDetailMariage";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IRegistre } from "@model/etatcivil/acte/IRegistre";
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
-import { ITypeRegistre } from "@model/etatcivil/acte/ITypeRegistre";
+import { ITypeRegistre } from "@model/etatcivil/acte/TypeRegistre";
 import { IAutresNoms } from "@model/etatcivil/commun/AutresNoms";
 import { IFicheLien } from "@model/etatcivil/commun/IFicheLien";
 import { ILieuEvenement } from "@model/etatcivil/commun/ILieuEvenement";

@@ -3,7 +3,7 @@ import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IRegistre } from "@model/etatcivil/acte/IRegistre";
-import { ITypeRegistre } from "@model/etatcivil/acte/ITypeRegistre";
+import { ITypeRegistre } from "@model/etatcivil/acte/TypeRegistre";
 import { TypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteArchiviste";
 import { IParamsAffichage, getPanelsActe, getParamsAffichageFicheActe } from "@pages/fiche/hook/constructionComposants/acte/FicheActeUtils";
 import { expect, test } from "vitest";

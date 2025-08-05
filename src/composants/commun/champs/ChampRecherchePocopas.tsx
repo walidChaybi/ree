@@ -1,10 +1,10 @@
 import { CONFIG_GET_POCOPAS_PAR_FAMILLE_REGISTRE } from "@api/configurations/etatCivil/pocopa/GetPocopasParFamilleRegistreConfigApi";
-import { ITypeRegistreDto } from "@model/etatcivil/acte/ITypeRegistre";
+import { ITypeRegistreDto } from "@model/etatcivil/acte/TypeRegistre";
 import Autocomplete from "@mui/material/Autocomplete";
 import { getIn, useField, useFormikContext } from "formik";
 import { useEffect, useMemo, useState } from "react";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
-import CacheDonneesPocopa from "../../../utils/CacheDonneesPocopa";
+import CacheOptionsPocopa from "../../../utils/CacheOptionsPocopa";
 import { InputChampRecherche } from "./geoApi/InputChampRechercheGeo";
 
 type TChampRecherchePocopasProps = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -43,7 +43,7 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
 
   useEffect(() => {
     if (!valeurFamilleRegistre) return;
-    const pocopasCache = CacheDonneesPocopa.getPocopasFamilleRegistre(valeurFamilleRegistre);
+    const pocopasCache = CacheOptionsPocopa.getPocopasFamilleRegistre(valeurFamilleRegistre);
 
     if (Array.isArray(pocopasCache)) {
       setPocopas(pocopasCache);
@@ -61,7 +61,7 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
         }
       },
       apresSucces: pocopaDtos => {
-        CacheDonneesPocopa.setPocopasFamilleRegistre(valeurFamilleRegistre, pocopaDtos);
+        CacheOptionsPocopa.setPocopasFamilleRegistre(valeurFamilleRegistre, pocopaDtos);
 
         setPocopas(pocopaDtos);
       },

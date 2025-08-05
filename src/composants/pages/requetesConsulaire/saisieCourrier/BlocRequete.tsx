@@ -2,7 +2,7 @@ import { CONFIG_GET_POCOPAS } from "@api/configurations/etatCivil/pocopa/GetPoco
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
-import { ITypeRegistreDto } from "@model/etatcivil/acte/ITypeRegistre";
+import { ITypeRegistreDto, TypeRegistre } from "@model/etatcivil/acte/TypeRegistre";
 import { ISaisieRequeteRCTCForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
 import { ELibelleNatureActeTranscrit, ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
 import { ETypeLienRequerantCreation } from "@model/requete/enum/TypeLienRequerantCreation";
@@ -11,7 +11,7 @@ import { enumVersOptions } from "@util/Utils";
 import { useFormikContext } from "formik";
 import { useContext, useEffect, useMemo, useState } from "react";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
-import CacheDonneesPocopa from "../../../../utils/CacheDonneesPocopa";
+import CacheOptionsPocopa from "../../../../utils/CacheOptionsPocopa";
 import ChampListeDeroulante from "../../../commun/champs/ChampListeDeroulante";
 import ChampRecherchePocopas from "../../../commun/champs/ChampRecherchePocopas";
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
@@ -39,7 +39,7 @@ const BlocRequete: React.FC = () => {
   useEffect(() => {
     if (estHabiliteSaisieRequeteTousRegistre) return;
 
-    const pocopasCache = CacheDonneesPocopa.getPocopas();
+    const pocopasCache = CacheOptionsPocopa.getPocopasFamilleRegistre("CSL");
 
     if (pocopasCache?.length) {
       setPocopas(pocopasCache);
@@ -55,14 +55,14 @@ const BlocRequete: React.FC = () => {
           return;
         }
 
-        CacheDonneesPocopa.setPocopas(pocopaDtos);
-        setPocopas(pocopaDtos);
+        CacheOptionsPocopa.setPocopasFamilleRegistre("CSL", pocopaDtos);
+        setPocopas(TypeRegistre.depuisDtos(pocopaDtos));
       }
     });
   }, []);
 
   useEffect(() => {
-    if (pocopas.length && !values.requete.villeRegistre) {
+    if (pocopas.length === 1 && !values.requete.villeRegistre) {
       setFieldValue("requete.villeRegistre", pocopas[0].pocopa);
     }
   }, [pocopas]);
@@ -95,7 +95,7 @@ const BlocRequete: React.FC = () => {
           <ChampListeDeroulante
             name="requete.villeRegistre"
             libelle="Registre"
-            options={CacheDonneesPocopa.versOptions(pocopas)}
+            options={(pocopas.length === 1 ? [] : [{ cle: "", libelle: "" }]).concat(TypeRegistre.versOptions(pocopas))}
             disabled={!pocopas.length}
             estObligatoire
           />

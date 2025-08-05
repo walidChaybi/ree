@@ -1,12 +1,12 @@
 import { CONFIG_GET_POCOPAS_PAR_FAMILLE_REGISTRE } from "@api/configurations/etatCivil/pocopa/GetPocopasParFamilleRegistreConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
-import { ITypeRegistreDto } from "@model/etatcivil/acte/ITypeRegistre";
+import { ITypeRegistreDto } from "@model/etatcivil/acte/TypeRegistre";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Form, Formik } from "formik";
 import { useState } from "react";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import ChampRecherchePocopas from "../../../../composants/commun/champs/ChampRecherchePocopas";
-import CacheDonneesPocopa from "../../../../utils/CacheDonneesPocopa";
+import CacheOptionsPocopa from "../../../../utils/CacheOptionsPocopa";
 
 vi.mock("../../../../../hooks/utilitaires/UseDelai", () => ({
   useDelai: (initialValue: string) => useState(initialValue)
@@ -36,7 +36,7 @@ const MockForm: React.FC<{ villeRegistre: string }> = ({ villeRegistre }) => (
 describe("Test ChampRecherche Pocopa", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    CacheDonneesPocopa.clearPocopas();
+    CacheOptionsPocopa.clearPocopas();
   });
 
   afterEach(() => {
@@ -78,8 +78,8 @@ describe("Test ChampRecherche Pocopa", () => {
   });
 
   test("DOIT utiliser les données du cache QUAND les données sont disponibles", async () => {
-    vi.spyOn(CacheDonneesPocopa, "getPocopasFamilleRegistre");
-    CacheDonneesPocopa.setPocopasFamilleRegistre("CSL", mockPocopasDto);
+    vi.spyOn(CacheOptionsPocopa, "getPocopasFamilleRegistre");
+    CacheOptionsPocopa.setPocopasFamilleRegistre("CSL", mockPocopasDto);
     render(<MockForm villeRegistre={""}></MockForm>);
 
     const mockApi = MockApi.getMock();
@@ -91,7 +91,7 @@ describe("Test ChampRecherche Pocopa", () => {
     fireEvent.keyDown(input, { key: "Enter" });
 
     await waitFor(() => {
-      expect(CacheDonneesPocopa.getPocopasFamilleRegistre).toHaveBeenCalledWith("CSL");
+      expect(CacheOptionsPocopa.getPocopasFamilleRegistre).toHaveBeenCalledWith("CSL");
     });
 
     await waitFor(() => {

@@ -1,6 +1,6 @@
 import { getRegistrePapierParIdProjetActe } from "@api/appels/etatcivilApi";
 import { IRegistre } from "@model/etatcivil/acte/IRegistre";
-import { ITypeRegistre } from "@model/etatcivil/acte/ITypeRegistre";
+import { ITypeRegistre } from "@model/etatcivil/acte/TypeRegistre";
 import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
 import { logError } from "@util/LogManager";
 import { getValeurOuUndefined } from "@util/Utils";
@@ -10,9 +10,7 @@ export interface IRecupererRegistrePapierParIdActeParams {
   idActe?: string;
 }
 
-export const useRecupererRegistrePapierParIdActeApiHook = (
-  params?: IRecupererRegistrePapierParIdActeParams
-): IRegistre | undefined => {
+export const useRecupererRegistrePapierParIdActeApiHook = (params?: IRecupererRegistrePapierParIdActeParams): IRegistre | undefined => {
   const [registre, setRegistre] = useState<IRegistre>();
 
   useEffect(() => {
@@ -22,8 +20,7 @@ export const useRecupererRegistrePapierParIdActeApiHook = (
         .catch((erreur: any) => {
           logError({
             error: erreur,
-            messageUtilisateur:
-              "Impossible de récupérer le registre papier du projet d'acte."
+            messageUtilisateur: "Impossible de récupérer le registre papier du projet d'acte."
           });
         });
     }
@@ -45,9 +42,7 @@ const mapRegistre = (data: any): IRegistre | undefined => {
         pvOuverture: getValeurOuUndefined(data.pvOuverture),
         dateOuverture: new Date(getValeurOuUndefined(data.dateOuverture)),
         pvFermeture: getValeurOuUndefined(data.pvFermeture),
-        dateFermeture: data.dateFermeture
-          ? new Date(data.dateFermeture)
-          : undefined,
+        dateFermeture: data.dateFermeture ? new Date(data.dateFermeture) : undefined,
         decret2017: getValeurOuUndefined(data.decret2017)
       }
     : undefined;

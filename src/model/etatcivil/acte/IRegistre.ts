@@ -1,4 +1,4 @@
-import { ITypeRegistre } from "./ITypeRegistre";
+import { ITypeRegistre } from "./TypeRegistre";
 
 export interface IRegistre {
   id: string;

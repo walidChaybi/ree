@@ -1,6 +1,6 @@
 import { ETATCIVIL_API } from "@api/ApiDisponibles";
 import { TConfigurationApi } from "@model/api/Api";
-import { ITypeRegistreDto } from "@model/etatcivil/acte/ITypeRegistre";
+import { ITypeRegistreDto } from "@model/etatcivil/acte/TypeRegistre";
 
 const URI = "/types-registres/:familleRegistre/pocopas";
 
