@@ -97,7 +97,7 @@ export const RMCTableauRequetesAssociees: React.FC<IRMCTableauRequetesAssocieesP
         paramsTableau={dataTableauRMCRequete}
         goToLink={goToLink}
         resetTableau={nouvelleRMCRequete}
-        noRows={RenderMessageZeroRequete()}
+        messageAucunResultat={RenderMessageZeroRequete()}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_REQUETE_ASSOCIEES}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_REQUETE_ASSOCIEES}
       >

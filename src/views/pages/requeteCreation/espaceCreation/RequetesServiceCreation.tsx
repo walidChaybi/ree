@@ -44,7 +44,6 @@ export const RequetesServiceCreation: React.FC<RequetesServiceCreationProps> = p
   const [opEnCours, setOpEnCours] = useState<boolean>(false);
   const [paramsMiseAJour, setParamsMiseAJour] = useState<ICreationActionMiseAjourStatutEtRedirectionParams | undefined>();
   const [parametresLienRequete, setParametresLienRequete] = useState<IQueryParametersPourRequetes>();
-  const [enChargement, setEnChargement] = React.useState(false);
   const [paramsAttributionParLot, setParamsAttributionParLot] = useState<TransfertParLotParams>();
   const [paramsCreation, setParamsCreation] = useState<NavigationApercuReqCreationParams | undefined>();
   const [idRequetesSelectionneesAttribueeA, setIdRequetesSelectionneesAttribueeA] = useState<string[]>([]);
@@ -54,7 +53,6 @@ export const RequetesServiceCreation: React.FC<RequetesServiceCreationProps> = p
 
   const { dataState, paramsTableau, onSubmit } = useRequeteCreationApiHook(
     TypeAppelRequete.REQUETE_CREATION_SERVICE,
-    setEnChargement,
     parametresLienRequete,
     setParametresLienRequete
   );
@@ -65,7 +63,7 @@ export const RequetesServiceCreation: React.FC<RequetesServiceCreationProps> = p
   const resultatTransfertsApi = useTransfertsApi(paramsAttributionParLot);
 
   const changementDePage = (link: string) => {
-    const queryParametersPourRequetes = goToLinkRequete(link, "requetesService");
+    const queryParametersPourRequetes = goToLinkRequete(link, "requetes-service");
     if (queryParametersPourRequetes) {
       setParametresLienRequete(queryParametersPourRequetes);
     }
@@ -103,7 +101,9 @@ export const RequetesServiceCreation: React.FC<RequetesServiceCreationProps> = p
   }, [resultatTransfertsApi]);
 
   useEffect(() => {
-    setEstTableauARafraichir(false);
+    if (estTableauARafraichir) {
+      setEstTableauARafraichir(false);
+    }
   }, [estTableauARafraichir]);
 
   const onClosePopinAttribuerA = () => {
@@ -180,7 +180,7 @@ export const RequetesServiceCreation: React.FC<RequetesServiceCreationProps> = p
           paramsTableau={paramsTableau}
           goToLink={changementDePage}
           handleChangeSort={handleChangeSortTableau}
-          noRows={RenderMessageZeroRequete()}
+          messageAucunResultat={RenderMessageZeroRequete()}
           nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
           nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
           onChangementDePage={() => setIdRequetesSelectionneesAttribueeA([])}

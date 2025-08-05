@@ -58,18 +58,13 @@ const defaultParamsRequetes = {
 
 export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props => {
   const [paramsMiseAJour, setParamsMiseAJour] = useState<ICreationActionMiseAjourStatutEtRedirectionParams | undefined>();
-
   const [parametresLienRequete, setParametresLienRequete] = React.useState<IQueryParametersPourRequetes>();
-  const [enChargement, setEnChargement] = useState(false);
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [estTableauARafraichir, setEstTableauARafraichir] = useState<boolean>(false);
-
   const { decrets, utilisateurConnecte } = useContext(RECEContextData);
-
   const { dataState, paramsTableau, onSubmitFiltres } = useRequeteDelivranceApiHook(
     parametresLienRequete,
     TypeAppelRequete.REQUETE_DELIVRANCE_SERVICE,
-    setEnChargement,
     setParametresLienRequete
   );
 
@@ -80,7 +75,9 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
     }
   }
   useEffect(() => {
-    setEstTableauARafraichir(false);
+    if (estTableauARafraichir) {
+      setEstTableauARafraichir(false);
+    }
   }, [estTableauARafraichir]);
 
   function rafraichirParent() {
@@ -158,7 +155,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
         onClick={finOperationEnCours}
       />
       <FiltreServiceRequeteDelivranceForm onSubmit={onSubmitFiltreServiceRequeteDelivrance} />
-      {enChargement ? (
+      {estTableauARafraichir ? (
         <PageChargeur />
       ) : (
         <TableauRece
@@ -172,7 +169,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
           paramsTableau={paramsTableau}
           goToLink={goToLink}
           handleChangeSort={handleChangeSort}
-          noRows={RenderMessageZeroRequete()}
+          messageAucunResultat={RenderMessageZeroRequete()}
           nbLignesParPage={NB_LIGNES_PAR_PAGE_ESPACE_DELIVRANCE}
           nbLignesParAppel={NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}
           resetTableau={estTableauARafraichir}

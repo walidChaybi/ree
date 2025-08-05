@@ -15,7 +15,6 @@ import { useContext, useEffect, useState } from "react";
 
 export function useRequeteCreationApiHook(
   typeRequete: TypeAppelRequete,
-  setEnChargement: (enChargement: boolean) => void,
   parametresLienRequete?: IQueryParametersPourRequetes,
   setParametresLienRequete?: React.Dispatch<React.SetStateAction<IQueryParametersPourRequetes | undefined>>
 ) {
@@ -36,7 +35,6 @@ export function useRequeteCreationApiHook(
           const mesRequetes = mappingRequetesTableauCreation(result?.body?.data, false, utilisateurs, services);
           setDataState(mesRequetes);
           setParamsTableau(getParamsTableauDepuisReponseApi(result));
-          setEnChargement(false);
         }
       } catch (error) {
         logError({
@@ -46,8 +44,7 @@ export function useRequeteCreationApiHook(
       }
     }
     fetchMesRequetes();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [parametresLienRequete, typeRequete, setEnChargement, filtresReq]);
+  }, [parametresLienRequete, typeRequete, filtresReq]);
 
   function onSubmit(values: IFiltreServiceRequeteCreationFormValues) {
     setFiltresReq({ ...values });

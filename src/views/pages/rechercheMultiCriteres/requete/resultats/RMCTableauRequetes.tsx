@@ -157,7 +157,7 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
         paramsTableau={dataTableauRMCRequete}
         goToLink={goToLink}
         resetTableau={resetTableauRequete}
-        noRows={RenderMessageZeroRequete()}
+        messageAucunResultat={RenderMessageZeroRequete()}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_REQUETE}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_REQUETE}
       />

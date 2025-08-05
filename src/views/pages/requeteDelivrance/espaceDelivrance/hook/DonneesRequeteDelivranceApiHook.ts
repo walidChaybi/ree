@@ -18,7 +18,6 @@ import { useContext, useEffect, useState } from "react";
 export function useRequeteDelivranceApiHook(
   parametresLienRequete: IQueryParametersPourRequetes | undefined,
   typeRequete: TypeAppelRequete,
-  setEnChargement: (enChargement: boolean) => void,
   setParametresLienRequete?: React.Dispatch<React.SetStateAction<IQueryParametersPourRequetes | undefined>>
 ) {
   const { utilisateurs, services } = useContext(RECEContextData);
@@ -30,7 +29,6 @@ export function useRequeteDelivranceApiHook(
     async function fetchMesRequetes() {
       try {
         if (parametresLienRequete) {
-          setEnChargement(true);
           const listeStatuts = parametresLienRequete?.statuts?.join(",");
           const result =
             typeRequete === TypeAppelRequete.MES_REQUETES_DELIVRANCE
@@ -42,7 +40,6 @@ export function useRequeteDelivranceApiHook(
           const mesRequetes = mappingRequetesTableauDelivrance(result?.body?.data, false, utilisateurs, services);
           setDataState(mesRequetes);
           setParamsTableau(getParamsTableauDepuisReponseApi(result));
-          setEnChargement(false);
         }
       } catch (error) {
         logError({
@@ -52,7 +49,7 @@ export function useRequeteDelivranceApiHook(
       }
     }
     fetchMesRequetes();
-  }, [parametresLienRequete, typeRequete, setEnChargement, filtresReq]);
+  }, [parametresLienRequete, typeRequete, filtresReq]);
 
   function onSubmitFiltres(values: IFiltreServiceRequeteDelivranceFormValues) {
     setFiltresReq({ ...values });

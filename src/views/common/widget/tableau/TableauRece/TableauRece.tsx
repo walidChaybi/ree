@@ -39,11 +39,12 @@ interface TableauReceProps {
   nbLignesParPage: number;
   nbLignesParAppel: number;
   resetTableau?: boolean;
-  noRows?: JSX.Element;
+  messageAucunResultat?: JSX.Element;
   stickyHeader?: boolean;
   getRowClassName?: (data: any) => string;
   onChangementDePage?: () => void;
   afficheBoutonsNavigationRapide?: boolean;
+  enChargement?: boolean;
 }
 
 export const TableauRece: React.FC<React.PropsWithChildren<TableauReceProps>> = props => {
@@ -160,9 +161,10 @@ export const TableauRece: React.FC<React.PropsWithChildren<TableauReceProps>> = 
             idKey={props.idKey}
             columnHeaders={props.columnHeaders}
             onClickOnLine={onClickOnLine}
-            noRows={props.noRows}
+            messageAucunResultat={props.messageAucunResultat}
             icone={props.icone}
             getRowClassName={props.getRowClassName}
+            enChargement={props.enChargement}
           />
         </Box>
       </TableContainer>

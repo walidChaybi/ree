@@ -16,7 +16,6 @@ import {
   getColonneFontAwesomeIcone
 } from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/ColonneFontAwesomeIcone";
 import React from "react";
-import PageChargeur from "../../../../../../composants/commun/chargeurs/PageChargeur";
 import { IDataTableauActeInscriptionSelectionne } from "./IDataTableauActeInscriptionSelectionne";
 
 interface ITableauActesInscriptionsSelectionnesProps {
@@ -68,20 +67,18 @@ export const TableauActesInscriptionsSelectionnes: React.FC<ITableauActesInscrip
       <div className="sousTitre">
         <span>{getLibelle("Actes et inscriptions sélectionnés pour le projet")}</span>
       </div>
-      {props.enChargement ? (
-        <PageChargeur />
-      ) : (
-        <TableauRece
-          idKey={"idActeInscription"}
-          columnHeaders={columnHeaderTableauActesInscriptionsSelectionnes}
-          dataState={props.dataActesInscriptionsSelectionnes}
-          paramsTableau={{}}
-          onClickOnLine={() => {}}
-          noRows={getLigneTableauVide("Aucun acte ou inscription sélectionné pour le projet.")}
-          nbLignesParPage={NB_LIGNES_PAR_PAGE_PERSONNE}
-          nbLignesParAppel={NB_LIGNES_PAR_APPEL_PERSONNE}
-        />
-      )}
+
+      <TableauRece
+        idKey={"idActeInscription"}
+        columnHeaders={columnHeaderTableauActesInscriptionsSelectionnes}
+        dataState={props.dataActesInscriptionsSelectionnes}
+        paramsTableau={{}}
+        onClickOnLine={() => {}}
+        messageAucunResultat={getLigneTableauVide("Aucun acte ou inscription sélectionné pour le projet.")}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_PERSONNE}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_PERSONNE}
+        enChargement={props.enChargement}
+      />
     </div>
   );
 };

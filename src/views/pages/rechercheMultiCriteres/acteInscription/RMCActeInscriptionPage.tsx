@@ -154,7 +154,6 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({ 
         onTimeoutEnd={() => setOpEnCours(false)}
       ></OperationEnCours>
       <RMCActeInscription onSubmit={onSubmitRMCActeInscription} />
-
       {resultatRMCActe.resultat?.dataRMCActe &&
         resultatRMCActe.resultat?.dataTableauRMCActe &&
         resultatRMCInscription.resultat?.dataRMCInscription &&

@@ -185,15 +185,13 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
         paramsTableau={dataTableauRMCInscription}
         goToLink={goToLink}
         resetTableau={resetTableauInscription}
-        noRows={getLigneTableauVide("Aucune inscription n'a été trouvée.")}
+        messageAucunResultat={getLigneTableauVide("Aucune inscription n'a été trouvée.")}
         nbLignesParPage={nbLignesParPage}
         nbLignesParAppel={nbLignesParAppel}
       />
-
       {typeRMC === "Auto" && dataRequete?.type === TypeRequete.DELIVRANCE && (
         <div className="ElementsCoches">{`${idInscriptionSelectionnees.length} élément(s) coché(s)`}</div>
       )}
-
       {etatFenetres && etatFenetres.length > 0 && (
         <>
           {etatFenetres.map((fenetreFicheInscription: IFenetreFicheInscription) => {

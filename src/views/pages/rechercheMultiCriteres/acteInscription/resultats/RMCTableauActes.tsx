@@ -179,7 +179,7 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
         nbLignesParPage={nbLignesParPage}
         nbLignesParAppel={nbLignesParAppel}
         resetTableau={resetTableauActe}
-        noRows={getLigneTableauVide("Aucun acte n'a été trouvé.")}
+        messageAucunResultat={getLigneTableauVide("Aucun acte n'a été trouvé.")}
         afficheBoutonsNavigationRapide={true}
       />
       {typeRMC === "Auto" && dataRequete?.type === TypeRequete.DELIVRANCE && (

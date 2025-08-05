@@ -1,7 +1,4 @@
-import {
-  IQueryParametersPourRequetes,
-  TypeAppelRequete
-} from "@api/appels/requeteApi";
+import { IQueryParametersPourRequetes, TypeAppelRequete } from "@api/appels/requeteApi";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { StatutsRequetesInformation } from "@pages/requeteInformation/espaceInformation/EspaceReqInfoParams";
 import { useRequeteInformationApi } from "@pages/requeteInformation/espaceInformation/hook/DonneesRequeteInformationApiHook";
@@ -10,8 +7,6 @@ import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauP
 import React from "react";
 import ReactDOM from "react-dom";
 import { afterEach, beforeEach, expect, test } from "vitest";
-
-
 
 const queryParam: IQueryParametersPourRequetes = {
   statuts: StatutsRequetesInformation,
@@ -22,17 +17,15 @@ const queryParam: IQueryParametersPourRequetes = {
 let container: Element | null;
 
 const HookConsummer: React.FC = () => {
-  const [enChargement, setEnChargement] = React.useState(true);
-  const { dataState } = useRequeteInformationApi(
-    queryParam,
-    TypeAppelRequete.MES_REQUETES_INFO,
-    setEnChargement
-  );
+  const { dataState } = useRequeteInformationApi(queryParam, TypeAppelRequete.MES_REQUETES_INFO);
   return (
     <>
       {dataState.map((element: IRequeteTableauInformation) => {
         return (
-          <div key={element.idRequete} data-testid={element.idRequete}>
+          <div
+            key={element.idRequete}
+            data-testid={element.idRequete}
+          >
             {element.idRequete}
           </div>
         );
@@ -63,5 +56,3 @@ test("monter un composant de test pour vérifier que tout va bien", async () => 
     expect(container.querySelector).toBeTruthy();
   }
 });
-
-

@@ -143,7 +143,7 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
         nbLignesParPage={NB_LIGNES_PAR_PAGE_PERSONNE}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_PERSONNE}
         getRowClassName={getLigneClassName}
-        noRows={getLigneTableauVide("Aucun projet d'acte n'a été trouvé.")}
+        messageAucunResultat={getLigneTableauVide("Aucun projet d'acte n'a été trouvé.")}
       />
       <ModalBulletinIdentification
         dataFromRequete={dataFromRequete || ({} as IDataBulletinIdentificationResultat)}

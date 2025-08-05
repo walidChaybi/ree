@@ -15,7 +15,6 @@ import { SortOrder } from "@widget/tableau/TableUtils";
 import { NB_LIGNES_PAR_APPEL_DEFAUT, NB_LIGNES_PAR_PAGE_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useContext, useState } from "react";
-import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
 import { useRequeteCreationApiHook } from "../../../common/hook/requete/creation/RequeteCreationApiHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { getOnClickSurLigneTableauEspaceCreation } from "./EspaceCreationUtils";
@@ -32,11 +31,10 @@ export const MesRequetesCreation: React.FC<MesRequetesCreationProps> = props => 
   const [paramsCreation, setParamsCreation] = useState<NavigationApercuReqCreationParams | undefined>();
 
   const [linkParameters, setLinkParameters] = useState<IQueryParametersPourRequetes>(props.queryParametersPourRequetes);
-  const [enChargement, setEnChargement] = useState(true);
 
   const { decrets, utilisateurConnecte } = useContext(RECEContextData);
 
-  const { dataState, paramsTableau } = useRequeteCreationApiHook(TypeAppelRequete.MES_REQUETES_CREATION, setEnChargement, linkParameters);
+  const { dataState, paramsTableau } = useRequeteCreationApiHook(TypeAppelRequete.MES_REQUETES_CREATION, linkParameters);
 
   useCreationActionMiseAjourStatutEtRedirectionHook(paramsMiseAJour);
   useNavigationApercuCreation(paramsCreation);
@@ -70,29 +68,27 @@ export const MesRequetesCreation: React.FC<MesRequetesCreationProps> = props => 
         onTimeoutEnd={finOperationEnCours}
         onClick={finOperationEnCours}
       />
-      {enChargement ? (
-        <PageChargeur />
-      ) : (
-        <TableauRece
-          idKey={"idRequete"}
-          sortOrderByState={linkParameters.tri}
-          sortOrderState={linkParameters.sens}
-          onClickOnLine={getOnClickSurLigneTableauEspaceCreation(
-            setOperationEnCours,
-            setParamsMiseAJour,
-            setParamsCreation,
-            utilisateurConnecte
-          )}
-          columnHeaders={colonnesTableauMesRequetesCreation}
-          dataState={dataState}
-          paramsTableau={paramsTableau}
-          goToLink={goToLink}
-          handleChangeSort={handleChangeSort}
-          noRows={RenderMessageZeroRequete()}
-          nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
-          nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
-        />
-      )}
+
+      <TableauRece
+        idKey={"idRequete"}
+        sortOrderByState={linkParameters.tri}
+        sortOrderState={linkParameters.sens}
+        onClickOnLine={getOnClickSurLigneTableauEspaceCreation(
+          setOperationEnCours,
+          setParamsMiseAJour,
+          setParamsCreation,
+          utilisateurConnecte
+        )}
+        columnHeaders={colonnesTableauMesRequetesCreation}
+        dataState={dataState}
+        paramsTableau={paramsTableau}
+        goToLink={goToLink}
+        handleChangeSort={handleChangeSort}
+        messageAucunResultat={RenderMessageZeroRequete()}
+        nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
+        nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
+      />
+
       <BoutonRetour />
     </>
   );

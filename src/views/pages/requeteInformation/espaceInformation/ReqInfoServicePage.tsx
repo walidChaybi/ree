@@ -14,7 +14,7 @@ import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { SortOrder } from "@widget/tableau/TableUtils";
 import { NB_LIGNES_PAR_APPEL_DEFAUT, NB_LIGNES_PAR_PAGE_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
@@ -33,16 +33,15 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({ parametresReqInfo }) 
   const location = useLocation();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [paramsNavReqInfo, setParamsNavReqInfo] = useState<INavigationApercuReqInfoParams | undefined>();
-
   const [linkParameters, setLinkParameters] = useState<IQueryParametersPourRequetes>(parametresReqInfo);
-  const [enChargement, setEnChargement] = useState<boolean>(false);
   const [rechercheEffectuee, setRechercheEffectuee] = useState<boolean>(false);
   const [filtresSelectionne, setFiltresSelectionne] =
     useState<IFiltresServiceRequeteInformationFormValues>(VALEUR_FILTRE_INFORMATION_DEFAUT);
+  const [estTableauARafraichir, setEstTableauARafraichir] = useState<boolean>(false);
   const { dataState, paramsTableau } = useRequeteInformationApi(
     linkParameters,
     TypeAppelRequete.REQUETE_INFO_SERVICE,
-    setEnChargement,
+
     filtresSelectionne,
     rechercheEffectuee
   );
@@ -97,15 +96,21 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({ parametresReqInfo }) 
     setOperationEnCours(false);
   };
 
-  const onSubmit = (values: IFiltresServiceRequeteInformationFormValues) => {
+  const soumettreFiltre = (values: IFiltresServiceRequeteInformationFormValues) => {
     if (values === filtresSelectionne && rechercheEffectuee) {
       return;
     }
 
     setFiltresSelectionne(values);
-    setEnChargement(true);
     setRechercheEffectuee(true);
+    setEstTableauARafraichir(true);
   };
+
+  useEffect(() => {
+    if (estTableauARafraichir) {
+      setEstTableauARafraichir(false);
+    }
+  }, [estTableauARafraichir]);
 
   return (
     <>
@@ -114,8 +119,8 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({ parametresReqInfo }) 
         onTimeoutEnd={finOperationEnCours}
         onClick={finOperationEnCours}
       />
-      <FiltresServiceRequeteInformationForm onSubmit={onSubmit} />
-      {enChargement ? (
+      <FiltresServiceRequeteInformationForm onSubmit={soumettreFiltre} />
+      {estTableauARafraichir ? (
         <PageChargeur />
       ) : (
         <TableauRece
@@ -128,7 +133,7 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({ parametresReqInfo }) 
           icone={{ keyColonne: "iconeAssigne", getIcone }}
           paramsTableau={paramsTableau}
           goToLink={goToLink}
-          noRows={RenderMessageSaisirFiltreOuZeroRequete(rechercheEffectuee)}
+          messageAucunResultat={RenderMessageSaisirFiltreOuZeroRequete(rechercheEffectuee)}
           nbLignesParPage={NB_LIGNES_PAR_PAGE_DEFAUT}
           nbLignesParAppel={NB_LIGNES_PAR_APPEL_DEFAUT}
           handleChangeSort={handleChangeSort}

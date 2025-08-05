@@ -1,8 +1,9 @@
+import CircularProgress from "@mui/material/CircularProgress";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import { chiffreEstPair } from "@util/Utils";
-import React from "react";
+import React, { useMemo } from "react";
 import { TableauBodyCell } from "./TableauBodyCell";
 import { IconeParams } from "./TableauRece";
 import { TableauTypeColumn } from "./TableauTypeColumn";
@@ -14,15 +15,34 @@ interface TableauBodyProps {
   idKey: string;
   columnHeaders: TableauTypeColumn[];
   onClickOnLine: (identifiant: string, idx: number) => void;
-  noRows?: JSX.Element;
+  messageAucunResultat?: JSX.Element;
+  enChargement?: boolean;
   icone?: IconeParams;
   getRowClassName?: (data: any) => string;
 }
 
-export const TableauBody: React.FC<TableauBodyProps> = ({ data, idKey, columnHeaders, onClickOnLine, noRows, icone, getRowClassName }) => {
+export const TableauBody: React.FC<TableauBodyProps> = ({
+  data,
+  idKey,
+  columnHeaders,
+  onClickOnLine,
+  messageAucunResultat,
+  enChargement,
+  icone,
+  getRowClassName
+}) => {
   function onClickRowHandler(identifiant: string, idx: number) {
     onClickOnLine(identifiant, idx);
   }
+
+  const contenuCellule = useMemo(() => {
+    if (enChargement) {
+      return <CircularProgress className="spinner" />;
+    } else if (messageAucunResultat) {
+      return messageAucunResultat;
+    }
+    return <></>;
+  }, [enChargement, messageAucunResultat]);
 
   return (
     <>
@@ -43,12 +63,12 @@ export const TableauBody: React.FC<TableauBodyProps> = ({ data, idKey, columnHea
             );
           })
         ) : (
-          <TableRow className={noRows && "ligneVide"}>
+          <TableRow className={messageAucunResultat && "ligneVide"}>
             <TableCell
               align="center"
               colSpan={columnHeaders.length}
             >
-              {noRows ? noRows : ""}
+              {contenuCellule}
             </TableCell>
           </TableRow>
         )}

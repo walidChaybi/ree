@@ -1,7 +1,4 @@
-import {
-  IQueryParametersPourRequetes,
-  TypeAppelRequete
-} from "@api/appels/requeteApi";
+import { IQueryParametersPourRequetes, TypeAppelRequete } from "@api/appels/requeteApi";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useRequeteDelivranceApiHook } from "@pages/requeteDelivrance/espaceDelivrance/hook/DonneesRequeteDelivranceApiHook";
 import { waitFor } from "@testing-library/react";
@@ -19,17 +16,15 @@ const queryParam: IQueryParametersPourRequetes = {
 let container: Element | null;
 
 const HookConsummer: React.FC = () => {
-  const [enChargement, setEnChargement] = React.useState(true);
-  const { dataState = [] } = useRequeteDelivranceApiHook(
-    queryParam,
-    TypeAppelRequete.MES_REQUETES_DELIVRANCE,
-    setEnChargement
-  );
+  const { dataState = [] } = useRequeteDelivranceApiHook(queryParam, TypeAppelRequete.MES_REQUETES_DELIVRANCE);
   return (
     <>
       {dataState.map(element => {
         return (
-          <div key={element.idRequete} data-testid={element.idRequete}>
+          <div
+            key={element.idRequete}
+            data-testid={element.idRequete}
+          >
             {element.idRequete}
           </div>
         );
@@ -63,5 +58,3 @@ test.skip("monter un composant de test pour vérifier que tout va bien", () => {
     expect(container.querySelector).toBeTruthy();
   }
 });
-
-

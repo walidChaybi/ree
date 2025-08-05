@@ -11,7 +11,7 @@ export const goToLinkRequete = (link: string, separator: string): IQueryParamete
   let queryParameters: IQueryParametersPourRequetes | undefined = undefined;
   if (link.indexOf("range") > 0) {
     let params = [];
-    const estRequeteService = separator === "requetesService";
+    const estRequeteService = separator === "requetesService" || separator === "requetes-service";
     params = link.split(`${separator}?`)[1].split("&");
     queryParameters = {
       statuts: estRequeteService ? [] : [StatutRequete.getEnumFor(params[indexParamsReq.Statut].split("=")[1])],

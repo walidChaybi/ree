@@ -10,7 +10,6 @@ import { useContext, useEffect, useState } from "react";
 export const useRequeteInformationApi = (
   queryParameters: IQueryParametersPourRequetes,
   typeRequete: TypeAppelRequete,
-  setEnChargement: (enChargement: boolean) => void,
   filtresRequetes?: IFiltresServiceRequeteInformationFormValues,
   peutChercher?: boolean
 ) => {
@@ -35,7 +34,6 @@ export const useRequeteInformationApi = (
         const mesRequetes = mappingRequetesTableauInformation(result?.body?.data, false, utilisateurs, services);
         setDataState(mesRequetes);
         setParamsTableau(getParamsTableauDepuisReponseApi(result));
-        setEnChargement(false);
       })
       .catch(error => {
         logError({
@@ -43,7 +41,7 @@ export const useRequeteInformationApi = (
           error
         });
       });
-  }, [queryParameters, typeRequete, setEnChargement, filtresRequetes, peutChercher]);
+  }, [queryParameters, typeRequete, filtresRequetes, peutChercher]);
 
   return {
     dataState,

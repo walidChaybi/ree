@@ -63,7 +63,7 @@ export const TableauPersonnesSelectionnees: React.FC<ITableauPersonnesSelectionn
         dataState={props.dataPersonnesSelectionnees}
         paramsTableau={{}}
         onClickOnLine={() => {}}
-        noRows={getLigneTableauVide("Aucune personne sélectionnée pour le projet.")}
+        messageAucunResultat={getLigneTableauVide("Aucune personne sélectionnée pour le projet.")}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_PERSONNE}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_PERSONNE}
       />
