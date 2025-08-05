@@ -9,16 +9,11 @@ interface IDataFicheApi {
   data: any;
 }
 
-export function useFichePageApiHook(
-  actualisationInfosFiche: boolean,
-  typeFiche?: ETypeFiche,
-  identifiant?: string,
-  estConsultation = false
-) {
+export function useFichePageApiHook(actualisationInfosFiche: boolean, typeFiche?: ETypeFiche, identifiant?: string) {
   const [dataFicheState, setDataFicheState] = useState<IDataFicheApi>({} as IDataFicheApi);
   useEffect(() => {
     if (identifiant != null && typeFiche != null) {
-      getInformationsFiche(typeFiche, identifiant, estConsultation)
+      getInformationsFiche(typeFiche, identifiant)
         .then((result: any) => {
           const dataFiche = {} as IDataFicheApi;
 
@@ -48,7 +43,7 @@ export function useFichePageApiHook(
           });
         });
     }
-  }, [typeFiche, identifiant, actualisationInfosFiche, estConsultation]);
+  }, [typeFiche, identifiant, actualisationInfosFiche]);
 
   return {
     dataFicheState

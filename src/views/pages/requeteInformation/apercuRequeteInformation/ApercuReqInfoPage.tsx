@@ -12,7 +12,6 @@ import { Requete, TRequete } from "@model/requete/IRequete";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
-import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
@@ -52,8 +51,7 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
       setDetailRequeteParams({ idRequete: props.idRequeteAAfficher });
     } else {
       setDetailRequeteParams({
-        idRequete: idRequeteParam,
-        estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE)
+        idRequete: idRequeteParam
       });
     }
   }, [idRequeteParam, props.idRequeteAAfficher, location.pathname]);

@@ -7,12 +7,11 @@ import ActeRegistre from "@pages/requeteCreation/commun/composants/ActeRegistre"
 import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
-import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { DEUX, UN, ZERO } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router";
+import { useParams } from "react-router";
 import "../../../commun/scss/ApercuReqCreationPage.scss";
 import { getConteneurResumeRequete, onRenommePieceJustificativeEtablissement } from "../commun/ApercuRequeteEtablissementUtils";
 import { BoutonsApercuRequeteCreationEtablissement } from "../commun/BoutonsApercuRequeteCreationEtablissement";
@@ -26,7 +25,6 @@ interface ItemListe {
 
 export const ApercuRequeteEtablissementActeRegistrePage: React.FC = () => {
   const { idRequeteParam, idActeParam } = useParams<TUuidActeParams>();
-  const location = useLocation();
   const [requete, setRequete] = useState<IRequeteCreationEtablissement>();
   const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>({});
 
@@ -61,7 +59,6 @@ export const ApercuRequeteEtablissementActeRegistrePage: React.FC = () => {
     if (idRequeteParam) {
       setDetailRequeteParams({
         idRequete: idRequeteParam,
-        estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE),
         estConsultationHistoriqueAction: true
       });
     }

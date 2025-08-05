@@ -68,7 +68,6 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
           idRequete: idRequeteParam
         },
         query: {
-          isConsultation: estModeConsultation,
           isConsultationHistoriqueAction: false
         }
       },

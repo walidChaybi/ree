@@ -5,7 +5,6 @@ import { TRequete } from "@model/requete/IRequete";
 const URI = "/requetes/:idRequete";
 
 interface IQuery {
-  isConsultation?: boolean;
   isConsultationHistoriqueAction?: boolean;
 }
 

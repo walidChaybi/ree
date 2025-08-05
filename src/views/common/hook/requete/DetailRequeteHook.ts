@@ -51,20 +51,19 @@ import { UnionActuelle } from "./../../../../model/requete/enum/UnionActuelle";
 
 export interface IDetailRequeteParams {
   idRequete?: string;
-  estConsultation?: boolean;
   estConsultationHistoriqueAction?: boolean;
 }
 
-export const useDetailRequeteApiHook = ({ idRequete, estConsultation, estConsultationHistoriqueAction }: IDetailRequeteParams) => {
+export const useDetailRequeteApiHook = ({ idRequete, estConsultationHistoriqueAction }: IDetailRequeteParams) => {
   const [detailRequeteState, setDetailRequeteState] = useState<TRequete | undefined>();
 
   const { utilisateurs } = useContext(RECEContextData);
 
   useEffect(() => {
     if (idRequete) {
-      fetchDetailRequete(setDetailRequeteState, estConsultation, estConsultationHistoriqueAction, utilisateurs, idRequete);
+      fetchDetailRequete(setDetailRequeteState, estConsultationHistoriqueAction, utilisateurs, idRequete);
     }
-  }, [idRequete, estConsultation, estConsultationHistoriqueAction]);
+  }, [idRequete, estConsultationHistoriqueAction]);
 
   return {
     detailRequeteState
@@ -77,7 +76,7 @@ export function useAvecRejeuDetailRequeteApiHook(params?: IDetailRequeteParams) 
   const { utilisateurs } = useContext(RECEContextData);
 
   useEffect(() => {
-    fetchDetailRequete(setDetailRequeteState, params?.estConsultation, undefined, utilisateurs, params?.idRequete);
+    fetchDetailRequete(setDetailRequeteState, undefined, utilisateurs, params?.idRequete);
   }, [params]);
 
   return {
@@ -87,14 +86,13 @@ export function useAvecRejeuDetailRequeteApiHook(params?: IDetailRequeteParams) 
 
 async function fetchDetailRequete(
   setDetailRequeteState: any,
-  estConsultation = false,
   estConsultationHistoriqueAction = false,
   utilisateurs?: Utilisateur[],
   idRequete?: string
 ) {
   try {
     if (idRequete) {
-      const result = await getDetailRequete(idRequete, estConsultation, estConsultationHistoriqueAction);
+      const result = await getDetailRequete(idRequete, estConsultationHistoriqueAction);
       const typeRequete = TypeRequete.getEnumFor(result?.body?.data?.type);
       switch (typeRequete) {
         case TypeRequete.DELIVRANCE: {

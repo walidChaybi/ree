@@ -7,13 +7,13 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IPieceJointe, TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
+import DetailRequetePage from "@pages/requeteDelivrance/detailRequete/DetailRequetePage";
 import { URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDCSC_ID, URL_MES_REQUETES_DELIVRANCE_MODIFIER_RDC_ID } from "@router/ReceUrls";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import FenetreExterne from "../../../../../../../composants/commun/conteneurs/FenetreExterne";
-import { DetailRequetePage } from "../../../../detailRequete/DetailRequetePage";
 import { ResumeRequetePartieHaute } from "./ResumeRequetePartieHaute";
 import { ResumeRequeteType } from "./ResumeRequeteType";
 import "./scss/ResumeRequete.scss";
@@ -113,7 +113,7 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
           hauteur={height}
           largeur={width}
         >
-          <DetailRequetePage idRequeteAAfficher={props.requete.id} />
+          <DetailRequetePage requete={props.requete} />
         </FenetreExterne>
       )}
     </>

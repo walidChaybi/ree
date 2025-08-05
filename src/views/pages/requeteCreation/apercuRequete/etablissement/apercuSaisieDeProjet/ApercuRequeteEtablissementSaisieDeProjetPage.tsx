@@ -26,8 +26,7 @@ import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/
 import {
   PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET,
   PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE,
-  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID,
-  URL_RECHERCHE_REQUETE
+  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID
 } from "@router/ReceUrls";
 import { DEUX, UN } from "@util/Utils";
 import messageManager from "@util/messageManager";
@@ -200,7 +199,6 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
   function rechargerRequete() {
     setDetailRequeteParams({
       idRequete: props.idRequeteAAfficher ?? idRequeteParam,
-      estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE),
       estConsultationHistoriqueAction: true
     });
   }

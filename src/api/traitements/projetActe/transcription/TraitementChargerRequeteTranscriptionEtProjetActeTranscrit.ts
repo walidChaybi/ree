@@ -31,7 +31,7 @@ const TRAITEMENT_CHARGER_REQUETE_TRANSCRIPTION_ET_PROJET_ACTE_TRANSCRIT: TTraite
     const { appelApi: getProjetActe } = useFetchApi(CONFIG_GET_PROJET_ACTE);
     const STATUTS_PROJET_ACTE_VALIDES = [StatutRequete.A_SIGNER, StatutRequete.EN_TRAITEMENT, StatutRequete.PRISE_EN_CHARGE];
 
-    const lancer = ({ idRequete, estModeConsultation }: IParamsChargement) => {
+    const lancer = ({ idRequete }: IParamsChargement) => {
       if (!idRequete) terminerTraitement();
 
       getDetailRequete({
@@ -40,7 +40,6 @@ const TRAITEMENT_CHARGER_REQUETE_TRANSCRIPTION_ET_PROJET_ACTE_TRANSCRIT: TTraite
             idRequete: idRequete
           },
           query: {
-            isConsultation: estModeConsultation,
             isConsultationHistoriqueAction: false
           }
         },

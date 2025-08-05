@@ -3,7 +3,6 @@ import { IDetailRequeteParams, useDetailRequeteApiHook } from "@hook/requete/Det
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import React, { useEffect, useState } from "react";
@@ -29,8 +28,7 @@ export const ApercuRequeteTemplate: React.FC<React.PropsWithChildren<TemplatePro
 
   useEffect(() => {
     setDetailRequeteParams({
-      idRequete: idRequete,
-      estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE)
+      idRequete: idRequete
     });
   }, [idRequete, location.pathname]);
 

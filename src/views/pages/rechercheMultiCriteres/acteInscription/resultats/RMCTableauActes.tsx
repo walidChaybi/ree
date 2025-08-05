@@ -190,7 +190,6 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
         (fenetreFicheActe: IFenetreFicheActe) =>
           fenetreFicheActe && (
             <FenetreFiche
-              estConsultation={typeRMC === "Classique"}
               key={`fiche${fenetreFicheActe.idActe}${fenetreFicheActe.index.value}`}
               identifiant={fenetreFicheActe.idActe}
               categorie={ETypeFiche.ACTE}

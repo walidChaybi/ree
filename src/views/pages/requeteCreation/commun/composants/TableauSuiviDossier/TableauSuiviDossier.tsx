@@ -160,7 +160,6 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
               return (
                 fenetreFicheActe && (
                   <FenetreFiche
-                    estConsultation={true}
                     key={`fiche${fenetreFicheActe.idActe}${fenetreFicheActe.index}`}
                     identifiant={fenetreFicheActe.idActe}
                     categorie={ETypeFiche.ACTE}

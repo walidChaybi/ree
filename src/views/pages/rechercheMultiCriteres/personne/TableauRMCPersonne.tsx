@@ -157,7 +157,6 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
             return (
               fenetreFicheActe && (
                 <FenetreFiche
-                  estConsultation={true}
                   key={`fiche${fenetreFicheActe.idActeInscription}+${fenetreFicheActe.index.value}`}
                   identifiant={fenetreFicheActe.idActeInscription}
                   categorie={fenetreFicheActe.datasFiches[ZERO].categorie}

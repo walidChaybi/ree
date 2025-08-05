@@ -57,8 +57,7 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<ApercuReqCreatio
 
   useEffect(() => {
     setDetailRequeteParams({
-      idRequete: props.idRequeteAAfficher ?? idRequeteParam,
-      estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE)
+      idRequete: props.idRequeteAAfficher ?? idRequeteParam
     });
   }, [props.idRequeteAAfficher, location.pathname, idRequeteParam]);
 

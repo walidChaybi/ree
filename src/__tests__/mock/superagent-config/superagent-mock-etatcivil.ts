@@ -129,43 +129,33 @@ export const configEtatcivil = [
           "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&recupereImagesEtTexte=true" ||
         match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4da/resume" ||
         match[1] === "/acte/f9279c00-5d2b-11ea-bc55-0242ac130004/resume" ||
-        match[1] ===
-          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&isConsultation=true" ||
-        match[1] ===
-          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false&isConsultation=true"
+        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true" ||
+        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false"
       ) {
         return { data: acte };
       } else if (
-        match[1] ===
-          "/acte/d8708d77-a359-4553-be72-1eb5f246d4dc/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false&isConsultation=true" ||
-        match[1] ===
-          "/acte/d8708d77-a359-4553-be72-1eb5f246d4dc/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&isConsultation=true"
+        match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4dc/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false" ||
+        match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4dc/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true"
       ) {
         return { data: acte1 };
       } else if (match[1] === "/acte/6e89c1c1-16c4-4e40-9b72-7b567270b26f/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true") {
         return { data: acteExtraitSaisie };
       } else if (
         match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8/resume" ||
-        match[1] ===
-          "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&isConsultation=true" ||
-        match[1] ===
-          "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false&isConsultation=true"
+        match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true" ||
+        match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false"
       ) {
         return { data: acte2 };
       } else if (
         match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4db/resume" ||
-        match[1] ===
-          "/acte/d8708d77-a359-4553-be72-1eb5f246d4db/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&isConsultation=true" ||
-        match[1] ===
-          "/acte/d8708d77-a359-4553-be72-1eb5f246d4db/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false&isConsultation=true" ||
-        match[1] ===
-          "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a9/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false&isConsultation=true"
+        match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4db/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true" ||
+        match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4db/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false" ||
+        match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a9/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false"
       ) {
         return { data: acte3 };
       } else if (
         match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a9/resume" ||
-        match[1] ===
-          "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a9/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&isConsultation=true"
+        match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a9/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true"
       ) {
         return { data: acte4 };
       } else if (match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true") {
@@ -330,16 +320,16 @@ export const configEtatcivil = [
       if (
         match[1] === `/acte/${idFicheActe1}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true` ||
         match[1] === `/acte/${idFicheActe1}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false` ||
-        match[1] === `/acte/${idFicheActe1}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&isConsultation=true` ||
-        match[1] === `/acte/${idFicheActe1}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false&isConsultation=true`
+        match[1] === `/acte/${idFicheActe1}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true` ||
+        match[1] === `/acte/${idFicheActe1}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false`
       ) {
         return ficheActe1;
       }
 
       if (
         match[1] === `/acte/${idFicheActe2}/resume` ||
-        match[1] === `/acte/${idFicheActe2}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&isConsultation=true` ||
-        match[1] === `/acte/${idFicheActe2}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false&isConsultation=true`
+        match[1] === `/acte/${idFicheActe2}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true` ||
+        match[1] === `/acte/${idFicheActe2}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false`
       ) {
         return ficheActe2;
       }

@@ -39,7 +39,7 @@ export const configRequetesCreation = [
         };
       }
 
-      if (url === "/requetes/de96cc3n-9865-4c83-b634-37fad2680f41?isConsultation=true") {
+      if (url === "/requetes/de96cc3n-9865-4c83-b634-37fad2680f41") {
         return {
           data: requeteCreationTranscriptionStatutATraiter
         };

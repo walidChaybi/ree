@@ -5,7 +5,6 @@ import { FichePage, IDataFicheProps, IIndex } from "./FichePage";
 import "./scss/LienFiche.scss";
 
 interface IFenetreFicheProps {
-  estConsultation?: boolean;
   identifiant: string;
   categorie: ETypeFiche;
   onClose: (id: string, index: number) => void;
@@ -18,7 +17,6 @@ interface IFenetreFicheProps {
 }
 
 export const FenetreFiche: React.FC<IFenetreFicheProps> = ({
-  estConsultation,
   identifiant,
   categorie,
   onClose,
@@ -45,7 +43,6 @@ export const FenetreFiche: React.FC<IFenetreFicheProps> = ({
           setFenetreExterneRef={ref => setFenetreExterneRef(ref)}
         >
           <FichePage
-            estConsultation={estConsultation}
             numeroRequete={numeroRequete}
             datasFiches={datasFiches}
             dataFicheIdentifiant={identifiant}

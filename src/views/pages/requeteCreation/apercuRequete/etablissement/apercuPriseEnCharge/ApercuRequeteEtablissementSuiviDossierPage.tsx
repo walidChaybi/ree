@@ -6,7 +6,6 @@ import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
-import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { DEUX } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
@@ -51,7 +50,6 @@ export const ApercuRequeteEtablissementSuiviDossierPage: React.FC<ApercuRequeteE
   function rechargerRequete() {
     setDetailRequeteParams({
       idRequete: props.idRequeteAAfficher ?? idRequeteParam,
-      estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE),
       estConsultationHistoriqueAction: true
     });
   }

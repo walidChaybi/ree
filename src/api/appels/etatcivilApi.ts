@@ -50,9 +50,9 @@ const URL_ACTE_RECOMPOSER_APRES_SIGNATURE = "/recomposer-document-final";
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
  */
-export function getInformationsFiche(typeFiche: ETypeFiche, identifiant: string, estConsultation = false): Promise<any> {
+export function getInformationsFiche(typeFiche: ETypeFiche, identifiant: string): Promise<any> {
   if (typeFiche === ETypeFiche.ACTE) {
-    return getInformationsFicheActe(identifiant, false, estConsultation, false);
+    return getInformationsFicheActe(identifiant, false, false);
   } else {
     return getInformationsFicheRepertoire(typeFiche, identifiant);
   }
@@ -176,7 +176,6 @@ export function getInformationsFicheRepertoire(typeFiche: ETypeFiche, identifian
 export function getInformationsFicheActe(
   identifiant: string,
   recupereImagesEtTexte = false,
-  estConsultation = false,
   remplaceIdentiteTitulaireParIdentiteTitulaireAM = true
 ): Promise<any> {
   const config: any = {
@@ -190,12 +189,6 @@ export function getInformationsFicheActe(
     config.parameters = {
       ...config.parameters,
       recupereImagesEtTexte
-    };
-  }
-  if (estConsultation) {
-    config.parameters = {
-      ...config.parameters,
-      isConsultation: estConsultation
     };
   }
 

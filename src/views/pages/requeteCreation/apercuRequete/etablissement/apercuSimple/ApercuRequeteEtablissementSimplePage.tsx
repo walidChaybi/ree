@@ -2,7 +2,6 @@ import { IDetailRequeteParams, useDetailRequeteApiHook } from "@hook/requete/Det
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
-import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
@@ -53,7 +52,6 @@ export const ApercuRequeteEtablissementSimplePage: React.FC<ApercuRequeteEtablis
   function rechargerRequete() {
     setDetailRequeteParams({
       idRequete: props.idRequeteAAfficher ?? idRequeteParam,
-      estConsultation: location.pathname.includes(URL_RECHERCHE_REQUETE),
       estConsultationHistoriqueAction: true
     });
   }

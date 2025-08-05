@@ -45,7 +45,6 @@ export interface IIndex {
 }
 
 interface FichePageProps {
-  estConsultation?: boolean;
   dataFicheIdentifiant: string;
   datasFiches: IDataFicheProps[];
   index: IIndex;
@@ -64,7 +63,6 @@ export interface IDataFicheProps {
 }
 
 export const FichePage: React.FC<FichePageProps> = ({
-  estConsultation,
   dataFicheIdentifiant,
   datasFiches,
   numeroRequete,
@@ -100,12 +98,7 @@ export const FichePage: React.FC<FichePageProps> = ({
 
   const { utilisateurConnecte } = useContext(RECEContextData);
 
-  const { dataFicheState } = useFichePageApiHook(
-    actualisationInfosFiche,
-    dataFicheCourante?.categorie,
-    dataFicheCourante?.identifiant,
-    estConsultation
-  );
+  const { dataFicheState } = useFichePageApiHook(actualisationInfosFiche, dataFicheCourante?.categorie, dataFicheCourante?.identifiant);
 
   const { bandeauFiche, panelsFiche, alertes, visuBoutonAlertes } = setFiche(utilisateurConnecte, dataFicheCourante, dataFicheState.data);
 

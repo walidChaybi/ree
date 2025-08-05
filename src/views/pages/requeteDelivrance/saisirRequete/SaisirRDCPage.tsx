@@ -140,8 +140,7 @@ export const SaisirRDCPage: React.FC = () => {
 
   useEffect(() => {
     setDetailRequeteParams({
-      idRequete,
-      estConsultation: false
+      idRequete
     });
   }, [idRequete]);
 

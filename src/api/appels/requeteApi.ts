@@ -209,19 +209,11 @@ export function postRequetesServiceCreation(
   );
 }
 
-export function getDetailRequete(idRequete: string, estConsultation = false, estConsultationHistoriqueAction = false): Promise<any> {
+export function getDetailRequete(idRequete: string, estConsultationHistoriqueAction = false): Promise<any> {
   let config: any = {
     method: HttpMethod.GET,
     uri: `${URL_REQUETES}/${idRequete}`
   };
-  if (estConsultation) {
-    config = {
-      ...config,
-      parameters: {
-        isConsultation: estConsultation
-      }
-    };
-  }
   if (estConsultationHistoriqueAction) {
     config = {
       ...config,
