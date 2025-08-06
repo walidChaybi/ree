@@ -1,5 +1,5 @@
 import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
-import { ETypeFamille } from "@model/etatcivil/enum/TypeFamille";
+import { EFamilleRegistre } from "@model/etatcivil/enum/TypeFamille";
 import { ETypeRepertoire } from "@model/etatcivil/enum/TypeRepertoire";
 import { ICriteresRMCActesInscriptions } from "@model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
@@ -28,8 +28,12 @@ export const mappingCriteres = (criteres: IRMCActeInscription): ICriteresRMCActe
 
     // Filtre Registre & Répertoire Civil
     natureActe: criteres.registreRepertoire?.registre?.natureActe as keyof typeof ENatureActe,
-    familleRegistre: criteres.registreRepertoire?.registre?.familleRegistre as keyof typeof ETypeFamille,
-    posteOuPocopa: criteres.registreRepertoire?.registre?.pocopa?.cle,
+    familleRegistre: criteres.registreRepertoire?.registre?.familleRegistre as keyof typeof EFamilleRegistre,
+    //Type Guard à retirer une fois que le pocopa sera passé de Option à string dans le refacto du DTO Criteres.
+    posteOuPocopa:
+      typeof criteres.registreRepertoire?.registre?.pocopa === "string"
+        ? criteres.registreRepertoire?.registre?.pocopa
+        : criteres.registreRepertoire?.registre?.pocopa?.cle,
     numeroActe: criteres.registreRepertoire?.registre?.numeroActe?.numeroActeOuOrdre,
     anneeRegistre: criteres.registreRepertoire?.registre?.anneeRegistre,
     numeroBisTer: criteres.registreRepertoire?.registre?.numeroActe?.numeroBisTer,

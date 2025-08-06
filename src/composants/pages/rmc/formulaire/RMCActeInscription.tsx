@@ -37,10 +37,10 @@ export const RMCActeInscription: React.FC<RMCActeInscriptionProps> = ({ onSubmit
               <div>
                 <BlocTitulaire />
                 <BlocEvenement />
-                <BlocRepertoire />
               </div>
               <div>
                 <BlocActe />
+                <BlocRepertoire />
               </div>
             </div>
             <BoutonsRMC />

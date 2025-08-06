@@ -592,7 +592,15 @@ export const rechercheExpressionReguliereAvecTimeout = (
   });
 };
 
-export const enumVersOptions = <TEnum extends { [cle: string]: string }>(enumeration: TEnum, avecOptionVide: boolean = false): Option[] => [
-  ...(avecOptionVide ? [OPTION_VIDE] : []),
-  ...Object.entries(enumeration).map((entree): Option => ({ cle: entree[0], libelle: entree[1] }))
+export const enumVersOptions = <TEnum extends Record<string, string>>(
+  enumeration: TEnum,
+  options?: {
+    avecOptionVide?: boolean;
+    cleDansLibelle?: boolean;
+  }
+): Option[] => [
+  ...(options?.avecOptionVide ? [OPTION_VIDE] : []),
+  ...Object.entries(enumeration).map(
+    (entree): Option => ({ cle: entree[0], libelle: options?.cleDansLibelle ? `(${entree[0]}) ${entree[1]}` : entree[1] })
+  )
 ];

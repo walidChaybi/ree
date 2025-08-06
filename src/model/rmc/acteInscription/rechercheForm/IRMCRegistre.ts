@@ -5,7 +5,7 @@ import { IRMCRegistreSupport } from "./IRMCRegistreSupport";
 export interface IRMCRegistre {
   natureActe?: string;
   familleRegistre?: string;
-  pocopa?: Option | null;
+  pocopa?: Option | string | null;
   anneeRegistre?: string;
   registreSupport?: IRMCRegistreSupport;
   numeroActe?: IRMCNumeroActe;

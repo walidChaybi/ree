@@ -17,7 +17,10 @@ export function mappingCriteresRMCArchive(criteres: IRMCActeArchive): IRMCArchiv
     // Filtre Registre Civile
     natureActe: criteres.registreArchive?.registre?.natureActe as keyof typeof ENatureActe,
     familleRegistre: criteres.registreArchive?.registre?.familleRegistre as keyof typeof ETypeFamille,
-    posteOuPocopa: criteres.registreArchive?.registre?.pocopa?.cle || undefined,
+    posteOuPocopa:
+      typeof criteres.registreArchive?.registre?.pocopa === "string"
+        ? criteres.registreArchive?.registre?.pocopa
+        : criteres.registreArchive?.registre?.pocopa?.cle || undefined,
     numeroActe: criteres.registreArchive?.registre?.numeroActe?.numeroActeOuOrdre || undefined,
     anneeRegistre: criteres.registreArchive?.registre?.anneeRegistre || undefined,
     numeroBisTer: criteres.registreArchive?.registre?.numeroActe?.numeroBisTer || undefined,

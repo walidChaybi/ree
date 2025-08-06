@@ -1,9 +1,9 @@
-import { ETypeFamille } from "@model/etatcivil/enum/TypeFamille";
+import { EFamilleRegistre } from "@model/etatcivil/enum/TypeFamille";
 import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
 import { useFormikContext } from "formik";
 import { useEffect, useState } from "react";
 
-const useRMCBlocActe = (typeRepertoireSelectionne: keyof typeof ETypeFamille) => {
+const useRMCBlocActe = (typeRepertoireSelectionne: keyof typeof EFamilleRegistre) => {
   const { values, setFieldValue } = useFormikContext<IRMCActeInscriptionForm>();
 
   const [champsDesactives, setChampsDesactives] = useState<string[]>([]);

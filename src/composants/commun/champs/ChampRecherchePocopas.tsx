@@ -1,8 +1,9 @@
 import { CONFIG_GET_POCOPAS_PAR_FAMILLE_REGISTRE } from "@api/configurations/etatCivil/pocopa/GetPocopasParFamilleRegistreConfigApi";
 import { ITypeRegistreDto } from "@model/etatcivil/acte/TypeRegistre";
+import { EFamilleRegistre, FAMILLES_SANS_POCOPA } from "@model/etatcivil/enum/TypeFamille";
 import Autocomplete from "@mui/material/Autocomplete";
 import { getIn, useField, useFormikContext } from "formik";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import CacheOptionsPocopa from "../../../utils/CacheOptionsPocopa";
 import { InputChampRecherche } from "./geoApi/InputChampRechercheGeo";
@@ -20,6 +21,8 @@ interface IRecherchePocopa {
   seulementPocopaOuvert: boolean;
 }
 
+const TYPE_FAMILLE_MAR: keyof typeof EFamilleRegistre = "MAR";
+
 const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
   name,
   libelle,
@@ -36,18 +39,25 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
 
   const { appelApi: appelGetPocopasParFamilleRegistre, enAttenteDeReponseApi } = useFetchApi(CONFIG_GET_POCOPAS_PAR_FAMILLE_REGISTRE);
 
-  const valeurFamilleRegistre = useMemo(
+  const valeurFamilleRegistre: keyof typeof EFamilleRegistre = useMemo(
     () => getIn(values, name.split(".").slice(0, -1).concat("familleRegistre").join(".") ?? "") ?? optionsRecherchePocopa.familleRegistre,
     [values]
   );
 
+  const estTypeFamilleMAR = useMemo(() => valeurFamilleRegistre === TYPE_FAMILLE_MAR, [valeurFamilleRegistre]);
+
   useEffect(() => {
-    if (!valeurFamilleRegistre) return;
+    helpers.setValue("");
+
+    if (!valeurFamilleRegistre || [...FAMILLES_SANS_POCOPA, TYPE_FAMILLE_MAR].includes(valeurFamilleRegistre)) {
+      setPocopas([]);
+      return;
+    }
+
     const pocopasCache = CacheOptionsPocopa.getPocopasFamilleRegistre(valeurFamilleRegistre);
 
     if (Array.isArray(pocopasCache)) {
       setPocopas(pocopasCache);
-
       return;
     }
 
@@ -70,6 +80,12 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
       }
     });
   }, [valeurFamilleRegistre]);
+
+  useLayoutEffect(() => {
+    if (estTypeFamilleMAR) {
+      helpers.setValue("TR-ACTES");
+    }
+  }, [pocopas]);
 
   return (
     <div className={`relative flex w-full flex-col text-start ${className ?? ""} ${enErreur ? "text-rouge" : ""}`.trim()}>
@@ -104,6 +120,7 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
           helpers.setValue(valeurSelectionne?.pocopa);
         }}
         disabled={disabled}
+        readOnly={estTypeFamilleMAR}
         componentsProps={{
           popper: {
             sx: {

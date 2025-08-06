@@ -1,6 +1,7 @@
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 import { Options } from "@util/Type";
 
+/** Doit être retiré lors d'un prochain refacto et remplacé par EFamilleRegistre / EFamilledossier */
 export enum ETypeFamille {
   ACQ = "Acquisition de la nationalité française",
   CSL = "Acte consulaire",
@@ -20,8 +21,31 @@ export enum ETypeFamille {
   PAC = "Etranger ayant conclu un PACS en France"
 }
 
-export const typesFamilleProjetActe: (keyof typeof ETypeFamille)[] = ["AFF", "OPT", "PR", "XDX"];
+export enum EFamilleRegistre {
+  ACQ = "Acquisition de la nationalité française",
+  CSL = "Acte consulaire",
+  DEP = "Acte déposé dans un pays voisin",
+  COL = "Acte issu d'anciennes colonies",
+  AR2 = "Acte reconstitué - Anciens territoires français (hors Algérie)",
+  AR3 = "Acte reconstitué – Algérie",
+  OP2 = "Actes d'optants à la nationalité (Afrique ou Indochine)",
+  OP3 = "Actes d'optants à la nationalité (Algérie)",
+  JUG = "Transcription judiciaire",
+  MAR = "Acte dressé en mer ou aux armées",
+  CPN = "Changement de nom ou prénoms"
+}
 
+export enum EFamilleDossier {
+  AFF = "Dossier d'affaire",
+  XDX = "Dossier pour acquisition",
+  OPT = "Dossier d'optants",
+  PR = "Pré-dossier"
+}
+
+export const typesFamilleProjetActe: (keyof typeof ETypeFamille)[] = ["AFF", "OPT", "PR", "XDX"];
+export const FAMILLES_SANS_POCOPA: (keyof typeof EFamilleRegistre)[] = ["OP2", "OP3", "CPN"];
+
+/** Doit être retiré lors d'un prochain refacto et remplacé par EFamilleRegistre / EFamilledossier */
 export class TypeFamille extends EnumWithLibelle {
   public static readonly ACQ = new TypeFamille("Acquisition de la nationalité française");
   public static readonly CSL = new TypeFamille("Acte consulaire");

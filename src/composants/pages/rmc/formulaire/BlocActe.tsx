@@ -1,16 +1,20 @@
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
+import { EFamilleRegistre } from "@model/etatcivil/enum/TypeFamille";
 import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
+import { enumVersOptions } from "@util/Utils";
 import { getIn, useFormikContext } from "formik";
 import { useContext, useMemo } from "react";
 import { EBlocsRMC, RMCContext } from "../../../../contexts/RMCContextProvider";
 import useRMCBlocActe from "../../../../hooks/rmc/RMCBlocActeHook";
 import ChampCaseACocher from "../../../commun/champs/ChampCaseACocher";
+import ChampDoubleTexte from "../../../commun/champs/ChampDoubleTexte";
 import ChampListeDeroulante from "../../../commun/champs/ChampListeDeroulante";
 import ChampRecherchePocopas from "../../../commun/champs/ChampRecherchePocopas";
 import ChampTexte from "../../../commun/champs/ChampTexte";
-import ChampTexteDouble from "../../../commun/champs/ChampTexteDouble";
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
+
+const FAMILLES_REGISTRE = enumVersOptions(EFamilleRegistre, { avecOptionVide: true, cleDansLibelle: true });
+const NATURES_ACTE = enumVersOptions(ENatureActe, { avecOptionVide: true, cleDansLibelle: false });
 
 const BlocActe: React.FC = () => {
   const { values, setFieldValue, initialValues } = useFormikContext<IRMCActeInscriptionForm>();
@@ -39,13 +43,13 @@ const BlocActe: React.FC = () => {
         <ChampListeDeroulante
           name="registreRepertoire.registre.familleRegistre"
           libelle="Famille de registre"
-          options={[{ cle: "", libelle: "" }, ...TypeFamille.getAllEnumsAsOptions()]}
+          options={FAMILLES_REGISTRE}
           disabled={blocRCRCAPACSAlimente}
         />
         <ChampListeDeroulante
           name="registreRepertoire.registre.natureActe"
           libelle="Nature de l'acte"
-          options={[{ cle: "", libelle: "" }, ...NatureActe.getAllEnumsAsOptions()]}
+          options={NATURES_ACTE}
           disabled={champsDesactives.includes("natureActe") || blocRCRCAPACSAlimente}
         />
       </div>
@@ -66,11 +70,12 @@ const BlocActe: React.FC = () => {
             name={"registreRepertoire.registre.anneeRegistre"}
             libelle={"Année"}
             disabled={champsDesactives.includes("anneeRegistre") || blocRCRCAPACSAlimente}
+            maxLength={4}
             numerique
           />
         </div>
         <div className="col-span-2">
-          <ChampTexteDouble
+          <ChampDoubleTexte
             proprietesPremierChamp={{
               name: "registreRepertoire.registre.registreSupport.supportUn",
               disabled: champsDesactives.includes("supportUn") || blocRCRCAPACSAlimente
@@ -83,7 +88,7 @@ const BlocActe: React.FC = () => {
           />
         </div>
         <div className="col-span-2">
-          <ChampTexteDouble
+          <ChampDoubleTexte
             proprietesPremierChamp={{
               name: "registreRepertoire.registre.numeroActe.numeroActeOuOrdre",
               disabled: champsDesactives.includes("numeroActeOuOrdre") || blocRCRCAPACSAlimente

@@ -18,7 +18,7 @@ import SeparateurSection from "../../../../commun/conteneurs/formulaire/Separate
 
 const optionsTransmetteur: Option[] = enumVersOptions(EIdentiteTransmetteur);
 const optionsPieces: Option[] = enumVersOptions(EPieceProduite);
-const optionsLegalisationApostille: Option[] = enumVersOptions(ELegalisationApostille, true);
+const optionsLegalisationApostille: Option[] = enumVersOptions(ELegalisationApostille, { avecOptionVide: true });
 const optionsModeDepot: Option[] = enumVersOptions(EModeDepot);
 
 const BlocFormuleFinale: React.FC = () => {
