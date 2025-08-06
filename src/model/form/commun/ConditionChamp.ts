@@ -36,12 +36,39 @@ export class ConditionChamp {
   public static depuisTableau(conditionDtos: IConditionChampDto[]): ConditionChamp[] {
     return conditionDtos.reduce((listeConditions: ConditionChamp[], conditionDto: IConditionChampDto) => {
       const exigence = ConditionChamp.depuisDto(conditionDto);
+
       if (exigence) {
         listeConditions.push(exigence);
       }
 
       return listeConditions;
     }, []);
+  }
+
+  public static depuisTableauConditionComplexe(
+    conditionDtos: (IConditionChampDto | IConditionChampDto[])[]
+  ): (ConditionChamp | ConditionChamp[])[] {
+    return conditionDtos.reduce(
+      (listeConditions: (ConditionChamp | ConditionChamp[])[], conditionDto: IConditionChampDto | IConditionChampDto[]) => {
+        const exigence = Array.isArray(conditionDto)
+          ? conditionDto
+              .map(condition => ConditionChamp.depuisDto(condition))
+              .reduce<ConditionChamp[]>((conditions, valeur) => {
+                if (valeur !== null) {
+                  conditions.push(valeur);
+                }
+                return conditions;
+              }, [])
+          : ConditionChamp.depuisDto(conditionDto);
+
+        if (exigence) {
+          listeConditions.push(exigence);
+        }
+
+        return listeConditions;
+      },
+      []
+    );
   }
 
   public estRespecteePourValeur(valeur: TValeurFormulaire) {

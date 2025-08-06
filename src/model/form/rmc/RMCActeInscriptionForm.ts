@@ -214,23 +214,35 @@ export const RMCActeInscriptionForm = {
                   idChampReference: "registreRepertoire.registre.anneeRegistre",
                   operateur: EOperateurCondition.DIFF,
                   valeurs: [""]
+                },
+                {
+                  idChampReference: "registreRepertoire.registre.familleRegistre",
+                  operateur: EOperateurCondition.DIFF,
+                  valeurs: ["CPN"]
                 }
               ]),
               { blocsRetirantValidation: ["TITULAIRE", "EVENEMENT"] }
             )
           }),
           pocopa: SchemaValidation.listeDeroulante({
-            obligatoire: ConditionChamp.depuisTableau([
+            obligatoire: ConditionChamp.depuisTableauConditionComplexe([
               {
                 idChampReference: "registreRepertoire.registre.familleRegistre",
                 operateur: EOperateurCondition.EGAL,
                 valeurs: ["CSL", "ACQ"]
               },
-              {
-                idChampReference: "registreRepertoire.registre.numeroActe.numeroActeOuOrdre",
-                operateur: EOperateurCondition.DIFF,
-                valeurs: [""]
-              }
+              [
+                {
+                  idChampReference: "registreRepertoire.registre.numeroActe.numeroActeOuOrdre",
+                  operateur: EOperateurCondition.DIFF,
+                  valeurs: [""]
+                },
+                {
+                  idChampReference: "registreRepertoire.registre.familleRegistre",
+                  operateur: EOperateurCondition.DIFF,
+                  valeurs: ["CPN", "OP2", "OP3"]
+                }
+              ]
             ]),
             valeursPossibles: [
               {
@@ -245,7 +257,8 @@ export const RMCActeInscriptionForm = {
                 sontUtilisables: () => true
               }
             ],
-            operateurConditionsOu: true
+            operateurConditionsOu: true,
+            dansTableauOperateurConditionsOu: false
           }),
           familleRegistre: SchemaValidation.texte({
             obligatoire: appliquerValidationSousCondition(
@@ -277,24 +290,37 @@ export const RMCActeInscriptionForm = {
                 idChampReference: "registreRepertoire.registre.natureActe",
                 operateur: EOperateurCondition.DIFF,
                 valeurs: [""]
+              },
+              {
+                idChampReference: "registreRepertoire.registre.familleRegistre",
+                operateur: EOperateurCondition.DIFF,
+                valeurs: ["OP2", "OP3"]
               }
             ])
           }),
           registreSupport: SchemaValidation.objet({
             supportUn: SchemaValidation.texte({
-              obligatoire: ConditionChamp.depuisTableau([
+              obligatoire: ConditionChamp.depuisTableauConditionComplexe([
                 {
                   idChampReference: "registreRepertoire.registre.registreSupport.supportDeux",
                   operateur: EOperateurCondition.DIFF,
                   valeurs: [""]
                 },
-                {
-                  idChampReference: "registreRepertoire.registre.numeroActe.etActesSuivants",
-                  operateur: EOperateurCondition.EGAL,
-                  valeurs: ["true"]
-                }
+                [
+                  {
+                    idChampReference: "registreRepertoire.registre.numeroActe.etActesSuivants",
+                    operateur: EOperateurCondition.EGAL,
+                    valeurs: ["true"]
+                  },
+                  {
+                    idChampReference: "registreRepertoire.registre.familleRegistre",
+                    operateur: EOperateurCondition.DIFF,
+                    valeurs: ["CPN"]
+                  }
+                ]
               ]),
-              operateurConditionsOu: true
+              operateurConditionsOu: true,
+              dansTableauOperateurConditionsOu: false
             }),
             supportDeux: SchemaValidation.texte({ obligatoire: false })
           }),

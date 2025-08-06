@@ -6,8 +6,25 @@ import { getIn } from "formik";
 import * as Yup from "yup";
 import { REGEX_ANNEE_QUATRE_CHIFFRES } from "../ressources/Regex";
 
+type TEstTableauCondition<T> = T extends (ConditionChamp | ConditionChamp[])[] ? true : false;
+
+type TSchemaParams<TObligatoire extends boolean | (ConditionChamp | ConditionChamp[])[]> = {
+  obligatoire?: TObligatoire;
+  operateurConditionsOu?: TEstTableauCondition<TObligatoire> extends true ? boolean : never;
+  dansTableauOperateurConditionsOu?: TEstTableauCondition<TObligatoire> extends true ? boolean : never;
+  interditSeul?: boolean | TInterditSeul;
+  interditAvec?: TInterditAvec[];
+  comparaisonValeurAutreChamp?: TComparaisonValeurAutreChamp;
+};
+
+type TSchemaValidationFonction<TAutreParams = {}, TRetour = Yup.AnySchema> = <
+  TObligatoire extends boolean | (ConditionChamp | ConditionChamp[])[] = false
+>(
+  params?: TSchemaParams<TObligatoire> & TAutreParams
+) => TRetour;
+
 interface ISchemaCommunParams {
-  obligatoire?: boolean | ConditionChamp[];
+  obligatoire?: boolean | (ConditionChamp | ConditionChamp[])[];
   operateurConditionsOu?: boolean;
   interditSeul?: boolean | TInterditSeul;
   interditAvec?: TInterditAvec[];
@@ -50,9 +67,10 @@ export type TComparaisonValeurAutreChamp = {
 
 type TGestionObligationParams<TSchemaChamp extends Yup.AnySchema = Yup.AnySchema> = {
   schema: TSchemaChamp;
-  obligatoire: boolean | ConditionChamp[];
+  obligatoire: boolean | (ConditionChamp | ConditionChamp[])[];
   actionObligation: () => TSchemaChamp;
   conditionOu?: boolean;
+  dansTableauConditionsOu?: boolean;
   interditSeul?: boolean | TInterditSeul;
   interditAvec?: TInterditAvec[];
   comparaisonValeurAutreChamp?: TComparaisonValeurAutreChamp;
@@ -72,6 +90,22 @@ type TNomSecableChamp = {
   nomPartie1: Yup.StringSchema<string | undefined>;
   nomPartie2: Yup.StringSchema<string | undefined>;
 };
+
+type ISchemaValidationType = {
+  objet: TSchemaValidationFonction<{ [cle: string]: Yup.AnySchema }, Yup.AnyObjectSchema>;
+  texte: TSchemaValidationFonction<{ listeRegexp?: TValidationText[] }, Yup.StringSchema>;
+  entier: TSchemaValidationFonction<{ min?: TValidationEntier; max?: TValidationEntier }, Yup.NumberSchema>;
+  booleen: TSchemaValidationFonction<{}, Yup.BooleanSchema>;
+  listeDeroulante: TSchemaValidationFonction<{ options?: string[]; valeursPossibles?: ValeursConditionneesMetaModele[] }, Yup.StringSchema>;
+  dateComplete: TSchemaValidationFonction<{ bloquerDateFuture?: boolean }>;
+  dateIncomplete: TSchemaValidationFonction<Omit<ISchemaCommunParams, "libelle"> & { bloquerDateFuture?: boolean }>;
+  annee: TSchemaValidationFonction;
+  nomSecable: TSchemaValidationFonction;
+  prenoms: (prefix: string) => Yup.AnySchema;
+  numeroRcRcaPacs: TSchemaValidationFonction;
+  numerosRcRcaPacs: TSchemaValidationFonction<{ prefix: string; tailleMax: number }>;
+  inconnu: () => Yup.AnySchema;
+} & { [cle in string]: unknown };
 
 export const messagesErreur = {
   ANNEE_INVALIDE: "⚠ L'année est invalide",
@@ -300,6 +334,7 @@ const gestionObligation = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>({
   obligatoire,
   actionObligation,
   conditionOu,
+  dansTableauConditionsOu,
   interditSeul,
   interditAvec,
   comparaisonValeurAutreChamp
@@ -324,26 +359,47 @@ const gestionObligation = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>({
 
   switch (true) {
     case !obligatoire.length:
-    case obligatoire[0].operateur === "AlwaysFalse":
+    case typeof obligatoire[0] === "object" && (obligatoire[0] as ConditionChamp).operateur === "AlwaysFalse":
       return schema;
-    case obligatoire[0].operateur === "AlwaysTrue":
+    case typeof obligatoire[0] === "object" && (obligatoire[0] as ConditionChamp).operateur === "AlwaysTrue":
       return actionObligation();
     default:
-      return schema.when([...obligatoire.map(condition => `$${condition.idChampReference}`)], {
+      const clesChampsReference = obligatoire.reduce((cles: string[], condition) => {
+        if (Array.isArray(condition)) {
+          return cles.concat(...condition.map(sousCondition => `$${sousCondition.idChampReference}`));
+        }
+
+        return cles.concat(`$${condition.idChampReference}`);
+      }, []);
+
+      return schema.when(clesChampsReference, {
         is: (...valeurChamp: TValeurChamp[]) => {
+          let indexValeur = 0;
           const verificationCondition = (condition: ConditionChamp, index: number) => condition.estRespecteePourValeur(valeurChamp[index]);
 
-          return conditionOu ? obligatoire.some(verificationCondition) : obligatoire.every(verificationCondition);
+          return obligatoire
+            .map(condition => {
+              if (Array.isArray(condition)) {
+                return condition.length
+                  ? condition
+                      .map(sousCondition => verificationCondition(sousCondition, indexValeur++))
+                      [dansTableauConditionsOu ? "some" : "every"](Boolean)
+                  : true;
+              }
+
+              return verificationCondition(condition, indexValeur++);
+            })
+            [conditionOu ? "some" : "every"](Boolean);
         },
         then: actionObligation()
       });
   }
 };
 
-const SchemaValidation = {
-  objet: (objet: { [cle: string]: Yup.AnySchema }) => Yup.object().shape(objet),
+const SchemaValidation: ISchemaValidationType = {
+  objet: (objet = {}) => Yup.object().shape(objet),
 
-  texte: (schemaParams: ISchemaCommunParams & { listeRegexp?: TValidationText[] } = {}): Yup.StringSchema => {
+  texte: (schemaParams = {}) => {
     let schema = Yup.string();
 
     if (schemaParams.listeRegexp?.length)
@@ -356,13 +412,14 @@ const SchemaValidation = {
       obligatoire: schemaParams.obligatoire ?? false,
       actionObligation: () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE),
       conditionOu: schemaParams.operateurConditionsOu,
+      dansTableauConditionsOu: schemaParams.dansTableauOperateurConditionsOu,
       interditSeul: schemaParams.interditSeul,
       interditAvec: schemaParams.interditAvec,
       comparaisonValeurAutreChamp: schemaParams.comparaisonValeurAutreChamp
     });
   },
 
-  entier: (schemaParams: ISchemaCommunParams & { min?: TValidationEntier; max?: TValidationEntier } = {}): Yup.NumberSchema => {
+  entier: (schemaParams = {}) => {
     let schema = Yup.number().integer(messagesErreur.DOIT_ETRE_ENTIER);
     schemaParams.min &&
       (schema = schema.min(
@@ -386,7 +443,7 @@ const SchemaValidation = {
     });
   },
 
-  booleen: (schemaParams: ISchemaCommunParams = {}): Yup.BooleanSchema => {
+  booleen: (schemaParams = {}) => {
     let schema = Yup.boolean();
 
     return gestionObligation({
@@ -400,9 +457,7 @@ const SchemaValidation = {
     });
   },
 
-  listeDeroulante: (
-    schemaParams: ISchemaCommunParams & { options?: string[]; valeursPossibles?: ValeursConditionneesMetaModele[] }
-  ): Yup.StringSchema => {
+  listeDeroulante: (schemaParams = {}) => {
     let schema = Yup.string();
 
     if (schemaParams.options) {
@@ -440,7 +495,7 @@ const SchemaValidation = {
     });
   },
 
-  dateComplete: (schemaParams: ISchemaCommunParams & { bloquerDateFuture?: boolean }) => {
+  dateComplete: (schemaParams = {}) => {
     let schema = getSchemaValidationDate(schemaParams.bloquerDateFuture)
       .test("dateCompleteObligatoireJour", (date, error) =>
         !date.jour && (Boolean(date.mois) || Boolean(date.annee))
@@ -481,7 +536,7 @@ const SchemaValidation = {
     });
   },
 
-  dateIncomplete: (schemaParams: Omit<ISchemaCommunParams, "libelle"> & { bloquerDateFuture?: boolean } = {}) => {
+  dateIncomplete: (schemaParams = {}) => {
     let schema = getSchemaValidationDate(schemaParams.bloquerDateFuture)
       .test("anneeObligatoireSiDateSaisie", (date, error) =>
         (Boolean(date.jour) || Boolean(date.mois)) && !date.annee
@@ -516,7 +571,7 @@ const SchemaValidation = {
     });
   },
 
-  annee: (schemaParams: ISchemaCommunParams) =>
+  annee: (schemaParams = {}) =>
     SchemaValidation.entier({
       obligatoire: schemaParams.obligatoire,
       min: { valeur: 1000, message: "⚠ L'année doit être sur 4 chiffres" },
@@ -526,7 +581,7 @@ const SchemaValidation = {
       comparaisonValeurAutreChamp: schemaParams.comparaisonValeurAutreChamp
     }),
 
-  nomSecable: (schemaParams: ISchemaCommunParams) => {
+  nomSecable: (schemaParams = {}) => {
     let schema = SchemaValidation.objet({
       nom: Yup.string(),
       secable: Yup.boolean(),
@@ -572,13 +627,7 @@ const SchemaValidation = {
     return SchemaValidation.objet(schemaPrenoms);
   },
 
-  numeroRcRcaPacs: ({
-    obligatoire,
-    operateurConditionsOu,
-    interditSeul,
-    interditAvec,
-    comparaisonValeurAutreChamp
-  }: ISchemaCommunParams) => {
+  numeroRcRcaPacs: ({ obligatoire, operateurConditionsOu, interditSeul, interditAvec, comparaisonValeurAutreChamp } = {}) => {
     let schema = SchemaValidation.objet({
       numero: SchemaValidation.entier({ obligatoire: obligatoire }),
       anneeInscription: SchemaValidation.annee({ obligatoire: obligatoire })
@@ -613,17 +662,17 @@ const SchemaValidation = {
     });
   },
 
-  numerosRcRcaPacs: ({ prefix, tailleMax, obligatoire }: { prefix: string; tailleMax: number } & ISchemaCommunParams) => {
+  numerosRcRcaPacs: (schemaParams = { prefix: "", tailleMax: 8 }) => {
     const schemaNumeros: { [cle: string]: Yup.AnyObjectSchema } = {};
 
-    Array.from({ length: tailleMax }).forEach((_, index) => {
+    Array.from({ length: schemaParams.tailleMax }).forEach((_, index) => {
       let schemaAnnee = SchemaValidation.annee({ obligatoire: false });
-      schemaAnnee = schemaAnnee.when(`$${prefix}${index + 1}.numero`, {
+      schemaAnnee = schemaAnnee.when(`$${schemaParams.prefix}${index + 1}.numero`, {
         is: (numero: number) => Boolean(`${numero ?? ""}`.length),
         then: schemaAnnee.required(messagesErreur.CHAMP_OBLIGATOIRE)
       });
       let schemaNumero = SchemaValidation.entier({ obligatoire: false });
-      schemaNumero = schemaNumero.when(`$${prefix}${index + 1}.anneeInscription`, {
+      schemaNumero = schemaNumero.when(`$${schemaParams.prefix}${index + 1}.anneeInscription`, {
         is: (annee: number) => Boolean(`${annee ?? ""}`.length),
         then: schemaNumero.required(messagesErreur.CHAMP_OBLIGATOIRE)
       });
@@ -631,17 +680,19 @@ const SchemaValidation = {
       if (index === 0) {
         schemaAnnee = gestionObligation({
           schema: schemaAnnee,
-          obligatoire: obligatoire ?? false,
+          obligatoire: schemaParams.obligatoire ?? false,
           actionObligation: () => schemaAnnee.required(messagesErreur.CHAMP_OBLIGATOIRE)
         });
         schemaNumero = gestionObligation({
           schema: schemaNumero,
-          obligatoire: obligatoire ?? false,
+          obligatoire: schemaParams.obligatoire ?? false,
           actionObligation: () => schemaNumero.required(messagesErreur.CHAMP_OBLIGATOIRE)
         });
       }
 
-      const numerosSuivants = Array.from({ length: tailleMax - 1 - index }).map((_, idx) => `$${prefix}${idx + index + 2}`);
+      const numerosSuivants = Array.from({ length: schemaParams.tailleMax - 1 - index }).map(
+        (_, idx) => `$${schemaParams.prefix}${idx + index + 2}`
+      );
       schemaAnnee = schemaAnnee.when(numerosSuivants, {
         is: (...valeur: (INumeroRcRcaPacs | undefined)[]) => valeur.some(val => Boolean(val?.anneeInscription) && Boolean(val?.numero)),
         then: schemaAnnee.required(messagesErreur.CHAMP_OBLIGATOIRE)
