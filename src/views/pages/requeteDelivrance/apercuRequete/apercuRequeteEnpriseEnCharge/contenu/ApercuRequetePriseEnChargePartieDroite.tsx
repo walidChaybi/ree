@@ -1,7 +1,6 @@
 import { AlertesActes } from "@composant/alertesActe/AlertesActes";
 import { useGetInscriptionsRCApiHook } from "@hook/acte/InscriptionsRcHook";
-import { IGetAlertesActeApiHookParameters, useGetAlertesActeApiHook } from "@hook/alertes/GetAlertesActeApiHook";
-import { GetNbrTitulairesActeHookParameters, useGetNbrTitulairesActeApiHook } from "@hook/repertoires/NbrTitulairesActeHook";
+import { IGetAlertesActeApiHookParameters } from "@hook/alertes/GetAlertesActeApiHook";
 import { GetTitulairesActeHookParameters, useGetTitulairesActeApiHook } from "@hook/repertoires/TitulairesActeHook";
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
@@ -35,12 +34,6 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
   /* Etat paramètres d'appel de l'API de récupération des titulaires d'un acte */
   const [titulairesActeHookParameters, setTitulairesActeHookParameters] = useState<GetTitulairesActeHookParameters>();
 
-  /* Etat paramètres d'appel de l'API de récupération du nombre de titulaires d'un acte */
-  const [nbrTitulairesActeHookParameters, setNbrTitulairesActeHookParameters] = useState<GetNbrTitulairesActeHookParameters>();
-
-  /* Etat paramètres d'appel de l'API de récupération des alertes d'un acte */
-  const [alertesActeHookParameters, setAlertesActeHookParameters] = useState<IGetAlertesActeApiHookParameters>();
-
   /* Titulaires associés aux actes sélectionnés */
   const [titulairesActe, setTitulairesActe] = useState<Map<string, ITitulaireActe[]>>(new Map([]));
 
@@ -48,78 +41,62 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
   const [nbrTitulairesActe, setNbrTitulairesActe] = useState<Map<string, number>>(new Map([]));
 
   /* Gestion du clic sur une colonne de type checkbox dans le tableau des actes */
-  const onClickCheckboxActe = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>, data: ResultatRMCActe): void => {
-      let nouveauxActesSelectionnes = [...actesSelectionnes];
-      const estCoche: boolean = event?.target.checked;
-      if (estCoche) {
-        nouveauxActesSelectionnes.push(data);
-      } else {
-        nouveauxActesSelectionnes = decocheElementDuTableauActe(actesSelectionnes, data.id);
-      }
-      setAddActe({ idActe: data.id, isChecked: estCoche });
-      setActesSelectionnes(nouveauxActesSelectionnes);
-      setNbrTitulairesActeHookParameters({
-        idActe: data.id,
-        isChecked: estCoche
-      });
-      setTitulairesActeHookParameters({
-        idActe: data.id,
-        isChecked: estCoche
-      });
-      setAlertesActeHookParameters({
-        idActe: data.id,
-        isChecked: estCoche
-      });
-    },
-    [actesSelectionnes]
-  );
+  const onClickCheckboxActe = useCallback((event: React.ChangeEvent<HTMLInputElement>, acteClique: ResultatRMCActe): void => {
+    const estCoche = event.target.checked;
+
+    setActesSelectionnes(prevActesSelectionnes =>
+      estCoche
+        ? [...prevActesSelectionnes, acteClique]
+        : prevActesSelectionnes.filter(acteSelectionne => acteSelectionne.id !== acteClique.id)
+    );
+
+    setAddActe({ idActe: acteClique.id, isChecked: estCoche });
+
+    setTitulairesActeHookParameters({
+      idActe: acteClique.id,
+      isChecked: estCoche
+    });
+  }, []);
 
   /* Gestion du clic sur une colonne de type checkbox dans le tableau des inscriptions */
   const onClickCheckboxInscription = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>, inscription: TResultatRMCInscription): void => {
-      let nouvellesInscriptionsSelectionnees = [...inscriptionsSelectionnees];
-      if (event?.target.checked) {
-        nouvellesInscriptionsSelectionnees.push(inscription);
-      } else {
-        nouvellesInscriptionsSelectionnees = decocheElementDuTableauInscription(inscriptionsSelectionnees, inscription.id);
-      }
+      setInscriptionsSelectionnees(prevInscriptionsSelectionnees => {
+        const nouvellesInscriptionsSelectionnees = event?.target.checked
+          ? [...prevInscriptionsSelectionnees, inscription]
+          : prevInscriptionsSelectionnees.filter(inscriptionSelectionnee => inscriptionSelectionnee.id !== inscription.id);
 
-      setInscriptionsSelectionnees(nouvellesInscriptionsSelectionnees);
-      if (nouvellesInscriptionsSelectionnees.length && inscription.type === "MODIFICATION") {
-        setIdPersonne(nouvellesInscriptionsSelectionnees[0].personne.id);
-      }
+        if (nouvellesInscriptionsSelectionnees.length && inscription.type === "MODIFICATION") {
+          setIdPersonne(nouvellesInscriptionsSelectionnees[0].personne.id);
+        }
+
+        return nouvellesInscriptionsSelectionnees;
+      });
     },
-    [inscriptionsSelectionnees]
+    []
   );
 
   /* Hook d'appel de l'API de récupération des titulaires associés à un acte */
   const resultatGetTitulairesActe = useGetTitulairesActeApiHook(titulairesActeHookParameters);
 
-  /* Hook d'appel de l'API de récupération du nombre de titulaires associés à un acte */
-  const resultatGetNbrTitulairesActe = useGetNbrTitulairesActeApiHook(nbrTitulairesActeHookParameters);
-
-  /* Hook d'appel de l'API de récupération des alertes associées à un acte */
-  const resultatGetAlertesActe = useGetAlertesActeApiHook(alertesActeHookParameters);
   const resultatGetInscriptionsRC = useGetInscriptionsRCApiHook(idPersonne);
 
   /* Actualisation de la liste des nombres de titulaires et des titulaires des actes sélectionnés */
   useEffect(() => {
-    if (nbrTitulairesActeHookParameters && titulairesActeHookParameters) {
+    if (titulairesActeHookParameters) {
       const newNbrTitulairesActe = new Map(nbrTitulairesActe);
       const newTitulairesActe = new Map(titulairesActe);
-      if (nbrTitulairesActeHookParameters.isChecked && resultatGetNbrTitulairesActe && resultatGetTitulairesActe) {
-        newNbrTitulairesActe.set(nbrTitulairesActeHookParameters.idActe, resultatGetNbrTitulairesActe);
+      if (titulairesActeHookParameters.isChecked && resultatGetTitulairesActe) {
+        newNbrTitulairesActe.set(titulairesActeHookParameters.idActe, resultatGetTitulairesActe.length);
         newTitulairesActe.set(titulairesActeHookParameters.idActe, resultatGetTitulairesActe);
       } else {
-        newNbrTitulairesActe.delete(nbrTitulairesActeHookParameters.idActe);
+        newNbrTitulairesActe.delete(titulairesActeHookParameters.idActe);
         newTitulairesActe.delete(titulairesActeHookParameters.idActe);
       }
       setNbrTitulairesActe(newNbrTitulairesActe);
       setTitulairesActe(newTitulairesActe);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nbrTitulairesActeHookParameters, resultatGetNbrTitulairesActe, titulairesActeHookParameters, resultatGetTitulairesActe]);
+  }, [titulairesActeHookParameters, resultatGetTitulairesActe]);
 
   /* Remise à zéro des résultats de la RMC */
   const resetActeInscription = useCallback(() => {
@@ -137,7 +114,6 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
         reset={resetActeInscription}
       />
       <AlertesActes
-        detailRequete={detailRequete}
         addActe={addActe}
         ajoutAlerte={setAlertes}
       />
@@ -148,17 +124,9 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
         inscriptionsRC={resultatGetInscriptionsRC}
         titulairesActe={titulairesActe}
         nbrTitulairesActe={nbrTitulairesActe}
-        alertesActe={resultatGetAlertesActe?.alertes}
+        alertesActe={Array.from(alertes.values()).flatMap(alerte => alerte)}
       />
       <BoutonRetour />
     </>
   );
 };
-
-function decocheElementDuTableauInscription(inscriptions: TResultatRMCInscription[], id: string): TResultatRMCInscription[] {
-  return inscriptions.filter(inscription => inscription.id !== id);
-}
-
-function decocheElementDuTableauActe(actes: ResultatRMCActe[], id: string): ResultatRMCActe[] {
-  return actes.filter(inscription => inscription.id !== id);
-}

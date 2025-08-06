@@ -7,7 +7,6 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { act } from "react";
 import { describe, expect, test, vi } from "vitest";
 import { TYPE_ALERTE } from "../../../../mock/data/NomenclatureTypeAlerte";
-import requeteDelivrance from "../../../../mock/data/requeteDelivrance";
 
 describe("Test de AlertesActes", () => {
   TypeAlerte.init(TYPE_ALERTE);
@@ -18,7 +17,6 @@ describe("Test de AlertesActes", () => {
         utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER_COMEDEC).generer()}
       >
         <AlertesActes
-          detailRequete={requeteDelivrance}
           ajoutAlerte={vi.fn()}
           addActe={{
             isChecked: true,

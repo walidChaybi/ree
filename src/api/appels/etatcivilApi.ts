@@ -20,7 +20,6 @@ async function getApiManager() {
 const URL_ACTE = "/acte";
 const URL_TITULAIRE = "/titulaire";
 const URL_RESUME = "/resume";
-const URL_COUNT_TITULAIRE = "/count/titulaire";
 const URL_ETAT_CIVIL = "/repertoirecivil";
 // Utilisé pour visualiser les images de l'acte dans la fiche Acte (renvoie un "InputStreamResource")
 const URL_CORPS_IMAGE = "/corps-image";
@@ -203,18 +202,6 @@ export function getTitulairesActe(identifiant: string): Promise<any> {
     api.fetch({
       method: HttpMethod.GET,
       uri: `${URL_ACTE}/${identifiant}${URL_TITULAIRE}`
-    })
-  );
-}
-
-/**
- * Récupération du nombre de titulaire d'un ACTE
- */
-export function getNbrTitulairesActe(identifiant: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.GET,
-      uri: `${URL_ACTE}/${identifiant}${URL_COUNT_TITULAIRE}`
     })
   );
 }

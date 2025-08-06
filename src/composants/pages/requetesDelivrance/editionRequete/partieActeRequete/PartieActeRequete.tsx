@@ -83,10 +83,7 @@ const PartieActeRequete: React.FC<IPartieActeRequeteProps> = React.memo(({ ongle
       {acte && (
         <ConteneurVoletEdition estActif={ongletActif === ECleOngletRequete.ACTE}>
           <div className="flex flex-col gap-2">
-            <AlertesActes
-              idActeInit={acte?.id}
-              detailRequete={requete}
-            />
+            <AlertesActes idActeInit={acte?.id} />
             <AffichagePDF
               contenuBase64={contenuActe}
               typeZoom={90}

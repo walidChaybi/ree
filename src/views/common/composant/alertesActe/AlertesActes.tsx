@@ -2,7 +2,6 @@ import { AddAlerteActeApiHookParameters, useAddAlerteActeApiHook } from "@hook/a
 import { DeleteAlerteActeApiHookParameters, useDeleteAlerteActeApiHook } from "@hook/alertes/DeleteAlerteActeHookApi";
 import { IGetAlertesActeApiHookParameters, useGetAlertesActeApiHook } from "@hook/alertes/GetAlertesActeApiHook";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
@@ -14,7 +13,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import "./scss/AlertesActes.scss";
 
 interface AlertesActesProps {
-  detailRequete?: IRequeteDelivrance;
   idActeInit?: string;
   addActe?: IGetAlertesActeApiHookParameters;
   ajoutAlerte?: (alerte: Map<string, IAlerte[]>) => void;
@@ -59,7 +57,6 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({ idActeInit, addActe,
       }
       majAlertes(newAlertes);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alertesActeApiHookParameters, resultatGetAlertesActe]);
 
   /* Ajout d'une alerte */
@@ -72,7 +69,7 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({ idActeInit, addActe,
   }, []);
 
   const majAlertes = useCallback(
-    (newAlertes: any) => {
+    (newAlertes: Map<string, IAlerte[]>) => {
       setAlertes(newAlertes);
       if (ajoutAlerte) {
         ajoutAlerte(newAlertes);
@@ -86,11 +83,10 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({ idActeInit, addActe,
     if (resultatAjoutAlerte) {
       /* màj des alertes*/
       const newAlertes = new Map(alertes);
-      const idActe = resultatAjoutAlerte.idActe || "";
+      const idActe = resultatAjoutAlerte.idActe ?? "";
       newAlertes?.get(idActe)?.unshift(resultatAjoutAlerte);
       majAlertes(newAlertes);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatAjoutAlerte]);
 
   /* Suppression d'une alerte */
@@ -107,8 +103,8 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({ idActeInit, addActe,
       /* màj des alertes*/
       const newAlertes = new Map(alertes);
 
-      const idAlerteActe = deleteAlerteActeApiHookParameters?.idAlerteActe || "";
-      const idActe = deleteAlerteActeApiHookParameters?.idActe || "";
+      const idAlerteActe = deleteAlerteActeApiHookParameters?.idAlerteActe ?? "";
+      const idActe = deleteAlerteActeApiHookParameters?.idActe ?? "";
 
       const nouvellesAlertesDeLActe = newAlertes?.get(idActe)?.filter(a => a.id !== idAlerteActe) || [];
 
