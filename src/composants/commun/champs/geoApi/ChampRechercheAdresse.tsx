@@ -1,7 +1,6 @@
 import { CONFIG_GET_ADRESSES, IAdresseDto } from "@api/configurations/adresse/GetAdressesConfigApi";
 import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import Autocomplete from "@mui/material/Autocomplete";
-import classNames from "classnames";
 import { useField, useFormikContext } from "formik";
 import { useEffect, useMemo, useState } from "react";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
@@ -68,12 +67,9 @@ const ChampRechercheAdresse: React.FC<TChampRechercheAdresse> = ({
   }, [adresseRecherchee]);
 
   return (
-    <div className={classNames("relative flex w-full flex-col text-start", className, { "text-rouge": enErreur })}>
+    <div className={`relative flex w-full flex-col text-start ${className} ${enErreur ? "text-rouge" : ""}`}>
       <label
-        className={classNames("m-0 mb-1 ml-1 block w-fit text-start transition-colors", {
-          "text-rouge": enErreur,
-          "text-bleu-sombre": !enErreur
-        })}
+        className={`m-0 mb-1 ml-1 block w-fit text-start transition-colors ${enErreur ? "text-rouge" : "text-bleu-sombre"}`}
         htmlFor={name}
         aria-label={`aria-label-${name}`}
       >

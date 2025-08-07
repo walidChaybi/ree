@@ -4,7 +4,6 @@ import { Utilisateur } from "@model/agent/Utilisateur";
 import { TRequete } from "@model/requete/IRequete";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import DateUtils from "@util/DateUtils";
-import classNames from "classnames";
 import React, { useContext } from "react";
 import "./scss/BandeauApercuRequete.scss";
 
@@ -14,10 +13,9 @@ interface BandeauRequeteProps {
 export const BandeauRequete: React.FC<BandeauRequeteProps> = ({ requete }) => {
   const { utilisateurs, services } = useContext(RECEContextData);
   const statut = requete.statutCourant.statut;
-  const styles = classNames(getClassName(statut));
   return (
     <div className="BandeauRequete">
-      <h2 className={styles}>{getStatutLibellePourRequete(requete, utilisateurs, services)}</h2>
+      <h2 className={getClassNames(statut)}>{getStatutLibellePourRequete(requete, utilisateurs, services)}</h2>
     </div>
   );
 };
@@ -168,19 +166,29 @@ function getStatutLibelleSuite(requete: TRequete, responsable: string) {
   return libelle;
 }
 
-const getClassName = (statut: StatutRequete) => ({
-  bleu: [StatutRequete.A_TRAITER, StatutRequete.A_VALIDER, StatutRequete.PRISE_EN_CHARGE, StatutRequete.TRANSFEREE].includes(statut),
-  gris: [
-    StatutRequete.BROUILLON,
-    StatutRequete.REJET,
-    StatutRequete.IGNOREE,
-    StatutRequete.DOUBLON,
-    StatutRequete.TRAITE_REPONDU,
-    StatutRequete.TRAITE_A_DELIVRER_DEMAT,
-    StatutRequete.TRAITE_A_IMPRIMER,
-    StatutRequete.TRAITE_DELIVRE_DEMAT,
-    StatutRequete.TRAITE_IMPRIME,
-    StatutRequete.REJET_IMPRESSION
-  ].includes(statut),
-  Entete: true
-});
+const getClassNames = (statut: StatutRequete): string => {
+  const result = ["Entete"];
+
+  if ([StatutRequete.A_TRAITER, StatutRequete.A_VALIDER, StatutRequete.PRISE_EN_CHARGE, StatutRequete.TRANSFEREE].includes(statut)) {
+    result.push("bleu");
+  }
+
+  if (
+    [
+      StatutRequete.BROUILLON,
+      StatutRequete.REJET,
+      StatutRequete.IGNOREE,
+      StatutRequete.DOUBLON,
+      StatutRequete.TRAITE_REPONDU,
+      StatutRequete.TRAITE_A_DELIVRER_DEMAT,
+      StatutRequete.TRAITE_A_IMPRIMER,
+      StatutRequete.TRAITE_DELIVRE_DEMAT,
+      StatutRequete.TRAITE_IMPRIME,
+      StatutRequete.REJET_IMPRESSION
+    ].includes(statut)
+  ) {
+    result.push("gris");
+  }
+
+  return result.join(" ");
+};

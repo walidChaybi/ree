@@ -1,7 +1,6 @@
 import TableCell, { SortDirection } from "@mui/material/TableCell";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import { getLibelle } from "@util/Utils";
-import classNames from "classnames";
 import React from "react";
 import "../../../../../scss/_library.scss";
 import { SortOrder } from "../TableUtils";
@@ -16,14 +15,6 @@ interface TableauHeaderCellProps {
 }
 
 export const TableauHeaderCell: React.FC<TableauHeaderCellProps> = props => {
-  const styles = classNames({
-    OrderedHeaderCell: props.orderBy === props.column.keys[0],
-    TableauFontHeader: true,
-    CursorHeader:
-      !(props.orderBy && props.sortHandler) || !props.column.sortable,
-    ColonneTriable: props.column.sortable
-  });
-
   let orderTableCell: SortDirection = false;
   let orderTableLabel: "asc" | "desc" = "asc";
 
@@ -41,12 +32,28 @@ export const TableauHeaderCell: React.FC<TableauHeaderCellProps> = props => {
     }
   };
 
+  const getClassNames = (): string => {
+    const result: string[] = ["TableauFontHeader"];
+
+    if (props.orderBy === props.column.keys[0]) {
+      result.push("OrderedHeaderCell");
+    }
+
+    if (!(props.orderBy && props.sortHandler) || !props.column.sortable) {
+      result.push("CursorHeader");
+    }
+
+    if (props.column.sortable) {
+      result.push("ColonneTriable");
+    }
+
+    return result.join(" ");
+  };
+
   return (
     <TableCell
       align={props.column?.align ? props.column?.align : "left"}
-      sortDirection={
-        props.orderBy === props.column.keys[0] ? orderTableCell : false
-      }
+      sortDirection={props.orderBy === props.column.keys[0] ? orderTableCell : false}
       // A ajouter dans TableauHeader cell si besoin d'une classe générique:
       // className="HeaderColonneTableau"
       style={props.column?.style}
@@ -55,17 +62,11 @@ export const TableauHeaderCell: React.FC<TableauHeaderCellProps> = props => {
         props.column.getTitle(props.dataBody)
       ) : (
         <TableSortLabel
-          className={styles}
-          active={
-            props.column.sortable && props.orderBy === props.column.keys[0]
-          }
-          direction={
-            props.orderBy === props.column.keys[0] ? orderTableLabel : "asc"
-          }
+          className={getClassNames()}
+          active={props.column.sortable && props.orderBy === props.column.keys[0]}
+          direction={props.orderBy === props.column.keys[0] ? orderTableLabel : "asc"}
           onClick={e => onClickCell(e, props.column.keys[0])}
-          hideSortIcon={
-            !props.column.sortable || props.orderBy !== props.column.keys[0]
-          }
+          hideSortIcon={!props.column.sortable || props.orderBy !== props.column.keys[0]}
         >
           {getLibelle(props.column.title)}
         </TableSortLabel>

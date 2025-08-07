@@ -71,5 +71,3 @@ declare module "*.module.sass" {
 declare module "Yup" {
   export * as Yup from "yup";
 }
-
-declare module "classnames";
