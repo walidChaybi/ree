@@ -1,14 +1,14 @@
 import { render, screen } from "@testing-library/react";
-import { base64toBlobUrl } from "@util/FileUtils";
 import { expect, it as test, vi } from "vitest";
 import AffichagePDF from "../../../../composants/commun/affichageDocument/AffichagePDF";
+import { base64EnBlobUrl } from "../../../../utils/FileUtils";
 
-vi.mock("@util/FileUtils", () => {
-  const module = vi.importActual("@util/FileUtils");
+vi.mock("../../../../utils/FileUtils", () => {
+  const module = vi.importActual("../../../../utils/FileUtils");
 
   return {
     ...module,
-    base64toBlobUrl: vi.fn((base64, type) => `blobUrl://${base64}`)
+    base64EnBlobUrl: vi.fn((base64, type) => `blobUrl://${base64}`)
   };
 });
 
@@ -42,7 +42,7 @@ test("doit mémoriser le blob pour ne pas re-calculer lorsque le contenuBase64 r
   let iframe = screen.getByTitle("Document PDF");
   expect(iframe).toBeDefined();
   expect(iframe.getAttribute("src")).toBe("blobUrl://mockDocBase64#zoom=page-fit");
-  expect(base64toBlobUrl).toHaveBeenCalledTimes(2);
+  expect(base64EnBlobUrl).toHaveBeenCalledTimes(2);
 
   rerender(<AffichagePDF contenuBase64={contenuBase64} />);
 
@@ -51,7 +51,7 @@ test("doit mémoriser le blob pour ne pas re-calculer lorsque le contenuBase64 r
   expect(iframe).toBeDefined();
   expect(iframe.getAttribute("src")).toBe("blobUrl://mockDocBase64#zoom=page-fit");
 
-  expect(base64toBlobUrl).toHaveBeenCalledTimes(2);
+  expect(base64EnBlobUrl).toHaveBeenCalledTimes(2);
 
   contenuBase64 = "nouveauMockDocBase64";
 
@@ -62,5 +62,5 @@ test("doit mémoriser le blob pour ne pas re-calculer lorsque le contenuBase64 r
   expect(iframe).toBeDefined();
   expect(iframe.getAttribute("src")).toBe("blobUrl://nouveauMockDocBase64#zoom=page-fit");
 
-  expect(base64toBlobUrl).toHaveBeenCalledTimes(3);
+  expect(base64EnBlobUrl).toHaveBeenCalledTimes(3);
 });

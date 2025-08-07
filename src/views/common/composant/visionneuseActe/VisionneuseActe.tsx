@@ -8,10 +8,10 @@ import useGetDonneesPourCompositionActeTexteApiHook, {
 import { ICompositionActeTexteParams, useCompositionActeTexteApiHook } from "@hook/composition/CompositionActeTexte";
 import { TypeActe } from "@model/etatcivil/enum/TypeActe";
 import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
-import { base64ToBlob } from "@util/FileUtils";
 import { VisionneuseDocument } from "@widget/visionneuseDocument/VisionneuseDocument";
 import React, { useEffect, useState } from "react";
 import { MimeType } from "../../../../ressources/MimeType";
+import { base64EnBlob } from "../../../../utils/FileUtils";
 import "./scss/VisionneuseActe.scss";
 
 interface IVisionneuseActeProps {
@@ -74,13 +74,13 @@ export const VisionneuseActe: React.FC<IVisionneuseActeProps> = ({ idActe, typeA
   useEffect(() => {
     if (estImage) {
       if (recupererActeImageResultat?.imageActe) {
-        setContenuBlob(base64ToBlob(recupererActeImageResultat.imageActe.contenu));
+        setContenuBlob(base64EnBlob(recupererActeImageResultat.imageActe.contenu));
       } else if (recupererActeImageResultat?.erreur) {
         setErreur(`[${CodeErreurFonctionnelle.FCT_AUCUN_ACTE_IMAGE}] ${MESSAGE_VISUALISATION_INDISPONIBLE}`);
       }
     } else {
       if (compositionActeTexteResultat?.donneesComposition) {
-        setContenuBlob(base64ToBlob(compositionActeTexteResultat.donneesComposition.contenu));
+        setContenuBlob(base64EnBlob(compositionActeTexteResultat.donneesComposition.contenu));
       } else if (compositionActeTexteResultat?.erreur) {
         setErreur(compositionActeTexteResultat?.erreur);
       }

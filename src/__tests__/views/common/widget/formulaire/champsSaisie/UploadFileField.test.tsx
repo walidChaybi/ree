@@ -1,25 +1,15 @@
-import {
-  cleanup,
-  fireEvent,
-  render,
-  screen,
-  waitFor
-} from "@testing-library/react";
-import { ExtensionDocumentTypeMime } from "@util/FileUtils";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Options } from "@util/Type";
 import UploadFileField from "@widget/formulaire/champsSaisie/UploadFileField";
 import { afterEach, expect, test, vi } from "vitest";
+import { ExtensionDocumentTypeMime } from "../../../../../../utils/FileUtils";
 import { inputPngFiles } from "../../../../../__tests__utils__/testsUtil";
 
 const AJOUT_PIECE_JOINTE = "Ajout d'une pièce jointe";
 
-const PNG_FILE_TYPES: ExtensionDocumentTypeMime[] = [
-  { extension: "png", mimeType: "image/png" }
-];
+const PNG_FILE_TYPES: ExtensionDocumentTypeMime[] = [{ extension: "png", mimeType: "image/png" }];
 
-const PDF_FILE_TYPES: ExtensionDocumentTypeMime[] = [
-  { extension: "pdf", mimeType: "application/pdf" }
-];
+const PDF_FILE_TYPES: ExtensionDocumentTypeMime[] = [{ extension: "pdf", mimeType: "application/pdf" }];
 
 const FILE_MAX_SIZE_KB = 20;
 
@@ -45,9 +35,7 @@ test("Attendu: le composant UploadFileField déclanche la fonction onFileChange 
     />
   );
 
-  const inputUploadFieldWrapper = screen.getByTestId(
-    "piecesJointes"
-  ) as HTMLInputElement;
+  const inputUploadFieldWrapper = screen.getByTestId("piecesJointes") as HTMLInputElement;
   fireEvent.change(inputUploadFieldWrapper, {
     target: {
       files: inputPngFiles
@@ -79,9 +67,7 @@ test("Attendu: le composant UploadFileField ne déclanche pas la fonction onFile
     />
   );
 
-  const inputUploadFieldWrapper = screen.getByTestId(
-    "piecesJointes"
-  ) as HTMLInputElement;
+  const inputUploadFieldWrapper = screen.getByTestId("piecesJointes") as HTMLInputElement;
   fireEvent.change(inputUploadFieldWrapper, {
     target: {
       files: inputPngFiles

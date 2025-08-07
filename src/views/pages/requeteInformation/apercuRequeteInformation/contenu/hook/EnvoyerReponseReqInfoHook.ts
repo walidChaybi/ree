@@ -6,9 +6,9 @@ import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
 import { getObjetRequeteInfoLibelle } from "@model/requete/enum/ObjetRequeteInfo";
 import DateUtils from "@util/DateUtils";
-import { PieceJointe } from "@util/FileUtils";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import { PieceJointe } from "../../../../../../utils/FileUtils";
 import { ISauvegarderReponseReqInfoParams } from "./SauvegarderReponseReqInfoHook";
 
 export interface IEnvoyerReponseReqInfoParams {
@@ -17,26 +17,19 @@ export interface IEnvoyerReponseReqInfoParams {
   piecesJointes?: PieceJointe[];
 }
 
-export function useEnvoyerReponsesReqInfoHook(
-  params: IEnvoyerReponseReqInfoParams | undefined
-) {
+export function useEnvoyerReponsesReqInfoHook(params: IEnvoyerReponseReqInfoParams | undefined) {
   const [mailEnvoyer, setMailEnvoyer] = useState<boolean | undefined>();
 
   useEffect(() => {
     if (params?.reponseSaisie) {
-      const mail = getReponseAEnvoyer(
-        params.reponseSaisie,
-        params.requete,
-        params.piecesJointes
-      );
+      const mail = getReponseAEnvoyer(params.reponseSaisie, params.requete, params.piecesJointes);
       getEnvoyerMail(mail)
         .then(result => {
           setMailEnvoyer(result.status === HTTP_STATUS_OK);
         })
         .catch(error => {
           logError({
-            messageUtilisateur:
-              "Impossible d'envoyer le mail avec votre réponse",
+            messageUtilisateur: "Impossible d'envoyer le mail avec votre réponse",
             error
           });
         });

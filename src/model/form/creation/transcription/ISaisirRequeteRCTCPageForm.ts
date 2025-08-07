@@ -15,7 +15,7 @@ import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { PieceJointe } from "@util/FileUtils";
+import { PieceJointe } from "../../../../utils/FileUtils";
 import SchemaValidation from "../../../../utils/SchemaValidation";
 
 export interface IParentFormRCTC {

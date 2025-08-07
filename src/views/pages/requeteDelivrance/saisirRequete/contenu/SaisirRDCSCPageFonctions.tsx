@@ -5,9 +5,9 @@ import {
 } from "@model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ECodeDocumentDelivrance, IDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { PieceJointe } from "@util/FileUtils";
 import messageManager from "@util/messageManager";
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
+import { PieceJointe } from "../../../../../utils/FileUtils";
 import { limitesTitulaires } from "../SaisirRDCSCPage";
 import { IdentiteSubFormProps } from "../sousFormulaires/identite/IdentiteForm";
 

@@ -1,6 +1,6 @@
-import { PieceJointe } from "@util/FileUtils";
 import { verificationAvantDOuvriLeMenu } from "@widget/formulaire/piecesJointes/PiecesJointes";
 import { expect, test } from "vitest";
+import { PieceJointe } from "../../../../../../utils/FileUtils";
 
 test("Attendu La vérification du nombre maximal de pièces jointes fonctionne correctement", () => {
   let pjs = [] as PieceJointe[];

@@ -5,9 +5,9 @@ import { CONFIG_POST_REQUETE_TRANSCRIPTION_TRANSMISE } from "@api/configurations
 import { CONFIG_POST_PIECE_JUSTIFICATIVE } from "@api/configurations/requete/pieceJustificative/PostPieceJustificativeConfigApi";
 import { ISaisieRequeteRCTCForm, SaisieRequeteRCTCForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
 import { IRequeteConsulaire } from "@model/requete/IRequeteConsulaire";
-import { PieceJointe } from "@util/FileUtils";
 import { useEffect, useState } from "react";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
+import { PieceJointe } from "../../../utils/FileUtils";
 import { TTraitementApi } from "../TTraitementApi";
 
 interface IParametresTraitement {

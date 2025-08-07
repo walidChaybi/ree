@@ -1,10 +1,10 @@
 import { postAjoutPieceJustificativeAUneRequeteCreation } from "@api/appels/requeteApi";
 import { TUuidSuiviDossierParams } from "@model/params/TUuidSuiviDossierParams";
-import { PieceJointe } from "@util/FileUtils";
 import { logError } from "@util/LogManager";
 import messageManager from "@util/messageManager";
 import { useEffect } from "react";
 import { useParams } from "react-router";
+import { PieceJointe } from "../../../../../utils/FileUtils";
 
 interface IAjoutPieceJustificativeDto {
   nom: string;

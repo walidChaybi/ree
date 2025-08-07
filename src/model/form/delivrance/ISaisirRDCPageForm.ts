@@ -10,16 +10,8 @@ import {
   TITULAIRE2
 } from "@composant/formulaire/ConstantesNomsForm";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { PieceJointe } from "@util/FileUtils";
-import {
-  Evenement,
-  ISaisieAdresse,
-  ISaisieIdentite,
-  ISaisieRequerant,
-  LienTitulaire,
-  Mandant,
-  Requete
-} from "./ISaisirRequetePageForm";
+import { PieceJointe } from "../../../utils/FileUtils";
+import { Evenement, ISaisieAdresse, ISaisieIdentite, ISaisieRequerant, LienTitulaire, Mandant, Requete } from "./ISaisirRequetePageForm";
 
 export interface IComplementCreationUpdateRequete {
   statutFinal?: StatutRequete;

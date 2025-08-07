@@ -91,21 +91,21 @@ type TNomSecableChamp = {
   nomPartie2: Yup.StringSchema<string | undefined>;
 };
 
-type ISchemaValidationType = {
+interface ISchemaValidation {
   objet: TSchemaValidationFonction<{ [cle: string]: Yup.AnySchema }, Yup.AnyObjectSchema>;
   texte: TSchemaValidationFonction<{ listeRegexp?: TValidationText[] }, Yup.StringSchema>;
   entier: TSchemaValidationFonction<{ min?: TValidationEntier; max?: TValidationEntier }, Yup.NumberSchema>;
   booleen: TSchemaValidationFonction<{}, Yup.BooleanSchema>;
   listeDeroulante: TSchemaValidationFonction<{ options?: string[]; valeursPossibles?: ValeursConditionneesMetaModele[] }, Yup.StringSchema>;
   dateComplete: TSchemaValidationFonction<{ bloquerDateFuture?: boolean }>;
-  dateIncomplete: TSchemaValidationFonction<Omit<ISchemaCommunParams, "libelle"> & { bloquerDateFuture?: boolean }>;
+  dateIncomplete: TSchemaValidationFonction<{ bloquerDateFuture?: boolean }>;
   annee: TSchemaValidationFonction;
   nomSecable: TSchemaValidationFonction;
   prenoms: (prefix: string) => Yup.AnySchema;
   numeroRcRcaPacs: TSchemaValidationFonction;
   numerosRcRcaPacs: TSchemaValidationFonction<{ prefix: string; tailleMax: number }>;
   inconnu: () => Yup.AnySchema;
-} & { [cle in string]: unknown };
+}
 
 export const messagesErreur = {
   ANNEE_INVALIDE: "⚠ L'année est invalide",
@@ -364,39 +364,40 @@ const gestionObligation = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>({
     case typeof obligatoire[0] === "object" && (obligatoire[0] as ConditionChamp).operateur === "AlwaysTrue":
       return actionObligation();
     default:
-      const clesChampsReference = obligatoire.reduce((cles: string[], condition) => {
-        if (Array.isArray(condition)) {
-          return cles.concat(...condition.map(sousCondition => `$${sousCondition.idChampReference}`));
-        }
+      return (() => {
+        const clesChampsReference = obligatoire.reduce((cles: string[], condition) => {
+          if (Array.isArray(condition)) {
+            return cles.concat(...condition.map(sousCondition => `$${sousCondition.idChampReference}`));
+          }
 
-        return cles.concat(`$${condition.idChampReference}`);
-      }, []);
+          return cles.concat(`$${condition.idChampReference}`);
+        }, []);
 
-      return schema.when(clesChampsReference, {
-        is: (...valeurChamp: TValeurChamp[]) => {
-          let indexValeur = 0;
-          const verificationCondition = (condition: ConditionChamp, index: number) => condition.estRespecteePourValeur(valeurChamp[index]);
+        const dansTableauConditionsOperateur = dansTableauConditionsOu ? "some" : "every";
 
-          return obligatoire
-            .map(condition => {
-              if (Array.isArray(condition)) {
-                return condition.length
-                  ? condition
-                      .map(sousCondition => verificationCondition(sousCondition, indexValeur++))
-                      [dansTableauConditionsOu ? "some" : "every"](Boolean)
-                  : true;
-              }
+        return schema.when(clesChampsReference, {
+          is: (...valeurChamp: TValeurChamp[]) => {
+            let indexValeur = 0;
 
-              return verificationCondition(condition, indexValeur++);
-            })
-            [conditionOu ? "some" : "every"](Boolean);
-        },
-        then: actionObligation()
-      });
+            const verificationCondition = (condition: ConditionChamp) => condition.estRespecteePourValeur(valeurChamp[indexValeur++]);
+
+            return obligatoire
+              .map(condition => {
+                if (Array.isArray(condition)) {
+                  return condition.length ? condition.map(verificationCondition)[dansTableauConditionsOperateur](Boolean) : true;
+                }
+
+                return verificationCondition(condition);
+              })
+              [conditionOu ? "some" : "every"](Boolean);
+          },
+          then: actionObligation()
+        });
+      })();
   }
 };
 
-const SchemaValidation: ISchemaValidationType = {
+const SchemaValidation: ISchemaValidation = {
   objet: (objet = {}) => Yup.object().shape(objet),
 
   texte: (schemaParams = {}) => {
@@ -633,7 +634,7 @@ const SchemaValidation: ISchemaValidationType = {
       anneeInscription: SchemaValidation.annee({ obligatoire: obligatoire })
     })
       .test("numeroIncompletInterditAnnee", (numeroRcRcaPacs, error) => {
-        return Boolean(numeroRcRcaPacs.numero) && !Boolean(numeroRcRcaPacs.anneeInscription)
+        return Boolean(numeroRcRcaPacs.numero) && !numeroRcRcaPacs.anneeInscription
           ? error.createError({
               path: `${error.path}.anneeInscription`,
               message: messagesErreur.CHAMP_INCOMPLET
@@ -641,7 +642,7 @@ const SchemaValidation: ISchemaValidationType = {
           : true;
       })
       .test("numeroIncompletInterditNumero", (numeroRcRcaPacs, error) => {
-        return !Boolean(numeroRcRcaPacs.numero) && Boolean(numeroRcRcaPacs.anneeInscription)
+        return !numeroRcRcaPacs.numero && Boolean(numeroRcRcaPacs.anneeInscription)
           ? error.createError({
               path: `${error.path}.numero`,
               message: messagesErreur.CHAMP_INCOMPLET

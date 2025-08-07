@@ -1,17 +1,7 @@
-import {
-  ADRESSE,
-  DOCUMENT,
-  PIECES_JOINTES,
-  REQUERANT,
-  TITULAIRES
-} from "@composant/formulaire/ConstantesNomsForm";
+import { ADRESSE, DOCUMENT, PIECES_JOINTES, REQUERANT, TITULAIRES } from "@composant/formulaire/ConstantesNomsForm";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { PieceJointe } from "@util/FileUtils";
-import {
-  ISaisieAdresse,
-  ISaisieIdentite,
-  ISaisieRequerant
-} from "./ISaisirRequetePageForm";
+import { PieceJointe } from "../../../utils/FileUtils";
+import { ISaisieAdresse, ISaisieIdentite, ISaisieRequerant } from "./ISaisirRequetePageForm";
 
 export interface IComplementCreationUpdateRequete {
   statutFinal?: StatutRequete;

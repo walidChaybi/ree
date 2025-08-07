@@ -1,15 +1,12 @@
 import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
-import { Base64File, FILE_TYPES, PieceJointe } from "@util/FileUtils";
 import messageManager from "@util/messageManager";
 import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import React from "react";
+import { Base64File, FILE_TYPES, PieceJointe } from "../../../../../utils/FileUtils";
 import { IconePoubelle } from "../../icones/IconePoubelle";
-import {
-  TableauSimple,
-  TableauSimpleProps
-} from "../../tableau/TableauSimple/TableauSimple";
+import { TableauSimple, TableauSimpleProps } from "../../tableau/TableauSimple/TableauSimple";
 import UploadFileField from "../champsSaisie/UploadFileField";
 import "../scss/PiecesJointesForm.scss";
 
@@ -27,23 +24,16 @@ interface PiecesJointesProps {
 const MAX_PIECES_JOINTES = 3;
 export const PiecesJointes: React.FC<PiecesJointesProps> = props => {
   function onFileChange(base64File: Base64File, type?: Option) {
-    const pjTrouvee = props.piecesJointes.find(
-      pj => pj.base64File.fileName === base64File.fileName
-    );
+    const pjTrouvee = props.piecesJointes.find(pj => pj.base64File.fileName === base64File.fileName);
     if (!pjTrouvee) {
       const nouvellePiecejointe: PieceJointe = { base64File, type };
-      const nouvellesPiecesJointes = [
-        ...props.piecesJointes,
-        nouvellePiecejointe
-      ];
+      const nouvellesPiecesJointes = [...props.piecesJointes, nouvellePiecejointe];
       props.setPiecesJointes(nouvellesPiecesJointes);
     }
   }
 
   function supprimePieceJointe(libelle: string) {
-    const nouvellesPiecesJointes = props.piecesJointes.filter(
-      pj => pj.base64File.fileName !== libelle
-    );
+    const nouvellesPiecesJointes = props.piecesJointes.filter(pj => pj.base64File.fileName !== libelle);
     props.setPiecesJointes(nouvellesPiecesJointes);
   }
 
@@ -53,9 +43,7 @@ export const PiecesJointes: React.FC<PiecesJointesProps> = props => {
       <div className="BoutonPiecesJointes">
         <UploadFileField
           name="piecesJointes"
-          libelleBouton={getLibelle(
-            props.libelleBouton ? ` ${props.libelleBouton}` : " Ajouter"
-          )}
+          libelleBouton={getLibelle(props.libelleBouton ? ` ${props.libelleBouton}` : " Ajouter")}
           menuItems={props.menuItem}
           iconBouton={
             <AttachFileOutlinedIcon
@@ -71,38 +59,24 @@ export const PiecesJointes: React.FC<PiecesJointesProps> = props => {
           maxSizeKB={FILE_MAX_SIZE_KB}
           onFileChange={onFileChange}
           verificationAvantDOuvriLeMenu={() => {
-            return verificationAvantDOuvriLeMenu(
-              props.piecesJointes,
-              props.maxPiecesJointes
-            );
+            return verificationAvantDOuvriLeMenu(props.piecesJointes, props.maxPiecesJointes);
           }}
         />
       </div>
       {/* Bloc Tableau Pieces Jointes */}
       <div className="BlocPiecesJointes">
-        {props.piecesJointes.length > 0 &&
-          getTableauPiecesJointes(props.piecesJointes, supprimePieceJointe)}
+        {props.piecesJointes.length > 0 && getTableauPiecesJointes(props.piecesJointes, supprimePieceJointe)}
       </div>
     </div>
   );
 };
 
 /** Construction du tableau des pièces jointes */
-export function getTableauPiecesJointes(
-  piecesJointes: PieceJointe[],
-  supprimePieceJointe: (libelle: string) => void
-): JSX.Element {
+export function getTableauPiecesJointes(piecesJointes: PieceJointe[], supprimePieceJointe: (libelle: string) => void): JSX.Element {
   const tableauSimpleProps: TableauSimpleProps = {
     entetes: piecesJointes[0].type
-      ? [
-          { libelle: getLibelle("Nom") },
-          { libelle: getLibelle("Type") },
-          { className: "EnteteActionPJ", libelle: getLibelle("Action") }
-        ]
-      : [
-          { libelle: getLibelle("Nom") },
-          { className: "EnteteActionPJ", libelle: getLibelle("Action") }
-        ],
+      ? [{ libelle: getLibelle("Nom") }, { libelle: getLibelle("Type") }, { className: "EnteteActionPJ", libelle: getLibelle("Action") }]
+      : [{ libelle: getLibelle("Nom") }, { className: "EnteteActionPJ", libelle: getLibelle("Action") }],
     lignes: piecesJointes.map(pj => ({
       key: pj.base64File.fileName,
       colonnes: pj.type
@@ -144,10 +118,7 @@ function getColonneTypePJ(pj: PieceJointe): string | JSX.Element {
   return pj.type ? pj.type.libelle : "";
 }
 
-function getColonneSuppressionPJ(
-  supprimePieceJointe: (libelle: string) => void,
-  pj: PieceJointe
-): JSX.Element {
+function getColonneSuppressionPJ(supprimePieceJointe: (libelle: string) => void, pj: PieceJointe): JSX.Element {
   return (
     <IconePoubelle
       onClick={() => {
@@ -161,21 +132,19 @@ function getColonneSuppressionPJ(
 function getColonneNomPJ(pj: PieceJointe): JSX.Element {
   return (
     <>
-      <InsertDriveFileOutlinedIcon fontSize="small" className="iconeFichier" />
+      <InsertDriveFileOutlinedIcon
+        fontSize="small"
+        className="iconeFichier"
+      />
       <span>{pj.base64File.fileName}</span>
     </>
   );
 }
 
-export function verificationAvantDOuvriLeMenu(
-  piecesJointes: PieceJointe[],
-  maxPiecesJointes = MAX_PIECES_JOINTES
-) {
+export function verificationAvantDOuvriLeMenu(piecesJointes: PieceJointe[], maxPiecesJointes = MAX_PIECES_JOINTES) {
   let ouvrirLeMenu = true;
   if (piecesJointes.length >= maxPiecesJointes) {
-    messageManager.showErrorAndClose(
-      getLibelle("Le nombre maximal de pièces jointes est atteint")
-    );
+    messageManager.showErrorAndClose(getLibelle("Le nombre maximal de pièces jointes est atteint"));
     ouvrirLeMenu = false;
   }
   return ouvrirLeMenu;

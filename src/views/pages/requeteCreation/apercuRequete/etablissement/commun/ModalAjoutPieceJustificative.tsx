@@ -1,10 +1,10 @@
 import { useAjoutPieceJustificativeToRequete } from "@hook/requete/piecesJointes/AjoutPieceJustificativeToRequeteApiHook";
 import Dialog from "@mui/material/Dialog";
-import { PieceJointe } from "@util/FileUtils";
 import { Options } from "@util/Type";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import React, { useState } from "react";
 import * as Yup from "yup";
+import { PieceJointe } from "../../../../../../utils/FileUtils";
 import ContenuModalAjoutPieceJustificative from "./ContenuModalAjoutPieceJustificative";
 import "./scss/ModalAjoutPieceJustificative.scss";
 
@@ -34,9 +34,7 @@ const FormValidationSchema = Yup.object({
   file: Yup.object().required()
 });
 
-export const ModaleAjoutPieceJustificativeRequeteCreation: React.FC<
-  ModalAjoutPieceJustificativeProps
-> = props => {
+export const ModaleAjoutPieceJustificativeRequeteCreation: React.FC<ModalAjoutPieceJustificativeProps> = props => {
   const [paramsApi, setParamsApi] = useState<ModalPieceJustificativeProps>();
 
   useAjoutPieceJustificativeToRequete(paramsApi);

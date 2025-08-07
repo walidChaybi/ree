@@ -22,7 +22,6 @@ import { TYPE_LIEN_REQUERANT_POUR_TITULAIRE, TypeLienRequerant } from "@model/re
 import { TypeRequerantRDC, UN_TITULAIRE } from "@model/requete/enum/TypeRequerantRDC";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { PATH_MODIFIER_RDC } from "@router/ReceUrls";
-import { PieceJointe, getPiecesJointesNonVides } from "@util/FileUtils";
 import { Options } from "@util/Type";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { Formulaire } from "@widget/formulaire/Formulaire";
@@ -34,6 +33,7 @@ import { useLocation, useParams } from "react-router";
 import * as Yup from "yup";
 import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import { SaisieRequeteRDC } from "../../../../model/form/delivrance/ISaisirRDCPageForm";
+import { PieceJointe, getPiecesJointesNonVides } from "../../../../utils/FileUtils";
 import SaisirRequeteBoutons from "../../../common/composant/formulaire/boutons/SaisirRequeteBoutons";
 import { getMessagesPopin, modificationChamps } from "./contenu/SaisirRDCPageFonctions";
 import {

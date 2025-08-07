@@ -2,7 +2,6 @@ import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Base64File, FILE_TYPES } from "@util/FileUtils";
 import { Option, Options } from "@util/Type";
 import { DIX_MILLE, getLibelle } from "@util/Utils";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
@@ -12,19 +11,16 @@ import { getTableauPiecesJointes } from "@widget/formulaire/piecesJointes/Pieces
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import { useEffect, useState } from "react";
+import { Base64File, FILE_TYPES } from "../../../../../../utils/FileUtils";
 
 interface ContenuModalProps {
   listeCategoriePJ: Options;
   onClose: () => void;
 }
-type ContenuModalAjoutPieceJustificativeProps = SubFormProps &
-  ContenuModalProps;
+type ContenuModalAjoutPieceJustificativeProps = SubFormProps & ContenuModalProps;
 
-const ContenuModalAjoutPieceJustificative: React.FC<
-  ContenuModalAjoutPieceJustificativeProps
-> = props => {
-  const [formulaireEstChange, setFormulaireEstChange] =
-    useState<boolean>(false);
+const ContenuModalAjoutPieceJustificative: React.FC<ContenuModalAjoutPieceJustificativeProps> = props => {
+  const [formulaireEstChange, setFormulaireEstChange] = useState<boolean>(false);
 
   useEffect(() => {
     if (props.formik.values.categoriePJ && props.formik.values.file) {
@@ -32,10 +28,7 @@ const ContenuModalAjoutPieceJustificative: React.FC<
     }
   }, [props.formik.values.categoriePJ, props.formik.values.file]);
 
-  function onFileChange(
-    base64File: Base64File,
-    type?: Option | undefined
-  ): void {
+  function onFileChange(base64File: Base64File, type?: Option | undefined): void {
     props.formik.setFieldValue("file", { base64File, type });
   }
 
@@ -57,9 +50,7 @@ const ContenuModalAjoutPieceJustificative: React.FC<
 
   return (
     <div>
-      <DialogTitle className="modalTitle">
-        {getLibelle("Ajouter une pièce justificative")}
-      </DialogTitle>
+      <DialogTitle className="modalTitle">{getLibelle("Ajouter une pièce justificative")}</DialogTitle>
       <DialogContent>
         <div className="inputsConteneur">
           <SelectField
@@ -82,10 +73,7 @@ const ContenuModalAjoutPieceJustificative: React.FC<
             maxSizeKB={DIX_MILLE}
             onFileChange={onFileChange}
           />
-          <div className="BlocPiecesJointes">
-            {fileFieldValue &&
-              getTableauPiecesJointes([fileFieldValue], supprimePieceJointe)}
-          </div>
+          <div className="BlocPiecesJointes">{fileFieldValue && getTableauPiecesJointes([fileFieldValue], supprimePieceJointe)}</div>
           <BoutonDoubleSubmit
             className="boutonValider"
             type="submit"
@@ -104,6 +92,4 @@ const ContenuModalAjoutPieceJustificative: React.FC<
   );
 };
 
-export default connect<ContenuModalAjoutPieceJustificativeProps>(
-  ContenuModalAjoutPieceJustificative
-);
+export default connect<ContenuModalAjoutPieceJustificativeProps>(ContenuModalAjoutPieceJustificative);

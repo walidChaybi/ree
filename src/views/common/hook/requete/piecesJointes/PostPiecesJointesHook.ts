@@ -2,9 +2,9 @@ import { postPieceComplementInformationApi, postPieceJustificative } from "@api/
 import { mapPieceComplementInformation } from "@model/requete/pieceJointe/IPieceComplementInformation";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { mapPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
-import { PieceJointe } from "@util/FileUtils";
 import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import { PieceJointe } from "../../../../../utils/FileUtils";
 
 interface IPostPiecesJointesApiResultat {
   uuidDocuments: string[];

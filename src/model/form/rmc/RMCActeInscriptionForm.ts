@@ -219,6 +219,21 @@ export const RMCActeInscriptionForm = {
                   idChampReference: "registreRepertoire.registre.familleRegistre",
                   operateur: EOperateurCondition.DIFF,
                   valeurs: ["CPN"]
+                },
+                {
+                  idChampReference: "registreRepertoire.registre.pocopa",
+                  operateur: EOperateurCondition.EGAL,
+                  valeurs: [""]
+                },
+                {
+                  idChampReference: "registreRepertoire.registre.registreSupport.supportUn",
+                  operateur: EOperateurCondition.EGAL,
+                  valeurs: [""]
+                },
+                {
+                  idChampReference: "registreRepertoire.registre.numeroActe.numeroActeOuOrdre",
+                  operateur: EOperateurCondition.EGAL,
+                  valeurs: [""]
                 }
               ]),
               { blocsRetirantValidation: ["TITULAIRE", "EVENEMENT"] }
@@ -284,7 +299,7 @@ export const RMCActeInscriptionForm = {
               messageErreurSpecifique: "⚠ Le champ ne peut pas être utilisé seul"
             }
           }),
-          anneeRegistre: SchemaValidation.texte({
+          anneeRegistre: SchemaValidation.annee({
             obligatoire: ConditionChamp.depuisTableau([
               {
                 idChampReference: "registreRepertoire.registre.natureActe",
@@ -295,6 +310,21 @@ export const RMCActeInscriptionForm = {
                 idChampReference: "registreRepertoire.registre.familleRegistre",
                 operateur: EOperateurCondition.DIFF,
                 valeurs: ["OP2", "OP3"]
+              },
+              {
+                idChampReference: "registreRepertoire.registre.pocopa",
+                operateur: EOperateurCondition.EGAL,
+                valeurs: [""]
+              },
+              {
+                idChampReference: "registreRepertoire.registre.registreSupport.supportUn",
+                operateur: EOperateurCondition.EGAL,
+                valeurs: [""]
+              },
+              {
+                idChampReference: "registreRepertoire.registre.numeroActe.numeroActeOuOrdre",
+                operateur: EOperateurCondition.EGAL,
+                valeurs: [""]
               }
             ])
           }),

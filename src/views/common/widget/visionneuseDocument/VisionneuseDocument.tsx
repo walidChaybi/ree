@@ -1,6 +1,6 @@
 import LinearProgress from "@mui/material/LinearProgress";
-import { base64toBlobUrl, bloblToBlobUrl, estTypeMimePdf } from "@util/FileUtils";
 import React, { useEffect, useState } from "react";
+import { base64EnBlobUrl, bloblEnBlobUrl, estTypeMimePdf } from "../../../../utils/FileUtils";
 import VisionneuseImage from "./VisionneuseImage";
 import { VisionneusePdf } from "./VisionneusePdf";
 
@@ -23,9 +23,9 @@ export const VisionneuseDocument: React.FC<IVisionneuseDocumentProps> = props =>
     let urlVisionneuseDocument;
 
     if (props.contenuBase64 && props.typeMime) {
-      urlVisionneuseDocument = base64toBlobUrl(props.contenuBase64, props.typeMime);
+      urlVisionneuseDocument = base64EnBlobUrl(props.contenuBase64, props.typeMime);
     } else if (props.contenuBlob && props.typeMime) {
-      urlVisionneuseDocument = bloblToBlobUrl(props.contenuBlob, props.typeMime);
+      urlVisionneuseDocument = bloblEnBlobUrl(props.contenuBlob, props.typeMime);
     }
     if (urlVisionneuseDocument) {
       setUrl(urlVisionneuseDocument);

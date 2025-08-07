@@ -1,5 +1,5 @@
-import { base64toBlobUrl } from "@util/FileUtils";
 import React, { memo, useMemo } from "react";
+import { base64EnBlobUrl } from "../../../utils/FileUtils";
 
 interface IAffichagePDFProps {
   contenuBase64: string | null;
@@ -8,7 +8,7 @@ interface IAffichagePDFProps {
 
 const AffichagePDF: React.FC<IAffichagePDFProps> = memo(({ contenuBase64, typeZoom = "page-fit" }) => {
   const blobUrl = useMemo(
-    () => (contenuBase64 ? `${base64toBlobUrl(contenuBase64, "application/pdf")}#zoom=${typeZoom}` : null),
+    () => (contenuBase64 ? `${base64EnBlobUrl(contenuBase64, "application/pdf")}#zoom=${typeZoom}` : null),
     [contenuBase64]
   );
 

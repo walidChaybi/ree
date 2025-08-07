@@ -57,8 +57,8 @@ import { ITitulaireRequete, TitulaireRequete } from "@model/requete/ITitulaireRe
 import { Qualite } from "@model/requete/enum/Qualite";
 import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
-import { PieceJointe } from "@util/FileUtils";
 import { DEUX, UN } from "@util/Utils";
+import { PieceJointe } from "../../../../../utils/FileUtils";
 import { AutreProfessionnelFormDefaultValues } from "../sousFormulaires/requerant/autreProfessionnel/AutreProfessionnelForm";
 import { InstitutionnelFormDefaultValues } from "../sousFormulaires/requerant/institutionnel/InstitutionnelForm";
 import { MandataireFormDefaultValues } from "../sousFormulaires/requerant/mandataire/MandataireForm";

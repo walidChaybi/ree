@@ -1,10 +1,10 @@
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { Base64File, ExtensionDocumentTypeMime, getBase64FileAndValidate } from "@util/FileUtils";
 import messageManager from "@util/messageManager";
 import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import React, { useEffect, useRef, useState } from "react";
+import { Base64File, ExtensionDocumentTypeMime, getBase64FichierEtLeValide } from "../../../../../utils/FileUtils";
 
 interface UploadFileFieldProps {
   name: string;
@@ -37,7 +37,8 @@ const UploadFileField: React.FC<UploadFileFieldProps> = props => {
   const onChange = async (event: any) => {
     const file: File = event?.target?.files?.[0];
     try {
-      const base64File: Base64File = await getBase64FileAndValidate(file, props.maxSizeKB, props.acceptFileTypes);
+      const base64File: Base64File = await getBase64FichierEtLeValide(file, props.maxSizeKB, props.acceptFileTypes);
+
       setFileState(base64File);
       props.onFileChange(base64File, menuItemState);
     } catch (error) {

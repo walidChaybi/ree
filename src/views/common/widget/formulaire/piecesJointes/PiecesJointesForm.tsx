@@ -1,10 +1,10 @@
 import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { PieceJointe } from "@util/FileUtils";
 import { Options } from "@util/Type";
 import { connect } from "formik";
 import React, { useEffect } from "react";
+import { PieceJointe } from "../../../../../utils/FileUtils";
 import { SousFormulaire } from "../SousFormulaire";
 import "../scss/PiecesJointesForm.scss";
 import { ISubForm, SubFormProps } from "../utils/FormUtil";
