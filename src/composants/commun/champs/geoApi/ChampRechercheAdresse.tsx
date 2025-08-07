@@ -86,8 +86,21 @@ const ChampRechercheAdresse: React.FC<TChampRechercheAdresse> = ({
         loadingText="Recherche en cours..."
         filterOptions={options => options}
         isOptionEqualToValue={(option, value) => option.properties.id === value.properties.id}
-        componentsProps={{
-          popper: { sx: { "& .MuiAutocomplete-listbox": { padding: 0 } } }
+        disablePortal={true}
+        slotProps={{
+          popper: {
+            sx: {
+              "& .MuiAutocomplete-listbox": {
+                padding: 0
+              }
+            },
+            modifiers: [
+              {
+                name: "flip",
+                enabled: false
+              }
+            ]
+          }
         }}
         onBlur={() => helpers.setValue(field.value.trim())}
         clearOnBlur={false}

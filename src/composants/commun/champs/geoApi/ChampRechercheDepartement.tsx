@@ -84,13 +84,20 @@ const ChampRechercheDepartement: React.FC<TChampRechercheDepartement> = ({ name,
             setDepartementRecherche(valeurSaisie.trim().toLowerCase() ?? "");
           }
         }}
-        componentsProps={{
+        disablePortal={true}
+        slotProps={{
           popper: {
             sx: {
               "& .MuiAutocomplete-listbox": {
                 padding: 0
               }
-            }
+            },
+            modifiers: [
+              {
+                name: "flip",
+                enabled: false
+              }
+            ]
           }
         }}
         renderInput={params => (

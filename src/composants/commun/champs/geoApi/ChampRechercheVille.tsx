@@ -79,13 +79,20 @@ const ChampRechercheVille: React.FC<TChampRechercheVille> = ({
         loadingText="Recherche en cours..."
         filterOptions={empecherFiltreParDefaut}
         isOptionEqualToValue={(option, value) => option.code === value.code}
-        componentsProps={{
+        disablePortal={true}
+        slotProps={{
           popper: {
             sx: {
               "& .MuiAutocomplete-listbox": {
                 padding: 0
               }
-            }
+            },
+            modifiers: [
+              {
+                name: "flip",
+                enabled: false
+              }
+            ]
           }
         }}
         onBlur={() => helpers.setValue(field.value.trim())}
