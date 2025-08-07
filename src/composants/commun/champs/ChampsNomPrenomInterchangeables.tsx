@@ -1,5 +1,6 @@
 import CompareArrows from "@mui/icons-material/CompareArrows";
 import { getIn, useFormikContext } from "formik";
+import { useRef } from "react";
 import BoutonIcon from "../bouton/BoutonIcon";
 import ChampTexte from "./ChampTexte";
 
@@ -9,7 +10,8 @@ export const ChampsNomPrenomInterchangeables: React.FC<{ cheminNom: string; chem
   avecAppauvrissement = false
 }) => {
   const { values, setFieldValue, setFieldTouched } = useFormikContext();
-
+  const nomRef = useRef<HTMLInputElement>(null);
+  const prenomRef = useRef<HTMLInputElement>(null);
   const intervertir = () => {
     setFieldValue(cheminNom, getIn(values, cheminPrenom)).finally(() => setFieldTouched(cheminNom, true));
     setFieldValue(cheminPrenom, getIn(values, cheminNom)).finally(() => setFieldTouched(cheminPrenom, true));
@@ -60,6 +62,7 @@ export const ChampsNomPrenomInterchangeables: React.FC<{ cheminNom: string; chem
           name={cheminNom}
           libelle="Nom"
           onPaste={placerNomEtPrenomDansLesBonsChamps}
+          refChamp={nomRef}
           boutonChamp={
             avecAppauvrissement
               ? {
@@ -68,7 +71,10 @@ export const ChampsNomPrenomInterchangeables: React.FC<{ cheminNom: string; chem
                       className="group absolute right-0 top-0 h-full rounded-l-none"
                       type="button"
                       title="Appauvrir le nom"
-                      onClick={() => appauvrirValeur(cheminNom)}
+                      onClick={() => {
+                        appauvrirValeur(cheminNom);
+                        nomRef.current?.focus();
+                      }}
                     >
                       <span className="mt-1 px-2">*</span>
                     </BoutonIcon>
@@ -90,6 +96,7 @@ export const ChampsNomPrenomInterchangeables: React.FC<{ cheminNom: string; chem
       </div>
       <ChampTexte
         name={cheminPrenom}
+        refChamp={prenomRef}
         libelle="Prénom"
         boutonChamp={
           avecAppauvrissement
@@ -99,7 +106,10 @@ export const ChampsNomPrenomInterchangeables: React.FC<{ cheminNom: string; chem
                     className={`group absolute right-0 top-0 flex h-full rounded-l-none`}
                     type="button"
                     title="Appauvrir le prénom"
-                    onClick={() => appauvrirValeur(cheminPrenom, 1)}
+                    onClick={() => {
+                      appauvrirValeur(cheminPrenom, 1);
+                      prenomRef.current?.focus();
+                    }}
                   >
                     <span className="mt-1 px-2">*</span>
                   </BoutonIcon>

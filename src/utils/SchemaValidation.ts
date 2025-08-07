@@ -246,14 +246,12 @@ export const getValeursRenseigneesFormulaire = (valeur: string | boolean | objec
   return [valeur];
 };
 
-// Retirer le retour en arrière dans N° inscription lorsque je supprime un numéro
 const comparerValeurChamps = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>(
   schema: TSchemaChamp,
   { cheminChampCompare, operateur, champEnfantCompare, messageErreurSpecifique }: TComparaisonValeurAutreChamp
 ) =>
   schema.test("valeursIncoherentes", (valeur, context) => {
-    const valeurChampCompare = getIn(context.options.context, cheminChampCompare);
-
+    const valeurChampCompare = getIn(context.options.context, cheminChampCompare)?.toString();
     if (!valeurChampCompare || !estChampRenseigne(valeur)) return true;
 
     const erreurComparaison = context.createError({
@@ -261,19 +259,13 @@ const comparerValeurChamps = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema
       message: messageErreurSpecifique ?? messagesErreur.CHAMPS_INCOHERENTS
     });
 
-    switch (operateur) {
-      case "==":
-        if (champEnfantCompare ? +valeur[champEnfantCompare] === valeurChampCompare : valeur === valeurChampCompare)
-          return erreurComparaison;
+    const valeurChamp = (champEnfantCompare ? valeur[champEnfantCompare] : valeur)?.toString();
 
-        break;
-      case "!=":
-        if (champEnfantCompare && valeur[champEnfantCompare] !== valeurChampCompare) return erreurComparaison;
+    const estValeursChampsSimilaire = valeurChamp === valeurChampCompare;
 
-        break;
-    }
+    const estConditionRespectee = operateur === EOperateurCondition.EGAL ? estValeursChampsSimilaire : !estValeursChampsSimilaire;
 
-    return true;
+    return estConditionRespectee ? true : erreurComparaison;
   });
 
 const champSeulInterdit = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>(

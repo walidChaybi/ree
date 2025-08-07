@@ -1,6 +1,6 @@
 import { CENT } from "@util/Utils";
 import { ErrorMessage, useField } from "formik";
-import { useCallback, useMemo } from "react";
+import { Ref, useCallback, useMemo } from "react";
 import { CHAMP_EN_ERREUR } from "../formulaire/ScrollVersErreur";
 
 type TFormatChampsTexte = "PREMIER_MAJUSCULE" | "NOMS_PROPRES" | "MAJUSCULES" | "SANS_ESPACES";
@@ -17,6 +17,7 @@ type TChampsTexteProps = React.InputHTMLAttributes<HTMLInputElement> & {
   estObligatoire?: boolean;
   boutonChamp?: IBoutonIcon;
   regex?: RegExp;
+  refChamp?: Ref<HTMLInputElement>;
 };
 
 const ChampTexte: React.FC<TChampsTexteProps> = ({
@@ -32,6 +33,7 @@ const ChampTexte: React.FC<TChampsTexteProps> = ({
     estAGauche: false
   },
   regex,
+  refChamp,
   ...props
 }) => {
   const [field, meta, helper] = useField(name as string);
@@ -89,6 +91,7 @@ const ChampTexte: React.FC<TChampsTexteProps> = ({
       <div className="relative flex rounded-md shadow-sm">
         <input
           id={name}
+          ref={refChamp}
           className={`border-1 flex w-full flex-grow rounded border border-solid px-2 py-1 ${boutonChamp?.estAGauche ? "pl-12" : ""} transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
           maxLength={maxLength ?? CENT}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {

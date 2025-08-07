@@ -5,6 +5,7 @@ import userEvent from "@testing-library/user-event";
 import dayjs from "dayjs";
 import { Form, Formik } from "formik";
 import { describe, expect, test } from "vitest";
+import ChampTexte from "../../composants/commun/champs/ChampTexte";
 import ChampsNomSecable from "../../composants/commun/champs/ChampsNomSecable";
 import ChampNumeroRcRcaPacs from "../../composants/commun/champs/ChampsNumeroRcRcaPacs";
 import SchemaValidation from "../../utils/SchemaValidation";
@@ -145,5 +146,53 @@ describe("Schema de validation: champsNumeroRcRcaPacs", () => {
       await userEvent.click(boutonValider);
       expect(container.firstChild).toMatchSnapshot();
     }
+  });
+});
+
+describe("Schema de validation: comparerValeurChamps", () => {
+  test("LORSQUE le formulaire est soumis et que deux champs inter-dépendants ne remplissent pas la conditon, ALORS une erreur apparait", async () => {
+    render(
+      <MockFormulaire
+        valeursInitiales={{ champ1: "", champ2: "" }}
+        schemaDeValidation={SchemaValidation.objet({
+          champ1: SchemaValidation.texte({
+            comparaisonValeurAutreChamp: {
+              cheminChampCompare: "champ2",
+              operateur: EOperateurCondition.DIFF,
+              messageErreurSpecifique: "⚠ Incohérence entre les valeurs champ2/champ1"
+            }
+          }),
+          champ2: SchemaValidation.texte({
+            comparaisonValeurAutreChamp: {
+              cheminChampCompare: "champ1",
+              operateur: EOperateurCondition.DIFF,
+              messageErreurSpecifique: "⚠ Incohérence entre les valeurs champ1/champ2"
+            }
+          })
+        })}
+      >
+        <ChampTexte
+          name="champ1"
+          aria-label="champ1"
+        />
+        <ChampTexte
+          name="champ2"
+          aria-label="champ2"
+        />
+        <button type="submit">Soumettre</button>
+      </MockFormulaire>
+    );
+    const champ1 = screen.getByLabelText("champ1");
+    const champ2 = screen.getByLabelText("champ2");
+    const boutonSoumission = screen.getByText("Soumettre");
+
+    await userEvent.type(champ1, "Bonjour");
+    await userEvent.type(champ2, "Au revoir");
+    await userEvent.click(boutonSoumission);
+
+    await waitFor(() => {
+      screen.findByText("⚠ Incohérence entre les valeurs champ2/champ1");
+      screen.findByText("⚠ Incohérence entre les valeurs champ1/champ2");
+    });
   });
 });
