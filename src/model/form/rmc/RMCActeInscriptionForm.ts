@@ -382,7 +382,7 @@ export const RMCActeInscriptionForm = {
             },
             comparaisonValeurAutreChamp: {
               cheminChampCompare: "registreRepertoire.evenement.dateEvenement.annee",
-              operateur: EOperateurCondition.DIFF,
+              operateur: EOperateurCondition.EGAL,
               champEnfantCompare: "anneeInscription",
               messageErreurSpecifique: "⚠ Incohérence avec l'année de l'évènement"
             }
@@ -414,7 +414,7 @@ export const RMCActeInscriptionForm = {
             ),
             comparaisonValeurAutreChamp: {
               cheminChampCompare: "registreRepertoire.repertoire.numeroInscription.anneeInscription",
-              operateur: EOperateurCondition.DIFF,
+              operateur: EOperateurCondition.EGAL,
               champEnfantCompare: "annee",
               messageErreurSpecifique: "⚠ Incohérence avec le numéro d'inscription / numéro PACS"
             }

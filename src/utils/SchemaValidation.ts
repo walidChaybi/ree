@@ -265,7 +265,7 @@ const comparerValeurChamps = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema
 
     const estConditionRespectee = operateur === EOperateurCondition.EGAL ? estValeursChampsSimilaire : !estValeursChampsSimilaire;
 
-    return estConditionRespectee ? true : erreurComparaison;
+    return estConditionRespectee || erreurComparaison;
   });
 
 const champSeulInterdit = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>(
