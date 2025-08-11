@@ -6,10 +6,7 @@ import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { getObjetRequeteInfoLibelle } from "@model/requete/enum/ObjetRequeteInfo";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { IPieceComplementInformation } from "@model/requete/pieceJointe/IPieceComplementInformation";
-import {
-  IPieceJointe,
-  TypePieceJointe
-} from "@model/requete/pieceJointe/IPieceJointe";
+import { IPieceJointe, TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
 import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPanel, SectionPanelProps } from "@widget/section/SectionPanel";
@@ -45,9 +42,7 @@ export const ResumeReqInfo: React.FC<RequeteInfoProps> = ({ requete }) => {
         <SectionPanel {...panels} />
         <hr className={"SectionPanelAreaSeparation"} />
         <ListePiecesJointes
-          pieces={mapPiecesComplementInformation(
-            requete.piecesComplementInformation
-          )}
+          pieces={mapPiecesComplementInformation(requete.piecesComplementInformation)}
           numRequete={requete.numero}
           titre="Pièces Complémentaires"
         />
@@ -56,9 +51,7 @@ export const ResumeReqInfo: React.FC<RequeteInfoProps> = ({ requete }) => {
   );
 };
 
-function mapPiecesComplementInformation(
-  pieces?: IPieceComplementInformation[]
-): IPieceJointe[] {
+function mapPiecesComplementInformation(pieces?: IPieceComplementInformation[]): IPieceJointe[] {
   return pieces
     ? pieces.map(piece => ({
         id: piece.id,
@@ -69,9 +62,7 @@ function mapPiecesComplementInformation(
     : [];
 }
 
-function getPanelResumeRequete(
-  detailRequete: IRequeteInformation
-): SectionPanelProps {
+function getPanelResumeRequete(detailRequete: IRequeteInformation): SectionPanelProps {
   const panel = {
     panelAreas: [],
     title: "requeteInformation"
@@ -97,39 +88,17 @@ function getRequete(detailRequete: IRequeteInformation): SectionPartProps[] {
   ];
 }
 
-function getRequeteInfo(
-  detailRequete: IRequeteInformation
-): SectionContentProps[] {
+function getRequeteInfo(detailRequete: IRequeteInformation): SectionContentProps[] {
   const infosRequete = [] as SectionContentProps[];
 
-  ajouterContentPartAuPartUneValeur(
-    infosRequete,
-    getLibelle(`Sous-type`),
-    detailRequete.sousType.libelle
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosRequete,
-    getLibelle(`Objet`),
-    getObjetRequeteInfoLibelle(detailRequete.objet)
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosRequete,
-    getLibelle(`Complément d'objet`),
-    detailRequete.complementObjet.libelle
-  );
-  ajouterContentPartAuPartUneValeur(
-    infosRequete,
-    getLibelle(`Date de création`),
-    Requete.getDateCreation(detailRequete)
-  );
+  ajouterContentPartAuPartUneValeur(infosRequete, `Sous-type`, detailRequete.sousType.libelle);
+  ajouterContentPartAuPartUneValeur(infosRequete, `Objet`, getObjetRequeteInfoLibelle(detailRequete.objet));
+  ajouterContentPartAuPartUneValeur(infosRequete, `Complément d'objet`, detailRequete.complementObjet.libelle);
+  ajouterContentPartAuPartUneValeur(infosRequete, `Date de création`, Requete.getDateCreation(detailRequete));
 
   let requeteLiee: string | JSX.Element = "";
 
-  if (
-    detailRequete.numeroRequeteLiee &&
-    detailRequete.idRequeteLiee &&
-    detailRequete.typeRequeteLiee
-  ) {
+  if (detailRequete.numeroRequeteLiee && detailRequete.idRequeteLiee && detailRequete.typeRequeteLiee) {
     requeteLiee = (
       <FenetreApercuRequeteLiee
         idRequeteLiee={detailRequete.idRequeteLiee}
@@ -159,35 +128,21 @@ function getRequerant(detailRequete: IRequeteInformation): SectionPartProps[] {
   ];
 }
 
-function getRequerantInfo(
-  detailRequete: IRequeteInformation
-): SectionContentProps[] {
+function getRequerantInfo(detailRequete: IRequeteInformation): SectionContentProps[] {
   const infosRequerant = [] as SectionContentProps[];
 
-  ajouterContentPartAuPartUneValeur(
-    infosRequerant,
-    getLibelle(`Type requérant`),
-    detailRequete.requerant.qualiteRequerant.qualite.libelle
-  );
+  ajouterContentPartAuPartUneValeur(infosRequerant, `Type requérant`, detailRequete.requerant.qualiteRequerant.qualite.libelle);
 
   let identiteRequerant = "";
-  if (
-    detailRequete.requerant.qualiteRequerant.qualite === Qualite.INSTITUTIONNEL
-  ) {
-    identiteRequerant = getValeurOuVide(
-      detailRequete.requerant.qualiteRequerant.institutionnel?.nomInstitution
-    );
+
+  if (detailRequete.requerant.qualiteRequerant.qualite === Qualite.INSTITUTIONNEL) {
+    identiteRequerant = getValeurOuVide(detailRequete.requerant.qualiteRequerant.institutionnel?.nomInstitution);
   } else {
-    identiteRequerant = `${Requerant.getNomFamille(
-      detailRequete.requerant
-    )} ${Requerant.getPrenom(detailRequete.requerant)}`;
+    identiteRequerant = `${Requerant.getNomFamille(detailRequete.requerant)} ${Requerant.getPrenom(detailRequete.requerant)}`;
   }
 
-  ajouterContentPartAuPartUneValeur(
-    infosRequerant,
-    getLibelle(`Identité du requérant`),
-    identiteRequerant
-  );
+  ajouterContentPartAuPartUneValeur(infosRequerant, `Identité du requérant`, identiteRequerant);
+  ajouterContentPartAuPartUneValeur(infosRequerant, `Courriel`, detailRequete.requerant.courriel ?? "");
 
   return infosRequerant;
 }
@@ -202,38 +157,24 @@ function getTitulaire(detailRequete: IRequeteInformation): SectionPartProps[] {
   ];
 }
 
-function getTitulaireInfo(
-  detailRequete: IRequeteInformation
-): SectionContentProps[] {
+function getTitulaireInfo(detailRequete: IRequeteInformation): SectionContentProps[] {
   const infosTitulaire = [] as SectionContentProps[];
 
   if (detailRequete.titulaires && detailRequete.titulaires.length > 0) {
     const titulaire = detailRequete.titulaires[0];
     ajouterContentPartAuPartUneValeur(
       infosTitulaire,
-      getLibelle(`Identité du titulaire`),
-      `${TitulaireRequete.getNom(titulaire)} ${TitulaireRequete.getPrenom1(
-        titulaire
-      )}`
+      `Identité du titulaire`,
+      `${TitulaireRequete.getNom(titulaire)} ${TitulaireRequete.getPrenom1(titulaire)}`
     );
-    ajouterContentPartAuPartUneValeur(
-      infosTitulaire,
-      getLibelle(`Date de naissance du titulaire`),
-      TitulaireRequete.getDateNaissance(titulaire)
-    );
-    ajouterContentPartAuPartUneValeur(
-      infosTitulaire,
-      getLibelle(`Lieu de naissance du titulaire`),
-      TitulaireRequete.getLieuNaissance(titulaire)
-    );
+    ajouterContentPartAuPartUneValeur(infosTitulaire, `Date de naissance du titulaire`, TitulaireRequete.getDateNaissance(titulaire));
+    ajouterContentPartAuPartUneValeur(infosTitulaire, `Lieu de naissance du titulaire`, TitulaireRequete.getLieuNaissance(titulaire));
   }
 
   return infosTitulaire;
 }
 
-function getCommentaireReq(
-  detailRequete: IRequeteInformation
-): SectionPartProps[] {
+function getCommentaireReq(detailRequete: IRequeteInformation): SectionPartProps[] {
   return [
     {
       partContent: {
@@ -243,16 +184,10 @@ function getCommentaireReq(
   ];
 }
 
-function getCommentaire(
-  detailRequete: IRequeteInformation
-): SectionContentProps[] {
+function getCommentaire(detailRequete: IRequeteInformation): SectionContentProps[] {
   const commentaire = [] as SectionContentProps[];
 
-  ajouterContentPartAuPartUneValeurVide(
-    commentaire,
-    getLibelle(`Commentaire libre de l'usager`),
-    detailRequete.commentaire
-  );
+  ajouterContentPartAuPartUneValeurVide(commentaire, `Commentaire libre de l'usager`, detailRequete.commentaire);
 
   return commentaire;
 }
