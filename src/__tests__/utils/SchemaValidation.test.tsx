@@ -1,6 +1,6 @@
 import { ConditionChamp, EOperateurCondition, IConditionChampDto } from "@model/form/commun/ConditionChamp";
 import { NumeroRcRcaPacsForm } from "@model/form/commun/NumeroRcRcaPacsForm";
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import dayjs from "dayjs";
 import { Form, Formik } from "formik";
@@ -53,7 +53,7 @@ describe("Schema de validation: nomSecable", () => {
       </MockFormulaire>
     );
     userEvent.click(screen.getByRole("button", { name: "Valider" }));
-    await waitFor(() => screen.findByText("⚠ La saisie du champ est obligatoire"));
+    await waitFor(() => expect(screen.getByText("⚠ La saisie du champ est obligatoire")).toBeDefined());
   });
 });
 
@@ -158,14 +158,14 @@ describe("Schema de validation: comparerValeurChamps", () => {
           champ1: SchemaValidation.texte({
             comparaisonValeurAutreChamp: {
               cheminChampCompare: "champ2",
-              operateur: EOperateurCondition.DIFF,
+              operateur: EOperateurCondition.EGAL,
               messageErreurSpecifique: "⚠ Incohérence entre les valeurs champ2/champ1"
             }
           }),
           champ2: SchemaValidation.texte({
             comparaisonValeurAutreChamp: {
               cheminChampCompare: "champ1",
-              operateur: EOperateurCondition.DIFF,
+              operateur: EOperateurCondition.EGAL,
               messageErreurSpecifique: "⚠ Incohérence entre les valeurs champ1/champ2"
             }
           })
@@ -179,20 +179,16 @@ describe("Schema de validation: comparerValeurChamps", () => {
           name="champ2"
           aria-label="champ2"
         />
-        <button type="submit">Soumettre</button>
       </MockFormulaire>
     );
-    const champ1 = screen.getByLabelText("champ1");
-    const champ2 = screen.getByLabelText("champ2");
-    const boutonSoumission = screen.getByText("Soumettre");
 
-    await userEvent.type(champ1, "Bonjour");
-    await userEvent.type(champ2, "Au revoir");
-    await userEvent.click(boutonSoumission);
+    fireEvent.change(screen.getByLabelText("champ1"), { target: { value: "Bonjour" } });
+    fireEvent.change(screen.getByLabelText("champ2"), { target: { value: "Au revoir" } });
+    fireEvent.click(screen.getByText("Valider"));
 
     await waitFor(() => {
-      screen.findByText("⚠ Incohérence entre les valeurs champ2/champ1");
-      screen.findByText("⚠ Incohérence entre les valeurs champ1/champ2");
+      expect(screen.getByText("⚠ Incohérence entre les valeurs champ2/champ1")).toBeDefined();
+      expect(screen.getByText("⚠ Incohérence entre les valeurs champ1/champ2")).toBeDefined();
     });
   });
 });
