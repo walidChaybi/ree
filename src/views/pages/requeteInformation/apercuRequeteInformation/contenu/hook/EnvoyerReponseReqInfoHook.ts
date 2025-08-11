@@ -6,8 +6,8 @@ import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
 import { getObjetRequeteInfoLibelle } from "@model/requete/enum/ObjetRequeteInfo";
 import DateUtils from "@util/DateUtils";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../../../utils/AfficherMessage";
 import { PieceJointe } from "../../../../../../utils/FileUtils";
 import { ISauvegarderReponseReqInfoParams } from "./SauvegarderReponseReqInfoHook";
 
@@ -27,10 +27,9 @@ export function useEnvoyerReponsesReqInfoHook(params: IEnvoyerReponseReqInfoPara
         .then(result => {
           setMailEnvoyer(result.status === HTTP_STATUS_OK);
         })
-        .catch(error => {
-          logError({
-            messageUtilisateur: "Impossible d'envoyer le mail avec votre réponse",
-            error
+        .catch(erreurs => {
+          AfficherMessage.erreur("Impossible d'envoyer le mail avec votre réponse", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : []
           });
         });
     }

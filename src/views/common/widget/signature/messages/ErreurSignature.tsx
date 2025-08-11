@@ -1,7 +1,7 @@
 import { ITypeErreurSignature } from "@model/signature/ITypeErreurSignature";
 import Divider from "@mui/material/Divider";
-import { logError } from "@util/LogManager";
 import React, { useCallback } from "react";
+import AfficherMessage from "../../../../../utils/AfficherMessage";
 import "./scss/ErrorsSignature.scss";
 
 interface ErreurSignatureProps {
@@ -17,7 +17,7 @@ export interface SignatureErreur {
 export const ErreurSignature: React.FC<ErreurSignatureProps> = ({ erreur }) => {
   const getErrorsDisplay = useCallback(() => {
     const texteErreur = erreur.typeErreur.libelle;
-    logError({ error: texteErreur });
+    AfficherMessage.erreur(texteErreur);
     return (
       <>
         <span className={"error-message"}>

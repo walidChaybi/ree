@@ -5,7 +5,7 @@ import "@scss/_colors.scss";
 import "@scss/_library.scss";
 import { FIREFOX, SeulementNavigateur } from "@util/detectionNavigateur/DetectionNavigateur";
 import { ErrorManager } from "@util/ErrorManager";
-import { TOASTCONTAINER_PRINCIPAL } from "@util/messageManager";
+import { DIX_MILLE } from "@util/Utils";
 import fr from "date-fns/locale/fr";
 import React from "react";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
@@ -14,6 +14,7 @@ import { ToastContainer } from "react-toastify";
 import { ConteneurParentModales } from "../../composants/commun/conteneurs/modale/ConteneurModale";
 import ProtectionDoubleOuverture from "../../composants/commun/conteneurs/ProtectionDoubleOuverture";
 import "../../index.css";
+import { TOASTCONTAINER_PRINCIPAL } from "../../utils/AfficherMessage";
 import "./App.scss";
 import { RECEContextProvider } from "./contexts/RECEContext";
 
@@ -45,13 +46,12 @@ const App: React.FC = () => {
                     containerId={TOASTCONTAINER_PRINCIPAL}
                     className={"toast-container"}
                     position="top-center"
-                    hideProgressBar={false}
                     newestOnTop={true}
                     closeOnClick={true}
                     rtl={false}
                     draggable={true}
                     pauseOnHover={true}
-                    enableMultiContainer={true}
+                    autoClose={DIX_MILLE}
                   />
                   <RouterProvider router={receRouter} />
                   <ConteneurParentModales />

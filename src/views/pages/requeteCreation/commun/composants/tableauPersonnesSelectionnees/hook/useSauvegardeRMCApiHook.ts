@@ -2,9 +2,8 @@ import { postSauvegardePersonneEtActeSelectionne } from "@api/appels/requeteApi"
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { RolePersonneSauvegardee } from "@model/requete/enum/RolePersonneSauvegardee";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
-import { logError } from "@util/LogManager";
-import messageManager from "@util/messageManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../../../../utils/AfficherMessage";
 import { IDataTableauActeInscriptionSelectionne } from "../../tableauActesInscriptionsSelectionnes/IDataTableauActeInscriptionSelectionne";
 import { IDataTableauPersonneSelectionnee } from "../IDataTableauPersonneSelectionne";
 
@@ -58,12 +57,11 @@ export function useSauvegardeRMCApiHook(params?: ISauvegardeRMCApiHookParams): I
       postSauvegardePersonneEtActeSelectionne(params.idRequete, mapPersonneEtActeSelectionne(params))
         .then(res => {
           setResultat({ estValide: true });
-          messageManager.showSuccessAndClose("Enregistrement effectué avec succès !");
+          AfficherMessage.succes("Enregistrement effectué avec succès !", { fermetureAuto: true });
         })
-        .catch(error => {
-          logError({
-            messageUtilisateur: "Impossible de sauvegarder la selection des actes et des personnes",
-            error
+        .catch(erreurs => {
+          AfficherMessage.erreur("Impossible de sauvegarder la selection des actes et des personnes", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : []
           });
           setResultat({ estValide: false });
         });

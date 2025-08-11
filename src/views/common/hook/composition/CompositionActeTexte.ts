@@ -1,9 +1,9 @@
 import { HTTP_NOT_FOUND } from "@api/ApiManager";
 import { compositionApi } from "@api/appels/compositionApi";
 import { IDonneesComposition } from "@model/composition/commun/retourApiComposition/IDonneesComposition";
-import { logError } from "@util/LogManager";
 import { ZERO } from "@util/Utils";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export interface ICompositionActeTexteParams {
   acteTexteJson: string;
@@ -32,15 +32,15 @@ export const useCompositionActeTexteApiHook = (params?: ICompositionActeTextePar
                 }
           );
         })
-        .catch(error => {
-          if (error?.response.status === HTTP_NOT_FOUND) {
+        .catch(erreurs => {
+          if (erreurs?.response.status === HTTP_NOT_FOUND) {
             setResultat({
               erreur: "La visualisation de l'acte n'est pas disponible"
             });
           } else {
-            logError({
-              error,
-              messageUtilisateur: "Impossible d'obtenir les informations de l'acte"
+            AfficherMessage.erreur("Impossible d'obtenir les informations de l'acte", {
+              erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+              fermetureAuto: true
             });
           }
         });

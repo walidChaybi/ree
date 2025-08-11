@@ -1,6 +1,6 @@
 import { postObservation } from "@api/appels/requeteApi";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export interface ICreationObservationParams {
   idRequete: string;
@@ -13,23 +13,17 @@ interface ICreationObservationResultat {
 }
 
 export function useCreationObservationApi(params?: ICreationObservationParams) {
-  const [resultat, setResultat] = useState<
-    ICreationObservationResultat | undefined
-  >();
+  const [resultat, setResultat] = useState<ICreationObservationResultat | undefined>();
   useEffect(() => {
     async function fetchData() {
       if (params && params.texteObservation && params.idRequete) {
         try {
-          const result = await postObservation(
-            params.idRequete,
-            params.texteObservation,
-            params.idObservation
-          );
+          const result = await postObservation(params.idRequete, params.texteObservation, params.idObservation);
           setResultat({ id: result.body.data });
-        } catch (error) {
-          logError({
-            messageUtilisateur: "Impossible de créer l'observation",
-            error
+        } catch (erreurs) {
+          AfficherMessage.erreur("Impossible de créer l'observation", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         }
       }

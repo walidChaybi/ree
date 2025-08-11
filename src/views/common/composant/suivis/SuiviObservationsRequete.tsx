@@ -7,10 +7,10 @@ import { ISuppressionObservationParams, useSuppressionObservationApi } from "@ho
 import { IObservation, Observation } from "@model/requete/IObservation";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
-import { logError } from "@util/LogManager";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { BoutonAccordionTitle } from "@widget/accordion/BoutonAccordionTitle";
 import React, { useContext, useEffect, useState } from "react";
+import AfficherMessage from "../../../../utils/AfficherMessage";
 import { IAjouterObservationFormValue, OBSERVATION, PopinAjouterObservation } from "./contenu/PopinAjouterObservation";
 import "./scss/Suivis.scss";
 
@@ -106,8 +106,8 @@ export const SuiviObservationsRequete: React.FC<SuiviObservationsRequeteProps> =
     if (utilisateurConnecte.id === ob.idUtilisateur && !props.disabled) {
       setObservationASupprimer({ idObservation: ob.id });
     } else {
-      logError({
-        messageUtilisateur: "Vous ne pouvez pas supprimer une observation que vous n'avez pas vous-même enregistrée"
+      AfficherMessage.erreur("Vous ne pouvez pas supprimer une observation que vous n'avez pas vous-même enregistrée", {
+        fermetureAuto: true
       });
     }
   };
@@ -118,8 +118,8 @@ export const SuiviObservationsRequete: React.FC<SuiviObservationsRequeteProps> =
       setTexteObservation(ob.texte);
       setIsOpen(true);
     } else {
-      logError({
-        messageUtilisateur: "Vous ne pouvez pas modifier une observation que vous n'avez pas vous-même enregistrée"
+      AfficherMessage.erreur("Vous ne pouvez pas modifier une observation que vous n'avez pas vous-même enregistrée", {
+        fermetureAuto: true
       });
     }
   };

@@ -1,9 +1,9 @@
-import { getDonneesPourCompositionActeTexte } from "@api/appels/etatcivilApi";
 import { IErreurTraitementApi } from "@api/IErreurTraitementApi";
+import { getDonneesPourCompositionActeTexte } from "@api/appels/etatcivilApi";
 import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
-import { logError } from "@util/LogManager";
 import { ZERO } from "@util/Utils";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export interface IGetDonneesPourCompositionActeTexteParams {
   idActe: string;
@@ -19,8 +19,7 @@ interface IGetDonneesPourCompositionActeTexteResultat {
 const useGetDonneesPourCompositionActeTexteApiHook = (
   params?: IGetDonneesPourCompositionActeTexteParams
 ): IGetDonneesPourCompositionActeTexteResultat | undefined => {
-  const [resultat, setResultat] =
-    useState<IGetDonneesPourCompositionActeTexteResultat>();
+  const [resultat, setResultat] = useState<IGetDonneesPourCompositionActeTexteResultat>();
 
   useEffect(() => {
     if (params) {
@@ -30,22 +29,18 @@ const useGetDonneesPourCompositionActeTexteApiHook = (
             acteTexteJson: reponse.body
           });
         })
-        .catch(errors => {
-          const premiereErreur: any | undefined =
-            errors?.response?.body?.errors[ZERO];
+        .catch(erreurs => {
+          const premiereErreur: any | undefined = erreurs?.response?.body?.errors[ZERO];
           const erreur: IErreurTraitementApi = {
             code: premiereErreur?.code,
             message: premiereErreur?.message
           };
-          if (
-            erreur.code === CodeErreurFonctionnelle.FCT_ACTE_SANS_CORPS_TEXTE
-          ) {
+          if (erreur.code === CodeErreurFonctionnelle.FCT_ACTE_SANS_CORPS_TEXTE) {
             setResultat({ acteTexteJson: "", erreur });
           } else {
-            logError({
-              error: errors,
-              messageUtilisateur:
-                "Une erreur est survenue lors de la récupération de l'acte texte."
+            AfficherMessage.erreur("Une erreur est survenue lors de la récupération de l'acte texte.", {
+              erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+              fermetureAuto: true
             });
           }
         });

@@ -1,6 +1,6 @@
 import { TAppelTraitement, TTraitementApi } from "@api/traitements/TTraitementApi";
-import { logError } from "@util/LogManager";
 import { useEffect, useMemo, useState } from "react";
+import AfficherMessage from "../../utils/AfficherMessage";
 
 type TInformationsTraitement<TReponseSucces, TParam> = {
   statut: "EN_ATTENTE_APPEL" | "EN_COURS" | "TERMINE";
@@ -51,7 +51,7 @@ const useTraitementApi = <TParam extends object | undefined, TReponseSucces>(tra
       ? informationsTraitement?.apresErreur?.(erreurTraitement.message)
       : informationsTraitement?.apresSucces?.(reponseTraitement);
     informationsTraitement?.finalement?.();
-    erreurTraitement.message && logError({ messageUtilisateur: erreurTraitement.message });
+    erreurTraitement.message && AfficherMessage.erreur(erreurTraitement.message, { fermetureAuto: true });
     setInformationsTraitement({ ...informationsDefaut });
   }, [informationsTraitement]);
 

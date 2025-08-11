@@ -11,8 +11,8 @@ import {
   ProjetActeNaissanceTranscriptionForm
 } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import messageManager from "@util/messageManager";
 import { SaisieProjetActeTranscritContext } from "../../../../../contexts/SaisieProjetActeTranscritContextProvider";
+import AfficherMessage from "../../../../../utils/AfficherMessage";
 import Bouton from "../../../../commun/bouton/Bouton";
 import { ConteneurBoutonBasDePage } from "../../../../commun/bouton/conteneurBoutonBasDePage/ConteneurBoutonBasDePage";
 import PageChargeur from "../../../../commun/chargeurs/PageChargeur";
@@ -63,11 +63,11 @@ const FormulaireSaisieProjet: React.FC = () => {
         );
 
         setModaleOuverte(true);
-        messageManager.showSuccessAndClose("Le projet d'acte a bien été enregistré");
+        AfficherMessage.succes("Le projet d'acte a bien été enregistré", { fermetureAuto: true });
       },
       apresErreur: messageErreur => {
         console.error(`Erreur: ${messageErreur}`);
-        messageManager.showError("Une erreur est survenue lors du traitement");
+        AfficherMessage.erreur("Une erreur est survenue lors du traitement");
       }
     });
   };
@@ -86,13 +86,13 @@ const FormulaireSaisieProjet: React.FC = () => {
       },
       apresSucces: projetActeReponse => {
         mettreAJourDonneesContext(projetActeReponse || projetActe, null);
-        messageManager.showSuccessAndClose("Le projet d'acte a bien été enregistré");
+        AfficherMessage.succes("Le projet d'acte a bien été enregistré", { fermetureAuto: true });
 
         valeursSaisies.soumissionFormulaire.apresEnregistrement && valeursSaisies.soumissionFormulaire.apresEnregistrement();
       },
       apresErreur: messageErreur => {
         console.error(`Erreur: ${messageErreur}`);
-        messageManager.showError("Une erreur est survenue lors du traitement");
+        AfficherMessage.erreur("Une erreur est survenue lors du traitement");
       }
     });
   };

@@ -1,11 +1,11 @@
 import { CONFIG_GET_MODELE_TEXTE } from "@api/configurations/etatCivil/acte/transcription/GetModeleTexteConfigApi";
 import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
-import messageManager from "@util/messageManager";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { SaisieProjetActeTranscritContext } from "../../../../../contexts/SaisieProjetActeTranscritContextProvider";
 import { EEventState, useEventState } from "../../../../../hooks/EventHook";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
+import AfficherMessage from "../../../../../utils/AfficherMessage";
 import DateRECE from "../../../../../utils/DateRECE";
 import ModeleTexte, { EModeleTexteDocument } from "../../../../../utils/ModeleTexte";
 import ComposantChargeur from "../../../../commun/chargeurs/ComposantChargeur";
@@ -77,8 +77,8 @@ const ApercuProjetActe: React.FC = () => {
         ModeleTexte.enregistrerModeleTexteDocument(donneesModeleTexte.natureProjet, donneesModeleTexte.modeleTexte);
         setModeleTexte(ModeleTexte.creer(donneesModeleTexte.modeleTexte));
       },
-      apresErreur: () => {
-        messageManager.showErrorAndClose("Erreur lors de la récupération du modèle texte du projet d'acte");
+      apresErreur: erreurs => {
+        AfficherMessage.erreur("Erreur lors de la récupération du modèle texte du projet d'acte", { erreurs, fermetureAuto: true });
       }
     });
   }, [requete.natureActeTranscrit]);

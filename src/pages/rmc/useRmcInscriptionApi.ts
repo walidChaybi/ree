@@ -4,9 +4,9 @@ import { IRMCActeInscriptionForm, RMCActeInscriptionForm } from "@model/form/rmc
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import ResultatRMCInscription, { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { IParamsTableau, PARAMS_TABLEAU_VIDE, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
-import messageManager from "@util/messageManager";
 import { useCallback } from "react";
 import useFetchApi from "../../hooks/api/FetchApiHook";
+import AfficherMessage from "../../utils/AfficherMessage";
 
 export const useRmcInscriptionApi = (
   setDataRMCInscription: React.Dispatch<React.SetStateAction<TResultatRMCInscription[] | null>>,
@@ -40,8 +40,11 @@ export const useRmcInscriptionApi = (
         setDataTableauRMCInscription(getParamsTableauDepuisHeaders(headers));
         setIdFicheActe(ficheIdentifiant);
       },
-      apresErreur: () => {
-        messageManager.showErrorAndClose("Impossible de récupérer les inscriptions via la recherche multi-critères");
+      apresErreur: erreurs => {
+        AfficherMessage.erreur("Impossible de récupérer les inscriptions via la recherche multi-critères", {
+          erreurs,
+          fermetureAuto: true
+        });
       }
     });
   }, []);

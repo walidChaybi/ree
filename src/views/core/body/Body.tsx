@@ -3,10 +3,10 @@ import { IErreurConnexion, RECEContextData } from "@core/contexts/RECEContext";
 import { routesRece } from "@router/ReceRoutes";
 import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { GestionnaireFermeture } from "@util/GestionnaireFermeture";
-import messageManager from "@util/messageManager";
 import { FilAriane } from "@widget/filAriane/FilAriane";
 import React, { useContext } from "react";
 import { Outlet } from "react-router";
+import AfficherMessage from "../../../utils/AfficherMessage";
 import { PageMessage } from "../login/PageMessage";
 
 const getMessageErreur = (erreurConnexion: IErreurConnexion | null) => {
@@ -17,7 +17,7 @@ const getMessageErreur = (erreurConnexion: IErreurConnexion | null) => {
     case Boolean(erreurConnexion?.avecErreur):
       return "Votre compte utilisateur n'est pas actif - Veuillez vous adresser à votre administrateur RECE";
     default:
-      messageManager.showError("Impossible de récupérer les informations utilisateur via le service de login");
+      AfficherMessage.erreur("Impossible de récupérer les informations utilisateur via le service de login");
 
       return "Erreur Système";
   }

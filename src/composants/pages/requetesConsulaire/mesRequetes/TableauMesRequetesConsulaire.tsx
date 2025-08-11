@@ -4,9 +4,9 @@ import { IRequeteTableauConsulaire, mappingRequetesTableauConsulaire } from "@mo
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { UN } from "@util/Utils";
-import messageManager from "@util/messageManager";
 import { useCallback, useContext, useEffect, useState } from "react";
 import useNavigationRequeteTableauConsulaire from "../../../../hooks/requeteConsulaire/NavigationRequeteTableauConsulaireHook";
+import AfficherMessage from "../../../../utils/AfficherMessage";
 import PageChargeur from "../../../commun/chargeurs/PageChargeur";
 import Tableau, { IEnTeteTableau, TSensTri } from "../../../commun/tableau/Tableau";
 
@@ -155,9 +155,9 @@ const TableauMesRequetesConsulaire: React.FC = () => {
           totalLignes: totalLignes
         });
       })
-      .catch(e => {
-        console.error(`Une erreur est survenue lors de l'appel API GET requêtes consulaire ${JSON.stringify(e)}`);
-        messageManager.showErrorAndClose("Impossible de récupérer les requêtes consulaires");
+      .catch(erreurs => {
+        console.error(`Une erreur est survenue lors de l'appel API GET requêtes consulaire ${JSON.stringify(erreurs)}`);
+        AfficherMessage.erreur("Impossible de récupérer les requêtes consulaires", { erreurs, fermetureAuto: true });
       })
       .finally(() => setEnRecuperation(false));
   }, [parametresTableau]);

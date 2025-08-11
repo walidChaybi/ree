@@ -9,9 +9,9 @@ import {
 } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
 import { IRequeteTableauCreation, mappingUneRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { getParamsTableauDepuisReponseApi, IParamsTableau } from "@util/GestionDesLiensApi";
-import { logError } from "@util/LogManager";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { useContext, useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
 
 export function useRequeteCreationApiHook(
   typeRequete: TypeAppelRequete,
@@ -36,10 +36,10 @@ export function useRequeteCreationApiHook(
           setDataState(mesRequetes);
           setParamsTableau(getParamsTableauDepuisReponseApi(result));
         }
-      } catch (error) {
-        logError({
-          messageUtilisateur: "Impossible de récupérer les requêtes de création",
-          error
+      } catch (erreurs) {
+        AfficherMessage.erreur("Impossible de récupérer les requêtes de création", {
+          erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+          fermetureAuto: true
         });
       }
     }

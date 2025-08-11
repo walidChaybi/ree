@@ -21,11 +21,11 @@ import {
   URL_REQUETES_DELIVRANCE_SERVICE,
   URL_REQUETES_INFORMATION_SERVICE
 } from "@router/ReceUrls";
-import messageManager from "@util/messageManager";
 import AccessibleAvecDroits from "../../composants/commun/accessibleAvecDroits/AccessibleAvecDroits";
 import Bouton from "../../composants/commun/bouton/Bouton";
 import useFetchApi from "../../hooks/api/FetchApiHook";
 import { useTitreDeLaFenetre } from "../../hooks/utilitaires/TitreDeLaFenetreHook";
+import AfficherMessage from "../../utils/AfficherMessage";
 
 interface ILienAccueil {
   libelle: string;
@@ -150,13 +150,13 @@ const PageAccueil: React.FC = () => {
     getNombreRequetesInformation({
       parametres: { query: { statuts: [StatutRequete.PRISE_EN_CHARGE.nom, StatutRequete.TRANSFEREE.nom].join(",") } },
       apresSucces: nombre => setNombreRequetesInformation(nombre),
-      apresErreur: () => messageManager.showError("Erreur lors de la récupération du nombre de requêtes d'information")
+      apresErreur: erreurs => AfficherMessage.erreur("Erreur lors de la récupération du nombre de requêtes d'information", { erreurs })
     });
 
     getNombreRequetes({
       parametres: { query: { statuts: StatutRequete.TRAITE_REPONDU.nom } },
       apresSucces: nombre => setNombreRequetes(nombre),
-      apresErreur: () => messageManager.showError("Erreur lors de la récupération du nombre de requêtes")
+      apresErreur: erreurs => AfficherMessage.erreur("Erreur lors de la récupération du nombre de requêtes", { erreurs })
     });
   }, []);
 

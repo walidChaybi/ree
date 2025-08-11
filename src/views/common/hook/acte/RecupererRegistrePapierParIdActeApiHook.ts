@@ -2,9 +2,9 @@ import { getRegistrePapierParIdProjetActe } from "@api/appels/etatcivilApi";
 import { IRegistre } from "@model/etatcivil/acte/IRegistre";
 import { ITypeRegistre } from "@model/etatcivil/acte/TypeRegistre";
 import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
-import { logError } from "@util/LogManager";
 import { getValeurOuUndefined } from "@util/Utils";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export interface IRecupererRegistrePapierParIdActeParams {
   idActe?: string;
@@ -17,10 +17,10 @@ export const useRecupererRegistrePapierParIdActeApiHook = (params?: IRecupererRe
     if (params?.idActe) {
       getRegistrePapierParIdProjetActe(params.idActe)
         .then(reponse => setRegistre(mapRegistre(reponse.body.data)))
-        .catch((erreur: any) => {
-          logError({
-            error: erreur,
-            messageUtilisateur: "Impossible de récupérer le registre papier du projet d'acte."
+        .catch((erreurs: any) => {
+          AfficherMessage.erreur("Impossible de récupérer le registre papier du projet d'acte.", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         });
     }

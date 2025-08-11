@@ -13,8 +13,6 @@ import {
   URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
   URL_RECHERCHE_REQUETE
 } from "@router/ReceUrls";
-import { logError } from "@util/LogManager";
-import messageManager from "@util/messageManager";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 import Bouton from "../../composants/commun/bouton/Bouton";
@@ -24,6 +22,7 @@ import ResumeDetailsRequete from "../../composants/pages/requetesConsulaire/comm
 import ConteneurVoletEdition from "../../composants/pages/requetesDelivrance/editionRequete/ConteneurVoletEdition";
 import useFetchApi from "../../hooks/api/FetchApiHook";
 import { useTitreDeLaFenetre } from "../../hooks/utilitaires/TitreDeLaFenetreHook";
+import AfficherMessage, { estTableauErreurApi } from "../../utils/AfficherMessage";
 
 enum ECleOngletPage {
   DESCRIPTION = "description"
@@ -75,8 +74,8 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
         setRequete(mappingRequeteCreation(data) as IRequeteCreationTranscription);
         setIsDirty(false);
       },
-      apresErreur: () => {
-        messageManager.showError("Une erreur est survenue lors de la récupération des informations de l'acte");
+      apresErreur: erreurs => {
+        AfficherMessage.erreur("Une erreur est survenue lors de la récupération des informations de l'acte", { erreurs });
         navigate(-1);
       }
     });
@@ -99,9 +98,9 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
         navigate(URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID.replace(":idRequeteParam", requete.id));
       },
       apresErreur: erreurs =>
-        logError({
-          error: erreurs[0],
-          messageUtilisateur: "Impossible de démarrer le traitement du projet d'acte."
+        AfficherMessage.erreur("Impossible de démarrer le traitement du projet d'acte.", {
+          erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+          fermetureAuto: true
         })
     });
   };

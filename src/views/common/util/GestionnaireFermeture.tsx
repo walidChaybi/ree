@@ -5,8 +5,8 @@ import { executeEnDiffere } from "@util/Utils";
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import apiResources from "../../../ressources/api.json";
+import AfficherMessage from "../../../utils/AfficherMessage";
 import { getCsrfHeader } from "./CsrfUtil";
-import messageManager from "./messageManager";
 
 const TIME_OUT_MS = 2000;
 
@@ -92,7 +92,7 @@ const traiteAppelRequeteASigner = (nbRequeteASigner: number) => {
   if (nbRequeteASigner > 0) {
     executeEnDiffere(function () {
       const msg = `Il reste ${nbRequeteASigner} requête(s) à signer`;
-      messageManager.showWarningAndClose(msg);
+      AfficherMessage.avertissement(msg, { fermetureAuto: true });
     }, TIME_OUT_MS);
   }
   return nbRequeteASigner > 0;

@@ -12,8 +12,8 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
-import messageManager from "@util/messageManager";
 import { useState } from "react";
+import AfficherMessage from "../../../../../utils/AfficherMessage";
 import { ICreationOuMiseAJourRDCResultat } from "./SoumissionFormulaireRDCHook";
 
 export const useRedirectionApresSoumissionRDCHook = (
@@ -35,7 +35,7 @@ export const useRedirectionApresSoumissionRDCHook = (
   const redirectionPage = async (requeteSauvegardee: IRequeteDelivrance) => {
     // Si l'appel s'est terminé sans erreur
     if (requeteSauvegardee) {
-      messageManager.showSuccessAndClose("La requête a bien été enregistrée");
+      AfficherMessage.succes("La requête a bien été enregistrée", { fermetureAuto: true });
       setNavigationApercuDelivranceParams({
         requete: mappingRequeteDelivranceToRequeteTableau(requeteSauvegardee),
         urlCourante

@@ -1,7 +1,7 @@
 import { deleteDocumentsReponseApi } from "@api/appels/requeteApi";
 import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../../../../../utils/AfficherMessage";
 
 export function useSupprimerAnciensDocumentsReponseHook(idRequete?: string, dataRMCAutoInscription?: TResultatRMCInscription[]): boolean {
   const [isOldDocumentDeleted, setIsOldDocumentDeleted] = useState<boolean>(false);
@@ -11,10 +11,9 @@ export function useSupprimerAnciensDocumentsReponseHook(idRequete?: string, data
         try {
           await deleteDocumentsReponseApi(idRequete);
           setIsOldDocumentDeleted(true);
-        } catch (error) {
-          logError({
-            messageUtilisateur: "Impossible de supprimer les documents réponses",
-            error
+        } catch (erreurs) {
+          AfficherMessage.erreur("Impossible de supprimer les documents réponses", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : []
           });
         }
       }

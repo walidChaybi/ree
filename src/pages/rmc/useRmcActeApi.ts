@@ -4,9 +4,9 @@ import { IRMCActeInscriptionForm, RMCActeInscriptionForm } from "@model/form/rmc
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { IParamsTableau, PARAMS_TABLEAU_VIDE, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
-import messageManager from "@util/messageManager";
 import { useCallback } from "react";
 import useFetchApi from "../../hooks/api/FetchApiHook";
+import AfficherMessage from "../../utils/AfficherMessage";
 
 export const useRmcActeApi = (
   setDataRMCActe: React.Dispatch<React.SetStateAction<ResultatRMCActe[] | null>>,
@@ -36,8 +36,8 @@ export const useRmcActeApi = (
         setDataTableauRMCActe(getParamsTableauDepuisHeaders(headers));
         setIdFicheActe(ficheIdentifiant);
       },
-      apresErreur: () => {
-        messageManager.showErrorAndClose("Impossible de récupérer les actes de la recherche multi-critères");
+      apresErreur: erreurs => {
+        AfficherMessage.erreur("Impossible de récupérer les actes de la recherche multi-critères", { erreurs, fermetureAuto: true });
       }
     });
   }, []);

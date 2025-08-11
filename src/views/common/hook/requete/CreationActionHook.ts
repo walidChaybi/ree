@@ -1,6 +1,6 @@
 import { postCreationAction } from "@api/appels/requeteApi";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 interface ICreationActionParams {
   libelleAction?: string;
@@ -15,10 +15,10 @@ export function usePostCreationActionApi(params?: ICreationActionParams) {
         .then(result => {
           setIdAction(result.body.data);
         })
-        .catch(error => {
-          logError({
-            error,
-            messageUtilisateur: "Impossible de créer l'action pour la requête"
+        .catch(erreurs => {
+          AfficherMessage.erreur("Impossible de créer l'action pour la requête", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         });
     }

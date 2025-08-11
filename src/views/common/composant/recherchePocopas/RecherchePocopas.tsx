@@ -1,11 +1,12 @@
 import { getPocopasOuvertsOuFermerParFamille, getPocopasParFamille } from "@api/appels/etatcivilApi";
 import { Option } from "@util/Type";
 import { estRenseigne, getValeurOuUndefined, premiereLettreEnMajusculeLeResteEnMinuscule } from "@util/Utils";
-import messageManager from "@util/messageManager";
+
 import { ChampRechercheField } from "@widget/formulaire/champRecherche/ChampRechercheField";
 import { INomForm, SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 interface RecherchePocopasProps {
   label: string;
@@ -53,8 +54,11 @@ function useRecherchePocopa(debutPocopa: string, familleRegistre: string, nombre
           } else {
             pocopas = await getPocopasParFamille(debutPocopa, getValeurOuUndefined(familleRegistre), nombreResultatsMax);
           }
-        } catch (error) {
-          messageManager.showErrorAndClose("Une erreur est survenue lors de la récupération des pocopas");
+        } catch (erreurs) {
+          AfficherMessage.erreur("Une erreur est survenue lors de la récupération des pocopas", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
+          });
         }
         setPocopasState(pocopas.body.data);
       } else {

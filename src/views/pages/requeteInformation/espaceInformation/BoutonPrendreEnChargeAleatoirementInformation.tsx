@@ -7,11 +7,11 @@ import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID } from "@router/ReceUrls";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
-import messageManager from "@util/messageManager";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import AfficherMessage from "../../../../utils/AfficherMessage";
 
 const BoutonPrendreEnChargeAleatoirementInformation: React.FC = (props: any) => {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const BoutonPrendreEnChargeAleatoirementInformation: React.FC = (props: any) => 
           callback: redirectApercuRequeteInfo
         });
       } else if (!requeteAleatoireResultat.requete) {
-        messageManager.showInfoAndClose("Il n'existe plus de requêtes disponibles à la prise en charge");
+        AfficherMessage.info("Il n'existe plus de requêtes disponibles à la prise en charge", { fermetureAuto: true });
       }
       setOperationEnCours(false);
       setPrendreEnCharge(false);

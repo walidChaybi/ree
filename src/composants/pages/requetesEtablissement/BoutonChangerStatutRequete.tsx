@@ -3,10 +3,10 @@ import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Option } from "@util/Type";
-import messageManager from "@util/messageManager";
 import { Form, Formik } from "formik";
 import React, { useContext, useMemo, useState } from "react";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
+import AfficherMessage from "../../../utils/AfficherMessage";
 import SchemaValidation from "../../../utils/SchemaValidation";
 import Bouton from "../../commun/bouton/Bouton";
 import ChampListeDeroulante from "../../commun/champs/ChampListeDeroulante";
@@ -89,10 +89,13 @@ export const BoutonChangerStatutRequete: React.FC<IBoutonChangerStatutRequetePro
                   },
                   apresSucces: () => {
                     setModaleChangementDeStatutOuverte(false);
-                    messageManager.showSuccessAndClose("Le statut a bien été mise à jour");
+                    AfficherMessage.succes("Le statut a bien été mis à jour", { fermetureAuto: true });
                   },
                   apresErreur: erreurs =>
-                    messageManager.showErrorAndClose("Une erreur s'est produite lors de la mise à jour du statut de la requête")
+                    AfficherMessage.erreur("Une erreur s'est produite lors de la mise à jour du statut de la requête", {
+                      erreurs,
+                      fermetureAuto: true
+                    })
                 });
               }}
             >

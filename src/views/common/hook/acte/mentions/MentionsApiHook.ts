@@ -4,8 +4,8 @@ import { ITypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { INatureMention, NatureMention } from "@model/etatcivil/enum/NatureMention";
 import DateUtils from "@util/DateUtils";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
 import { StatutMention } from "./../../../../../model/etatcivil/enum/StatutMention";
 
 export interface IMentionsParams {
@@ -26,12 +26,12 @@ export function useMentionsApiHook(params?: IMentionsParams) {
         .then(result => {
           setMentions({ mentions: mappingMentions(result.body.data) });
         })
-        .catch(error => {
+        .catch(erreurs => {
           /* istanbul ignore next */
           setMentions({ mentions: undefined });
-          logError({
-            messageUtilisateur: "Impossible de récupérer les mentions pour cet acte",
-            error
+          AfficherMessage.erreur("Impossible de récupérer les mentions pour cet acte", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         });
     }

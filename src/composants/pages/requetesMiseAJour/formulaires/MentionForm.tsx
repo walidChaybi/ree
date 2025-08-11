@@ -5,12 +5,12 @@ import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IMetaModeleTypeMentionDto, MetaModeleTypeMention } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
 import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
-import messageManager from "@util/messageManager";
 import { Form, Formik } from "formik";
 import { useEffect, useMemo, useState } from "react";
 import * as Yup from "yup";
 import { EEventState, useEventDispatch, useEventState } from "../../../../hooks/EventHook";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
+import AfficherMessage from "../../../../utils/AfficherMessage";
 import SchemaValidation from "../../../../utils/SchemaValidation";
 import Bouton from "../../../commun/bouton/Bouton";
 import ChampZoneTexte from "../../../commun/champs/ChampZoneTexte";
@@ -170,8 +170,8 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
             mentionAffecteAnalyseMarginale: typeMentionChoisi.affecteAnalyseMarginale
           });
         },
-        apresErreur: () => {
-          messageManager.showError("Impossible de récupérer les metamodeles");
+        apresErreur: erreurs => {
+          AfficherMessage.erreur("Impossible de récupérer les metamodeles", { erreurs });
           setValeurDefaut((prec: any) => ({ ...prec, texteMention: "" }));
         }
       });

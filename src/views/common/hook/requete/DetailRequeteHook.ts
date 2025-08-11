@@ -42,8 +42,8 @@ import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import { IPieceJustificativeCreation, PieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
 import DateUtils from "@util/DateUtils";
-import { logError } from "@util/LogManager";
 import { useContext, useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 import { AvancementProjetActe } from "./../../../../model/requete/enum/AvancementProjetActe";
 import { NatureProjetEtablissement } from "./../../../../model/requete/enum/NatureProjetEtablissement";
 import { RolePersonneSauvegardee } from "./../../../../model/requete/enum/RolePersonneSauvegardee";
@@ -112,10 +112,10 @@ async function fetchDetailRequete(
         }
       }
     }
-  } catch (error) {
-    logError({
-      messageUtilisateur: "Impossible de récupérer le détail de la requête",
-      error
+  } catch (erreurs) {
+    AfficherMessage.erreur("Impossible de récupérer le détail de la requête", {
+      erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+      fermetureAuto: true
     });
   }
 }

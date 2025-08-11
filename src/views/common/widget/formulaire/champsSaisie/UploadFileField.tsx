@@ -1,9 +1,10 @@
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import messageManager from "@util/messageManager";
+
 import { Option, Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import React, { useEffect, useRef, useState } from "react";
+import AfficherMessage from "../../../../../utils/AfficherMessage";
 import { Base64File, ExtensionDocumentTypeMime, getBase64FichierEtLeValide } from "../../../../../utils/FileUtils";
 
 interface UploadFileFieldProps {
@@ -42,7 +43,7 @@ const UploadFileField: React.FC<UploadFileFieldProps> = props => {
       setFileState(base64File);
       props.onFileChange(base64File, menuItemState);
     } catch (error) {
-      messageManager.showErrorAndClose((error as Error).message);
+      AfficherMessage.erreur((error as Error).message, { fermetureAuto: true });
     }
   };
   const handleCloseMenu = () => {

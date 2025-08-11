@@ -5,9 +5,9 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { getLibelle } from "@util/Utils";
-import messageManager from "@util/messageManager";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import React, { useEffect, useState } from "react";
+import AfficherMessage from "../../../../utils/AfficherMessage";
 import { CodePinForm, CodePinFormValues } from "./CodePinForm";
 import { useSignatureHook } from "./hook/SignatureHook";
 import { ErreurSignature, SignatureErreur } from "./messages/ErreurSignature";
@@ -19,10 +19,7 @@ export interface PopinSignatureProps {
   estOuvert: boolean;
   setEstOuvert: React.Dispatch<React.SetStateAction<boolean>>;
   documentASigner: string;
-  onSuccesSignature: (
-    documentAvecSignature: string,
-    infosSignature: IInfosCarteSignature
-  ) => void;
+  onSuccesSignature: (documentAvecSignature: string, infosSignature: IInfosCarteSignature) => void;
   informations?: IDetailInfos[];
   etatTraitementSignature: IEtatTraitementSignature;
   timeoutTraitementSignature?: number;
@@ -33,11 +30,7 @@ export const PopinSignature: React.FC<PopinSignatureProps> = props => {
   const [codePin, setCodePin] = useState<string | undefined>();
   const [signatureEnCours, setSignatureEnCours] = useState(false);
 
-  const resultatSignature = useSignatureHook(
-    props.documentASigner,
-    codePin,
-    props.informations
-  );
+  const resultatSignature = useSignatureHook(props.documentASigner, codePin, props.informations);
 
   useEffect(() => {
     if (props.estOuvert) {
@@ -57,10 +50,7 @@ export const PopinSignature: React.FC<PopinSignatureProps> = props => {
         setSignatureEnCours(false);
         setCodePin(undefined);
       } else {
-        props.onSuccesSignature(
-          resultatSignature.data.document,
-          resultatSignature.data.infosSignature
-        );
+        props.onSuccesSignature(resultatSignature.data.document, resultatSignature.data.infosSignature);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -91,10 +81,8 @@ export const PopinSignature: React.FC<PopinSignatureProps> = props => {
   const onTimeoutEnd = () => {
     setSignatureEnCours(false);
     setCodePin(undefined);
-    messageManager.showError(
-      getLibelle(
-        "Une erreur inconnue est survenue. Veuillez réessayer ultérieurement. Si le problème persiste, merci de contacter le BIMO."
-      )
+    AfficherMessage.erreur(
+      "Une erreur inconnue est survenue. Veuillez réessayer ultérieurement. Si le problème persiste, merci de contacter le BIMO."
     );
   };
 
@@ -105,9 +93,7 @@ export const PopinSignature: React.FC<PopinSignatureProps> = props => {
       aria-describedby="alert-dialog-description"
       className="popin-signature"
     >
-      <DialogTitle id="alert-dialog-title">
-        {getLibelle(props.titre)}
-      </DialogTitle>
+      <DialogTitle id="alert-dialog-title">{getLibelle(props.titre)}</DialogTitle>
       <DialogContent>
         {erreurSignature && <ErreurSignature erreur={erreurSignature} />}
         <div className="texte-popin-signature">{getLibelle(props.texte)}</div>

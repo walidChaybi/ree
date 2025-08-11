@@ -1,7 +1,7 @@
 import { compositionApi, ICompositionDto } from "@api/appels/compositionApi";
 import { IProjetActeComposition } from "@model/composition/acte/IProjetActeComposition";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 interface ICompositionProjetActeApiHookResultat {
   documentComposer: ICompositionDto;
@@ -20,10 +20,10 @@ export function useCompositionProjetActeApiHook(params?: ICompositionProjetActeP
         .then(res => {
           setDocument(res.body?.data);
         })
-        .catch(error => {
-          logError({
-            error,
-            messageUtilisateur: "Erreur lors de la génération du pdf à composer"
+        .catch(erreurs => {
+          AfficherMessage.erreur("Erreur lors de la génération du pdf à composer", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         });
     }

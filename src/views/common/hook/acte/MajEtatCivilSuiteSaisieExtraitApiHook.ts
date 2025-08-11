@@ -2,8 +2,8 @@ import { majEtatCivilSuiteSaisieExtrait } from "@api/appels/etatcivilApi";
 import { IDetailMariage } from "@model/etatcivil/acte/IDetailMariage";
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export interface IExtraitSaisiAEnvoyer {
   evenementActe: IEvenement;
@@ -25,11 +25,8 @@ interface IMajEtatCivilSuiteSaisieExtraitResultat {
   data: any;
 }
 
-export function useMajEtatCivilSuiteSaisieExtrait(
-  params?: IMajEtatCivilSuiteSaisieExtraitParams
-) {
-  const [resultat, setResultat] =
-    useState<IMajEtatCivilSuiteSaisieExtraitResultat>();
+export function useMajEtatCivilSuiteSaisieExtrait(params?: IMajEtatCivilSuiteSaisieExtraitParams) {
+  const [resultat, setResultat] = useState<IMajEtatCivilSuiteSaisieExtraitResultat>();
 
   useEffect(() => {
     if (params) {
@@ -37,11 +34,10 @@ export function useMajEtatCivilSuiteSaisieExtrait(
         .then((result: any) => {
           setResultat({ data: result.body.data });
         })
-        .catch((error: any) => {
-          logError({
-            messageUtilisateur:
-              "Impossible d'enregistrer la saisie de l'extrait",
-            error
+        .catch((erreurs: any) => {
+          AfficherMessage.erreur("Impossible d'enregistrer la saisie de l'extrait", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         });
     }

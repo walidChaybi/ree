@@ -1,6 +1,6 @@
 import { postValiderProjetActe } from "@api/appels/requeteApi";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 interface IValiderProjetActeParams {
   idRequete: string;
@@ -21,10 +21,10 @@ export function useValiderProjetActeApiHook(params?: IValiderProjetActeParams): 
             setProjetEstValide(true);
           }
         })
-        .catch((error: any) => {
-          logError({
-            error,
-            messageUtilisateur: "Impossible de valider le projet d'acte, veuillez réessayer"
+        .catch((erreurs: any) => {
+          AfficherMessage.erreur("Impossible de valider le projet d'acte, veuillez réessayer", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         });
     }

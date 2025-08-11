@@ -1,7 +1,7 @@
 import { addAlerteActe } from "@api/appels/etatcivilApi";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 import { mapAlerteActe } from "./MappingAlertesActe";
 
 export interface AddAlerteActeApiHookParameters {
@@ -10,9 +10,7 @@ export interface AddAlerteActeApiHookParameters {
   complementDescription: string;
 }
 
-export function useAddAlerteActeApiHook(
-  parameters?: AddAlerteActeApiHookParameters
-) {
+export function useAddAlerteActeApiHook(parameters?: AddAlerteActeApiHookParameters) {
   const [alerte, setAlerte] = useState<IAlerte>();
   useEffect(() => {
     if (parameters) {
@@ -21,11 +19,10 @@ export function useAddAlerteActeApiHook(
           const alerteActe = mapAlerteActe(result?.body?.data);
           setAlerte(alerteActe);
         })
-        .catch((error: any) => {
-          logError({
-            messageUtilisateur:
-              "Une erreur est survenue lors de l'ajout de l'alerte",
-            error
+        .catch((erreurs: any) => {
+          AfficherMessage.erreur("Une erreur est survenue lors de l'ajout de l'alerte", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         });
     }

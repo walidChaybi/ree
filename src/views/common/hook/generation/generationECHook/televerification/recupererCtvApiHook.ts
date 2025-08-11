@@ -1,6 +1,6 @@
 import { getCodeCtv } from "@api/appels/televerificationApi";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../../../utils/AfficherMessage";
 
 interface IRecupererCTVResultat {
   ctv: string;
@@ -15,11 +15,11 @@ export function useRecupererCTV(params?: {}): IRecupererCTVResultat | undefined 
         .then(result => {
           setRes({ ctv: result.body.data });
         })
-        .catch(error => {
+        .catch(erreurs => {
           /* istanbul ignore next */
-          logError({
-            messageUtilisateur: "Impossible de récupérer le code Ctv",
-            error
+          AfficherMessage.erreur("Impossible de récupérer le code Ctv", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         });
     }

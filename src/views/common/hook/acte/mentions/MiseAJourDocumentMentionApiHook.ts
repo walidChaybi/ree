@@ -1,6 +1,6 @@
 import { updateDocumentMention } from "@api/appels/requeteApi";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
 
 export interface IMiseAJourDocumentMentionParams {
   idDocument: string;
@@ -20,12 +20,12 @@ export function useMiseAJourDocumentMentionApiHook(params?: IMiseAJourDocumentMe
         .then(result => {
           setFait({ resultat: true });
         })
-        .catch(error => {
+        .catch(erreurs => {
           /* istanbul ignore next */
           setFait({ resultat: false });
-          logError({
-            messageUtilisateur: "Impossible de mettre à jour les mentions retirées du document ",
-            error
+          AfficherMessage.erreur("Impossible de mettre à jour les mentions retirées du document ", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         });
     } else {

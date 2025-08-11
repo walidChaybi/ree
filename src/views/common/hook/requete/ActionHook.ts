@@ -1,7 +1,7 @@
 import { postCreationActionEtMiseAjourStatut } from "@api/appels/requeteApi";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export interface ICreationActionEtMiseAjourStatutParams {
   libelleAction?: string;
@@ -22,10 +22,10 @@ export function usePostCreationActionEtMiseAjourStatutApi(params?: ICreationActi
         .then(result => {
           setIdAction(result.body.data);
         })
-        .catch(error => {
-          logError({
-            error,
-            messageUtilisateur: "Impossible de mettre à jour le statut de la requête ou de créer une action associée"
+        .catch(erreurs => {
+          AfficherMessage.erreur("Impossible de mettre à jour le statut de la requête ou de créer une action associée", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         });
     }

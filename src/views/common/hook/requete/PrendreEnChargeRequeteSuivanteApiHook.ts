@@ -1,9 +1,9 @@
-import { getPrendreEnChargeRequeteSuivante } from "@api/appels/requeteApi";
 import { IErreurTraitementApi } from "@api/IErreurTraitementApi";
+import { getPrendreEnChargeRequeteSuivante } from "@api/appels/requeteApi";
 import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage from "../../../../utils/AfficherMessage";
 
 interface IPrendreEnChargeRequeteSuivanteResultat {
   idRequete?: string;
@@ -31,9 +31,9 @@ export function usePrendreEnChargeRequeteSuivanteApiHook(
           if (erreurPlusDeRequeteDisponible) {
             setErreur(erreurPlusDeRequeteDisponible);
           } else {
-            logError({
-              messageUtilisateur: "Impossible de prendre en charge la requête suivante",
-              error: response.body.errors
+            AfficherMessage.erreur("Impossible de prendre en charge la requête suivante", {
+              erreurs: response.body.errors,
+              fermetureAuto: true
             });
           }
         });

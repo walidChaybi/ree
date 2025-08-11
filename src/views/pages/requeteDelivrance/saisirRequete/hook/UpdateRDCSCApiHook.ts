@@ -4,8 +4,8 @@ import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
 import { UpdateRequeteRDCSC } from "@model/form/delivrance/ISaisirRDCSCPageForm";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { logError } from "@util/LogManager";
 import { useContext, useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
 import { mappingFormulaireRDCSCVersRequeteDelivrance } from "./mappingFormulaireRDCSCVersRequeteDelivrance";
 
 interface IUpdateRequeteDelivranceRDCSCResultat {
@@ -39,10 +39,9 @@ export function useUpdateRequeteDelivranceRDCSC(
             refus: requeteRDCSC.refus
           });
         })
-        .catch((error: any) => {
-          logError({
-            messageUtilisateur: "Une erreur est survenue lors de la mise à jour de la requête",
-            error
+        .catch((erreurs: any) => {
+          AfficherMessage.erreur("Une erreur est survenue lors de la mise à jour de la requête", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : []
           });
         });
     }

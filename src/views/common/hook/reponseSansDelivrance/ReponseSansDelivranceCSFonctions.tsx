@@ -21,7 +21,7 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
-import messageManager from "@util/messageManager";
+import AfficherMessage from "../../../../utils/AfficherMessage";
 
 const ERREUR_PAS_DE_REQUERENT = "Erreur inattendue: Pas de requérant pour la requête";
 
@@ -32,7 +32,7 @@ export const createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete = 
   if (requete?.requerant) {
     return ReponseSansDelivranceCSDemandeIncompleteComposition.creerReponseSansDelivranceCS(requete);
   } else {
-    messageManager.showErrorAndClose(ERREUR_PAS_DE_REQUERENT);
+    AfficherMessage.erreur(ERREUR_PAS_DE_REQUERENT, { fermetureAuto: true });
     return {} as IReponseSansDelivranceCSDemandeIncompleteComposition;
   }
 };
@@ -44,7 +44,7 @@ export const createReponseSansDelivranceCSPourCompositionApiPACSNonInscrit = (
   if (requete?.requerant) {
     return ReponseSansDelivranceCSPACSNonInscritComposition.creerReponseSansDelivranceCS(requete, requete.canal);
   }
-  messageManager.showErrorAndClose(ERREUR_PAS_DE_REQUERENT);
+  AfficherMessage.erreur(ERREUR_PAS_DE_REQUERENT, { fermetureAuto: true });
   return {} as IReponseSansDelivranceCSPACSNonInscritComposition;
 };
 
@@ -55,7 +55,7 @@ export const createReponseSansDelivranceCSPourCompositionApiFrancais = (
   if (requete.requerant) {
     return ReponseSansDelivranceCSFrancaisComposition.creerReponseSansDelivranceCS(requete);
   }
-  messageManager.showErrorAndClose(ERREUR_PAS_DE_REQUERENT);
+  AfficherMessage.erreur(ERREUR_PAS_DE_REQUERENT, { fermetureAuto: true });
   return {} as IReponseSansDelivranceCSFrancaisComposition;
 };
 
@@ -68,7 +68,7 @@ export const createReponseSansDelivranceCSPourCompositionApiMariage = async (
     const infoActe = await getInformationsFicheActe(acte.id);
     return ReponseSansDelivranceCSMariageComposition.creerReponseSansDelivranceCS(requete, mapActe(infoActe.body.data));
   }
-  messageManager.showErrorAndClose(ERREUR_PAS_DE_REQUERENT);
+  AfficherMessage.erreur(ERREUR_PAS_DE_REQUERENT, { fermetureAuto: true });
   return {} as IReponseSansDelivranceCSMariageComposition;
 };
 

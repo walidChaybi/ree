@@ -4,9 +4,9 @@ import {
 } from "@api/configurations/composition/PostCompositionActeTexteApiConfigApi";
 import { ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
 import { TitulaireProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/TitulaireProjetActeTranscrit";
-import messageManager from "@util/messageManager";
 import { useEffect, useMemo, useState } from "react";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
+import AfficherMessage from "../../../../../utils/AfficherMessage";
 import AffichagePDF from "../../../../commun/affichageDocument/AffichagePDF";
 import Bouton from "../../../../commun/bouton/Bouton";
 import ConteneurModale from "../../../../commun/conteneurs/modale/ConteneurModale";
@@ -65,12 +65,12 @@ const ModaleProjetActe: React.FC<IModaleProjetActeProps> = ({ fermerModale, proj
         if (reponse.contenu) {
           setPdfBase64(reponse.contenu);
         } else {
-          messageManager.showWarning("L'aperçu PDF n'a pas pu être généré");
+          AfficherMessage.avertissement("L'aperçu PDF n'a pas pu être généré");
         }
       },
       apresErreur: messageErreur => {
         console.error(`Erreur lors de la génération du PDF : ${messageErreur}`);
-        messageManager.showError("Une erreur est survenue lors de la composition de l'acte");
+        AfficherMessage.erreur("Une erreur est survenue lors de la composition de l'acte", { erreurs: messageErreur });
       }
     });
   }, [projetActe]);

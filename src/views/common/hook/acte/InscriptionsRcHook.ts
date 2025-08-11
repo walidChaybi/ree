@@ -2,8 +2,8 @@ import { getInscriptionsRC } from "@api/appels/etatcivilApi";
 import { ETypeInscriptionRc } from "@model/etatcivil/enum/ETypeInscriptionRc";
 import { INatureRc, NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export function useGetInscriptionsRCApiHook(id?: string): IInscriptionRc[] {
   const [inscriptionsRC, setInscriptionsRC] = useState<IInscriptionRc[]>([]);
@@ -13,10 +13,10 @@ export function useGetInscriptionsRCApiHook(id?: string): IInscriptionRc[] {
         .then((result: any) => {
           setInscriptionsRC(mappingInscriptionsRC(result?.body));
         })
-        .catch((error: any) => {
-          logError({
-            messageUtilisateur: "Impossible de récupérer les inscriptions liées à une personne",
-            error
+        .catch((erreurs: any) => {
+          AfficherMessage.erreur("Impossible de récupérer les inscriptions liées à une personne", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         });
     }

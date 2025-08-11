@@ -1,5 +1,4 @@
 import { DATE_MES } from "@util/DateUtils";
-import { logError } from "@util/LogManager";
 import {
   DEUX,
   premiereLettreEnMinuscule,
@@ -11,6 +10,7 @@ import {
   TROIS,
   UN
 } from "@util/Utils";
+import AfficherMessage from "../../../utils/AfficherMessage";
 import { ChoixDelivrance } from "../../requete/enum/ChoixDelivrance";
 import { IPersonne } from "../commun/Personne";
 import { NatureActe } from "../enum/NatureActe";
@@ -403,11 +403,10 @@ const extraireMentionNationalite = (texte?: string): string => {
 
       mentionNationalite = `${matches?.[UN]} ${partieMilieu} ${entreParenthese}`;
     })
-    .catch(error => {
+    .catch(erreurs => {
       console.error("Le temps alloué à la recherche d'expression régulière a expiré.");
-      logError({
-        messageUtilisateur: "Erreur lors de l'extraction de la mention de nationalité.",
-        error
+      AfficherMessage.erreur("Erreur lors de l'extraction de la mention de nationalité.", {
+        fermetureAuto: true
       });
     });
 

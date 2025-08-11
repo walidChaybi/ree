@@ -11,9 +11,9 @@ import {
 } from "@model/form/delivrance/IFiltreServiceRequeteDelivrance";
 import { IRequeteTableauDelivrance, mappingRequetesTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { getParamsTableauDepuisReponseApi, IParamsTableau } from "@util/GestionDesLiensApi";
-import { logError } from "@util/LogManager";
 import { NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { useContext, useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
 
 export function useRequeteDelivranceApiHook(
   parametresLienRequete: IQueryParametersPourRequetes | undefined,
@@ -41,10 +41,9 @@ export function useRequeteDelivranceApiHook(
           setDataState(mesRequetes);
           setParamsTableau(getParamsTableauDepuisReponseApi(result));
         }
-      } catch (error) {
-        logError({
-          messageUtilisateur: "Impossible de récupérer les requêtes de délivrance",
-          error
+      } catch (erreurs) {
+        AfficherMessage.erreur("Impossible de récupérer les requêtes de délivrance", {
+          erreurs: estTableauErreurApi(erreurs) ? erreurs : []
         });
       }
     }

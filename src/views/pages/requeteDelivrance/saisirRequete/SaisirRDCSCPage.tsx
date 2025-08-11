@@ -11,7 +11,7 @@ import { ELibelleSousTypeDelivrance, ESousTypeDelivrance } from "@model/requete/
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { PATH_MODIFIER_RDCSC } from "@router/ReceUrls";
-import messageManager from "@util/messageManager";
+
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import { goBack } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
@@ -24,6 +24,7 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 import * as Yup from "yup";
 import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
+import AfficherMessage from "../../../../utils/AfficherMessage";
 import { PieceJointe } from "../../../../utils/FileUtils";
 import SaisirRequeteBoutons from "../../../common/composant/formulaire/boutons/SaisirRequeteBoutons";
 import { creerTitulaire, getMaxTitulaires, getPiecesJointesAMettreAJour, initialiserTitulaires } from "./contenu/SaisirRDCSCPageFonctions";
@@ -191,7 +192,7 @@ export const SaisirRDCSCPage: React.FC = () => {
 
   useEffect(() => {
     if (resultatReponseSansDelivranceCS) {
-      messageManager.showSuccessAndClose("Le refus a bien été enregistré");
+      AfficherMessage.succes("Le refus a bien été enregistré", { fermetureAuto: true });
 
       goBack(navigate);
     }

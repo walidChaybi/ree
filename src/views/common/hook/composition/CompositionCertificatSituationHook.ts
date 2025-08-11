@@ -1,16 +1,11 @@
 import { compositionApi } from "@api/appels/compositionApi";
-import { IDonneesComposition } from "@model/composition/commun/retourApiComposition/IDonneesComposition";
 import { ICertificatSituationComposition } from "@model/composition/ICertificatSituationComposition";
-import { logError } from "@util/LogManager";
-import { getLibelle } from "@util/Utils";
+import { IDonneesComposition } from "@model/composition/commun/retourApiComposition/IDonneesComposition";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
-export function useCertificatSituationApiHook(
-  certificatSituationComposition?: ICertificatSituationComposition
-) {
-  const [donneesComposition, setDonneesComposition] = useState<
-    IDonneesComposition | undefined
-  >();
+export function useCertificatSituationApiHook(certificatSituationComposition?: ICertificatSituationComposition) {
+  const [donneesComposition, setDonneesComposition] = useState<IDonneesComposition | undefined>();
 
   useEffect(() => {
     if (certificatSituationComposition) {
@@ -19,12 +14,10 @@ export function useCertificatSituationApiHook(
         .then(result => {
           setDonneesComposition(result.body.data);
         })
-        .catch(error => {
-          logError({
-            error,
-            messageUtilisateur: getLibelle(
-              "Impossible de créer le document de certificat de situation"
-            )
+        .catch(erreurs => {
+          AfficherMessage.erreur("Impossible de créer le document de certificat de situation", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         });
     }

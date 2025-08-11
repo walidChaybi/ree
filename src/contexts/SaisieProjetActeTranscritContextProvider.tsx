@@ -2,11 +2,11 @@ import TRAITEMENT_CHARGER_REQUETE_TRANSCRIPTION_ET_PROJET_ACTE_TRANSCRIT from "@
 import { ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import messageManager from "@util/messageManager";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import PageChargeur from "../composants/commun/chargeurs/PageChargeur";
 import useTraitementApi from "../hooks/api/TraitementApiHook";
+import AfficherMessage from "../utils/AfficherMessage";
 
 interface IRequeteEtProjetActe {
   requete: IRequeteCreationTranscription | null;
@@ -42,7 +42,7 @@ const SaisieProjetActeTranscritContextProvider: React.FC<
       parametres: { idRequete, estModeConsultation },
       apresSucces: setRequeteEtProjetActe,
       apresErreur: messageErreur => {
-        messageErreur && messageManager.showError(messageErreur);
+        messageErreur && AfficherMessage.erreur(messageErreur);
         navigate(-1);
       }
     });

@@ -14,8 +14,8 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
-import messageManager from "@util/messageManager";
 import { useCallback, useState } from "react";
+import AfficherMessage from "../../../../../utils/AfficherMessage";
 import { createReponseSansDelivranceCS } from "../contenu/SaisirRDCSCPageFonctions";
 import { ICreationOuMiseAJourRDCSCResultat } from "./SoumissionFormulaireRDCSCHook";
 
@@ -49,7 +49,7 @@ export const useRedirectionApresSoumissionRDCSCHook = (
             fichier: NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE
           });
         } else {
-          messageManager.showSuccessAndClose("La requête a bien été enregistrée");
+          AfficherMessage.succes("La requête a bien été enregistrée", { fermetureAuto: true });
           setNavigationApercuDelivranceParams({
             requete: mappingRequeteDelivranceToRequeteTableau(requeteSauvegardee),
             urlCourante

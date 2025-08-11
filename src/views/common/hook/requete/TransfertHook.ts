@@ -1,9 +1,9 @@
 import { postTransfertRequete } from "@api/appels/requeteApi";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { logError } from "@util/LogManager";
 import { getValeurOuVide } from "@util/Utils";
 import { useContext, useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 interface TransfertParams {
   idService?: string;
@@ -76,9 +76,8 @@ export function useTransfertsApi(params?: TransfertParLotParams) {
   return res;
 }
 
-const errorFct = (error: any) => {
-  logError({
-    error,
-    messageUtilisateur: "Impossible de mettre à jour le statut de la requête ou de créer une action associée"
+const errorFct = (erreurs: any) => {
+  AfficherMessage.erreur("Impossible de mettre à jour le statut de la requête ou de créer une action associée", {
+    erreurs: estTableauErreurApi(erreurs) ? erreurs : []
   });
 };

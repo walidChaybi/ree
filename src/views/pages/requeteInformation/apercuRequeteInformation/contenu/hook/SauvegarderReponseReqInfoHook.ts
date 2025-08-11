@@ -1,6 +1,6 @@
 import { sauvegarderReponseReqInfo } from "@api/appels/requeteApi";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../../../utils/AfficherMessage";
 
 export interface ISauvegarderReponseReqInfoParams {
   idRequete: string;
@@ -8,27 +8,18 @@ export interface ISauvegarderReponseReqInfoParams {
   idReponse?: string;
 }
 
-export function useSauvegarderReponsesReqInfoHook(
-  params: ISauvegarderReponseReqInfoParams | undefined
-) {
-  const [idReponseChoisie, setIdReponseChoisie] = useState<
-    string | undefined
-  >();
+export function useSauvegarderReponsesReqInfoHook(params: ISauvegarderReponseReqInfoParams | undefined) {
+  const [idReponseChoisie, setIdReponseChoisie] = useState<string | undefined>();
 
   useEffect(() => {
     if (params) {
-      sauvegarderReponseReqInfo(
-        params.idRequete,
-        params.corpsMail,
-        params.idReponse
-      )
+      sauvegarderReponseReqInfo(params.idRequete, params.corpsMail, params.idReponse)
         .then(result => {
           setIdReponseChoisie(result.body.data);
         })
-        .catch(error => {
-          logError({
-            messageUtilisateur: "Impossible de sauvegarder la réponse choisie",
-            error
+        .catch(erreurs => {
+          AfficherMessage.erreur("Impossible de sauvegarder la réponse choisie", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : []
           });
         });
     }

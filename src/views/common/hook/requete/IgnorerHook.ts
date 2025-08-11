@@ -1,6 +1,6 @@
 import { postIgnorerRequete } from "@api/appels/requeteApi";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export interface IgnorerParams {
   idRequete?: string;
@@ -15,10 +15,10 @@ export function useIgnorerApi(params?: IgnorerParams) {
         .then(result => {
           setRes(result.body.data);
         })
-        .catch(error => {
-          logError({
-            error,
-            messageUtilisateur: "Impossible d'ignorer la requête"
+        .catch(erreurs => {
+          AfficherMessage.erreur("Impossible d'ignorer la requête", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         });
     }

@@ -1,6 +1,6 @@
 import { patchMiseAJourLibellePJ } from "@api/appels/requeteApi";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
 
 export interface IMajLibellePjParams {
   idPJ: string;
@@ -20,10 +20,10 @@ export function useMiseAJourLibellePjApiHook(params?: IMajLibellePjParams) {
         .then(() => {
           setResultat({ resultat: true });
         })
-        .catch(error => {
-          logError({
-            error,
-            messageUtilisateur: "Impossible de mettre à jour le libellé de la pièce jointe"
+        .catch(erreurs => {
+          AfficherMessage.erreur("Impossible de mettre à jour le libellé de la pièce jointe", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         });
     }

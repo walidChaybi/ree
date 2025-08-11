@@ -1,20 +1,12 @@
-import {
-  getPieceComplementInformationById,
-  getPieceJustificativeById
-} from "@api/appels/requeteApi";
+import { getPieceComplementInformationById, getPieceJustificativeById } from "@api/appels/requeteApi";
 import { IPieceComplementInformation } from "@model/requete/pieceJointe/IPieceComplementInformation";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
 
-export function useGetPieceJointeApi(
-  type: TypePieceJointe,
-  id?: string
-): IPieceJustificative | IPieceComplementInformation | undefined {
-  const [PieceJointe, setPieceJointe] = useState<
-    IPieceJustificative | IPieceComplementInformation | undefined
-  >();
+export function useGetPieceJointeApi(type: TypePieceJointe, id?: string): IPieceJustificative | IPieceComplementInformation | undefined {
+  const [PieceJointe, setPieceJointe] = useState<IPieceJustificative | IPieceComplementInformation | undefined>();
   useEffect(() => {
     if (id && type === TypePieceJointe.PIECE_JUSTIFICATIVE) {
       getPieceJustificativeById(id)
@@ -38,10 +30,9 @@ export function useGetPieceJointeApi(
 }
 
 /* istanbul ignore next */
-function gereErreur(error: any) {
-  logError({
-    messageUtilisateur: "Impossible de récupérer le document",
-    error
+function gereErreur(erreurs: any) {
+  AfficherMessage.erreur("Impossible de récupérer le document", {
+    erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+    fermetureAuto: true
   });
 }
-

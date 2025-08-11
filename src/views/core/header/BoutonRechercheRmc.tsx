@@ -52,13 +52,11 @@ export const BoutonRechercheRmc: React.FC = () => {
                 containerId={"toastContainer-externe"}
                 className={"toast-container"}
                 position="top-center"
-                hideProgressBar={false}
                 newestOnTop={true}
                 closeOnClick={true}
                 rtl={false}
                 draggable={true}
                 pauseOnHover={true}
-                enableMultiContainer={true}
               />
             </>
           ) : (

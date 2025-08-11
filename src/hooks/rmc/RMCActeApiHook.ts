@@ -1,8 +1,8 @@
 import { CONFIG_POST_RMC_ACTE } from "@api/configurations/etatCivil/acte/PostRMCActeConfigApi";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { IParamsTableau, PARAMS_TABLEAU_VIDE, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
-import messageManager from "@util/messageManager";
 import { useEffect, useState } from "react";
+import AfficherMessage from "../../utils/AfficherMessage";
 import {
   ICriteresRechercheActeInscription,
   mappingCriteres,
@@ -47,9 +47,9 @@ export const useRMCActeApiHook = (
         });
         criteres.onFinTraitement?.();
       },
-      apresErreur: e => {
-        console.error("Erreur lors de la RMC acte :", e);
-        messageManager.showError("Une erreur est survenue lors de la recherche multi-critères d'actes");
+      apresErreur: erreurs => {
+        console.error("Erreur lors de la RMC acte :", erreurs);
+        AfficherMessage.erreur("Une erreur est survenue lors de la recherche multi-critères d'actes", { erreurs, fermetureAuto: true });
         criteres?.onErreur?.();
       }
     });

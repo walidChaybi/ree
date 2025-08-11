@@ -12,7 +12,7 @@ import {
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { Options } from "@util/Type";
-import messageManager from "@util/messageManager";
+import AfficherMessage from "../../../../../../../utils/AfficherMessage";
 
 function miseAJourMention(
   mentionSelect: IMentionAffichage | undefined,
@@ -24,7 +24,7 @@ function miseAJourMention(
 ) {
   // Si le texte est vide, on remet le texte de la liste
   if (mentionSelect?.texte === "") {
-    messageManager.showWarningAndClose("Le texte de la mention est obligatoire");
+    AfficherMessage.avertissement("Le texte de la mention est obligatoire", { fermetureAuto: true });
     const temp = { ...mentionSelect };
     temp.texte = mentions[index].texte;
     setMentionSelect(temp);

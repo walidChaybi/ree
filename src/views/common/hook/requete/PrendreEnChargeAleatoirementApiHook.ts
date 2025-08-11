@@ -1,12 +1,12 @@
 import { HTTP_NOT_FOUND } from "@api/ApiManager";
 import { getRequeteAleatoire } from "@api/appels/requeteApi";
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { TRequeteTableau } from "@model/requete/IRequeteTableau";
 import { mappingUneRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { mappingUneRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
-import { logError } from "@util/LogManager";
+import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { useContext, useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export interface IRequeteAleatoireResultat {
   requete: TRequeteTableau;
@@ -47,11 +47,11 @@ export function useGetRequeteAleatoire(type: TypeRequete, prendreEnCharge: boole
   return requeteAleatoireResultat;
 }
 
-export const gereErreur = (error: any, setRequeteAleatoireResultat: any) => {
-  error.response?.status === HTTP_NOT_FOUND
+export const gereErreur = (erreur: any, setRequeteAleatoireResultat: any) => {
+  erreur.response?.status === HTTP_NOT_FOUND
     ? setRequeteAleatoireResultat?.({ requete: undefined })
-    : logError({
-        messageUtilisateur: "Impossible de prendre en charge une requête",
-        error
+    : AfficherMessage.erreur("Impossible de prendre en charge une requête", {
+        erreurs: estTableauErreurApi(erreur) ? erreur : [],
+        fermetureAuto: true
       });
 };

@@ -9,10 +9,10 @@ import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 import useFetchApi from "../../../../../../hooks/api/FetchApiHook";
 import { MimeType } from "../../../../../../ressources/MimeType";
+import AfficherMessage, { estTableauErreurApi } from "../../../../../../utils/AfficherMessage";
 import { usePostDocumentsReponseApi } from "../../../DocumentReponseHook";
 import { useCertificatPacsRcRcaApiHook } from "../../../composition/CompositionCertificatPacsRcRca";
 import { TFiche, mapRcRca } from "../../../repertoires/MappingRepertoires";
@@ -81,10 +81,10 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
           setInformationsPacsRcRca(ficheRepertoire);
         }
       },
-      apresErreur: (error: any) => {
-        logError({
-          messageUtilisateur: "Impossible de récupérer les informations du répertoire",
-          error
+      apresErreur: (erreurs: any) => {
+        AfficherMessage.erreur("Impossible de récupérer les informations du répertoire", {
+          erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+          fermetureAuto: true
         });
       }
     });

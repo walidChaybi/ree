@@ -2,10 +2,9 @@ import { CONFIG_POST_RMC_ACTE } from "@api/configurations/etatCivil/acte/PostRMC
 import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { IParamsTableau, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
-import { logError } from "@util/LogManager";
-import messageManager from "@util/messageManager";
 import { useEffect, useState } from "react";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
+import AfficherMessage from "../../../../../utils/AfficherMessage";
 import { mappingCriteresRMCArchive } from "./RMCActeArchiveUtils";
 
 export interface ICriteresRechercheActeArchive {
@@ -41,12 +40,9 @@ export function useRMCActeArchiveApiHook(criteres?: ICriteresRechercheActeArchiv
           ficheIdentifiant: criteres.ficheIdentifiant
         });
       },
-      apresErreur: e => {
-        console.error("Erreur lors de la RMC acte :", e);
-        messageManager.showError("Une erreur est survenue lors de la recherche multi-critères d'actes");
-        logError({
-          messageUtilisateur: "Impossible de récupérer les actes de la recherche multi-critères"
-        });
+      apresErreur: erreurs => {
+        console.error("Erreur lors de la RMC acte :", erreurs);
+        AfficherMessage.erreur("Une erreur est survenue lors de la recherche multi-critères d'actes", { erreurs });
       }
     });
   }, [criteres]);

@@ -1,8 +1,8 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import messageManager from "@util/messageManager";
 import { IRoute } from "@util/route/IRoute";
 import { useContext, useMemo } from "react";
 import { Navigate, Outlet } from "react-router";
+import AfficherMessage from "../../utils/AfficherMessage";
 import { URL_ACCUEIL } from "./ReceUrls";
 
 interface IReceRouteProps {
@@ -40,7 +40,9 @@ const ReceRoute: React.FC<React.PropsWithChildren<IReceRouteProps>> = ({ route, 
   }, [route, utilisateurConnecte]);
 
   if (!auth) {
-    messageManager.showWarningAndClose("La page demandée n'est pas autorisée, vous avez été redirigé sur la page d'accueil");
+    AfficherMessage.avertissement("La page demandée n'est pas autorisée, vous avez été redirigé sur la page d'accueil", {
+      fermetureAuto: true
+    });
 
     return (
       <Navigate

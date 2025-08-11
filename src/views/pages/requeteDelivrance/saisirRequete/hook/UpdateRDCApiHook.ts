@@ -1,20 +1,16 @@
 import { updateRequeteDelivrance } from "@api/appels/requeteApi";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
-import { logError } from "@util/LogManager";
 import { useContext, useEffect, useState } from "react";
 import { UpdateRequeteRDC } from "../../../../../model/form/delivrance/ISaisirRDCPageForm";
+import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
 import { ICreationOuMiseAJourRDCResultat } from "./SoumissionFormulaireRDCHook";
 import { mappingFormulaireRDCVersRequeteDelivrance } from "./mappingFormulaireRDCVersRequeteDelivrance";
 
 type IUpdateRequeteDelivranceRDCResultat = ICreationOuMiseAJourRDCResultat;
 
-export function useUpdateRequeteDelivranceRDC(
-  requeteRDC?: UpdateRequeteRDC
-): IUpdateRequeteDelivranceRDCResultat | undefined {
-  const [resultat, setResultat] = useState<
-    IUpdateRequeteDelivranceRDCResultat | undefined
-  >();
+export function useUpdateRequeteDelivranceRDC(requeteRDC?: UpdateRequeteRDC): IUpdateRequeteDelivranceRDCResultat | undefined {
+  const [resultat, setResultat] = useState<IUpdateRequeteDelivranceRDCResultat | undefined>();
 
   const { utilisateurs } = useContext(RECEContextData);
 
@@ -35,11 +31,9 @@ export function useUpdateRequeteDelivranceRDC(
             refus
           });
         })
-        .catch((error: any) => {
-          logError({
-            messageUtilisateur:
-              "Une erreur est survenue lors de la mise à jour de la requête",
-            error
+        .catch((erreurs: any) => {
+          AfficherMessage.erreur("Une erreur est survenue lors de la mise à jour de la requête", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : []
           });
         });
     }

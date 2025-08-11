@@ -2,11 +2,11 @@ import { usePrendreEnChargeRequeteSuivanteApiHook } from "@hook/requete/PrendreE
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID } from "@router/ReceUrls";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
-import messageManager from "@util/messageManager";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import AfficherMessage from "../../../../utils/AfficherMessage";
 
 interface BoutonPrendreEnChargeRequeteSuivanteProps {
   typeRequete: TypeRequete;
@@ -27,7 +27,7 @@ const BoutonPrendreEnChargeRequeteSuivanteCreation: React.FC<BoutonPrendreEnChar
     if (idRequetePriseEnCharge) {
       navigate(getUrlWithParam(URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID, idRequetePriseEnCharge));
     } else if (erreurRequetePriseEnCharge) {
-      messageManager.showWarningAndClose("Il n'existe plus de requête à prendre en charge");
+      AfficherMessage.avertissement("Il n'existe plus de requête à prendre en charge", { fermetureAuto: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idRequetePriseEnCharge, erreurRequetePriseEnCharge]);

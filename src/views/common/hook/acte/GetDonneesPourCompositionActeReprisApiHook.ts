@@ -1,6 +1,6 @@
 import { getDonneesPourCompositionActeRepris } from "@api/appels/etatcivilApi";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export interface IGetDonneesPourCompositionActeReprisParams {
   idActe: string;
@@ -15,8 +15,7 @@ interface IGetDonneesPourCompositionActeReprisResultat {
 const useGetDonneesPourCompositionActeReprisApiHook = (
   params?: IGetDonneesPourCompositionActeReprisParams
 ): IGetDonneesPourCompositionActeReprisResultat | undefined => {
-  const [resultat, setResultat] =
-    useState<IGetDonneesPourCompositionActeReprisResultat>();
+  const [resultat, setResultat] = useState<IGetDonneesPourCompositionActeReprisResultat>();
 
   useEffect(() => {
     if (params) {
@@ -26,11 +25,10 @@ const useGetDonneesPourCompositionActeReprisApiHook = (
             acteTexteJson: reponse.body
           });
         })
-        .catch(error => {
-          logError({
-            error,
-            messageUtilisateur:
-              "Une erreur est survenue lors de la récupération de l'acte texte."
+        .catch(erreurs => {
+          AfficherMessage.erreur("Une erreur est survenue lors de la récupération de l'acte texte.", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         });
     }

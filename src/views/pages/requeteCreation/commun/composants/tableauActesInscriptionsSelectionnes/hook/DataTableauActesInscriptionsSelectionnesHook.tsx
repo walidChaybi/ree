@@ -2,12 +2,12 @@ import { useActesInscriptionsSauvegardesApiHook } from "@hook/acte/ActesInscript
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
 import { ZERO } from "@util/Utils";
-import messageManager from "@util/messageManager";
 import React, { useEffect, useState } from "react";
 import {
   ActeInscriptionSauvegardeDto,
   IActeInscriptionSauvegardeDto
 } from "../../../../../../../dto/etatcivil/acte/actesInscriptionsSauvegardes/IActeInscriptionSauvegardeDto";
+import AfficherMessage from "../../../../../../../utils/AfficherMessage";
 import { IDataTableauActeInscriptionSelectionne } from "../IDataTableauActeInscriptionSelectionne";
 
 interface IDataTableauActesInscriptionsSelectionnesHook {
@@ -47,8 +47,9 @@ export function useDataTableauActesInscriptionsSelectionnesHook(
         setDataActesInscriptionsSelectionnes(data);
 
         if (auMoinsUnParametreActeInscriptionSauvegardeManque(actesInscriptionsSauvegardesParams, resultatActesInscriptionsSauvegardes)) {
-          messageManager.showWarningAndClose(
-            "Au moins une des lignes du tableau des actes et des inscriptions sauvegardés pour le projet n'a pu être retrouvée suite à une modification de l'élément correspondant."
+          AfficherMessage.avertissement(
+            "Au moins une des lignes du tableau des actes et des inscriptions sauvegardés pour le projet n'a pu être retrouvée suite à une modification de l'élément correspondant.",
+            { fermetureAuto: true }
           );
         }
       } else {

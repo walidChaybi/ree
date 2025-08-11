@@ -5,8 +5,8 @@ import {
   URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
   URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID
 } from "@router/ReceUrls";
-import messageManager from "@util/messageManager";
 import { useNavigate } from "react-router";
+import AfficherMessage from "../../utils/AfficherMessage";
 import useFetchApi from "../api/FetchApiHook";
 
 const useNavigationRequeteTableauConsulaire = () => {
@@ -29,7 +29,7 @@ const useNavigationRequeteTableauConsulaire = () => {
           },
           apresErreur: erreurs => {
             console.error("Erreur lors de la mise à jour du statut:", erreurs);
-            messageManager.showErrorAndClose("Impossible de prendre en charge la requête");
+            AfficherMessage.erreur("Impossible de prendre en charge la requête", { erreurs, fermetureAuto: true });
           }
         });
         break;
@@ -44,7 +44,7 @@ const useNavigationRequeteTableauConsulaire = () => {
         break;
 
       default:
-        messageManager.showErrorAndClose(`Statut non reconnu: "${statut}"`);
+        AfficherMessage.erreur(`Statut non reconnu: "${statut}"`, { fermetureAuto: true });
     }
   };
 

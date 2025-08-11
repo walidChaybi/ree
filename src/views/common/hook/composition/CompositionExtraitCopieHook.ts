@@ -2,9 +2,14 @@ import { compositionApi } from "@api/appels/compositionApi";
 import { IDonneesComposition } from "@model/composition/commun/retourApiComposition/IDonneesComposition";
 import { IExtraitCopieComposition } from "@model/composition/extraitCopie/IExtraitCopieComposition";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { logError, LogErrorMsg } from "@util/LogManager";
-import { getLibelle } from "@util/Utils";
 import { useEffect, useState } from "react";
+import AfficherMessage from "../../../../utils/AfficherMessage";
+
+interface LogErrorMsg {
+  messageUtilisateur?: string;
+  error?: any;
+  errorInfo?: React.ErrorInfo | string;
+}
 
 export interface IExtraitCopieApiHookResultat {
   donneesComposition?: IDonneesComposition;
@@ -16,23 +21,17 @@ export interface IExtraitCopieApiHookParams {
 }
 
 export function useExtraitCopieApiHook(params?: IExtraitCopieApiHookParams) {
-  const [extraitCopieApiHookResultat, setExtraitCopieApiHookResultat] =
-    useState<IExtraitCopieApiHookResultat>();
+  const [extraitCopieApiHookResultat, setExtraitCopieApiHookResultat] = useState<IExtraitCopieApiHookResultat>();
 
   useEffect(() => {
     if (params && params.extraitCopieComposition) {
       let apiCompositionAAppeler;
       if (ChoixDelivrance.estPlurilingue(params.choixDelivrance)) {
-        apiCompositionAAppeler =
-          compositionApi.getCompositionExtraitPlurilingue;
-      } else if (
-        params.extraitCopieComposition.corps_image &&
-        params.extraitCopieComposition.corps_image.length > 0
-      ) {
+        apiCompositionAAppeler = compositionApi.getCompositionExtraitPlurilingue;
+      } else if (params.extraitCopieComposition.corps_image && params.extraitCopieComposition.corps_image.length > 0) {
         apiCompositionAAppeler = compositionApi.getCompositionCopieActeImage;
       } else {
-        apiCompositionAAppeler =
-          compositionApi.getCompositionExtraitOuCopieActeTexte;
+        apiCompositionAAppeler = compositionApi.getCompositionExtraitOuCopieActeTexte;
       }
 
       apiCompositionAAppeler(params.extraitCopieComposition)
@@ -41,16 +40,17 @@ export function useExtraitCopieApiHook(params?: IExtraitCopieApiHookParams) {
             donneesComposition: result.body.data
           });
         })
-        .catch(error => {
+        .catch(erreurs => {
           /* istanbul ignore next */
-          const erreur = {
-            error,
-            messageUtilisateur: getLibelle(
-              "Impossible de créer le document extrait ou copie de l'acte"
-            )
-          };
-          logError(erreur);
-          setExtraitCopieApiHookResultat({ erreur });
+          const messageUtilisateur = "Impossible de créer le document extrait ou copie de l'acte";
+
+          setExtraitCopieApiHookResultat({
+            erreur: {
+              error: erreurs,
+              messageUtilisateur
+            }
+          });
+          AfficherMessage.erreur(messageUtilisateur, { erreurs });
         });
     }
   }, [params]);

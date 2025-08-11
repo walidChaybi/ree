@@ -1,8 +1,8 @@
 import { CONFIG_POST_RMC_INSCRIPTION } from "@api/configurations/etatCivil/acte/PostRMCInscriptionConfigApi";
 import ResultatRMCInscription, { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { IParamsTableau, PARAMS_TABLEAU_VIDE, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
-import messageManager from "@util/messageManager";
 import { useEffect, useState } from "react";
+import AfficherMessage from "../../utils/AfficherMessage";
 import {
   ICriteresRechercheActeInscription,
   mappingCriteres,
@@ -52,7 +52,7 @@ export const useRMCInscriptionApiHook = (
       },
       apresErreur: erreurs => {
         console.error("Erreur lors de la RMC inscription :", erreurs);
-        messageManager.showError("Une erreur est survenue lors de la recherche multi-critères de RC/RCA/PACS");
+        AfficherMessage.erreur("Une erreur est survenue lors de la recherche multi-critères de RC/RCA/PACS", { erreurs });
         criteres.onErreur?.();
       }
     });

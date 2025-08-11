@@ -1,8 +1,8 @@
 import { CONFIG_GET_NOMBRE_REQUETES } from "@api/configurations/requete/GetNombreRequetesConfigApi";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import messageManager from "@util/messageManager";
 import React, { useEffect, useState } from "react";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
+import AfficherMessage from "../../../../../utils/AfficherMessage";
 import "./scss/CompteurRequete.scss";
 
 interface CompteurRequeteProps {
@@ -17,7 +17,7 @@ export const CompteurRequete: React.FC<CompteurRequeteProps> = props => {
     getNombreRequetes({
       parametres: { query: { statuts: StatutRequete.A_SIGNER.nom } },
       apresSucces: nombre => setNombreRequetes(nombre),
-      apresErreur: () => messageManager.showError("Erreur lors de la récupération du nombre de requêtes")
+      apresErreur: erreurs => AfficherMessage.erreur("Erreur lors de la récupération du nombre de requêtes", { erreurs })
     });
   }, [props.reloadCompteur]);
 

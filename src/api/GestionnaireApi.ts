@@ -10,8 +10,8 @@ import {
 } from "@model/api/Api";
 import { CSRF_HEADER_NAME, getCsrfCookieValue } from "@util/CsrfUtil";
 import { Generateur } from "@util/generateur/Generateur";
-import messageManager from "@util/messageManager";
 import * as superagent from "superagent";
+import AfficherMessage from "../utils/AfficherMessage";
 
 const ID_CORRELATION_HEADER_NAME = "X-Correlation-Id";
 
@@ -84,10 +84,13 @@ export class GestionnaireApi {
         };
 
         if (process.env.NODE_ENV === "development" && erreur.status !== codeErreurForbidden) {
-          messageManager.showErrors([
-            `[DEV] Une erreur ${erreur.status} est survenue`,
-            ...erreur.erreurs.map((erreur: { message: any }) => `[DEV] ${erreur.message}`)
-          ]);
+          AfficherMessage.erreur(
+            [
+              `[DEV] Une erreur ${erreur.status} est survenue`,
+              ...erreur.erreurs.map((erreur: { message: any }) => `[DEV] ${erreur.message}`)
+            ],
+            { erreurs }
+          );
         }
 
         return Promise.reject<TReponseApiEchec>(erreur);

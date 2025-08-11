@@ -14,9 +14,9 @@ import { DocumentDelivrance, IDocumentDelivrance } from "@model/requete/enum/Doc
 import { IPaysSecabilite, PaysSecabilite } from "@model/requete/enum/PaysSecabilite";
 import { ITypePieceJustificative, TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { ITypePopinSignature, TypePopinSignature } from "@model/signature/ITypePopinSignature";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
+import AfficherMessage from "../../../utils/AfficherMessage";
 import { TRAITEMENT_SANS_ERREUR, TRAITEMENT_SANS_REPONSE, TTraitementApi } from "../TTraitementApi";
 
 interface IAppelsNomenclatures {
@@ -109,14 +109,16 @@ export const TRAITEMENT_GET_NOMENCLATURES: TTraitementApi = {
           TypeAlerte.init(nomenclaturesEtatCivil.typesAlerte);
           TypePopinSignature.init(nomenclaturesEtatCivil.popinsSignatures);
         },
-        apresErreur: () => logError({ messageUtilisateur: "Erreur lors de la récupération des nomenclatures État Civil" }),
+        apresErreur: erreurs =>
+          AfficherMessage.erreur("Erreur lors de la récupération des nomenclatures État Civil", { erreurs, fermetureAuto: true }),
         finalement: () => {
           finAppel("etatCivil");
           appelNomenclaturesTypeMention({
             apresSucces: typeMentionDtos => {
               TypeMention.init(typeMentionDtos);
             },
-            apresErreur: () => logError({ messageUtilisateur: "Erreur lors de la récupération des types mention" }),
+            apresErreur: erreurs =>
+              AfficherMessage.erreur("Erreur lors de la récupération des types mention", { erreurs, fermetureAuto: true }),
             finalement: () => finAppel("typeMention")
           });
         }
@@ -151,7 +153,7 @@ export const TRAITEMENT_GET_NOMENCLATURES: TTraitementApi = {
           DocumentDelivrance.init(nomenclaturesRequete.documentsDelivrance);
           PaysSecabilite.init(nomenclaturesRequete.paysSecabilite);
         },
-        apresErreur: () => logError({ messageUtilisateur: "Erreur lors de la récupération des nomenclatures Requête" }),
+        apresErreur: erreurs => AfficherMessage.erreur("Erreur lors de la récupération des nomenclatures Requête", { erreurs }),
         finalement: () => {
           finAppel("requete");
         }
@@ -160,7 +162,7 @@ export const TRAITEMENT_GET_NOMENCLATURES: TTraitementApi = {
       appelParametreBaseRequete({
         parametres: { body: CLES },
         apresSucces: ParametreBaseRequete.init,
-        apresErreur: () => logError({ messageUtilisateur: "Erreur lors de la récupération des paramètres de la base requête" }),
+        apresErreur: erreurs => AfficherMessage.erreur("Erreur lors de la récupération des paramètres de la base requête", { erreurs }),
         finalement: () => {
           finAppel("parametreBaseRequete");
         }

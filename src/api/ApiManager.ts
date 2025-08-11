@@ -3,10 +3,10 @@
 import { URL_BASE } from "@router/ReceUrls";
 import { logInfoDansLaConsole } from "@util/Console";
 import { getCsrfHeader } from "@util/CsrfUtil";
-import { Generateur } from "@util/generateur/Generateur";
 import { GestionnaireCache, ReceCache } from "@util/GestionnaireCache";
-import messageManager from "@util/messageManager";
+import { Generateur } from "@util/generateur/Generateur";
 import * as superagent from "superagent";
+import AfficherMessage from "../utils/AfficherMessage";
 
 export const ID_CORRELATION_HEADER_NAME = "X-Correlation-Id";
 const EXPIRATION_CACHE_SECONDS = 43200; // Expiration du cache au bout de 12h (43200 secondes)
@@ -176,7 +176,7 @@ export class ApiManager {
       window.location.replace(URL_BASE);
     } else if (process.env.NODE_ENV === "development" && error.status !== HTTP_FORBIDDEN) {
       errorType = "toutesErreursSaufForbidden";
-      messageManager.showError(`Une erreur est survenue: ${error ? error.message : "inconnue"}`);
+      AfficherMessage.erreur(`Une erreur est survenue: ${error ? error.message : "inconnue"}`, { erreurs: error });
     } else if (process.env.NODE_ENV === "test") {
       const message = `Erreur mock api: ${error?.uri}`;
 

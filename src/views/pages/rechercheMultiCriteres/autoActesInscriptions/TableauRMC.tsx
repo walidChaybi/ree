@@ -17,10 +17,8 @@ import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMC
 import ResultatRMCInscription, { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { IParamsTableau, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
-import { logError } from "@util/LogManager";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import messageManager from "@util/messageManager";
 import { stockageDonnees } from "@util/stockageDonnees";
 import {
   NB_LIGNES_PAR_APPEL_ACTE,
@@ -36,6 +34,7 @@ import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
 import { useRMCActeApiHook } from "../../../../hooks/rmc/RMCActeApiHook";
 import { useRMCInscriptionApiHook } from "../../../../hooks/rmc/RMCInscriptionApiHook";
+import AfficherMessage from "../../../../utils/AfficherMessage";
 import { StockageLocal } from "../../../../utils/StockageLocal";
 import { RMCActeInscriptionResultats } from "../acteInscription/resultats/RMCActeInscriptionResultats";
 import { goToLinkRMC } from "../acteInscription/resultats/RMCTableauCommun";
@@ -90,10 +89,7 @@ export const TableauRMC: React.FC<ITableauRMCProps> = ({ requete, ...props }) =>
       },
       apresErreur: erreurs => {
         console.error("Erreur lors de la RMC auto acte :", erreurs);
-        messageManager.showError("Une erreur est survenue lors de la recherche multi-critères automatique d'actes");
-        logError({
-          messageUtilisateur: "Impossible de récupérer les actes de la recherche multi-critères automatique"
-        });
+        AfficherMessage.erreur("Une erreur est survenue lors de la recherche multi-critères automatique d'actes", { erreurs });
       }
     });
   }, [requete]);
@@ -120,7 +116,7 @@ export const TableauRMC: React.FC<ITableauRMCProps> = ({ requete, ...props }) =>
       },
       apresErreur: erreurs => {
         console.error("Erreur lors de la RMC auto inscription :", erreurs);
-        messageManager.showError("Une erreur est survenue lors de la recherche multi-critères automatique de RC/RCA/PACS");
+        AfficherMessage.erreur("Une erreur est survenue lors de la recherche multi-critères automatique de RC/RCA/PACS", { erreurs });
       }
     });
   }, [requete]);
@@ -237,7 +233,7 @@ export const TableauRMC: React.FC<ITableauRMCProps> = ({ requete, ...props }) =>
     (values: any) => {
       const messageErreur = getMessageSiVerificationRestrictionRmcActeInscriptionCriteresEnErreur(values);
       if (messageErreur) {
-        messageManager.showErrorAndClose(messageErreur);
+        AfficherMessage.erreur(messageErreur, { fermetureAuto: true });
       } else {
         setPopinAffichee(false);
         setResetRMCActeInscription(true);

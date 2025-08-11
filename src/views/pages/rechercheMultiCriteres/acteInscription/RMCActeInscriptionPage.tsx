@@ -1,6 +1,5 @@
 import { ICriteresRechercheActeInscription } from "@hook/rmcActeInscription/RMCActeInscriptionUtils";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
-import messageManager, { TOASTCONTAINER_PRINCIPAL } from "@util/messageManager";
 import { stockageDonnees } from "@util/stockageDonnees";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import {
@@ -14,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
 import { useRMCActeApiHook } from "../../../../hooks/rmc/RMCActeApiHook";
 import { useRMCInscriptionApiHook } from "../../../../hooks/rmc/RMCInscriptionApiHook";
+import AfficherMessage, { TOASTCONTAINER_PRINCIPAL } from "../../../../utils/AfficherMessage";
 import { RMCActeInscription } from "./RMCActeInscription";
 import { RMCActeInscriptionResultats } from "./resultats/RMCActeInscriptionResultats";
 import { goToLinkRMC } from "./resultats/RMCTableauCommun";
@@ -115,7 +115,10 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({ 
     (values: IRMCActeInscription) => {
       const messageErreur = getMessageSiVerificationRestrictionRmcActeInscriptionCriteresEnErreur(values);
       if (messageErreur) {
-        messageManager.showErrorAndClose(messageErreur, dansFenetreExterne ? TOASTCONTAINER_EXTERNE : TOASTCONTAINER_PRINCIPAL);
+        AfficherMessage.erreur(messageErreur, {
+          idConteneur: dansFenetreExterne ? TOASTCONTAINER_EXTERNE : TOASTCONTAINER_PRINCIPAL,
+          fermetureAuto: true
+        });
       } else {
         setOpEnCours(true);
         setNouvelleRMCActeInscription(true);
@@ -192,13 +195,11 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({ 
           containerId={TOASTCONTAINER_EXTERNE}
           className={"toast-container"}
           position="top-center"
-          hideProgressBar={false}
           newestOnTop={true}
           closeOnClick={true}
           rtl={false}
           draggable={true}
           pauseOnHover={true}
-          enableMultiContainer={true}
         />
       )}
     </>

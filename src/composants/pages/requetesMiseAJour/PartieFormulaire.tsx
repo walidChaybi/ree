@@ -9,10 +9,10 @@ import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetRe
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import MiseAJourForm from "@model/form/miseAJour/MiseAJourForm";
-import messageManager from "@util/messageManager";
 import { useContext, useEffect, useState } from "react";
 import { ECleOngletsMiseAJour, EditionMiseAJourContext } from "../../../contexts/EditionMiseAJourContextProvider";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
+import AfficherMessage from "../../../utils/AfficherMessage";
 import { ConteneurBoutonBasDePage } from "../../commun/bouton/conteneurBoutonBasDePage/ConteneurBoutonBasDePage";
 import PageChargeur from "../../commun/chargeurs/PageChargeur";
 import OngletsBouton from "../../commun/onglets/OngletsBouton";
@@ -100,7 +100,7 @@ const PartieFormulaire: React.FC = () => {
           }
         })();
 
-        messageManager.showErrorAndClose(messageErreur);
+        AfficherMessage.erreur(messageErreur, { erreurs, fermetureAuto: true });
       }
     };
 
@@ -149,7 +149,8 @@ const PartieFormulaire: React.FC = () => {
           sexe: titulaireRep.sexe ?? null
         });
       },
-      apresErreur: () => messageManager.showError("Une erreur est survenue lors de la récupération des informations de l'acte")
+      apresErreur: erreurs =>
+        AfficherMessage.erreur("Une erreur est survenue lors de la récupération des informations de l'acte", { erreurs })
     });
   }, []);
 

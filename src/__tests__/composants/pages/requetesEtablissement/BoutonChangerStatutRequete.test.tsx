@@ -6,11 +6,11 @@ import { Droit } from "@model/agent/enum/Droit";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import messageManager from "@util/messageManager";
 import { RouterProvider } from "react-router";
 import { describe, expect, test, vi } from "vitest";
 import { ConteneurParentModales } from "../../../../composants/commun/conteneurs/modale/ConteneurModale";
 import { BoutonChangerStatutRequete } from "../../../../composants/pages/requetesEtablissement/BoutonChangerStatutRequete";
+import AfficherMessage from "../../../../utils/AfficherMessage";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 
 describe("Test de la fonctionnalité de changement de statut d'une requête", () => {
@@ -148,8 +148,7 @@ describe("Test de la fonctionnalité de changement de statut d'une requête", ()
     const mockApi = MockApi.getMock();
 
     render(<RouterProvider router={routerBoutonChangerStatutAvecDroit()} />);
-    const logMessageSucces = vi.fn();
-    messageManager.showSuccessAndClose = logMessageSucces;
+    AfficherMessage.succes = vi.fn();
 
     await waitFor(() => {
       expect(screen.queryByRole("button", { name: /Changer Statut/i })).toBeDefined();
@@ -179,7 +178,9 @@ describe("Test de la fonctionnalité de changement de statut d'une requête", ()
       expect(screen.queryByText("Motif du changement")).toBeNull();
       expect(screen.queryByRole("button", { name: /Annuler/i })).toBeNull();
       expect(screen.queryByRole("button", { name: /Valider/i })).toBeNull();
-      expect(logMessageSucces).toHaveBeenCalledWith("Le statut a bien été mise à jour");
+      expect(AfficherMessage.succes).toHaveBeenCalledWith("Le statut a bien été mis à jour", {
+        fermetureAuto: true
+      });
     });
 
     await waitFor(() => {
@@ -190,8 +191,7 @@ describe("Test de la fonctionnalité de changement de statut d'une requête", ()
   });
 
   test("LORSQUE l'api requete renvoi une erreur ALORS on reste sur la modale", async () => {
-    const logMessageErreur = vi.fn();
-    messageManager.showErrorAndClose = logMessageErreur;
+    AfficherMessage.erreur = vi.fn();
 
     MockApi.deployer(
       CONFIG_PATCH_STATUT_REQUETE_CREATION,
@@ -230,7 +230,10 @@ describe("Test de la fonctionnalité de changement de statut d'une requête", ()
       expect(screen.queryByText("Motif du changement")).toBeDefined();
       expect(screen.queryByRole("button", { name: /Annuler/i })).toBeDefined();
       expect(screen.queryByRole("button", { name: /Valider/i })).toBeDefined();
-      expect(logMessageErreur).toHaveBeenCalledWith("Une erreur s'est produite lors de la mise à jour du statut de la requête");
+      expect(AfficherMessage.erreur).toHaveBeenCalledWith("Une erreur s'est produite lors de la mise à jour du statut de la requête", {
+        fermetureAuto: true,
+        erreurs: []
+      });
     });
 
     await waitFor(() => {

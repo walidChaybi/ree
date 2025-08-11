@@ -1,7 +1,7 @@
 import { getDocumentReponseById, postDocumentReponseApi } from "@api/appels/requeteApi";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../utils/AfficherMessage";
 
 export function useGetDocumentReponseApi(idDocumentReponse?: string): IDocumentReponse | undefined {
   const [documentReponse, setDocumentReponse] = useState<IDocumentReponse | undefined>();
@@ -11,10 +11,9 @@ export function useGetDocumentReponseApi(idDocumentReponse?: string): IDocumentR
         try {
           const result = await getDocumentReponseById(idDocumentReponse);
           setDocumentReponse(result.body.data);
-        } catch (error) {
-          logError({
-            messageUtilisateur: "Impossible de récupérer le document",
-            error
+        } catch (erreurs) {
+          AfficherMessage.erreur("Impossible de récupérer le document", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : []
           });
         }
       } else {
@@ -35,10 +34,9 @@ export function usePostDocumentsReponseApi(idRequete?: string, documentsReponse?
         try {
           const result = await postDocumentReponseApi(idRequete, documentsReponse);
           setUuidPostDocuments(result.body.data);
-        } catch (error) {
-          logError({
-            messageUtilisateur: "Impossible de stocker les documents",
-            error
+        } catch (erreurs) {
+          AfficherMessage.erreur("Impossible de stocker les documents", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : []
           });
         }
       }

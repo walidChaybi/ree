@@ -1,16 +1,16 @@
 import { redirectionVersRequetePriseEnCharge } from "@hook/rmcAuto/RMCAutoActesInscriptionsUtils";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
+import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
-import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { RequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 import { PATH_APERCU_REQ_DEL, PATH_APERCU_REQ_TRAITEMENT, PATH_EDITION, PATH_SAISIR_RDCSC } from "@router/ReceUrls";
+import { autorisePrendreEnChargeReqTableauDelivrance } from "@util/RequetesUtils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import messageManager from "@util/messageManager";
 import { GestionnaireARetraiterDansSaga } from "@util/migration/GestionnaireARetraiterDansSaga";
-import { autorisePrendreEnChargeReqTableauDelivrance } from "@util/RequetesUtils";
 import { getUrlPrecedente } from "@util/route/UrlUtil";
+import AfficherMessage from "../../../../utils/AfficherMessage";
 
 // TODO : se débarrasser des type guard "idRequete" quand IRequeteTableauDelivrance sera supprimé
 
@@ -80,7 +80,7 @@ const redirectionBrouillon = (requete: IRequeteTableauDelivrance | RequeteTablea
   }
 };
 const redirectionRequeteDoublon = (urlCourante: string, idRequete: string): string => {
-  messageManager.showSuccessAndClose("La requête a bien été enregistrée");
+  AfficherMessage.succes("La requête a bien été enregistrée", { fermetureAuto: true });
   return `${getUrlPrecedente(urlCourante)}/${PATH_APERCU_REQ_DEL}/${idRequete}`;
 };
 

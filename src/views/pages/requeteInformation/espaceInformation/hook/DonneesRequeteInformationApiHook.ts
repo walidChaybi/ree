@@ -4,8 +4,8 @@ import { IFiltresServiceRequeteInformationFormValues } from "@model/requete/IFil
 import { IRequeteTableauInformation, mappingRequetesTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { VALEUR_FILTRE_INFORMATION_DEFAUT } from "@pages/requeteInformation/commun/FiltresServiceRequeteInformationForm/FiltresServiceRequeteInformationForm";
 import { getParamsTableauDepuisReponseApi, IParamsTableau } from "@util/GestionDesLiensApi";
-import { logError } from "@util/LogManager";
 import { useContext, useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
 
 export const useRequeteInformationApi = (
   queryParameters: IQueryParametersPourRequetes,
@@ -35,10 +35,9 @@ export const useRequeteInformationApi = (
         setDataState(mesRequetes);
         setParamsTableau(getParamsTableauDepuisReponseApi(result));
       })
-      .catch(error => {
-        logError({
-          messageUtilisateur: "Impossible de récupérer les requêtes d'information",
-          error
+      .catch(erreurs => {
+        AfficherMessage.erreur("Impossible de récupérer les requêtes d'information", {
+          erreurs: estTableauErreurApi(erreurs) ? erreurs : []
         });
       });
   }, [queryParameters, typeRequete, filtresRequetes, peutChercher]);

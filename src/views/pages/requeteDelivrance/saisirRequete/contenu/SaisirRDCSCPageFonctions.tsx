@@ -5,8 +5,8 @@ import {
 } from "@model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ECodeDocumentDelivrance, IDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import messageManager from "@util/messageManager";
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
+import AfficherMessage from "../../../../../utils/AfficherMessage";
 import { PieceJointe } from "../../../../../utils/FileUtils";
 import { limitesTitulaires } from "../SaisirRDCSCPage";
 import { IdentiteSubFormProps } from "../sousFormulaires/identite/IdentiteForm";
@@ -16,7 +16,7 @@ export function createReponseSansDelivranceCS(requete?: IRequeteDelivrance) {
   if (requete?.requerant) {
     reponseSansDelivranceCS = ReponseSansDelivranceCSDemandeIncompleteComposition.creerReponseSansDelivranceCS(requete);
   } else {
-    messageManager.showErrorAndClose("Erreur inattendue: Pas de requérent pour la requête");
+    AfficherMessage.erreur("Erreur inattendue: Pas de requérent pour la requête", { fermetureAuto: true });
   }
 
   return reponseSansDelivranceCS;

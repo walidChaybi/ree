@@ -1,6 +1,6 @@
 import { postMentions } from "@api/appels/etatcivilApi";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
 
 export interface IMiseAJourMentionsParams {
   idActe: string;
@@ -20,13 +20,12 @@ export function useMiseAJourMentionsApiHook(params?: IMiseAJourMentionsParams) {
         .then(result => {
           setFini({ resultat: true });
         })
-        .catch(error => {
+        .catch(erreurs => {
           /* istanbul ignore next */
           setFini({ resultat: false });
-          logError({
-            messageUtilisateur:
-              "Impossible de mettre à jour les mentions de cet acte ",
-            error
+          AfficherMessage.erreur("Impossible de mettre à jour les mentions de cet acte ", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         });
     }

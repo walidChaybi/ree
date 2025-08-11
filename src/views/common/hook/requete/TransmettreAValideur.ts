@@ -1,6 +1,6 @@
 import { postTransfertValideur } from "@api/appels/requeteApi";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export interface ITransmettreAValideurParams {
   libelleAction: string;
@@ -9,27 +9,18 @@ export interface ITransmettreAValideurParams {
   requeteId: string;
 }
 
-export function useTransmettreAValideurApiHook(
-  params?: ITransmettreAValideurParams
-) {
+export function useTransmettreAValideurApiHook(params?: ITransmettreAValideurParams) {
   const [idAction, setIdAction] = useState<string | undefined>();
   useEffect(() => {
     if (params) {
-      postTransfertValideur(
-        params.requeteId,
-        params.idUtilisateur,
-        params.libelleAction,
-        params.texteObservation
-      )
+      postTransfertValideur(params.requeteId, params.idUtilisateur, params.libelleAction, params.texteObservation)
         .then(result => {
           setIdAction(result.body.data);
         })
-        .catch(error => {
+        .catch(erreurs => {
           /* istanbul ignore next */
-          logError({
-            error,
-            messageUtilisateur:
-              "Impossible de transmettre la requête au valideur"
+          AfficherMessage.erreur("Impossible de transmettre la requête au valideur", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : []
           });
         });
     }

@@ -9,12 +9,12 @@ import { IRMCRequeteForm } from "@model/rmc/requete/IRMCRequete";
 import RequeteAssociee, { TRequeteAssociee } from "@model/rmc/requete/RequeteAssociee";
 import { IHeadersAvecParamsTableau, IParamsTableau, PARAMS_TABLEAU_VIDE, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
 import { SNP } from "@util/Utils";
-import messageManager from "@util/messageManager";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useEffect, useState } from "react";
 import PageChargeur from "../../../../../composants/commun/chargeurs/PageChargeur";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
+import AfficherMessage from "../../../../../utils/AfficherMessage";
 import "../scss/RMCRequetesAssocieesResultats.scss";
 import { RMCTableauRequetesAssociees } from "./RMCTableauRequetesAssociees";
 
@@ -51,7 +51,7 @@ export const RMCRequetesAssocieesResultats: React.FC<RMCRequetesAssocieesResulta
       },
       apresErreur: erreurs => {
         console.error("Erreur lors de la RMC requête auto :", erreurs);
-        messageManager.showError("Impossible de récupérer les requetes de la recherche multi-critères");
+        AfficherMessage.erreur("Impossible de récupérer les requetes de la recherche multi-critères", { erreurs });
         criteresRechercheRequete?.onErreur?.();
       }
     });
@@ -76,9 +76,9 @@ export const RMCRequetesAssocieesResultats: React.FC<RMCRequetesAssocieesResulta
         setRequetesTableau(requetes.map(RequeteAssociee.depuisDto).filter((requete): requete is TRequeteAssociee => requete !== null));
         setParamsTableau(getParamsTableauDepuisHeaders(headers as unknown as IHeadersAvecParamsTableau));
       },
-      apresErreur: messageErreur => {
-        console.error("Erreur lors de la RMC requête auto :", messageErreur);
-        messageManager.showError("Une erreur est survenue lors de la RMC automatique de requêtes");
+      apresErreur: erreurs => {
+        console.error("Erreur lors de la RMC requête auto :", erreurs);
+        AfficherMessage.erreur("Une erreur est survenue lors de la RMC automatique de requêtes", { erreurs });
       }
     });
   }, [requete]);

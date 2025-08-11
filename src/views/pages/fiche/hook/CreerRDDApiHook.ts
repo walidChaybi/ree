@@ -1,9 +1,8 @@
 import { creationRequeteDelivrance } from "@api/appels/requeteApi";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { logError } from "@util/LogManager";
-import { getLibelle } from "@util/Utils";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export interface ICreationRequeteDelivranceParams {
   requete: IRequeteDelivrance;
@@ -17,8 +16,7 @@ interface ICreationRequeteDelivranceResultat {
 export const useCreationRequeteDelivranceRDD = (
   params?: ICreationRequeteDelivranceParams
 ): ICreationRequeteDelivranceResultat | undefined => {
-  const [resultat, setResultat] =
-    useState<ICreationRequeteDelivranceResultat>();
+  const [resultat, setResultat] = useState<ICreationRequeteDelivranceResultat>();
 
   useEffect(() => {
     if (params) {
@@ -31,12 +29,9 @@ export const useCreationRequeteDelivranceRDD = (
         .then((result: any) => {
           setResultat({ idRequete: result.idRequete });
         })
-        .catch((error: any) => {
-          logError({
-            messageUtilisateur: getLibelle(
-              "Une erreur est survenue lors de la création de la requête"
-            ),
-            error
+        .catch((erreurs: any) => {
+          AfficherMessage.erreur("Une erreur est survenue lors de la création de la requête", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : []
           });
         });
     }

@@ -6,10 +6,10 @@ import { IRequeteAleatoireResultat, useGetRequeteAleatoire } from "@hook/requete
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
-import messageManager from "@util/messageManager";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
+import AfficherMessage from "../../../../../utils/AfficherMessage";
 
 export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
   const location = useLocation();
@@ -30,7 +30,7 @@ export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
           typeRequete: "DELIVRANCE"
         });
       } else if (!requeteAleatoireResultat.requete) {
-        messageManager.showInfoAndClose("Il n'existe plus de requêtes disponibles à la prise en charge");
+        AfficherMessage.info("Il n'existe plus de requêtes disponibles à la prise en charge", { fermetureAuto: true });
       }
       setPrendreEnCharge(false);
       setOperationEnCours(false);

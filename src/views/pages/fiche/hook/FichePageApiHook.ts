@@ -2,8 +2,8 @@ import { getInformationsFiche } from "@api/appels/etatcivilApi";
 import { mapActe, mapRcRca } from "@hook/repertoires/MappingRepertoires";
 import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 interface IDataFicheApi {
   data: any;
@@ -36,10 +36,9 @@ export function useFichePageApiHook(actualisationInfosFiche: boolean, typeFiche?
           }
           setDataFicheState(dataFiche);
         })
-        .catch((error: any) => {
-          logError({
-            messageUtilisateur: "Impossible de récupérer les informations de la fiche",
-            error
+        .catch((erreurs: any) => {
+          AfficherMessage.erreur("Impossible de récupérer les informations de la fiche", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : []
           });
         });
     }

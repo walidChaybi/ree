@@ -9,8 +9,8 @@ import {
   TReponseApiSucces
 } from "@model/api/Api";
 import { CSRF_HEADER_NAME, getCsrfCookieValue } from "@util/CsrfUtil";
-import messageManager from "@util/messageManager";
 import axios from "axios";
+import AfficherMessage from "./AfficherMessage";
 
 interface IReponseErreur extends Error {
   response: {
@@ -95,17 +95,17 @@ const API = {
           headers: response.headers as THeader
         });
       })
-      .catch(({ response }) => {
+      .catch(({ response, erreurs }) => {
         const erreur: TReponseApiEchec = {
           status: response.status,
           erreurs: response.data?.errors ?? []
         };
 
         if (process.env.NODE_ENV === "development" && erreur.status !== CODE_FORBIDDEN) {
-          messageManager.showErrors([
-            `[DEV] Une erreur ${erreur.status} est survenue`,
-            ...erreur.erreurs.map(erreur => `[DEV] ${erreur.message}`)
-          ]);
+          AfficherMessage.erreur(
+            [`[DEV] Une erreur ${erreur.status} est survenue`, ...erreur.erreurs.map(erreur => `[DEV] ${erreur.message}`)],
+            { erreurs }
+          );
         }
 
         return Promise.reject<TReponseApiEchec>(erreur);

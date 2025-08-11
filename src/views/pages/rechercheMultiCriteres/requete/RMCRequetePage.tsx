@@ -6,12 +6,12 @@ import { mappingCriteresRMCRequeteVersDto } from "@model/rmc/requete/ICriteresRM
 import { IRMCRequeteForm } from "@model/rmc/requete/IRMCRequete";
 import { RequeteTableauRMC, TRequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 import { IParamsTableau, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
-import messageManager from "@util/messageManager";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { AutoScroll } from "@widget/autoScroll/autoScroll";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
+import AfficherMessage from "../../../../utils/AfficherMessage";
 import { RMCRequeteForm } from "./RMCRequeteForm";
 import { RMCRequeteResultats } from "./resultats/RMCRequeteResultats";
 import "./scss/RMCRequetePage.scss";
@@ -42,7 +42,7 @@ export const RMCRequetePage: React.FC = () => {
       },
       apresErreur: erreurs => {
         console.error("Erreur lors de la RMC requête auto :", erreurs);
-        messageManager.showError("Impossible de récupérer les requetes de la recherche multi-critères");
+        AfficherMessage.erreur("Impossible de récupérer les requetes de la recherche multi-critères", { erreurs });
         criteresRMCRequete?.onErreur?.();
       }
     });

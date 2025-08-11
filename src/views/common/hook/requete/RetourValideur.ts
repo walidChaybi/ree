@@ -1,6 +1,6 @@
 import { postRetourValideur } from "@api/appels/requeteApi";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export interface IRetourValideurParams {
   libelleAction: string;
@@ -13,20 +13,15 @@ export function useRetourValideurApiHook(params?: IRetourValideurParams) {
   const [idAction, setIdAction] = useState<string | undefined>();
   useEffect(() => {
     if (params) {
-      postRetourValideur(
-        params.requeteId,
-        params.statutDemande,
-        params.libelleAction,
-        params.texteObservation
-      )
+      postRetourValideur(params.requeteId, params.statutDemande, params.libelleAction, params.texteObservation)
         .then(result => {
           setIdAction(result.body.data);
         })
-        .catch(error => {
+        .catch(erreurs => {
           /* istanbul ignore next */
-          logError({
-            error,
-            messageUtilisateur: "Impossible de renvoyer la requête"
+          AfficherMessage.erreur("Impossible de renvoyer la requête", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         });
     }

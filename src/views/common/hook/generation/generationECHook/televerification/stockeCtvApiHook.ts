@@ -1,6 +1,6 @@
 import { saveCodeCtv } from "@api/appels/televerificationApi";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../../../utils/AfficherMessage";
 
 export interface IStockeCTVParams {
   ctv: string;
@@ -21,11 +21,11 @@ export function useStockeCTV(params?: IStockeCTVParams): IStockeCTVResultat | un
           .then(result => {
             setRes({ resultat: true });
           })
-          .catch(error => {
+          .catch(erreurs => {
             /* istanbul ignore next */
-            logError({
-              messageUtilisateur: "Impossible de stocker le code Ctv",
-              error
+            AfficherMessage.erreur("Impossible de stocker le code Ctv", {
+              erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+              fermetureAuto: true
             });
           });
       } else {

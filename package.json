@@ -24,7 +24,7 @@
     "react-dom": "18.3.1",
     "react-movable": "3.4.0",
     "react-router": "7.5.2",
-    "react-toastify": "6.0.8",
+    "react-toastify": "11.0.5",
     "superagent": "10.2.2",
     "uuid": "8.3.2",
     "yup": "0.32.8"

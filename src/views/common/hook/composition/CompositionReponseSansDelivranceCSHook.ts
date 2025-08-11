@@ -1,33 +1,23 @@
 import { compositionApi } from "@api/appels/compositionApi";
-import { IDonneesComposition } from "@model/composition/commun/retourApiComposition/IDonneesComposition";
 import { IContenuReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
-import { logError } from "@util/LogManager";
-import { getLibelle } from "@util/Utils";
+import { IDonneesComposition } from "@model/composition/commun/retourApiComposition/IDonneesComposition";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
-export function useCompositionReponseSansDelivranceCSApi(
-  document?: string,
-  reponseSansDelivranceCS?: IContenuReponseSansDelivranceCS
-) {
-  const [donneesComposition, setDonneesComposition] =
-    useState<IDonneesComposition>();
+export function useCompositionReponseSansDelivranceCSApi(document?: string, reponseSansDelivranceCS?: IContenuReponseSansDelivranceCS) {
+  const [donneesComposition, setDonneesComposition] = useState<IDonneesComposition>();
 
   useEffect(() => {
     if (reponseSansDelivranceCS && document) {
       compositionApi
-        .getCompositionReponseSansDelivranceCS(
-          document,
-          reponseSansDelivranceCS
-        )
+        .getCompositionReponseSansDelivranceCS(document, reponseSansDelivranceCS)
         .then(result => {
           setDonneesComposition(result.body.data);
         })
-        .catch(error => {
-          logError({
-            error,
-            messageUtilisateur: getLibelle(
-              "Impossible de créer le document pour la réponse négative"
-            )
+        .catch(erreurs => {
+          AfficherMessage.erreur("Impossible de créer le document pour la réponse négative", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         });
     }

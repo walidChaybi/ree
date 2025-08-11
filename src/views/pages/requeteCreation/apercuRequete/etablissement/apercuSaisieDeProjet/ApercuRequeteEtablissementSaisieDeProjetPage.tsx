@@ -29,7 +29,6 @@ import {
   URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID
 } from "@router/ReceUrls";
 import { DEUX, UN } from "@util/Utils";
-import messageManager from "@util/messageManager";
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
@@ -38,6 +37,7 @@ import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import { FormikHelpers } from "formik";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
+import AfficherMessage from "../../../../../../utils/AfficherMessage";
 import "../../../commun/scss/ApercuReqCreationPage.scss";
 import {
   annulerModificationBulletinIdentification,
@@ -130,7 +130,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
       if (utilisateurConnecte.id !== detailRequeteState.idUtilisateur) {
         const url = getApercuSimpleUrl(location.pathname, detailRequeteState.id);
         navigate(url);
-        messageManager.showWarningAndClose("Ouverture impossible. Vous n'êtes pas en charge de ce dossier");
+        AfficherMessage.avertissement("Ouverture impossible. Vous n'êtes pas en charge de ce dossier", { fermetureAuto: true });
         return;
       }
       setRequete(detailRequeteState as IRequeteCreationEtablissement);

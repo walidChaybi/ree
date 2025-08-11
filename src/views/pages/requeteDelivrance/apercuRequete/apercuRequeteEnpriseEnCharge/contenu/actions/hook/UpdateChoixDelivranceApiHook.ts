@@ -1,8 +1,8 @@
 import { updateChoixDelivrance } from "@api/appels/requeteApi";
-import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { logError } from "@util/LogManager";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../../../../../utils/AfficherMessage";
 
 export interface UpdateChoixDelivranceProps {
   requete: IRequeteDelivrance;
@@ -26,11 +26,10 @@ export function useUpdateChoixDelivrance(params?: UpdateChoixDelivranceProps): I
         .then((result: any) => {
           setUpdateChoixDelivranceResultat({ idRequete: result.body.data });
         })
-        .catch((error: any) => {
+        .catch((erreurs: any) => {
           /* istanbul ignore next */
-          logError({
-            messageUtilisateur: "Une erreur est survenue lors de la mise à jour de la requête",
-            error
+          AfficherMessage.erreur("Une erreur est survenue lors de la mise à jour de la requête", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : []
           });
         });
     }

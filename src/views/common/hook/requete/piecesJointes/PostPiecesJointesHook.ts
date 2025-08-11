@@ -2,8 +2,9 @@ import { postPieceComplementInformationApi, postPieceJustificative } from "@api/
 import { mapPieceComplementInformation } from "@model/requete/pieceJointe/IPieceComplementInformation";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { mapPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
-import { logError } from "@util/LogManager";
+
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
 import { PieceJointe } from "../../../../../utils/FileUtils";
 
 interface IPostPiecesJointesApiResultat {
@@ -42,14 +43,14 @@ export function usePostPiecesJointesApi(
             setUuidDocuments([...uuidDocuments, result.body.data]);
             setPiecesJointesAEnvoyer(piecesJointesAEnvoyer.slice(1));
           }
-        } catch (error) {
+        } catch (erreurs) {
           setResultat({
-            erreur: error,
+            erreur: erreurs,
             uuidDocuments
           });
-          logError({
-            messageUtilisateur: `Impossible de stocker le document ${piecesJointesAEnvoyer[0].base64File.fileName}`,
-            error
+          AfficherMessage.erreur(`Impossible de stocker le document ${piecesJointesAEnvoyer[0].base64File.fileName}`, {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         }
       } else if (piecesJointesAEnvoyer && piecesJointesAEnvoyer.length === 0) {

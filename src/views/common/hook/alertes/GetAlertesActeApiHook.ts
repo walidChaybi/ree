@@ -1,7 +1,7 @@
 import { getAlertesActe } from "@api/appels/etatcivilApi";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 import { mapAlertesActe } from "./MappingAlertesActe";
 export interface IGetAlertesActeApiHookParameters {
   idActe: string;
@@ -23,10 +23,10 @@ export function useGetAlertesActeApiHook(parameters?: IGetAlertesActeApiHookPara
             idTypeRegistre: result?.body?.data.idTypeRegistre
           });
         })
-        .catch((error: any) => {
-          logError({
-            messageUtilisateur: "Impossible de récupérer les alertes associées à l'acte",
-            error
+        .catch((erreurs: any) => {
+          AfficherMessage.erreur("Impossible de récupérer les alertes associées à l'acte", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         });
     }

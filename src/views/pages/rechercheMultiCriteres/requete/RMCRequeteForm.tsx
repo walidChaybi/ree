@@ -3,13 +3,13 @@ import { ETypeRequete } from "@model/requete/enum/TypeRequete";
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
 import { IRMCRequeteForm } from "@model/rmc/requete/IRMCRequete";
 import { MEP_YEAR } from "@util/DateUtils";
-import messageManager from "@util/messageManager";
 import { stockageDonnees } from "@util/stockageDonnees";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { NB_LIGNES_PAR_APPEL_REQUETE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
 import * as Yup from "yup";
 import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
+import AfficherMessage from "../../../../utils/AfficherMessage";
 import RMCBoutons from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,
@@ -66,7 +66,7 @@ export const RMCRequeteForm: React.FC<RMCRequeteFormProps> = ({
   const onSubmitRMCRequete = (values: any) => {
     const messageErreur = getMessageSiVerificationRestrictionRmcRequeteEnErreur(values);
     if (messageErreur) {
-      messageManager.showErrorAndClose(messageErreur);
+      AfficherMessage.erreur(messageErreur, { fermetureAuto: true });
     } else {
       if (closePopIn) {
         closePopIn();

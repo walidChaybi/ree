@@ -1,8 +1,8 @@
 import { patchSauvDocumentCreerActionMajStatutRequete } from "@api/appels/requeteApi";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
-import { logError } from "@util/LogManager";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export interface IStockerDocumentCreerActionMajStatutRequeteParams {
   libelleAction: string;
@@ -25,10 +25,9 @@ export function useStockerDocumentCreerActionMajStatutRequete(params?: IStockerD
         .then(result => {
           setUuidDocumentReponse(result.body.data[0]);
         })
-        .catch(error => {
-          logError({
-            messageUtilisateur: "Impossible de stocker le document et de mettre à jour le statut",
-            error
+        .catch(erreurs => {
+          AfficherMessage.erreur("Impossible de stocker le document et de mettre à jour le statut", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : []
           });
         });
     }

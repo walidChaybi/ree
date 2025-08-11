@@ -15,7 +15,6 @@ import {
   URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE_ID,
   URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID
 } from "@router/ReceUrls";
-import { logError } from "@util/LogManager";
 import { UN, ZERO } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
@@ -31,6 +30,7 @@ import { useNavigate } from "react-router";
 import { IFenetreExterneRef } from "../../../composants/commun/conteneurs/FenetreExterne";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import { ETypeFiche } from "../../../model/etatcivil/enum/ETypeFiche";
+import AfficherMessage from "../../../utils/AfficherMessage";
 import { BoutonCreationRDD } from "./BoutonCreationRDD/BoutonCreationRDD";
 import { setFiche } from "./FicheUtils";
 import { BandeauAlertesActe } from "./contenu/BandeauAlertesActe";
@@ -152,9 +152,8 @@ export const FichePage: React.FC<FichePageProps> = ({
       apresErreur: erreurs => {
         const messageErreur = erreurs[ZERO]?.code === "FCT_15181" ? erreurs[ZERO]?.message : "";
 
-        logError({
-          error: erreurs,
-          messageUtilisateur: messageErreur || "Impossible d'accéder à la requête de mise à jour de l'acte"
+        AfficherMessage.erreur(messageErreur || "Impossible d'accéder à la requête de mise à jour de l'acte", {
+          erreurs
         });
       },
       finalement: () => setOptionMiseAJour(null)

@@ -1,9 +1,9 @@
 import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
-import messageManager from "@util/messageManager";
+
 import { Option, Options } from "@util/Type";
-import { getLibelle } from "@util/Utils";
 import React from "react";
+import AfficherMessage from "../../../../../utils/AfficherMessage";
 import { Base64File, FILE_TYPES, PieceJointe } from "../../../../../utils/FileUtils";
 import { IconePoubelle } from "../../icones/IconePoubelle";
 import { TableauSimple, TableauSimpleProps } from "../../tableau/TableauSimple/TableauSimple";
@@ -43,7 +43,7 @@ export const PiecesJointes: React.FC<PiecesJointesProps> = props => {
       <div className="BoutonPiecesJointes">
         <UploadFileField
           name="piecesJointes"
-          libelleBouton={getLibelle(props.libelleBouton ? ` ${props.libelleBouton}` : " Ajouter")}
+          libelleBouton={props.libelleBouton ? ` ${props.libelleBouton}` : " Ajouter"}
           menuItems={props.menuItem}
           iconBouton={
             <AttachFileOutlinedIcon
@@ -53,8 +53,8 @@ export const PiecesJointes: React.FC<PiecesJointesProps> = props => {
           }
           hideInput={true}
           disabled={props.disabled}
-          ariaLabel={getLibelle("Ajout pièce jointe")}
-          title={getLibelle("Ajout d'une pièce jointe")}
+          ariaLabel={"Ajout pièce jointe"}
+          title={"Ajout d'une pièce jointe"}
           acceptFileTypes={FILE_TYPES}
           maxSizeKB={FILE_MAX_SIZE_KB}
           onFileChange={onFileChange}
@@ -75,8 +75,8 @@ export const PiecesJointes: React.FC<PiecesJointesProps> = props => {
 export function getTableauPiecesJointes(piecesJointes: PieceJointe[], supprimePieceJointe: (libelle: string) => void): JSX.Element {
   const tableauSimpleProps: TableauSimpleProps = {
     entetes: piecesJointes[0].type
-      ? [{ libelle: getLibelle("Nom") }, { libelle: getLibelle("Type") }, { className: "EnteteActionPJ", libelle: getLibelle("Action") }]
-      : [{ libelle: getLibelle("Nom") }, { className: "EnteteActionPJ", libelle: getLibelle("Action") }],
+      ? [{ libelle: "Nom" }, { libelle: "Type" }, { className: "EnteteActionPJ", libelle: "Action" }]
+      : [{ libelle: "Nom" }, { className: "EnteteActionPJ", libelle: "Action" }],
     lignes: piecesJointes.map(pj => ({
       key: pj.base64File.fileName,
       colonnes: pj.type
@@ -92,7 +92,7 @@ export function getTableauPiecesJointes(piecesJointes: PieceJointe[], supprimePi
               onClick: () => {
                 supprimePieceJointe(pj.base64File.fileName);
               },
-              title: getLibelle("Supprimer"),
+              title: "Supprimer",
               contenu: getColonneSuppressionPJ(supprimePieceJointe, pj)
             }
           ]
@@ -105,7 +105,7 @@ export function getTableauPiecesJointes(piecesJointes: PieceJointe[], supprimePi
               onClick: () => {
                 supprimePieceJointe(pj.base64File.fileName);
               },
-              title: getLibelle("Supprimer"),
+              title: "Supprimer",
               contenu: getColonneSuppressionPJ(supprimePieceJointe, pj)
             }
           ]
@@ -124,7 +124,7 @@ function getColonneSuppressionPJ(supprimePieceJointe: (libelle: string) => void,
       onClick={() => {
         supprimePieceJointe(pj.base64File.fileName);
       }}
-      title={getLibelle("Supprimer")}
+      title={"Supprimer"}
     />
   );
 }
@@ -144,7 +144,7 @@ function getColonneNomPJ(pj: PieceJointe): JSX.Element {
 export function verificationAvantDOuvriLeMenu(piecesJointes: PieceJointe[], maxPiecesJointes = MAX_PIECES_JOINTES) {
   let ouvrirLeMenu = true;
   if (piecesJointes.length >= maxPiecesJointes) {
-    messageManager.showErrorAndClose(getLibelle("Le nombre maximal de pièces jointes est atteint"));
+    AfficherMessage.erreur("Le nombre maximal de pièces jointes est atteint", { fermetureAuto: true });
     ouvrirLeMenu = false;
   }
   return ouvrirLeMenu;

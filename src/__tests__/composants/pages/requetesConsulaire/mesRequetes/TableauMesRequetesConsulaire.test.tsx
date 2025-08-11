@@ -5,9 +5,9 @@ import {
   URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID
 } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import messageManager from "@util/messageManager";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import TableauMesRequetesConsulaire from "../../../../../composants/pages/requetesConsulaire/mesRequetes/TableauMesRequetesConsulaire";
+import AfficherMessage from "../../../../../utils/AfficherMessage";
 
 vi.mock("@util/messageManager", () => ({
   default: {
@@ -94,8 +94,7 @@ describe("TableauMesRequetesConsulaire ", () => {
   });
 
   test("doit afficher un message d'erreur en cas de status non reconnu", async () => {
-    const mockShowErrorAndClose = vi.fn();
-    vi.mocked(messageManager.showErrorAndClose).mockImplementation(mockShowErrorAndClose);
+    AfficherMessage.erreur = vi.fn();
 
     render(<TableauMesRequetesConsulaire />);
 
@@ -106,7 +105,7 @@ describe("TableauMesRequetesConsulaire ", () => {
       const requetePriseEnCharge = screen.getByText("000000").closest("tr");
       fireEvent.click(requetePriseEnCharge!);
 
-      expect(mockShowErrorAndClose).toHaveBeenCalledWith('Statut non reconnu: "undefined"');
+      expect(AfficherMessage.erreur).toHaveBeenCalledWith('Statut non reconnu: "undefined"', { fermetureAuto: true });
     });
   });
 });

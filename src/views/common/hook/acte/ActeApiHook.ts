@@ -1,7 +1,7 @@
 import { getInformationsFicheActe } from "@api/appels/etatcivilApi";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 import { mapActe } from "../repertoires/MappingRepertoires";
 
 export interface IActeApiHookParams {
@@ -24,10 +24,10 @@ export function useInformationsActeApiHook(params?: IActeApiHookParams): IActeAp
           const acte: IFicheActe = mapActe(result.body.data);
           setActeApiHookResultat({ acte });
         })
-        .catch((error: any) => {
-          logError({
-            messageUtilisateur: "Impossible de récupérer les informations de l'acte",
-            error
+        .catch((erreurs: any) => {
+          AfficherMessage.erreur("Impossible de récupérer les informations de l'acte", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         });
     }

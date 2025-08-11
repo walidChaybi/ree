@@ -26,14 +26,13 @@ export const PageRMCActeInscription: React.FC = () => {
     }
   }, []);
 
+  /** States (beaucoup trop nombreux) */
   const [valuesRMCActeInscription, setValuesRMCActeInscription] = useState<IRMCActeInscriptionForm | null>(null);
   const [nouvelleRMCActeInscription, setNouvelleRMCActeInscription] = useState<boolean>(false);
-
   const [dataRMCActe, setDataRMCActe] = useState<ResultatRMCActe[] | null>(null);
   const [dataTableauRMCActe, setDataTableauRMCActe] = useState<IParamsTableau | null>(null);
   const [dataRMCInscription, setDataRMCInscription] = useState<TResultatRMCInscription[] | null>(null);
   const [dataTableauRMCInscription, setDataTableauRMCInscription] = useState<IParamsTableau | null>(null);
-
   const [idFicheActe, setIdFicheActe] = useState<string>();
   const [idFicheInscription, setIdFicheInscription] = useState<string>();
 

@@ -1,8 +1,8 @@
 import { postSauvCourrierCreerActionMajStatutRequete } from "@api/appels/requeteApi";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { ISauvegardeCourrier } from "@model/requete/ISauvegardeCourrier";
-import { logError } from "@util/LogManager";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export function useSauvegarderCourrierCreerActionMajStatutRequete(
   statutRequete: StatutRequete,
@@ -10,26 +10,18 @@ export function useSauvegarderCourrierCreerActionMajStatutRequete(
   requete?: ISauvegardeCourrier | undefined,
   requeteId?: string
 ) {
-  const [uuidDocumentsReponse, setUuidDocumentsReponse] = useState<
-    string[] | undefined
-  >();
+  const [uuidDocumentsReponse, setUuidDocumentsReponse] = useState<string[] | undefined>();
   useEffect(
     () => {
       if (requete && requeteId) {
-        postSauvCourrierCreerActionMajStatutRequete(
-          requeteId,
-          statutRequete,
-          requete,
-          libelleAction
-        )
+        postSauvCourrierCreerActionMajStatutRequete(requeteId, statutRequete, requete, libelleAction)
           .then(result => {
             setUuidDocumentsReponse(result.body.data);
           })
-          .catch(error => {
-            logError({
-              error,
-              messageUtilisateur:
-                "Impossible de sauvegarder le courrier d'accompagnement"
+          .catch(erreurs => {
+            AfficherMessage.erreur("Impossible de sauvegarder le courrier d'accompagnement", {
+              erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+              fermetureAuto: true
             });
           });
       }

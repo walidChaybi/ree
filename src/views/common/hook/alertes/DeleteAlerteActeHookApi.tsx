@@ -1,6 +1,6 @@
 import { deleteAlerteActe } from "@api/appels/etatcivilApi";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export interface DeleteAlerteActeApiHookParameters {
   idAlerteActe: string;
@@ -21,10 +21,10 @@ export function useDeleteAlerteActeApiHook(parameters?: DeleteAlerteActeApiHookP
             status: result?.status
           });
         })
-        .catch((error: any) => {
-          logError({
-            messageUtilisateur: "Une erreur est survenue lors de la suppression de l'alerte'",
-            error
+        .catch((erreurs: any) => {
+          AfficherMessage.erreur("Une erreur est survenue lors de la suppression de l'alerte'", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         });
     }

@@ -1,20 +1,16 @@
 import { creationRequeteDelivrance } from "@api/appels/requeteApi";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
-import { logError } from "@util/LogManager";
 import { useContext, useEffect, useState } from "react";
 import { CreationRequeteRDC } from "../../../../../model/form/delivrance/ISaisirRDCPageForm";
+import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
 import { ICreationOuMiseAJourRDCResultat } from "./SoumissionFormulaireRDCHook";
 import { mappingFormulaireRDCVersRequeteDelivrance } from "./mappingFormulaireRDCVersRequeteDelivrance";
 
 type ICreationRequeteDelivranceRDCResultat = ICreationOuMiseAJourRDCResultat;
 
-export function useCreationRequeteDelivranceRDC(
-  requeteRDC?: CreationRequeteRDC
-): ICreationRequeteDelivranceRDCResultat | undefined {
-  const [resultat, setResultat] = useState<
-    ICreationRequeteDelivranceRDCResultat | undefined
-  >();
+export function useCreationRequeteDelivranceRDC(requeteRDC?: CreationRequeteRDC): ICreationRequeteDelivranceRDCResultat | undefined {
+  const [resultat, setResultat] = useState<ICreationRequeteDelivranceRDCResultat | undefined>();
 
   const { utilisateurs } = useContext(RECEContextData);
 
@@ -34,15 +30,12 @@ export function useCreationRequeteDelivranceRDC(
             refus: requeteRDC.refus
           });
         })
-        .catch((error: any) => {
-          logError({
-            messageUtilisateur:
-              "Une erreur est survenue lors de la création de la requête",
-            error
+        .catch((erreurs: any) => {
+          AfficherMessage.erreur("Une erreur est survenue lors de la création de la requête", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : []
           });
         });
     }
   }, [requeteRDC]);
   return resultat;
 }
-

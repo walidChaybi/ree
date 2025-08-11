@@ -1,13 +1,10 @@
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { getLibelle } from "@util/Utils";
-import messageManager from "@util/messageManager";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import { useEffect, useState } from "react";
-import {
-  ICreationRequeteDelivranceParams,
-  useCreationRequeteDelivranceRDD
-} from "../hook/CreerRDDApiHook";
+import AfficherMessage from "../../../../utils/AfficherMessage";
+import { ICreationRequeteDelivranceParams, useCreationRequeteDelivranceRDD } from "../hook/CreerRDDApiHook";
 import { mappingActeVersRequeteDelivrance } from "../hook/mappingActeVersRequeteDelivrance";
 import "./scss/BoutonCreationRDD.scss";
 
@@ -20,17 +17,12 @@ type BoutonCreationRDDProps = {
 
 export const BoutonCreationRDD = (props: BoutonCreationRDDProps) => {
   const [popinOpen, setPopinOpen] = useState(false);
-  const [creationRequeteDelivranceParams, setCreationRequeteDelivranceParams] =
-    useState<ICreationRequeteDelivranceParams>();
-  const resultat = useCreationRequeteDelivranceRDD(
-    creationRequeteDelivranceParams
-  );
+  const [creationRequeteDelivranceParams, setCreationRequeteDelivranceParams] = useState<ICreationRequeteDelivranceParams>();
+  const resultat = useCreationRequeteDelivranceRDD(creationRequeteDelivranceParams);
 
   useEffect(() => {
     if (resultat) {
-      messageManager.showSuccessAndClose(
-        getLibelle("La requête a bien été enregistrée.")
-      );
+      AfficherMessage.succes("La requête a bien été enregistrée.", { fermetureAuto: true });
     }
   }, [resultat]);
 
@@ -47,10 +39,7 @@ export const BoutonCreationRDD = (props: BoutonCreationRDDProps) => {
       action: () => {
         setPopinOpen(false);
         setCreationRequeteDelivranceParams({
-          requete: mappingActeVersRequeteDelivrance(
-            props.acte,
-            props.numeroFonctionnel
-          ),
+          requete: mappingActeVersRequeteDelivrance(props.acte, props.numeroFonctionnel),
           futurStatut: StatutRequete.A_TRAITER
         });
       }

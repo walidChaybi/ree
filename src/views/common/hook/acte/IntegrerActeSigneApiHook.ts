@@ -2,8 +2,8 @@ import { HTTP_BAD_REQUEST } from "@api/ApiManager";
 import { integrerActeSigne } from "@api/appels/etatcivilApi";
 import { TModeAuthentification } from "@model/agent/types";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
-import { logError } from "@util/LogManager";
 import { useEffect, useState } from "react";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export interface IIntegrerActeSigneApiHookParams {
   idActe: string;
@@ -17,9 +17,7 @@ interface IIntegrerActeSigneApiHookResultat {
   reinitialiserParamsApiHook: () => void;
 }
 
-export const useIntegrerActeSigneApiHook = (
-  params?: IIntegrerActeSigneApiHookParams
-): IIntegrerActeSigneApiHookResultat => {
+export const useIntegrerActeSigneApiHook = (params?: IIntegrerActeSigneApiHookParams): IIntegrerActeSigneApiHookResultat => {
   const [codeReponse, setCodeReponse] = useState<number>();
 
   const reinitialiserCodeReponse = () => {
@@ -28,19 +26,13 @@ export const useIntegrerActeSigneApiHook = (
 
   useEffect(() => {
     if (params) {
-      integrerActeSigne(
-        params.idActe,
-        params.document,
-        params.infosCarteSignature,
-        params.modeAuthentification
-      )
+      integrerActeSigne(params.idActe, params.document, params.infosCarteSignature, params.modeAuthentification)
         .then(reponse => setCodeReponse(reponse.status))
-        .catch((errors: any) => {
+        .catch((erreurs: any) => {
           setCodeReponse(HTTP_BAD_REQUEST); // TODO: Revoir la gestion du status code.
-          logError({
-            error: errors,
-            messageUtilisateur:
-              "Impossible d'enregistrer le document final signé."
+          AfficherMessage.erreur("Impossible d'enregistrer le document final signé.", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+            fermetureAuto: true
           });
         });
     }
