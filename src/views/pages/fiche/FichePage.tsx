@@ -109,7 +109,8 @@ export const FichePage: React.FC<FichePageProps> = ({
     return {
       autorise:
         EOrigineActe[dataFicheState?.data?.origine as keyof typeof EOrigineActe] === EOrigineActe.RECE &&
-        (droitMentions || droitAnalyseMarginale),
+        (droitMentions || droitAnalyseMarginale) &&
+        dataFicheState.data.statutsFiche.statut !== "BROUILLON",
       mentions: droitMentions,
       AnalyseMarginale: droitAnalyseMarginale
     };
