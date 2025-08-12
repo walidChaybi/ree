@@ -13,6 +13,7 @@ import {
 import AfficherMessage from "../../../utils/AfficherMessage";
 import { ChoixDelivrance } from "../../requete/enum/ChoixDelivrance";
 import { IPersonne } from "../commun/Personne";
+import { EStatutActe } from "../enum/EStatutActe";
 import { NatureActe } from "../enum/NatureActe";
 import { NATIONALITE, NatureMention } from "../enum/NatureMention";
 import { Sexe } from "../enum/Sexe";
@@ -56,6 +57,7 @@ export interface IFicheActe {
   referenceActe: string;
   referenceSignifiante?: string;
   origine: string;
+  statut: EStatutActe;
 }
 
 interface ITitulairesActe {

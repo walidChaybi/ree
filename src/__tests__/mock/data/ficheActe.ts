@@ -1,6 +1,7 @@
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { ILieuEvenement } from "@model/etatcivil/commun/ILieuEvenement";
+import { EStatutActe } from "@model/etatcivil/enum/EStatutActe";
 import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
@@ -1137,6 +1138,7 @@ export const ficheActe3: IFicheActe = {
   referenceActe: "ACQ.X.1951.1.483",
   dateCreation: undefined,
   nature: NatureActe.NAISSANCE,
+  statut: EStatutActe.VALIDE,
   numero: "483",
   numeroBisTer: "",
   dateDerniereDelivrance: undefined,

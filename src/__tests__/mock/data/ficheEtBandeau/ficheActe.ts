@@ -1,3 +1,4 @@
+import { EStatutActe } from "@model/etatcivil/enum/EStatutActe";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IBandeauFiche } from "@model/etatcivil/fiche/IBandeauFiche";
@@ -17,10 +18,10 @@ export const bandeauActe: IBandeauFiche = {
 
 export const acte: any = {
   id: "b41079a5-9e8d-478c-b04c-c4c2ac67134f",
+  statut: EStatutActe.ANNULE,
   dateInitialisation: 1405980000,
   dateCreation: 1256943600,
   modeCreation: "DRESSE",
-  statut: "ANNULE",
   dateStatut: 1045609200,
   nature: new NatureActe("Absence"),
   numero: "410",
@@ -499,7 +500,7 @@ export const acte1: any = {
   dateInitialisation: 1405980000,
   dateCreation: 1256943600,
   modeCreation: "DRESSE",
-  statut: "ANNULE",
+  statut: EStatutActe.ANNULE,
   dateStatut: 1045609200,
   nature: new NatureActe("ABSENCE"),
   numero: "411",
@@ -1091,7 +1092,7 @@ export const acte3: any = {
   dateInitialisation: 1405980000,
   dateCreation: 1256943600,
   modeCreation: "DRESSE",
-  statut: "ANNULE",
+  statut: EStatutActe.ANNULE,
   dateStatut: 1045609200,
   nature: new NatureActe("Absence"),
   numero: "413",
@@ -1305,7 +1306,7 @@ export const acte4: any = {
   dateInitialisation: 1405980000,
   dateCreation: 1256943600,
   modeCreation: "DRESSE",
-  statut: "ANNULE",
+  statut: EStatutActe.ANNULE,
   dateStatut: 1045609200,
   nature: new NatureActe("Absence"),
   numero: "414",
@@ -1587,7 +1588,7 @@ export const acte5 = {
   dateInitialisation: null,
   dateCreation: 1304330400000,
   modeCreation: "DRESSE",
-  statut: "VALIDE",
+  statut: EStatutActe.VALIDE,
   dateStatut: 1380362400000,
   nature: "NAISSANCE",
   numero: "100",
@@ -1989,7 +1990,7 @@ export const acteNaissance: any = {
   dateInitialisation: 1405980000,
   dateCreation: 1256943600,
   modeCreation: "DRESSE",
-  statut: "ANNULE",
+  statut: EStatutActe.ANNULE,
   dateStatut: 1045609200,
   nature: NatureActe.NAISSANCE,
   numero: "410",

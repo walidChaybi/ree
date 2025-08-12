@@ -5,6 +5,7 @@ import { DeleteAlerteActeApiHookParameters, useDeleteAlerteActeApiHook } from "@
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { EOrigineActe } from "@model/etatcivil/enum/EOrigineActe";
+import { EStatutActe } from "@model/etatcivil/enum/EStatutActe";
 import { EOptionMiseAJourActe, OptionMiseAJourActe } from "@model/etatcivil/enum/OptionMiseAJourActe";
 import { TitulaireRequeteMiseAJour } from "@model/requete/ITitulaireRequeteMiseAJour";
 import { SousTypeMiseAJour } from "@model/requete/enum/SousTypeMiseAJour";
@@ -110,7 +111,8 @@ export const FichePage: React.FC<FichePageProps> = ({
       autorise:
         EOrigineActe[dataFicheState?.data?.origine as keyof typeof EOrigineActe] === EOrigineActe.RECE &&
         (droitMentions || droitAnalyseMarginale) &&
-        dataFicheState.data.statutsFiche.statut !== "BROUILLON",
+        dataFicheCourante?.categorie === ETypeFiche.ACTE &&
+        dataFicheState.data.statut !== EStatutActe.BROUILLON,
       mentions: droitMentions,
       AnalyseMarginale: droitAnalyseMarginale
     };
