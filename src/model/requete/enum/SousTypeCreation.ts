@@ -16,6 +16,8 @@ export enum ESousTypeCreation {
   RCADC = "RCADC"
 }
 
+// CODE EXEMPLE enumération avec deux libellés et utilitaire
+
 export const ELibelleSousTypeCreation: TEnumAvecDeuxLibelles<ESousTypeCreation> = {
   RCEDXR: {
     court: "Acte Etab DX (d)",
@@ -61,6 +63,7 @@ export const ELibelleSousTypeCreation: TEnumAvecDeuxLibelles<ESousTypeCreation> 
 
 export const SousTypeCreationUtils = constructeurEnumAvecDeuxLibellesUtils(ELibelleSousTypeCreation);
 
+/** @deprecated à supprimer suite refonte tableau requête (12/08/2025) */
 export class SousTypeCreation extends EnumWithComplete {
   public static readonly RCEDXR = new SousTypeCreation("RCEDXR", "Création Etablissement par déclaration (DX) Démat", "Acte Etab DX (d)");
   public static readonly RCEDXC = new SousTypeCreation(

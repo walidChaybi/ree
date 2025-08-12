@@ -8,6 +8,8 @@ import DOCUMENT_VALIDE from "../ressources/DocumentSigneValide";
 import DOCUMENT_VIDE_A_SIGNER from "../ressources/DocumentVideASigner";
 import { appelApiAvecAxios } from "./AppelApi";
 
+// MODULE CLE signature des documents via webextension
+
 export interface IInformationsCarte {
   noSerieCarte: string;
   manufacturerIDCarte: string;

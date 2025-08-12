@@ -5,6 +5,8 @@ import { PrenomsForm, TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import DateRECE, { TFormatDate, TOptionPrefixe } from "./DateRECE";
 import Texte from "./Texte";
 
+// MODULE CLE génération de texte via template
+
 type TCondition = {
   si: string;
   alors: (string | TCondition)[];

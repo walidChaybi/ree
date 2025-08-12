@@ -2,6 +2,8 @@ import { TDateArrayDTO } from "@util/DateUtils";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 
+// MODULE CLE gestion des dates
+
 dayjs.extend(customParseFormat);
 
 export type TFormatDate =

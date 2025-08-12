@@ -2,6 +2,8 @@ import { TAppelTraitement, TTraitementApi } from "@api/traitements/TTraitementAp
 import { useEffect, useMemo, useState } from "react";
 import AfficherMessage from "../../utils/AfficherMessage";
 
+// MODULE CLE pour traitements API complexes
+
 type TInformationsTraitement<TReponseSucces, TParam> = {
   statut: "EN_ATTENTE_APPEL" | "EN_COURS" | "TERMINE";
   parametres: TParam | null;

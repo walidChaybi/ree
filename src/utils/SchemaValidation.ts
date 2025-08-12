@@ -6,6 +6,8 @@ import { getIn } from "formik";
 import * as Yup from "yup";
 import { REGEX_ANNEE_QUATRE_CHIFFRES } from "../ressources/Regex";
 
+// MODULE CLE centralisation des validations de formulaire
+
 type TEstTableauCondition<T> = T extends (ConditionChamp | ConditionChamp[])[] ? true : false;
 
 type TSchemaParams<TObligatoire extends boolean | (ConditionChamp | ConditionChamp[])[]> = {

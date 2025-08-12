@@ -1,8 +1,9 @@
 import { GestionnaireApi } from "@api/GestionnaireApi";
 import { TAppelApi, TBaseUri, TConfigurationApi, TReponseApiEchec, TReponseApiSucces } from "@model/api/Api";
-
 import { useState } from "react";
 import API from "../../utils/AppelApi";
+
+// MODULE CLE pour appels API
 
 const useFetchApi = <
   TUri extends TBaseUri,
