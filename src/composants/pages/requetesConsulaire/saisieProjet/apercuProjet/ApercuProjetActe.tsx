@@ -41,7 +41,7 @@ const ApercuProjetActe: React.FC = () => {
   const pagesTexteActe = useMemo(() => {
     if (!valeurs || !modeleTexte) return { pages: {}, total: 0 };
 
-    const acteTexteParPage = modeleTexte.genererParPage(valeurs, { tailleLigne: 84, ligneParPage: 45 });
+    const acteTexteParPage = modeleTexte.genererParPage(valeurs, { tailleLigne: 84, ligneParPage: 57 });
 
     return { pages: acteTexteParPage, total: Object.keys(acteTexteParPage).length };
   }, [valeurs, modeleTexte]);
@@ -88,7 +88,7 @@ const ApercuProjetActe: React.FC = () => {
       {enAttenteModeleTexte && <ComposantChargeur />}
 
       {Boolean(pagesTexteActe.total) && (
-        <ConteneurDocument>
+        <ConteneurDocument imprimable>
           <div className="grid gap-10">
             {Object.entries(pagesTexteActe.pages).map(([clePage, lignes], indexPage) => (
               <DocumentTexte key={clePage}>
@@ -104,7 +104,7 @@ const ApercuProjetActe: React.FC = () => {
                     ))}
                   </div>
 
-                  <div>{`${requete.numeroDossier ?? "<REFERENCE.ACTE.TRANSCRIT>"} - ${DateRECE.depuisTimestamp(Date.now()).format()} - ${indexPage + 1}/${pagesTexteActe.total}`}</div>
+                  <div className="pb-2">{`${requete.numeroDossier ?? "<REFERENCE.ACTE.TRANSCRIT>"} - ${DateRECE.depuisTimestamp(Date.now()).format()} - ${indexPage + 1}/${pagesTexteActe.total}`}</div>
                 </div>
               </DocumentTexte>
             ))}

@@ -2942,28 +2942,6 @@ pays
         </form>
       </div>
     </div>
-    <div
-      class="gap-2 rounded-lg hidden overflow-auto pt-4 h-[calc(100vh-16.5rem)]"
-    >
-      <div
-        class="GestionMentions"
-      >
-        <h2>
-          GestionMention
-        </h2>
-      </div>
-    </div>
-    <div
-      class="gap-2 rounded-lg hidden overflow-hidden pt-4 h-[calc(100vh-16.5rem)]"
-    >
-      <div
-        class="Echanges"
-      >
-        <h2>
-          Echange
-        </h2>
-      </div>
-    </div>
   </div>
 </div>
 `;

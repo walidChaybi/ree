@@ -1,0 +1,262 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ApercuProjetActe - Tests du composant > Doit afficher l'aperçu du projet d'un ate de décès 1`] = `
+<div
+  class="h-screen"
+>
+  <div
+    class="h-full"
+  >
+    <div
+      class="relative h-full w-full overflow-y-auto overflow-x-hidden bg-gris-clair"
+    >
+      <div
+        class="sticky top-0 text-end"
+      >
+        <button
+          class="min-w-0 bg-transparent px-1.5 py-0.5 text-bleu-sombre transition-colors hover:text-bleu focus-visible:text-bleu"
+          title="Imprimer"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            data-testid="PrintIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="absolute w-[calc(100%-80px)] pb-24 transition-all duration-100"
+        style="top: 40px; left: 40px;"
+      >
+        <div
+          class="grid gap-10"
+        >
+          <div
+            class="mx-auto flex w-full max-w-[750px] bg-blanc font-liberation shadow-lg"
+          >
+            <div
+              class="contenu-document-texte flex aspect-[21/29.7] w-full overflow-hidden break-words"
+            >
+              <div
+                class="flex w-full flex-col justify-between gap-4 text-start"
+              >
+                <div>
+                  <div
+                    class="text-center"
+                  >
+                    Projet d'acte de décès
+                  </div>
+                  <div>
+                    <br />
+                  </div>
+                  <div>
+                    de François
+                  </div>
+                  <div>
+                    <br />
+                  </div>
+                  <div>
+                    <br />
+                  </div>
+                  <div>
+                    TRANSCRIPTION
+                  </div>
+                  <div>
+                    <br />
+                  </div>
+                </div>
+                <div
+                  class="pb-2"
+                >
+                  &lt;REFERENCE.ACTE.TRANSCRIT&gt; - 05/06/2025 - 1/1
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ApercuProjetActe - Tests du composant > Doit afficher l'aperçu du projet d'un ate de mariage 1`] = `
+<div
+  class="h-screen"
+>
+  <div
+    class="h-full"
+  >
+    <div
+      class="relative h-full w-full overflow-y-auto overflow-x-hidden bg-gris-clair"
+    >
+      <div
+        class="sticky top-0 text-end"
+      >
+        <button
+          class="min-w-0 bg-transparent px-1.5 py-0.5 text-bleu-sombre transition-colors hover:text-bleu focus-visible:text-bleu"
+          title="Imprimer"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            data-testid="PrintIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="absolute w-[calc(100%-80px)] pb-24 transition-all duration-100"
+        style="top: 40px; left: 40px;"
+      >
+        <div
+          class="grid gap-10"
+        >
+          <div
+            class="mx-auto flex w-full max-w-[750px] bg-blanc font-liberation shadow-lg"
+          >
+            <div
+              class="contenu-document-texte flex aspect-[21/29.7] w-full overflow-hidden break-words"
+            >
+              <div
+                class="flex w-full flex-col justify-between gap-4 text-start"
+              >
+                <div>
+                  <div
+                    class="text-center"
+                  >
+                    Projet d'acte de mariage
+                  </div>
+                  <div>
+                    <br />
+                  </div>
+                  <div>
+                    de François
+                  </div>
+                  <div>
+                    <br />
+                  </div>
+                  <div>
+                    <br />
+                  </div>
+                  <div>
+                    TRANSCRIPTION
+                  </div>
+                  <div>
+                    <br />
+                  </div>
+                </div>
+                <div
+                  class="pb-2"
+                >
+                  &lt;REFERENCE.ACTE.TRANSCRIT&gt; - 05/06/2025 - 1/1
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ApercuProjetActe - Tests du composant > Doit afficher l'aperçu du projet d'un ate de naissance 1`] = `
+<div
+  class="h-screen"
+>
+  <div
+    class="h-full"
+  >
+    <div
+      class="relative h-full w-full overflow-y-auto overflow-x-hidden bg-gris-clair"
+    >
+      <div
+        class="sticky top-0 text-end"
+      >
+        <button
+          class="min-w-0 bg-transparent px-1.5 py-0.5 text-bleu-sombre transition-colors hover:text-bleu focus-visible:text-bleu"
+          title="Imprimer"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            data-testid="PrintIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="absolute w-[calc(100%-80px)] pb-24 transition-all duration-100"
+        style="top: 40px; left: 40px;"
+      >
+        <div
+          class="grid gap-10"
+        >
+          <div
+            class="mx-auto flex w-full max-w-[750px] bg-blanc font-liberation shadow-lg"
+          >
+            <div
+              class="contenu-document-texte flex aspect-[21/29.7] w-full overflow-hidden break-words"
+            >
+              <div
+                class="flex w-full flex-col justify-between gap-4 text-start"
+              >
+                <div>
+                  <div
+                    class="text-center"
+                  >
+                    Projet d'acte de naissance
+                  </div>
+                  <div>
+                    <br />
+                  </div>
+                  <div>
+                    de François
+                  </div>
+                  <div>
+                    <br />
+                  </div>
+                  <div>
+                    <br />
+                  </div>
+                  <div>
+                    TRANSCRIPTION
+                  </div>
+                  <div>
+                    <br />
+                  </div>
+                </div>
+                <div
+                  class="pb-2"
+                >
+                  &lt;REFERENCE.ACTE.TRANSCRIT&gt; - 05/06/2025 - 1/1
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

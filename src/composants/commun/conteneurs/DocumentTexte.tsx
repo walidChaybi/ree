@@ -6,7 +6,7 @@ interface IStyleDocument {
 }
 
 const COEFFICIENT_MARGE = 0.035;
-const COEFFICIENT_TAILLE_POLICE = 0.0182;
+const COEFFICIENT_TAILLE_POLICE = 0.0177;
 
 const DocumentTexte: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [refDocument, setRefDocument] = useState<HTMLDivElement | null>(null);

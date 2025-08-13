@@ -80,7 +80,7 @@ describe("Test des composants conteneur de documents texte", () => {
       expect(donneesFenetre.pages).toStrictEqual([
         {
           style: {
-            fontSize: "13px",
+            fontSize: "13.65px",
             height: "100vh",
             display: "flex",
             fontFamily: "Liberation Mono"

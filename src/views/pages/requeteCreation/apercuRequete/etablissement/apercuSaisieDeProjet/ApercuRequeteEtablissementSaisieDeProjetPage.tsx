@@ -19,7 +19,6 @@ import { ITitulaireRequeteCreation, TitulaireRequeteCreation } from "@model/requ
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { ApercuProjet } from "@pages/requeteCreation/commun/composants/ApercuProjet";
-import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
@@ -287,11 +286,6 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
         </>
       ),
       index: 0
-    },
-    {
-      titre: "Echanges",
-      component: <Echanges />,
-      index: 1
     }
   ];
 

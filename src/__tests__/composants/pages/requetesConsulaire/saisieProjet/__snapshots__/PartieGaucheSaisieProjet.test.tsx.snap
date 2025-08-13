@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre décès dans ApercuProjetActe 1`] = `
+exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher correctement le composant 1`] = `
 <div
   class="flex w-1/2 flex-col"
 >
@@ -8,15 +8,15 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
     class="flex items-end border-0 border-b border-solid border-gris"
   >
     <button
-      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-blanc text-bleu-sombre hover:text-bleu hover:border-bleu focus:text-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc m-0 h-10 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
+      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre false m-0 h-11 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
+      disabled=""
       title="Description de la requête"
       type="button"
     >
       Description de la requête
     </button>
     <button
-      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre false m-0 h-11 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
-      disabled=""
+      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-blanc text-bleu-sombre hover:text-bleu hover:border-bleu focus:text-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc m-0 h-10 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
       title="Aperçu du projet"
       type="button"
     >
@@ -24,7 +24,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
     </button>
   </div>
   <div
-    class="gap-2 rounded-lg hidden overflow-auto pt-4 h-[calc(100vh-16.5rem)]"
+    class="gap-2 rounded-lg grid overflow-auto pt-4 h-[calc(100vh-16.5rem)]"
   >
     <div
       class="pr-4"
@@ -39,7 +39,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
           <span
             class="truncate"
           >
-            "Transcription" Acte de décès
+            Transcription d'un acte de naissance d'une personne mineure
           </span>
           <svg
             aria-hidden="true"
@@ -83,7 +83,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                         <div
                           class="mb-1 text-left text-xs uppercase text-gray-500"
                         >
-                          Type Requete
+                          Type Requête
                         </div>
                         <div
                           class="relative z-50 inline-block w-full"
@@ -109,16 +109,16 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                           <div
                             class="line-clamp-3 max-w-72 text-ellipsis break-words flex w-fit rounded-r-full border border-solid border-bleu-sombre bg-blue-50 px-2 py-1 text-bleu-sombre"
                           >
-                            En traitement
+                            Prise en charge
                             <svg
                               aria-hidden="true"
                               class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium ml-1 h-5 w-5 css-i4bv87-MuiSvgIcon-root"
-                              data-testid="UpdateIcon"
+                              data-testid="PendingActionsIcon"
                               focusable="false"
                               viewBox="0 0 24 24"
                             >
                               <path
-                                d="M21 10.12h-6.78l2.74-2.82c-2.73-2.7-7.15-2.8-9.88-.1-2.73 2.71-2.73 7.08 0 9.79s7.15 2.71 9.88 0C18.32 15.65 19 14.08 19 12.1h2c0 1.98-.88 4.55-2.64 6.29-3.51 3.48-9.21 3.48-12.72 0-3.5-3.47-3.53-9.11-.02-12.58s9.14-3.47 12.65 0L21 3v7.12zM12.5 8v4.25l3.5 2.08-.72 1.21L11 13V8h1.5z"
+                                d="M17 12c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm1.65 7.35L16.5 17.2V14h1v2.79l1.85 1.85-.7.71zM18 3h-3.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H6c-1.1 0-2 .9-2 2v15c0 1.1.9 2 2 2h6.11c-.59-.57-1.07-1.25-1.42-2H6V5h2v3h8V5h2v5.08c.71.1 1.38.31 2 .6V5c0-1.1-.9-2-2-2zm-6 2c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"
                               />
                             </svg>
                           </div>
@@ -156,7 +156,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                           <div
                             class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
-                            31/03/2025
+                            28/06/2022
                           </div>
                         </div>
                       </div>
@@ -174,7 +174,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                           <div
                             class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
-                            QEILP1
+                            2H5U3Q
                           </div>
                         </div>
                       </div>
@@ -207,7 +207,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                           <div
                             class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
-                            Xi-phun bin
+                            dupont
                           </div>
                         </div>
                       </div>
@@ -225,7 +225,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                           <div
                             class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
-                            liao, xiar, sehoo
+                            paul
                           </div>
                         </div>
                       </div>
@@ -243,43 +243,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                           <div
                             class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
-                            Féminin
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Date de naissance
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                          >
-                            03/12/2024
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Lieu de naissance
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                          >
-                            Bejin, China (Chine)
+                            Masculin
                           </div>
                         </div>
                       </div>
@@ -313,7 +277,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                             <div
                               class="line-clamp-3 max-w-72 text-ellipsis break-words "
                             >
-                              Greenwald
+                              Philips
                             </div>
                           </div>
                         </div>
@@ -331,7 +295,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                             <div
                               class="line-clamp-3 max-w-72 text-ellipsis break-words "
                             >
-                              cassandra
+                              Yann
                             </div>
                           </div>
                         </div>
@@ -359,7 +323,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                           <div
                             class="mb-1 text-left text-xs uppercase text-gray-500"
                           >
-                            Date de naissance
+                            Nationalité
                           </div>
                           <div
                             class="relative z-50 inline-block w-full"
@@ -367,7 +331,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                             <div
                               class="line-clamp-3 max-w-72 text-ellipsis break-words "
                             >
-                              10/10/2000
+                              nationalite
                             </div>
                           </div>
                         </div>
@@ -382,7 +346,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                     <span
                       class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
                     >
-                      Requerant
+                      Requérant
                     </span>
                     <div
                       class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
@@ -401,7 +365,66 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
                           <div
                             class="line-clamp-3 max-w-72 text-ellipsis break-words "
                           >
-                            Père/mère
+                            Titulaire
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="mb-5 text-left"
+                      >
+                        <div
+                          class="mb-1 text-left text-xs uppercase text-gray-500"
+                        >
+                          Courriel
+                        </div>
+                        <div
+                          class="relative z-50 inline-block w-full"
+                        >
+                          <div
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
+                          >
+                            courriel
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="mb-5 text-left"
+                      >
+                        <div
+                          class="mb-1 text-left text-xs uppercase text-gray-500"
+                        >
+                          Téléphone
+                        </div>
+                        <div
+                          class="relative z-50 inline-block w-full"
+                        >
+                          <div
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
+                          >
+                            telephone
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="mb-5 text-left"
+                      >
+                        <div
+                          class="mb-1 text-left text-xs uppercase text-gray-500"
+                        >
+                          Coordonnées
+                        </div>
+                        <div
+                          class="relative z-50 inline-block w-full"
+                        >
+                          <div
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
+                          >
+                            ligne2
+ligne3
+ligne4
+ligne5
+codePostal ville
+pays
                           </div>
                         </div>
                       </div>
@@ -416,985 +439,36 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre dé
     </div>
     <div
       class="mb-4 mr-4 mt-4"
-    >
-      <div
-        class="mt-2"
-      />
-    </div>
+    />
   </div>
   <div
-    class="gap-2 rounded-lg grid overflow-hidden h-[calc(100vh-15.5rem)]"
+    class="gap-2 rounded-lg hidden overflow-hidden h-[calc(100vh-15.5rem)]"
   >
     <div
       class="h-full"
     >
       <div
-        class="relative h-full w-full overflow-y-auto overflow-x-hidden bg-gris-clair"
+        class="grid w-full place-content-center py-6"
       >
-        <div
-          class="absolute w-[calc(100%-80px)] pb-24 transition-all duration-100"
-          style="top: 40px; left: 40px;"
+        <span
+          class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-18lrjg1-MuiCircularProgress-root"
+          role="progressbar"
+          style="width: 40px; height: 40px;"
         >
-          <div
-            class="mx-auto flex w-full max-w-[750px] bg-blanc font-liberation shadow-lg"
-          >
-            <div
-              class="flex aspect-[21/29.7] w-full"
-            >
-              <div
-                class="flex w-full flex-col justify-between gap-4 text-start"
-              >
-                <div>
-                  <div
-                    class="text-center"
-                  >
-                    Projet d'acte de décès
-                  </div>
-                  <div>
-                    Texte décès
-                  </div>
-                </div>
-                <div>
-                  &lt;REFERENCE.ACTE.TRANSCRIT&gt; - 05/06/2025
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher titre mariage dans ApercuProjetActe 1`] = `
-<div
-  class="flex w-1/2 flex-col"
->
-  <div
-    class="flex items-end border-0 border-b border-solid border-gris"
-  >
-    <button
-      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-blanc text-bleu-sombre hover:text-bleu hover:border-bleu focus:text-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc m-0 h-10 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
-      title="Description de la requête"
-      type="button"
-    >
-      Description de la requête
-    </button>
-    <button
-      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre false m-0 h-11 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
-      disabled=""
-      title="Aperçu du projet"
-      type="button"
-    >
-      Aperçu du projet
-    </button>
-  </div>
-  <div
-    class="gap-2 rounded-lg hidden overflow-auto pt-4 h-[calc(100vh-16.5rem)]"
-  >
-    <div
-      class="pr-4"
-    >
-      <div
-        class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
-      >
-        <button
-          class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
-          type="button"
-        >
-          <span
-            class="truncate"
-          >
-            "Transcription" Acte de mariage avec CCAM
-          </span>
           <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-i4bv87-MuiSvgIcon-root"
-            data-testid="ExpandMoreIcon"
-            focusable="false"
-            viewBox="0 0 24 24"
+            class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
+            viewBox="22 22 44 44"
           >
-            <path
-              d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+            <circle
+              class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
+              cx="44"
+              cy="44"
+              fill="none"
+              r="20.2"
+              stroke-width="3.6"
             />
           </svg>
-        </button>
-        <div
-          class="grid transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
-        >
-          <div
-            class="min-h-0"
-          >
-            <div
-              class="grid gap-y-4 p-4 "
-            >
-              <div
-                class="grid gap-12 py-4"
-              >
-                <div>
-                  <div
-                    class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
-                  >
-                    <span
-                      class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
-                    >
-                      Informations générales
-                    </span>
-                    <div
-                      class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
-                    >
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Type Requete
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                          >
-                            Création suite Transcription Courrier
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Statut
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words flex w-fit rounded-r-full border border-solid border-bleu-sombre bg-blue-50 px-2 py-1 text-bleu-sombre"
-                          >
-                            En traitement
-                            <svg
-                              aria-hidden="true"
-                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium ml-1 h-5 w-5 css-i4bv87-MuiSvgIcon-root"
-                              data-testid="UpdateIcon"
-                              focusable="false"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                d="M21 10.12h-6.78l2.74-2.82c-2.73-2.7-7.15-2.8-9.88-.1-2.73 2.71-2.73 7.08 0 9.79s7.15 2.71 9.88 0C18.32 15.65 19 14.08 19 12.1h2c0 1.98-.88 4.55-2.64 6.29-3.51 3.48-9.21 3.48-12.72 0-3.5-3.47-3.53-9.11-.02-12.58s9.14-3.47 12.65 0L21 3v7.12zM12.5 8v4.25l3.5 2.08-.72 1.21L11 13V8h1.5z"
-                              />
-                            </svg>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Provenance
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                          >
-                            Courrier
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Date création
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                          >
-                            31/03/2025
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Numéro fonctionnel
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                          >
-                            QEILP1
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div
-                    class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
-                  >
-                    <span
-                      class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
-                    >
-                      Titulaire
-                    </span>
-                    <div
-                      class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
-                    >
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Nom
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                          >
-                            Xi-phun bin
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Prénoms
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                          >
-                            liao, xiar, sehoo
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Sexe
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                          >
-                            Féminin
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Date de naissance
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                          >
-                            03/12/2024
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Lieu de naissance
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                          >
-                            Bejin, China (Chine)
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div>
-                    <div
-                      class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
-                    >
-                      <span
-                        class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
-                      >
-                        Père
-                      </span>
-                      <div
-                        class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
-                      >
-                        <div
-                          class="mb-5 text-left"
-                        >
-                          <div
-                            class="mb-1 text-left text-xs uppercase text-gray-500"
-                          >
-                            Nom
-                          </div>
-                          <div
-                            class="relative z-50 inline-block w-full"
-                          >
-                            <div
-                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                            >
-                              Greenwald
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="mb-5 text-left"
-                        >
-                          <div
-                            class="mb-1 text-left text-xs uppercase text-gray-500"
-                          >
-                            Prénoms
-                          </div>
-                          <div
-                            class="relative z-50 inline-block w-full"
-                          >
-                            <div
-                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                            >
-                              cassandra
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="mb-5 text-left"
-                        >
-                          <div
-                            class="mb-1 text-left text-xs uppercase text-gray-500"
-                          >
-                            Sexe
-                          </div>
-                          <div
-                            class="relative z-50 inline-block w-full"
-                          >
-                            <div
-                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                            >
-                              Masculin
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="mb-5 text-left"
-                        >
-                          <div
-                            class="mb-1 text-left text-xs uppercase text-gray-500"
-                          >
-                            Date de naissance
-                          </div>
-                          <div
-                            class="relative z-50 inline-block w-full"
-                          >
-                            <div
-                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                            >
-                              10/10/2000
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div
-                    class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
-                  >
-                    <span
-                      class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
-                    >
-                      Requerant
-                    </span>
-                    <div
-                      class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
-                    >
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Requérant
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                          >
-                            Père/mère
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="mb-4 mr-4 mt-4"
-    >
-      <div
-        class="mt-2"
-      />
-    </div>
-  </div>
-  <div
-    class="gap-2 rounded-lg grid overflow-hidden h-[calc(100vh-15.5rem)]"
-  >
-    <div
-      class="h-full"
-    >
-      <div
-        class="relative h-full w-full overflow-y-auto overflow-x-hidden bg-gris-clair"
-      >
-        <div
-          class="absolute w-[calc(100%-80px)] pb-24 transition-all duration-100"
-          style="top: 40px; left: 40px;"
-        >
-          <div
-            class="mx-auto flex w-full max-w-[750px] bg-blanc font-liberation shadow-lg"
-          >
-            <div
-              class="flex aspect-[21/29.7] w-full"
-            >
-              <div
-                class="flex w-full flex-col justify-between gap-4 text-start"
-              >
-                <div>
-                  <div
-                    class="text-center"
-                  >
-                    Projet d'acte de mariage
-                  </div>
-                  <div>
-                    Texte mariage
-                  </div>
-                </div>
-                <div>
-                  &lt;REFERENCE.ACTE.TRANSCRIT&gt; - 05/06/2025
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`PartieGaucheSaisieProjet - Tests du composant > Doit rendre composant PartieGaucheSaisieProjet 1`] = `
-<div
-  class="flex w-1/2 flex-col"
->
-  <div
-    class="flex items-end border-0 border-b border-solid border-gris"
-  >
-    <button
-      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-blanc text-bleu-sombre hover:text-bleu hover:border-bleu focus:text-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc m-0 h-10 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
-      title="Description de la requête"
-      type="button"
-    >
-      Description de la requête
-    </button>
-    <button
-      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre false m-0 h-11 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
-      disabled=""
-      title="Aperçu du projet"
-      type="button"
-    >
-      Aperçu du projet
-    </button>
-  </div>
-  <div
-    class="gap-2 rounded-lg hidden overflow-auto pt-4 h-[calc(100vh-16.5rem)]"
-  >
-    <div
-      class="pr-4"
-    >
-      <div
-        class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
-      >
-        <button
-          class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
-          type="button"
-        >
-          <span
-            class="truncate"
-          >
-            "Transcription" Acte de naissance d'une personne mineure
-          </span>
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-i4bv87-MuiSvgIcon-root"
-            data-testid="ExpandMoreIcon"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-            />
-          </svg>
-        </button>
-        <div
-          class="grid transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
-        >
-          <div
-            class="min-h-0"
-          >
-            <div
-              class="grid gap-y-4 p-4 "
-            >
-              <div
-                class="grid gap-12 py-4"
-              >
-                <div>
-                  <div
-                    class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
-                  >
-                    <span
-                      class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
-                    >
-                      Informations générales
-                    </span>
-                    <div
-                      class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
-                    >
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Type Requete
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                          >
-                            Création suite Transcription Courrier
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Statut
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words flex w-fit rounded-r-full border border-solid border-bleu-sombre bg-blue-50 px-2 py-1 text-bleu-sombre"
-                          >
-                            En traitement
-                            <svg
-                              aria-hidden="true"
-                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium ml-1 h-5 w-5 css-i4bv87-MuiSvgIcon-root"
-                              data-testid="UpdateIcon"
-                              focusable="false"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                d="M21 10.12h-6.78l2.74-2.82c-2.73-2.7-7.15-2.8-9.88-.1-2.73 2.71-2.73 7.08 0 9.79s7.15 2.71 9.88 0C18.32 15.65 19 14.08 19 12.1h2c0 1.98-.88 4.55-2.64 6.29-3.51 3.48-9.21 3.48-12.72 0-3.5-3.47-3.53-9.11-.02-12.58s9.14-3.47 12.65 0L21 3v7.12zM12.5 8v4.25l3.5 2.08-.72 1.21L11 13V8h1.5z"
-                              />
-                            </svg>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Provenance
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                          >
-                            Courrier
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Date création
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                          >
-                            31/03/2025
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Numéro fonctionnel
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                          >
-                            QEILP1
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div
-                    class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
-                  >
-                    <span
-                      class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
-                    >
-                      Titulaire
-                    </span>
-                    <div
-                      class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
-                    >
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Nom
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                          >
-                            Xi-phun bin
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Prénoms
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                          >
-                            liao, xiar, sehoo
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Sexe
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                          >
-                            Féminin
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Date de naissance
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                          >
-                            03/12/2024
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Lieu de naissance
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                          >
-                            Bejin, China (Chine)
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div>
-                    <div
-                      class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
-                    >
-                      <span
-                        class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
-                      >
-                        Père
-                      </span>
-                      <div
-                        class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
-                      >
-                        <div
-                          class="mb-5 text-left"
-                        >
-                          <div
-                            class="mb-1 text-left text-xs uppercase text-gray-500"
-                          >
-                            Nom
-                          </div>
-                          <div
-                            class="relative z-50 inline-block w-full"
-                          >
-                            <div
-                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                            >
-                              Greenwald
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="mb-5 text-left"
-                        >
-                          <div
-                            class="mb-1 text-left text-xs uppercase text-gray-500"
-                          >
-                            Prénoms
-                          </div>
-                          <div
-                            class="relative z-50 inline-block w-full"
-                          >
-                            <div
-                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                            >
-                              cassandra
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="mb-5 text-left"
-                        >
-                          <div
-                            class="mb-1 text-left text-xs uppercase text-gray-500"
-                          >
-                            Sexe
-                          </div>
-                          <div
-                            class="relative z-50 inline-block w-full"
-                          >
-                            <div
-                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                            >
-                              Masculin
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="mb-5 text-left"
-                        >
-                          <div
-                            class="mb-1 text-left text-xs uppercase text-gray-500"
-                          >
-                            Date de naissance
-                          </div>
-                          <div
-                            class="relative z-50 inline-block w-full"
-                          >
-                            <div
-                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                            >
-                              10/10/2000
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div
-                    class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
-                  >
-                    <span
-                      class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
-                    >
-                      Requerant
-                    </span>
-                    <div
-                      class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
-                    >
-                      <div
-                        class="mb-5 text-left"
-                      >
-                        <div
-                          class="mb-1 text-left text-xs uppercase text-gray-500"
-                        >
-                          Requérant
-                        </div>
-                        <div
-                          class="relative z-50 inline-block w-full"
-                        >
-                          <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
-                          >
-                            Père/mère
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="mb-4 mr-4 mt-4"
-    >
-      <div
-        class="mt-2"
-      />
-    </div>
-  </div>
-  <div
-    class="gap-2 rounded-lg grid overflow-hidden h-[calc(100vh-15.5rem)]"
-  >
-    <div
-      class="h-full"
-    >
-      <div
-        class="relative h-full w-full overflow-y-auto overflow-x-hidden bg-gris-clair"
-      >
-        <div
-          class="absolute w-[calc(100%-80px)] pb-24 transition-all duration-100"
-          style="top: 40px; left: 40px;"
-        >
-          <div
-            class="mx-auto flex w-full max-w-[750px] bg-blanc font-liberation shadow-lg"
-          >
-            <div
-              class="flex aspect-[21/29.7] w-full"
-            >
-              <div
-                class="flex w-full flex-col justify-between gap-4 text-start"
-              >
-                <div>
-                  <div
-                    class="text-center"
-                  >
-                    Projet d'acte de naissance
-                  </div>
-                  <div>
-                    Test modele
-                  </div>
-                </div>
-                <div>
-                  &lt;REFERENCE.ACTE.TRANSCRIT&gt; - 05/06/2025
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        </span>
       </div>
     </div>
   </div>

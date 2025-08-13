@@ -11,7 +11,7 @@ const imprimerDocument = () => {
   pagesDocumentTexte.forEach(page => {
     let elem = fenetreImpression.document.createElement("div");
     elem.innerHTML = page.innerHTML;
-    elem.style.fontSize = "13px";
+    elem.style.fontSize = "13.65px";
     elem.style.height = "100vh";
     elem.style.display = "flex";
     elem.style.fontFamily = "Liberation Mono";

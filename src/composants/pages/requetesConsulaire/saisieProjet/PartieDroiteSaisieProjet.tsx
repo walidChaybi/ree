@@ -1,5 +1,3 @@
-import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
-import { GestionMentions } from "@pages/requeteCreation/commun/composants/GestionMentions";
 import React, { useContext, useState } from "react";
 import { SaisieProjetActeTranscritContext } from "../../../../contexts/SaisieProjetActeTranscritContextProvider";
 import OngletsBouton from "../../../commun/onglets/OngletsBouton";
@@ -7,9 +5,7 @@ import ConteneurVoletEdition from "../../requetesDelivrance/editionRequete/Conte
 import FormulaireSaisieProjet from "./formulaireSaisieProjet/FormulaireSaisieProjet";
 
 enum ECleOngletPartieDroite {
-  PROJET = "projet",
-  MENTIONS = "mentions",
-  ECHANGE = "echange"
+  PROJET = "projet"
 }
 
 const PartieDroiteSaisieProjet: React.FC = () => {
@@ -42,22 +38,8 @@ const PartieDroiteSaisieProjet: React.FC = () => {
           </div>
         </ConteneurVoletEdition>
       )}
-
-      <ConteneurVoletEdition
-        estActif={ongletActifPartieDroite === ECleOngletPartieDroite.MENTIONS}
-        estScrollable
-      >
-        <GestionMentions />
-      </ConteneurVoletEdition>
-
-      {requete && (
-        <ConteneurVoletEdition estActif={ongletActifPartieDroite === ECleOngletPartieDroite.ECHANGE}>
-          <Echanges />
-        </ConteneurVoletEdition>
-      )}
     </div>
   );
 };
 
 export default PartieDroiteSaisieProjet;
-/* v8 ignore end */

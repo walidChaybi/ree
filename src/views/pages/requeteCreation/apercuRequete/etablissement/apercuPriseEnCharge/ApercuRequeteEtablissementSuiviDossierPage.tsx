@@ -2,7 +2,6 @@ import { IDetailRequeteParams, useDetailRequeteApiHook } from "@hook/requete/Det
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
-import { Echanges } from "@pages/requeteCreation/commun/composants/Echanges";
 import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
@@ -112,11 +111,6 @@ export const ApercuRequeteEtablissementSuiviDossierPage: React.FC<ApercuRequeteE
         />
       ),
       index: 2
-    },
-    {
-      titre: "Echanges",
-      component: <Echanges />,
-      index: 3
     }
   ];
 
