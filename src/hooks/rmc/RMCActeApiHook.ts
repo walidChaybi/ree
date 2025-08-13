@@ -1,6 +1,6 @@
 import { CONFIG_POST_RMC_ACTE } from "@api/configurations/etatCivil/acte/PostRMCActeConfigApi";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
-import { IParamsTableau, PARAMS_TABLEAU_VIDE, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
+import { IParamsTableau, PARAMS_TABLEAU_VIDE, getParamsTableauRMCDepuisHeaders } from "@util/GestionDesLiensApi";
 import { useEffect, useState } from "react";
 import AfficherMessage from "../../utils/AfficherMessage";
 import {
@@ -40,7 +40,7 @@ export const useRMCActeApiHook = (
       apresSucces: (actes, headers) => {
         setResultat({
           dataRMCActe: actes.map(ResultatRMCActe.depuisDto).filter((acte): acte is ResultatRMCActe => acte !== null),
-          dataTableauRMCActe: getParamsTableauDepuisHeaders(headers),
+          dataTableauRMCActe: getParamsTableauRMCDepuisHeaders(headers),
           // L'identifiant de la fiche qui a démandé la rmc doit être retourné dans la réponse car il est utilisé pour mettre à jour les actes
           //  de la fiche acte pour sa pagination/navigation
           ficheIdentifiant: criteres.ficheIdentifiant

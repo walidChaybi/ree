@@ -1,4 +1,3 @@
-import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import React, { useState } from "react";
 import FenetreExterne, { IFenetreExterneRef } from "../../../composants/commun/conteneurs/FenetreExterne";
 import { FichePage, IDataFicheProps, IIndex } from "./FichePage";
@@ -6,26 +5,22 @@ import "./scss/LienFiche.scss";
 
 interface IFenetreFicheProps {
   identifiant: string;
-  categorie: ETypeFiche;
   onClose: (id: string, index: number) => void;
   datasFiches: IDataFicheProps[];
   numeroRequete?: string;
   index: IIndex;
   nbLignesTotales: number;
   nbLignesParAppel: number;
-  getLignesSuivantesOuPrecedentes?: (ficheIdentifiant: string, lien: string) => void;
 }
 
 export const FenetreFiche: React.FC<IFenetreFicheProps> = ({
   identifiant,
-  categorie,
   onClose,
   datasFiches,
   numeroRequete,
   index,
   nbLignesTotales,
-  nbLignesParAppel,
-  getLignesSuivantesOuPrecedentes
+  nbLignesParAppel
 }) => {
   const [fenetreOuverteState, setFenetreOuverteState] = useState(true);
   const [fenetreExterneRef, setFenetreExterneRef] = useState<IFenetreExterneRef>();
@@ -50,7 +45,6 @@ export const FenetreFiche: React.FC<IFenetreFicheProps> = ({
             index={index}
             nbLignesTotales={nbLignesTotales}
             nbLignesParAppel={nbLignesParAppel}
-            getLignesSuivantesOuPrecedentes={getLignesSuivantesOuPrecedentes}
           />
         </FenetreExterne>
       )}

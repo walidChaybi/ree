@@ -162,7 +162,6 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
                   <FenetreFiche
                     key={`fiche${fenetreFicheActe.idActe}${fenetreFicheActe.index}`}
                     identifiant={fenetreFicheActe.idActe}
-                    categorie={ETypeFiche.ACTE}
                     datasFiches={fenetreFicheActe.datasFiches}
                     numeroRequete={fenetreFicheActe.numeroRequete}
                     onClose={closeFenetre}

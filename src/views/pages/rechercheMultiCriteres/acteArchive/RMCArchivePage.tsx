@@ -1,11 +1,9 @@
-import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { stockageDonnees } from "@util/stockageDonnees";
 import { Formulaire } from "@widget/formulaire/Formulaire";
-import { NB_LIGNES_PAR_APPEL_ACTE, NB_LIGNES_PAR_PAGE_ACTE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import React, { useCallback, useState } from "react";
+import { NB_LIGNES_PAR_APPEL_ACTE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import React, { useState } from "react";
 import * as Yup from "yup";
 import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
-import { goToLinkRMC } from "../acteInscription/resultats/RMCTableauCommun";
 import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,
@@ -50,23 +48,14 @@ export const titreForm = "Critères de recherche d'un acte";
 export const RMCArchivePage: React.FC = () => {
   const blocsForm: JSX.Element[] = [getFormTitulaire(), getRegistreArchive(), getFormDatesDebutFinAnnee()];
 
-  const [valuesRMC, setValuesRMC] = useState<IRMCActeArchive>({});
-
   const [nouvelleRecherche, setNouvelleRecherche] = useState<boolean>(false);
 
   const [criteresRechercheActe, setCriteresRechercheActe] = useState<ICriteresRechercheActeArchive>();
 
-  // Critères de recherche pour alimenter les données des fiches Acte en effet leur pagination/navigation est indépendante du tableau de résultats
-  const [criteresRechercheFicheActe, setCriteresRechercheFicheActe] = useState<ICriteresRechercheActeArchive>();
-
   const resultatRMCActe = useRMCActeArchiveApiHook(criteresRechercheActe);
-
-  /** Récupération des résultats rmc pour une fiche Acte lors d'une navigation */
-  const resultatRMCFicheActe = useRMCActeArchiveApiHook(criteresRechercheFicheActe);
 
   const onSubmitRMCActeArchive = (values: any) => {
     setNouvelleRecherche(true);
-    setValuesRMC(values);
     setCriteresRechercheActe({
       valeurs: values,
       range: `0-${NB_LIGNES_PAR_APPEL_ACTE}`
@@ -74,29 +63,6 @@ export const RMCArchivePage: React.FC = () => {
     stockageDonnees.stockerCriteresRMCActeArchive(values);
     setNouvelleRecherche(false);
   };
-
-  const setRangeActeArchive = (range: string) => {
-    if (valuesRMC && range !== "") {
-      setCriteresRechercheActe({
-        valeurs: valuesRMC,
-        range
-      });
-    }
-  };
-
-  const getLignesSuivantesOuPrecedentesActe = useCallback(
-    (ficheIdentifiant: string, lien: string) => {
-      const range = goToLinkRMC(lien);
-      if (valuesRMC && range) {
-        setCriteresRechercheFicheActe({
-          valeurs: valuesRMC,
-          range,
-          ficheIdentifiant
-        });
-      }
-    },
-    [valuesRMC]
-  );
 
   const rappelCriteres = () => {
     return stockageDonnees.recupererCriteresRMCActeArchive();
@@ -123,14 +89,7 @@ export const RMCArchivePage: React.FC = () => {
         <RMCActeArchiveResultats
           dataRMCActeArchive={resultatRMCActe.dataRMCActe}
           dataTableauRMCActeArchive={resultatRMCActe.dataTableauRMCActe}
-          setRangeActeArchive={setRangeActeArchive}
           resetRMC={nouvelleRecherche}
-          nbLignesParAppel={NB_LIGNES_PAR_APPEL_ACTE}
-          nbLignesParPage={NB_LIGNES_PAR_PAGE_ACTE}
-          getLignesSuivantesOuPrecedentesActe={getLignesSuivantesOuPrecedentesActe}
-          idFicheActe={resultatRMCFicheActe?.ficheIdentifiant}
-          dataRMCFicheActe={resultatRMCFicheActe?.dataRMCActe}
-          dataTableauRMCFicheActe={resultatRMCFicheActe?.dataTableauRMCActe}
         />
       )}
     </>

@@ -6,9 +6,17 @@ export interface IParamsTableau {
   maxRangeState?: number;
 }
 
+export type TParamsTableauRMC = Pick<IParamsTableau, "minRangeState" | "maxRangeState" | "rowsNumberState">;
+
 export const PARAMS_TABLEAU_VIDE: IParamsTableau = {
   previousDataLinkState: "",
   nextDataLinkState: "",
+  rowsNumberState: 0,
+  minRangeState: 0,
+  maxRangeState: 0
+};
+
+export const PARAMS_TABLEAU_RMC_VIDE: TParamsTableauRMC = {
   rowsNumberState: 0,
   minRangeState: 0,
   maxRangeState: 0
@@ -19,10 +27,19 @@ export interface IHeadersAvecParamsTableau {
   "content-range"?: string;
 }
 
+export interface IHeadersAvecParamsTableauRMC {
+  "content-range"?: string;
+}
+
 export const getParamsTableauDepuisReponseApi = (result: any): IParamsTableau => getParamsTableauDepuisHeaders(result.headers);
 
 export const getParamsTableauDepuisHeaders = (headers: IHeadersAvecParamsTableau): IParamsTableau => ({
   ...parseLink(headers.link),
+  ...getRangeTableau(headers["content-range"]),
+  rowsNumberState: getRowsNumber(headers["content-range"])
+});
+
+export const getParamsTableauRMCDepuisHeaders = (headers: IHeadersAvecParamsTableauRMC): TParamsTableauRMC => ({
   ...getRangeTableau(headers["content-range"]),
   rowsNumberState: getRowsNumber(headers["content-range"])
 });

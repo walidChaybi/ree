@@ -19,7 +19,6 @@ test("renders Fielset Recherche Multi Critères Requêtes", () => {
             )}
             dataTableauRMCRequete={DataTableauRequete}
             setRangeRequete={vi.fn()}
-            resetRMC={true}
           />
         )
       }

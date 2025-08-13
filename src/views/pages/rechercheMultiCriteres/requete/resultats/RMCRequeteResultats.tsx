@@ -9,7 +9,6 @@ interface RMCRequeteResultatsProps {
   dataRMCRequete: TRequeteTableauRMC[];
   dataTableauRMCRequete: IParamsTableau;
   setRangeRequete: (range: string) => void;
-  resetRMC: boolean;
 }
 
 export const RMCRequeteResultats: React.FC<RMCRequeteResultatsProps> = props => {
@@ -24,7 +23,6 @@ export const RMCRequeteResultats: React.FC<RMCRequeteResultatsProps> = props => 
             dataRMCRequete={props.dataRMCRequete}
             dataTableauRMCRequete={props.dataTableauRMCRequete}
             setRangeRequete={props.setRangeRequete}
-            resetTableauRequete={props.resetRMC}
           />
         </div>
       </Fieldset>

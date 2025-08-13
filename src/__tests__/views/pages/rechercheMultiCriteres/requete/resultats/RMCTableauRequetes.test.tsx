@@ -30,7 +30,6 @@ describe("Test RMCTableauRequetes", () => {
               )}
               dataTableauRMCRequete={DataTableauRequete}
               setRangeRequete={vi.fn()}
-              resetTableauRequete={true}
             />
           )
         }
@@ -64,7 +63,6 @@ describe("Test RMCTableauRequetes", () => {
               )}
               dataTableauRMCRequete={DataTableauRequete}
               setRangeRequete={vi.fn()}
-              resetTableauRequete={true}
             />
           )
         },
@@ -99,7 +97,6 @@ describe("Test RMCTableauRequetes", () => {
               )}
               dataTableauRMCRequete={DataTableauRequete}
               setRangeRequete={vi.fn()}
-              resetTableauRequete={true}
             />
           )
         },
@@ -134,7 +131,6 @@ describe("Test RMCTableauRequetes", () => {
               dataRMCRequete={[]}
               dataTableauRMCRequete={{}}
               setRangeRequete={vi.fn()}
-              resetTableauRequete={true}
             />
           )
         }
@@ -159,7 +155,6 @@ describe("Test RMCTableauRequetes", () => {
               )}
               dataTableauRMCRequete={DataTableauRequete}
               setRangeRequete={vi.fn()}
-              resetTableauRequete={true}
             />
           )
         },
@@ -201,7 +196,6 @@ describe("Test RMCTableauRequetes", () => {
               )}
               dataTableauRMCRequete={DataTableauRequete}
               setRangeRequete={vi.fn()}
-              resetTableauRequete={true}
             />
           )
         },
@@ -243,7 +237,6 @@ describe("Test RMCTableauRequetes", () => {
               )}
               dataTableauRMCRequete={DataTableauRequete}
               setRangeRequete={vi.fn()}
-              resetTableauRequete={true}
             />
           )
         }

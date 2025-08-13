@@ -13,7 +13,6 @@ import "./../scss/PopinNouvelleRMCRequete.scss";
 interface PopinNouvelleRMCRequeteProps {
   open: boolean;
   onClose: (isOpen: boolean) => void;
-  setNouvelleRMCRequete: React.Dispatch<React.SetStateAction<boolean>>;
   setValuesRMCRequete: React.Dispatch<React.SetStateAction<IRMCRequeteForm<keyof typeof ETypeRequete | ""> | null>>;
   setCriteresRechercheRequete: React.Dispatch<React.SetStateAction<ICriteresRMCRequete | undefined>>;
 }
@@ -21,7 +20,6 @@ interface PopinNouvelleRMCRequeteProps {
 export const PopinNouvelleRMCRequete: React.FC<PopinNouvelleRMCRequeteProps> = ({
   open,
   onClose,
-  setNouvelleRMCRequete,
   setValuesRMCRequete,
   setCriteresRechercheRequete
 }) => {
@@ -49,7 +47,6 @@ export const PopinNouvelleRMCRequete: React.FC<PopinNouvelleRMCRequeteProps> = (
       <DialogContent>
         <RMCRequeteForm
           closePopIn={handleClose}
-          setNouvelleRMCRequete={setNouvelleRMCRequete}
           setValuesRMCRequete={setValuesRMCRequete}
           setCriteresRechercheRequete={setCriteresRechercheRequete}
         />

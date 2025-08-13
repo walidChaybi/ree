@@ -20,8 +20,6 @@ interface IRMCActeInscriptionResultatsProps {
   dataTableauRMCActe: IParamsTableau;
   dataRMCInscription: TResultatRMCInscription[];
   dataTableauRMCInscription: IParamsTableau;
-  setRangeActe?: (range: string) => void;
-  setRangeInscription?: (range: string) => void;
   resetRMC?: boolean;
   onClickCheckboxTableauActes?: (event: TChangeEventSurHTMLInputElement, data: ResultatRMCActe) => void;
   onClickCheckboxTableauInscriptions?: (event: TChangeEventSurHTMLInputElement, data: TResultatRMCInscription) => void;
@@ -29,16 +27,6 @@ interface IRMCActeInscriptionResultatsProps {
   nbLignesParAppelActe: number;
   nbLignesParPageInscription: number;
   nbLignesParAppelInscription: number;
-  // Données propre à une fiche Acte pour sa pagination/navigation
-  getLignesSuivantesOuPrecedentesActe?: (ficheIdentifiant: string, lien: string) => void;
-  idFicheActe?: string;
-  dataRMCFicheActe?: ResultatRMCActe[];
-  dataTableauRMCFicheActe?: IParamsTableau;
-  // Données propre à une fiche Inscription pour sa pagination/navigation
-  getLignesSuivantesOuPrecedentesInscription?: (ficheIdentifiant: string, lien: string) => void;
-  idFicheInscription?: string;
-  dataRMCFicheInscription?: TResultatRMCInscription[];
-  dataTableauRMCFicheInscription?: IParamsTableau;
   rmcActeEnCours: boolean;
   rmcInscriptionEnCours: boolean;
 }
@@ -53,8 +41,6 @@ export const RMCActeInscriptionResultats = forwardRef<HTMLDivElement, IRMCActeIn
       dataTableauRMCActe,
       dataRMCInscription,
       dataTableauRMCInscription,
-      setRangeActe,
-      setRangeInscription,
       resetRMC,
       onClickCheckboxTableauActes,
       onClickCheckboxTableauInscriptions,
@@ -62,16 +48,6 @@ export const RMCActeInscriptionResultats = forwardRef<HTMLDivElement, IRMCActeIn
       nbLignesParAppelActe,
       nbLignesParPageInscription,
       nbLignesParAppelInscription,
-      // Données propre à une fiche Acte pour sa pagination/navigation
-      getLignesSuivantesOuPrecedentesActe,
-      idFicheActe,
-      dataRMCFicheActe,
-      dataTableauRMCFicheActe,
-      // Données propre à une fiche Inscription pour sa pagination/navigation
-      getLignesSuivantesOuPrecedentesInscription,
-      idFicheInscription,
-      dataRMCFicheInscription,
-      dataTableauRMCFicheInscription,
       rmcActeEnCours,
       rmcInscriptionEnCours
     },
@@ -96,15 +72,10 @@ export const RMCActeInscriptionResultats = forwardRef<HTMLDivElement, IRMCActeIn
                 dataAlertes={dataAlertes}
                 dataRMCActe={dataRMCActe}
                 dataTableauRMCActe={dataTableauRMCActe}
-                setRangeActe={setRangeActe}
                 resetTableauActe={resetRMC}
                 onClickCheckboxCallBack={onClickCheckboxTableauActes}
                 nbLignesParPage={nbLignesParPageActe}
                 nbLignesParAppel={nbLignesParAppelActe}
-                getLignesSuivantesOuPrecedentesActe={getLignesSuivantesOuPrecedentesActe}
-                idFicheActe={idFicheActe}
-                dataRMCFicheActe={dataRMCFicheActe}
-                dataTableauRMCFicheActe={dataTableauRMCFicheActe}
               />
             )}
           </div>
@@ -120,15 +91,10 @@ export const RMCActeInscriptionResultats = forwardRef<HTMLDivElement, IRMCActeIn
                 dataRequete={dataRequete}
                 dataRMCInscription={dataRMCInscription}
                 dataTableauRMCInscription={dataTableauRMCInscription}
-                setRangeInscription={setRangeInscription}
                 resetTableauInscription={resetRMC}
                 onClickCheckboxCallBack={onClickCheckboxTableauInscriptions}
                 nbLignesParPage={nbLignesParPageInscription}
                 nbLignesParAppel={nbLignesParAppelInscription}
-                getLignesSuivantesOuPrecedentesInscription={getLignesSuivantesOuPrecedentesInscription}
-                idFicheInscription={idFicheInscription}
-                dataRMCFicheInscription={dataRMCFicheInscription}
-                dataTableauRMCFicheInscription={dataTableauRMCFicheInscription}
               />
             )}
           </div>

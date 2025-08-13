@@ -17,7 +17,6 @@ import { RMCRequeteResultats } from "./resultats/RMCRequeteResultats";
 import "./scss/RMCRequetePage.scss";
 
 export const RMCRequetePage: React.FC = () => {
-  const [nouvelleRMCRequete, setNouvelleRMCRequete] = useState<boolean>(false);
   const [valuesRMCRequete, setValuesRMCRequete] = useState<IRMCRequeteForm<keyof typeof ETypeRequete | ""> | null>(null);
   const [opEnCours, setOpEnCours] = useState<boolean>(false);
   const [criteresRMCRequete, setCriteresRMCRequete] = useState<ICriteresRMCRequete>();
@@ -81,12 +80,11 @@ export const RMCRequetePage: React.FC = () => {
         onTimeoutEnd={() => setOpEnCours(false)}
       ></OperationEnCours>
       <RMCRequeteForm
-        setNouvelleRMCRequete={setNouvelleRMCRequete}
         setValuesRMCRequete={setValuesRMCRequete}
         setCriteresRechercheRequete={lancerRercherche}
       />
       <AutoScroll
-        autoScroll={nouvelleRMCRequete}
+        autoScroll={Boolean(dataRMCRequete)}
         baliseRef={RMCRequeteRef}
       />
 
@@ -99,7 +97,6 @@ export const RMCRequetePage: React.FC = () => {
             dataRMCRequete={dataRMCRequete}
             dataTableauRMCRequete={dataTableauRMCRequete}
             setRangeRequete={setRangeRequete}
-            resetRMC={nouvelleRMCRequete}
           />
         ))}
     </>

@@ -50,17 +50,11 @@ export const titreForm = "Critères de recherche d'une requête";
 
 interface RMCRequeteFormProps {
   closePopIn?: () => void;
-  setNouvelleRMCRequete: React.Dispatch<React.SetStateAction<boolean>>;
   setValuesRMCRequete: React.Dispatch<React.SetStateAction<IRMCRequeteForm<keyof typeof ETypeRequete | ""> | null>>;
   setCriteresRechercheRequete: (criteres: ICriteresRMCRequete) => void;
 }
 
-export const RMCRequeteForm: React.FC<RMCRequeteFormProps> = ({
-  closePopIn,
-  setNouvelleRMCRequete,
-  setValuesRMCRequete,
-  setCriteresRechercheRequete
-}) => {
+export const RMCRequeteForm: React.FC<RMCRequeteFormProps> = ({ closePopIn, setValuesRMCRequete, setCriteresRechercheRequete }) => {
   const blocsForm: JSX.Element[] = [getFormRequete(), getFormDatesDebutFin(), getFormTitulaire(), getFormRequerant()];
 
   const onSubmitRMCRequete = (values: any) => {
@@ -72,14 +66,12 @@ export const RMCRequeteForm: React.FC<RMCRequeteFormProps> = ({
         closePopIn();
       }
 
-      setNouvelleRMCRequete(true);
       setValuesRMCRequete(values);
       setCriteresRechercheRequete({
         valeurs: values,
         range: `0-${NB_LIGNES_PAR_APPEL_REQUETE}`
       });
       stockageDonnees.stockerCriteresRMCReq(values);
-      setNouvelleRMCRequete(false);
     }
   };
 

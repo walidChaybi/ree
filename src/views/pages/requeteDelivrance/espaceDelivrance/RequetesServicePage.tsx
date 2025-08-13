@@ -172,7 +172,6 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
           messageAucunResultat={RenderMessageZeroRequete()}
           nbLignesParPage={NB_LIGNES_PAR_PAGE_ESPACE_DELIVRANCE}
           nbLignesParAppel={NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}
-          resetTableau={estTableauARafraichir}
         />
       )}
       <BoutonRetour />

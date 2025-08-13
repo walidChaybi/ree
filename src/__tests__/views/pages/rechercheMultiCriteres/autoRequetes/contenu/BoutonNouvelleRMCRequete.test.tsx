@@ -5,7 +5,6 @@ import { expect, test, vi } from "vitest";
 test("render BoutonNouvelleRMCRequete", () => {
   render(
     <BoutonNouvelleRMCRequete
-      setNouvelleRMCRequete={vi.fn()}
       setValuesRMCRequete={vi.fn()}
       setCriteresRechercheRequete={vi.fn()}
     />
@@ -27,13 +26,11 @@ test("render BoutonNouvelleRMCRequete", () => {
     expect(popinNouvelleRMC).toBeDefined();
   });
 
-  const boutonAnnuler = screen.getByLabelText(
-    "CloseButtonNouvelleRMCRequete"
-  ) as HTMLButtonElement;
+  const boutonAnnuler = screen.getByLabelText("CloseButtonNouvelleRMCRequete") as HTMLButtonElement;
 
   fireEvent.click(boutonAnnuler);
 
-    waitFor(() => {
-      expect(popinNouvelleRMC).not.toBeDefined();
-    });
+  waitFor(() => {
+    expect(popinNouvelleRMC).not.toBeDefined();
+  });
 });

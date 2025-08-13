@@ -50,8 +50,6 @@ export const RMCTableauRequetesAssociees: React.FC<IRMCTableauRequetesAssocieesP
   setValuesRMCRequete,
   setCriteresRechercheRequete
 }) => {
-  const [nouvelleRMCRequete, setNouvelleRMCRequete] = useState<boolean>(false);
-
   const { utilisateurConnecte } = useContext(RECEContextData);
   // Gestion du tableau
   const [requeteSelectionnee, setRequeteSelectionnee] = useState<IInfoRequeteSelectionnee>();
@@ -96,13 +94,11 @@ export const RMCTableauRequetesAssociees: React.FC<IRMCTableauRequetesAssocieesP
         dataState={dataRMCRequete}
         paramsTableau={dataTableauRMCRequete}
         goToLink={goToLink}
-        resetTableau={nouvelleRMCRequete}
         messageAucunResultat={RenderMessageZeroRequete()}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_REQUETE_ASSOCIEES}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_REQUETE_ASSOCIEES}
       >
         <BoutonNouvelleRMCRequete
-          setNouvelleRMCRequete={setNouvelleRMCRequete}
           setValuesRMCRequete={setValuesRMCRequete}
           setCriteresRechercheRequete={setCriteresRechercheRequete}
         />

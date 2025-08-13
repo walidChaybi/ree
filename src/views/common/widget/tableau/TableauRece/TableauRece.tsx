@@ -4,7 +4,6 @@ import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
-import { getLibelle } from "@util/Utils";
 import React, { useCallback, useEffect } from "react";
 import {
   SortOrder,
@@ -30,7 +29,6 @@ interface TableauReceProps {
   columnHeaders: TableauTypeColumn[];
   dataState: any[];
   paramsTableau: IParamsTableau;
-  canUseSignature?: boolean;
   icone?: IconeParams;
   handleChangeSort?: (tri: string, sens: SortOrder) => void;
   onClickOnLine: (id: string, data: any[], idxGlobal: number) => void;
@@ -38,7 +36,6 @@ interface TableauReceProps {
   handleReload?: () => void;
   nbLignesParPage: number;
   nbLignesParAppel: number;
-  resetTableau?: boolean;
   messageAucunResultat?: JSX.Element;
   stickyHeader?: boolean;
   getRowClassName?: (data: any) => string;
@@ -174,7 +171,7 @@ export const TableauRece: React.FC<React.PropsWithChildren<TableauReceProps>> = 
           component="div"
           count={paramsTableau.rowsNumberState || 0}
           rowsPerPage={props.nbLignesParPage}
-          labelDisplayedRows={({ from, to, count }) => getLibelle(`${from}-${to} sur ${count}`)}
+          labelDisplayedRows={({ from, to, count }) => `${from}-${to} sur ${count}`}
           showFirstButton={props.afficheBoutonsNavigationRapide}
           showLastButton={props.afficheBoutonsNavigationRapide}
           page={pageState > 0 && paramsTableau.rowsNumberState === 0 ? 0 : pageState}

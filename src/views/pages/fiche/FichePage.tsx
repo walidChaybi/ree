@@ -53,14 +53,11 @@ interface FichePageProps {
   fenetreExterneRef?: IFenetreExterneRef;
   nbLignesTotales: number;
   nbLignesParAppel: number;
-  getLignesSuivantesOuPrecedentes?: (ficheIdentifiant: string, lien: string) => void;
 }
 
 export interface IDataFicheProps {
   identifiant: string;
   categorie: ETypeFiche;
-  lienSuivant?: string;
-  lienPrecedent?: string;
 }
 
 export const FichePage: React.FC<FichePageProps> = ({
@@ -70,8 +67,7 @@ export const FichePage: React.FC<FichePageProps> = ({
   index,
   fenetreExterneRef,
   nbLignesTotales,
-  nbLignesParAppel,
-  getLignesSuivantesOuPrecedentes
+  nbLignesParAppel
 }) => {
   const navigate = useNavigate();
   const [actualisationInfosFiche, setActualisationInfosFiche] = useState<boolean>(false);
@@ -178,42 +174,14 @@ export const FichePage: React.FC<FichePageProps> = ({
     }
   }, [dataFicheState.data, fenetreExterneRef, bandeauFiche, dataFicheCourante]);
 
-  const obtenirFicheSuivante = useCallback(
-    (idxLocal: number, idx: number) => {
-      if (getLignesSuivantesOuPrecedentes && dataFicheCourante?.lienSuivant && passageALaPlageSuivante(idxLocal, idx)) {
-        // On est en dehors de la plage courante (ie datasFiches) il faut faire un appel serveur pour obtenir la plage suivante
-        getLignesSuivantesOuPrecedentes(dataFicheIdentifiant, dataFicheCourante.lienSuivant);
-      } else {
-        setDataFicheCourante(datasFiches[idxLocal]);
-      }
-    },
-    [dataFicheCourante, dataFicheIdentifiant, datasFiches, getLignesSuivantesOuPrecedentes]
-  );
-
-  const obtenirFichePrecedente = useCallback(
-    (idx: number, idxLocal: number) => {
-      if (getLignesSuivantesOuPrecedentes && dataFicheCourante?.lienPrecedent && passageALaPlagePrecedente(idx, nbLignesParAppel)) {
-        // On est en dehors de la plage courante (ie datasFiches) il faut faire un appel serveur pour obtenir la plage précédente
-        getLignesSuivantesOuPrecedentes(dataFicheIdentifiant, dataFicheCourante.lienPrecedent);
-      } else {
-        setDataFicheCourante(datasFiches[idxLocal]);
-      }
-    },
-    [dataFicheCourante, dataFicheIdentifiant, datasFiches, getLignesSuivantesOuPrecedentes, nbLignesParAppel]
-  );
-
   const setIndexFiche = useCallback(
     (idx: number) => {
       if (dataFicheCourante && datasFiches && idx >= 0 && idx < nbLignesTotales) {
-        if (idx > indexCourant) {
-          obtenirFicheSuivante(getIndexLocal(idx, nbLignesParAppel), idx);
-        } else {
-          obtenirFichePrecedente(idx, getIndexLocal(idx, nbLignesParAppel));
-        }
+        setDataFicheCourante(datasFiches[getIndexLocal(idx, nbLignesParAppel)]);
       }
       setIndexCourant(idx);
     },
-    [dataFicheCourante, datasFiches, indexCourant, nbLignesParAppel, nbLignesTotales, obtenirFichePrecedente, obtenirFicheSuivante]
+    [dataFicheCourante, datasFiches, indexCourant, nbLignesParAppel, nbLignesTotales]
   );
 
   /* Ajout d'une alerte */
@@ -338,20 +306,6 @@ export const FichePage: React.FC<FichePageProps> = ({
     </div>
   );
 };
-
-/**
- * Passage à la plage suivante si le prochain index local est 0 et que ce n'est pas le 0 du tout début
- */
-function passageALaPlageSuivante(idxLocal: number, indexCourant: number) {
-  return idxLocal === 0 && indexCourant !== idxLocal;
-}
-
-/**
- *  Passage à la plage précédente si l'index local précédent était 0
- */
-function passageALaPlagePrecedente(indexCourant: number, nbLignesParAppel: number) {
-  return getIndexLocal(indexCourant + 1, nbLignesParAppel) === 0;
-}
 
 /**
  * Retourne l'index local à la "plage" courante (ie "datasFiches").

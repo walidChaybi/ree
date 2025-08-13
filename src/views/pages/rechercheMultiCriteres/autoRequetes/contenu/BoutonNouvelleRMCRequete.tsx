@@ -9,16 +9,11 @@ import "./../scss/BoutonNouvelleRMCRequete.scss";
 import { PopinNouvelleRMCRequete } from "./PopinNouvelleRMCRequete";
 
 interface BoutonNouvelleRMCRequeteProps {
-  setNouvelleRMCRequete: React.Dispatch<React.SetStateAction<boolean>>;
   setValuesRMCRequete: React.Dispatch<React.SetStateAction<IRMCRequeteForm<keyof typeof ETypeRequete | ""> | null>>;
   setCriteresRechercheRequete: React.Dispatch<React.SetStateAction<ICriteresRMCRequete | undefined>>;
 }
 
-export const BoutonNouvelleRMCRequete: React.FC<BoutonNouvelleRMCRequeteProps> = ({
-  setNouvelleRMCRequete,
-  setValuesRMCRequete,
-  setCriteresRechercheRequete
-}) => {
+export const BoutonNouvelleRMCRequete: React.FC<BoutonNouvelleRMCRequeteProps> = ({ setValuesRMCRequete, setCriteresRechercheRequete }) => {
   const [showWaitState, setShowWaitState] = useState<boolean>(false);
   const closePopin = useCallback(
     (showPopin: boolean) => {
@@ -48,7 +43,6 @@ export const BoutonNouvelleRMCRequete: React.FC<BoutonNouvelleRMCRequeteProps> =
       <PopinNouvelleRMCRequete
         open={showWaitState}
         onClose={closePopin}
-        setNouvelleRMCRequete={setNouvelleRMCRequete}
         setValuesRMCRequete={setValuesRMCRequete}
         setCriteresRechercheRequete={setCriteresRechercheRequete}
       />

@@ -11,7 +11,7 @@ export const NB_LIGNES_PAR_APPEL_ACTE = 100;
 export const NB_LIGNES_PAR_PAGE_ACTE = 10;
 
 // Inscriptions
-export const NB_LIGNES_PAR_APPEL_INSCRIPTION = NB_LIGNES_PAR_APPEL_DEFAUT;
+export const NB_LIGNES_PAR_APPEL_INSCRIPTION = 100;
 export const NB_LIGNES_PAR_PAGE_INSCRIPTION = 5;
 
 // Requêtes associées dans l'aperçu prise en charge

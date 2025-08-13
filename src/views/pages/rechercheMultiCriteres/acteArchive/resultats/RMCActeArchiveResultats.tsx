@@ -10,15 +10,7 @@ import "../scss/RMCActeArchiveResultats.scss";
 interface RMCActeArchiveResultatsProps {
   dataRMCActeArchive: ResultatRMCActe[];
   dataTableauRMCActeArchive: IParamsTableau;
-  setRangeActeArchive?: (range: string) => void;
   resetRMC?: boolean;
-  nbLignesParAppel: number;
-  nbLignesParPage: number;
-  // Données propre à une fiche Acte pour sa pagination/navigation
-  getLignesSuivantesOuPrecedentesActe?: (ficheIdentifiant: string, lien: string) => void;
-  idFicheActe?: string;
-  dataRMCFicheActe?: ResultatRMCActe[];
-  dataTableauRMCFicheActe?: IParamsTableau;
 }
 
 export const RMCActeArchiveResultats: React.FC<RMCActeArchiveResultatsProps> = props => {
@@ -34,14 +26,9 @@ export const RMCActeArchiveResultats: React.FC<RMCActeArchiveResultatsProps> = p
               typeRMC="Classique"
               dataRMCActe={props.dataRMCActeArchive}
               dataTableauRMCActe={props.dataTableauRMCActeArchive}
-              setRangeActe={props.setRangeActeArchive}
               resetTableauActe={props.resetRMC}
               nbLignesParAppel={NB_LIGNES_PAR_APPEL_ACTE}
               nbLignesParPage={NB_LIGNES_PAR_PAGE_ACTE}
-              getLignesSuivantesOuPrecedentesActe={props.getLignesSuivantesOuPrecedentesActe}
-              idFicheActe={props.idFicheActe}
-              dataRMCFicheActe={props.dataRMCFicheActe}
-              dataTableauRMCFicheActe={props.dataTableauRMCFicheActe}
             />
           ) : (
             <div className="AucunResultat">{"Aucun acte trouvé pour ces critères de recherche"}</div>

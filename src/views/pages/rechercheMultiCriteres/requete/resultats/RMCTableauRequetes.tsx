@@ -37,15 +37,9 @@ interface RMCResultatRequetesProps {
   dataRMCRequete: TRequeteTableauRMC[];
   dataTableauRMCRequete: IParamsTableau;
   setRangeRequete: (range: string) => void;
-  resetTableauRequete: boolean;
 }
 
-export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
-  dataRMCRequete,
-  dataTableauRMCRequete,
-  setRangeRequete,
-  resetTableauRequete
-}) => {
+export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({ dataRMCRequete, dataTableauRMCRequete, setRangeRequete }) => {
   // Gestion du tableau
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
 
@@ -156,7 +150,6 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({
         dataState={dataRMCRequete}
         paramsTableau={dataTableauRMCRequete}
         goToLink={goToLink}
-        resetTableau={resetTableauRequete}
         messageAucunResultat={RenderMessageZeroRequete()}
         nbLignesParPage={NB_LIGNES_PAR_PAGE_REQUETE}
         nbLignesParAppel={NB_LIGNES_PAR_APPEL_REQUETE}

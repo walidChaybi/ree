@@ -6,17 +6,13 @@ import {
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useEffect, useRef, useState } from "react";
 
+import TRAITEMENT_RMC_ACTES_INSCRIPTIONS, { IResultatRMCActesInscriptions } from "@api/traitements/rmc/TraitementRMCActesInscriptions";
 import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
-import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
-import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { RMCActeInscriptionResultats } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCActeInscriptionResultats";
-import { goToLinkRMC } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCTableauCommun";
-import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { RMCActeInscription } from "../../composants/pages/rmc/formulaire/RMCActeInscription";
 import { RMCContextProvider } from "../../contexts/RMCContextProvider";
+import useTraitementApi from "../../hooks/api/TraitementApiHook";
 import { StockageLocal } from "../../utils/StockageLocal";
-import { useRmcActeApi } from "./useRmcActeApi";
-import { useRmcInscriptionApi } from "./useRmcInscriptionApi";
 
 export const PageRMCActeInscription: React.FC = () => {
   useEffect(() => {
@@ -26,54 +22,27 @@ export const PageRMCActeInscription: React.FC = () => {
     }
   }, []);
 
-  /** States (beaucoup trop nombreux) */
-  const [valuesRMCActeInscription, setValuesRMCActeInscription] = useState<IRMCActeInscriptionForm | null>(null);
   const [nouvelleRMCActeInscription, setNouvelleRMCActeInscription] = useState<boolean>(false);
-  const [dataRMCActe, setDataRMCActe] = useState<ResultatRMCActe[] | null>(null);
-  const [dataTableauRMCActe, setDataTableauRMCActe] = useState<IParamsTableau | null>(null);
-  const [dataRMCInscription, setDataRMCInscription] = useState<TResultatRMCInscription[] | null>(null);
-  const [dataTableauRMCInscription, setDataTableauRMCInscription] = useState<IParamsTableau | null>(null);
-  const [idFicheActe, setIdFicheActe] = useState<string>();
-  const [idFicheInscription, setIdFicheInscription] = useState<string>();
+  const [resultatRMCActeInscription, setResultatRMCActeInscription] = useState<IResultatRMCActesInscriptions | null>(null);
 
   const tableauResultatRef = useRef<HTMLDivElement | null>(null);
 
-  const { appellerRmcInscriptionApi, enAttenteRMCInscription } = useRmcInscriptionApi(
-    setDataRMCInscription,
-    setDataTableauRMCInscription,
-    setIdFicheInscription
-  );
-
-  const { appellerRmcActeApi, enAttenteRMCActe } = useRmcActeApi(setDataRMCActe, setDataTableauRMCActe, setIdFicheActe);
-
-  const rechercherPlageSuivante = (range: string, type: "ACTE" | "INSCRIPTION", ficheIdentifiant?: string) => {
-    if (!valuesRMCActeInscription) return;
-    switch (type) {
-      case "ACTE":
-        return appellerRmcActeApi(valuesRMCActeInscription, range, ficheIdentifiant);
-      case "INSCRIPTION":
-        return appellerRmcInscriptionApi(valuesRMCActeInscription, range, ficheIdentifiant);
-    }
-  };
-
-  const getLignesSuivantesOuPrecedentes = (ficheIdentifiant: string, lien: string, type: "ACTE" | "INSCRIPTION") => {
-    const range = goToLinkRMC(lien);
-    if (!valuesRMCActeInscription || !range) return;
-    rechercherPlageSuivante(range, type, ficheIdentifiant);
-  };
+  const { lancerTraitement, traitementEnCours: enAttenteRMC } = useTraitementApi(TRAITEMENT_RMC_ACTES_INSCRIPTIONS);
 
   useEffect(() => {
-    if (dataRMCActe && dataTableauRMCActe && dataRMCInscription && dataTableauRMCInscription)
-      tableauResultatRef?.current?.scrollIntoView({ behavior: "smooth" });
-  }, [dataRMCActe, dataTableauRMCActe, dataRMCInscription, dataTableauRMCInscription]);
+    if (resultatRMCActeInscription) tableauResultatRef?.current?.scrollIntoView({ behavior: "smooth" });
+  }, [resultatRMCActeInscription]);
 
-  const onSubmitRMCActeInscription = async (valeurs: IRMCActeInscriptionForm) => {
+  const onSubmitRMCActeInscription = (valeurs: IRMCActeInscriptionForm) => {
     StockageLocal.stocker("CRITERES_RMC_ACTE_INSCRIPTION", valeurs);
-    appellerRmcActeApi(valeurs, `0-${NB_LIGNES_PAR_APPEL_ACTE}`);
-    appellerRmcInscriptionApi(valeurs, `0-${NB_LIGNES_PAR_APPEL_INSCRIPTION}`);
+    lancerTraitement({
+      parametres: {
+        valeursFormulaire: valeurs
+      },
+      apresSucces: setResultatRMCActeInscription
+    });
 
     setNouvelleRMCActeInscription(true);
-    setValuesRMCActeInscription(valeurs);
     setNouvelleRMCActeInscription(false);
   };
 
@@ -83,35 +52,21 @@ export const PageRMCActeInscription: React.FC = () => {
         <RMCActeInscription onSubmit={onSubmitRMCActeInscription} />
       </RMCContextProvider>
 
-      {dataRMCActe && dataTableauRMCActe && dataRMCInscription && dataTableauRMCInscription && (
+      {resultatRMCActeInscription && (
         <RMCActeInscriptionResultats
           ref={tableauResultatRef}
           typeRMC="Classique"
-          dataRMCActe={dataRMCActe}
-          dataTableauRMCActe={dataTableauRMCActe}
-          dataRMCInscription={dataRMCInscription}
-          dataTableauRMCInscription={dataTableauRMCInscription}
-          setRangeInscription={range => rechercherPlageSuivante(range, "INSCRIPTION")}
-          setRangeActe={range => rechercherPlageSuivante(range, "ACTE")}
+          dataRMCActe={resultatRMCActeInscription.resultatRMCActe}
+          dataTableauRMCActe={resultatRMCActeInscription.paramsTableauRMCActe}
+          dataRMCInscription={resultatRMCActeInscription.resultatRMCInscription}
+          dataTableauRMCInscription={resultatRMCActeInscription.paramsTableauRMCInscription}
           resetRMC={nouvelleRMCActeInscription}
           nbLignesParPageActe={NB_LIGNES_PAR_PAGE_ACTE}
           nbLignesParAppelActe={NB_LIGNES_PAR_APPEL_ACTE}
           nbLignesParPageInscription={NB_LIGNES_PAR_PAGE_INSCRIPTION}
           nbLignesParAppelInscription={NB_LIGNES_PAR_APPEL_INSCRIPTION}
-          getLignesSuivantesOuPrecedentesActe={(ficheIdentifiant: string, lien: string) =>
-            getLignesSuivantesOuPrecedentes(ficheIdentifiant, lien, "ACTE")
-          }
-          idFicheActe={idFicheActe}
-          dataRMCFicheActe={dataRMCActe!}
-          dataTableauRMCFicheActe={dataTableauRMCActe!}
-          getLignesSuivantesOuPrecedentesInscription={(ficheIdentifiant: string, lien: string) =>
-            getLignesSuivantesOuPrecedentes(ficheIdentifiant, lien, "INSCRIPTION")
-          }
-          idFicheInscription={idFicheInscription}
-          dataRMCFicheInscription={dataRMCInscription}
-          dataTableauRMCFicheInscription={dataTableauRMCInscription}
-          rmcActeEnCours={enAttenteRMCActe}
-          rmcInscriptionEnCours={enAttenteRMCInscription}
+          rmcActeEnCours={enAttenteRMC}
+          rmcInscriptionEnCours={enAttenteRMC}
         />
       )}
     </>

@@ -1,7 +1,7 @@
 import { CONFIG_POST_RMC_ACTE } from "@api/configurations/etatCivil/acte/PostRMCActeConfigApi";
 import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
-import { IParamsTableau, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
+import { IParamsTableau, getParamsTableauRMCDepuisHeaders } from "@util/GestionDesLiensApi";
 import { useEffect, useState } from "react";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
 import AfficherMessage from "../../../../../utils/AfficherMessage";
@@ -34,15 +34,17 @@ export function useRMCActeArchiveApiHook(criteres?: ICriteresRechercheActeArchiv
       apresSucces: (actes, headers) => {
         setResultat({
           dataRMCActe: actes.map(ResultatRMCActe.depuisDto).filter((acte): acte is ResultatRMCActe => acte !== null),
-          dataTableauRMCActe: getParamsTableauDepuisHeaders(headers),
+          dataTableauRMCActe: getParamsTableauRMCDepuisHeaders(headers),
           // L'identifiant de la fiche qui a démandé la rmc doit être retourné dans la réponse car il est utilisé pour mettre à jour les actes
           //  de la fiche acte pour sa pagination/navigation
           ficheIdentifiant: criteres.ficheIdentifiant
         });
       },
-      apresErreur: erreurs => {
+      apresErreur: (erreurs, statut) => {
         console.error("Erreur lors de la RMC acte :", erreurs);
-        AfficherMessage.erreur("Une erreur est survenue lors de la recherche multi-critères d'actes", { erreurs });
+        statut === 413
+          ? AfficherMessage.info("La recherche renvoie plus de 100 résultats. Veuillez affiner votre recherche.", { fermetureAuto: true })
+          : AfficherMessage.erreur("Une erreur est survenue lors de la recherche multi-critères d'actes", { erreurs });
       }
     });
   }, [criteres]);

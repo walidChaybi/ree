@@ -19,7 +19,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
 import { IDataFicheProps } from "../../../fiche/FichePage";
 import { getColonnesTableauActes } from "./RMCTableauActesParams";
-import { TypeRMC, goToLinkRMC } from "./RMCTableauCommun";
+import { TypeRMC } from "./RMCTableauCommun";
 
 interface RMCResultatActeProps {
   typeRMC: TypeRMC;
@@ -27,16 +27,10 @@ interface RMCResultatActeProps {
   dataAlertes?: IAlerte[];
   dataRMCActe: ResultatRMCActe[];
   dataTableauRMCActe: IParamsTableau;
-  setRangeActe?: (range: string) => void;
   resetTableauActe?: boolean;
   onClickCheckboxCallBack?: (event: TChangeEventSurHTMLInputElement, data: ResultatRMCActe) => void;
   nbLignesParPage: number;
   nbLignesParAppel: number;
-  // Données propre à une fiche acte pour sa pagination/navigation
-  getLignesSuivantesOuPrecedentesActe?: (ficheIdentifiant: string, lien: string) => void;
-  idFicheActe?: string;
-  dataRMCFicheActe?: ResultatRMCActe[];
-  dataTableauRMCFicheActe?: IParamsTableau;
 }
 
 export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
@@ -45,27 +39,11 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
   dataAlertes,
   dataRMCActe,
   dataTableauRMCActe,
-  setRangeActe,
   resetTableauActe,
   onClickCheckboxCallBack,
   nbLignesParPage,
-  nbLignesParAppel,
-  // Données propre à une fiche acte pour sa pagination/navigation
-  getLignesSuivantesOuPrecedentesActe,
-  idFicheActe,
-  dataRMCFicheActe,
-  dataTableauRMCFicheActe
+  nbLignesParAppel
 }) => {
-  const goToLink = useCallback(
-    (link: string) => {
-      const range = goToLinkRMC(link);
-      if (range && setRangeActe) {
-        setRangeActe(range);
-      }
-    },
-    [setRangeActe]
-  );
-
   // Gestion des fenêtres fiche acte
   const [etatFenetres, setEtatFenetres] = useState<IFenetreFicheActe[]>([]);
 
@@ -99,28 +77,10 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
   };
 
   useEffect(() => {
-    if (dataRMCFicheActe) {
-      const etatFenetreTrouve = etatFenetres.find(etatFenetre => etatFenetre.idActe === idFicheActe);
-      if (etatFenetreTrouve) {
-        const datasFiches = dataRMCFicheActe.map(data => ({
-          identifiant: data.id,
-          categorie: ETypeFiche.ACTE,
-          lienSuivant: dataTableauRMCFicheActe?.nextDataLinkState,
-          lienPrecedent: dataTableauRMCFicheActe?.previousDataLinkState
-        }));
-        etatFenetreTrouve.datasFiches = datasFiches;
-        setEtatFenetres([...etatFenetres]);
-      }
-    }
-  }, [idFicheActe, dataRMCFicheActe, dataTableauRMCFicheActe]);
-
-  useEffect(() => {
     setDatasFichesCourantes(
       dataRMCActe.map(data => ({
         identifiant: data.id,
-        categorie: ETypeFiche.ACTE,
-        lienSuivant: dataTableauRMCActe?.nextDataLinkState,
-        lienPrecedent: dataTableauRMCActe?.previousDataLinkState
+        categorie: ETypeFiche.ACTE
       }))
     );
   }, [dataRMCActe, dataTableauRMCActe]);
@@ -175,10 +135,8 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
         columnHeaders={columnHeaders}
         dataState={dataRMCActe}
         paramsTableau={dataTableauRMCActe}
-        goToLink={goToLink}
         nbLignesParPage={nbLignesParPage}
         nbLignesParAppel={nbLignesParAppel}
-        resetTableau={resetTableauActe}
         messageAucunResultat={getLigneTableauVide("Aucun acte n'a été trouvé.")}
         afficheBoutonsNavigationRapide={true}
       />
@@ -192,13 +150,11 @@ export const RMCTableauActes: React.FC<RMCResultatActeProps> = ({
             <FenetreFiche
               key={`fiche${fenetreFicheActe.idActe}${fenetreFicheActe.index.value}`}
               identifiant={fenetreFicheActe.idActe}
-              categorie={ETypeFiche.ACTE}
               datasFiches={fenetreFicheActe.datasFiches}
               numeroRequete={fenetreFicheActe.numeroRequete}
               onClose={closeFenetre}
               index={fenetreFicheActe.index}
               nbLignesTotales={dataTableauRMCActe.rowsNumberState ?? 0}
-              getLignesSuivantesOuPrecedentes={getLignesSuivantesOuPrecedentesActe}
               nbLignesParAppel={nbLignesParAppel}
             />
           )

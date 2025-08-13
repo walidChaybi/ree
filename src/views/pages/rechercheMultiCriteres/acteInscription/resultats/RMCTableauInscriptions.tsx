@@ -16,7 +16,7 @@ import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/col
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { FenetreFiche } from "../../../fiche/FenetreFiche";
 import { IDataFicheProps, IIndex } from "../../../fiche/FichePage";
-import { TypeRMC, goToLinkRMC } from "./RMCTableauCommun";
+import { TypeRMC } from "./RMCTableauCommun";
 import { getColonnesTableauInscriptions } from "./RMCTableauInscriptionsParams";
 
 interface IFenetreFicheInscription {
@@ -30,16 +30,10 @@ interface RMCResultatInscriptionProps {
   dataRequete?: TRequete;
   dataRMCInscription: TResultatRMCInscription[];
   dataTableauRMCInscription: IParamsTableau;
-  setRangeInscription?: (range: string) => void;
   resetTableauInscription?: boolean;
   onClickCheckboxCallBack?: (event: TChangeEventSurHTMLInputElement, data: TResultatRMCInscription) => void;
   nbLignesParPage: number;
   nbLignesParAppel: number;
-  // Données propre à une fiche Inscription pour sa pagination/navigation
-  getLignesSuivantesOuPrecedentesInscription?: (ficheIdentifiant: string, lien: string) => void;
-  idFicheInscription?: string;
-  dataRMCFicheInscription?: TResultatRMCInscription[];
-  dataTableauRMCFicheInscription?: IParamsTableau;
 }
 
 export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
@@ -47,27 +41,12 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
   dataRequete,
   dataRMCInscription,
   dataTableauRMCInscription,
-  setRangeInscription,
   resetTableauInscription,
   onClickCheckboxCallBack,
   nbLignesParPage,
-  nbLignesParAppel,
-  // Données propre à une fiche Inscription pour sa pagination/navigation
-  getLignesSuivantesOuPrecedentesInscription,
-  idFicheInscription,
-  dataRMCFicheInscription,
-  dataTableauRMCFicheInscription
+  nbLignesParAppel
 }) => {
   const { utilisateurConnecte } = useContext(RECEContextData);
-  const goToLink = useCallback(
-    (link: string) => {
-      const range = goToLinkRMC(link);
-      if (range && setRangeInscription) {
-        setRangeInscription(range);
-      }
-    },
-    [setRangeInscription]
-  );
 
   // Gestion des fenêtre fiche inscription
   const [etatFenetres, setEtatFenetres] = useState<IFenetreFicheInscription[]>([]);
@@ -106,28 +85,9 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
   };
 
   useEffect(() => {
-    if (dataRMCFicheInscription) {
-      const etatFenetreTrouve = etatFenetres.find(etatFenetre => etatFenetre.idInscription === idFicheInscription);
-      if (etatFenetreTrouve) {
-        const datasFiches = dataRMCFicheInscription.map(inscription => ({
-          identifiant: inscription.id,
-          categorie: ETypeFiche[inscription.categorie],
-          lienSuivant: dataTableauRMCFicheInscription?.nextDataLinkState,
-          lienPrecedent: dataTableauRMCFicheInscription?.previousDataLinkState
-        }));
-        etatFenetreTrouve.datasFiches = datasFiches;
-        setEtatFenetres([...etatFenetres]);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [idFicheInscription, dataRMCFicheInscription, dataTableauRMCFicheInscription]);
-
-  useEffect(() => {
     const datasFiches: IDataFicheProps[] = dataRMCInscription.map(inscription => ({
       identifiant: inscription.id,
-      categorie: ETypeFiche[inscription.categorie],
-      lienSuivant: dataTableauRMCInscription?.nextDataLinkState,
-      lienPrecedent: dataTableauRMCInscription?.previousDataLinkState
+      categorie: ETypeFiche[inscription.categorie]
     }));
     setDatasFichesCourantes(datasFiches);
   }, [dataRMCInscription, dataTableauRMCInscription]);
@@ -183,8 +143,6 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
         columnHeaders={columnHeaders}
         dataState={dataRMCInscription}
         paramsTableau={dataTableauRMCInscription}
-        goToLink={goToLink}
-        resetTableau={resetTableauInscription}
         messageAucunResultat={getLigneTableauVide("Aucune inscription n'a été trouvée.")}
         nbLignesParPage={nbLignesParPage}
         nbLignesParAppel={nbLignesParAppel}
@@ -200,15 +158,10 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
                 <FenetreFiche
                   key={`fiche${fenetreFicheInscription.idInscription}${fenetreFicheInscription.index.value}`}
                   identifiant={fenetreFicheInscription.idInscription}
-                  categorie={getCategorieFicheAPartirDatasFiches(
-                    fenetreFicheInscription.idInscription,
-                    fenetreFicheInscription.datasFiches
-                  )}
                   onClose={closeFenetre}
                   datasFiches={fenetreFicheInscription.datasFiches}
                   index={fenetreFicheInscription.index}
                   nbLignesTotales={dataTableauRMCInscription.rowsNumberState ?? 0}
-                  getLignesSuivantesOuPrecedentes={getLignesSuivantesOuPrecedentesInscription}
                   nbLignesParAppel={nbLignesParAppel}
                 />
               )
@@ -219,6 +172,3 @@ export const RMCTableauInscriptions: React.FC<RMCResultatInscriptionProps> = ({
     </>
   );
 };
-
-const getCategorieFicheAPartirDatasFiches = (id: string, datas: IDataFicheProps[]): ETypeFiche =>
-  datas.find(data => data.categorie && data.identifiant === id)!.categorie;

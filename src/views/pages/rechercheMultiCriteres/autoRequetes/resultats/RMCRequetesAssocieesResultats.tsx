@@ -7,7 +7,7 @@ import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
 import { mappingCriteresRMCRequeteVersDto } from "@model/rmc/requete/ICriteresRMCRequeteDto";
 import { IRMCRequeteForm } from "@model/rmc/requete/IRMCRequete";
 import RequeteAssociee, { TRequeteAssociee } from "@model/rmc/requete/RequeteAssociee";
-import { IHeadersAvecParamsTableau, IParamsTableau, PARAMS_TABLEAU_VIDE, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
+import { IParamsTableau, PARAMS_TABLEAU_VIDE, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
 import { SNP } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
@@ -74,7 +74,7 @@ export const RMCRequetesAssocieesResultats: React.FC<RMCRequetesAssocieesResulta
       parametres: { body: criteresRMCAuto, query: { range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}` } },
       apresSucces: (requetes, headers) => {
         setRequetesTableau(requetes.map(RequeteAssociee.depuisDto).filter((requete): requete is TRequeteAssociee => requete !== null));
-        setParamsTableau(getParamsTableauDepuisHeaders(headers as unknown as IHeadersAvecParamsTableau));
+        setParamsTableau(getParamsTableauDepuisHeaders(headers));
       },
       apresErreur: erreurs => {
         console.error("Erreur lors de la RMC requête auto :", erreurs);

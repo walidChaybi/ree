@@ -16,7 +16,6 @@ test.skip("renders Lien fiche fonctionne correctement", () => {
     <MemoryRouter>
       <FenetreFiche
         identifiant={"7566e16c-2b0e-11eb-adc1-0242ac120002"}
-        categorie={ETypeFiche.RC}
         onClose={onClose}
         datasFiches={[
           {

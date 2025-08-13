@@ -1,6 +1,6 @@
 import { CONFIG_POST_RMC_INSCRIPTION } from "@api/configurations/etatCivil/acte/PostRMCInscriptionConfigApi";
 import ResultatRMCInscription, { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
-import { IParamsTableau, PARAMS_TABLEAU_VIDE, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
+import { IParamsTableau, PARAMS_TABLEAU_VIDE, getParamsTableauRMCDepuisHeaders } from "@util/GestionDesLiensApi";
 import { useEffect, useState } from "react";
 import AfficherMessage from "../../utils/AfficherMessage";
 import {
@@ -43,7 +43,7 @@ export const useRMCInscriptionApiHook = (
           dataRMCInscription: inscriptions
             .map(ResultatRMCInscription.depuisDto)
             .filter((inscription): inscription is TResultatRMCInscription => inscription !== null),
-          dataTableauRMCInscription: getParamsTableauDepuisHeaders(headers),
+          dataTableauRMCInscription: getParamsTableauRMCDepuisHeaders(headers),
           // L'identifiant de la fiche qui a démandé la rmc doit être retourné dans la réponse car il est utilisé pour mettre à jour les actes
           //  de la fiche Inscription pour sa pagination/navigation
           ficheIdentifiant: criteres.ficheIdentifiant

@@ -6,6 +6,9 @@ type TReponseMock<TResultat> = {
   data?: TResultat;
   erreurs?: TErreurApi[];
   codeHttp?: number;
+  headers?: {
+    [key: string]: string | number | boolean | null | undefined;
+  };
 };
 
 interface IParametresMock<TUri extends TBaseUri, TBody extends object | undefined, TQuery extends object | undefined>
@@ -55,7 +58,7 @@ export class MockApi {
 
     MockApi.getMock()
       [onMethode](parametres?.regexp ? new RegExp(uriAvecParametres) : uriAvecParametres)
-      .reply(reponse?.codeHttp ?? 200, config.api.estExterne ? reponse?.data : reponse);
+      .reply(reponse?.codeHttp ?? 200, config.api.estExterne ? reponse?.data : reponse, reponse?.headers);
 
     return MockApi;
   }

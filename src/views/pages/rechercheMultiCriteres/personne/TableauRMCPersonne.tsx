@@ -159,7 +159,6 @@ export const TableauRMCPersonne: React.FC<TableauRMCPersonneProps> = props => {
                 <FenetreFiche
                   key={`fiche${fenetreFicheActe.idActeInscription}+${fenetreFicheActe.index.value}`}
                   identifiant={fenetreFicheActe.idActeInscription}
-                  categorie={fenetreFicheActe.datasFiches[ZERO].categorie}
                   datasFiches={fenetreFicheActe.datasFiches}
                   onClose={closeFenetre}
                   index={fenetreFicheActe.index}

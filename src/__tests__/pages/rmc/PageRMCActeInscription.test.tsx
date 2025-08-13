@@ -4,8 +4,10 @@ import { MockApi } from "@mock/appelsApi/MockApi";
 import { MOCK_RESULTAT_RMC_INSCRIPTION_RC } from "@mock/data/RMCInscription";
 import { NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { NB_LIGNES_PAR_APPEL_ACTE, NB_LIGNES_PAR_APPEL_INSCRIPTION } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { describe, expect, test, vi } from "vitest";
 import { PageRMCActeInscription } from "../../../pages/rmc/PageRMCActeInscription";
+import AfficherMessage from "../../../utils/AfficherMessage";
 
 test("Le formulaire s'affiche correctement", async () => {
   const { container } = render(<PageRMCActeInscription></PageRMCActeInscription>);
@@ -318,7 +320,7 @@ describe("Les boutons du formulaire fonctionnent correctement ", () => {
   test("LORSQUE l'utilisateur clique sur le bouton RECHERCHER, ALORS la soumission du formulaire s'effectue correctement", async () => {
     MockApi.deployer(
       CONFIG_POST_RMC_ACTE,
-      { body: {}, query: { range: "0-100" } },
+      { body: {}, query: { range: `0-${NB_LIGNES_PAR_APPEL_ACTE}` } },
       {
         codeHttp: 200,
         data: [
@@ -353,29 +355,22 @@ describe("Les boutons du formulaire fonctionnent correctement ", () => {
             familleRegistre: "ACQ",
             type: "TEXTE"
           }
-        ]
+        ],
+        headers: { "content-range": "0-100/1" }
       }
-    );
+    )
+      .deployer(
+        CONFIG_POST_RMC_INSCRIPTION,
+        { query: { range: `0-${NB_LIGNES_PAR_APPEL_INSCRIPTION}` } },
+        {
+          data: [MOCK_RESULTAT_RMC_INSCRIPTION_RC],
+          codeHttp: 200,
+          headers: { "content-range": "0-100/1" }
+        }
+      )
+      .debugAppels();
 
-    MockApi.deployer(
-      CONFIG_POST_RMC_INSCRIPTION,
-      { query: { range: "0-105" } },
-      {
-        data: [MOCK_RESULTAT_RMC_INSCRIPTION_RC],
-        codeHttp: 200
-      }
-    );
-
-    MockApi.deployer(
-      CONFIG_POST_RMC_INSCRIPTION,
-      { query: { range: "0-105" } },
-      {
-        data: [MOCK_RESULTAT_RMC_INSCRIPTION_RC],
-        codeHttp: 200
-      }
-    );
-
-    render(<PageRMCActeInscription></PageRMCActeInscription>);
+    render(<PageRMCActeInscription />);
 
     const InputNom: HTMLInputElement = await screen.findByLabelText("Nom");
     const BoutonRechercher = screen.getByRole("button", { name: "Rechercher" });
@@ -404,5 +399,39 @@ describe("Les boutons du formulaire fonctionnent correctement ", () => {
     await waitFor(() => {
       expect(InputNom.value).equals("Goku");
     });
+  });
+  test("LORSQUE la RMC renvoit plus de 100 résultats, un message d'information apparaît", async () => {
+    const spyMessageManager = vi.spyOn(AfficherMessage, "info");
+
+    MockApi.deployer(
+      CONFIG_POST_RMC_ACTE,
+      { body: {}, query: { range: `0-${NB_LIGNES_PAR_APPEL_ACTE}` } },
+      {
+        codeHttp: 413,
+        data: []
+      }
+    ).deployer(
+      CONFIG_POST_RMC_INSCRIPTION,
+      { query: { range: `0-${NB_LIGNES_PAR_APPEL_INSCRIPTION}` } },
+      {
+        data: [],
+        codeHttp: 413
+      }
+    );
+
+    render(<PageRMCActeInscription />);
+
+    const InputNom: HTMLInputElement = await screen.findByLabelText("Nom");
+    const BoutonRechercher = screen.getByRole("button", { name: "Rechercher" });
+
+    fireEvent.change(InputNom, { target: { value: "Goku" } });
+    fireEvent.click(BoutonRechercher);
+
+    await waitFor(() => {
+      expect(spyMessageManager).toHaveBeenCalledOnce();
+    });
+
+    MockApi.stopMock();
+    vi.clearAllMocks();
   });
 });

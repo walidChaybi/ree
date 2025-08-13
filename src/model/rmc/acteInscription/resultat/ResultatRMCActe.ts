@@ -4,6 +4,7 @@ import { ETypeFamille } from "@model/etatcivil/enum/TypeFamille";
 import { IPrenomOrdonneDto } from "@model/form/commun/PrenomsForm";
 import { IDateDto } from "@util/DateUtils";
 import { formatNoms, jointPrenoms } from "@util/Utils";
+import { champsObligatoiresDuDtoAbsents, valeurDtoAbsenteDansEnum } from "../../../../dto/commun/dtoUtils";
 import DateRECE from "../../../../utils/DateRECE";
 
 // CODE EXEMPLE développement OBJET des modèles métier + contrôle des DTO
@@ -54,21 +55,10 @@ export class ResultatRMCActe {
 
   public static readonly depuisDto = (acte: IResultatRMCActeDto): ResultatRMCActe | null => {
     switch (true) {
-      case ResultatRMCActe.champsObligatoires.some(cle => acte[cle] === undefined):
-        console.error(`Un champ obligatoire d'un ResultatRMCActeDto n'est pas défini.`);
-        return null;
-      case !Object.keys(ENatureActe).includes(acte.nature):
-        console.error(
-          `La nature d'un ResultatRMCActeDto a la valeur ${acte.nature} au lieu d'une des suivantes : ${Object.keys(ENatureActe)}.`
-        );
-        return null;
-      case !Object.keys(ETypeFamille).includes(acte.familleRegistre):
-        console.error(
-          `La famille de registre d'un ResultatRMCActeDto a la valeur ${acte.familleRegistre} au lieu d'une des suivantes : ${Object.keys(ETypeFamille)}.`
-        );
-        return null;
-      case !Object.keys(ETypeActe).includes(acte.type):
-        console.error(`Le type d'un ResultatRMCActeDto a la valeur ${acte.type} au lieu d'une des suivantes : ${Object.keys(ETypeActe)}.`);
+      case champsObligatoiresDuDtoAbsents("ResultatRMCActeDto", acte, this.champsObligatoires):
+      case valeurDtoAbsenteDansEnum("ResultatRMCActeDto", acte, "nature", ENatureActe):
+      case valeurDtoAbsenteDansEnum("ResultatRMCActeDto", acte, "familleRegistre", ETypeFamille):
+      case valeurDtoAbsenteDansEnum("ResultatRMCActeDto", acte, "type", ETypeActe):
         return null;
     }
 
