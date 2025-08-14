@@ -8,15 +8,15 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher correctem
     class="flex items-end border-0 border-b border-solid border-gris"
   >
     <button
-      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre false m-0 h-11 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
-      disabled=""
+      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-blanc text-bleu-sombre hover:text-bleu hover:border-bleu focus:text-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc m-0 h-10 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
       title="Description de la requête"
       type="button"
     >
       Description de la requête
     </button>
     <button
-      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-blanc text-bleu-sombre hover:text-bleu hover:border-bleu focus:text-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc m-0 h-10 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
+      class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre false m-0 h-11 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
+      disabled=""
       title="Aperçu du projet"
       type="button"
     >
@@ -24,7 +24,7 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher correctem
     </button>
   </div>
   <div
-    class="gap-2 rounded-lg grid overflow-auto pt-4 h-[calc(100vh-16.5rem)]"
+    class="gap-2 rounded-lg hidden overflow-auto pt-4 h-[calc(100vh-16.5rem)]"
   >
     <div
       class="pr-4"
@@ -442,7 +442,7 @@ pays
     />
   </div>
   <div
-    class="gap-2 rounded-lg hidden overflow-hidden h-[calc(100vh-15.5rem)]"
+    class="gap-2 rounded-lg grid overflow-hidden h-[calc(100vh-15.5rem)]"
   >
     <div
       class="h-full"

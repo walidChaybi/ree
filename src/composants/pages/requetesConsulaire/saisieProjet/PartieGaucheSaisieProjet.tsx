@@ -1,5 +1,4 @@
 import { IRequete } from "@model/requete/IRequete";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { useContext, useState } from "react";
 import { SaisieProjetActeTranscritContext } from "../../../../contexts/SaisieProjetActeTranscritContextProvider";
@@ -20,11 +19,7 @@ interface IPartieGaucheSaisieProjetProps {
 const PartieGaucheSaisieProjet: React.FC<IPartieGaucheSaisieProjetProps> = ({ estModeConsultation }) => {
   const { requete } = useContext(SaisieProjetActeTranscritContext);
 
-  const [ongletActif, setOngletActif] = useState<ECleOngletPartieGauche>(
-    requete.statutCourant.statut.libelle === StatutRequete.A_SIGNER.libelle
-      ? ECleOngletPartieGauche.APERCU_PROJET
-      : ECleOngletPartieGauche.DESCRIPTION
-  );
+  const [ongletActif, setOngletActif] = useState<ECleOngletPartieGauche>(ECleOngletPartieGauche.APERCU_PROJET);
 
   return (
     <div className="flex w-1/2 flex-col">
