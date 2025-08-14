@@ -11,11 +11,12 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { mappingRequeteTableauVersRequeteDelivrance } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
-import { PATH_APERCU_REQ_TRAITEMENT } from "@router/ReceUrls";
-import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
+import { replaceUrl } from "@util/route/UrlUtil";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
+import LiensRECE from "../../../../router/LiensRECE";
+import { INFO_PAGE_APERCU_REQUETE_DELIVRANCE_TRAITEMENT } from "../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import AfficherMessage from "../../../../utils/AfficherMessage";
 import {
   IGenerationCertificatSituationParams,
@@ -98,7 +99,10 @@ export const useTraitementAutoRDCSHook = (params: ITraitementAutoRDCSParams | nu
       "La recherche multi-critères sur les actes RC/RCA et PACS n'ayant donné aucun résultat, il vous est proposé de délivrer le certificat ci-dessous.";
 
     AfficherMessage.info(INFO_TRAITEMENT_AUTO_EFFECTUE);
-    replaceUrl(navigate, `${getUrlPrecedente(params.urlCourante)}/${PATH_APERCU_REQ_TRAITEMENT}/${params.requete.idRequete}`);
+    replaceUrl(
+      navigate,
+      LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_TRAITEMENT.url, { idRequeteParam: params.requete.idRequete })
+    );
   }, [traitementAutoRDCSEffectue]);
 
   return traitementEnCours;

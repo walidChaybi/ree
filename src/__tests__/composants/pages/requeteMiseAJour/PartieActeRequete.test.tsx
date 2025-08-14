@@ -1,11 +1,12 @@
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
-import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { act } from "react";
 import { RouterProvider } from "react-router";
 import { describe, expect, test, vi } from "vitest";
 import PartieActe from "../../../../composants/pages/requetesMiseAJour/PartieActe";
 import EditionMiseAJourContextProvider from "../../../../contexts/EditionMiseAJourContextProvider";
+import LiensRECE from "../../../../router/LiensRECE";
+import { INFO_PAGE_RECHERCHE_ACTE_INSCRIPTION } from "../../../../router/infoPages/InfoPagesEspaceRecherche";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 import { TYPE_ALERTE } from "../../../mock/data/NomenclatureTypeAlerte";
 
@@ -66,7 +67,7 @@ describe("PartieActeRequete", () => {
           )
         },
         {
-          path: URL_RECHERCHE_ACTE_INSCRIPTION,
+          path: LiensRECE.genererLien(INFO_PAGE_RECHERCHE_ACTE_INSCRIPTION.url),
           element: <div>Redirection Abandon</div>
         }
       ],

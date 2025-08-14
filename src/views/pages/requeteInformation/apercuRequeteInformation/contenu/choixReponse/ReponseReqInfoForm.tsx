@@ -3,7 +3,6 @@ import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJ
 import { IReponseRequeteInfo } from "@model/requete/IReponseRequeteInfo";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
-import { URL_MES_REQUETES_INFORMATION } from "@router/ReceUrls";
 import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { Fieldset } from "@widget/fieldset/Fieldset";
@@ -11,6 +10,8 @@ import { Formulaire } from "@widget/formulaire/Formulaire";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import * as Yup from "yup";
+import LiensRECE from "../../../../../../router/LiensRECE";
+import { INFO_PAGE_MES_REQUETES_INFORMATION } from "../../../../../../router/infoPages/InfoPagesEspaceInformation";
 import { PieceJointe } from "../../../../../../utils/FileUtils";
 import { IEnvoyerReponseReqInfoParams, useEnvoyerReponsesReqInfoHook } from "../hook/EnvoyerReponseReqInfoHook";
 import { ISauvegarderReponseReqInfoParams, useSauvegarderReponsesReqInfoHook } from "../hook/SauvegarderReponseReqInfoHook";
@@ -117,7 +118,7 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
   useEffect(() => {
     if (idReponse) {
       setOperationEnCours(false);
-      navigate(URL_MES_REQUETES_INFORMATION);
+      navigate(LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_INFORMATION.url));
     }
   }, [idReponse, navigate]);
 

@@ -1,16 +1,18 @@
+import { idRequeteRDDASigner } from "@mock/data/requeteDelivrance";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Utilisateur } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
-import { ID, ID_ACTE, URL_BASE, URL_MES_REQUETES_DELIVRANCE_EDITION_ID } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
 import PageEditionRequeteDelivrance from "../../../pages/requetesDelivrance/PageEditionRequeteDelivrance";
+import LiensRECE from "../../../router/LiensRECE";
+import { URL_ACCUEIL } from "../../../router/infoPages/InfoPagesBase";
+import { INFO_PAGE_APERCU_REQUETE_DELIVRANCE_EDITION } from "../../../router/infoPages/InfoPagesEspaceDelivrance";
 import { createTestingRouter } from "../../__tests__utils__/testsUtil";
 import MockRECEContextProvider from "../../mock/context/MockRECEContextProvider";
 import { TYPE_ALERTE } from "../../mock/data/NomenclatureTypeAlerte";
-import { idRequeteRDDASigner } from "../../mock/data/requeteDelivrance";
 
 describe("Test de la page aperçu requête edition analyse marginale", () => {
   TypeAlerte.init(TYPE_ALERTE);
@@ -21,11 +23,12 @@ describe("Test de la page aperçu requête edition analyse marginale", () => {
 
   const idActe = "b41079a5-9e8f-478a-b04c-c4c2ac671123";
   const idRequete = "9d00fe88-9d21-482e-bb02-223636f78386";
+
   test("La page s'affiche correctement", async () => {
     const router = createTestingRouter(
       [
         {
-          path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
+          path: `${URL_ACCUEIL}${INFO_PAGE_APERCU_REQUETE_DELIVRANCE_EDITION.url}`,
           element: (
             <MockRECEContextProvider
               utilisateurConnecte={utilisateurConnecte}
@@ -36,7 +39,12 @@ describe("Test de la page aperçu requête edition analyse marginale", () => {
           )
         }
       ],
-      [URL_MES_REQUETES_DELIVRANCE_EDITION_ID.replace(ID, idRequete).replace(ID_ACTE, idActe)]
+      [
+        LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_EDITION.url, {
+          idRequeteParam: idRequete,
+          idActeParam: idActe
+        })
+      ]
     );
 
     render(<RouterProvider router={router} />);
@@ -50,7 +58,7 @@ describe("Test de la page aperçu requête edition analyse marginale", () => {
     const router = createTestingRouter(
       [
         {
-          path: `${URL_BASE}/test`,
+          path: `${URL_ACCUEIL}${INFO_PAGE_APERCU_REQUETE_DELIVRANCE_EDITION.url}`,
           element: (
             <MockRECEContextProvider
               utilisateurConnecte={utilisateurConnecte}
@@ -61,11 +69,15 @@ describe("Test de la page aperçu requête edition analyse marginale", () => {
           )
         },
         {
-          path: URL_BASE,
+          path: URL_ACCUEIL,
           element: <div>Redirigé</div>
         }
       ],
-      [`${URL_BASE}/test`]
+      [
+        LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_EDITION.url, {
+          idRequeteParam: ""
+        })
+      ]
     );
 
     render(<RouterProvider router={router} />);
@@ -78,7 +90,7 @@ describe("Test de la page aperçu requête edition analyse marginale", () => {
     const router = createTestingRouter(
       [
         {
-          path: `${URL_BASE}/:idRequeteParam`,
+          path: `${URL_ACCUEIL}${INFO_PAGE_APERCU_REQUETE_DELIVRANCE_EDITION.url}`,
           element: (
             <MockRECEContextProvider
               utilisateurConnecte={utilisateurConnecte}
@@ -89,7 +101,11 @@ describe("Test de la page aperçu requête edition analyse marginale", () => {
           )
         }
       ],
-      [`${URL_BASE}/:idRequeteParam`.replace(ID, idRequete)]
+      [
+        LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_EDITION.url, {
+          idRequeteParam: idRequete
+        })
+      ]
     );
 
     render(<RouterProvider router={router} />);
@@ -105,7 +121,7 @@ describe("Test de la page aperçu requête edition analyse marginale", () => {
     const router = createTestingRouter(
       [
         {
-          path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
+          path: `${URL_ACCUEIL}${INFO_PAGE_APERCU_REQUETE_DELIVRANCE_EDITION.url}`,
           element: (
             <MockRECEContextProvider
               utilisateurConnecte={utilisateurConnecte}
@@ -116,7 +132,12 @@ describe("Test de la page aperçu requête edition analyse marginale", () => {
           )
         }
       ],
-      [URL_MES_REQUETES_DELIVRANCE_EDITION_ID.replace(ID, idRequete).replace(ID_ACTE, idActe)]
+      [
+        LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_EDITION.url, {
+          idRequeteParam: idRequete,
+          idActeParam: idActe
+        })
+      ]
     );
 
     render(<RouterProvider router={router} />);
@@ -131,7 +152,7 @@ describe("Test de la page aperçu requête edition analyse marginale", () => {
     const router = createTestingRouter(
       [
         {
-          path: URL_MES_REQUETES_DELIVRANCE_EDITION_ID,
+          path: `${URL_ACCUEIL}${INFO_PAGE_APERCU_REQUETE_DELIVRANCE_EDITION.url}`,
           element: (
             <MockRECEContextProvider
               utilisateurConnecte={utilisateurConnecte}
@@ -142,7 +163,12 @@ describe("Test de la page aperçu requête edition analyse marginale", () => {
           )
         }
       ],
-      [URL_MES_REQUETES_DELIVRANCE_EDITION_ID.replace(ID, idRequeteRDDASigner).replace(ID_ACTE, idActe)]
+      [
+        LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_EDITION.url, {
+          idRequeteParam: idRequeteRDDASigner,
+          idActeParam: idActe
+        })
+      ]
     );
 
     render(<RouterProvider router={router} />);

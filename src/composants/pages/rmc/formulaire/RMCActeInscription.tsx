@@ -2,7 +2,6 @@ import { IRMCActeInscriptionForm, RMCActeInscriptionForm } from "@model/form/rmc
 import { Form, Formik } from "formik";
 import { useContext } from "react";
 import { IRMCContextProps, RMCContext } from "../../../../contexts/RMCContextProvider";
-import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import BlocActe from "./BlocActe";
 import BlocEvenement from "./BlocEvenement";
@@ -18,7 +17,6 @@ interface RMCActeInscriptionProps {
 }
 
 export const RMCActeInscription: React.FC<RMCActeInscriptionProps> = ({ onSubmit }) => {
-  useTitreDeLaFenetre(titreForm);
   const { blocsRenseignes } = useContext<IRMCContextProps>(RMCContext);
 
   return (

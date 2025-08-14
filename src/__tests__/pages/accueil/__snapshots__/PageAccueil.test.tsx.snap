@@ -42,7 +42,7 @@ exports[`Test page d'accueil > il faut afficher les rubriques / boutons si l'uti
         <a
           class="rounded-md border border-solid px-4 py-2 font-noto-sans-ui-bold no-underline transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc mb-4 flex items-center"
           data-discover="true"
-          href="/rece/rece-ui/mesrequetes"
+          href="/rece/rece-ui/espace-delivrance/mes-requetes"
           title="Mes requêtes"
         >
           <div
@@ -104,7 +104,7 @@ exports[`Test page d'accueil > il faut afficher les rubriques / boutons si l'uti
         <a
           class="rounded-md border border-solid px-4 py-2 font-noto-sans-ui-bold no-underline transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc mb-4 flex items-center"
           data-discover="true"
-          href="/rece/rece-ui/rechercherequete"
+          href="/rece/rece-ui/espace-recherche/requete"
           title="Requête"
         >
           <div
@@ -124,7 +124,7 @@ exports[`Test page d'accueil > il faut afficher les rubriques / boutons si l'uti
         <a
           class="rounded-md border border-solid px-4 py-2 font-noto-sans-ui-bold no-underline transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc mb-4 flex items-center"
           data-discover="true"
-          href="/rece/rece-ui/rechercheacteinscription"
+          href="/rece/rece-ui/espace-recherche/acte-inscription"
           title="Acte et Inscription"
         >
           <div

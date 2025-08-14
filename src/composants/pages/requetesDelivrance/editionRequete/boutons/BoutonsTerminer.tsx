@@ -6,12 +6,13 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { validerMentionsPlusieursDocuments } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
-import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { checkDirty } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import React, { useCallback, useContext, useMemo } from "react";
 import { useNavigate } from "react-router";
+import LiensRECE from "../../../../../router/LiensRECE";
+import { INFO_PAGE_MES_REQUETES_DELIVRANCE } from "../../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import Bouton from "../../../../commun/bouton/Bouton";
 import BoutonListeDeroulante from "../../../../commun/bouton/BoutonListeDeroulante";
 import SignatureDelivrance from "../../../../commun/signature/SignatureDelivrance";
@@ -63,7 +64,11 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({ requete, acte 
 
   const onClickTerminer = useCallback(() => {
     if (checkDirty(isDirty, setIsDirty)) {
-      validerMentionsPlusieursDocuments(() => navigate(URL_MES_REQUETES_DELIVRANCE), acte, requete.documentsReponses);
+      validerMentionsPlusieursDocuments(
+        () => navigate(LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_DELIVRANCE.url)),
+        acte,
+        requete.documentsReponses
+      );
     }
   }, [acte, requete.documentsReponses, isDirty, setIsDirty]);
 
@@ -99,7 +104,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({ requete, acte 
             numerosFonctionnel={[requete.numero]}
             titreBouton="Terminer et signer"
             titreModale="Signature"
-            apreSignature={succes => succes && navigate(URL_MES_REQUETES_DELIVRANCE)}
+            apreSignature={succes => succes && navigate(LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_DELIVRANCE.url))}
             donneesAvertissementsMentions={{ acte: acte, documents: requete.documentsReponses }}
             chargerDocumentsAuClic
           />

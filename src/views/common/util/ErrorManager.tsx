@@ -1,6 +1,6 @@
 /* istanbul ignore file */
-import { URL_ACCUEIL } from "@router/ReceUrls";
 import * as React from "react";
+import { URL_ACCUEIL } from "../../../router/infoPages/InfoPagesBase";
 import AfficherMessage from "../../../utils/AfficherMessage";
 
 interface LocalProps {

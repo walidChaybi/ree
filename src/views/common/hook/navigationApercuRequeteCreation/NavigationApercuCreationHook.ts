@@ -2,16 +2,17 @@ import { RECEContextData } from "@core/contexts/RECEContext";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { ESousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
-import {
-  PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE,
-  PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER,
-  PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE,
-  PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET,
-  PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE,
-  URL_MES_REQUETES_CONSULAIRE
-} from "@router/ReceUrls";
 import { useContext, useEffect } from "react";
 import { NavigateFunction, useNavigate } from "react-router";
+import LiensRECE from "../../../../router/LiensRECE";
+import {
+  INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE,
+  INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_SAISIE_PROJET
+} from "../../../../router/infoPages/InfoPagesEspaceConsulaire";
+import {
+  INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_CONSULTATION,
+  INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_SUIVI_DOSSIER
+} from "../../../../router/infoPages/InfoPagesEspaceEtablissement";
 
 export type NavigationApercuReqCreationParams = {
   idRequete: string;
@@ -57,11 +58,11 @@ function redirectionEtablissement(
     "A_SIGNER"
   ];
   if (utilisateurConnecte.id === idUtilisateur && statutsQuiRedirigentVersLeSuiviDossier.includes(statut)) {
-    path = PATH_APERCU_REQ_ETABLISSEMENT_SUIVI_DOSSIER;
+    path = LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_SUIVI_DOSSIER.url, { idRequeteParam: idRequete });
   } else {
-    path = PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE;
+    path = LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_CONSULTATION.url, { idRequeteParam: idRequete });
   }
-  navigate(`${path}/${idRequete}`);
+  navigate(path);
 }
 
 function redirectionTranscription(
@@ -73,14 +74,10 @@ function redirectionTranscription(
 ) {
   let path: string;
   const appartientAUtilisateurConnecte = utilisateurConnecte.id === idUtilisateur;
-  if (!appartientAUtilisateurConnecte && statut === "A_TRAITER") {
-    path = PATH_APERCU_REQ_TRANSCRIPTION_SIMPLE;
-  } else if (appartientAUtilisateurConnecte && statut === "PRISE_EN_CHARGE") {
-    path = PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE;
-  } else if (appartientAUtilisateurConnecte && statut === "EN_TRAITEMENT") {
-    path = PATH_APERCU_REQ_TRANSCRIPTION_EN_SAISIE_PROJET;
+  if (appartientAUtilisateurConnecte && (statut === "EN_TRAITEMENT" || statut === "A_SIGNER")) {
+    path = LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_SAISIE_PROJET.url, { idRequeteParam: idRequete });
   } else {
-    path = PATH_APERCU_REQ_TRANSCRIPTION_EN_PRISE_CHARGE;
+    path = LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE.url, { idRequeteParam: idRequete });
   }
-  navigate(`${URL_MES_REQUETES_CONSULAIRE}/${path}/${idRequete}`);
+  navigate(path);
 }

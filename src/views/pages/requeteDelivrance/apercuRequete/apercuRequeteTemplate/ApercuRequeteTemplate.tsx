@@ -7,7 +7,6 @@ import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
-import { useTitreDeLaFenetre } from "../../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import { ApercuRequetePartieGauche } from "../apercuRequetePartieGauche/ApercuRequetePartieGauche";
 import "./scss/ApercuRequeteTemplate.scss";
 
@@ -52,8 +51,6 @@ export const ApercuRequeteTemplate: React.FC<React.PropsWithChildren<TemplatePro
       props.setRequete(requete);
     }
   }, [requete, props.setRequete]);
-
-  useTitreDeLaFenetre(props.title);
 
   return (
     <div className="ApercuRequete">

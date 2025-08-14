@@ -21,7 +21,6 @@ import { ELibelleSousTypeDelivrance, ESousTypeDelivrance } from "@model/requete/
 import { TYPE_LIEN_REQUERANT_POUR_TITULAIRE, TypeLienRequerant } from "@model/requete/enum/TypeLienRequerant";
 import { TypeRequerantRDC, UN_TITULAIRE } from "@model/requete/enum/TypeRequerantRDC";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
-import { PATH_MODIFIER_RDC } from "@router/ReceUrls";
 import { Options } from "@util/Type";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { Formulaire } from "@widget/formulaire/Formulaire";
@@ -31,8 +30,9 @@ import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import * as Yup from "yup";
-import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import { SaisieRequeteRDC } from "../../../../model/form/delivrance/ISaisirRDCPageForm";
+import LiensRECE from "../../../../router/LiensRECE";
+import { INFO_PAGE_MODIFICATION_REQUETE_DELIVRANCE_EXTRAIT_COPIE_COURRIER } from "../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import { PieceJointe, getPiecesJointesNonVides } from "../../../../utils/FileUtils";
 import SaisirRequeteBoutons from "../../../common/composant/formulaire/boutons/SaisirRequeteBoutons";
 import { getMessagesPopin, modificationChamps } from "./contenu/SaisirRDCPageFonctions";
@@ -82,11 +82,8 @@ const ValidationSchemaRDCRequete = Yup.object({
   [ADRESSE]: AdresseFormValidationSchema
 });
 
-const titreForm = ELibelleSousTypeDelivrance[ESousTypeDelivrance.RDC].long;
-
 export const SaisirRDCPage: React.FC = () => {
   // Parametres
-  useTitreDeLaFenetre(titreForm);
   const location = useLocation();
   const { idRequeteParam } = useParams<TUuidRequeteParams>();
 
@@ -147,7 +144,9 @@ export const SaisirRDCPage: React.FC = () => {
   useEffect(() => {
     if (location) {
       const url = location.pathname;
-      setModeModification(url.includes(PATH_MODIFIER_RDC));
+      setModeModification(
+        url.includes(LiensRECE.genererLien(INFO_PAGE_MODIFICATION_REQUETE_DELIVRANCE_EXTRAIT_COPIE_COURRIER.url, { idRequeteParam: "" }))
+      );
     }
   }, [location]);
 
@@ -233,7 +232,7 @@ export const SaisirRDCPage: React.FC = () => {
         onClick={() => setOperationEnCours(false)}
       />
       <Formulaire
-        titre={titreForm}
+        titre={ELibelleSousTypeDelivrance[ESousTypeDelivrance.RDC].long}
         formDefaultValues={requete ?? { ...DefaultValuesRDCRequete }}
         formValidationSchema={ValidationSchemaRDCRequete.clone()}
         onSubmit={onSubmitSaisieRequeteRDC}

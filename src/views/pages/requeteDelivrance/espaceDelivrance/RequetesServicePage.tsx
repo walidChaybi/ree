@@ -10,7 +10,6 @@ import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivra
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { URL_REQUETES_DELIVRANCE_SERVICE } from "@router/ReceUrls";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
@@ -25,6 +24,8 @@ import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
+import LiensRECE from "../../../../router/LiensRECE";
+import { INFO_PAGE_REQUETES_DELIVRANCE_SERVICE } from "../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import { HeaderTableauRequete, dateStatutColumnHeaders, requeteColumnHeaders } from "./EspaceDelivranceParams";
 import { goToLinkRequete, miseAjourOuRedirection } from "./EspaceDelivranceUtils";
 import { FiltreServiceRequeteDelivranceForm } from "./contenu/FiltreServiceRequeteDelivranceForm";
@@ -111,7 +112,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
       idRequete,
       data,
       idx,
-      URL_REQUETES_DELIVRANCE_SERVICE,
+      LiensRECE.genererLien(INFO_PAGE_REQUETES_DELIVRANCE_SERVICE.url),
       utilisateurConnecte
     );
   }

@@ -1,11 +1,11 @@
 import { usePrendreEnChargeRequeteSuivanteApiHook } from "@hook/requete/PrendreEnChargeRequeteSuivanteApiHook";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID } from "@router/ReceUrls";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
-import { getUrlWithParam } from "@util/route/UrlUtil";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import LiensRECE from "../../../../router/LiensRECE";
+import { INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_SUIVI_DOSSIER } from "../../../../router/infoPages/InfoPagesEspaceEtablissement";
 import AfficherMessage from "../../../../utils/AfficherMessage";
 
 interface BoutonPrendreEnChargeRequeteSuivanteProps {
@@ -25,7 +25,7 @@ const BoutonPrendreEnChargeRequeteSuivanteCreation: React.FC<BoutonPrendreEnChar
   useEffect(() => {
     setPrendreEnCharge(false);
     if (idRequetePriseEnCharge) {
-      navigate(getUrlWithParam(URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID, idRequetePriseEnCharge));
+      navigate(LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_SUIVI_DOSSIER.url, { idRequeteParam: idRequetePriseEnCharge }));
     } else if (erreurRequetePriseEnCharge) {
       AfficherMessage.avertissement("Il n'existe plus de requête à prendre en charge", { fermetureAuto: true });
     }

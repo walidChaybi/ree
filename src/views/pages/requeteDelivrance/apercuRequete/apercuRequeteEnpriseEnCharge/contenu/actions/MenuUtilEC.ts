@@ -16,11 +16,12 @@ import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
-import { PATH_EDITION } from "@router/ReceUrls";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { IBoutonPopin } from "@widget/popin/ConfirmationPopin";
 import React, { MutableRefObject } from "react";
 import { Location, NavigateFunction } from "react-router";
+import LiensRECE from "../../../../../../../router/LiensRECE";
+import { INFO_PAGE_APERCU_REQUETE_DELIVRANCE_EDITION } from "../../../../../../../router/infoPages/InfoPagesEspaceDelivrance";
 
 const ORDRE_OPTION_MAX = 900;
 const enum MaxTitulaireDelivrance {
@@ -253,7 +254,7 @@ export const redirection = ({
   const prefix = getUrlPrecedente(location.pathname);
 
   if (idRequete) {
-    const url = `${prefix}/${PATH_EDITION}/${idRequete}/${idActe}`;
+    const url = LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_EDITION.url, { idRequeteParam: idRequete, idActeParam: idActe });
 
     replaceUrl(navigate, url, index);
   }

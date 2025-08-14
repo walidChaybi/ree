@@ -4,15 +4,15 @@ import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { IActionOption } from "@model/requete/IActionOption";
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
-import { receUrl } from "@router/ReceUrls";
 import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
 import { estRenseigne } from "@util/Utils";
-import { replaceUrl } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import LiensRECE from "../../../../../../../router/LiensRECE";
+import { INFO_PAGE_APERCU_REQUETE_DELIVRANCE_TRAITEMENT } from "../../../../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../../mapping/ReqDelivranceToReqTableau";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
 import {
@@ -102,10 +102,9 @@ export const MenuDelivrerCS: React.FC<IChoixActionDelivranceProps> = props => {
   useEffect(() => {
     if (resultDeliverCertificatSituation) {
       setOperationEnCours(false);
-      const url = receUrl.getUrlApercuTraitementAPartirDe({
-        url: location.pathname
+      navigate(LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_TRAITEMENT.url, { idRequeteParam: props.requete.id }), {
+        replace: true
       });
-      replaceUrl(navigate, url);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

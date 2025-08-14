@@ -1,57 +1,9 @@
-import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { RouteObject, createMemoryRouter } from "react-router";
-import { vi } from "vitest";
 import { EditionDelivranceContext } from "../../contexts/EditionDelivranceContextProvider";
-import { urlImagePngVideBase64 } from "../mock/data/ImagePng";
 import { acte as acteMock } from "../mock/data/ficheEtBandeau/ficheActe";
 import requeteDelivrance from "../mock/data/requeteDelivrance";
-
-function dataURLtoFile(dataurl: string, filename: string): File {
-  const arr = dataurl.split(",");
-  const mime = arr[0]!.match(/:(.*?);/)![1]; // NOSONAR fichier non présent en PROD
-  const bstr = atob(arr[1]);
-  let n = bstr.length;
-  const u8arr = new Uint8Array(n);
-
-  while (n--) {
-    u8arr[n] = bstr.charCodeAt(n);
-  }
-
-  return new File([u8arr], filename, { type: mime });
-}
-
-const pngFile = dataURLtoFile(urlImagePngVideBase64, "hello.png");
-export const pngFiles = [pngFile];
-export const inputPngFiles = {
-  item: (index: number) => pngFiles[index],
-  ...pngFiles
-};
-
-export function getRequeteWithChoixDelivrance(requete: any, choixDelivrance: ChoixDelivrance) {
-  return {
-    ...mappingRequeteDelivrance(requete),
-    choixDelivrance
-  };
-}
-
-export function mockFenetreFicheTestFunctions() {
-  const globalAny: any = global;
-  globalAny.URL.createObjectURL = vi.fn();
-  globalAny.scroll = vi.fn();
-  globalAny.open = () => {
-    return {
-      ...window,
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      dispatchEvent: vi.fn(),
-      close: vi.fn()
-    };
-  };
-  globalAny.close = vi.fn();
-}
 
 export function deepCopie(objet: any) {
   return JSON.parse(JSON.stringify(objet));

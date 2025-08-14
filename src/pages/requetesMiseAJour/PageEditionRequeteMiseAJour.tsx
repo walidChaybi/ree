@@ -1,8 +1,8 @@
 import { TUuidActeParams } from "@model/params/TUuidActeParams";
-import { URL_ACCUEIL } from "@router/ReceUrls";
 import { Navigate, useParams } from "react-router";
 import MiseAJourRequete from "../../composants/pages/requetesMiseAJour/MiseAJourRequete";
 import EditionMiseAJourContextProvider from "../../contexts/EditionMiseAJourContextProvider";
+import { URL_ACCUEIL } from "../../router/infoPages/InfoPagesBase";
 
 interface IPageEditionRequeteMiseAJourProps {
   estMiseAJourAvecMentions?: boolean;

@@ -7,13 +7,15 @@ import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import AssignmentInd from "@mui/icons-material/AssignmentInd";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { URL_MES_REQUETES_DELIVRANCE, URL_MES_REQUETES_INFORMATION } from "@router/ReceUrls";
 import { replaceUrl } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
+import LiensRECE from "../../../../router/LiensRECE";
+import { INFO_PAGE_MES_REQUETES_DELIVRANCE } from "../../../../router/infoPages/InfoPagesEspaceDelivrance";
+import { INFO_PAGE_MES_REQUETES_INFORMATION } from "../../../../router/infoPages/InfoPagesEspaceInformation";
 import {
   listeServicesToOptions,
   listeUtilisateursToOptionsBis,
@@ -116,9 +118,9 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
       setOperationEnCours(false);
       if (props.estTransfert) {
         if (props.typeRequete === TypeRequete.DELIVRANCE) {
-          replaceUrl(navigate, URL_MES_REQUETES_DELIVRANCE);
+          replaceUrl(navigate, LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_DELIVRANCE.url));
         } else {
-          replaceUrl(navigate, URL_MES_REQUETES_INFORMATION);
+          replaceUrl(navigate, LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_INFORMATION.url));
         }
       } else if (props.rafraichirParent) {
         props.rafraichirParent();

@@ -8,23 +8,28 @@ import { RECEContextData } from "@core/contexts/RECEContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Droit } from "@model/agent/enum/Droit";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import {
-  URL_MES_REQUETES_CONSULAIRE,
-  URL_MES_REQUETES_CREATION,
-  URL_MES_REQUETES_DELIVRANCE,
-  URL_MES_REQUETES_INFORMATION,
-  URL_RECHERCHE_ACTE,
-  URL_RECHERCHE_ACTE_INSCRIPTION,
-  URL_RECHERCHE_REQUETE,
-  URL_REQUETES_CONSULAIRE_SERVICE,
-  URL_REQUETES_CREATION_SERVICE,
-  URL_REQUETES_DELIVRANCE_SERVICE,
-  URL_REQUETES_INFORMATION_SERVICE
-} from "@router/ReceUrls";
 import AccessibleAvecDroits from "../../composants/commun/accessibleAvecDroits/AccessibleAvecDroits";
 import Bouton from "../../composants/commun/bouton/Bouton";
 import useFetchApi from "../../hooks/api/FetchApiHook";
-import { useTitreDeLaFenetre } from "../../hooks/utilitaires/TitreDeLaFenetreHook";
+import LiensRECE from "../../router/LiensRECE";
+import {
+  INFO_PAGE_MES_REQUETES_CONSULAIRES,
+  INFO_PAGE_REQUETES_CONSULAIRES_SERVICE
+} from "../../router/infoPages/InfoPagesEspaceConsulaire";
+import { INFO_PAGE_MES_REQUETES_DELIVRANCE, INFO_PAGE_REQUETES_DELIVRANCE_SERVICE } from "../../router/infoPages/InfoPagesEspaceDelivrance";
+import {
+  INFO_PAGE_MES_REQUETES_ETABLISSEMENT,
+  INFO_PAGE_REQUETES_ETABLISSEMENT_SERVICE
+} from "../../router/infoPages/InfoPagesEspaceEtablissement";
+import {
+  INFO_PAGE_MES_REQUETES_INFORMATION,
+  INFO_PAGE_REQUETES_INFORMATION_SERVICE
+} from "../../router/infoPages/InfoPagesEspaceInformation";
+import {
+  INFO_PAGE_RECHERCHE_ACTE,
+  INFO_PAGE_RECHERCHE_ACTE_INSCRIPTION,
+  INFO_PAGE_RECHERCHE_REQUETE
+} from "../../router/infoPages/InfoPagesEspaceRecherche";
 import AfficherMessage from "../../utils/AfficherMessage";
 
 interface ILienAccueil {
@@ -51,32 +56,32 @@ const getDonneesMenu = (nombreRequetes: number, nombreRequetesInformation: numbe
     liens: [
       {
         libelle: "Mes requêtes",
-        urlPage: URL_MES_REQUETES_DELIVRANCE,
+        urlPage: LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_DELIVRANCE.url),
         auMoinsUnDesDroits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC, Droit.CONSULTER],
         compteurNotifications: nombreRequetes
       },
       {
         libelle: "Mon service",
-        urlPage: URL_REQUETES_DELIVRANCE_SERVICE,
+        urlPage: LiensRECE.genererLien(INFO_PAGE_REQUETES_DELIVRANCE_SERVICE.url),
         auMoinsUnDesDroits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC]
       }
     ]
   },
   {
-    libelle: "Création",
+    libelle: "Établissement",
     icone: faPlusCircle,
-    auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT, Droit.CREER_ACTE_DRESSE, Droit.CREER_ACTE_ETABLI],
+    auMoinsUnDesDroits: [Droit.CREER_ACTE_ETABLI],
     liens: [
       {
         libelle: "Mes requêtes",
-        urlPage: URL_MES_REQUETES_CREATION,
-        auMoinsUnDesDroits: [Droit.CREER_ACTE_DRESSE, Droit.CREER_ACTE_ETABLI, Droit.CREER_ACTE_TRANSCRIT]
+        urlPage: LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_ETABLISSEMENT.url),
+        auMoinsUnDesDroits: [Droit.CREER_ACTE_ETABLI]
       },
       {
         libelle: "Mon service",
-        urlPage: URL_REQUETES_CREATION_SERVICE,
+        urlPage: LiensRECE.genererLien(INFO_PAGE_REQUETES_ETABLISSEMENT_SERVICE.url),
         droits: [Droit.ATTRIBUER_REQUETE],
-        auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT, Droit.CREER_ACTE_DRESSE, Droit.CREER_ACTE_ETABLI]
+        auMoinsUnDesDroits: [Droit.CREER_ACTE_ETABLI]
       }
     ]
   },
@@ -87,12 +92,12 @@ const getDonneesMenu = (nombreRequetes: number, nombreRequetesInformation: numbe
     liens: [
       {
         libelle: "Mes requêtes",
-        urlPage: URL_MES_REQUETES_CONSULAIRE,
+        urlPage: LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_CONSULAIRES.url),
         auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT, Droit.CREER_ACTE_DRESSE]
       },
       {
         libelle: "Mon service",
-        urlPage: URL_REQUETES_CONSULAIRE_SERVICE,
+        urlPage: LiensRECE.genererLien(INFO_PAGE_REQUETES_CONSULAIRES_SERVICE.url),
         auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT, Droit.CREER_ACTE_DRESSE]
       }
     ]
@@ -104,17 +109,17 @@ const getDonneesMenu = (nombreRequetes: number, nombreRequetesInformation: numbe
     liens: [
       {
         libelle: "Requête",
-        urlPage: URL_RECHERCHE_REQUETE,
+        urlPage: LiensRECE.genererLien(INFO_PAGE_RECHERCHE_REQUETE.url),
         auMoinsUnDesDroits: [Droit.CONSULTER]
       },
       {
         libelle: "Acte et Inscription",
-        urlPage: URL_RECHERCHE_ACTE_INSCRIPTION,
+        urlPage: LiensRECE.genererLien(INFO_PAGE_RECHERCHE_ACTE_INSCRIPTION.url),
         auMoinsUnDesDroits: [Droit.CONSULTER]
       },
       {
         libelle: "Acte",
-        urlPage: URL_RECHERCHE_ACTE,
+        urlPage: LiensRECE.genererLien(INFO_PAGE_RECHERCHE_ACTE.url),
         auMoinsUnDesDroits: [Droit.CONSULTER_ARCHIVES]
       }
     ]
@@ -126,12 +131,12 @@ const getDonneesMenu = (nombreRequetes: number, nombreRequetesInformation: numbe
     liens: [
       {
         libelle: "Mes requêtes",
-        urlPage: URL_MES_REQUETES_INFORMATION,
+        urlPage: LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_INFORMATION.url),
         auMoinsUnDesDroits: [Droit.INFORMER_USAGER]
       },
       {
         libelle: "Mon service",
-        urlPage: URL_REQUETES_INFORMATION_SERVICE,
+        urlPage: LiensRECE.genererLien(INFO_PAGE_REQUETES_INFORMATION_SERVICE.url),
         auMoinsUnDesDroits: [Droit.INFORMER_USAGER, Droit.ATTRIBUER_REQUETE],
         compteurNotifications: nombreRequetesInformation
       }
@@ -159,8 +164,6 @@ const PageAccueil: React.FC = () => {
       apresErreur: erreurs => AfficherMessage.erreur("Erreur lors de la récupération du nombre de requêtes", { erreurs })
     });
   }, []);
-
-  useTitreDeLaFenetre("Accueil");
 
   const { utilisateurConnecte } = useContext(RECEContextData);
   const donneesMenu = useMemo(

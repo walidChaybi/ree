@@ -1,11 +1,11 @@
 import { HTTP_FORBIDDEN, HTTP_UNAUTHORIZED } from "@api/ApiManager";
 import { IErreurConnexion, RECEContextData } from "@core/contexts/RECEContext";
-import { routesRece } from "@router/ReceRoutes";
-import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { GestionnaireFermeture } from "@util/GestionnaireFermeture";
-import { FilAriane } from "@widget/filAriane/FilAriane";
 import React, { useContext } from "react";
 import { Outlet } from "react-router";
+import FilAriane from "../../../composants/miseEnPage/corpsDePage/FilAriane";
+import LiensRECE from "../../../router/LiensRECE";
+import { INFO_PAGE_MES_REQUETES_DELIVRANCE } from "../../../router/infoPages/InfoPagesEspaceDelivrance";
 import AfficherMessage from "../../../utils/AfficherMessage";
 import { PageMessage } from "../login/PageMessage";
 
@@ -32,8 +32,10 @@ export const Body: React.FC = () => {
         <PageMessage message={getMessageErreur(erreurConnexion)} />
       ) : (
         <>
-          {utilisateurConnecte?.idArobas && <GestionnaireFermeture urlRedirection={URL_MES_REQUETES_DELIVRANCE}></GestionnaireFermeture>}
-          <FilAriane routes={routesRece} />
+          {utilisateurConnecte?.idArobas && (
+            <GestionnaireFermeture urlRedirection={LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_DELIVRANCE.url)} />
+          )}
+          <FilAriane />
           <Outlet />
         </>
       )}

@@ -22,7 +22,6 @@ import { ESousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { RequeteTableauRMC, TRequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 import { setParamsUseApercuCreation } from "@pages/requeteCreation/commun/requeteCreationUtils";
-import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { autorisePrendreEnChargeReqTableauCreation, autorisePrendreEnChargeReqTableauDelivrance } from "@util/RequetesUtils";
 import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
@@ -30,6 +29,8 @@ import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { NB_LIGNES_PAR_APPEL_REQUETE, NB_LIGNES_PAR_PAGE_REQUETE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useContext, useState } from "react";
+import LiensRECE from "../../../../../router/LiensRECE";
+import { INFO_PAGE_RECHERCHE_REQUETE } from "../../../../../router/infoPages/InfoPagesEspaceRecherche";
 import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";
 import { columnsTableauRequete } from "./RMCTableauRequetesParams";
 
@@ -89,7 +90,7 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({ dataRMC
     }
   };
 
-  const urlCourante = URL_RECHERCHE_REQUETE;
+  const urlCourante = LiensRECE.genererLien(INFO_PAGE_RECHERCHE_REQUETE.url);
 
   const onClickReqDelivrance = (requete: RequeteTableauRMC<"DELIVRANCE">) => {
     setOperationEnCours(true);

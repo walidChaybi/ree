@@ -6,6 +6,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import PageChargeur from "../composants/commun/chargeurs/PageChargeur";
 import useTraitementApi from "../hooks/api/TraitementApiHook";
+import LiensRECE from "../router/LiensRECE";
 import AfficherMessage from "../utils/AfficherMessage";
 
 interface IRequeteEtProjetActe {
@@ -43,7 +44,7 @@ const SaisieProjetActeTranscritContextProvider: React.FC<
       apresSucces: setRequeteEtProjetActe,
       apresErreur: messageErreur => {
         messageErreur && AfficherMessage.erreur(messageErreur);
-        navigate(-1);
+        navigate(LiensRECE.retourArriere());
       }
     });
   }, [idRequete]);

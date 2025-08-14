@@ -2,8 +2,6 @@ import { RECEContextData } from "@core/contexts/RECEContext";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { RequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
-import { receUrl } from "@router/ReceUrls";
-import { replaceUrl } from "@util/route/UrlUtil";
 import { useContext, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router";
 import { getUrlApercuRequete, redirectionSelonStatutRequete } from "./NavigationApercuDelivranceUtils";
@@ -25,22 +23,17 @@ export const useNavigationApercuDelivrance = (params: INavigationApercuDelivranc
     return utilisateurConnecte.id === params.requete.idUtilisateur &&
       params.requete.statut &&
       ("idRequete" in params.requete ? params.requete.type === TypeRequete.DELIVRANCE.libelle : params.requete.type === "DELIVRANCE")
-      ? redirectionSelonStatutRequete(utilisateurConnecte, params.requete, params.urlCourante)
-      : getUrlApercuRequete(params.urlCourante, "idRequete" in params.requete ? params.requete.idRequete : params.requete.id);
+      ? redirectionSelonStatutRequete(utilisateurConnecte, params.requete)
+      : getUrlApercuRequete("idRequete" in params.requete ? params.requete.idRequete : params.requete.id);
   }, [params]);
 
   useEffect(() => {
     if (!redirection || !params?.urlCourante) return;
 
-    const autoriserTraitementAutoRDCS = {
-      autoriserTraitementAutoRDCS: params.autoriserTraitementAutoRDCS ?? true
-    };
-
-    receUrl.estUrlApercuRequete(params.urlCourante) ||
-    receUrl.estUrlApercuTraitementRequete(params.urlCourante) ||
-    receUrl.estUrlSaisirCourrier(params.urlCourante) ||
-    receUrl.estUrlEdition(params.urlCourante)
-      ? replaceUrl(navigate, redirection, autoriserTraitementAutoRDCS)
-      : navigate(redirection, { state: autoriserTraitementAutoRDCS });
+    navigate(redirection, {
+      state: {
+        autoriserTraitementAutoRDCS: params.autoriserTraitementAutoRDCS ?? true
+      }
+    });
   }, [redirection, params?.urlCourante]);
 };

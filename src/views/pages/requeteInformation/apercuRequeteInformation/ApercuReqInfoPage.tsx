@@ -15,7 +15,6 @@ import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
-import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import { IDetailRequeteParams, useAvecRejeuDetailRequeteApiHook } from "../../../common/hook/requete/DetailRequeteHook";
 import { TableauRMC } from "../../rechercheMultiCriteres/autoActesInscriptions/TableauRMC";
 import { RMCRequetesAssocieesResultats } from "../../rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
@@ -82,8 +81,6 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
       });
     }
   }, [detailRequeteParams, detailRequeteState]);
-
-  useTitreDeLaFenetre("Aperçu requête d'information");
 
   return (
     <div className="ApercuRequete">

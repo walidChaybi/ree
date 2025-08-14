@@ -1,8 +1,8 @@
 import { TUuidSuiviDossierParams } from "@model/params/TUuidSuiviDossierParams";
 import { TypePopinSignature } from "@model/signature/ITypePopinSignature";
-import { URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID } from "@router/ReceUrls";
-import { replaceUrl } from "@util/route/UrlUtil";
 import { useNavigate, useParams } from "react-router";
+import LiensRECE from "../../../../router/LiensRECE";
+import { INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_ACTE_REGISTRE } from "../../../../router/infoPages/InfoPagesEspaceEtablissement";
 import { PopinSignature, PopinSignatureProps } from "./PopinSignature";
 import { useSignatureCreationEtablisementHook } from "./hook/SignatureCreationActeEtablissementHook";
 import { PopinPlageHoraireNonAutorisee } from "./messages/PopinPlageHoraireNonAutorisee";
@@ -24,11 +24,13 @@ export const PopinSignatureCreationEtablissement: React.FC<PopinSignatureCreatio
 
   const redirectionApresSuccesTraitementSignature = () => {
     if (idActe) {
-      const url = URL_REQUETES_CREATION_SERVICE_ETABLISSEMENT_APERCU_ACTE_REGISTRE_ID.replace(
-        ":idRequeteParam",
-        idRequeteParam || ""
-      ).replace(":idActeParam", idActe);
-      replaceUrl(navigate, url);
+      navigate(
+        LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_ACTE_REGISTRE.url, {
+          idRequeteParam: idRequeteParam || "",
+          idActeParam: idActe
+        }),
+        { replace: true }
+      );
     }
   };
 

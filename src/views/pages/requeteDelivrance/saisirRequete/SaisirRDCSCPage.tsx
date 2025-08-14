@@ -10,8 +10,6 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ELibelleSousTypeDelivrance, ESousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
-import { PATH_MODIFIER_RDCSC } from "@router/ReceUrls";
-
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import { goBack } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
@@ -23,7 +21,8 @@ import { FormikProps, FormikValues } from "formik";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 import * as Yup from "yup";
-import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
+import LiensRECE from "../../../../router/LiensRECE";
+import { INFO_PAGE_MODIFICATION_REQUETE_DELIVRANCE_CERTIFICAT_SITUATION_COURRIER } from "../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import AfficherMessage from "../../../../utils/AfficherMessage";
 import { PieceJointe } from "../../../../utils/FileUtils";
 import SaisirRequeteBoutons from "../../../common/composant/formulaire/boutons/SaisirRequeteBoutons";
@@ -67,8 +66,6 @@ const ValidationSchemaSaisirRDCSC = Yup.object({
   [ADRESSE]: AdresseFormValidationSchema
 });
 
-const titreForm = ELibelleSousTypeDelivrance[ESousTypeDelivrance.RDCSC].long;
-
 export interface ITitulairesState {
   titulaires: IdentiteSubFormProps[];
   maxTitulaires: number;
@@ -81,7 +78,6 @@ export const enum limitesTitulaires {
 
 export const SaisirRDCSCPage: React.FC = () => {
   /** Parametres */
-  useTitreDeLaFenetre(titreForm);
   const location = useLocation();
   const navigate = useNavigate();
   const { idRequeteParam } = useParams<TUuidRequeteParams>();
@@ -140,7 +136,11 @@ export const SaisirRDCSCPage: React.FC = () => {
   useEffect(() => {
     if (location) {
       const url = location.pathname;
-      setModeModification(url.includes(PATH_MODIFIER_RDCSC));
+      setModeModification(
+        url.includes(
+          LiensRECE.genererLien(INFO_PAGE_MODIFICATION_REQUETE_DELIVRANCE_CERTIFICAT_SITUATION_COURRIER.url, { idRequeteParam: "" })
+        )
+      );
     }
   }, [location]);
 
@@ -251,7 +251,7 @@ export const SaisirRDCSCPage: React.FC = () => {
         onClick={() => setOperationEnCours(false)}
       />
       <Formulaire
-        titre={titreForm}
+        titre={ELibelleSousTypeDelivrance[ESousTypeDelivrance.RDCSC].long}
         formDefaultValues={saisieRequeteRDCSC || { ...DefaultValuesSaisirRDCSC }}
         formValidationSchema={ValidationSchemaSaisirRDCSC}
         onSubmit={onSubmitSaisieRequeteRDCSC}

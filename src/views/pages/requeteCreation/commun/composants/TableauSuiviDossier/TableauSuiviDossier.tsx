@@ -7,10 +7,9 @@ import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtabl
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { FenetreFiche } from "@pages/fiche/FenetreFiche";
 import { IFenetreFicheActe } from "@pages/rechercheMultiCriteres/common/IFenetreFicheActeInscription";
-import { PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET } from "@router/ReceUrls";
 import DateUtils from "@util/DateUtils";
 import { getValeurOuVide, supprimeElement } from "@util/Utils";
-import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
+import { replaceUrl } from "@util/route/UrlUtil";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { getLigneTableauVide } from "@widget/tableau/TableUtils";
 import {
@@ -26,7 +25,9 @@ import {
   getColonneFontAwesomeIcone
 } from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/ColonneFontAwesomeIcone";
 import React, { useContext, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
+import LiensRECE from "../../../../../../router/LiensRECE";
+import { INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_SAISIE_PROJET } from "../../../../../../router/infoPages/InfoPagesEspaceEtablissement";
 import ModalBulletinIdentification from "./ModalBulletinIdentification";
 import { IDataBulletinIdentificationResultat } from "./ModalBulletinIdentificationApiHook";
 import { ILigneTableauSuiviDossier, ITableauSuiviDossierParams, useTableauSuiviDossierHook } from "./TableauSuiviDossierHook";
@@ -41,7 +42,6 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
   const [etatFenetres, setEtatFenetres] = useState<IFenetreFicheActe[]>([]);
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   const { dataTableau } = useTableauSuiviDossierHook(utilisateurConnecte.id === props.requete.idUtilisateur, props.requete.titulaires);
 
@@ -113,7 +113,10 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
         /* v8 ignore end */
         replaceUrl(
           navigate,
-          `${getUrlPrecedente(location.pathname)}/${PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET}/${props.requete.id}/${id}`
+          LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_SAISIE_PROJET.url, {
+            idRequeteParam: props.requete.id,
+            idSuiviDossierParam: id
+          })
         );
       }
     }

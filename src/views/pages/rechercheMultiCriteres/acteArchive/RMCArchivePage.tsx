@@ -3,7 +3,6 @@ import { Formulaire } from "@widget/formulaire/Formulaire";
 import { NB_LIGNES_PAR_APPEL_ACTE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useState } from "react";
 import * as Yup from "yup";
-import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import RMCBoutons, { RMCBoutonsProps } from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,
@@ -43,8 +42,6 @@ const ValidationSchemaRMCActeArchive = Yup.object({
   [REGISTRE_ARCHIVE]: RegistreArchiveValidationSchema
 });
 
-export const titreForm = "Critères de recherche d'un acte";
-
 export const RMCArchivePage: React.FC = () => {
   const blocsForm: JSX.Element[] = [getFormTitulaire(), getRegistreArchive(), getFormDatesDebutFinAnnee()];
 
@@ -72,12 +69,10 @@ export const RMCArchivePage: React.FC = () => {
     rappelCriteres
   } as RMCBoutonsProps;
 
-  useTitreDeLaFenetre(titreForm);
-
   return (
     <>
       <Formulaire
-        titre={titreForm}
+        titre="Critères de recherche d'un acte"
         formDefaultValues={DefaultValuesRMCActeArchive}
         formValidationSchema={ValidationSchemaRMCActeArchive}
         onSubmit={onSubmitRMCActeArchive}

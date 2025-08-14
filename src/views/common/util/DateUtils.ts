@@ -20,11 +20,6 @@ export interface IDateCompose {
   minute?: string;
 }
 
-export interface IDateHeureDto extends IDateDto {
-  heure?: number;
-  minute?: number;
-}
-
 export interface IDateDto {
   jour?: number;
   mois?: number;

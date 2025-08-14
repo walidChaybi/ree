@@ -1,11 +1,12 @@
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
-import { URL_MES_REQUETES_CONSULAIRE_SAISIR_RCTC } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
 import BoutonsTableauConsulaire from "../../../../../composants/pages/requetesConsulaire/BoutonsTableauConsulaire";
+import { URL_ACCUEIL } from "../../../../../router/infoPages/InfoPagesBase";
+import { INFO_PAGE_SAISIE_REQUETE_TRANSCRIPTION_COURRIER } from "../../../../../router/infoPages/InfoPagesEspaceConsulaire";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 describe("Test des boutons d'actions des tableaux de requêtes consulaire", () => {
@@ -23,7 +24,7 @@ describe("Test des boutons d'actions des tableaux de requêtes consulaire", () =
     const router = createTestingRouter(
       [
         { path: "/", element: <BoutonsTableauConsulaire /> },
-        { path: URL_MES_REQUETES_CONSULAIRE_SAISIR_RCTC, element: <div>{"Page saisie RCTC"}</div> }
+        { path: `${URL_ACCUEIL}${INFO_PAGE_SAISIE_REQUETE_TRANSCRIPTION_COURRIER.url}`, element: <div>{"Page saisie RCTC"}</div> }
       ],
       ["/"]
     );

@@ -1,11 +1,9 @@
-import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
-
-import { goBack } from "@util/route/UrlUtil";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import React from "react";
+import { useNavigate } from "react-router";
+import LiensRECE from "../../../../../../router/LiensRECE";
 import "../scss/ReponseReqInfo.scss";
 
 type ComponentProps = {
@@ -19,33 +17,19 @@ type BoutonsReponseReqInfoProps = ComponentProps & FormikComponentProps;
 
 const ReponseReqInfoBoutons: React.FC<BoutonsReponseReqInfoProps> = props => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [libelleRetour, setLibelleRetour] = useState<string>();
-
-  useEffect(() => {
-    if (location.pathname.includes(URL_RECHERCHE_REQUETE)) {
-      setLibelleRetour("Retour rechercher une requête");
-    } else {
-      setLibelleRetour("Retour espace information");
-    }
-  }, [location]);
-
-  const handleAnnuler = () => {
-    goBack(navigate);
-  };
 
   return (
     <div className="Boutons">
       {props.retourVisible && (
         <BoutonDoubleSubmit
           type="button"
-          aria-label={libelleRetour}
+          title="Retour"
           id="boutonAnnuler"
           onClick={() => {
-            handleAnnuler();
+            navigate(LiensRECE.retourArriere(), { replace: true });
           }}
         >
-          {libelleRetour}
+          {"Retout"}
         </BoutonDoubleSubmit>
       )}
       {!props.affichageBoutonPrendreEnCharge && (

@@ -4,12 +4,14 @@ import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { URL_DECONNEXION, URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
 import { ConteneurParentModales } from "../../../../composants/commun/conteneurs/modale/ConteneurModale";
 import MenuUtilisateur from "../../../../composants/miseEnPage/enTete/MenuUtilisateur";
+import LiensRECE from "../../../../router/LiensRECE";
+import { URL_DECONNEXION } from "../../../../router/infoPages/InfoPagesBase";
+import { INFO_PAGE_MES_REQUETES_DELIVRANCE } from "../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 
 describe("test du composant MenuUtilisateur", () => {
@@ -36,7 +38,7 @@ describe("test du composant MenuUtilisateur", () => {
           element: <div>{REDIRECTION_DECONNEXION}</div>
         },
         {
-          path: URL_MES_REQUETES_DELIVRANCE,
+          path: LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_DELIVRANCE.url),
           element: <div>{REDIRECTION_DELIVRANCE}</div>
         }
       ],

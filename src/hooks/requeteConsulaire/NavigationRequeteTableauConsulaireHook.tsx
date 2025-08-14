@@ -1,11 +1,12 @@
 import { CONFIG_POST_MAJ_STATUT_REQUETE_CONSULAIRE } from "@api/configurations/requete/consulaire/PostRequeteCreationMiseAJourStatusConfig";
 import { IRequeteTableauConsulaire } from "@model/requete/IRequeteTableauConsulaire";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import {
-  URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-  URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID
-} from "@router/ReceUrls";
 import { useNavigate } from "react-router";
+import LiensRECE from "../../router/LiensRECE";
+import {
+  INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE,
+  INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_SAISIE_PROJET
+} from "../../router/infoPages/InfoPagesEspaceConsulaire";
 import AfficherMessage from "../../utils/AfficherMessage";
 import useFetchApi from "../api/FetchApiHook";
 
@@ -25,7 +26,7 @@ const useNavigationRequeteTableauConsulaire = () => {
             }
           },
           apresSucces: () => {
-            navigate(URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID.replace(":idRequeteParam", idRequete));
+            navigate(LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE.url, { idRequeteParam: idRequete }));
           },
           apresErreur: erreurs => {
             console.error("Erreur lors de la mise à jour du statut:", erreurs);
@@ -35,12 +36,12 @@ const useNavigationRequeteTableauConsulaire = () => {
         break;
 
       case StatutRequete.PRISE_EN_CHARGE.libelle:
-        navigate(URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID.replace(":idRequeteParam", idRequete));
+        navigate(LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE.url, { idRequeteParam: idRequete }));
         break;
 
       case StatutRequete.A_SIGNER.libelle:
       case StatutRequete.EN_TRAITEMENT.libelle:
-        navigate(URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID.replace(":idRequeteParam", idRequete));
+        navigate(LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_SAISIE_PROJET.url, { idRequeteParam: idRequete }));
         break;
 
       default:

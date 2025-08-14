@@ -15,8 +15,6 @@ import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { OngletProps } from "@pages/requeteCreation/commun/requeteCreationUtils";
-import { URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID, URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
-import { getUrlPrecedente, getUrlWithParam } from "@util/route/UrlUtil";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
@@ -24,6 +22,8 @@ import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
+import LiensRECE from "../../../../../router/LiensRECE";
+import { INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE } from "../../../../../router/infoPages/InfoPagesEspaceConsulaire";
 import Labels from "../../commun/Labels";
 import { OngletPiecesJustificatives } from "../../commun/composants/OngletPiecesJustificatives";
 import "../../commun/scss/ApercuReqCreationPage.scss";
@@ -67,7 +67,7 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<ApercuReqCreatio
 
   function redirectApercuRequetePriseEnCharge() {
     if (requete) {
-      navigate(getUrlWithParam(URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID, requete?.id));
+      navigate(LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE.url, { idRequeteParam: requete.id }));
     }
   }
 
@@ -115,10 +115,6 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<ApercuReqCreatio
     });
   }
 
-  function pagePrecedenteEstRechercherUneRequete(): boolean {
-    return getUrlPrecedente(location.pathname) === URL_RECHERCHE_REQUETE;
-  }
-
   const { utilisateurs, services, utilisateurConnecte } = useContext(RECEContextData);
 
   return (
@@ -139,7 +135,7 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<ApercuReqCreatio
 
           <VoletAvecOnglet liste={getListeOnglets()}>
             <div className="boutons">
-              {pagePrecedenteEstRechercherUneRequete() && <BoutonRetour />}
+              {LiensRECE.estPageConsultation() && <BoutonRetour />}
 
               {estPresentBoutonPrendreEnCharge(utilisateurConnecte) && (
                 <BoutonDoubleSubmit

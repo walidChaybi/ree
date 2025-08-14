@@ -8,11 +8,6 @@ import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import Edit from "@mui/icons-material/Edit";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
-import {
-  URL_MES_REQUETES_CONSULAIRE_MODIFIER_RCTC_ID,
-  URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID,
-  URL_RECHERCHE_REQUETE
-} from "@router/ReceUrls";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 import Bouton from "../../composants/commun/bouton/Bouton";
@@ -21,7 +16,11 @@ import OngletsBouton from "../../composants/commun/onglets/OngletsBouton";
 import ResumeDetailsRequete from "../../composants/pages/requetesConsulaire/commun/ResumeDetailsRequete";
 import ConteneurVoletEdition from "../../composants/pages/requetesDelivrance/editionRequete/ConteneurVoletEdition";
 import useFetchApi from "../../hooks/api/FetchApiHook";
-import { useTitreDeLaFenetre } from "../../hooks/utilitaires/TitreDeLaFenetreHook";
+import LiensRECE from "../../router/LiensRECE";
+import {
+  INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_SAISIE_PROJET,
+  INFO_PAGE_MODIFICATION_REQUETE_TRANSCRIPTION_COURRIER
+} from "../../router/infoPages/InfoPagesEspaceConsulaire";
 import AfficherMessage, { estTableauErreurApi } from "../../utils/AfficherMessage";
 
 enum ECleOngletPage {
@@ -29,7 +28,6 @@ enum ECleOngletPage {
 }
 
 const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
-  useTitreDeLaFenetre("Aperçu requête transcription (prise en charge)");
   const { idRequeteParam } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -39,7 +37,7 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
   const [requete, setRequete] = useState<IRequeteCreationTranscription | null>(null);
   const [ongletActif, setOngletActif] = useState<ECleOngletPage>(ECleOngletPage.DESCRIPTION);
 
-  const estModeConsultation = useMemo<boolean>(() => location.pathname.includes(URL_RECHERCHE_REQUETE), [location.pathname]);
+  const estModeConsultation = useMemo<boolean>(() => LiensRECE.estPageConsultation(), [location.pathname]);
   const { appelApi: appelApiGetDetail } = useFetchApi(CONFIG_GET_DETAIL_REQUETE);
   const { appelApi: appelApiMajStatutEtAction, enAttenteDeReponseApi: enAttenteMajStatutEtAction } =
     useFetchApi(CONFIG_POST_MAJ_STATUT_ET_ACTION);
@@ -95,7 +93,9 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
         }
       },
       apresSucces: () => {
-        navigate(URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID.replace(":idRequeteParam", requete.id));
+        navigate(LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_SAISIE_PROJET.url, { idRequeteParam: requete.id }), {
+          replace: true
+        });
       },
       apresErreur: erreurs =>
         AfficherMessage.erreur("Impossible de démarrer le traitement du projet d'acte.", {
@@ -156,7 +156,7 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
               <Bouton
                 title="Modifier la requête"
                 className="flex w-fit"
-                lienVers={URL_MES_REQUETES_CONSULAIRE_MODIFIER_RCTC_ID.replace(":idRequete", requete.id)}
+                lienVers={LiensRECE.genererLien(INFO_PAGE_MODIFICATION_REQUETE_TRANSCRIPTION_COURRIER.url, { idRequeteParam: requete.id })}
               >
                 <Edit className="mr-2" /> {"MODIFIER LA REQUÊTE"}
               </Bouton>

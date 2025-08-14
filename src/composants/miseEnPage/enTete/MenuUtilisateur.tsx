@@ -5,10 +5,12 @@ import AccountCircleOutlined from "@mui/icons-material/AccountCircleOutlined";
 import Close from "@mui/icons-material/Close";
 import InfoOutlined from "@mui/icons-material/InfoOutlined";
 import Logout from "@mui/icons-material/Logout";
-import { URL_DECONNEXION, URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
+import LiensRECE from "../../../router/LiensRECE";
+import { URL_DECONNEXION } from "../../../router/infoPages/InfoPagesBase";
+import { INFO_PAGE_MES_REQUETES_DELIVRANCE } from "../../../router/infoPages/InfoPagesEspaceDelivrance";
 import Texte from "../../../utils/Texte";
 import Bouton from "../../commun/bouton/Bouton";
 import ConteneurModale from "../../commun/conteneurs/modale/ConteneurModale";
@@ -114,7 +116,7 @@ const MenuUtilisateur: React.FC = () => {
                 onClick={() => {
                   setNombreRequeteASigner(0);
                   setMenuOuvert(false);
-                  navigate(URL_MES_REQUETES_DELIVRANCE);
+                  navigate(LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_DELIVRANCE.url));
                 }}
               >
                 {"Non"}

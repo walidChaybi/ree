@@ -1,11 +1,11 @@
 /* CE FICHIER COEXISTE AVEC GestionnaireApi.ts. UNE FOIS QUE TOUT LES APPELS DE L'APPLICATION PASSENT PAR useFetchApi (ET DONC GestionnaireApi.ts), ALORS SUPPRIMER CE FICHIER */
 
-import { URL_BASE } from "@router/ReceUrls";
 import { logInfoDansLaConsole } from "@util/Console";
 import { getCsrfHeader } from "@util/CsrfUtil";
 import { GestionnaireCache, ReceCache } from "@util/GestionnaireCache";
 import { Generateur } from "@util/generateur/Generateur";
 import * as superagent from "superagent";
+import { URL_ACCUEIL } from "../router/infoPages/InfoPagesBase";
 import AfficherMessage from "../utils/AfficherMessage";
 
 export const ID_CORRELATION_HEADER_NAME = "X-Correlation-Id";
@@ -173,7 +173,7 @@ export class ApiManager {
     if (error?.message?.indexOf("offline") !== -1 && error.crossDomain === true) {
       errorType = "erreurOffLine";
       // Force la reconnexion
-      window.location.replace(URL_BASE);
+      window.location.replace(URL_ACCUEIL);
     } else if (process.env.NODE_ENV === "development" && error.status !== HTTP_FORBIDDEN) {
       errorType = "toutesErreursSaufForbidden";
       AfficherMessage.erreur(`Une erreur est survenue: ${error ? error.message : "inconnue"}`, { erreurs: error });

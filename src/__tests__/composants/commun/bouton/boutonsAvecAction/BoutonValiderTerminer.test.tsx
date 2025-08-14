@@ -6,11 +6,12 @@ import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router";
 import { expect, test } from "vitest";
 import { BoutonValiderTerminer } from "../../../../../composants/pages/requetesDelivrance/editionRequete/boutons/BoutonValiderTerminer";
+import LiensRECE from "../../../../../router/LiensRECE";
+import { INFO_PAGE_APERCU_REQUETE_DELIVRANCE_CONSULTATION } from "../../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 import { idRequeteRDCSC } from "../../../../mock/data/requeteDelivrance";
 
@@ -45,11 +46,13 @@ const requeteTestCOURRIER = {
   documentsReponses: [{ idRc: "123456789" }, { idRca: "123456789" }, { idPacs: "123456789" }]
 } as IRequeteDelivrance;
 
-test("est à A_VALIDER et provient de COURRIER", () => {
+const URL_APERCU_REQUETE = LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_CONSULTATION.url, { idRequeteParam: "idRequete" });
+
+test("est à A_VALIDER et provient de COURRIER", async () => {
   const router = createTestingRouter(
     [
       {
-        path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
+        path: URL_APERCU_REQUETE,
         element: <BoutonValiderTerminer requete={requeteTestCOURRIER}></BoutonValiderTerminer>
       },
       {
@@ -57,7 +60,7 @@ test("est à A_VALIDER et provient de COURRIER", () => {
         element: <></>
       }
     ],
-    [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]
+    [URL_APERCU_REQUETE]
   );
 
   render(
@@ -65,9 +68,8 @@ test("est à A_VALIDER et provient de COURRIER", () => {
       <RouterProvider router={router} />
     </MockRECEContextProvider>
   );
-  const bouttonSigner = screen.getByText<HTMLButtonElement>(/Valider et terminer/i);
 
-  waitFor(() => {
-    expect(bouttonSigner.disabled).toBeFalsy();
+  await waitFor(() => {
+    expect(screen.getByText<HTMLButtonElement>(/Valider et terminer/i).disabled).toBeTruthy();
   });
 });

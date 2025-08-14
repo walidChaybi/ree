@@ -1,10 +1,13 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
-import { URL_MES_REQUETES_INFORMATION, URL_REQUETES_INFORMATION_SERVICE } from "@router/ReceUrls";
 import { NomComposant } from "@util/habilitation/habilitationsDescription";
 import { BoiteAOnglets, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
-import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
+import LiensRECE from "../../../../router/LiensRECE";
+import {
+  INFO_PAGE_MES_REQUETES_INFORMATION,
+  INFO_PAGE_REQUETES_INFORMATION_SERVICE
+} from "../../../../router/infoPages/InfoPagesEspaceInformation";
 import BoutonPrendreEnChargeAleatoirementInformation from "./BoutonPrendreEnChargeAleatoirementInformation";
 import { StatutsRequetesInformation } from "./EspaceReqInfoParams";
 import { MesRequetesInformationPage } from "./MesRequetesInformation";
@@ -26,7 +29,7 @@ const getOnglets = (): IOngletProps[] => {
     {
       enTete: {
         titre: "Mes requêtes d'information",
-        url: URL_MES_REQUETES_INFORMATION
+        url: LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_INFORMATION.url)
       },
       corps: {
         composant: <MesRequetesInformationPage parametresReqInfo={parametresReqInfo} />
@@ -35,7 +38,7 @@ const getOnglets = (): IOngletProps[] => {
     {
       enTete: {
         titre: "Les requêtes d'information de mon service",
-        url: URL_REQUETES_INFORMATION_SERVICE,
+        url: LiensRECE.genererLien(INFO_PAGE_REQUETES_INFORMATION_SERVICE.url),
         nomHabilitation: "LinkTabRequetesInfoService" as NomComposant
       },
       corps: {
@@ -48,8 +51,6 @@ const getOnglets = (): IOngletProps[] => {
 
 const EspaceInformationPage: React.FC<LocalProps> = ({ selectedTab }) => {
   const selectedTabState = selectedTab ?? 0;
-
-  useTitreDeLaFenetre("Espace information");
 
   return (
     <div>

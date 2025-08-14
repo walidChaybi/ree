@@ -1,7 +1,13 @@
-import { URL_ACCUEIL, URL_MES_REQUETES_DELIVRANCE, URL_RECHERCHE_REQUETE, URL_REQUETES_DELIVRANCE_SERVICE } from "@router/ReceUrls";
 import { getUrlPrecedente } from "@util/route/UrlUtil";
 import React from "react";
 import { Link, useLocation } from "react-router";
+import LiensRECE from "../../../../router/LiensRECE";
+import { URL_ACCUEIL } from "../../../../router/infoPages/InfoPagesBase";
+import {
+  INFO_PAGE_MES_REQUETES_DELIVRANCE,
+  INFO_PAGE_REQUETES_DELIVRANCE_SERVICE
+} from "../../../../router/infoPages/InfoPagesEspaceDelivrance";
+import { INFO_PAGE_RECHERCHE_REQUETE } from "../../../../router/infoPages/InfoPagesEspaceRecherche";
 
 export const BoutonRetour: React.FC = () => {
   const location = useLocation();
@@ -21,12 +27,12 @@ export function getLibelleEtUrl(url: string) {
   switch (url) {
     case URL_ACCUEIL:
       return ["Accueil", URL_ACCUEIL];
-    case URL_MES_REQUETES_DELIVRANCE:
-      return ["mes requêtes de délivrance", URL_MES_REQUETES_DELIVRANCE];
-    case URL_REQUETES_DELIVRANCE_SERVICE:
-      return ["requête de service", URL_REQUETES_DELIVRANCE_SERVICE];
-    case URL_RECHERCHE_REQUETE:
-      return ["recherche requête", URL_RECHERCHE_REQUETE];
+    case LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_DELIVRANCE.url):
+      return ["mes requêtes de délivrance", LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_DELIVRANCE.url)];
+    case LiensRECE.genererLien(INFO_PAGE_REQUETES_DELIVRANCE_SERVICE.url):
+      return ["requête de service", LiensRECE.genererLien(INFO_PAGE_REQUETES_DELIVRANCE_SERVICE.url)];
+    case LiensRECE.genererLien(INFO_PAGE_RECHERCHE_REQUETE.url):
+      return ["recherche requête", LiensRECE.genererLien(INFO_PAGE_RECHERCHE_REQUETE.url)];
     default:
       return ["", URL_ACCUEIL];
   }

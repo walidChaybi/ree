@@ -5,14 +5,17 @@ import {
 } from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceHook";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { URL_MES_REQUETES_DELIVRANCE, URL_REQUETES_DELIVRANCE_SERVICE } from "@router/ReceUrls";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { NomComposant } from "@util/habilitation/habilitationsDescription";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoiteAOnglets, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import React, { useCallback, useContext, useState } from "react";
-import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
+import LiensRECE from "../../../../router/LiensRECE";
+import {
+  INFO_PAGE_MES_REQUETES_DELIVRANCE,
+  INFO_PAGE_REQUETES_DELIVRANCE_SERVICE
+} from "../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import { MesRequetesPage } from "./MesRequetesPage";
 import { RequetesServicePage } from "./RequetesServicePage";
 import BoutonPrendreEnChargeAleatoirement from "./contenu/BoutonPrendreEnChargeAleatoirement";
@@ -45,7 +48,7 @@ const getOnglets = (
     {
       enTete: {
         titre: "Mes requêtes de délivrance",
-        url: URL_MES_REQUETES_DELIVRANCE
+        url: LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_DELIVRANCE.url)
       },
       corps: {
         composant: (
@@ -59,7 +62,7 @@ const getOnglets = (
     {
       enTete: {
         titre: "Les requêtes de délivrance de mon service",
-        url: URL_REQUETES_DELIVRANCE_SERVICE,
+        url: LiensRECE.genererLien(INFO_PAGE_REQUETES_DELIVRANCE_SERVICE.url),
         nomHabilitation: "LinkTabRequetesDelivranceService" as NomComposant
       },
       corps: {
@@ -89,8 +92,6 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
       urlCourante: urlWithParam
     });
   }, []);
-
-  useTitreDeLaFenetre("Délivrance");
 
   return (
     <div>

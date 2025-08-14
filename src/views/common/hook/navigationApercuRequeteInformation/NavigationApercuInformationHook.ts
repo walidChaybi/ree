@@ -2,11 +2,11 @@ import { RECEContextData } from "@core/contexts/RECEContext";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { RequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
-import { PATH_APERCU_REQ_INFO } from "@router/ReceUrls";
 import { autorisePrendreEnChargeReqTableauInformation } from "@util/RequetesUtils";
-import { getUrlWithParam } from "@util/route/UrlUtil";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import LiensRECE from "../../../../router/LiensRECE";
+import { INFO_PAGE_APERCU_REQUETE_INFORMATION } from "../../../../router/infoPages/InfoPagesEspaceInformation";
 import { ICreationActionMiseAjourStatutHookParams, useCreationActionMiseAjourStatut } from "../requete/CreationActionMiseAjourStatutHook";
 
 export interface INavigationApercuReqInfoParams {
@@ -25,8 +25,11 @@ export function useNavigationApercuInformation(params?: INavigationApercuReqInfo
 
   const redirectionVersApercu = useCallback(() => {
     if (params) {
-      const url = `${params.urlCourante}/${PATH_APERCU_REQ_INFO}/:idRequete`;
-      navigate(getUrlWithParam(url, "idRequete" in params.requete ? params.requete.idRequete : params.requete.id));
+      navigate(
+        LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_INFORMATION.url, {
+          idRequeteParam: "idRequete" in params.requete ? params.requete.idRequete : params.requete.id
+        })
+      );
     }
   }, [params, navigate]);
 

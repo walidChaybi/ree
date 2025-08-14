@@ -2,12 +2,15 @@ import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { URL_MES_REQUETES_CREATION, URL_REQUETES_CREATION_SERVICE } from "@router/ReceUrls";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoiteAOnglets, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useContext, useState } from "react";
-import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
+import LiensRECE from "../../../../router/LiensRECE";
+import {
+  INFO_PAGE_MES_REQUETES_ETABLISSEMENT,
+  INFO_PAGE_REQUETES_ETABLISSEMENT_SERVICE
+} from "../../../../router/infoPages/InfoPagesEspaceEtablissement";
 import { BoutonAttribuerRequete } from "./BoutonAttribuerRequete";
 import BoutonPrendreEnChargeRequeteSuivanteCreation from "./BoutonPrendreEnChargeRequeteSuivanteCreation";
 import { MesRequetesCreation } from "./MesRequetesCreation";
@@ -52,8 +55,8 @@ const getOnglets = (popinAttribuerAOuvert: boolean, setPopinAttribuerAOuvert: Fu
   return [
     {
       enTete: {
-        titre: "Mes requêtes de création",
-        url: URL_MES_REQUETES_CREATION
+        titre: "Mes requêtes d'établissement'",
+        url: LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_ETABLISSEMENT.url)
       },
       corps: {
         composant: <MesRequetesCreation queryParametersPourRequetes={queryParametersPourRequetesCreation} />
@@ -61,8 +64,8 @@ const getOnglets = (popinAttribuerAOuvert: boolean, setPopinAttribuerAOuvert: Fu
     },
     {
       enTete: {
-        titre: "Les requêtes de création de mon service",
-        url: URL_REQUETES_CREATION_SERVICE,
+        titre: "Les requêtes d'établissement de mon service",
+        url: LiensRECE.genererLien(INFO_PAGE_REQUETES_ETABLISSEMENT_SERVICE.url),
         nomHabilitation: "LinkTabRequetesCreationService"
       },
       corps: {
@@ -84,8 +87,6 @@ const EspaceCreationPage: React.FC<LocalProps> = ({ selectedTab }) => {
   const [popinAttribuerAOuvert, setPopinAttribuerAOuvert] = useState<boolean>(false);
 
   const { utilisateurs } = useContext(RECEContextData);
-
-  useTitreDeLaFenetre("Espace création");
 
   return (
     <div>

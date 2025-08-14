@@ -1,0 +1,24 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Test du composant ElementPageRECE > le composant fonctionne correctement 1`] = `
+<div>
+  <div>
+    Toujours accessible
+  </div>
+  <div>
+    Accès par FF
+  </div>
+  <div>
+    Avec tous les droits
+  </div>
+  <div>
+    Avec au moins un des droits
+  </div>
+  <div>
+    Avec uniquement les droits
+  </div>
+  <div>
+    Avec droit sur périmetre
+  </div>
+</div>
+`;

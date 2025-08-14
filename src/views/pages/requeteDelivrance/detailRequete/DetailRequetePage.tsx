@@ -1,7 +1,6 @@
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SectionPanel } from "@widget/section/SectionPanel";
 import React from "react";
-import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import { getPanelsDetailRequete } from "./DetailRequeteUtils";
 import "./scss/DetailRequetePage.scss";
 
@@ -11,8 +10,6 @@ interface IDetailRequetePageProps {
 
 const DetailRequetePage: React.FC<IDetailRequetePageProps> = ({ requete }) => {
   const panels = getPanelsDetailRequete(requete);
-
-  useTitreDeLaFenetre("Détails requête");
 
   return (
     <div className="DetailRequetePage">

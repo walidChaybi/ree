@@ -1,12 +1,13 @@
 import { getTableauRequetesConsulaires } from "@api/appels/requeteApi";
 import { mesRequetesConsulaire } from "@mock/data/requeteCreationTranscription";
-import {
-  URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-  URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID
-} from "@router/ReceUrls";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import TableauMesRequetesConsulaire from "../../../../../composants/pages/requetesConsulaire/mesRequetes/TableauMesRequetesConsulaire";
+import LiensRECE from "../../../../../router/LiensRECE";
+import {
+  INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE,
+  INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_SAISIE_PROJET
+} from "../../../../../router/infoPages/InfoPagesEspaceConsulaire";
 import AfficherMessage from "../../../../../utils/AfficherMessage";
 
 vi.mock("@util/messageManager", () => ({
@@ -66,10 +67,9 @@ describe("TableauMesRequetesConsulaire ", () => {
       fireEvent.click(requeteEnTraitement!);
 
       expect(mockNavigate).toHaveBeenCalledWith(
-        URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_REQUETE_SAISIE_PROJET_ID.replace(
-          ":idRequeteParam",
-          "91d13aad-c023-4a6d-b88c-18f277061ca3"
-        )
+        LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_SAISIE_PROJET.url, {
+          idRequeteParam: "91d13aad-c023-4a6d-b88c-18f277061ca3"
+        })
       );
     });
   });
@@ -85,10 +85,9 @@ describe("TableauMesRequetesConsulaire ", () => {
       fireEvent.click(requetePriseEnCharge!);
 
       expect(mockNavigate).toHaveBeenCalledWith(
-        URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID.replace(
-          ":idRequeteParam",
-          "91d13aad-c023-4a6d-b88c-18f277061ca2"
-        )
+        LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE.url, {
+          idRequeteParam: "91d13aad-c023-4a6d-b88c-18f277061ca2"
+        })
       );
     });
   });

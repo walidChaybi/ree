@@ -2,12 +2,13 @@ import {
   ICreationActionMiseAjourStatutEtRedirectionParams,
   useCreationActionMiseAjourStatutEtRedirectionHook
 } from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
-import { PATH_APERCU_REQ_PRISE } from "@router/ReceUrls";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
-import { getUrlPrecedente, getUrlWithParam, replaceUrl } from "../../../../../common/util/route/UrlUtil";
+import LiensRECE from "../../../../../../router/LiensRECE";
+import { INFO_PAGE_APERCU_REQUETE_DELIVRANCE_PRISE_EN_CHARGE } from "../../../../../../router/infoPages/InfoPagesEspaceDelivrance";
+import { getUrlWithParam, replaceUrl } from "../../../../../common/util/route/UrlUtil";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 
 interface BoutonModifierTraitementProps {
@@ -22,9 +23,13 @@ export const BoutonModifierTraitement: React.FC<BoutonModifierTraitementProps> =
 
   const setActionEtUpdateStatut = () => {
     if (!props.requete.documentsReponses || props.requete.documentsReponses.length === 0) {
-      replaceUrl(navigate, `${getUrlPrecedente(location.pathname)}/${PATH_APERCU_REQ_PRISE}/${props.requete.id}`, {
-        autoriserTraitementAutoRDCS: false
-      });
+      replaceUrl(
+        navigate,
+        LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_PRISE_EN_CHARGE.url, { idRequeteParam: props.requete.id }),
+        {
+          autoriserTraitementAutoRDCS: false
+        }
+      );
     } else {
       setParams({
         statutRequete: "PRISE_EN_CHARGE",

@@ -43,7 +43,6 @@ const URL_IGNORER = "/requetes/action/ignorer";
 const URL_REQUETE_ALEATOIRE = "/requetes/requetealeatoire";
 const URL_OPTION_COURRIER = "/optioncourrier";
 const URL_REPONSE_REQ_INFO = "/reponse";
-const URL_NB_REQ_INFO = "/requetes/information/count";
 const URL_ECHANGE_STATUT = "/requetes/action/retourSdanf";
 const URL_DOCUMENT_COMPLEMENTAIRE = "/documentsreponses/documentComplementaire";
 const URL_SAUVEGARDE_PERSONNE_ACTE_RMC = "/requetes/creation/sauvegardeDetailsRMC";
@@ -223,18 +222,6 @@ export function getDetailRequete(idRequete: string, estConsultationHistoriqueAct
     };
   }
   return getApiManager().then(api => api.fetch(config));
-}
-
-export function getCompteurRequetes(statuts: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.GET,
-      uri: URL_REQUETES_COUNT,
-      parameters: {
-        statuts
-      }
-    })
-  );
 }
 
 export async function creationRequeteDelivrance({
@@ -558,18 +545,6 @@ export async function sauvegarderReponseReqInfo(idRequete: string, corpsMailRepo
       method: HttpMethod.POST,
       uri: `${URL_SAUVEGARDER_REPONSE_REQINFO}/${idRequete}`,
       data: { corpsMail: corpsMailReponse, idReponse }
-    })
-  );
-}
-
-export function getNbReqInfo(listeStatuts: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.GET,
-      uri: URL_NB_REQ_INFO,
-      parameters: {
-        statuts: listeStatuts
-      }
     })
   );
 }

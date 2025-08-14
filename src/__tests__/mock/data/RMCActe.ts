@@ -1,13 +1,5 @@
 import { IResultatRMCActeDto } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 
-export const DataTableauActe = {
-  previousDataLinkState: "previousDataLinkState",
-  nextDataLinkState: "http://localhost:8089/rece-etatcivil-api/v1/acte/rmc?range=1-105",
-  rowsNumberState: 5,
-  minRangeState: 0,
-  maxRangeState: 105
-};
-
 export const ReponseAppelRMCActe = {
   hasTechnicalError: false,
   hasBusinessError: false,
@@ -33,94 +25,6 @@ export const ReponseAppelRMCActe = {
     }
   ] as IResultatRMCActeDto[]
 };
-
-export const DataRMCActeAvecResultatDto: IResultatRMCActeDto[] = [
-  {
-    id: "b41079a5-9e8d-478c-b04c-c4c2ac67134f",
-    nom: "ROSE",
-    autresNoms: ["DUPE"],
-    prenoms: [
-      { prenom: "Jean-pierre", numeroOrdre: 1 },
-      { prenom: "Mick", numeroOrdre: 2 }
-    ],
-    dateNaissance: { jour: 8, mois: 6, annee: 1961 },
-    dateEvenement: { jour: 8, mois: 12, annee: 1980 },
-    paysNaissance: "Tunisie",
-    nature: "RECONNAISSANCE",
-    referenceRece: "RECE.999",
-    referenceRegistre: "4568",
-    familleRegistre: "ACQ",
-    type: "TEXTE"
-  },
-  {
-    id: "d8708d77-a359-4553-be72-1eb5f246d4dc",
-    nom: "ROSE",
-    autresNoms: ["DUPE"],
-    prenoms: [
-      { prenom: "Jean-pierre", numeroOrdre: 1 },
-      { prenom: "Michel", numeroOrdre: 2 }
-    ],
-    dateNaissance: { jour: 8, mois: 6, annee: 1960 },
-    dateEvenement: { jour: 8, mois: 12, annee: 1980 },
-    paysNaissance: "Tunisie",
-    nature: "RECONNAISSANCE",
-    referenceRece: "RECE.999",
-    referenceRegistre: "4569",
-    familleRegistre: "ACQ",
-    type: "TEXTE"
-  },
-  {
-    id: "2748bb45-22cd-41ea-90db-0483b8ffc8a8",
-    nom: "ROSE",
-    autresNoms: [],
-    prenoms: [
-      { prenom: "Catherine", numeroOrdre: 1 },
-      { prenom: "Marlène", numeroOrdre: 2 }
-    ],
-    dateNaissance: { jour: 2, mois: 11, annee: 1991 },
-    dateEvenement: { jour: 8, mois: 12, annee: 1980 },
-    paysNaissance: "Australie",
-    nature: "NAISSANCE",
-    referenceRece: "RECE.999",
-    referenceRegistre: "8547",
-    familleRegistre: "ACQ",
-    type: "TEXTE"
-  },
-  {
-    id: "d8708d77-a359-4553-be72-1eb5f246d4db",
-    nom: "ROSE",
-    autresNoms: ["DUPE"],
-    prenoms: [
-      { prenom: "Jean-pierre", numeroOrdre: 1 },
-      { prenom: "Michel", numeroOrdre: 2 }
-    ],
-    dateNaissance: { jour: 8, mois: 6, annee: 1960 },
-    dateEvenement: { jour: 8, mois: 12, annee: 1981 },
-    paysNaissance: "Tunisie",
-    nature: "RECONNAISSANCE",
-    referenceRece: "RECE.999",
-    referenceRegistre: "4570",
-    familleRegistre: "ACQ",
-    type: "TEXTE"
-  },
-  {
-    id: "2748bb45-22cd-41ea-90db-0483b8ffc8a9",
-    nom: "ROSE",
-    autresNoms: [],
-    prenoms: [
-      { prenom: "Catherine", numeroOrdre: 1 },
-      { prenom: "Marlène", numeroOrdre: 2 }
-    ],
-    dateNaissance: { jour: 2, mois: 11, annee: 1991 },
-    dateEvenement: { jour: 8, mois: 12, annee: 1987 },
-    paysNaissance: "Australie",
-    nature: "NAISSANCE",
-    referenceRece: "RECE.999",
-    referenceRegistre: "8548",
-    familleRegistre: "ACQ",
-    type: "TEXTE"
-  }
-];
 
 export const ReponseAppelRMCActe4PremiersResultats = {
   errors: [],

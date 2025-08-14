@@ -4,7 +4,6 @@ import { stockageDonnees } from "@util/stockageDonnees";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import React from "react";
 import * as Yup from "yup";
-import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import RMCBoutons from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,
@@ -29,20 +28,18 @@ export const DATES_DEBUT_FIN_ANNEE = "datesDebutFinAnnee";
 export const REGISTRE_REPERTOIRE = "registreRepertoire";
 
 // Valeurs par défaut des champs
-export const DefaultValuesRMCActeInscription = {
+const DefaultValuesRMCActeInscription = {
   [TITULAIRE]: TitulaireDefaultValues,
   [DATES_DEBUT_FIN_ANNEE]: DatesDebutFinAnneeDefaultValues,
   [REGISTRE_REPERTOIRE]: RegistreRepertoireDefaultValues
 };
 
 // Schéma de validation en sortie de champs
-export const ValidationSchemaRMCActeInscription = Yup.object({
+const ValidationSchemaRMCActeInscription = Yup.object({
   [TITULAIRE]: TitulaireValidationSchema,
   [DATES_DEBUT_FIN_ANNEE]: DatesDebutFinAnneeValidationSchema,
   [REGISTRE_REPERTOIRE]: RegistreRepertoireValidationSchema
 });
-
-export const titreForm = "Critères de recherche d'un acte et d'une inscription";
 
 interface RMCActeInscriptionFormProps {
   onSubmit: (values: any) => void;
@@ -60,11 +57,9 @@ export const RMCActeInscription: React.FC<RMCActeInscriptionFormProps> = props =
     return stockageDonnees.recupererCriteresRMCActeInspt();
   };
 
-  useTitreDeLaFenetre(titreForm);
-
   return (
     <Formulaire
-      titre={titreForm}
+      titre="Critères de recherche d'un acte et d'une inscription"
       formDefaultValues={DefaultValuesRMCActeInscription}
       formValidationSchema={ValidationSchemaRMCActeInscription}
       onSubmit={onSubmitRMCActeInscription}

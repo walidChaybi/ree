@@ -22,13 +22,7 @@ import { ApercuProjet } from "@pages/requeteCreation/commun/composants/ApercuPro
 import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
-import {
-  PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET,
-  PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE,
-  URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID
-} from "@router/ReceUrls";
 import { DEUX, UN } from "@util/Utils";
-import { getUrlWithParam } from "@util/route/UrlUtil";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import { PopinSignatureCreationEtablissement } from "@widget/signature/PopinSignatureCreationEtablissement";
@@ -36,6 +30,11 @@ import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import { FormikHelpers } from "formik";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
+import LiensRECE from "../../../../../../router/LiensRECE";
+import {
+  INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_CONSULTATION,
+  INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_SUIVI_DOSSIER
+} from "../../../../../../router/infoPages/InfoPagesEspaceEtablissement";
 import AfficherMessage from "../../../../../../utils/AfficherMessage";
 import "../../../commun/scss/ApercuReqCreationPage.scss";
 import {
@@ -127,7 +126,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
   useEffect(() => {
     if (detailRequeteState) {
       if (utilisateurConnecte.id !== detailRequeteState.idUtilisateur) {
-        const url = getApercuSimpleUrl(location.pathname, detailRequeteState.id);
+        const url = getApercuSimpleUrl(detailRequeteState.id);
         navigate(url);
         AfficherMessage.avertissement("Ouverture impossible. Vous n'êtes pas en charge de ce dossier", { fermetureAuto: true });
         return;
@@ -139,7 +138,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
   useEffect(() => {
     if (projetEstValide) {
       navigate(
-        getUrlWithParam(URL_MES_REQUETES_CREATION_ETABLISSEMENT_APERCU_SUIVI_DOSSIER_ID, idRequeteParam ?? ""),
+        LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_SUIVI_DOSSIER.url, { idRequeteParam: idRequeteParam ?? "" }),
         // TODO: passage du state non fonctionnel ==> reussir a passer l'idSuiviDossier & le location.pathname a l'apercu suivi dossier
         { state: { idSuiviDossier: idSuiviDossierParam } }
       );
@@ -369,6 +368,6 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
   );
 };
 
-const getApercuSimpleUrl = (pathname: string, idRequete: string): string => {
-  return `${pathname.split(PATH_APERCU_REQ_ETABLISSEMENT_SAISIE_PROJET)[0]}${PATH_APERCU_REQ_ETABLISSEMENT_SIMPLE}/${idRequete}`;
+const getApercuSimpleUrl = (idRequete: string): string => {
+  return LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_CONSULTATION.url, { idRequeteParam: idRequete });
 };

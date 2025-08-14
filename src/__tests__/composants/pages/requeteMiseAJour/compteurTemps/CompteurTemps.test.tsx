@@ -1,10 +1,11 @@
-import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router";
 import request from "superagent";
 import { afterAll, describe, expect, test, vi } from "vitest";
 import { ConteneurParentModales } from "../../../../../composants/commun/conteneurs/modale/ConteneurModale";
 import CompteurTemps from "../../../../../composants/pages/requetesMiseAJour/compteurTemps/CompteurTemps";
+import LiensRECE from "../../../../../router/LiensRECE";
+import { INFO_PAGE_RECHERCHE_ACTE_INSCRIPTION } from "../../../../../router/infoPages/InfoPagesEspaceRecherche";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 
 describe("Test du composant CompteurTemps", () => {
@@ -82,7 +83,7 @@ describe("Test du composant CompteurTemps", () => {
           )
         },
         {
-          path: URL_RECHERCHE_ACTE_INSCRIPTION,
+          path: LiensRECE.genererLien(INFO_PAGE_RECHERCHE_ACTE_INSCRIPTION.url),
           element: <div>{REDIRIGE}</div>
         }
       ],

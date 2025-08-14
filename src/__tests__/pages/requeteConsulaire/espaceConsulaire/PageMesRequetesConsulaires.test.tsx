@@ -1,6 +1,5 @@
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
-import { URL_MES_REQUETES_CONSULAIRE } from "@router/ReceUrls";
 import { render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
@@ -13,7 +12,7 @@ describe("Test PageMesRequetesConsulaires", () => {
     const router = createTestingRouter(
       [
         {
-          path: URL_MES_REQUETES_CONSULAIRE,
+          path: "/",
           element: (
             <MockRECEContextProvider
               utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.CREER_ACTE_TRANSCRIT).generer()}
@@ -23,7 +22,7 @@ describe("Test PageMesRequetesConsulaires", () => {
           )
         }
       ],
-      [URL_MES_REQUETES_CONSULAIRE]
+      ["/"]
     );
     return <RouterProvider router={router} />;
   };

@@ -1832,28 +1832,6 @@ export const requeteAvecCopieIntegraleActeImage = {
   choixDelivrance: "DELIVRER_EC_COPIE_INTEGRALE"
 };
 
-export const detailRequeteDelivranceAvecRequerantQualiteInstitutionnel = {
-  ...ReponseAppelDetailRequeteDelivrance,
-  data: {
-    ...ReponseAppelDetailRequeteDelivrance.data,
-    id: "a4cefb71-8457-4f6b-937e-34b49335d423",
-    requerant: {
-      ...ReponseAppelDetailRequeteDelivrance.data.requerant,
-      qualite: "INSTITUTIONNEL",
-      detailQualiteInstitutionnel: {
-        type: "typeTest",
-        nomInstitution: " TRIBUNAL",
-        nature: "natureInstitution"
-      },
-      institutionnel: {
-        type: "typeTest",
-        nomInstitution: "testNomInstitution",
-        nature: "natureInstitution"
-      }
-    }
-  }
-};
-
 export const requeteSansDocument = {
   id: "7b448d64-add5-4dbd-8041-b7081ea7bc86",
   numeroFonctionnel: "4ANXFD",
@@ -1979,36 +1957,6 @@ export const requeteSansDocument = {
     pays: "V"
   },
   choixDelivrance: "DELIVRER_EC_EXTRAIT_AVEC_FILIATION"
-};
-
-export const detailRequeteDelivranceAvecRequerantQualiteAutreProfessionnel = {
-  ...ReponseAppelDetailRequeteDelivrance,
-  data: {
-    ...ReponseAppelDetailRequeteDelivrance.data,
-    id: "a4cefb71-8457-4f6b-937e-34b49335d412",
-    requerant: {
-      ...ReponseAppelDetailRequeteDelivrance.data.requerant,
-      qualite: "AUTRE_PROFESSIONNEL",
-      detailQualiteAutreProfessionnel: {
-        nature: "TestAutrePro",
-        raisonSociale: "RaisonSocialAutrePro"
-      },
-      autreProfessionnel: {}
-    }
-  }
-};
-
-export const detailRequeteDelivranceAvecRequerantQualiteUtilisateurRece = {
-  ...ReponseAppelDetailRequeteDelivrance,
-  data: {
-    ...ReponseAppelDetailRequeteDelivrance.data,
-    id: "a4cefb71-8457-4f6b-937e-34b49335d412",
-    requerant: {
-      ...ReponseAppelDetailRequeteDelivrance.data.requerant,
-      qualite: "UTILISATEUR_RECE",
-      nomFamille: "UtilRece"
-    }
-  }
 };
 
 export const detailRequeteDelivranceCopieArchive = {

@@ -1,21 +1,16 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
-import { Droit } from "@model/agent/enum/Droit";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import {
-  URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC,
-  URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC,
-  URL_MES_REQUETES_DELIVRANCE_SAISIR_RDLFC,
-  URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC,
-  URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC,
-  URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDLFC
-} from "@router/ReceUrls";
+import { Option, Options } from "@util/Type";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
-import { Option, Options } from "@util/Type";
 import { BoutonMenu } from "@widget/boutonMenu/BoutonMenu";
-import React, { useContext } from "react";
+import React from "react";
 import { useNavigate } from "react-router";
+import LiensRECE from "../../../../../router/LiensRECE";
+import {
+  INFO_PAGE_SAISIE_REQUETE_DELIVRANCE_CERTIFICAT_SITUATION_COURRIER,
+  INFO_PAGE_SAISIE_REQUETE_DELIVRANCE_EXTRAIT_COPIE_COURRIER
+} from "../../../../../router/infoPages/InfoPagesEspaceDelivrance";
 interface MenuSaisirRequeteProps {
   indexTabPanel: number;
   disabled?: boolean;
@@ -23,46 +18,18 @@ interface MenuSaisirRequeteProps {
 
 const MenuSaisirRequete: React.FC<MenuSaisirRequeteProps> = props => {
   const navigate = useNavigate();
-  const { utilisateurConnecte } = useContext(RECEContextData);
   const clickMenuItem = (nomRequete: string) => {
-    if (props.indexTabPanel === 1) {
-      switch (nomRequete) {
-        case "RDCSC":
-          if (utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER })) {
-            navigate(URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDCSC);
-          } else {
-            alert("Vous n'avez pas les droits pour ce type de requête");
-          }
-          break;
+    switch (nomRequete) {
+      case "RDCSC":
+        navigate(LiensRECE.genererLien(INFO_PAGE_SAISIE_REQUETE_DELIVRANCE_CERTIFICAT_SITUATION_COURRIER.url));
+        break;
 
-        case "RDC":
-          navigate(URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDC);
-          break;
+      case "RDC":
+        navigate(LiensRECE.genererLien(INFO_PAGE_SAISIE_REQUETE_DELIVRANCE_EXTRAIT_COPIE_COURRIER.url));
+        break;
 
-        case "RDLFC":
-          navigate(URL_REQUETES_DELIVRANCE_SERVICE_SAISIR_RDLFC);
-          break;
-
-        default:
-          break;
-      }
-    } else {
-      switch (nomRequete) {
-        case "RDCSC":
-          navigate(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDCSC);
-          break;
-
-        case "RDC":
-          navigate(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDC);
-          break;
-
-        case "RDLFC":
-          navigate(URL_MES_REQUETES_DELIVRANCE_SAISIR_RDLFC);
-          break;
-
-        default:
-          break;
-      }
+      default:
+        break;
     }
   };
 
@@ -102,10 +69,6 @@ function getListeDesRequetesCourrierAsOptions(): Options {
 
   if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATION)) {
     listeRequeteCourrier = listeRequeteCourrier.concat(mapSousTypeDelivrance(SousTypeDelivrance.RDCSC));
-  }
-
-  if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES)) {
-    listeRequeteCourrier = listeRequeteCourrier.concat(mapSousTypeDelivrance(SousTypeDelivrance.RDLFC));
   }
 
   return listeRequeteCourrier;

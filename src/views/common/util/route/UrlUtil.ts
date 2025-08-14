@@ -1,5 +1,4 @@
 import { UN } from "@util/Utils";
-import { gestionnaireNavigation } from "@widget/filAriane/FilAriane";
 import { NavigateFunction } from "react-router";
 import { UUID } from "../../../../ressources/Regex";
 
@@ -7,14 +6,7 @@ export const URL_SEPARATEUR = "/";
 
 // Fontions utilitaires de résolution d'url
 const urlWithParamPatern = /^(.+)\/:[^/]+$/;
-const urlWithoutParamPatern = /\/:[^/]+/g;
 
-/*
- * Supprime les éventuels paramètres de l'url (exemple: .../apercurequete/:idRequete => .../apercurequete)
- */
-export function getUrlWithoutParam(url: string) {
-  return url.replace(urlWithoutParamPatern, "");
-}
 /**
  * Remplace le paramètre dans une url, exemple:
  * /xxx/yyy/zzz/:id => /xxx/yyy/zzz/123456
@@ -70,11 +62,9 @@ export function getUrlPrecedente(url: string) {
 }
 
 export function replaceUrl(navigate: NavigateFunction, url: string, data?: any) {
-  gestionnaireNavigation.deleteLastUrl();
   navigate(url, { state: data, replace: true });
 }
 
 export function goBack(navigate: NavigateFunction) {
-  gestionnaireNavigation.deleteLastUrl();
   navigate(-UN);
 }

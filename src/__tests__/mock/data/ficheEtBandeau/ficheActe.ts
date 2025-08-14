@@ -1,20 +1,6 @@
 import { EStatutActe } from "@model/etatcivil/enum/EStatutActe";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { IBandeauFiche } from "@model/etatcivil/fiche/IBandeauFiche";
-
-export const bandeauActe: IBandeauFiche = {
-  titreFenetre: "NAISSANCE-DUPE-N°2020-123456",
-  categorie: "acte",
-  identifiant: "123456",
-  registre: "ACQ.DX.2020.123456..01133",
-  annee: "20220",
-  numero: "123456",
-  statutsFiche: [],
-  personnes: [{ prenom: "Laurent", nom: "Dupe" }],
-  dateDerniereMaj: "07/01/2021",
-  dateDerniereDelivrance: "07/01/2021"
-};
 
 export const acte: any = {
   id: "b41079a5-9e8d-478c-b04c-c4c2ac67134f",
@@ -863,13 +849,6 @@ export const acte1: any = {
       noPage: 2
     }
   ]
-};
-
-export const acteElectronique: any = {
-  ...acte,
-  id: "b41079a5-9e8d-478c-b04c-c4c2ac671333",
-  referenceActe: "RECE.0000.0000",
-  referenceSignifiante: "CSL.DX.1922.NA.T.410.681"
 };
 
 export const acte2: any = {

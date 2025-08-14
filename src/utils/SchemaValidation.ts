@@ -25,14 +25,6 @@ type TSchemaValidationFonction<TAutreParams = {}, TRetour = Yup.AnySchema> = <
   params?: TSchemaParams<TObligatoire> & TAutreParams
 ) => TRetour;
 
-interface ISchemaCommunParams {
-  obligatoire?: boolean | (ConditionChamp | ConditionChamp[])[];
-  operateurConditionsOu?: boolean;
-  interditSeul?: boolean | TInterditSeul;
-  interditAvec?: TInterditAvec[];
-  comparaisonValeurAutreChamp?: TComparaisonValeurAutreChamp;
-}
-
 type TValeurChamp = string | boolean | number | undefined;
 
 type TValidation = {

@@ -1,8 +1,9 @@
 import { CONFIG_GET_DELAI_MISE_A_JOUR_RESTANT } from "@api/configurations/requete/miseAJour/GetDelaiMiseAJourRestantConfigApi";
-import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
 import { memo, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
+import LiensRECE from "../../../../router/LiensRECE";
+import { INFO_PAGE_RECHERCHE_ACTE_INSCRIPTION } from "../../../../router/infoPages/InfoPagesEspaceRecherche";
 import Bouton from "../../../commun/bouton/Bouton";
 import ConteneurModale from "../../../commun/conteneurs/modale/ConteneurModale";
 
@@ -50,7 +51,7 @@ const CompteurTemps: React.FC<ICompteurTempsProps> = memo(({ idRequete, abandonn
         <Bouton
           type="button"
           title="OK"
-          onClick={() => navigate(URL_RECHERCHE_ACTE_INSCRIPTION, { replace: true })}
+          onClick={() => navigate(LiensRECE.genererLien(INFO_PAGE_RECHERCHE_ACTE_INSCRIPTION.url), { replace: true })}
         >
           {"OK"}
         </Bouton>

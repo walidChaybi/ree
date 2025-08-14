@@ -1,10 +1,10 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
-import { URL_ACCUEIL } from "@router/ReceUrls";
 import React, { useContext } from "react";
 import { useNavigate } from "react-router";
 import MenuUtilisateur from "../../../composants/miseEnPage/enTete/MenuUtilisateur";
 import logoReceBlanc from "../../../img/logo-rece-blanc.svg";
+import { URL_ACCUEIL } from "../../../router/infoPages/InfoPagesBase";
 import { BoutonRechercheRmc } from "./BoutonRechercheRmc";
 
 interface HeaderProps {

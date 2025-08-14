@@ -5,12 +5,12 @@ import {
 import { IRequeteAleatoireResultat, useGetRequeteAleatoire } from "@hook/requete/PrendreEnChargeAleatoirementApiHook";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID } from "@router/ReceUrls";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
-import { getUrlWithParam } from "@util/route/UrlUtil";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import LiensRECE from "../../../../router/LiensRECE";
+import { INFO_PAGE_APERCU_REQUETE_INFORMATION } from "../../../../router/infoPages/InfoPagesEspaceInformation";
 import AfficherMessage from "../../../../utils/AfficherMessage";
 
 const BoutonPrendreEnChargeAleatoirementInformation: React.FC = (props: any) => {
@@ -43,7 +43,9 @@ const BoutonPrendreEnChargeAleatoirementInformation: React.FC = (props: any) => 
 
   const redirectApercuRequeteInfo = useCallback(() => {
     if (requeteAleatoireResultat?.requete) {
-      navigate(getUrlWithParam(URL_MES_REQUETES_APERCU_REQ_INFORMATION_ID, requeteAleatoireResultat.requete.idRequete));
+      navigate(
+        LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_INFORMATION.url, { idRequeteParam: requeteAleatoireResultat.requete.idRequete })
+      );
     }
   }, [navigate, requeteAleatoireResultat]);
 

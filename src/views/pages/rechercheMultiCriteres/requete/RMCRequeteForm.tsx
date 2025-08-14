@@ -8,7 +8,6 @@ import { Formulaire } from "@widget/formulaire/Formulaire";
 import { NB_LIGNES_PAR_APPEL_REQUETE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
 import * as Yup from "yup";
-import { useTitreDeLaFenetre } from "../../../../hooks/utilitaires/TitreDeLaFenetreHook";
 import AfficherMessage from "../../../../utils/AfficherMessage";
 import RMCBoutons from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
@@ -46,8 +45,6 @@ const ValidationSchemaRMCRequete = Yup.object({
   [REQUERANT]: RequerantValidationSchema
 });
 
-export const titreForm = "Critères de recherche d'une requête";
-
 interface RMCRequeteFormProps {
   closePopIn?: () => void;
   setValuesRMCRequete: React.Dispatch<React.SetStateAction<IRMCRequeteForm<keyof typeof ETypeRequete | ""> | null>>;
@@ -79,11 +76,9 @@ export const RMCRequeteForm: React.FC<RMCRequeteFormProps> = ({ closePopIn, setV
     return stockageDonnees.recupererCriteresRMCReq();
   };
 
-  useTitreDeLaFenetre(titreForm);
-
   return (
     <Formulaire
-      titre={titreForm}
+      titre="Critères de recherche d'une requête"
       formDefaultValues={DefaultValuesRMCRequete}
       formValidationSchema={ValidationSchemaRMCRequete}
       onSubmit={onSubmitRMCRequete}

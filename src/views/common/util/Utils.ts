@@ -144,10 +144,6 @@ export const getValeurOuVide = (str?: any) => {
   return str ?? "";
 };
 
-export const getTableauOuVide = (arr?: any[]) => {
-  return arr?.length ? arr : [];
-};
-
 export const jointAvec = (tab: string[], sep: string) => {
   let res = "";
   if (tab) {

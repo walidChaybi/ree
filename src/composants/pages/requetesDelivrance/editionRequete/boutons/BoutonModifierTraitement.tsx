@@ -4,10 +4,11 @@ import {
 } from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
-import { PATH_APERCU_REQ_PRISE } from "@router/ReceUrls";
-import { getUrlPrecedente, getUrlWithParam, replaceUrl } from "@util/route/UrlUtil";
+import { getUrlWithParam, replaceUrl } from "@util/route/UrlUtil";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import LiensRECE from "../../../../../router/LiensRECE";
+import { INFO_PAGE_APERCU_REQUETE_DELIVRANCE_PRISE_EN_CHARGE } from "../../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import { IBoutonProps } from "../../../../commun/bouton/Bouton";
 import { BoutonAvecChargement } from "../../../../commun/bouton/BoutonAvecChargement";
 
@@ -34,7 +35,7 @@ export const BoutonModifierTraitement: React.FC<BoutonModifierTraitementProps> =
         autoriserTraitementAutoRDCS: false
       });
     } else {
-      replaceUrl(navigate, `${getUrlPrecedente(location.pathname)}/${PATH_APERCU_REQ_PRISE}/${requete.id}`, {
+      replaceUrl(navigate, LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_PRISE_EN_CHARGE.url, { idRequeteParam: requete.id }), {
         autoriserTraitementAutoRDCS: false
       });
     }

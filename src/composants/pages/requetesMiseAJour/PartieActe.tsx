@@ -1,7 +1,8 @@
-import { URL_RECHERCHE_ACTE_INSCRIPTION } from "@router/ReceUrls";
 import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { ECleOngletsMiseAJour, EditionMiseAJourContext } from "../../../contexts/EditionMiseAJourContextProvider";
+import LiensRECE from "../../../router/LiensRECE";
+import { INFO_PAGE_RECHERCHE_ACTE_INSCRIPTION } from "../../../router/infoPages/InfoPagesEspaceRecherche";
 import Bouton from "../../commun/bouton/Bouton";
 import { ConteneurBoutonBasDePage } from "../../commun/bouton/conteneurBoutonBasDePage/ConteneurBoutonBasDePage";
 import OngletsBouton from "../../commun/onglets/OngletsBouton";
@@ -46,7 +47,7 @@ const PartieActe: React.FC = () => {
         <Bouton
           title={estActeSigne ? "Retour rechercher un acte" : "Abandonner"}
           type="button"
-          onClick={() => navigate(URL_RECHERCHE_ACTE_INSCRIPTION, { replace: true })}
+          onClick={() => navigate(LiensRECE.genererLien(INFO_PAGE_RECHERCHE_ACTE_INSCRIPTION.url), { replace: true })}
         >
           {estActeSigne ? "Retour rechercher un acte" : "Abandonner"}
         </Bouton>

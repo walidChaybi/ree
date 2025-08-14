@@ -9,13 +9,6 @@ import { EStatutActe } from "@model/etatcivil/enum/EStatutActe";
 import { EOptionMiseAJourActe, OptionMiseAJourActe } from "@model/etatcivil/enum/OptionMiseAJourActe";
 import { TitulaireRequeteMiseAJour } from "@model/requete/ITitulaireRequeteMiseAJour";
 import { SousTypeMiseAJour } from "@model/requete/enum/SousTypeMiseAJour";
-import {
-  ID,
-  ID_ACTE,
-  URL_REQUETE_MISE_A_JOUR_ANALYSE_MARGINALE_ID,
-  URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE_ID,
-  URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID
-} from "@router/ReceUrls";
 import { UN, ZERO } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
@@ -31,6 +24,12 @@ import { useNavigate } from "react-router";
 import { IFenetreExterneRef } from "../../../composants/commun/conteneurs/FenetreExterne";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import { ETypeFiche } from "../../../model/etatcivil/enum/ETypeFiche";
+import LiensRECE from "../../../router/LiensRECE";
+import {
+  INFO_PAGE_MISE_A_JOUR_ANALYSE_MARGINALE,
+  INFO_PAGE_MISE_A_JOUR_MENTION_AUTRE,
+  INFO_PAGE_MISE_A_JOUR_MENTION_SUITE_AVIS
+} from "../../../router/infoPages/InfoPagesEspaceMiseAJour";
 import AfficherMessage from "../../../utils/AfficherMessage";
 import { BoutonCreationRDD } from "./BoutonCreationRDD/BoutonCreationRDD";
 import { setFiche } from "./FicheUtils";
@@ -136,15 +135,21 @@ export const FichePage: React.FC<FichePageProps> = ({
         const urlNavigation = (() => {
           switch (true) {
             case estAnalyseMarginale:
-              return URL_REQUETE_MISE_A_JOUR_ANALYSE_MARGINALE_ID;
+              return LiensRECE.genererLien(INFO_PAGE_MISE_A_JOUR_ANALYSE_MARGINALE.url, {
+                idRequeteParam: reponse.id,
+                idActeParam: idActe
+              });
             case SousTypeMiseAJour.estRMAC(sousTypeOptionMiseAJour):
-              return URL_REQUETE_MISE_A_JOUR_MENTIONS_SUITE_AVIS_ID;
+              return LiensRECE.genererLien(INFO_PAGE_MISE_A_JOUR_MENTION_SUITE_AVIS.url, {
+                idRequeteParam: reponse.id,
+                idActeParam: idActe
+              });
             default:
-              return URL_REQUETE_MISE_A_JOUR_MENTIONS_AUTRE_ID;
+              return LiensRECE.genererLien(INFO_PAGE_MISE_A_JOUR_MENTION_AUTRE.url, { idRequeteParam: reponse.id, idActeParam: idActe });
           }
-        })()
-          .replace(ID, reponse.id)
-          .replace(ID_ACTE, idActe);
+        })();
+
+        console.log(urlNavigation);
 
         navigate(urlNavigation);
       },

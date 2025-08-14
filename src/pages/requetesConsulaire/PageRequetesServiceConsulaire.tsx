@@ -1,17 +1,12 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { URL_MES_REQUETES_CONSULAIRE } from "@router/ReceUrls";
 import { useContext } from "react";
 import PageChargeur from "../../composants/commun/chargeurs/PageChargeur";
 import OngletsLien from "../../composants/commun/onglets/OngletsLien";
 import BoutonsTableauConsulaire from "../../composants/pages/requetesConsulaire/BoutonsTableauConsulaire";
-import { useTitreDeLaFenetre } from "../../hooks/utilitaires/TitreDeLaFenetreHook";
+import LiensRECE from "../../router/LiensRECE";
+import { INFO_PAGE_MES_REQUETES_CONSULAIRES } from "../../router/infoPages/InfoPagesEspaceConsulaire";
 
-interface IPageRequetesServiceConsulaireProps {
-  query: any;
-}
-
-const PageRequetesServiceConsulaire: React.FC<IPageRequetesServiceConsulaireProps> = () => {
-  useTitreDeLaFenetre("Espace consulaire");
+const PageRequetesServiceConsulaire: React.FC = () => {
   const { utilisateurs } = useContext(RECEContextData);
 
   return (
@@ -21,7 +16,7 @@ const PageRequetesServiceConsulaire: React.FC<IPageRequetesServiceConsulaireProp
         liens={[
           {
             libelle: "Mes requêtes consulaires",
-            url: URL_MES_REQUETES_CONSULAIRE
+            url: LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_CONSULAIRES.url)
           },
           {
             libelle: "Les requêtes consulaires de mon service"

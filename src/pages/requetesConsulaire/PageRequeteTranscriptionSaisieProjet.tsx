@@ -1,22 +1,20 @@
-import { URL_RECHERCHE_REQUETE } from "@router/ReceUrls";
 import React, { useEffect, useMemo } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 import PartieDroiteSaisieProjet from "../../composants/pages/requetesConsulaire/saisieProjet/PartieDroiteSaisieProjet";
 import PartieGaucheSaisieProjet from "../../composants/pages/requetesConsulaire/saisieProjet/PartieGaucheSaisieProjet";
 import SaisieProjetActeTranscritContextProvider from "../../contexts/SaisieProjetActeTranscritContextProvider";
-import { useTitreDeLaFenetre } from "../../hooks/utilitaires/TitreDeLaFenetreHook";
+import LiensRECE from "../../router/LiensRECE";
 
 const PageRequeteTranscriptionSaisieProjet: React.FC = () => {
-  useTitreDeLaFenetre("Aperçu requête transcription (saisie de projet)");
   const { idRequeteParam } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
 
-  const estModeConsultation = useMemo<boolean>(() => location.pathname.includes(URL_RECHERCHE_REQUETE), [location.pathname]);
+  const estModeConsultation = useMemo<boolean>(() => LiensRECE.estPageConsultation(), [location.pathname]);
 
   useEffect(() => {
     if (!idRequeteParam) {
-      navigate(-1);
+      navigate(LiensRECE.retourArriere(), { replace: true });
     }
   }, []);
 

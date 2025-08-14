@@ -1,32 +1,28 @@
-import { URL_REQUETES_CONSULAIRE_SERVICE } from "@router/ReceUrls";
 import OngletsLien from "../../composants/commun/onglets/OngletsLien";
 import BoutonsTableauConsulaire from "../../composants/pages/requetesConsulaire/BoutonsTableauConsulaire";
 import TableauMesRequetesConsulaire from "../../composants/pages/requetesConsulaire/mesRequetes/TableauMesRequetesConsulaire";
-import { useTitreDeLaFenetre } from "../../hooks/utilitaires/TitreDeLaFenetreHook";
+import LiensRECE from "../../router/LiensRECE";
+import { INFO_PAGE_REQUETES_CONSULAIRES_SERVICE } from "../../router/infoPages/InfoPagesEspaceConsulaire";
 interface IPageMesRequetesConsulaireProps {}
 
-const PageMesRequetesConsulaires: React.FC<IPageMesRequetesConsulaireProps> = () => {
-  useTitreDeLaFenetre("Espace consulaire");
+const PageMesRequetesConsulaires: React.FC<IPageMesRequetesConsulaireProps> = () => (
+  <>
+    <OngletsLien
+      liens={[
+        {
+          libelle: "Mes requêtes consulaires"
+        },
+        {
+          libelle: "Les requêtes consulaires de mon service",
+          url: LiensRECE.genererLien(INFO_PAGE_REQUETES_CONSULAIRES_SERVICE.url)
+        }
+      ]}
+    />
 
-  return (
-    <>
-      <OngletsLien
-        liens={[
-          {
-            libelle: "Mes requêtes consulaires"
-          },
-          {
-            libelle: "Les requêtes consulaires de mon service",
-            url: URL_REQUETES_CONSULAIRE_SERVICE
-          }
-        ]}
-      />
+    <BoutonsTableauConsulaire />
 
-      <BoutonsTableauConsulaire />
-
-      <TableauMesRequetesConsulaire />
-    </>
-  );
-};
+    <TableauMesRequetesConsulaire />
+  </>
+);
 
 export default PageMesRequetesConsulaires;

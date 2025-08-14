@@ -1,6 +1,5 @@
 /* v8 ignore start */
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { receRouter } from "@router/ReceRouter";
 import "@scss/_colors.scss";
 import "@scss/_library.scss";
 import { FIREFOX, SeulementNavigateur } from "@util/detectionNavigateur/DetectionNavigateur";
@@ -9,11 +8,11 @@ import { DIX_MILLE } from "@util/Utils";
 import fr from "date-fns/locale/fr";
 import React from "react";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
-import { RouterProvider } from "react-router";
 import { ToastContainer } from "react-toastify";
 import { ConteneurParentModales } from "../../composants/commun/conteneurs/modale/ConteneurModale";
 import ProtectionDoubleOuverture from "../../composants/commun/conteneurs/ProtectionDoubleOuverture";
 import "../../index.css";
+import RouterRECE from "../../router/RouterRECE";
 import { TOASTCONTAINER_PRINCIPAL } from "../../utils/AfficherMessage";
 import "./App.scss";
 import { RECEContextProvider } from "./contexts/RECEContext";
@@ -53,7 +52,8 @@ const App: React.FC = () => {
                     pauseOnHover={true}
                     autoClose={DIX_MILLE}
                   />
-                  <RouterProvider router={receRouter} />
+                  <RouterRECE />
+                  {/* <RouterProvider router={receRouter} /> */}
                   <ConteneurParentModales />
                 </>
               </RECEContextProvider>

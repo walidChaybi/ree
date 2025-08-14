@@ -1,0 +1,140 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Test du composant FilAriane > le composant fonctionne correctement 1`] = `null`;
+
+exports[`Test du composant FilAriane > le composant fonctionne correctement 2`] = `
+<div
+  class="mt-2 flex h-8 animate-apparition flex-nowrap items-center gap-3 font-semibold text-bleu-sombre"
+>
+  <a
+    class="underline-offset-3 text-bleu-sombre underline decoration-transparent decoration-2 transition-colors hover:decoration-bleu-sombre"
+    data-discover="true"
+    href="/rece/rece-ui/"
+    title="Accueil"
+  >
+    Accueil
+  </a>
+  <svg
+    aria-hidden="true"
+    class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+    data-testid="NavigateNextIcon"
+    focusable="false"
+    viewBox="0 0 24 24"
+  >
+    <path
+      d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+    />
+  </svg>
+  <span>
+    Niveau 1
+  </span>
+</div>
+`;
+
+exports[`Test du composant FilAriane > le composant fonctionne correctement 3`] = `
+<div
+  class="mt-2 flex h-8 animate-apparition flex-nowrap items-center gap-3 font-semibold text-bleu-sombre"
+>
+  <a
+    class="underline-offset-3 text-bleu-sombre underline decoration-transparent decoration-2 transition-colors hover:decoration-bleu-sombre"
+    data-discover="true"
+    href="/rece/rece-ui/"
+    title="Accueil"
+  >
+    Accueil
+  </a>
+  <svg
+    aria-hidden="true"
+    class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+    data-testid="NavigateNextIcon"
+    focusable="false"
+    viewBox="0 0 24 24"
+  >
+    <path
+      d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+    />
+  </svg>
+  <a
+    class="underline-offset-3 text-bleu-sombre underline decoration-transparent decoration-2 transition-colors hover:decoration-bleu-sombre"
+    data-discover="true"
+    href="/niveau-1"
+    title="Niveau 1"
+  >
+    Niveau 1
+  </a>
+  <svg
+    aria-hidden="true"
+    class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+    data-testid="NavigateNextIcon"
+    focusable="false"
+    viewBox="0 0 24 24"
+  >
+    <path
+      d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+    />
+  </svg>
+  <span>
+    Niveau 2
+  </span>
+</div>
+`;
+
+exports[`Test du composant FilAriane > le composant fonctionne correctement 4`] = `
+<div
+  class="mt-2 flex h-8 animate-apparition flex-nowrap items-center gap-3 font-semibold text-bleu-sombre"
+>
+  <a
+    class="underline-offset-3 text-bleu-sombre underline decoration-transparent decoration-2 transition-colors hover:decoration-bleu-sombre"
+    data-discover="true"
+    href="/rece/rece-ui/"
+    title="Accueil"
+  >
+    Accueil
+  </a>
+  <svg
+    aria-hidden="true"
+    class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+    data-testid="NavigateNextIcon"
+    focusable="false"
+    viewBox="0 0 24 24"
+  >
+    <path
+      d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+    />
+  </svg>
+  <span>
+    Niveau 1 bis
+  </span>
+</div>
+`;
+
+exports[`Test du composant FilAriane > le composant fonctionne correctement 5`] = `null`;
+
+exports[`Test du composant FilAriane > le composant fonctionne correctement 6`] = `
+<div
+  class="mt-2 flex h-8 animate-apparition flex-nowrap items-center gap-3 font-semibold text-bleu-sombre"
+>
+  <a
+    class="underline-offset-3 text-bleu-sombre underline decoration-transparent decoration-2 transition-colors hover:decoration-bleu-sombre"
+    data-discover="true"
+    href="/rece/rece-ui/"
+    title="Accueil"
+  >
+    Accueil
+  </a>
+  <svg
+    aria-hidden="true"
+    class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+    data-testid="NavigateNextIcon"
+    focusable="false"
+    viewBox="0 0 24 24"
+  >
+    <path
+      d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+    />
+  </svg>
+  <span>
+    Niveau 2 bis
+  </span>
+</div>
+`;

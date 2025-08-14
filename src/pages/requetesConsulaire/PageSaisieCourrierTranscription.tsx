@@ -5,15 +5,10 @@ import TRAITEMENT_ENREGISTRER_RCTC from "@api/traitements/requetesConsulaire/Tra
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { ISaisieRequeteRCTCForm, SaisieRequeteRCTCForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
 import { IRequeteConsulaire } from "@model/requete/IRequeteConsulaire";
-import {
-  URL_MES_REQUETES_CONSULAIRE,
-  URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID,
-  URL_REQUETES_CONSULAIRE_SERVICE
-} from "@router/ReceUrls";
 import { Option } from "@util/Type";
 import { Form, Formik } from "formik";
 import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Bouton from "../../composants/commun/bouton/Bouton";
 import PageChargeur from "../../composants/commun/chargeurs/PageChargeur";
 import ConteneurAccordeon from "../../composants/commun/conteneurs/accordeon/ConteneurAccordeon";
@@ -25,46 +20,34 @@ import BlocTitulaire from "../../composants/pages/requetesConsulaire/saisieCourr
 import TransmissionService from "../../composants/pages/requetesConsulaire/saisieCourrier/TransmissionService";
 import useFetchApi from "../../hooks/api/FetchApiHook";
 import useTraitementApi from "../../hooks/api/TraitementApiHook";
-import { useTitreDeLaFenetre } from "../../hooks/utilitaires/TitreDeLaFenetreHook";
+import LiensRECE from "../../router/LiensRECE";
+import { INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE } from "../../router/infoPages/InfoPagesEspaceConsulaire";
 
 const PageSaisieCourrierTranscription: React.FC = () => {
-  useTitreDeLaFenetre("Saisir une requête de transcription courrier");
-  const { idRequete } = useParams();
+  const { idRequeteParam } = useParams();
   const { services } = useContext(RECEContextData);
   const navigate = useNavigate();
-  const location = useLocation();
   const [requeteModifiee, setRequeteModifiee] = useState<IRequeteConsulaire | false | null>(false);
   const [optionsServices, setOptionsServices] = useState<Option[] | null>(null);
   const { appelApi: appelGetDetailRequete } = useFetchApi(CONFIG_GET_DETAIL_REQUETE);
   const { appelApi: appelGetServicesFils } = useFetchApi(CONFIG_GET_TOUS_SERVICES_FILS);
   const { lancerTraitement: enregistrerRCTC, traitementEnCours: enregistrementEnCours } = useTraitementApi(TRAITEMENT_ENREGISTRER_RCTC);
 
-  const [depuisServiceTab, setDepuisServiceTab] = useState(false);
-
   useEffect(() => {
-    const estDepuisOngletService = sessionStorage.getItem("depuis_onglet_requete_mon_service");
-    if (estDepuisOngletService !== null) {
-      setDepuisServiceTab(JSON.parse(estDepuisOngletService));
-    } else {
-      setDepuisServiceTab(false);
-    }
-  }, [location]);
-
-  useEffect(() => {
-    if (!idRequete) {
+    if (!idRequeteParam) {
       setRequeteModifiee(null);
 
       return;
     }
 
     appelGetDetailRequete({
-      parametres: { path: { idRequete: idRequete } },
+      parametres: { path: { idRequete: idRequeteParam } },
       apresSucces: requete => setRequeteModifiee(requete as IRequeteConsulaire),
       apresErreur: () => {
         setRequeteModifiee(null);
       }
     });
-  }, [idRequete]);
+  }, [idRequeteParam]);
 
   useEffect(() => {
     if (optionsServices !== null || !services.length) {
@@ -108,14 +91,12 @@ const PageSaisieCourrierTranscription: React.FC = () => {
               enregistrerRCTC({
                 parametres: { valeurs: values, requeteModifiee: requeteModifiee },
                 apresSucces: requeteEnregistree =>
-                  idRequete
-                    ? navigate(-1)
-                    : navigate(
-                        URL_MES_REQUETES_CONSULAIRE_TRANSCRIPTION_APERCU_PRISE_EN_CHARGE_ID.replace(
-                          ":idRequeteParam",
-                          requeteEnregistree.id
-                        )
-                      )
+                  navigate(
+                    LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE.url, {
+                      idRequeteParam: requeteEnregistree.id
+                    }),
+                    { replace: true }
+                  )
               })
             }
           >
@@ -142,21 +123,21 @@ const PageSaisieCourrierTranscription: React.FC = () => {
                   <div className="mx-auto flex max-w-[90rem] justify-between px-8">
                     <Bouton
                       type="button"
-                      title={idRequete ? "Annuler" : "Abandonner"}
-                      onClick={() => navigate(depuisServiceTab ? URL_REQUETES_CONSULAIRE_SERVICE : URL_MES_REQUETES_CONSULAIRE)}
+                      title={idRequeteParam ? "Annuler" : "Abandonner"}
+                      onClick={() => navigate(LiensRECE.retourArriere(), { replace: true })}
                       styleBouton="secondaire"
                     >
-                      {idRequete ? "Annuler" : "Abandonner"}
+                      {idRequeteParam ? "Annuler" : "Abandonner"}
                     </Bouton>
                     <div className="flex gap-4">
                       <Bouton
                         type="submit"
-                        title={idRequete ? "Valider" : "Prendre en charge"}
-                        disabled={Boolean(idRequete) && !dirty}
+                        title={idRequeteParam ? "Valider" : "Prendre en charge"}
+                        disabled={Boolean(idRequeteParam) && !dirty}
                       >
-                        {idRequete ? "Valider" : "Prendre en charge"}
+                        {idRequeteParam ? "Valider" : "Prendre en charge"}
                       </Bouton>
-                      {!idRequete && optionsServices && <TransmissionService optionsServices={optionsServices} />}
+                      {!idRequeteParam && optionsServices && <TransmissionService optionsServices={optionsServices} />}
                     </div>
                   </div>
                 </div>

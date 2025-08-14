@@ -15,8 +15,6 @@ import { NOMENCLATURE_OPTION_COURRIER } from "../data/NomenclatureOptionCourrier
 import { NOMENCLATURE_REPONSE } from "../data/NomenclatureReponse";
 import { ReponseAppelNomenclatureDocummentDelivrance, ReponseAppelNomenclatureTypePiecesJustificative } from "../data/nomenclatures";
 
-export const NORESULT = "NORESULT";
-
 export const configRequetesInformation = [
   {
     compteurRequeteInformation: 0,

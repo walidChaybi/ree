@@ -7,11 +7,12 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 import { expect, test } from "vitest";
 import { BoutonTerminerApresImpression } from "../../../../../composants/pages/requetesDelivrance/editionRequete/boutons/BoutonTerminerApresImpression";
+import LiensRECE from "../../../../../router/LiensRECE";
+import { INFO_PAGE_APERCU_REQUETE_DELIVRANCE_CONSULTATION } from "../../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import { idRequeteRDCSC } from "../../../../mock/data/requeteDelivrance";
 
 const requeteTestCOURRIER = {
@@ -46,10 +47,12 @@ const requeteTestCOURRIER = {
   documentsReponses: [{ idRc: "123456789" }, { idRca: "123456789" }, { idPacs: "123456789" }]
 } as IRequeteDelivrance;
 
+const URL_APERCU_REQUETE = LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_CONSULTATION.url, { idRequeteParam: "idRequete" });
+
 test("est à A_VALIDER et provient de COURRIER", () => {
   const { getByText } = render(
     <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER).generer()}>
-      <MemoryRouter initialEntries={[URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]}>
+      <MemoryRouter initialEntries={[URL_APERCU_REQUETE]}>
         <BoutonTerminerApresImpression requete={requeteTestCOURRIER}></BoutonTerminerApresImpression>
       </MemoryRouter>
     </MockRECEContextProvider>

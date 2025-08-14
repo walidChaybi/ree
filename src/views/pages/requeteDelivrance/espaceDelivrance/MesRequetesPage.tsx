@@ -7,7 +7,6 @@ import {
 } from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
-import { URL_MES_REQUETES_DELIVRANCE } from "@router/ReceUrls";
 import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
@@ -16,6 +15,8 @@ import { SortOrder } from "@widget/tableau/TableUtils";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import SignatureDelivrance from "../../../../composants/commun/signature/SignatureDelivrance";
+import LiensRECE from "../../../../router/LiensRECE";
+import { INFO_PAGE_MES_REQUETES_DELIVRANCE } from "../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import { dateStatutColumnHeaders, requeteColumnHeaders } from "./EspaceDelivranceParams";
 import { goToLinkRequete, miseAjourOuRedirection } from "./EspaceDelivranceUtils";
 import { useRequeteDelivranceApiHook } from "./hook/DonneesRequeteDelivranceApiHook";
@@ -89,7 +90,7 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
       idRequete,
       data,
       idx,
-      URL_MES_REQUETES_DELIVRANCE,
+      LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_DELIVRANCE.url),
       utilisateurConnecte
     );
   }

@@ -1,8 +1,9 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import Add from "@mui/icons-material/Add";
-import { URL_MES_REQUETES_CONSULAIRE_SAISIR_RCTC } from "@router/ReceUrls";
 import { useContext, useMemo } from "react";
+import LiensRECE from "../../../router/LiensRECE";
+import { INFO_PAGE_SAISIE_REQUETE_TRANSCRIPTION_COURRIER } from "../../../router/infoPages/InfoPagesEspaceConsulaire";
 import Bouton from "../../commun/bouton/Bouton";
 import BoutonListeDeroulante from "../../commun/bouton/BoutonListeDeroulante";
 
@@ -19,7 +20,7 @@ const BoutonsTableauConsulaire: React.FC = () => {
         <Bouton
           className="shadow-xl"
           title="Création suite transcription courrier"
-          lienVers={URL_MES_REQUETES_CONSULAIRE_SAISIR_RCTC}
+          lienVers={LiensRECE.genererLien(INFO_PAGE_SAISIE_REQUETE_TRANSCRIPTION_COURRIER.url)}
         >
           <span className="flex items-center gap-1 normal-case">
             <Add fontSize="small" />

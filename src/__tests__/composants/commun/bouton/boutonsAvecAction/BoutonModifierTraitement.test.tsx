@@ -8,11 +8,12 @@ import { Provenance } from "@model/requete/enum/Provenance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID } from "@router/ReceUrls";
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
 import { BoutonModifierTraitement } from "../../../../../composants/pages/requetesDelivrance/editionRequete/boutons/BoutonModifierTraitement";
+import LiensRECE from "../../../../../router/LiensRECE";
+import { INFO_PAGE_APERCU_REQUETE_DELIVRANCE_CONSULTATION } from "../../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import { createTestingRouter } from "../../../../__tests__utils__/testsUtil";
 import { idRequeteRDCSC } from "../../../../mock/data/requeteDelivrance";
 
@@ -48,12 +49,14 @@ const requeteTestCOURRIER = {
   sousType: SousTypeDelivrance.RDD
 } as IRequeteDelivrance;
 
+const URL_APERCU_REQUETE = LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_CONSULTATION.url, { idRequeteParam: "idRequete" });
+
 describe("BoutonModifierTraitement - ", () => {
   test("est à A_SIGNER", () => {
     const router = createTestingRouter(
       [
         {
-          path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
+          path: URL_APERCU_REQUETE,
           element: <BoutonModifierTraitement requete={requeteTestCOURRIER}></BoutonModifierTraitement>
         },
         {
@@ -61,7 +64,7 @@ describe("BoutonModifierTraitement - ", () => {
           element: <></>
         }
       ],
-      [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]
+      [URL_APERCU_REQUETE]
     );
 
     const { getByText } = render(
@@ -85,7 +88,7 @@ describe("BoutonModifierTraitement - ", () => {
     const router = createTestingRouter(
       [
         {
-          path: URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID,
+          path: URL_APERCU_REQUETE,
           element: <BoutonModifierTraitement requete={requeteTestCOURRIER}></BoutonModifierTraitement>
         },
         {
@@ -93,7 +96,7 @@ describe("BoutonModifierTraitement - ", () => {
           element: <></>
         }
       ],
-      [URL_MES_REQUETES_DELIVRANCE_APERCU_REQUETE_ID]
+      [URL_APERCU_REQUETE]
     );
 
     const { getByText } = render(
