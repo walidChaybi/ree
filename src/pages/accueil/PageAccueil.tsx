@@ -38,6 +38,7 @@ interface ILienAccueil {
   compteurNotifications?: number;
   auMoinsUnDesDroits: Droit[];
   droits?: Droit[];
+  estDroitUnique?: boolean;
 }
 
 export interface IRangRubrique {
@@ -120,7 +121,8 @@ const getDonneesMenu = (nombreRequetes: number, nombreRequetesInformation: numbe
       {
         libelle: "Acte",
         urlPage: LiensRECE.genererLien(INFO_PAGE_RECHERCHE_ACTE.url),
-        auMoinsUnDesDroits: [Droit.CONSULTER_ARCHIVES]
+        auMoinsUnDesDroits: [Droit.CONSULTER_ARCHIVES],
+        estDroitUnique: true
       }
     ]
   },
@@ -197,6 +199,7 @@ const PageAccueil: React.FC = () => {
               {element.liens.map(lienElement => (
                 <AccessibleAvecDroits
                   droits={lienElement.droits}
+                  estDroitUnique={lienElement.estDroitUnique}
                   auMoinsUnDesDroits={lienElement.auMoinsUnDesDroits}
                   key={"bouton-accueil-" + element.libelle + lienElement.libelle}
                 >
