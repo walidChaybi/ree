@@ -1,7 +1,4 @@
-import {
-  DATE_EVENEMENT,
-  LIEU_EVENEMENT
-} from "@composant/formulaire/ConstantesNomsForm";
+import { DATE_EVENEMENT, LIEU_EVENEMENT } from "@composant/formulaire/ConstantesNomsForm";
 import LieuEvenementForm from "@composant/formulaire/LieuEvenementForm";
 import { Evenement, IEvenement } from "@model/etatcivil/acte/IEvenement";
 import DateComposeForm from "@widget/formulaire/champsDate/DateComposeForm";
@@ -26,22 +23,10 @@ export const EvenementForm: React.FC<EvenementFormProps> = props => {
       <DateComposeForm
         nomDate={withNamespace(props.nom, DATE_EVENEMENT)}
         labelDate={props.labelDate}
-        disabledJour={
-          Evenement.estTotalementRenseigne(props.evenement) &&
-          props.saisieVerrouillee
-        }
-        disabledMois={
-          Evenement.estTotalementRenseigne(props.evenement) &&
-          props.saisieVerrouillee
-        }
-        disabledAnnee={
-          Evenement.estTotalementRenseigne(props.evenement) &&
-          props.saisieVerrouillee
-        }
-        disabledHeure={
-          Evenement.estHeureRenseignee(props.evenement) &&
-          props.saisieVerrouillee
-        }
+        disabledJour={Evenement.estTotalementRenseigne(props.evenement) && props.saisieVerrouillee}
+        disabledMois={Evenement.estTotalementRenseigne(props.evenement) && props.saisieVerrouillee}
+        disabledAnnee={Evenement.estTotalementRenseigne(props.evenement) && props.saisieVerrouillee}
+        disabledHeure={Evenement.estHeureRenseignee(props.evenement) && props.saisieVerrouillee}
         afficheHeure={props.afficheHeure}
         showCroixSuppression={false}
         anneeObligatoire={true}

@@ -1,5 +1,5 @@
-@import "./../../scss/colors";
-@import "./../../scss/library";
+@use "./../../scss/colors" as *;
+@use "./../../scss/library" as *;
 
 .App {
   text-align: center;

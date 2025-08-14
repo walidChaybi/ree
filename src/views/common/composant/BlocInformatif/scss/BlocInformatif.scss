@@ -1,11 +1,9 @@
-
-@import "../../../../../scss/colors.scss";
-
+@use "../../../../../scss/colors.scss" as *;
 
 .BlocInfo {
-    flex-basis: 100%;
-    text-align: end; 
-    color: $title-application-color; 
-    margin-top: -5px;
-    margin-bottom: 5px;
-  }
+  flex-basis: 100%;
+  text-align: end;
+  color: $title-application-color;
+  margin-top: -5px;
+  margin-bottom: 5px;
+}

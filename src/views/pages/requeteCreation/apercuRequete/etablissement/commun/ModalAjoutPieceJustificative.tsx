@@ -2,6 +2,7 @@ import { useAjoutPieceJustificativeToRequete } from "@hook/requete/piecesJointes
 import Dialog from "@mui/material/Dialog";
 import { Options } from "@util/Type";
 import { Formulaire } from "@widget/formulaire/Formulaire";
+import { useFormik } from "formik";
 import React, { useState } from "react";
 import * as Yup from "yup";
 import { PieceJointe } from "../../../../../../utils/FileUtils";
@@ -46,6 +47,8 @@ export const ModaleAjoutPieceJustificativeRequeteCreation: React.FC<ModalAjoutPi
     });
   }
 
+  const formik = useFormik({ initialValues: {}, onSubmit: () => {} });
+
   return (
     <Formulaire
       className="FormulaireAjouterPJ"
@@ -60,8 +63,10 @@ export const ModaleAjoutPieceJustificativeRequeteCreation: React.FC<ModalAjoutPi
         onClose={props.onClose}
       >
         <ContenuModalAjoutPieceJustificative
+          nom=""
           listeCategoriePJ={props.listeCategoriePJ}
           onClose={props.onClose}
+          formik={formik}
         />
       </Dialog>
     </Formulaire>

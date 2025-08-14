@@ -1,4 +1,4 @@
-@import "../../../../../../scss/_colors.scss";
+@use "../../../../../../scss/_colors.scss" as *;
 
 .DateComposeForm {
   grid-template-columns: 35% 16% 5% 16% 5% 23% 20px;
@@ -45,7 +45,7 @@
   .DateComposeForm {
     grid-template-columns: 25.5% 21px 25% 21px 38% 2%;
   }
-  
+
   .DateComposeFormWithDatePicker {
     grid-template-columns: 25.5% 9px 25.5% 9px 38% 2% 7%;
   }
@@ -81,5 +81,4 @@
   .BlockErreur {
     text-align: left;
   }
-
 }

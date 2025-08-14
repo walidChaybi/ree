@@ -1,18 +1,18 @@
-@import "../../../../../scss/colors";
+@use "../../../../../scss/colors" as *;
 
 .selecteursContainer {
-    position: sticky;
-    top: -0.2rem;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    z-index: 1;
-    background-color: white;
-    padding: 15px;
+  position: sticky;
+  top: -0.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  z-index: 1;
+  background-color: white;
+  padding: 15px;
 }
 
 .stepperButton {
-    svg {
-        font-size: 2rem;
-    }
+  svg {
+    font-size: 2rem;
+  }
 }

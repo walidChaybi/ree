@@ -109,7 +109,7 @@ const ChampTexte: React.FC<TChampsTexteProps> = ({
       </div>
       {meta.error && (
         <div className="text-start text-sm text-rouge">
-          <ErrorMessage name={name} />
+          <ErrorMessage name={name ?? ""} />
         </div>
       )}
     </div>

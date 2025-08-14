@@ -28,7 +28,7 @@ const ReceDatePicker: React.FC<ReceDatePickerProps> = props => {
       <DatePicker
         renderCustomHeader={customHeaderRenderer}
         selected={dateValue}
-        onChange={(date: Date, event: React.SyntheticEvent<any> | undefined) => onDateValueChange(props, setDateValue, date, event)}
+        onChange={(date: Date | null, event: React.SyntheticEvent<any> | undefined) => onDateValueChange(props, setDateValue, date, event)}
         customInput={<IconCalendar />}
         shouldCloseOnSelect={true}
         disabled={props.disabled}
@@ -53,7 +53,7 @@ class IconCalendar extends React.Component<{ value?: any; onClick?: any }> {
   }
 }
 
-export function onDateValueChange(props: any, setDateValue: any, date: Date, event: React.SyntheticEvent<any> | undefined) {
+export function onDateValueChange(props: any, setDateValue: any, date: Date | null, event: React.SyntheticEvent<any> | undefined) {
   if (date) {
     if (props.onChange) {
       props.onChange(date);

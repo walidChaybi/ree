@@ -1,11 +1,9 @@
-@import "../../../../../scss/_colors.scss";
+@use "../../../../../scss/_colors.scss" as *;
 
 .Formulaire {
-  
   .DeuxColonnes {
     display: grid;
     grid-template-columns: 50% 50%;
-
   }
 
   input:not([type="checkbox"]):not([type="radio"]):disabled {

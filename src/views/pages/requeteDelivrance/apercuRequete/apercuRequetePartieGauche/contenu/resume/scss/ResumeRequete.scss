@@ -1,4 +1,4 @@
-@import "../../../../../../../../scss/colors";
+@use "../../../../../../../../scss/colors" as *;
 
 .ResumeRequete {
   .ResumeRequeteTitle {
@@ -53,5 +53,5 @@
     span {
       text-align: justify;
     }
-  } 
+  }
 }

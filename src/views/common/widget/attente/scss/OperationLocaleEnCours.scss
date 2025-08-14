@@ -1,7 +1,7 @@
-@import "./../../../../../scss/colors";
+@use "./../../../../../scss/colors" as *;
 
 .spinner {
   color: $application-color !important;
-    z-index: 99;
-    color: "#fff"
+  z-index: 99;
+  color: "#fff";
 }

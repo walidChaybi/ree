@@ -16,6 +16,7 @@ export const IconeCroix: React.FC<IconeCroixProps> = ({ onClick, title }) => {
       className="IconeCroix"
       onClick={onClick}
       title={title}
+      aria-label={title}
     />
   );
 };

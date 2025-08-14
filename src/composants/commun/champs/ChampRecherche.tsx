@@ -50,7 +50,7 @@ const ChampRecherche: React.FC<IChampRechercheProps> = ({
             {!disabled && (
               <IconeCroix
                 onClick={() => helpers.setValue(OPTION_VIDE)}
-                title={"Vider le champ"}
+                title="Vider le champ"
               />
             )}
           </div>

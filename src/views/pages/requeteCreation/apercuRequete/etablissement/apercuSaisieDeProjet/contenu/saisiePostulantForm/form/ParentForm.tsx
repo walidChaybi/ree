@@ -21,17 +21,9 @@ import { getLibelle } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
-import {
-  OptionVide,
-  SelectField
-} from "@widget/formulaire/champsSaisie/SelectField";
+import { OptionVide, SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { MessageAvertissement } from "@widget/formulaire/erreur/MessageAvertissement";
-import {
-  compteNombreDePrenoms,
-  FormikComponentProps,
-  NB_CARACT_MAX_SAISIE,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { compteNombreDePrenoms, FormikComponentProps, NB_CARACT_MAX_SAISIE, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
 import "../scss/Parent.scss";
@@ -49,9 +41,7 @@ const ParentForm: React.FC<ParentFormProps> = props => {
   const villeNamespace = withNamespace(lieuNaissanceNamespace, VILLE_NAISSANCE);
   const sexe = withNamespace(props.nom, SEXE);
 
-  const afficherMessageSexe = Sexe.estIndetermine(
-    props.formik.getFieldProps(sexe).value
-  );
+  const afficherMessageSexe = Sexe.estIndetermine(props.formik.getFieldProps(sexe).value);
 
   const lieuElements: ILieuProps = {
     lieu: (
@@ -72,9 +62,7 @@ const ParentForm: React.FC<ParentFormProps> = props => {
       <SelectField
         name={withNamespace(lieuNaissanceNamespace, ARRONDISSEMENT_NAISSANCE)}
         label={getLibelle("Arrondissement")}
-        options={LieuxUtils.getOptionsArrondissement(
-          props.formik.getFieldProps(villeNamespace).value
-        )}
+        options={LieuxUtils.getOptionsArrondissement(props.formik.getFieldProps(villeNamespace).value)}
         optionVide={OptionVide.SELECTIONNABLE}
       />
     ),
@@ -101,17 +89,10 @@ const ParentForm: React.FC<ParentFormProps> = props => {
     )
   };
 
-  const afficherArrondissement = LieuxUtils.estVilleMarseilleLyonParis(
-    props.formik.getFieldProps(villeNamespace).value
-  );
-  const afficherDepartement = !LieuxUtils.estVilleParis(
-    props.formik.getFieldProps(villeNamespace).value
-  );
+  const afficherArrondissement = LieuxUtils.estVilleMarseilleLyonParis(props.formik.getFieldProps(villeNamespace).value);
+  const afficherDepartement = !LieuxUtils.estVilleParis(props.formik.getFieldProps(villeNamespace).value);
 
-  const nbPrenoms = compteNombreDePrenoms(
-    props.formik.getFieldProps(withNamespace(props.nom, `${PRENOM}.${PRENOMS}`))
-      .value
-  );
+  const nbPrenoms = compteNombreDePrenoms(props.formik.getFieldProps(withNamespace(props.nom, `${PRENOM}.${PRENOMS}`)).value);
 
   return (
     <div className="Parent">
@@ -133,15 +114,13 @@ const ParentForm: React.FC<ParentFormProps> = props => {
             label={getLibelle("Sexe")}
             values={Sexe.getAllEnumsAsOptionsSansInconnu()}
           />
-          <MessageAvertissement afficherMessage={afficherMessageSexe}>
-            {getLibelle("Attention, sexe indéterminé")}
-          </MessageAvertissement>
+          <MessageAvertissement afficherMessage={afficherMessageSexe}>{getLibelle("Attention, sexe indéterminé")}</MessageAvertissement>
         </div>
         <div className="AvertissementConteneur">
           <div className="ConteneurDateCompose">
             <DateNaissanceOuAgeDeForm
               nom={withNamespace(props.nom, DATE_NAISSANCE)}
-              labelDate={getLibelle("Date de naissance")}
+              saisieVerrouillee={false}
             />
           </div>
         </div>

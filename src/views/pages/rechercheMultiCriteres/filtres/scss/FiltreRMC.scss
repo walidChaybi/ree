@@ -1,4 +1,4 @@
-@import "../../../../../scss/colors";
+@use "../../../../../scss/colors" as *;
 
 $largeur-libelle: 35%;
 $largeur-block-input: 65%;

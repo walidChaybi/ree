@@ -1,4 +1,4 @@
-@import "../../../../../../../../scss/colors";
+@use "../../../../../../../../scss/colors" as *;
 
 $spacing: 0.5rem;
 $min-width-container: 25rem;
@@ -12,7 +12,7 @@ $max-width-container: 30vw;
     display: flex;
     align-items: flex-start;
     flex-wrap: wrap;
-    
+
     > div {
       flex: 1;
     }
@@ -68,7 +68,7 @@ $max-width-container: 30vw;
     color: #03476e;
     font-weight: bold;
     font-size: 1.1rem;
-    margin-bottom: .7rem;
+    margin-bottom: 0.7rem;
   }
 
   .separation {

@@ -1,5 +1,4 @@
-@import "../../../../../scss/colors";
-
+@use "../../../../../scss/colors" as *;
 
 .resultatsRMCPersonne {
   .MuiTableContainer-root {
@@ -10,7 +9,7 @@
     background-color: $tableau-body-ligne-main;
 
     * {
-      font-weight:900;
+      font-weight: 900;
     }
   }
 

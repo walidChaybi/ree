@@ -1,4 +1,4 @@
-@import "../../../../../scss/colors";
+@use "../../../../../scss/colors" as *;
 
 .AlertesActes {
   border: 1px solid;

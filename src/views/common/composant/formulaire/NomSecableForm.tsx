@@ -3,15 +3,12 @@ import { EtatCivilUtil } from "@utilMetier/EtatCivilUtil";
 import { CheckboxField } from "@widget/formulaire/champsSaisie/CheckBoxField";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { MessageAvertissement } from "@widget/formulaire/erreur/MessageAvertissement";
-import {
-  FormikComponentProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { FormikComponentProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useCallback } from "react";
 import { NOM_PARTIE1, NOM_PARTIE2, SECABLE } from "./ConstantesNomsForm";
 
-interface ComponentFormProps {
+export interface ComponentFormProps {
   nomComposant: string;
   nomTitulaire?: string;
   origineTitulaireActe?: boolean;
@@ -30,14 +27,9 @@ const NomSecableForm: React.FC<NomSecableFormProps> = ({
   nomTitulaire
 }) => {
   const disabled =
-    estDisabled(
-      formik.getFieldProps(withNamespace(nomComposant, NOM_PARTIE1)).value,
-      origineTitulaireActe
-    ) && saisieVerrouillee;
+    estDisabled(formik.getFieldProps(withNamespace(nomComposant, NOM_PARTIE1)).value, origineTitulaireActe) && saisieVerrouillee;
 
-  const afficherMessageAvertissement =
-    afficherAvertissementVocable &&
-    EtatCivilUtil.getVocables(nomTitulaire).length > DEUX;
+  const afficherMessageAvertissement = afficherAvertissementVocable && EtatCivilUtil.getVocables(nomTitulaire).length > DEUX;
 
   const onCaseACocherNomSecableChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,14 +47,8 @@ const NomSecableForm: React.FC<NomSecableFormProps> = ({
         }
       }
 
-      formik.setFieldValue(
-        withNamespace(nomComposant, NOM_PARTIE1),
-        nomPartie1
-      );
-      formik.setFieldValue(
-        withNamespace(nomComposant, NOM_PARTIE2),
-        nomPartie2
-      );
+      formik.setFieldValue(withNamespace(nomComposant, NOM_PARTIE1), nomPartie1);
+      formik.setFieldValue(withNamespace(nomComposant, NOM_PARTIE2), nomPartie2);
 
       formik.handleChange(e);
     },
@@ -79,8 +65,7 @@ const NomSecableForm: React.FC<NomSecableFormProps> = ({
         disabled={disabled}
         onChange={onCaseACocherNomSecableChange}
       />
-      {formik.getFieldProps(withNamespace(nomComposant, SECABLE)).value.length >
-        0 && (
+      {formik.getFieldProps(withNamespace(nomComposant, SECABLE)).value.length > 0 && (
         <>
           <InputField
             name={withNamespace(nomComposant, NOM_PARTIE1)}
@@ -93,9 +78,7 @@ const NomSecableForm: React.FC<NomSecableFormProps> = ({
               label={getLibelle("2nde partie")}
               disabled={disabled}
             />
-            <MessageAvertissement
-              afficherMessage={afficherMessageAvertissement || false}
-            >
+            <MessageAvertissement afficherMessage={afficherMessageAvertissement || false}>
               {getLibelle("Nom avec plus de deux vocables")}
             </MessageAvertissement>
           </div>

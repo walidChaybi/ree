@@ -1,6 +1,6 @@
-@import "../../../../../../scss/colors";
+@use "../../../../../../scss/colors" as *;
 
-.TableauRece{
+.TableauRece {
   .MuiTableBody-root {
     tr {
       &.MuiTableRow-root {
@@ -33,7 +33,7 @@
     overflow: hidden;
   }
 
-  .lignePaire{
+  .lignePaire {
     background-color: $tableau-body-ligne-paire;
   }
 

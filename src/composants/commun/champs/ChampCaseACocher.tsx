@@ -27,7 +27,7 @@ const ChampCaseACocher: React.FC<TChampsCaseACocherProps> = ({ name, libelle, di
       </label>
       {meta.error && (
         <div className="message-erreur-textearea">
-          <ErrorMessage name={name} />
+          <ErrorMessage name={name ?? ""} />
         </div>
       )}
     </div>

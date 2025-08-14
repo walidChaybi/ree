@@ -1,12 +1,11 @@
-@import "../../../../../scss/colors";
+@use "../../../../../scss/colors" as *;
 
-.TableauRece{
+.TableauRece {
   .finConsultation {
-      margin: 0;
+    margin: 0;
   }
   .ToolbarBottom {
     text-align: right;
     padding-right: 0.5rem;
   }
 }
-

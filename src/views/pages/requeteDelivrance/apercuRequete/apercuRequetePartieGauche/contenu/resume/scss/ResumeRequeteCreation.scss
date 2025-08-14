@@ -1,4 +1,4 @@
-@import "../../../../../../../scss/_colors.scss";
+@use "../../../../../../../scss/_colors.scss" as *;
 
 $spacing: 0.5rem;
 $height: calc($spacing * 2.5);
@@ -50,7 +50,7 @@ $height: calc($spacing * 2.5);
       opacity: 0.5;
     }
   }
-  
+
   .infoBulle {
     display: flex;
 

@@ -1,7 +1,6 @@
-@import "../../../../../../scss/colors";
+@use "../../../../../../scss/colors" as *;
 
 .Boutons {
   display: flex;
   justify-content: center;
 }
- 

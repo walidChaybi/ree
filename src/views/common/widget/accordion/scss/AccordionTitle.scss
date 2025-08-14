@@ -1,4 +1,4 @@
-@import "../../../../../scss/_colors.scss";
+@use "../../../../../scss/_colors.scss" as *;
 
 div.accordionTitle {
   text-align: center;
@@ -16,7 +16,6 @@ div.accordionTitle {
   .MuiAccordionSummary-content {
     display: block;
     margin: 0px;
-
   }
 
   .MuiSummaryFlex {
@@ -30,16 +29,16 @@ div.accordionTitle {
 
   .itemHidden {
     margin-right: auto;
-    visibility: hidden; 
+    visibility: hidden;
   }
-  
+
   .BoutonAccordionTitle {
     margin-left: 10px;
   }
-  
+
   .flexAccordion {
-      margin-left: auto;
-      display: flex;
+    margin-left: auto;
+    display: flex;
   }
 }
 

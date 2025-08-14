@@ -34,7 +34,7 @@ describe("Test ChampRecherche", () => {
 
     const autocomplete = screen.getByTestId("autocomplete");
     const inputChampRecherche: HTMLInputElement = screen.getByTestId("inputChampRecherche");
-    const iconeCroix = screen.getByTitle("Vider le champ");
+    const iconeCroix = screen.getByLabelText("Vider le champ");
 
     await waitFor(() => {
       expect(autocomplete).toBeDefined();

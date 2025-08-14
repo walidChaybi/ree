@@ -59,7 +59,7 @@ const ChampListeDeroulante: React.FC<TChampListeDeroulanteProps> = ({
 
       {meta.error && (
         <div className="text-start text-sm text-rouge">
-          <ErrorMessage name={name} />
+          <ErrorMessage name={name ?? ""} />
         </div>
       )}
     </div>

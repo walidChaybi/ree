@@ -1,4 +1,4 @@
-@import "../../../../../scss/colors";
+@use "../../../../../scss/colors" as *;
 
 .BandeauRequete {
   border-radius: 0.25rem;
@@ -17,8 +17,8 @@
     margin: 0.5rem 0;
     font-size: 1.0625em;
     color: white;
-}
-  
+  }
+
   div {
     padding: 0.5rem 1rem 0.5rem 1rem;
     border: 1px solid;

@@ -1,4 +1,4 @@
-@import "./colors";
+@use "./../../../../scss/colors" as *;
 
 .Toastify__toast-body {
   white-space: pre-line;

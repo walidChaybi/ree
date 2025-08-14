@@ -1,4 +1,4 @@
-@import "../../../../../../scss/colors";
+@use "../../../../../../scss/colors" as *;
 
 .contenu-requete {
   margin-bottom: 5em;
@@ -34,6 +34,6 @@
 }
 
 div.MuiAccordionDetails-root {
-  display:block;
+  display: block;
   padding: 0px;
 }

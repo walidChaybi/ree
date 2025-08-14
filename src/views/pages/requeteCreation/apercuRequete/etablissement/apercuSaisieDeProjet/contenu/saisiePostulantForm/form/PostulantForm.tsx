@@ -19,20 +19,13 @@ import PrenomsForm from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { OuiNon } from "@model/etatcivil/enum/OuiNon";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { getLibelle } from "@util/Utils";
-import DateComposeForm, {
-  ChampDateModifie
-} from "@widget/formulaire/champsDate/DateComposeForm";
+import DateComposeForm, { ChampDateModifie } from "@widget/formulaire/champsDate/DateComposeForm";
 import { IDateComposeForm } from "@widget/formulaire/champsDate/DateComposeFormUtil";
 import { CheckboxField } from "@widget/formulaire/champsSaisie/CheckBoxField";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import { MessageAvertissement } from "@widget/formulaire/erreur/MessageAvertissement";
-import {
-  FormikComponentProps,
-  NB_CARACT_MAX_SAISIE,
-  compteNombreDePrenoms,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { FormikComponentProps, NB_CARACT_MAX_SAISIE, compteNombreDePrenoms, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useState } from "react";
 import Item from "../../../../commun/resumeRequeteCreationEtablissement/items/Item";
@@ -44,30 +37,20 @@ interface IPostulantFormProps {
 type PostulantFormProps = IPostulantFormProps & FormikComponentProps;
 
 const PostulantForm: React.FC<PostulantFormProps> = props => {
-  const [afficherMessageNaissance, setAfficherMessageNaissance] =
-    useState<boolean>(props.afficherMessageNaissance);
+  const [afficherMessageNaissance, setAfficherMessageNaissance] = useState<boolean>(props.afficherMessageNaissance);
 
-  const nbPrenoms = compteNombreDePrenoms(
-    props.formik.values.titulaire.prenoms.prenoms
-  );
+  const nbPrenoms = compteNombreDePrenoms(props.formik.values.titulaire.prenoms.prenoms);
 
-  const nbPrenomAnalyseMarginale = compteNombreDePrenoms(
-    props.formik.values.titulaire.analyseMarginale.prenoms
-  );
+  const nbPrenomAnalyseMarginale = compteNombreDePrenoms(props.formik.values.titulaire.analyseMarginale.prenoms);
 
   const nomSecableWithNamespace = withNamespace(props.nom, NOM_SECABLE);
   const analyseMarginale = withNamespace(props.nom, ANALYSE_MARGINALE);
   const sexe = withNamespace(props.nom, SEXE);
   const lieuNaissance = withNamespace(props.nom, LIEU_DE_NAISSANCE);
 
-  const afficherMessageSexe = Sexe.estIndetermine(
-    props.formik.getFieldProps(sexe).value
-  );
+  const afficherMessageSexe = Sexe.estIndetermine(props.formik.getFieldProps(sexe).value);
 
-  function onChangeDateNaissance(
-    date: IDateComposeForm,
-    type?: ChampDateModifie
-  ) {
+  function onChangeDateNaissance(date: IDateComposeForm, type?: ChampDateModifie) {
     if (type === ChampDateModifie.JOUR || ChampDateModifie.MOIS) {
       setAfficherMessageNaissance(false);
     }
@@ -82,9 +65,7 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
       />
       <NomSecableForm
         nomComposant={nomSecableWithNamespace}
-        nomTitulaire={
-          props.formik.getFieldProps(withNamespace(props.nom, NOM)).value
-        }
+        nomTitulaire={props.formik.getFieldProps(withNamespace(props.nom, NOM)).value}
         saisieVerrouillee={false}
         afficherAvertissementVocable={true}
       />
@@ -93,6 +74,7 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
         nom={withNamespace(props.nom, PRENOMS)}
         nbPrenomsAffiche={nbPrenoms}
         nbPrenoms={nbPrenoms}
+        pasDePrenomConnu
       />
       <div className="Titre">{getLibelle("Analyse marginale")}</div>
       <InputField
@@ -116,17 +98,10 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
           label={getLibelle("Sexe")}
           values={Sexe.getAllEnumsAsOptionsSansInconnu()}
         />
-        <MessageAvertissement afficherMessage={afficherMessageSexe}>
-          {getLibelle("Attention, sexe indéterminé")}
-        </MessageAvertissement>
+        <MessageAvertissement afficherMessage={afficherMessageSexe}>{getLibelle("Attention, sexe indéterminé")}</MessageAvertissement>
       </div>
       <div className="AvertissementConteneur">
-        <div
-          className={
-            "ConteneurDateCompose" +
-            (afficherMessageNaissance ? " AvertissementDateCompose" : "")
-          }
-        >
+        <div className={"ConteneurDateCompose" + (afficherMessageNaissance ? " AvertissementDateCompose" : "")}>
           <DateComposeForm
             nomDate={withNamespace(props.nom, DATE_NAISSANCE)}
             labelDate={getLibelle("Date de naissance")}

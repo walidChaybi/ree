@@ -1,4 +1,4 @@
-@import "../../../../../scss/colors";
+@use "../../../../../scss/colors" as *;
 
 .suivis-requete {
   margin-top: 0.5em;
@@ -36,13 +36,13 @@
     }
   }
 
-  .Observation{
+  .Observation {
     display: inline;
-    cursor:pointer
+    cursor: pointer;
   }
 
-  .IconeSupprimer{
+  .IconeSupprimer {
     margin-left: 5px;
-    cursor:pointer
+    cursor: pointer;
   }
 }

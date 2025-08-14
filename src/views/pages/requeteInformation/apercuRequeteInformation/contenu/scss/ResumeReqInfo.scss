@@ -1,9 +1,9 @@
-@import "../../../../../../scss/colors";
+@use "../../../../../../scss/colors" as *;
 .ResumeReqInfo {
   .ResumeRequeteTitle {
     display: flex;
     justify-content: space-between;
-    }
+  }
   .SectionPanel {
     width: 92%;
   }

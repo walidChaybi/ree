@@ -1,4 +1,4 @@
-@import "./../../../../../scss/colors";
+@use "./../../../../../scss/colors" as *;
 
 .PrioriteBasse {
   color: $priorite-basse;
@@ -23,7 +23,7 @@
 }
 
 .ReportIcon {
- vertical-align: middle;
+  vertical-align: middle;
 }
 
 .alerteSdanfIcone {

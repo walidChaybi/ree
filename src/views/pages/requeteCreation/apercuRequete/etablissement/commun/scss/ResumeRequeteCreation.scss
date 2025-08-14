@@ -1,4 +1,4 @@
-@import "../../../../../../../scss/_colors.scss";
+@use "../../../../../../../scss/_colors.scss" as *;
 
 $spacing: 0.35rem;
 $height: calc($spacing * 2.5);
@@ -83,20 +83,19 @@ $height: calc($spacing * 2.5);
     }
   }
 
-
   .tagTitleAccordion {
     display: flex;
     justify-content: center;
 
     .title {
-      flex:1;
+      flex: 1;
       display: flex;
       justify-content: center;
-      transform: translateX(10px)
+      transform: translateX(10px);
     }
 
     .tagPriorisation {
-      margin-left: auto
+      margin-left: auto;
     }
   }
 

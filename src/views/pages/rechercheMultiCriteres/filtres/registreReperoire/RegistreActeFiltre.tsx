@@ -78,15 +78,17 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
   const numeroActeAvecNamespace = withNamespace(props.nomFiltre, NUMERO_ACTE);
   const registreSupportAvecNamespace = withNamespace(props.nomFiltre, REGISTRE_SUPPORT);
 
-  const registreSupportProps: RegistreSupportFormProps = {
+  const registreSupportProps: RegistreSupportFormProps & FormikComponentProps = {
     nomFiltre: registreSupportAvecNamespace,
     estInactifChampSupportUn: champsVerrouilles.supportUn,
-    estInactifChampSupportDeux: champsVerrouilles.supportDeux
+    estInactifChampSupportDeux: champsVerrouilles.supportDeux,
+    formik: props.formik
   };
 
-  const numeroActeProps: NumeroActeFormProps = {
+  const numeroActeProps: NumeroActeFormProps & FormikComponentProps = {
     nomFiltre: numeroActeAvecNamespace,
-    estInactifChampNumeroBisTer: champsVerrouilles.numeroBisTer
+    estInactifChampNumeroBisTer: champsVerrouilles.numeroBisTer,
+    formik: props.formik
   };
 
   // Evennement

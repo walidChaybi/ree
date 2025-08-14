@@ -1,4 +1,4 @@
-@import "../../../../../../scss/colors";
+@use "../../../../../../scss/colors" as *;
 
 .ApercuRequeteTraitement {
   .MessageInfo {
@@ -12,12 +12,14 @@
 
   .BarreBoutons {
     text-align: center;
-    .Warning{
-    color:red;
-    height: 100%;
-    svg {vertical-align: middle;}
+    .Warning {
+      color: red;
+      height: 100%;
+      svg {
+        vertical-align: middle;
+      }
+    }
   }
-}
 
   .VisionneuseDocument {
     .Titre {

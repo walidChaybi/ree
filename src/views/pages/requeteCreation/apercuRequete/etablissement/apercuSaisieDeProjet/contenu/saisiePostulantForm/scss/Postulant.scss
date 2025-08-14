@@ -1,63 +1,63 @@
-@import "../../../../../../../../../scss/colors";
+@use "../../../../../../../../../scss/colors" as *;
 
 .FormulairePostulant {
-    margin-left: 0;
-    margin-right: 0;
-    text-align: left;
+  margin-left: 0;
+  margin-right: 0;
+  text-align: left;
 
-    .Titre {
-        color: $title-application-color;
-        font-weight: bold;
-        margin-top: 0.25rem;
-        margin-bottom: 0.5rem;
+  .Titre {
+    color: $title-application-color;
+    font-weight: bold;
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .BlockInput {
+    grid-template-columns: 20% 45%;
+  }
+  .BlockErreur {
+    margin-left: 20%;
+  }
+  .Projet {
+    display: flex;
+    .InputField {
+      flex: 50%;
+      text-align: center;
+      .BlockInput {
+        grid-template-columns: 31% 69%;
+      }
     }
-
-    .BlockInput {
-        grid-template-columns: 20% 45%;
+  }
+  .ConteneurDateCompose {
+    width: 65%;
+    .DateComposeForm {
+      grid-template-columns: 31% 18% 4% 18% 4% 25%;
     }
     .BlockErreur {
-        margin-left: 20%;
+      margin-left: 30%;
     }
-    .Projet {
-        display: flex;
-        .InputField {
-            flex: 50%;
-            text-align: center;
-            .BlockInput {
-                grid-template-columns: 31% 69%;
-            }
-        }
+  }
+  .AvertissementConteneur {
+    display: flex;
+    align-items: center;
+    .InputField {
+      width: 65%;
     }
+    .BlockInput {
+      grid-template-columns: 31% 69%;
+    }
+    .BlockErreur {
+      margin-left: 31%;
+    }
+    .InputField,
     .ConteneurDateCompose {
-        width: 65%;
-        .DateComposeForm {
-            grid-template-columns: 31% 18% 4% 18% 4% 25%;
-        }
-        .BlockErreur {
-            margin-left: 30%;
-        }
+      margin-right: 0.5rem;
     }
-    .AvertissementConteneur {
-        display: flex;
-        align-items: center;
-        .InputField {
-            width: 65%;
-        }
-        .BlockInput {
-            grid-template-columns: 31% 69%;
-        }
-        .BlockErreur {
-            margin-left: 31%;
-        }
-        .InputField, .ConteneurDateCompose {
-            margin-right: 0.5rem;
-        }
-        .AvertissementDateCompose > .DateComposeForm > input:nth-of-type(-n+2) {
-            border: 1px solid $warning-formulaire;
-        }
-    
+    .AvertissementDateCompose > .DateComposeForm > input:nth-of-type(-n + 2) {
+      border: 1px solid $warning-formulaire;
     }
-    .BoutonAffichage {
-        margin: 0.5rem 0 0 0;
-    }
+  }
+  .BoutonAffichage {
+    margin: 0.5rem 0 0 0;
+  }
 }

@@ -1,4 +1,4 @@
-@import "./colors";
+@use "./colors" as *;
 $application-font-family: "NotoSansUI-Regular";
 
 /*@font-face {

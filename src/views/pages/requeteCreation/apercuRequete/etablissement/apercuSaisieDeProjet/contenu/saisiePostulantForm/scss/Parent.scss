@@ -1,31 +1,30 @@
-@import "../../../../../../../../../scss/colors";
+@use "../../../../../../../../../scss/colors" as *;
 
 .FormulairePostulant {
-    .Parent {
-        .AvertissementConteneur {
-            display: flex;
-            .DateComposeFormContainer {
-                .InputField {
-                    width: 100%;
-                }
-            }
-            .InputField {
-                width: 65%;
-            }
-            .BlockInput {
-                grid-template-columns: 31% 69%;
-            }
-
-            .BlockErreur {
-                margin-left: 31%;
-            }
-            .ConteneurDateCompose {
-                margin-right: 0.5rem;
-            }
-            .AvertissementDateCompose > .DateComposeForm > input:nth-of-type(-n+2) {
-                border: 1px solid $warning-formulaire;
-            }
+  .Parent {
+    .AvertissementConteneur {
+      display: flex;
+      .DateComposeFormContainer {
+        .InputField {
+          width: 100%;
         }
+      }
+      .InputField {
+        width: 65%;
+      }
+      .BlockInput {
+        grid-template-columns: 31% 69%;
+      }
+
+      .BlockErreur {
+        margin-left: 31%;
+      }
+      .ConteneurDateCompose {
+        margin-right: 0.5rem;
+      }
+      .AvertissementDateCompose > .DateComposeForm > input:nth-of-type(-n + 2) {
+        border: 1px solid $warning-formulaire;
+      }
     }
-    
+  }
 }

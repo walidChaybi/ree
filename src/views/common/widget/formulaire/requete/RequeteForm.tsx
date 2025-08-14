@@ -55,7 +55,7 @@ export const RequeteFormValidationSchema = Yup.object()
     return motif === "AUTRE" && complementMotif == null ? this.createError(paramsError) : true;
   });
 
-const RequeteForm: React.FC<SubFormProps & { champDocumentDemandeCharge: boolean }> = props => {
+const RequeteForm: React.FC<SubFormProps & { champDocumentDemandeCharge?: boolean }> = props => {
   const [documentDemandeOptions, setDocumentDemandeOptions] = useState<Options>(
     DocumentDelivrance.versOptionsDepuisCodes(CodesExtraitCopie)
   );

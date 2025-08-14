@@ -1,4 +1,4 @@
-@import "../../../../../../scss/colors";
+@use "../../../../../../scss/colors" as *;
 // FIXME à encapsuler dans une classe mère
 
 .TableauRece {

@@ -1,7 +1,6 @@
-@import "../../../../../../../../scss/colors";
+@use "../../../../../../../../scss/colors" as *;
 
 .Mention {
-
   .Header {
     text-align: center;
     display: flex;

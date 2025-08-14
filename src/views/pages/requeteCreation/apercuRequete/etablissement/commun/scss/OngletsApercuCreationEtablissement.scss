@@ -1,4 +1,4 @@
-@import "../../../../../../../scss/_colors.scss";
+@use "../../../../../../../scss/_colors.scss" as *;
 
 .OngletsApercuCreationEtablissement {
   margin-top: 0.4rem;
@@ -53,6 +53,5 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-
   }
 }

@@ -1,12 +1,11 @@
-@import "./../../../../../scss/colors";
+@use "./../../../../../scss/colors" as *;
 
 .PopinAjouter {
-
   textarea {
     min-width: 40rem;
     height: 8rem;
   }
-  
+
   .MuiDialog-paperWidthSm {
     max-width: unset;
   }

@@ -1,4 +1,4 @@
-@import "../../../../../../scss/colors";
+@use "../../../../../../scss/colors" as *;
 
 .error-message {
   color: $error;
@@ -6,8 +6,7 @@
 
   p {
     color: $error;
-    margin-top:0;
+    margin-top: 0;
     margin-left: 1rem;
-
   }
 }

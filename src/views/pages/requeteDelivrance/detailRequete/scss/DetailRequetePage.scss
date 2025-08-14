@@ -1,7 +1,6 @@
-@import "../../../../../scss/colors";
+@use "../../../../../scss/colors" as *;
 
 .DetailRequetePage {
-
   .DetailRequeteTitle {
     text-align: center;
     font-weight: bold;
