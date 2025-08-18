@@ -337,10 +337,20 @@ export const ProjetActeNaissanceTranscriptionForm = {
       prenomsChemin: SchemaValidation.prenoms("titulaire.prenomsChemin.prenom"),
       sexe: SchemaValidation.texte({ obligatoire: true }),
       dateNaissance: SchemaValidation.dateIncomplete({ obligatoire: true }),
-      villeNaissance: SchemaValidation.texte(),
-      regionNaissance: SchemaValidation.texte(),
-      paysNaissance: SchemaValidation.texte(),
-      adresseNaissance: SchemaValidation.texte()
+      lieuNaissance: SchemaValidation.objet({
+        ville: SchemaValidation.texte({
+          obligatoire: ConditionChamp.depuisTableau([
+            {
+              idChampReference: "titulaire.lieuNaissance.adresse",
+              operateur: EOperateurCondition.DIFF,
+              valeurs: [""]
+            }
+          ])
+        }),
+        region: SchemaValidation.texte(),
+        pays: SchemaValidation.texte(),
+        adresse: SchemaValidation.texte()
+      })
     });
 
     const AdresseSchemaValidationFormulaire = (prefix: string, estDeclarant = false) =>

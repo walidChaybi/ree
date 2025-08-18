@@ -863,7 +863,7 @@ pays
                         </div>
                       </div>
                       <div
-                        class="grid grid-cols-2 items-center gap-4"
+                        class="grid grid-cols-2 gap-4"
                       >
                         <div
                           class="flex gap-4"
