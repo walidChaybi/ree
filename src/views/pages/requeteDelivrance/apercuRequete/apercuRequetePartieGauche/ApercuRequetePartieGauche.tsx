@@ -1,4 +1,4 @@
-import { SuiviActionsRequete } from "@composant/suivis/SuiviActionsRequete";
+import { HistoriqueActionsRequete } from "@composant/suivis/HistoriqueActionsRequete";
 import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
@@ -14,26 +14,23 @@ interface ApercuRequetePartieGaucheProps {
   disabled?: boolean;
 }
 
-export const ApercuRequetePartieGauche: React.FC<
-  ApercuRequetePartieGaucheProps
-> = props => {
-
+export const ApercuRequetePartieGauche: React.FC<ApercuRequetePartieGaucheProps> = props => {
   const afficherResultatRequeteAssocieesResultats =
-    props.requete?.statutCourant.statut === StatutRequete.PRISE_EN_CHARGE &&
-    !props.disabled;
+    props.requete?.statutCourant.statut === StatutRequete.PRISE_EN_CHARGE && !props.disabled;
 
   return (
     <div className="side left">
-      <ResumeRequete requete={props.requete} disabledActions={props.disabled} />
-      {afficherResultatRequeteAssocieesResultats && (
-        <RMCRequetesAssocieesResultats requete={props.requete} />
-      )}
+      <ResumeRequete
+        requete={props.requete}
+        disabledActions={props.disabled}
+      />
+      {afficherResultatRequeteAssocieesResultats && <RMCRequetesAssocieesResultats requete={props.requete} />}
       <SuiviObservationsRequete
         observations={props.requete.observations}
         idRequete={props.requete.id}
         disabled={props.disabled}
       />
-      <SuiviActionsRequete actions={props.requete?.actions} />
+      <HistoriqueActionsRequete actions={props.requete?.actions} />
       <DocumentsReponses
         requete={props.requete}
         onClickDocumentAffiche={props.onClickDocumentAffiche}

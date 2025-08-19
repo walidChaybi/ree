@@ -1,5 +1,5 @@
 import { BandeauRequete } from "@composant/bandeauApercuRequete/BandeauApercuRequete";
-import { SuiviActionsRequete } from "@composant/suivis/SuiviActionsRequete";
+import { HistoriqueActionsRequete } from "@composant/suivis/HistoriqueActionsRequete";
 import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import {
@@ -99,7 +99,7 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
                 idRequete={requete.id}
               ></SuiviObservationsRequete>
               {!estModeConsultation && !affichageBoutonPrendreEnCharge && <RMCRequetesAssocieesResultats requete={requete} />}
-              <SuiviActionsRequete actions={requete.actions}></SuiviActionsRequete>
+              <HistoriqueActionsRequete actions={requete.actions}></HistoriqueActionsRequete>
             </div>
             <div className="side right">
               {!estModeConsultation && !affichageBoutonPrendreEnCharge && <TableauRMC requete={detailRequeteState} />}

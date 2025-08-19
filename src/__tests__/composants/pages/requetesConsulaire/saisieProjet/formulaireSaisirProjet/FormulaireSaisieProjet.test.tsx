@@ -1,3 +1,5 @@
+import { CONFIG_POST_COMPOSITION_ACTE_TEXTE } from "@api/configurations/composition/PostCompositionActeTexteApiConfigApi";
+import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import MockSaisieProjetActeContextProvider from "@mock/context/MockSaisieProjetActeContextProvider";
 import { projetActe } from "@mock/data/projetActeTranscrit";
@@ -187,6 +189,11 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
   });
 
   test("DOIT pas appeler la fonction enregistrer ou terminer et signer QUAND aucune modification n'est effectuées", async () => {
+    MockApi.deployer(
+      CONFIG_POST_COMPOSITION_ACTE_TEXTE,
+      { body: { nature_acte: "A", texte_corps_acte: "texte corps acte", titulaires: "" } },
+      { data: { contenu: "", nbPages: 1 } }
+    );
     renderWithRouter(
       <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.SIGNER_ACTE).generer()}>
         <MockSaisieProjetActeContextProvider
@@ -205,13 +212,18 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
         </MockSaisieProjetActeContextProvider>
       </MockRECEContextProvider>
     );
-
+    const mockApi = MockApi.getMock();
     const boutonEnregistrer = screen.getByRole("button", { name: "Enregistrer" });
     const boutonTerminerSigner = screen.getByRole("button", { name: "Terminer et signer" });
     await userEvent.click(boutonEnregistrer);
     await userEvent.click(boutonTerminerSigner);
 
+    await waitFor(() => {
+      expect(mockApi.history.post.length).toBe(1);
+    });
+
     expect(mockLancerTraitement).not.toHaveBeenCalled();
+    MockApi.stopMock();
   });
 
   test("DOIT afficher la modale QUAND l'utilisateur clique sur le bouton 'terminer et signer'", async () => {
@@ -234,14 +246,14 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
       </MockRECEContextProvider>
     );
 
-    const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /titulaire.nomRetenuOEC/i });
-    await userEvent.type(inputNomRetenuOEC, "Xi phun bin");
+    const mockApi = MockApi.getMock();
 
     const boutonTerminerSigner = screen.getByRole("button", { name: "Terminer et signer" });
     await userEvent.click(boutonTerminerSigner);
 
     await waitFor(() => {
-      expect(document.getElementById("conteneur-modale-rece")).toBeDefined();
+      expect(mockApi.history.post.length).toBe(1);
+      expect(mockApi.history.post[0].url).toContain("composition/ACTE_TEXTE/1");
     });
   });
 });

@@ -5,14 +5,14 @@ import React from "react";
 import { ActionRequete } from "./ActionRequete";
 import "./scss/Suivis.scss";
 
-interface SuiviActionsRequeteProps {
+interface HistoriqueActionsRequeteProps {
   actions?: IAction[];
 }
 
-export const SuiviActionsRequete: React.FC<SuiviActionsRequeteProps> = props => (
-  <div className="suivis-requete">
+export const HistoriqueActionsRequete: React.FC<HistoriqueActionsRequeteProps> = props => (
+  <div className="historique-actions">
     <AccordionRece
-      titre={"Suivi requête"}
+      titre={"Historique des actions"}
       disabled={false}
       expanded={false}
     >

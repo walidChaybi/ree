@@ -20,7 +20,7 @@ const infos = {
 };
 
 const historique = {
-  scecSdanf: "Historique SCEC/SDANF"
+  scecSdanf: "Historique des actions"
 };
 
 const sdanf = {
