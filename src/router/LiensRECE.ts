@@ -1,4 +1,5 @@
 import { To, generatePath } from "react-router";
+import { TInfoPageRECE } from "./infoPages/InfoPageRECE";
 import { FIN_URL_CONSULTATION, URL_ACCUEIL } from "./infoPages/InfoPagesBase";
 
 type TAjoutParametre<TParam extends string> = TParam extends `${infer ParamOptionnel}?`
@@ -31,7 +32,20 @@ const LiensRECE = {
 
   retourArriere: (): To => ((window.history.state?.idx ?? 0) > 0 ? (-1 as To) : URL_ACCUEIL),
 
-  estPageConsultation: (): boolean => window.location.pathname.endsWith(`/${FIN_URL_CONSULTATION}`)
+  estPageConsultation: (): boolean => window.location.pathname.endsWith(`/${FIN_URL_CONSULTATION}`),
+
+  sontUrlDeLaMemePage: <TUrl extends string>(infoPage: TInfoPageRECE<TUrl>, urlAComparer: string): boolean => {
+    const urlAComparerDecompose = urlAComparer.startsWith("/") ? urlAComparer.split("/") : "/".concat(urlAComparer).split("/");
+    const urlPageDecompose = infoPage.url.startsWith("/") ? infoPage.url.split("/") : "/".concat(infoPage.url).split("/");
+
+    return (
+      urlPageDecompose.find((elementUrl, idx) => {
+        if (elementUrl.includes(":")) return false;
+
+        return elementUrl !== urlAComparerDecompose[idx];
+      }) === undefined
+    );
+  }
 } as const;
 
 export default LiensRECE;

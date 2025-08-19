@@ -1,7 +1,7 @@
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import React, { useEffect, useState } from "react";
+import React, { useMemo } from "react";
 import { useLocation } from "react-router";
 import LiensRECE from "../../../../../router/LiensRECE";
 import {
@@ -13,7 +13,6 @@ import {
 } from "../../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import { INFO_PAGE_APERCU_REQUETE_INFORMATION } from "../../../../../router/infoPages/InfoPagesEspaceInformation";
 import { GestionnaireARetraiterDansSaga } from "../../migration/GestionnaireARetraiterDansSaga";
-import { Protection } from "./Protection";
 
 interface ProtectionApercuProps {
   statut?: StatutRequete;
@@ -30,32 +29,24 @@ export const ProtectionApercu: React.FC<React.PropsWithChildren<ProtectionApercu
   forcePass
 }) => {
   const location = useLocation();
-  const [estBonStatut, setEstBonStatut] = useState<boolean>(true);
 
-  useEffect(() => {
+  const estBonStatut: boolean = useMemo(() => {
     if (
       // @ts-ignore
       window.protectionOff ||
-      location.pathname.includes(LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_CONSULTATION.url, { idRequeteParam: "" })) ||
+      LiensRECE.sontUrlDeLaMemePage(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_CONSULTATION, location.pathname) ||
       forcePass
     ) {
-      setEstBonStatut(true);
+      return true;
     } else {
-      setEstBonStatut(checkURL(location.pathname, statut, type, sousType));
+      return checkURL(location.pathname, statut, type, sousType);
     }
   }, [statut, type, sousType, location, forcePass]);
 
-  return (
-    <Protection
-      message={"Le statut de la requête ne permet pas de la consulter sur cette page"}
-      peutAfficher={estBonStatut}
-    >
-      {children}
-    </Protection>
-  );
+  return estBonStatut ? <>{children}</> : <p>{"Le statut de la requête ne permet pas de la consulter sur cette page"}</p>;
 };
 
-export function checkURL(nomChemin: string, statut?: StatutRequete, type?: TypeRequete, sousType?: SousTypeRequete) {
+const checkURL = (nomChemin: string, statut?: StatutRequete, type?: TypeRequete, sousType?: SousTypeRequete) => {
   switch (type) {
     case TypeRequete.DELIVRANCE:
       return checkURLDelivrance(nomChemin, statut, sousType);
@@ -64,40 +55,34 @@ export function checkURL(nomChemin: string, statut?: StatutRequete, type?: TypeR
     default:
       return true;
   }
-}
+};
 
-function checkURLDelivrance(pathname: string, statut?: StatutRequete, sousType?: SousTypeRequete) {
+const checkURLDelivrance = (pathname: string, statut?: StatutRequete, sousType?: SousTypeRequete) => {
   switch (statut) {
     case StatutRequete.BROUILLON:
-      return pathname.includes(
-        LiensRECE.genererLien(INFO_PAGE_MODIFICATION_REQUETE_DELIVRANCE_CERTIFICAT_SITUATION_COURRIER.url, { idRequeteParam: "" })
-      );
+      return LiensRECE.sontUrlDeLaMemePage(INFO_PAGE_MODIFICATION_REQUETE_DELIVRANCE_CERTIFICAT_SITUATION_COURRIER, pathname);
     case StatutRequete.PRISE_EN_CHARGE:
       return (
-        pathname.includes(LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_PRISE_EN_CHARGE.url, { idRequeteParam: "" })) ||
-        pathname.includes(
-          LiensRECE.genererLien(INFO_PAGE_MODIFICATION_REQUETE_DELIVRANCE_CERTIFICAT_SITUATION_COURRIER.url, { idRequeteParam: "" })
-        )
+        LiensRECE.sontUrlDeLaMemePage(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_PRISE_EN_CHARGE, pathname) ||
+        LiensRECE.sontUrlDeLaMemePage(INFO_PAGE_MODIFICATION_REQUETE_DELIVRANCE_CERTIFICAT_SITUATION_COURRIER, pathname)
       );
     case StatutRequete.TRANSFEREE:
     case StatutRequete.A_TRAITER:
-      return pathname.includes(LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_CONSULTATION.url, { idRequeteParam: "" }));
+      return LiensRECE.sontUrlDeLaMemePage(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_CONSULTATION, pathname);
     case StatutRequete.A_VALIDER:
     case StatutRequete.A_SIGNER:
     case StatutRequete.TRANSMISE_A_VALIDEUR:
       return (
-        pathname.includes(LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_TRAITEMENT.url, { idRequeteParam: "" })) ||
-        pathname.includes(LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_EDITION.url, { idRequeteParam: "" }))
+        LiensRECE.sontUrlDeLaMemePage(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_TRAITEMENT, pathname) ||
+        LiensRECE.sontUrlDeLaMemePage(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_EDITION, pathname)
       );
     default:
       if (sousType && GestionnaireARetraiterDansSaga.estARetraiterSagaStatutSousType(statut, sousType)) {
-        return pathname.includes(LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_TRAITEMENT.url, { idRequeteParam: "" }));
+        return LiensRECE.sontUrlDeLaMemePage(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_TRAITEMENT, pathname);
       }
 
       return false;
   }
-}
+};
 
-function checkURLInformation(pathname: string) {
-  return pathname.includes(LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_INFORMATION.url, { idRequeteParam: "" }));
-}
+const checkURLInformation = (pathname: string) => LiensRECE.sontUrlDeLaMemePage(INFO_PAGE_APERCU_REQUETE_INFORMATION, pathname);
