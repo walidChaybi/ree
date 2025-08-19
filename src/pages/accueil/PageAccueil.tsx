@@ -88,17 +88,17 @@ const getDonneesMenu = (nombreRequetes: number, nombreRequetesInformation: numbe
   {
     libelle: "Consulaire",
     icone: faLandmark,
-    auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT, Droit.CREER_ACTE_DRESSE],
+    auMoinsUnDesDroits: [Droit.CONSULAIRE_ACCES_ESPACE_MES_REQUETES, Droit.CONSULAIRE_ACCES_ESPACE_REQUETES_DE_MON_SERVICE],
     liens: [
       {
         libelle: "Mes requêtes",
         urlPage: LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_CONSULAIRES.url),
-        auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT, Droit.CREER_ACTE_DRESSE]
+        auMoinsUnDesDroits: [Droit.CONSULAIRE_ACCES_ESPACE_MES_REQUETES]
       },
       {
         libelle: "Mon service",
         urlPage: LiensRECE.genererLien(INFO_PAGE_REQUETES_CONSULAIRES_SERVICE.url),
-        auMoinsUnDesDroits: [Droit.CREER_ACTE_TRANSCRIT, Droit.CREER_ACTE_DRESSE]
+        auMoinsUnDesDroits: [Droit.CONSULAIRE_ACCES_ESPACE_REQUETES_DE_MON_SERVICE]
       }
     ]
   },

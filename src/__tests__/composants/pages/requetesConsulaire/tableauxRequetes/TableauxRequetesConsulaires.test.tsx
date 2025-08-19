@@ -30,7 +30,9 @@ describe("Test des boutons d'actions des tableaux de requêtes consulaire", () =
     );
 
     render(
-      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.SAISIR_REQUETE).generer()}>
+      <MockRECEContextProvider
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.TRANSCRIPTION_SAISIR_REQUETE).generer()}
+      >
         <RouterProvider router={router} />
       </MockRECEContextProvider>
     );

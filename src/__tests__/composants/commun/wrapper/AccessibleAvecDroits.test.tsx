@@ -40,18 +40,18 @@ describe("Test de AccessibleAvecDroits", () => {
     expect(screen.queryByText("Click me")).toBeNull();
   });
 
-  test("Le bouton doit exister car l'utilisateur a le droit ATTRIBUER_REQUETE et un de ces droits [CREER_ACTE_TRANSCRIT, CREER_ACTE_DRESSE, CREER_ACTE_ETABLI]", async () => {
-    renderComponent([Droit.CONSULTER, Droit.CREER_ACTE_TRANSCRIT], [Droit.CONSULTER], [Droit.CREER_ACTE_TRANSCRIT]);
+  test("Le bouton doit exister car l'utilisateur a le droit ATTRIBUER_REQUETE et un de ces droits [TRANSCRIPTION_CREER_PROJET_ACTE, CREER_ACTE_DRESSE, CREER_ACTE_ETABLI]", async () => {
+    renderComponent([Droit.CONSULTER, Droit.TRANSCRIPTION_CREER_PROJET_ACTE], [Droit.CONSULTER], [Droit.TRANSCRIPTION_CREER_PROJET_ACTE]);
     expect(screen.getByText("Click me")).toBeDefined();
   });
 
-  test("Le bouton ne doit pas exister car l'utilisateur n'a pas le droit ATTRIBUER_REQUETE avec un de ces droits [CREER_ACTE_TRANSCRIT, CREER_ACTE_DRESSE, CREER_ACTE_ETABLI]", async () => {
-    renderComponent([Droit.CONSULTER, Droit.ATTRIBUER_REQUETE], [Droit.ATTRIBUER_REQUETE], [Droit.CREER_ACTE_TRANSCRIT]);
+  test("Le bouton ne doit pas exister car l'utilisateur n'a pas le droit ATTRIBUER_REQUETE avec un de ces droits [TRANSCRIPTION_CREER_PROJET_ACTE, CREER_ACTE_DRESSE, CREER_ACTE_ETABLI]", async () => {
+    renderComponent([Droit.CONSULTER, Droit.ATTRIBUER_REQUETE], [Droit.ATTRIBUER_REQUETE], [Droit.TRANSCRIPTION_CREER_PROJET_ACTE]);
     expect(screen.queryByText("Click me")).toBeNull();
   });
 
   test("Le bouton ne doit pas exister car l'utilisateur n'a pas le droit : droits vide", async () => {
-    renderComponent([], [Droit.ATTRIBUER_REQUETE], [Droit.CREER_ACTE_TRANSCRIT]);
+    renderComponent([], [Droit.ATTRIBUER_REQUETE], [Droit.TRANSCRIPTION_CREER_PROJET_ACTE]);
     expect(screen.queryByText("Click me")).toBeNull();
   });
 });

@@ -1,6 +1,6 @@
+import ETypeLienRequerantCreation from "./enum/ETypeLienRequerantCreation";
 import { Provenance } from "./enum/Provenance";
 import { SousTypeCreation } from "./enum/SousTypeCreation";
-import { TypeLienRequerantCreation } from "./enum/TypeLienRequerantCreation";
 import { DocumentPJ, IDocumentPJ } from "./IDocumentPj";
 import { IMandant } from "./IMandant";
 import { IPersonneSauvegardee } from "./IPersonneSauvegardee";
@@ -12,7 +12,7 @@ import { ENatureActeTranscrit } from "./NatureActeTranscription";
 import { IPieceJustificativeCreation } from "./pieceJointe/IPieceJustificativeCreation";
 
 interface LienRequerant {
-  typeLienRequerant: TypeLienRequerantCreation;
+  typeLienRequerant: keyof typeof ETypeLienRequerantCreation;
 }
 
 export interface IRequeteCreationEtablissement extends IRequete {

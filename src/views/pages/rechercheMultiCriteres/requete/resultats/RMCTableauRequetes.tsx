@@ -162,7 +162,8 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({ dataRMC
 const estRequeteRCTDOuRCTCEtALeDroitActeTranscrit = (
   sousType: keyof typeof ESousTypeCreation,
   utilisateurConnecte: UtilisateurConnecte
-): boolean => ["RCTC", "RCTD"].includes(sousType) && utilisateurConnecte.estHabilitePour({ leDroit: Droit.CREER_ACTE_TRANSCRIT });
+): boolean =>
+  ["RCTC", "RCTD"].includes(sousType) && utilisateurConnecte.estHabilitePour({ leDroit: Droit.TRANSCRIPTION_CREER_PROJET_ACTE });
 
 const estRequeteRCEXREtALeDroitActeEtabli = (sousType: keyof typeof ESousTypeCreation, utilisateurConnecte: UtilisateurConnecte): boolean =>
   sousType === "RCEXR" &&

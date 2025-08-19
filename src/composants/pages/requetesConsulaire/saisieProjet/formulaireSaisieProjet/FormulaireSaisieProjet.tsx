@@ -37,13 +37,21 @@ const FormulaireSaisieProjet: React.FC = () => {
 
   const { utilisateurConnecte } = useContext(RECEContextData);
 
-  const peutSigner = useMemo(() => utilisateurConnecte.estHabilitePour({ leDroit: Droit.SIGNER_ACTE }), [utilisateurConnecte]);
+  const peutSigner = useMemo(
+    () => utilisateurConnecte.estHabilitePour({ leDroit: Droit.TRANSCRIPTION_SIGNER_ACTE }),
+    [utilisateurConnecte]
+  );
 
   const { lancerTraitement: lancerEnregistrement, traitementEnCours: enregistrementEnCours } = useTraitementApi(
     TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT
   );
 
   const terminerEtSigner = (valeursSaisies: IProjetActeTranscritForm) => {
+    if (!peutSigner) {
+      AfficherMessage.erreur("Vous n'avez pas l'habilitation nécessaire pour terminer et signer le projet d'acte");
+      return;
+    }
+
     if (!valeursSaisies.soumissionFormulaire.avecEnregistrement && !valeursSaisies.soumissionFormulaire.avecMajStatut) {
       setModaleOuverte(true);
       return;

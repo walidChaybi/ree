@@ -139,7 +139,7 @@ export const utilisateurADroitOuvrirRequete = <TTypeRequete extends keyof typeof
             });
           case [SousTypeCreation.RCTD, SousTypeCreation.RCTC].includes(sousTypeCreation) ||
             [ESousTypeCreation.RCTD, ESousTypeCreation.RCTC].includes(sousTypeRequete as ESousTypeCreation):
-            return utilisateurConnecte.estHabilitePour({ leDroit: Droit.CREER_ACTE_TRANSCRIT });
+            return utilisateurConnecte.estHabilitePour({ leDroit: Droit.TRANSCRIPTION_CREER_PROJET_ACTE });
           default:
             return false;
         }

@@ -149,8 +149,6 @@ export const FichePage: React.FC<FichePageProps> = ({
           }
         })();
 
-        console.log(urlNavigation);
-
         navigate(urlNavigation);
       },
       apresErreur: erreurs => {

@@ -54,7 +54,9 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
 
   test("Doit afficher le formulaire de saisie de projet d'acte", async () => {
     const { container } = renderWithRouter(
-      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.SIGNER_ACTE).generer()}>
+      <MockRECEContextProvider
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.TRANSCRIPTION_SIGNER_ACTE).generer()}
+      >
         <MockSaisieProjetActeContextProvider
           projetActe={null}
           requete={
@@ -78,7 +80,7 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
   test("DOIT afficher le bouton 'enregistrer' QUAND l'utilisateur ne possède pas le droit signer_acte", () => {
     renderWithRouter(
       <MockRECEContextProvider
-        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.CREER_ACTE_TRANSCRIT).generer()}
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.TRANSCRIPTION_CREER_PROJET_ACTE).generer()}
       >
         <MockSaisieProjetActeContextProvider
           projetActe={null}
@@ -103,7 +105,9 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
 
   test("DOIT afficher le bouton 'enregistrer' et 'terminer et signer' QUAND l'utilisateur possède le droit signer_acte", async () => {
     renderWithRouter(
-      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.SIGNER_ACTE).generer()}>
+      <MockRECEContextProvider
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.TRANSCRIPTION_SIGNER_ACTE).generer()}
+      >
         <MockSaisieProjetActeContextProvider
           projetActe={null}
           requete={
@@ -132,7 +136,9 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
 
   test("DOIT appeler la fonction enregistrer QUAND l'utilisateur clique sur 'Enregistrer' avec des modifications", async () => {
     renderWithRouter(
-      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.SIGNER_ACTE).generer()}>
+      <MockRECEContextProvider
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.TRANSCRIPTION_CREER_PROJET_ACTE).generer()}
+      >
         <MockSaisieProjetActeContextProvider
           projetActe={projetActe}
           requete={
@@ -161,7 +167,9 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
 
   test("DOIT appeler la fonction terminer et signer QUAND l'utilisateur clique sur 'Terminer et signer' avec des modifications", async () => {
     renderWithRouter(
-      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.SIGNER_ACTE).generer()}>
+      <MockRECEContextProvider
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.TRANSCRIPTION_SIGNER_ACTE).generer()}
+      >
         <MockSaisieProjetActeContextProvider
           projetActe={projetActe}
           requete={
@@ -195,7 +203,9 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
       { data: { contenu: "", nbPages: 1 } }
     );
     renderWithRouter(
-      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.SIGNER_ACTE).generer()}>
+      <MockRECEContextProvider
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.TRANSCRIPTION_SIGNER_ACTE).generer()}
+      >
         <MockSaisieProjetActeContextProvider
           projetActe={projetActe}
           requete={
@@ -228,7 +238,9 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
 
   test("DOIT afficher la modale QUAND l'utilisateur clique sur le bouton 'terminer et signer'", async () => {
     renderWithRouter(
-      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.SIGNER_ACTE).generer()}>
+      <MockRECEContextProvider
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.TRANSCRIPTION_SIGNER_ACTE).generer()}
+      >
         <MockSaisieProjetActeContextProvider
           projetActe={projetActe}
           requete={

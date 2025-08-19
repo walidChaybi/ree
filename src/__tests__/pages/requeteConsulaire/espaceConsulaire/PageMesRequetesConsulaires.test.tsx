@@ -15,7 +15,7 @@ describe("Test PageMesRequetesConsulaires", () => {
           path: "/",
           element: (
             <MockRECEContextProvider
-              utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.CREER_ACTE_TRANSCRIT).generer()}
+              utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.TRANSCRIPTION_CREER_PROJET_ACTE).generer()}
             >
               <PageMesRequetesConsulaires />
             </MockRECEContextProvider>

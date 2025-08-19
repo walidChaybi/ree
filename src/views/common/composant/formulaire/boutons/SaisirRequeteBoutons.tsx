@@ -22,7 +22,7 @@ const SaisirRequeteBoutons: React.FC<SaisirRequeteBoutonsProps> = props => {
   const { utilisateurConnecte } = useContext(RECEContextData);
   const utilisateurSansBrouillon =
     (utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER }) ||
-      utilisateurConnecte.estHabilitePour({ tousLesDroits: [Droit.SAISIR_REQUETE, Droit.CREER_ACTE_TRANSCRIT] })) ??
+      utilisateurConnecte.estHabilitePour({ tousLesDroits: [Droit.SAISIR_REQUETE, Droit.TRANSCRIPTION_CREER_PROJET_ACTE] })) ??
     true;
   const annuler = () => {
     navigate(-UN);

@@ -9,7 +9,10 @@ import BoutonListeDeroulante from "../../commun/bouton/BoutonListeDeroulante";
 
 const BoutonsTableauConsulaire: React.FC = () => {
   const { utilisateurConnecte } = useContext(RECEContextData);
-  const peutSaisirRequete = useMemo(() => utilisateurConnecte.estHabilitePour({ leDroit: Droit.SAISIR_REQUETE }), [utilisateurConnecte]);
+  const peutSaisirRequete = useMemo(
+    () => utilisateurConnecte.estHabilitePour({ leDroit: Droit.TRANSCRIPTION_SAISIR_REQUETE }),
+    [utilisateurConnecte]
+  );
 
   return peutSaisirRequete ? (
     <div className="flex justify-end">

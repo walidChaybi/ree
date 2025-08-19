@@ -15,7 +15,7 @@ test("DOIT afficher correctement la page PageRequetesServiceConsulaire", async (
         element: (
           <MockRECEContextProvider
             utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte()
-              .avecDroits([Droit.CREER_ACTE_TRANSCRIT, Droit.ATTRIBUER_REQUETE])
+              .avecDroits([Droit.TRANSCRIPTION_CREER_PROJET_ACTE, Droit.ATTRIBUER_REQUETE])
               .generer()}
           >
             <PageRequetesServiceConsulaire />

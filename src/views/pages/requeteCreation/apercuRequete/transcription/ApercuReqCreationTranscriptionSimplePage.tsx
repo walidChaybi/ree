@@ -95,7 +95,7 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<ApercuReqCreatio
       return (
         SousTypeCreation.estRCTDOuRCTC(requete.sousType) &&
         StatutRequete.estATraiterOuTransferee(requete.statutCourant?.statut) &&
-        utilisateurConnecte.estHabilitePour({ leDroit: Droit.CREER_ACTE_TRANSCRIT }) &&
+        utilisateurConnecte.estHabilitePour({ leDroit: Droit.TRANSCRIPTION_CREER_PROJET_ACTE }) &&
         (!requete.idUtilisateur || utilisateurConnecte.id === requete.idUtilisateur) &&
         [utilisateurConnecte.idService, ...utilisateurConnecte.idServicesFils, ...utilisateurConnecte.idServicesParent].includes(
           requete.idService

@@ -5,7 +5,7 @@ import { Perimetre } from "@model/agent/enum/Perimetre";
 import { ITypeRegistreDto, TypeRegistre } from "@model/etatcivil/acte/TypeRegistre";
 import { ISaisieRequeteRCTCForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
 import { ELibelleNatureActeTranscrit, ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
-import { ETypeLienRequerantCreation } from "@model/requete/enum/TypeLienRequerantCreation";
+import ETypeLienRequerantCreation from "@model/requete/enum/ETypeLienRequerantCreation";
 import { Options } from "@util/Type";
 import { enumVersOptions } from "@util/Utils";
 import { useFormikContext } from "formik";
@@ -30,7 +30,7 @@ const BlocRequete: React.FC = () => {
   const estHabiliteSaisieRequeteTousRegistre = useMemo(
     () =>
       utilisateurConnecte.estHabilitePour({
-        leDroit: Droit.SAISIR_REQUETE,
+        leDroit: Droit.TRANSCRIPTION_SAISIR_REQUETE,
         surLePerimetre: Perimetre.TOUS_REGISTRES
       }),
     [utilisateurConnecte]

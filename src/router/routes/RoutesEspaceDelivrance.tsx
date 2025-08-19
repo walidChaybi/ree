@@ -107,7 +107,7 @@ export const ROUTES_ESPACE_DELIVRANCE: RouteObject[] = [
         auMoinsUnDesDroits={[
           Droit.CREER_ACTE_DRESSE,
           Droit.CREER_ACTE_ETABLI,
-          Droit.CREER_ACTE_TRANSCRIT,
+          Droit.TRANSCRIPTION_CREER_PROJET_ACTE,
           Droit.CREER_PACS,
           Droit.DELIVRER,
           Droit.INFORMER_USAGER,

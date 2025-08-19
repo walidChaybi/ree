@@ -7,6 +7,7 @@ import { PrenomsForm, TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import { IRequeteConsulaire } from "@model/requete/IRequeteConsulaire";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
+import ETypeLienRequerantCreation from "@model/requete/enum/ETypeLienRequerantCreation";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
@@ -135,7 +136,7 @@ const ParentRCTCForm = {
 export interface ISaisieRequeteRCTCForm {
   requete: {
     natureActe: string;
-    lienRequerant: string;
+    lienRequerant: keyof typeof ETypeLienRequerantCreation;
     villeRegistre: string;
   };
   titulaire: {
@@ -235,7 +236,7 @@ export const SaisieRequeteRCTCForm = {
     return {
       requete: {
         natureActe: ENatureActeTranscrit.NAISSANCE_MINEUR,
-        lienRequerant: String(requete?.lienRequerant.typeLienRequerant),
+        lienRequerant: requete?.lienRequerant?.typeLienRequerant ?? "PERE_MERE",
         villeRegistre: requete?.villeRegistre ?? ""
       },
       titulaire: {

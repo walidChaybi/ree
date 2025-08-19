@@ -41,7 +41,7 @@ type NomComposantOuFonction = NomComposant | NomFonction;
 const droitsSaufConsulterArchives = [
   Droit.CREER_ACTE_DRESSE,
   Droit.CREER_ACTE_ETABLI,
-  Droit.CREER_ACTE_TRANSCRIT,
+  Droit.TRANSCRIPTION_CREER_PROJET_ACTE,
   Droit.CREER_PACS,
   Droit.DELIVRER,
   Droit.INFORMER_USAGER,
@@ -76,13 +76,13 @@ export const habilitationsDescription: IHabiliationDescription[] = [
   },
   {
     nomComposant: "BoutonAccueilEspaceCreation",
-    unDesDroits: [Droit.CREER_ACTE_TRANSCRIT, Droit.CREER_ACTE_DRESSE, Droit.CREER_ACTE_ETABLI],
+    unDesDroits: [Droit.TRANSCRIPTION_CREER_PROJET_ACTE, Droit.CREER_ACTE_DRESSE, Droit.CREER_ACTE_ETABLI],
     comportementSiNonAutorise: { disabled: true },
     visiblePourLesDroits: droitsSaufConsulterArchives
   },
   {
     nomComposant: "BoutonAccueilEspaceConsulaire",
-    unDesDroits: [Droit.CREER_ACTE_TRANSCRIT, Droit.CREER_ACTE_DRESSE],
+    unDesDroits: [Droit.TRANSCRIPTION_CREER_PROJET_ACTE, Droit.CREER_ACTE_DRESSE],
     comportementSiNonAutorise: { disabled: true },
     visiblePourLesDroits: droitsSaufConsulterArchives
   },
@@ -151,7 +151,7 @@ export const habilitationsDescription: IHabiliationDescription[] = [
   },
   {
     nomComposant: "BoutonPrendreEnChargePlusAncienneCreation",
-    unDesDroits: [Droit.CREER_ACTE_DRESSE, Droit.CREER_ACTE_TRANSCRIT, Droit.CREER_ACTE_ETABLI],
+    unDesDroits: [Droit.CREER_ACTE_DRESSE, Droit.TRANSCRIPTION_CREER_PROJET_ACTE, Droit.CREER_ACTE_ETABLI],
     comportementSiNonAutorise: { disabled: true }
   },
   {
