@@ -1,8 +1,7 @@
 import { INationalitesForm } from "@model/form/commun/NationalitesForm";
-import AddCircle from "@mui/icons-material/AddCircle";
-import Delete from "@mui/icons-material/Delete";
 import { useField } from "formik";
 import React from "react";
+import { MdAddCircle, MdDelete } from "react-icons/md";
 import BoutonIcon from "../bouton/BoutonIcon";
 import ChampTexte from "./ChampTexte";
 
@@ -28,6 +27,7 @@ const ChampNationalite: React.FC<IPropsChampNationalite> = ({ nom, libelle, desa
         <BoutonIcon
           type="button"
           title="Ajouter une nationalité"
+          aria-label="Ajouter une nationalité"
           onClick={() =>
             champ.value.nationalitesAffichees < 3 &&
             helper.setValue({
@@ -39,7 +39,7 @@ const ChampNationalite: React.FC<IPropsChampNationalite> = ({ nom, libelle, desa
           styleBouton="principal"
         >
           <div className="flex items-center gap-4 px-2">
-            <AddCircle />
+            <MdAddCircle aria-hidden />
             <span className="font-marianne text-sm font-bold">{"Ajouter une nationalité"}</span>
           </div>
         </BoutonIcon>
@@ -56,7 +56,8 @@ const ChampNationalite: React.FC<IPropsChampNationalite> = ({ nom, libelle, desa
               <BoutonIcon
                 className="group absolute right-0 h-full rounded-l-none bg-transparent"
                 type="button"
-                title={"Supprimer cette nationalité"}
+                title="Supprimer cette nationalité"
+                aria-label="Supprimer cette nationalité"
                 onClick={() => {
                   helper.setValue({
                     ...champ.value,
@@ -68,7 +69,10 @@ const ChampNationalite: React.FC<IPropsChampNationalite> = ({ nom, libelle, desa
                 styleBouton="suppression"
                 disabled={desactive}
               >
-                <Delete className="text-rouge group-hover:text-blanc group-focus:text-blanc" />
+                <MdDelete
+                  className="text-rouge group-hover:text-blanc group-focus:text-blanc"
+                  aria-hidden
+                />
               </BoutonIcon>
             )
           }}
@@ -86,7 +90,8 @@ const ChampNationalite: React.FC<IPropsChampNationalite> = ({ nom, libelle, desa
               <BoutonIcon
                 className="group absolute right-0 h-full rounded-l-none bg-transparent"
                 type="button"
-                title={"Supprimer cette nationalité"}
+                title="Supprimer cette nationalité"
+                aria-label="Supprimer cette nationalité"
                 onClick={() =>
                   helper.setValue({
                     ...champ.value,
@@ -97,7 +102,10 @@ const ChampNationalite: React.FC<IPropsChampNationalite> = ({ nom, libelle, desa
                 styleBouton="suppression"
                 disabled={desactive}
               >
-                <Delete className="text-rouge group-hover:text-blanc group-focus:text-blanc" />
+                <MdDelete
+                  className="text-rouge group-hover:text-blanc group-focus:text-blanc"
+                  aria-hidden
+                />
               </BoutonIcon>
             )
           }}

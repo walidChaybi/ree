@@ -4,7 +4,6 @@ import { IActionOption } from "@model/requete/IActionOption";
 import { IProvenanceRequete } from "@model/requete/IProvenanceRequete";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import AssignmentInd from "@mui/icons-material/AssignmentInd";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { replaceUrl } from "@util/route/UrlUtil";
@@ -12,6 +11,7 @@ import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { MdAssignmentInd } from "react-icons/md";
 import { useNavigate } from "react-router";
 import LiensRECE from "../../../../router/LiensRECE";
 import { INFO_PAGE_MES_REQUETES_DELIVRANCE } from "../../../../router/infoPages/InfoPagesEspaceDelivrance";
@@ -140,7 +140,10 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
         <div>
           {props.icone ? (
             <span title={"Attribuer requête"}>
-              <AssignmentInd onClick={e => handleClickBoutonReponse(e)} />
+              <MdAssignmentInd
+                onClick={e => handleClickBoutonReponse(e)}
+                aria-hidden
+              />
             </span>
           ) : (
             <BoutonDoubleSubmit

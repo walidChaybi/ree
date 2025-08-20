@@ -1,7 +1,6 @@
-import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IBandeauFiche } from "@model/etatcivil/fiche/IBandeauFiche";
 import React from "react";
+import { FaExclamationTriangle } from "react-icons/fa";
 import "./scss/Bandeau.scss";
 
 interface BandeauFicheProps {
@@ -31,9 +30,9 @@ export const BandeauFiche: React.FC<BandeauFicheProps> = props => {
           <div className="LigneAlertes">
             {data.alertes != null && data.alertes?.length >= 1 && (
               <div title={getAlertes()}>
-                <FontAwesomeIcon
-                  icon={faExclamationTriangle}
+                <FaExclamationTriangle
                   className="IconeAlertes"
+                  aria-hidden
                 />
                 {data.alertes[0].alerte}
               </div>

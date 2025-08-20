@@ -1,6 +1,6 @@
-import CompareArrows from "@mui/icons-material/CompareArrows";
 import { getIn, useFormikContext } from "formik";
 import { useRef } from "react";
+import { MdCompareArrows } from "react-icons/md";
 import BoutonIcon from "../bouton/BoutonIcon";
 import ChampTexte from "./ChampTexte";
 
@@ -86,11 +86,15 @@ export const ChampsNomPrenomInterchangeables: React.FC<{ cheminNom: string; chem
         <div className="flex items-start pt-7">
           <BoutonIcon
             title="Intervertir Nom et Prénom"
+            aria-label="Intervertir nom et prénom"
             styleBouton="secondaire"
             className="h-8 w-12"
             onClick={intervertir}
           >
-            <CompareArrows />
+            <MdCompareArrows
+              className="text-2xl"
+              aria-hidden
+            />
           </BoutonIcon>
         </div>
       </div>

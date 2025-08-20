@@ -1,5 +1,4 @@
-import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
-import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
+import { MdAttachFile, MdInsertDriveFile } from "react-icons/md";
 
 import { Option, Options } from "@util/Type";
 import React from "react";
@@ -46,9 +45,9 @@ export const PiecesJointes: React.FC<PiecesJointesProps> = props => {
           libelleBouton={props.libelleBouton ? ` ${props.libelleBouton}` : " Ajouter"}
           menuItems={props.menuItem}
           iconBouton={
-            <AttachFileOutlinedIcon
-              fontSize="small"
-              className="iconeTrombone"
+            <MdAttachFile
+              className="iconeTrombone text-xl"
+              aria-hidden
             />
           }
           hideInput={true}
@@ -132,9 +131,9 @@ function getColonneSuppressionPJ(supprimePieceJointe: (libelle: string) => void,
 function getColonneNomPJ(pj: PieceJointe): JSX.Element {
   return (
     <>
-      <InsertDriveFileOutlinedIcon
-        fontSize="small"
-        className="iconeFichier"
+      <MdInsertDriveFile
+        className="iconeFichier text-lg"
+        aria-hidden
       />
       <span>{pj.base64File.fileName}</span>
     </>

@@ -1,7 +1,5 @@
 import { listeUtilisateursToOptionsBis } from "@composant/menuTransfert/MenuTransfertUtil";
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { faCircleXmark, faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IFiltreServiceRequeteCreationFormValues } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -14,6 +12,8 @@ import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { Formik } from "formik";
 import React, { useContext } from "react";
+import { FaSearch } from "react-icons/fa";
+import { FaCircleXmark } from "react-icons/fa6";
 import "./FiltreServiceRequeteCreationForm.scss";
 
 interface FiltreServiceRequeteCreationFormProps {
@@ -109,21 +109,21 @@ export const FiltreServiceRequeteCreationForm: React.FC<FiltreServiceRequeteCrea
               data-testid="loupeButton"
               type="submit"
               onClick={() => onSubmitFiltresEtRecherche(values)}
-              aria-label="submitButton"
+              aria-label="Rechercher"
             >
-              <FontAwesomeIcon
+              <FaSearch
                 className="actionButton"
-                icon={faSearch}
+                aria-hidden
               />
             </Button>
             <Button
               data-testid="resetButton"
               onClick={() => onReset(handleReset)}
-              aria-label="resetButton"
+              aria-label="Réinitialiser"
             >
-              <FontAwesomeIcon
+              <FaCircleXmark
                 className="actionButton"
-                icon={faCircleXmark}
+                aria-hidden
               />
             </Button>
           </div>

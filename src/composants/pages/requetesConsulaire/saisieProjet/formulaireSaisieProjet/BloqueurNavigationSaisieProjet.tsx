@@ -4,12 +4,9 @@ import {
 } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { useFormikContext } from "formik";
 import { useEffect } from "react";
+import { MdClose, MdDone, MdUndo } from "react-icons/md";
 import { useBlocker } from "react-router";
 import { useModaleConfirmation } from "../../commun/ConfirmationModale";
-
-import CloseIcon from "@mui/icons-material/Close";
-import DoneIcon from "@mui/icons-material/Done";
-import UndoIcon from "@mui/icons-material/Undo";
 
 const BloqueurNavigationSaisieProjet: React.FC<React.PropsWithChildren> = ({ children }) => {
   const { dirty, setFieldValue, submitForm } = useFormikContext<IProjetActeTranscritForm>();
@@ -29,7 +26,12 @@ const BloqueurNavigationSaisieProjet: React.FC<React.PropsWithChildren> = ({ chi
           {
             libelle: "Enregistrer et quitter",
             variante: "primaire",
-            icone: <DoneIcon fontSize="small" />,
+            icone: (
+              <MdDone
+                className="text-md"
+                aria-hidden
+              />
+            ),
             action: async () => {
               setFieldValue("soumissionFormulaire", {
                 action: EActionFormulaireProjetActeTranscrit.ENREGISTRER,
@@ -43,7 +45,12 @@ const BloqueurNavigationSaisieProjet: React.FC<React.PropsWithChildren> = ({ chi
           {
             libelle: "Quitter sans enregistrer",
             variante: "danger",
-            icone: <CloseIcon fontSize="small" />,
+            icone: (
+              <MdClose
+                className="text-md"
+                aria-hidden
+              />
+            ),
             action: async () => {
               blocker.proceed();
             }
@@ -51,7 +58,12 @@ const BloqueurNavigationSaisieProjet: React.FC<React.PropsWithChildren> = ({ chi
           {
             libelle: "Annuler",
             variante: "secondaire",
-            icone: <UndoIcon fontSize="small" />,
+            icone: (
+              <MdUndo
+                className="text-md"
+                aria-hidden
+              />
+            ),
             action: async () => {
               blocker.reset();
             }

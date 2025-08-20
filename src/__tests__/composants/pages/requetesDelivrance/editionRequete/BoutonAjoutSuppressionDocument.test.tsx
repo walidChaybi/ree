@@ -136,7 +136,7 @@ describe("Test BoutonAjoutSuppressionDocument", () => {
 
     render(<RouterProvider router={router} />);
 
-    fireEvent.click(screen.getByTestId("AddIcon"));
+    fireEvent.click(screen.getByLabelText("Ajouter"));
     await waitFor(() => {
       expect(screen.queryByText("Copie intégrale")).toBeDefined();
     });

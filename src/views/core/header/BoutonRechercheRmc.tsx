@@ -1,10 +1,9 @@
-import { faSearch } from "@fortawesome/free-solid-svg-icons/faSearch";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "@mui/material/Button";
 import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import React, { useState } from "react";
+import { FaSearch } from "react-icons/fa";
 import { ToastContainer } from "react-toastify";
 import FenetreExterne, { IFenetreExterneRef } from "../../../composants/commun/conteneurs/FenetreExterne";
 import { PageRMCActeInscription } from "../../../pages/rmc/PageRMCActeInscription";
@@ -30,10 +29,11 @@ export const BoutonRechercheRmc: React.FC = () => {
       <Button
         onClick={handleClick}
         title={"Recherche acte/inscription"}
+        aria-label="Recherche acte/inscription"
       >
-        <FontAwesomeIcon
+        <FaSearch
           className="loupeChampsRecherche"
-          icon={faSearch}
+          aria-hidden
         />
       </Button>
       {rmcExterne && (

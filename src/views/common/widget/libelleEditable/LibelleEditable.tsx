@@ -1,7 +1,6 @@
-import { faEdit, faRotateBackward } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getLibelle } from "@util/Utils";
 import React, { useState } from "react";
+import { FaEdit } from "react-icons/fa";
+import { FaRotateLeft } from "react-icons/fa6";
 import "./scss/LibelleEditable.scss";
 
 interface ILibelleEditable {
@@ -21,11 +20,7 @@ export const LibelleEditable: React.FC<ILibelleEditable> = props => {
   };
 
   function afficherBoutonAnnuler() {
-    return (
-      props.handleMiseAJourLibelle &&
-      props.libelle &&
-      props.libelle !== props.libelleOrigine
-    );
+    return props.handleMiseAJourLibelle && props.libelle && props.libelle !== props.libelleOrigine;
   }
 
   return (
@@ -51,14 +46,14 @@ export const LibelleEditable: React.FC<ILibelleEditable> = props => {
           autoFocus
         />
       ) : (
-        props.libelle ?? props.libelleOrigine
+        (props.libelle ?? props.libelleOrigine)
       )}
       <div className={"flexAccordion"}>
         {afficherBoutonAnnuler() && (
-          <FontAwesomeIcon
-            icon={faRotateBackward}
-            className={`BoutonActionLibelleEditable`}
-            title={getLibelle("Annuler la modification du libellé")}
+          <FaRotateLeft
+            className="BoutonActionLibelleEditable"
+            title="Annuler la modification du libellé"
+            aria-label="Annuler la modification du libellé"
             onClick={e => {
               e.stopPropagation();
               fermerInputEdition(props.libelleOrigine ?? "");
@@ -66,10 +61,10 @@ export const LibelleEditable: React.FC<ILibelleEditable> = props => {
           />
         )}
         {props.handleMiseAJourLibelle && (
-          <FontAwesomeIcon
-            icon={faEdit}
-            className={`BoutonActionLibelleEditable`}
-            title={getLibelle("Modifier le libellé")}
+          <FaEdit
+            className="BoutonActionLibelleEditable"
+            title="Modifier le libellé"
+            aria-label="Modifier le libellé"
             onClick={e => {
               e.stopPropagation();
               setModeEdition(true);

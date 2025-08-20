@@ -34,16 +34,13 @@ export const ItemLigneSdanf: React.FC<ItemLigneSdanfProps> = ({
         ) : (
           <></>
         )}
-        <span
-          className={
-            infoBulleSdanfVisible && estRenseigne(texteTitulaire)
-              ? "erreurSdanf"
-              : ""
-          }
-        >
+        <span className={infoBulleSdanfVisible && estRenseigne(texteTitulaire) ? "erreurSdanf" : ""}>
           {infoBulleSdanfVisible ? (
             <>
-              <div className="icon" title={texteTitulaire}>
+              <div
+                className="icon"
+                title={texteTitulaire}
+              >
                 {texteSdanf}
               </div>
             </>

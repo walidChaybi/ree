@@ -127,7 +127,10 @@ const getColonneAjouterOption = (visible: boolean): JSX.Element => (
   <>
     {visible && (
       <div className="BoutonOption">
-        <IconePlus title={"Ajouter"} />
+        <IconePlus
+          className="text-md"
+          title={"Ajouter"}
+        />
       </div>
     )}
   </>

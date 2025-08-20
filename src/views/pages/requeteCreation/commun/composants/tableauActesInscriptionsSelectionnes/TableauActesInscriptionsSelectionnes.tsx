@@ -1,83 +1,98 @@
-import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import {
-  getColonnesTableauDocuments,
-  getColonnesTableauPersonnes,
-  getLigneTableauVide
-} from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
-import { DEUX, UN, ZERO, getLibelle } from "@util/Utils";
-import { NB_LIGNES_PAR_APPEL_PERSONNE, NB_LIGNES_PAR_PAGE_PERSONNE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
-import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
-import { IConteneurElementPropsPartielles } from "@widget/tableau/TableauRece/colonneElements/ConteneurElement";
-import { TMouseEventSurSVGSVGElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
-import { ICelluleFontAwesomeIconeProps } from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/CelluleFontAwesomeIcone";
-import {
-  IColonneFontAwesomeIcone,
-  getColonneFontAwesomeIcone
-} from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/ColonneFontAwesomeIcone";
-import React from "react";
+import { NB_LIGNES_PAR_PAGE_PERSONNE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import React, { useState } from "react";
+import { FaTrashAlt } from "react-icons/fa";
+import Tableau from "../../../../../../composants/commun/tableau/Tableau";
 import { IDataTableauActeInscriptionSelectionne } from "./IDataTableauActeInscriptionSelectionne";
 
 interface ITableauActesInscriptionsSelectionnesProps {
   dataActesInscriptionsSelectionnes: IDataTableauActeInscriptionSelectionne[];
-  onClickBoutonRetirerActeInscription: (
-    event: TMouseEventSurSVGSVGElement,
-    data: IDataTableauActeInscriptionSelectionne,
-    cle?: string | undefined
-  ) => void;
-  enChargement: boolean;
+  onClickBoutonRetirerActeInscription: (data: IDataTableauActeInscriptionSelectionne) => void;
 }
 
+export const EN_TETES_ACTE_INSCRIPTION_SELECTIONNE = [
+  {
+    cle: "nom",
+    libelle: "Nom"
+  },
+  {
+    cle: "autresNoms",
+    libelle: "Autres noms"
+  },
+  {
+    cle: "prenoms",
+    libelle: "Prénoms"
+  },
+  {
+    cle: "sexe",
+    libelle: "Sexe"
+  },
+  {
+    cle: "dateNaissance",
+    libelle: "Date de naissance"
+  },
+  {
+    cle: "lieuNaissance",
+    libelle: "Lieu de naissance"
+  },
+  {
+    cle: "nature",
+    libelle: "Nature"
+  },
+  {
+    cle: "reference",
+    libelle: "Référence"
+  },
+  {
+    cle: "typePJ",
+    libelle: "Type PJ"
+  },
+  {
+    cle: "actions",
+    libelle: ""
+  }
+];
+
 export const TableauActesInscriptionsSelectionnes: React.FC<ITableauActesInscriptionsSelectionnesProps> = props => {
-  const colonneIconeRetirerActeInscriptionParams: IColonneFontAwesomeIcone<IDataTableauActeInscriptionSelectionne, string> = {
-    getIdentifiant: data => data.idActeInscription,
-    style: {
-      width: "3rem"
-    }
-  };
+  const [pageActuelle, setPageActuelle] = useState(0);
 
-  const iconeRetirerActeInscriptionProps: ICelluleFontAwesomeIconeProps = {
-    icon: faTrashAlt,
-    title: getLibelle("Retirer cet acte ou inscription du projet"),
-    size: "lg",
-    className: "IconePoubelle"
-  };
-
-  const conteneurIconeRetirerActeInscriptionProps: IConteneurElementPropsPartielles<
-    IDataTableauActeInscriptionSelectionne,
-    string,
-    TMouseEventSurSVGSVGElement
-  > = {
-    handleInteractionUtilisateur: props.onClickBoutonRetirerActeInscription
-  };
-
-  const columnHeaderTableauActesInscriptionsSelectionnes: TableauTypeColumn[] = [
-    ...getColonnesTableauPersonnes().slice(ZERO, -UN),
-    ...getColonnesTableauDocuments().slice(ZERO, DEUX),
-    ...getColonnesTableauDocuments().splice(-UN, UN),
-    getColonneFontAwesomeIcone(
-      colonneIconeRetirerActeInscriptionParams,
-      iconeRetirerActeInscriptionProps,
-      conteneurIconeRetirerActeInscriptionProps
-    )
-  ];
+  const getIconeSuppression = (data: IDataTableauActeInscriptionSelectionne) => (
+    <FaTrashAlt
+      className="text-xl"
+      title="Retirer cet acte ou inscription du projet"
+      aria-label="Retirer cet acte ou inscription du projet"
+      onClick={() => props.onClickBoutonRetirerActeInscription(data)}
+    />
+  );
 
   return (
     <div className="ActesInscriptionsSelectionnesProjet">
       <div className="sousTitre">
-        <span>{getLibelle("Actes et inscriptions sélectionnés pour le projet")}</span>
+        <span>{"Actes et inscriptions sélectionnés pour le projet"}</span>
       </div>
-
-      <TableauRece
-        idKey={"idActeInscription"}
-        columnHeaders={columnHeaderTableauActesInscriptionsSelectionnes}
-        dataState={props.dataActesInscriptionsSelectionnes}
-        paramsTableau={{}}
-        onClickOnLine={() => {}}
-        messageAucunResultat={getLigneTableauVide("Aucun acte ou inscription sélectionné pour le projet.")}
-        nbLignesParPage={NB_LIGNES_PAR_PAGE_PERSONNE}
-        nbLignesParAppel={NB_LIGNES_PAR_APPEL_PERSONNE}
-        enChargement={props.enChargement}
+      <Tableau
+        enTetes={EN_TETES_ACTE_INSCRIPTION_SELECTIONNE}
+        lignes={props.dataActesInscriptionsSelectionnes.map(ligne => ({
+          cle: ligne.idPersonne,
+          nom: ligne.nom,
+          autresNoms: ligne.autresNoms,
+          prenoms: ligne.prenoms,
+          sexe: ligne.sexe,
+          dateNaissance: ligne.dateNaissance,
+          lieuNaissance: ligne.lieuNaissance,
+          nature: ligne.nature,
+          reference: ligne.reference,
+          typePJ: ligne.typePJ,
+          actions: getIconeSuppression(ligne)
+        }))}
+        messageAucuneLigne="Aucun acte ou inscription sélectionné pour le projet."
+        parametresPagination={{
+          pageActuelle: pageActuelle,
+          lignesParPage: NB_LIGNES_PAR_PAGE_PERSONNE,
+          totalLignes: props.dataActesInscriptionsSelectionnes.length,
+          onChangePage: () => {
+            setPageActuelle(pageActuelle + 1);
+          }
+        }}
       />
     </div>
   );

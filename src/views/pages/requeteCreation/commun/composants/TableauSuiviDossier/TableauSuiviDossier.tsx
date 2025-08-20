@@ -1,5 +1,4 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
@@ -19,7 +18,6 @@ import {
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
-import { ICelluleFontAwesomeIconeProps } from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/CelluleFontAwesomeIcone";
 import {
   IColonneFontAwesomeIcone,
   getColonneFontAwesomeIcone
@@ -56,14 +54,10 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
       opacity: 0
     }
   };
-  const iconeRetirerProjetActeProps: ICelluleFontAwesomeIconeProps = {
-    icon: faTrashAlt,
-    size: "lg",
-    className: "IconePoubelle"
-  };
+
   const columnHeaderTableauSuiviDossier: TableauTypeColumn[] = [
     ...getColonnesTableauSuiviDossier(),
-    getColonneFontAwesomeIcone(colonneIconeRetirerProjetActeParams, iconeRetirerProjetActeProps)
+    getColonneFontAwesomeIcone(colonneIconeRetirerProjetActeParams)
   ];
 
   // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

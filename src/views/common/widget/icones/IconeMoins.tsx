@@ -1,6 +1,5 @@
-import { faMinusCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { FaMinusCircle } from "react-icons/fa";
 import "./scss/Icones.scss";
 
 interface IconeMoinsProps {
@@ -10,12 +9,11 @@ interface IconeMoinsProps {
 
 export const IconeMoins: React.FC<IconeMoinsProps> = ({ onClick, title }) => {
   return (
-    <FontAwesomeIcon
-      icon={faMinusCircle}
-      size="sm"
-      className="IconeMoins"
+    <FaMinusCircle
+      className="IconeMoins text-sm"
       onClick={onClick}
       title={title}
+      aria-label={title}
     />
   );
 };

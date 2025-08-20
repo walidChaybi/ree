@@ -1,10 +1,9 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useContext, useState } from "react";
+import { FaPlusCircle } from "react-icons/fa";
 import { IAjouterAlerteFormValue, PopinAjouterAlertes } from "./contenu/PopinAjouterAlertes";
 
 interface BoutonAjouterAlerteProps {
@@ -43,10 +42,10 @@ export const BoutonAjouterAlerte: React.FC<BoutonAjouterAlerteProps> = ({ ajoute
 
   return (
     <div className="BoutonAjouterAlerte">
-      <FontAwesomeIcon
-        icon={faPlusCircle}
-        className={`IconeBoutonAjoutAlerte`}
-        title={"Ajouter une alerte"}
+      <FaPlusCircle
+        className="IconeBoutonAjoutAlerte"
+        title="Ajouter une alerte"
+        aria-label="Ajouter une alerte"
         onClick={onClick}
       />
       <PopinAjouterAlertes

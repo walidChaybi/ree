@@ -2,12 +2,12 @@ import { CONTENU, LIBELLE_OPTION } from "@composant/formulaire/ConstantesNomsFor
 import { OptionCourrier } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import SettingsBackupRestore from "@mui/icons-material/SettingsBackupRestore";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
+import { MdSettingsBackupRestore } from "react-icons/md";
 import * as Yup from "yup";
 import { useOptionsCourriersApiHook } from "../../hook/OptionsCourriersHook";
 import {
@@ -164,9 +164,13 @@ const OptionsCourrierForm: React.FC<OptionsCourrierSubFormProps> = props => {
               type="button"
               onClick={reinitialerContenu}
               disabled={reinitialiserDisabled(optionSelectionnee, props.optionsChoisies)}
-              title={"Rappel du modèle de l'option"}
+              title="Rappel du modèle de l'option"
+              aria-label="Rappel du modèle de l'option"
             >
-              <SettingsBackupRestore />
+              <MdSettingsBackupRestore
+                className="text-2xl"
+                aria-hidden
+              />
             </button>
           </div>
         </>

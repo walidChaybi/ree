@@ -1,13 +1,12 @@
-import { IconDefinition, faEnvelope, faGavel, faLandmark, faPlusCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 
 import { CONFIG_GET_NOMBRE_REQUETES } from "../../api/configurations/requete/GetNombreRequetesConfigApi";
 import { CONFIG_GET_NOMBRE_REQUETES_INFORMATION } from "../../api/configurations/requete/GetNombreRequetesInformationConfigApi";
 
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Droit } from "@model/agent/enum/Droit";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { FaEnvelope, FaGavel, FaLandmark, FaPlusCircle, FaSearch } from "react-icons/fa";
 import AccessibleAvecDroits from "../../composants/commun/accessibleAvecDroits/AccessibleAvecDroits";
 import Bouton from "../../composants/commun/bouton/Bouton";
 import useFetchApi from "../../hooks/api/FetchApiHook";
@@ -43,7 +42,7 @@ interface ILienAccueil {
 
 export interface IRangRubrique {
   libelle: string;
-  icone: IconDefinition;
+  icone: JSX.Element;
   liens: ILienAccueil[];
   auMoinsUnDesDroits: Droit[];
   droits?: Droit[];
@@ -52,7 +51,12 @@ export interface IRangRubrique {
 const getDonneesMenu = (nombreRequetes: number, nombreRequetesInformation: number): IRangRubrique[] => [
   {
     libelle: "Délivrance",
-    icone: faGavel,
+    icone: (
+      <FaGavel
+        className="text-5xl text-white"
+        aria-hidden
+      />
+    ),
     auMoinsUnDesDroits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC, Droit.CONSULTER],
     liens: [
       {
@@ -70,7 +74,12 @@ const getDonneesMenu = (nombreRequetes: number, nombreRequetesInformation: numbe
   },
   {
     libelle: "Établissement",
-    icone: faPlusCircle,
+    icone: (
+      <FaPlusCircle
+        className="text-5xl text-white"
+        aria-hidden
+      />
+    ),
     auMoinsUnDesDroits: [Droit.CREER_ACTE_ETABLI],
     liens: [
       {
@@ -88,7 +97,12 @@ const getDonneesMenu = (nombreRequetes: number, nombreRequetesInformation: numbe
   },
   {
     libelle: "Consulaire",
-    icone: faLandmark,
+    icone: (
+      <FaLandmark
+        className="text-5xl text-white"
+        aria-hidden
+      />
+    ),
     auMoinsUnDesDroits: [Droit.CONSULAIRE_ACCES_ESPACE_MES_REQUETES, Droit.CONSULAIRE_ACCES_ESPACE_REQUETES_DE_MON_SERVICE],
     liens: [
       {
@@ -105,7 +119,12 @@ const getDonneesMenu = (nombreRequetes: number, nombreRequetesInformation: numbe
   },
   {
     libelle: "Recherche",
-    icone: faSearch,
+    icone: (
+      <FaSearch
+        className="text-5xl text-white"
+        aria-hidden
+      />
+    ),
     auMoinsUnDesDroits: [Droit.CONSULTER, Droit.CONSULTER_ARCHIVES],
     liens: [
       {
@@ -128,7 +147,12 @@ const getDonneesMenu = (nombreRequetes: number, nombreRequetesInformation: numbe
   },
   {
     libelle: "Communication avec les usagers",
-    icone: faEnvelope,
+    icone: (
+      <FaEnvelope
+        className="text-5xl text-white"
+        aria-hidden
+      />
+    ),
     auMoinsUnDesDroits: [Droit.INFORMER_USAGER, Droit.ATTRIBUER_REQUETE],
     liens: [
       {
@@ -186,12 +210,7 @@ const PageAccueil: React.FC = () => {
           className="min-h-44 w-[23vw] select-none rounded-xl border border-solid border-bleu-transparent bg-blanc p-6 pb-3 text-white shadow-lg transition-colors duration-300"
         >
           <div className="mb-4 flex items-center gap-6">
-            <div className="grid aspect-square h-20 place-content-center rounded-md bg-bleu">
-              <FontAwesomeIcon
-                className="text-5xl text-white"
-                icon={element.icone}
-              />
-            </div>
+            <div className="grid aspect-square h-20 place-content-center rounded-md bg-bleu">{element.icone}</div>
             <h2 className="text-shadow m-0 break-words text-2xl font-semibold leading-tight text-bleu">{element.libelle}</h2>
           </div>
           {element.liens && (

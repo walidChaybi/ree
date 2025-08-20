@@ -1,7 +1,7 @@
 import { TNumeroRcRcaPacsForm } from "@model/form/commun/NumeroRcRcaPacsForm";
-import AddCircle from "@mui/icons-material/AddCircle";
 import { useField } from "formik";
 import { useMemo } from "react";
+import { MdAddCircle } from "react-icons/md";
 import BoutonIcon from "../bouton/BoutonIcon";
 import ChampRcRcaPacs from "./ChampNumeroRcRcaPacs";
 
@@ -37,6 +37,7 @@ const ChampNumeroRcRcaPacs: React.FC<IChampNumeroRcRcaPacsProps> = ({
             className="h-9 w-1/2"
             type="button"
             title="Ajouter un numéro"
+            aria-label="Ajouter un numéro"
             onClick={() =>
               champ.value?.nombreNumerosAffiches < tailleMax &&
               helper.setValue({ ...champ.value, nombreNumerosAffiches: champ.value?.nombreNumerosAffiches + 1 })
@@ -45,7 +46,7 @@ const ChampNumeroRcRcaPacs: React.FC<IChampNumeroRcRcaPacsProps> = ({
             styleBouton="secondaire"
           >
             <div className="flex items-center gap-4 px-2">
-              <AddCircle />
+              <MdAddCircle aria-hidden />
               <span className="font-marianne text-sm font-bold">{"Ajouter un numéro"}</span>
             </div>
           </BoutonIcon>

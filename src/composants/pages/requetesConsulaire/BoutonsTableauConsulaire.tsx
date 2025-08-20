@@ -1,7 +1,7 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
-import Add from "@mui/icons-material/Add";
 import { useContext, useMemo } from "react";
+import { MdAdd } from "react-icons/md";
 import LiensRECE from "../../../router/LiensRECE";
 import { INFO_PAGE_SAISIE_REQUETE_TRANSCRIPTION_COURRIER } from "../../../router/infoPages/InfoPagesEspaceConsulaire";
 import Bouton from "../../commun/bouton/Bouton";
@@ -26,7 +26,10 @@ const BoutonsTableauConsulaire: React.FC = () => {
           lienVers={LiensRECE.genererLien(INFO_PAGE_SAISIE_REQUETE_TRANSCRIPTION_COURRIER.url)}
         >
           <span className="flex items-center gap-1 normal-case">
-            <Add fontSize="small" />
+            <MdAdd
+              className="text-md"
+              aria-hidden
+            />
             {"Création suite transcription courrier"}
           </span>
         </Bouton>

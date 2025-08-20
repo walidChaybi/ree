@@ -1,6 +1,5 @@
-import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { FaExclamationTriangle } from "react-icons/fa";
 import "./scss/Icones.scss";
 
 interface IconeDangerProps {
@@ -10,12 +9,11 @@ interface IconeDangerProps {
 
 export const IconeDanger: React.FC<IconeDangerProps> = ({ onClick, title }) => {
   return (
-    <FontAwesomeIcon
-      icon={faExclamationTriangle}
-      size="sm"
-      className="IconeDanger"
+    <FaExclamationTriangle
+      className="IconeDanger text-sm"
       onClick={onClick}
       title={title}
+      aria-label={title}
     />
   );
 };

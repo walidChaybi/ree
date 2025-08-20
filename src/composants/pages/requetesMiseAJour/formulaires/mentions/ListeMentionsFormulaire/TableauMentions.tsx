@@ -1,8 +1,8 @@
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
-import Delete from "@mui/icons-material/Delete";
-import Edit from "@mui/icons-material/Edit";
+
 import { useFormikContext } from "formik";
 import { useEffect, useRef, useState } from "react";
+import { MdDelete, MdEdit } from "react-icons/md";
 import { List, arrayMove } from "react-movable";
 import { EEventState, useEventDispatch, useEventState } from "../../../../../../hooks/EventHook";
 import Bouton from "../../../../../commun/bouton/Bouton";
@@ -120,23 +120,25 @@ const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAna
               <div className="flex gap-3 px-2">
                 <BoutonIcon
                   title={`Modifier la ${Number(props.key) + 1}${props.key === 0 ? "ère" : "ème"} mention`}
+                  aria-label={`Modifier la ${Number(props.key) + 1}${props.key === 0 ? "ère" : "ème"} mention`}
                   onClick={() => {
                     modifierMention({ index: props.key ?? null, mention: value });
                     setModificationEnCours(true);
                   }}
                   disabled={modificationEnCours}
                 >
-                  <Edit />
+                  <MdEdit aria-hidden />
                 </BoutonIcon>
 
                 {values.mentions.length > 1 && (
                   <BoutonIcon
                     title={`Supprimer la ${Number(props.key) + 1}${props.key === 0 ? "ère" : "ème"} mention`}
+                    aria-label={`Supprimer la ${Number(props.key) + 1}${props.key === 0 ? "ère" : "ème"} mention`}
                     onClick={() => setIndexASupprimer(props.key ?? null)}
                     disabled={modificationEnCours}
                     danger
                   >
-                    <Delete />
+                    <MdDelete aria-hidden />
                   </BoutonIcon>
                 )}
               </div>

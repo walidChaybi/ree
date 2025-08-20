@@ -1,9 +1,8 @@
 import { TPrenomsForm } from "@model/form/commun/PrenomsForm";
-import AddCircle from "@mui/icons-material/AddCircle";
-import Delete from "@mui/icons-material/Delete";
 import { UN } from "@util/Utils";
 import { useField } from "formik";
 import { useMemo } from "react";
+import { MdAddCircle, MdDelete } from "react-icons/md";
 import BoutonIcon from "../bouton/BoutonIcon";
 import ChampTexte from "./ChampTexte";
 
@@ -28,6 +27,7 @@ const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({ cheminPrenoms, prefixePr
         <BoutonIcon
           type="button"
           title="Ajouter un prénom"
+          aria-label="Ajouter un prénom"
           onClick={() =>
             champ.value.nombrePrenomsAffiches < 15 &&
             helper.setValue({ ...champ.value, nombrePrenomsAffiches: champ.value.nombrePrenomsAffiches + 1 })
@@ -36,7 +36,7 @@ const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({ cheminPrenoms, prefixePr
           styleBouton="principal"
         >
           <div className="flex items-center gap-4 px-2">
-            <AddCircle />
+            <MdAddCircle aria-hidden />
             <span className="font-marianne text-sm font-bold">{"Ajouter un prénom"}</span>
           </div>
         </BoutonIcon>
@@ -54,6 +54,7 @@ const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({ cheminPrenoms, prefixePr
                   className="group absolute right-0 h-full rounded-l-none bg-transparent"
                   type="button"
                   title="Supprimer ce prénom"
+                  aria-label="Supprimer ce prénom"
                   onClick={() =>
                     helper.setValue({
                       ...champ.value,
@@ -69,7 +70,10 @@ const ChampsPrenoms: React.FC<IChampsPrenomsProps> = ({ cheminPrenoms, prefixePr
                   }
                   styleBouton="suppression"
                 >
-                  <Delete className="text-rouge group-hover:text-blanc group-focus-visible:text-blanc" />
+                  <MdDelete
+                    className="text-rouge group-hover:text-blanc group-focus-visible:text-blanc"
+                    aria-hidden
+                  />
                 </BoutonIcon>
               )
             }}

@@ -1,4 +1,3 @@
-import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { getColonnesTableauPersonnes, getLigneTableauVide } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
 import { getLibelle } from "@util/Utils";
 import { NB_LIGNES_PAR_APPEL_PERSONNE, NB_LIGNES_PAR_PAGE_PERSONNE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
@@ -6,7 +5,6 @@ import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import { IConteneurElementPropsPartielles } from "@widget/tableau/TableauRece/colonneElements/ConteneurElement";
 import { TMouseEventSurSVGSVGElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
-import { ICelluleFontAwesomeIconeProps } from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/CelluleFontAwesomeIcone";
 import {
   IColonneFontAwesomeIcone,
   getColonneFontAwesomeIcone
@@ -32,13 +30,6 @@ export const TableauPersonnesSelectionnees: React.FC<ITableauPersonnesSelectionn
     }
   };
 
-  const iconeRetirerPersonneProps: ICelluleFontAwesomeIconeProps = {
-    icon: faTrashAlt,
-    title: getLibelle("Retirer cette personne du projet"),
-    size: "lg",
-    className: "IconePoubelle"
-  };
-
   const conteneurIconeRetirerPersonneProps: IConteneurElementPropsPartielles<
     IDataTableauPersonneSelectionnee,
     string,
@@ -49,7 +40,7 @@ export const TableauPersonnesSelectionnees: React.FC<ITableauPersonnesSelectionn
 
   const columnHeaderTableauPersonnes: TableauTypeColumn[] = [
     ...getColonnesTableauPersonnes(),
-    getColonneFontAwesomeIcone(colonneIconeRetirerPersonneParams, iconeRetirerPersonneProps, conteneurIconeRetirerPersonneProps)
+    getColonneFontAwesomeIcone(colonneIconeRetirerPersonneParams, conteneurIconeRetirerPersonneProps)
   ];
 
   return (

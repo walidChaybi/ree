@@ -1,5 +1,5 @@
-import NavigateNext from "@mui/icons-material/NavigateNext";
 import { useEffect, useState } from "react";
+import { MdNavigateNext } from "react-icons/md";
 import { Link } from "react-router";
 import { URL_ACCUEIL } from "../../../router/infoPages/InfoPagesBase";
 import GestionnaireFilAriane, { EVENT_MISE_A_JOUR_FIL_ARIANE, IElementsFilAriane } from "../../../utils/GestionnaireFilAriane";
@@ -33,7 +33,10 @@ const FilAriane: React.FC = () => {
         {TITRE_ACCUEIL}
       </Link>
 
-      <NavigateNext fontSize="small" />
+      <MdNavigateNext
+        className="text-lg"
+        aria-label="Page suivante"
+      />
 
       {elementsFilAriane.niveau1 && !elementsFilAriane.niveau2 && <span>{elementsFilAriane.niveau1.titre}</span>}
 
@@ -48,7 +51,12 @@ const FilAriane: React.FC = () => {
         </Link>
       )}
 
-      {elementsFilAriane.niveau1 && elementsFilAriane.niveau2 && <NavigateNext fontSize="small" />}
+      {elementsFilAriane.niveau1 && elementsFilAriane.niveau2 && (
+        <MdNavigateNext
+          className="text-lg"
+          aria-label="Page suivante"
+        />
+      )}
 
       {elementsFilAriane.niveau2 && <span>{elementsFilAriane.niveau2.titre}</span>}
     </div>

@@ -1,12 +1,12 @@
 /* v8 ignore start A TESTER 03/25 */
 
 import { IParentFormRCTC, ISaisieRequeteRCTCForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
-import AddCircle from "@mui/icons-material/AddCircle";
-import Delete from "@mui/icons-material/Delete";
+
 import { Option } from "@util/Type";
 import { genererArrondissements } from "@util/Utils";
 import { useFormikContext } from "formik";
 import { useMemo } from "react";
+import { MdAddCircle, MdDelete } from "react-icons/md";
 import BoutonIcon from "../../../commun/bouton/BoutonIcon";
 import ChampDate from "../../../commun/champs/ChampDate";
 import ChampListeDeroulante from "../../../commun/champs/ChampListeDeroulante";
@@ -160,7 +160,7 @@ const BlocParents: React.FC = () => {
           danger={values.parents.avecParent2}
         >
           <div className="flex items-center gap-4 px-2">
-            {values.parents.avecParent2 ? <Delete /> : <AddCircle />}
+            {values.parents.avecParent2 ? <MdDelete aria-hidden /> : <MdAddCircle aria-hidden />}
             <span className="font-marianne text-sm font-bold">
               {values.parents.avecParent2 ? "Retirer un parent" : "Ajouter un parent"}
             </span>

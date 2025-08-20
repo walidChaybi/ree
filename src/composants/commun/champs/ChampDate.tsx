@@ -1,6 +1,6 @@
-import Replay from "@mui/icons-material/Replay";
 import { useField } from "formik";
 import { useEffect, useMemo, useRef } from "react";
+import { MdReplay } from "react-icons/md";
 import { messagesErreur } from "../../../utils/SchemaValidation";
 import BoutonIcon from "../bouton/BoutonIcon";
 import { CHAMP_EN_ERREUR } from "../formulaire/ScrollVersErreur";
@@ -276,10 +276,14 @@ const ChampDate: React.FC<TChampDateProps> = ({
             className="ml-1"
             styleBouton="suppression"
             title="Réinitialiser la date"
+            aria-label="Réinitialiser la date"
             iconeSeule
             onClick={resetDate}
           >
-            <Replay />
+            <MdReplay
+              className="text-2xl"
+              aria-hidden
+            />
           </BoutonIcon>
         )}
       </div>

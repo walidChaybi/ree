@@ -1,27 +1,20 @@
-import { SizeProp } from "@fortawesome/fontawesome-svg-core";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { FaPlusCircle } from "react-icons/fa";
 import "./scss/Icones.scss";
 
 interface IconePlusProps {
   onClick?: (e: any) => void;
   title?: string;
-  size?: SizeProp;
+  className?: string;
 }
 
-export const IconePlus: React.FC<IconePlusProps> = ({
-  onClick,
-  title,
-  size
-}) => {
+export const IconePlus: React.FC<IconePlusProps> = ({ onClick, title, className }) => {
   return (
-    <FontAwesomeIcon
-      icon={faPlusCircle}
-      size={size ? size : "sm"}
-      className="IconePlus"
+    <FaPlusCircle
+      className={`IconePlus ${className}`}
       onClick={onClick}
       title={title}
+      aria-label={title}
     />
   );
 };

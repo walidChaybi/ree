@@ -1,4 +1,4 @@
-import Print from "@mui/icons-material/Print";
+import { MdPrint } from "react-icons/md";
 import PolicesEtStylesRECE from "../../../utils/PolicesEtStylesRECE";
 
 const imprimerDocument = () => {
@@ -37,10 +37,14 @@ const ConteneurDocument: React.FC<React.PropsWithChildren<IConteneurDocumentProp
           <button
             className="min-w-0 bg-transparent px-1.5 py-0.5 text-bleu-sombre transition-colors hover:text-bleu focus-visible:text-bleu"
             title="Imprimer"
+            aria-label="Imprimer"
             type="button"
             onClick={imprimerDocument}
           >
-            <Print fontSize="medium" />
+            <MdPrint
+              className="text-lg"
+              aria-hidden
+            />
           </button>
         </div>
       )}

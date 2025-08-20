@@ -1,9 +1,8 @@
-import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Option, Options } from "@util/Type";
-import { DIX_MILLE, getLibelle } from "@util/Utils";
+import { DIX_MILLE } from "@util/Utils";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import UploadFileField from "@widget/formulaire/champsSaisie/UploadFileField";
@@ -11,6 +10,7 @@ import { getTableauPiecesJointes } from "@widget/formulaire/piecesJointes/Pieces
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import { useEffect, useState } from "react";
+import { MdOutlineAttachFile } from "react-icons/md";
 import { Base64File, FILE_TYPES } from "../../../../../../utils/FileUtils";
 
 interface ContenuModalProps {
@@ -50,24 +50,24 @@ const ContenuModalAjoutPieceJustificative: React.FC<ContenuModalAjoutPieceJustif
 
   return (
     <div>
-      <DialogTitle className="modalTitle">{getLibelle("Ajouter une pièce justificative")}</DialogTitle>
+      <DialogTitle className="modalTitle">Ajouter une pièce justificative</DialogTitle>
       <DialogContent>
         <div className="inputsConteneur">
           <SelectField
             options={props.listeCategoriePJ}
             name="categoriePJ"
-            label={getLibelle("Catégorie de la pièce justificative")}
+            label="Catégorie de la pièce justificative"
           />
           <UploadFileField
             className="boutonUploadFile"
             name="file"
             iconBouton={
-              <AttachFileOutlinedIcon
-                fontSize="small"
-                className="iconeTrombone"
+              <MdOutlineAttachFile
+                className="iconeTrombone text-xl"
+                aria-hidden
               />
             }
-            libelleBouton={getLibelle("Sélectionner un fichier")}
+            libelleBouton="Sélectionner un fichier"
             hideInput={true}
             acceptFileTypes={FILE_TYPES}
             maxSizeKB={DIX_MILLE}
@@ -81,12 +81,12 @@ const ContenuModalAjoutPieceJustificative: React.FC<ContenuModalAjoutPieceJustif
             onClick={onSubmitForm}
             disabled={!formulaireEstChange}
           >
-            {getLibelle("Valider")}
+            Valider
           </BoutonDoubleSubmit>
         </div>
       </DialogContent>
       <DialogActions>
-        <BoutonDoubleSubmit onClick={onClose}>{getLibelle("Fermer")}</BoutonDoubleSubmit>
+        <BoutonDoubleSubmit onClick={onClose}>Fermer</BoutonDoubleSubmit>
       </DialogActions>
     </div>
   );

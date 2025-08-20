@@ -1,5 +1,5 @@
-import PlayArrow from "@mui/icons-material/PlayArrow";
 import React, { useMemo, useState } from "react";
+import { MdPlayArrow } from "react-icons/md";
 import Bouton, { TStyleBouton } from "./Bouton";
 
 type TPointAncrageMenu = "haut-gauche" | "haut-droite" | "bas-gauche" | "bas-droite";
@@ -41,8 +41,9 @@ const BoutonListeDeroulante: React.FC<React.PropsWithChildren<IBoutonListeDeroul
           >
             <div className="flex items-center justify-center gap-2">
               {titre}
-              <PlayArrow
-                className={`!transition-transform duration-1000 ${pointAncrageMenu.includes("haut") ? "group-hover:-rotate-90" : "group-hover:rotate-90"}`}
+              <MdPlayArrow
+                className={`text-2xl !transition-transform duration-1000 ${pointAncrageMenu.includes("haut") ? "group-hover:-rotate-90" : "group-hover:rotate-90"}`}
+                aria-hidden
               />
             </div>
           </Bouton>

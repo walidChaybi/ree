@@ -1,8 +1,6 @@
-import { faChevronCircleLeft, faChevronCircleRight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React from "react";
+import { FaChevronCircleLeft, FaChevronCircleRight } from "react-icons/fa";
 import "./scss/BoutonSuivPrec.scss";
 
 interface BoutonSuivPrecProps {
@@ -25,8 +23,9 @@ export const BoutonSuivPrec: React.FC<BoutonSuivPrecProps> = ({ direction, index
         id={`button-navigation-${direction}`}
         disabled={isDisabled(direction, index, max)}
         title={direction === "left" ? "Précédent" : "Suivant"}
+        aria-label={direction === "left" ? "Précédent" : "Suivant"}
       >
-        <FontAwesomeIcon icon={direction === "left" ? faChevronCircleLeft : faChevronCircleRight} />
+        {direction === "left" ? <FaChevronCircleLeft aria-hidden /> : <FaChevronCircleRight aria-hidden />}
       </BoutonDoubleSubmit>
     </div>
   );

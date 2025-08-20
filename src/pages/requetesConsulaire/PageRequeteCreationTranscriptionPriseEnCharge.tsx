@@ -6,9 +6,9 @@ import { IRequete } from "@model/requete/IRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import Edit from "@mui/icons-material/Edit";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { useContext, useEffect, useMemo, useState } from "react";
+import { MdEdit } from "react-icons/md";
 import { useLocation, useNavigate, useParams } from "react-router";
 import Bouton from "../../composants/commun/bouton/Bouton";
 import PageChargeur from "../../composants/commun/chargeurs/PageChargeur";
@@ -158,7 +158,11 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
                 className="flex w-fit"
                 lienVers={LiensRECE.genererLien(INFO_PAGE_MODIFICATION_REQUETE_TRANSCRIPTION_COURRIER.url, { idRequeteParam: requete.id })}
               >
-                <Edit className="mr-2" /> {"MODIFIER LA REQUÊTE"}
+                <MdEdit
+                  className="mr-2"
+                  aria-hidden
+                />{" "}
+                {"MODIFIER LA REQUÊTE"}
               </Bouton>
             )}
           </div>

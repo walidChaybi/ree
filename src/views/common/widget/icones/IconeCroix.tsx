@@ -1,6 +1,5 @@
-import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { FaTimesCircle } from "react-icons/fa";
 import "./scss/Icones.scss";
 
 interface IconeCroixProps {
@@ -10,10 +9,8 @@ interface IconeCroixProps {
 
 export const IconeCroix: React.FC<IconeCroixProps> = ({ onClick, title }) => {
   return (
-    <FontAwesomeIcon
-      icon={faTimesCircle}
-      size="xs"
-      className="IconeCroix"
+    <FaTimesCircle
+      className="IconeCroix text-sm"
       onClick={onClick}
       title={title}
       aria-label={title}

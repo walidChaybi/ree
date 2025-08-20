@@ -36,7 +36,9 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
           class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
         >
           <button
+            aria-label="Étendre la section"
             class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
+            title="Étendre la section"
             type="button"
           >
             <span
@@ -46,11 +48,19 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
             </span>
             <svg
               aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-1umw9bq-MuiSvgIcon-root"
-              data-testid="ExpandMoreIcon"
-              focusable="false"
+              class="absolute right-2 text-2xl transition-transform duration-200 ease-in rotate-180"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
               viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
               <path
                 d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
               />
@@ -115,13 +125,21 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
                               Prise en charge
                               <svg
                                 aria-hidden="true"
-                                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium ml-1 h-5 w-5 css-1umw9bq-MuiSvgIcon-root"
-                                data-testid="PendingActionsIcon"
-                                focusable="false"
+                                class="ml-1 h-5 w-5"
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
                                 viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
                               >
                                 <path
-                                  d="M17 12c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5m1.65 7.35L16.5 17.2V14h1v2.79l1.85 1.85zM18 3h-3.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H6c-1.1 0-2 .9-2 2v15c0 1.1.9 2 2 2h6.11c-.59-.57-1.07-1.25-1.42-2H6V5h2v3h8V5h2v5.08c.71.1 1.38.31 2 .6V5c0-1.1-.9-2-2-2m-6 2c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1"
+                                  d="M0 0h24v24H0z"
+                                  fill="none"
+                                />
+                                <path
+                                  d="M17 12c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm1.65 7.35L16.5 17.2V14h1v2.79l1.85 1.85-.7.71zM18 3h-3.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H6c-1.1 0-2 .9-2 2v15c0 1.1.9 2 2 2h6.11a6.743 6.743 0 0 1-1.42-2H6V5h2v3h8V5h2v5.08c.71.1 1.38.31 2 .6V5c0-1.1-.9-2-2-2zm-6 2c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"
                                 />
                               </svg>
                             </div>
@@ -500,7 +518,9 @@ pays
             class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
           >
             <button
+              aria-label="Étendre la section"
               class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
+              title="Étendre la section"
               type="button"
             >
               <span
@@ -510,11 +530,19 @@ pays
               </span>
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-1umw9bq-MuiSvgIcon-root"
-                data-testid="ExpandMoreIcon"
-                focusable="false"
+                class="absolute right-2 text-2xl transition-transform duration-200 ease-in rotate-180"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
                 viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
                 <path
                   d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                 />
@@ -689,6 +717,7 @@ pays
                             class="pt-[1.6rem]"
                           >
                             <button
+                              aria-label="Ajouter un prénom"
                               class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out  bg-bleu-sombre text-blanc hover:bg-bleu focus-visible:bg-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-gris-sombre disabled:cursor-not-allowed"
                               title="Ajouter un prénom"
                               type="button"
@@ -698,13 +727,20 @@ pays
                               >
                                 <svg
                                   aria-hidden="true"
-                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                                  data-testid="AddCircleIcon"
-                                  focusable="false"
+                                  fill="currentColor"
+                                  height="1em"
+                                  stroke="currentColor"
+                                  stroke-width="0"
                                   viewBox="0 0 24 24"
+                                  width="1em"
+                                  xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m5 11h-4v4h-2v-4H7v-2h4V7h2v4h4z"
+                                    d="M0 0h24v24H0z"
+                                    fill="none"
+                                  />
+                                  <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
                                   />
                                 </svg>
                                 <span
@@ -1004,7 +1040,9 @@ pays
             class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
           >
             <button
+              aria-label="Étendre la section"
               class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
+              title="Étendre la section"
               type="button"
             >
               <span
@@ -1014,11 +1052,19 @@ pays
               </span>
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-1umw9bq-MuiSvgIcon-root"
-                data-testid="ExpandMoreIcon"
-                focusable="false"
+                class="absolute right-2 text-2xl transition-transform duration-200 ease-in rotate-180"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
                 viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
                 <path
                   d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                 />
@@ -1099,6 +1145,7 @@ pays
                             class="pt-[1.6rem]"
                           >
                             <button
+                              aria-label="Ajouter un prénom"
                               class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out  bg-bleu-sombre text-blanc hover:bg-bleu focus-visible:bg-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-gris-sombre disabled:cursor-not-allowed"
                               title="Ajouter un prénom"
                               type="button"
@@ -1108,13 +1155,20 @@ pays
                               >
                                 <svg
                                   aria-hidden="true"
-                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                                  data-testid="AddCircleIcon"
-                                  focusable="false"
+                                  fill="currentColor"
+                                  height="1em"
+                                  stroke="currentColor"
+                                  stroke-width="0"
                                   viewBox="0 0 24 24"
+                                  width="1em"
+                                  xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m5 11h-4v4h-2v-4H7v-2h4V7h2v4h4z"
+                                    d="M0 0h24v24H0z"
+                                    fill="none"
+                                  />
+                                  <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
                                   />
                                 </svg>
                                 <span
@@ -1766,6 +1820,7 @@ pays
                             class="pt-[1.6rem]"
                           >
                             <button
+                              aria-label="Ajouter un prénom"
                               class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out  bg-bleu-sombre text-blanc hover:bg-bleu focus-visible:bg-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-gris-sombre disabled:cursor-not-allowed"
                               title="Ajouter un prénom"
                               type="button"
@@ -1775,13 +1830,20 @@ pays
                               >
                                 <svg
                                   aria-hidden="true"
-                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-                                  data-testid="AddCircleIcon"
-                                  focusable="false"
+                                  fill="currentColor"
+                                  height="1em"
+                                  stroke="currentColor"
+                                  stroke-width="0"
                                   viewBox="0 0 24 24"
+                                  width="1em"
+                                  xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <path
-                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m5 11h-4v4h-2v-4H7v-2h4V7h2v4h4z"
+                                    d="M0 0h24v24H0z"
+                                    fill="none"
+                                  />
+                                  <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
                                   />
                                 </svg>
                                 <span
@@ -2141,7 +2203,9 @@ pays
             class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
           >
             <button
+              aria-label="Étendre la section"
               class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
+              title="Étendre la section"
               type="button"
             >
               <span
@@ -2151,11 +2215,19 @@ pays
               </span>
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-1umw9bq-MuiSvgIcon-root"
-                data-testid="ExpandMoreIcon"
-                focusable="false"
+                class="absolute right-2 text-2xl transition-transform duration-200 ease-in rotate-180"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
                 viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
                 <path
                   d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                 />
@@ -2240,7 +2312,9 @@ pays
             class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
           >
             <button
+              aria-label="Étendre la section"
               class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
+              title="Étendre la section"
               type="button"
             >
               <span
@@ -2250,11 +2324,19 @@ pays
               </span>
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-1umw9bq-MuiSvgIcon-root"
-                data-testid="ExpandMoreIcon"
-                focusable="false"
+                class="absolute right-2 text-2xl transition-transform duration-200 ease-in rotate-180"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
                 viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
                 <path
                   d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                 />
@@ -2302,7 +2384,9 @@ pays
             class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
           >
             <button
+              aria-label="Étendre la section"
               class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
+              title="Étendre la section"
               type="button"
             >
               <span
@@ -2312,11 +2396,19 @@ pays
               </span>
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-1umw9bq-MuiSvgIcon-root"
-                data-testid="ExpandMoreIcon"
-                focusable="false"
+                class="absolute right-2 text-2xl transition-transform duration-200 ease-in rotate-180"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
                 viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
                 <path
                   d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                 />
@@ -2602,7 +2694,9 @@ pays
             class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
           >
             <button
+              aria-label="Étendre la section"
               class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
+              title="Étendre la section"
               type="button"
             >
               <span
@@ -2612,11 +2706,19 @@ pays
               </span>
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-1umw9bq-MuiSvgIcon-root"
-                data-testid="ExpandMoreIcon"
-                focusable="false"
+                class="absolute right-2 text-2xl transition-transform duration-200 ease-in rotate-180"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
                 viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
                 <path
                   d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                 />
@@ -2664,7 +2766,9 @@ pays
             class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
           >
             <button
+              aria-label="Étendre la section"
               class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
+              title="Étendre la section"
               type="button"
             >
               <span
@@ -2674,11 +2778,19 @@ pays
               </span>
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-1umw9bq-MuiSvgIcon-root"
-                data-testid="ExpandMoreIcon"
-                focusable="false"
+                class="absolute right-2 text-2xl transition-transform duration-200 ease-in rotate-180"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
                 viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
                 <path
                   d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
                 />

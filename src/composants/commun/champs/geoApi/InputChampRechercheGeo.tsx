@@ -1,5 +1,5 @@
-import { Search } from "@mui/icons-material";
 import { AutocompleteRenderInputParams } from "@mui/material/Autocomplete";
+import { MdSearch } from "react-icons/md";
 
 export const InputChampRecherche: React.FC<AutocompleteRenderInputParams & { enErreur: boolean; error?: string }> = ({
   inputProps,
@@ -17,9 +17,9 @@ export const InputChampRecherche: React.FC<AutocompleteRenderInputParams & { enE
           enErreur ? "border-rouge focus-within:ring-rouge" : "border-gris focus-within:ring-bleu"
         }`}
       >
-        <Search
-          className="text-gris"
-          fontSize="small"
+        <MdSearch
+          className="text-xl text-gris"
+          aria-hidden
         />
         <input
           className="flex-grow border-none bg-transparent p-0 pl-1 read-only:bg-gris-clair focus:border-none focus:outline-none focus:ring-0"

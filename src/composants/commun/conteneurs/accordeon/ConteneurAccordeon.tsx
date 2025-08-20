@@ -1,5 +1,5 @@
-import ExpandMore from "@mui/icons-material/ExpandMore";
 import React, { useMemo, useState } from "react";
+import { MdExpandMore } from "react-icons/md";
 
 interface IConteneurAccordeonProps {
   titre: string | React.ReactNode;
@@ -34,10 +34,15 @@ const ConteneurAccordeon: React.FC<React.PropsWithChildren<IConteneurAccordeonPr
         <button
           className="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
           type="button"
+          title="Étendre la section"
+          aria-label="Étendre la section"
           onClick={() => setEstOuvert(!estOuvert)}
         >
           <span className="truncate">{titre}</span>
-          <ExpandMore className={`absolute right-2 transition-transform duration-200 ease-in ${estOuvert ? "rotate-180" : ""}`} />
+          <MdExpandMore
+            className={`absolute right-2 text-2xl transition-transform duration-200 ease-in ${estOuvert ? "rotate-180" : ""}`}
+            aria-hidden
+          />
         </button>
       ) : (
         <div className="font-marianne-bold relative m-0 truncate bg-bleu px-4 py-1 text-lg text-blanc">{titre}</div>

@@ -2,11 +2,10 @@
 /* Lien GitHub du composant https://github.com/azmenak/material-ui-nested-menu-item */
 /********************************************************************************** */
 
-import ArrowLeft from "@mui/icons-material/ArrowLeft";
-import ArrowRight from "@mui/icons-material/ArrowRight";
 import Menu from "@mui/material/Menu";
 import MenuItem, { MenuItemProps } from "@mui/material/MenuItem";
 import React, { Ref, useImperativeHandle, useRef, useState } from "react";
+import { MdArrowLeft, MdArrowRight } from "react-icons/md";
 
 interface NestedMenuItemProps extends Omit<MenuItemProps, "button"> {
   /**
@@ -139,9 +138,9 @@ const NestedMenuItem = React.forwardRef<HTMLLIElement | null, NestedMenuItemProp
         className={className}
         ref={menuItemRef}
       >
-        {openDirection === "left" && <ArrowLeft />}
+        {openDirection === "left" && <MdArrowLeft aria-hidden />}
         {label}
-        {openDirection === "right" && <ArrowRight />}
+        {openDirection === "right" && <MdArrowRight aria-hidden />}
       </MenuItem>
       <Menu
         // Set pointer events to 'none' to prevent the invisible Popover div

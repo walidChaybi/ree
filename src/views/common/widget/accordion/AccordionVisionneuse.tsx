@@ -1,13 +1,14 @@
 import { FenetrePiecesJointes } from "@composant/piecesJointes/FenetrePiecesJointes";
-import { faExternalLink, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
 import { IMajLibellePjParams, useMiseAJourLibellePjApiHook } from "@hook/requete/creation/MiseAJourLibellePjApiHook";
 import { useGetPieceJointeApi } from "@hook/requete/piecesJointes/GetPieceJointeHook";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import { getLibelle, getValeurOuVide } from "@util/Utils";
+import { getValeurOuVide } from "@util/Utils";
 import { VisionneuseDocument } from "@widget/visionneuseDocument/VisionneuseDocument";
 import React, { useEffect, useState } from "react";
+import { FaExternalLinkAlt } from "react-icons/fa";
+import { FaSquareXmark } from "react-icons/fa6";
 import { AccordionTitle } from "./AccordionTitle";
 import { BoutonAccordionTitle } from "./BoutonAccordionTitle";
 import "./scss/AccordionVisionneuse.scss";
@@ -77,9 +78,21 @@ export const AccordionVisionneuse: React.FC<AccordionVisionneuseProps> = ({
             autoriseOuvertureFenetreExt ? (
               <BoutonAccordionTitle
                 onClickBouton={toggleFenetreExtState}
-                iconeBouton={fenetreExtOuverte ? faSquareXmark : faExternalLink}
-                descriptionBouton={getLibelle(fenetreExtOuverte ? "Fermer la fenetre externe" : "Ouvrir PJ dans une fenêtre externe")}
-                classNameBouton={fenetreExtOuverte ? "BoutonFermetureFenetreExt" : "BoutonOuvertureFenetreExt"}
+                iconeBouton={
+                  fenetreExtOuverte ? (
+                    <FaSquareXmark
+                      className="BoutonAccordionTitle BoutonFermetureFenetreExt"
+                      title="Fermer la fenêtre externe"
+                      aria-label="Fermer la fenêtre externe"
+                    />
+                  ) : (
+                    <FaExternalLinkAlt
+                      className="BoutonAccordionTitle BoutonOuvertureFenetreExt"
+                      title="Ouvrir PJ dans une fenêtre externe"
+                      aria-label="Ouvrir PJ dans une fenêtre externe"
+                    />
+                  )
+                }
               />
             ) : undefined
           }

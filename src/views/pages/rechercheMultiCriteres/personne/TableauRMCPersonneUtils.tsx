@@ -7,7 +7,6 @@ import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { HeaderTableauRMCPersonne } from "@model/rmc/headerTableau/HeaderTableauRMCPersonne";
-import ReportIcon from "@mui/icons-material/Report";
 import DateUtils from "@util/DateUtils";
 import { Options } from "@util/Type";
 import { formatNoms, formatPrenoms, getValeurOuVide, TROIS } from "@util/Utils";
@@ -15,6 +14,7 @@ import { getColonneBoutonMenu, IColonneBoutonMenuParams } from "@widget/tableau/
 import { IConteneurElementPropsPartielles } from "@widget/tableau/TableauRece/colonneElements/ConteneurElement";
 import { TMouseEventSurHTMLButtonElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
+import { MdReport } from "react-icons/md";
 import { IActeInscriptionRMCPersonne, IPersonneRMCPersonne, IRMCPersonneResultat } from "../../../common/hook/rmcAuto/IRMCPersonneResultat";
 import { commonHeadersTableauRMC } from "../acteInscription/resultats/RMCTableauCommun";
 import { IDataTableauRMCPersonne } from "./IDataTableauRMCPersonne";
@@ -87,7 +87,10 @@ export function getColonnesTableauDocuments(): TableauTypeColumn[] {
 export function getLigneTableauVide(message: string): JSX.Element {
   return (
     <>
-      <ReportIcon />
+      <MdReport
+        className="text-2xl"
+        aria-hidden
+      />
       <div>{message}</div>
     </>
   );

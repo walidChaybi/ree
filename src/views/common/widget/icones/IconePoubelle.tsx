@@ -1,6 +1,5 @@
-import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { FaTrashAlt } from "react-icons/fa";
 import "./scss/Icones.scss";
 
 interface IconePoubelleProps {
@@ -8,17 +7,13 @@ interface IconePoubelleProps {
   title?: string;
 }
 
-export const IconePoubelle: React.FC<IconePoubelleProps> = ({
-  onClick,
-  title
-}) => {
+export const IconePoubelle: React.FC<IconePoubelleProps> = ({ onClick, title }) => {
   return (
-    <FontAwesomeIcon
-      icon={faTrashAlt}
-      size="sm"
-      className="IconePoubelle"
+    <FaTrashAlt
+      className="IconePoubelle text-sm"
       onClick={onClick}
       title={title}
+      aria-label={title}
     />
   );
 };

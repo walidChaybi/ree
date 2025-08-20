@@ -1,10 +1,10 @@
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
-import CloseIcon from "@mui/icons-material/Close";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import React from "react";
+import { MdClose } from "react-icons/md";
 import BoutonIcon from "../../../../composants/commun/bouton/BoutonIcon";
 import { RMCActeInscription } from "../../../../composants/pages/rmc/formulaire/RMCActeInscription";
 import { RMCContextProvider } from "../../../../contexts/RMCContextProvider";
@@ -35,13 +35,13 @@ export const PopinNouvelleRMCActeInscription: React.FC<PopinNouvelleRMCActeInscr
     >
       <DialogContent>
         <BoutonIcon
-          aria-label="bouton-fermeture-popin-rmc"
+          aria-label="Fermer popin rmc"
           className="absolute right-4 top-3 w-[38,25px]"
           styleBouton="suppression"
           onClick={handleClose}
           iconeSeule
         >
-          <CloseIcon />
+          <MdClose aria-hidden />
         </BoutonIcon>
         {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_UTILISER_NOUVELLE_RMC) ? (
           <RMCContextProvider>

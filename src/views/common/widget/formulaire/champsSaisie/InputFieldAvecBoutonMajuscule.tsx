@@ -1,23 +1,18 @@
-import { faTextHeight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { enMajuscule } from "@util/Utils";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
-import {
-  InputField,
-  InputFieldProps
-} from "@widget/formulaire/champsSaisie/InputField";
+import { InputField, InputFieldProps } from "@widget/formulaire/champsSaisie/InputField";
 import { sortieChampSupprimerEspacesInutiles } from "@widget/formulaire/utils/ControlesUtil";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
+import { FaTextHeight } from "react-icons/fa";
 import "./scss/InputFieldAvecBoutonMajuscule.scss";
 
 type InputFieldAvecBoutonMajusculeProps = InputFieldProps & {
   boutons?: JSX.Element | false;
 };
 
-type BoutonChampEnMajusculeProps = FormikComponentProps &
-  Pick<InputFieldProps, "name">;
+type BoutonChampEnMajusculeProps = FormikComponentProps & Pick<InputFieldProps, "name">;
 
 const BoutonChampEnMajuscule: React.FC<BoutonChampEnMajusculeProps> = props => {
   const champEnMajuscule = () => {
@@ -32,21 +27,20 @@ const BoutonChampEnMajuscule: React.FC<BoutonChampEnMajusculeProps> = props => {
       onClick={champEnMajuscule}
       aria-label="Bouton passer le champ en majuscule"
     >
-      <FontAwesomeIcon icon={faTextHeight} />
+      <FaTextHeight
+        className="text-lg"
+        aria-hidden
+      />
     </BoutonDoubleSubmit>
   );
 };
 
-const InputFieldAvecBoutonMajuscule: React.FC<
-  InputFieldAvecBoutonMajusculeProps & FormikComponentProps
-> = props => {
+const InputFieldAvecBoutonMajuscule: React.FC<InputFieldAvecBoutonMajusculeProps & FormikComponentProps> = props => {
   return (
     <div className="InputFieldMajuscule">
       <InputField
         {...props}
-        onBlur={e =>
-          sortieChampSupprimerEspacesInutiles(e, props.formik, props.name)
-        }
+        onBlur={e => sortieChampSupprimerEspacesInutiles(e, props.formik, props.name)}
       />
       <div className="BoutonsConteneur">
         <BoutonChampEnMajuscule {...props} />
@@ -55,6 +49,4 @@ const InputFieldAvecBoutonMajuscule: React.FC<
   );
 };
 
-export default connect<InputFieldAvecBoutonMajusculeProps>(
-  InputFieldAvecBoutonMajuscule
-);
+export default connect<InputFieldAvecBoutonMajusculeProps>(InputFieldAvecBoutonMajuscule);

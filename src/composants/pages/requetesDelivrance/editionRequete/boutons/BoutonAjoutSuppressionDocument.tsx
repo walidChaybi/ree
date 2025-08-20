@@ -6,10 +6,9 @@ import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import Add from "@mui/icons-material/Add";
-import Clear from "@mui/icons-material/Clear";
 import { getParamsCreationEC } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopieUtils";
 import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { MdAdd, MdClear } from "react-icons/md";
 import { EditionDelivranceContext } from "../../../../../contexts/EditionDelivranceContextProvider";
 import Bouton from "../../../../commun/bouton/Bouton";
 import PageChargeur from "../../../../commun/chargeurs/PageChargeur";
@@ -113,9 +112,20 @@ const BoutonAjoutSuppressionDocument: React.FC<IBoutonAjoutSuppressionDocumentPr
           className={`${styleBouton} flex items-center justify-center border-dashed group-hover:text-blanc ${ajoutDocument ? "group-hover:bg-bleu" : "group-hover:bg-rouge"}`}
           styleBouton={ajoutDocument ? "secondaire" : "suppression"}
           title={ajoutDocument ? "Ajouter un document" : `Supprimer ${documentsDelivrance.secondaire?.nom}`}
+          aria-label={ajoutDocument ? "Ajouter un document" : `Supprimer ${documentsDelivrance.secondaire?.nom}`}
           onClick={() => (ajoutDocument ? setMenuOuvert(!menuOuvert) : supprimerDocument())}
         >
-          {ajoutDocument ? <Add /> : <Clear />}
+          {ajoutDocument ? (
+            <MdAdd
+              className="text-2xl"
+              aria-label="Ajouter"
+            />
+          ) : (
+            <MdClear
+              className="text-2xl"
+              aria-label="Supprimer"
+            />
+          )}
         </Bouton>
 
         {ajoutDocument && menuOuvert && (

@@ -1,8 +1,7 @@
-import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { FaCalendarAlt } from "react-icons/fa";
 import "../scss/ReceDatePicker.scss";
 import { customHeaderRenderer } from "./CustomHeader";
 
@@ -42,12 +41,11 @@ const ReceDatePicker: React.FC<ReceDatePickerProps> = props => {
 class IconCalendar extends React.Component<{ value?: any; onClick?: any }> {
   render() {
     return (
-      <FontAwesomeIcon
-        icon={faCalendarAlt}
-        size="lg"
-        className="IconeCalendar"
+      <FaCalendarAlt
+        className="IconeCalendar text-2xl"
         onClick={this.props.onClick}
         title="Calendrier"
+        aria-label="Calendrier"
       />
     );
   }

@@ -1,11 +1,8 @@
 import { CONFIG_GET_NOMBRE_REQUETE } from "@api/configurations/requete/compteur/GetNombreRequeteConfigApi";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import AccountCircleOutlined from "@mui/icons-material/AccountCircleOutlined";
-import Close from "@mui/icons-material/Close";
-import InfoOutlined from "@mui/icons-material/InfoOutlined";
-import Logout from "@mui/icons-material/Logout";
 import { useContext, useEffect, useState } from "react";
+import { MdClose, MdInfoOutline, MdLogout, MdOutlineAccountCircle } from "react-icons/md";
 import { useNavigate } from "react-router";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import LiensRECE from "../../../router/LiensRECE";
@@ -42,12 +39,16 @@ const MenuUtilisateur: React.FC = () => {
         className="h-12 min-w-0 bg-transparent pl-4 pr-2"
         type="button"
         title="Menu utilisateur"
+        aria-label="Menu utilisateur"
         onClick={event => {
           event.stopPropagation();
           setMenuOuvert(true);
         }}
       >
-        <AccountCircleOutlined fontSize="large" />
+        <MdOutlineAccountCircle
+          className="text-4xl"
+          aria-hidden
+        />
       </button>
 
       <aside
@@ -57,7 +58,10 @@ const MenuUtilisateur: React.FC = () => {
         <div className="grid gap-6">
           <div className="flex justify-between">
             <div className="flex gap-4 pt-3.5">
-              <AccountCircleOutlined fontSize="large" />
+              <MdOutlineAccountCircle
+                className="text-4xl"
+                aria-hidden
+              />
               <div className="text-start">
                 <div className="text-2xl font-bold">{utilisateurConnecte.prenomNom}</div>
                 {utilisateurConnecte.fonction && (
@@ -67,9 +71,14 @@ const MenuUtilisateur: React.FC = () => {
             </div>
             <button
               className="h-12 w-12 min-w-0 bg-transparent"
+              title="Fermer"
+              aria-label="Fermer"
               onClick={() => setMenuOuvert(false)}
             >
-              <Close fontSize="large" />
+              <MdClose
+                className="text-4xl"
+                aria-hidden
+              />
             </button>
           </div>
 
@@ -86,7 +95,10 @@ const MenuUtilisateur: React.FC = () => {
             }
           >
             <span>{"Déconnexion"}</span>
-            <Logout />
+            <MdLogout
+              className="text-2xl"
+              aria-hidden
+            />
           </button>
         </div>
 
@@ -98,7 +110,10 @@ const MenuUtilisateur: React.FC = () => {
             target="__blank"
             rel="noopener"
           >
-            <InfoOutlined />
+            <MdInfoOutline
+              className="text-2xl"
+              aria-hidden
+            />
             <span>{"Nouveautés du RECE"}</span>
           </a>
           <div className="text-center italic">{`RECE - version ${process.env.VERSION ?? ""} - ${process.env.DATE_BUILD ?? ""}`}</div>
@@ -144,7 +159,7 @@ const MenuUtilisateur: React.FC = () => {
       title="Déconnexion"
     >
       <span>{"Déconnexion"}</span>
-      <Logout />
+      <MdLogout aria-hidden />
     </button>
   );
 };

@@ -1,7 +1,7 @@
-import ArrowBack from "@mui/icons-material/ArrowBack";
 import Autocomplete from "@mui/material/Autocomplete";
 import { ErrorMessage, useField, useFormikContext } from "formik";
 import { Fragment, useEffect, useMemo, useState } from "react";
+import { MdArrowBack } from "react-icons/md";
 import { ITypeMentionDisponible, TMentionForm } from "../MentionForm";
 
 interface IChampTypeMentionProps {
@@ -147,7 +147,12 @@ const ChampTypeMention: React.FC<IChampTypeMentionProps> = ({ name, typesMention
               {...propsOption}
             >
               <div className="flex items-center gap-1">
-                {Boolean(listeOuverte) && !option.parents.parent1 && <ArrowBack fontSize="small" />}
+                {Boolean(listeOuverte) && !option.parents.parent1 && (
+                  <MdArrowBack
+                    className="text-md"
+                    aria-hidden
+                  />
+                )}
                 {option.libelle}
               </div>
             </li>

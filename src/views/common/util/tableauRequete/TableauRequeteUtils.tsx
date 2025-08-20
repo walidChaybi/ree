@@ -9,13 +9,10 @@ import { TRequeteAssociee } from "@model/rmc/requete/RequeteAssociee";
 import { TRequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 import { TitulaireRequeteAssociee } from "@model/rmc/requete/TitulaireRequeteAssociee";
 import { TitulaireRequeteTableauRMC } from "@model/rmc/requete/TitulaireRequeteTableauRMC";
-import ClearIcon from "@mui/icons-material/Clear";
-import ErrorIcon from "@mui/icons-material/Error";
-import LabelIcon from "@mui/icons-material/Label";
-import ReportIcon from "@mui/icons-material/Report";
 import Box from "@mui/material/Box";
 import { getLigneTableauVide } from "@widget/tableau/TableUtils";
 import { useContext } from "react";
+import { MdClear, MdError, MdLabel, MdReport } from "react-icons/md";
 import "./scss/RequeteUtils.scss";
 
 const prioriteDeLaRequete = (priorite: keyof typeof EPriorite): string => {
@@ -37,9 +34,11 @@ export const RenderIconePrioriteRequeteRMC = ({ priorite }: TRequeteTableauRMC):
       <Box
         title={EPriorite[priorite]}
         aria-label={EPriorite[priorite]}
-        aria-hidden={true}
       >
-        <LabelIcon className={prioriteDeLaRequete(priorite)} />
+        <MdLabel
+          className={prioriteDeLaRequete(priorite)}
+          aria-hidden
+        />
       </Box>
     );
   } else {
@@ -47,9 +46,11 @@ export const RenderIconePrioriteRequeteRMC = ({ priorite }: TRequeteTableauRMC):
       <Box
         title={"Erreur priorité"}
         aria-label={"Erreur priorité"}
-        aria-hidden={true}
       >
-        <ClearIcon className="ClearIcon" />
+        <MdClear
+          className="ClearIcon"
+          aria-hidden
+        />
       </Box>
     );
   }
@@ -64,9 +65,11 @@ export const RenderObservationsNumeroRequete = (data: TRequeteTableauRMC): JSX.E
         <Box
           title={observations.join("\n")}
           aria-label={observations.join("\n")}
-          aria-hidden={true}
         >
-          <ReportIcon className="ReportIcon" />
+          <MdReport
+            className="ReportIcon text-2xl"
+            aria-hidden
+          />
         </Box>
       )}
     </>
@@ -154,9 +157,11 @@ export const RenderIconeAlerteRequete = (data: any): JSX.Element => {
       <Box
         title={AlerteRequete.RECEPTION_MISE_A_JOUR_SDANF.libelle}
         aria-label={AlerteRequete.RECEPTION_MISE_A_JOUR_SDANF.libelle}
-        aria-hidden={true}
       >
-        <ErrorIcon className="alerteSdanfIcone" />
+        <MdError
+          className="alerteSdanfIcone text-4xl"
+          aria-hidden
+        />
       </Box>
     );
   } else return <></>;

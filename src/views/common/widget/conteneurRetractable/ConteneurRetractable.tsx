@@ -1,7 +1,6 @@
-import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
-import ArrowForwardIos from "@mui/icons-material/ArrowForwardIos";
 import { formatLigne } from "@util/Utils";
 import React, { useMemo, useState } from "react";
+import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 import "./scss/ConteneurRetractable.scss";
 
 interface TitreProps {
@@ -26,7 +25,19 @@ const ConteneurRetractable: React.FC<React.PropsWithChildren<TitreProps>> = ({ i
         onClick={() => setConteneurFerme(!conteneurFerme)}
       >
         <span className={conteneurFerme ? "vertical" : ""}>{props.titre}</span>
-        <div className="icon">{props.estADroite ? <ArrowBackIos /> : <ArrowForwardIos />}</div>
+        <div className="icon">
+          {props.estADroite ? (
+            <MdArrowBackIos
+              className="text-2xl"
+              aria-hidden
+            />
+          ) : (
+            <MdArrowForwardIos
+              className="text-2xl"
+              aria-hidden
+            />
+          )}
+        </div>
       </div>
       <div className="body">{!conteneurFerme ? props.children : null}</div>
     </div>

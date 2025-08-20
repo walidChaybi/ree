@@ -1,8 +1,7 @@
-import Warning from "@mui/icons-material/Warning";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-import { getLibelle } from "@util/Utils";
 import React from "react";
+import { MdWarning } from "react-icons/md";
 import "./scss/BoutonVerrouillage.scss";
 
 interface BoutonVerrouillageProps {
@@ -12,14 +11,12 @@ interface BoutonVerrouillageProps {
 }
 
 export const BoutonVerrouillage: React.FC<BoutonVerrouillageProps> = props => {
-  const nomAction = getLibelle(
-    props.estVerrouille ? "Déverrouiller" : "Verrouiller"
-  );
+  const nomAction = props.estVerrouille ? "Déverrouiller" : "Verrouiller";
 
   return (
     <div className="BoutonVerrouillage">
       <FormControlLabel
-        title={getLibelle(`Cliquer pour ${nomAction.toLowerCase()}`)}
+        title={`Cliquer pour ${nomAction.toLowerCase()}`}
         control={
           <Switch
             checked={!props.estVerrouille}
@@ -27,11 +24,12 @@ export const BoutonVerrouillage: React.FC<BoutonVerrouillageProps> = props => {
             color="primary"
           />
         }
-        label={getLibelle(
-          props.libelle ? `${nomAction} ${props.libelle}` : nomAction
-        )}
+        label={props.libelle ? `${nomAction} ${props.libelle}` : nomAction}
       />
-      <Warning />
+      <MdWarning
+        className="text-2xl"
+        aria-hidden
+      />
     </div>
   );
 };

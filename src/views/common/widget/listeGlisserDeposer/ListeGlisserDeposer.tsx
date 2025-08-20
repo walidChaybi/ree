@@ -1,13 +1,11 @@
 import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import DeleteOutlined from "@mui/icons-material/DeleteOutlined";
-import DragHandle from "@mui/icons-material/DragHandle";
-import EditOutlined from "@mui/icons-material/EditOutlined";
 import Checkbox from "@mui/material/Checkbox";
 import Tooltip from "@mui/material/Tooltip";
-import { finirAvec3petitsPoints, getLibelle } from "@util/Utils";
+import { finirAvec3petitsPoints } from "@util/Utils";
 import React, { useCallback } from "react";
+import { MdDeleteOutline, MdDragHandle, MdEdit } from "react-icons/md";
 import "./scss/ListeGlisserDeposer.scss";
 
 const CARACTERES_MAXIMUM_LIBELLE_LISTE = 120;
@@ -75,17 +73,19 @@ export const ListeGlisserDeposer: React.FC<ListeGlisserDeposerProps> = props => 
           {afficherHandle(props) && (
             <span
               ref={props.useDragHandle ? setActivatorNodeRef : null}
-              title={getLibelle("Cliquer pour glisser/déposer")}
+              title="Cliquer pour glisser/déposer"
+              aria-label="Cliquer pour glisser/déposer"
               className="handler"
               {...attributes}
               {...listeners}
             >
-              <DragHandle />
+              <MdDragHandle aria-hidden />
             </span>
           )}
           {props.deverrouille && props.handleCheckbox && (
             <Checkbox
-              title={getLibelle("Cliquer pour sélectionner")}
+              title="Cliquer pour sélectionner"
+              aria-label="Cliquer pour sélectionner"
               checked={item.checkbox}
               onClick={e => {
                 if (props.handleCheckbox) {
@@ -98,25 +98,27 @@ export const ListeGlisserDeposer: React.FC<ListeGlisserDeposerProps> = props => 
           )}
 
           {props.onClickSupprimer && item.estSupprimable && (
-            <DeleteOutlined
+            <MdDeleteOutline
               onClick={() => {
                 if (props.onClickSupprimer) {
                   props.onClickSupprimer(item.index);
                 }
               }}
               className="IconeSupprimer"
-              titleAccess={getLibelle("Supprimer la mention")}
+              title="Supprimer la mention"
+              aria-label="Supprimer la mention"
             />
           )}
           {props.onClickModifier && item.estModifiable && (
-            <EditOutlined
+            <MdEdit
               onClick={() => {
                 if (props.onClickModifier) {
                   props.onClickModifier(item.index);
                 }
               }}
               className="IconeModifier"
-              titleAccess={getLibelle("Modifier la mention")}
+              title="Modifier la mention"
+              aria-label="Modifier la mention"
             />
           )}
           {props.libellesSontTitres ? (

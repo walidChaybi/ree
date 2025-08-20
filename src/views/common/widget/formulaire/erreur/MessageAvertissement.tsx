@@ -1,19 +1,19 @@
-import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FaExclamationTriangle } from "react-icons/fa";
 import "./scss/Erreur.scss";
 
 interface IAvertissementMessageProps {
   afficherMessage: boolean;
 }
 
-export const MessageAvertissement: React.FC<
-  React.PropsWithChildren<IAvertissementMessageProps>
-> = props => {
+export const MessageAvertissement: React.FC<React.PropsWithChildren<IAvertissementMessageProps>> = props => {
   return (
     <>
       {props.afficherMessage && (
         <div className="WarningBlock">
-          <FontAwesomeIcon icon={faExclamationTriangle} size="xs" />{" "}
+          <FaExclamationTriangle
+            className="text-xs"
+            aria-label="Avertissement"
+          />{" "}
           {props.children}
         </div>
       )}

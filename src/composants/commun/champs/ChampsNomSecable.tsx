@@ -1,8 +1,8 @@
 import { ObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
-import ArrowBack from "@mui/icons-material/ArrowBack";
 import { DEUX, UN } from "@util/Utils";
 import { FormikErrors, FormikValues, useFormikContext } from "formik";
 import { useEffect, useState } from "react";
+import { MdArrowBack } from "react-icons/md";
 import BoutonIcon from "../bouton/BoutonIcon";
 import ChampCaseACocher from "./ChampCaseACocher";
 import ChampTexte from "./ChampTexte";
@@ -142,11 +142,15 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
                   className={`group absolute right-0 top-0 flex h-full w-8 items-center justify-center rounded-l-none hover:text-white disabled:bg-transparent disabled:text-gris-desactive disabled:opacity-30`}
                   type="button"
                   title="Déplacer le dernier vocable"
+                  aria-label="Déplacer le dernier vocable"
                   onClick={() => deplacerVocable(false)}
                   disabled={tailleNomPartie1 < DEUX}
                 >
                   <div className={`flex transform items-center transition-transform duration-200 ease-in group-hover:translate-x-1`}>
-                    <ArrowBack className="rotate-180" />
+                    <MdArrowBack
+                      className="rotate-180"
+                      aria-hidden
+                    />
                   </div>
                 </BoutonIcon>
               )
@@ -163,11 +167,12 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
                   className={`group absolute left-0 top-0 flex h-full w-8 items-center justify-center rounded-r-none hover:text-white disabled:bg-transparent disabled:text-gris-desactive disabled:opacity-30`}
                   type="button"
                   title="Déplacer le premier vocable"
+                  aria-label="Déplacer le premier vocable"
                   onClick={() => deplacerVocable(true)}
                   disabled={tailleNomPartie2 < DEUX}
                 >
                   <div className={`left-4 flex transform transition-transform duration-200 ease-in group-hover:-translate-x-1`}>
-                    <ArrowBack />
+                    <MdArrowBack aria-hidden />
                   </div>
                 </BoutonIcon>
               ),

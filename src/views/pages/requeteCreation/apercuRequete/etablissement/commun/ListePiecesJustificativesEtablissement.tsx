@@ -4,15 +4,12 @@ import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
 import { typeFctRenommePieceJustificative } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
 import { Options } from "@util/Type";
-import { estRenseigne, getLibelle } from "@util/Utils";
+import { estRenseigne } from "@util/Utils";
 import { AccordionVisionneuse } from "@widget/accordion/AccordionVisionneuse";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { IconePlus } from "@widget/icones/IconePlus";
-import {
-  ListeGlisserDeposer,
-  ListeItem
-} from "@widget/listeGlisserDeposer/ListeGlisserDeposer";
+import { ListeGlisserDeposer, ListeItem } from "@widget/listeGlisserDeposer/ListeGlisserDeposer";
 import React, { useEffect, useState } from "react";
 import { ModaleAjoutPieceJustificativeRequeteCreation } from "./ModalAjoutPieceJustificative";
 import "./scss/ListePiecesJustificativesEtablissement.scss";
@@ -24,9 +21,10 @@ interface ListePiecesJustificativesEtablissementProps {
   rechargerRequete?: () => void;
 }
 
-export const ListePiecesJustificativesEtablissement: React.FC<
-  ListePiecesJustificativesEtablissementProps
-> = ({ autoriseOuvertureFenetreExt = false, ...props }) => {
+export const ListePiecesJustificativesEtablissement: React.FC<ListePiecesJustificativesEtablissementProps> = ({
+  autoriseOuvertureFenetreExt = false,
+  ...props
+}) => {
   const [documentPJTries, setDocumentPjTries] = useState<IDocumentPJ[]>([]);
   const [estModaleOuverte, setEstModaleOuverte] = useState<boolean>(false);
 
@@ -34,10 +32,7 @@ export const ListePiecesJustificativesEtablissement: React.FC<
     if (props.requete?.documentsPj) {
       let nouveauxDocumentPJTries;
       if (estRenseigne(documentPJTries)) {
-        nouveauxDocumentPJTries = majLibellesPiecesJustificatives(
-          documentPJTries,
-          props.requete.documentsPj
-        );
+        nouveauxDocumentPJTries = majLibellesPiecesJustificatives(documentPJTries, props.requete.documentsPj);
       } else {
         nouveauxDocumentPJTries = [...props.requete.documentsPj];
       }
@@ -49,24 +44,12 @@ export const ListePiecesJustificativesEtablissement: React.FC<
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.requete]);
 
-  const setNouveauLibellePieceJointe = (
-    idDocumentPJ: string,
-    idPieceJustificative: string,
-    nouveauLibelle: string
-  ) => {
-    const pieceJTrouvee = DocumentPJ.getPieceJustificative(
-      documentPJTries,
-      idDocumentPJ,
-      idPieceJustificative
-    );
+  const setNouveauLibellePieceJointe = (idDocumentPJ: string, idPieceJustificative: string, nouveauLibelle: string) => {
+    const pieceJTrouvee = DocumentPJ.getPieceJustificative(documentPJTries, idDocumentPJ, idPieceJustificative);
     if (pieceJTrouvee) {
       pieceJTrouvee.nouveauLibelleFichierPJ = nouveauLibelle;
       setDocumentPjTries([...documentPJTries]);
-      props.onRenommePieceJustificative(
-        idPieceJustificative,
-        nouveauLibelle,
-        idDocumentPJ
-      );
+      props.onRenommePieceJustificative(idPieceJustificative, nouveauLibelle, idDocumentPJ);
     }
   };
 
@@ -80,26 +63,20 @@ export const ListePiecesJustificativesEtablissement: React.FC<
         estModifiable: false,
         sousElement: (
           <>
-            {document.piecesJustificatives.map(
-              (piece: IPieceJustificativeCreation, index) => (
-                <AccordionVisionneuse
-                  key={piece.id}
-                  idDocumentAAfficher={piece.id}
-                  titre={piece.nouveauLibelleFichierPJ}
-                  titreOrigine={piece.nom}
-                  typePiece={TypePieceJointe.PIECE_JUSTIFICATIVE}
-                  numRequete={props.requete?.numero}
-                  setTitreActuel={(nouveauLibelle: string) => {
-                    setNouveauLibellePieceJointe(
-                      document.id,
-                      piece.id,
-                      nouveauLibelle
-                    );
-                  }}
-                  autoriseOuvertureFenetreExt={autoriseOuvertureFenetreExt}
-                />
-              )
-            )}
+            {document.piecesJustificatives.map((piece: IPieceJustificativeCreation, index) => (
+              <AccordionVisionneuse
+                key={piece.id}
+                idDocumentAAfficher={piece.id}
+                titre={piece.nouveauLibelleFichierPJ}
+                titreOrigine={piece.nom}
+                typePiece={TypePieceJointe.PIECE_JUSTIFICATIVE}
+                numRequete={props.requete?.numero}
+                setTitreActuel={(nouveauLibelle: string) => {
+                  setNouveauLibellePieceJointe(document.id, piece.id, nouveauLibelle);
+                }}
+                autoriseOuvertureFenetreExt={autoriseOuvertureFenetreExt}
+              />
+            ))}
           </>
         )
       })
@@ -128,11 +105,14 @@ export const ListePiecesJustificativesEtablissement: React.FC<
   return (
     <span className="PiecesJustificativesContainer">
       <div className="IconePlusContainer">
-        <BoutonDoubleSubmit onClick={ouvrirModal} className="BoutonPlus">
-          {getLibelle("Ajouter un fichier")}
+        <BoutonDoubleSubmit
+          onClick={ouvrirModal}
+          className="BoutonPlus"
+        >
+          {"Ajouter un fichier"}
           <IconePlus
-            size={"2x"}
-            title={getLibelle("Ajouter une pièce justificatives")}
+            className="text-lg"
+            title={"Ajouter une pièce justificatives"}
             onClick={ouvrirModal}
           />
         </BoutonDoubleSubmit>
@@ -169,17 +149,10 @@ export const ListePiecesJustificativesEtablissement: React.FC<
   }
 };
 
-function majLibellesPiecesJustificatives(
-  documentsPJAMettreAJour: IDocumentPJ[],
-  documentsPJReference: IDocumentPJ[]
-) {
+function majLibellesPiecesJustificatives(documentsPJAMettreAJour: IDocumentPJ[], documentsPJReference: IDocumentPJ[]) {
   documentsPJAMettreAJour.forEach(documentPJAMettreAJour => {
     documentPJAMettreAJour.piecesJustificatives.forEach(pjAMettreAJour => {
-      const pjReference = DocumentPJ.getPieceJustificative(
-        documentsPJReference,
-        documentPJAMettreAJour.id,
-        pjAMettreAJour.id
-      );
+      const pjReference = DocumentPJ.getPieceJustificative(documentsPJReference, documentPJAMettreAJour.id, pjAMettreAJour.id);
       if (pjReference) {
         pjAMettreAJour.libelle = pjReference.libelle;
       }

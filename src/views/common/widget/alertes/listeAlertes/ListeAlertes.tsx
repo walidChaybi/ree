@@ -1,12 +1,11 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { Alerte, IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import React, { useCallback, useContext, useState } from "react";
+import { FaTrashAlt } from "react-icons/fa";
 import { ConfirmationPopin } from "../../popin/ConfirmationPopin";
 import { PopinSupprimerAlerte } from "./contenu/PopinSupprimerAlerte";
 import "./scss/ListeAlertes.scss";
@@ -67,19 +66,19 @@ export const ListeAlertes: React.FC<ListeAlertesProps> = ({ alertes, displayRefe
   return (
     <>
       <div className="ListeAlertes">
-        {alertes?.map((alerte: IAlerte, idx: number): JSX.Element => {
+        {alertes?.map((alerte: IAlerte): JSX.Element => {
           return (
             <div
-              key={`alerte-${idx}`}
+              key={alerte.id}
               className={alerte?.codeCouleur}
               title={alerte?.complementDescription}
             >
               {displayReference ? Alerte.toReferenceString(alerte, utilisateurs) : Alerte.toAlertString(alerte, utilisateurs)}
               {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) && (
-                <FontAwesomeIcon
-                  icon={faTrashAlt}
+                <FaTrashAlt
                   className="IconeBoutonSupprimerAlerte"
-                  title={"Supprimer l'alerte"}
+                  title="Supprimer l'alerte"
+                  aria-label="Supprimer l'alerte"
                   onClick={() => onClick(alerte)}
                 />
               )}

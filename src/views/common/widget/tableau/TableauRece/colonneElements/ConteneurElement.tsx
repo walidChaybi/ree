@@ -1,7 +1,6 @@
-import InfoIcon from "@mui/icons-material/Info";
-import WarningIcon from "@mui/icons-material/Warning";
 import { PropsPartielles } from "@util/Utils";
 import React, { PropsWithChildren, useEffect, useState } from "react";
+import { MdInfo, MdWarning } from "react-icons/md";
 import { ConteneurElementContext } from "./ConteneurElementContext";
 import "./scss/ColonneElements.scss";
 
@@ -61,8 +60,18 @@ const ConteneurElement = <TData, TIdentifiant, TEvenement extends React.Syntheti
         title={estDesactive ? props.messageInfoBulleEstDesactive : ""}
       >
         {props.children}
-        {afficheAvertissement && <WarningIcon className="WarningIcon" />}
-        {estDesactive && props.messageInfoBulleEstDesactive && <InfoIcon className="InfoIcon" />}
+        {afficheAvertissement && (
+          <MdWarning
+            className="WarningIcon"
+            aria-hidden
+          />
+        )}
+        {estDesactive && props.messageInfoBulleEstDesactive && (
+          <MdInfo
+            className="InfoIcon"
+            aria-hidden
+          />
+        )}
       </div>
     </ConteneurElementContext.Provider>
   );

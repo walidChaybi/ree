@@ -1,16 +1,24 @@
-import ReportIcon from "@mui/icons-material/Report";
 import DateUtils, { FormatDate } from "@util/DateUtils";
 import { Dayjs } from "dayjs";
+import { MdReport } from "react-icons/md";
 
 export type SortOrder = "ASC" | "DESC";
 
 type DayJsInput = string | number | Date | Dayjs;
 
 export function descendingDateComparator<T>(a: T, b: T, orderBy: keyof T) {
-  if (DateUtils.dayjsAvecFormat(b[orderBy] as DayJsInput, FormatDate.DDMMYYYY).isBefore(DateUtils.dayjsAvecFormat(a[orderBy] as DayJsInput, FormatDate.DDMMYYYY))) {
+  if (
+    DateUtils.dayjsAvecFormat(b[orderBy] as DayJsInput, FormatDate.DDMMYYYY).isBefore(
+      DateUtils.dayjsAvecFormat(a[orderBy] as DayJsInput, FormatDate.DDMMYYYY)
+    )
+  ) {
     return -1;
   }
-  if (DateUtils.dayjsAvecFormat(b[orderBy] as DayJsInput, FormatDate.DDMMYYYY).isAfter(DateUtils.dayjsAvecFormat(a[orderBy] as DayJsInput, FormatDate.DDMMYYYY))) {
+  if (
+    DateUtils.dayjsAvecFormat(b[orderBy] as DayJsInput, FormatDate.DDMMYYYY).isAfter(
+      DateUtils.dayjsAvecFormat(a[orderBy] as DayJsInput, FormatDate.DDMMYYYY)
+    )
+  ) {
     return 1;
   }
   return 0;
@@ -18,7 +26,8 @@ export function descendingDateComparator<T>(a: T, b: T, orderBy: keyof T) {
 
 export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   const isDate =
-    DateUtils.dayjsAvecFormat(a[orderBy] as DayJsInput, FormatDate.DDMMYYYY).isValid() && DateUtils.dayjsAvecFormat(b[orderBy] as DayJsInput, FormatDate.DDMMYYYY).isValid();
+    DateUtils.dayjsAvecFormat(a[orderBy] as DayJsInput, FormatDate.DDMMYYYY).isValid() &&
+    DateUtils.dayjsAvecFormat(b[orderBy] as DayJsInput, FormatDate.DDMMYYYY).isValid();
   if (isDate) {
     return descendingDateComparator(a, b, orderBy);
   } else {
@@ -119,7 +128,10 @@ export function getSortOrder(columnKey: string, sortOrderBy: string, sortOrder: 
 export function getLigneTableauVide(message: string): JSX.Element {
   return (
     <>
-      <ReportIcon />
+      <MdReport
+        className="text-2xl"
+        aria-hidden
+      />
       <div>{message}</div>
     </>
   );

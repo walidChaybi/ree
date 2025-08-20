@@ -1,7 +1,5 @@
 import { ListePiecesJointes } from "@composant/piecesJointes/ListePiecesJointes";
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -10,6 +8,7 @@ import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificat
 import { getUrlWithParam } from "@util/route/UrlUtil";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useContext, useState } from "react";
+import { FaEdit } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import FenetreExterne from "../../../../../../../composants/commun/conteneurs/FenetreExterne";
 import LiensRECE from "../../../../../../../router/LiensRECE";
@@ -99,9 +98,9 @@ export const ResumeRequete: React.FC<ResumeRequeteProps> = props => {
                 onClick={onModificationRequete}
                 aria-label="Modifier"
               >
-                <FontAwesomeIcon
-                  icon={faEdit}
+                <FaEdit
                   className="iconModifierRequete"
+                  aria-hidden
                 />
                 {"Modifier la requête"}
               </BoutonDoubleSubmit>

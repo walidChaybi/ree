@@ -1,7 +1,4 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ICreationObservationParams, useCreationObservationApi } from "@hook/observation/CreationObservationApiHook";
 import { ISuppressionObservationParams, useSuppressionObservationApi } from "@hook/observation/SuppressionObservationApiHook";
 import { IObservation, Observation } from "@model/requete/IObservation";
@@ -10,6 +7,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { BoutonAccordionTitle } from "@widget/accordion/BoutonAccordionTitle";
 import React, { useContext, useEffect, useState } from "react";
+import { FaPlusCircle, FaTrashAlt } from "react-icons/fa";
 import AfficherMessage from "../../../../utils/AfficherMessage";
 import { IAjouterObservationFormValue, OBSERVATION, PopinAjouterObservation } from "./contenu/PopinAjouterObservation";
 import "./scss/Suivis.scss";
@@ -138,9 +136,13 @@ export const SuiviObservationsRequete: React.FC<SuiviObservationsRequeteProps> =
         expandedPossible={observations?.length > 0}
         bouton={
           <BoutonAccordionTitle
-            iconeBouton={faPlusCircle}
-            descriptionBouton={"Ajouter une observation"}
-            classNameBouton={"BoutonAjouter"}
+            iconeBouton={
+              <FaPlusCircle
+                className="BoutonAccordionTitle BoutonAjouter"
+                title="Ajouter une observation"
+                aria-label="Ajouter une observation"
+              />
+            }
             onClickBouton={onClickBouton}
           />
         }
@@ -160,10 +162,10 @@ export const SuiviObservationsRequete: React.FC<SuiviObservationsRequeteProps> =
                 >
                   {`${Observation.getTexte(el)} - ${Observation.getDate(el)} ${el.trigramme !== "RECE Système" ? getTrigramme(el) : ""}`}
                 </div>
-                <FontAwesomeIcon
-                  icon={faTrashAlt}
+                <FaTrashAlt
                   className="IconeSupprimer"
-                  title={"Supprimer l'observation"}
+                  title="Supprimer l'observation"
+                  aria-label="Supprimer l'observation"
                   onClick={() => onClickSupprimer(el)}
                 />
               </ListItemText>

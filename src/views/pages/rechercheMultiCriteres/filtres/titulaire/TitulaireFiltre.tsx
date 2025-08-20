@@ -1,6 +1,5 @@
 import { ANNEE, JOUR, MOIS } from "@composant/formulaire/ConstantesNomsForm";
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
-import SwapHoriz from "@mui/icons-material/SwapHoriz";
 import IconButton from "@mui/material/IconButton";
 import { UN, ZERO, rempliAGaucheAvecZero } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
@@ -12,6 +11,7 @@ import { traiteEspace } from "@widget/formulaire/utils/ControlesUtil";
 import { ComponentFiltreProps, FormikComponentProps, reinitialiserChamps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
+import { MdSwapHoriz } from "react-icons/md";
 import * as Yup from "yup";
 import { ASTERISQUE_PRECEDE_DEUX, CARACTERES_POST_ASTERISQUE, CaracteresAutorisesRecherche } from "../../../../../ressources/Regex";
 import "../scss/FiltreRMC.scss";
@@ -127,12 +127,12 @@ const TitulaireFiltre: React.FC<TitulaireFiltreProps> = props => {
             />
 
             <IconButton
-              aria-label="inverser nom et prénom"
+              aria-label="Inverser nom et prénom"
               className="BtnNomPrenom"
               onClick={switchNomPrenom}
               tabIndex={-1}
             >
-              <SwapHoriz />
+              <MdSwapHoriz aria-hidden />
             </IconButton>
             <InputField
               name={withNamespace(props.nomFiltre, PRENOM)}

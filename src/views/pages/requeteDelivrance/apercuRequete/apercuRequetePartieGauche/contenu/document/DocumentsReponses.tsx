@@ -1,8 +1,6 @@
 import { useGetDocumentReponseApi } from "@hook/DocumentReponseHook";
 import { DocumentReponse, IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import Image from "@mui/icons-material/Image";
-import PictureAsPdf from "@mui/icons-material/PictureAsPdf";
 import Avatar from "@mui/material/Avatar";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -11,6 +9,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { getIdDocumentReponseAAfficher } from "@util/RequetesUtils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import React, { useCallback, useEffect, useState } from "react";
+import { MdImage, MdPictureAsPdf } from "react-icons/md";
 import { FenetreDocumentReponse } from "./FenetreDocumentReponse";
 import "./scss/DocumentsReponses.scss";
 
@@ -92,12 +91,18 @@ export const DocumentsReponses: React.FC<IDocumentsReponsesProps> = ({ requete, 
             >
               <ListItemAvatar>
                 {el.mimeType === "application/pdf" ? (
-                  <Avatar title={"Fichier au format PDF"}>
-                    <PictureAsPdf />
+                  <Avatar
+                    title="Fichier au format PDF"
+                    aria-label="Fichier au format PDF"
+                  >
+                    <MdPictureAsPdf aria-hidden />
                   </Avatar>
                 ) : (
-                  <Avatar title={"Image au format PNG"}>
-                    <Image />
+                  <Avatar
+                    title="Image au format PNG"
+                    aria-label="Image au format PNG"
+                  >
+                    <MdImage aria-hidden />
                   </Avatar>
                 )}
               </ListItemAvatar>

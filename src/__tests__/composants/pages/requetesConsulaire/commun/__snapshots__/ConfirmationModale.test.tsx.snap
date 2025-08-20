@@ -51,6 +51,7 @@ exports[`useModaleConfirmation > Doit afficher la modale avec le titre et les me
       >
         <button
           class="px-4 py-2 transition-colors duration-200 flex items-center gap-2 bg-gris hover:bg-gris/80 text-gray-800"
+          title="OK"
           type="button"
         >
           <span>
@@ -104,6 +105,7 @@ exports[`useModaleConfirmation > Doit afficher les boutons avec les bonnes varia
       >
         <button
           class="px-4 py-2 transition-colors duration-200 flex items-center gap-2 bg-bleu text-white hover:bg-bleu/90"
+          title="Primaire"
           type="button"
         >
           <span>
@@ -112,6 +114,7 @@ exports[`useModaleConfirmation > Doit afficher les boutons avec les bonnes varia
         </button>
         <button
           class="px-4 py-2 transition-colors duration-200 flex items-center gap-2 bg-rouge hover:bg-rouge/80 text-white"
+          title="Danger"
           type="button"
         >
           <span>
@@ -120,6 +123,7 @@ exports[`useModaleConfirmation > Doit afficher les boutons avec les bonnes varia
         </button>
         <button
           class="px-4 py-2 transition-colors duration-200 flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white"
+          title="Succès"
           type="button"
         >
           <span>
@@ -128,6 +132,7 @@ exports[`useModaleConfirmation > Doit afficher les boutons avec les bonnes varia
         </button>
         <button
           class="px-4 py-2 transition-colors duration-200 flex items-center gap-2 bg-gris hover:bg-gris/80 text-gray-800"
+          title="Secondaire"
           type="button"
         >
           <span>

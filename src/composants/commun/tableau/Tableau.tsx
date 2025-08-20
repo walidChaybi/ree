@@ -1,7 +1,5 @@
-import { ChevronLeft, ChevronRight } from "@mui/icons-material";
-import ArrowUpward from "@mui/icons-material/ArrowUpward";
-import Report from "@mui/icons-material/Report";
 import React from "react";
+import { MdArrowUpward, MdChevronLeft, MdChevronRight, MdReport } from "react-icons/md";
 import Bouton from "../bouton/Bouton";
 
 export type TSensTri = "ASC" | "DESC";
@@ -64,6 +62,7 @@ const Tableau: React.FC<ITableauProps> = ({ enTetes, lignes, messageAucuneLigne,
                   <Bouton
                     key={enTete.cle}
                     title={`Trier par ${enTete.libelle.toLowerCase()}`}
+                    aria-label={`Trier par ${enTete.libelle.toLowerCase()}`}
                     className="relative border-none bg-transparent text-bleu hover:bg-transparent focus:bg-transparent"
                     onClick={() => {
                       if (!parametresTri) return;
@@ -74,7 +73,7 @@ const Tableau: React.FC<ITableauProps> = ({ enTetes, lignes, messageAucuneLigne,
                     }}
                   >
                     <span className="text-sm normal-case underline">{enTete.libelle}</span>
-                    <ArrowUpward
+                    <MdArrowUpward
                       fontSize="inherit"
                       className={`absolute -right-1 top-1/2 -translate-y-1/2 ${
                         enTete.cle !== parametresTri?.cle ? "opacity-0" : ""
@@ -120,18 +119,26 @@ const Tableau: React.FC<ITableauProps> = ({ enTetes, lignes, messageAucuneLigne,
             onClick={() => parametresPagination.onChangePage(false)}
             disabled={!parametresPagination.pageActuelle}
             title="Page précédente"
+            aria-label="Page précédente"
             className="m-0 min-w-0 p-0 text-gris hover:text-bleu-sombre disabled:bg-transparent disabled:text-gris"
           >
-            <ChevronLeft fontSize="large" />
+            <MdChevronLeft
+              className="text-xl"
+              aria-hidden
+            />
           </button>
           <button
             type="button"
             onClick={() => parametresPagination.onChangePage(true)}
             disabled={pasDePageSuivante(parametresPagination)}
             title="Page suivante"
+            aria-label="Page suivante"
             className="m-0 min-w-0 p-0 text-gris-sombre hover:text-bleu-sombre disabled:bg-transparent disabled:text-gris"
           >
-            <ChevronRight fontSize="large" />
+            <MdChevronRight
+              className="text-xl"
+              aria-hidden
+            />
           </button>
         </div>
       )}
@@ -172,7 +179,10 @@ const MessageAucuneLigne: React.FC<{ message: string; colSpan: number }> = ({ me
       className="py-2"
     >
       <div className="flex flex-col items-center">
-        <Report />
+        <MdReport
+          className="text-2xl"
+          aria-hidden
+        />
         <div>{message}</div>
       </div>
     </td>

@@ -1,7 +1,4 @@
 import { RECEContextData } from "@core/contexts/RECEContext";
-import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IFiltresServiceRequeteInformationFormValues } from "@model/requete/IFiltreServiceRequeteInformation";
 import { ObjetRequeteInfo, objetsRequeteInfoCommeOptions } from "@model/requete/enum/ObjetRequeteInfo";
 import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
@@ -14,6 +11,8 @@ import { ChampRechercheField } from "@widget/formulaire/champRecherche/ChampRech
 import { OptionVide, SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { Formik } from "formik";
 import { useContext, useMemo } from "react";
+import { FaSearch } from "react-icons/fa";
+import { FaRegCircleXmark } from "react-icons/fa6";
 import "../scss/FiltresServiceRequeteInformationForm.scss";
 
 interface IFiltresServiceRequeteInformationFormProps {
@@ -107,21 +106,21 @@ const FiltresServiceRequeteInformationForm: React.FC<IFiltresServiceRequeteInfor
           <Button
             onClick={() => handleReset()}
             data-testid="resetBouton"
+            aria-label="Réinitialiser"
           >
-            <FontAwesomeIcon
-              size="sm"
-              className="actionButton"
-              icon={faCircleXmark}
+            <FaRegCircleXmark
+              className="actionButton text-sm"
+              aria-hidden
             />
           </Button>
           <Button
             type="submit"
             data-testid="loupeBouton"
+            aria-label="Rechercher"
           >
-            <FontAwesomeIcon
-              size="sm"
-              className="actionButton"
-              icon={faSearch}
+            <FaSearch
+              className="actionButton text-sm"
+              aria-hidden
             />
           </Button>
         </form>

@@ -1,8 +1,6 @@
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import CreateOutlined from "@mui/icons-material/CreateOutlined";
-import PendingActions from "@mui/icons-material/PendingActions";
-import Update from "@mui/icons-material/Update";
 import React, { useMemo } from "react";
+import { MdOutlineCreate, MdPendingActions, MdUpdate } from "react-icons/md";
 
 interface IIconeStatutProps {
   statut?: string;
@@ -12,11 +10,26 @@ const IconeStatut: React.FC<IIconeStatutProps> = ({ statut }) => {
   const icone = useMemo(() => {
     switch (statut) {
       case StatutRequete.EN_TRAITEMENT.libelle:
-        return <Update className="ml-1 h-5 w-5" />;
+        return (
+          <MdUpdate
+            className="ml-1 h-5 w-5"
+            aria-hidden
+          />
+        );
       case StatutRequete.A_SIGNER.libelle:
-        return <CreateOutlined className="ml-1 h-5 w-5" />;
+        return (
+          <MdOutlineCreate
+            className="ml-1 h-5 w-5"
+            aria-hidden
+          />
+        );
       case StatutRequete.PRISE_EN_CHARGE.libelle:
-        return <PendingActions className="ml-1 h-5 w-5" />;
+        return (
+          <MdPendingActions
+            className="ml-1 h-5 w-5"
+            aria-hidden
+          />
+        );
       default:
         return <></>;
     }

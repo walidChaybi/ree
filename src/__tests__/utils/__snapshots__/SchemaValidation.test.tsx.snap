@@ -285,6 +285,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
       class="flex justify-center pt-[1.6rem]"
     >
       <button
+        aria-label="Ajouter un numéro"
         class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out border border-solid border-bleu-sombre bg-blanc hover:bg-bleu hover:text-blanc hover:border-bleu focus-visible:bg-bleu focus-visible:text-blanc focus-visible:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 text-bleu-sombre disabled:cursor-not-allowed h-9 w-1/2"
         hidden=""
         title="Ajouter un numéro"
@@ -295,13 +296,20 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-            data-testid="AddCircleIcon"
-            focusable="false"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
             viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m5 11h-4v4h-2v-4H7v-2h4V7h2v4h4z"
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
             />
           </svg>
           <span
@@ -346,19 +354,28 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
               value=""
             />
             <button
+              aria-label="Supprimer ce numéro"
               class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out hover:bg-rouge focus-visible:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 disabled:cursor-not-allowed group absolute right-0 h-full rounded-l-none bg-transparent"
               title="Supprimer ce numéro"
               type="button"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium text-rouge group-hover:text-blanc group-focus-visible:text-blanc css-1umw9bq-MuiSvgIcon-root"
-                data-testid="DeleteIcon"
-                focusable="false"
+                class="text-rouge group-hover:text-blanc group-focus-visible:text-blanc"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
                 viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z"
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
                 />
               </svg>
             </button>
@@ -400,19 +417,28 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
               value=""
             />
             <button
+              aria-label="Supprimer ce numéro"
               class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out hover:bg-rouge focus-visible:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 disabled:cursor-not-allowed group absolute right-0 h-full rounded-l-none bg-transparent"
               title="Supprimer ce numéro"
               type="button"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium text-rouge group-hover:text-blanc group-focus-visible:text-blanc css-1umw9bq-MuiSvgIcon-root"
-                data-testid="DeleteIcon"
-                focusable="false"
+                class="text-rouge group-hover:text-blanc group-focus-visible:text-blanc"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
                 viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z"
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
                 />
               </svg>
             </button>
@@ -454,19 +480,28 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
               value=""
             />
             <button
+              aria-label="Supprimer ce numéro"
               class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out hover:bg-rouge focus-visible:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 disabled:cursor-not-allowed group absolute right-0 h-full rounded-l-none bg-transparent"
               title="Supprimer ce numéro"
               type="button"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium text-rouge group-hover:text-blanc group-focus-visible:text-blanc css-1umw9bq-MuiSvgIcon-root"
-                data-testid="DeleteIcon"
-                focusable="false"
+                class="text-rouge group-hover:text-blanc group-focus-visible:text-blanc"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
                 viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z"
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
                 />
               </svg>
             </button>
@@ -508,19 +543,28 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
               value=""
             />
             <button
+              aria-label="Supprimer ce numéro"
               class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out hover:bg-rouge focus-visible:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 disabled:cursor-not-allowed group absolute right-0 h-full rounded-l-none bg-transparent"
               title="Supprimer ce numéro"
               type="button"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium text-rouge group-hover:text-blanc group-focus-visible:text-blanc css-1umw9bq-MuiSvgIcon-root"
-                data-testid="DeleteIcon"
-                focusable="false"
+                class="text-rouge group-hover:text-blanc group-focus-visible:text-blanc"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
                 viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z"
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
                 />
               </svg>
             </button>
@@ -562,19 +606,28 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
               value=""
             />
             <button
+              aria-label="Supprimer ce numéro"
               class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out hover:bg-rouge focus-visible:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 disabled:cursor-not-allowed group absolute right-0 h-full rounded-l-none bg-transparent"
               title="Supprimer ce numéro"
               type="button"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium text-rouge group-hover:text-blanc group-focus-visible:text-blanc css-1umw9bq-MuiSvgIcon-root"
-                data-testid="DeleteIcon"
-                focusable="false"
+                class="text-rouge group-hover:text-blanc group-focus-visible:text-blanc"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
                 viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z"
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
                 />
               </svg>
             </button>
@@ -644,6 +697,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
       class="flex justify-center pt-[1.6rem]"
     >
       <button
+        aria-label="Ajouter un numéro"
         class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out border border-solid border-bleu-sombre bg-blanc hover:bg-bleu hover:text-blanc hover:border-bleu focus-visible:bg-bleu focus-visible:text-blanc focus-visible:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 text-bleu-sombre disabled:cursor-not-allowed h-9 w-1/2"
         hidden=""
         title="Ajouter un numéro"
@@ -654,13 +708,20 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
         >
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
-            data-testid="AddCircleIcon"
-            focusable="false"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
             viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m5 11h-4v4h-2v-4H7v-2h4V7h2v4h4z"
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
             />
           </svg>
           <span
@@ -707,19 +768,28 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
               value=""
             />
             <button
+              aria-label="Supprimer ce numéro"
               class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out hover:bg-rouge focus-visible:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 disabled:cursor-not-allowed group absolute right-0 h-full rounded-l-none bg-transparent"
               title="Supprimer ce numéro"
               type="button"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium text-rouge group-hover:text-blanc group-focus-visible:text-blanc css-1umw9bq-MuiSvgIcon-root"
-                data-testid="DeleteIcon"
-                focusable="false"
+                class="text-rouge group-hover:text-blanc group-focus-visible:text-blanc"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
                 viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z"
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
                 />
               </svg>
             </button>
@@ -768,19 +838,28 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
               value=""
             />
             <button
+              aria-label="Supprimer ce numéro"
               class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out hover:bg-rouge focus-visible:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 disabled:cursor-not-allowed group absolute right-0 h-full rounded-l-none bg-transparent"
               title="Supprimer ce numéro"
               type="button"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium text-rouge group-hover:text-blanc group-focus-visible:text-blanc css-1umw9bq-MuiSvgIcon-root"
-                data-testid="DeleteIcon"
-                focusable="false"
+                class="text-rouge group-hover:text-blanc group-focus-visible:text-blanc"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
                 viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z"
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
                 />
               </svg>
             </button>
@@ -829,19 +908,28 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
               value=""
             />
             <button
+              aria-label="Supprimer ce numéro"
               class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out hover:bg-rouge focus-visible:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 disabled:cursor-not-allowed group absolute right-0 h-full rounded-l-none bg-transparent"
               title="Supprimer ce numéro"
               type="button"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium text-rouge group-hover:text-blanc group-focus-visible:text-blanc css-1umw9bq-MuiSvgIcon-root"
-                data-testid="DeleteIcon"
-                focusable="false"
+                class="text-rouge group-hover:text-blanc group-focus-visible:text-blanc"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
                 viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z"
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
                 />
               </svg>
             </button>
@@ -890,19 +978,28 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
               value=""
             />
             <button
+              aria-label="Supprimer ce numéro"
               class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out hover:bg-rouge focus-visible:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 disabled:cursor-not-allowed group absolute right-0 h-full rounded-l-none bg-transparent"
               title="Supprimer ce numéro"
               type="button"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium text-rouge group-hover:text-blanc group-focus-visible:text-blanc css-1umw9bq-MuiSvgIcon-root"
-                data-testid="DeleteIcon"
-                focusable="false"
+                class="text-rouge group-hover:text-blanc group-focus-visible:text-blanc"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
                 viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z"
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
                 />
               </svg>
             </button>
@@ -949,19 +1046,28 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
               value="11111"
             />
             <button
+              aria-label="Supprimer ce numéro"
               class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out hover:bg-rouge focus-visible:bg-rouge focus:outline-none focus-visible:ring-2 focus-visible:ring-rouge focus-visible:ring-offset-2 disabled:cursor-not-allowed group absolute right-0 h-full rounded-l-none bg-transparent"
               title="Supprimer ce numéro"
               type="button"
             >
               <svg
                 aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium text-rouge group-hover:text-blanc group-focus-visible:text-blanc css-1umw9bq-MuiSvgIcon-root"
-                data-testid="DeleteIcon"
-                focusable="false"
+                class="text-rouge group-hover:text-blanc group-focus-visible:text-blanc"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
                 viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM19 4h-3.5l-1-1h-5l-1 1H5v2h14z"
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
                 />
               </svg>
             </button>

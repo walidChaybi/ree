@@ -1,6 +1,5 @@
 import { useCallback, useState } from "react";
-
-import LoopIcon from "@mui/icons-material/Loop";
+import { MdLoop } from "react-icons/md";
 
 interface IBoutonPopin {
   libelle: string;
@@ -150,6 +149,7 @@ export const useModaleConfirmation = () => {
                   <button
                     key={index}
                     type="button"
+                    title={bouton.libelle}
                     className={getClassesBouton(bouton.variante, estDesactive)}
                     disabled={estDesactive}
                     onClick={() => executerAction(index, bouton.action)}
@@ -157,9 +157,9 @@ export const useModaleConfirmation = () => {
                     {bouton.icone}
                     <span>{bouton.libelle}</span>
                     {estEnChargement ? (
-                      <LoopIcon
-                        className="animate-spin"
-                        fontSize="small"
+                      <MdLoop
+                        className="text-md animate-spin"
+                        aria-label="Chargement en cours"
                       />
                     ) : null}
                   </button>

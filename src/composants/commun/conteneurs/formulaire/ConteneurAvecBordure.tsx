@@ -1,5 +1,5 @@
-import { Replay } from "@mui/icons-material";
 import React from "react";
+import { MdReplay } from "react-icons/md";
 import BoutonIcon from "../../bouton/BoutonIcon";
 
 interface IConteneurAvecBordureProps {
@@ -29,10 +29,14 @@ const ConteneurAvecBordure: React.FC<React.PropsWithChildren<IConteneurAvecBordu
           className="absolute -top-4 right-8 rounded-md border border-solid border-blue-200 shadow-md hover:border-rouge"
           styleBouton="suppression"
           title="Réinitialiser les données du bloc"
+          aria-label="Réinitialiser les données du bloc"
           iconeSeule
           onClick={reinitialiserDonneesBloc}
         >
-          <Replay />
+          <MdReplay
+            className="text-2xl"
+            aria-hidden
+          />
         </BoutonIcon>
       )}
       {children}

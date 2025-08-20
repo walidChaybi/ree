@@ -2,13 +2,11 @@ import { deleteObservation, postObservation } from "@api/appels/requeteApi";
 import { RECEContextData } from "@core/contexts/RECEContext";
 import { IObservation } from "@model/requete/IObservation";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import AddCircleOutline from "@mui/icons-material/AddCircleOutline";
-import DeleteOutline from "@mui/icons-material/DeleteOutline";
-import Edit from "@mui/icons-material/Edit";
 import DateUtils from "@util/DateUtils";
 import { UN, ZERO } from "@util/Utils";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { useContext, useState } from "react";
+import { MdAddCircleOutline, MdDeleteOutline, MdEdit } from "react-icons/md";
 import * as Yup from "yup";
 import PageChargeur from "../../../../commun/chargeurs/PageChargeur";
 import ConteneurModale from "../../../../commun/conteneurs/modale/ConteneurModale";
@@ -136,17 +134,25 @@ const ObservationsRequete: React.FC<IObservationsRequeteProps> = ({ requete }) =
                       className="bouton-modifier"
                       type="button"
                       title="Modifier l'observation"
+                      aria-label="Modifier l'observation"
                       onClick={() => ouvrirModaleObservation(observation)}
                     >
-                      <Edit fontSize="small" />
+                      <MdEdit
+                        className="text-md"
+                        aria-hidden
+                      />
                     </button>
                     <button
                       className="bouton-supprimer"
                       type="button"
                       title="Supprimer l'observation"
+                      aria-label="Supprimer l'observation"
                       onClick={() => ouvrirModaleSuppression(observation.id)}
                     >
-                      <DeleteOutline fontSize="small" />
+                      <MdDeleteOutline
+                        className="text-md"
+                        aria-hidden
+                      />
                     </button>
                   </div>
                 )}
@@ -163,7 +169,10 @@ const ObservationsRequete: React.FC<IObservationsRequeteProps> = ({ requete }) =
             title="Ajouter une observation"
             onClick={() => ouvrirModaleObservation()}
           >
-            <AddCircleOutline fontSize="large" />
+            <MdAddCircleOutline
+              className="text-4xl"
+              aria-hidden
+            />
           </button>
         </div>
       </div>

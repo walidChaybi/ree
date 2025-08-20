@@ -1,6 +1,5 @@
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { FaCheckCircle } from "react-icons/fa";
 import "./scss/Icones.scss";
 
 interface IconeValiderProps {
@@ -8,17 +7,13 @@ interface IconeValiderProps {
   title?: string;
 }
 
-export const IconeValider: React.FC<IconeValiderProps> = ({
-  onClick,
-  title
-}) => {
+export const IconeValider: React.FC<IconeValiderProps> = ({ onClick, title }) => {
   return (
-    <FontAwesomeIcon
-      icon={faCheckCircle}
-      size="sm"
-      className="IconeValider"
+    <FaCheckCircle
+      className="IconeValider text-sm"
       onClick={onClick}
       title={title}
+      aria-label={title}
     />
   );
 };

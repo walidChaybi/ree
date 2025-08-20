@@ -97,10 +97,7 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
     }
   }
 
-  function onClickBoutonRetirerActeInscription(
-    event: TMouseEventSurSVGSVGElement,
-    ligneTableau: IDataTableauActeInscriptionSelectionne
-  ): void {
+  function onClickBoutonRetirerActeInscription(ligneTableau: IDataTableauActeInscriptionSelectionne): void {
     props.setDataActesInscriptionsSelectionnes(
       props.dataActesInscriptionsSelectionnes?.filter(
         acteInscription => acteInscription.idActeInscription !== ligneTableau.idActeInscription
@@ -161,7 +158,6 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
       <TableauActesInscriptionsSelectionnes
         dataActesInscriptionsSelectionnes={props.dataActesInscriptionsSelectionnes || []}
         onClickBoutonRetirerActeInscription={onClickBoutonRetirerActeInscription}
-        enChargement={props.tableauActesInscriptionsSelectionnesEnChargement}
       />
       <BoutonDoubleSubmit
         disabled={!isDirty}

@@ -1,10 +1,9 @@
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ETypeRequete } from "@model/requete/enum/TypeRequete";
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
 import { IRMCRequeteForm } from "@model/rmc/requete/IRMCRequete";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useCallback, useState } from "react";
+import { FaSearch } from "react-icons/fa";
 import "./../scss/BoutonNouvelleRMCRequete.scss";
 import { PopinNouvelleRMCRequete } from "./PopinNouvelleRMCRequete";
 
@@ -34,10 +33,9 @@ export const BoutonNouvelleRMCRequete: React.FC<BoutonNouvelleRMCRequeteProps> =
         onClick={handleClickNouvelleRMC}
         aria-label={"Nouvelle recherche multi critères"}
       >
-        <FontAwesomeIcon
-          aria-label="NouvelleRMCRequete"
+        <FaSearch
+          aria-label="Nouvelle requête RMC"
           className="loupeChampsRecherche"
-          icon={faSearch}
         />
       </BoutonDoubleSubmit>
       <PopinNouvelleRMCRequete

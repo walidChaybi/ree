@@ -1,6 +1,6 @@
-import { Delete } from "@mui/icons-material";
 import { useField } from "formik";
 import { useMemo, useState } from "react";
+import { MdDelete } from "react-icons/md";
 import BoutonIcon from "../bouton/BoutonIcon";
 import { CHAMP_EN_ERREUR } from "../formulaire/ScrollVersErreur";
 
@@ -83,10 +83,14 @@ const ChampRcRcaPacs: React.FC<IChampRcRcaPacsProps> = ({ name, libelle, actionS
               className="group absolute right-0 h-full rounded-l-none bg-transparent"
               type="button"
               title="Supprimer ce numéro"
+              aria-label="Supprimer ce numéro"
               onClick={actionSuppression}
               styleBouton="suppression"
             >
-              <Delete className="text-rouge group-hover:text-blanc group-focus-visible:text-blanc" />
+              <MdDelete
+                className="text-rouge group-hover:text-blanc group-focus-visible:text-blanc"
+                aria-hidden
+              />
             </BoutonIcon>
           )}
         </div>

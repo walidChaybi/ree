@@ -2,7 +2,6 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
 import { Option, Options } from "@util/Type";
-import { getLibelle } from "@util/Utils";
 import React, { useEffect, useRef, useState } from "react";
 import AfficherMessage from "../../../../../utils/AfficherMessage";
 import { Base64File, ExtensionDocumentTypeMime, getBase64FichierEtLeValide } from "../../../../../utils/FileUtils";
@@ -90,7 +89,7 @@ const UploadFileField: React.FC<UploadFileFieldProps> = props => {
           disabled={props.disabled}
         >
           {props.iconBouton}
-          {props.libelleBouton ? props.libelleBouton : getLibelle("...")}
+          {props.libelleBouton ?? "..."}
         </button>
         {props.menuItems && (
           <Menu

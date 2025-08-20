@@ -1,30 +1,19 @@
-import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getLibelle } from "@util/Utils";
 import React from "react";
 import "./scss/BoutonAccordionTitle.scss";
 
 interface BoutonAccordionTitleProps {
-  iconeBouton: IconDefinition;
-  onClickBouton?: any;
-  classNameBouton: string;
-  descriptionBouton: string;
+  iconeBouton: JSX.Element;
+  onClickBouton?: () => any;
 }
 
-export const BoutonAccordionTitle: React.FC<BoutonAccordionTitleProps> = props => {
-  function onClickBouton(e: any) {
-    e.stopPropagation();
-    props.onClickBouton();
-  }
-
+export const BoutonAccordionTitle: React.FC<BoutonAccordionTitleProps> = ({ iconeBouton, onClickBouton }) => {
   return (
-    <div className={props.iconeBouton ? "flexAccordion" : ""}>
-      <FontAwesomeIcon
-        icon={props.iconeBouton}
-        className={`BoutonAccordionTitle ${props.classNameBouton}`}
-        title={getLibelle(props.descriptionBouton)}
-        onClick={onClickBouton}
-      />
-    </div>
+    <button
+      type="button"
+      className={iconeBouton ? "flexAccordion m-0 justify-end bg-transparent p-0" : ""}
+      onClick={onClickBouton}
+    >
+      {iconeBouton}
+    </button>
   );
 };

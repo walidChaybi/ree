@@ -1,13 +1,12 @@
-import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FaExclamationTriangle } from "react-icons/fa";
 
 export const IconErrorMessage = ({ ...props }) => (
   <span>
-    <FontAwesomeIcon
-      icon={faExclamationTriangle}
-      size="xs"
-      className="Warning"
-    />
-    {props.children}
+    <FaExclamationTriangle
+      className="Warning text-xs"
+      aria-label="Erreur"
+    >
+      {props.children}
+    </FaExclamationTriangle>
   </span>
 );
