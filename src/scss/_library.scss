@@ -1,18 +1,6 @@
 @use "./colors" as *;
-$application-font-family: "NotoSansUI-Regular";
 
-/*@font-face {
-  font-family: "NotoSansUI-Regular";
-  src: url("../fonts/NotoSansUI-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "NotoSansUI-Bold";
-  src: url("../fonts/NotoSansUI-Bold.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}*/
+$application-font-family: "Marianne-Regular";
 
 html {
   font-size: 13.5px;
@@ -35,7 +23,7 @@ a {
 
 input,
 textarea {
-  font-family: "NotoSansUI-Regular", sans-serif;
+  font-family: "Marianne-Regular", sans-serif;
 }
 
 .BoutonRetour {
@@ -51,7 +39,7 @@ Button,
   overflow: hidden;
   min-width: 4vw;
   color: white;
-  font-family: "NotoSansUI-Bold", sans-serif;
+  font-family: "Marianne-Bold", sans-serif;
   font-size: 1rem;
   text-align: center;
   cursor: pointer;
@@ -94,7 +82,7 @@ h1 {
 
 h2 {
   text-align: left;
-  font-family: "NotoSansUI-Regular", sans-serif;
+  font-family: "Marianne-Regular", sans-serif;
   font-size: 1.575em;
   color: #03476e;
   font-weight: 500;
@@ -102,13 +90,13 @@ h2 {
 
 h3 {
   color: #0579be;
-  font-family: "NotoSansUI-Regular", sans-serif;
+  font-family: "Marianne-Regular", sans-serif;
   font-size: 1.0625em;
 }
 
 h4 {
   color: #0579be;
-  font-family: "NotoSansUI-Regular", sans-serif;
+  font-family: "Marianne-Regular", sans-serif;
   font-size: 0.6725em;
 }
 
@@ -162,7 +150,7 @@ textarea {
 
 .FormContent {
   color: #232425;
-  font-family: "NotoSansUI-Regular", sans-serif;
+  font-family: "Marianne-Regular", sans-serif;
   font-size: 1.6rem;
   line-height: 1.5;
   background-color: #f4f4f4;
@@ -245,7 +233,7 @@ th {
 ///////////////////////////////////////////////
 .MuiTypography-body1,
 .MuiTypography-body2 {
-  font-family: "NotoSansUI-Regular", sans-serif !important;
+  font-family: "Marianne-Regular", sans-serif !important;
 }
 
 .MuiTypography-body1 {
@@ -354,7 +342,7 @@ th {
       opacity: 0.7 !important;
     }
 
-    font-family: "NotoSansUI-Bold", sans-serif;
+    font-family: "Marianne-Bold", sans-serif;
   }
 
   .MuiButtonBase-root.Mui-selected {

@@ -46,7 +46,7 @@ const ChampNumeroRcRcaPacs: React.FC<IChampNumeroRcRcaPacsProps> = ({
           >
             <div className="flex items-center gap-4 px-2">
               <AddCircle />
-              <span className="font-noto-sans-ui text-sm font-bold">{"Ajouter un numéro"}</span>
+              <span className="font-marianne text-sm font-bold">{"Ajouter un numéro"}</span>
             </div>
           </BoutonIcon>
         </div>

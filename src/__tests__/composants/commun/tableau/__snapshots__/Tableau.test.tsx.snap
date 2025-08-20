@@ -12,7 +12,7 @@ exports[`Test du composant Tableau > DOIT afficher correctement les en-têtes et
         class="text-center first:text-left"
       >
         <span
-          class="px-4 font-noto-sans-ui-bold text-bleu"
+          class="font-marianne-bold px-4 text-bleu"
         >
           N dossier
         </span>
@@ -21,7 +21,7 @@ exports[`Test du composant Tableau > DOIT afficher correctement les en-têtes et
         class="text-center first:text-left"
       >
         <span
-          class="px-4 font-noto-sans-ui-bold text-bleu"
+          class="font-marianne-bold px-4 text-bleu"
         >
           Nature acte
         </span>
@@ -73,7 +73,7 @@ exports[`Test du composant Tableau > DOIT afficher un message lorsqu'il n'y a pa
         class="text-center first:text-left"
       >
         <span
-          class="px-4 font-noto-sans-ui-bold text-bleu"
+          class="font-marianne-bold px-4 text-bleu"
         >
           N dossier
         </span>
@@ -82,7 +82,7 @@ exports[`Test du composant Tableau > DOIT afficher un message lorsqu'il n'y a pa
         class="text-center first:text-left"
       >
         <span
-          class="px-4 font-noto-sans-ui-bold text-bleu"
+          class="font-marianne-bold px-4 text-bleu"
         >
           Nature acte
         </span>

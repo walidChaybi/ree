@@ -15,12 +15,14 @@ describe("Test de l'utilitaire des polices et styles RECE", () => {
         this.descriptors = descriptors;
       }
     }
+
     const mockFontFace = (enErreur: boolean = false) =>
       class MockFontFace extends BaseMockFontFace {
         load(): Promise<string> {
           return enErreur ? Promise.reject() : Promise.resolve(this.source);
         }
       };
+
     const mockConsoleError = vi.fn();
     const mockDocument = { fonts: new Set<BaseMockFontFace>() };
 
@@ -33,11 +35,12 @@ describe("Test de l'utilitaire des polices et styles RECE", () => {
     await act(() => {
       PolicesEtStylesRECE.chargerPolices();
     });
+
     expect(Array.from(documentTest.fonts.values())).toStrictEqual([
-      "url('/rece/rece-ui/fonts/NotoSansUI-Regular.ttf')",
-      "url('/rece/rece-ui/fonts/NotoSansUI-Italic.ttf')",
-      "url('/rece/rece-ui/fonts/NotoSansUI-Bold.ttf')",
-      "url('/rece/rece-ui/fonts/NotoSansUI-BoldItalic.ttf')",
+      "url('/rece/rece-ui/fonts/Marianne/Marianne-Regular.woff')",
+      "url('/rece/rece-ui/fonts/Marianne/Marianne-Regular_Italic.woff')",
+      "url('/rece/rece-ui/fonts/Marianne/Marianne-Bold.woff')",
+      "url('/rece/rece-ui/fonts/Marianne/Marianne-Bold_Italic.woff')",
       "url('/rece/rece-ui/fonts/Liberation/LiberationMono-Regular.ttf')",
       "url('/rece/rece-ui/fonts/Liberation/LiberationMono-Italic.ttf')",
       "url('/rece/rece-ui/fonts/Liberation/LiberationMono-Bold.ttf')",
@@ -51,10 +54,10 @@ describe("Test de l'utilitaire des polices et styles RECE", () => {
     await act(() => {
       PolicesEtStylesRECE.chargerPolices();
     });
-    expect(mockConsoleError).toHaveBeenNthCalledWith(1, 'Erreur lors du chargement de la police "NotoSansUI-Regular".');
-    expect(mockConsoleError).toHaveBeenNthCalledWith(2, 'Erreur lors du chargement de la police "NotoSansUI-Italic".');
-    expect(mockConsoleError).toHaveBeenNthCalledWith(3, 'Erreur lors du chargement de la police "NotoSansUI-Bold".');
-    expect(mockConsoleError).toHaveBeenNthCalledWith(4, 'Erreur lors du chargement de la police "NotoSansUI-BoldItalic".');
+    expect(mockConsoleError).toHaveBeenNthCalledWith(1, 'Erreur lors du chargement de la police "Marianne-Regular".');
+    expect(mockConsoleError).toHaveBeenNthCalledWith(2, 'Erreur lors du chargement de la police "Marianne-Regular_Italic".');
+    expect(mockConsoleError).toHaveBeenNthCalledWith(3, 'Erreur lors du chargement de la police "Marianne-Bold".');
+    expect(mockConsoleError).toHaveBeenNthCalledWith(4, 'Erreur lors du chargement de la police "Marianne-Bold_Italic".');
     expect(mockConsoleError).toHaveBeenNthCalledWith(5, 'Erreur lors du chargement de la police "Liberation Regular".');
     expect(mockConsoleError).toHaveBeenNthCalledWith(6, 'Erreur lors du chargement de la police "Liberation Italic".');
     expect(mockConsoleError).toHaveBeenNthCalledWith(7, 'Erreur lors du chargement de la police "Liberation Bold".');

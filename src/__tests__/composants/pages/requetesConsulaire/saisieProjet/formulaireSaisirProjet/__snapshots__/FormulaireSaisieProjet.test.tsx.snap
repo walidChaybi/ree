@@ -8,7 +8,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
     class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
   >
     <button
-      class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+      class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
       type="button"
     >
       <span
@@ -216,7 +216,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                           />
                         </svg>
                         <span
-                          class="font-noto-sans-ui text-sm font-bold"
+                          class="font-marianne text-sm font-bold"
                         >
                           Ajouter un prénom
                         </span>
@@ -511,7 +511,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
     class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
   >
     <button
-      class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+      class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
       type="button"
     >
       <span
@@ -625,7 +625,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                           />
                         </svg>
                         <span
-                          class="font-noto-sans-ui text-sm font-bold"
+                          class="font-marianne text-sm font-bold"
                         >
                           Ajouter un prénom
                         </span>
@@ -1039,7 +1039,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                           />
                         </svg>
                         <span
-                          class="font-noto-sans-ui text-sm font-bold"
+                          class="font-marianne text-sm font-bold"
                         >
                           Ajouter un prénom
                         </span>
@@ -1395,7 +1395,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
     class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
   >
     <button
-      class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+      class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
       type="button"
     >
       <span
@@ -1494,7 +1494,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
     class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
   >
     <button
-      class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+      class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
       type="button"
     >
       <span
@@ -1540,7 +1540,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                   Texte énonciations
                 </label>
                 <textarea
-                  class="font-noto-sans-ui text-base resize-y transition-colors border-gris focus-visible:ring-bleu"
+                  class="font-marianne text-base resize-y transition-colors border-gris focus-visible:ring-bleu"
                   id="autresEnonciations.enonciations"
                   maxlength="2000"
                   name="autresEnonciations.enonciations"
@@ -1556,7 +1556,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
     class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
   >
     <button
-      class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+      class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
       type="button"
     >
       <span
@@ -1840,7 +1840,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                   Référence et/ou complément
                 </label>
                 <textarea
-                  class="font-noto-sans-ui text-base resize-y transition-colors border-gris focus-visible:ring-bleu"
+                  class="font-marianne text-base resize-y transition-colors border-gris focus-visible:ring-bleu"
                   id="acteEtranger.referenceComplement"
                   maxlength="2000"
                   name="acteEtranger.referenceComplement"
@@ -1856,7 +1856,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
     class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
   >
     <button
-      class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+      class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
       type="button"
     >
       <span
@@ -1902,7 +1902,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                   Mention(s)
                 </label>
                 <textarea
-                  class="font-noto-sans-ui text-base resize-y transition-colors border-gris focus-visible:ring-bleu"
+                  class="font-marianne text-base resize-y transition-colors border-gris focus-visible:ring-bleu"
                   id="mentions.mentions"
                   maxlength="3000"
                   name="mentions.mentions"
@@ -1918,7 +1918,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
     class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
   >
     <button
-      class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+      class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
       type="button"
     >
       <span

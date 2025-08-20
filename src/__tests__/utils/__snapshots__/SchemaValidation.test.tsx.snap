@@ -305,7 +305,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
             />
           </svg>
           <span
-            class="font-noto-sans-ui text-sm font-bold"
+            class="font-marianne text-sm font-bold"
           >
             Ajouter un numéro
           </span>
@@ -664,7 +664,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
             />
           </svg>
           <span
-            class="font-noto-sans-ui text-sm font-bold"
+            class="font-marianne text-sm font-bold"
           >
             Ajouter un numéro
           </span>

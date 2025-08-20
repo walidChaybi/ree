@@ -161,7 +161,7 @@ const BlocParents: React.FC = () => {
         >
           <div className="flex items-center gap-4 px-2">
             {values.parents.avecParent2 ? <Delete /> : <AddCircle />}
-            <span className="font-noto-sans-ui text-sm font-bold">
+            <span className="font-marianne text-sm font-bold">
               {values.parents.avecParent2 ? "Retirer un parent" : "Ajouter un parent"}
             </span>
           </div>

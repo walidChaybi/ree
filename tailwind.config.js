@@ -34,9 +34,9 @@ module.exports = {
         }
       },
       fontFamily: {
-        "noto-sans-ui": ["NotoSansUI-Regular", "sans-serif"],
-        "noto-sans-ui-bold": ["NotoSansUI-Bold", "sans-serif"],
-        liberation: ["Liberation Mono"]
+        liberation: ["Liberation Mono"],
+        marianne: ["Marianne-Regular", "sans-serif"],
+        "marianne-bold": ["Marianne-Bold", "sans-serif"]
       },
       keyframes: {
         apparition: {

@@ -36,7 +36,7 @@ exports[`PageRequeteTranscriptionSaisieProjet - affichage des parties > affiche 
           class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
         >
           <button
-            class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+            class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
             type="button"
           >
             <span
@@ -500,7 +500,7 @@ pays
             class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
           >
             <button
-              class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+              class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
               type="button"
             >
               <span
@@ -708,7 +708,7 @@ pays
                                   />
                                 </svg>
                                 <span
-                                  class="font-noto-sans-ui text-sm font-bold"
+                                  class="font-marianne text-sm font-bold"
                                 >
                                   Ajouter un prénom
                                 </span>
@@ -1004,7 +1004,7 @@ pays
             class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
           >
             <button
-              class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+              class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
               type="button"
             >
               <span
@@ -1118,7 +1118,7 @@ pays
                                   />
                                 </svg>
                                 <span
-                                  class="font-noto-sans-ui text-sm font-bold"
+                                  class="font-marianne text-sm font-bold"
                                 >
                                   Ajouter un prénom
                                 </span>
@@ -1785,7 +1785,7 @@ pays
                                   />
                                 </svg>
                                 <span
-                                  class="font-noto-sans-ui text-sm font-bold"
+                                  class="font-marianne text-sm font-bold"
                                 >
                                   Ajouter un prénom
                                 </span>
@@ -2141,7 +2141,7 @@ pays
             class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
           >
             <button
-              class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+              class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
               type="button"
             >
               <span
@@ -2240,7 +2240,7 @@ pays
             class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
           >
             <button
-              class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+              class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
               type="button"
             >
               <span
@@ -2286,7 +2286,7 @@ pays
                           Texte énonciations
                         </label>
                         <textarea
-                          class="font-noto-sans-ui text-base resize-y transition-colors border-gris focus-visible:ring-bleu"
+                          class="font-marianne text-base resize-y transition-colors border-gris focus-visible:ring-bleu"
                           id="autresEnonciations.enonciations"
                           maxlength="2000"
                           name="autresEnonciations.enonciations"
@@ -2302,7 +2302,7 @@ pays
             class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
           >
             <button
-              class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+              class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
               type="button"
             >
               <span
@@ -2586,7 +2586,7 @@ pays
                           Référence et/ou complément
                         </label>
                         <textarea
-                          class="font-noto-sans-ui text-base resize-y transition-colors border-gris focus-visible:ring-bleu"
+                          class="font-marianne text-base resize-y transition-colors border-gris focus-visible:ring-bleu"
                           id="acteEtranger.referenceComplement"
                           maxlength="2000"
                           name="acteEtranger.referenceComplement"
@@ -2602,7 +2602,7 @@ pays
             class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
           >
             <button
-              class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+              class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
               type="button"
             >
               <span
@@ -2648,7 +2648,7 @@ pays
                           Mention(s)
                         </label>
                         <textarea
-                          class="font-noto-sans-ui text-base resize-y transition-colors border-gris focus-visible:ring-bleu"
+                          class="font-marianne text-base resize-y transition-colors border-gris focus-visible:ring-bleu"
                           id="mentions.mentions"
                           maxlength="3000"
                           name="mentions.mentions"
@@ -2664,7 +2664,7 @@ pays
             class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
           >
             <button
-              class="text-blanc-rece relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-noto-sans-ui font-bold normal-case focus-visible:bg-bleu-sombre"
+              class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
               type="button"
             >
               <span

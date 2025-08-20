@@ -131,7 +131,7 @@ exports[`Tests du formulaire AnalyseMarginaleFormulaire > Doit afficher le formu
                       />
                     </svg>
                     <span
-                      class="font-noto-sans-ui text-sm font-bold"
+                      class="font-marianne text-sm font-bold"
                     >
                       Ajouter un prénom
                     </span>

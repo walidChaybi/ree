@@ -1,4 +1,4 @@
-const POLICES = ["NotoSansUI-Regular", "NotoSansUI-Italic", "NotoSansUI-Bold", "NotoSansUI-BoldItalic"];
+const POLICES = ["Marianne-Regular", "Marianne-Regular_Italic", "Marianne-Bold", "Marianne-Bold_Italic"];
 
 const LIBERATION = [
   { nom: "Regular", style: "normal", weight: "400" },
@@ -10,8 +10,9 @@ const LIBERATION = [
 class PolicesEtStylesRECE {
   static chargerPolices() {
     const publicUrl = import.meta.env.BASE_URL;
+
     POLICES.forEach(police =>
-      new FontFace(police, `url('${publicUrl}/fonts/${police}.ttf')`)
+      new FontFace(police, `url('${publicUrl}/fonts/Marianne/${police}.woff')`)
         .load()
         .then(policeChargee => document.fonts.add(policeChargee))
         .catch(() => console.error(`Erreur lors du chargement de la police "${police}".`))

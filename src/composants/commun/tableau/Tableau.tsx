@@ -84,7 +84,7 @@ const Tableau: React.FC<ITableauProps> = ({ enTetes, lignes, messageAucuneLigne,
                 ) : (
                   <span
                     key={enTete.cle}
-                    className="px-4 font-noto-sans-ui-bold text-bleu"
+                    className="font-marianne-bold px-4 text-bleu"
                   >
                     {enTete.libelle}
                   </span>

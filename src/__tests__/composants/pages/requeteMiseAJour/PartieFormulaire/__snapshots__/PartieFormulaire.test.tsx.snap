@@ -364,7 +364,7 @@ exports[`Tests PartieFormulaire > Mettre à jour le formulaire d'analyse margina
                           />
                         </svg>
                         <span
-                          class="font-noto-sans-ui text-sm font-bold"
+                          class="font-marianne text-sm font-bold"
                         >
                           Ajouter un prénom
                         </span>

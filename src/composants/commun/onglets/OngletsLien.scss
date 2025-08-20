@@ -1,35 +1,39 @@
 .conteneur-onglets-lien {
-    display: flex;
-    margin: 1rem 0;
-    border-radius: .25rem;
-    overflow: hidden;
-    box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);
+  display: flex;
+  margin: 1rem 0;
+  border-radius: 0.25rem;
+  overflow: hidden;
+  box-shadow:
+    0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 
-    .onglet-lien {
-        width: 100%;
-        text-transform: uppercase; 
-        font-size: 1rem;
-        font-family: "NotoSansUI-Bold", sans-serif;
+  .onglet-lien {
+    width: 100%;
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-family: "Marianne-Bold", sans-serif;
 
-        a, span {
-            display: block;
-            width: 100%;
-            padding: 1rem 0;
-            text-decoration: none;
-            color: var(--blanc-rece);  
-        }
-
-        span {
-            background-color: var(--bleu-sombre-rece);
-        }
-
-        a {
-            background-color: var(--bleu-rece);
-            transition: opacity .25s ease;
-
-            &:hover {
-                opacity: .8;
-            }
-        }
+    a,
+    span {
+      display: block;
+      width: 100%;
+      padding: 1rem 0;
+      text-decoration: none;
+      color: var(--blanc-rece);
     }
+
+    span {
+      background-color: var(--bleu-sombre-rece);
+    }
+
+    a {
+      background-color: var(--bleu-rece);
+      transition: opacity 0.25s ease;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
 }

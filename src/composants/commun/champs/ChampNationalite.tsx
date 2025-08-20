@@ -40,7 +40,7 @@ const ChampNationalite: React.FC<IPropsChampNationalite> = ({ nom, libelle, desa
         >
           <div className="flex items-center gap-4 px-2">
             <AddCircle />
-            <span className="font-noto-sans-ui text-sm font-bold">{"Ajouter une nationalité"}</span>
+            <span className="font-marianne text-sm font-bold">{"Ajouter une nationalité"}</span>
           </div>
         </BoutonIcon>
       </div>

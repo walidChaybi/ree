@@ -33,7 +33,7 @@ const Bouton: React.FC<React.PropsWithChildren<IBoutonProps>> = ({
   lienVers ? (
     <Link
       to={lienVers}
-      className={`rounded-md border border-solid px-4 py-2 font-noto-sans-ui-bold no-underline transition-colors ${getStyleBouton(styleBouton)} ${!garderStyleSiDisabled && "disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"} ${className ?? ""}`.trim()}
+      className={`font-marianne-bold rounded-md border border-solid px-4 py-2 no-underline transition-colors ${getStyleBouton(styleBouton)} ${!garderStyleSiDisabled && "disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"} ${className ?? ""}`.trim()}
       title={props.title}
     >
       {children}
