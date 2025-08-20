@@ -18,7 +18,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
       </span>
       <svg
         aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-i4bv87-MuiSvgIcon-root"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-1umw9bq-MuiSvgIcon-root"
         data-testid="ExpandMoreIcon"
         focusable="false"
         viewBox="0 0 24 24"
@@ -206,13 +206,13 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       >
                         <svg
                           aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                           data-testid="AddCircleIcon"
                           focusable="false"
                           viewBox="0 0 24 24"
                         >
                           <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m5 11h-4v4h-2v-4H7v-2h4V7h2v4h4z"
                           />
                         </svg>
                         <span
@@ -521,7 +521,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
       </span>
       <svg
         aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-i4bv87-MuiSvgIcon-root"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-1umw9bq-MuiSvgIcon-root"
         data-testid="ExpandMoreIcon"
         focusable="false"
         viewBox="0 0 24 24"
@@ -615,13 +615,13 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       >
                         <svg
                           aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                           data-testid="AddCircleIcon"
                           focusable="false"
                           viewBox="0 0 24 24"
                         >
                           <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m5 11h-4v4h-2v-4H7v-2h4V7h2v4h4z"
                           />
                         </svg>
                         <span
@@ -1029,13 +1029,13 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       >
                         <svg
                           aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
                           data-testid="AddCircleIcon"
                           focusable="false"
                           viewBox="0 0 24 24"
                         >
                           <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m5 11h-4v4h-2v-4H7v-2h4V7h2v4h4z"
                           />
                         </svg>
                         <span
@@ -1405,7 +1405,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
       </span>
       <svg
         aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-i4bv87-MuiSvgIcon-root"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-1umw9bq-MuiSvgIcon-root"
         data-testid="ExpandMoreIcon"
         focusable="false"
         viewBox="0 0 24 24"
@@ -1504,7 +1504,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
       </span>
       <svg
         aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-i4bv87-MuiSvgIcon-root"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-1umw9bq-MuiSvgIcon-root"
         data-testid="ExpandMoreIcon"
         focusable="false"
         viewBox="0 0 24 24"
@@ -1566,7 +1566,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
       </span>
       <svg
         aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-i4bv87-MuiSvgIcon-root"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-1umw9bq-MuiSvgIcon-root"
         data-testid="ExpandMoreIcon"
         focusable="false"
         viewBox="0 0 24 24"
@@ -1866,7 +1866,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
       </span>
       <svg
         aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-i4bv87-MuiSvgIcon-root"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-1umw9bq-MuiSvgIcon-root"
         data-testid="ExpandMoreIcon"
         focusable="false"
         viewBox="0 0 24 24"
@@ -1928,7 +1928,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
       </span>
       <svg
         aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-i4bv87-MuiSvgIcon-root"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium absolute right-2 transition-transform duration-200 ease-in rotate-180 css-1umw9bq-MuiSvgIcon-root"
         data-testid="ExpandMoreIcon"
         focusable="false"
         viewBox="0 0 24 24"

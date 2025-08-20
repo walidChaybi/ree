@@ -17,12 +17,12 @@ interface AccordionTitleProps {
 export const AccordionTitle: React.FC<AccordionTitleProps> = ({ boutonExpanded = true, ...props }) => {
   return (
     <AccordionSummary
-      className={["accordionTitle", props.className].join(" ")}
+      className={`accordionTitle !rounded-md !bg-bleu !text-center !text-white ${props.className ?? ""}`}
       expandIcon={boutonExpanded && <ExpandMoreIcon />}
       title={props.titre}
       style={{ userSelect: "text" }}
     >
-      <div className={[props.bouton ? "MuiSummaryFlex" : "", props.className].join(" ")}>
+      <div className={`text-center ${props.bouton ? "MuiSummaryFlex" : ""} ${props.className ?? ""}`}>
         {props.tag}
         {props.handleMiseAJourLibelle ? (
           <LibelleEditable
@@ -33,7 +33,7 @@ export const AccordionTitle: React.FC<AccordionTitleProps> = ({ boutonExpanded =
         ) : (
           <>
             <div className="itemHidden" />
-            <span className="title">{props.titre}</span>
+            <span className="title !font-normal">{props.titre}</span>
           </>
         )}
         {props.bouton}

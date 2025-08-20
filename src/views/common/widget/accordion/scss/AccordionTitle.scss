@@ -1,11 +1,9 @@
 @use "../../../../../scss/_colors.scss" as *;
 
-div.accordionTitle {
+.accordionTitle {
   text-align: center;
   font-weight: bold;
   font-size: 1.1rem;
-  color: white;
-  background-color: $application-color;
   border-radius: 0.25em;
   min-height: 35px;
 
@@ -49,4 +47,8 @@ div.accordionTitle {
 .MuiAccordionSummary-expandIcon {
   padding-top: 0px !important;
   padding-bottom: 0px !important;
+}
+
+.MuiAccordionSummary-content.Mui-expanded {
+  margin: 0 !important;
 }

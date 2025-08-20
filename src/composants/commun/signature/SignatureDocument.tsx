@@ -8,7 +8,7 @@ import { RECEContextData } from "@core/contexts/RECEContext";
 import { TErreurApi } from "@model/api/Api";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypePopinSignature } from "@model/signature/ITypePopinSignature";
-import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
+import CircularProgress from "@mui/material/CircularProgress";
 import { useContext, useEffect, useMemo, useState } from "react";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import Signature, { CODE_PIN_INVALIDE, IInformationsCarte } from "../../../utils/Signature";

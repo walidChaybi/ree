@@ -1,4 +1,4 @@
-import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const ComposantChargeur: React.FC = () => (
   <div className="grid w-full place-content-center py-6">

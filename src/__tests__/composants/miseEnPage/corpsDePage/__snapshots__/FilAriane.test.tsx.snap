@@ -16,7 +16,7 @@ exports[`Test du composant FilAriane > le composant fonctionne correctement 2`] 
   </a>
   <svg
     aria-hidden="true"
-    class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+    class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
     data-testid="NavigateNextIcon"
     focusable="false"
     viewBox="0 0 24 24"
@@ -45,7 +45,7 @@ exports[`Test du composant FilAriane > le composant fonctionne correctement 3`] 
   </a>
   <svg
     aria-hidden="true"
-    class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+    class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
     data-testid="NavigateNextIcon"
     focusable="false"
     viewBox="0 0 24 24"
@@ -64,7 +64,7 @@ exports[`Test du composant FilAriane > le composant fonctionne correctement 3`] 
   </a>
   <svg
     aria-hidden="true"
-    class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+    class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
     data-testid="NavigateNextIcon"
     focusable="false"
     viewBox="0 0 24 24"
@@ -93,7 +93,7 @@ exports[`Test du composant FilAriane > le composant fonctionne correctement 4`] 
   </a>
   <svg
     aria-hidden="true"
-    class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+    class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
     data-testid="NavigateNextIcon"
     focusable="false"
     viewBox="0 0 24 24"
@@ -124,7 +124,7 @@ exports[`Test du composant FilAriane > le composant fonctionne correctement 6`] 
   </a>
   <svg
     aria-hidden="true"
-    class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+    class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-120dh41-MuiSvgIcon-root"
     data-testid="NavigateNextIcon"
     focusable="false"
     viewBox="0 0 24 24"
