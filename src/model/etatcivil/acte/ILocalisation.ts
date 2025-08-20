@@ -6,6 +6,7 @@ export interface ILocalisation {
   arrondissement?: string;
   departement?: string;
   etatProvince?: string;
+  region?: string;
   pays?: string;
   adresse?: string;
   preposition?: keyof typeof EPrepositionLieu;

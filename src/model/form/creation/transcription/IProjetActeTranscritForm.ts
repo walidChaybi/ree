@@ -708,8 +708,8 @@ const getRegionDomicile = (domicile?: ILocalisation): string => {
 };
 
 const getPrepositionLieu = (champsLocalisation: ILocalisation): keyof typeof EPrepositionLieu | undefined => {
-  const { departement, etatProvince, ville, pays, preposition } = champsLocalisation;
-  return ((departement || etatProvince || ville || pays) && preposition) || undefined;
+  const { departement, etatProvince, ville, pays, preposition, region } = champsLocalisation;
+  return ((departement || etatProvince || ville || pays || region) && preposition) || undefined;
 };
 
 const mapFiliationNaissance = (parentForm: IParentTranscriptionForm): IEvenementProjetActeTranscritDto => {
