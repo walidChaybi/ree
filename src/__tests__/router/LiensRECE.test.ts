@@ -58,25 +58,28 @@ describe("Test du helper LiensRECE", () => {
     expect(
       LiensRECE.sontUrlDeLaMemePage(
         INFO_PAGE_APERCU_REQUETE_DELIVRANCE_PRISE_EN_CHARGE,
-        "/espace-delivrance/requete/79618e9e-0650-4e76-b326-bb4425c9d6cc/prise-en-charge"
+        "/rece/rece-ui/espace-delivrance/requete/79618e9e-0650-4e76-b326-bb4425c9d6cc/prise-en-charge"
       )
-    ).toBeTruthy();
-
-    expect(
-      LiensRECE.sontUrlDeLaMemePage(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_PRISE_EN_CHARGE, "/espace-delivrance/requete//prise-en-charge")
     ).toBeTruthy();
 
     expect(
       LiensRECE.sontUrlDeLaMemePage(
         INFO_PAGE_APERCU_REQUETE_DELIVRANCE_PRISE_EN_CHARGE,
-        "/espace-delivrance/requete/79618e9e-0650-4e76-b326-bb4425c9d6cc/consultation"
+        "/rece/rece-ui/espace-delivrance/requete//prise-en-charge"
+      )
+    ).toBeTruthy();
+
+    expect(
+      LiensRECE.sontUrlDeLaMemePage(
+        INFO_PAGE_APERCU_REQUETE_DELIVRANCE_PRISE_EN_CHARGE,
+        "/rece/rece-ui/espace-delivrance/requete/79618e9e-0650-4e76-b326-bb4425c9d6cc/consultation"
       )
     ).toBeFalsy();
 
     expect(
       LiensRECE.sontUrlDeLaMemePage(
         INFO_PAGE_APERCU_REQUETE_DELIVRANCE_EDITION,
-        "/espace-delivrance/requete/79618e9e-0650-4e76-b326-bb4425c9d6cc/edition/79618e9e-0650-4e76-b326-bb4425c9d6cc"
+        "/rece/rece-ui/espace-delivrance/requete/79618e9e-0650-4e76-b326-bb4425c9d6cc/edition/79618e9e-0650-4e76-b326-bb4425c9d6cc"
       )
     ).toBeTruthy();
   });

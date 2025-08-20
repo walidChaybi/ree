@@ -36,7 +36,7 @@ const LiensRECE = {
 
   sontUrlDeLaMemePage: <TUrl extends string>(infoPage: TInfoPageRECE<TUrl>, urlAComparer: string): boolean => {
     const urlAComparerDecompose = urlAComparer.startsWith("/") ? urlAComparer.split("/") : "/".concat(urlAComparer).split("/");
-    const urlPageDecompose = infoPage.url.startsWith("/") ? infoPage.url.split("/") : "/".concat(infoPage.url).split("/");
+    const urlPageDecompose = "/rece/rece-ui".concat(infoPage.url.startsWith("/") ? infoPage.url : "/".concat(infoPage.url)).split("/");
 
     return (
       urlPageDecompose.find((elementUrl, idx) => {
