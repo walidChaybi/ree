@@ -4,7 +4,7 @@ import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { render } from "@testing-library/react";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
-import { afterAll, beforeAll, describe, expect, test, vi } from "vitest";
+import { afterAll, beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
 import ElementPageRECE from "../../router/ElementPageRECE";
 import { creerInfoPageRECE } from "../../router/infoPages/InfoPageRECE";
 import AfficherMessage from "../../utils/AfficherMessage";
@@ -21,6 +21,10 @@ beforeAll(() => {
       estActif: (featureFlag: FeatureFlag) => featureFlag === fauxFFValide
     }
   }));
+});
+
+beforeEach(() => {
+  afficherMessageErreur.mockClear();
   AfficherMessage.erreur = afficherMessageErreur;
 });
 
@@ -133,7 +137,7 @@ describe("Test du composant ElementPageRECE", () => {
               url: "",
               titre: "Avec droit sur périmetre"
             })}
-            droitSurUnDesPerimetre={{ droit: Droit.CONSULTER, perimetres: [Perimetre.TOUS_REGISTRES] }}
+            droitSurUnDesPerimetres={{ droit: Droit.CONSULTER, perimetres: [Perimetre.TOUS_REGISTRES] }}
           >
             <div>{"Avec droit sur périmetre"}</div>
           </ElementPageRECE>
@@ -143,7 +147,7 @@ describe("Test du composant ElementPageRECE", () => {
               url: "",
               titre: "Sans droit sur périmetre"
             })}
-            droitSurUnDesPerimetre={{ droit: Droit.CONSULTER, perimetres: ["INCONNU"] }}
+            droitSurUnDesPerimetres={{ droit: Droit.CONSULTER, perimetres: ["INCONNU"] }}
           >
             <div>{"Sans droit sur périmetre"}</div>
           </ElementPageRECE>
@@ -154,5 +158,27 @@ describe("Test du composant ElementPageRECE", () => {
     expect(navigate).toHaveBeenCalledTimes(5);
     expect(afficherMessageErreur).toHaveBeenCalledTimes(5);
     expect(snapshot).toMatchSnapshot();
+  });
+
+  test("DOIT rediriger vers la page d'accueil QUAND l'utilisateur ne possède pas les droits nécéssaires", () => {
+    render(
+      <MockRECEContextProvider
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte()
+          .avecDroit(Droit.SAISIR_REQUETE, { perimetres: [Perimetre.TOUS_REGISTRES] })
+          .generer()}
+      >
+        <ElementPageRECE
+          infoPage={creerInfoPageRECE({
+            url: "",
+            titre: "Sans droit consulter"
+          })}
+          droitSurUnDesPerimetres={{ droit: Droit.CONSULTER, perimetres: [Perimetre.TOUS_REGISTRES] }}
+        >
+          <div>{"Sans droit consulter"}</div>
+        </ElementPageRECE>
+      </MockRECEContextProvider>
+    );
+    expect(afficherMessageErreur).toHaveBeenCalledTimes(1);
+    expect(navigate).toHaveBeenCalledWith("/rece/rece-ui/", { replace: true });
   });
 });

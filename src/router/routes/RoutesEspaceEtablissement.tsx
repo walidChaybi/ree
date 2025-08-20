@@ -46,7 +46,7 @@ export const ROUTES_ESPACE_ETABLISSEMENT: RouteObject[] = [
     element: (
       <ElementPageRECE
         infoPage={INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_CONSULTATION}
-        droitSurUnDesPerimetre={{ droit: Droit.CREER_ACTE_ETABLI, perimetres: [Perimetre.TOUS_REGISTRES, Perimetre.ETAX] }}
+        droitSurUnDesPerimetres={{ droit: Droit.CREER_ACTE_ETABLI, perimetres: [Perimetre.TOUS_REGISTRES, Perimetre.ETAX] }}
       >
         <ApercuRequeteEtablissementSimplePage />
       </ElementPageRECE>
@@ -58,7 +58,7 @@ export const ROUTES_ESPACE_ETABLISSEMENT: RouteObject[] = [
     element: (
       <ElementPageRECE
         infoPage={INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_SUIVI_DOSSIER}
-        droitSurUnDesPerimetre={{ droit: Droit.CREER_ACTE_ETABLI, perimetres: [Perimetre.TOUS_REGISTRES, Perimetre.ETAX] }}
+        droitSurUnDesPerimetres={{ droit: Droit.CREER_ACTE_ETABLI, perimetres: [Perimetre.TOUS_REGISTRES, Perimetre.ETAX] }}
       >
         <ApercuRequeteEtablissementSuiviDossierPage />
       </ElementPageRECE>
@@ -70,7 +70,7 @@ export const ROUTES_ESPACE_ETABLISSEMENT: RouteObject[] = [
     element: (
       <ElementPageRECE
         infoPage={INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_SAISIE_PROJET}
-        droitSurUnDesPerimetre={{ droit: Droit.CREER_ACTE_ETABLI, perimetres: [Perimetre.TOUS_REGISTRES, Perimetre.ETAX] }}
+        droitSurUnDesPerimetres={{ droit: Droit.CREER_ACTE_ETABLI, perimetres: [Perimetre.TOUS_REGISTRES, Perimetre.ETAX] }}
       >
         <ApercuRequeteEtablissementSaisieDeProjetPage />
       </ElementPageRECE>
@@ -83,7 +83,7 @@ export const ROUTES_ESPACE_ETABLISSEMENT: RouteObject[] = [
       <ElementPageRECE
         infoPage={INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_ACTE_REGISTRE}
         tousLesDroits={[Droit.SIGNER_ACTE]}
-        droitSurUnDesPerimetre={{ droit: Droit.CREER_ACTE_ETABLI, perimetres: [Perimetre.TOUS_REGISTRES, Perimetre.ETAX] }}
+        droitSurUnDesPerimetres={{ droit: Droit.CREER_ACTE_ETABLI, perimetres: [Perimetre.TOUS_REGISTRES, Perimetre.ETAX] }}
       >
         <ApercuRequeteEtablissementActeRegistrePage />
       </ElementPageRECE>

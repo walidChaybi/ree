@@ -6,8 +6,8 @@ import { useContext, useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router";
 import AfficherMessage from "../utils/AfficherMessage";
 import GestionnaireFilAriane from "../utils/GestionnaireFilAriane";
-import LiensRECE from "./LiensRECE";
 import { TInfoPageRECE } from "./infoPages/InfoPageRECE";
+import LiensRECE from "./LiensRECE";
 
 type TElementPageRECEProps = {
   infoPage: Omit<TInfoPageRECE<"">, "url">;
@@ -17,17 +17,17 @@ type TElementPageRECEProps = {
   | {
       auMoinsUnDesDroits?: Droit[];
       uniquementLesDroits?: never;
-      droitSurUnDesPerimetre?: never;
+      droitSurUnDesPerimetres?: never;
     }
   | {
       auMoinsUnDesDroits?: never;
       uniquementLesDroits?: Droit[];
-      droitSurUnDesPerimetre?: never;
+      droitSurUnDesPerimetres?: never;
     }
   | {
       auMoinsUnDesDroits?: never;
       uniquementLesDroits?: never;
-      droitSurUnDesPerimetre?: { droit: Droit; perimetres: string[] };
+      droitSurUnDesPerimetres?: { droit: Droit; perimetres: string[] };
     }
 );
 
@@ -37,7 +37,7 @@ const ElementPageRECE: React.FC<React.PropsWithChildren<TElementPageRECEProps>> 
   tousLesDroits,
   auMoinsUnDesDroits,
   uniquementLesDroits,
-  droitSurUnDesPerimetre,
+  droitSurUnDesPerimetres,
   children
 }) => {
   const { utilisateurConnecte } = useContext(RECEContextData);
@@ -53,35 +53,38 @@ const ElementPageRECE: React.FC<React.PropsWithChildren<TElementPageRECEProps>> 
         ? utilisateurConnecte.nombreHabilitations === uniquementLesDroits.length &&
           utilisateurConnecte.estHabilitePour({ tousLesDroits: uniquementLesDroits })
         : true,
-      aDroitSurUnDesPerimetres: droitSurUnDesPerimetre
+      aDroitSurUnDesPerimetres: droitSurUnDesPerimetres
         ? utilisateurConnecte.estHabilitePour({
-            leDroit: droitSurUnDesPerimetre.droit,
-            surUnDesPerimetres: droitSurUnDesPerimetre.perimetres
+            leDroit: droitSurUnDesPerimetres.droit,
+            surUnDesPerimetres: droitSurUnDesPerimetres.perimetres
           })
         : true
     };
 
-    const accesAccorde =
+    return (
       utilisateur.aLesFeatureFlags &&
       utilisateur.aTousLesDroits &&
       utilisateur.aAuMoinsUnDesDroits &&
       utilisateur.aUniquementLesdroits &&
-      utilisateur.aDroitSurUnDesPerimetres;
+      utilisateur.aDroitSurUnDesPerimetres
+    );
+  }, [utilisateurConnecte, featureFlags, tousLesDroits, auMoinsUnDesDroits, uniquementLesDroits, droitSurUnDesPerimetres]);
 
-    if (!accesAccorde) {
-      AfficherMessage.erreur("Vous n'êtes pas autorisé à consulter cette page", { fermetureAuto: true });
+  useEffect(() => {
+    if (!utilisateurPeutAccederALaPage) {
+      AfficherMessage.erreur("Vous n'avez pas d'habilitation suffisante. Veuillez contacter votre administrateur.", {
+        fermetureAuto: true
+      });
       navigate(LiensRECE.retourArriere(), { replace: true });
     }
-
-    return accesAccorde;
-  }, [utilisateurConnecte, featureFlags, tousLesDroits, auMoinsUnDesDroits, uniquementLesDroits, droitSurUnDesPerimetre]);
+  }, [utilisateurPeutAccederALaPage]);
 
   useEffect(() => {
     document.title = infoPage.titre ? `RECE - ${infoPage.titre}` : "RECE";
     GestionnaireFilAriane.ajoutElement({ url: location.pathname, titre: infoPage.titre, niveau: infoPage.niveauNavigation });
   }, [infoPage]);
 
-  return <>{utilisateurPeutAccederALaPage ? children : <></>}</>;
+  return utilisateurPeutAccederALaPage ? <>{children}</> : null;
 };
 
 export default ElementPageRECE;
