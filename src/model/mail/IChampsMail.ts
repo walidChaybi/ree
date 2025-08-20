@@ -16,4 +16,5 @@ export interface IChampsMail {
   champ4: string;
   champ5: string;
   champ6: string;
+  champ7?: string;
 }

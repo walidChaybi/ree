@@ -17,6 +17,11 @@ export interface IEnvoyerReponseReqInfoParams {
   piecesJointes?: PieceJointe[];
 }
 
+enum ERequeteMail {
+  REQUETE_INFO = "REQUETE_INFO",
+  REQUETE_INFO_ORIGINE = "REQUETE_INFO_ORIGINE"
+}
+
 export function useEnvoyerReponsesReqInfoHook(params: IEnvoyerReponseReqInfoParams | undefined) {
   const [mailEnvoyer, setMailEnvoyer] = useState<boolean | undefined>();
 
@@ -43,8 +48,12 @@ function getReponseAEnvoyer(
   piecesJointes?: PieceJointe[]
 ): IMail {
   const mail = {} as IMail;
+
   if (requete.requerant.courriel) {
-    mail.codeModele = "REQUETE_INFO";
+    const commentaire = requete.commentaire?.trim();
+    const codeModele = commentaire ? ERequeteMail.REQUETE_INFO_ORIGINE : ERequeteMail.REQUETE_INFO;
+
+    mail.codeModele = codeModele;
     mail.versionModele = "1.0.0";
     mail.listeDestinataire = [requete.requerant.courriel];
     mail.listeDestinataireCopie = [];
@@ -57,6 +66,11 @@ function getReponseAEnvoyer(
       champ5: DateUtils.getFormatDateFromTimestamp(requete.dateCreation), //  "Date création demande"
       champ6: reponseSaisie.corpsMail //  "Contenu"
     };
+
+    if (codeModele === ERequeteMail.REQUETE_INFO_ORIGINE) {
+      mail.champs.champ7 = requete.commentaire;
+    }
+
     mail.listePieceJointe = [];
     if (piecesJointes && piecesJointes.length > 0) {
       piecesJointes.forEach((pj: PieceJointe) => {
