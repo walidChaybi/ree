@@ -93,7 +93,7 @@ const getDonneesMenu = (nombreRequetes: number, nombreRequetesInformation: numbe
       {
         libelle: "Mes requêtes",
         urlPage: LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_CONSULAIRES.url),
-        auMoinsUnDesDroits: [Droit.CONSULAIRE_ACCES_ESPACE_MES_REQUETES]
+        auMoinsUnDesDroits: [Droit.CONSULAIRE_ACCES_ESPACE_MES_REQUETES, Droit.CONSULAIRE_ACCES_ESPACE_REQUETES_DE_MON_SERVICE]
       },
       {
         libelle: "Mon service",

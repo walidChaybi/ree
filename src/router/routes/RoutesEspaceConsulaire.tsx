@@ -14,7 +14,11 @@ export const ROUTES_ESPACE_CONSULAIRE: RouteObject[] = [
     element: (
       <ElementPageRECE
         infoPage={Consulaire.INFO_PAGE_MES_REQUETES_CONSULAIRES}
-        auMoinsUnDesDroits={[Droit.CONSULAIRE_ACCES_ESPACE_MES_REQUETES, Droit.CREER_ACTE_DRESSE]}
+        auMoinsUnDesDroits={[
+          Droit.CONSULAIRE_ACCES_ESPACE_MES_REQUETES,
+          Droit.CREER_ACTE_DRESSE,
+          Droit.CONSULAIRE_ACCES_ESPACE_REQUETES_DE_MON_SERVICE
+        ]}
       >
         <PageMesRequetesConsulaires />
       </ElementPageRECE>
@@ -38,7 +42,8 @@ export const ROUTES_ESPACE_CONSULAIRE: RouteObject[] = [
     element: (
       <ElementPageRECE
         infoPage={Consulaire.INFO_PAGE_SAISIE_REQUETE_TRANSCRIPTION_COURRIER}
-        tousLesDroits={[Droit.TRANSCRIPTION_SAISIR_REQUETE, Droit.CONSULAIRE_ACCES_ESPACE_MES_REQUETES]}
+        tousLesDroits={[Droit.TRANSCRIPTION_SAISIR_REQUETE]}
+        auMoinsUnDesDroits={[Droit.CONSULAIRE_ACCES_ESPACE_MES_REQUETES, Droit.CONSULAIRE_ACCES_ESPACE_REQUETES_DE_MON_SERVICE]}
       >
         <PageSaisieCourrierTranscription />
       </ElementPageRECE>
