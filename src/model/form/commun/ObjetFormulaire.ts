@@ -107,7 +107,7 @@ export const ObjetFormulaire = {
   },
 
   estNumeroRcRca: (valeur: TValeurFormulaire): valeur is INumeroRcRcaPacs => {
-    return typeof valeur === "object" && "anneeInscription" in valeur;
+    return typeof valeur === "object" && "annee" in valeur;
   }
 } as const;
 /* v8 ignore end */

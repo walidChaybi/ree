@@ -10,19 +10,18 @@ const GestionBlocsRMC: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     if (!setBlocsRenseignes) return;
-    let blocsRenseignes: (keyof typeof EBlocsRMC)[] = [];
+    const blocsRenseignes: (keyof typeof EBlocsRMC)[] = [];
 
     if (getValeursRenseigneesFormulaire(values.registreRepertoire.evenement, []).filter(estChampRenseigne).length)
-      blocsRenseignes = [...blocsRenseignes, "EVENEMENT"];
+      blocsRenseignes.push("EVENEMENT");
 
     if (getValeursRenseigneesFormulaire(values.registreRepertoire.repertoire, []).filter(estChampRenseigne).length)
-      blocsRenseignes = [...blocsRenseignes, "RCRCAPACS"];
+      blocsRenseignes.push("RCRCAPACS");
 
-    if (getValeursRenseigneesFormulaire(values.registreRepertoire.registre, []).filter(estChampRenseigne).length)
-      blocsRenseignes = [...blocsRenseignes, "ACTE"];
+    if (getValeursRenseigneesFormulaire(values.registreRepertoire.registre, ["typeReference"]).filter(estChampRenseigne).length)
+      blocsRenseignes.push("ACTE");
 
-    if (getValeursRenseigneesFormulaire(values.titulaire, []).filter(estChampRenseigne).length)
-      blocsRenseignes = [...blocsRenseignes, "TITULAIRE"];
+    if (getValeursRenseigneesFormulaire(values.titulaire, []).filter(estChampRenseigne).length) blocsRenseignes.push("TITULAIRE");
 
     setBlocsRenseignes(blocsRenseignes);
   }, [values.registreRepertoire, values.titulaire]);

@@ -19,9 +19,10 @@ export interface ICriteresRechercheActeInscription {
 
 /** Critères de recherche: mapping avant appel d'api */
 export const mappingCriteres = (criteres: IRMCActeInscription): ICriteresRMCActesInscriptions =>
-  nettoyerAttributsDto({
+  nettoyerAttributsDto<ICriteresRMCActesInscriptions>({
     // Filtre Titulaire
     ...getCriteresTitulaire(criteres),
+
     // Filtre Date de création
     dateCreationDebut: DateUtils.getDateDebutFromDateCompose(criteres.datesDebutFinAnnee?.dateDebut),
     dateCreationFin: DateUtils.getDateFinFromDateCompose(criteres.datesDebutFinAnnee?.dateFin),
@@ -37,13 +38,15 @@ export const mappingCriteres = (criteres: IRMCActeInscription): ICriteresRMCActe
     numeroActe: criteres.registreRepertoire?.registre?.numeroActe?.numeroActeOuOrdre,
     anneeRegistre: criteres.registreRepertoire?.registre?.anneeRegistre,
     numeroBisTer: criteres.registreRepertoire?.registre?.numeroActe?.numeroBisTer,
-    aPartirDeNumeroActe: criteres.registreRepertoire?.registre?.numeroActe?.etActesSuivants,
+    aPartirDeNumeroActe: criteres.registreRepertoire?.registre?.numeroActe?.etActesSuivants || undefined,
     support1: criteres.registreRepertoire?.registre?.registreSupport?.supportUn,
     support2: criteres.registreRepertoire?.registre?.registreSupport?.supportDeux,
+    referenceRece: criteres.registreRepertoire?.registre?.referenceRece,
+
     numeroInscription: criteres.registreRepertoire?.repertoire?.numeroInscription,
     typeRepertoire: criteres.registreRepertoire?.repertoire?.typeRepertoire as keyof typeof ETypeRepertoire,
     natureRcRca: RMCRepertoire.getNatureRcRca(criteres.registreRepertoire?.repertoire),
-    etInscriptionsSuivantes: criteres.registreRepertoire?.repertoire?.etInscriptionsSuivantes,
+    etInscriptionsSuivantes: criteres.registreRepertoire?.repertoire?.etInscriptionsSuivantes || undefined,
     jourDateEvenement: criteres.registreRepertoire?.evenement?.dateEvenement?.jour,
     moisDateEvenement: criteres.registreRepertoire?.evenement?.dateEvenement?.mois,
     anneeDateEvenement: criteres.registreRepertoire?.evenement?.dateEvenement?.annee,
@@ -51,7 +54,14 @@ export const mappingCriteres = (criteres: IRMCActeInscription): ICriteresRMCActe
   });
 
 export const rmcInscriptionAutorisee = (criteres: ICriteresRMCActesInscriptions): boolean =>
-  !(criteres.natureActe || criteres.familleRegistre || criteres.posteOuPocopa || criteres.numeroActe || criteres.anneeRegistre);
+  !(
+    criteres.natureActe ??
+    criteres.familleRegistre ??
+    criteres.posteOuPocopa ??
+    criteres.numeroActe ??
+    criteres.anneeRegistre ??
+    criteres.referenceRece
+  );
 
 export const rmcActeAutorisee = (criteres: ICriteresRMCActesInscriptions): boolean =>
-  !(criteres.typeRepertoire || criteres.natureRcRca || criteres.numeroInscription);
+  !(criteres.typeRepertoire ?? criteres.natureRcRca ?? criteres.numeroInscription);

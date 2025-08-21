@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { ToastContainer } from "react-toastify";
 import FenetreExterne, { IFenetreExterneRef } from "../../../composants/commun/conteneurs/FenetreExterne";
-import { PageRMCActeInscription } from "../../../pages/rmc/PageRMCActeInscription";
+import PageRMCActeInscription from "../../../pages/rmc/PageRMCActeInscription";
 import "../../pages/rechercheMultiCriteres/acteInscription/scss/RMCActeInscriptionPage.scss";
 
 const width = 1200;

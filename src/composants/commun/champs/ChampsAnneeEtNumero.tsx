@@ -4,9 +4,12 @@ import { MdDelete } from "react-icons/md";
 import BoutonIcon from "../bouton/BoutonIcon";
 import { CHAMP_EN_ERREUR } from "../formulaire/ScrollVersErreur";
 
-interface IChampRcRcaPacsProps {
+export interface IChampsAnneeEtNumeroProps {
   name: string;
   libelle: string;
+  tailleMaxNumero: number;
+  caractereSeparateur: string;
+  texteDevantChamps?: string;
   actionSuppression?: () => void;
   estObligatoire?: boolean;
   disabled?: boolean;
@@ -14,17 +17,26 @@ interface IChampRcRcaPacsProps {
 
 const seulementNumerique = (texte: string) => texte.replace(/\D/, "");
 
-const ChampRcRcaPacs: React.FC<IChampRcRcaPacsProps> = ({ name, libelle, actionSuppression, estObligatoire, disabled }) => {
-  const champRcRcaPacs = useMemo(
+const ChampsAnneeEtNumero: React.FC<IChampsAnneeEtNumeroProps> = ({
+  name,
+  libelle,
+  estObligatoire,
+  disabled,
+  tailleMaxNumero,
+  caractereSeparateur,
+  texteDevantChamps,
+  actionSuppression
+}) => {
+  const champsAnneeEtNumero = useMemo(
     () => ({
-      annee: `${name}.anneeInscription`,
+      annee: `${name}.annee`,
       numero: `${name}.numero`
     }),
     [name]
   );
 
-  const [fieldAnnee, metaAnnee] = useField(champRcRcaPacs.annee);
-  const [fieldNumero, metaNumero] = useField(champRcRcaPacs.numero);
+  const [fieldAnnee, metaAnnee] = useField(champsAnneeEtNumero.annee);
+  const [fieldNumero, metaNumero] = useField(champsAnneeEtNumero.numero);
   const [refNumero, setRefNumero] = useState<HTMLInputElement | null>(null);
   const enErreur = useMemo(
     () => (Boolean(metaAnnee.error) && metaAnnee.touched) || (Boolean(metaNumero.error) && metaNumero.touched),
@@ -35,14 +47,15 @@ const ChampRcRcaPacs: React.FC<IChampRcRcaPacsProps> = ({ name, libelle, actionS
     <div {...(enErreur ? { className: CHAMP_EN_ERREUR } : {})}>
       <label
         className={`m-0 mb-1 ml-1 block w-fit text-start transition-colors ${enErreur ? "text-rouge" : "text-bleu-sombre"}`}
-        htmlFor={champRcRcaPacs.annee}
+        htmlFor={champsAnneeEtNumero.annee}
       >
         {libelle}
         {estObligatoire && <span className="ml-1 text-rouge">{"*"}</span>}
       </label>
       <div className="flex items-center gap-1">
+        {texteDevantChamps ?? <span className="whitespace-nowrap">{texteDevantChamps}</span>}
         <input
-          id={champRcRcaPacs.annee}
+          id={champsAnneeEtNumero.annee}
           className={`border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${Boolean(metaAnnee.error) && metaAnnee.touched ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
           maxLength={4}
           placeholder="AAAA"
@@ -59,14 +72,14 @@ const ChampRcRcaPacs: React.FC<IChampRcRcaPacsProps> = ({ name, libelle, actionS
             return autreProps;
           })()}
         />
-        <span>{"-"}</span>
+        <span>{caractereSeparateur}</span>
         <div className="relative flex flex-grow rounded-md shadow-sm">
           <input
             ref={setRefNumero}
-            id={champRcRcaPacs.numero}
+            id={champsAnneeEtNumero.numero}
             className={`border-1 flex w-full rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${Boolean(metaNumero.error) && metaNumero.touched ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
-            maxLength={5}
-            placeholder="XXXXX"
+            maxLength={tailleMaxNumero}
+            placeholder={"X".repeat(tailleMaxNumero)}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               event.target.value = seulementNumerique(event.target.value);
               fieldNumero.onChange(event);
@@ -100,4 +113,4 @@ const ChampRcRcaPacs: React.FC<IChampRcRcaPacsProps> = ({ name, libelle, actionS
   );
 };
 
-export default ChampRcRcaPacs;
+export default ChampsAnneeEtNumero;

@@ -93,11 +93,13 @@ interface ISchemaValidation {
   listeDeroulante: TSchemaValidationFonction<{ options?: string[]; valeursPossibles?: ValeursConditionneesMetaModele[] }, Yup.StringSchema>;
   dateComplete: TSchemaValidationFonction<{ bloquerDateFuture?: boolean }>;
   dateIncomplete: TSchemaValidationFonction<{ bloquerDateFuture?: boolean }>;
-  annee: TSchemaValidationFonction;
+  annee: TSchemaValidationFonction<{ min?: TValidationEntier }>;
   nomSecable: TSchemaValidationFonction;
   prenoms: (prefix: string) => Yup.AnySchema;
+  champsAnneeEtNumero: TSchemaValidationFonction<{ min?: TValidationEntier }>;
   numeroRcRcaPacs: TSchemaValidationFonction;
   numerosRcRcaPacs: TSchemaValidationFonction<{ prefix: string; tailleMax: number }>;
+  referenceRECE: TSchemaValidationFonction;
   inconnu: () => Yup.AnySchema;
 }
 
@@ -561,7 +563,7 @@ const SchemaValidation: ISchemaValidation = {
   annee: (schemaParams = {}) =>
     SchemaValidation.entier({
       obligatoire: schemaParams.obligatoire,
-      min: { valeur: 1000, message: "⚠ L'année doit être sur 4 chiffres" },
+      min: { valeur: schemaParams.min?.valeur ?? 1000, message: schemaParams.min?.message ?? "⚠ L'année doit être sur 4 chiffres" },
       max: { valeur: dayjs().get("year"), message: "⚠ L'année ne peut pas être supérieure à l'année actuelle" },
       interditSeul: schemaParams.interditSeul,
       interditAvec: schemaParams.interditAvec,
@@ -614,27 +616,49 @@ const SchemaValidation: ISchemaValidation = {
     return SchemaValidation.objet(schemaPrenoms);
   },
 
-  numeroRcRcaPacs: ({ obligatoire, operateurConditionsOu, interditSeul, interditAvec, comparaisonValeurAutreChamp } = {}) => {
+  champsAnneeEtNumero: ({ obligatoire, operateurConditionsOu, interditSeul, interditAvec, comparaisonValeurAutreChamp, min } = {}) => {
     let schema = SchemaValidation.objet({
       numero: SchemaValidation.entier({ obligatoire: obligatoire }),
-      anneeInscription: SchemaValidation.annee({ obligatoire: obligatoire })
+      annee: SchemaValidation.annee({ obligatoire: obligatoire, min })
     })
       .test("numeroIncompletInterditAnnee", (numeroRcRcaPacs, error) => {
-        return Boolean(numeroRcRcaPacs.numero) && !numeroRcRcaPacs.anneeInscription
+        return Boolean(numeroRcRcaPacs.numero) && !numeroRcRcaPacs.annee
           ? error.createError({
-              path: `${error.path}.anneeInscription`,
+              path: `${error.path}.annee`,
               message: messagesErreur.CHAMP_INCOMPLET
             })
           : true;
       })
       .test("numeroIncompletInterditNumero", (numeroRcRcaPacs, error) => {
-        return !numeroRcRcaPacs.numero && Boolean(numeroRcRcaPacs.anneeInscription)
+        return !numeroRcRcaPacs.numero && Boolean(numeroRcRcaPacs.annee)
           ? error.createError({
               path: `${error.path}.numero`,
               message: messagesErreur.CHAMP_INCOMPLET
             })
           : true;
       });
+
+    return gestionObligation({
+      schema: schema,
+      obligatoire: obligatoire ?? false,
+      actionObligation: () => {
+        return schema;
+      },
+      conditionOu: operateurConditionsOu,
+      interditSeul: interditSeul,
+      interditAvec: interditAvec,
+      comparaisonValeurAutreChamp: comparaisonValeurAutreChamp
+    });
+  },
+
+  numeroRcRcaPacs: ({ obligatoire, operateurConditionsOu, interditSeul, interditAvec, comparaisonValeurAutreChamp } = {}) => {
+    let schema = SchemaValidation.champsAnneeEtNumero({
+      obligatoire,
+      operateurConditionsOu,
+      interditSeul,
+      interditAvec,
+      comparaisonValeurAutreChamp
+    });
 
     return gestionObligation({
       schema: schema,
@@ -659,7 +683,7 @@ const SchemaValidation: ISchemaValidation = {
         then: schemaAnnee.required(messagesErreur.CHAMP_OBLIGATOIRE)
       });
       let schemaNumero = SchemaValidation.entier({ obligatoire: false });
-      schemaNumero = schemaNumero.when(`$${schemaParams.prefix}${index + 1}.anneeInscription`, {
+      schemaNumero = schemaNumero.when(`$${schemaParams.prefix}${index + 1}.annee`, {
         is: (annee: number) => Boolean(`${annee ?? ""}`.length),
         then: schemaNumero.required(messagesErreur.CHAMP_OBLIGATOIRE)
       });
@@ -681,21 +705,44 @@ const SchemaValidation: ISchemaValidation = {
         (_, idx) => `$${schemaParams.prefix}${idx + index + 2}`
       );
       schemaAnnee = schemaAnnee.when(numerosSuivants, {
-        is: (...valeur: (INumeroRcRcaPacs | undefined)[]) => valeur.some(val => Boolean(val?.anneeInscription) && Boolean(val?.numero)),
+        is: (...valeur: (INumeroRcRcaPacs | undefined)[]) => valeur.some(val => Boolean(val?.annee) && Boolean(val?.numero)),
         then: schemaAnnee.required(messagesErreur.CHAMP_OBLIGATOIRE)
       });
       schemaNumero = schemaNumero.when(numerosSuivants, {
-        is: (...valeur: (INumeroRcRcaPacs | undefined)[]) => valeur.some(val => Boolean(val?.anneeInscription) && Boolean(val?.numero)),
+        is: (...valeur: (INumeroRcRcaPacs | undefined)[]) => valeur.some(val => Boolean(val?.annee) && Boolean(val?.numero)),
         then: schemaNumero.required(messagesErreur.CHAMP_OBLIGATOIRE)
       });
 
       schemaNumeros[`ligne${index + 1}`] = SchemaValidation.objet({
-        anneeInscription: schemaAnnee,
+        annee: schemaAnnee,
         numero: schemaNumero
       });
     });
 
     return SchemaValidation.objet(schemaNumeros);
+  },
+
+  referenceRECE: ({ obligatoire, operateurConditionsOu, interditSeul, interditAvec, comparaisonValeurAutreChamp } = {}) => {
+    let schema = SchemaValidation.champsAnneeEtNumero({
+      min: { valeur: 2021, message: "L'année doit être postérieure à 2020" },
+      obligatoire,
+      operateurConditionsOu,
+      interditSeul,
+      interditAvec,
+      comparaisonValeurAutreChamp
+    });
+
+    return gestionObligation({
+      schema: schema,
+      obligatoire: obligatoire ?? false,
+      actionObligation: () => {
+        return schema;
+      },
+      conditionOu: operateurConditionsOu,
+      interditSeul: interditSeul,
+      interditAvec: interditAvec,
+      comparaisonValeurAutreChamp: comparaisonValeurAutreChamp
+    });
   },
 
   inconnu: () => Yup.mixed()

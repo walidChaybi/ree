@@ -3,13 +3,13 @@ import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm"
 import { useFormikContext } from "formik";
 import { useEffect, useState } from "react";
 
-const useRMCBlocActe = (typeRepertoireSelectionne: keyof typeof EFamilleRegistre) => {
+const useRMCBlocActe = (familleRegistreSelectionnee: keyof typeof EFamilleRegistre) => {
   const { values, setFieldValue } = useFormikContext<IRMCActeInscriptionForm>();
 
   const [champsDesactives, setChampsDesactives] = useState<string[]>([]);
 
   useEffect(() => {
-    switch (typeRepertoireSelectionne) {
+    switch (familleRegistreSelectionnee) {
       case "CSL":
       case "DEP":
       case "AR2":
@@ -49,7 +49,7 @@ const useRMCBlocActe = (typeRepertoireSelectionne: keyof typeof EFamilleRegistre
         setChampsDesactives([]);
         break;
     }
-  }, [typeRepertoireSelectionne]);
+  }, [familleRegistreSelectionnee]);
 
   return champsDesactives;
 };

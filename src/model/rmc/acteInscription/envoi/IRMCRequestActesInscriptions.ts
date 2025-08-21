@@ -1,3 +1,4 @@
+import { IReferenceRECE } from "@model/form/commun/referenceRECE";
 import { ENatureActe } from "../../../etatcivil/enum/NatureActe";
 import { ETypeFamille } from "../../../etatcivil/enum/TypeFamille";
 import { ETypeRepertoire } from "../../../etatcivil/enum/TypeRepertoire";
@@ -30,6 +31,8 @@ export interface ICriteresRMCActesInscriptions {
   numeroBisTer?: string;
   support1?: string;
   support2?: string;
+  referenceRece?: IReferenceRECE;
+
   //Repertoire
   numeroInscription?: string;
   typeRepertoire?: keyof typeof ETypeRepertoire;

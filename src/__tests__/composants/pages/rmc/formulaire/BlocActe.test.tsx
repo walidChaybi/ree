@@ -21,10 +21,17 @@ describe("RMC - BlocActe", () => {
     );
   };
 
-  test("render le composant correctement", () => {
+  test("render le composant correctement", async () => {
     renderComponent();
 
-    expect(screen.getByLabelText("Famille de registre")).toBeDefined();
+    // RG - La recherche par référence registre est affichée par défaut
+    expect(screen.queryByLabelText("Référence RECE")).toBeNull();
+
+    fireEvent.click(screen.getAllByRole("radio")[1]);
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Famille de registre")).toBeDefined();
+    });
     expect(screen.getByLabelText("Nature de l'acte")).toBeDefined();
     expect(screen.getByLabelText("Type / Poste / Commune / Pays")).toBeDefined();
     expect(screen.getByLabelText("Année")).toBeDefined();
@@ -35,6 +42,8 @@ describe("RMC - BlocActe", () => {
 
   test("Vérifier valeur des champs", async () => {
     renderComponent();
+
+    await userEvent.click(screen.getAllByRole("radio")[1]);
 
     // récupération des champs du formulaire
     const selectFamilleDeRegistre: HTMLSelectElement = screen.getByRole("combobox", {
@@ -90,6 +99,8 @@ describe("RMC - BlocActe", () => {
   test("RG - Si la famille de registre sélectionnée est CSL, le champ support 2 est désactivé", async () => {
     renderComponent();
 
+    await userEvent.click(screen.getAllByRole("radio")[1]);
+
     const selectFamilleDeRegistre: HTMLSelectElement = screen.getByRole("combobox", {
       name: /Famille de registre/i
     });
@@ -104,6 +115,8 @@ describe("RMC - BlocActe", () => {
 
   test("RG - Si la famille de registre sélectionnée est DEP, le champ support 2 est désactivé", async () => {
     renderComponent();
+
+    await userEvent.click(screen.getAllByRole("radio")[1]);
 
     const selectFamilleDeRegistre: HTMLSelectElement = screen.getByRole("combobox", {
       name: /Famille de registre/i
@@ -120,6 +133,8 @@ describe("RMC - BlocActe", () => {
   test("RG - Si la famille de registre sélectionnée est AR2, le champ support 2 est désactivé", async () => {
     renderComponent();
 
+    await userEvent.click(screen.getAllByRole("radio")[1]);
+
     const selectFamilleDeRegistre: HTMLSelectElement = screen.getByRole("combobox", {
       name: /Famille de registre/i
     });
@@ -134,6 +149,8 @@ describe("RMC - BlocActe", () => {
 
   test("RG - Si la famille de registre sélectionnée est AR3, le champ support 2 est désactivé", async () => {
     renderComponent();
+
+    await userEvent.click(screen.getAllByRole("radio")[1]);
 
     const selectFamilleDeRegistre: HTMLSelectElement = screen.getByRole("combobox", {
       name: /Famille de registre/i
@@ -150,6 +167,8 @@ describe("RMC - BlocActe", () => {
   test("RG - Si la famille de registre sélectionnée est JUG, le champ support 2 est désactivé", async () => {
     renderComponent();
 
+    await userEvent.click(screen.getAllByRole("radio")[1]);
+
     const selectFamilleDeRegistre: HTMLSelectElement = screen.getByRole("combobox", {
       name: /Famille de registre/i
     });
@@ -165,6 +184,8 @@ describe("RMC - BlocActe", () => {
   test("RG - Si la famille de registre sélectionnée est MAR, le champ support 2 est désactivé", async () => {
     renderComponent();
 
+    await userEvent.click(screen.getAllByRole("radio")[1]);
+
     const selectFamilleDeRegistre: HTMLSelectElement = screen.getByRole("combobox", {
       name: /Famille de registre/i
     });
@@ -179,6 +200,8 @@ describe("RMC - BlocActe", () => {
 
   test("RG - Si la famille de registre sélectionnée est OP2, les champs pocopa, année et support 2 sont désactivés", async () => {
     renderComponent();
+
+    await userEvent.click(screen.getAllByRole("radio")[1]);
 
     const selectFamilleDeRegistre: HTMLSelectElement = screen.getByRole("combobox", {
       name: /Famille de registre/i
@@ -199,6 +222,8 @@ describe("RMC - BlocActe", () => {
   test("RG - Si la famille de registre sélectionnée est OP3, les champs pocopa, année et support 2 sont désactivés", async () => {
     renderComponent();
 
+    await userEvent.click(screen.getAllByRole("radio")[1]);
+
     const selectFamilleDeRegistre: HTMLSelectElement = screen.getByRole("combobox", {
       name: /Famille de registre/i
     });
@@ -217,6 +242,8 @@ describe("RMC - BlocActe", () => {
 
   test("RG - Si la famille de registre sélectionnée est CPN, les champs pocopa, support 1, support 2, N°bis et nature sont désactivés", async () => {
     renderComponent();
+
+    await userEvent.click(screen.getAllByRole("radio")[1]);
 
     const selectFamilleDeRegistre: HTMLSelectElement = screen.getByRole("combobox", {
       name: /Famille de registre/i

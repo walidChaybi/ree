@@ -18,6 +18,8 @@ describe("test nettoyerAttributsDto", () => {
     expect(nettoyerAttributsDto(test13)).toStrictEqual(test13);
 
     expect(nettoyerAttributsDto(["1", 2, []])).toStrictEqual(["1", 2, []]);
+
+    expect(nettoyerAttributsDto([true, false, 0, []])).toStrictEqual([true, false, 0, []]);
   });
 
   test("test objet avec un attribut vide", () => {
@@ -127,8 +129,8 @@ describe("test nettoyerAttributsDto", () => {
           b: "b",
           form3: {
             a: "a",
-            b: "b",
-            c: "",
+            b: true,
+            c: false,
             d: {},
             e: {
               a: "",
@@ -149,7 +151,8 @@ describe("test nettoyerAttributsDto", () => {
           b: "b",
           form3: {
             a: "a",
-            b: "b"
+            b: true,
+            c: false
           }
         }
       }

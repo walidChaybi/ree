@@ -5,12 +5,12 @@ import { MOCK_RESULTAT_RMC_INSCRIPTION_RC } from "@mock/data/RMCInscription";
 import { NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { NB_LIGNES_PAR_APPEL_ACTE, NB_LIGNES_PAR_APPEL_INSCRIPTION } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import { describe, expect, test, vi } from "vitest";
-import { PageRMCActeInscription } from "../../../pages/rmc/PageRMCActeInscription";
+import { afterEach, describe, expect, test, vi } from "vitest";
+import PageRMCActeInscription from "../../../pages/rmc/PageRMCActeInscription";
 import AfficherMessage from "../../../utils/AfficherMessage";
 
 test("Le formulaire s'affiche correctement", async () => {
-  const { container } = render(<PageRMCActeInscription></PageRMCActeInscription>);
+  const { container } = render(<PageRMCActeInscription />);
 
   expect(container).toMatchSnapshot();
 });
@@ -174,7 +174,11 @@ describe("Le bloc evenement fonctionne correctement ", () => {
   });
 });
 
-describe("Le bloc RC/RCA/PAC fonctionne correctement ", () => {
+describe("Le bloc RC/RCA/PACS fonctionne correctement ", () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
   test("La Nature de l'inscription est grisée tant que RC ou RCA ne sont pas selectionnes", async () => {
     render(<PageRMCActeInscription></PageRMCActeInscription>);
 
@@ -207,7 +211,7 @@ describe("Le bloc RC/RCA/PAC fonctionne correctement ", () => {
       }
     ]);
 
-    render(<PageRMCActeInscription></PageRMCActeInscription>);
+    render(<PageRMCActeInscription />);
 
     const InputNatureInscription: HTMLInputElement = await screen.findByLabelText("Nature de l'inscription");
     const InputTypeRepertoire: HTMLSelectElement = await screen.findByLabelText("Type de répertoire");
@@ -249,20 +253,31 @@ describe("Le bloc RC/RCA/PAC fonctionne correctement ", () => {
   });
 
   test("Le N° de l'inscription / N° du PACS fonctionnent correctement", async () => {
-    render(<PageRMCActeInscription></PageRMCActeInscription>);
+    vi.spyOn(NatureRc, "versOptions").mockReturnValue([
+      {
+        cle: "curatelle",
+        libelle: "curatelle"
+      }
+    ]);
+
+    render(<PageRMCActeInscription />);
+
+    const InputTypeRepertoire: HTMLSelectElement = await screen.findByLabelText("Type de répertoire");
+
+    fireEvent.change(InputTypeRepertoire, { target: { value: "RC" } });
 
     const InputAnnee = (await screen.findAllByPlaceholderText("AAAA")).find(
-      input => input.id === "registreRepertoire.repertoire.numeroInscription.anneeInscription"
+      input => input.id === "registreRepertoire.repertoire.numeroInscription.annee"
     )!;
     const InputNumero = (await screen.findAllByPlaceholderText("XXXXX")).find(
       input => input.id === "registreRepertoire.repertoire.numeroInscription.numero"
     )!;
 
     fireEvent.change(InputAnnee, { target: { value: "1234" } });
-    fireEvent.blur(InputAnnee);
+    fireEvent.blur(InputNumero);
 
     await waitFor(() => {
-      expect(screen.getByText("⚠ Le champ ne peut être utilisé seul")).toBeDefined();
+      expect(screen.getByText("⚠ Le champ est incomplet")).toBeDefined();
     });
 
     const InputNom: HTMLInputElement = await screen.findByLabelText("Nom");
@@ -293,7 +308,7 @@ describe("Le bloc RC/RCA/PAC fonctionne correctement ", () => {
     const checkboxInscriptionSuivantes: HTMLInputElement = await screen.findByLabelText("Et les inscriptions/PACS suivants du répertoire");
 
     const InputAnnee = (await screen.findAllByPlaceholderText("AAAA")).find(
-      input => input.id === "registreRepertoire.repertoire.numeroInscription.anneeInscription"
+      input => input.id === "registreRepertoire.repertoire.numeroInscription.annee"
     )!;
     const InputNumero = (await screen.findAllByPlaceholderText("XXXXX")).find(
       input => input.id === "registreRepertoire.repertoire.numeroInscription.numero"

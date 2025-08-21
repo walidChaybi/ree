@@ -8,7 +8,7 @@ import { estRenseigne } from "@util/Utils";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import { ConfirmationPopin, IBoutonPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { DocumentEC } from "../../../../../../../model/requete/enum/DocumentEC";
 import { IgnoreRequetePopin } from "../IgnoreRequetePopin";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
@@ -22,7 +22,6 @@ import {
 import { UpdateChoixDelivranceProps, useUpdateChoixDelivrance } from "./hook/UpdateChoixDelivranceApiHook";
 
 export const MenuReponseSansDelivranceEC: React.FC<IChoixActionDelivranceProps> = props => {
-  const location = useLocation();
   const navigate = useNavigate();
   const refs = useRef([]);
 
@@ -46,13 +45,12 @@ export const MenuReponseSansDelivranceEC: React.FC<IChoixActionDelivranceProps> 
     (index: DocumentEC) => {
       redirection({
         navigate,
-        location,
         idActe: actes?.[0] ? actes[0].id : "",
         idRequete: updateChoixDelivranceResultat?.idRequete,
         index
       });
     },
-    [actes, navigate, location, updateChoixDelivranceResultat]
+    [actes, navigate, updateChoixDelivranceResultat]
   );
 
   const reponseSansDelivranceOptions: IActionOption[] = getOptionsMenuReponseSansDelivrance();

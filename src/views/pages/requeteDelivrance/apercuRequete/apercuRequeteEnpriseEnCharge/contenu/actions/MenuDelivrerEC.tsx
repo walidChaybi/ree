@@ -11,7 +11,7 @@ import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import { ConfirmationPopin, IBoutonPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { DocumentEC } from "../../../../../../../model/requete/enum/DocumentEC";
 import { useOptionsCourriersApiHook } from "../../../apercuCourrier/contenu/hook/OptionsCourriersHook";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
@@ -26,7 +26,6 @@ import { UpdateChoixDelivranceProps, useUpdateChoixDelivrance } from "./hook/Upd
 
 export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
   const navigate = useNavigate();
-  const location = useLocation();
   const refs = useRef([]);
 
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
@@ -52,13 +51,12 @@ export const MenuDelivrerEC: React.FC<IChoixActionDelivranceProps> = props => {
     (index: DocumentEC) => {
       redirection({
         navigate,
-        location,
         idActe: actes?.[0] ? actes[0].id : "",
         idRequete: updateChoixDelivranceResultat?.idRequete,
         index
       });
     },
-    [actes, navigate, location, updateChoixDelivranceResultat]
+    [actes, navigate, updateChoixDelivranceResultat]
   );
 
   // 2 - Récuperer les options pour la génération du courrier auto

@@ -3,16 +3,16 @@ import { useField } from "formik";
 import { useMemo } from "react";
 import { MdAddCircle } from "react-icons/md";
 import BoutonIcon from "../bouton/BoutonIcon";
-import ChampRcRcaPacs from "./ChampNumeroRcRcaPacs";
+import ChampRcRcaPacs from "./ChampRcRcaPacs";
 
-interface IChampNumeroRcRcaPacsProps {
+interface IChampsNumerosRcRcaPacsProps {
   libelle: string;
   cheminNumeroRcRcaPacs: string;
   prefixeNumeroRcRcaPacs: string;
   tailleMax: number;
 }
 
-const ChampNumeroRcRcaPacs: React.FC<IChampNumeroRcRcaPacsProps> = ({
+const ChampsNumerosRcRcaPacs: React.FC<IChampsNumerosRcRcaPacsProps> = ({
   libelle,
   cheminNumeroRcRcaPacs,
   prefixeNumeroRcRcaPacs,
@@ -78,4 +78,4 @@ const ChampNumeroRcRcaPacs: React.FC<IChampNumeroRcRcaPacsProps> = ({
   );
 };
 
-export default ChampNumeroRcRcaPacs;
+export default ChampsNumerosRcRcaPacs;

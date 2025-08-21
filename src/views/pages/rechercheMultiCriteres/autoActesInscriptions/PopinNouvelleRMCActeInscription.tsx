@@ -6,7 +6,7 @@ import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFl
 import React from "react";
 import { MdClose } from "react-icons/md";
 import BoutonIcon from "../../../../composants/commun/bouton/BoutonIcon";
-import { RMCActeInscription } from "../../../../composants/pages/rmc/formulaire/RMCActeInscription";
+import RMCActeInscription from "../../../../composants/pages/rmc/formulaire/RMCActeInscription";
 import { RMCContextProvider } from "../../../../contexts/RMCContextProvider";
 import { RMCActeInscription as RMCActeInscriptionOld } from "../acteInscription/RMCActeInscription";
 

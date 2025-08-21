@@ -71,6 +71,7 @@ export const ChampsNomPrenomInterchangeables: React.FC<{ cheminNom: string; chem
                       className="group absolute right-0 top-0 h-full rounded-l-none"
                       type="button"
                       title="Appauvrir le nom"
+                      tabIndex={-1} // Accès via tabulation désactivé pour améliorer l'expérience utilisateur. Le bouton n'a pas de fonctionnalité essentielle
                       onClick={() => {
                         appauvrirValeur(cheminNom);
                         nomRef.current?.focus();
@@ -90,6 +91,7 @@ export const ChampsNomPrenomInterchangeables: React.FC<{ cheminNom: string; chem
             styleBouton="secondaire"
             className="h-8 w-12"
             onClick={intervertir}
+            tabIndex={-1} // Accès via tabulation désactivé pour améliorer l'expérience utilisateur. Le bouton n'a pas de fonctionnalité essentielle
           >
             <MdCompareArrows
               className="text-2xl"
@@ -110,6 +112,7 @@ export const ChampsNomPrenomInterchangeables: React.FC<{ cheminNom: string; chem
                     className={`group absolute right-0 top-0 flex h-full rounded-l-none`}
                     type="button"
                     title="Appauvrir le prénom"
+                    tabIndex={-1} // Accès via tabulation désactivé pour améliorer l'expérience utilisateur. Le bouton n'a pas de fonctionnalité essentielle
                     onClick={() => {
                       appauvrirValeur(cheminPrenom, 1);
                       prenomRef.current?.focus();

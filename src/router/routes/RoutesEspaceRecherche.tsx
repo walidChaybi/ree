@@ -5,7 +5,7 @@ import { RMCRequetePage } from "@pages/rechercheMultiCriteres/requete/RMCRequete
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { RouteObject } from "react-router";
-import { PageRMCActeInscription } from "../../pages/rmc/PageRMCActeInscription";
+import PageRMCActeInscription from "../../pages/rmc/PageRMCActeInscription";
 import ElementPageRECE from "../ElementPageRECE";
 import {
   INFO_PAGE_RECHERCHE_ACTE,

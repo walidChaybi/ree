@@ -8,18 +8,18 @@ import { useContext, useEffect, useMemo } from "react";
 import { EBlocsRMC, RMCContext } from "../../../../contexts/RMCContextProvider";
 import ChampCaseACocher from "../../../commun/champs/ChampCaseACocher";
 import ChampListeDeroulante from "../../../commun/champs/ChampListeDeroulante";
-import ChampRcRcaPacs from "../../../commun/champs/ChampNumeroRcRcaPacs";
+import ChampRcRcaPacs from "../../../commun/champs/ChampRcRcaPacs";
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 
-const BlocRepertoire: React.FC = () => {
+const BlocRcRcaPacs: React.FC = () => {
   const { values, setValues, setFieldValue } = useFormikContext<IRMCActeInscriptionForm>();
   const { blocsRenseignes } = useContext(RMCContext);
   const {
     etInscriptionsSuivantes,
     typeRepertoire,
-    numeroInscription: { anneeInscription, numero }
+    numeroInscription: { annee, numero }
   } = values.registreRepertoire.repertoire;
-  const estNumeroInscriptionIncomplet = !anneeInscription || !numero;
+  const estNumeroInscriptionIncomplet = !annee || !numero;
 
   const listeNatureInscription = useMemo(() => {
     switch (typeRepertoire) {
@@ -40,7 +40,7 @@ const BlocRepertoire: React.FC = () => {
       registreRepertoire: {
         ...values.registreRepertoire,
         repertoire: {
-          numeroInscription: { anneeInscription: "", numero: "" },
+          numeroInscription: { annee: "", numero: "" },
           typeRepertoire: "",
           natureInscription: "",
           etInscriptionsSuivantes: false
@@ -94,4 +94,4 @@ const BlocRepertoire: React.FC = () => {
   );
 };
 
-export default BlocRepertoire;
+export default BlocRcRcaPacs;

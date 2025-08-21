@@ -14,7 +14,7 @@ const TITRE = {
 beforeAll(() => {
   vi.mock("../../../router/ElementPageRECE.tsx", () => ({ default: ({ children }: React.PropsWithChildren) => children }));
   vi.mock("../../../pages/rmc/PageRMCActeInscription.tsx", () => ({
-    PageRMCActeInscription: () => <h1>{TITRE.RECHERCHE_ACTE_INSCRIPTION}</h1>
+    default: () => <h1>{TITRE.RECHERCHE_ACTE_INSCRIPTION}</h1>
   }));
   vi.mock("../../../views/pages/rechercheMultiCriteres/requete/RMCRequetePage.tsx", () => ({
     RMCRequetePage: () => <h1>{TITRE.RECHERCHE_REQUETE}</h1>

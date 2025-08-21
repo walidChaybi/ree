@@ -9,7 +9,7 @@ import ChampRecherchePocopas from "../../../../../commun/champs/ChampRecherchePo
 import ChampTexte from "../../../../../commun/champs/ChampTexte";
 import ChampZoneTexte from "../../../../../commun/champs/ChampZoneTexte";
 import ChampsNomSecable from "../../../../../commun/champs/ChampsNomSecable";
-import ChampNumeroRcRcaPacs from "../../../../../commun/champs/ChampsNumeroRcRcaPacs";
+import ChampsNumerosRcRcaPacs from "../../../../../commun/champs/ChampsNumerosRcRcaPacs";
 import SeparateurSection from "../../../../../commun/conteneurs/formulaire/SeparateurSection";
 import { TMentionForm } from "../../MentionForm";
 import { ChampConditionneAideSaisie } from "./ChampConditionneAideSaisie";
@@ -156,7 +156,7 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
     case champ.type === "numeroInscriptionRcRca" && estAffiche:
       return (
         <ChampFormAideSaisie typeChamp={champ.type}>
-          <ChampNumeroRcRcaPacs
+          <ChampsNumerosRcRcaPacs
             libelle={champ.libelle}
             cheminNumeroRcRcaPacs={nomChamp}
             prefixeNumeroRcRcaPacs={"ligne"}

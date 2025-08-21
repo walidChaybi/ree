@@ -10,7 +10,7 @@ import { NB_LIGNES_PAR_APPEL_ACTE, NB_LIGNES_PAR_APPEL_INSCRIPTION } from "@widg
 import { useEffect, useState } from "react";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import AfficherMessage from "../../../utils/AfficherMessage";
-import { TRAITEMENT_SANS_ERREUR, TTraitementApi } from "../TTraitementApi";
+import { IErreurTraitement, TRAITEMENT_SANS_ERREUR, TTraitementApi } from "../TTraitementApi";
 
 interface IParamsRMCActesInscriptions {
   valeursFormulaire: IRMCActeInscriptionForm;
@@ -27,6 +27,7 @@ const TRAITEMENT_RMC_ACTES_INSCRIPTIONS: TTraitementApi<IParamsRMCActesInscripti
   Lancer: terminerTraitement => {
     const [resultat, setResultat] = useState<Partial<IResultatRMCActesInscriptions>>({});
     const [tropDeResultats, setTropDeResultats] = useState<boolean>(false);
+    const [erreurTraitement, setErreurTraitement] = useState<IErreurTraitement>(TRAITEMENT_SANS_ERREUR);
 
     const { appelApi: getRMCActe, enAttenteDeReponseApi: enAttenteRMCActe } = useFetchApi(CONFIG_POST_RMC_ACTE);
     const { appelApi: getRMCInscription, enAttenteDeReponseApi: enAttenteRMCInscription } = useFetchApi(CONFIG_POST_RMC_INSCRIPTION);
@@ -34,6 +35,7 @@ const TRAITEMENT_RMC_ACTES_INSCRIPTIONS: TTraitementApi<IParamsRMCActesInscripti
     const lancer = ({ valeursFormulaire }: IParamsRMCActesInscriptions) => {
       const criteres = mappingCriteres(RMCActeInscriptionForm.versDto(valeursFormulaire) as IRMCActeInscription);
 
+      setErreurTraitement(TRAITEMENT_SANS_ERREUR);
       setTropDeResultats(false);
       setResultat({});
       !rmcActeAutorisee(criteres)
@@ -51,13 +53,16 @@ const TRAITEMENT_RMC_ACTES_INSCRIPTIONS: TTraitementApi<IParamsRMCActesInscripti
                 resultatRMCActe: actes.map(ResultatRMCActe.depuisDto).filter((acte): acte is ResultatRMCActe => acte !== null),
                 paramsTableauRMCActe: getParamsTableauRMCDepuisHeaders(headers)
               })),
-            apresErreur: (erreurs, statut) =>
+            apresErreur: (erreurs, statut) => {
               statut === 413
                 ? setTropDeResultats(true)
                 : AfficherMessage.erreur("Impossible de récupérer les actes de la recherche multi-critères", {
                     erreurs,
                     fermetureAuto: true
-                  })
+                  });
+              setErreurTraitement({ enEchec: true });
+              terminerTraitement();
+            }
           });
 
       !rmcInscriptionAutorisee(criteres)
@@ -77,13 +82,16 @@ const TRAITEMENT_RMC_ACTES_INSCRIPTIONS: TTraitementApi<IParamsRMCActesInscripti
                   .filter((inscription): inscription is TResultatRMCInscription => inscription !== null),
                 paramsTableauRMCInscription: getParamsTableauRMCDepuisHeaders(headers)
               })),
-            apresErreur: (erreurs, statut) =>
+            apresErreur: (erreurs, statut) => {
               statut === 413
                 ? setTropDeResultats(true)
                 : AfficherMessage.erreur("Impossible de récupérer les inscriptions via la recherche multi-critères", {
                     erreurs,
                     fermetureAuto: true
-                  })
+                  });
+              setErreurTraitement({ enEchec: true });
+              terminerTraitement();
+            }
           });
     };
 
@@ -102,7 +110,7 @@ const TRAITEMENT_RMC_ACTES_INSCRIPTIONS: TTraitementApi<IParamsRMCActesInscripti
         terminerTraitement();
     }, [enAttenteRMCActe, enAttenteRMCInscription, resultat]);
 
-    return { lancer, erreurTraitement: TRAITEMENT_SANS_ERREUR, reponseTraitement: resultat as IResultatRMCActesInscriptions };
+    return { lancer, erreurTraitement: erreurTraitement, reponseTraitement: resultat as IResultatRMCActesInscriptions };
   }
 };
 

@@ -85,6 +85,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                         />
                         <button
                           class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out  bg-bleu-sombre text-blanc hover:bg-bleu focus-visible:bg-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-gris-sombre disabled:cursor-not-allowed group absolute right-0 top-0 h-full rounded-l-none"
+                          tabindex="-1"
                           title="Appauvrir le nom"
                           type="button"
                         >
@@ -102,6 +103,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                       <button
                         aria-label="Intervertir nom et prénom"
                         class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out border border-solid border-bleu-sombre bg-blanc hover:bg-bleu hover:text-blanc hover:border-bleu focus-visible:bg-bleu focus-visible:text-blanc focus-visible:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 text-bleu-sombre disabled:cursor-not-allowed h-8 w-12"
+                        tabindex="-1"
                         title="Intervertir Nom et Prénom"
                         type="button"
                       >
@@ -149,6 +151,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                       />
                       <button
                         class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out  bg-bleu-sombre text-blanc hover:bg-bleu focus-visible:bg-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-gris-sombre disabled:cursor-not-allowed group absolute right-0 top-0 flex h-full rounded-l-none"
+                        tabindex="-1"
                         title="Appauvrir le prénom"
                         type="button"
                       >
@@ -439,80 +442,6 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                   >
                     <label
                       class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                      for="registreRepertoire.registre.familleRegistre"
-                    >
-                      Famille de registre
-                    </label>
-                    <select
-                      class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
-                      id="registreRepertoire.registre.familleRegistre"
-                      name="registreRepertoire.registre.familleRegistre"
-                    >
-                      <option
-                        value=""
-                      />
-                      <option
-                        value="ACQ"
-                      >
-                        (ACQ) Acquisition de la nationalité française
-                      </option>
-                      <option
-                        value="CSL"
-                      >
-                        (CSL) Acte consulaire
-                      </option>
-                      <option
-                        value="DEP"
-                      >
-                        (DEP) Acte déposé dans un pays voisin
-                      </option>
-                      <option
-                        value="COL"
-                      >
-                        (COL) Acte issu d'anciennes colonies
-                      </option>
-                      <option
-                        value="AR2"
-                      >
-                        (AR2) Acte reconstitué - Anciens territoires français (hors Algérie)
-                      </option>
-                      <option
-                        value="AR3"
-                      >
-                        (AR3) Acte reconstitué – Algérie
-                      </option>
-                      <option
-                        value="OP2"
-                      >
-                        (OP2) Actes d'optants à la nationalité (Afrique ou Indochine)
-                      </option>
-                      <option
-                        value="OP3"
-                      >
-                        (OP3) Actes d'optants à la nationalité (Algérie)
-                      </option>
-                      <option
-                        value="JUG"
-                      >
-                        (JUG) Transcription judiciaire
-                      </option>
-                      <option
-                        value="MAR"
-                      >
-                        (MAR) Acte dressé en mer ou aux armées
-                      </option>
-                      <option
-                        value="CPN"
-                      >
-                        (CPN) Changement de nom ou prénoms
-                      </option>
-                    </select>
-                  </div>
-                  <div
-                    class="text-start"
-                  >
-                    <label
-                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                       for="registreRepertoire.registre.natureActe"
                     >
                       Nature de l'acte
@@ -586,21 +515,134 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                         Enfant sans vie
                       </option>
                       <option
-                        value="DOSSIER"
-                      >
-                        Dossier
-                      </option>
-                      <option
                         value="INCONNUE"
                       >
                         Inconnue
                       </option>
                     </select>
                   </div>
+                  <fieldset
+                    class="m-0 flex w-full flex-col border-0 p-0 text-start"
+                  >
+                    <legend
+                      class="m-0 mb-1 block w-fit text-start text-base transition-colors text-bleu-sombre"
+                    >
+                      Référence
+                    </legend>
+                    <div
+                      class="mt-1.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start"
+                    >
+                      <div>
+                        <input
+                          class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                          id="registreRepertoire.registre.typeReference-RECE"
+                          name="registreRepertoire.registre.typeReference"
+                          type="radio"
+                          value="RECE"
+                        />
+                        <label
+                          class="cursor-pointer pl-2"
+                          for="registreRepertoire.registre.typeReference-RECE"
+                        >
+                          RECE
+                        </label>
+                      </div>
+                      <div>
+                        <input
+                          checked=""
+                          class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                          id="registreRepertoire.registre.typeReference-REGISTRE"
+                          name="registreRepertoire.registre.typeReference"
+                          type="radio"
+                          value="REGISTRE"
+                        />
+                        <label
+                          class="cursor-pointer pl-2"
+                          for="registreRepertoire.registre.typeReference-REGISTRE"
+                        >
+                          Registre
+                        </label>
+                      </div>
+                    </div>
+                  </fieldset>
                 </div>
                 <div
-                  class="pt-4"
+                  class="grid grid-cols-2 gap-4 pt-4"
                 >
+                  <div
+                    class="text-start"
+                  >
+                    <label
+                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                      for="registreRepertoire.registre.familleRegistre"
+                    >
+                      Famille de registre
+                    </label>
+                    <select
+                      class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                      id="registreRepertoire.registre.familleRegistre"
+                      name="registreRepertoire.registre.familleRegistre"
+                    >
+                      <option
+                        value=""
+                      />
+                      <option
+                        value="ACQ"
+                      >
+                        (ACQ) Acquisition de la nationalité française
+                      </option>
+                      <option
+                        value="CSL"
+                      >
+                        (CSL) Acte consulaire
+                      </option>
+                      <option
+                        value="DEP"
+                      >
+                        (DEP) Acte déposé dans un pays voisin
+                      </option>
+                      <option
+                        value="COL"
+                      >
+                        (COL) Acte issu d'anciennes colonies
+                      </option>
+                      <option
+                        value="AR2"
+                      >
+                        (AR2) Acte reconstitué - Anciens territoires français (hors Algérie)
+                      </option>
+                      <option
+                        value="AR3"
+                      >
+                        (AR3) Acte reconstitué – Algérie
+                      </option>
+                      <option
+                        value="OP2"
+                      >
+                        (OP2) Actes d'optants à la nationalité (Afrique ou Indochine)
+                      </option>
+                      <option
+                        value="OP3"
+                      >
+                        (OP3) Actes d'optants à la nationalité (Algérie)
+                      </option>
+                      <option
+                        value="JUG"
+                      >
+                        (JUG) Transcription judiciaire
+                      </option>
+                      <option
+                        value="MAR"
+                      >
+                        (MAR) Acte dressé en mer ou aux armées
+                      </option>
+                      <option
+                        value="CPN"
+                      >
+                        (CPN) Changement de nom ou prénoms
+                      </option>
+                    </select>
+                  </div>
                   <div
                     class="relative flex w-full flex-col text-start"
                   >
@@ -744,7 +786,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                   </div>
                 </div>
                 <div
-                  class="pt-8"
+                  class="pt-4"
                 >
                   <label
                     class="flex w-fit text-start cursor-pointer"
@@ -841,18 +883,21 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                   <div>
                     <label
                       class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                      for="registreRepertoire.repertoire.numeroInscription.anneeInscription"
+                      for="registreRepertoire.repertoire.numeroInscription.annee"
                     >
                       N° de l'inscription / N° du PACS
                     </label>
                     <div
                       class="flex items-center gap-1"
                     >
+                      <span
+                        class="whitespace-nowrap"
+                      />
                       <input
                         class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                        id="registreRepertoire.repertoire.numeroInscription.anneeInscription"
+                        id="registreRepertoire.repertoire.numeroInscription.annee"
                         maxlength="4"
-                        name="registreRepertoire.repertoire.numeroInscription.anneeInscription"
+                        name="registreRepertoire.repertoire.numeroInscription.annee"
                         placeholder="AAAA"
                         value=""
                       />

@@ -12,18 +12,21 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE le formulaire est
     >
       <label
         class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-rouge"
-        for="numero.ligne1.anneeInscription"
+        for="numero.ligne1.annee"
       >
         Numéro
       </label>
       <div
         class="flex items-center gap-1"
       >
+        <span
+          class="whitespace-nowrap"
+        />
         <input
           class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
-          id="numero.ligne1.anneeInscription"
+          id="numero.ligne1.annee"
           maxlength="4"
-          name="numero.ligne1.anneeInscription"
+          name="numero.ligne1.annee"
           placeholder="AAAA"
           value=""
         />
@@ -70,18 +73,21 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE le formulaire est
     >
       <label
         class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-rouge"
-        for="numero.ligne1.anneeInscription"
+        for="numero.ligne1.annee"
       >
         Numéro
       </label>
       <div
         class="flex items-center gap-1"
       >
+        <span
+          class="whitespace-nowrap"
+        />
         <input
           class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
-          id="numero.ligne1.anneeInscription"
+          id="numero.ligne1.annee"
           maxlength="4"
-          name="numero.ligne1.anneeInscription"
+          name="numero.ligne1.annee"
           placeholder="AAAA"
           value="123"
         />
@@ -128,18 +134,21 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE le formulaire est
     >
       <label
         class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-rouge"
-        for="numero.ligne1.anneeInscription"
+        for="numero.ligne1.annee"
       >
         Numéro
       </label>
       <div
         class="flex items-center gap-1"
       >
+        <span
+          class="whitespace-nowrap"
+        />
         <input
           class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
-          id="numero.ligne1.anneeInscription"
+          id="numero.ligne1.annee"
           maxlength="4"
-          name="numero.ligne1.anneeInscription"
+          name="numero.ligne1.annee"
           placeholder="AAAA"
           value="2026"
         />
@@ -186,18 +195,21 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE le formulaire est
     >
       <label
         class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-rouge"
-        for="numero.ligne1.anneeInscription"
+        for="numero.ligne1.annee"
       >
         Numéro
       </label>
       <div
         class="flex items-center gap-1"
       >
+        <span
+          class="whitespace-nowrap"
+        />
         <input
           class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
-          id="numero.ligne1.anneeInscription"
+          id="numero.ligne1.annee"
           maxlength="4"
-          name="numero.ligne1.anneeInscription"
+          name="numero.ligne1.annee"
           placeholder="AAAA"
           value=""
         />
@@ -244,18 +256,21 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
     >
       <label
         class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-rouge"
-        for="numero.ligne1.anneeInscription"
+        for="numero.ligne1.annee"
       >
         Numéro 1
       </label>
       <div
         class="flex items-center gap-1"
       >
+        <span
+          class="whitespace-nowrap"
+        />
         <input
           class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
-          id="numero.ligne1.anneeInscription"
+          id="numero.ligne1.annee"
           maxlength="4"
-          name="numero.ligne1.anneeInscription"
+          name="numero.ligne1.annee"
           placeholder="AAAA"
           value=""
         />
@@ -324,18 +339,21 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
       <div>
         <label
           class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-          for="numero.ligne2.anneeInscription"
+          for="numero.ligne2.annee"
         >
           Numéro 2
         </label>
         <div
           class="flex items-center gap-1"
         >
+          <span
+            class="whitespace-nowrap"
+          />
           <input
             class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-            id="numero.ligne2.anneeInscription"
+            id="numero.ligne2.annee"
             maxlength="4"
-            name="numero.ligne2.anneeInscription"
+            name="numero.ligne2.annee"
             placeholder="AAAA"
             value=""
           />
@@ -387,18 +405,21 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
       <div>
         <label
           class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-          for="numero.ligne3.anneeInscription"
+          for="numero.ligne3.annee"
         >
           Numéro 3
         </label>
         <div
           class="flex items-center gap-1"
         >
+          <span
+            class="whitespace-nowrap"
+          />
           <input
             class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-            id="numero.ligne3.anneeInscription"
+            id="numero.ligne3.annee"
             maxlength="4"
-            name="numero.ligne3.anneeInscription"
+            name="numero.ligne3.annee"
             placeholder="AAAA"
             value=""
           />
@@ -450,18 +471,21 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
       <div>
         <label
           class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-          for="numero.ligne4.anneeInscription"
+          for="numero.ligne4.annee"
         >
           Numéro 4
         </label>
         <div
           class="flex items-center gap-1"
         >
+          <span
+            class="whitespace-nowrap"
+          />
           <input
             class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-            id="numero.ligne4.anneeInscription"
+            id="numero.ligne4.annee"
             maxlength="4"
-            name="numero.ligne4.anneeInscription"
+            name="numero.ligne4.annee"
             placeholder="AAAA"
             value=""
           />
@@ -513,18 +537,21 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
       <div>
         <label
           class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-          for="numero.ligne5.anneeInscription"
+          for="numero.ligne5.annee"
         >
           Numéro 5
         </label>
         <div
           class="flex items-center gap-1"
         >
+          <span
+            class="whitespace-nowrap"
+          />
           <input
             class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-            id="numero.ligne5.anneeInscription"
+            id="numero.ligne5.annee"
             maxlength="4"
-            name="numero.ligne5.anneeInscription"
+            name="numero.ligne5.annee"
             placeholder="AAAA"
             value=""
           />
@@ -576,18 +603,21 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
       <div>
         <label
           class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-          for="numero.ligne6.anneeInscription"
+          for="numero.ligne6.annee"
         >
           Numéro 6
         </label>
         <div
           class="flex items-center gap-1"
         >
+          <span
+            class="whitespace-nowrap"
+          />
           <input
             class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-            id="numero.ligne6.anneeInscription"
+            id="numero.ligne6.annee"
             maxlength="4"
-            name="numero.ligne6.anneeInscription"
+            name="numero.ligne6.annee"
             placeholder="AAAA"
             value=""
           />
@@ -656,18 +686,21 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
     >
       <label
         class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-rouge"
-        for="numero.ligne1.anneeInscription"
+        for="numero.ligne1.annee"
       >
         Numéro 1
       </label>
       <div
         class="flex items-center gap-1"
       >
+        <span
+          class="whitespace-nowrap"
+        />
         <input
           class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
-          id="numero.ligne1.anneeInscription"
+          id="numero.ligne1.annee"
           maxlength="4"
-          name="numero.ligne1.anneeInscription"
+          name="numero.ligne1.annee"
           placeholder="AAAA"
           value=""
         />
@@ -738,18 +771,21 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
       >
         <label
           class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-rouge"
-          for="numero.ligne2.anneeInscription"
+          for="numero.ligne2.annee"
         >
           Numéro 2
         </label>
         <div
           class="flex items-center gap-1"
         >
+          <span
+            class="whitespace-nowrap"
+          />
           <input
             class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
-            id="numero.ligne2.anneeInscription"
+            id="numero.ligne2.annee"
             maxlength="4"
-            name="numero.ligne2.anneeInscription"
+            name="numero.ligne2.annee"
             placeholder="AAAA"
             value=""
           />
@@ -808,18 +844,21 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
       >
         <label
           class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-rouge"
-          for="numero.ligne3.anneeInscription"
+          for="numero.ligne3.annee"
         >
           Numéro 3
         </label>
         <div
           class="flex items-center gap-1"
         >
+          <span
+            class="whitespace-nowrap"
+          />
           <input
             class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
-            id="numero.ligne3.anneeInscription"
+            id="numero.ligne3.annee"
             maxlength="4"
-            name="numero.ligne3.anneeInscription"
+            name="numero.ligne3.annee"
             placeholder="AAAA"
             value=""
           />
@@ -878,18 +917,21 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
       >
         <label
           class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-rouge"
-          for="numero.ligne4.anneeInscription"
+          for="numero.ligne4.annee"
         >
           Numéro 4
         </label>
         <div
           class="flex items-center gap-1"
         >
+          <span
+            class="whitespace-nowrap"
+          />
           <input
             class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
-            id="numero.ligne4.anneeInscription"
+            id="numero.ligne4.annee"
             maxlength="4"
-            name="numero.ligne4.anneeInscription"
+            name="numero.ligne4.annee"
             placeholder="AAAA"
             value=""
           />
@@ -948,18 +990,21 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
       >
         <label
           class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-rouge"
-          for="numero.ligne5.anneeInscription"
+          for="numero.ligne5.annee"
         >
           Numéro 5
         </label>
         <div
           class="flex items-center gap-1"
         >
+          <span
+            class="whitespace-nowrap"
+          />
           <input
             class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
-            id="numero.ligne5.anneeInscription"
+            id="numero.ligne5.annee"
             maxlength="4"
-            name="numero.ligne5.anneeInscription"
+            name="numero.ligne5.annee"
             placeholder="AAAA"
             value=""
           />
@@ -1016,18 +1061,21 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
       <div>
         <label
           class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-          for="numero.ligne6.anneeInscription"
+          for="numero.ligne6.annee"
         >
           Numéro 6
         </label>
         <div
           class="flex items-center gap-1"
         >
+          <span
+            class="whitespace-nowrap"
+          />
           <input
             class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-            id="numero.ligne6.anneeInscription"
+            id="numero.ligne6.annee"
             maxlength="4"
-            name="numero.ligne6.anneeInscription"
+            name="numero.ligne6.annee"
             placeholder="AAAA"
             value="1900"
           />

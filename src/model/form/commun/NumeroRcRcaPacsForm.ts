@@ -1,5 +1,5 @@
 export interface INumeroRcRcaPacs {
-  anneeInscription: string;
+  annee: string;
   numero: string;
 }
 
@@ -20,14 +20,14 @@ export const NumeroRcRcaPacsForm = {
 
     return {
       nombreNumerosAffiches: nombreNumerosAffiches || 1,
-      ligne1: { anneeInscription: "", numero: "" },
-      ligne2: { anneeInscription: "", numero: "" },
-      ligne3: { anneeInscription: "", numero: "" },
-      ligne4: { anneeInscription: "", numero: "" },
-      ligne5: { anneeInscription: "", numero: "" },
-      ligne6: { anneeInscription: "", numero: "" },
-      ligne7: { anneeInscription: "", numero: "" },
-      ligne8: { anneeInscription: "", numero: "" },
+      ligne1: { annee: "", numero: "" },
+      ligne2: { annee: "", numero: "" },
+      ligne3: { annee: "", numero: "" },
+      ligne4: { annee: "", numero: "" },
+      ligne5: { annee: "", numero: "" },
+      ligne6: { annee: "", numero: "" },
+      ligne7: { annee: "", numero: "" },
+      ligne8: { annee: "", numero: "" },
       ...(numeroRcRcaPacsDtos?.reduce((numeroRcRcaPacsForm, numeroRcRcaPacsDto) => {
         return {
           ...numeroRcRcaPacsForm,
@@ -40,11 +40,11 @@ export const NumeroRcRcaPacsForm = {
 
 export const numeroRcRcaPacsVersDto = (numeroRcRcaPacs: INumeroRcRcaPacs): string => {
   switch (true) {
-    case !numeroRcRcaPacs.anneeInscription:
+    case !numeroRcRcaPacs.annee:
       return "";
     case !numeroRcRcaPacs.numero:
-      return numeroRcRcaPacs.anneeInscription;
+      return numeroRcRcaPacs.annee;
     default:
-      return `${numeroRcRcaPacs.anneeInscription}-${numeroRcRcaPacs.numero}`;
+      return `${numeroRcRcaPacs.annee}-${numeroRcRcaPacs.numero}`;
   }
 };

@@ -1,7 +1,7 @@
-import { IRMCActeInscriptionDto, IRMCActeInscriptionForm, RMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
+import { ICriteresRMCActeInscriptionDto, IRMCActeInscriptionForm, RMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
 import { describe, expect, test } from "vitest";
 
-const valeursInitialesRMCActeInscriptionAttendues = {
+const valeursInitialesRMCActeInscriptionAttendues: IRMCActeInscriptionForm = {
   registreRepertoire: {
     registre: {
       natureActe: "",
@@ -16,10 +16,15 @@ const valeursInitialesRMCActeInscriptionAttendues = {
         numeroActeOuOrdre: "",
         numeroBisTer: "",
         etActesSuivants: false
+      },
+      typeReference: "REGISTRE",
+      referenceRECE: {
+        annee: "",
+        numero: ""
       }
     },
     repertoire: {
-      numeroInscription: { anneeInscription: "", numero: "" },
+      numeroInscription: { annee: "", numero: "" },
       typeRepertoire: "",
       natureInscription: "",
       etInscriptionsSuivantes: false
@@ -33,18 +38,7 @@ const valeursInitialesRMCActeInscriptionAttendues = {
       paysEvenement: ""
     }
   },
-  datesDebutFinAnnee: {
-    dateDebut: {
-      jour: "",
-      mois: "",
-      annee: ""
-    },
-    dateFin: {
-      jour: "",
-      mois: "",
-      annee: ""
-    }
-  },
+
   titulaire: {
     nom: "",
     prenom: "",
@@ -61,7 +55,7 @@ export const mockValeursRMCActeInscription: IRMCActeInscriptionForm = {
   registreRepertoire: {
     registre: {
       natureActe: "NAISSANCE",
-      familleRegistre: "ÉTAT CIVIL",
+      familleRegistre: "ACQ",
       anneeRegistre: "2023",
       pocopa: "",
       registreSupport: {
@@ -72,11 +66,16 @@ export const mockValeursRMCActeInscription: IRMCActeInscriptionForm = {
         numeroActeOuOrdre: "42",
         numeroBisTer: "B",
         etActesSuivants: true
+      },
+      typeReference: "RECE",
+      referenceRECE: {
+        annee: "",
+        numero: ""
       }
     },
     repertoire: {
-      numeroInscription: { anneeInscription: "2000", numero: "1" },
-      typeRepertoire: "PRINCIPAL",
+      numeroInscription: { annee: "2000", numero: "1" },
+      typeRepertoire: "",
       natureInscription: "contestation",
       etInscriptionsSuivantes: false
     },
@@ -87,18 +86,6 @@ export const mockValeursRMCActeInscription: IRMCActeInscriptionForm = {
         annee: "1990"
       },
       paysEvenement: "FRANCE"
-    }
-  },
-  datesDebutFinAnnee: {
-    dateDebut: {
-      jour: "01",
-      mois: "01",
-      annee: "2023"
-    },
-    dateFin: {
-      jour: "31",
-      mois: "12",
-      annee: "2023"
     }
   },
   titulaire: {
@@ -113,13 +100,12 @@ export const mockValeursRMCActeInscription: IRMCActeInscriptionForm = {
   }
 };
 
-const mockDtoRMCActeInscription: IRMCActeInscriptionDto = {
+const mockDtoRMCActeInscription: ICriteresRMCActeInscriptionDto = {
   registreRepertoire: {
     registre: {
       natureActe: "NAISSANCE",
-      familleRegistre: "ÉTAT CIVIL",
+      familleRegistre: "ACQ",
       anneeRegistre: "2023",
-      pocopa: undefined,
       registreSupport: {
         supportUn: "PAPIER",
         supportDeux: "NUMÉRIQUE"
@@ -132,7 +118,6 @@ const mockDtoRMCActeInscription: IRMCActeInscriptionDto = {
     },
     repertoire: {
       numeroInscription: "2000-1",
-      typeRepertoire: "PRINCIPAL",
       natureInscription: "contestation",
       etInscriptionsSuivantes: false
     },
@@ -143,18 +128,6 @@ const mockDtoRMCActeInscription: IRMCActeInscriptionDto = {
         annee: "1990"
       },
       paysEvenement: "FRANCE"
-    }
-  },
-  datesDebutFinAnnee: {
-    dateDebut: {
-      jour: "01",
-      mois: "01",
-      annee: "2023"
-    },
-    dateFin: {
-      jour: "31",
-      mois: "12",
-      annee: "2023"
     }
   },
   titulaire: {

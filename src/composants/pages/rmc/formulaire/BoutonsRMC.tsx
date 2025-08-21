@@ -1,11 +1,13 @@
 import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
 import { useFormikContext } from "formik";
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
+import { RMCContext } from "../../../../contexts/RMCContextProvider";
 import { StockageLocal } from "../../../../utils/StockageLocal";
 import Bouton from "../../../commun/bouton/Bouton";
 
 const BoutonsRMC: React.FC = () => {
-  const { dirty, resetForm, setValues, isSubmitting } = useFormikContext<IRMCActeInscriptionForm>();
+  const { resetForm, setValues, isSubmitting } = useFormikContext<IRMCActeInscriptionForm>();
+  const { blocsRenseignes } = useContext(RMCContext);
 
   const derniersCriteresUtilises = useMemo(() => StockageLocal.recuperer("CRITERES_RMC_ACTE_INSCRIPTION"), [isSubmitting]);
 
@@ -21,14 +23,14 @@ const BoutonsRMC: React.FC = () => {
       </Bouton>
       <Bouton
         styleBouton="secondaire"
-        disabled={!dirty}
+        disabled={!blocsRenseignes.length}
         type="reset"
         onClick={() => resetForm()}
       >
         {"Réinitialiser les critères"}
       </Bouton>
       <Bouton
-        disabled={!dirty}
+        disabled={!blocsRenseignes.length}
         type="submit"
       >
         {"Rechercher"}

@@ -300,7 +300,7 @@ class ModeleTexte {
   }
 
   private static formaterNumeroRcRca(numeroForm: INumeroRcRcaPacs): string {
-    return numeroForm.anneeInscription && numeroForm.numero ? `${numeroForm.anneeInscription}-${numeroForm.numero}` : "";
+    return numeroForm.annee && numeroForm.numero ? `${numeroForm.annee}-${numeroForm.numero}` : "";
   }
 
   /** Gestions modèles texte **/

@@ -16,10 +16,10 @@ import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
-import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
+import { replaceUrl } from "@util/route/UrlUtil";
 import { IBoutonPopin } from "@widget/popin/ConfirmationPopin";
 import React, { MutableRefObject } from "react";
-import { Location, NavigateFunction } from "react-router";
+import { NavigateFunction } from "react-router";
 import LiensRECE from "../../../../../../../router/LiensRECE";
 import { INFO_PAGE_APERCU_REQUETE_DELIVRANCE_EDITION } from "../../../../../../../router/infoPages/InfoPagesEspaceDelivrance";
 
@@ -240,19 +240,15 @@ const aGenreInconnu = (genres: (string | undefined)[]) => genres.find(genre => g
 
 export const redirection = ({
   navigate,
-  location,
   idActe,
   idRequete,
   index
 }: {
   navigate: NavigateFunction;
-  location: Location;
   idActe?: string;
   idRequete?: string;
   index: DocumentEC;
 }) => {
-  const prefix = getUrlPrecedente(location.pathname);
-
   if (idRequete) {
     const url = LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_EDITION.url, { idRequeteParam: idRequete, idActeParam: idActe });
 

@@ -14,7 +14,6 @@ export enum ENatureActe {
   ADOPTION_PLENIERE = "Adoption plénière",
   ADOPTION = "Adoption",
   ENFANT_SANS_VIE = "Enfant sans vie",
-  DOSSIER = "Dossier",
   INCONNUE = "Inconnue"
 }
 
@@ -31,7 +30,6 @@ export class NatureActe extends EnumWithLibelle {
   public static readonly ADOPTION_PLENIERE = new NatureActe("Adoption plénière");
   public static readonly ADOPTION = new NatureActe("Adoption");
   public static readonly ENFANT_SANS_VIE = new NatureActe("Enfant sans vie");
-  public static readonly DOSSIER = new NatureActe("Dossier");
   public static readonly INCONNUE = new NatureActe("Inconnue");
 
   public static getEnumFor(str: string) {
@@ -39,7 +37,7 @@ export class NatureActe extends EnumWithLibelle {
   }
 
   public static getEnumFromLibelle(str?: string): NatureActe {
-    return str ? EnumWithLibelle.getEnumFromLibelle(NatureActe, str) : undefined;
+    return str ? EnumWithLibelle.getEnumFromLibelle(NatureActe, str) : NatureActe.INCONNUE;
   }
 
   public static getAllEnumsAsOptions(): Options {

@@ -1,3 +1,5 @@
+import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
+import { RMCActeInscriptionResultats } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCActeInscriptionResultats";
 import {
   NB_LIGNES_PAR_APPEL_ACTE,
   NB_LIGNES_PAR_APPEL_INSCRIPTION,
@@ -7,14 +9,12 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 
 import TRAITEMENT_RMC_ACTES_INSCRIPTIONS, { IResultatRMCActesInscriptions } from "@api/traitements/rmc/TraitementRMCActesInscriptions";
-import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
-import { RMCActeInscriptionResultats } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCActeInscriptionResultats";
-import { RMCActeInscription } from "../../composants/pages/rmc/formulaire/RMCActeInscription";
+import RMCActeInscription from "../../composants/pages/rmc/formulaire/RMCActeInscription";
 import { RMCContextProvider } from "../../contexts/RMCContextProvider";
 import useTraitementApi from "../../hooks/api/TraitementApiHook";
 import { StockageLocal } from "../../utils/StockageLocal";
 
-export const PageRMCActeInscription: React.FC = () => {
+const PageRMCActeInscription: React.FC = () => {
   useEffect(() => {
     const event = new CustomEvent("refreshStyles");
     if (window.top) {
@@ -72,3 +72,5 @@ export const PageRMCActeInscription: React.FC = () => {
     </>
   );
 };
+
+export default PageRMCActeInscription;

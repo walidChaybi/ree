@@ -5,23 +5,25 @@ import { IRMCContextProps, RMCContext } from "../../../../contexts/RMCContextPro
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import BlocActe from "./BlocActe";
 import BlocEvenement from "./BlocEvenement";
-import BlocRepertoire from "./BlocRepertoire";
+import BlocRcRcaPacs from "./BlocRcRcaPacs";
 import BlocTitulaire from "./BlocTitulaire";
 import BoutonsRMC from "./BoutonsRMC";
 import GestionBlocsRMC from "./GestionBlocsRMC";
 
 const titreForm = "Critères de recherche d'un acte et d'une inscription";
 
+const VALEURS_INITIALES = RMCActeInscriptionForm.valeursInitiales();
+
 interface RMCActeInscriptionProps {
   onSubmit: (valeursFormulaire: IRMCActeInscriptionForm) => void;
 }
 
-export const RMCActeInscription: React.FC<RMCActeInscriptionProps> = ({ onSubmit }) => {
+const RMCActeInscription: React.FC<RMCActeInscriptionProps> = ({ onSubmit }) => {
   const { blocsRenseignes } = useContext<IRMCContextProps>(RMCContext);
 
   return (
     <Formik<IRMCActeInscriptionForm>
-      initialValues={RMCActeInscriptionForm.valeursInitiales()}
+      initialValues={VALEURS_INITIALES}
       validationSchema={RMCActeInscriptionForm.schemaValidation(blocsRenseignes)}
       onSubmit={onSubmit}
     >
@@ -38,7 +40,7 @@ export const RMCActeInscription: React.FC<RMCActeInscriptionProps> = ({ onSubmit
               </div>
               <div>
                 <BlocActe />
-                <BlocRepertoire />
+                <BlocRcRcaPacs />
               </div>
             </div>
             <BoutonsRMC />
@@ -48,3 +50,5 @@ export const RMCActeInscription: React.FC<RMCActeInscriptionProps> = ({ onSubmit
     </Formik>
   );
 };
+
+export default RMCActeInscription;

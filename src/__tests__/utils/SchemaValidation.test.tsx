@@ -7,7 +7,7 @@ import { Form, Formik } from "formik";
 import { describe, expect, test } from "vitest";
 import ChampTexte from "../../composants/commun/champs/ChampTexte";
 import ChampsNomSecable from "../../composants/commun/champs/ChampsNomSecable";
-import ChampNumeroRcRcaPacs from "../../composants/commun/champs/ChampsNumeroRcRcaPacs";
+import ChampsNumerosRcRcaPacs from "../../composants/commun/champs/ChampsNumerosRcRcaPacs";
 import SchemaValidation from "../../utils/SchemaValidation";
 
 const conditionToujoursObligatoire = (idChampReference: string): ConditionChamp[] | boolean => [
@@ -70,7 +70,7 @@ describe("Schema de validation: champsNumeroRcRcaPacs", () => {
           })
         })}
       >
-        <ChampNumeroRcRcaPacs
+        <ChampsNumerosRcRcaPacs
           libelle={"Numéro"}
           cheminNumeroRcRcaPacs={"numero"}
           prefixeNumeroRcRcaPacs={"ligne"}
@@ -113,7 +113,7 @@ describe("Schema de validation: champsNumeroRcRcaPacs", () => {
           })
         })}
       >
-        <ChampNumeroRcRcaPacs
+        <ChampsNumerosRcRcaPacs
           libelle={"Numéro"}
           cheminNumeroRcRcaPacs={"numero"}
           prefixeNumeroRcRcaPacs={"ligne"}
