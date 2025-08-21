@@ -29,7 +29,7 @@ const ReponseReqInfoBoutons: React.FC<BoutonsReponseReqInfoProps> = props => {
             navigate(LiensRECE.retourArriere(), { replace: true });
           }}
         >
-          {"Retout"}
+          {"Retour"}
         </BoutonDoubleSubmit>
       )}
       {!props.affichageBoutonPrendreEnCharge && (
