@@ -6,15 +6,23 @@ import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { TPrenomsForm } from "@model/form/commun/PrenomsForm";
 
 import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
+
+import CONFIG_GET_TYPES_MENTION_INTEGRATION_RECE, {
+  ITypeMentionIntegrationDto
+} from "@api/configurations/etatCivil/nomenclature/GetTypesMentionIntegrationRECEApi";
+import { RECEContextData } from "@core/contexts/RECEContext";
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
+import { Droit } from "@model/agent/enum/Droit";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import MiseAJourForm from "@model/form/miseAJour/MiseAJourForm";
-import { useContext, useEffect, useState } from "react";
+import { estActeEligibleMentionDIntegration } from "@pages/fiche/FichePage";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { ECleOngletsMiseAJour, EditionMiseAJourContext } from "../../../contexts/EditionMiseAJourContextProvider";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import AfficherMessage from "../../../utils/AfficherMessage";
 import { ConteneurBoutonBasDePage } from "../../commun/bouton/conteneurBoutonBasDePage/ConteneurBoutonBasDePage";
 import PageChargeur from "../../commun/chargeurs/PageChargeur";
+import ConteneurAvecBordure from "../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import OngletsBouton from "../../commun/onglets/OngletsBouton";
 import OngletsContenu from "../../commun/onglets/OngletsContenu";
 import BoutonTerminerEtSigner from "./formulaires/BoutonTerminerEtSigner";
@@ -78,8 +86,37 @@ const PartieFormulaire: React.FC = () => {
 
   const [acte, setActe] = useState<IFicheActe | null>(null);
   const { appelApi: appelResumeActe } = useFetchApi(CONFIG_GET_RESUME_ACTE, true);
+  const { appelApi: appelTypeMentionsIntegrationRece } = useFetchApi(CONFIG_GET_TYPES_MENTION_INTEGRATION_RECE, true);
   const [valeursInitialesFormulaireAnalyseMarginale, setValeursInitialesFormulaireAnalyseMarginale] =
     useState<IAnalyseMarginaleMiseAJour | null>(null);
+  const { utilisateurConnecte } = useContext(RECEContextData);
+
+  const [mentionDIntegration, setMentionDIntegration] = useState<ITypeMentionIntegrationDto | null>(null);
+
+  const acteEstEligibleMentionDIntegrationEtUtilisateurALesDroits = useMemo(() => {
+    if (acte !== null) {
+      return (
+        estActeEligibleMentionDIntegration(acte) &&
+        utilisateurConnecte.estHabilitePour({ tousLesDroits: [Droit.METTRE_A_JOUR_ACTE, Droit.SIGNER_MENTION_INTEGRATION] })
+      );
+    }
+    return false;
+  }, [acte, utilisateurConnecte]);
+
+  useEffect(() => {
+    if (acteEstEligibleMentionDIntegrationEtUtilisateurALesDroits && mentionDIntegration === null) {
+      appelTypeMentionsIntegrationRece({
+        parametres: {},
+        apresSucces: mentionDIntegration => {
+          setMentionDIntegration(mentionDIntegration);
+        },
+        apresErreur: erreurs =>
+          AfficherMessage.erreur("Une erreur est survenue lors de la récupération des informations de la mention d'intégration au RECE", {
+            erreurs
+          })
+      });
+    }
+  }, [acteEstEligibleMentionDIntegrationEtUtilisateurALesDroits]);
 
   useEffect(() => {
     const apresRetour = {
@@ -109,7 +146,18 @@ const PartieFormulaire: React.FC = () => {
         parametres: {
           body: MiseAJourForm.versDto(
             idActe,
-            donneesMentions,
+            [
+              ...(mentionDIntegration !== null
+                ? [
+                    {
+                      idTypeMention: mentionDIntegration.idTypeMention,
+                      affecteAnalyseMarginale: mentionDIntegration.affecteAnalyseMarginale,
+                      texte: mentionDIntegration.texteMention
+                    }
+                  ]
+                : []),
+              ...donneesMentions
+            ],
             donneesAnalyseMarginale,
             afficherAnalyseMarginale && analyseMarginaleModifiee && donneesAnalyseMarginale != null
           )
@@ -193,6 +241,14 @@ const PartieFormulaire: React.FC = () => {
         <div className="mt-4 flex h-[calc(100vh-16rem)] flex-col overflow-y-auto">
           {estMiseAJourAvecMentions && (
             <OngletsContenu estActif={ongletsActifs.formulaires === ECleOngletsMiseAJour.MENTIONS}>
+              {acteEstEligibleMentionDIntegrationEtUtilisateurALesDroits && (
+                <div className="pb-4 text-left">
+                  <ConteneurAvecBordure titreEnTete="Mention intégration dans RECE">
+                    <div className="mt-3 bg-slate-400">{mentionDIntegration?.texteMention}</div>
+                  </ConteneurAvecBordure>
+                </div>
+              )}
+
               <ListeMentionsFormulaire
                 setAfficherAnalyseMarginale={setAfficherAnalyseMarginale}
                 setDonneesMentions={setDonneesMentions}

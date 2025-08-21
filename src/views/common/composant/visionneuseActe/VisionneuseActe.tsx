@@ -6,7 +6,7 @@ import useGetDonneesPourCompositionActeTexteApiHook, {
   IGetDonneesPourCompositionActeTexteParams
 } from "@hook/acte/GetDonneesPourCompositionActeTexteApiHook";
 import { ICompositionActeTexteParams, useCompositionActeTexteApiHook } from "@hook/composition/CompositionActeTexte";
-import { TypeActe } from "@model/etatcivil/enum/TypeActe";
+import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
 import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
 import { VisionneuseDocument } from "@widget/visionneuseDocument/VisionneuseDocument";
 import React, { useEffect, useState } from "react";
@@ -16,7 +16,7 @@ import "./scss/VisionneuseActe.scss";
 
 interface IVisionneuseActeProps {
   idActe?: string;
-  typeActe?: TypeActe;
+  typeActe?: keyof typeof ETypeActe;
   estReecrit?: boolean;
 }
 
@@ -25,7 +25,7 @@ const MESSAGE_VISUALISATION_INDISPONIBLE = "La visualisation de l'acte n'est pas
 export const VisionneuseActe: React.FC<IVisionneuseActeProps> = ({ idActe, typeActe, estReecrit }) => {
   const [contenuBlob, setContenuBlob] = useState<Blob>();
   const [erreur, setErreur] = useState<string>();
-  const [estImage, setEstImage] = useState(typeActe === TypeActe.IMAGE);
+  const [estImage, setEstImage] = useState(typeActe === ETypeActe.IMAGE);
 
   const [recupererActeImageParams, setRecupererActeImageParams] = useState<IGetCorpsActeImageParams>();
   const recupererActeImageResultat = useGetCorpsActeImageApiHook(recupererActeImageParams);

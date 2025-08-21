@@ -13,11 +13,12 @@ import {
 import AfficherMessage from "../../../utils/AfficherMessage";
 import { ChoixDelivrance } from "../../requete/enum/ChoixDelivrance";
 import { IPersonne } from "../commun/Personne";
+import { EOrigineActe } from "../enum/EOrigineActe";
 import { EStatutActe } from "../enum/EStatutActe";
+import { ETypeActe } from "../enum/ETypeActe";
 import { NatureActe } from "../enum/NatureActe";
 import { NATIONALITE, NatureMention } from "../enum/NatureMention";
 import { Sexe } from "../enum/Sexe";
-import { TypeActe } from "../enum/TypeActe";
 import { TypeDeclarationConjointe } from "../enum/TypeDeclarationConjointe";
 import { TypeVisibiliteArchiviste } from "../enum/TypeVisibiliteArchiviste";
 import { TypeExtrait } from "./../enum/TypeExtrait";
@@ -50,13 +51,13 @@ export interface IFicheActe {
   detailMariage?: IDetailMariage;
   corpsTexte?: ICorpsTexte;
   corpsImage?: ICorpsImage;
-  type: TypeActe;
+  type: keyof typeof ETypeActe;
   corpsExtraitRectifications: ICorpsExtraitRectification[];
   mentions?: IMention[];
   numeroActeElectronique?: number;
   referenceActe: string;
   referenceSignifiante?: string;
-  origine: string;
+  origine: keyof typeof EOrigineActe;
   statut: EStatutActe;
 }
 
@@ -91,15 +92,15 @@ export const FicheActe = {
   },
 
   estActeImage(acte: IFicheActe) {
-    return acte.type === TypeActe.IMAGE || (acte.corpsImage?.images && acte.corpsImage.images.length > 0);
+    return acte.type === ETypeActe.IMAGE || (acte.corpsImage?.images && acte.corpsImage.images.length > 0);
   },
 
   estActeTexte(acte: IFicheActe): boolean {
-    return acte.type === TypeActe.TEXTE || !acte.corpsImage;
+    return acte.type === ETypeActe.TEXTE || !acte.corpsImage;
   },
 
   estActeImageReecrit(acte: IFicheActe): boolean {
-    return acte.type === TypeActe.IMAGE && Boolean(acte.estReecrit) && Boolean(acte.corpsTexte?.texte);
+    return acte.type === ETypeActe.IMAGE && Boolean(acte.estReecrit) && Boolean(acte.corpsTexte?.texte);
   },
 
   getCorpsExtraitRectificationTexte(acte: IFicheActe, typeExtrait: TypeExtrait): string | undefined {

@@ -4,8 +4,10 @@ import { AddAlerteActeApiHookParameters, useAddAlerteActeApiHook } from "@hook/a
 import { DeleteAlerteActeApiHookParameters, useDeleteAlerteActeApiHook } from "@hook/alertes/DeleteAlerteActeHookApi";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
+import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { EOrigineActe } from "@model/etatcivil/enum/EOrigineActe";
 import { EStatutActe } from "@model/etatcivil/enum/EStatutActe";
+import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
 import { EOptionMiseAJourActe, OptionMiseAJourActe } from "@model/etatcivil/enum/OptionMiseAJourActe";
 import { TitulaireRequeteMiseAJour } from "@model/requete/ITitulaireRequeteMiseAJour";
 import { SousTypeMiseAJour } from "@model/requete/enum/SousTypeMiseAJour";
@@ -59,6 +61,15 @@ export interface IDataFicheProps {
   categorie: ETypeFiche;
 }
 
+export const estActeEligibleMentionDIntegration = ({ origine, referenceActe, referenceSignifiante, type }: IFicheActe): boolean => {
+  const estOrigineScecDocs = EOrigineActe[origine as keyof typeof EOrigineActe] === EOrigineActe.SCEC_DOCS;
+  const referenceActePresente = Boolean(referenceActe?.trim());
+  const referenceSignifianteAbsente = !referenceSignifiante?.trim();
+  const estTypeTexte = type === ETypeActe.TEXTE;
+
+  return estOrigineScecDocs && referenceActePresente && referenceSignifianteAbsente && estTypeTexte;
+};
+
 export const FichePage: React.FC<FichePageProps> = ({
   dataFicheIdentifiant,
   datasFiches,
@@ -102,16 +113,31 @@ export const FichePage: React.FC<FichePageProps> = ({
     const droitMentions = utilisateurConnecte.estHabilitePour({ leDroit: Droit.METTRE_A_JOUR_ACTE });
     const droitAnalyseMarginale = utilisateurConnecte.estHabilitePour({ leDroit: Droit.MODIFIER_ANALYSE_MARGINALE });
 
-    return {
-      autorise:
-        EOrigineActe[dataFicheState?.data?.origine as keyof typeof EOrigineActe] === EOrigineActe.RECE &&
-        (droitMentions || droitAnalyseMarginale) &&
+    const donneesActe = dataFicheState?.data;
+
+    if (!donneesActe) {
+      return {
+        autorise: false,
+        mentions: droitMentions,
+        AnalyseMarginale: droitAnalyseMarginale
+      };
+    }
+
+    const autorise =
+      (EOrigineActe[dataFicheState?.data?.origine as keyof typeof EOrigineActe] === EOrigineActe.RECE &&
+        (droitMentions || droitAnalyseMarginale)) ||
+      (estActeEligibleMentionDIntegration(dataFicheState?.data) &&
         dataFicheCourante?.categorie === ETypeFiche.ACTE &&
-        dataFicheState.data.statut !== EStatutActe.BROUILLON,
+        dataFicheState.data.statut !== EStatutActe.BROUILLON &&
+        droitMentions &&
+        utilisateurConnecte.estHabilitePour({ leDroit: Droit.SIGNER_MENTION_INTEGRATION }));
+
+    return {
+      autorise,
       mentions: droitMentions,
       AnalyseMarginale: droitAnalyseMarginale
     };
-  }, [dataFicheState]);
+  }, [dataFicheState, dataFicheCourante, utilisateurConnecte]);
 
   useEffect(() => {
     const idActe = dataFicheState?.data?.id;

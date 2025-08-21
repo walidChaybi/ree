@@ -1,6 +1,6 @@
 import { CopieActeImageComposition } from "@model/composition/extraitCopie/createur/CopieActeImageComposition";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { TypeActe } from "@model/etatcivil/enum/TypeActe";
+import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { Validation } from "@model/requete/enum/Validation";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -14,16 +14,11 @@ export const creationCompositionCopieActeImage = function (
   ctv: string
 ) {
   let composition;
-  if (acte.type === TypeActe.IMAGE) {
+  if (acte.type === ETypeActe.IMAGE) {
     const natureActe = acte.nature.libelle;
 
     const corpsImage = acte.corpsImage;
-    const erreur =
-      Validation.E === validation
-        ? getLibelle(
-            "L'absence d'informations ne permet pas de générer la copie."
-          )
-        : undefined;
+    const erreur = Validation.E === validation ? getLibelle("L'absence d'informations ne permet pas de générer la copie.") : undefined;
     composition = CopieActeImageComposition.creerCopieActeImage({
       acte,
       natureActe,

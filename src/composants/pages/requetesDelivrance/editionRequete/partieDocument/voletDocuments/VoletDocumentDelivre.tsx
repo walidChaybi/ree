@@ -1,7 +1,7 @@
 import { CONFIG_GET_DOCUMENTS_REPONSE_DELIVRANCE } from "@api/configurations/requete/documentsReponses/GetDocumentsReponseDelivrance";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { TypeActe } from "@model/etatcivil/enum/TypeActe";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
@@ -40,7 +40,7 @@ const aOngletMention = (typeDelivrance: IDocumentDelivrance | null, requete: IRe
       return acte && [NatureActe.NAISSANCE, NatureActe.MARIAGE].includes(acte.nature);
     case ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE:
     case ECodeDocumentDelivrance.CODE_COPIE_NON_SIGNEE:
-      return acte?.type === TypeActe.TEXTE && requete.choixDelivrance !== ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE;
+      return acte?.type === ETypeActe.TEXTE && requete.choixDelivrance !== ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE;
     default:
       return true;
   }

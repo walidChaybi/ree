@@ -1,7 +1,7 @@
 import { EStatutActe } from "@model/etatcivil/enum/EStatutActe";
+import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
 import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
-import { ETypeActe } from "@model/etatcivil/enum/TypeActe";
 import { TDateArrayDTO } from "@util/DateUtils";
 import DateRECE from "../../../../../utils/DateRECE";
 import { IActeEtrangerDto } from "../../IActeEtrangerDto";

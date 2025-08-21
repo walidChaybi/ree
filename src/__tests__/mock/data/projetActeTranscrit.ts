@@ -5,9 +5,9 @@ import {
   IProjetActeTranscritPostDto,
   ProjetActeTranscrit
 } from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
+import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
 import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { LienParente } from "@model/etatcivil/enum/LienParente";
-import { ETypeActe } from "@model/etatcivil/enum/TypeActe";
 
 export const projetActeNaissanceDto: IProjetActeTranscritDto = {
   id: "6190b304-18dc-43e5-a53a-02612dbadeae",

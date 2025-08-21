@@ -32,7 +32,7 @@ const toastMessage = (titre: string, message?: string | string[], erreurs?: TErr
 
       {message && (Array.isArray(message) ? message.map(msg => <div key={`msg-${msg}`}>{msg}</div>) : <div>{message}</div>)}
 
-      {erreurs && erreurs.length > 0 && (
+      {Array.isArray(erreurs) && erreurs.some(erreur => erreur.code) && (
         <p className="mb-1 text-center">
           Codes d’erreur :<br />
           {erreurs

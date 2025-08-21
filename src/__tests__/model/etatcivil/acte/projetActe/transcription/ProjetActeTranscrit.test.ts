@@ -6,9 +6,9 @@ import { FormuleFinale } from "@model/etatcivil/acte/projetActe/transcription/Fo
 import { IProjetActeTranscritDto, ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
 import { TitulaireProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/TitulaireProjetActeTranscrit";
 import { EStatutActe } from "@model/etatcivil/enum/EStatutActe";
+import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
 import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
-import { ETypeActe } from "@model/etatcivil/enum/TypeActe";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 
 describe("Test de la class ProjetActeTranscrit", () => {

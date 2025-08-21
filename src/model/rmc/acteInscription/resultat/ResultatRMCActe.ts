@@ -1,5 +1,5 @@
+import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
 import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
-import { ETypeActe } from "@model/etatcivil/enum/TypeActe";
 import { ETypeFamille } from "@model/etatcivil/enum/TypeFamille";
 import { IPrenomOrdonneDto } from "@model/form/commun/PrenomsForm";
 import { IDateDto } from "@util/DateUtils";

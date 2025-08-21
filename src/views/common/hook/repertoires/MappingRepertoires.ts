@@ -14,7 +14,6 @@ import { ExistenceContratMariage } from "@model/etatcivil/enum/ExistenceContratM
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { TypeActe } from "@model/etatcivil/enum/TypeActe";
 import { TypeDeclarationConjointe } from "@model/etatcivil/enum/TypeDeclarationConjointe";
 import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
 import { TypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteArchiviste";
@@ -50,7 +49,7 @@ export function mapActe(data: any): IFicheActe {
 
   dataActe.detailMariage = mapDetailMariage(data.detailMariage);
 
-  dataActe.type = TypeActe.getEnumFor(data.type);
+  dataActe.type = data.type;
 
   dataActe.corpsExtraitRectifications = mapCorpsRectifications(data.corpsExtraitRectifications);
 

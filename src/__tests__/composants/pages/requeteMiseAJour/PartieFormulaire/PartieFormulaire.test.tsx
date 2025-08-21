@@ -1,13 +1,15 @@
 import { CONFIG_PUT_ANALYSE_MARGINALE_ET_MENTIONS } from "@api/configurations/etatCivil/PutAnalyseMarginaleEtMentionsConfigApi";
 import { CONFIG_PUT_MISE_A_JOUR_ANALYSE_MARGINALE } from "@api/configurations/etatCivil/PutMiseAJourAnalyseMarginaleConfigApi";
 import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
+import CONFIG_GET_TYPES_MENTION_INTEGRATION_RECE from "@api/configurations/etatCivil/nomenclature/GetTypesMentionIntegrationRECEApi";
 import { CONFIG_GET_METAMODELE_TYPE_MENTION } from "@api/configurations/requete/miseAJour/GetMetamodeleTypeMentionConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
-import { ficheActe3 } from "@mock/data/ficheActe";
+import { ficheActe3, ficheActeMentionIntegrationRECE, ficheActeMentionIntegrationRECENonEligible } from "@mock/data/ficheActe";
 import { MetaModeleAideSaisieMariageEnFrance } from "@mock/data/mentions";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
@@ -43,7 +45,8 @@ describe("Tests PartieFormulaire", () => {
       actes: ECleOngletsMiseAJour;
       formulaires: ECleOngletsMiseAJour;
     },
-    estMiseAJourAvecMentions: boolean
+    estMiseAJourAvecMentions: boolean,
+    droits: Droit[]
   ): Promise<ChildNode | null> => {
     const router = createMemoryRouter(
       [
@@ -80,7 +83,7 @@ describe("Tests PartieFormulaire", () => {
 
     const { container } = await act(async () =>
       render(
-        <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().generer()}>
+        <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroits(droits).generer()}>
           <RouterProvider router={router} />
         </MockRECEContextProvider>
       )
@@ -131,6 +134,18 @@ describe("Tests PartieFormulaire", () => {
         data: MetaModeleAideSaisieMariageEnFrance
       }
     );
+
+    MockApi.deployer(
+      CONFIG_GET_TYPES_MENTION_INTEGRATION_RECE,
+      {},
+      {
+        data: {
+          idTypeMention: "0123456789",
+          affecteAnalyseMarginale: false,
+          texteMention: "Acte intégré au registre électronique sous la référence"
+        }
+      }
+    );
   });
 
   afterEach(() => {
@@ -165,7 +180,7 @@ describe("Tests PartieFormulaire", () => {
   };
 
   test("Mettre à jour le formulaire d'analyse marginale et s'assurer que l'appel API est correct", async () => {
-    const snapshot = await renderSnapshot(ONGLETS_ACTIFS_MENTION, false);
+    const snapshot = await renderSnapshot(ONGLETS_ACTIFS_MENTION, false, []);
     expect(snapshot).toMatchSnapshot();
 
     const mock = MockApi.getMock();
@@ -177,7 +192,7 @@ describe("Tests PartieFormulaire", () => {
   });
 
   test("Ajouter une mention simple, ajouter une mention liée à l'analyse marginale, modifier le formulaire et vérifier l'appel API", async () => {
-    const snapshot = await renderSnapshot(ONGLETS_ACTIFS_MENTION, true);
+    const snapshot = await renderSnapshot(ONGLETS_ACTIFS_MENTION, true, []);
     expect(snapshot).toMatchSnapshot();
 
     const mock = MockApi.getMock();
@@ -199,7 +214,7 @@ describe("Tests PartieFormulaire", () => {
   });
 
   test("Ajouter une mention 'Mariage - en France(marie)' + validation et envoi fomulaire", async () => {
-    const snapshot = await renderSnapshot(ONGLETS_ACTIFS_MENTION, true);
+    const snapshot = await renderSnapshot(ONGLETS_ACTIFS_MENTION, true, []);
     expect(snapshot).toMatchSnapshot();
 
     await userEvent.click(await screen.findByPlaceholderText("Recherche..."));
@@ -273,12 +288,51 @@ describe("Tests PartieFormulaire", () => {
       }
     );
 
-    const snapshot = await renderSnapshot(ONGLETS_ACTIFS_MENTION, false);
+    const snapshot = await renderSnapshot(ONGLETS_ACTIFS_MENTION, false, []);
     expect(snapshot).toMatchSnapshot();
 
     const mock = MockApi.getMock();
 
     expect(mock.history.get.length).toBe(1);
     expect(mock.history.get[0].url).toContain("/acte/1010/resume");
+  });
+
+  test("Afficher le bloc 'Mention intégration RECE'", async () => {
+    MockApi.deployer(
+      CONFIG_GET_RESUME_ACTE,
+      { path: { idActe: ID_ACTE }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
+      {
+        data: ficheActeMentionIntegrationRECE
+      }
+    );
+
+    const snapshot = await renderSnapshot(ONGLETS_ACTIFS_MENTION, true, [Droit.METTRE_A_JOUR_ACTE, Droit.SIGNER_MENTION_INTEGRATION]);
+    expect(snapshot).toMatchSnapshot();
+  });
+
+  test("N'affiche pas le bloc 'Mention intégration RECE' quand l'utilisateur ne possède pas le droit SIGNER_MENTION_INTEGRATION", async () => {
+    MockApi.deployer(
+      CONFIG_GET_RESUME_ACTE,
+      { path: { idActe: ID_ACTE }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
+      {
+        data: ficheActeMentionIntegrationRECE
+      }
+    );
+
+    const snapshot = await renderSnapshot(ONGLETS_ACTIFS_MENTION, true, [Droit.METTRE_A_JOUR_ACTE]);
+    expect(snapshot).toMatchSnapshot();
+  });
+
+  test("N'affiche pas le bloc 'Mention intégration RECE' si l'acte n'est pas éligible integration mentions", async () => {
+    MockApi.deployer(
+      CONFIG_GET_RESUME_ACTE,
+      { path: { idActe: ID_ACTE }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
+      {
+        data: ficheActeMentionIntegrationRECENonEligible
+      }
+    );
+
+    const snapshot = await renderSnapshot(ONGLETS_ACTIFS_MENTION, true, [Droit.METTRE_A_JOUR_ACTE, Droit.SIGNER_MENTION_INTEGRATION]);
+    expect(snapshot).toMatchSnapshot();
   });
 });
