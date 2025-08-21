@@ -123,6 +123,26 @@ describe("Test du composant Champs Nom Prenom Interchangeables", () => {
     await userEvent.type(champNom, "Mi");
     await userEvent.click(boutonAppauvrir);
     expect(champNom.value).toBe("Mi*");
+
+    await userEvent.clear(champNom);
+    await userEvent.type(champNom, "D'Hubert");
+    await userEvent.click(boutonAppauvrir);
+    expect(champNom.value).toBe("D'H*");
+
+    await userEvent.clear(champNom);
+    await userEvent.type(champNom, "'D'Hubert");
+    await userEvent.click(boutonAppauvrir);
+    expect(champNom.value).toBe("'D'H*");
+
+    await userEvent.clear(champNom);
+    await userEvent.type(champNom, "'''Hubert");
+    await userEvent.click(boutonAppauvrir);
+    expect(champNom.value).toBe("'''Hu*");
+
+    await userEvent.clear(champNom);
+    await userEvent.type(champNom, "''''''''''''''''''Hubert");
+    await userEvent.click(boutonAppauvrir);
+    expect(champNom.value).toBe("''''''''''''''''''Hu*");
   });
 
   test("DOIT appauvrir la valeur du champs Prénom QUAND l'utilisateur clique sur le bouton 'appauvrir'", async () => {

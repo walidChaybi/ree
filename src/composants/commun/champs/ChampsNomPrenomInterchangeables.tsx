@@ -17,17 +17,19 @@ export const ChampsNomPrenomInterchangeables: React.FC<{ cheminNom: string; chem
     setFieldValue(cheminPrenom, getIn(values, cheminNom)).finally(() => setFieldTouched(cheminPrenom, true));
   };
 
-  const appauvrirValeur = (cheminValeur: string, nombreCaracteres = 2) => {
-    const valeurActuelle = getIn(values, cheminValeur);
-    const valeurSansEspaces = valeurActuelle.replace(/\s/g, "");
+  const appauvrirValeur = (cheminValeur: string, nombreCaracteresMax = 2) => {
+    const valeurNettoyee = (getIn(values, cheminValeur) as string).trim();
 
-    if (!valeurActuelle || valeurSansEspaces.length < nombreCaracteres) return;
+    let resultat = "";
+    let nombreCaracteresAjoutes = 0;
 
-    const regex = new RegExp(`^((?:\\s*[^\\s]){${nombreCaracteres}})`);
+    for (let caractere of valeurNettoyee) {
+      resultat += caractere;
 
-    if (valeurActuelle.match(regex)) {
-      setFieldValue(cheminValeur, valeurActuelle.match(regex)[0] + "*");
+      if (!["'", " "].includes(caractere) && ++nombreCaracteresAjoutes === nombreCaracteresMax) break;
     }
+
+    setFieldValue(cheminValeur, resultat.concat("*"));
   };
 
   const placerNomEtPrenomDansLesBonsChamps = (event: React.ClipboardEvent<HTMLInputElement>): void => {
