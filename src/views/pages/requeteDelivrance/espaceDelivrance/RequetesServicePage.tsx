@@ -1,6 +1,5 @@
 import { IQueryParametersPourRequetes, TypeAppelRequete } from "@api/appels/requeteApi";
 import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   ICreationActionMiseAjourStatutEtRedirectionParams,
   useCreationActionMiseAjourStatutEtRedirectionHook
@@ -24,6 +23,7 @@ import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../router/LiensRECE";
 import { INFO_PAGE_REQUETES_DELIVRANCE_SERVICE } from "../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import { HeaderTableauRequete, dateStatutColumnHeaders, requeteColumnHeaders } from "./EspaceDelivranceParams";

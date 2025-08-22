@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { IFiltresServiceRequeteInformationFormValues } from "@model/requete/IFiltreServiceRequeteInformation";
 import { ObjetRequeteInfo, objetsRequeteInfoCommeOptions } from "@model/requete/enum/ObjetRequeteInfo";
 import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
@@ -13,6 +12,7 @@ import { Formik } from "formik";
 import { useContext, useMemo } from "react";
 import { FaSearch } from "react-icons/fa";
 import { FaRegCircleXmark } from "react-icons/fa6";
+import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import "../scss/FiltresServiceRequeteInformationForm.scss";
 
 interface IFiltresServiceRequeteInformationFormProps {

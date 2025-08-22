@@ -11,7 +11,6 @@ import {
   TITULAIRE,
   TYPE
 } from "@composant/formulaire/ConstantesNomsForm";
-import { RECEContextActions, RECEContextData } from "@core/contexts/RECEContext";
 import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
@@ -23,6 +22,7 @@ import { getLibelleParentFromSexe, withNamespace } from "@widget/formulaire/util
 import FormikEffect from "@widget/formulaire/utils/FormikEffect";
 import { FormikHelpers } from "formik";
 import React, { useContext } from "react";
+import { RECEContextActions, RECEContextData } from "../../../../../../../../contexts/RECEContextProvider";
 import { estJourMoisVide } from "./SaisiePostulantFormUtils";
 import AcquisitionForm from "./form/AcquisitionForm";
 import AutresForm from "./form/AutresForm";
@@ -38,7 +38,7 @@ interface ISaisiePostulantFormProps {
   valeursForm?: ISaisieProjetPostulantForm;
   avancementProjet?: AvancementProjetActe;
   onSubmitSaisieProjetForm: (valeurs: ISaisieProjetPostulantForm, formikHelpers?: FormikHelpers<ISaisieProjetPostulantForm>) => void;
-  affichageActualiserEtVisualiser: boolean
+  affichageActualiserEtVisualiser: boolean;
 }
 
 export const SaisiePostulantForm: React.FC<ISaisiePostulantFormProps> = props => {
@@ -128,16 +128,14 @@ export const SaisiePostulantForm: React.FC<ISaisiePostulantFormProps> = props =>
           />
         </div>
         <GestionnaireElementScroll elementListe={elementListe} />
-        {
-          props.affichageActualiserEtVisualiser && (
-            <BoutonDoubleSubmit
+        {props.affichageActualiserEtVisualiser && (
+          <BoutonDoubleSubmit
             type="submit"
             disabled={!isDirty && props.estProjetExistant}
           >
             {"Actualiser et visualiser"}
           </BoutonDoubleSubmit>
-          )
-        }
+        )}
       </Formulaire>
     </div>
   );

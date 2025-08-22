@@ -845,7 +845,7 @@ pays
                               /
                             </span>
                             <input
-                              class="border-1 w-11 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              class="border-1 w-12 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               id="titulaire.dateNaissance.annee"
                               maxlength="4"
                               placeholder="AAAA"
@@ -1265,7 +1265,7 @@ pays
                                   /
                                 </span>
                                 <input
-                                  class="border-1 w-11 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  class="border-1 w-12 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                   id="parents.parent1.dateNaissance.annee"
                                   maxlength="4"
                                   placeholder="AAAA"
@@ -1939,7 +1939,7 @@ pays
                                   /
                                 </span>
                                 <input
-                                  class="border-1 w-11 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  class="border-1 w-12 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                   id="parents.parent2.dateNaissance.annee"
                                   maxlength="4"
                                   placeholder="AAAA"
@@ -2514,7 +2514,7 @@ pays
                             /
                           </span>
                           <input
-                            class="border-1 w-11 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                            class="border-1 w-12 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                             id="acteEtranger.dateEnregistrement.annee"
                             maxlength="4"
                             placeholder="AAAA"

@@ -1,10 +1,10 @@
 import TRAITEMENT_CHARGER_REQUETE_ET_ACTE from "@api/traitements/requeteDelivrance/edition/TraitementChargerRequeteEtActe";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import PageChargeur from "../composants/commun/chargeurs/PageChargeur";
 import useTraitementApi from "../hooks/api/TraitementApiHook";
+import { RECEContextData } from "./RECEContextProvider";
 
 interface IRequeteActe {
   requete: IRequeteDelivrance;

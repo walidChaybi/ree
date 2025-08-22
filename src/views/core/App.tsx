@@ -11,11 +11,11 @@ import { registerLocale, setDefaultLocale } from "react-datepicker";
 import { ToastContainer } from "react-toastify";
 import { ConteneurParentModales } from "../../composants/commun/conteneurs/modale/ConteneurModale";
 import ProtectionDoubleOuverture from "../../composants/commun/conteneurs/ProtectionDoubleOuverture";
+import { RECEContextProvider } from "../../contexts/RECEContextProvider";
 import "../../index.css";
 import RouterRECE from "../../router/RouterRECE";
 import { TOASTCONTAINER_PRINCIPAL } from "../../utils/AfficherMessage";
 import "./App.scss";
-import { RECEContextProvider } from "./contexts/RECEContext";
 
 // ReceDatepicker Locale
 registerLocale("fr", fr);
@@ -38,7 +38,7 @@ const App: React.FC = () => {
       <SeulementNavigateur navigateurs={[FIREFOX]}>
         <ProtectionDoubleOuverture>
           <ErrorManager>
-            <div className="App">
+            <div className="text-center font-marianne">
               <RECEContextProvider>
                 <>
                   <ToastContainer

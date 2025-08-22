@@ -11,7 +11,6 @@ import {
   TITULAIRE2,
   TYPE_REQUERANT
 } from "@composant/formulaire/ConstantesNomsForm";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { IDetailRequeteParams, useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
@@ -30,6 +29,7 @@ import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import * as Yup from "yup";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import { SaisieRequeteRDC } from "../../../../model/form/delivrance/ISaisirRDCPageForm";
 import LiensRECE from "../../../../router/LiensRECE";
 import { INFO_PAGE_MODIFICATION_REQUETE_DELIVRANCE_EXTRAIT_COPIE_COURRIER } from "../../../../router/infoPages/InfoPagesEspaceDelivrance";

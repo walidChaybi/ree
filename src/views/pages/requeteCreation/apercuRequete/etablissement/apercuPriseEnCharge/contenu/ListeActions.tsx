@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   RetourSDANFParams,
   useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook
@@ -9,6 +8,7 @@ import { estSuperieurA500Caracteres, getLibelle } from "@util/Utils";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import { ConfirmationPopinAvecMessage } from "@widget/popin/ConfirmationPopinAvecMessage";
 import React, { useContext, useEffect, useState } from "react";
+import { RECEContextData } from "../../../../../../../contexts/RECEContextProvider";
 interface ListeActionsRetourSDANFProps {
   statusRequete: any;
   idRequeteCorbeilleAgent?: string;

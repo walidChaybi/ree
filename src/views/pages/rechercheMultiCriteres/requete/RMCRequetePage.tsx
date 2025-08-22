@@ -1,5 +1,4 @@
 import { CONFIG_POST_RMC_REQUETE } from "@api/configurations/requete/rmc/PostRMCRequeteConfigApi";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { ETypeRequete } from "@model/requete/enum/TypeRequete";
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
 import { mappingCriteresRMCRequeteVersDto } from "@model/rmc/requete/ICriteresRMCRequeteDto";
@@ -10,6 +9,7 @@ import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { AutoScroll } from "@widget/autoScroll/autoScroll";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
 import AfficherMessage from "../../../../utils/AfficherMessage";
 import { RMCRequeteForm } from "./RMCRequeteForm";

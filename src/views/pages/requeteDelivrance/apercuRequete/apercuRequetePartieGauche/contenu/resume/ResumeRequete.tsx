@@ -1,5 +1,4 @@
 import { ListePiecesJointes } from "@composant/piecesJointes/ListePiecesJointes";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -11,6 +10,7 @@ import React, { useContext, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import FenetreExterne from "../../../../../../../composants/commun/conteneurs/FenetreExterne";
+import { RECEContextData } from "../../../../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../../../../router/LiensRECE";
 import {
   INFO_PAGE_MODIFICATION_REQUETE_DELIVRANCE_CERTIFICAT_SITUATION_COURRIER,

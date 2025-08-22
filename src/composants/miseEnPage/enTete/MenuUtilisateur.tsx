@@ -1,9 +1,9 @@
 import { CONFIG_GET_NOMBRE_REQUETE } from "@api/configurations/requete/compteur/GetNombreRequeteConfigApi";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useContext, useEffect, useState } from "react";
 import { MdClose, MdInfoOutline, MdLogout, MdOutlineAccountCircle } from "react-icons/md";
 import { useNavigate } from "react-router";
+import { RECEContextData } from "../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import LiensRECE from "../../../router/LiensRECE";
 import { URL_DECONNEXION } from "../../../router/infoPages/InfoPagesBase";

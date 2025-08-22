@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   ICreationActionMiseAjourStatutEtRedirectionParams,
   useCreationActionMiseAjourStatutEtRedirectionHook
@@ -11,6 +10,7 @@ import { getUrlWithParam } from "@util/route/UrlUtil";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useContext, useState } from "react";
 import { useLocation } from "react-router";
+import { RECEContextData } from "../../../../../../contexts/RECEContextProvider";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 import "./scss/BoutonPrendreEnCharge.scss";
 

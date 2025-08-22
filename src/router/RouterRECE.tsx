@@ -1,7 +1,7 @@
-import { Body } from "@core/body/Body";
-import { Header } from "@core/header/Header";
 import { Navigate, RouterProvider, createBrowserRouter } from "react-router";
 import AppChargeur from "../composants/commun/chargeurs/AppChargeur";
+import CorpsDePage from "../composants/miseEnPage/corpsDePage/CorpsDePage";
+import EnTete from "../composants/miseEnPage/enTete/EnTete";
 import PageAccueil from "../pages/accueil/PageAccueil";
 import ElementPageRECE from "./ElementPageRECE";
 import { INFO_PAGE_ACCUEIL, URL_ACCUEIL, URL_DECONNEXION } from "./infoPages/InfoPagesBase";
@@ -17,8 +17,8 @@ const ROUTER = createBrowserRouter([
     path: URL_ACCUEIL,
     element: (
       <>
-        <Header />
-        <Body />
+        <EnTete />
+        <CorpsDePage />
       </>
     ),
     children: [

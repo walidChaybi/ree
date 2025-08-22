@@ -3,12 +3,12 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import { CONFIG_GET_NOMBRE_REQUETES } from "../../api/configurations/requete/GetNombreRequetesConfigApi";
 import { CONFIG_GET_NOMBRE_REQUETES_INFORMATION } from "../../api/configurations/requete/GetNombreRequetesInformationConfigApi";
 
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { FaEnvelope, FaGavel, FaLandmark, FaPlusCircle, FaSearch } from "react-icons/fa";
 import AccessibleAvecDroits from "../../composants/commun/accessibleAvecDroits/AccessibleAvecDroits";
 import Bouton from "../../composants/commun/bouton/Bouton";
+import { RECEContextData } from "../../contexts/RECEContextProvider";
 import useFetchApi from "../../hooks/api/FetchApiHook";
 import LiensRECE from "../../router/LiensRECE";
 import {

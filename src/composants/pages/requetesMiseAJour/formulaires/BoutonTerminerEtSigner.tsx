@@ -1,7 +1,7 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import { useContext, useMemo, useState } from "react";
 import { ECleOngletsMiseAJour, EditionMiseAJourContext } from "../../../../contexts/EditionMiseAJourContextProvider";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import AfficherMessage from "../../../../utils/AfficherMessage";
 import Bouton from "../../../commun/bouton/Bouton";
 import ConteneurModale from "../../../commun/conteneurs/modale/ConteneurModale";

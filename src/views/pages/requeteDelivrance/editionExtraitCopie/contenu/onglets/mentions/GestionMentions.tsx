@@ -1,5 +1,4 @@
 import { ReinitialiserValiderBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
-import { RECEContextActions } from "@core/contexts/RECEContext";
 import { IMentionsParams, useMentionsApiHook } from "@hook/acte/mentions/MentionsApiHook";
 import { SauvegarderMentionsParam, useSauvegarderMentions } from "@hook/acte/mentions/SauvegarderMentionsHook";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
@@ -14,6 +13,7 @@ import { estTableauNonVide } from "@util/Utils";
 import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { ECleOngletDocumentDelivre } from "../../../../../../../composants/pages/requetesDelivrance/editionRequete/partieDocument/voletDocuments/VoletDocumentDelivre";
 import { EditionDelivranceContext } from "../../../../../../../contexts/EditionDelivranceContextProvider";
+import { RECEContextActions } from "../../../../../../../contexts/RECEContextProvider";
 import { boutonReinitialiserEstDisabled, getValeurEstdeverrouillerCommencement, validerMentions } from "./GestionMentionsUtil";
 import { MentionsCopie } from "./contenu/MentionsCopie";
 import { MentionsExtrait } from "./contenu/MentionsExtrait";

@@ -1,11 +1,11 @@
 import { HTTP_BAD_REQUEST, HTTP_STATUS_OK } from "@api/ApiManager";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { IModifierStatutRequeteApresSignature } from "@model/requete/IModifierStatutRequeteApresSignature";
 import { IComposerDocumentFinalApiHookResultat } from "@model/signature/IComposerDocumentFinalApiHookResultat";
 import { IEtatTraitementSignature } from "@model/signature/IEtatTraitementSignature";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import { useContext, useEffect, useState } from "react";
+import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import DOCUMENT_SIGNE_VALIDE from "../../../../../ressources/DocumentSigneValide";
 import DOCUMENT_VIDE_A_SIGNER from "../../../../../ressources/DocumentVideASigner";
 

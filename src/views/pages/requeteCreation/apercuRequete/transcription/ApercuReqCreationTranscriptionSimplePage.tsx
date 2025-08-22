@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
@@ -22,6 +21,7 @@ import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
+import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../../router/LiensRECE";
 import { INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE } from "../../../../../router/infoPages/InfoPagesEspaceConsulaire";
 import Labels from "../../commun/Labels";

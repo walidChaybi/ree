@@ -1,7 +1,7 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import { useFormikContext } from "formik";
 import React, { useContext } from "react";
+import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import Bouton, { TStyleBouton } from "../../../../commun/bouton/Bouton";
 
 interface BoutonsValiderEtReinitialiserProps {

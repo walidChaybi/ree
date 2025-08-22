@@ -1,7 +1,7 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import * as React from "react";
 import { useContext } from "react";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import { IHabiliationDescription, NomComposant, habilitationsDescription } from "./habilitationsDescription";
 
 function getHabilitationPourLeComposant(nomComposant: string, habsDesc: IHabiliationDescription[]) {

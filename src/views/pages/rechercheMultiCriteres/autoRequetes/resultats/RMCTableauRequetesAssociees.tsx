@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
@@ -21,6 +20,7 @@ import {
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useContext, useState } from "react";
 import FenetreExterne from "../../../../../composants/commun/conteneurs/FenetreExterne";
+import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";
 import { BoutonNouvelleRMCRequete } from "../contenu/BoutonNouvelleRMCRequete";
 import { columnsTableauRequeteAssociees } from "./RMCTableauRequetesAssocieesParams";

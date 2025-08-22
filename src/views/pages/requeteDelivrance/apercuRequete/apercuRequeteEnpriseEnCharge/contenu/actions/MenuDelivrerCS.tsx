@@ -1,5 +1,4 @@
 import { reinitialiserOnClick } from "@composant/menuTransfert/MenuTransfertUtil";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { IActionOption } from "@model/requete/IActionOption";
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
@@ -11,6 +10,7 @@ import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import { RECEContextData } from "../../../../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../../../../router/LiensRECE";
 import { INFO_PAGE_APERCU_REQUETE_DELIVRANCE_TRAITEMENT } from "../../../../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../../mapping/ReqDelivranceToReqTableau";

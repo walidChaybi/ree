@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import { AlerteRequete } from "@model/requete/enum/AlerteRequete";
 import { EPriorite } from "@model/requete/enum/EPriorite";
@@ -13,6 +12,7 @@ import Box from "@mui/material/Box";
 import { getLigneTableauVide } from "@widget/tableau/TableUtils";
 import { useContext } from "react";
 import { MdClear, MdError, MdLabel, MdReport } from "react-icons/md";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import "./scss/RequeteUtils.scss";
 
 const prioriteDeLaRequete = (priorite: keyof typeof EPriorite): string => {

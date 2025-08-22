@@ -1,11 +1,11 @@
 import { HTTP_NOT_FOUND } from "@api/ApiManager";
 import { getRequeteAleatoire } from "@api/appels/requeteApi";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { TRequeteTableau } from "@model/requete/IRequeteTableau";
 import { mappingUneRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { mappingUneRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { useContext, useEffect, useState } from "react";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export interface IRequeteAleatoireResultat {

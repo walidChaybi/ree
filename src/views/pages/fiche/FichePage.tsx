@@ -1,5 +1,4 @@
 import { CONFIG_POST_REQUETE_MISE_A_JOUR } from "@api/configurations/requete/miseAJour/PostRequeteMiseAJourApiConfig";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { AddAlerteActeApiHookParameters, useAddAlerteActeApiHook } from "@hook/alertes/AddAlerteActeHookApi";
 import { DeleteAlerteActeApiHookParameters, useDeleteAlerteActeApiHook } from "@hook/alertes/DeleteAlerteActeHookApi";
 import { Droit } from "@model/agent/enum/Droit";
@@ -24,6 +23,7 @@ import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
 import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import { IFenetreExterneRef } from "../../../composants/commun/conteneurs/FenetreExterne";
+import { RECEContextData } from "../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import { ETypeFiche } from "../../../model/etatcivil/enum/ETypeFiche";
 import LiensRECE from "../../../router/LiensRECE";

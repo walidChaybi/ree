@@ -1,7 +1,6 @@
 import { PARENT_ADOPTANT_NAISS1, PARENT_ADOPTANT_NAISS2, TITULAIRE_EVT_1 } from "@composant/formulaire/ConstantesNomsForm";
 import { BoutonVerrouillage } from "@composant/formulaire/boutons/BoutonVerrouillage";
 import { ReinitialiserValiderFormBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
-import { RECEContextActions } from "@core/contexts/RECEContext";
 import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
 import { ISauvegardeValidationSaisieExtraitParams, useSauvegardeValidationSaisieExtrait } from "@hook/requete/ValidationSaisieExtraitHook";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
@@ -21,6 +20,7 @@ import { FormikProps, FormikValues } from "formik";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { ECleOngletDocumentDelivre } from "../../../../../../../composants/pages/requetesDelivrance/editionRequete/partieDocument/voletDocuments/VoletDocumentDelivre";
 import { EditionDelivranceContext } from "../../../../../../../contexts/EditionDelivranceContextProvider";
+import { RECEContextActions } from "../../../../../../../contexts/RECEContextProvider";
 import {
   IProprietesFormulaire,
   getTitulairesEvenementsEtParentsForm,

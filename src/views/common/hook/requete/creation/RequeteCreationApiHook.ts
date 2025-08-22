@@ -1,5 +1,4 @@
 import { getRequetesCreation, IQueryParametersPourRequetes, postRequetesServiceCreation, TypeAppelRequete } from "@api/appels/requeteApi";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { IService } from "@model/agent/IService";
 import { Utilisateur } from "@model/agent/Utilisateur";
 import {
@@ -11,6 +10,7 @@ import { IRequeteTableauCreation, mappingUneRequeteTableauCreation } from "@mode
 import { getParamsTableauDepuisReponseApi, IParamsTableau } from "@util/GestionDesLiensApi";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { useContext, useEffect, useState } from "react";
+import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
 
 export function useRequeteCreationApiHook(

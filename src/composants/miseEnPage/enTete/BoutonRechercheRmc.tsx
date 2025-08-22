@@ -7,7 +7,7 @@ import { FaSearch } from "react-icons/fa";
 import { ToastContainer } from "react-toastify";
 import FenetreExterne, { IFenetreExterneRef } from "../../../composants/commun/conteneurs/FenetreExterne";
 import PageRMCActeInscription from "../../../pages/rmc/PageRMCActeInscription";
-import "../../pages/rechercheMultiCriteres/acteInscription/scss/RMCActeInscriptionPage.scss";
+import "../../../views/pages/rechercheMultiCriteres/acteInscription/scss/RMCActeInscriptionPage.scss";
 
 const width = 1200;
 const ratioHeight = 1;
@@ -32,7 +32,7 @@ export const BoutonRechercheRmc: React.FC = () => {
         aria-label="Recherche acte/inscription"
       >
         <FaSearch
-          className="loupeChampsRecherche"
+          className="text-xl text-white"
           aria-hidden
         />
       </Button>

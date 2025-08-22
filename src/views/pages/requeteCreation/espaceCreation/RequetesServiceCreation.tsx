@@ -1,7 +1,6 @@
 import { IQueryParametersPourRequetes, TypeAppelRequete } from "@api/appels/requeteApi";
 import { listeUtilisateursToOptionsBis } from "@composant/menuTransfert/MenuTransfertUtil";
 import { ITransfertPopinForm, TransfertPopin } from "@composant/menuTransfert/TransfertPopin";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   NavigationApercuReqCreationParams,
   useNavigationApercuCreation
@@ -26,6 +25,7 @@ import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneElements/caseACocher/ColonneCasesACocher";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import { useRequeteCreationApiHook } from "../../../common/hook/requete/creation/RequeteCreationApiHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { FiltreServiceRequeteCreationForm } from "../commun/composants/FiltreServiceRequeteCreationForm/FiltreServiceRequeteCreationForm";

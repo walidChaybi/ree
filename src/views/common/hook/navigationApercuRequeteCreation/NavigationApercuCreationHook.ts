@@ -1,9 +1,9 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { ESousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { useContext, useEffect } from "react";
 import { NavigateFunction, useNavigate } from "react-router";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../router/LiensRECE";
 import {
   INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE,

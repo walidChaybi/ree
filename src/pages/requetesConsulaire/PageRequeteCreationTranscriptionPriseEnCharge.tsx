@@ -1,6 +1,5 @@
 import { CONFIG_GET_DETAIL_REQUETE } from "@api/configurations/requete/GetDetailRequeteConfigApi";
 import { CONFIG_POST_MAJ_STATUT_ET_ACTION } from "@api/configurations/requete/actions/PostMajStatutEtActionConfigApi";
-import { RECEContextActions, RECEContextData } from "@core/contexts/RECEContext";
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { IRequete } from "@model/requete/IRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
@@ -15,6 +14,7 @@ import PageChargeur from "../../composants/commun/chargeurs/PageChargeur";
 import OngletsBouton from "../../composants/commun/onglets/OngletsBouton";
 import ResumeDetailsRequete from "../../composants/pages/requetesConsulaire/commun/ResumeDetailsRequete";
 import ConteneurVoletEdition from "../../composants/pages/requetesDelivrance/editionRequete/ConteneurVoletEdition";
+import { RECEContextActions, RECEContextData } from "../../contexts/RECEContextProvider";
 import useFetchApi from "../../hooks/api/FetchApiHook";
 import LiensRECE from "../../router/LiensRECE";
 import {

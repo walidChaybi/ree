@@ -1,4 +1,3 @@
-import { RECEContextActions, RECEContextData } from "@core/contexts/RECEContext";
 import {
   IRecupererRegistrePapierParIdActeParams,
   useRecupererRegistrePapierParIdActeApiHook
@@ -30,6 +29,7 @@ import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import { FormikHelpers } from "formik";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
+import { RECEContextActions, RECEContextData } from "../../../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../../../router/LiensRECE";
 import {
   INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_CONSULTATION,

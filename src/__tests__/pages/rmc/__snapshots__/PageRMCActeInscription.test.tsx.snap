@@ -202,7 +202,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                         /
                       </span>
                       <input
-                        class="border-1 w-11 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                        class="border-1 w-12 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                         id="titulaire.dateNaissance.annee"
                         maxlength="4"
                         placeholder="AAAA"
@@ -336,7 +336,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                         /
                       </span>
                       <input
-                        class="border-1 w-11 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                        class="border-1 w-12 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                         id="registreRepertoire.evenement.dateEvenement.annee"
                         maxlength="4"
                         placeholder="AAAA"
@@ -894,7 +894,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                         class="whitespace-nowrap"
                       />
                       <input
-                        class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                        class="border-1 flex w-12 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                         id="registreRepertoire.repertoire.numeroInscription.annee"
                         maxlength="4"
                         name="registreRepertoire.repertoire.numeroInscription.annee"

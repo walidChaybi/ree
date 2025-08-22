@@ -1,11 +1,11 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoiteAOnglets, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useContext, useState } from "react";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../router/LiensRECE";
 import {
   INFO_PAGE_MES_REQUETES_ETABLISSEMENT,

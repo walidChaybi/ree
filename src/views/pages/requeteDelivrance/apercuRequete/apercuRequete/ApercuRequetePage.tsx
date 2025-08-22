@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
@@ -14,6 +13,7 @@ import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { VisionneuseAvecTitre } from "@widget/visionneuseDocument/VisionneuseAvecTitre";
 import React, { useCallback, useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import { ApercuRequeteTemplate } from "../apercuRequeteTemplate/ApercuRequeteTemplate";
 import { mappingRequeteDelivranceToRequeteTableau } from "../mapping/ReqDelivranceToReqTableau";
 import { BoutonPrendreEnCharge } from "./contenu/BoutonPrendreEnCharge";

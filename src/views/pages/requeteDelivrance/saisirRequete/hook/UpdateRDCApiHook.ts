@@ -1,7 +1,7 @@
 import { updateRequeteDelivrance } from "@api/appels/requeteApi";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
 import { useContext, useEffect, useState } from "react";
+import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import { UpdateRequeteRDC } from "../../../../../model/form/delivrance/ISaisirRDCPageForm";
 import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
 import { ICreationOuMiseAJourRDCResultat } from "./SoumissionFormulaireRDCHook";

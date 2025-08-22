@@ -1,5 +1,4 @@
 import { IQueryParametersPourRequetes, TypeAppelRequete } from "@api/appels/requeteApi";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import {
   ICreationActionMiseAjourStatutEtRedirectionParams,
@@ -15,6 +14,7 @@ import { SortOrder } from "@widget/tableau/TableUtils";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import SignatureDelivrance from "../../../../composants/commun/signature/SignatureDelivrance";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../router/LiensRECE";
 import { INFO_PAGE_MES_REQUETES_DELIVRANCE } from "../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import { dateStatutColumnHeaders, requeteColumnHeaders } from "./EspaceDelivranceParams";

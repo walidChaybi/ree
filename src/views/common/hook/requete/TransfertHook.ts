@@ -1,8 +1,8 @@
 import { postTransfertRequete } from "@api/appels/requeteApi";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { getValeurOuVide } from "@util/Utils";
 import { useContext, useEffect, useState } from "react";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 interface TransfertParams {

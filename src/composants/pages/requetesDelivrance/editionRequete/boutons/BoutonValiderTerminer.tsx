@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   IDerniereDelivranceRcRcaPacsParams,
   useDerniereDelivranceRcRcaPacsApiHook
@@ -14,6 +13,7 @@ import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import { IBoutonProps } from "../../../../commun/bouton/Bouton";
 import { BoutonAvecChargement } from "../../../../commun/bouton/BoutonAvecChargement";
 

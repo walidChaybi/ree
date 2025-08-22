@@ -189,7 +189,7 @@ const ChampDate: React.FC<TChampDateProps> = ({
           {...props}
           id={champsDate.annee}
           ref={refAnnee}
-          className={`border-1 w-11 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${metaAnnee.error && erreurs.length ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
+          className={`border-1 w-12 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${metaAnnee.error && erreurs.length ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
           placeholder="AAAA"
           maxLength={4}
           value={fieldAnnee.value}

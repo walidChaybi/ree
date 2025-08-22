@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   NavigationApercuReqCreationParams,
   useNavigationApercuCreation
@@ -29,6 +28,7 @@ import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { NB_LIGNES_PAR_APPEL_REQUETE, NB_LIGNES_PAR_PAGE_REQUETE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useContext, useState } from "react";
+import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../../router/LiensRECE";
 import { INFO_PAGE_RECHERCHE_REQUETE } from "../../../../../router/infoPages/InfoPagesEspaceRecherche";
 import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";

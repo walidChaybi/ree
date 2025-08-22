@@ -1,0 +1,36 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`test du composant EnTete > Doit afficher correctement l'en-tête 1`] = `
+<div>
+  <header
+    class="grid h-16 grid-cols-[29%_42%_29%] bg-bleu text-white shadow-[0_0.1em_0.3em_rgba(0,0,0,0.55)]"
+  >
+    <div
+      class="text-start leading-[4rem]"
+    >
+      <a
+        aria-label="Accueil"
+        class="cursor-pointer"
+        data-discover="true"
+        href="/rece/rece-ui/"
+        title="Accueil"
+      >
+        <img
+          alt="Logo RECE"
+          class="w-32 pl-2 align-middle"
+          data-testid="LogoHeader"
+          src="/rece/rece-ui/src/img/logo-rece-blanc.svg"
+        />
+      </a>
+    </div>
+    <h1
+      class="m-auto hidden md:block"
+    >
+      Registre d'État Civil Électronique
+    </h1>
+    <div
+      class="flex h-16 justify-end"
+    />
+  </header>
+</div>
+`;

@@ -1,5 +1,4 @@
 import { deleteObservation, postObservation } from "@api/appels/requeteApi";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { IObservation } from "@model/requete/IObservation";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import DateUtils from "@util/DateUtils";
@@ -8,6 +7,7 @@ import { Formulaire } from "@widget/formulaire/Formulaire";
 import { useContext, useState } from "react";
 import { MdAddCircleOutline, MdDeleteOutline, MdEdit } from "react-icons/md";
 import * as Yup from "yup";
+import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import PageChargeur from "../../../../commun/chargeurs/PageChargeur";
 import ConteneurModale from "../../../../commun/conteneurs/modale/ConteneurModale";
 import "./ObservationsRequete.scss";

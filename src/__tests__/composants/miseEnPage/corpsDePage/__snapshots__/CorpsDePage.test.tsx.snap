@@ -1,0 +1,15 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`test du composant CorpsDePage > Doit afficher correctement le corps de page 1`] = `
+<div>
+  <main
+    class="px-1 md:px-2 lg:px-4 2xl:px-8"
+  >
+    <div
+      class="m-20 text-2xl text-bleu-sombre"
+    >
+      Erreur Système
+    </div>
+  </main>
+</div>
+`;

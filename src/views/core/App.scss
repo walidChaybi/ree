@@ -1,78 +1,6 @@
 @use "./../../scss/colors" as *;
 @use "./../../scss/library" as *;
 
-.App {
-  text-align: center;
-  font-family: $application-font-family;
-}
-
-.AppHeader {
-  background: $application-color;
-  height: 4rem;
-  box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.55);
-  color: white;
-  display: grid;
-  grid-template-columns: 29% 42% 29%;
-
-  .LogoHeader {
-    text-align: start;
-    line-height: 4rem;
-    img {
-      padding: 0 0 0 0.5rem;
-      cursor: pointer;
-      width: 8rem;
-      vertical-align: middle;
-    }
-  }
-
-  .coteDroit {
-    display: flex;
-    justify-content: flex-end;
-    height: 4rem;
-    .loupeChampsRecherche {
-      color: white;
-    }
-    .traitVerticalConteneur {
-      line-height: 4rem;
-      .traitVertical {
-        height: 2.5rem;
-        width: 1px;
-        vertical-align: middle;
-        display: inline-block;
-        background: #03476e;
-      }
-    }
-  }
-
-  h1 {
-    margin: auto;
-  }
-
-  .UtilisateurBouton {
-    text-align: end;
-    margin: 0 1rem;
-    line-height: 4rem;
-
-    button {
-      color: white;
-      text-transform: initial;
-      font-family: $application-font-family;
-      font-size: 1.2rem;
-
-      &:focus,
-      &:hover {
-        box-shadow: none;
-        background-color: $application-color;
-      }
-    }
-  }
-
-  @media (max-width: 720px) {
-    h1 {
-      display: none;
-    }
-  }
-}
 .Menu {
   ul {
     background-color: $button-application-color;
@@ -85,34 +13,4 @@
   li:hover {
     background-color: $application-color;
   }
-}
-
-.AppBody {
-  padding-left: 2em;
-  padding-right: 2em;
-
-  @media (max-width: 1500px) {
-    padding-left: 1em;
-    padding-right: 1em;
-  }
-
-  @media (max-width: 1100px) {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-  }
-
-  @media (max-width: 700px) {
-    padding-left: 0.2em;
-    padding-right: 0.2em;
-  }
-}
-
-.AppLink {
-  color: #61dafb;
-}
-
-.PageLogin {
-  color: $button-application-color;
-  font-size: 2em;
-  margin: 5em;
 }

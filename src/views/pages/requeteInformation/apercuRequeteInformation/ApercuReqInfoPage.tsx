@@ -1,7 +1,6 @@
 import { BandeauRequete } from "@composant/bandeauApercuRequete/BandeauApercuRequete";
 import { HistoriqueActionsRequete } from "@composant/suivis/HistoriqueActionsRequete";
 import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
@@ -15,6 +14,7 @@ import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import { IDetailRequeteParams, useAvecRejeuDetailRequeteApiHook } from "../../../common/hook/requete/DetailRequeteHook";
 import { TableauRMC } from "../../rechercheMultiCriteres/autoActesInscriptions/TableauRMC";
 import { RMCRequetesAssocieesResultats } from "../../rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";

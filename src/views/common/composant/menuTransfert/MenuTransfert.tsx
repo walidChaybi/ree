@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { TransfertUnitaireParams, useTransfertApi } from "@hook/requete/TransfertHook";
 import { IActionOption } from "@model/requete/IActionOption";
 import { IProvenanceRequete } from "@model/requete/IProvenanceRequete";
@@ -13,6 +12,7 @@ import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { MdAssignmentInd } from "react-icons/md";
 import { useNavigate } from "react-router";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../router/LiensRECE";
 import { INFO_PAGE_MES_REQUETES_DELIVRANCE } from "../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import { INFO_PAGE_MES_REQUETES_INFORMATION } from "../../../../router/infoPages/InfoPagesEspaceInformation";

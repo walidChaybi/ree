@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
@@ -6,6 +5,7 @@ import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivra
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { RequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 import { useContext, useEffect, useState } from "react";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 
 export interface ICreationActionMiseAjourStatutHookParams {
   statutRequete: keyof typeof EStatutRequete;

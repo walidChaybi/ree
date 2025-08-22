@@ -1,15 +1,15 @@
 import { HTTP_FORBIDDEN, HTTP_UNAUTHORIZED } from "@api/ApiManager";
-import { IErreurConnexion, RECEContextData } from "@core/contexts/RECEContext";
 import { GestionnaireFermeture } from "@util/GestionnaireFermeture";
 import React, { useContext } from "react";
 import { Outlet } from "react-router";
+import MessageErreurConnexion from "../../../composants/miseEnPage/connexion/MessageErreurConnexion";
 import FilAriane from "../../../composants/miseEnPage/corpsDePage/FilAriane";
+import { IErreurConnexion, RECEContextData } from "../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../router/LiensRECE";
 import { INFO_PAGE_MES_REQUETES_DELIVRANCE } from "../../../router/infoPages/InfoPagesEspaceDelivrance";
 import AfficherMessage from "../../../utils/AfficherMessage";
-import { PageMessage } from "../login/PageMessage";
 
-const getMessageErreur = (erreurConnexion: IErreurConnexion | null) => {
+const getMessageErreur = (erreurConnexion: IErreurConnexion | null): string => {
   switch (true) {
     case erreurConnexion?.statut === HTTP_UNAUTHORIZED:
     case erreurConnexion?.statut === HTTP_FORBIDDEN:
@@ -23,13 +23,13 @@ const getMessageErreur = (erreurConnexion: IErreurConnexion | null) => {
   }
 };
 
-export const Body: React.FC = () => {
+const CorpsDePage: React.FC = () => {
   const { utilisateurConnecte, erreurConnexion } = useContext(RECEContextData);
 
   return (
-    <main className="AppBody">
+    <main className="px-1 md:px-2 lg:px-4 2xl:px-8">
       {erreurConnexion || !utilisateurConnecte?.idArobas ? (
-        <PageMessage message={getMessageErreur(erreurConnexion)} />
+        <MessageErreurConnexion message={getMessageErreur(erreurConnexion)} />
       ) : (
         <>
           {utilisateurConnecte?.idArobas && (
@@ -42,3 +42,5 @@ export const Body: React.FC = () => {
     </main>
   );
 };
+
+export default CorpsDePage;

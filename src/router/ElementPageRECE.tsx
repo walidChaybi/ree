@@ -1,9 +1,9 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { useContext, useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router";
+import { RECEContextData } from "../contexts/RECEContextProvider";
 import AfficherMessage from "../utils/AfficherMessage";
 import GestionnaireFilAriane from "../utils/GestionnaireFilAriane";
 import { TInfoPageRECE } from "./infoPages/InfoPageRECE";

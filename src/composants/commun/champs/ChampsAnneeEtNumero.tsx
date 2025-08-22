@@ -56,7 +56,7 @@ const ChampsAnneeEtNumero: React.FC<IChampsAnneeEtNumeroProps> = ({
         {texteDevantChamps ?? <span className="whitespace-nowrap">{texteDevantChamps}</span>}
         <input
           id={champsAnneeEtNumero.annee}
-          className={`border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${Boolean(metaAnnee.error) && metaAnnee.touched ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
+          className={`border-1 flex w-12 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${Boolean(metaAnnee.error) && metaAnnee.touched ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
           maxLength={4}
           placeholder="AAAA"
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
@@ -16,6 +15,7 @@ import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";
 import { getLigneTableauVide } from "@widget/tableau/TableUtils";
 import React, { useContext, useState } from "react";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import { IFenetreFicheActeInscription } from "../common/IFenetreFicheActeInscription";
 import { DataTableauRMCPersonne, IDataTableauRMCPersonne } from "./IDataTableauRMCPersonne";
 import "./scss/TableauRMCPersonne.scss";

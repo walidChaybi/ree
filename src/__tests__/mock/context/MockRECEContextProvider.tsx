@@ -1,8 +1,8 @@
-import { IErreurConnexion, RECEContextActions, RECEContextData } from "@core/contexts/RECEContext";
 import { IService } from "@model/agent/IService";
 import { Utilisateur, UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { IDecret } from "@model/etatcivil/commun/IDecret";
 import React, { useMemo, useState } from "react";
+import { IErreurConnexion, RECEContextActions, RECEContextData } from "../../../contexts/RECEContextProvider";
 import { servicesALL } from "../data/servicesALL";
 
 interface IMockRECEContextProviderProps {

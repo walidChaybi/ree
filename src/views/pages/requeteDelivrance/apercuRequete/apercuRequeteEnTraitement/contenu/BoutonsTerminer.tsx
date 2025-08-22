@@ -1,4 +1,3 @@
-import { RECEContextActions, RECEContextData } from "@core/contexts/RECEContext";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
@@ -14,6 +13,7 @@ import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleS
 import React, { useCallback, useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import SignatureDelivrance from "../../../../../../composants/commun/signature/SignatureDelivrance";
+import { RECEContextActions, RECEContextData } from "../../../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../../../router/LiensRECE";
 import { INFO_PAGE_MES_REQUETES_DELIVRANCE } from "../../../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import { BoutonTerminerApresImpression } from "./BoutonTerminerApresImpression";

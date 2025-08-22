@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { CertificatRCAComposition, NOM_DOCUMENT_CERTIFICAT_RCA } from "@model/composition/ICertificatRCAComposition";
 import { CertificatRCComposition, NOM_DOCUMENT_CERTIFICAT_RC } from "@model/composition/ICertificatRCComposition";
 import { CertificatPACSComposition, NOM_DOCUMENT_ATTESTATION_PACS } from "@model/composition/pacs/ICertificatPACSComposition";
@@ -13,6 +12,7 @@ import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivra
 import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTableau";
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { useContext } from "react";
+import { RECEContextData } from "../../../../../../contexts/RECEContextProvider";
 import SpecificationRC from "../specificationInscriptions/specificationRC";
 import { specificationRCA } from "../specificationInscriptions/specificationRCA";
 

@@ -1,4 +1,3 @@
-import { RECEContextActions, RECEContextData } from "@core/contexts/RECEContext";
 import { IRMCPersonneResultat } from "@hook/rmcAuto/IRMCPersonneResultat";
 import { IRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
 import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
@@ -18,6 +17,7 @@ import {
   TMouseEventSurSVGSVGElement
 } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
 import React, { useContext, useEffect, useState } from "react";
+import { RECEContextActions, RECEContextData } from "../../../../../../contexts/RECEContextProvider";
 import { IDataTableauActeInscriptionSelectionne } from "../tableauActesInscriptionsSelectionnes/IDataTableauActeInscriptionSelectionne";
 import { TableauActesInscriptionsSelectionnes } from "../tableauActesInscriptionsSelectionnes/TableauActesInscriptionsSelectionnes";
 import { IDataTableauPersonneSelectionnee } from "../tableauPersonnesSelectionnees/IDataTableauPersonneSelectionne";

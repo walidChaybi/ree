@@ -1,6 +1,6 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import React, { useContext, useMemo } from "react";
+import { RECEContextData } from "../../../contexts/RECEContextProvider";
 
 interface IProps {
   auMoinsUnDesDroits: Droit[];

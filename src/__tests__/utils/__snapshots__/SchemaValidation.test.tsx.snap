@@ -23,7 +23,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE le formulaire est
           class="whitespace-nowrap"
         />
         <input
-          class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
+          class="border-1 flex w-12 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
           id="numero.ligne1.annee"
           maxlength="4"
           name="numero.ligne1.annee"
@@ -84,7 +84,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE le formulaire est
           class="whitespace-nowrap"
         />
         <input
-          class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
+          class="border-1 flex w-12 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
           id="numero.ligne1.annee"
           maxlength="4"
           name="numero.ligne1.annee"
@@ -145,7 +145,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE le formulaire est
           class="whitespace-nowrap"
         />
         <input
-          class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
+          class="border-1 flex w-12 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
           id="numero.ligne1.annee"
           maxlength="4"
           name="numero.ligne1.annee"
@@ -206,7 +206,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE le formulaire est
           class="whitespace-nowrap"
         />
         <input
-          class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
+          class="border-1 flex w-12 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
           id="numero.ligne1.annee"
           maxlength="4"
           name="numero.ligne1.annee"
@@ -267,7 +267,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
           class="whitespace-nowrap"
         />
         <input
-          class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
+          class="border-1 flex w-12 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
           id="numero.ligne1.annee"
           maxlength="4"
           name="numero.ligne1.annee"
@@ -350,7 +350,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
             class="whitespace-nowrap"
           />
           <input
-            class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+            class="border-1 flex w-12 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
             id="numero.ligne2.annee"
             maxlength="4"
             name="numero.ligne2.annee"
@@ -416,7 +416,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
             class="whitespace-nowrap"
           />
           <input
-            class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+            class="border-1 flex w-12 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
             id="numero.ligne3.annee"
             maxlength="4"
             name="numero.ligne3.annee"
@@ -482,7 +482,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
             class="whitespace-nowrap"
           />
           <input
-            class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+            class="border-1 flex w-12 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
             id="numero.ligne4.annee"
             maxlength="4"
             name="numero.ligne4.annee"
@@ -548,7 +548,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
             class="whitespace-nowrap"
           />
           <input
-            class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+            class="border-1 flex w-12 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
             id="numero.ligne5.annee"
             maxlength="4"
             name="numero.ligne5.annee"
@@ -614,7 +614,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
             class="whitespace-nowrap"
           />
           <input
-            class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+            class="border-1 flex w-12 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
             id="numero.ligne6.annee"
             maxlength="4"
             name="numero.ligne6.annee"
@@ -697,7 +697,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
           class="whitespace-nowrap"
         />
         <input
-          class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
+          class="border-1 flex w-12 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
           id="numero.ligne1.annee"
           maxlength="4"
           name="numero.ligne1.annee"
@@ -782,7 +782,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
             class="whitespace-nowrap"
           />
           <input
-            class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
+            class="border-1 flex w-12 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
             id="numero.ligne2.annee"
             maxlength="4"
             name="numero.ligne2.annee"
@@ -855,7 +855,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
             class="whitespace-nowrap"
           />
           <input
-            class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
+            class="border-1 flex w-12 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
             id="numero.ligne3.annee"
             maxlength="4"
             name="numero.ligne3.annee"
@@ -928,7 +928,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
             class="whitespace-nowrap"
           />
           <input
-            class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
+            class="border-1 flex w-12 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
             id="numero.ligne4.annee"
             maxlength="4"
             name="numero.ligne4.annee"
@@ -1001,7 +1001,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
             class="whitespace-nowrap"
           />
           <input
-            class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
+            class="border-1 flex w-12 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-rouge focus-visible:ring-rouge"
             id="numero.ligne5.annee"
             maxlength="4"
             name="numero.ligne5.annee"
@@ -1072,7 +1072,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
             class="whitespace-nowrap"
           />
           <input
-            class="border-1 flex w-10 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+            class="border-1 flex w-12 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
             id="numero.ligne6.annee"
             maxlength="4"
             name="numero.ligne6.annee"

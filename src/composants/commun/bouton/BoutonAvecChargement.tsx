@@ -1,7 +1,7 @@
-import { RECEContextActions, RECEContextData } from "@core/contexts/RECEContext";
 import { checkDirty } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import React, { ReactNode, useContext, useState } from "react";
+import { RECEContextActions, RECEContextData } from "../../../contexts/RECEContextProvider";
 import Bouton, { TStyleBouton } from "./Bouton";
 
 interface BoutonAvecChargementProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {

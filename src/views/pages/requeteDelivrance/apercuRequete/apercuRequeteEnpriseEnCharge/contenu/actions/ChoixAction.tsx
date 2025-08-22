@@ -1,5 +1,4 @@
 import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
@@ -10,6 +9,7 @@ import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMC
 import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import React, { useContext } from "react";
+import { RECEContextData } from "../../../../../../../contexts/RECEContextProvider";
 import { MenuDelivrerCS } from "./MenuDelivrerCS";
 import { MenuDelivrerEC } from "./MenuDelivrerEC";
 import { MenuReponseSansDelivranceCS } from "./MenuReponseSansDelivranceCS";

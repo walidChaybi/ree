@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { ICreationObservationParams, useCreationObservationApi } from "@hook/observation/CreationObservationApiHook";
 import { ISuppressionObservationParams, useSuppressionObservationApi } from "@hook/observation/SuppressionObservationApiHook";
 import { IObservation, Observation } from "@model/requete/IObservation";
@@ -8,6 +7,7 @@ import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { BoutonAccordionTitle } from "@widget/accordion/BoutonAccordionTitle";
 import React, { useContext, useEffect, useState } from "react";
 import { FaPlusCircle, FaTrashAlt } from "react-icons/fa";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import AfficherMessage from "../../../../utils/AfficherMessage";
 import { IAjouterObservationFormValue, OBSERVATION, PopinAjouterObservation } from "./contenu/PopinAjouterObservation";
 import "./scss/Suivis.scss";

@@ -1,10 +1,10 @@
 import { CONFIG_PATCH_STATUT_REQUETE_CREATION } from "@api/configurations/requete/creation/PatchStatutRequeteCreationConfigApi";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Option } from "@util/Type";
 import { Form, Formik } from "formik";
 import React, { useContext, useMemo, useState } from "react";
+import { RECEContextData } from "../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import AfficherMessage from "../../../utils/AfficherMessage";
 import SchemaValidation from "../../../utils/SchemaValidation";

@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { TUuidSuiviDossierParams } from "@model/params/TUuidSuiviDossierParams";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
@@ -9,6 +8,7 @@ import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleS
 import { useContext } from "react";
 import { useNavigate, useParams } from "react-router";
 import { BoutonChangerStatutRequete } from "../../../../../../composants/pages/requetesEtablissement/BoutonChangerStatutRequete";
+import { RECEContextData } from "../../../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../../../router/LiensRECE";
 import { INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_SUIVI_DOSSIER } from "../../../../../../router/infoPages/InfoPagesEspaceEtablissement";
 import { BlocInformatif } from "../../../../../common/composant/BlocInformatif/BlocInformatif";

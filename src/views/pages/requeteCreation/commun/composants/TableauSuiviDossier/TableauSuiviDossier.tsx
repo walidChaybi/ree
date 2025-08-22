@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
@@ -24,6 +23,7 @@ import {
 } from "@widget/tableau/TableauRece/colonneElements/fontAwesomeIcon/ColonneFontAwesomeIcone";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router";
+import { RECEContextData } from "../../../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../../../router/LiensRECE";
 import { INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_SAISIE_PROJET } from "../../../../../../router/infoPages/InfoPagesEspaceEtablissement";
 import ModalBulletinIdentification from "./ModalBulletinIdentification";

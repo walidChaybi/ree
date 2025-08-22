@@ -1,5 +1,4 @@
 import { ADRESSE, DOCUMENT, PIECES_JOINTES, REQUERANT, TITULAIRES } from "@composant/formulaire/ConstantesNomsForm";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { useReponseSansDelivranceCS } from "@hook/reponseSansDelivrance/ChoixReponseSansDelivranceCSHook";
 import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
@@ -21,6 +20,7 @@ import { FormikProps, FormikValues } from "formik";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 import * as Yup from "yup";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../router/LiensRECE";
 import { INFO_PAGE_MODIFICATION_REQUETE_DELIVRANCE_CERTIFICAT_SITUATION_COURRIER } from "../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import AfficherMessage from "../../../../utils/AfficherMessage";

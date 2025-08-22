@@ -1,10 +1,10 @@
 import { creationRequeteDelivrance } from "@api/appels/requeteApi";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
 import { CreationRequeteRDCSC } from "@model/form/delivrance/ISaisirRDCSCPageForm";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useContext, useEffect, useState } from "react";
+import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
 import { mappingFormulaireRDCSCVersRequeteDelivrance } from "./mappingFormulaireRDCSCVersRequeteDelivrance";
 

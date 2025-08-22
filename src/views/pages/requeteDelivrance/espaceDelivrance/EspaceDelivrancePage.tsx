@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   INavigationApercuDelivranceParams,
   useNavigationApercuDelivrance
@@ -11,6 +10,7 @@ import { NomComposant } from "@util/habilitation/habilitationsDescription";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoiteAOnglets, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import React, { useCallback, useContext, useState } from "react";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../router/LiensRECE";
 import {
   INFO_PAGE_MES_REQUETES_DELIVRANCE,

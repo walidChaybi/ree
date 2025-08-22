@@ -10,7 +10,6 @@ import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetRe
 import CONFIG_GET_TYPES_MENTION_INTEGRATION_RECE, {
   ITypeMentionIntegrationDto
 } from "@api/configurations/etatCivil/nomenclature/GetTypesMentionIntegrationRECEApi";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { Droit } from "@model/agent/enum/Droit";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
@@ -18,6 +17,7 @@ import MiseAJourForm from "@model/form/miseAJour/MiseAJourForm";
 import { estActeEligibleMentionDIntegration } from "@pages/fiche/FichePage";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { ECleOngletsMiseAJour, EditionMiseAJourContext } from "../../../contexts/EditionMiseAJourContextProvider";
+import { RECEContextData } from "../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import AfficherMessage from "../../../utils/AfficherMessage";
 import { ConteneurBoutonBasDePage } from "../../commun/bouton/conteneurBoutonBasDePage/ConteneurBoutonBasDePage";

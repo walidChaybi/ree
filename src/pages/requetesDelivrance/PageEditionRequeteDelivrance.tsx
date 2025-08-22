@@ -1,10 +1,10 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { TUuidActeParams } from "@model/params/TUuidActeParams";
 import React, { useContext } from "react";
 import { useParams } from "react-router";
 import EditionRequeteDelivrance from "../../composants/pages/requetesDelivrance/editionRequete/EditionRequeteDelivrance";
 import BoutonsEditionRequeteDelivrance from "../../composants/pages/requetesDelivrance/editionRequete/boutons/BoutonsEditionRequeteDelivrance";
 import EditionDelivranceContextProvider from "../../contexts/EditionDelivranceContextProvider";
+import { RECEContextData } from "../../contexts/RECEContextProvider";
 
 const PageEditionRequeteDelivrance: React.FC = () => {
   const { idRequeteParam, idActeParam } = useParams<TUuidActeParams>();

@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import { Droit } from "@model/agent/enum/Droit";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
@@ -7,6 +6,7 @@ import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import { IBoutonProps } from "../../../../commun/bouton/Bouton";
 import { BoutonAvecChargement } from "../../../../commun/bouton/BoutonAvecChargement";
 

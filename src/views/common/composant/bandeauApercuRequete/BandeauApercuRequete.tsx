@@ -1,10 +1,10 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { IService, Service } from "@model/agent/IService";
 import { Utilisateur } from "@model/agent/Utilisateur";
 import { TRequete } from "@model/requete/IRequete";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import DateUtils from "@util/DateUtils";
 import React, { useContext } from "react";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import "./scss/BandeauApercuRequete.scss";
 
 interface BandeauRequeteProps {

@@ -4,7 +4,6 @@ import {
   postTableauRequetesDelivranceService,
   TypeAppelRequete
 } from "@api/appels/requeteApi";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   IFiltreServiceRequeteDelivranceFormValues,
   mappingFiltreServiceRequeteDelivranceVersFiltreDto
@@ -13,6 +12,7 @@ import { IRequeteTableauDelivrance, mappingRequetesTableauDelivrance } from "@mo
 import { getParamsTableauDepuisReponseApi, IParamsTableau } from "@util/GestionDesLiensApi";
 import { NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { useContext, useEffect, useState } from "react";
+import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
 
 export function useRequeteDelivranceApiHook(

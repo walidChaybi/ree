@@ -1,10 +1,10 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { GestionnaireBlockErreur } from "@widget/formulaire/GestionnaireBlockErreur";
 import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useContext } from "react";
+import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 
 interface IReinitialiserValiderBoutonsProps {
   afficherBouton: boolean;

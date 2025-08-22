@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   ICreationActionMiseAjourStatutEtRedirectionParams,
   useCreationActionMiseAjourStatutEtRedirectionHook
@@ -12,6 +11,7 @@ import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useContext, useState } from "react";
 import { useLocation } from "react-router";
+import { RECEContextData } from "../../../../../../contexts/RECEContextProvider";
 
 interface BoutonPrendreEnChargeCreationProps {
   requete?: IRequeteCreationEtablissement;

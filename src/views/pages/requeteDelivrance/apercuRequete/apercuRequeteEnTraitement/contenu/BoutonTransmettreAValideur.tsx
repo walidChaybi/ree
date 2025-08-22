@@ -1,11 +1,11 @@
 import { listeValideurToOptions } from "@composant/menuTransfert/MenuTransfertUtil";
 import { ITransfertPopinForm, TransfertPopin } from "@composant/menuTransfert/TransfertPopin";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { ITransmettreAValideurParams, useTransmettreAValideurApiHook } from "@hook/requete/TransmettreAValideur";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import { RECEContextData } from "../../../../../../contexts/RECEContextProvider";
 
 interface BoutonTransmettreAValideurProps {
   idRequete: string;

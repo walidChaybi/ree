@@ -1,9 +1,9 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { RequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 import { useContext, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import { getUrlApercuRequete, redirectionSelonStatutRequete } from "./NavigationApercuDelivranceUtils";
 
 export interface INavigationApercuDelivranceParams {

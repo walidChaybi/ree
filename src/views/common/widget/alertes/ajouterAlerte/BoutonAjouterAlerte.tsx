@@ -1,9 +1,9 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useContext, useState } from "react";
 import { FaPlusCircle } from "react-icons/fa";
+import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import { IAjouterAlerteFormValue, PopinAjouterAlertes } from "./contenu/PopinAjouterAlertes";
 
 interface BoutonAjouterAlerteProps {

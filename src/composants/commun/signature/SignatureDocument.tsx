@@ -4,12 +4,12 @@ import { CONFIG_PATCH_COMPOSER_DOCUMENT_FINAL_PROJET_ACTE } from "@api/configura
 import { CONFIG_PATCH_INTEGRER_DOCUMENT_FINAL_PROJET_ACTE } from "@api/configurations/etatCivil/projetActe/PatchIntegrerDocumentFinalProjetActeConfigApi";
 import { CONFIG_PATCH_STATUT_REQUETE_CREATION_APRES_SIGNATURE } from "@api/configurations/requete/creation/PatchStatutRequeteCreationApresSignatureConfigApi";
 import { CONFIG_PATCH_STATUT_REQUETE_MISE_A_JOUR } from "@api/configurations/requete/miseAJour/PatchStatutRequeteMiseAjourConfigApi";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { TErreurApi } from "@model/api/Api";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypePopinSignature } from "@model/signature/ITypePopinSignature";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useContext, useEffect, useMemo, useState } from "react";
+import { RECEContextData } from "../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import Signature, { CODE_PIN_INVALIDE, IInformationsCarte } from "../../../utils/Signature";
 import Bouton from "../bouton/Bouton";

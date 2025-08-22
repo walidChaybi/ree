@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   CertificatSituationComposition,
   ICertificatSituationComposition,
@@ -13,6 +12,7 @@ import { ITitulaireRequeteTableau } from "@model/requete/ITitulaireRequeteTablea
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useContext, useEffect, useState } from "react";
+import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import { MimeType } from "../../../../../ressources/MimeType";
 import { useCertificatSituationApiHook } from "../../composition/CompositionCertificatSituationHook";
 import {

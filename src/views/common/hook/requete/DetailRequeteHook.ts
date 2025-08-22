@@ -1,5 +1,4 @@
 import { getDetailRequete } from "@api/appels/requeteApi";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { Utilisateur } from "@model/agent/Utilisateur";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { CategorieDocument } from "@model/requete/CategorieDocument";
@@ -43,6 +42,7 @@ import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificat
 import { IPieceJustificativeCreation, PieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
 import DateUtils from "@util/DateUtils";
 import { useContext, useEffect, useState } from "react";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 import { AvancementProjetActe } from "./../../../../model/requete/enum/AvancementProjetActe";
 import { NatureProjetEtablissement } from "./../../../../model/requete/enum/NatureProjetEtablissement";

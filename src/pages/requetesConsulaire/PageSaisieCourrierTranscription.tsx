@@ -2,7 +2,6 @@
 import { CONFIG_GET_TOUS_SERVICES_FILS } from "@api/configurations/agent/services/GetServicesFilsConfigApi";
 import { CONFIG_GET_DETAIL_REQUETE } from "@api/configurations/requete/GetDetailRequeteConfigApi";
 import TRAITEMENT_ENREGISTRER_RCTC from "@api/traitements/requetesConsulaire/TraitementEnregistrerRCTC";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { ISaisieRequeteRCTCForm, SaisieRequeteRCTCForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
 import { IRequeteConsulaire } from "@model/requete/IRequeteConsulaire";
 import { Option } from "@util/Type";
@@ -18,6 +17,7 @@ import BlocRequerant from "../../composants/pages/requetesConsulaire/saisieCourr
 import BlocRequete from "../../composants/pages/requetesConsulaire/saisieCourrier/BlocRequete";
 import BlocTitulaire from "../../composants/pages/requetesConsulaire/saisieCourrier/BlocTitulaire";
 import TransmissionService from "../../composants/pages/requetesConsulaire/saisieCourrier/TransmissionService";
+import { RECEContextData } from "../../contexts/RECEContextProvider";
 import useFetchApi from "../../hooks/api/FetchApiHook";
 import useTraitementApi from "../../hooks/api/TraitementApiHook";
 import LiensRECE from "../../router/LiensRECE";

@@ -1,10 +1,10 @@
 import { getTableauRequetesConsulaires } from "@api/appels/requeteApi";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { IRequeteTableauConsulaire, mappingRequetesTableauConsulaire } from "@model/requete/IRequeteTableauConsulaire";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { UN } from "@util/Utils";
 import { useCallback, useContext, useEffect, useState } from "react";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import useNavigationRequeteTableauConsulaire from "../../../../hooks/requeteConsulaire/NavigationRequeteTableauConsulaireHook";
 import AfficherMessage from "../../../../utils/AfficherMessage";
 import PageChargeur from "../../../commun/chargeurs/PageChargeur";

@@ -1,4 +1,3 @@
-/* v8 ignore start */
 import { CONFIG_GET_UTILISATEUR_CONNECTE } from "@api/configurations/agent/utilisateur/GetUtilisateurConnecteConfigApi";
 import { TRAITEMENT_GET_DONNEES_CONTEXT } from "@api/traitements/RECEContext/TraitementGetDonneesContext";
 import { TRAITEMENT_GET_NOMENCLATURES } from "@api/traitements/RECEContext/TraitementGetNomenclatures";
@@ -8,9 +7,9 @@ import { IDecret } from "@model/etatcivil/commun/IDecret";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { GestionnaireARetraiterDansSaga } from "@util/migration/GestionnaireARetraiterDansSaga";
 import React, { useEffect, useMemo, useState } from "react";
-import AppChargeur from "../../../composants/commun/chargeurs/AppChargeur";
-import useFetchApi from "../../../hooks/api/FetchApiHook";
-import useTraitementApi from "../../../hooks/api/TraitementApiHook";
+import AppChargeur from "../composants/commun/chargeurs/AppChargeur";
+import useFetchApi from "../hooks/api/FetchApiHook";
+import useTraitementApi from "../hooks/api/TraitementApiHook";
 
 export interface IErreurConnexion {
   avecErreur: boolean;
@@ -36,22 +35,25 @@ interface IRECEContext extends IDonneesContext {
   erreurConnexion: IErreurConnexion | null;
 }
 
+const valeursInitialesDonneesConnexion = {
+  utilisateurConnecte: UtilisateurConnecte.inconnu(),
+  erreurConnexion: null,
+  chargees: false
+};
+
+const valeursInitialesDonneesContext = {
+  utilisateurs: [],
+  services: [],
+  decrets: []
+};
+
 const RECEContextData = React.createContext<Omit<IRECEContext, "setIsDirty">>({} as IRECEContext);
 const RECEContextActions = React.createContext<Pick<IRECEContext, "setIsDirty">>({} as IRECEContext);
 
 const RECEContextProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const [donneesConnexion, setDonneesConnexion] = useState<IDonneesConnexion>({
-    utilisateurConnecte: UtilisateurConnecte.inconnu(),
-    erreurConnexion: null,
-    chargees: false
-  });
-
+  const [donneesConnexion, setDonneesConnexion] = useState<IDonneesConnexion>(valeursInitialesDonneesConnexion);
+  const [donneesContext, setDonneesContext] = useState<IDonneesContext>(valeursInitialesDonneesContext);
   const [isDirty, setIsDirty] = useState<boolean>(false);
-  const [donneesContext, setDonneesContext] = useState<IDonneesContext>({
-    utilisateurs: [],
-    services: [],
-    decrets: []
-  });
 
   const { appelApi: appelApiLogin } = useFetchApi(CONFIG_GET_UTILISATEUR_CONNECTE);
   const { lancerTraitement: chargerNomenclature } = useTraitementApi(TRAITEMENT_GET_NOMENCLATURES);
@@ -61,6 +63,7 @@ const RECEContextProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     appelApiLogin({
       apresSucces: (officierLogin, headers) => {
         const utilisateur = UtilisateurConnecte.depuisDto(officierLogin);
+
         if (!utilisateur) {
           setDonneesConnexion(prec => ({ ...prec, erreurConnexion: { avecErreur: true }, chargees: true }));
 
@@ -73,6 +76,7 @@ const RECEContextProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
         chargerNomenclature({
           apresSucces: () => setDonneesConnexion(prec => ({ ...prec, utilisateurConnecte: utilisateur, chargees: true }))
         });
+
         recupererDonneesContext({ apresSucces: donneesContext => setDonneesContext(donneesContext) });
       },
       apresErreur: (erreurs, statut) =>
@@ -114,4 +118,3 @@ const RECEContextProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
 };
 
 export { RECEContextActions, RECEContextData, RECEContextProvider };
-/* v8 ignore end */

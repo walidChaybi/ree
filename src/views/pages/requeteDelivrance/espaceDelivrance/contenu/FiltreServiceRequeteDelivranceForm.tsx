@@ -1,5 +1,4 @@
 import { listeUtilisateursToOptionsBis } from "@composant/menuTransfert/MenuTransfertUtil";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   FILTRES_SERVICE_STATUTS_REQUETE_DELIVRANCE,
   IFiltreServiceRequeteDelivranceFormValues
@@ -14,6 +13,7 @@ import { Formik } from "formik";
 import React, { useContext } from "react";
 import { FaSearch } from "react-icons/fa";
 import { FaCircleXmark } from "react-icons/fa6";
+import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import "./scss/FiltreServiceRequeteDelivranceForm.scss";
 
 // TOREFACTO à couvrir (ignoré le 28/11/24)

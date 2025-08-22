@@ -1,6 +1,5 @@
 import { CONFIG_POST_RECUPERER_DOCUMENTS_REPONSES_A_SIGNER } from "@api/configurations/requete/documentsReponses/PostRecupererDocumentsReponsesASignerConfigApi";
 import TRAITEMENT_ENREGISTRER_DOCUMENTS_SIGNES from "@api/traitements/signature/TraitementEnregistrerDocumentsSignes";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
@@ -12,6 +11,7 @@ import {
   getNaturesMentions
 } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
 import { useContext, useEffect, useMemo, useState } from "react";
+import { RECEContextData } from "../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import useTraitementApi from "../../../hooks/api/TraitementApiHook";
 import Signature, { CODES_ERREUR_BLOQUANTS, CODE_PIN_INVALIDE, IDocumentASigner, IDocumentSigne } from "../../../utils/Signature";

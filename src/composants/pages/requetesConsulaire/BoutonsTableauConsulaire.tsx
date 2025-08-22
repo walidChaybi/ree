@@ -1,7 +1,7 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import { useContext, useMemo } from "react";
 import { MdAdd } from "react-icons/md";
+import { RECEContextData } from "../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../router/LiensRECE";
 import { INFO_PAGE_SAISIE_REQUETE_TRANSCRIPTION_COURRIER } from "../../../router/infoPages/InfoPagesEspaceConsulaire";
 import Bouton from "../../commun/bouton/Bouton";

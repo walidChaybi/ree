@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import { UN } from "@util/Utils";
 import { GestionnaireBlockErreur } from "@widget/formulaire/GestionnaireBlockErreur";
@@ -7,6 +6,7 @@ import { connect } from "formik";
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import Bouton from "../../../../../composants/commun/bouton/Bouton";
+import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import "./scss/SaisirRequeteBoutons.scss";
 
 interface ComponentProps {

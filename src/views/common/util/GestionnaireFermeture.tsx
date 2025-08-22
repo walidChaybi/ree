@@ -1,9 +1,9 @@
 import { HTTP_STATUS_OK } from "@api/ApiManager";
 import { URL_REQUETES_COUNT } from "@api/appels/requeteApi";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { executeEnDiffere } from "@util/Utils";
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { RECEContextData } from "../../../contexts/RECEContextProvider";
 import apiResources from "../../../ressources/api.json";
 import AfficherMessage from "../../../utils/AfficherMessage";
 import { getCsrfHeader } from "./CsrfUtil";

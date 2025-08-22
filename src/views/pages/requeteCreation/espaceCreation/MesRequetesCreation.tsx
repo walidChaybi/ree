@@ -1,5 +1,4 @@
 import { IQueryParametersPourRequetes, TypeAppelRequete } from "@api/appels/requeteApi";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   NavigationApercuReqCreationParams,
   useNavigationApercuCreation
@@ -15,6 +14,7 @@ import { SortOrder } from "@widget/tableau/TableUtils";
 import { NB_LIGNES_PAR_APPEL_DEFAUT, NB_LIGNES_PAR_PAGE_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useContext, useState } from "react";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import { useRequeteCreationApiHook } from "../../../common/hook/requete/creation/RequeteCreationApiHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { getOnClickSurLigneTableauEspaceCreation } from "./EspaceCreationUtils";

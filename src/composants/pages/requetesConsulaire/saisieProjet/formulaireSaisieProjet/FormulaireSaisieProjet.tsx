@@ -3,7 +3,6 @@ import { Form, Formik } from "formik";
 import React, { useContext, useMemo, useState } from "react";
 import useTraitementApi from "../../../../../hooks/api/TraitementApiHook";
 
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import {
   EActionFormulaireProjetActeTranscrit,
@@ -11,6 +10,7 @@ import {
   ProjetActeNaissanceTranscriptionForm
 } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import { SaisieProjetActeTranscritContext } from "../../../../../contexts/SaisieProjetActeTranscritContextProvider";
 import AfficherMessage from "../../../../../utils/AfficherMessage";
 import Bouton from "../../../../commun/bouton/Bouton";

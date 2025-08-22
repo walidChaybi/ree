@@ -1,5 +1,4 @@
 import { CONFIG_GET_POCOPAS } from "@api/configurations/etatCivil/pocopa/GetPocopasConfigApi";
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { ITypeRegistreDto, TypeRegistre } from "@model/etatcivil/acte/TypeRegistre";
@@ -10,6 +9,7 @@ import { Options } from "@util/Type";
 import { enumVersOptions } from "@util/Utils";
 import { useFormikContext } from "formik";
 import { useContext, useEffect, useMemo, useState } from "react";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
 import CacheOptionsPocopa from "../../../../utils/CacheOptionsPocopa";
 import ChampListeDeroulante from "../../../commun/champs/ChampListeDeroulante";

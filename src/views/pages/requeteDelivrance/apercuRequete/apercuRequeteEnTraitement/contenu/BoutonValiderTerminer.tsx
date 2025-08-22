@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import {
   IDerniereDelivranceRcRcaPacsParams,
   useDerniereDelivranceRcRcaPacsApiHook
@@ -15,6 +14,7 @@ import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import { RECEContextData } from "../../../../../../contexts/RECEContextProvider";
 
 interface BoutonValiderTerminerProps {
   requete: IRequeteDelivrance;

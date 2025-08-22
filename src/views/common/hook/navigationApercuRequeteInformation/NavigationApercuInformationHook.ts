@@ -1,10 +1,10 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { RequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 import { autorisePrendreEnChargeReqTableauInformation } from "@util/RequetesUtils";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../router/LiensRECE";
 import { INFO_PAGE_APERCU_REQUETE_INFORMATION } from "../../../../router/infoPages/InfoPagesEspaceInformation";
 import { ICreationActionMiseAjourStatutHookParams, useCreationActionMiseAjourStatut } from "../requete/CreationActionMiseAjourStatutHook";

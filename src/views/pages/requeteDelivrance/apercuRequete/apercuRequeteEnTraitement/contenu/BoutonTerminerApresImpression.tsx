@@ -1,4 +1,3 @@
-import { RECEContextData } from "@core/contexts/RECEContext";
 import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import { Droit } from "@model/agent/enum/Droit";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -9,6 +8,7 @@ import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import { RECEContextData } from "../../../../../../contexts/RECEContextProvider";
 
 interface BoutonTerminerApresImpressionProps {
   requete: IRequeteDelivrance;

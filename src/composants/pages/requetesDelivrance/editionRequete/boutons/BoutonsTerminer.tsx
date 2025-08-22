@@ -1,4 +1,3 @@
-import { RECEContextActions, RECEContextData } from "@core/contexts/RECEContext";
 import { Droit } from "@model/agent/enum/Droit";
 import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
@@ -11,6 +10,7 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import React, { useCallback, useContext, useMemo } from "react";
 import { useNavigate } from "react-router";
+import { RECEContextActions, RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../../router/LiensRECE";
 import { INFO_PAGE_MES_REQUETES_DELIVRANCE } from "../../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import Bouton from "../../../../commun/bouton/Bouton";
