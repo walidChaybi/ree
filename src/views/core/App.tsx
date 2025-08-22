@@ -15,7 +15,6 @@ import { RECEContextProvider } from "../../contexts/RECEContextProvider";
 import "../../index.css";
 import RouterRECE from "../../router/RouterRECE";
 import { TOASTCONTAINER_PRINCIPAL } from "../../utils/AfficherMessage";
-import "./App.scss";
 
 // ReceDatepicker Locale
 registerLocale("fr", fr);

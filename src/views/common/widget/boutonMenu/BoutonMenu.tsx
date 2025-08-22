@@ -50,7 +50,6 @@ export const BoutonMenu: React.FC<IBoutonMenuProps> = props => {
             {props.boutonLibelle}
           </button>
           <Menu
-            className="Menu"
             anchorEl={menu}
             keepMounted
             open={Boolean(menu)}
@@ -61,11 +60,17 @@ export const BoutonMenu: React.FC<IBoutonMenuProps> = props => {
             disableScrollLock={props.disableScrollLock}
             MenuListProps={{
               onMouseLeave: handleCloseMenuFromMenuList,
-              onClick: handleCloseMenuFromMenuList
+              onClick: handleCloseMenuFromMenuList,
+              className: "bg-bleu-sombre text-white"
             }}
           >
             {props.options.map((option: Option) => (
               <MenuItem
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "var(--bleu-rece)"
+                  }
+                }}
                 onClick={event => props.onClickOption(option.cle, event)}
                 key={option.cle}
               >

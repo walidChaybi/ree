@@ -93,7 +93,6 @@ const UploadFileField: React.FC<UploadFileFieldProps> = props => {
         </button>
         {props.menuItems && (
           <Menu
-            className="Menu"
             anchorEl={menu}
             keepMounted
             open={Boolean(menu)}
@@ -106,9 +105,15 @@ const UploadFileField: React.FC<UploadFileFieldProps> = props => {
               vertical: "top",
               horizontal: "left"
             }}
+            MenuListProps={{ className: "bg-bleu-sombre text-white" }}
           >
             {props.menuItems.map(menuItem => (
               <MenuItem
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "var(--bleu-rece)"
+                  }
+                }}
                 key={menuItem.cle}
                 onClick={(e: any) => {
                   setMenuItemState(menuItem);

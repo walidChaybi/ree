@@ -12,14 +12,9 @@ interface MenuReponsesProposeesProps {
   disabled: boolean;
 }
 
-export const MenuReponsesProposees: React.FC<MenuReponsesProposeesProps> = (
-  props
-) => {
-  const [menuReponsesProposees, setMenuReponsesProposees] =
-    React.useState<null | HTMLElement>(null);
-  const [reponsesFiltees, setReponsesFiltees] = useState<IReponseRequeteInfo[]>(
-    []
-  );
+export const MenuReponsesProposees: React.FC<MenuReponsesProposeesProps> = props => {
+  const [menuReponsesProposees, setMenuReponsesProposees] = React.useState<null | HTMLElement>(null);
+  const [reponsesFiltees, setReponsesFiltees] = useState<IReponseRequeteInfo[]>([]);
   const handleClickBoutonReponse = (e: React.MouseEvent<HTMLButtonElement>) => {
     setMenuReponsesProposees(e.currentTarget);
   };
@@ -37,9 +32,7 @@ export const MenuReponsesProposees: React.FC<MenuReponsesProposeesProps> = (
     if (props.listeReponse) {
       setReponsesFiltees(
         props.listeReponse.filter(
-          reponse =>
-            reponse.objet === props.requete.objet &&
-            reponse.complementObjet === props.requete.complementObjet.nom
+          reponse => reponse.objet === props.requete.objet && reponse.complementObjet === props.requete.complementObjet.nom
         )
       );
     }
@@ -52,13 +45,12 @@ export const MenuReponsesProposees: React.FC<MenuReponsesProposeesProps> = (
         <div>
           <button
             disabled={props.disabled}
-            onClick={(e) => handleClickBoutonReponse(e)}
+            onClick={e => handleClickBoutonReponse(e)}
           >
             {getLibelle("Réponses proposées")}
           </button>
 
           <Menu
-            className="Menu"
             anchorEl={menuReponsesProposees}
             keepMounted
             open={Boolean(menuReponsesProposees)}
@@ -71,11 +63,16 @@ export const MenuReponsesProposees: React.FC<MenuReponsesProposeesProps> = (
               vertical: "top",
               horizontal: "left"
             }}
-            MenuListProps={{ onMouseLeave: handleCloseMenu }}
+            MenuListProps={{ onMouseLeave: handleCloseMenu, className: "bg-bleu-sombre text-white" }}
           >
             {reponsesFiltees.map((reponse: IReponseRequeteInfo) => {
               return (
                 <MenuItem
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "var(--bleu-rece)"
+                    }
+                  }}
                   onClick={() => clickMenuItem(reponse)}
                   key={reponse.id}
                 >

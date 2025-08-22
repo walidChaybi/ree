@@ -1,8 +1,5 @@
 import { IReponseRequeteInfo } from "@model/requete/IReponseRequeteInfo";
-import {
-  ObjetRequeteInfo,
-  objetsRequeteInfoCommeOptions
-} from "@model/requete/enum/ObjetRequeteInfo";
+import { ObjetRequeteInfo, objetsRequeteInfoCommeOptions } from "@model/requete/enum/ObjetRequeteInfo";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { Option } from "@util/Type";
@@ -17,11 +14,8 @@ interface MenuToutesLesReponsesProps {
   disabled: boolean;
 }
 
-export const MenuToutesLesReponses: React.FC<
-  MenuToutesLesReponsesProps
-> = props => {
-  const [menuToutesLesReponses, setMenuToutesLesReponses] =
-    React.useState<null | HTMLElement>(null);
+export const MenuToutesLesReponses: React.FC<MenuToutesLesReponsesProps> = props => {
+  const [menuToutesLesReponses, setMenuToutesLesReponses] = React.useState<null | HTMLElement>(null);
 
   const handleClickBoutonReponse = (e: React.MouseEvent<HTMLButtonElement>) => {
     setMenuToutesLesReponses(e.currentTarget);
@@ -48,7 +42,6 @@ export const MenuToutesLesReponses: React.FC<
           </button>
 
           <Menu
-            className="Menu"
             anchorEl={menuToutesLesReponses}
             keepMounted
             open={Boolean(menuToutesLesReponses)}
@@ -61,16 +54,12 @@ export const MenuToutesLesReponses: React.FC<
               vertical: "top",
               horizontal: "left"
             }}
-            MenuListProps={{ onMouseLeave: handleCloseMenu }}
+            MenuListProps={{ onMouseLeave: handleCloseMenu, className: "bg-bleu-sombre text-white" }}
           >
-            {objetsRequeteInfoCommeOptions([
-              ObjetRequeteInfo.COMPLETION_REQUETE_EN_COURS
-            ]).map((optionObjetRequeteInfo: Option) => {
+            {objetsRequeteInfoCommeOptions([ObjetRequeteInfo.COMPLETION_REQUETE_EN_COURS]).map((optionObjetRequeteInfo: Option) => {
               let reponsesFiltrees: IReponseRequeteInfo[] = [];
               if (props.listeReponse) {
-                reponsesFiltrees = props.listeReponse.filter(
-                  rep => rep.objet === optionObjetRequeteInfo.cle
-                );
+                reponsesFiltrees = props.listeReponse.filter(rep => rep.objet === optionObjetRequeteInfo.cle);
               }
               return (
                 <NestedMenuItem
@@ -84,6 +73,11 @@ export const MenuToutesLesReponses: React.FC<
                     return (
                       <MenuItem
                         className="SousMenu"
+                        sx={{
+                          "&:hover": {
+                            backgroundColor: "var(--bleu-rece)"
+                          }
+                        }}
                         onClick={() => clickMenuItem(reponse)}
                         key={reponse.id}
                       >

@@ -2,6 +2,7 @@ import { IMentionAffichage } from "@model/etatcivil/acte/mention/IMentionAfficha
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { SelectRece } from "@widget/formulaire/champsSaisie/SelectField";
 import React from "react";
+import { MdAdd } from "react-icons/md";
 import { getOptionsMentions } from "../GestionMentionsUtil";
 
 interface AjoutMentionProps {
@@ -41,7 +42,7 @@ export const AjoutMention: React.FC<AjoutMentionProps> = ({
             onClick={handleAjoutMention}
             title="Ajouter la mention"
           >
-            +
+            <MdAdd />
           </button>
         </span>
       </div>

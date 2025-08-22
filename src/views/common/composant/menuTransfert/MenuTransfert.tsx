@@ -155,7 +155,6 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
           )}
 
           <Menu
-            className="Menu"
             anchorEl={menuReponsesProposees}
             keepMounted
             open={Boolean(menuReponsesProposees)}
@@ -168,11 +167,16 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
               vertical: "top",
               horizontal: "left"
             }}
-            MenuListProps={{ onMouseLeave: handleCloseMenu }}
+            MenuListProps={{ onMouseLeave: handleCloseMenu, className: "bg-bleu-sombre text-white" }}
           >
             {options.map((action: IActionOption) => {
               return (
                 <MenuItem
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "var(--bleu-rece)"
+                    }
+                  }}
                   onClick={e => handleTransfertMenu(action.value, e)}
                   key={`action${action.value}`}
                 >
