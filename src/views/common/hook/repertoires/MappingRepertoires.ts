@@ -68,7 +68,7 @@ function mapAnalysesMarginales(ams: IAnalyseMarginale[]): IAnalyseMarginale[] | 
   }));
 }
 
-export function mapTitulaires(titulaires: any[]): ITitulaireActe[] {
+function mapTitulaires(titulaires: any[]): ITitulaireActe[] {
   return titulaires
     .map(titulaire => ({
       ...titulaire,

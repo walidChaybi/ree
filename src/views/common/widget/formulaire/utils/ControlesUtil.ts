@@ -24,7 +24,7 @@ export function traiteCarAutorises(element: any, filter: any) {
   }
 }
 
-export function traiteDepassement(element: any, nb: number) {
+function traiteDepassement(element: any, nb: number) {
   if (Number(element.value) > nb) {
     element.value = String(nb);
   }

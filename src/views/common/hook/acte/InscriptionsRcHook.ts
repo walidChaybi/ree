@@ -24,7 +24,7 @@ export function useGetInscriptionsRCApiHook(id?: string): IInscriptionRc[] {
   return inscriptionsRC;
 }
 
-export function mappingInscriptionsRC(data: any): IInscriptionRc[] {
+function mappingInscriptionsRC(data: any): IInscriptionRc[] {
   return data?.map((inscription: any): IInscriptionRc => {
     return {
       idInscription: inscription?.id,

@@ -1,7 +1,7 @@
 export const SDANF = "SDANF";
 export const REQUETE = "Requête";
 export const UNION = "Union";
-export const ENFANT = "Enfant";
+const ENFANT = "Enfant";
 export const INFOS = "Informations";
 export const UNION_ACTUELLE = "Union actuelle";
 

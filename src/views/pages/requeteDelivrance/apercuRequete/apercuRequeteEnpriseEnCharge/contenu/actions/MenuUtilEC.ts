@@ -29,7 +29,7 @@ const enum MaxTitulaireDelivrance {
   DECES = 1,
   MARIAGE = 2
 }
-export const enum IndexAction {
+const enum IndexAction {
   // Délivrer
   COPIE_INTEGRALE = 0,
   EXTRAIT_AVEC_FILIATION = 1,
@@ -62,7 +62,7 @@ type ErreurType = {
   acte?: ResultatRMCActe;
   titulaires?: ITitulaireActe[];
 };
-export type ErreurResult = {
+type ErreurResult = {
   enErreur: boolean;
   popinErreur: {
     message: string;
@@ -86,10 +86,10 @@ const getBoutonsActionPopin = (boutons: BoutonsActionPopinType[]): IBoutonPopin[
 
 // Choix -----------------------------------------------------------------
 
-export const estChoixExtraitAvecOuSansFiliation = (indexMenu: number) =>
+const estChoixExtraitAvecOuSansFiliation = (indexMenu: number) =>
   indexMenu === IndexAction.EXTRAIT_AVEC_FILIATION || indexMenu === IndexAction.EXTRAIT_SANS_FILIATION;
 
-export const estChoixExtraitPlurilingue = (indexMenu: number) => indexMenu === IndexAction.EXTRAIT_PLURILINGUE;
+const estChoixExtraitPlurilingue = (indexMenu: number) => indexMenu === IndexAction.EXTRAIT_PLURILINGUE;
 
 export const estChoixIgnorerRequete = (indexMenu: number) => indexMenu === IndexAction.IGNORER_REQUETE;
 
@@ -206,7 +206,7 @@ export const compositionCourrierAutomatique = (
 
 // Utils -----------------------------------------------------------------
 
-export const aNombreTitulairesIncoherent = (natureActe?: keyof typeof ENatureActe, nbTitulaires?: number) => {
+const aNombreTitulairesIncoherent = (natureActe?: keyof typeof ENatureActe, nbTitulaires?: number) => {
   if (nbTitulaires) {
     switch (natureActe) {
       case "NAISSANCE":
@@ -230,11 +230,11 @@ const getGenreTitulaireConjointEtParents = (titulairesActe?: ITitulaireActe[]): 
       titulairesActe?.[0]?.filiations?.filter(filiation => filiation.lienParente === LienParente.PARENT).map(parent => parent.sexe) || []
   }) as unknown as GenresType;
 
-export const aGenreIdentique = (genrePersonneA?: string, genrePersonneB?: string) => {
+const aGenreIdentique = (genrePersonneA?: string, genrePersonneB?: string) => {
   return genrePersonneA && genrePersonneB && !aGenreInconnu([genrePersonneA, genrePersonneB]) && genrePersonneA === genrePersonneB;
 };
 
-export const aGenreIndetermine = (genres: (string | undefined)[]) => genres.find(genre => genre === Sexe.getKey(Sexe.INDETERMINE)) != null;
+const aGenreIndetermine = (genres: (string | undefined)[]) => genres.find(genre => genre === Sexe.getKey(Sexe.INDETERMINE)) != null;
 
 const aGenreInconnu = (genres: (string | undefined)[]) => genres.find(genre => genre === Sexe.getKey(Sexe.INCONNU)) != null;
 
@@ -261,7 +261,7 @@ export const redirection = ({
 // teste dans l'ordre la condition d'erreur de chaque controles en paramètre, et return le premier qui valide sa condition
 const controleCoherence = (controles: ErreurResult[]): ErreurResult | undefined => controles.find(controle => controle.enErreur);
 
-export const nombreActesSelectionnesDifferentDeUn = ({
+const nombreActesSelectionnesDifferentDeUn = ({
   actes,
   inscriptions
 }: {
@@ -276,7 +276,7 @@ export const nombreActesSelectionnesDifferentDeUn = ({
   };
 };
 
-export const choixDifferentNonDetenuEtnombreActesSelectionnesDifferentDeUnOuZero = (
+const choixDifferentNonDetenuEtnombreActesSelectionnesDifferentDeUnOuZero = (
   props: Pick<ErreurType, "indexMenu"> & {
     actes?: ResultatRMCActe[];
     inscriptions?: TResultatRMCInscription[];
@@ -380,7 +380,7 @@ const genresIndeterminesOuIdentiquesDeces = (props: ErreurType): ErreurResult =>
   };
 };
 
-export const acteAvecAlerteDeTypeANePasDelivrer = (alertesActe?: IAlerte[]): ErreurResult => {
+const acteAvecAlerteDeTypeANePasDelivrer = (alertesActe?: IAlerte[]): ErreurResult => {
   return {
     enErreur: Boolean(
       alertesActe?.find(alerte => TypeAlerte.listeDepuisType(A_NE_PAS_DELIVRER).filter(type => type === alerte.type).length !== 0)

@@ -51,7 +51,7 @@ class IconCalendar extends React.Component<{ value?: any; onClick?: any }> {
   }
 }
 
-export function onDateValueChange(props: any, setDateValue: any, date: Date | null, event: React.SyntheticEvent<any> | undefined) {
+function onDateValueChange(props: any, setDateValue: any, date: Date | null, event: React.SyntheticEvent<any> | undefined) {
   if (date) {
     if (props.onChange) {
       props.onChange(date);

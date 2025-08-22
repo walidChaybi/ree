@@ -26,7 +26,7 @@ import {
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DEUX } from "@util/Utils";
 
-export type IMentionAvecRetiree = IMention & { retiree?: boolean };
+type IMentionAvecRetiree = IMention & { retiree?: boolean };
 
 class GestionnaireMentionsRetireesAuto {
   public getIdsMentionsRetirees(mentions: IMentionAvecRetiree[], choixDelivrance?: ChoixDelivrance, natureActe?: NatureActe): string[] {

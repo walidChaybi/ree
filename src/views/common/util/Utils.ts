@@ -428,7 +428,7 @@ const estUnObjet = (objet: any): boolean => {
   return objet != null && typeof objet === "object" && !Array.isArray(objet);
 };
 
-export const estUnNombre = (str?: string): boolean => {
+const estUnNombre = (str?: string): boolean => {
   return str != null && str !== "" && Number.isInteger(+str);
 };
 

@@ -51,7 +51,7 @@ const valeursInitialesRMCActeInscriptionAttendues: IRMCActeInscriptionForm = {
   }
 };
 
-export const mockValeursRMCActeInscription: IRMCActeInscriptionForm = {
+const mockValeursRMCActeInscription: IRMCActeInscriptionForm = {
   registreRepertoire: {
     registre: {
       natureActe: "NAISSANCE",

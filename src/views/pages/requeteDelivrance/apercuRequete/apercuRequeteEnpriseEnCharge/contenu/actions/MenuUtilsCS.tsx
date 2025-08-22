@@ -112,7 +112,7 @@ export const estMemeNombreDeRCModificationEtRadiation = (
   return inscriptionTypeRadiation?.length === inscriptionTypeModification?.length;
 };
 
-export function getInscriptionsRCDeTypeRadiation(inscriptionsRC?: IInscriptionRc[]): IInscriptionRc[] {
+function getInscriptionsRCDeTypeRadiation(inscriptionsRC?: IInscriptionRc[]): IInscriptionRc[] {
   let inscriptionRC: IInscriptionRc[] = [];
   if (inscriptionsRC) {
     inscriptionRC = inscriptionsRC.filter(inscription => {
@@ -123,7 +123,7 @@ export function getInscriptionsRCDeTypeRadiation(inscriptionsRC?: IInscriptionRc
   return inscriptionRC;
 }
 
-export function getInscriptionsRCDeTypeModification(inscriptionsRC?: IInscriptionRc[]): IInscriptionRc[] {
+function getInscriptionsRCDeTypeModification(inscriptionsRC?: IInscriptionRc[]): IInscriptionRc[] {
   let inscriptionRC: IInscriptionRc[] = [];
   if (inscriptionsRC) {
     inscriptionRC = inscriptionsRC.filter(inscription => {

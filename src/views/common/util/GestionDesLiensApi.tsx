@@ -22,12 +22,12 @@ export const PARAMS_TABLEAU_RMC_VIDE: TParamsTableauRMC = {
   maxRangeState: 0
 };
 
-export interface IHeadersAvecParamsTableau {
+interface IHeadersAvecParamsTableau {
   link?: string;
   "content-range"?: string;
 }
 
-export interface IHeadersAvecParamsTableauRMC {
+interface IHeadersAvecParamsTableauRMC {
   "content-range"?: string;
 }
 

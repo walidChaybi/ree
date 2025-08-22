@@ -13,12 +13,7 @@ import {
   messageErreurPrenomSaisiSansNom,
   prenomSaisiSansNom
 } from "@pages/rechercheMultiCriteres/common/validation/VerificationRestrictionRegles";
-import {
-  aucuneProprieteRenseignee,
-  estNonRenseigne,
-  estRenseigne,
-  tousRenseignes
-} from "@util/Utils";
+import { aucuneProprieteRenseignee, estNonRenseigne, estRenseigne, tousRenseignes } from "@util/Utils";
 import {
   seulementAnneeRegistreSaisi,
   seulementDateEvenementSaisi,
@@ -41,8 +36,7 @@ const verificationsRestrictionCriteresErreurs: IVerificationErreur[] = [
   },
   {
     test: dateOuPaysNaissanceSaisiSansCritereDuBlocTitulaire,
-    messageErreur:
-      messageErreurDateOuPaysNaissanceSaisiSansCritereDuBlocTitulaire
+    messageErreur: messageErreurDateOuPaysNaissanceSaisiSansCritereDuBlocTitulaire
   },
   {
     test: filtreDateCreationInformatiqueSaisiSeul,
@@ -50,18 +44,15 @@ const verificationsRestrictionCriteresErreurs: IVerificationErreur[] = [
   },
   {
     test: familleRegistreCSLouACQSaisieSansPocopa,
-    messageErreur:
-      'Le critère "Type / Poste / Commune / Pays" est obligatoire pour cette famille de registre'
+    messageErreur: 'Le critère "Type / Poste / Commune / Pays" est obligatoire pour cette famille de registre'
   },
   {
     test: tripletNatureFamilleAnneeNonSaisiEntierementEtPasDAutreCritereSaisi,
-    messageErreur:
-      "Complétez votre recherche ou a minima utilisez le triplet (Nature, Famille et Année)"
+    messageErreur: "Complétez votre recherche ou a minima utilisez le triplet (Nature, Famille et Année)"
   },
   {
     test: numeroActeSaisiSansFamilleRegistreEtPocopa,
-    messageErreur:
-      'Complétez votre recherche avec la Famille de registre et le critère "Type / Poste / Commune / Pays"'
+    messageErreur: 'Complétez votre recherche avec la Famille de registre et le critère "Type / Poste / Commune / Pays"'
   }
 ];
 
@@ -72,20 +63,15 @@ export function getMessageSiVerificationRestrictionRmcActeInscriptionCriteresEnE
   return getMessageSiVerificationEnErreur(rMCSaisie, verifications);
 }
 
-export function numeroActeSaisiSansFamilleRegistreEtPocopa(
-  rMCSaisie: IRMCActeInscription
-): boolean {
+function numeroActeSaisiSansFamilleRegistreEtPocopa(rMCSaisie: IRMCActeInscription): boolean {
   const registre = rMCSaisie.registreRepertoire?.registre;
   return (
     estRenseigne(registre?.numeroActe?.numeroActeOuOrdre) &&
-    (estNonRenseigne(registre?.familleRegistre) ||
-      estNonRenseigne(registre?.pocopa))
+    (estNonRenseigne(registre?.familleRegistre) || estNonRenseigne(registre?.pocopa))
   );
 }
 
-export function tripletNatureFamilleAnneeNonSaisiEntierementEtPasDAutreCritereSaisi(
-  rMCSaisie: IRMCActeInscription
-): boolean {
+function tripletNatureFamilleAnneeNonSaisiEntierementEtPasDAutreCritereSaisi(rMCSaisie: IRMCActeInscription): boolean {
   const registre = rMCSaisie?.registreRepertoire?.registre;
   return (
     tripletNatureFamilleAnneeIncomplet(registre) &&
@@ -97,25 +83,15 @@ export function tripletNatureFamilleAnneeNonSaisiEntierementEtPasDAutreCritereSa
   );
 }
 
-function tripletNatureFamilleAnneeIncomplet(
-  registre: IRMCRegistre | undefined
-): boolean {
+function tripletNatureFamilleAnneeIncomplet(registre: IRMCRegistre | undefined): boolean {
   return (
-    sontRenseignesNatureActeEtFamilleRegistreEtNonRenseigneAnneeRegistre(
-      registre
-    ) ||
-    sontRenseignesNatureActeEtAnneeRegistreEtNonRenseigneFamilleRegistre(
-      registre
-    ) ||
-    sontRenseignesFamilleRegistreEtAnneeRegistreEtNonRenseigneNatureActe(
-      registre
-    )
+    sontRenseignesNatureActeEtFamilleRegistreEtNonRenseigneAnneeRegistre(registre) ||
+    sontRenseignesNatureActeEtAnneeRegistreEtNonRenseigneFamilleRegistre(registre) ||
+    sontRenseignesFamilleRegistreEtAnneeRegistreEtNonRenseigneNatureActe(registre)
   );
 }
 
-function sontRenseignesNatureActeEtFamilleRegistreEtNonRenseigneAnneeRegistre(
-  registre?: IRMCRegistre
-): boolean {
+function sontRenseignesNatureActeEtFamilleRegistreEtNonRenseigneAnneeRegistre(registre?: IRMCRegistre): boolean {
   return (
     tousRenseignes(registre?.natureActe, registre?.familleRegistre) &&
     estNonRenseigne(registre?.anneeRegistre) &&
@@ -123,37 +99,20 @@ function sontRenseignesNatureActeEtFamilleRegistreEtNonRenseigneAnneeRegistre(
   );
 }
 
-function sontRenseignesNatureActeEtAnneeRegistreEtNonRenseigneFamilleRegistre(
-  registre?: IRMCRegistre
-): boolean {
-  return (
-    tousRenseignes(registre?.natureActe, registre?.anneeRegistre) &&
-    estNonRenseigne(registre?.familleRegistre)
-  );
+function sontRenseignesNatureActeEtAnneeRegistreEtNonRenseigneFamilleRegistre(registre?: IRMCRegistre): boolean {
+  return tousRenseignes(registre?.natureActe, registre?.anneeRegistre) && estNonRenseigne(registre?.familleRegistre);
 }
 
-function sontRenseignesFamilleRegistreEtAnneeRegistreEtNonRenseigneNatureActe(
-  registre?: IRMCRegistre
-): boolean {
-  return (
-    tousRenseignes(registre?.familleRegistre, registre?.anneeRegistre) &&
-    estNonRenseigne(registre?.natureActe)
-  );
+function sontRenseignesFamilleRegistreEtAnneeRegistreEtNonRenseigneNatureActe(registre?: IRMCRegistre): boolean {
+  return tousRenseignes(registre?.familleRegistre, registre?.anneeRegistre) && estNonRenseigne(registre?.natureActe);
 }
 
 function estFamilleRegistreOP2OuOP3(registre?: IRMCRegistre): boolean {
-  const enumFamilleRegistre = TypeFamille.getEnumFor(
-    registre?.familleRegistre ?? ""
-  );
-  return (
-    TypeFamille.estOP2(enumFamilleRegistre) ||
-    TypeFamille.estOP3(enumFamilleRegistre)
-  );
+  const enumFamilleRegistre = TypeFamille.getEnumFor(registre?.familleRegistre ?? "");
+  return TypeFamille.estOP2(enumFamilleRegistre) || TypeFamille.estOP3(enumFamilleRegistre);
 }
 
-export function filtreDateCreationInformatiqueSaisiSeul(
-  rMCSaisie: IRMCActeInscription
-): boolean {
+function filtreDateCreationInformatiqueSaisiSeul(rMCSaisie: IRMCActeInscription): boolean {
   return (
     filtreDateCreationInformatiqueSaisi(rMCSaisie) &&
     aucuneProprieteRenseignee(rMCSaisie.evenement) &&
@@ -162,21 +121,15 @@ export function filtreDateCreationInformatiqueSaisiSeul(
   );
 }
 
-export function familleRegistreCSLouACQSaisieSansPocopa(
-  rMCSaisie: IRMCActeInscription
-): boolean {
-  const familleRegistre =
-    rMCSaisie.registreRepertoire?.registre?.familleRegistre;
+function familleRegistreCSLouACQSaisieSansPocopa(rMCSaisie: IRMCActeInscription): boolean {
+  const familleRegistre = rMCSaisie.registreRepertoire?.registre?.familleRegistre;
   return (
-    (familleRegistre === TypeFamille.getKey(TypeFamille.CSL) ||
-      familleRegistre === TypeFamille.getKey(TypeFamille.ACQ)) &&
+    (familleRegistre === TypeFamille.getKey(TypeFamille.CSL) || familleRegistre === TypeFamille.getKey(TypeFamille.ACQ)) &&
     estNonRenseigne(rMCSaisie?.registreRepertoire?.registre?.pocopa)
   );
 }
 
-function seulementUnCritereSaisiSeulNonAutorise(
-  rMCSaisie: IRMCActeInscription
-): boolean {
+function seulementUnCritereSaisiSeulNonAutorise(rMCSaisie: IRMCActeInscription): boolean {
   return (
     seulementNatureActeSaisi(rMCSaisie) ||
     seulementFamilleRegistreSaisi(rMCSaisie) ||

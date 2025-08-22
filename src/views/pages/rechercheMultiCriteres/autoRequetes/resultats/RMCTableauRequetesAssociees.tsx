@@ -36,7 +36,7 @@ interface IRMCTableauRequetesAssocieesProps {
   setCriteresRechercheRequete: React.Dispatch<React.SetStateAction<ICriteresRMCRequete | undefined>>;
 }
 
-export interface IInfoRequeteSelectionnee {
+interface IInfoRequeteSelectionnee {
   idRequete: string;
   numeroFonctionnel?: string;
   type: string;
@@ -117,7 +117,7 @@ export const RMCTableauRequetesAssociees: React.FC<IRMCTableauRequetesAssocieesP
   );
 };
 
-export const utilisateurADroitOuvrirRequete = <TTypeRequete extends keyof typeof ETypeRequete>(
+const utilisateurADroitOuvrirRequete = <TTypeRequete extends keyof typeof ETypeRequete>(
   typeRequete: string | TTypeRequete,
   sousTypeRequete: string | TSousTypeRequete<TTypeRequete>,
   utilisateurConnecte: UtilisateurConnecte
@@ -165,7 +165,7 @@ const getApercuRequeteSimple = (requeteSelectionnee: IInfoRequeteSelectionnee): 
   }
 };
 
-export const getApercuRequeteEtablissementOuTranscription = (requeteSelectionnee: IInfoRequeteSelectionnee): JSX.Element => {
+const getApercuRequeteEtablissementOuTranscription = (requeteSelectionnee: IInfoRequeteSelectionnee): JSX.Element => {
   switch (SousTypeCreation.getEnumFromLibelleCourt(requeteSelectionnee.sousType)) {
     case SousTypeCreation.RCEXR:
       return <ApercuRequeteEtablissementSimplePage idRequeteAAfficher={requeteSelectionnee.idRequete} />;

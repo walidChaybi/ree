@@ -3,7 +3,7 @@ import { Option } from "@util/Type";
 const DATA_URL_BASE_64 = ";base64,";
 const NB_BYTES_IN_KILOBYTES = 1000;
 
-export enum MimeType {
+enum MimeType {
   APPLI_PDF = "application/pdf",
   IMAGE_PNG = "image/png",
   IMAGE_TIFF = "image/tiff"
@@ -16,7 +16,7 @@ export const FILE_TYPES: ExtensionDocumentTypeMime[] = [
   { extension: "jpeg", mimeType: "image/jpeg" }
 ];
 
-export const FILE_TYPES_ET_SIGNATURES: ExtensionDocumentTypeMimeAvecSignature[] = [
+const FILE_TYPES_ET_SIGNATURES: ExtensionDocumentTypeMimeAvecSignature[] = [
   { extension: "png", mimeType: "image/png", signature: [0x89, 0x50, 0x4e, 0x47] },
   { extension: "pdf", mimeType: "application/pdf", signature: [0x25, 0x50, 0x44, 0x46] },
   { extension: "jpg", mimeType: "image/jpeg", signature: [0xff, 0xd8, 0xff] },

@@ -236,7 +236,7 @@ function creerCourrierComposition(elements: IElementsJasperCourrier, requete: IR
   return CourrierComposition.creerCourrier(requete, elements);
 }
 
-export const mapCourrierPourSauvegarde = (
+const mapCourrierPourSauvegarde = (
   saisieCourrier: SaisieCourrier | undefined,
   donneesComposition: IDonneesComposition,
   optionsChoisies: OptionsCourrier | undefined,
@@ -280,7 +280,7 @@ function requeteAvecSaisieRequerant(requete: IRequeteDelivrance, saisieCourrier:
   return requete;
 }
 
-export const mappingSaisieAdresseVersAdresseRequerant = (saisieCourrier: SaisieCourrier | undefined): IAdresseRequerant => {
+const mappingSaisieAdresseVersAdresseRequerant = (saisieCourrier: SaisieCourrier | undefined): IAdresseRequerant => {
   return {
     ligne2: saisieCourrier?.[ADRESSE]?.[COMPLEMENT_DESTINATAIRE] ?? "",
     ligne3: saisieCourrier?.[ADRESSE]?.[COMPLEMENT_POINT_GEO] ?? "",

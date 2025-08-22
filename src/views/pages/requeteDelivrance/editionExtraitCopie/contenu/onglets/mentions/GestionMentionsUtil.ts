@@ -107,7 +107,7 @@ export function handleBlur(
   }
 }
 
-export const miseAjourEnFonctionNature = (
+const miseAjourEnFonctionNature = (
   mentions: IMentionAffichage[],
   indexMention: number,
   mentionSelect: IMentionAffichage,
@@ -125,7 +125,7 @@ export const miseAjourEnFonctionNature = (
   setMentions(newMentions);
 };
 
-export const texteEnFonctionOpposableAuTiers = (mention?: IMentionAffichage, mentionSelect?: IMentionAffichage, mentionApi?: IMention) => {
+const texteEnFonctionOpposableAuTiers = (mention?: IMentionAffichage, mentionSelect?: IMentionAffichage, mentionApi?: IMention) => {
   let res = mention?.texte;
   if (mentionSelect?.nature?.opposableAuTiers && !mention?.nature?.opposableAuTiers) {
     res = `${mentionApi?.textes.texteMention} ${mentionApi?.textes.texteApposition}`;
@@ -135,7 +135,7 @@ export const texteEnFonctionOpposableAuTiers = (mention?: IMentionAffichage, men
   return res;
 };
 
-export const texteNonModifieNatureChangePasDeTexteDelivrance = (
+const texteNonModifieNatureChangePasDeTexteDelivrance = (
   mention?: IMentionAffichage,
   mentionSelect?: IMentionAffichage,
   mentionApi?: IMention
@@ -150,7 +150,7 @@ export const texteNonModifieNatureChangePasDeTexteDelivrance = (
   );
 };
 
-export function aucuneMentionsAffichageNationalite(mentions?: IMentionAffichage[]) {
+function aucuneMentionsAffichageNationalite(mentions?: IMentionAffichage[]) {
   return mentions?.filter(el => el.estPresent).every(mention => mention.nature?.libelle !== "Nationalité");
 }
 

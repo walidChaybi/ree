@@ -23,9 +23,9 @@ import TitulaireFiltre, {
 import "./scss/RMCActeInscriptionPage.scss";
 
 // Nom des filtres
-export const TITULAIRE = "titulaire";
-export const DATES_DEBUT_FIN_ANNEE = "datesDebutFinAnnee";
-export const REGISTRE_REPERTOIRE = "registreRepertoire";
+const TITULAIRE = "titulaire";
+const DATES_DEBUT_FIN_ANNEE = "datesDebutFinAnnee";
+const REGISTRE_REPERTOIRE = "registreRepertoire";
 
 // Valeurs par défaut des champs
 const DefaultValuesRMCActeInscription = {

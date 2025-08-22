@@ -140,7 +140,7 @@ function getColonneNomPJ(pj: PieceJointe): JSX.Element {
   );
 }
 
-export function verificationAvantDOuvriLeMenu(piecesJointes: PieceJointe[], maxPiecesJointes = MAX_PIECES_JOINTES) {
+function verificationAvantDOuvriLeMenu(piecesJointes: PieceJointe[], maxPiecesJointes = MAX_PIECES_JOINTES) {
   let ouvrirLeMenu = true;
   if (piecesJointes.length >= maxPiecesJointes) {
     AfficherMessage.erreur("Le nombre maximal de pièces jointes est atteint", { fermetureAuto: true });

@@ -13,12 +13,12 @@ export type TApiAutorisee =
 
 export type TMethodeHttp = "GET" | "DELETE" | "PATCH" | "POST" | "PUT";
 
-export type TErreurApiTech = {
+type TErreurApiTech = {
   type: "TechnicalException";
   code: TCodesTech;
 };
 
-export type TErreurApiFct = {
+type TErreurApiFct = {
   type: "BusinessException";
   code: TCodesFct;
 };

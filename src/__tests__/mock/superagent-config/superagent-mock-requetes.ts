@@ -63,7 +63,7 @@ import { configRequetesGeneInscription } from "./superagent-mock-requetes-gene-i
 import { configRequetesInformation } from "./superagent-mock-requetes-information";
 import { configRequetesMiseAJour } from "./superagent-mock-requetes-mise-a-jour";
 
-export const NORESULT = "NORESULT";
+const NORESULT = "NORESULT";
 let compteur = 0;
 
 export const configRequetes = [

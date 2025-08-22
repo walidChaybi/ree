@@ -79,7 +79,7 @@ export function mappingSaisieProjetPostulantFormVersProjetActe(
   return projetActeAEnvoyer;
 }
 
-export function mapPostulantVersTitulaireProjetActe(
+function mapPostulantVersTitulaireProjetActe(
   acte: ISaisieProjetPostulantForm,
   naissancePostulantEvenement: IEvenement
 ): ITitulaireProjetActe {
@@ -122,7 +122,7 @@ export function mapPostulantVersTitulaireProjetActe(
   } as ITitulaireProjetActe;
 }
 
-export function getFiliationParParent(parentForm: ISaisieParentSousForm, ordre: number): IFiliationProjetActeTranscrit {
+function getFiliationParParent(parentForm: ISaisieParentSousForm, ordre: number): IFiliationProjetActeTranscrit {
   const prenoms = getPrenomsTableauStringVersPrenomsOrdonnes(parentForm.prenom.prenoms).map(p => p.prenom);
   return {
     lienParente: LienParente.PARENT,
@@ -135,7 +135,7 @@ export function getFiliationParParent(parentForm: ISaisieParentSousForm, ordre: 
   } as IFiliationProjetActeTranscrit;
 }
 
-export function getFiliationNaissance(parentForm: ISaisieParentSousForm) {
+function getFiliationNaissance(parentForm: ISaisieParentSousForm) {
   const lieuNaissanceExiste = !LieuxUtils.estPaysInconnu(parentForm.lieuNaissance.lieuNaissance);
   const lieuNaissanceEstFrance = LieuxUtils.estPaysFrance(parentForm.lieuNaissance.lieuNaissance);
 
@@ -164,7 +164,7 @@ function getRegionNaissanceFiliation(parentForm: ISaisieParentSousForm) {
   }
 }
 
-export function getFiliation(acte: ISaisieProjetPostulantForm): IFiliationProjetActeTranscrit[] {
+function getFiliation(acte: ISaisieProjetPostulantForm): IFiliationProjetActeTranscrit[] {
   let filiation: IFiliationProjetActeTranscrit[] = [];
   const listeParents: ISaisieParentSousForm[] = [];
   acte.parents.parent1 && estParentRenseigne(acte.parents.parent1) && listeParents.push(acte.parents.parent1);

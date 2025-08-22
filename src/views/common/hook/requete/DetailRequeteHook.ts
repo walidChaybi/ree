@@ -377,7 +377,7 @@ export function mappingRequeteCreation(data: any, utilisateurs?: Utilisateur[]):
   };
 }
 
-export function mapTitulairesCreation(titulaires: any[]): ITitulaireRequeteCreation[] {
+function mapTitulairesCreation(titulaires: any[]): ITitulaireRequeteCreation[] {
   return titulaires.map(titulaire => ({
     ...titulaire,
     qualite: QualiteFamille.getEnumFor(titulaire.qualite),

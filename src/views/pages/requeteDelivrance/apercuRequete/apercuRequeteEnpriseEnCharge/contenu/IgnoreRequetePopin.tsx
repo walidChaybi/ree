@@ -23,7 +23,7 @@ interface IgnoreRequetePopinProps {
   requete: IRequete;
 }
 
-export const MOTIF_IGNORE = "motifIgnore";
+const MOTIF_IGNORE = "motifIgnore";
 const COMPLEMENT_IGNORE = "complementIgnore";
 // Valeurs par défaut des champs
 const DefaultValues = {

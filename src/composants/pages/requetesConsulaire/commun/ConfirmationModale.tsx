@@ -179,4 +179,4 @@ export const useModaleConfirmation = () => {
   };
 };
 
-export type { IBoutonPopin, IConfigPopin };
+export type { IConfigPopin };

@@ -39,20 +39,20 @@ type TValidationText = TValidation & {
   valeur: RegExp;
 };
 
-export type TInterditSeul = {
+type TInterditSeul = {
   champsEnErreur?: string[];
   champsAIgnorer?: string[];
   messageErreurSpecifique?: string;
   limiterAuBloc?: boolean;
 };
 
-export type TInterditAvec = {
+type TInterditAvec = {
   champExclusif: string;
   valeursExclusives?: string[];
   messageErreurSpecifique?: string;
 };
 
-export type TComparaisonValeurAutreChamp = {
+type TComparaisonValeurAutreChamp = {
   cheminChampCompare: string;
   operateur: EOperateurCondition;
   champEnfantCompare?: string;

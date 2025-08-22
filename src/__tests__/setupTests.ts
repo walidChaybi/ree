@@ -12,7 +12,7 @@ import { configParamsBaseRequete } from "./mock/superagent-config/superagent-moc
 import { configRequetes } from "./mock/superagent-config/superagent-mock-requetes";
 import { configTeleverification } from "./mock/superagent-config/superagent-mock-televerification";
 
-export const localStorageFeatureFlagMock = (() => {
+const localStorageFeatureFlagMock = (() => {
   let store: Partial<Record<keyof typeof FeatureFlag, string>> = {
     FF_DELIVRANCE_CERTIFS_SITUATION: "true",
     FF_DELIVRANCE_EXTRAITS_COPIES: "true",

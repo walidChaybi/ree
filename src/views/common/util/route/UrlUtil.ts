@@ -2,7 +2,7 @@ import { UN } from "@util/Utils";
 import { NavigateFunction } from "react-router";
 import { UUID } from "../../../../ressources/Regex";
 
-export const URL_SEPARATEUR = "/";
+const URL_SEPARATEUR = "/";
 
 // Fontions utilitaires de résolution d'url
 const urlWithParamPatern = /^(.+)\/:[^/]+$/;
@@ -17,18 +17,18 @@ export function getUrlWithParam(path: string, param?: string) {
   return path.replace(urlWithParamPatern, `$1/${param}`);
 }
 
-export function isPathElemId(elem: string): boolean {
+function isPathElemId(elem: string): boolean {
   return !isNaN(Number(elem)) || UUID.test(elem);
 }
 
-export function isLastPathElemIsId(url: string): boolean {
+function isLastPathElemIsId(url: string): boolean {
   return Boolean(getUrlParamId(url));
 }
 
 /**
  * Renvoie une url sans les derniers éléments si ils sont des ID (UUID ou un nombre)
  */
-export function getUrlWithoutIdParam(url: string): string {
+function getUrlWithoutIdParam(url: string): string {
   let validUrl = cleanUrl(url);
   while (isLastPathElemIsId(validUrl)) {
     validUrl = validUrl.substring(0, validUrl.lastIndexOf(URL_SEPARATEUR));
@@ -36,18 +36,18 @@ export function getUrlWithoutIdParam(url: string): string {
   return validUrl;
 }
 
-export function getUrlParamId(url: string): string | undefined {
+function getUrlParamId(url: string): string | undefined {
   const lastPathElem = getLastPathElem(url);
   return isPathElemId(lastPathElem) ? lastPathElem : undefined;
 }
 
-export function getLastPathElem(url: string) {
+function getLastPathElem(url: string) {
   const validUrl = cleanUrl(url);
   return validUrl.substring(validUrl.lastIndexOf(URL_SEPARATEUR) + 1);
 }
 
 const regex = /\/+/g;
-export function cleanUrl(url: string) {
+function cleanUrl(url: string) {
   let validUrl = url.replace(regex, "/");
   if (validUrl.endsWith(URL_SEPARATEUR)) {
     validUrl = validUrl.substring(0, validUrl.length - 1);

@@ -61,7 +61,7 @@ export const ELibelleSousTypeCreation: TEnumAvecDeuxLibelles<ESousTypeCreation> 
   }
 } as const;
 
-export const SousTypeCreationUtils = constructeurEnumAvecDeuxLibellesUtils(ELibelleSousTypeCreation);
+const SousTypeCreationUtils = constructeurEnumAvecDeuxLibellesUtils(ELibelleSousTypeCreation);
 
 /** @deprecated à supprimer suite refonte tableau requête (12/08/2025) */
 export class SousTypeCreation extends EnumWithComplete {

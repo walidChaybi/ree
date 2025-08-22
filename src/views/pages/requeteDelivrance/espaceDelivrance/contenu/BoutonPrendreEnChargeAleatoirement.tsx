@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import AfficherMessage from "../../../../../utils/AfficherMessage";
 
-export const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
+const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
   const location = useLocation();
 
   const [prendreEnCharge, setPrendreEnCharge] = useState<boolean>(false);

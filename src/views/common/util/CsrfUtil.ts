@@ -6,12 +6,10 @@ export function getCsrfCookieValue() {
   return getCsrfCookieValueFromCookies(document.cookie);
 }
 
-export function getCsrfCookieValueFromCookies(cookies: string) {
+function getCsrfCookieValueFromCookies(cookies: string) {
   let value = "";
   if (cookies) {
-    const csrfCookie = cookies
-      .split(";")
-      .find(row => row.trim().startsWith(CSRF_COOKIE_NAME));
+    const csrfCookie = cookies.split(";").find(row => row.trim().startsWith(CSRF_COOKIE_NAME));
     if (csrfCookie) {
       const parts = csrfCookie.split("=");
       if (parts.length > 1) {

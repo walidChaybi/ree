@@ -9,8 +9,8 @@ import { SelectField } from "../../../formulaire/champsSaisie/SelectField";
 import FormBoutons, { FormBoutonsProps } from "../../../popin/FormBoutons";
 import "../../../popin/scss/PopinAjouter.scss";
 
-export const ID_TYPE_ALERTE = "idTypeAlerte";
-export const COMPLEMENT_DESCRIPTION = "complementDescription";
+const ID_TYPE_ALERTE = "idTypeAlerte";
+const COMPLEMENT_DESCRIPTION = "complementDescription";
 
 export interface IAjouterAlerteFormValue {
   [ID_TYPE_ALERTE]: string;

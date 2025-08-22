@@ -19,9 +19,9 @@ import RepertoireInscriptionFiltre, {
 } from "./RepertoireInscriptionFiltre";
 
 // Noms des champs
-export const REGISTRE = "registre";
-export const REPERTOIRE = "repertoire";
-export const EVENEMENT = "evenement";
+const REGISTRE = "registre";
+const REPERTOIRE = "repertoire";
+const EVENEMENT = "evenement";
 
 // Valeurs par défaut des champs
 export const RegistreRepertoireDefaultValues = {

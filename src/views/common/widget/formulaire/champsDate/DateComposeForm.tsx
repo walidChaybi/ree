@@ -1,10 +1,4 @@
-import {
-  ANNEE,
-  JOUR,
-  MOIS,
-  NB_HEURE,
-  NB_MINUTE
-} from "@composant/formulaire/ConstantesNomsForm";
+import { ANNEE, JOUR, MOIS, NB_HEURE, NB_MINUTE } from "@composant/formulaire/ConstantesNomsForm";
 import DateUtils from "@util/DateUtils";
 import { executeEnDiffere } from "@util/Utils";
 import { ErrorMessage, Field, connect } from "formik";
@@ -172,7 +166,12 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
               validate={(value: any) => validateAnnee(value, props.anneeMin, props.anneeMax, props.anneeObligatoire)}
               placeholder="AAAA"
             />
-            {!estDesactive(props.disabled, !showCroixSuppression) && <IconeCroix onClick={videChamps} title="Vider les champs" />}
+            {!estDesactive(props.disabled, !showCroixSuppression) && (
+              <IconeCroix
+                onClick={videChamps}
+                title="Vider les champs"
+              />
+            )}
             {props.showDatePicker && (
               <ReceDatePicker
                 dateValue={buildDatePickerValue(dateSaisie)}
@@ -213,14 +212,20 @@ const DateComposeForm: React.FC<DateComposeFormProps> = props => {
         )}
       </div>
       <div className="BlockErreur">
-        <ErrorMessage component={IconErrorMessage} name={withNamespace(props.nomDate, ANNEE)} />
-        <ErrorMessage component={IconErrorMessage} name={withNamespace(props.nomDate, NB_HEURE)} />
+        <ErrorMessage
+          component={IconErrorMessage}
+          name={withNamespace(props.nomDate, ANNEE)}
+        />
+        <ErrorMessage
+          component={IconErrorMessage}
+          name={withNamespace(props.nomDate, NB_HEURE)}
+        />
       </div>
     </>
   );
 };
 
-export const onDatePickerValueChange = (props: any, date: Date, setDateSaisie: any) => {
+const onDatePickerValueChange = (props: any, date: Date, setDateSaisie: any) => {
   const dateCompose = DateUtils.getDateComposeFromDate(date) as IDateComposeForm;
   executeEnDiffere(() => {
     props.formik.setFieldValue(withNamespace(props.nomDate, JOUR), dateCompose.jour);
@@ -239,20 +244,13 @@ function estCroixSuppressionAffichee(props: React.PropsWithChildren<DateComposeF
 }
 
 function getBornesDates(props: React.PropsWithChildren<DateComposeFormProps>) {
-  const dateMini = props.anneeMin
-    ? new Date(`${props.anneeMin}-01-01`)
-    : undefined;
+  const dateMini = props.anneeMin ? new Date(`${props.anneeMin}-01-01`) : undefined;
 
-  const dateMaxi = props.anneeMax
-    ? new Date(`${props.anneeMax}-12-31`)
-    : undefined;
+  const dateMaxi = props.anneeMax ? new Date(`${props.anneeMax}-12-31`) : undefined;
   return { dateMini, dateMaxi };
 }
 
-function estDesactive(
-  estDesactivationGlobale = false,
-  estChampDesactive = false
-) {
+function estDesactive(estDesactivationGlobale = false, estChampDesactive = false) {
   return estDesactivationGlobale || estChampDesactive;
 }
 

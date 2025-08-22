@@ -35,7 +35,7 @@ export enum EFamilleRegistre {
   CPN = "Changement de nom ou prénoms"
 }
 
-export enum EFamilleDossier {
+enum EFamilleDossier {
   AFF = "Dossier d'affaire",
   XDX = "Dossier pour acquisition",
   OPT = "Dossier d'optants",

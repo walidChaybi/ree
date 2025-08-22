@@ -103,7 +103,7 @@ export const estOuvertRegistrePapier = (decretNaturalisaton?: IDecretNaturalisat
   return estOuvert;
 };
 
-export function estModifieBulletinIdentification(saisieProjetPostulant: ISaisieProjetPostulantForm, projetActe?: IProjetActe): boolean {
+function estModifieBulletinIdentification(saisieProjetPostulant: ISaisieProjetPostulantForm, projetActe?: IProjetActe): boolean {
   return projetActe ? estModifieBulletinIdentificationCompareAvecProjetActe(saisieProjetPostulant, projetActe) : false;
 }
 

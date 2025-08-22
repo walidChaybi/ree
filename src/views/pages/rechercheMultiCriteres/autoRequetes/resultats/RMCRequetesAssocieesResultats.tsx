@@ -128,7 +128,7 @@ interface ICritereRMCAutoRequete {
   anneeNaissance?: string;
 }
 
-export const determinerCriteresRMCAutoRequeteDepuisTitulaire = (titulaires?: ITitulaireRequete[]): IEnveloppeCriteresRMCAutoRequete => ({
+const determinerCriteresRMCAutoRequeteDepuisTitulaire = (titulaires?: ITitulaireRequete[]): IEnveloppeCriteresRMCAutoRequete => ({
   criteres:
     titulaires?.map((titulaire: ITitulaireRequete) => ({
       nomTitulaire: titulaire.nomNaissance,
@@ -139,7 +139,7 @@ export const determinerCriteresRMCAutoRequeteDepuisTitulaire = (titulaires?: ITi
     })) ?? []
 });
 
-export const criteresAvecDonneesTitulaireSuffisantes = (criteresRMCAuto: ICritereRMCAutoRequete[]): boolean =>
+const criteresAvecDonneesTitulaireSuffisantes = (criteresRMCAuto: ICritereRMCAutoRequete[]): boolean =>
   Boolean(
     criteresRMCAuto?.[0] &&
       (criteresRMCAuto[0].nomTitulaire !== SNP ||

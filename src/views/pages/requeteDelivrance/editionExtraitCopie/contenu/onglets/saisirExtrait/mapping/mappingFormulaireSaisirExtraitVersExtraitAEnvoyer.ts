@@ -124,7 +124,7 @@ function mapDonneesComplementairesPlurilingueNomApresMariage(
   return nomApresMariage;
 }
 
-export function mapTitulaireNaissanceEtParents(acte: IFicheActe, titulaireEvtSaisi?: ITitulaireEvtForm): ITitulaireActe | undefined {
+function mapTitulaireNaissanceEtParents(acte: IFicheActe, titulaireEvtSaisi?: ITitulaireEvtForm): ITitulaireActe | undefined {
   let titulaireAEnvoyer: ITitulaireActe | undefined;
 
   if (titulaireEvtSaisi) {

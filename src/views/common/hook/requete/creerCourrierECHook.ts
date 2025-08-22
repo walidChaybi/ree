@@ -1,16 +1,6 @@
-import {
-  IGenerationCourrierParams,
-  useGenerationCourrierHook
-} from "@hook/requete/GenerationCourrierHook";
-import {
-  FicheActe,
-  IFicheActe,
-  necessiteMentionNationalite
-} from "@model/etatcivil/acte/IFicheActe";
-import {
-  mappingVersMentionApi,
-  Mention
-} from "@model/etatcivil/acte/mention/IMention";
+import { IGenerationCourrierParams, useGenerationCourrierHook } from "@hook/requete/GenerationCourrierHook";
+import { FicheActe, IFicheActe, necessiteMentionNationalite } from "@model/etatcivil/acte/IFicheActe";
+import { mappingVersMentionApi, Mention } from "@model/etatcivil/acte/mention/IMention";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentEC } from "@model/requete/enum/DocumentEC";
@@ -20,20 +10,13 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DEUX } from "@util/Utils";
 import { gestionnaireMentionsRetireesAuto } from "@utilMetier/mention/GestionnaireMentionsRetireesAuto";
 import { useEffect, useState } from "react";
-import {
-  IActeApiHookParams,
-  useInformationsActeApiHook
-} from "../acte/ActeApiHook";
+import { IActeApiHookParams, useInformationsActeApiHook } from "../acte/ActeApiHook";
 import {
   IMiseAJourMentionsParams,
   IMiseAJourMentionsResultat,
   useMiseAJourMentionsApiHook
 } from "../acte/mentions/MiseAJourMentionsApiHook";
-import {
-  IGenerationECParams,
-  IGenerationECResultat,
-  useGenerationEC
-} from "../generation/generationECHook/generationECHook";
+import { IGenerationECParams, IGenerationECResultat, useGenerationEC } from "../generation/generationECHook/generationECHook";
 import { estPresentIdActeEtChoixDelivrance } from "../generation/generationECHook/generationECHookUtil";
 import { IResultGenerationUnDocument } from "../generation/generationUtils";
 import { NatureActe } from "./../../../../model/etatcivil/enum/NatureActe";
@@ -49,15 +32,11 @@ export interface ICreerCourrierECParams {
 }
 
 export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
-  const [generationCourrierHookParams, setGenerationCourrierHookParams] =
-    useState<IGenerationCourrierParams>();
-  const [generationDocumentECParams, setGenerationDocumentECParams] =
-    useState<IGenerationECParams>();
+  const [generationCourrierHookParams, setGenerationCourrierHookParams] = useState<IGenerationCourrierParams>();
+  const [generationDocumentECParams, setGenerationDocumentECParams] = useState<IGenerationECParams>();
   const [idsMentionsRetirees, setIdsMentionsRetirees] = useState<string[]>();
-  const [majMentionsParams, setMajMentionsParams] =
-    useState<IMiseAJourMentionsParams>();
-  const [acteApiHookParams, setActeApiHookParams] =
-    useState<IActeApiHookParams>();
+  const [majMentionsParams, setMajMentionsParams] = useState<IMiseAJourMentionsParams>();
+  const [acteApiHookParams, setActeApiHookParams] = useState<IActeApiHookParams>();
 
   // 1- Récupération de l'acte complet pour la génération du document + images corpsImage
   const acteApiHookResultat = useInformationsActeApiHook(acteApiHookParams);
@@ -74,9 +53,7 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
             params.requete.choixDelivrance
             //@ts-ignore params.requete.choixDelivrance non null
           ) || ChoixDelivrance.estAvecFiliation(params.requete.choixDelivrance),
-        remplaceIdentiteTitulaireParIdentiteTitulaireAM: params?.natureActe
-          ? !NatureActe.estReconnaissance(params.natureActe)
-          : true
+        remplaceIdentiteTitulaireParIdentiteTitulaireAM: params?.natureActe ? !NatureActe.estReconnaissance(params.natureActe) : true
       });
     }
   }, [params, acteApiHookResultat]);
@@ -86,10 +63,7 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
     () => {
       if (acteApiHookResultat?.acte?.mentions && acteApiHookResultat?.acte) {
         let mentions;
-        if (
-          params?.requete.choixDelivrance ===
-          ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE
-        ) {
+        if (params?.requete.choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE) {
           mentions = Mention.filtrerFormaterEtTrierMentionsPlurilingues(
             acteApiHookResultat?.acte?.mentions,
             acteApiHookResultat?.acte?.nature
@@ -106,22 +80,12 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
           )
         );
 
-        if (
-          necessiteMentionNationalite(
-            acteApiHookResultat.acte,
-            params?.requete.choixDelivrance
-          )
-        ) {
+        if (necessiteMentionNationalite(acteApiHookResultat.acte, params?.requete.choixDelivrance)) {
           setMajMentionsParams({
             idActe: acteApiHookResultat.acte.id,
             mentions: [
-              ...acteApiHookResultat.acte.mentions.map(el =>
-                mappingVersMentionApi(el)
-              ),
-              ...FicheActe.getMentionNationalite(
-                acteApiHookResultat.acte,
-                params?.requete.choixDelivrance
-              )
+              ...acteApiHookResultat.acte.mentions.map(el => mappingVersMentionApi(el)),
+              ...FicheActe.getMentionNationalite(acteApiHookResultat.acte, params?.requete.choixDelivrance)
             ]
           });
         }
@@ -131,18 +95,11 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
     [params, acteApiHookResultat]
   );
 
-  const mentionNationaliteAjoutee =
-    useMiseAJourMentionsApiHook(majMentionsParams);
+  const mentionNationaliteAjoutee = useMiseAJourMentionsApiHook(majMentionsParams);
 
   // 3 - Création des paramètres pour la création du courrier
   useEffect(() => {
-    if (
-      acteApiHookResultat ||
-      (!params?.idActe &&
-        ChoixDelivrance.estReponseSansDelivrance(
-          params?.requete.choixDelivrance
-        ))
-    ) {
+    if (acteApiHookResultat || (!params?.idActe && ChoixDelivrance.estReponseSansDelivrance(params?.requete.choixDelivrance))) {
       setGenerationCourrierHookParams({
         saisieCourrier: params?.saisieCourrier,
         optionsChoisies: params?.optionsChoisies,
@@ -151,41 +108,28 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
         acte: acteApiHookResultat?.acte,
         // On ne change le statut que lorsqu'on a aucun documents
         mettreAJourStatut:
-          params?.requete.documentsReponses.length === 0 &&
-          ChoixDelivrance.estReponseSansDelivrance(
-            params?.requete.choixDelivrance
-          )
+          params?.requete.documentsReponses.length === 0 && ChoixDelivrance.estReponseSansDelivrance(params?.requete.choixDelivrance)
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params, acteApiHookResultat]);
 
-  const resultatGenerationCourrier = useGenerationCourrierHook(
-    generationCourrierHookParams
-  );
+  const resultatGenerationCourrier = useGenerationCourrierHook(generationCourrierHookParams);
 
   // 4 - Création des paramètre pour la génération du document demandé
   useEffect(() => {
     if (params) {
-      const mentionNationaliteAjoute = nationaliteAjouteSiBesoin(
-        mentionNationaliteAjoutee,
-        params,
-        acteApiHookResultat?.acte
-      );
+      const mentionNationaliteAjoute = nationaliteAjouteSiBesoin(mentionNationaliteAjoutee, params, acteApiHookResultat?.acte);
       if (
         params.idActe &&
         resultatGenerationCourrier &&
-        ChoixDelivrance.estReponseAvecDelivrance(
-          params.requete.choixDelivrance
-        ) &&
+        ChoixDelivrance.estReponseAvecDelivrance(params.requete.choixDelivrance) &&
         params.requete.documentsReponses.length < DEUX &&
         idsMentionsRetirees &&
         mentionNationaliteAjoute
       ) {
         setGenerationDocumentECParams({
-          acte: mentionNationaliteAjoutee
-            ? undefined
-            : acteApiHookResultat?.acte,
+          acte: mentionNationaliteAjoutee ? undefined : acteApiHookResultat?.acte,
           idActe: mentionNationaliteAjoutee ? params.idActe : undefined,
           requete: params.requete,
           mentionsRetirees: idsMentionsRetirees,
@@ -195,19 +139,13 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    idsMentionsRetirees,
-    resultatGenerationCourrier,
-    mentionNationaliteAjoutee
-  ]);
+  }, [idsMentionsRetirees, resultatGenerationCourrier, mentionNationaliteAjoutee]);
 
   // Génération du document demandé
   const resultatGenerationEC = useGenerationEC(generationDocumentECParams);
 
   useEffect(() => {
-    if (
-      traitementFini(params, resultatGenerationCourrier, resultatGenerationEC)
-    ) {
+    if (traitementFini(params, resultatGenerationCourrier, resultatGenerationEC)) {
       //@ts-ignore params non null
       params.setOperationEnCours(false);
       //@ts-ignore params non null
@@ -230,11 +168,8 @@ function nationaliteAjouteSiBesoin(
   acte?: IFicheActe
 ) {
   return (
-    (acte &&
-      majMentionFait &&
-      necessiteMentionNationalite(acte, params?.requete?.choixDelivrance)) ||
-    (acte &&
-      !necessiteMentionNationalite(acte, params?.requete?.choixDelivrance))
+    (acte && majMentionFait && necessiteMentionNationalite(acte, params?.requete?.choixDelivrance)) ||
+    (acte && !necessiteMentionNationalite(acte, params?.requete?.choixDelivrance))
   );
 }
 
@@ -250,20 +185,14 @@ function getIndexDocument(
     // Si on a créé deux documents et que c'est une RDD avec délivrance
     (resultatGenerationCourrier &&
       resultatGenerationEC &&
-      getOngletSelectVenantDePriseEnCharge(
-        requete.sousType,
-        requete.choixDelivrance
-      ) === DocumentEC.Principal)
+      getOngletSelectVenantDePriseEnCharge(requete.sousType, requete.choixDelivrance) === DocumentEC.Principal)
   ) {
     res = DocumentEC.Principal;
   }
   return res;
 }
 
-export function getOngletSelectVenantDePriseEnCharge(
-  sousType: SousTypeDelivrance,
-  choixDelivrance?: ChoixDelivrance
-) {
+function getOngletSelectVenantDePriseEnCharge(sousType: SousTypeDelivrance, choixDelivrance?: ChoixDelivrance) {
   return choixDelivrance &&
     ChoixDelivrance.estReponseAvecDelivrance(choixDelivrance) &&
     SousTypeDelivrance.estSousTypeCreationCourrierAutomatique(sousType)
@@ -279,11 +208,7 @@ function traitementFini(
   return (
     params &&
     (resultatGenerationEC ||
-      (resultatGenerationCourrier &&
-        ChoixDelivrance.estReponseSansDelivrance(
-          params?.requete.choixDelivrance
-        )) ||
-      (resultatGenerationCourrier &&
-        params.requete.documentsReponses.length > 1))
+      (resultatGenerationCourrier && ChoixDelivrance.estReponseSansDelivrance(params?.requete.choixDelivrance)) ||
+      (resultatGenerationCourrier && params.requete.documentsReponses.length > 1))
   );
 }

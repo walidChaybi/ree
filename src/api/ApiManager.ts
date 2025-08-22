@@ -8,7 +8,7 @@ import * as superagent from "superagent";
 import { URL_ACCUEIL } from "../router/infoPages/InfoPagesBase";
 import AfficherMessage from "../utils/AfficherMessage";
 
-export const ID_CORRELATION_HEADER_NAME = "X-Correlation-Id";
+const ID_CORRELATION_HEADER_NAME = "X-Correlation-Id";
 const EXPIRATION_CACHE_SECONDS = 43200; // Expiration du cache au bout de 12h (43200 secondes)
 
 export const HTTP_STATUS_OK = 200;
@@ -17,8 +17,7 @@ export const HTTP_BAD_REQUEST = 400;
 export const HTTP_UNAUTHORIZED = 401;
 export const HTTP_FORBIDDEN = 403;
 export const HTTP_NOT_FOUND = 404;
-export const HTTP_PAYLOAD_TOO_LARGE = 413;
-export const HTTP_REQUEST_TIME_OUT = 408;
+const HTTP_REQUEST_TIME_OUT = 408;
 
 const ERROR_OFFLINE_TIMEOUT = 5000;
 
@@ -51,11 +50,6 @@ interface HttpRequestConfig {
   data?: any;
   headers?: HttpRequestHeader[];
   responseType?: "blob";
-}
-
-export interface IHttpResponse {
-  body?: any;
-  status: number;
 }
 
 const DOMAIN = "rece";

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 export const FIREFOX = "Mozilla Firefox";
-export const CHROME = "Google Chrome ou Chromium";
+const CHROME = "Google Chrome ou Chromium";
 
 type Navigateur = "Mozilla Firefox" | "Google Chrome ou Chromium";
 /**

@@ -40,7 +40,7 @@ interface ILienAccueil {
   estDroitUnique?: boolean;
 }
 
-export interface IRangRubrique {
+interface IRangRubrique {
   libelle: string;
   icone: JSX.Element;
   liens: ILienAccueil[];

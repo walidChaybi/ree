@@ -22,7 +22,7 @@ export interface IRequeteRMCAutoDto<TTypeRequete extends keyof typeof ETypeReque
   numero: string;
 }
 
-export type TRequeteRMCAutoDto = IRequeteRMCAutoDto<"CREATION" | "DELIVRANCE" | "INFORMATION" | "MISE_A_JOUR">;
+type TRequeteRMCAutoDto = IRequeteRMCAutoDto<"CREATION" | "DELIVRANCE" | "INFORMATION" | "MISE_A_JOUR">;
 
 export const CONFIG_POST_RMC_AUTO_REQUETE: TConfigurationApi<typeof URI, IEnveloppeCriteresRMCAutoRequete, IQuery, TRequeteRMCAutoDto[]> = {
   api: REQUETE_API,

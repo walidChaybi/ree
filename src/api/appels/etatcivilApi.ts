@@ -160,7 +160,7 @@ export function getRegistrePapierParIdProjetActe(idActe: string): Promise<any> {
 /**
  * Récupération des informations des Fiches RC/RCA/PACS
  */
-export function getInformationsFicheRepertoire(typeFiche: ETypeFiche, identifiant: string): Promise<any> {
+function getInformationsFicheRepertoire(typeFiche: ETypeFiche, identifiant: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,

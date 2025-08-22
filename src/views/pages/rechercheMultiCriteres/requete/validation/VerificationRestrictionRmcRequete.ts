@@ -39,7 +39,7 @@ export function getMessageSiVerificationRestrictionRmcRequeteEnErreur(
   return getMessageSiVerificationEnErreur(rMCSaisie, verificationsRestrictionCriteresErreurs);
 }
 
-export function filtreDateCreationInformatiqueSaisiSeul(rMCSaisie: IRMCRequeteForm<keyof typeof ETypeRequete | "">): boolean {
+function filtreDateCreationInformatiqueSaisiSeul(rMCSaisie: IRMCRequeteForm<keyof typeof ETypeRequete | "">): boolean {
   return (
     filtreDateCreationInformatiqueSaisi(rMCSaisie) &&
     aucuneProprieteRenseignee(rMCSaisie.requerant) &&
@@ -48,7 +48,7 @@ export function filtreDateCreationInformatiqueSaisiSeul(rMCSaisie: IRMCRequeteFo
   );
 }
 
-export function typeRequeteSaisiSansSousTypeOuStatut(rMCSaisie: IRMCRequeteForm<keyof typeof ETypeRequete | "">): boolean {
+function typeRequeteSaisiSansSousTypeOuStatut(rMCSaisie: IRMCRequeteForm<keyof typeof ETypeRequete | "">): boolean {
   return (
     estRenseigne(rMCSaisie.requete?.typeRequete) &&
     (estNonRenseigne(rMCSaisie.requete?.sousTypeRequete) || estNonRenseigne(rMCSaisie.requete?.statutRequete))

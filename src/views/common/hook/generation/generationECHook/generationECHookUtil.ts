@@ -118,7 +118,7 @@ function getValidationExtrait(acte: IFicheActe, choixDelivrance: ChoixDelivrance
   return validation;
 }
 
-export function getValidationExtraitPlurilingue(acte: IFicheActe, validation: Validation) {
+function getValidationExtraitPlurilingue(acte: IFicheActe, validation: Validation) {
   switch (acte.nature) {
     case NatureActe.MARIAGE:
     case NatureActe.NAISSANCE:

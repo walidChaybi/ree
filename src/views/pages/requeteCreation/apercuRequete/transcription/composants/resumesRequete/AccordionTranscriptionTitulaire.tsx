@@ -14,7 +14,7 @@ function formatNomSouhaite(nomSouhaite?: string): string | undefined {
   return nomSouhaite ? `(${"souhaité"} : ${nomSouhaite})` : "";
 }
 
-export function formatNomsEtNomSouhaite(titulaire?: ITitulaireRequeteCreation): string {
+function formatNomsEtNomSouhaite(titulaire?: ITitulaireRequeteCreation): string {
   return `${TitulaireRequeteCreation.getNomNaissanceOuSNP(titulaire)} ${formatNomSouhaite(titulaire?.nomSouhaite)}`;
 }
 

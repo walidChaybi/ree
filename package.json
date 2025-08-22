@@ -47,6 +47,7 @@
     "sass": "1.90.0",
     "superagent-mock": "5.0.1",
     "tailwindcss": "3.4.14",
+    "ts-unused-exports": "11.0.1",
     "tsarch": "5.4.1",
     "typescript": "4.9.5",
     "vite": "6.3.5",
@@ -61,7 +62,8 @@
     "test:dev": "NODE_ENV=test vitest --config vite.config.mts",
     "test:dev:coverage": "NODE_ENV=test vitest --config vite.config.mts --coverage",
     "package": "npm run build",
-    "transpil": "tsc"
+    "transpil": "tsc",
+    "unused": "ts-unused-exports tsconfig.json"
   },
   "eslintConfig": {
     "extends": "react-app"

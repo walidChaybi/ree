@@ -68,14 +68,14 @@ export interface IActeEtrangerTranscriptionForm {
   referenceComplement: string;
 }
 
-export interface ILieuEtranger {
+interface ILieuEtranger {
   ville: string;
   etatProvince: string;
   pays: string;
   preposition: keyof typeof EPrepositionLieu;
 }
 
-export interface ITitulaireTranscriptionForm {
+interface ITitulaireTranscriptionForm {
   nomActeEtranger: string;
   nomRetenuOEC: string;
   nomSouhaite: string;
@@ -105,13 +105,13 @@ export interface IParentTranscriptionForm {
   domicile: ILocalisation;
 }
 
-export interface IParentsTranscriptionForm {
+interface IParentsTranscriptionForm {
   parent1: IParentTranscriptionForm;
   parent2: IParentTranscriptionForm;
   domicileCommun: boolean;
 }
 
-export interface IDeclarantTranscriptionForm {
+interface IDeclarantTranscriptionForm {
   identite: keyof typeof EIdentiteDeclarant;
   nom: string;
   prenomsChemin: TPrenomsForm;
@@ -124,11 +124,11 @@ export interface IDeclarantTranscriptionForm {
   complement: string;
 }
 
-export interface IMentionsTranscriptionForm {
+interface IMentionsTranscriptionForm {
   mentions: string;
 }
 
-export interface IFormuleFinaleTranscriptionForm {
+interface IFormuleFinaleTranscriptionForm {
   identiteDemandeur: keyof typeof EIdentiteDemandeur;
   nom: string;
   prenomsChemin: TPrenomsForm;

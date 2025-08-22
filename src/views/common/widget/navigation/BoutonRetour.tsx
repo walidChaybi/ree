@@ -23,7 +23,7 @@ export const BoutonRetour: React.FC = () => {
   );
 };
 
-export function getLibelleEtUrl(url: string) {
+function getLibelleEtUrl(url: string) {
   switch (url) {
     case URL_ACCUEIL:
       return ["Accueil", URL_ACCUEIL];

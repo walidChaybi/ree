@@ -54,7 +54,7 @@ export const GestionnaireFermeture: React.FC<GestionnaireFermetureProps> = props
   return null;
 };
 
-export const appelRequetesASigner = () => {
+const appelRequetesASigner = () => {
   const req = appelApi();
   let response;
   try {
