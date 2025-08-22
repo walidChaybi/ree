@@ -86,6 +86,7 @@ const BlocActe: React.FC = () => {
               libelle="Famille de registre"
               options={FAMILLES_REGISTRE}
               disabled={blocRCRCAPACSAlimente}
+              apresChangement={() => setFieldValue("registreRepertoire.registre.pocopa", "")}
             />
             <ChampRecherchePocopas
               name={"registreRepertoire.registre.pocopa"}

@@ -47,8 +47,6 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
   const estTypeFamilleMAR = useMemo(() => valeurFamilleRegistre === TYPE_FAMILLE_MAR, [valeurFamilleRegistre]);
 
   useEffect(() => {
-    helpers.setValue("");
-
     if (!valeurFamilleRegistre || [...FAMILLES_SANS_POCOPA, TYPE_FAMILLE_MAR].includes(valeurFamilleRegistre)) {
       setPocopas([]);
       return;
@@ -101,9 +99,8 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
         id={name}
         options={pocopas}
         value={pocopas.find(p => p.pocopa === field.value) || null}
-        inputValue={field.value}
         loading={enAttenteDeReponseApi}
-        getOptionLabel={option => option.pocopa || ""}
+        getOptionLabel={option => option.pocopa ?? ""}
         loadingText="Recherche en cours..."
         onInputChange={(_, nouvelleValeur, raison) => {
           if (raison === "input") {
