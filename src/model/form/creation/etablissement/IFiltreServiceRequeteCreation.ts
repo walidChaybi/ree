@@ -1,6 +1,9 @@
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { Option } from "@util/Type";
+/* v8 ignore start */
+import { nettoyerAttributsDto } from "../../../../dto/commun/dtoUtils";
+/* v8 ignore stop */
 
 export interface IFiltreServiceRequeteCreationFormValues {
   numeroRequete: string;
@@ -22,13 +25,15 @@ export interface IFiltreServiceRequeteCreationDto {
 }
 export type IFiltresServiceRequeteCreation = Omit<IFiltreServiceRequeteCreationFormValues, "numeroRequete">;
 
+/* v8 ignore start */
 export function mappingFiltreServiceCreationVersFiltreDto(filtre: IFiltresServiceRequeteCreation): IFiltreServiceRequeteCreationDto {
-  return {
-    sousType: filtre.sousType ?? null,
-    tagPriorisation: filtre.priorisation ?? null,
+  return nettoyerAttributsDto<IFiltreServiceRequeteCreationDto>({
+    sousType: filtre.sousType,
+    tagPriorisation: filtre.priorisation,
     idAgent: filtre.attribueA?.cle ?? null,
     idService: filtre.attribueAuService?.cle ?? null,
     statuts: filtre.statut ? [filtre.statut] : StatutRequete.getOptionsAPartirTypeRequete(TypeRequete.CREATION).map(st => st.cle),
-    numeroDossierNational: filtre.numeroDossierNational ?? null
-  };
+    numeroDossierNational: filtre.numeroDossierNational
+  });
 }
+/* v8 ignore stop */

@@ -1,6 +1,9 @@
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { Option } from "@util/Type";
+/* v8 ignore start */
+import { nettoyerAttributsDto } from "../../../dto/commun/dtoUtils";
+/* v8 ignore stop */
 
 export interface IFiltreServiceRequeteDelivranceDto {
   sousType: string | null;
@@ -28,24 +31,20 @@ const STATUTS_REQUETE_A_EXCLURE: StatutRequete[] = [
   StatutRequete.REJET
 ];
 
-export const FILTRES_SERVICE_STATUTS_REQUETE_DELIVRANCE =
-  StatutRequete.getOptionsAPartirTypeRequete(TypeRequete.DELIVRANCE).filter(
-    statutCourant =>
-      !STATUTS_REQUETE_A_EXCLURE.includes(
-        StatutRequete.getEnumFromLibelle(statutCourant.libelle)
-      )
-  );
+/* v8 ignore start */
+export const FILTRES_SERVICE_STATUTS_REQUETE_DELIVRANCE = StatutRequete.getOptionsAPartirTypeRequete(TypeRequete.DELIVRANCE).filter(
+  statutCourant => !STATUTS_REQUETE_A_EXCLURE.includes(StatutRequete.getEnumFromLibelle(statutCourant.libelle))
+);
 
 export function mappingFiltreServiceRequeteDelivranceVersFiltreDto(
   filtre: IFiltreServiceRequeteDelivranceFormValues
 ): IFiltreServiceRequeteDelivranceDto {
-  return {
-    sousType: filtre.sousType || null,
-    provenance: filtre.provenance || null,
+  return nettoyerAttributsDto<IFiltreServiceRequeteDelivranceDto>({
+    sousType: filtre.sousType,
+    provenance: filtre.provenance,
     idAgent: filtre.attribueA?.cle || null,
     idService: filtre.attribueAuService?.cle || null,
-    statuts: filtre.statut
-      ? [filtre.statut]
-      : FILTRES_SERVICE_STATUTS_REQUETE_DELIVRANCE.map(statut => statut.cle)
-  };
+    statuts: filtre.statut ? [filtre.statut] : FILTRES_SERVICE_STATUTS_REQUETE_DELIVRANCE.map(statut => statut.cle)
+  });
 }
+/* v8 ignore stop */

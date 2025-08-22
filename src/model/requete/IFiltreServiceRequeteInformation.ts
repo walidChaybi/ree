@@ -8,3 +8,12 @@ export interface IFiltresServiceRequeteInformationFormValues {
   typeRequerant: string;
   statut: string;
 }
+
+export interface IFiltreServiceRequeteInformationDto {
+  sousType: string;
+  objet: string;
+  idAgent: string | null;
+  idService: string | null;
+  typeRequerant?: string;
+  statuts: string[] | null;
+}

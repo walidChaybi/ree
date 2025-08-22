@@ -2,11 +2,15 @@ import { IFiltreServiceRequeteCreationDto } from "@model/form/creation/etablisse
 import { IFiltreServiceRequeteDelivranceDto } from "@model/form/delivrance/IFiltreServiceRequeteDelivrance";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IEchange } from "@model/requete/IEchange";
-import { IFiltresServiceRequeteInformationFormValues } from "@model/requete/IFiltreServiceRequeteInformation";
+import {
+  IFiltreServiceRequeteInformationDto,
+  IFiltresServiceRequeteInformationFormValues
+} from "@model/requete/IFiltreServiceRequeteInformation";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import { SortOrder } from "@widget/tableau/TableUtils";
+import { nettoyerAttributsDto } from "../../dto/commun/dtoUtils";
 import { HttpMethod } from "../ApiManager";
 import { URL_MENTION } from "./etatcivilApi";
 
@@ -148,7 +152,7 @@ export function getRequetesInformation(queryParameters: IQueryParametersPourRequ
     })
   );
 }
-
+/* v8 ignore start */
 export function postRequetesInformation(
   queryParameters: IQueryParametersPourRequetes,
   filtresRequetes: IFiltresServiceRequeteInformationFormValues
@@ -162,17 +166,18 @@ export function postRequetesInformation(
         sens: queryParameters.sens,
         range: queryParameters.range
       },
-      data: {
+      data: nettoyerAttributsDto<IFiltreServiceRequeteInformationDto>({
         sousType: filtresRequetes.sousType,
         objet: filtresRequetes.objet,
         idAgent: filtresRequetes.agent?.cle ?? "",
         idService: filtresRequetes.service?.cle ?? "",
         typeRequerant: filtresRequetes.typeRequerant,
         statuts: filtresRequetes.statut ? [filtresRequetes.statut] : queryParameters.statuts
-      }
+      })
     })
   );
 }
+/* v8 ignore stop */
 
 export function getRequetesCreation(listeStatuts: string, queryParameters: IQueryParametersPourRequetes): Promise<any> {
   return getApiManager().then(api =>

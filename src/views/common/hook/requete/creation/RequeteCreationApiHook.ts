@@ -38,8 +38,7 @@ export function useRequeteCreationApiHook(
         }
       } catch (erreurs) {
         AfficherMessage.erreur("Impossible de récupérer les requêtes de création", {
-          erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
-          fermetureAuto: true
+          erreurs: estTableauErreurApi(erreurs) ? erreurs : []
         });
       }
     }
