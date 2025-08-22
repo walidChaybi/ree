@@ -87,14 +87,14 @@ const BlocRequete: React.FC = () => {
         {estHabiliteSaisieRequeteTousRegistre ? (
           <ChampRecherchePocopas
             name="requete.villeRegistre"
-            libelle="Registre"
+            libelle="Poste"
             optionsRecherchePocopa={{ familleRegistre: "CSL", seulementPocopaOuvert: true }}
             estObligatoire
           />
         ) : (
           <ChampListeDeroulante
             name="requete.villeRegistre"
-            libelle="Registre"
+            libelle="Poste"
             options={(pocopas.length === 1 ? [] : [{ cle: "", libelle: "" }]).concat(TypeRegistre.versOptions(pocopas))}
             disabled={!pocopas.length}
             estObligatoire

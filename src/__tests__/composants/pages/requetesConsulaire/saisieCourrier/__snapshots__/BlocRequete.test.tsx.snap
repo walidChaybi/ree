@@ -85,7 +85,7 @@ exports[`Test rendu du bloc requete en saisie courrier > DOIT afficher le champ 
             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
             for="requete.villeRegistre"
           >
-            Registre
+            Poste
             <span
               class="ml-1 text-rouge"
             >
@@ -195,7 +195,7 @@ exports[`Test rendu du bloc requete en saisie courrier > DOIT afficher le compos
             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
             for="requete.villeRegistre"
           >
-            Registre
+            Poste
             <span
               class="ml-1 text-rouge"
             >
