@@ -47,7 +47,6 @@ export interface IIndex {
 }
 
 interface FichePageProps {
-  dataFicheIdentifiant: string;
   datasFiches: IDataFicheProps[];
   index: IIndex;
   numeroRequete?: string;
@@ -61,17 +60,16 @@ export interface IDataFicheProps {
   categorie: ETypeFiche;
 }
 
-export const estActeEligibleMentionDIntegration = ({ origine, referenceActe, referenceSignifiante, type }: IFicheActe): boolean => {
-  const estOrigineScecDocs = EOrigineActe[origine as keyof typeof EOrigineActe] === EOrigineActe.SCEC_DOCS;
+export const estActeEligibleMentionDIntegration = ({ origine, referenceActe, referenceRegistre, type }: IFicheActe): boolean => {
+  const estOrigineScecDocs = origine === "SCEC_DOCS";
   const referenceActePresente = Boolean(referenceActe?.trim());
-  const referenceSignifianteAbsente = !referenceSignifiante?.trim();
+  const referenceRegistreAbsente = !referenceRegistre?.trim();
   const estTypeTexte = type === ETypeActe.TEXTE;
 
-  return estOrigineScecDocs && referenceActePresente && referenceSignifianteAbsente && estTypeTexte;
+  return estOrigineScecDocs && referenceActePresente && referenceRegistreAbsente && estTypeTexte;
 };
 
 export const FichePage: React.FC<FichePageProps> = ({
-  dataFicheIdentifiant,
   datasFiches,
   numeroRequete,
   index,

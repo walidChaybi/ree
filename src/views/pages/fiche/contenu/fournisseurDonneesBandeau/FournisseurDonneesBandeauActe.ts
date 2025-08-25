@@ -8,6 +8,7 @@ import {
   triListeObjetsSurPropriete
 } from "@util/Utils";
 import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
+
 export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
   getPersonnesAsAny(): any[] {
     return this.data ? triListeObjetsSurPropriete(this.data.titulaires, "ordre") : [];
@@ -36,8 +37,8 @@ export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
   }
 
   getRegistre(): string {
-    if (this.data?.referenceSignifiante) {
-      return getValeurOuVide(`${this.data.referenceActe} / ${this.data.referenceSignifiante}`);
+    if (this.data?.referenceRegistre) {
+      return getValeurOuVide(`${this.data.referenceActe} / ${this.data.referenceRegistre}`);
     } else {
       return getValeurOuVide(this.data.referenceActe);
     }

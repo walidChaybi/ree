@@ -40,7 +40,6 @@ export const FenetreFiche: React.FC<IFenetreFicheProps> = ({
           <FichePage
             numeroRequete={numeroRequete}
             datasFiches={datasFiches}
-            dataFicheIdentifiant={identifiant}
             fenetreExterneRef={fenetreExterneRef}
             index={index}
             nbLignesTotales={nbLignesTotales}
