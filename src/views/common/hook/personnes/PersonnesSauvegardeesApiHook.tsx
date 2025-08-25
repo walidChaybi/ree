@@ -1,9 +1,6 @@
 import { getPersonnesSauvegardees } from "@api/appels/etatcivilApi";
+import { IPersonneSauvegardeeDto, PersonneSauvegardeeDto } from "@model/etatcivil/personne/IPersonneSauvegardeeDto";
 import { useEffect, useState } from "react";
-import {
-  IPersonneSauvegardeeDto,
-  PersonneSauvegardeeDto
-} from "../../../../dto/etatcivil/personne/personnesSauvegardees/IPersonneSauvegardeeDto";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export interface IPersonnesSauvegardeesParams {

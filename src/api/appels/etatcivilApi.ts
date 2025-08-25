@@ -3,14 +3,14 @@ import { AddAlerteActeApiHookParameters } from "@hook/alertes/AddAlerteActeHookA
 import { DeleteAlerteActeApiHookParameters } from "@hook/alertes/DeleteAlerteActeHookApi";
 import { IDerniereDelivranceRcRcaPacsParams } from "@hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
 import { TModeAuthentification } from "@model/agent/types";
+import { IActeInscriptionSauvegardeDto } from "@model/etatcivil/acte/IActeInscriptionSauvegardeDto";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
+import { StatutMention } from "@model/etatcivil/enum/StatutMention";
 import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
 import { IRMCAutoPersonneRequest } from "@model/rmc/personne/IRMCAutoPersonneRequest";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
-import { IActeInscriptionSauvegardeDto } from "../../dto/etatcivil/acte/actesInscriptionsSauvegardes/IActeInscriptionSauvegardeDto";
 import { HttpMethod } from "../ApiManager";
-import { StatutMention } from "./../../model/etatcivil/enum/StatutMention";
 
 async function getApiManager() {
   const { ApiManager } = await import("../ApiManager");

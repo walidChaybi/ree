@@ -1,6 +1,6 @@
 import { AGENT_API } from "@api/ApiDisponibles";
+import { IServiceDto } from "@model/agent/IService";
 import { TConfigurationApi } from "@model/api/Api";
-import IServiceDto from "../../../../dto/etatcivil/agent/IServiceDto";
 
 const URI = "/services";
 

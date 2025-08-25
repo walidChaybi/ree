@@ -2,6 +2,7 @@ import { ICreerCourrierECParams, useCreerCourrierEC } from "@hook/requete/creerC
 import { IActionOption } from "@model/requete/IActionOption";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { DocumentEC } from "@model/requete/enum/DocumentEC";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
@@ -12,7 +13,6 @@ import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import { ConfirmationPopin, IBoutonPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
-import { DocumentEC } from "../../../../../../../model/requete/enum/DocumentEC";
 import { useOptionsCourriersApiHook } from "../../../apercuCourrier/contenu/hook/OptionsCourriersHook";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
 import {

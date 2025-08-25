@@ -1,5 +1,5 @@
+import { champsObligatoiresDuDtoAbsents, nettoyerAttributsDto, valeurDtoAbsenteDansEnum } from "@model/commun/dtoUtils";
 import { describe, expect, test } from "vitest";
-import { champsObligatoiresDuDtoAbsents, nettoyerAttributsDto, valeurDtoAbsenteDansEnum } from "../../../dto/commun/dtoUtils";
 
 describe("test nettoyerAttributsDto", () => {
   test("test objet simple", () => {

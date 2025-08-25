@@ -1,4 +1,4 @@
-import IServiceDto from "./IServiceDto";
+import { IServiceDto } from "./IService";
 
 interface IHierarchieServiceDto {
   service?: IServiceDto;

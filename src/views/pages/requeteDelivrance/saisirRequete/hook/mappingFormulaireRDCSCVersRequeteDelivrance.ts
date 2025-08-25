@@ -1,3 +1,4 @@
+import { nettoyerAttributsDto } from "@model/commun/dtoUtils";
 import { CreationRequeteRDCSC, SaisieRequeteRDCSC, UpdateRequeteRDCSC } from "@model/form/delivrance/ISaisirRDCSCPageForm";
 import { ISaisieAdresse, ISaisieIdentite } from "@model/form/delivrance/ISaisirRequetePageForm";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -8,7 +9,6 @@ import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IPieceJustificative, mapPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import { SNP, getValeurOuVide } from "@util/Utils";
-import { nettoyerAttributsDto } from "../../../../../dto/commun/dtoUtils";
 import { limitesTitulaires } from "../SaisirRDCSCPage";
 import { getPrenomsTableauStringVersPrenomsOrdonnes } from "./mappingCommun";
 

@@ -1,5 +1,10 @@
 import { DOCUMENT } from "@composant/formulaire/ConstantesNomsForm";
-import { CreationRequeteRDCSC, SaisieRequeteRDCSC, UpdateRequeteRDCSC } from "@model/form/delivrance/ISaisirRDCSCPageForm";
+import {
+  CreationRequeteRDCSC,
+  IComplementCreationUpdateRequete,
+  SaisieRequeteRDCSC,
+  UpdateRequeteRDCSC
+} from "@model/form/delivrance/ISaisirRDCSCPageForm";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -7,7 +12,6 @@ import { DEUX } from "@util/Utils";
 import React, { useEffect, useRef, useState } from "react";
 import { ITitulairesState } from "../SaisirRDCSCPage";
 import { IdentiteSubFormProps } from "../sousFormulaires/identite/IdentiteForm";
-import { IComplementCreationUpdateRequete } from "./../../../../../model/form/delivrance/ISaisirRDCSCPageForm";
 import { useCreationRequeteDelivranceRDCSC } from "./CreerRDCSCApiHook";
 import { useUpdateRequeteDelivranceRDCSC } from "./UpdateRDCSCApiHook";
 

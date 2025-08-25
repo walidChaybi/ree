@@ -1,3 +1,4 @@
+import { nettoyerAttributsDto } from "@model/commun/dtoUtils";
 import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { EFamilleRegistre } from "@model/etatcivil/enum/TypeFamille";
 import { ETypeRepertoire } from "@model/etatcivil/enum/TypeRepertoire";
@@ -5,7 +6,6 @@ import { ICriteresRMCActesInscriptions } from "@model/rmc/acteInscription/envoi/
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 import { RMCRepertoire } from "@model/rmc/acteInscription/rechercheForm/IRMCRepertoire";
 import DateUtils from "@util/DateUtils";
-import { nettoyerAttributsDto } from "../../../../dto/commun/dtoUtils";
 import { getCriteresTitulaire } from "./mapping/RMCMappingUtil";
 
 export interface ICriteresRechercheActeInscription {

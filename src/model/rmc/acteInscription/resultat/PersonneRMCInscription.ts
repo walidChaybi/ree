@@ -1,8 +1,8 @@
 import { IPrenomOrdonneDto } from "@model/form/commun/PrenomsForm";
 import { IDateDto } from "@util/DateUtils";
 import { formatNoms, jointPrenoms } from "@util/Utils";
-import { champsObligatoiresDuDtoAbsents } from "../../../../dto/commun/dtoUtils";
 import DateRECE from "../../../../utils/DateRECE";
+import { champsObligatoiresDuDtoAbsents } from "../../../commun/dtoUtils";
 
 export interface IPersonneRMCInscriptionDto {
   id: string;

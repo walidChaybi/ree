@@ -1,12 +1,9 @@
 import { useActesInscriptionsSauvegardesApiHook } from "@hook/acte/ActesInscriptionsSauvegardesApiHook";
+import { ActeInscriptionSauvegardeDto, IActeInscriptionSauvegardeDto } from "@model/etatcivil/acte/IActeInscriptionSauvegardeDto";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
 import { ZERO } from "@util/Utils";
 import React, { useEffect, useState } from "react";
-import {
-  ActeInscriptionSauvegardeDto,
-  IActeInscriptionSauvegardeDto
-} from "../../../../../../../dto/etatcivil/acte/actesInscriptionsSauvegardes/IActeInscriptionSauvegardeDto";
 import AfficherMessage from "../../../../../../../utils/AfficherMessage";
 import { IDataTableauActeInscriptionSelectionne } from "../IDataTableauActeInscriptionSelectionne";
 

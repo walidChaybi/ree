@@ -2,6 +2,7 @@ import { TransfertUnitaireParams } from "@hook/requete/TransfertHook";
 import { IService } from "@model/agent/IService";
 import { Utilisateur, UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
+import { Perimetre } from "@model/agent/enum/Perimetre";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -9,7 +10,6 @@ import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { DoubleClicUtil } from "@util/DoubleClicUtil";
 import { Option, Options } from "@util/Type";
 import { MutableRefObject } from "react";
-import { Perimetre } from "./../../../../model/agent/enum/Perimetre";
 import { IMenuTransfertProps } from "./MenuTransfert";
 /* v8 ignore start */
 

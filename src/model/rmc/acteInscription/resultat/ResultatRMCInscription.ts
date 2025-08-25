@@ -2,7 +2,7 @@ import { EStatutRcRcaPacs } from "@model/etatcivil/enum/EStatutRcRcaPacs";
 import { ETypeInscriptionRc } from "@model/etatcivil/enum/ETypeInscriptionRc";
 import { ETypeInscriptionRca } from "@model/etatcivil/enum/ETypeInscriptionRca";
 import { ETypePacsRcRca } from "@model/etatcivil/enum/ETypePacsRcRca";
-import { champsObligatoiresDuDtoAbsents, valeurDtoAbsenteDansEnum } from "../../../../dto/commun/dtoUtils";
+import { champsObligatoiresDuDtoAbsents, valeurDtoAbsenteDansEnum } from "../../../commun/dtoUtils";
 import PersonneRMCInscription, { IPersonneRMCInscriptionDto } from "./PersonneRMCInscription";
 
 export type IResultatRMCInscriptionDto<TTypeFiche extends keyof typeof ETypePacsRcRca> = {

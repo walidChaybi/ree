@@ -1,5 +1,4 @@
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { getValeurOuUndefined } from "@util/Utils";
 
 export interface IPersonneSauvegardeeDto {
   idPersonne: string;
@@ -15,11 +14,11 @@ export const PersonneSauvegardeeDto = {
   mapping(data: any): IPersonneSauvegardeeDto {
     return {
       idPersonne: data.idPersonne,
-      nom: getValeurOuUndefined(data.nom),
-      autresNoms: getValeurOuUndefined(data.autresNoms),
-      prenoms: getValeurOuUndefined(data.prenoms),
-      lieuNaissance: getValeurOuUndefined(data.lieuNaissance),
-      dateNaissance: getValeurOuUndefined(data.dateNaissance),
+      nom: data.nom,
+      autresNoms: data.autresNoms,
+      prenoms: data.prenoms,
+      lieuNaissance: data.lieuNaissance,
+      dateNaissance: data.dateNaissance,
       sexe: Sexe.getEnumFor(data.sexe)
     };
   }

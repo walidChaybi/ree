@@ -1,7 +1,7 @@
 import { TSousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import DateUtils from "@util/DateUtils";
-import { nettoyerAttributsDto } from "../../../dto/commun/dtoUtils";
+import { nettoyerAttributsDto } from "../../commun/dtoUtils";
 import { ETypeRequete } from "../../requete/enum/TypeRequete";
 import { IRMCRequeteForm } from "./IRMCRequete";
 

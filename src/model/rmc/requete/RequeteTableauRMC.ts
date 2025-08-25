@@ -10,8 +10,8 @@ import { TSousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { ETagPriorisation } from "@model/requete/enum/TagPriorisation";
 import { ETypeRequete } from "@model/requete/enum/TypeRequete";
-import { valeurDtoAbsenteDansEnum } from "../../../dto/commun/dtoUtils";
 import DateRECE from "../../../utils/DateRECE";
+import { valeurDtoAbsenteDansEnum } from "../../commun/dtoUtils";
 import { ITitulaireRequeteTableauRMCDto, TitulaireRequeteTableauRMC } from "./TitulaireRequeteTableauRMC";
 
 export interface IRequeteTableauRMCDto<TTypeRequete extends keyof typeof ETypeRequete> {

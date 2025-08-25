@@ -1,9 +1,6 @@
 import { getActesInscriptionsSauvegardes } from "@api/appels/etatcivilApi";
+import { ActeInscriptionSauvegardeDto, IActeInscriptionSauvegardeDto } from "@model/etatcivil/acte/IActeInscriptionSauvegardeDto";
 import { useEffect, useState } from "react";
-import {
-  ActeInscriptionSauvegardeDto,
-  IActeInscriptionSauvegardeDto
-} from "../../../../dto/etatcivil/acte/actesInscriptionsSauvegardes/IActeInscriptionSauvegardeDto";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export function useActesInscriptionsSauvegardesApiHook(

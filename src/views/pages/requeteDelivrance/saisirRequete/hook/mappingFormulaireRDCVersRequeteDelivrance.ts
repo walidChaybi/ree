@@ -1,3 +1,5 @@
+import { nettoyerAttributsDto } from "@model/commun/dtoUtils";
+import { CreationRequeteRDC, SaisieRequeteRDC } from "@model/form/delivrance/ISaisirRDCPageForm";
 import { ISaisieAdresse, ISaisieIdentite } from "@model/form/delivrance/ISaisirRequetePageForm";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
@@ -9,8 +11,6 @@ import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { IPieceJustificative, mapPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import DateUtils from "@util/DateUtils";
 import { DEUX, SNP, UN, auMoinsUneProprieteEstRenseigne, getValeurOuVide } from "@util/Utils";
-import { nettoyerAttributsDto } from "../../../../../dto/commun/dtoUtils";
-import { CreationRequeteRDC, SaisieRequeteRDC } from "../../../../../model/form/delivrance/ISaisirRDCPageForm";
 import { getPrenomsTableauStringVersPrenomsOrdonnes } from "./mappingCommun";
 
 export function mappingFormulaireRDCVersRequeteDelivrance(requeteRDC: CreationRequeteRDC): IRequeteDelivrance {

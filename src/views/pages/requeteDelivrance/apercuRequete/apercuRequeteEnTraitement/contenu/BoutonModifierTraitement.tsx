@@ -2,10 +2,10 @@ import {
   ICreationActionMiseAjourStatutEtRedirectionParams,
   useCreationActionMiseAjourStatutEtRedirectionHook
 } from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { IRequeteDelivrance } from "../../../../../../model/requete/IRequeteDelivrance";
 import LiensRECE from "../../../../../../router/LiensRECE";
 import { INFO_PAGE_APERCU_REQUETE_DELIVRANCE_PRISE_EN_CHARGE } from "../../../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import { getUrlWithParam, replaceUrl } from "../../../../../common/util/route/UrlUtil";

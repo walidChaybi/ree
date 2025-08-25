@@ -1,9 +1,9 @@
 import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { ISaisieParentSousForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
 import { TRequete } from "@model/requete/IRequete";
 import { Options } from "@util/Type";
 import { FormikProps, FormikValues } from "formik";
-import { ISaisieParentSousForm } from "./../../../../../model/form/creation/etablissement/ISaisiePostulantForm";
 import { traiteEspace } from "./ControlesUtil";
 
 export const NB_CARACT_MAX_SAISIE = "100";

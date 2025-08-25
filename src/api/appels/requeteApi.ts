@@ -1,3 +1,4 @@
+import { nettoyerAttributsDto } from "@model/commun/dtoUtils";
 import { IFiltreServiceRequeteCreationDto } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
 import { IFiltreServiceRequeteDelivranceDto } from "@model/form/delivrance/IFiltreServiceRequeteDelivrance";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
@@ -10,7 +11,6 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import { SortOrder } from "@widget/tableau/TableUtils";
-import { nettoyerAttributsDto } from "../../dto/commun/dtoUtils";
 import { HttpMethod } from "../ApiManager";
 import { URL_MENTION } from "./etatcivilApi";
 

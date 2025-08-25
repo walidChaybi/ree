@@ -1,8 +1,8 @@
 import { creationRequeteDelivrance } from "@api/appels/requeteApi";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
+import { CreationRequeteRDC } from "@model/form/delivrance/ISaisirRDCPageForm";
 import { useContext, useEffect, useState } from "react";
 import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
-import { CreationRequeteRDC } from "../../../../../model/form/delivrance/ISaisirRDCPageForm";
 import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
 import { ICreationOuMiseAJourRDCResultat } from "./SoumissionFormulaireRDCHook";
 import { mappingFormulaireRDCVersRequeteDelivrance } from "./mappingFormulaireRDCVersRequeteDelivrance";

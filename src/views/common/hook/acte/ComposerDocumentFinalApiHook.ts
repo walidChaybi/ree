@@ -1,8 +1,8 @@
 import { IErreurTraitementApi } from "@api/IErreurTraitementApi";
 import { composerDocumentFinal } from "@api/appels/etatcivilApi";
 import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
+import { IComposerDocumentFinalApiHookResultat } from "@model/signature/IComposerDocumentFinalApiHookResultat";
 import { useEffect, useState } from "react";
-import { IComposerDocumentFinalApiHookResultat } from "../../../../model/signature/IComposerDocumentFinalApiHookResultat";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export interface IComposerDocumentFinalApiHookParams {

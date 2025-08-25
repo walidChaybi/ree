@@ -2,7 +2,7 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { Option } from "@util/Type";
 /* v8 ignore start */
-import { nettoyerAttributsDto } from "../../../dto/commun/dtoUtils";
+import { nettoyerAttributsDto } from "../../commun/dtoUtils";
 /* v8 ignore stop */
 
 export interface IFiltreServiceRequeteDelivranceDto {

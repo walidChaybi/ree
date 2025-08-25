@@ -3,10 +3,10 @@ import { IMention } from "@model/etatcivil/acte/mention/IMention";
 import { ITypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { INatureMention, NatureMention } from "@model/etatcivil/enum/NatureMention";
+import { StatutMention } from "@model/etatcivil/enum/StatutMention";
 import DateUtils from "@util/DateUtils";
 import { useEffect, useState } from "react";
 import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
-import { StatutMention } from "./../../../../../model/etatcivil/enum/StatutMention";
 
 export interface IMentionsParams {
   idActe: string;

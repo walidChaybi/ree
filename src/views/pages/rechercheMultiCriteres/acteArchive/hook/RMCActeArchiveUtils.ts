@@ -1,10 +1,10 @@
 import { getCriteresTitulaire } from "@hook/rmcActeInscription/mapping/RMCMappingUtil";
+import { nettoyerAttributsDto } from "@model/commun/dtoUtils";
 import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { ETypeFamille } from "@model/etatcivil/enum/TypeFamille";
 import { IRMCArchiveRequest } from "@model/rmc/acteArchive/envoi/IRMCArchiveRequest";
 import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import DateUtils from "@util/DateUtils";
-import { nettoyerAttributsDto } from "../../../../../dto/commun/dtoUtils";
 
 /** Critères de recherche: mapping avant appel d'api */
 export const mappingCriteresRMCArchive = (criteres: IRMCActeArchive): IRMCArchiveRequest =>

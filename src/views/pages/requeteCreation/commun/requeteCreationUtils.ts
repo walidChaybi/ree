@@ -1,12 +1,12 @@
 import { NavigationApercuReqCreationParams } from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
 import { Requete } from "@model/requete/IRequete";
+import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { ESousTypeCreation, SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { UN } from "@util/Utils";
-import { IRequeteCreationEtablissement } from "./../../../../model/requete/IRequeteCreationEtablissement";
-import { ITitulaireRequeteCreation } from "./../../../../model/requete/ITitulaireRequeteCreation";
 
 export function setParamsUseApercuCreation(
   idRequete: string,

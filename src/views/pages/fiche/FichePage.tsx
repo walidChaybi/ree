@@ -7,6 +7,7 @@ import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { EOrigineActe } from "@model/etatcivil/enum/EOrigineActe";
 import { EStatutActe } from "@model/etatcivil/enum/EStatutActe";
 import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { EOptionMiseAJourActe, OptionMiseAJourActe } from "@model/etatcivil/enum/OptionMiseAJourActe";
 import { TitulaireRequeteMiseAJour } from "@model/requete/ITitulaireRequeteMiseAJour";
 import { SousTypeMiseAJour } from "@model/requete/enum/SousTypeMiseAJour";
@@ -25,7 +26,6 @@ import { useNavigate } from "react-router";
 import { IFenetreExterneRef } from "../../../composants/commun/conteneurs/FenetreExterne";
 import { RECEContextData } from "../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
-import { ETypeFiche } from "../../../model/etatcivil/enum/ETypeFiche";
 import LiensRECE from "../../../router/LiensRECE";
 import {
   INFO_PAGE_MISE_A_JOUR_ANALYSE_MARGINALE,

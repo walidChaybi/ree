@@ -8,7 +8,7 @@ import { getStatuts } from "@pages/fiche/hook/constructionComposants/statut/Stat
 import { triListeObjetsSurPropriete } from "@util/Utils";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPartProps } from "@widget/section/SectionPart";
-import { champsObligatoiresDuDtoAbsents, valeurDtoAbsenteDansEnum } from "../../../dto/commun/dtoUtils";
+import { champsObligatoiresDuDtoAbsents, valeurDtoAbsenteDansEnum } from "../../commun/dtoUtils";
 import { ETypeFiche } from "../enum/ETypeFiche";
 import { ETypeInscriptionRc } from "../enum/ETypeInscriptionRc";
 import { ETypeInscriptionRca } from "../enum/ETypeInscriptionRca";

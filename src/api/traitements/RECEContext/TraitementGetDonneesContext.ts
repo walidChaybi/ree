@@ -2,13 +2,12 @@ import { CONFIG_GET_TOUS_SERVICES } from "@api/configurations/agent/services/Get
 import { CONFIG_GET_TOUS_UTILISATEURS } from "@api/configurations/agent/utilisateur/GetUtilisateursConfigApi";
 import { CONFIG_GET_DECRETS } from "@api/configurations/etatCivil/repertoireCivil/GetDecretsConfigApi";
 import { gereErreur } from "@hook/requete/PrendreEnChargeAleatoirementApiHook";
-import { IService, Service } from "@model/agent/IService";
+import { IService, IServiceDto, Service, ServiceDto } from "@model/agent/IService";
 import { IUtilisateurDto, Utilisateur } from "@model/agent/Utilisateur";
 import { THeader } from "@model/api/Api";
 import { Decret, IDecret } from "@model/etatcivil/commun/IDecret";
 import { UN, ZERO } from "@util/Utils";
 import { useEffect, useState } from "react";
-import IServiceDto, { ServiceDto } from "../../../dto/etatcivil/agent/IServiceDto";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import { TRAITEMENT_SANS_ERREUR, TTraitementApi } from "../TTraitementApi";
 

@@ -2,7 +2,6 @@ import { ETypePacsRcRca } from "@model/etatcivil/enum/ETypePacsRcRca";
 import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { EFamilleRegistre } from "@model/etatcivil/enum/TypeFamille";
 import { EBlocsRMC } from "../../../contexts/RMCContextProvider";
-import { nettoyerAttributsDto } from "../../../dto/commun/dtoUtils";
 import {
   ASTERISQUE_PRECEDE_DEUX,
   ASTERISQUE_PRECEDE_ESPACE,
@@ -12,6 +11,7 @@ import {
   CaracteresAutorisesRecherchePays
 } from "../../../ressources/Regex";
 import SchemaValidation, { messagesErreur } from "../../../utils/SchemaValidation";
+import { nettoyerAttributsDto } from "../../commun/dtoUtils";
 import { ConditionChamp, EOperateurCondition } from "../commun/ConditionChamp";
 import { IDateHeureForm } from "../commun/DateForm";
 import { INumeroRcRcaPacs, numeroRcRcaPacsVersDto } from "../commun/NumeroRcRcaPacsForm";

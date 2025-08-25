@@ -13,6 +13,7 @@ import {
 } from "@composant/formulaire/ConstantesNomsForm";
 import { IDetailRequeteParams, useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
+import { SaisieRequeteRDC } from "@model/form/delivrance/ISaisirRDCPageForm";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
@@ -30,7 +31,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import * as Yup from "yup";
 import { RECEContextData } from "../../../../contexts/RECEContextProvider";
-import { SaisieRequeteRDC } from "../../../../model/form/delivrance/ISaisirRDCPageForm";
 import LiensRECE from "../../../../router/LiensRECE";
 import { INFO_PAGE_MODIFICATION_REQUETE_DELIVRANCE_EXTRAIT_COPIE_COURRIER } from "../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import { PieceJointe, getPiecesJointesNonVides } from "../../../../utils/FileUtils";

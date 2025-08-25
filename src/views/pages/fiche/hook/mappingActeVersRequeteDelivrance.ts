@@ -1,3 +1,4 @@
+import { nettoyerAttributsDto } from "@model/commun/dtoUtils";
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { IFiliation } from "@model/etatcivil/acte/IFiliation";
@@ -14,7 +15,6 @@ import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { TypeLienRequerant } from "@model/requete/enum/TypeLienRequerant";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { mapPrenomsVersPrenomsOrdonnes } from "@util/Utils";
-import { nettoyerAttributsDto } from "../../../../dto/commun/dtoUtils";
 
 export const mappingActeVersRequeteDelivrance = (acte: IFicheActe, numeroFonctionnel?: string): IRequeteDelivrance => {
   const requete = {

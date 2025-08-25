@@ -63,6 +63,7 @@ import {
   ISaisieDate,
   ISaisieDateNaissanceOuAgeDe,
   ISaisieLieuNaissance,
+  ISaisieLieuNaissanceParent,
   ISaisieParentSousForm,
   ISaisiePostulantSousForm,
   ISaisiePrenoms,
@@ -86,7 +87,6 @@ import {
   rempliAGaucheAvecZero
 } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
-import { ISaisieLieuNaissanceParent } from "./../../../../../../../../../model/form/creation/etablissement/ISaisiePostulantForm";
 import { mapFrancisationPostulant } from "./mappingTitulaireVersFormulairePostulant";
 
 export const mappingProjetActeVersFormulairePostulant = (

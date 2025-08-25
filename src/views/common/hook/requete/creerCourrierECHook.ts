@@ -1,6 +1,7 @@
 import { IGenerationCourrierParams, useGenerationCourrierHook } from "@hook/requete/GenerationCourrierHook";
 import { FicheActe, IFicheActe, necessiteMentionNationalite } from "@model/etatcivil/acte/IFicheActe";
 import { mappingVersMentionApi, Mention } from "@model/etatcivil/acte/mention/IMention";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentEC } from "@model/requete/enum/DocumentEC";
@@ -19,7 +20,6 @@ import {
 import { IGenerationECParams, IGenerationECResultat, useGenerationEC } from "../generation/generationECHook/generationECHook";
 import { estPresentIdActeEtChoixDelivrance } from "../generation/generationECHook/generationECHookUtil";
 import { IResultGenerationUnDocument } from "../generation/generationUtils";
-import { NatureActe } from "./../../../../model/etatcivil/enum/NatureActe";
 
 export interface ICreerCourrierECParams {
   idActe?: string;

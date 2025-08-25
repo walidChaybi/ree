@@ -1,5 +1,5 @@
 import DateUtils, { TDateArrayDTO } from "@util/DateUtils";
-import { champsObligatoiresDuDtoAbsents } from "../../../dto/commun/dtoUtils";
+import { champsObligatoiresDuDtoAbsents } from "../../commun/dtoUtils";
 import { IPersonneDTO, Personne } from "../commun/Personne";
 import { IAlerte } from "../fiche/IAlerte";
 import { IStatutFicheDTO, StatutFiche } from "../fiche/StatutFiche";

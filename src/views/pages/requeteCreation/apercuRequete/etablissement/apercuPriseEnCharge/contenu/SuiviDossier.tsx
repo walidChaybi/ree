@@ -1,4 +1,7 @@
 import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
+import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
+import { IEchange } from "@model/requete/IEchange";
+import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { SituationFamiliale } from "@model/requete/enum/SituationFamiliale";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
@@ -8,13 +11,11 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import React, { useState } from "react";
 import { useParams } from "react-router";
-import { TUuidRequeteParams } from "../../../../../../../model/params/TUuidRequeteParams";
-import { IEchange } from "../../../../../../../model/requete/IEchange";
-import { IRequeteCreationEtablissement } from "../../../../../../../model/requete/IRequeteCreationEtablissement";
 import { Item } from "../../commun/resumeRequeteCreationEtablissement/items/Item";
 import "../../commun/scss/OngletsApercuCreationEtablissement.scss";
 import { ItemEchangesRetourSDANF } from "./ItemEchangesRetourSDANF";
 import { ListeActionsRetourSDANF } from "./ListeActions";
+
 interface ISuiviDossierProps {
   echanges?: IEchange[];
   requete: IRequeteCreationEtablissement;

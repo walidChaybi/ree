@@ -4,8 +4,8 @@ import { ETypeFamille } from "@model/etatcivil/enum/TypeFamille";
 import { IPrenomOrdonneDto } from "@model/form/commun/PrenomsForm";
 import { IDateDto } from "@util/DateUtils";
 import { formatNoms, jointPrenoms } from "@util/Utils";
-import { champsObligatoiresDuDtoAbsents, valeurDtoAbsenteDansEnum } from "../../../../dto/commun/dtoUtils";
 import DateRECE from "../../../../utils/DateRECE";
+import { champsObligatoiresDuDtoAbsents, valeurDtoAbsenteDansEnum } from "../../../commun/dtoUtils";
 
 // CODE EXEMPLE développement OBJET des modèles métier + contrôle des DTO
 

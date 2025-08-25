@@ -57,13 +57,13 @@ import { ITitulaireRequete, TitulaireRequete } from "@model/requete/ITitulaireRe
 import { Qualite } from "@model/requete/enum/Qualite";
 import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
+import { TypeRequerantRDC } from "@model/requete/enum/TypeRequerantRDC";
 import { DEUX, UN } from "@util/Utils";
 import { PieceJointe } from "../../../../../utils/FileUtils";
 import { AutreProfessionnelFormDefaultValues } from "../sousFormulaires/requerant/autreProfessionnel/AutreProfessionnelForm";
 import { InstitutionnelFormDefaultValues } from "../sousFormulaires/requerant/institutionnel/InstitutionnelForm";
 import { MandataireFormDefaultValues } from "../sousFormulaires/requerant/mandataire/MandataireForm";
 import { ParticulierFormDefaultValues } from "../sousFormulaires/requerant/particulier/ParticulierForm";
-import { TypeRequerantRDC } from "./../../../../../model/requete/enum/TypeRequerantRDC";
 
 export function getPrenomsTableauStringVersPrenomsOrdonnes(prenoms?: Prenoms): IPrenomOrdonnes[] {
   const prenomsInteresse = [] as IPrenomOrdonnes[];

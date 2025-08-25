@@ -61,7 +61,6 @@ export default defineConfig({
   resolve: {
     alias: {
       "@api": path.resolve(__dirname, "/src/api"),
-      "@dto": path.resolve(__dirname, "/src/dto"),
       "@mock": path.resolve(__dirname, "/src/__tests__/mock"),
       "@model": path.resolve(__dirname, "/src/model"),
       "@ressources": path.resolve(__dirname, "/src/ressources"),

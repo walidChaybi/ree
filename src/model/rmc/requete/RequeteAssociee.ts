@@ -6,8 +6,8 @@ import { ESousTypeMiseAJour } from "@model/requete/enum/SousTypeMiseAJour";
 import { TSousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { ETypeRequete } from "@model/requete/enum/TypeRequete";
-import { valeurDtoAbsenteDansEnum } from "../../../dto/commun/dtoUtils";
 import DateRECE from "../../../utils/DateRECE";
+import { valeurDtoAbsenteDansEnum } from "../../commun/dtoUtils";
 import { TitulaireRequeteAssociee } from "./TitulaireRequeteAssociee";
 
 export type TRequeteAssociee =
