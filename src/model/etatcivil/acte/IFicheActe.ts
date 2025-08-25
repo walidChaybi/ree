@@ -56,7 +56,7 @@ export interface IFicheActe {
   mentions?: IMention[];
   numeroActeElectronique?: number;
   referenceActe: string;
-  referenceRegistre?: string;
+  referenceSignifiante?: string;
   origine: keyof typeof EOrigineActe;
   statut: EStatutActe;
 }

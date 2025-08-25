@@ -47,6 +47,7 @@ export const LienFiche: React.FC<IDataLienFicheProps> = props => {
           setFenetreExterneRef={ref => setFenetreExterneRef(ref)}
         >
           <FichePage
+            dataFicheIdentifiant={props.identifiant}
             datasFiches={[
               {
                 identifiant: props.identifiant,
