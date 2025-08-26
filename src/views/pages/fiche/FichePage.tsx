@@ -26,6 +26,7 @@ import { useNavigate } from "react-router";
 import { IFenetreExterneRef } from "../../../composants/commun/conteneurs/FenetreExterne";
 import { RECEContextData } from "../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
+import { estIFicheActe } from "../../../model/etatcivil/enum/ETypeFiche";
 import LiensRECE from "../../../router/LiensRECE";
 import {
   INFO_PAGE_MISE_A_JOUR_ANALYSE_MARGINALE,
@@ -81,7 +82,7 @@ export const FichePage: React.FC<FichePageProps> = ({
 }) => {
   const navigate = useNavigate();
   const [actualisationInfosFiche, setActualisationInfosFiche] = useState<boolean>(false);
-  const [dataFicheCourante, setDataFicheCourante] = useState<IDataFicheProps | undefined>(
+  const [ficheCourante, setFicheCourante] = useState<IDataFicheProps | undefined>(
     datasFiches[getIndexLocal(index.value, nbLignesParAppel)]
   );
   const [optionMiseAJour, setOptionMiseAJour] = useState<EOptionMiseAJourActe | null>(null);
@@ -91,31 +92,29 @@ export const FichePage: React.FC<FichePageProps> = ({
   const { appelApi: appelPostRequeteMiseAJour } = useFetchApi(CONFIG_POST_REQUETE_MISE_A_JOUR);
 
   useEffect(() => {
-    setDataFicheCourante(datasFiches[getIndexLocal(indexCourant, nbLignesParAppel)]);
+    setFicheCourante(datasFiches[getIndexLocal(indexCourant, nbLignesParAppel)]);
   }, [datasFiches]);
 
   // (*) Permet de résoudre le pb de la fenêtre fiche déjà ouverte
   // Si l'utilisateur clique sur une fenêtre fiche déjà ouverte (et qu'il a déjà navigué dedans) alors l'index aura changé (cf. onClickOnLine RMCTableauActes par exemple ),
   //   on peut ainsi mettre à jour l'index courant avec l'index passé en props
-  // A noté que ce useEffect passe après le précédent et qu'il écrase donc la dataFicheCourante précédemment mise à jour par le useEffect ci-dessus
+  // A noté que ce useEffect passe après le précédent et qu'il écrase donc la ficheCourante précédemment mise à jour par le useEffect ci-dessus
   useEffect(() => {
     setIndexCourant(index.value);
-    setDataFicheCourante(datasFiches[getIndexLocal(index.value, nbLignesParAppel)]);
+    setFicheCourante(datasFiches[getIndexLocal(index.value, nbLignesParAppel)]);
   }, [index]);
 
   const { utilisateurConnecte } = useContext(RECEContextData);
 
-  const { dataFicheState } = useFichePageApiHook(actualisationInfosFiche, dataFicheCourante?.categorie, dataFicheCourante?.identifiant);
+  const { fiche } = useFichePageApiHook(actualisationInfosFiche, ficheCourante?.categorie, ficheCourante?.identifiant);
 
-  const { bandeauFiche, panelsFiche, alertes, visuBoutonAlertes } = setFiche(utilisateurConnecte, dataFicheCourante, dataFicheState.data);
+  const { bandeauFiche, panelsFiche, alertes, visuBoutonAlertes } = setFiche(utilisateurConnecte, ficheCourante, fiche);
 
   const droitsMiseAJour = useMemo(() => {
     const droitMentions = utilisateurConnecte.estHabilitePour({ leDroit: Droit.METTRE_A_JOUR_ACTE });
     const droitAnalyseMarginale = utilisateurConnecte.estHabilitePour({ leDroit: Droit.MODIFIER_ANALYSE_MARGINALE });
 
-    const donneesActe = dataFicheState?.data;
-
-    if (!donneesActe) {
+    if (!fiche) {
       return {
         autorise: false,
         mentions: droitMentions,
@@ -123,24 +122,32 @@ export const FichePage: React.FC<FichePageProps> = ({
       };
     }
 
-    const autorise =
-      (EOrigineActe[dataFicheState?.data?.origine as keyof typeof EOrigineActe] === EOrigineActe.RECE &&
-        (droitMentions || droitAnalyseMarginale)) ||
-      (estActeEligibleMentionDIntegration(dataFicheState?.data) &&
-        dataFicheCourante?.categorie === ETypeFiche.ACTE &&
-        dataFicheState.data.statut !== EStatutActe.BROUILLON &&
-        droitMentions &&
-        utilisateurConnecte.estHabilitePour({ leDroit: Droit.SIGNER_MENTION_INTEGRATION }));
+    let autorise = false;
+
+    if (estIFicheActe(fiche)) {
+      const estActeValide = ficheCourante?.categorie === ETypeFiche.ACTE && fiche.statut !== EStatutActe.BROUILLON;
+
+      if (estActeValide) {
+        const estOrigineRece = EOrigineActe[fiche?.origine as keyof typeof EOrigineActe] === EOrigineActe.RECE;
+
+        const peutSignerMentionIntegration =
+          estActeEligibleMentionDIntegration(fiche) &&
+          droitMentions &&
+          utilisateurConnecte.estHabilitePour({ leDroit: Droit.SIGNER_MENTION_INTEGRATION });
+
+        autorise = (estOrigineRece && (droitMentions || droitAnalyseMarginale)) || peutSignerMentionIntegration;
+      }
+    }
 
     return {
       autorise,
       mentions: droitMentions,
       AnalyseMarginale: droitAnalyseMarginale
     };
-  }, [dataFicheState, dataFicheCourante, utilisateurConnecte]);
+  }, [fiche, ficheCourante, utilisateurConnecte]);
 
   useEffect(() => {
-    const idActe = dataFicheState?.data?.id;
+    const idActe = fiche?.id;
     if (!(optionMiseAJour && idActe)) {
       return;
     }
@@ -148,50 +155,52 @@ export const FichePage: React.FC<FichePageProps> = ({
     const estAnalyseMarginale = optionMiseAJour === EOptionMiseAJourActe.ANALYSE_MARGINALE;
     const sousTypeOptionMiseAJour = OptionMiseAJourActe.getSousType(optionMiseAJour);
 
-    appelPostRequeteMiseAJour({
-      parametres: {
-        body: {
-          idActeMAJ: idActe,
-          choixMAJ: estAnalyseMarginale ? "MAJ_ACTE_ANALYSE_MARGINALE" : "MAJ_ACTE_APPOSER_MENTION",
-          sousType: sousTypeOptionMiseAJour.nom,
-          titulaires: TitulaireRequeteMiseAJour.listeDepuisDonneesFiche(dataFicheState.data.titulaires)
-        }
-      },
-      apresSucces: reponse => {
-        const urlNavigation = (() => {
-          switch (true) {
-            case estAnalyseMarginale:
-              return LiensRECE.genererLien(INFO_PAGE_MISE_A_JOUR_ANALYSE_MARGINALE.url, {
-                idRequeteParam: reponse.id,
-                idActeParam: idActe
-              });
-            case SousTypeMiseAJour.estRMAC(sousTypeOptionMiseAJour):
-              return LiensRECE.genererLien(INFO_PAGE_MISE_A_JOUR_MENTION_SUITE_AVIS.url, {
-                idRequeteParam: reponse.id,
-                idActeParam: idActe
-              });
-            default:
-              return LiensRECE.genererLien(INFO_PAGE_MISE_A_JOUR_MENTION_AUTRE.url, { idRequeteParam: reponse.id, idActeParam: idActe });
+    if (estIFicheActe(fiche)) {
+      appelPostRequeteMiseAJour({
+        parametres: {
+          body: {
+            idActeMAJ: idActe,
+            choixMAJ: estAnalyseMarginale ? "MAJ_ACTE_ANALYSE_MARGINALE" : "MAJ_ACTE_APPOSER_MENTION",
+            sousType: sousTypeOptionMiseAJour.nom,
+            titulaires: TitulaireRequeteMiseAJour.listeDepuisDonneesFiche(fiche.titulaires)
           }
-        })();
+        },
+        apresSucces: reponse => {
+          const urlNavigation = (() => {
+            switch (true) {
+              case estAnalyseMarginale:
+                return LiensRECE.genererLien(INFO_PAGE_MISE_A_JOUR_ANALYSE_MARGINALE.url, {
+                  idRequeteParam: reponse.id,
+                  idActeParam: idActe
+                });
+              case SousTypeMiseAJour.estRMAC(sousTypeOptionMiseAJour):
+                return LiensRECE.genererLien(INFO_PAGE_MISE_A_JOUR_MENTION_SUITE_AVIS.url, {
+                  idRequeteParam: reponse.id,
+                  idActeParam: idActe
+                });
+              default:
+                return LiensRECE.genererLien(INFO_PAGE_MISE_A_JOUR_MENTION_AUTRE.url, { idRequeteParam: reponse.id, idActeParam: idActe });
+            }
+          })();
 
-        navigate(urlNavigation);
-      },
-      apresErreur: erreurs => {
-        const messageErreur = erreurs[ZERO]?.code === "FCT_15181" ? erreurs[ZERO]?.message : "";
+          navigate(urlNavigation);
+        },
+        apresErreur: erreurs => {
+          const messageErreur = erreurs[ZERO]?.code === "FCT_15181" ? erreurs[ZERO]?.message : "";
 
-        AfficherMessage.erreur(messageErreur || "Impossible d'accéder à la requête de mise à jour de l'acte", {
-          erreurs
-        });
-      },
-      finalement: () => setOptionMiseAJour(null)
-    });
+          AfficherMessage.erreur(messageErreur || "Impossible d'accéder à la requête de mise à jour de l'acte", {
+            erreurs
+          });
+        },
+        finalement: () => setOptionMiseAJour(null)
+      });
+    }
   }, [optionMiseAJour]);
 
   // Obligatoire pour les styles qui sont chargés dynamiquement
   useEffect(() => {
-    if (dataFicheState.data && dataFicheState.data.id === dataFicheCourante?.identifiant) {
-      if (dataFicheState.data != null) {
+    if (fiche && fiche.id === ficheCourante?.identifiant) {
+      if (fiche != null) {
         const event = new CustomEvent("refreshStyles");
         if (window.top) {
           window.top.dispatchEvent(event);
@@ -201,16 +210,16 @@ export const FichePage: React.FC<FichePageProps> = ({
         fenetreExterneRef.ref.document.title = bandeauFiche.titreFenetre;
       }
     }
-  }, [dataFicheState.data, fenetreExterneRef, bandeauFiche, dataFicheCourante]);
+  }, [fiche, fenetreExterneRef, bandeauFiche, ficheCourante]);
 
   const setIndexFiche = useCallback(
     (idx: number) => {
-      if (dataFicheCourante && datasFiches && idx >= 0 && idx < nbLignesTotales) {
-        setDataFicheCourante(datasFiches[getIndexLocal(idx, nbLignesParAppel)]);
+      if (ficheCourante && datasFiches && idx >= 0 && idx < nbLignesTotales) {
+        setFicheCourante(datasFiches[getIndexLocal(idx, nbLignesParAppel)]);
       }
       setIndexCourant(idx);
     },
-    [dataFicheCourante, datasFiches, indexCourant, nbLignesParAppel, nbLignesTotales]
+    [ficheCourante, datasFiches, indexCourant, nbLignesParAppel, nbLignesTotales]
   );
 
   /* Ajout d'une alerte */
@@ -219,12 +228,12 @@ export const FichePage: React.FC<FichePageProps> = ({
   const ajouterAlerteCallBack = useCallback(
     (value: IAjouterAlerteFormValue) => {
       setAjouterAlerteActeApiHookParameters({
-        idActe: dataFicheState?.data?.id,
+        idActe: fiche?.id ?? "",
         idTypeAlerte: value?.idTypeAlerte,
         complementDescription: value?.complementDescription
       });
     },
-    [dataFicheState]
+    [fiche]
   );
 
   const alerte = useAddAlerteActeApiHook(ajouterAlerteActeApiHookParameters);
@@ -253,12 +262,12 @@ export const FichePage: React.FC<FichePageProps> = ({
 
   return (
     <div className="FichePage">
-      {bandeauFiche && panelsFiche && dataFicheState && dataFicheCourante ? (
+      {bandeauFiche && panelsFiche && fiche && ficheCourante ? (
         <>
           <BandeauFiche
             dataBandeau={bandeauFiche}
             elementNumeroLigne={
-              dataFicheCourante.categorie === ETypeFiche.ACTE ? (
+              ficheCourante.categorie === ETypeFiche.ACTE ? (
                 <BandeauFicheActeNumero dataBandeau={bandeauFiche} />
               ) : (
                 <BandeauFicheRcRcaPacsNumero dataBandeau={bandeauFiche} />
@@ -276,11 +285,11 @@ export const FichePage: React.FC<FichePageProps> = ({
             </div>
           )}
 
-          {dataFicheCourante.categorie === ETypeFiche.ACTE && (
+          {estIFicheActe(fiche) && ficheCourante.categorie === ETypeFiche.ACTE && (
             <div className="headerFichePage">
               <BandeauAlertesActe
                 alertes={alertes}
-                idTypeRegistre={dataFicheState.data?.registre?.type?.id}
+                idTypeRegistre={fiche?.registre?.type?.id}
                 ajouterAlerteCallBack={ajouterAlerteCallBack}
                 supprimerAlerteCallBack={supprimerAlerteCallBack}
                 afficherBouton={visuBoutonAlertes}
@@ -300,18 +309,18 @@ export const FichePage: React.FC<FichePageProps> = ({
                   disableScrollLock={true}
                 />
               )}
-              {dataFicheState.data &&
+              {fiche &&
                 !(
                   utilisateurConnecte.estHabilitePour({
                     leDroit: Droit.CONSULTER,
-                    pourIdTypeRegistre: dataFicheState.data.registre?.type?.id
+                    pourIdTypeRegistre: fiche.registre?.type?.id
                   }) || utilisateurConnecte.estHabilitePour({ leDroit: Droit.CONSULTER, surLePerimetre: Perimetre.TOUS_REGISTRES })
                 ) &&
                 gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) && (
                   <BoutonCreationRDD
                     label="Demander la délivrance"
                     labelPopin={`Vous allez demander la délivrance de cet acte. Souhaitez-vous continuer ?`}
-                    acte={dataFicheState.data}
+                    acte={fiche}
                     numeroFonctionnel={numeroRequete}
                   />
                 )}

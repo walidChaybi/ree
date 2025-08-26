@@ -56,6 +56,7 @@ export function mapActe(data: any): IFicheActe {
   dataActe.analyseMarginales = mapAnalysesMarginales(data.analyseMarginales);
   dataActe.titulaires = mapTitulaires(data.titulaires);
   dataActe.origine = data.origine;
+
   return dataActe;
 }
 
