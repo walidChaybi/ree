@@ -50,7 +50,7 @@ export function ajouterContentPartAuPartUneValeurVide(panel: SectionContentProps
   if (libelle != null && info != null && info !== "") {
     panel.push({
       libelle,
-      value: <span>{info}</span>
+      value: <span className="break-all">{info}</span>
     });
   } else if (libelle) {
     panel.push({
