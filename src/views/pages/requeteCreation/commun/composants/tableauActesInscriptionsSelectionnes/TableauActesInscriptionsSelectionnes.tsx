@@ -9,7 +9,7 @@ interface ITableauActesInscriptionsSelectionnesProps {
   onClickBoutonRetirerActeInscription: (data: IDataTableauActeInscriptionSelectionne) => void;
 }
 
-export const EN_TETES_ACTE_INSCRIPTION_SELECTIONNE = [
+const EN_TETES_ACTE_INSCRIPTION_SELECTIONNE = [
   {
     cle: "nom",
     libelle: "Nom"

@@ -9,7 +9,7 @@ export enum ETypeFiche {
   ACTE = "ACTE"
 }
 
-export type TFiche = FicheRcRca | FichePacs | IFicheActe;
+type TFiche = FicheRcRca | FichePacs | IFicheActe;
 
 /* v8 ignore start */
 export const estIFicheActe = (data: TFiche): data is IFicheActe => {

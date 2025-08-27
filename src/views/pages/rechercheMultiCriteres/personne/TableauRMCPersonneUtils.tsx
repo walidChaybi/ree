@@ -58,7 +58,7 @@ export function getColonnesTableauPersonnes(): TableauTypeColumn[] {
   ];
 }
 
-export function getColonnesTableauDocuments(): TableauTypeColumn[] {
+function getColonnesTableauDocuments(): TableauTypeColumn[] {
   return [
     new TableauTypeColumn({
       keys: [HeaderTableauRMCPersonne.NATURE.nom],
