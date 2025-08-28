@@ -6,9 +6,9 @@ import { IRMCRequeteForm } from "@model/rmc/requete/IRMCRequete";
 import { RequeteTableauRMC, TRequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 import { IParamsTableau, getParamsTableauDepuisHeaders } from "@util/GestionDesLiensApi";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
-import { AutoScroll } from "@widget/autoScroll/autoScroll";
-import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
+import DefilementAutomatique from "../../../../composants/commun/defilementAutomatique/DefilementAutomatique";
 import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
 import AfficherMessage from "../../../../utils/AfficherMessage";
@@ -71,8 +71,6 @@ export const RMCRequetePage: React.FC = () => {
     }
   }, [dataRMCRequete]);
 
-  const RMCRequeteRef = useRef();
-
   return (
     <>
       <OperationEnCours
@@ -83,10 +81,7 @@ export const RMCRequetePage: React.FC = () => {
         setValuesRMCRequete={setValuesRMCRequete}
         setCriteresRechercheRequete={lancerRercherche}
       />
-      <AutoScroll
-        autoScroll={Boolean(dataRMCRequete)}
-        baliseRef={RMCRequeteRef}
-      />
+      <DefilementAutomatique faireDefiler={Boolean(dataRMCRequete)} />
 
       {dataRMCRequete &&
         dataTableauRMCRequete &&

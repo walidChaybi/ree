@@ -8,9 +8,10 @@ import {
   NB_LIGNES_PAR_PAGE_ACTE,
   NB_LIGNES_PAR_PAGE_INSCRIPTION
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
+import DefilementAutomatique from "../../../../composants/commun/defilementAutomatique/DefilementAutomatique";
 import { useRMCActeApiHook } from "../../../../hooks/rmc/RMCActeApiHook";
 import { useRMCInscriptionApiHook } from "../../../../hooks/rmc/RMCInscriptionApiHook";
 import AfficherMessage, { TOASTCONTAINER_PRINCIPAL } from "../../../../utils/AfficherMessage";
@@ -31,8 +32,6 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({ 
   const [nouvelleRMCActeInscription, setNouvelleRMCActeInscription] = useState<boolean>(false);
   const [criteresRechercheActe, setCriteresRechercheActe] = useState<ICriteresRechercheActeInscription>();
   const [criteresRechercheInscription, setCriteresRechercheInscription] = useState<ICriteresRechercheActeInscription>();
-
-  const tableauResultatRef = useRef<HTMLDivElement | null>(null);
 
   const resultatRMCActe = useRMCActeApiHook(criteresRechercheActe);
   const resultatRMCInscription = useRMCInscriptionApiHook(criteresRechercheInscription);
@@ -74,15 +73,7 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({ 
     },
     [dansFenetreExterne]
   );
-  useEffect(() => {
-    if (
-      resultatRMCActe.resultat?.dataRMCActe &&
-      resultatRMCActe.resultat.dataTableauRMCActe &&
-      resultatRMCInscription.resultat?.dataRMCInscription &&
-      resultatRMCInscription.resultat.dataTableauRMCInscription
-    )
-      tableauResultatRef?.current?.scrollIntoView({ behavior: "smooth" });
-  }, [resultatRMCActe, resultatRMCInscription]);
+
   return (
     <>
       <OperationEnCours
@@ -90,6 +81,7 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({ 
         onTimeoutEnd={() => setOpEnCours(false)}
       ></OperationEnCours>
       <RMCActeInscription onSubmit={onSubmitRMCActeInscription} />
+      <DefilementAutomatique faireDefiler={Boolean(resultatRMCActe && resultatRMCInscription)} />
       {resultatRMCActe.resultat?.dataRMCActe &&
         resultatRMCActe.resultat?.dataTableauRMCActe &&
         resultatRMCInscription.resultat?.dataRMCInscription &&
@@ -98,7 +90,6 @@ export const RMCActeInscriptionPage: React.FC<RMCActeInscriptionPageProps> = ({ 
           <PageChargeur />
         ) : (
           <RMCActeInscriptionResultats
-            ref={tableauResultatRef}
             typeRMC="Classique"
             dataRMCActe={resultatRMCActe.resultat.dataRMCActe}
             dataTableauRMCActe={resultatRMCActe.resultat.dataTableauRMCActe}

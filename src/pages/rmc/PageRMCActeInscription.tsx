@@ -6,9 +6,10 @@ import {
   NB_LIGNES_PAR_PAGE_ACTE,
   NB_LIGNES_PAR_PAGE_INSCRIPTION
 } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import TRAITEMENT_RMC_ACTES_INSCRIPTIONS, { IResultatRMCActesInscriptions } from "@api/traitements/rmc/TraitementRMCActesInscriptions";
+import DefilementAutomatique from "../../composants/commun/defilementAutomatique/DefilementAutomatique";
 import RMCActeInscription from "../../composants/pages/rmc/formulaire/RMCActeInscription";
 import { RMCContextProvider } from "../../contexts/RMCContextProvider";
 import useTraitementApi from "../../hooks/api/TraitementApiHook";
@@ -25,13 +26,7 @@ const PageRMCActeInscription: React.FC = () => {
   const [nouvelleRMCActeInscription, setNouvelleRMCActeInscription] = useState<boolean>(false);
   const [resultatRMCActeInscription, setResultatRMCActeInscription] = useState<IResultatRMCActesInscriptions | null>(null);
 
-  const tableauResultatRef = useRef<HTMLDivElement | null>(null);
-
   const { lancerTraitement, traitementEnCours: enAttenteRMC } = useTraitementApi(TRAITEMENT_RMC_ACTES_INSCRIPTIONS);
-
-  useEffect(() => {
-    if (resultatRMCActeInscription) tableauResultatRef?.current?.scrollIntoView({ behavior: "smooth" });
-  }, [resultatRMCActeInscription]);
 
   const onSubmitRMCActeInscription = (valeurs: IRMCActeInscriptionForm) => {
     StockageLocal.stocker("CRITERES_RMC_ACTE_INSCRIPTION", valeurs);
@@ -51,10 +46,9 @@ const PageRMCActeInscription: React.FC = () => {
       <RMCContextProvider>
         <RMCActeInscription onSubmit={onSubmitRMCActeInscription} />
       </RMCContextProvider>
-
+      <DefilementAutomatique faireDefiler={Boolean(resultatRMCActeInscription)} />
       {resultatRMCActeInscription && (
         <RMCActeInscriptionResultats
-          ref={tableauResultatRef}
           typeRMC="Classique"
           dataRMCActe={resultatRMCActeInscription.resultatRMCActe}
           dataTableauRMCActe={resultatRMCActeInscription.paramsTableauRMCActe}

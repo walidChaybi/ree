@@ -999,5 +999,8 @@ exports[`Le formulaire s'affiche correctement 1`] = `
       </div>
     </div>
   </form>
+  <div
+    aria-hidden="true"
+  />
 </div>
 `;
