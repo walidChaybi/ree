@@ -91,7 +91,11 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
     setMenuReponsesProposees(e.currentTarget);
   };
 
-  const handleCloseMenu = () => {
+  const handleCloseMenu = (e: React.SyntheticEvent) => {
+    if (e) {
+      e.stopPropagation();
+    }
+
     setMenuReponsesProposees(null);
   };
 
