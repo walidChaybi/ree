@@ -51,7 +51,7 @@ describe("Test page d'accueil", () => {
   });
 
   test("il faut afficher les rubriques / boutons si l'utilisateur a les droits nécessaires", async () => {
-    const snapshot = await renderSnapshot([Droit.CONSULTER]);
+    const snapshot = await renderSnapshot([Droit.DELIVRER]);
     expect(snapshot).toMatchSnapshot();
   });
 

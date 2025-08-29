@@ -57,17 +57,18 @@ const getDonneesMenu = (nombreRequetes: number, nombreRequetesInformation: numbe
         aria-hidden
       />
     ),
-    auMoinsUnDesDroits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC, Droit.CONSULTER],
+    auMoinsUnDesDroits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC],
     liens: [
       {
         libelle: "Mes requêtes",
         urlPage: LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_DELIVRANCE.url),
-        auMoinsUnDesDroits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC, Droit.CONSULTER],
+        auMoinsUnDesDroits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC],
         compteurNotifications: nombreRequetes
       },
       {
         libelle: "Mon service",
         urlPage: LiensRECE.genererLien(INFO_PAGE_REQUETES_DELIVRANCE_SERVICE.url),
+        droits: [Droit.ATTRIBUER_REQUETE],
         auMoinsUnDesDroits: [Droit.DELIVRER, Droit.DELIVRER_COMEDEC]
       }
     ]

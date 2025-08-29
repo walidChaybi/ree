@@ -18,7 +18,7 @@ DELETE FROM etape2.requerant r where r.id_requerant='89acb513-785e-4f5f-b8f6-c73
 INSERT INTO etape2.requerant (id_requerant,date_creation,nom_famille,prenom,courriel,telephone,"qualite",courriel_autre_contact,telephone_autre_contact) VALUES
 	 ('89acb513-785e-4f5f-b8f6-c73a25714ea3'::uuid,'2025-08-22 14:41:23.87081+02','BRUTUS','Marcus','brutus@gmail.com','+331234567890','PARTICULIER'::etape2."qualite",NULL,NULL);
 INSERT INTO etape2.requete (id_requete,numero_fonctionnel,date_creation,"canal","type",id_utilisateur,id_service,id_requerant,id_mandant,date_modification,id_dernier_action) VALUES
-	 ('89acf6d3-f836-4f09-83f9-5708c04c6eb9'::uuid,'LDLK7N','2025-08-22 14:41:23.870803+02','INTERNET'::etape2."canal",'DELIVRANCE'::etape2."type_requete",'a60f71d8-7cfa-11f0-a5e6-0800276b552b','9587b5bd-659c-456a-a798-b60e913bb51b'::uuid,'89acb513-785e-4f5f-b8f6-c73a25714ea3'::uuid,NULL,'2025-08-22 14:41:24.163741+02',NULL);
+	 ('89acf6d3-f836-4f09-83f9-5708c04c6eb9'::uuid,'LDLK7N','2025-08-22 14:41:23.870803+02','INTERNET'::etape2."canal",'DELIVRANCE'::etape2."type_requete",NULL,'95878ce0-8cfb-456e-a296-f100685ac064'::uuid,'89acb513-785e-4f5f-b8f6-c73a25714ea3'::uuid,NULL,'2025-08-22 14:41:24.163741+02',NULL);
 INSERT INTO etape2."action" (id_action,numero_ordre,libelle,date_action,id_utilisateur,id_requete) VALUES
 	 ('8a395f4b-0e4f-4ef0-8532-4afeabcb2884'::uuid,1,'A traiter','2025-08-22 14:41:23.690007+02','c4b37383-54c8-4f65-afdf-be1355a90ee2'::uuid,'89acf6d3-f836-4f09-83f9-5708c04c6eb9'::uuid);
 UPDATE etape2.requete req set id_dernier_action='8a395f4b-0e4f-4ef0-8532-4afeabcb2884' where req.id_requete = '89acf6d3-f836-4f09-83f9-5708c04c6eb9';
@@ -38,4 +38,4 @@ INSERT INTO etape2.evenement (id_evenement,"nature_acte",jour,mois,annee,ville,p
 INSERT INTO etape2.detail_requete_delivrance (id_detail_requete_delivrance,sous_type,document_demande,motif,complement_motif,date_delivrance_demat,"provenance",id_requete,id_provenance_service_public,id_provenance_rece,id_provenance_planete,nombre_exemplaires_demandes,"choix_delivrance",document_complementaire,"statut_reponse",id_provenance_comedec) VALUES
 	 ('8a39d597-a541-4f4d-88b8-3a7ee57ace73'::uuid,'RDD'::etape2."sous_type_delivrance",'0e1e909f-f74c-4b16-9c03-b3733354c6ce'::uuid,'CERTIFICAT_NATIONALITE_FRANCAISE'::etape2."motif_delivrance",NULL,NULL,'SERVICE_PUBLIC'::etape2."provenance",'89acf6d3-f836-4f09-83f9-5708c04c6eb9'::uuid,'89acb762-21f2-4a11-9ef8-5d4854cb6a99'::uuid,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 INSERT INTO etape2.statut (id_statut,"statut_requete",date_effet,raison_statut,id_requete) VALUES
-	 ('8a396759-3a9d-4e8b-86d1-46abd9de00f1'::uuid,'PRISE_EN_CHARGE'::etape2."statut_requete",'2025-08-22 14:41:23.578732+02',NULL,'89acf6d3-f836-4f09-83f9-5708c04c6eb9'::uuid);
+	 ('8a396759-3a9d-4e8b-86d1-46abd9de00f1'::uuid,'A_TRAITER'::etape2."statut_requete",'2025-08-22 14:41:23.578732+02',NULL,'89acf6d3-f836-4f09-83f9-5708c04c6eb9'::uuid);
