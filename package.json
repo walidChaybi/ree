@@ -1,7 +1,7 @@
 {
   "name": "rece-ui",
   "maeGroup": "fr.gouv.diplomatie.rece",
-  "version": "91.0",
+  "version": "92.0",
   "private": true,
   "homepage": "rece/rece-ui/",
   "dependencies": {
