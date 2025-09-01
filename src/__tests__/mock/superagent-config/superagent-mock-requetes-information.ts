@@ -57,7 +57,7 @@ export const configRequetesInformation = [
           data: ReponseRequetesInfoServiceFiltreSousType,
           headers: {
             "content-range": "0-15/" + ReponseRequetesInfoServiceFiltreSousType.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetesService?tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetes-service?tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -70,7 +70,7 @@ export const configRequetesInformation = [
           data: ReponseRequetesInfoServiceFiltreObjet,
           headers: {
             "content-range": "0-15/" + ReponseRequetesInfoServiceFiltreObjet.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetesService?tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetes-service?tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -83,7 +83,7 @@ export const configRequetesInformation = [
           data: ReponseRequetesInfoServiceFiltreTypeRequerant,
           headers: {
             "content-range": "0-15/" + ReponseRequetesInfoServiceFiltreTypeRequerant.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetesService?tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetes-service?tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -97,7 +97,7 @@ export const configRequetesInformation = [
           data: ReponseRequetesInfoServiceFiltreStatut,
           headers: {
             "content-range": "0-15/" + ReponseRequetesInfoServiceFiltreStatut.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetesService?tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetes-service?tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }
@@ -107,7 +107,7 @@ export const configRequetesInformation = [
           data: ReponseRequetesInfoService,
           headers: {
             "content-range": "0-15/" + ReponseRequetesInfoService.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetesService?tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/requetes-service?tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
           }
         };
       }

@@ -142,77 +142,77 @@ export const configRequetes = [
       // Requetes de mon service (espace délivrance)
       if (
         match[1] ===
-        "/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-100"
+        "/requetes/requetes-service?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-100"
       ) {
         return {
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-100/" + ReponseAppelRequetesService.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-100>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetes-service?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=dateStatut&sens=ASC&range=0-100>;rel="next"'
           }
         };
       }
 
       if (
         match[1] ===
-        "/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-100"
+        "/requetes/requetes-service?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-100"
       ) {
         return {
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-100/" + ReponseAppelRequetesService.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-100>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetes-service?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=idSagaDila&sens=ASC&range=0-100>;rel="next"'
           }
         };
       }
 
       if (
         match[1] ===
-        "/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-100"
+        "/requetes/requetes-service?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-100"
       ) {
         return {
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-100/" + ReponseAppelRequetesService.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-100>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetes-service?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER&tri=numero&sens=ASC&range=0-100>;rel="next"'
           }
         };
       }
 
       if (
         match[1] ===
-        "/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CTRAITE_REPONDU%2CA_REVOIR%2CTRANSMISE_A_VALIDEUR%2CA_TRAITER&tri=dateStatut&sens=ASC&range=0-100"
+        "/requetes/requetes-service?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CTRAITE_REPONDU%2CA_REVOIR%2CTRANSMISE_A_VALIDEUR%2CA_TRAITER&tri=dateStatut&sens=ASC&range=0-100"
       ) {
         return {
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-100/" + ReponseAppelRequetesService.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CTRAITE_REPONDU%2CA_REVOIR%2CTRANSMISE_A_VALIDEUR%2CA_TRAITER&tri=dateStatut&sens=ASC&range=0-100>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetes-service?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CTRAITE_REPONDU%2CA_REVOIR%2CTRANSMISE_A_VALIDEUR%2CA_TRAITER&tri=dateStatut&sens=ASC&range=0-100>;rel="next"'
           }
         };
       }
       if (
         match[1] ===
-        "/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CA_TRAITER&tri=idSagaDila&sens=ASC&range=0-100"
+        "/requetes/requetes-service?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CA_TRAITER&tri=idSagaDila&sens=ASC&range=0-100"
       ) {
         return {
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-100/" + ReponseAppelRequetesService.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CA_TRAITER&tri=idSagaDila&sens=ASC&range=0-100>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetes-service?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CA_TRAITER&tri=idSagaDila&sens=ASC&range=0-100>;rel="next"'
           }
         };
       }
 
       if (
         match[1] ===
-        "/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CTRAITE_REPONDU%2CA_REVOIR%2CTRANSMISE_A_VALIDEUR%2CA_TRAITER&tri=numero&sens=ASC&range=0-100"
+        "/requetes/requetes-service?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CTRAITE_REPONDU%2CA_REVOIR%2CTRANSMISE_A_VALIDEUR%2CA_TRAITER&tri=numero&sens=ASC&range=0-100"
       ) {
         return {
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-100/" + ReponseAppelRequetesService.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CTRAITE_REPONDU%2CA_REVOIR%2CTRANSMISE_A_VALIDEUR%2CA_TRAITER&tri=numero&sens=ASC&range=0-100>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetes-service?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CTRAITE_REPONDU%2CA_REVOIR%2CTRANSMISE_A_VALIDEUR%2CA_TRAITER&tri=numero&sens=ASC&range=0-100>;rel="next"'
           }
         };
       }
@@ -220,18 +220,18 @@ export const configRequetes = [
       ////// Mock requete de mon service Delivrance avec filtre
 
       if (
-        match[1] === "/requetes/requetesService?tri=dateCreation&sens=ASC&range=0-100" ||
-        match[1] === "/requetes/requetesService?tri=statut&sens=ASC&range=0-105" ||
-        match[1] === "/requetes/requetesService?tri=dateDerniereAction&sens=ASC&range=0-105" ||
-        match[1] === "/requetes/requetesService?tri=provenance&sens=ASC&range=0-105" ||
-        match[1] === "/requetes/requetesService?tri=numero&sens=ASC&range=0-100" ||
-        match[1] === "/requetes/requetesService?tri=dateCreation&sens=ASC&range=0-105"
+        match[1] === "/requetes/requetes-service?tri=dateCreation&sens=ASC&range=0-100" ||
+        match[1] === "/requetes/requetes-service?tri=statut&sens=ASC&range=0-105" ||
+        match[1] === "/requetes/requetes-service?tri=dateDerniereAction&sens=ASC&range=0-105" ||
+        match[1] === "/requetes/requetes-service?tri=provenance&sens=ASC&range=0-105" ||
+        match[1] === "/requetes/requetes-service?tri=numero&sens=ASC&range=0-100" ||
+        match[1] === "/requetes/requetes-service?tri=dateCreation&sens=ASC&range=0-105"
       ) {
         return {
           data: ReponseAppelRequetesService,
           headers: {
             "content-range": "0-100/" + ReponseAppelRequetesService.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetesService?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CTRAITE_REPONDU%2CA_REVOIR%2CTRANSMISE_A_VALIDEUR%2CA_TRAITER&tri=numero&sens=ASC&range=0-100>;rel="next"'
+            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/requetes-service?statuts=BROUILLON%2CPRISE_EN_CHARGE%2CTRANSFEREE%2CA_SIGNER%2CA_VALIDER%2CTRAITE_REPONDU%2CA_REVOIR%2CTRANSMISE_A_VALIDEUR%2CA_TRAITER&tri=numero&sens=ASC&range=0-100>;rel="next"'
           }
         };
       }

@@ -32,7 +32,7 @@ export function useRequeteDelivranceApiHook(
           const listeStatuts = parametresLienRequete?.statuts?.join(",");
           const result =
             typeRequete === TypeAppelRequete.MES_REQUETES_DELIVRANCE
-              ? await getTableauRequetesDelivrance(typeRequete, listeStatuts, parametresLienRequete)
+              ? await getTableauRequetesDelivrance(listeStatuts, parametresLienRequete)
               : await postTableauRequetesDelivranceService(
                   parametresLienRequete,
                   mappingFiltreServiceRequeteDelivranceVersFiltreDto(filtresReq)

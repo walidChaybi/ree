@@ -70,7 +70,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
   );
 
   function goToLink(link: string) {
-    const queryParametersPourRequetes = goToLinkRequete(link, "requetesService");
+    const queryParametersPourRequetes = goToLinkRequete(link, "requetes-service");
     if (queryParametersPourRequetes) {
       setParametresLienRequete(queryParametersPourRequetes);
     }

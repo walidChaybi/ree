@@ -14,7 +14,7 @@ import { SortOrder } from "@widget/tableau/TableUtils";
 import { HttpMethod } from "../ApiManager";
 import { URL_MENTION } from "./etatcivilApi";
 
-const URL_REQUETES_DELIVRANCE_SERVICE = "/requetes/requetesService";
+const URL_REQUETES_DELIVRANCE_SERVICE = "/requetes/requetes-service";
 const URL_REQUETES_INFO_SERVICE = "/requetes/information/requetes-de-mon-service";
 const URL_REQUETES_CREATION_SERVICE = "/requetes/creation/requetes-service";
 const URL_REQUETES = "/requetes";
@@ -82,15 +82,11 @@ async function getApiManager() {
 ////////////////////////
 /*** API REQUETE V2 ***/
 ////////////////////////
-export function getTableauRequetesDelivrance(
-  typeRequete: TypeAppelRequete,
-  listeStatuts: string,
-  queryParameters: IQueryParametersPourRequetes
-): Promise<any> {
+export function getTableauRequetesDelivrance(listeStatuts: string, queryParameters: IQueryParametersPourRequetes): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
-      uri: typeRequete === TypeAppelRequete.REQUETE_DELIVRANCE_SERVICE ? URL_REQUETES_DELIVRANCE_SERVICE : URL_MES_REQUETES_DELIVRANCE,
+      uri: URL_MES_REQUETES_DELIVRANCE,
       parameters: {
         statuts: listeStatuts,
         tri: queryParameters.tri !== "prioriteRequete" ? queryParameters.tri : "dateStatut",
