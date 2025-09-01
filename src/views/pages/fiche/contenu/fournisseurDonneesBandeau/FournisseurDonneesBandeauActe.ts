@@ -1,12 +1,5 @@
 import { SimplePersonne } from "@model/etatcivil/fiche/SimplePersonne";
-import {
-  formatDe,
-  formatNom,
-  formatPrenom,
-  getValeurOuVide,
-  premiereLettreEnMajusculeLeResteEnMinuscule,
-  triListeObjetsSurPropriete
-} from "@util/Utils";
+import { formatDe, formatNom, formatPrenom, premiereLettreEnMajusculeLeResteEnMinuscule, triListeObjetsSurPropriete } from "@util/Utils";
 import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
 export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
   getPersonnesAsAny(): any[] {
@@ -36,10 +29,10 @@ export class FournisseurDonneeBandeauActe extends FournisseurDonneesBandeau {
   }
 
   getRegistre(): string {
-    if (this.data?.referenceSignifiante) {
-      return getValeurOuVide(`${this.data.referenceActe} / ${this.data.referenceSignifiante}`);
+    if (this.data?.referenceRegistreSansNumeroDActe) {
+      return `${this.data.referenceActe} / ${this.data.referenceRegistreSansNumeroDActe}`;
     } else {
-      return getValeurOuVide(this.data.referenceActe);
+      return this.data.referenceActe ?? "";
     }
   }
 }

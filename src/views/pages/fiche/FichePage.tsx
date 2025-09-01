@@ -62,13 +62,18 @@ export interface IDataFicheProps {
   categorie: ETypeFiche;
 }
 
-export const estActeEligibleMentionDIntegration = ({ origine, referenceActe, referenceSignifiante, type }: IFicheActe): boolean => {
+export const estActeEligibleMentionDIntegration = ({
+  origine,
+  referenceActe,
+  referenceRegistreSansNumeroDActe,
+  type
+}: IFicheActe): boolean => {
   const estOrigineScecDocs = EOrigineActe[origine as keyof typeof EOrigineActe] === EOrigineActe.SCEC_DOCS;
   const referenceActePresente = Boolean(referenceActe?.trim());
-  const referenceSignifianteAbsente = !referenceSignifiante?.trim();
+  const referenceRegistreSansNumeroDActeAbsente = !referenceRegistreSansNumeroDActe?.trim();
   const estTypeTexte = type === ETypeActe.TEXTE;
 
-  return estOrigineScecDocs && referenceActePresente && referenceSignifianteAbsente && estTypeTexte;
+  return estOrigineScecDocs && referenceActePresente && referenceRegistreSansNumeroDActeAbsente && estTypeTexte;
 };
 
 export const FichePage: React.FC<FichePageProps> = ({
