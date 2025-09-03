@@ -48,7 +48,7 @@ const TableauSuiviDossier: React.FC<ITableauSuiviDossierParams> = props => {
   // TODO: GESTION SUPPRESSION DES PROJETS D ACTES ET AJOUT DES ICONES POUBELLES (RETIRER OPACITY: 0)
 
   const colonneIconeRetirerProjetActeParams: IColonneFontAwesomeIcone<ILigneTableauSuiviDossier, string> = {
-    getIdentifiant: data => data.idSuiviDossier,
+    getIdentifiant: data => data?.idSuiviDossier,
     style: {
       width: "3rem",
       opacity: 0
