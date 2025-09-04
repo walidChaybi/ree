@@ -172,13 +172,6 @@ export const configRequetesInformation = [
         return { data: ["bbd05aed-8ea9-45ba-a7d7-b8d55ad10857"] };
       }
 
-      // Prise en charge aléatoire
-      if (match[1] === "/requetes/requetealeatoire?type=INFORMATION") {
-        return {
-          data: ReponseMesRequetesInformation[1]
-        };
-      }
-
       // Création d'une action et maj statut de la requête
       if (
         match[1] ===

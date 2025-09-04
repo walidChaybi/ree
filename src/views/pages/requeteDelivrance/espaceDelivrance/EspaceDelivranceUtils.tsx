@@ -24,12 +24,10 @@ export const goToLinkRequete = (link: string, separator: string): IQueryParamete
   return queryParameters;
 };
 
-/* v8 ignore start */
 export const miseAjourOuRedirection = (
   requeteSelect: IRequeteTableauDelivrance,
   setParamsMiseAJour: React.Dispatch<React.SetStateAction<ICreationActionMiseAjourStatutEtRedirectionParams | undefined>>,
   setNavigationApercuDelivranceParams: (requete: IRequeteTableauDelivrance, urlWithParam: string) => void,
-  idRequete: string,
   data: IRequeteTableauDelivrance[],
   idx: number,
   url: string,
@@ -55,11 +53,9 @@ export const miseAjourOuRedirection = (
       libelleAction: EStatutRequete[statutFutur],
       statutRequete: statutFutur,
       requete: requeteSelect,
-      urlCourante: url,
       typeRequete: "DELIVRANCE"
     });
   } else {
     setNavigationApercuDelivranceParams(data[idx], url);
   }
 };
-/* v8 ignore end */

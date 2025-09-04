@@ -20,7 +20,6 @@ import { createReponseSansDelivranceCS } from "../contenu/SaisirRDCSCPageFonctio
 import { ICreationOuMiseAJourRDCSCResultat } from "./SoumissionFormulaireRDCSCHook";
 
 export const useRedirectionApresSoumissionRDCSCHook = (
-  urlCourante: string,
   modeModification: boolean,
   setOperationEnCours: React.Dispatch<React.SetStateAction<boolean>>,
   setReponseSansDelivranceCS: React.Dispatch<React.SetStateAction<IReponseSansDelivranceCS | undefined>>,
@@ -51,15 +50,13 @@ export const useRedirectionApresSoumissionRDCSCHook = (
         } else {
           AfficherMessage.succes("La requête a bien été enregistrée", { fermetureAuto: true });
           setNavigationApercuDelivranceParams({
-            requete: mappingRequeteDelivranceToRequeteTableau(requeteSauvegardee),
-            urlCourante
+            requete: mappingRequeteDelivranceToRequeteTableau(requeteSauvegardee)
           });
         }
       }
 
       setOperationEnCours(false);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [modeModification]
   );
 

@@ -17,7 +17,6 @@ import AfficherMessage from "../../../../../utils/AfficherMessage";
 import { ICreationOuMiseAJourRDCResultat } from "./SoumissionFormulaireRDCHook";
 
 export const useRedirectionApresSoumissionRDCHook = (
-  urlCourante: string,
   setOperationEnCours: React.Dispatch<React.SetStateAction<boolean>>,
   creationRDCParams?: CreationRequeteRDC & IComplementCreationUpdateRequete,
   miseAJourRDCParams?: UpdateRequeteRDC & IComplementCreationUpdateRequete,
@@ -37,8 +36,7 @@ export const useRedirectionApresSoumissionRDCHook = (
     if (requeteSauvegardee) {
       AfficherMessage.succes("La requête a bien été enregistrée", { fermetureAuto: true });
       setNavigationApercuDelivranceParams({
-        requete: mappingRequeteDelivranceToRequeteTableau(requeteSauvegardee),
-        urlCourante
+        requete: mappingRequeteDelivranceToRequeteTableau(requeteSauvegardee)
       });
     }
     setOperationEnCours(false);

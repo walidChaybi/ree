@@ -6,10 +6,8 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { autorisePrendreEnChargeDelivrance } from "@util/RequetesUtils";
-import { getUrlWithParam } from "@util/route/UrlUtil";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useContext, useState } from "react";
-import { useLocation } from "react-router";
 import { RECEContextData } from "../../../../../../contexts/RECEContextProvider";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 import "./scss/BoutonPrendreEnCharge.scss";
@@ -20,7 +18,6 @@ interface BoutonPrendreEnChargeProps {
 }
 
 export const BoutonPrendreEnCharge: React.FC<BoutonPrendreEnChargeProps> = props => {
-  const location = useLocation();
   const { utilisateurConnecte } = useContext(RECEContextData);
 
   const [params, setParams] = useState<ICreationActionMiseAjourStatutEtRedirectionParams | undefined>();
@@ -30,7 +27,6 @@ export const BoutonPrendreEnCharge: React.FC<BoutonPrendreEnChargeProps> = props
       requete: mapRequeteRmcAuto(props.requete),
       libelleAction: EStatutRequete.PRISE_EN_CHARGE,
       statutRequete: "PRISE_EN_CHARGE",
-      urlCourante: getUrlWithParam(location.pathname, props.requete.id),
       typeRequete: "DELIVRANCE"
     });
   };

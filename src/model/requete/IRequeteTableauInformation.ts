@@ -36,7 +36,7 @@ export function mappingRequetesTableauInformation(
   });
 }
 
-export function mappingUneRequeteTableauInformation(
+function mappingUneRequeteTableauInformation(
   requete: any,
   mappingSupplementaire: boolean,
   utilisateurs: Utilisateur[],

@@ -9,7 +9,6 @@ import {
 import { ReponseAppelAddAlerteActe, ReponseAppelGetAlertesActe } from "../data/Alertes";
 import { acteExtraitSaisie } from "../data/DonneesSaisieExtrait";
 import { imagePngVideBase64 } from "../data/ImagePng";
-import { decrets } from "../data/NomenclatureEtatCivilDecrets";
 import { ReponseAppelRMCActe, ReponseAppelRMCActe4DernierResultats, ReponseAppelRMCActe4PremiersResultats } from "../data/RMCActe";
 import { RMCAutoPersonneResponseAlpha, RMCAutoPersonneResponseBeta } from "../data/RMCAutoPersonne";
 import { ReponseAppelRMCInscription } from "../data/RMCInscription";
@@ -610,10 +609,6 @@ export const configEtatcivil = [
 
       if (match[1] === "/repertoirecivil/datedernieredelivrance") {
         return { data: null };
-      }
-
-      if (match[1].startsWith("/repertoirecivil/decrets")) {
-        return { data: decrets };
       }
 
       if (

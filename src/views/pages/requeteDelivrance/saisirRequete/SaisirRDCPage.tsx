@@ -122,7 +122,6 @@ export const SaisirRDCPage: React.FC = () => {
   } = useSoumissionFormulaireRDCHook(setRequete, setDonneesIncompletes, requete, idRequete);
 
   const { miseAJourStatutRequetePuisRedirection, miseAJourActionPuisRedirection } = useRedirectionApresSoumissionRDCHook(
-    location.pathname,
     setOperationEnCours,
     creationRDCParams,
     miseAJourRDCParams,
@@ -143,9 +142,8 @@ export const SaisirRDCPage: React.FC = () => {
 
   useEffect(() => {
     if (location) {
-      const url = location.pathname;
       setModeModification(
-        url.includes(LiensRECE.genererLien(INFO_PAGE_MODIFICATION_REQUETE_DELIVRANCE_EXTRAIT_COPIE_COURRIER.url, { idRequeteParam: "" }))
+        LiensRECE.sontUrlDeLaMemePage(INFO_PAGE_MODIFICATION_REQUETE_DELIVRANCE_EXTRAIT_COPIE_COURRIER, location.pathname)
       );
     }
   }, [location]);

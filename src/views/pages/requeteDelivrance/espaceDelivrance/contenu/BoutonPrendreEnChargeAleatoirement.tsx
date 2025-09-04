@@ -1,53 +1,58 @@
-import {
-  ICreationActionMiseAjourStatutEtRedirectionParams,
-  useCreationActionMiseAjourStatutEtRedirectionHook
-} from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
-import { IRequeteAleatoireResultat, useGetRequeteAleatoire } from "@hook/requete/PrendreEnChargeAleatoirementApiHook";
+import { HTTP_NOT_FOUND } from "@api/ApiManager";
+import CONFIG_GET_REQUETE_DELIVRANCE_A_PRENDRE_EN_CHARGE from "@api/configurations/requete/delivrance/GetRequeteDelivranceAPrendreEnChargeConfigApi";
+import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import React, { useCallback, useState } from "react";
+import { useNavigate } from "react-router";
+import useFetchApi from "../../../../../hooks/api/FetchApiHook";
+import LiensRECE from "../../../../../router/LiensRECE";
+import { INFO_PAGE_APERCU_REQUETE_DELIVRANCE_PRISE_EN_CHARGE } from "../../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import AfficherMessage from "../../../../../utils/AfficherMessage";
 
-const BoutonPrendreEnChargeAleatoirement: React.FC = (props: any) => {
-  const location = useLocation();
+interface IBoutonPrendreEnChargeAleatoirementProps {
+  disabled: boolean;
+}
 
-  const [prendreEnCharge, setPrendreEnCharge] = useState<boolean>(false);
-  const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
-  const [paramsDelivrance, setParamsDelivrance] = useState<ICreationActionMiseAjourStatutEtRedirectionParams | undefined>();
-  const requeteAleatoireResultat: IRequeteAleatoireResultat | undefined = useGetRequeteAleatoire(TypeRequete.DELIVRANCE, prendreEnCharge);
+const BoutonPrendreEnChargeAleatoirement: React.FC<IBoutonPrendreEnChargeAleatoirementProps> = ({ disabled }) => {
+  const navigate = useNavigate();
+  const [miseAJourStatutRequeteEtRedirectionParams, setMiseAJourStatutRequeteEtRedirectionParams] = useState<
+    ICreationActionEtMiseAjourStatutParams | undefined
+  >();
 
-  useEffect(() => {
-    if (requeteAleatoireResultat) {
-      if (requeteAleatoireResultat.requete) {
-        setParamsDelivrance({
-          requete: requeteAleatoireResultat.requete,
+  const { appelApi: recupererRequeteDelivranceAleatoire, enAttenteDeReponseApi: operationEnCours } = useFetchApi(
+    CONFIG_GET_REQUETE_DELIVRANCE_A_PRENDRE_EN_CHARGE
+  );
+  const onClickPrendreEnCharge = useCallback(() => {
+    recupererRequeteDelivranceAleatoire({
+      apresSucces: idRequeteDelivrance =>
+        setMiseAJourStatutRequeteEtRedirectionParams({
+          requeteId: idRequeteDelivrance,
           libelleAction: EStatutRequete.PRISE_EN_CHARGE,
           statutRequete: "PRISE_EN_CHARGE",
-          urlCourante: location.pathname,
-          typeRequete: "DELIVRANCE"
-        });
-      } else if (!requeteAleatoireResultat.requete) {
-        AfficherMessage.info("Il n'existe plus de requêtes disponibles à la prise en charge", { fermetureAuto: true });
+          callback: () => {
+            navigate(
+              LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_DELIVRANCE_PRISE_EN_CHARGE.url, {
+                idRequeteParam: idRequeteDelivrance
+              })
+            );
+          }
+        }),
+      apresErreur: (erreurs, status) => {
+        status === HTTP_NOT_FOUND
+          ? AfficherMessage.info("Il n'existe plus de requêtes disponibles à la prise en charge", { fermetureAuto: true })
+          : AfficherMessage.erreur("Impossible de prendre en charge une requête suivante", { erreurs });
       }
-      setPrendreEnCharge(false);
-      setOperationEnCours(false);
-    }
-  }, [requeteAleatoireResultat, location]);
+    });
+  }, [recupererRequeteDelivranceAleatoire]);
 
-  useCreationActionMiseAjourStatutEtRedirectionHook(paramsDelivrance);
-
-  const onClickPrendreEnCharge = () => {
-    setPrendreEnCharge(true);
-    setOperationEnCours(true);
-  };
+  usePostCreationActionEtMiseAjourStatutApi(miseAJourStatutRequeteEtRedirectionParams);
 
   return (
     <BoutonOperationEnCours
       onClick={onClickPrendreEnCharge}
-      estDesactive={props.disabled}
+      estDesactive={disabled}
       toileDeFondVisible={operationEnCours}
     >
       {"Prendre en charge requête suivante"}

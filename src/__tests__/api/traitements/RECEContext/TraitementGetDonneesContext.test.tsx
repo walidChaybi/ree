@@ -1,38 +1,17 @@
+import { CONFIG_GET_TOUS_SERVICES } from "@api/configurations/agent/services/GetServicesConfigApi";
+import { CONFIG_GET_TOUS_UTILISATEURS } from "@api/configurations/agent/utilisateur/GetUtilisateursConfigApi";
+import { CONFIG_GET_DECRETS } from "@api/configurations/etatCivil/repertoireCivil/GetDecretsConfigApi";
+import { TCodesFct } from "@api/TCodesFct";
 import { TRAITEMENT_GET_DONNEES_CONTEXT } from "@api/traitements/RECEContext/TraitementGetDonneesContext";
+import { MockApi } from "@mock/appelsApi/MockApi";
+import { NOMENCLATURE_DECRETS } from "@mock/data/NomenclatureEtatCivilDecrets";
+import { IUtilisateurDto } from "@model/agent/Utilisateur";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import request from "superagent";
-import { afterAll, describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import useTraitementApi from "../../../../hooks/api/TraitementApiHook";
+import AfficherMessage from "../../../../utils/AfficherMessage";
 
 describe("Test du traitement de récupération des données du context RECE", () => {
-  const superagentMock = require("superagent-mock")(request, [
-    {
-      pattern: "http://localhost/rece/rece-agent-api/v1(.*)",
-      fixtures: (match: any) => {
-        switch (match[1]) {
-          case "/utilisateurs/referentiel?range=0-100":
-            return { data: [{ idUtilisateur: "test-id-utilisateur" }] };
-          case "/utilisateurs/referentiel?range=1-100":
-            return { data: [{ idUtilisateur: "test-id-utilisateur-2" }] };
-          case "/services/referentiel?range=0-100":
-            return { data: [{ idService: "test-id-service" }] };
-          case "/services/referentiel?range=1-100":
-            return { data: [{ idService: "test-id-service-2" }] };
-          default:
-            return;
-        }
-      },
-      get: (match: any, data: any) => {
-        return {
-          body: data,
-          header: {
-            link: (match[1] ?? "").includes("0-100") ? 'rel="next"' : ""
-          }
-        };
-      }
-    }
-  ]);
-
   const EN_COURS = "en-cours";
   const PAS_EN_COURS = "pas-en-cours";
   const LANCER = "lancer";
@@ -54,18 +33,63 @@ describe("Test du traitement de récupération des données du context RECE", ()
   };
 
   test("Le traitement s'effectue correctement", async () => {
+    MockApi.deployer(
+      CONFIG_GET_TOUS_UTILISATEURS,
+      { query: { range: "0-100" } },
+      { data: [{ idUtilisateur: "test-id-utilisateur" }] as IUtilisateurDto[] }
+    )
+      .deployer(CONFIG_GET_TOUS_SERVICES, { query: { range: "0-100" } }, { data: [{ idService: "test-id-service" }] })
+      .deployer(CONFIG_GET_DECRETS, undefined, { data: NOMENCLATURE_DECRETS });
+
     render(<ComposantTest />);
 
-    expect(screen.getByText(PAS_EN_COURS)).toBeDefined();
+    await waitFor(() => {
+      expect(screen.getByText(PAS_EN_COURS)).toBeDefined();
+    });
 
     fireEvent.click(screen.getByText(LANCER));
 
-    expect(screen.getByText(EN_COURS)).toBeDefined();
-
     await waitFor(() => expect(screen.getByText(PAS_EN_COURS)).toBeDefined());
+
+    MockApi.stopMock();
   });
 
-  afterAll(() => {
-    superagentMock.unset();
+  test("Les appels n'aboutissent pas", async () => {
+    MockApi.deployer(
+      CONFIG_GET_TOUS_UTILISATEURS,
+      { query: { range: "0-100" } },
+      {
+        codeHttp: 500,
+        erreurs: [{ message: "Appel utilisateurs en echec", code: "FCT_TEST" as unknown as TCodesFct, type: "BusinessException" }]
+      }
+    )
+      .deployer(
+        CONFIG_GET_TOUS_SERVICES,
+        { query: { range: "0-100" } },
+        {
+          codeHttp: 500,
+          erreurs: [{ message: "Appel services en echec", code: "FCT_TEST" as unknown as TCodesFct, type: "BusinessException" }]
+        }
+      )
+      .deployer(CONFIG_GET_DECRETS, undefined, {
+        codeHttp: 500,
+        erreurs: [{ message: "Appel decrets en echec", code: "FCT_TEST" as unknown as TCodesFct, type: "BusinessException" }]
+      });
+
+    const afficherErreur = vi.fn();
+    AfficherMessage.erreur = afficherErreur;
+
+    render(<ComposantTest />);
+
+    await waitFor(() => {
+      expect(screen.getByText(PAS_EN_COURS)).toBeDefined();
+    });
+
+    fireEvent.click(screen.getByText(LANCER));
+
+    await waitFor(() => expect(screen.getByText(PAS_EN_COURS)).toBeDefined());
+
+    expect(afficherErreur).toHaveBeenCalledTimes(3);
+    MockApi.stopMock();
   });
 });

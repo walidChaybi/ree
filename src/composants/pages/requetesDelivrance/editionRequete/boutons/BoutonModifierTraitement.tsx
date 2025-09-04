@@ -4,9 +4,9 @@ import {
 } from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
-import { getUrlWithParam, replaceUrl } from "@util/route/UrlUtil";
+import { replaceUrl } from "@util/route/UrlUtil";
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import LiensRECE from "../../../../../router/LiensRECE";
 import { INFO_PAGE_APERCU_REQUETE_DELIVRANCE_PRISE_EN_CHARGE } from "../../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import { IBoutonProps } from "../../../../commun/bouton/Bouton";
@@ -17,7 +17,6 @@ interface BoutonModifierTraitementProps extends IBoutonProps {
 }
 
 export const BoutonModifierTraitement: React.FC<BoutonModifierTraitementProps> = ({ requete, ...props }) => {
-  const location = useLocation();
   const navigate = useNavigate();
 
   const [paramsCreerActionMAJEtRedirection, setParamsCreerActionMAJEtRedirection] = useState<
@@ -29,7 +28,6 @@ export const BoutonModifierTraitement: React.FC<BoutonModifierTraitementProps> =
       setParamsCreerActionMAJEtRedirection({
         statutRequete: "PRISE_EN_CHARGE",
         libelleAction: "Revue du traitement",
-        urlCourante: getUrlWithParam(location.pathname, requete.id),
         requete: mappingRequeteDelivranceToRequeteTableau(requete),
         typeRequete: "DELIVRANCE",
         autoriserTraitementAutoRDCS: false

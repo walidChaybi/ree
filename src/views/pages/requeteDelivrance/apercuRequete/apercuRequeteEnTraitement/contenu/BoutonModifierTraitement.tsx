@@ -5,10 +5,10 @@ import {
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import LiensRECE from "../../../../../../router/LiensRECE";
 import { INFO_PAGE_APERCU_REQUETE_DELIVRANCE_PRISE_EN_CHARGE } from "../../../../../../router/infoPages/InfoPagesEspaceDelivrance";
-import { getUrlWithParam, replaceUrl } from "../../../../../common/util/route/UrlUtil";
+import { replaceUrl } from "../../../../../common/util/route/UrlUtil";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 
 interface BoutonModifierTraitementProps {
@@ -16,7 +16,6 @@ interface BoutonModifierTraitementProps {
 }
 
 export const BoutonModifierTraitement: React.FC<BoutonModifierTraitementProps> = props => {
-  const location = useLocation();
   const navigate = useNavigate();
 
   const [params, setParams] = useState<ICreationActionMiseAjourStatutEtRedirectionParams | undefined>();
@@ -34,7 +33,6 @@ export const BoutonModifierTraitement: React.FC<BoutonModifierTraitementProps> =
       setParams({
         statutRequete: "PRISE_EN_CHARGE",
         libelleAction: "Revue du traitement",
-        urlCourante: getUrlWithParam(location.pathname, props.requete.id),
         requete: mappingRequeteDelivranceToRequeteTableau(props.requete),
         typeRequete: "DELIVRANCE",
         autoriserTraitementAutoRDCS: false

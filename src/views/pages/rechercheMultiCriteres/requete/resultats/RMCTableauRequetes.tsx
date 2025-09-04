@@ -99,13 +99,11 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({ dataRMC
         libelleAction: EStatutRequete.PRISE_EN_CHARGE,
         statutRequete: "PRISE_EN_CHARGE",
         requete,
-        urlCourante,
         typeRequete: "DELIVRANCE"
       });
     } else {
       setNavigationApercuDelivranceParams({
-        requete,
-        urlCourante
+        requete
       });
     }
   };
@@ -130,7 +128,6 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({ dataRMC
           libelleAction: EStatutRequete.PRISE_EN_CHARGE,
           statutRequete: "PRISE_EN_CHARGE",
           requete,
-          urlCourante,
           typeRequete: "CREATION"
         });
       } else {

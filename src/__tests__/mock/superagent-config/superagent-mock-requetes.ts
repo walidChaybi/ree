@@ -25,7 +25,6 @@ import {
   documentReponseExtraitAvecFiliation,
   idDocumentsReponse
 } from "../data/DocumentReponse";
-import { reponseMesRequeteCreation } from "../data/EspaceCreation";
 import { ReponseAppelMesRequetes, ReponseAppelRequetesService } from "../data/EspaceDelivrance";
 import { NOMENCLATURE_OPTION_COURRIER } from "../data/NomenclatureOptionCourrier";
 import { PARAMETRE_BASE_REQUETE } from "../data/NomenclatureParametresBaseRequete";
@@ -811,19 +810,6 @@ export const configRequetes = [
         context.method === "post"
       ) {
         return { data: "123456789" };
-      }
-
-      // Prise en charge aléatoire
-      if (match[1] === "/requetes/requetealeatoire?type=DELIVRANCE") {
-        return {
-          data: ReponseAppelMesRequetes[1]
-        };
-      }
-
-      if (match[1] === "/requetes/requetealeatoire?type=CREATION") {
-        return {
-          data: reponseMesRequeteCreation
-        };
       }
 
       // Prise en charge requete

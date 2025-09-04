@@ -44,7 +44,6 @@ const URL_TRANSFERT_VALIDEUR = "/requetes/action/transfertValideur";
 const URL_RETOUR_VALIDEUR = "/requetes/action/retourValideur";
 const URL_OBSERVATION = "/requetes/observation";
 const URL_IGNORER = "/requetes/action/ignorer";
-const URL_REQUETE_ALEATOIRE = "/requetes/requetealeatoire";
 const URL_OPTION_COURRIER = "/optioncourrier";
 const URL_REPONSE_REQ_INFO = "/reponse";
 const URL_ECHANGE_STATUT = "/requetes/action/retourSdanf";
@@ -496,18 +495,6 @@ export function postIgnorerRequete(idRequete: string, texteObservation: string) 
       parameters: {
         idRequete,
         texteObservation
-      }
-    })
-  );
-}
-
-export function getRequeteAleatoire(type: string) {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.GET,
-      uri: URL_REQUETE_ALEATOIRE,
-      parameters: {
-        type
       }
     })
   );

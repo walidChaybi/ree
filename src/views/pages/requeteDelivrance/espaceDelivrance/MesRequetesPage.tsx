@@ -80,14 +80,13 @@ export const MesRequetesPage: React.FC<MesRequetesPageProps> = props => {
     }
   }, [linkParameters, props]);
 
-  function onClickOnLine(idRequete: string, data: IRequeteTableauDelivrance[], idx: number) {
+  function onClickOnLine(_: string, data: IRequeteTableauDelivrance[], idx: number) {
     setOperationEnCours(true);
     const requeteSelect = data[idx];
     miseAjourOuRedirection(
       requeteSelect,
       setParamsMiseAJour,
       props.setNavigationApercuDelivranceParams,
-      idRequete,
       data,
       idx,
       LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_DELIVRANCE.url),

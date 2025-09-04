@@ -1,14 +1,13 @@
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { RequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
-import { useContext, useEffect, useMemo } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import { getUrlApercuRequete, redirectionSelonStatutRequete } from "./NavigationApercuDelivranceUtils";
 
 export interface INavigationApercuDelivranceParams {
   requete: IRequeteTableauDelivrance | RequeteTableauRMC<"DELIVRANCE">;
-  urlCourante: string;
   autoriserTraitementAutoRDCS?: boolean;
 }
 
@@ -16,24 +15,23 @@ export const useNavigationApercuDelivrance = (params: INavigationApercuDelivranc
   const navigate = useNavigate();
   const { utilisateurConnecte } = useContext(RECEContextData);
 
-  const redirection: string = useMemo(() => {
-    if (!params) return "";
+  useEffect(() => {
+    if (!params) return;
+
+    const estRequeteDelivrance: boolean =
+      "idRequete" in params.requete ? params.requete.type === TypeRequete.DELIVRANCE.libelle : params.requete.type === "DELIVRANCE";
+    const idRequete: string = "idRequete" in params.requete ? params.requete.idRequete : params.requete.id;
 
     // Si la requete est attribuée à l'utilisateur connecté
-    return utilisateurConnecte.id === params.requete.idUtilisateur &&
-      params.requete.statut &&
-      ("idRequete" in params.requete ? params.requete.type === TypeRequete.DELIVRANCE.libelle : params.requete.type === "DELIVRANCE")
-      ? redirectionSelonStatutRequete(utilisateurConnecte, params.requete)
-      : getUrlApercuRequete("idRequete" in params.requete ? params.requete.idRequete : params.requete.id);
-  }, [params]);
-
-  useEffect(() => {
-    if (!redirection || !params?.urlCourante) return;
+    const redirection =
+      utilisateurConnecte.id === params.requete.idUtilisateur && params.requete.statut && estRequeteDelivrance
+        ? redirectionSelonStatutRequete(utilisateurConnecte, params.requete)
+        : getUrlApercuRequete(idRequete);
 
     navigate(redirection, {
       state: {
         autoriserTraitementAutoRDCS: params.autoriserTraitementAutoRDCS ?? true
       }
     });
-  }, [redirection, params?.urlCourante]);
+  }, [params]);
 };

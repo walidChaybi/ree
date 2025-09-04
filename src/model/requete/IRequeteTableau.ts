@@ -1,13 +1,5 @@
-/* istanbul ignore file */
-
 import { TagPriorisation } from "./enum/TagPriorisation";
-import { IRequeteTableauConsulaire } from "./IRequeteTableauConsulaire";
-import { IRequeteTableauCreation } from "./IRequeteTableauCreation";
-import { IRequeteTableauDelivrance } from "./IRequeteTableauDelivrance";
-import { IRequeteTableauInformation } from "./IRequeteTableauInformation";
 import { ITitulaireRequeteTableau } from "./ITitulaireRequeteTableau";
-
-export type TRequeteTableau = IRequeteTableauDelivrance | IRequeteTableauInformation | IRequeteTableauCreation | IRequeteTableauConsulaire;
 
 export interface IRequeteTableau {
   idRequete: string;

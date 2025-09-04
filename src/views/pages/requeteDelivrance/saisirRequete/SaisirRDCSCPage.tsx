@@ -111,7 +111,6 @@ export const SaisirRDCSCPage: React.FC = () => {
     );
 
   const { miseAJourStatutRequetePuisRedirection, miseAJourActionPuisRedirection } = useRedirectionApresSoumissionRDCSCHook(
-    location.pathname,
     modeModification,
     setOperationEnCours,
     setReponseSansDelivranceCS,
@@ -135,11 +134,8 @@ export const SaisirRDCSCPage: React.FC = () => {
 
   useEffect(() => {
     if (location) {
-      const url = location.pathname;
       setModeModification(
-        url.includes(
-          LiensRECE.genererLien(INFO_PAGE_MODIFICATION_REQUETE_DELIVRANCE_CERTIFICAT_SITUATION_COURRIER.url, { idRequeteParam: "" })
-        )
+        LiensRECE.sontUrlDeLaMemePage(INFO_PAGE_MODIFICATION_REQUETE_DELIVRANCE_CERTIFICAT_SITUATION_COURRIER, location.pathname)
       );
     }
   }, [location]);

@@ -1,7 +1,7 @@
 import { DocumentDecret, IDecret } from "@model/etatcivil/commun/IDecret";
 import { ETypePacsRcRca } from "@model/etatcivil/enum/ETypePacsRcRca";
 
-export const decrets: IDecret[] = [
+export const NOMENCLATURE_DECRETS: IDecret[] = [
   {
     id: "981109a6-fce7-441e-9a23-0fa39c408760",
     document: DocumentDecret.ATTESTATION_PACS,

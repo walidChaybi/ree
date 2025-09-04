@@ -55,7 +55,7 @@ const getOnglets = (popinAttribuerAOuvert: boolean, setPopinAttribuerAOuvert: Fu
   return [
     {
       enTete: {
-        titre: "Mes requêtes d'établissement'",
+        titre: "Mes requêtes d'établissement",
         url: LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_ETABLISSEMENT.url)
       },
       corps: {

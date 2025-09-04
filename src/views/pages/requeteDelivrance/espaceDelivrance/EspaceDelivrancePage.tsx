@@ -88,8 +88,7 @@ const EspaceDelivrancePage: React.FC<LocalProps> = ({ selectedTab }) => {
 
   const recuperationParamsRMCAuto = useCallback((requete: IRequeteTableauDelivrance, urlWithParam: string) => {
     setNavigationApercuDelivranceParams({
-      requete,
-      urlCourante: urlWithParam
+      requete
     });
   }, []);
 

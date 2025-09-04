@@ -11,5 +11,6 @@ interface IPaginationParams {
 export const CONFIG_GET_TOUS_UTILISATEURS: TConfigurationApi<typeof URI, undefined, IPaginationParams, IUtilisateurDto[]> = {
   api: AGENT_API,
   methode: "GET",
-  uri: URI
+  uri: URI,
+  avecAxios: true
 };

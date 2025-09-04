@@ -17,7 +17,6 @@ export const HTTP_BAD_REQUEST = 400;
 export const HTTP_UNAUTHORIZED = 401;
 export const HTTP_FORBIDDEN = 403;
 export const HTTP_NOT_FOUND = 404;
-const HTTP_REQUEST_TIME_OUT = 408;
 
 const ERROR_OFFLINE_TIMEOUT = 5000;
 

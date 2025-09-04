@@ -1,7 +1,6 @@
 import { CONFIG_GET_TOUS_SERVICES } from "@api/configurations/agent/services/GetServicesConfigApi";
 import { CONFIG_GET_TOUS_UTILISATEURS } from "@api/configurations/agent/utilisateur/GetUtilisateursConfigApi";
 import { CONFIG_GET_DECRETS } from "@api/configurations/etatCivil/repertoireCivil/GetDecretsConfigApi";
-import { gereErreur } from "@hook/requete/PrendreEnChargeAleatoirementApiHook";
 import { IService, IServiceDto, Service, ServiceDto } from "@model/agent/IService";
 import { IUtilisateurDto, Utilisateur } from "@model/agent/Utilisateur";
 import { THeader } from "@model/api/Api";
@@ -9,6 +8,7 @@ import { Decret, IDecret } from "@model/etatcivil/commun/IDecret";
 import { UN, ZERO } from "@util/Utils";
 import { useEffect, useState } from "react";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
+import AfficherMessage from "../../../utils/AfficherMessage";
 import { TRAITEMENT_SANS_ERREUR, TTraitementApi } from "../TTraitementApi";
 
 interface IReponseSucces {
@@ -70,7 +70,7 @@ export const TRAITEMENT_GET_DONNEES_CONTEXT: TTraitementApi<undefined, IReponseS
             : setAppelsTermines(etatPrecedent => ({ ...etatPrecedent, utilisateurs: true }));
         },
         apresErreur: erreurs => {
-          gereErreur(erreurs[ZERO], "Impossible de récupérer les utilisateurs");
+          AfficherMessage.erreur("Impossible de récupérer les utilisateurs", { erreurs });
           setAppelsTermines(etatPrecedent => ({ ...etatPrecedent, utilisateurs: true }));
         }
       });
@@ -91,7 +91,7 @@ export const TRAITEMENT_GET_DONNEES_CONTEXT: TTraitementApi<undefined, IReponseS
             : setAppelsTermines(etatPrecedent => ({ ...etatPrecedent, services: true }));
         },
         apresErreur: erreurs => {
-          gereErreur(erreurs[ZERO], "Impossible de récupérer les services");
+          AfficherMessage.erreur("Impossible de récupérer les services", { erreurs });
           setAppelsTermines(etatPrecedent => ({ ...etatPrecedent, services: true }));
         }
       });
@@ -103,7 +103,7 @@ export const TRAITEMENT_GET_DONNEES_CONTEXT: TTraitementApi<undefined, IReponseS
           setReponseTraitement(etatPrecedent => ({ ...etatPrecedent, decrets: Decret.mapDecrets(decrets) }));
         },
         apresErreur: erreurs => {
-          gereErreur(erreurs[ZERO], "Impossible de récupérer les décrets");
+          AfficherMessage.erreur("Impossible de récupérer les décrets", { erreurs });
         },
         finalement: () => setAppelsTermines(etatPrecedent => ({ ...etatPrecedent, decrets: true }))
       });

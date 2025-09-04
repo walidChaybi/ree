@@ -1,10 +1,7 @@
 import { MockHabilitation } from "../data/habilitationMock";
 import INFOS_UTILISATEURS from "../data/infosUtilisateurs.json";
 import { serviceEtablissement } from "../data/serviceEtablissement";
-import DONNEES_SERVICES from "../data/services.json";
-import DONNEES_SERVICES_PAGE2 from "../data/servicesPage2.json";
 import DONNEES_UTILISATEURS from "../data/utilisateurs.json";
-import DONNEES_UTILISATEURS_PAGE2 from "../data/utilisateursPage2.json";
 
 export const configAgent = [
   {
@@ -28,21 +25,6 @@ export const configAgent = [
 
       if (match[1] === "/utilisateurs") {
         return { data: DONNEES_UTILISATEURS.data };
-      }
-
-      if (match[1] === "/utilisateurs/referentiel?range=0-100" || match[1] === "/utilisateurs/referentiel?range=0-200") {
-        return { ...DONNEES_UTILISATEURS };
-      }
-
-      if (match[1] === "/utilisateurs/referentiel?range=1-100") {
-        return { ...DONNEES_UTILISATEURS_PAGE2 };
-      }
-      if (match[1] === "/services/referentiel" || match[1].startsWith("/services/referentiel?range=0-100")) {
-        return { ...DONNEES_SERVICES };
-      }
-
-      if (match[1].startsWith("/services/referentiel?range=1-100")) {
-        return { ...DONNEES_SERVICES_PAGE2 };
       }
 
       if (match[1] === "/utilisateurs/infos?ids=204b8563-c7f8-4748-9daa-f26558985895&ids=204b8563-c7f8-4748-9daa-f26558985894") {

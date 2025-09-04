@@ -52,7 +52,7 @@ export function mappingRequetesTableauDelivrance(
   });
 }
 
-export function mappingUneRequeteTableauDelivrance(
+function mappingUneRequeteTableauDelivrance(
   requete: any,
   mappingSupplementaire: boolean,
   utilisateurs: Utilisateur[],
