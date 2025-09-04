@@ -159,7 +159,7 @@ export const RenderIconeAlerteRequete = (data: any): JSX.Element => {
         aria-label={AlerteRequete.RECEPTION_MISE_A_JOUR_SDANF.libelle}
       >
         <MdError
-          className="alerteSdanfIcone text-4xl"
+          className="alerteSdanfIcone text-2xl"
           aria-hidden
         />
       </Box>
