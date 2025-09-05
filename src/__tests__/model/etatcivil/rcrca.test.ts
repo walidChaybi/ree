@@ -14,7 +14,9 @@ import { ENationalite } from "@model/etatcivil/enum/Nationalite";
 import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { IDecisionRcRcaDTO } from "@model/etatcivil/rcrca/DecisionRcRca";
 import { FicheRcRca, IFicheRcDto, IFicheRcaDto } from "@model/etatcivil/rcrca/FicheRcRca";
+import { mappingInscriptionsRCDepuisFicheRcDto } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { IInteresseDTO, Interesse } from "@model/etatcivil/rcrca/Interesse";
+import DateUtils from "@util/DateUtils";
 import { describe, expect, test, vi } from "vitest";
 
 describe("test FicheRcRca", () => {
@@ -295,5 +297,18 @@ describe("test Interesse", () => {
     expect(consoleErrorMock).toHaveBeenCalledWith("Un champ obligatoire d'un Interesse n'est pas défini.");
 
     consoleErrorMock.mockRestore();
+  });
+});
+
+describe("test IInscriptionRC", () => {
+  test("test mappingInscriptionsRCDepuisFicheRcDto", () => {
+    expect(mappingInscriptionsRCDepuisFicheRcDto([ficheDeuxInteresseNumeroOrdreNonOrdonne])).toStrictEqual([
+      {
+        dateInscription: DateUtils.getDateDepuisDateArrayDto([2020, 11, 18]),
+        idInscription: "135e4dfe-9757-4d5d-8715-359c6e73289b",
+        nature: null,
+        typeInscription: "Inscription"
+      }
+    ]);
   });
 });

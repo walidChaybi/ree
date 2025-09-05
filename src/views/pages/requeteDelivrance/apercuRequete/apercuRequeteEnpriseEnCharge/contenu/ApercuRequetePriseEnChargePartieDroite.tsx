@@ -1,15 +1,18 @@
+import { CONFIG_GET_INSCRIPTIONS_RC_DE_LA_PERSONNE } from "@api/configurations/etatCivil/personnes/GetInscriptionsRCDeLaPersonneConfigApi";
 import { AlertesActes } from "@composant/alertesActe/AlertesActes";
-import { useGetInscriptionsRCApiHook } from "@hook/acte/InscriptionsRcHook";
 import { IGetAlertesActeApiHookParameters } from "@hook/alertes/GetAlertesActeApiHook";
 import { GetTitulairesActeHookParameters, useGetTitulairesActeApiHook } from "@hook/repertoires/TitulairesActeHook";
 import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
+import { IInscriptionRc, mappingInscriptionsRCDepuisFicheRcDto } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { aplatirTableau } from "@util/Utils";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import React, { useCallback, useEffect, useState } from "react";
+import useFetchApi from "../../../../../../hooks/api/FetchApiHook";
+import AfficherMessage from "../../../../../../utils/AfficherMessage";
 import { TableauRMC } from "../../../../rechercheMultiCriteres/autoActesInscriptions/TableauRMC";
 import { ChoixAction } from "./actions/ChoixAction";
 
@@ -79,7 +82,23 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
   /* Hook d'appel de l'API de récupération des titulaires associés à un acte */
   const resultatGetTitulairesActe = useGetTitulairesActeApiHook(titulairesActeHookParameters);
 
-  const resultatGetInscriptionsRC = useGetInscriptionsRCApiHook(idPersonne);
+  const { appelApi: recuperationDesRCs } = useFetchApi(CONFIG_GET_INSCRIPTIONS_RC_DE_LA_PERSONNE);
+  const [inscriptionsRC, setInscriptionsRC] = useState<IInscriptionRc[]>([]);
+  useEffect(() => {
+    if (!idPersonne) return;
+
+    recuperationDesRCs({
+      parametres: { path: { idPersonne } },
+      apresSucces: fichesRC => {
+        setInscriptionsRC(mappingInscriptionsRCDepuisFicheRcDto(fichesRC));
+      },
+      apresErreur: erreurs => {
+        AfficherMessage.erreur("Impossible de récupérer les inscriptions liées à une personne", {
+          erreurs
+        });
+      }
+    });
+  }, [idPersonne]);
 
   /* Actualisation de la liste des nombres de titulaires et des titulaires des actes sélectionnés */
   useEffect(() => {
@@ -121,7 +140,7 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
         requete={detailRequete}
         actes={actesSelectionnes}
         inscriptions={inscriptionsSelectionnees}
-        inscriptionsRC={resultatGetInscriptionsRC}
+        inscriptionsRC={inscriptionsRC}
         titulairesActe={titulairesActe}
         nbrTitulairesActe={nbrTitulairesActe}
         alertesActe={Array.from(alertes.values()).flatMap(alerte => alerte)}

@@ -1,7 +1,9 @@
 import { compositionApi } from "@api/appels/compositionApi";
-import { getDonneesPourCompositionActeAvantSignatureMentions } from "@api/appels/etatcivilApi";
+import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR } from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteMisAJourConfigApi";
 import { useContext, useEffect, useState } from "react";
 import { EditionMiseAJourContext } from "../../../../contexts/EditionMiseAJourContextProvider";
+import useFetchApi from "../../../../hooks/api/FetchApiHook";
+import AfficherMessage from "../../../../utils/AfficherMessage";
 import AffichagePDF from "../../../commun/affichageDocument/AffichagePDF";
 import OngletsContenu from "../../../commun/onglets/OngletsContenu";
 
@@ -14,17 +16,23 @@ const OngletActeMisAJour: React.FC<IOngletActeMisAJourProps> = ({ estActif }) =>
   const { setComposerActeMisAJour } = useContext(EditionMiseAJourContext.Actions);
   const [contenuActeMisAJour, setContenuActeMisAJour] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (!composerActeMisAJour) {
-      return;
-    }
+  const { appelApi: recupererDonneesPourCompositionActeTexteMisAJour } = useFetchApi(
+    CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR
+  );
 
-    getDonneesPourCompositionActeAvantSignatureMentions(idActe).then(data =>
-      compositionApi.getCompositionActeTexte(data.body).then(dataComposition => {
-        setContenuActeMisAJour(dataComposition.body.data.contenu ?? "");
-        setComposerActeMisAJour(false);
-      })
-    );
+  useEffect(() => {
+    if (!composerActeMisAJour) return;
+
+    recupererDonneesPourCompositionActeTexteMisAJour({
+      parametres: { path: { idActe } },
+      apresSucces: donneesComposition => {
+        compositionApi.getCompositionActeTexte(donneesComposition).then(retour => {
+          setContenuActeMisAJour(retour.body.data.contenu ?? "");
+          setComposerActeMisAJour(false);
+        });
+      },
+      apresErreur: erreurs => AfficherMessage.erreur("Impossible de composer le document", { erreurs })
+    });
   }, [composerActeMisAJour]);
 
   return (

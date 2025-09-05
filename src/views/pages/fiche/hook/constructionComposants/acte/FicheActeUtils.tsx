@@ -1,4 +1,4 @@
-import { VisionneuseActe } from "@composant/visionneuseActe/VisionneuseActe";
+import VisionneuseActe from "@composant/visionneuseActe/VisionneuseActe";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
@@ -48,13 +48,12 @@ function getPanelAreasActeImage(acte: IFicheActe, params: IParamsAffichage): Sec
             idActe={acte.id}
             typeActe={acte.type}
             estReecrit={params.visuActe === "classique" ? acte.estReecrit : undefined}
-          ></VisionneuseActe>
+          />
         ),
         nbColonne: 1
       }
     ];
   } else {
-    // params.visuActe === "disabled"
     return [{ value: undefined }];
   }
 }

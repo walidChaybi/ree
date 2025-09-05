@@ -12,15 +12,7 @@ describe("Test du dto IActeInscriptionSauvegardeDto", () => {
 
     expect(ActeInscriptionSauvegardeDto.mapResultatGetActesInscriptionsSauvegardes(donneesActeInscriptionSauvegardeIncompletes)).toEqual({
       ...donneesActeInscriptionSauvegardeIncompletes,
-      personne: {
-        ...donneesActeInscriptionSauvegardeIncompletes.personne,
-        nom: undefined,
-        autresNoms: undefined,
-        prenoms: undefined,
-        dateNaissance: undefined,
-        lieuNaissance: undefined,
-        sexe: ""
-      },
+      personne: donneesActeInscriptionSauvegardeIncompletes.personne,
       nature: undefined,
       reference: undefined
     });

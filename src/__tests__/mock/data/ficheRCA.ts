@@ -21,7 +21,7 @@ export const mockRcaDto = {
       article: "la",
       categorieRCRCA: "DIVORCE"
     },
-    dateInscription: null,
+    dateInscription: [1, 1, 2020],
     dateDerniereMaj: 1435183200,
     dateDerniereDelivrance: 1457046000,
     statutsFiche: [

@@ -1,5 +1,5 @@
 import { IPieceJustificativeCreation, PieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
-import { IPersonneSauvegardeeDto, PersonneSauvegardeeDto } from "../personne/IPersonneSauvegardeeDto";
+import { IPersonneSauvegardeeDto } from "../personne/IPersonneSauvegardeeDto";
 
 export interface IActeInscriptionSauvegardeDto {
   idActeOuInscription: string;
@@ -14,7 +14,7 @@ export const ActeInscriptionSauvegardeDto = {
     return {
       idActeOuInscription: data.idActeOuInscription,
       type: data.type,
-      personne: PersonneSauvegardeeDto.mapping(data.personne),
+      personne: data.personne,
       nature: data.nature,
       reference: data.reference
     };

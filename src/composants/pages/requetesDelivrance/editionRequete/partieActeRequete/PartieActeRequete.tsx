@@ -1,10 +1,12 @@
 import { compositionApi } from "@api/appels/compositionApi";
-import { getDonneesPourCompositionActeTexte } from "@api/appels/etatcivilApi";
 import { getDocumentReponseById } from "@api/appels/requeteApi";
+import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE } from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteConfigApi";
 import { AlertesActes } from "@composant/alertesActe/AlertesActes";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import React, { Dispatch, SetStateAction, useContext, useEffect, useMemo, useState } from "react";
 import { EditionDelivranceContext } from "../../../../../contexts/EditionDelivranceContextProvider";
+import useFetchApi from "../../../../../hooks/api/FetchApiHook";
+import AfficherMessage from "../../../../../utils/AfficherMessage";
 import AffichagePDF from "../../../../commun/affichageDocument/AffichagePDF";
 import OngletsBouton from "../../../../commun/onglets/OngletsBouton";
 import ConteneurVoletEdition from "../ConteneurVoletEdition";
@@ -32,24 +34,29 @@ const PartieActeRequete: React.FC<IPartieActeRequeteProps> = React.memo(({ ongle
   );
 
   useEffect(() => {
-    if (!idDocumentCourrier) {
-      return;
-    }
+    if (!idDocumentCourrier) return;
 
     getDocumentReponseById(idDocumentCourrier).then(data => setContenuCourrier(data.body.data.contenu ?? ""));
   }, [idDocumentCourrier]);
 
-  useEffect(() => {
-    if (contenuActe !== null || !acte) {
-      return;
-    }
+  const { appelApi: recupererDonneesCompositionActeTexte } = useFetchApi(CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE);
 
-    getDonneesPourCompositionActeTexte(acte.id).then(data => {
-      compositionApi.getCompositionActeTexte(data.body).then(dataComposition => setContenuActe(dataComposition.body.data.contenu ?? ""));
+  useEffect(() => {
+    if (contenuActe !== null || !acte) return;
+
+    recupererDonneesCompositionActeTexte({
+      parametres: { path: { idActe: acte.id } },
+      apresSucces: donneesPourCompositionActeTexte => {
+        compositionApi
+          .getCompositionActeTexte(donneesPourCompositionActeTexte)
+          .then(dataComposition => setContenuActe(dataComposition.body.data.contenu ?? ""));
+      },
+      apresErreur: erreurs =>
+        AfficherMessage.erreur("Une erreur est survenue lors de la récupération de l'acte texte.", {
+          erreurs
+        })
     });
   }, [contenuActe, acte]);
-
-  //const { declancherRetoucheImage } = useRetoucherImage(requete, resultatInformationsActeApiHook); Refondre complètement la retouche image, c'est une catastrophe
 
   return (
     <div className="w-1/2">

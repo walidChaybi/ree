@@ -21,11 +21,6 @@ const URL_ACTE = "/acte";
 const URL_TITULAIRE = "/titulaire";
 const URL_RESUME = "/resume";
 const URL_ETAT_CIVIL = "/repertoirecivil";
-// Utilisé pour visualiser les images de l'acte dans la fiche Acte (renvoie un "InputStreamResource")
-const URL_CORPS_IMAGE = "/corps-image";
-const URL_DONNEES_POUR_COMPOSITION_ACTE_TEXTE = "/donnees-pour-composition-acte-texte";
-const URL_DONNEES_POUR_COMPOSITION_ACTE_REPRIS = "/donnees-pour-composition-acte-repris";
-const URL_DONNEES_POUR_COMPOSITION_ACTE_AVANT_SIGNATURE_MENTIONS = "/donnees-pour-composition-acte-texte-mis-a-jour";
 const URL_POCOPAS_DEBUTENT_PAR = "/acte/pocopas/debutentPar";
 export const URL_MENTION = "/mentions";
 const URL_CORPS_TEXTE = "/corpstexte";
@@ -33,8 +28,6 @@ const URL_ALERTES_ACTE = "/alertes";
 const URL_ALERTE_ACTE = "/alerte";
 const URL_DERNIERE_DELIVRANCE_RC_RCA_PACS = "/repertoirecivil/datedernieredelivrance";
 const URL_SAISIE_EXTRAIT = "/saisieExtrait";
-const URL_PERSONNES = "/personnes";
-const URL_RC = "/rc";
 const URL_PERSONNES_RMC_AUTO = "/personnes/rmcauto";
 const URL_PROJET_ACTE = "/projetacte";
 const URL_ETABLI = "/etabli";
@@ -44,7 +37,6 @@ const URL_BULLETIN_IDENTIFICATION = "/bulletinIdentification";
 const URL_COMPOSER_DOCUMENT_FINAL = "/composer-document-final";
 const URL_REGISTRE_PAPIER_PROJET_ACTE = "/registre-papier";
 const URL_INTEGRER_ACTE_SIGNE = "/integrer-acte-signe";
-const URL_ACTE_RECOMPOSER_APRES_SIGNATURE = "/recomposer-document-final";
 
 /**
  * Récupération des informations des Fiches RC/RCA/PACS (répertoires) et Acte (Registre)
@@ -206,15 +198,6 @@ export function getTitulairesActe(identifiant: string): Promise<any> {
   );
 }
 
-export function getInscriptionsRC(identifiant: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.GET,
-      uri: `${URL_PERSONNES}/${identifiant}${URL_RC}`
-    })
-  );
-}
-
 export function rechercheMultiCriteresPersonne(criteres: IRMCAutoPersonneRequest, range?: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
@@ -224,53 +207,6 @@ export function rechercheMultiCriteresPersonne(criteres: IRMCAutoPersonneRequest
       parameters: {
         range
       }
-    })
-  );
-}
-
-export function getPersonnesSauvegardees(idPersonnes: string[]): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.POST,
-      uri: `${URL_PERSONNES}`,
-      data: idPersonnes
-    })
-  );
-}
-
-/** Utilisé pour visualiser les images de l'acte dans la fiche Acte (renvoie un "InputStreamResource")*/
-export function getCorpsActeImage(identifiant: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.GET,
-      uri: `${URL_ACTE}/${identifiant}${URL_CORPS_IMAGE}`
-    })
-  );
-}
-
-export function getDonneesPourCompositionActeTexte(idActe: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.GET,
-      uri: `${URL_ACTE}/${idActe}${URL_DONNEES_POUR_COMPOSITION_ACTE_TEXTE}`
-    })
-  );
-}
-
-export function getDonneesPourCompositionActeRepris(idActe: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.GET,
-      uri: `${URL_ACTE}/${idActe}${URL_DONNEES_POUR_COMPOSITION_ACTE_REPRIS}`
-    })
-  );
-}
-
-export function getDonneesPourCompositionActeAvantSignatureMentions(idActe: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.GET,
-      uri: `${URL_ACTE}/${idActe}${URL_DONNEES_POUR_COMPOSITION_ACTE_AVANT_SIGNATURE_MENTIONS}`
     })
   );
 }
@@ -408,16 +344,6 @@ export function getBulletinIdentificationByIdActe(idActe: string): Promise<any> 
     api.fetch({
       method: HttpMethod.GET,
       uri: `${URL_ACTE}${URL_BULLETIN_IDENTIFICATION}/${idActe}`
-    })
-  );
-}
-
-export function getActeRecomposerApresSignature(idActe: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.GET,
-      uri: `${URL_ACTE}/${idActe}${URL_ACTE_RECOMPOSER_APRES_SIGNATURE}`,
-      responseType: "blob"
     })
   );
 }

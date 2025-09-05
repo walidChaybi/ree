@@ -1,4 +1,4 @@
-import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
+import { ECodeErreurFonctionnelle } from "@model/requete/ECodeErreurFonctionnelle";
 import { IEtatTraitementSignature } from "@model/signature/IEtatTraitementSignature";
 import { getLibelle } from "@util/Utils";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
@@ -8,9 +8,7 @@ interface IPopinPlageHoraireNonAutoriseeProps {
   etatTraitementSignature: IEtatTraitementSignature;
 }
 
-export const PopinPlageHoraireNonAutorisee: React.FC<
-  IPopinPlageHoraireNonAutoriseeProps
-> = ({ etatTraitementSignature }) => {
+export const PopinPlageHoraireNonAutorisee: React.FC<IPopinPlageHoraireNonAutoriseeProps> = ({ etatTraitementSignature }) => {
   const [estOuvert, setEstOuvert] = useState<boolean>(false);
   const [messages, setMessages] = useState<string[]>();
 
@@ -26,10 +24,7 @@ export const PopinPlageHoraireNonAutorisee: React.FC<
   ];
 
   useEffect(() => {
-    if (
-      etatTraitementSignature.erreur?.code ===
-      CodeErreurFonctionnelle.FCT_PLAGE_HORAIRE_SIGNATURE
-    ) {
+    if (etatTraitementSignature.erreur?.code === ECodeErreurFonctionnelle.FCT_PLAGE_HORAIRE_SIGNATURE) {
       setEstOuvert(true);
       setMessages([etatTraitementSignature.erreur.message]);
     }

@@ -1,32 +1,37 @@
+import { CONFIG_GET_RECOMPOSER_DOCUMENT_FINAL } from "@api/configurations/etatCivil/acte/GetRecomposerDocumentFinalConfigApi";
 import { AlertesActes } from "@composant/alertesActe/AlertesActes";
-import { VisionneuseActe } from "@composant/visionneuseActe/VisionneuseActe";
-import { useActeRecomposerApresSignatureApiHook } from "@hook/acte/ActeRecomposerApresSignatureApiHook";
+import VisionneuseActe from "@composant/visionneuseActe/VisionneuseActe";
 import { VisionneuseDocument } from "@widget/visionneuseDocument/VisionneuseDocument";
 import React, { useEffect, useState } from "react";
+import useFetchApi from "../../../../../hooks/api/FetchApiHook";
 import { MimeType } from "../../../../../ressources/MimeType";
+import AfficherMessage from "../../../../../utils/AfficherMessage";
 
 interface ActeRegistreProps {
   idActeAAfficher?: string;
   affichageApresSignature?: boolean;
 }
 
-const ActeRegistre: React.FC<ActeRegistreProps> = ({
-  idActeAAfficher,
-  affichageApresSignature
-}) => {
-  const [
-    acteRecomposerApresSignatureParams,
-    setActeRecomposerApresSignatureParams
-  ] = useState<string>();
-  const resultat = useActeRecomposerApresSignatureApiHook(
-    acteRecomposerApresSignatureParams
-  );
+const ActeRegistre: React.FC<ActeRegistreProps> = ({ idActeAAfficher, affichageApresSignature }) => {
+  const [acteRecompose, setActeRecompose] = useState<Blob>();
+  const { appelApi: recomposerDocumentFinal } = useFetchApi(CONFIG_GET_RECOMPOSER_DOCUMENT_FINAL);
 
   useEffect(() => {
-    if (affichageApresSignature && idActeAAfficher) {
-      setActeRecomposerApresSignatureParams(idActeAAfficher);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (!idActeAAfficher || !affichageApresSignature) return;
+
+    recomposerDocumentFinal({
+      parametres: { path: { idActe: idActeAAfficher } },
+      apresSucces: pdf => {
+        if (pdf.size === 0) {
+          AfficherMessage.erreur("La visualisation de l'acte n'est pas disponible");
+        }
+        setActeRecompose(pdf);
+      },
+      apresErreur: erreurs =>
+        AfficherMessage.erreur("Impossible de récupérer l'acte recomposé", {
+          erreurs
+        })
+    });
   }, [idActeAAfficher, affichageApresSignature]);
 
   return (
@@ -35,7 +40,7 @@ const ActeRegistre: React.FC<ActeRegistreProps> = ({
         <VisionneuseDocument
           infoBulle="Visionneuse acte registre"
           typeMime={MimeType.APPLI_PDF}
-          contenuBlob={resultat}
+          contenuBlob={acteRecompose}
         />
       ) : (
         <>

@@ -1,6 +1,6 @@
 import { IErreurTraitementApi } from "@api/IErreurTraitementApi";
 import { getPrendreEnChargeRequeteSuivante } from "@api/appels/requeteApi";
-import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
+import { ECodeErreurFonctionnelle } from "@model/requete/ECodeErreurFonctionnelle";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { useEffect, useState } from "react";
 import AfficherMessage from "../../../../utils/AfficherMessage";
@@ -26,7 +26,7 @@ export function usePrendreEnChargeRequeteSuivanteApiHook(
         .catch(({ response }) => {
           const erreurs: IErreurTraitementApi[] = response.body.errors;
           const erreurPlusDeRequeteDisponible = erreurs.find(
-            erreur => erreur.code === CodeErreurFonctionnelle.FCT_AUCUNE_REQUETE_DISPONIBLE_A_PRENDRE_EN_CHARGE
+            erreur => erreur.code === ECodeErreurFonctionnelle.FCT_AUCUNE_REQUETE_DISPONIBLE_A_PRENDRE_EN_CHARGE
           );
           if (erreurPlusDeRequeteDisponible) {
             setErreur(erreurPlusDeRequeteDisponible);

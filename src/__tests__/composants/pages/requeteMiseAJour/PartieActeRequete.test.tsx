@@ -1,10 +1,12 @@
+import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE } from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteConfigApi";
+import { MockApi } from "@mock/appelsApi/MockApi";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { act } from "react";
 import { RouterProvider } from "react-router";
 import { describe, expect, test, vi } from "vitest";
 import PartieActe from "../../../../composants/pages/requetesMiseAJour/PartieActe";
 import EditionMiseAJourContextProvider from "../../../../contexts/EditionMiseAJourContextProvider";
+import { RECEContextProvider } from "../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../router/LiensRECE";
 import { INFO_PAGE_RECHERCHE_ACTE_INSCRIPTION } from "../../../../router/infoPages/InfoPagesEspaceRecherche";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
@@ -43,12 +45,28 @@ describe("PartieActeRequete", () => {
       ["/b41079a5-9e8f-478a-b04c-c4c2ac671123"]
     );
 
+    MockApi.deployer(
+      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE,
+      { path: { idActe } },
+      {
+        data: `{
+          reference_acte: "RECE.2022.000001",
+          nature_acte: "ACTE DE NAISSANCE",
+          titulaires: "de Cassandra, Clara, Angela Schlosser",
+          texte_corps_acte: "texte corps acte",
+          mentions: ""
+        }`
+      }
+    );
+
     render(<RouterProvider router={router} />);
 
     await waitFor(() => {
       expect(screen.getByText("Acte registre")).toBeDefined();
       expect(screen.getByText("Alertes et informations")).toBeDefined();
     });
+
+    MockApi.stopMock();
   });
 
   test("Redirection lorsque le bouton Abandonner est cliqué", async () => {
@@ -57,13 +75,15 @@ describe("PartieActeRequete", () => {
         {
           path: "/:idActeParam",
           element: (
-            <EditionMiseAJourContextProvider
-              idActe={idActe}
-              idRequete={""}
-              estMiseAJourAvecMentions={false}
-            >
-              <PartieActe />
-            </EditionMiseAJourContextProvider>
+            <RECEContextProvider>
+              <EditionMiseAJourContextProvider
+                idActe={idActe}
+                idRequete={""}
+                estMiseAJourAvecMentions={false}
+              >
+                <PartieActe />
+              </EditionMiseAJourContextProvider>
+            </RECEContextProvider>
           )
         },
         {
@@ -80,7 +100,7 @@ describe("PartieActeRequete", () => {
       expect(screen.getByText("Acte registre")).toBeDefined();
     });
 
-    act(() => fireEvent.click(screen.getByText("Abandonner")));
+    fireEvent.click(screen.getByText("Abandonner"));
 
     await waitFor(() => {
       expect(mockedUseNavigate).toHaveBeenCalled();

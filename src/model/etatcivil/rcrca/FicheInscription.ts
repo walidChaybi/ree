@@ -10,7 +10,7 @@ export interface IFicheInscriptionDto {
   id: string;
   annee: string;
   numero: string;
-  dateInscription: TDateArrayDTO | null;
+  dateInscription: TDateArrayDTO;
   dateDerniereDelivrance?: number;
   dateDerniereMaj?: number;
   alertes: IAlerte[];
@@ -36,7 +36,7 @@ export class FicheInscription {
     public readonly id: string,
     public readonly annee: string,
     public readonly numero: string,
-    public readonly dateInscription: Date | null,
+    public readonly dateInscription: Date,
     public readonly dateDerniereDelivrance: Date | null,
     public readonly dateDerniereMaj: Date | null,
     public readonly alertes: IAlerte[],
@@ -53,7 +53,7 @@ export class FicheInscription {
       ficheInscription.id,
       ficheInscription.annee,
       ficheInscription.numero,
-      ficheInscription.dateInscription ? DateUtils.getDateDepuisDateArrayDto(ficheInscription.dateInscription) : null,
+      DateUtils.getDateDepuisDateArrayDto(ficheInscription.dateInscription),
       ficheInscription.dateDerniereDelivrance ? DateUtils.getDateFromTimestamp(ficheInscription.dateDerniereDelivrance) : null,
       ficheInscription.dateDerniereMaj ? DateUtils.getDateFromTimestamp(ficheInscription.dateDerniereMaj) : null,
       ficheInscription.alertes,
@@ -72,7 +72,7 @@ export class FicheInscription {
     id: string,
     annee: string,
     numero: string,
-    dateInscription: Date | null,
+    dateInscription: Date,
     dateDerniereDelivrance: Date | null,
     dateDerniereMaj: Date | null,
     alertes: IAlerte[],

@@ -1,16 +1,14 @@
-import { IGetCorpsActeImageParams, useGetCorpsActeImageApiHook } from "@hook/acte/GetCorpsActeImageApiHook";
-import useGetDonneesPourCompositionActeReprisApiHook, {
-  IGetDonneesPourCompositionActeReprisParams
-} from "@hook/acte/GetDonneesPourCompositionActeReprisApiHook";
-import useGetDonneesPourCompositionActeTexteApiHook, {
-  IGetDonneesPourCompositionActeTexteParams
-} from "@hook/acte/GetDonneesPourCompositionActeTexteApiHook";
-import { ICompositionActeTexteParams, useCompositionActeTexteApiHook } from "@hook/composition/CompositionActeTexte";
+import { compositionApi } from "@api/appels/compositionApi";
+import { CONFIG_GET_CORPS_ACTE_IMAGE } from "@api/configurations/etatCivil/acte/GetCorpsActeImage";
+import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_REPRIS } from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeReprisConfigApi";
+import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE } from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteConfigApi";
+import { IDonneesComposition } from "@model/composition/commun/retourApiComposition/IDonneesComposition";
 import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
-import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
 import { VisionneuseDocument } from "@widget/visionneuseDocument/VisionneuseDocument";
 import React, { useEffect, useState } from "react";
+import useFetchApi from "../../../../hooks/api/FetchApiHook";
 import { MimeType } from "../../../../ressources/MimeType";
+import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 import { base64EnBlob } from "../../../../utils/FileUtils";
 import "./scss/VisionneuseActe.scss";
 
@@ -20,77 +18,80 @@ interface IVisionneuseActeProps {
   estReecrit?: boolean;
 }
 
-const MESSAGE_VISUALISATION_INDISPONIBLE = "La visualisation de l'acte n'est pas disponible.";
-
-export const VisionneuseActe: React.FC<IVisionneuseActeProps> = ({ idActe, typeActe, estReecrit }) => {
+const VisionneuseActe: React.FC<IVisionneuseActeProps> = ({ idActe, typeActe, estReecrit }) => {
   const [contenuBlob, setContenuBlob] = useState<Blob>();
-  const [erreur, setErreur] = useState<string>();
   const [estImage, setEstImage] = useState(typeActe === ETypeActe.IMAGE);
 
-  const [recupererActeImageParams, setRecupererActeImageParams] = useState<IGetCorpsActeImageParams>();
-  const recupererActeImageResultat = useGetCorpsActeImageApiHook(recupererActeImageParams);
+  const [donneesPourCompositionActeTexte, setDonneesPourCompositionActeTexte] = useState<string | null>(null);
 
-  const [recupererActeTexteReprisParams, setRecupererActeTexteReprisParams] = useState<IGetDonneesPourCompositionActeReprisParams>();
-  const recupererActeTexteReprisResultat = useGetDonneesPourCompositionActeReprisApiHook(recupererActeTexteReprisParams);
-
-  const [recupererActeTexteParams, setRecupererActeTexteParams] = useState<IGetDonneesPourCompositionActeTexteParams>();
-  const recupererActeTexteResultat = useGetDonneesPourCompositionActeTexteApiHook(recupererActeTexteParams);
-
-  const [compositionActeTexteParams, setCompositionActeTexteParams] = useState<ICompositionActeTexteParams>();
-  const compositionActeTexteResultat = useCompositionActeTexteApiHook(compositionActeTexteParams);
+  const { appelApi: recupererCorpsActeImage } = useFetchApi(CONFIG_GET_CORPS_ACTE_IMAGE);
+  const { appelApi: recupererDonneesCompositionActeTexte } = useFetchApi(CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE);
+  const { appelApi: recupererDonneesPourCompositionActeRepris } = useFetchApi(CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_REPRIS);
 
   useEffect(() => {
-    if (idActe) {
-      if (estImage) {
-        !recupererActeImageResultat && setRecupererActeImageParams({ idActe });
-      } else {
-        if (estReecrit) {
-          !recupererActeTexteReprisResultat && setRecupererActeTexteReprisParams({ idActe });
-        } else {
-          !recupererActeTexteResultat && setRecupererActeTexteParams({ idActe });
+    if (!idActe) return;
+
+    switch (true) {
+      case estImage:
+        !contenuBlob &&
+          recupererCorpsActeImage({
+            parametres: { path: { idActe } },
+            apresSucces: corpsActeImage => setContenuBlob(base64EnBlob(corpsActeImage.contenu)),
+            apresErreur: erreurs =>
+              AfficherMessage.erreur("Une erreur est survenue lors de la récupération de l'acte image.", {
+                erreurs
+              })
+          });
+        break;
+
+      case estReecrit:
+        !donneesPourCompositionActeTexte &&
+          recupererDonneesPourCompositionActeRepris({
+            parametres: { path: { idActe } },
+            apresSucces: setDonneesPourCompositionActeTexte,
+            apresErreur: erreurs =>
+              AfficherMessage.erreur("Une erreur est survenue lors de la récupération de l'acte texte.", {
+                erreurs
+              })
+          });
+        break;
+
+      default:
+        !donneesPourCompositionActeTexte &&
+          recupererDonneesCompositionActeTexte({
+            parametres: { path: { idActe } },
+            apresSucces: setDonneesPourCompositionActeTexte,
+            apresErreur: erreurs =>
+              AfficherMessage.erreur("Une erreur est survenue lors de la récupération de l'acte texte.", {
+                erreurs
+              })
+          });
+        break;
+    }
+  }, [idActe, estImage, estReecrit]);
+
+  useEffect(() => {
+    if (!donneesPourCompositionActeTexte) return;
+
+    compositionApi
+      .getCompositionActeTexte(donneesPourCompositionActeTexte)
+      .then(reponse => {
+        if (reponse.body.size === 0) {
+          AfficherMessage.erreur("La visualisation de l'acte n'est pas disponible");
+          return;
         }
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [idActe, estImage]);
-
-  useEffect(() => {
-    if (!estReecrit) {
-      if (recupererActeTexteResultat?.erreur?.code === CodeErreurFonctionnelle.FCT_ACTE_SANS_CORPS_TEXTE) {
-        setErreur(`[${CodeErreurFonctionnelle.FCT_ACTE_SANS_CORPS_TEXTE}] ${MESSAGE_VISUALISATION_INDISPONIBLE}`);
-      } else if (recupererActeTexteResultat?.acteTexteJson) {
-        setCompositionActeTexteParams({
-          acteTexteJson: recupererActeTexteResultat.acteTexteJson
+        setContenuBlob(base64EnBlob((reponse.body.data as IDonneesComposition).contenu));
+      })
+      .catch(erreurs => {
+        AfficherMessage.erreur("Impossible d'obtenir les informations de l'acte", {
+          erreurs: estTableauErreurApi(erreurs) ? erreurs : []
         });
-      }
-    } else if (recupererActeTexteReprisResultat?.acteTexteJson) {
-      setCompositionActeTexteParams({
-        acteTexteJson: recupererActeTexteReprisResultat.acteTexteJson
       });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [recupererActeTexteResultat, recupererActeTexteReprisResultat]);
-
-  useEffect(() => {
-    if (estImage) {
-      if (recupererActeImageResultat?.imageActe) {
-        setContenuBlob(base64EnBlob(recupererActeImageResultat.imageActe.contenu));
-      } else if (recupererActeImageResultat?.erreur) {
-        setErreur(`[${CodeErreurFonctionnelle.FCT_AUCUN_ACTE_IMAGE}] ${MESSAGE_VISUALISATION_INDISPONIBLE}`);
-      }
-    } else {
-      if (compositionActeTexteResultat?.donneesComposition) {
-        setContenuBlob(base64EnBlob(compositionActeTexteResultat.donneesComposition.contenu));
-      } else if (compositionActeTexteResultat?.erreur) {
-        setErreur(compositionActeTexteResultat?.erreur);
-      }
-    }
-  }, [compositionActeTexteResultat, recupererActeImageResultat, estImage]);
+  }, [donneesPourCompositionActeTexte]);
 
   const onClickSwitchActeExtraitRepris = () => {
     setContenuBlob(undefined);
-    setEstImage(!estImage);
-    setErreur(undefined);
+    setEstImage(prec => !prec);
   };
 
   return (
@@ -106,7 +107,7 @@ export const VisionneuseActe: React.FC<IVisionneuseActeProps> = ({ idActe, typeA
           {estImage ? "Voir extrait repris" : "Voir acte"}
         </button>
       )}
-      {erreur ?? (
+      {contenuBlob && (
         <VisionneuseDocument
           infoBulle="Visionneuse PDF"
           contenuBlob={contenuBlob}
@@ -116,3 +117,5 @@ export const VisionneuseActe: React.FC<IVisionneuseActeProps> = ({ idActe, typeA
     </div>
   );
 };
+
+export default VisionneuseActe;

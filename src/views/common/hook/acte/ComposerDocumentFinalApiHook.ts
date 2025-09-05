@@ -1,6 +1,6 @@
 import { IErreurTraitementApi } from "@api/IErreurTraitementApi";
 import { composerDocumentFinal } from "@api/appels/etatcivilApi";
-import { CodeErreurFonctionnelle } from "@model/requete/CodeErreurFonctionnelle";
+import { ECodeErreurFonctionnelle } from "@model/requete/ECodeErreurFonctionnelle";
 import { IComposerDocumentFinalApiHookResultat } from "@model/signature/IComposerDocumentFinalApiHookResultat";
 import { useEffect, useState } from "react";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
@@ -40,7 +40,7 @@ export const useComposerDocumentFinalApiHook = (
             codeReponse: errors.status,
             erreur
           });
-          erreur.code !== CodeErreurFonctionnelle.FCT_PLAGE_HORAIRE_SIGNATURE &&
+          erreur.code !== ECodeErreurFonctionnelle.FCT_PLAGE_HORAIRE_SIGNATURE &&
             AfficherMessage.erreur("Impossible de composer le document final du projet d'acte.", {
               erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
               fermetureAuto: true

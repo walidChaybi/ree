@@ -1,8 +1,10 @@
 import { compositionApi } from "@api/appels/compositionApi";
-import { getDonneesPourCompositionActeTexte } from "@api/appels/etatcivilApi";
+import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE } from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteConfigApi";
 import { AlertesActes } from "@composant/alertesActe/AlertesActes";
 import { useContext, useEffect, useState } from "react";
 import { EditionMiseAJourContext } from "../../../../contexts/EditionMiseAJourContextProvider";
+import useFetchApi from "../../../../hooks/api/FetchApiHook";
+import AfficherMessage from "../../../../utils/AfficherMessage";
 import AffichagePDF from "../../../commun/affichageDocument/AffichagePDF";
 import OngletsContenu from "../../../commun/onglets/OngletsContenu";
 
@@ -14,55 +16,23 @@ const OngletActe: React.FC<IOngletActeProps> = ({ estActif }) => {
   const { idActe, estActeSigne } = useContext(EditionMiseAJourContext.Valeurs);
   const [contenuActe, setContenuActe] = useState<string | null>(null);
 
+  const { appelApi: recupererDonneesCompositionActeTexte } = useFetchApi(CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE);
+
   useEffect(() => {
-    if (!idActe || (contenuActe !== null && !estActeSigne)) {
-      return;
-    }
+    if (!idActe || (contenuActe !== null && !estActeSigne)) return;
 
-    // const { appelApi: appelApiDonneesPourComposition } = useFetchApi(
-    //   CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE
-    // );
-    // const { appelApi: appelApicompositionActeTexte } = useFetchApi(
-    //   CONFIG_POST_COMPOSITION_ACTE_TEXTE
-    // );
-
-    // appelApiDonneesPourComposition({
-    //   parametres: {
-    //     path: {
-    //       idActe: idActe
-    //     }
-    //   },
-    //   apresSucces: donneesComposition => {
-
-    //     appelApicompositionActeTexte({
-    //       parametres: {
-    //         body: {
-    //           donneesComposition: donneesComposition
-    //         }
-    //       },
-    //       apresSucces: acteCompose => {
-    //         //setContenuActe(acteCompose.contenu ?? "");
-    //       },
-    //       apresErreur: erreurs => {
-    //         logError({
-    //           messageUtilisateur:
-    //             "Impossible de récupérer les données pour la composition de l'acte",
-    //           error: erreurs[0]
-    //         });
-    //       }
-    //     });
-    //   },
-    //   apresErreur: erreurs => {
-    //     logError({
-    //       messageUtilisateur: "Impossible de récupérer l'acte recomposé'",
-    //       error: erreurs[0]
-    //     });
-    //   }
-    // });
-
-    getDonneesPourCompositionActeTexte(idActe).then(data =>
-      compositionApi.getCompositionActeTexte(data.body).then(dataComposition => setContenuActe(dataComposition.body.data.contenu ?? ""))
-    );
+    recupererDonneesCompositionActeTexte({
+      parametres: { path: { idActe } },
+      apresSucces: donneesPourCompositionActeTexte => {
+        compositionApi
+          .getCompositionActeTexte(donneesPourCompositionActeTexte)
+          .then(dataComposition => setContenuActe(dataComposition.body.data.contenu ?? ""));
+      },
+      apresErreur: erreurs =>
+        AfficherMessage.erreur("Une erreur est survenue lors de la récupération de l'acte texte.", {
+          erreurs
+        })
+    });
   }, [idActe, estActeSigne]);
 
   return (

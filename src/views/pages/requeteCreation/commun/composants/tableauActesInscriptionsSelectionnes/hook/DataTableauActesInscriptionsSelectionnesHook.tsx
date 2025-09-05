@@ -79,7 +79,7 @@ function mapDataTableauActeInscriptionSelectionne(
     prenoms: data.personne.prenoms,
     dateNaissance: data.personne.dateNaissance,
     lieuNaissance: data.personne.lieuNaissance,
-    sexe: data.personne.sexe?.libelle.charAt(0)
+    sexe: data.personne.sexe?.charAt(0)
   };
 }
 

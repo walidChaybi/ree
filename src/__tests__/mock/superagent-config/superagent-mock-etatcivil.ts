@@ -40,9 +40,8 @@ import {
   acteNaissance,
   acteNationalite
 } from "../data/ficheEtBandeau/ficheActe";
-import { inscriptionsRc, mockRcDto } from "../data/ficheRC";
+import { mockRcDto } from "../data/ficheRC";
 import { ficheRca, ficheRcaDecisionJuridictionEtrangere, idFicheRca, mockRcaDto } from "../data/ficheRCA";
-import { listeDeuxPersonnes } from "../data/listePersonnes";
 import {
   EnregistrerMentionsResultat,
   MetamodeleAideSaisie,
@@ -235,81 +234,6 @@ export const configEtatcivil = [
       }
 
       /////////////////////////////////////////////////////////////////////
-      // acte corps image
-      if (
-        [
-          "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/corps-image",
-          "/acte/923a10fb-0b15-452d-83c0-d24c76d1de8d/corps-image",
-          "/acte/b41079a3-9e8d-478c-b04c-c4c2ac47134f/corps-image",
-          "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/corps-image",
-          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134b/corps-image",
-          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134a/corps-image",
-          "/acte/b41079a5-9e8f-478a-b04c-c4c2ac671123/corps-image",
-          "/acte/b45079a5-9e8f-488a-b07c-c4c2az613121/corps-image",
-          "/acte/b45079a5-9e8f-478a-b07c-c4c2az671123/corps-image",
-          "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235e/corps-image"
-        ].includes(match[1])
-      ) {
-        return {
-          headers: [
-            {
-              "Content-Disposition": 'filename="unfichier.pdf"'
-            },
-            {
-              "content-type": "application/pdf"
-            }
-          ],
-          body: "contenubase64dupdf"
-        };
-      }
-
-      // Donnees pour composition acte texte et acte repris.
-      if (
-        [
-          "/acte/885bdb13-d995-4dbd-93cb-a7a3b2eee5c8/donnees-pour-composition-acte-texte",
-          "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/donnees-pour-composition-acte-texte",
-          "/acte/a5187320-d722-4673-abd7-a73ed41ad8c1/donnees-pour-composition-acte-texte",
-          "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/donnees-pour-composition-acte-texte",
-          "/acte/b51079a5-9e8d-478c-b04c-c4c4ey86537g/donnees-pour-composition-acte-texte",
-          "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235e/donnees-pour-composition-acte-texte",
-          "/acte/923a10fb-0b15-452d-83c0-d24c76d1de8d/donnees-pour-composition-acte-texte",
-          "/acte/b41079a3-9e8d-478c-b04c-c4c2ac47134f/donnees-pour-composition-acte-texte",
-          "/acte/b41079a5-9e8f-478a-b04c-c4c2ac671123/donnees-pour-composition-acte-texte",
-          "/acte/b45079a5-9e8f-478a-b07c-c4c2az671123/donnees-pour-composition-acte-texte",
-          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/donnees-pour-composition-acte-texte",
-          "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/donnees-pour-composition-acte-repris",
-          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134a/donnees-pour-composition-acte-repris",
-          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134b/donnees-pour-composition-acte-repris"
-        ].includes(match[1])
-      ) {
-        return {
-          body: {
-            reference_acte: null,
-            nature_acte: "DONNEES SAISIES SUR CET ACTE",
-            titulaires: null,
-            texte_corps_acte:
-              "Nom                : BEDROS\nPrénoms            : Balli\nSexe               : masculin\nné le              : huit mars mil neuf cent cinquante neuf\nà                  : Soueida (Syrie)\n\nNom du père        : BEDROS\nPrénoms            : Médard\nné en              : 1929\nà                  : Michrefa (Syrie)\n\nNom de la mère     : MARDAM BEK\nPrénoms            : Nadira\nnée en             : 1935\nà                  : Lattaquieh (Syrie)\n\nAdresse            : 61, rue des Migneaux - 78300 POISSY\nFrançais par       : Déclaration d'acquisition souscrite le 1er octobre 1991\n                     (Art. 37-1 du code de la Nationalité Française) \n\n                     Acte établi par Nous, Rafik MALAKIAN,\nofficier de l'état civil du service central d'état civil du ministère\ndes affaires étrangères - (loi n°78-731 du 12 juillet 1978).\n\n          Nantes, le 11 juin 1996",
-            mentions: ""
-          }
-        };
-      }
-      // Donnes pour composition acte texte en mise a jour mentions
-      if (
-        match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4da/donnees-pour-composition-acte-texte-mis-a-jour" ||
-        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/donnees-pour-composition-acte-texte-mis-a-jour"
-      ) {
-        return {
-          body: {
-            reference_acte: "RECE",
-            nature_acte: "ACTE DE RECONNAISSANCE",
-            titulaires: "de lolita MICHEL DE LAVANDIÈRE DU GRAND-LARGE\net marie-paulita, zaria, léna GREENWALD",
-            texte_corps_acte: "mon acte en texte",
-            mentions: "Divorce avec Richard."
-          }
-        };
-      }
-
-      /////////////////////////////////////////////////////////////////////
       // actes utilisés pour le test de pagination (avec changement de plage)
       if (
         match[1] === `/acte/${idFicheActe1}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true` ||
@@ -417,11 +341,6 @@ export const configEtatcivil = [
         return RMCAutoPersonneResponseAlpha;
       }
 
-      // Incriptions RC
-      if (match[1] === "/personnes/0bce8edd-0183-497b-139d-0a3cf6918792/rc") {
-        return inscriptionsRc;
-      }
-
       /////////////////
       // Projet acte //
       /////////////////
@@ -440,22 +359,10 @@ export const configEtatcivil = [
       /////////////////
       // Signature //
       /////////////////
-      if (
-        match[1] === "/acte/885bdb13-d995-4dbd-93cb-a7a3b2eee5c8/recomposer-document-final" ||
-        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/recomposer-document-final"
-      ) {
-        return {
-          data: "documentFinalActeSigneResponseTypeBlob"
-        };
-      }
 
       // Actes / inscriptions sauvegardes
       if (match[1] === "/projetacte/actesinscriptionssauvegardes") {
         return { data: actesInscriptionsSauvegardes };
-      }
-
-      if (match[1] === "/personnes") {
-        return listeDeuxPersonnes;
       }
 
       if (
