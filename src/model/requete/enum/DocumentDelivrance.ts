@@ -232,7 +232,7 @@ export class DocumentDelivrance {
         ?.filter(
           documentDelivrance =>
             documentDelivrance.categorieDocumentDelivrance === "Certificat de situation demandé" ||
-            (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) &&
+            (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA) &&
               documentDelivrance.categorieDocumentDelivrance === "Attestation")
         )
         .map(documentDelivrance => ({ cle: documentDelivrance.id, libelle: documentDelivrance.libelle })) ?? []

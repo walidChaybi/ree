@@ -51,7 +51,7 @@ export const redirectionSelonStatutRequete = (
 
 const redirectionAValider = (requete: IRequeteTableauDelivrance | RequeteTableauRMC<"DELIVRANCE">): string => {
   if (
-    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) &&
+    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA) &&
     [
       SousTypeDelivrance.RDDP.libelleCourt,
       SousTypeDelivrance.RDD.libelleCourt,

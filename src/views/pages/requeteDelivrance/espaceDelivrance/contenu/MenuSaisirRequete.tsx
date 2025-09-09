@@ -63,7 +63,7 @@ function mapSousTypeDelivrance(sousTypeDelivrance: SousTypeDelivrance): Option {
 function getListeDesRequetesCourrierAsOptions(): Options {
   let listeRequeteCourrier: Options = [];
 
-  if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES)) {
+  if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA)) {
     listeRequeteCourrier = listeRequeteCourrier.concat(mapSousTypeDelivrance(SousTypeDelivrance.RDC));
   }
 

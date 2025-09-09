@@ -181,7 +181,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
 
 function gestionFeatureFlagAssigneeA(sousType: string) {
   return (
-    (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) &&
+    (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA) &&
       (SousTypeDelivrance.RDC.libelleCourt === sousType || SousTypeDelivrance.RDD.libelleCourt === sousType)) ||
     (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATION) &&
       (SousTypeDelivrance.RDCSC.libelleCourt === sousType || SousTypeDelivrance.RDCSD.libelleCourt === sousType))

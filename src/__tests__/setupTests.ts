@@ -15,7 +15,7 @@ import { configTeleverification } from "./mock/superagent-config/superagent-mock
 const localStorageFeatureFlagMock = (() => {
   let store: Partial<Record<keyof typeof FeatureFlag, string>> = {
     FF_DELIVRANCE_CERTIFS_SITUATION: "true",
-    FF_DELIVRANCE_EXTRAITS_COPIES: "true",
+    FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA: "true",
     FF_LOG_SERVEUR: "true",
     FF_INTEGRATION_CIBLE_REQUETE_NATURALISATION: "true",
     FF_SIGNER_ACTE_ETABLISSEMENT: "true"

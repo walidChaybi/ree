@@ -50,7 +50,7 @@ export const SousTypeDelivranceUtils = {
   ...constructeurEnumAvecDeuxLibellesUtils(ELibelleSousTypeDelivrance),
 
   estPossibleAPrendreEnCharge: (sousType: keyof typeof ESousTypeDelivrance): boolean =>
-    (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) && ["RDD", "RDC", "RDDP"].includes(sousType)) ||
+    (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA) && ["RDD", "RDC", "RDDP"].includes(sousType)) ||
     (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATION) && ["RDCSD", "RDCSC"].includes(sousType))
 };
 
@@ -117,7 +117,8 @@ export class SousTypeDelivrance extends EnumWithComplete {
 
   public static estPossibleAPrendreEnCharge(sousType?: SousTypeDelivrance): boolean {
     return (
-      (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES) && SousTypeDelivrance.estRDDouRDCouRDDP(sousType)) ||
+      (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA) &&
+        SousTypeDelivrance.estRDDouRDCouRDDP(sousType)) ||
       (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATION) && SousTypeDelivrance.estRDCSDouRDCSC(sousType))
     );
   }
