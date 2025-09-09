@@ -6,9 +6,9 @@ import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IMetaModeleTypeMentionDto, MetaModeleTypeMention } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
 import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { Form, Formik } from "formik";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import * as Yup from "yup";
-import { EEventState, useEventDispatch, useEventState } from "../../../../hooks/EventHook";
+import { EEventState, useEventState } from "../../../../hooks/EventHook";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
 import AfficherMessage from "../../../../utils/AfficherMessage";
 import SchemaValidation from "../../../../utils/SchemaValidation";
@@ -49,7 +49,9 @@ export type TMentionForm = {
 
 interface IMentionFormProps {
   infoTitulaire: IInfoTitulaire;
-  setEnCoursDeSaisie: (estEnCours: boolean) => void;
+  setEnCoursDeSaisie: React.Dispatch<React.SetStateAction<boolean>>;
+  enCoursDeSaisie: boolean;
+  setMentionEnCoursDeSaisie: React.Dispatch<React.SetStateAction<IMentionEnCours | null>>;
 }
 
 const SCHEMA_VALIDATION_MENTIONS = {
@@ -104,9 +106,12 @@ const getTypesMentionDisponibles = (natureActe: NatureActe): ITypeMentionDisponi
   return typesMentionDisponibles;
 };
 
+const formaterTexteMention = (texteMention: string): string =>
+  `${texteMention.charAt(0).toUpperCase()}${texteMention.substring(1)}${texteMention.endsWith(".") ? "" : "."}`;
+
 const DEFAUT_CREATION: TMentionForm = { idTypeMention: "", texteMention: "", textesEdites: {}, mentionAffecteAnalyseMarginale: false };
 
-const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeSaisie }) => {
+const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeSaisie, setMentionEnCoursDeSaisie, enCoursDeSaisie }) => {
   const typesMentionDisponibles = useMemo(() => getTypesMentionDisponibles(NatureActe.NAISSANCE), []);
   const [valeurDefaut, setValeurDefaut] = useState<TMentionForm>({ ...DEFAUT_CREATION });
   const [typeMentionChoisi, setTypeMentionChoisi] = useState<ITypeMentionDisponible | null>(null);
@@ -114,24 +119,21 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
   const { appelApi: appelApiGetMetamodeleTypeMention, enAttenteDeReponseApi: enAttenteMetamodele } =
     useFetchApi(CONFIG_GET_METAMODELE_TYPE_MENTION);
   const [mentionModifiee, setMentionModifiee] = useEventState<IMentionEnCours | null>(EEventState.MODIFIER_MENTION, null);
-  const { envoyer: enregistrerMention } = useEventDispatch<IMentionEnCours | null>(EEventState.ENREGISTRER_MENTION);
-  const schemaValidation = useMemo(() => {
-    return SchemaValidation.objet({
-      ...SCHEMA_VALIDATION_MENTIONS,
-      ...(metamodeleTypeMention?.schemaValidation ?? {})
-    });
-  }, [metamodeleTypeMention]);
+  const schemaValidation = useMemo(
+    () =>
+      SchemaValidation.objet({
+        ...SCHEMA_VALIDATION_MENTIONS,
+        ...(metamodeleTypeMention?.schemaValidation ?? {})
+      }),
+    [metamodeleTypeMention]
+  );
 
   useEffect(() => {
-    if (!mentionModifiee) {
-      return;
-    }
+    if (!mentionModifiee) return;
 
     const idModifie = mentionModifiee.mention.idTypeMention;
     const typeMentionModifie = typesMentionDisponibles.find(typeMention => typeMention.id === idModifie) ?? null;
-    if (!typeMentionModifie) {
-      return;
-    }
+    if (!typeMentionModifie) return;
 
     setTypeMentionChoisi(typeMentionModifie);
   }, [mentionModifiee]);
@@ -188,32 +190,43 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
     });
   }, [typeMentionChoisi]);
 
+  const mettreAJourMentionEnCoursDeSaisie = useCallback(
+    (values: TMentionForm) => {
+      setMentionEnCoursDeSaisie({
+        mention: {
+          idTypeMention: values.idTypeMention,
+          donneesAideSaisie: {
+            champs: (() => {
+              const { idTypeMention, texteMention, textesEdites, ...champsAideSaisie } = values;
+
+              return champsAideSaisie;
+            })(),
+            textesEdites: values.textesEdites
+          },
+          affecteAnalyseMarginale: values.mentionAffecteAnalyseMarginale,
+          texte: formaterTexteMention(values.texteMention)
+        },
+        index: mentionModifiee?.index ?? null
+      });
+    },
+    [setMentionEnCoursDeSaisie, mentionModifiee]
+  );
+
+  useEffect(() => {
+    if (!enCoursDeSaisie) {
+      setMentionModifiee(null);
+      setValeurDefaut({ ...DEFAUT_CREATION });
+      setTypeMentionChoisi(null);
+    }
+  }, [enCoursDeSaisie]);
+
   return (
     <div className="mt-4">
       <Formik<TMentionForm>
         initialValues={valeurDefaut}
         validationSchema={schemaValidation}
         enableReinitialize
-        onSubmit={values => {
-          enregistrerMention({
-            index: mentionModifiee?.index ?? null,
-            mention: {
-              idTypeMention: values.idTypeMention,
-              texte: values.texteMention,
-              donneesAideSaisie: {
-                champs: (() => {
-                  const { idTypeMention, texteMention, textesEdites, ...champsAideSaisie } = values;
-
-                  return champsAideSaisie;
-                })(),
-                textesEdites: values.textesEdites
-              },
-              affecteAnalyseMarginale: values.mentionAffecteAnalyseMarginale
-            }
-          });
-          setMentionModifiee(null);
-          setValeurDefaut({ ...DEFAUT_CREATION });
-        }}
+        onSubmit={mettreAJourMentionEnCoursDeSaisie}
       >
         {({ values, initialValues }) => (
           <ConteneurAvecBordure titreEnTete={mentionModifiee ? "Modification d'une mention" : "Ajout d'une mention"}>
@@ -257,7 +270,6 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
                       styleBouton="secondaire"
                       onClick={() => {
                         if (mentionModifiee) {
-                          enregistrerMention(mentionModifiee);
                           setMentionModifiee(null);
                         }
                         setValeurDefaut({ ...DEFAUT_CREATION });

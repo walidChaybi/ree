@@ -14,12 +14,18 @@ export interface IEvenementMention {
   pays: string | null;
 }
 
+export interface IPersonneLieeDto {
+  nom: string | null;
+  prenoms: string | null;
+}
+
 interface IMentionEnregistree {
   idTypeMention: string;
   texteMention: string;
   numeroOrdre: number;
   evenement?: IEvenementMention;
   estSaisieAssistee?: boolean;
+  personneLiee?: IPersonneLieeDto;
 }
 
 export interface IEnregistrerAnalyseMarginaleEtMentionDto {

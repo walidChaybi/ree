@@ -196,7 +196,6 @@ describe("Tests PartieFormulaire", () => {
     expect(snapshot).toMatchSnapshot();
 
     const mock = MockApi.getMock();
-
     await ajoutMention("Autres", MENTION_TEXT_TEST_1);
 
     expect(mock.history.put.length).toBe(1);
@@ -213,7 +212,7 @@ describe("Tests PartieFormulaire", () => {
     expect(mock.history.put[2].url).toContain("/acte/mentions-et-analyse-marginale");
   });
 
-  test("Ajouter une mention 'Mariage - en France(marie)' + validation et envoi fomulaire", async () => {
+  test("Ajouter une mention 'Mariage - en France(marie)' + validation et envoi formulaire", async () => {
     const snapshot = await renderSnapshot(ONGLETS_ACTIFS_MENTION, true, []);
     expect(snapshot).toMatchSnapshot();
 

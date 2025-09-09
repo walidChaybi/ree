@@ -1,10 +1,10 @@
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 
 import { useFormikContext } from "formik";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { List, arrayMove } from "react-movable";
-import { EEventState, useEventDispatch, useEventState } from "../../../../../../hooks/EventHook";
+import { EEventState, useEventDispatch } from "../../../../../../hooks/EventHook";
 import Bouton from "../../../../../commun/bouton/Bouton";
 import BoutonIcon from "../../../../../commun/bouton/BoutonIcon";
 import ConteneurAvecBordure from "../../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
@@ -14,58 +14,23 @@ import { IMentionEnCours, IMentionMiseAJour, IMiseAJourForm } from "../../../Par
 interface ITableauMentionsProps {
   setAfficherOngletAnalyseMarginale: (afficher: boolean) => void;
   setMotif: (motif: string) => void;
+  formulaireMentionEnCoursDeSaisie: boolean;
+  donneesMentions: IMentionMiseAJour[];
 }
 
-const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAnalyseMarginale, setMotif }) => {
+const TableauMentions: React.FC<ITableauMentionsProps> = ({
+  setAfficherOngletAnalyseMarginale,
+  setMotif,
+  formulaireMentionEnCoursDeSaisie,
+  donneesMentions
+}) => {
   const { setFieldValue, values, submitForm } = useFormikContext<IMiseAJourForm>();
   const [indexASupprimer, setIndexASupprimer] = useState<number | null>(null);
-  const [afficherModaleAnalyseMarginale, setAfficherModaleAnalyseMarginale] = useState<boolean>(false);
   const { envoyer: modifierMention } = useEventDispatch<IMentionEnCours | null>(EEventState.MODIFIER_MENTION);
-  const [modificationEnCours, setModificationEnCours] = useState<boolean>(false);
-  const [mentionEnCours, setMentionEnCours] = useEventState<IMentionEnCours | null>(EEventState.ENREGISTRER_MENTION, null);
-  const estRenduInitial = useRef<boolean>(true);
 
   useEffect(() => {
-    if (mentionEnCours === null) {
-      return;
-    }
-
-    if (!mentionEnCours.mention.texte.length) {
-      setMentionEnCours(null);
-
-      return;
-    }
-
-    if (mentionEnCours.index === null) {
-      setFieldValue("mentions", [
-        ...values.mentions,
-        { ...mentionEnCours.mention, texte: formaterTexteMention(mentionEnCours.mention.texte) }
-      ]);
-      setAfficherModaleAnalyseMarginale(
-        Boolean(TypeMention.getTypeMentionById(mentionEnCours.mention.idTypeMention)?.affecteAnalyseMarginale)
-      );
-      setMentionEnCours(null);
-
-      return;
-    }
-
-    const modifiee = values.mentions[mentionEnCours.index];
-    if (modifiee.idTypeMention !== mentionEnCours.mention.idTypeMention || modifiee.texte !== mentionEnCours.mention.texte) {
-      setFieldValue(
-        "mentions",
-        values.mentions.map((mention, index) =>
-          index === mentionEnCours.index
-            ? { ...mentionEnCours.mention, texte: formaterTexteMention(mentionEnCours.mention.texte) }
-            : mention
-        )
-      );
-    }
-    setAfficherModaleAnalyseMarginale(
-      Boolean(TypeMention.getTypeMentionById(mentionEnCours.mention.idTypeMention)?.affecteAnalyseMarginale)
-    );
-    setMentionEnCours(null);
-    setModificationEnCours(false);
-  }, [mentionEnCours]);
+    setFieldValue("mentions", donneesMentions);
+  }, [donneesMentions]);
 
   useEffect(() => {
     const mentionsAffectantAnalyseMarginale: IMentionMiseAJour[] = values.mentions.filter(mention => mention.affecteAnalyseMarginale);
@@ -79,12 +44,7 @@ const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAna
 
     setMotif(motifMention);
 
-    if (estRenduInitial.current) {
-      estRenduInitial.current = false;
-      return;
-    }
-
-    submitForm();
+    if (values.mentions !== donneesMentions) submitForm();
   }, [values.mentions]);
 
   return (
@@ -123,9 +83,8 @@ const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAna
                   aria-label={`Modifier la ${Number(props.key) + 1}${props.key === 0 ? "ère" : "ème"} mention`}
                   onClick={() => {
                     modifierMention({ index: props.key ?? null, mention: value });
-                    setModificationEnCours(true);
                   }}
-                  disabled={modificationEnCours}
+                  disabled={formulaireMentionEnCoursDeSaisie}
                 >
                   <MdEdit aria-hidden />
                 </BoutonIcon>
@@ -135,7 +94,7 @@ const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAna
                     title={`Supprimer la ${Number(props.key) + 1}${props.key === 0 ? "ère" : "ème"} mention`}
                     aria-label={`Supprimer la ${Number(props.key) + 1}${props.key === 0 ? "ère" : "ème"} mention`}
                     onClick={() => setIndexASupprimer(props.key ?? null)}
-                    disabled={modificationEnCours}
+                    disabled={formulaireMentionEnCoursDeSaisie}
                     danger
                   >
                     <MdDelete aria-hidden />
@@ -147,7 +106,7 @@ const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAna
         )}
         lockVertically
         transitionDuration={150}
-        disabled={!values.mentions.length || modificationEnCours}
+        disabled={!values.mentions.length || formulaireMentionEnCoursDeSaisie}
       />
 
       {indexASupprimer !== null && (
@@ -182,26 +141,8 @@ const TableauMentions: React.FC<ITableauMentionsProps> = ({ setAfficherOngletAna
           </div>
         </ConteneurModale>
       )}
-      {afficherModaleAnalyseMarginale && (
-        <ConteneurModale>
-          <div className="rounded-md border-[2px] border-solid border-bleu-sombre bg-blanc p-6 shadow-lg">
-            <div className="p-6">{"Veuillez vérifier s'il y a lieu de mettre à jour l'analyse marginale"}</div>
-            <Bouton
-              title="J'ai lu ce message"
-              onClick={() => {
-                setAfficherModaleAnalyseMarginale(false);
-              }}
-            >
-              {"OK"}
-            </Bouton>
-          </div>
-        </ConteneurModale>
-      )}
     </ConteneurAvecBordure>
   );
 };
-
-const formaterTexteMention = (texteMention: string): string =>
-  `${texteMention.charAt(0).toUpperCase()}${texteMention.substring(1)}${texteMention.endsWith(".") ? "" : "."}`;
 
 export default TableauMentions;

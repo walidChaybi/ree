@@ -2,7 +2,6 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 export enum EEventState {
   MODIFIER_MENTION = "event-hook:modifier-mention",
-  ENREGISTRER_MENTION = "event-hook:enregistrer-mention",
   APERCU_PROJET_ACTE = "event-hook:apercu-projet-acte"
 }
 

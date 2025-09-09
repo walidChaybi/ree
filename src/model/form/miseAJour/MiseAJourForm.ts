@@ -1,7 +1,9 @@
 import {
   IEnregistrerAnalyseMarginaleEtMentionDto,
-  IEvenementMention
+  IEvenementMention,
+  IPersonneLieeDto
 } from "@api/configurations/etatCivil/PutAnalyseMarginaleEtMentionsConfigApi";
+import { nettoyerAttributsDto } from "@model/commun/dtoUtils";
 import { IAnalyseMarginaleMiseAJour, IMentionMiseAJour } from "../../../composants/pages/requetesMiseAJour/PartieFormulaire";
 import AnalyseMarginaleForm from "../AnalyseMarginale/AnalyseMarginaleForm";
 import { TObjetFormulaire, TValeurFormulaire } from "../commun/ObjetFormulaire";
@@ -63,25 +65,55 @@ const getEvenementMention = (champs?: TObjetFormulaire): IEvenementMention | und
   return evenement.annee ? evenement : undefined;
 };
 
+const getPersonneLiee = (champs?: TObjetFormulaire): IPersonneLieeDto | undefined => {
+  const champPersonneLiee = Object.entries(champs ?? {}).find(([cle]) =>
+    ["personnesConcernees", "conjoint", "exConjoint", "partenaire"].includes(cle)
+  )?.[1] as TObjetFormulaire;
+
+  if (!Object.keys(champPersonneLiee ?? {}).length) return undefined;
+
+  const personneLiee = Object.entries(champPersonneLiee).reduce<IPersonneLieeDto>(
+    (personneLiee: IPersonneLieeDto, [clePersonneLiee, valeurPersonneLiee]) => {
+      if (!valeurPersonneLiee) return personneLiee;
+
+      if (clePersonneLiee === "nom") {
+        return { ...personneLiee, nom: valeurPersonneLiee as string };
+      }
+
+      if (clePersonneLiee === "prenoms") {
+        return { ...personneLiee, prenoms: valeurPersonneLiee as string };
+      }
+
+      return personneLiee;
+    },
+    {
+      nom: null,
+      prenoms: null
+    }
+  );
+
+  return personneLiee.nom ? personneLiee : undefined;
+};
+
 const MiseAJourForm = {
   versDto: (
     idActe: string,
     mentions: IMentionMiseAJour[],
     analyseMarginale: IAnalyseMarginaleMiseAJour | null,
     analyseMarginaleModifiee: boolean
-  ): IEnregistrerAnalyseMarginaleEtMentionDto => {
-    return {
+  ): IEnregistrerAnalyseMarginaleEtMentionDto =>
+    nettoyerAttributsDto<IEnregistrerAnalyseMarginaleEtMentionDto>({
       idActe: idActe,
       mentionCreationList: mentions?.map((mention, index) => ({
         idTypeMention: mention.idTypeMention,
         numeroOrdre: index + 1,
         texteMention: mention.texte,
         evenement: getEvenementMention(mention.donneesAideSaisie?.champs),
+        personneLiee: getPersonneLiee(mention.donneesAideSaisie?.champs),
         estSaisieAssistee: Boolean(Object.keys(mention.donneesAideSaisie?.champs ?? {}).length)
       })),
       analyseMarginale: analyseMarginaleModifiee ? AnalyseMarginaleForm.versDto(analyseMarginale) : null
-    } as IEnregistrerAnalyseMarginaleEtMentionDto;
-  }
+    })
 };
 
 export default MiseAJourForm;

@@ -15,21 +15,25 @@ import { Droit } from "@model/agent/enum/Droit";
 import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import MiseAJourForm from "@model/form/miseAJour/MiseAJourForm";
 import { estActeEligibleMentionDIntegration } from "@pages/fiche/FichePage";
+import { Formik } from "formik";
 import { useContext, useEffect, useMemo, useState } from "react";
+import { Form } from "react-router";
 import { ECleOngletsMiseAJour, EditionMiseAJourContext } from "../../../contexts/EditionMiseAJourContextProvider";
 import { RECEContextData } from "../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import AfficherMessage from "../../../utils/AfficherMessage";
+import Bouton from "../../commun/bouton/Bouton";
 import { ConteneurBoutonBasDePage } from "../../commun/bouton/conteneurBoutonBasDePage/ConteneurBoutonBasDePage";
 import PageChargeur from "../../commun/chargeurs/PageChargeur";
 import ConteneurAvecBordure from "../../commun/conteneurs/formulaire/ConteneurAvecBordure";
+import ConteneurModale from "../../commun/conteneurs/modale/ConteneurModale";
 import OngletsBouton from "../../commun/onglets/OngletsBouton";
 import OngletsContenu from "../../commun/onglets/OngletsContenu";
 import BoutonTerminerEtSigner from "./formulaires/BoutonTerminerEtSigner";
 import BoutonValiderEtTerminer from "./formulaires/BoutonValiderEtTerminer";
 import MentionForm, { IInfoTitulaire } from "./formulaires/MentionForm";
 import AnalyseMarginaleFormulaire from "./formulaires/mentions/AnalyseMarginaleFormulaire/AnalyseMarginaleFormulaire";
-import ListeMentionsFormulaire from "./formulaires/mentions/ListeMentionsFormulaire/ListeMentionsFormulaire";
+import TableauMentions from "./formulaires/mentions/ListeMentionsFormulaire/TableauMentions";
 
 interface IDonneesAideSaisie {
   champs: TObjetFormulaire;
@@ -69,9 +73,9 @@ const PartieFormulaire: React.FC = () => {
   const { estMiseAJourAvecMentions, ongletsActifs, idActe, miseAJourEffectuee } = useContext(EditionMiseAJourContext.Valeurs);
   const { changerOnglet, activerOngletActeMisAJour, setComposerActeMisAJour } = useContext(EditionMiseAJourContext.Actions);
 
-  const { appelApi: appelApiMiseAJourAnalyseMarginaleEtMentions, enAttenteDeReponseApi: enAttenteMiseAJourAnalyseMarginaleEtMention } =
+  const { appelApi: mettreAJourAnalyseMarginaleEtMentions, enAttenteDeReponseApi: enAttenteMiseAJourAnalyseMarginaleEtMention } =
     useFetchApi(CONFIG_PUT_ANALYSE_MARGINALE_ET_MENTIONS);
-  const { appelApi: appelApiMisAJourAnalyseMarginale, enAttenteDeReponseApi: enAttenteMiseAJourAnalyseMarginale } = useFetchApi(
+  const { appelApi: mettreAJourAnalyseMarginale, enAttenteDeReponseApi: enAttenteMiseAJourAnalyseMarginale } = useFetchApi(
     CONFIG_PUT_MISE_A_JOUR_ANALYSE_MARGINALE
   );
   const [afficherAnalyseMarginale, setAfficherAnalyseMarginale] = useState(!estMiseAJourAvecMentions);
@@ -79,9 +83,12 @@ const PartieFormulaire: React.FC = () => {
   const [titulaire, setTitulaire] = useState<IInfoTitulaire | null>(null);
   const [formulaireMentionEnCoursDeSaisie, setFormulaireMentionEnCoursDeSaisie] = useState<boolean>(false);
 
+  const [afficherModaleAnalyseMarginale, setAfficherModaleAnalyseMarginale] = useState<boolean>(false);
   const [donneesAnalyseMarginale, setDonneesAnalyseMarginale] = useState<IAnalyseMarginaleMiseAJour | null>(null);
   const [analyseMarginaleModifiee, setAnalyseMarginaleModifiee] = useState<boolean>(false);
-  const [donneesMentions, setDonneesMentions] = useState<IMentionMiseAJour[]>([]);
+  const [mentionsDeLActe, setMentionsDeLActe] = useState<IMentionMiseAJour[]>([]);
+  const [mentionsDuTableau, setMentionsDuTableau] = useState<IMentionMiseAJour[]>([]);
+  const [mentionEnCoursDeSaisie, setMentionEnCoursDeSaisie] = useState<IMentionEnCours | null>(null);
   const [motif, setMotif] = useState<string | null>(null);
 
   const [acte, setActe] = useState<IFicheActe | null>(null);
@@ -119,30 +126,37 @@ const PartieFormulaire: React.FC = () => {
   }, [acteEstEligibleMentionDIntegrationEtUtilisateurALesDroits]);
 
   useEffect(() => {
-    const apresRetour = {
-      apresSucces: () => {
-        activerOngletActeMisAJour();
-        setComposerActeMisAJour(true);
-        changerOnglet(ECleOngletsMiseAJour.ACTE_MIS_A_JOUR, null);
-      },
-      apresErreur: (erreurs: TErreurApi[]) => {
-        const messageErreur = (() => {
-          switch (true) {
-            case Boolean(erreurs?.find(erreur => erreur.code === "FCT_16136")):
-              return "Aucune modification de l'analyse marginale n'a été détectée";
-            case estMiseAJourAvecMentions:
-              return "Impossible de mettre à jour l'acte";
-            default:
-              return "Impossible de mettre à jour l'analyse marginale";
-          }
-        })();
+    if (estMiseAJourAvecMentions) {
+      let mentions: IMentionMiseAJour[];
+      const analyseMarginaleEstMiseAJour = afficherAnalyseMarginale && analyseMarginaleModifiee && donneesAnalyseMarginale !== null;
 
-        AfficherMessage.erreur(messageErreur, { erreurs, fermetureAuto: true });
+      // Mention saisie dans le formulaire de saisie
+      if (mentionEnCoursDeSaisie?.mention) {
+        // Mention modifiée
+        if (typeof mentionEnCoursDeSaisie.index === "number") {
+          if (mentionsDeLActe[mentionEnCoursDeSaisie.index] === mentionEnCoursDeSaisie.mention) return;
+
+          mentions = mentionsDeLActe.map((mention, index) =>
+            index === mentionEnCoursDeSaisie.index ? mentionEnCoursDeSaisie.mention : mention
+          );
+
+          // Mention ajoutée
+        } else {
+          mentions = [...mentionsDeLActe, mentionEnCoursDeSaisie.mention];
+        }
+
+        // Analyse marginale modifiée
+      } else if (analyseMarginaleEstMiseAJour) {
+        mentions = mentionsDeLActe;
+
+        // Ordre des mentions modifié ou mention supprimée
+      } else {
+        mentions = mentionsDuTableau;
       }
-    };
 
-    if (estMiseAJourAvecMentions && donneesMentions.length) {
-      appelApiMiseAJourAnalyseMarginaleEtMentions({
+      if (!mentions.length) return;
+
+      mettreAJourAnalyseMarginaleEtMentions({
         parametres: {
           body: MiseAJourForm.versDto(
             idActe,
@@ -156,26 +170,60 @@ const PartieFormulaire: React.FC = () => {
                     }
                   ]
                 : []),
-              ...donneesMentions
+              ...mentions
             ],
             donneesAnalyseMarginale,
-            afficherAnalyseMarginale && analyseMarginaleModifiee && donneesAnalyseMarginale != null
+            analyseMarginaleEstMiseAJour
           )
         },
-        ...apresRetour
+        apresSucces: () => {
+          setFormulaireMentionEnCoursDeSaisie(false);
+          setMentionsDeLActe(mentions);
+          activerOngletActeMisAJour();
+          setComposerActeMisAJour(true);
+          changerOnglet(ECleOngletsMiseAJour.ACTE_MIS_A_JOUR, null);
+          !analyseMarginaleEstMiseAJour &&
+            setAfficherModaleAnalyseMarginale(mentions[mentionEnCoursDeSaisie?.index ?? mentions.length - 1].affecteAnalyseMarginale);
+          setMentionEnCoursDeSaisie(null);
+        },
+        apresErreur: (erreurs: TErreurApi[]) => {
+          const messageErreur = (() => {
+            switch (true) {
+              case Boolean(erreurs?.find(erreur => erreur.code === "FCT_16136")):
+                return "Aucune modification de l'analyse marginale n'a été détectée";
+              case Boolean(erreurs?.find(erreur => erreur.code === "FCT_160168")):
+                return "La personne liée ne peut pas être le titulaire de l'acte";
+              default:
+                return "Impossible de mettre à jour l'acte";
+            }
+          })();
+
+          AfficherMessage.erreur(messageErreur, { erreurs, fermetureAuto: true });
+        }
       });
     }
 
-    if (!estMiseAJourAvecMentions && donneesAnalyseMarginale != null) {
-      appelApiMisAJourAnalyseMarginale({
+    if (!estMiseAJourAvecMentions && donneesAnalyseMarginale !== null) {
+      mettreAJourAnalyseMarginale({
         parametres: {
           path: { idActe: idActe },
           body: AnalyseMarginaleForm.versDto(donneesAnalyseMarginale)
         },
-        ...apresRetour
+        apresSucces: () => {
+          activerOngletActeMisAJour();
+          setComposerActeMisAJour(true);
+          changerOnglet(ECleOngletsMiseAJour.ACTE_MIS_A_JOUR, null);
+        },
+        apresErreur: (erreurs: TErreurApi[]) => {
+          const messageErreur = erreurs.find(erreur => erreur.code === "FCT_16136")
+            ? "Aucune modification de l'analyse marginale n'a été détectée"
+            : "Impossible de mettre à jour l'analyse marginale";
+
+          AfficherMessage.erreur(messageErreur, { erreurs, fermetureAuto: true });
+        }
       });
     }
-  }, [donneesAnalyseMarginale, donneesMentions]);
+  }, [donneesAnalyseMarginale, mentionEnCoursDeSaisie, mentionsDuTableau]);
 
   useEffect(() => {
     appelResumeActe({
@@ -249,11 +297,21 @@ const PartieFormulaire: React.FC = () => {
                 </div>
               )}
 
-              <ListeMentionsFormulaire
-                setAfficherAnalyseMarginale={setAfficherAnalyseMarginale}
-                setDonneesMentions={setDonneesMentions}
-                setMotif={setMotif}
-              />
+              <Formik<IMiseAJourMentionsForm>
+                initialValues={{ mentions: [] }}
+                onSubmit={values => {
+                  setMentionsDuTableau(values.mentions);
+                }}
+              >
+                <Form>
+                  <TableauMentions
+                    setAfficherOngletAnalyseMarginale={setAfficherAnalyseMarginale}
+                    setMotif={setMotif}
+                    formulaireMentionEnCoursDeSaisie={formulaireMentionEnCoursDeSaisie}
+                    donneesMentions={mentionsDeLActe}
+                  />
+                </Form>
+              </Formik>
               <MentionForm
                 infoTitulaire={{
                   nom: titulaire?.nom ?? "",
@@ -262,7 +320,9 @@ const PartieFormulaire: React.FC = () => {
                   nomSecable: titulaire?.nomSecable ?? false,
                   sexe: titulaire?.sexe ?? null
                 }}
-                setEnCoursDeSaisie={estEnCours => setFormulaireMentionEnCoursDeSaisie(estEnCours)}
+                setEnCoursDeSaisie={setFormulaireMentionEnCoursDeSaisie}
+                enCoursDeSaisie={formulaireMentionEnCoursDeSaisie}
+                setMentionEnCoursDeSaisie={setMentionEnCoursDeSaisie}
               />
             </OngletsContenu>
           )}
@@ -287,6 +347,21 @@ const PartieFormulaire: React.FC = () => {
           </ConteneurBoutonBasDePage>
         </div>
       </div>
+      {afficherModaleAnalyseMarginale && (
+        <ConteneurModale>
+          <div className="rounded-md border-[2px] border-solid border-bleu-sombre bg-blanc p-6 shadow-lg">
+            <div className="p-6">{"Veuillez vérifier s'il y a lieu de mettre à jour l'analyse marginale"}</div>
+            <Bouton
+              title="J'ai lu ce message"
+              onClick={() => {
+                setAfficherModaleAnalyseMarginale(false);
+              }}
+            >
+              {"OK"}
+            </Bouton>
+          </div>
+        </ConteneurModale>
+      )}
     </>
   );
 };
