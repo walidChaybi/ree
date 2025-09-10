@@ -266,11 +266,9 @@ describe("Le bloc RC/RCA/PACS fonctionne correctement ", () => {
 
     fireEvent.change(InputTypeRepertoire, { target: { value: "RC" } });
 
-    const InputAnnee = (await screen.findAllByPlaceholderText("AAAA")).find(
-      input => input.id === "registreRepertoire.repertoire.numeroInscription.annee"
-    )!;
+    const InputAnnee = (await screen.findAllByPlaceholderText("AAAA")).find(input => input.id === "inscription.numeroInscription.annee")!;
     const InputNumero = (await screen.findAllByPlaceholderText("XXXXX")).find(
-      input => input.id === "registreRepertoire.repertoire.numeroInscription.numero"
+      input => input.id === "inscription.numeroInscription.numero"
     )!;
 
     fireEvent.change(InputAnnee, { target: { value: "1234" } });
@@ -307,11 +305,9 @@ describe("Le bloc RC/RCA/PACS fonctionne correctement ", () => {
     render(<PageRMCActeInscription></PageRMCActeInscription>);
     const checkboxInscriptionSuivantes: HTMLInputElement = await screen.findByLabelText("Et les inscriptions/PACS suivants du répertoire");
 
-    const InputAnnee = (await screen.findAllByPlaceholderText("AAAA")).find(
-      input => input.id === "registreRepertoire.repertoire.numeroInscription.annee"
-    )!;
+    const InputAnnee = (await screen.findAllByPlaceholderText("AAAA")).find(input => input.id === "inscription.numeroInscription.annee")!;
     const InputNumero = (await screen.findAllByPlaceholderText("XXXXX")).find(
-      input => input.id === "registreRepertoire.repertoire.numeroInscription.numero"
+      input => input.id === "inscription.numeroInscription.numero"
     )!;
 
     expect(checkboxInscriptionSuivantes.disabled).toBe(true);

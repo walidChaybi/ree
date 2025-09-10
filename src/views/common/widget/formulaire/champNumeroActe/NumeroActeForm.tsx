@@ -4,25 +4,20 @@ import { getLibelle } from "@util/Utils";
 import { connect, Field } from "formik";
 import * as Yup from "yup";
 import { digitSeulement, traiteCarAutorises } from "../utils/ControlesUtil";
-import {
-  ComponentFiltreProps,
-  FormikComponentProps,
-  onBlurChampNumero,
-  withNamespace
-} from "../utils/FormUtil";
+import { ComponentFiltreProps, FormikComponentProps, onBlurChampNumero, withNamespace } from "../utils/FormUtil";
 
-const NUMERO_ACTE_OU_ORDRE = "numeroActeOuOrdre";
+const NUMERO_ACTE = "numeroActe";
 export const NUMERO_BIS_TER = "numeroBisTer";
 const A_PARTIR_DE = "aPartirDe";
 
 export const NumeroActeDefaultValues = {
-  [NUMERO_ACTE_OU_ORDRE]: "",
+  [NUMERO_ACTE]: "",
   [NUMERO_BIS_TER]: "",
   [A_PARTIR_DE]: false
 };
 
 export const NumeroActeValidationSchema = Yup.object({
-  [NUMERO_ACTE_OU_ORDRE]: Yup.string()
+  [NUMERO_ACTE]: Yup.string()
 });
 
 interface INumeroActeFormProps {
@@ -31,13 +26,8 @@ interface INumeroActeFormProps {
 
 export type NumeroActeFormProps = INumeroActeFormProps & ComponentFiltreProps;
 
-const NumeroActeForm: React.FC<
-  NumeroActeFormProps & FormikComponentProps
-> = props => {
-  const nomChampNumeroActeOuOrdre = withNamespace(
-    props.nomFiltre,
-    NUMERO_ACTE_OU_ORDRE
-  );
+const NumeroActeForm: React.FC<NumeroActeFormProps & FormikComponentProps> = props => {
+  const nomChampNumeroActeOuOrdre = withNamespace(props.nomFiltre, NUMERO_ACTE);
   const nomChampNumeroBisTer = withNamespace(props.nomFiltre, NUMERO_BIS_TER);
   const nomChampAPartirDe = withNamespace(props.nomFiltre, A_PARTIR_DE);
 
@@ -61,18 +51,14 @@ const NumeroActeForm: React.FC<
   return (
     <div className="InputField">
       <div className="BlockInput TroisInputs">
-        <label htmlFor={nomChampNumeroActeOuOrdre}>
-          {getLibelle("N° d'acte / N° d'ordre")}
-        </label>
+        <label htmlFor={nomChampNumeroActeOuOrdre}>{getLibelle("N° d'acte / N° d'ordre")}</label>
         <Field
           component="input"
           name={nomChampNumeroActeOuOrdre}
           id={nomChampNumeroActeOuOrdre}
           aria-label={getLibelle("Numero d'acte ou d'ordre")}
           placeholder={getLibelle("N° d'acte ou d'ordre")}
-          onBlur={(e: React.ChangeEvent<HTMLInputElement>) =>
-            onBlurChampNumero(e, props.formik)
-          }
+          onBlur={(e: React.ChangeEvent<HTMLInputElement>) => onBlurChampNumero(e, props.formik)}
           onInput={onInputNumeroActeOuOrdre}
         />
         <Field

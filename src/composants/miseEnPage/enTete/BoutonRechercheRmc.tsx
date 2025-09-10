@@ -1,13 +1,9 @@
 import Button from "@mui/material/Button";
-import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
-import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { ToastContainer } from "react-toastify";
 import FenetreExterne, { IFenetreExterneRef } from "../../../composants/commun/conteneurs/FenetreExterne";
 import PageRMCActeInscription from "../../../pages/rmc/PageRMCActeInscription";
-import "../../../views/pages/rechercheMultiCriteres/acteInscription/scss/RMCActeInscriptionPage.scss";
 
 const width = 1200;
 const ratioHeight = 1;
@@ -45,26 +41,19 @@ export const BoutonRechercheRmc: React.FC = () => {
           titre="Recherche acte et inscription"
           setFenetreExterneRef={ref => setFenetreExterne(ref)}
         >
-          {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_UTILISER_NOUVELLE_RMC) ? (
-            <>
-              <PageRMCActeInscription />
-              <ToastContainer
-                containerId={"toastContainer-externe"}
-                className={"toast-container"}
-                position="top-center"
-                newestOnTop={true}
-                closeOnClick={true}
-                rtl={false}
-                draggable={true}
-                pauseOnHover={true}
-              />
-            </>
-          ) : (
-            <RMCActeInscriptionPage
-              noAutoScroll={true}
-              dansFenetreExterne={true}
-            ></RMCActeInscriptionPage>
-          )}
+          <>
+            <PageRMCActeInscription />
+            <ToastContainer
+              containerId={"toastContainer-externe"}
+              className={"toast-container"}
+              position="top-center"
+              newestOnTop={true}
+              closeOnClick={true}
+              rtl={false}
+              draggable={true}
+              pauseOnHover={true}
+            />
+          </>
         </FenetreExterne>
       )}
     </>

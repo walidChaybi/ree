@@ -15,9 +15,6 @@ import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMC
 import ResultatRMCInscription, { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { TParamsTableauRMC, getParamsTableauRMCDepuisHeaders } from "@util/GestionDesLiensApi";
-import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { stockageDonnees } from "@util/stockageDonnees";
 import {
   NB_LIGNES_PAR_APPEL_ACTE,
   NB_LIGNES_PAR_APPEL_DEFAUT,
@@ -177,9 +174,7 @@ export const TableauRMC: React.FC<ITableauRMCProps> = ({ requete, ...props }) =>
           apresSucces: setResultatRMCActeInscription
         });
 
-        gestionnaireFeatureFlag.estActif(FeatureFlag.FF_UTILISER_NOUVELLE_RMC)
-          ? StockageLocal.stocker("CRITERES_RMC_ACTE_INSCRIPTION", valeurs)
-          : stockageDonnees.stockerCriteresRMCActeInspt(valeurs);
+        StockageLocal.stocker("CRITERES_RMC_ACTE_INSCRIPTION", valeurs);
         setResetRMCActeInscription(false);
         props.reset?.();
       }

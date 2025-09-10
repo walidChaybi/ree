@@ -1,42 +1,40 @@
-import { ICriteresRMCActeInscriptionDto, IRMCActeInscriptionForm, RMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
+import { IRMCActeInscriptionDto, IRMCActeInscriptionForm, RMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
 import { describe, expect, test } from "vitest";
 
 const valeursInitialesRMCActeInscriptionAttendues: IRMCActeInscriptionForm = {
-  registreRepertoire: {
-    registre: {
-      natureActe: "",
-      familleRegistre: "",
-      pocopa: "",
-      anneeRegistre: "",
-      registreSupport: {
-        supportUn: "",
-        supportDeux: ""
-      },
-      numeroActe: {
-        numeroActeOuOrdre: "",
-        numeroBisTer: "",
-        etActesSuivants: false
-      },
-      typeReference: "REGISTRE",
-      referenceRECE: {
-        annee: "",
-        numero: ""
-      }
+  acte: {
+    natureActe: "",
+    familleRegistre: "",
+    pocopa: "",
+    anneeRegistre: "",
+    registreSupport: {
+      support1: "",
+      support2: ""
     },
-    repertoire: {
-      numeroInscription: { annee: "", numero: "" },
-      typeRepertoire: "",
-      natureInscription: "",
-      etInscriptionsSuivantes: false
+    numeroActe: {
+      numeroActe: "",
+      numeroBisTer: ""
     },
-    evenement: {
-      dateEvenement: {
-        jour: "",
-        mois: "",
-        annee: ""
-      },
-      paysEvenement: ""
+    etActesSuivants: false,
+    typeReference: "REGISTRE",
+    referenceRECE: {
+      annee: "",
+      numero: ""
     }
+  },
+  inscription: {
+    numeroInscription: { annee: "", numero: "" },
+    typeRepertoire: "",
+    natureInscription: "",
+    etInscriptionsSuivantes: false
+  },
+  evenement: {
+    dateEvenement: {
+      jour: "",
+      mois: "",
+      annee: ""
+    },
+    paysEvenement: ""
   },
 
   titulaire: {
@@ -52,41 +50,39 @@ const valeursInitialesRMCActeInscriptionAttendues: IRMCActeInscriptionForm = {
 };
 
 const mockValeursRMCActeInscription: IRMCActeInscriptionForm = {
-  registreRepertoire: {
-    registre: {
-      natureActe: "NAISSANCE",
-      familleRegistre: "ACQ",
-      anneeRegistre: "2023",
-      pocopa: "",
-      registreSupport: {
-        supportUn: "PAPIER",
-        supportDeux: "NUMÉRIQUE"
-      },
-      numeroActe: {
-        numeroActeOuOrdre: "42",
-        numeroBisTer: "B",
-        etActesSuivants: true
-      },
-      typeReference: "RECE",
-      referenceRECE: {
-        annee: "",
-        numero: ""
-      }
+  acte: {
+    natureActe: "NAISSANCE",
+    familleRegistre: "ACQ",
+    anneeRegistre: "2023",
+    pocopa: "",
+    registreSupport: {
+      support1: "PAPIER",
+      support2: "NUMÉRIQUE"
     },
-    repertoire: {
-      numeroInscription: { annee: "2000", numero: "1" },
-      typeRepertoire: "",
-      natureInscription: "contestation",
-      etInscriptionsSuivantes: false
+    numeroActe: {
+      numeroActe: "42",
+      numeroBisTer: "B"
     },
-    evenement: {
-      dateEvenement: {
-        jour: "15",
-        mois: "06",
-        annee: "1990"
-      },
-      paysEvenement: "FRANCE"
+    etActesSuivants: true,
+    typeReference: "RECE",
+    referenceRECE: {
+      annee: "",
+      numero: ""
     }
+  },
+  inscription: {
+    numeroInscription: { annee: "2000", numero: "1" },
+    typeRepertoire: "",
+    natureInscription: "contestation",
+    etInscriptionsSuivantes: false
+  },
+  evenement: {
+    dateEvenement: {
+      jour: "15",
+      mois: "06",
+      annee: "1990"
+    },
+    paysEvenement: "FRANCE"
   },
   titulaire: {
     nom: "DUPONT",
@@ -100,35 +96,30 @@ const mockValeursRMCActeInscription: IRMCActeInscriptionForm = {
   }
 };
 
-const mockDtoRMCActeInscription: ICriteresRMCActeInscriptionDto = {
-  registreRepertoire: {
-    registre: {
-      natureActe: "NAISSANCE",
+const mockDtoRMCActeInscription: IRMCActeInscriptionDto = {
+  acte: {
+    referenceRegistre: {
       familleRegistre: "ACQ",
       anneeRegistre: "2023",
-      registreSupport: {
-        supportUn: "PAPIER",
-        supportDeux: "NUMÉRIQUE"
-      },
-      numeroActe: {
-        numeroActeOuOrdre: "42",
-        numeroBisTer: "B",
-        etActesSuivants: true
-      }
+      support1: "PAPIER",
+      support2: "NUMÉRIQUE",
+      numeroActe: "42",
+      numeroBisTer: "B",
+      etActesSuivants: true
     },
-    repertoire: {
-      numeroInscription: "2000-1",
-      natureInscription: "contestation",
-      etInscriptionsSuivantes: false
+    natureActe: "NAISSANCE"
+  },
+  inscription: {
+    numeroInscription: "2000-1",
+    natureInscription: "contestation"
+  },
+  evenement: {
+    dateEvenement: {
+      jour: "15",
+      mois: "06",
+      annee: "1990"
     },
-    evenement: {
-      dateEvenement: {
-        jour: "15",
-        mois: "06",
-        annee: "1990"
-      },
-      paysEvenement: "FRANCE"
-    }
+    paysEvenement: "FRANCE"
   },
   titulaire: {
     nom: "DUPONT",

@@ -53,8 +53,8 @@ export const mappingCriteresRMCRequeteVersDto = <TTypeRequete extends keyof type
     paysNaissance: criteres.titulaire?.paysNaissance,
 
     // Filtre Date de création
-    dateCreationDebut: DateUtils.getDateDebutFromDateCompose(criteres.datesDebutFinAnnee?.dateDebut),
-    dateCreationFin: DateUtils.getDateFinFromDateCompose(criteres.datesDebutFinAnnee?.dateFin),
+    dateCreationDebut: DateUtils.getDateDebutFromDate(criteres.datesDebutFinAnnee?.dateDebut),
+    dateCreationFin: DateUtils.getDateFinFromDate(criteres.datesDebutFinAnnee?.dateFin),
 
     // Filtre Requerant
     nomRequerant: criteres.requerant?.nom,

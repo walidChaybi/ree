@@ -11,15 +11,17 @@ import ChampListeDeroulante from "../../../commun/champs/ChampListeDeroulante";
 import ChampRcRcaPacs from "../../../commun/champs/ChampRcRcaPacs";
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 
+const typesRepertoire = [{ cle: "", libelle: "" }, ...enumVersOptions(ETypePacsRcRca)];
+
 const BlocRcRcaPacs: React.FC = () => {
   const { values, setValues, setFieldValue } = useFormikContext<IRMCActeInscriptionForm>();
   const { blocsRenseignes } = useContext(RMCContext);
-  const {
-    etInscriptionsSuivantes,
-    typeRepertoire,
-    numeroInscription: { annee, numero }
-  } = values.registreRepertoire.repertoire;
-  const estNumeroInscriptionIncomplet = !annee || !numero;
+
+  const etInscriptionsSuivantes = values.inscription?.etInscriptionsSuivantes;
+  const typeRepertoire = values.inscription?.typeRepertoire;
+  const numeroInscription = values.inscription?.numeroInscription;
+
+  const estNumeroInscriptionIncomplet = !numeroInscription?.annee || !numeroInscription?.numero;
 
   const listeNatureInscription = useMemo(() => {
     switch (typeRepertoire) {
@@ -37,21 +39,18 @@ const BlocRcRcaPacs: React.FC = () => {
   const reinitialiserValeurs = () => {
     setValues({
       ...values,
-      registreRepertoire: {
-        ...values.registreRepertoire,
-        repertoire: {
-          numeroInscription: { annee: "", numero: "" },
-          typeRepertoire: "",
-          natureInscription: "",
-          etInscriptionsSuivantes: false
-        }
+      inscription: {
+        numeroInscription: { annee: "", numero: "" },
+        typeRepertoire: "",
+        natureInscription: "",
+        etInscriptionsSuivantes: false
       }
     });
   };
 
   useEffect(() => {
     if (estNumeroInscriptionIncomplet && etInscriptionsSuivantes) {
-      setFieldValue("registreRepertoire.repertoire.etInscriptionsSuivantes", false);
+      setFieldValue("inscription.etInscriptionsSuivantes", false);
     }
   }, [estNumeroInscriptionIncomplet]);
 
@@ -63,29 +62,29 @@ const BlocRcRcaPacs: React.FC = () => {
     >
       <div className="grid grid-cols-2 gap-4 pt-4">
         <ChampListeDeroulante
-          name="registreRepertoire.repertoire.typeRepertoire"
+          name="inscription.typeRepertoire"
           libelle="Type de répertoire"
-          options={[{ cle: "", libelle: "" }, ...enumVersOptions(ETypePacsRcRca)]}
+          options={typesRepertoire}
           disabled={blocActeAlimente}
         />
         <ChampRcRcaPacs
-          name="registreRepertoire.repertoire.numeroInscription"
+          name="inscription.numeroInscription"
           libelle="N° de l'inscription / N° du PACS"
           disabled={blocActeAlimente}
         />
       </div>
       <div className="pt-4">
         <ChampListeDeroulante
-          name="registreRepertoire.repertoire.natureInscription"
+          name="inscription.natureInscription"
           libelle="Nature de l'inscription"
           options={[{ cle: "", libelle: "" }, ...listeNatureInscription]}
-          disabled={!["RC", "RCA"].includes(typeRepertoire) || blocActeAlimente}
+          disabled={!["RC", "RCA"].includes(typeRepertoire ?? "") || blocActeAlimente}
         />
       </div>
 
       <div className="pt-4">
         <ChampCaseACocher
-          name="registreRepertoire.repertoire.etInscriptionsSuivantes"
+          name="inscription.etInscriptionsSuivantes"
           libelle="Et les inscriptions/PACS suivants du répertoire"
           disabled={estNumeroInscriptionIncomplet}
         />

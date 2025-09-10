@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Formik } from "formik";
 import { expect, test } from "vitest";
-import BlocTitulaireRMC from "../../../../../composants/pages/rmc/formulaire/BlocTitulaire";
+import BlocTitulaire from "../../../../../composants/pages/rmc/formulaire/BlocTitulaire";
 
 test("DOIT réinitialiser les champs QUAND le bouton réinitialiser est cliqué", async () => {
   render(
@@ -12,7 +12,7 @@ test("DOIT réinitialiser les champs QUAND le bouton réinitialiser est cliqué"
       }}
       onSubmit={() => {}}
     >
-      <BlocTitulaireRMC />
+      <BlocTitulaire />
     </Formik>
   );
 

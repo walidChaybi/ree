@@ -1,11 +1,11 @@
 import { CONFIG_POST_RMC_ACTE } from "@api/configurations/etatCivil/acte/PostRMCActeConfigApi";
+import { IRMCActeInscriptionForm, RMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
 import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { IParamsTableau, getParamsTableauRMCDepuisHeaders } from "@util/GestionDesLiensApi";
 import { useEffect, useState } from "react";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
 import AfficherMessage from "../../../../../utils/AfficherMessage";
-import { mappingCriteresRMCArchive } from "./RMCActeArchiveUtils";
 
 export interface ICriteresRechercheActeArchive {
   valeurs: IRMCActeArchive;
@@ -27,7 +27,7 @@ export function useRMCActeArchiveApiHook(criteres?: ICriteresRechercheActeArchiv
   useEffect(() => {
     if (!criteres?.valeurs) return;
 
-    const criteresRMC = mappingCriteresRMCArchive(criteres.valeurs);
+    const criteresRMC = RMCActeInscriptionForm.versDto(criteres.valeurs as IRMCActeInscriptionForm); // Modifier pour utiliser le "versDto" qui sera crée par Adel dans IRMCActeArchiveForm.
 
     rmcActe({
       parametres: { query: { range: criteres.range }, body: criteresRMC },

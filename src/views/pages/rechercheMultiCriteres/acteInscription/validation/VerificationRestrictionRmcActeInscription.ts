@@ -1,6 +1,6 @@
 import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
+import { IRMCActe } from "@model/rmc/acteInscription/rechercheForm/IRMCActe";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
-import { IRMCRegistre } from "@model/rmc/acteInscription/rechercheForm/IRMCRegistre";
 import {
   getMessageSiVerificationEnErreur,
   IVerificationErreur
@@ -66,8 +66,7 @@ export function getMessageSiVerificationRestrictionRmcActeInscriptionCriteresEnE
 function numeroActeSaisiSansFamilleRegistreEtPocopa(rMCSaisie: IRMCActeInscription): boolean {
   const registre = rMCSaisie.registreRepertoire?.registre;
   return (
-    estRenseigne(registre?.numeroActe?.numeroActeOuOrdre) &&
-    (estNonRenseigne(registre?.familleRegistre) || estNonRenseigne(registre?.pocopa))
+    estRenseigne(registre?.numeroActe?.numeroActe) && (estNonRenseigne(registre?.familleRegistre) || estNonRenseigne(registre?.pocopa))
   );
 }
 
@@ -75,7 +74,7 @@ function tripletNatureFamilleAnneeNonSaisiEntierementEtPasDAutreCritereSaisi(rMC
   const registre = rMCSaisie?.registreRepertoire?.registre;
   return (
     tripletNatureFamilleAnneeIncomplet(registre) &&
-    estNonRenseigne(registre?.numeroActe?.numeroActeOuOrdre) &&
+    estNonRenseigne(registre?.numeroActe?.numeroActe) &&
     estNonRenseigne(registre?.pocopa) &&
     aucuneProprieteRenseignee(rMCSaisie.evenement) &&
     aucuneProprieteRenseignee(rMCSaisie.datesDebutFinAnnee) &&
@@ -83,7 +82,7 @@ function tripletNatureFamilleAnneeNonSaisiEntierementEtPasDAutreCritereSaisi(rMC
   );
 }
 
-function tripletNatureFamilleAnneeIncomplet(registre: IRMCRegistre | undefined): boolean {
+function tripletNatureFamilleAnneeIncomplet(registre: IRMCActe | undefined): boolean {
   return (
     sontRenseignesNatureActeEtFamilleRegistreEtNonRenseigneAnneeRegistre(registre) ||
     sontRenseignesNatureActeEtAnneeRegistreEtNonRenseigneFamilleRegistre(registre) ||
@@ -91,7 +90,7 @@ function tripletNatureFamilleAnneeIncomplet(registre: IRMCRegistre | undefined):
   );
 }
 
-function sontRenseignesNatureActeEtFamilleRegistreEtNonRenseigneAnneeRegistre(registre?: IRMCRegistre): boolean {
+function sontRenseignesNatureActeEtFamilleRegistreEtNonRenseigneAnneeRegistre(registre?: IRMCActe): boolean {
   return (
     tousRenseignes(registre?.natureActe, registre?.familleRegistre) &&
     estNonRenseigne(registre?.anneeRegistre) &&
@@ -99,15 +98,15 @@ function sontRenseignesNatureActeEtFamilleRegistreEtNonRenseigneAnneeRegistre(re
   );
 }
 
-function sontRenseignesNatureActeEtAnneeRegistreEtNonRenseigneFamilleRegistre(registre?: IRMCRegistre): boolean {
+function sontRenseignesNatureActeEtAnneeRegistreEtNonRenseigneFamilleRegistre(registre?: IRMCActe): boolean {
   return tousRenseignes(registre?.natureActe, registre?.anneeRegistre) && estNonRenseigne(registre?.familleRegistre);
 }
 
-function sontRenseignesFamilleRegistreEtAnneeRegistreEtNonRenseigneNatureActe(registre?: IRMCRegistre): boolean {
+function sontRenseignesFamilleRegistreEtAnneeRegistreEtNonRenseigneNatureActe(registre?: IRMCActe): boolean {
   return tousRenseignes(registre?.familleRegistre, registre?.anneeRegistre) && estNonRenseigne(registre?.natureActe);
 }
 
-function estFamilleRegistreOP2OuOP3(registre?: IRMCRegistre): boolean {
+function estFamilleRegistreOP2OuOP3(registre?: IRMCActe): boolean {
   const enumFamilleRegistre = TypeFamille.getEnumFor(registre?.familleRegistre ?? "");
   return TypeFamille.estOP2(enumFamilleRegistre) || TypeFamille.estOP3(enumFamilleRegistre);
 }

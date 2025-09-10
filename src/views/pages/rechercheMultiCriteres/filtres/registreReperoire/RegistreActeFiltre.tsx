@@ -2,7 +2,9 @@ import { ANNEE } from "@composant/formulaire/ConstantesNomsForm";
 import RecherchePocopas from "@composant/recherchePocopas/RecherchePocopas";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
-import { IRMCRegistre } from "@model/rmc/acteInscription/rechercheForm/IRMCRegistre";
+import { IRMCNumeroActe } from "@model/rmc/acteInscription/rechercheForm/IRMCNumeroActe";
+import { IRMCRegistreSupport } from "@model/rmc/acteInscription/rechercheForm/IRMCRegistreSupport";
+import { Option } from "@util/Type";
 import { getLibelle } from "@util/Utils";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import { MAX_ANNEE_MESSAGE, MIN_LENGTH_ANNEE_MESSAGE } from "@widget/formulaire/FormulaireMessages";
@@ -34,12 +36,21 @@ const ANNEE_REGISTRE = "anneeRegistre";
 const REGISTRE_SUPPORT = "registreSupport";
 const NUMERO_ACTE = "numeroActe";
 
+interface IRMCActeArchive {
+  // A modifier par Adel
+  natureActe?: string;
+  familleRegistre?: string;
+  pocopa?: Option | string | null;
+  anneeRegistre?: string;
+  registreSupport?: IRMCRegistreSupport;
+  numeroActe?: IRMCNumeroActe;
+}
 // Valeurs par défaut des champs
-export const RegistreActeDefaultValues: IRMCRegistre = {
+export const RegistreActeDefaultValues: IRMCActeArchive = {
   [NATURE_ACTE]: "",
   [FAMILLE_REGISTRE]: "",
   [ANNEE_REGISTRE]: "",
-  [POCOPA]: null, // Pocopa est un objet de type Option ({cle: "", libelle: ""})
+  [POCOPA]: "",
   [REGISTRE_SUPPORT]: RegistreSupportDefaultValues,
   [NUMERO_ACTE]: NumeroActeDefaultValues
 };
@@ -50,8 +61,8 @@ const CHAMPS_VERROUILLES_VALEURS_PAR_DEFAUT = {
   natureActe: false,
   pocopa: false,
   anneeRegistre: false,
-  supportUn: false,
-  supportDeux: false,
+  support1: false,
+  support2: false,
   numeroBisTer: false
 };
 
@@ -80,8 +91,8 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
 
   const registreSupportProps: RegistreSupportFormProps & FormikComponentProps = {
     nomFiltre: registreSupportAvecNamespace,
-    estInactifChampSupportUn: champsVerrouilles.supportUn,
-    estInactifChampSupportDeux: champsVerrouilles.supportDeux,
+    estInactifChampSupportUn: champsVerrouilles.support1,
+    estInactifChampSupportDeux: champsVerrouilles.support2,
     formik: props.formik
   };
 
@@ -140,8 +151,8 @@ const RegistreActeFiltre: React.FC<RegistreActeFiltreProps> = props => {
       natureActe: estCPNOuPAC,
       pocopa: estCPNOuPAC || estOP2OuOP3 || TypeFamille.estMAR(enumTypeFamille),
       anneeRegistre: estOP2OuOP3,
-      supportUn: estCPNOuPAC,
-      supportDeux: !estACQOuCOLOuVide,
+      support1: estCPNOuPAC,
+      support2: !estACQOuCOLOuVide,
       numeroBisTer: estCPNOuPAC
     });
 
@@ -202,17 +213,4 @@ function estTypeFamilleOP2OuOP3(familleRegistre: TypeFamille): boolean {
 
 function estTypeFamilleACQOuCOL(familleRegistre: TypeFamille): boolean {
   return TypeFamille.estACQ(familleRegistre) || TypeFamille.estCOL(familleRegistre);
-}
-
-export function registreFormEstModifie(valeurs: IRMCRegistre) {
-  return (
-    valeurs.familleRegistre !== "" ||
-    valeurs.natureActe !== "" ||
-    valeurs.anneeRegistre !== "" ||
-    valeurs.numeroActe?.numeroActeOuOrdre !== "" ||
-    valeurs.numeroActe?.numeroBisTer !== "" ||
-    valeurs.registreSupport?.supportUn !== "" ||
-    valeurs.registreSupport?.supportDeux !== "" ||
-    valeurs.pocopa !== null
-  );
 }

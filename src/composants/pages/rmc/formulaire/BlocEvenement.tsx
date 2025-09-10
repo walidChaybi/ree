@@ -11,16 +11,14 @@ const BlocEvenement: React.FC = () => {
   const reinitialiserValeurs = () => {
     setValues({
       ...values,
-      registreRepertoire: {
-        ...values.registreRepertoire,
-        evenement: {
-          dateEvenement: {
-            jour: "",
-            mois: "",
-            annee: ""
-          },
-          paysEvenement: ""
-        }
+
+      evenement: {
+        dateEvenement: {
+          jour: "",
+          mois: "",
+          annee: ""
+        },
+        paysEvenement: ""
       }
     });
   };
@@ -33,12 +31,12 @@ const BlocEvenement: React.FC = () => {
     >
       <div className="grid grid-cols-2 gap-4 pt-4">
         <ChampDate
-          name="registreRepertoire.evenement.dateEvenement"
+          name="evenement.dateEvenement"
           libelle="Date de l'évènement"
           avecBoutonReinitialiser
         />
         <ChampTexte
-          name="registreRepertoire.evenement.paysEvenement"
+          name="evenement.paysEvenement"
           libelle="Pays de l'évènement"
         />
       </div>

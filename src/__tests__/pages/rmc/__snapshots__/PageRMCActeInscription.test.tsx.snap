@@ -304,7 +304,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                   <div>
                     <label
                       class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                      for="registreRepertoire.evenement.dateEvenement.jour"
+                      for="evenement.dateEvenement.jour"
                     >
                       Date de l'évènement
                     </label>
@@ -313,7 +313,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                     >
                       <input
                         class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                        id="registreRepertoire.evenement.dateEvenement.jour"
+                        id="evenement.dateEvenement.jour"
                         maxlength="2"
                         placeholder="JJ"
                         value=""
@@ -325,7 +325,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                       </span>
                       <input
                         class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                        id="registreRepertoire.evenement.dateEvenement.mois"
+                        id="evenement.dateEvenement.mois"
                         maxlength="2"
                         placeholder="MM"
                         value=""
@@ -337,7 +337,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                       </span>
                       <input
                         class="border-1 w-12 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                        id="registreRepertoire.evenement.dateEvenement.annee"
+                        id="evenement.dateEvenement.annee"
                         maxlength="4"
                         placeholder="AAAA"
                         value=""
@@ -374,9 +374,9 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                     class="flex w-full flex-col text-start"
                   >
                     <label
-                      aria-label="aria-label-registreRepertoire.evenement.paysEvenement"
+                      aria-label="aria-label-evenement.paysEvenement"
                       class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                      for="registreRepertoire.evenement.paysEvenement"
+                      for="evenement.paysEvenement"
                     >
                       Pays de l'évènement
                     </label>
@@ -385,9 +385,9 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                     >
                       <input
                         class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                        id="registreRepertoire.evenement.paysEvenement"
+                        id="evenement.paysEvenement"
                         maxlength="100"
-                        name="registreRepertoire.evenement.paysEvenement"
+                        name="evenement.paysEvenement"
                         value=""
                       />
                     </div>
@@ -442,14 +442,14 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                   >
                     <label
                       class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                      for="registreRepertoire.registre.natureActe"
+                      for="acte.natureActe"
                     >
                       Nature de l'acte
                     </label>
                     <select
                       class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
-                      id="registreRepertoire.registre.natureActe"
-                      name="registreRepertoire.registre.natureActe"
+                      id="acte.natureActe"
+                      name="acte.natureActe"
                     >
                       <option
                         value=""
@@ -535,14 +535,14 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                       <div>
                         <input
                           class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                          id="registreRepertoire.registre.typeReference-RECE"
-                          name="registreRepertoire.registre.typeReference"
+                          id="acte.typeReference-RECE"
+                          name="acte.typeReference"
                           type="radio"
                           value="RECE"
                         />
                         <label
                           class="cursor-pointer pl-2"
-                          for="registreRepertoire.registre.typeReference-RECE"
+                          for="acte.typeReference-RECE"
                         >
                           RECE
                         </label>
@@ -551,14 +551,14 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                         <input
                           checked=""
                           class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                          id="registreRepertoire.registre.typeReference-REGISTRE"
-                          name="registreRepertoire.registre.typeReference"
+                          id="acte.typeReference-REGISTRE"
+                          name="acte.typeReference"
                           type="radio"
                           value="REGISTRE"
                         />
                         <label
                           class="cursor-pointer pl-2"
-                          for="registreRepertoire.registre.typeReference-REGISTRE"
+                          for="acte.typeReference-REGISTRE"
                         >
                           Registre
                         </label>
@@ -574,14 +574,14 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                   >
                     <label
                       class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                      for="registreRepertoire.registre.familleRegistre"
+                      for="acte.familleRegistre"
                     >
                       Famille de registre
                     </label>
                     <select
                       class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
-                      id="registreRepertoire.registre.familleRegistre"
-                      name="registreRepertoire.registre.familleRegistre"
+                      id="acte.familleRegistre"
+                      name="acte.familleRegistre"
                     >
                       <option
                         value=""
@@ -648,7 +648,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                   >
                     <label
                       class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                      for="registreRepertoire.registre.pocopa"
+                      for="acte.pocopa"
                     >
                       Type / Poste / Commune / Pays
                     </label>
@@ -683,7 +683,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                           autocapitalize="none"
                           autocomplete="off"
                           class="flex-grow border-none bg-transparent p-0 pl-1 read-only:bg-gris-clair focus:border-none focus:outline-none focus:ring-0"
-                          id="registreRepertoire.registre.pocopa"
+                          id="acte.pocopa"
                           placeholder="Recherche..."
                           role="combobox"
                           spellcheck="false"
@@ -704,9 +704,9 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                       class="flex w-full flex-col text-start"
                     >
                       <label
-                        aria-label="aria-label-registreRepertoire.registre.anneeRegistre"
+                        aria-label="aria-label-acte.anneeRegistre"
                         class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                        for="registreRepertoire.registre.anneeRegistre"
+                        for="acte.anneeRegistre"
                       >
                         Année
                       </label>
@@ -715,9 +715,9 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                       >
                         <input
                           class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                          id="registreRepertoire.registre.anneeRegistre"
+                          id="acte.anneeRegistre"
                           maxlength="4"
-                          name="registreRepertoire.registre.anneeRegistre"
+                          name="acte.anneeRegistre"
                           value=""
                         />
                       </div>
@@ -729,7 +729,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                     <div>
                       <label
                         class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                        for="registreRepertoire.registre.registreSupport.supportUn"
+                        for="acte.registreSupport.support1"
                       >
                         Registre (support)
                       </label>
@@ -737,17 +737,17 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                         class="grid grid-cols-2 gap-3 rounded-md shadow-sm"
                       >
                         <input
-                          aria-label="registreRepertoire.registre.registreSupport.supportUn"
+                          aria-label="acte.registreSupport.support1"
                           class="border-1 flex w-auto flex-grow rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                          id="registreRepertoire.registre.registreSupport.supportUn"
-                          name="registreRepertoire.registre.registreSupport.supportUn"
+                          id="acte.registreSupport.support1"
+                          name="acte.registreSupport.support1"
                           value=""
                         />
                         <input
-                          aria-label="registreRepertoire.registre.registreSupport.supportDeux"
+                          aria-label="acte.registreSupport.support2"
                           class="border-1 flex w-auto flex-grow rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                          id="registreRepertoire.registre.registreSupport.supportDeux"
-                          name="registreRepertoire.registre.registreSupport.supportDeux"
+                          id="acte.registreSupport.support2"
+                          name="acte.registreSupport.support2"
                           value=""
                         />
                       </div>
@@ -759,7 +759,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                     <div>
                       <label
                         class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                        for="registreRepertoire.registre.numeroActe.numeroActeOuOrdre"
+                        for="acte.numeroActe.numeroActe"
                       >
                         N° d'acte
                       </label>
@@ -767,17 +767,17 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                         class="grid grid-cols-2 gap-3 rounded-md shadow-sm"
                       >
                         <input
-                          aria-label="registreRepertoire.registre.numeroActe.numeroActeOuOrdre"
+                          aria-label="acte.numeroActe.numeroActe"
                           class="border-1 flex w-auto flex-grow rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                          id="registreRepertoire.registre.numeroActe.numeroActeOuOrdre"
-                          name="registreRepertoire.registre.numeroActe.numeroActeOuOrdre"
+                          id="acte.numeroActe.numeroActe"
+                          name="acte.numeroActe.numeroActe"
                           value=""
                         />
                         <input
-                          aria-label="registreRepertoire.registre.numeroActe.numeroBisTer"
+                          aria-label="acte.numeroActe.numeroBisTer"
                           class="border-1 flex w-auto flex-grow rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                          id="registreRepertoire.registre.numeroActe.numeroBisTer"
-                          name="registreRepertoire.registre.numeroActe.numeroBisTer"
+                          id="acte.numeroActe.numeroBisTer"
+                          name="acte.numeroActe.numeroBisTer"
                           placeholder="N° Bis"
                           value=""
                         />
@@ -793,7 +793,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                   >
                     <input
                       class="cursor-pointer accent-bleu-sombre"
-                      name="registreRepertoire.registre.numeroActe.etActesSuivants"
+                      name="acte.etActesSuivants"
                       type="checkbox"
                       value="false"
                     />
@@ -851,14 +851,14 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                   >
                     <label
                       class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                      for="registreRepertoire.repertoire.typeRepertoire"
+                      for="inscription.typeRepertoire"
                     >
                       Type de répertoire
                     </label>
                     <select
                       class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
-                      id="registreRepertoire.repertoire.typeRepertoire"
-                      name="registreRepertoire.repertoire.typeRepertoire"
+                      id="inscription.typeRepertoire"
+                      name="inscription.typeRepertoire"
                     >
                       <option
                         value=""
@@ -883,7 +883,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                   <div>
                     <label
                       class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                      for="registreRepertoire.repertoire.numeroInscription.annee"
+                      for="inscription.numeroInscription.annee"
                     >
                       N° de l'inscription / N° du PACS
                     </label>
@@ -895,9 +895,9 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                       />
                       <input
                         class="border-1 flex w-12 rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                        id="registreRepertoire.repertoire.numeroInscription.annee"
+                        id="inscription.numeroInscription.annee"
                         maxlength="4"
-                        name="registreRepertoire.repertoire.numeroInscription.annee"
+                        name="inscription.numeroInscription.annee"
                         placeholder="AAAA"
                         value=""
                       />
@@ -909,9 +909,9 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                       >
                         <input
                           class="border-1 flex w-full rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                          id="registreRepertoire.repertoire.numeroInscription.numero"
+                          id="inscription.numeroInscription.numero"
                           maxlength="5"
-                          name="registreRepertoire.repertoire.numeroInscription.numero"
+                          name="inscription.numeroInscription.numero"
                           placeholder="XXXXX"
                           value=""
                         />
@@ -927,15 +927,15 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                   >
                     <label
                       class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                      for="registreRepertoire.repertoire.natureInscription"
+                      for="inscription.natureInscription"
                     >
                       Nature de l'inscription
                     </label>
                     <select
                       class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
                       disabled=""
-                      id="registreRepertoire.repertoire.natureInscription"
-                      name="registreRepertoire.repertoire.natureInscription"
+                      id="inscription.natureInscription"
+                      name="inscription.natureInscription"
                     >
                       <option
                         value=""
@@ -955,7 +955,7 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                       <input
                         class="cursor-default"
                         disabled=""
-                        name="registreRepertoire.repertoire.etInscriptionsSuivantes"
+                        name="inscription.etInscriptionsSuivantes"
                         type="checkbox"
                         value="false"
                       />

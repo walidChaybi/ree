@@ -1,6 +1,11 @@
-import { IRMCDateCompose } from "./dateCreation/IRMCDateCompose";
+import { IDate } from "@util/DateUtils";
 
 export interface IRMCEvenement {
-  dateEvenement?: IRMCDateCompose;
+  dateEvenement: IDate;
+  paysEvenement: string;
+}
+
+export interface IRMCEvenementDto {
+  dateEvenement?: IDate;
   paysEvenement?: string;
 }

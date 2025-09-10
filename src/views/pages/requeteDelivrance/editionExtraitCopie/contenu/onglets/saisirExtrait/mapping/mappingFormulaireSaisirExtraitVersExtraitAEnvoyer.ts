@@ -240,7 +240,7 @@ function mapTitulaire(titulaireSaisi: ITitulaireEvtForm) {
     nomPartie1: titulaireSaisi.nomSecable?.nomPartie1,
     nomPartie2: titulaireSaisi.nomSecable?.nomPartie2,
     typeDeclarationConjointe: titulaireSaisi.declarationConjointe?.type,
-    dateDeclarationConjointe: DateUtils.getDateDebutFromDateCompose(titulaireSaisi.declarationConjointe?.date),
+    dateDeclarationConjointe: DateUtils.getDateDebutFromDate(titulaireSaisi.declarationConjointe?.date),
     prenoms: retirePrenomVide(titulaireSaisi.prenoms),
     sexe: mapSexe(titulaireSaisi.sexe),
     age: getValeurOuUndefined(titulaireSaisi.evenement?.dateNaissanceOuAgeDe?.age)

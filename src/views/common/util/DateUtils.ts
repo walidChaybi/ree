@@ -26,6 +26,12 @@ export interface IDateDto {
   annee?: number;
 }
 
+export interface IDate {
+  jour?: string;
+  mois?: string;
+  annee?: string;
+}
+
 export type TDateArrayDTO = [annee: number, mois: number, jour: number];
 
 export enum FormatDate {
@@ -61,9 +67,9 @@ const DateUtils = {
     }
   },
 
-  getDateDebutFromDateCompose: (date?: IDateCompose): Date | undefined => {
-    if (!date) {
-      return undefined;
+  getDateDebutFromDate: (date?: IDateCompose | IDate): Date | undefined => {
+    if (!date?.annee) {
+      return;
     }
 
     const jour = date.jour ?? "1";
@@ -72,19 +78,17 @@ const DateUtils = {
     return DateUtils.getDateFromDateCompose({ jour, mois, annee: date.annee });
   },
 
-  getDateFinFromDateCompose: (date?: IDateCompose): Date | undefined => {
-    if (date) {
-      const mois = date.mois ?? String(MAX_MONTH);
-      let jour = "";
-      if (!date.jour) {
-        const dernierjourDuMois = DateUtils.getDernierJourDuMois(Number(mois), Number(date.annee));
-        jour = String(dernierjourDuMois ?? "");
-        return DateUtils.getDateFromDateCompose({ jour, mois, annee: date.annee });
-      }
-      return DateUtils.getDateFromDateCompose({ jour: date.jour, mois, annee: date.annee });
-    } else {
-      return undefined;
+  getDateFinFromDate: (date?: IDateCompose | IDate): Date | undefined => {
+    if (!date?.annee) return;
+
+    const mois = date.mois ?? String(MAX_MONTH);
+    let jour = "";
+    if (!date.jour) {
+      const dernierjourDuMois = DateUtils.getDernierJourDuMois(Number(mois), Number(date.annee));
+      jour = String(dernierjourDuMois ?? "");
+      return DateUtils.getDateFromDateCompose({ jour, mois, annee: date.annee });
     }
+    return DateUtils.getDateFromDateCompose({ jour: date.jour, mois, annee: date.annee });
   },
 
   getDernierJourDuMois: (mois?: number, annee?: number): number | undefined => {

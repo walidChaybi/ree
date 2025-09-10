@@ -1,5 +1,4 @@
 import { fireEvent, screen, waitFor } from "@testing-library/dom";
-import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { afterAll, beforeAll, describe, expect, test, vi } from "vitest";
 import * as Recherche from "../../../router/infoPages/InfoPagesEspaceRecherche";
 import { ROUTES_ESPACE_RECHERCHE } from "../../../router/routes/RoutesEspaceRecherche";
@@ -21,14 +20,6 @@ beforeAll(() => {
   }));
   vi.mock("../../../views/pages/rechercheMultiCriteres/acteArchive/RMCArchivePage.tsx", () => ({
     RMCArchivePage: () => <h1>{TITRE.RECHERCHE_ACTE}</h1>
-  }));
-
-  // TODELETE lors de la suppression du FF
-  const flagASupp = FeatureFlag.FF_UTILISER_NOUVELLE_RMC;
-  vi.mock("../../../views/common/util/featureFlag/gestionnaireFeatureFlag.ts", () => ({
-    gestionnaireFeatureFlag: {
-      estActif: (_: typeof flagASupp) => true
-    }
   }));
 });
 

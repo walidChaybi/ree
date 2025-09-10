@@ -1,7 +1,7 @@
-import { IRMCRegistre } from "../../acteInscription/rechercheForm/IRMCRegistre";
+import { IRMCActe } from "../../acteInscription/rechercheForm/IRMCActe";
 import { IRMCEvenement } from "../../acteInscription/rechercheForm/IRMCEvenement";
 
 export interface IRMCRegistreArchive {
-  registre?: IRMCRegistre;
+  registre?: IRMCActe;
   evenement?: IRMCEvenement;
 }

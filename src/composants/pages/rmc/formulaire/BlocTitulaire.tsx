@@ -5,7 +5,7 @@ import ChampTexte from "../../../commun/champs/ChampTexte";
 import { ChampsNomPrenomInterchangeables } from "../../../commun/champs/ChampsNomPrenomInterchangeables";
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 
-const BlocTitulaireRMC: React.FC = () => {
+const BlocTitulaire: React.FC = () => {
   const { initialValues, setFieldValue } = useFormikContext<IRMCActeInscriptionForm>();
 
   const reinitialiserValeurs = () => {
@@ -38,4 +38,4 @@ const BlocTitulaireRMC: React.FC = () => {
   );
 };
 
-export default BlocTitulaireRMC;
+export default BlocTitulaire;

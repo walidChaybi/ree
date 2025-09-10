@@ -68,6 +68,7 @@ interface ITitulaireFiltreProps {
 
 export type TitulaireFiltreProps = ComponentFiltreProps & FormikComponentProps & ITitulaireFiltreProps;
 
+// A SUURPIMER UNE FOIS LA NOUVELLE RMC ARCHIVE TERMINEE
 const TitulaireFiltre: React.FC<TitulaireFiltreProps> = props => {
   const dateNaissanceNamespace = withNamespace(props.nomFiltre, DATE_NAISSANCE);
   const dateDebutComposeFormProps = {

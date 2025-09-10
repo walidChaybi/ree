@@ -1,6 +1,7 @@
 import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { EFamilleRegistre } from "@model/etatcivil/enum/TypeFamille";
-import { ETypeReference, IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
+import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
+import { ETypeReference } from "@model/rmc/acteInscription/rechercheForm/ETypeReference";
 import { enumVersOptions } from "@util/Utils";
 import { getIn, useFormikContext } from "formik";
 import { useCallback, useContext, useMemo } from "react";
@@ -24,28 +25,25 @@ const BlocActe: React.FC = () => {
   const { blocsRenseignes } = useContext(RMCContext);
 
   const familleRegistreSelectionnee: keyof typeof EFamilleRegistre = useMemo(
-    () => getIn(values.registreRepertoire.registre, "familleRegistre"),
-    [values.registreRepertoire.registre.familleRegistre]
+    () => getIn(values.acte, "familleRegistre"),
+    [values.acte?.familleRegistre]
   );
 
   const champsDesactives = useRMCBlocActe(familleRegistreSelectionnee);
 
   const reinitialiserValeurs = useCallback(() => {
-    setFieldValue(
-      "registreRepertoire.registre",
-      structuredClone({ ...initialValues.registreRepertoire.registre, typeReference: values.registreRepertoire.registre.typeReference })
-    );
-  }, [values.registreRepertoire.registre.typeReference]);
+    setFieldValue("registre", structuredClone({ ...initialValues.acte, typeReference: values.acte?.typeReference }));
+  }, [values.acte?.typeReference]);
 
   const reinitialiserValeursSaufNatureEtTypeReference = useCallback(() => {
     setFieldValue(
-      "registreRepertoire.registre",
+      "registre",
       structuredClone({
-        ...initialValues.registreRepertoire.registre,
-        natureActe: values.registreRepertoire.registre.natureActe
+        ...initialValues.acte,
+        natureActe: values.acte?.natureActe
       })
     );
-  }, [values.registreRepertoire.registre.referenceRECE, values.registreRepertoire.registre.natureActe]);
+  }, [values.acte?.referenceRECE, values.acte?.natureActe]);
 
   const blocRCRCAPACSAlimente = useMemo(() => blocsRenseignes?.includes(EBlocsRMC.RCRCAPACS), [blocsRenseignes]);
 
@@ -57,23 +55,23 @@ const BlocActe: React.FC = () => {
     >
       <div className="grid grid-cols-2 gap-4 pt-4">
         <ChampListeDeroulante
-          name="registreRepertoire.registre.natureActe"
+          name="acte.natureActe"
           libelle="Nature de l'acte"
           options={NATURES_ACTE}
           disabled={champsDesactives.includes("natureActe") || blocRCRCAPACSAlimente}
         />
         <ChampsRadio
-          name="registreRepertoire.registre.typeReference"
+          name="acte.typeReference"
           libelle="Référence"
           options={TYPES_REFERENCE}
           disabled={blocRCRCAPACSAlimente}
           apresChangement={reinitialiserValeursSaufNatureEtTypeReference}
         />
       </div>
-      {values.registreRepertoire.registre.typeReference === "RECE" ? (
+      {values.acte?.typeReference === "RECE" ? (
         <div className="grid grid-cols-2 gap-4 pt-4">
           <ChampReferenceRECE
-            name="registreRepertoire.registre.referenceRECE"
+            name="acte.referenceRECE"
             libelle="Référence RECE"
             disabled={blocRCRCAPACSAlimente}
           />
@@ -82,14 +80,14 @@ const BlocActe: React.FC = () => {
         <>
           <div className="grid grid-cols-2 gap-4 pt-4">
             <ChampListeDeroulante
-              name="registreRepertoire.registre.familleRegistre"
+              name="acte.familleRegistre"
               libelle="Famille de registre"
               options={FAMILLES_REGISTRE}
               disabled={blocRCRCAPACSAlimente}
-              apresChangement={() => setFieldValue("registreRepertoire.registre.pocopa", "")}
+              apresChangement={() => setFieldValue("acte.pocopa", "")}
             />
             <ChampRecherchePocopas
-              name={"registreRepertoire.registre.pocopa"}
+              name={"acte.pocopa"}
               libelle={"Type / Poste / Commune / Pays"}
               optionsRecherchePocopa={{
                 familleRegistre: familleRegistreSelectionnee,
@@ -101,7 +99,7 @@ const BlocActe: React.FC = () => {
           <div className="grid w-full grid-cols-5 gap-8 pt-4">
             <div className="col-span-1">
               <ChampTexte
-                name={"registreRepertoire.registre.anneeRegistre"}
+                name={"acte.anneeRegistre"}
                 libelle={"Année"}
                 disabled={champsDesactives.includes("anneeRegistre") || blocRCRCAPACSAlimente}
                 maxLength={4}
@@ -111,12 +109,12 @@ const BlocActe: React.FC = () => {
             <div className="col-span-2">
               <ChampDoubleTexte
                 proprietesPremierChamp={{
-                  name: "registreRepertoire.registre.registreSupport.supportUn",
-                  disabled: champsDesactives.includes("supportUn") || blocRCRCAPACSAlimente
+                  name: "acte.registreSupport.support1",
+                  disabled: champsDesactives.includes("support1") || blocRCRCAPACSAlimente
                 }}
                 proprietesSecondChamp={{
-                  name: "registreRepertoire.registre.registreSupport.supportDeux",
-                  disabled: champsDesactives.includes("supportDeux") || blocRCRCAPACSAlimente
+                  name: "acte.registreSupport.support2",
+                  disabled: champsDesactives.includes("support2") || blocRCRCAPACSAlimente
                 }}
                 libelle={"Registre (support)"}
               />
@@ -124,11 +122,11 @@ const BlocActe: React.FC = () => {
             <div className="col-span-2">
               <ChampDoubleTexte
                 proprietesPremierChamp={{
-                  name: "registreRepertoire.registre.numeroActe.numeroActeOuOrdre",
-                  disabled: champsDesactives.includes("numeroActeOuOrdre") || blocRCRCAPACSAlimente
+                  name: "acte.numeroActe.numeroActe",
+                  disabled: champsDesactives.includes("numeroActe") || blocRCRCAPACSAlimente
                 }}
                 proprietesSecondChamp={{
-                  name: "registreRepertoire.registre.numeroActe.numeroBisTer",
+                  name: "acte.numeroActe.numeroBisTer",
                   placeholder: "N° Bis",
                   disabled: champsDesactives.includes("numeroBisTer") || blocRCRCAPACSAlimente
                 }}
@@ -137,7 +135,7 @@ const BlocActe: React.FC = () => {
             </div>
           </div>
           <ChampCaseACocher
-            name="registreRepertoire.registre.numeroActe.etActesSuivants"
+            name="acte.etActesSuivants"
             libelle={"Et les actes suivants du registre"}
             className="pt-4"
             disabled={blocRCRCAPACSAlimente}

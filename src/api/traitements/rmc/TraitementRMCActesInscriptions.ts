@@ -1,8 +1,6 @@
 import { CONFIG_POST_RMC_ACTE } from "@api/configurations/etatCivil/acte/PostRMCActeConfigApi";
 import { CONFIG_POST_RMC_INSCRIPTION } from "@api/configurations/etatCivil/acte/PostRMCInscriptionConfigApi";
-import { mappingCriteres, rmcActeAutorisee, rmcInscriptionAutorisee } from "@hook/rmcActeInscription/RMCActeInscriptionUtils";
-import { IRMCActeInscriptionForm, RMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
-import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
+import { IRMCActeInscriptionDto, IRMCActeInscriptionForm, RMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import ResultatRMCInscription, { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { getParamsTableauRMCDepuisHeaders, PARAMS_TABLEAU_RMC_VIDE, TParamsTableauRMC } from "@util/GestionDesLiensApi";
@@ -23,6 +21,19 @@ export interface IResultatRMCActesInscriptions {
   paramsTableauRMCInscription: TParamsTableauRMC;
 }
 
+const rmcInscriptionAutorisee = (rmc: IRMCActeInscriptionDto): boolean =>
+  !(
+    rmc.acte?.natureActe ??
+    rmc.acte?.referenceRegistre?.familleRegistre ??
+    rmc.acte?.referenceRegistre?.pocopa ??
+    rmc.acte?.referenceRegistre?.numeroActe ??
+    rmc.acte?.referenceRegistre?.anneeRegistre ??
+    rmc.acte?.referenceRECE
+  );
+
+const rmcActeAutorisee = (rmc: IRMCActeInscriptionDto): boolean =>
+  !(rmc.inscription?.typeRepertoire ?? rmc.inscription?.natureInscription ?? rmc.inscription?.numeroInscription);
+
 const TRAITEMENT_RMC_ACTES_INSCRIPTIONS: TTraitementApi<IParamsRMCActesInscriptions, IResultatRMCActesInscriptions> = {
   Lancer: terminerTraitement => {
     const [resultat, setResultat] = useState<Partial<IResultatRMCActesInscriptions>>({});
@@ -33,16 +44,15 @@ const TRAITEMENT_RMC_ACTES_INSCRIPTIONS: TTraitementApi<IParamsRMCActesInscripti
     const { appelApi: getRMCInscription, enAttenteDeReponseApi: enAttenteRMCInscription } = useFetchApi(CONFIG_POST_RMC_INSCRIPTION);
 
     const lancer = ({ valeursFormulaire }: IParamsRMCActesInscriptions) => {
-      const criteres = mappingCriteres(RMCActeInscriptionForm.versDto(valeursFormulaire) as IRMCActeInscription);
-
+      const criteresRMC = RMCActeInscriptionForm.versDto(valeursFormulaire);
       setErreurTraitement(TRAITEMENT_SANS_ERREUR);
       setTropDeResultats(false);
       setResultat({});
-      !rmcActeAutorisee(criteres)
+      !rmcActeAutorisee(criteresRMC)
         ? setResultat(prec => ({ ...prec, resultatRMCActe: [], paramsTableauRMCActe: PARAMS_TABLEAU_RMC_VIDE }))
         : getRMCActe({
             parametres: {
-              body: criteres,
+              body: criteresRMC,
               query: {
                 range: `0-${NB_LIGNES_PAR_APPEL_ACTE}`
               }
@@ -65,11 +75,11 @@ const TRAITEMENT_RMC_ACTES_INSCRIPTIONS: TTraitementApi<IParamsRMCActesInscripti
             }
           });
 
-      !rmcInscriptionAutorisee(criteres)
+      !rmcInscriptionAutorisee(criteresRMC)
         ? setResultat(prec => ({ ...prec, resultatRMCInscription: [], paramsTableauRMCInscription: PARAMS_TABLEAU_RMC_VIDE }))
         : getRMCInscription({
             parametres: {
-              body: criteres,
+              body: criteresRMC,
               query: {
                 range: `0-${NB_LIGNES_PAR_APPEL_INSCRIPTION}`
               }

@@ -1,14 +1,11 @@
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import React from "react";
 import { MdClose } from "react-icons/md";
 import BoutonIcon from "../../../../composants/commun/bouton/BoutonIcon";
 import RMCActeInscription from "../../../../composants/pages/rmc/formulaire/RMCActeInscription";
 import { RMCContextProvider } from "../../../../contexts/RMCContextProvider";
-import { RMCActeInscription as RMCActeInscriptionOld } from "../acteInscription/RMCActeInscription";
 
 interface PopinNouvelleRMCActeInscriptionProps {
   open: boolean;
@@ -43,16 +40,9 @@ export const PopinNouvelleRMCActeInscription: React.FC<PopinNouvelleRMCActeInscr
         >
           <MdClose aria-hidden />
         </BoutonIcon>
-        {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_UTILISER_NOUVELLE_RMC) ? (
-          <RMCContextProvider>
-            <RMCActeInscription onSubmit={props.nouvelleRMCActeInscription} />
-          </RMCContextProvider>
-        ) : (
-          <RMCActeInscriptionOld
-            onSubmit={props.nouvelleRMCActeInscription}
-            titulaires={props.titulaires}
-          />
-        )}
+        <RMCContextProvider>
+          <RMCActeInscription onSubmit={props.nouvelleRMCActeInscription} />
+        </RMCContextProvider>
       </DialogContent>
     </Dialog>
   );

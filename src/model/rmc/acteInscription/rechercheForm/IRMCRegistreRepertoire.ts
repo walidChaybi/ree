@@ -1,9 +1,9 @@
-import { IRMCRegistre } from "./IRMCRegistre";
-import { IRMCRepertoire } from "./IRMCRepertoire";
+import { IRMCActe } from "./IRMCActe";
 import { IRMCEvenement } from "./IRMCEvenement";
+import { IRMCInscriptionDto } from "./IRMCInscription";
 
 export interface IRMCRegistreRepertoire {
-  registre?: IRMCRegistre;
-  repertoire?: IRMCRepertoire;
+  registre?: IRMCActe;
+  repertoire?: IRMCInscriptionDto;
   evenement?: IRMCEvenement;
 }

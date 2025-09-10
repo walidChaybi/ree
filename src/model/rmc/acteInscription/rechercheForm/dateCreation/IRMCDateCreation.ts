@@ -1,6 +1,6 @@
-import { IRMCDateCompose } from "./IRMCDateCompose";
+import { IDate } from "@util/DateUtils";
 
 export interface IRMCDateCreation {
-  dateDebut?: IRMCDateCompose;
-  dateFin?: IRMCDateCompose;
+  dateDebut?: IDate;
+  dateFin?: IDate;
 }

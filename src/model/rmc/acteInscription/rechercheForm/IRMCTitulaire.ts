@@ -1,8 +1,15 @@
-import { IDateCompose } from "@util/DateUtils";
+import { IDate } from "@util/DateUtils";
 
 export interface IRMCTitulaire {
+  nom: string;
+  prenom: string;
+  paysNaissance: string;
+  dateNaissance: IDate;
+}
+
+export interface IRMCTitulaireDto {
   nom?: string;
   prenom?: string;
-  dateNaissance?: IDateCompose;
   paysNaissance?: string;
+  dateNaissance?: IDate;
 }

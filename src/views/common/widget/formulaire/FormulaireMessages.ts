@@ -9,8 +9,6 @@ export const CARACTERES_AUTORISES_AVEC_VIRGULE_MESSAGE =
 
 export const ASTERISQUE_MESSAGE = "Il faut 2 caractères minimum avant l'astérisque";
 
-export const NUMERO_INSCRIPTION_MESSAGE = "Le n° de l'inscription doit respecter le format année-numéro";
-
 export const CARACTERES_ALPHANUMERIQUE = "Les caractères autorisés sont les chiffres et les lettres sans accents";
 
 export const ADRESSE_MAIL_NON_CONFORME = "L'adresse courriel saisie est non conforme";

@@ -1,4 +1,4 @@
 export interface IRMCRegistreSupport {
-  supportUn?: string;
-  supportDeux?: string;
+  support1: string;
+  support2: string;
 }

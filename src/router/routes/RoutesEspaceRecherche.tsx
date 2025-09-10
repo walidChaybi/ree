@@ -1,9 +1,6 @@
 import { Droit } from "@model/agent/enum/Droit";
 import { RMCArchivePage } from "@pages/rechercheMultiCriteres/acteArchive/RMCArchivePage";
-import { RMCActeInscriptionPage } from "@pages/rechercheMultiCriteres/acteInscription/RMCActeInscriptionPage";
 import { RMCRequetePage } from "@pages/rechercheMultiCriteres/requete/RMCRequetePage";
-import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
-import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { RouteObject } from "react-router";
 import PageRMCActeInscription from "../../pages/rmc/PageRMCActeInscription";
 import ElementPageRECE from "../ElementPageRECE";
@@ -21,14 +18,7 @@ export const ROUTES_ESPACE_RECHERCHE: RouteObject[] = [
         infoPage={INFO_PAGE_RECHERCHE_ACTE_INSCRIPTION}
         tousLesDroits={[Droit.CONSULTER]}
       >
-        {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_UTILISER_NOUVELLE_RMC) ? (
-          <PageRMCActeInscription />
-        ) : (
-          <RMCActeInscriptionPage
-            noAutoScroll={false}
-            dansFenetreExterne={false}
-          />
-        )}
+        <PageRMCActeInscription />
       </ElementPageRECE>
     )
   },

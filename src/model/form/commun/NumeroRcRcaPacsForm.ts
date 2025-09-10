@@ -38,13 +38,10 @@ export const NumeroRcRcaPacsForm = {
   }
 };
 
-export const numeroRcRcaPacsVersDto = (numeroRcRcaPacs: INumeroRcRcaPacs): string => {
-  switch (true) {
-    case !numeroRcRcaPacs.annee:
-      return "";
-    case !numeroRcRcaPacs.numero:
-      return numeroRcRcaPacs.annee;
-    default:
-      return `${numeroRcRcaPacs.annee}-${numeroRcRcaPacs.numero}`;
-  }
+export const numeroRcRcaPacsVersDto = (numeroRcRcaPacs?: INumeroRcRcaPacs): string => {
+  if (!numeroRcRcaPacs?.annee) return "";
+
+  if (!numeroRcRcaPacs.numero) return numeroRcRcaPacs.annee;
+
+  return `${numeroRcRcaPacs.annee}-${numeroRcRcaPacs.numero}`;
 };

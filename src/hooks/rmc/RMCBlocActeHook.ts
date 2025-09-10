@@ -16,32 +16,32 @@ const useRMCBlocActe = (familleRegistreSelectionnee: keyof typeof EFamilleRegist
       case "AR3":
       case "MAR":
       case "JUG":
-        setChampsDesactives(["supportDeux"]);
-        setFieldValue("registreRepertoire.registre.registreSupport.supportDeux", "");
+        setChampsDesactives(["support2"]);
+        setFieldValue("acte.registreSupport.support2", "");
         break;
       case "OP2":
       case "OP3":
-        setChampsDesactives(["pocopa", "anneeRegistre", "supportDeux"]);
+        setChampsDesactives(["pocopa", "anneeRegistre", "support2"]);
         setFieldValue(
-          "registreRepertoire.registre",
+          "acte",
           structuredClone({
-            ...values.registreRepertoire.registre,
+            ...values.acte,
             pocopa: "",
             anneeRegistre: "",
-            registreSupport: { ...values.registreRepertoire.registre.registreSupport, supportDeux: "" }
+            registreSupport: { ...values.acte?.registreSupport, support2: "" }
           })
         );
         break;
       case "CPN":
-        setChampsDesactives(["pocopa", "supportUn", "supportDeux", "numeroBisTer", "natureActe"]);
+        setChampsDesactives(["pocopa", "support1", "support2", "numeroBisTer", "natureActe"]);
         setFieldValue(
-          "registreRepertoire.registre",
+          "acte",
           structuredClone({
-            ...values.registreRepertoire.registre,
+            ...values.acte,
             pocopa: "",
             natureActe: "",
-            numeroActe: { ...values.registreRepertoire.registre.numeroActe, numeroBisTer: "" },
-            registreSupport: { supportUn: "", supportDeux: "" }
+            numeroActe: { ...values.acte?.numeroActe, numeroBisTer: "" },
+            registreSupport: { support1: "", support2: "" }
           })
         );
         break;

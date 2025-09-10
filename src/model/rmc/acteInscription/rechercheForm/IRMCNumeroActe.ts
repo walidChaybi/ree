@@ -1,5 +1,4 @@
 export interface IRMCNumeroActe {
-  numeroActeOuOrdre?: string;
+  numeroActe?: string;
   numeroBisTer?: string;
-  etActesSuivants?: boolean;
 }

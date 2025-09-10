@@ -230,12 +230,12 @@ export const estChampRenseigne = (valeur: any): boolean => {
   return true;
 };
 
-export const getValeursRenseigneesFormulaire = (valeur: string | boolean | object | null, clesExclues: string[]): string[] => {
-  if (valeur == null || typeof valeur === "boolean") return [];
+export const getValeursRenseigneesFormulaire = (valeur?: string | boolean | object | null, clesExclues?: string[]): string[] => {
+  if (!valeur || typeof valeur === "boolean") return [];
 
   if (typeof valeur === "object") {
     return Object.entries(valeur).flatMap(([cle, value]) => {
-      return clesExclues.includes(cle) ? [] : getValeursRenseigneesFormulaire(value, clesExclues);
+      return clesExclues?.includes(cle) ? [] : getValeursRenseigneesFormulaire(value, clesExclues);
     });
   }
 
