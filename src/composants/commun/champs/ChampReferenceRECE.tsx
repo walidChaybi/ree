@@ -1,4 +1,3 @@
-import { memo } from "react";
 import ChampsAnneeEtNumero, { IChampsAnneeEtNumeroProps } from "./ChampsAnneeEtNumero";
 
 type TChampReferenceRECEProps = Omit<IChampsAnneeEtNumeroProps, "caractereSeparateur" | "tailleMaxNumero" | "texteDevantChamps">;
@@ -14,4 +13,4 @@ const ChampReferenceRECE: React.FC<TChampReferenceRECEProps> = props => {
   );
 };
 
-export default memo(ChampReferenceRECE);
+export default ChampReferenceRECE;

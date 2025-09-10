@@ -31,6 +31,8 @@ const BlocActe: React.FC = () => {
 
   const champsDesactives = useRMCBlocActe(familleRegistreSelectionnee);
 
+  const blocRCRCAPACSAlimente = useMemo(() => blocsRenseignes?.includes(EBlocsRMC.RCRCAPACS), [blocsRenseignes]);
+
   const reinitialiserValeurs = useCallback(() => {
     setFieldValue("registre", structuredClone({ ...initialValues.acte, typeReference: values.acte?.typeReference }));
   }, [values.acte?.typeReference]);
@@ -44,8 +46,6 @@ const BlocActe: React.FC = () => {
       })
     );
   }, [values.acte?.referenceRECE, values.acte?.natureActe]);
-
-  const blocRCRCAPACSAlimente = useMemo(() => blocsRenseignes?.includes(EBlocsRMC.RCRCAPACS), [blocsRenseignes]);
 
   return (
     <ConteneurAvecBordure

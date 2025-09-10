@@ -36,6 +36,8 @@ const BlocRcRcaPacs: React.FC = () => {
 
   const blocActeAlimente = blocsRenseignes?.includes(EBlocsRMC.ACTE);
 
+  const champPaysBlocEvenementAlimente = Boolean(values.evenement.paysEvenement);
+
   const reinitialiserValeurs = () => {
     setValues({
       ...values,
@@ -65,12 +67,12 @@ const BlocRcRcaPacs: React.FC = () => {
           name="inscription.typeRepertoire"
           libelle="Type de répertoire"
           options={typesRepertoire}
-          disabled={blocActeAlimente}
+          disabled={blocActeAlimente || champPaysBlocEvenementAlimente}
         />
         <ChampRcRcaPacs
           name="inscription.numeroInscription"
           libelle="N° de l'inscription / N° du PACS"
-          disabled={blocActeAlimente}
+          disabled={blocActeAlimente || champPaysBlocEvenementAlimente}
         />
       </div>
       <div className="pt-4">
@@ -78,7 +80,7 @@ const BlocRcRcaPacs: React.FC = () => {
           name="inscription.natureInscription"
           libelle="Nature de l'inscription"
           options={[{ cle: "", libelle: "" }, ...listeNatureInscription]}
-          disabled={!["RC", "RCA"].includes(typeRepertoire ?? "") || blocActeAlimente}
+          disabled={!["RC", "RCA"].includes(typeRepertoire ?? "") || blocActeAlimente || champPaysBlocEvenementAlimente}
         />
       </div>
 
@@ -86,7 +88,7 @@ const BlocRcRcaPacs: React.FC = () => {
         <ChampCaseACocher
           name="inscription.etInscriptionsSuivantes"
           libelle="Et les inscriptions/PACS suivants du répertoire"
-          disabled={estNumeroInscriptionIncomplet}
+          disabled={estNumeroInscriptionIncomplet || champPaysBlocEvenementAlimente}
         />
       </div>
     </ConteneurAvecBordure>

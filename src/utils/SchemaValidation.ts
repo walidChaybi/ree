@@ -96,10 +96,10 @@ interface ISchemaValidation {
   annee: TSchemaValidationFonction<{ min?: TValidationEntier }>;
   nomSecable: TSchemaValidationFonction;
   prenoms: (prefix: string) => Yup.AnySchema;
-  champsAnneeEtNumero: TSchemaValidationFonction<{ min?: TValidationEntier }>;
+  champsAnneeEtNumero: TSchemaValidationFonction<{ min?: TValidationEntier; autoriserAnneeSeulement?: boolean }>;
   numeroRcRcaPacs: TSchemaValidationFonction;
   numerosRcRcaPacs: TSchemaValidationFonction<{ prefix: string; tailleMax: number }>;
-  referenceRECE: TSchemaValidationFonction;
+  referenceRECE: TSchemaValidationFonction<{ autoriserAnneeSeulement?: boolean }>;
   inconnu: () => Yup.AnySchema;
 }
 
@@ -616,7 +616,15 @@ const SchemaValidation: ISchemaValidation = {
     return SchemaValidation.objet(schemaPrenoms);
   },
 
-  champsAnneeEtNumero: ({ obligatoire, operateurConditionsOu, interditSeul, interditAvec, comparaisonValeurAutreChamp, min } = {}) => {
+  champsAnneeEtNumero: ({
+    obligatoire,
+    operateurConditionsOu,
+    interditSeul,
+    interditAvec,
+    comparaisonValeurAutreChamp,
+    min,
+    autoriserAnneeSeulement
+  } = {}) => {
     let schema = SchemaValidation.objet({
       numero: SchemaValidation.entier({ obligatoire: obligatoire }),
       annee: SchemaValidation.annee({ obligatoire: obligatoire, min })
@@ -630,7 +638,7 @@ const SchemaValidation: ISchemaValidation = {
           : true;
       })
       .test("numeroIncompletInterditNumero", (numeroRcRcaPacs, error) => {
-        return !numeroRcRcaPacs.numero && Boolean(numeroRcRcaPacs.annee)
+        return !autoriserAnneeSeulement && !numeroRcRcaPacs.numero && Boolean(numeroRcRcaPacs.annee)
           ? error.createError({
               path: `${error.path}.numero`,
               message: messagesErreur.CHAMP_INCOMPLET
@@ -722,14 +730,22 @@ const SchemaValidation: ISchemaValidation = {
     return SchemaValidation.objet(schemaNumeros);
   },
 
-  referenceRECE: ({ obligatoire, operateurConditionsOu, interditSeul, interditAvec, comparaisonValeurAutreChamp } = {}) => {
+  referenceRECE: ({
+    obligatoire,
+    operateurConditionsOu,
+    interditSeul,
+    interditAvec,
+    comparaisonValeurAutreChamp,
+    autoriserAnneeSeulement
+  } = {}) => {
     let schema = SchemaValidation.champsAnneeEtNumero({
       min: { valeur: 2021, message: "L'année doit être postérieure à 2020" },
       obligatoire,
       operateurConditionsOu,
       interditSeul,
       interditAvec,
-      comparaisonValeurAutreChamp
+      comparaisonValeurAutreChamp,
+      autoriserAnneeSeulement
     });
 
     return gestionObligation({

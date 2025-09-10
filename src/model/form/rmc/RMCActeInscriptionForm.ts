@@ -181,7 +181,8 @@ export const RMCActeInscriptionForm = {
               { idChampReference: "acte.natureActe", operateur: EOperateurCondition.DIFF, valeurs: [""] }
             ]),
             { blocsRetirantValidation: ["TITULAIRE", "EVENEMENT"] }
-          )
+          ),
+          autoriserAnneeSeulement: blocsRenseignes?.some(blocRenseigne => ["TITULAIRE", "EVENEMENT"].includes(blocRenseigne))
         }),
         pocopa: SchemaValidation.listeDeroulante({
           obligatoire: ConditionChamp.depuisTableauConditionComplexe([
