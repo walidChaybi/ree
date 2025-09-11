@@ -1,4 +1,3 @@
-import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
 import { RMCActeInscriptionResultats } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCActeInscriptionResultats";
 import {
   NB_LIGNES_PAR_APPEL_ACTE,
@@ -9,6 +8,7 @@ import {
 import React, { useEffect, useState } from "react";
 
 import TRAITEMENT_RMC_ACTES_INSCRIPTIONS, { IResultatRMCActesInscriptions } from "@api/traitements/rmc/TraitementRMCActesInscriptions";
+import { ICriteresRMC } from "@model/rmc/commun/IRMCFormulaire";
 import DefilementAutomatique from "../../composants/commun/defilementAutomatique/DefilementAutomatique";
 import RMCActeInscription from "../../composants/pages/rmc/formulaire/RMCActeInscription";
 import { RMCContextProvider } from "../../contexts/RMCContextProvider";
@@ -28,7 +28,7 @@ const PageRMCActeInscription: React.FC = () => {
 
   const { lancerTraitement, traitementEnCours: enAttenteRMC } = useTraitementApi(TRAITEMENT_RMC_ACTES_INSCRIPTIONS);
 
-  const onSubmitRMCActeInscription = (valeurs: IRMCActeInscriptionForm) => {
+  const onSubmitRMCActeInscription = (valeurs: ICriteresRMC) => {
     StockageLocal.stocker("CRITERES_RMC_ACTE_INSCRIPTION", valeurs);
     lancerTraitement({
       parametres: {

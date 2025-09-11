@@ -1,4 +1,3 @@
-import { ICriteresRMC, ICriteresRMCDto } from "@model/rmc/commun/IRMCFormulaire";
 import { EBlocsRMC } from "../../../contexts/RMCContextProvider";
 import {
   ASTERISQUE_PRECEDE_DEUX,
@@ -11,11 +10,12 @@ import {
 import SchemaValidation, { messagesErreur } from "../../../utils/SchemaValidation";
 import { nettoyerAttributsDto } from "../../commun/dtoUtils";
 import { ConditionChamp, EOperateurCondition } from "../commun/ConditionChamp";
-import { numeroRcRcaPacsVersDto } from "../commun/NumeroRcRcaPacsForm";
+
+import { ICriteresRMC, ICriteresRMCDto } from "@model/rmc/commun/IRMCFormulaire";
 
 const MESSAGE_CARACTERES_INTERDITS_CHAMP_PAYS = "⚠ Les caractères spéciaux autorisés sont l'espace et les suivants : ' -";
 
-export const RMCActeInscriptionForm = {
+export const RMCArchiveForm = {
   valeursInitiales: (): ICriteresRMC => {
     return {
       acte: {
@@ -38,28 +38,22 @@ export const RMCActeInscriptionForm = {
         },
         etActesSuivants: false
       },
-      inscription: {
-        numeroInscription: { annee: "", numero: "" },
-        typeRepertoire: "",
-        natureInscription: "",
-        etInscriptionsSuivantes: false
-      },
       evenement: {
+        paysEvenement: "",
         dateEvenement: {
-          jour: "",
+          annee: "",
           mois: "",
-          annee: ""
-        },
-        paysEvenement: ""
+          jour: ""
+        }
       },
       titulaire: {
-        nom: "",
         prenom: "",
+        nom: "",
         paysNaissance: "",
         dateNaissance: {
-          jour: "",
+          annee: "",
           mois: "",
-          annee: ""
+          jour: ""
         }
       }
     };
@@ -68,50 +62,43 @@ export const RMCActeInscriptionForm = {
   versDto: (valeurs: ICriteresRMC): ICriteresRMCDto =>
     nettoyerAttributsDto<ICriteresRMCDto>({
       acte: {
-        natureActe: valeurs.acte?.natureActe,
         referenceRECE: valeurs.acte?.referenceRECE,
+        natureActe: valeurs.acte?.natureActe,
         referenceRegistre: {
-          familleRegistre: valeurs.acte?.familleRegistre,
           pocopa: valeurs.acte?.pocopa,
           anneeRegistre: valeurs.acte?.anneeRegistre,
-          support1: valeurs.acte?.registreSupport?.support1,
-          support2: valeurs.acte?.registreSupport?.support2,
-          numeroActe: valeurs.acte?.numeroActe?.numeroActe,
+          etActesSuivants: valeurs.acte?.etActesSuivants,
+          familleRegistre: valeurs.acte?.familleRegistre,
           numeroBisTer: valeurs.acte?.numeroActe?.numeroBisTer,
-          etActesSuivants: valeurs.acte?.etActesSuivants
+          numeroActe: valeurs.acte?.numeroActe?.numeroActe,
+          support1: valeurs.acte?.registreSupport?.support1,
+          support2: valeurs.acte?.registreSupport?.support2
         }
       },
-      inscription: {
-        numeroInscription: numeroRcRcaPacsVersDto(valeurs.inscription?.numeroInscription),
-        typeRepertoire: valeurs.inscription?.typeRepertoire || undefined,
-        natureInscription: valeurs.inscription?.natureInscription,
-        etInscriptionsSuivantes: valeurs.inscription?.etInscriptionsSuivantes
+      titulaire: {
+        prenom: valeurs.titulaire?.prenom,
+        nom: valeurs.titulaire?.nom,
+        paysNaissance: valeurs.titulaire?.paysNaissance,
+        dateNaissance: {
+          annee: valeurs.titulaire?.dateNaissance?.annee,
+          mois: valeurs.titulaire?.dateNaissance?.mois,
+          jour: valeurs.titulaire?.dateNaissance?.jour
+        }
       },
       evenement: {
         dateEvenement: {
-          jour: valeurs.evenement?.dateEvenement?.jour,
+          annee: valeurs.evenement?.dateEvenement?.annee,
           mois: valeurs.evenement?.dateEvenement?.mois,
-          annee: valeurs.evenement?.dateEvenement?.annee
+          jour: valeurs.evenement?.dateEvenement?.jour
         },
         paysEvenement: valeurs.evenement?.paysEvenement
-      },
-
-      titulaire: {
-        nom: valeurs.titulaire?.nom,
-        prenom: valeurs.titulaire?.prenom,
-        paysNaissance: valeurs.titulaire?.paysNaissance,
-        dateNaissance: {
-          jour: valeurs.titulaire?.dateNaissance?.jour,
-          mois: valeurs.titulaire?.dateNaissance?.mois,
-          annee: valeurs.titulaire?.dateNaissance?.annee
-        }
       }
     }),
 
   schemaValidation: (blocsRenseignes?: (keyof typeof EBlocsRMC)[]) => {
     const ENSEMBLE_REGEX_CHAMP_ASTERISQUE = [
-      { valeur: CaracteresAutorisesRechercheNomPrenom, message: messagesErreur.CARACTERES_INTERDITS },
       { valeur: CARACTERES_POST_ASTERISQUE, message: messagesErreur.CARACTERES_POST_ASTERISQUE },
+      { valeur: CaracteresAutorisesRechercheNomPrenom, message: messagesErreur.CARACTERES_INTERDITS },
       { valeur: ASTERISQUE_PRECEDE_ESPACE, message: messagesErreur.ASTERISQUE_PRECEDE_ESPACE }
     ];
 
@@ -124,33 +111,33 @@ export const RMCActeInscriptionForm = {
     };
 
     return SchemaValidation.objet({
-      acte: SchemaValidation.objet({
+      registre: SchemaValidation.objet({
         natureActe: SchemaValidation.texte({
           obligatoire: appliquerValidationSousCondition(
             ConditionChamp.depuisTableau([
               {
-                idChampReference: "acte.anneeRegistre",
-                operateur: EOperateurCondition.DIFF,
+                idChampReference: "registre.pocopa",
+                operateur: EOperateurCondition.EGAL,
                 valeurs: [""]
               },
               {
-                idChampReference: "acte.familleRegistre",
+                idChampReference: "registre.familleRegistre",
                 operateur: EOperateurCondition.DIFF,
                 valeurs: ["CPN"]
               },
               {
-                idChampReference: "acte.pocopa",
+                idChampReference: "registre.numeroActe.numeroActe",
                 operateur: EOperateurCondition.EGAL,
                 valeurs: [""]
               },
               {
-                idChampReference: "acte.registreSupport.support1",
+                idChampReference: "registre.registreSupport.support1",
                 operateur: EOperateurCondition.EGAL,
                 valeurs: [""]
               },
               {
-                idChampReference: "acte.numeroActe.numeroActe",
-                operateur: EOperateurCondition.EGAL,
+                idChampReference: "registre.anneeRegistre",
+                operateur: EOperateurCondition.DIFF,
                 valeurs: [""]
               }
             ]),
@@ -160,39 +147,19 @@ export const RMCActeInscriptionForm = {
         referenceRECE: SchemaValidation.referenceRECE({
           obligatoire: appliquerValidationSousCondition(
             ConditionChamp.depuisTableau([
-              { idChampReference: "acte.typeReference", operateur: EOperateurCondition.EGAL, valeurs: ["RECE"] },
-              { idChampReference: "acte.natureActe", operateur: EOperateurCondition.DIFF, valeurs: [""] }
+              { idChampReference: "registre.natureActe", operateur: EOperateurCondition.DIFF, valeurs: [""] },
+              { idChampReference: "registre.typeReference", operateur: EOperateurCondition.EGAL, valeurs: ["RECE"] }
             ]),
             { blocsRetirantValidation: ["TITULAIRE", "EVENEMENT"] }
-          ),
-          autoriserAnneeSeulement: blocsRenseignes?.some(blocRenseigne => ["TITULAIRE", "EVENEMENT"].includes(blocRenseigne))
+          )
         }),
         pocopa: SchemaValidation.listeDeroulante({
-          obligatoire: ConditionChamp.depuisTableauConditionComplexe([
-            {
-              idChampReference: "acte.familleRegistre",
-              operateur: EOperateurCondition.EGAL,
-              valeurs: ["CSL", "ACQ"]
-            },
-            [
-              {
-                idChampReference: "acte.numeroActe.numeroActe",
-                operateur: EOperateurCondition.DIFF,
-                valeurs: [""]
-              },
-              {
-                idChampReference: "acte.familleRegistre",
-                operateur: EOperateurCondition.DIFF,
-                valeurs: ["CPN", "OP2", "OP3"]
-              }
-            ]
-          ]),
           valeursPossibles: [
             {
               valeurs: ["TR-ACTES"],
               conditions: ConditionChamp.depuisTableau([
                 {
-                  idChampReference: "acte.familleRegistre",
+                  idChampReference: "registre.familleRegistre",
                   operateur: EOperateurCondition.EGAL,
                   valeurs: ["MAR"]
                 }
@@ -200,67 +167,86 @@ export const RMCActeInscriptionForm = {
               sontUtilisables: () => true
             }
           ],
-          operateurConditionsOu: true,
-          dansTableauOperateurConditionsOu: false
+          obligatoire: ConditionChamp.depuisTableauConditionComplexe([
+            {
+              idChampReference: "registre.familleRegistre",
+              operateur: EOperateurCondition.EGAL,
+              valeurs: ["CSL", "ACQ"]
+            },
+            [
+              {
+                idChampReference: "registre.numeroActe.numeroActe",
+                operateur: EOperateurCondition.DIFF,
+                valeurs: [""]
+              },
+              {
+                idChampReference: "registre.familleRegistre",
+                operateur: EOperateurCondition.DIFF,
+                valeurs: ["CPN", "OP2", "OP3"]
+              }
+            ]
+          ]),
+          dansTableauOperateurConditionsOu: false,
+          operateurConditionsOu: true
         }),
         familleRegistre: SchemaValidation.texte({
+          dansTableauOperateurConditionsOu: true,
+          interditSeul: {
+            champsAIgnorer: ["typeReference"],
+            messageErreurSpecifique: "⚠ Le champ ne peut pas être utilisé seul"
+          },
           obligatoire: appliquerValidationSousCondition(
             ConditionChamp.depuisTableauConditionComplexe([
-              { idChampReference: "acte.typeReference", operateur: EOperateurCondition.DIFF, valeurs: ["RECE"] },
+              { idChampReference: "registre.typeReference", operateur: EOperateurCondition.DIFF, valeurs: ["RECE"] },
               [
-                { idChampReference: "acte.anneeRegistre", operateur: EOperateurCondition.DIFF, valeurs: [""] },
-                { idChampReference: "acte.natureActe", operateur: EOperateurCondition.DIFF, valeurs: [""] },
-                { idChampReference: "acte.pocopa", operateur: EOperateurCondition.DIFF, valeurs: [""] },
+                { idChampReference: "registre.natureActe", operateur: EOperateurCondition.DIFF, valeurs: [""] },
+                { idChampReference: "registre.anneeRegistre", operateur: EOperateurCondition.DIFF, valeurs: [""] },
                 {
-                  idChampReference: "acte.registreSupport.support1",
+                  idChampReference: "registre.registreSupport.support1",
                   operateur: EOperateurCondition.DIFF,
                   valeurs: [""]
                 },
+                { idChampReference: "registre.pocopa", operateur: EOperateurCondition.DIFF, valeurs: [""] },
                 {
-                  idChampReference: "acte.numeroActe.numeroActe",
+                  idChampReference: "registre.numeroActe.numeroActe",
                   operateur: EOperateurCondition.DIFF,
                   valeurs: [""]
                 }
               ]
             ]),
             { blocsRetirantValidation: ["TITULAIRE", "EVENEMENT"] }
-          ),
-          dansTableauOperateurConditionsOu: true,
-          interditSeul: {
-            champsAIgnorer: ["typeReference"],
-            messageErreurSpecifique: "⚠ Le champ ne peut pas être utilisé seul"
-          }
+          )
         }),
         anneeRegistre: SchemaValidation.annee({
           obligatoire: appliquerValidationSousCondition(
             ConditionChamp.depuisTableauConditionComplexe([
-              { idChampReference: "acte.typeReference", operateur: EOperateurCondition.DIFF, valeurs: ["RECE"] },
+              { idChampReference: "registre.typeReference", operateur: EOperateurCondition.DIFF, valeurs: ["RECE"] },
 
               [
                 {
-                  idChampReference: "acte.natureActe",
+                  idChampReference: "registre.numeroActe.numeroActe",
+                  operateur: EOperateurCondition.EGAL,
+                  valeurs: [""]
+                },
+                {
+                  idChampReference: "registre.pocopa",
+                  operateur: EOperateurCondition.EGAL,
+                  valeurs: [""]
+                },
+                {
+                  idChampReference: "registre.registreSupport.support1",
+                  operateur: EOperateurCondition.EGAL,
+                  valeurs: [""]
+                },
+                {
+                  idChampReference: "registre.natureActe",
                   operateur: EOperateurCondition.DIFF,
                   valeurs: [""]
                 },
                 {
-                  idChampReference: "acte.familleRegistre",
+                  idChampReference: "registre.familleRegistre",
                   operateur: EOperateurCondition.DIFF,
                   valeurs: ["OP2", "OP3"]
-                },
-                {
-                  idChampReference: "acte.pocopa",
-                  operateur: EOperateurCondition.EGAL,
-                  valeurs: [""]
-                },
-                {
-                  idChampReference: "acte.registreSupport.support1",
-                  operateur: EOperateurCondition.EGAL,
-                  valeurs: [""]
-                },
-                {
-                  idChampReference: "acte.numeroActe.numeroActe",
-                  operateur: EOperateurCondition.EGAL,
-                  valeurs: [""]
                 }
               ]
             ]),
@@ -271,20 +257,20 @@ export const RMCActeInscriptionForm = {
           support1: SchemaValidation.texte({
             obligatoire: ConditionChamp.depuisTableauConditionComplexe([
               {
-                idChampReference: "acte.registreSupport.support2",
+                idChampReference: "registre.registreSupport.support2",
                 operateur: EOperateurCondition.DIFF,
                 valeurs: [""]
               },
               [
                 {
-                  idChampReference: "acte.etActesSuivants",
-                  operateur: EOperateurCondition.EGAL,
-                  valeurs: ["true"]
-                },
-                {
-                  idChampReference: "acte.familleRegistre",
+                  idChampReference: "registre.familleRegistre",
                   operateur: EOperateurCondition.DIFF,
                   valeurs: ["CPN"]
+                },
+                {
+                  idChampReference: "registre.etActesSuivants",
+                  operateur: EOperateurCondition.EGAL,
+                  valeurs: ["true"]
                 }
               ]
             ]),
@@ -297,14 +283,14 @@ export const RMCActeInscriptionForm = {
           numeroActe: SchemaValidation.texte({
             obligatoire: ConditionChamp.depuisTableau([
               {
-                idChampReference: "acte.numeroActe.numeroBisTer",
-                operateur: EOperateurCondition.DIFF,
-                valeurs: [""]
-              },
-              {
-                idChampReference: "acte.etActesSuivants",
+                idChampReference: "registre.etActesSuivants",
                 operateur: EOperateurCondition.EGAL,
                 valeurs: ["true"]
+              },
+              {
+                idChampReference: "registre.numeroActe.numeroBisTer",
+                operateur: EOperateurCondition.DIFF,
+                valeurs: [""]
               }
             ]),
             operateurConditionsOu: true
@@ -312,34 +298,6 @@ export const RMCActeInscriptionForm = {
           numeroBisTer: SchemaValidation.texte({ obligatoire: false })
         }),
         etActesSuivants: SchemaValidation.booleen({ obligatoire: false })
-      }),
-      inscription: SchemaValidation.objet({
-        numeroInscription: SchemaValidation.numeroRcRcaPacs({
-          interditSeul: {
-            champsEnErreur: ["annee", "numero"],
-            champsAIgnorer: ["typeReference"]
-          },
-          comparaisonValeurAutreChamp: {
-            cheminChampCompare: "evenement.dateEvenement.annee",
-            operateur: EOperateurCondition.EGAL,
-            champEnfantCompare: "annee",
-            messageErreurSpecifique: "⚠ Incohérence avec l'année de l'évènement"
-          }
-        }),
-        typeRepertoire: SchemaValidation.texte({
-          obligatoire: false,
-          interditSeul: {
-            champsAIgnorer: ["natureInscription", "typeReference"],
-            messageErreurSpecifique: "⚠ Le champ ne peut être utilisé seul, ni être le seul champ renseigné avec Nature de l'inscription"
-          }
-        }),
-        natureInscription: SchemaValidation.texte({
-          obligatoire: false,
-          interditSeul: {
-            champsAIgnorer: ["typeRepertoire", "typeReference"],
-            messageErreurSpecifique: "⚠ Le champ ne peut être utilisé seul, ni être le seul champ renseigné avec Type de répertoire"
-          }
-        })
       }),
       evenement: SchemaValidation.objet({
         dateEvenement: SchemaValidation.dateIncomplete({
@@ -351,47 +309,21 @@ export const RMCActeInscriptionForm = {
               champsAIgnorer: ["typeReference"]
             },
             { blocsRetirantValidation: ["TITULAIRE", "INSCRIPTION", "ACTE"] }
-          ),
-          comparaisonValeurAutreChamp: {
-            cheminChampCompare: "inscription.numeroInscription.annee",
-            operateur: EOperateurCondition.EGAL,
-            champEnfantCompare: "annee",
-            messageErreurSpecifique: "⚠ Incohérence avec le numéro d'inscription / numéro PACS"
-          }
+          )
         }),
         paysEvenement: SchemaValidation.texte({
-          obligatoire: false,
           listeRegexp: [{ valeur: CaracteresAutorisesRecherchePays, message: MESSAGE_CARACTERES_INTERDITS_CHAMP_PAYS }],
+          obligatoire: false,
           interditSeul: appliquerValidationSousCondition(
             {
               champsAIgnorer: ["typeReference"]
             },
             { blocsRetirantValidation: ["TITULAIRE", "INSCRIPTION", "ACTE"] }
-          ),
-          interditAvec: [
-            {
-              champExclusif: "inscription.typeRepertoire",
-              valeursExclusives: ["RC", "RCA"],
-              messageErreurSpecifique: "⚠ Incompatible avec une recherche RC/RCA"
-            }
-          ]
+          )
         })
       }),
 
       titulaire: SchemaValidation.objet({
-        nom: SchemaValidation.texte({
-          obligatoire: ConditionChamp.depuisTableau([
-            {
-              idChampReference: "titulaire.prenom",
-              operateur: EOperateurCondition.DIFF,
-              valeurs: [""]
-            }
-          ]),
-          listeRegexp: [
-            { valeur: ASTERISQUE_PRECEDE_DEUX, message: messagesErreur.ASTERISQUE_PRECEDE_DE_DEUX },
-            ...ENSEMBLE_REGEX_CHAMP_ASTERISQUE
-          ]
-        }),
         prenom: SchemaValidation.texte({
           obligatoire: false,
           listeRegexp: [
@@ -399,14 +331,20 @@ export const RMCActeInscriptionForm = {
             ...ENSEMBLE_REGEX_CHAMP_ASTERISQUE
           ]
         }),
-        paysNaissance: SchemaValidation.texte({
-          obligatoire: false,
-          listeRegexp: [{ valeur: CaracteresAutorisesRecherchePays, message: MESSAGE_CARACTERES_INTERDITS_CHAMP_PAYS }],
-          interditSeul: {
-            messageErreurSpecifique: "⚠ Le champ ne peut être utilisé sans au moins un autre critère du titulaire",
-            limiterAuBloc: true
-          }
+        nom: SchemaValidation.texte({
+          listeRegexp: [
+            { valeur: ASTERISQUE_PRECEDE_DEUX, message: messagesErreur.ASTERISQUE_PRECEDE_DE_DEUX },
+            ...ENSEMBLE_REGEX_CHAMP_ASTERISQUE
+          ],
+          obligatoire: ConditionChamp.depuisTableau([
+            {
+              idChampReference: "titulaire.prenom",
+              operateur: EOperateurCondition.DIFF,
+              valeurs: [""]
+            }
+          ])
         }),
+
         dateNaissance: SchemaValidation.dateIncomplete({
           obligatoire: false,
           interditSeul: {
@@ -415,6 +353,14 @@ export const RMCActeInscriptionForm = {
             limiterAuBloc: true
           },
           bloquerDateFuture: true
+        }),
+        paysNaissance: SchemaValidation.texte({
+          obligatoire: false,
+          listeRegexp: [{ valeur: CaracteresAutorisesRecherchePays, message: MESSAGE_CARACTERES_INTERDITS_CHAMP_PAYS }],
+          interditSeul: {
+            messageErreurSpecifique: "⚠ Le champ ne peut être utilisé sans au moins un autre critère du titulaire",
+            limiterAuBloc: true
+          }
         })
       })
     });

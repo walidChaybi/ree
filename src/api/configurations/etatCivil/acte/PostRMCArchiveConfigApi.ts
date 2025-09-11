@@ -9,7 +9,7 @@ interface IQuery {
   range?: string;
 }
 
-export const CONFIG_POST_RMC_ACTE: TConfigurationApi<typeof URI, ICriteresRMCDto, IQuery, IResultatRMCActeDto[]> = {
+export const CONFIG_POST_RMC_ARCHIVE: TConfigurationApi<typeof URI, ICriteresRMCDto, IQuery, IResultatRMCActeDto[]> = {
   api: ETATCIVIL_API,
   methode: "POST",
   uri: URI,

@@ -1,9 +1,8 @@
-import { IRMCActeArchive } from "@model/rmc/acteArchive/rechercheForm/IRMCActeArchive";
 import { IRMCActeInscription } from "@model/rmc/acteInscription/rechercheForm/IRMCActeInscription";
 
-const CRITERES_RMC_ACTE_ARCHIVE = "criteresRMCActeArchive";
 const CRITERES_RMC_REQ = "criteresRMCReq";
 
+/** @deprecated Remplacé par `StockageLocal`. Cette classe sera supprimée dans une future version. */
 class StockageDonnees {
   stockerDonnees(key: string, data: string) {
     localStorage.setItem(key, data);
@@ -11,20 +10,6 @@ class StockageDonnees {
 
   recupererDonnees(key: string) {
     return localStorage.getItem(key);
-  }
-
-  // A SUPPRIMER QUAND RMC ARCHIVE SERA TERMINE
-  stockerCriteresRMCActeArchive(data: any) {
-    this.stockerDonnees(CRITERES_RMC_ACTE_ARCHIVE, JSON.stringify(data));
-  }
-
-  recupererCriteresRMCActeArchive() {
-    let res;
-    const value = this.recupererDonnees(CRITERES_RMC_ACTE_ARCHIVE);
-    if (value) {
-      res = JSON.parse(value) as IRMCActeArchive;
-    }
-    return res;
   }
 
   stockerCriteresRMCReq(data: any) {

@@ -52,7 +52,7 @@ interface AnneeInputProps {
 
 export type DatesDebutFinAnneeFiltreProps = AnneeInputProps & ComponentFiltreProps & FormikComponentProps;
 
-// A SUPPRIMER APRES LA NOUVELLE RMC ARCHIVE TERMINE
+// A SUPPRIMER APRES LA REFONT DE RMC REQUETE
 const DatesDebutFinAnneeFiltre: React.FC<DatesDebutFinAnneeFiltreProps> = props => {
   const dateDebutComposeFormProps = {
     labelDate: "De ",

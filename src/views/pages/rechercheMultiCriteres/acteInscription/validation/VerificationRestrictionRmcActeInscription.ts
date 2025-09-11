@@ -7,7 +7,6 @@ import {
 } from "@pages/rechercheMultiCriteres/common/validation/VerificationRestrictionProcesseur";
 import {
   dateOuPaysNaissanceSaisiSansCritereDuBlocTitulaire,
-  filtreDateCreationInformatiqueSaisi,
   messageErreurDateOuPaysNaissanceSaisiSansCritereDuBlocTitulaire,
   messageErreurFiltreDateCreationInformatiqueSaisiSeul,
   messageErreurPrenomSaisiSansNom,
@@ -77,7 +76,6 @@ function tripletNatureFamilleAnneeNonSaisiEntierementEtPasDAutreCritereSaisi(rMC
     estNonRenseigne(registre?.numeroActe?.numeroActe) &&
     estNonRenseigne(registre?.pocopa) &&
     aucuneProprieteRenseignee(rMCSaisie.evenement) &&
-    aucuneProprieteRenseignee(rMCSaisie.datesDebutFinAnnee) &&
     aucuneProprieteRenseignee(rMCSaisie.titulaire)
   );
 }
@@ -113,7 +111,6 @@ function estFamilleRegistreOP2OuOP3(registre?: IRMCActe): boolean {
 
 function filtreDateCreationInformatiqueSaisiSeul(rMCSaisie: IRMCActeInscription): boolean {
   return (
-    filtreDateCreationInformatiqueSaisi(rMCSaisie) &&
     aucuneProprieteRenseignee(rMCSaisie.evenement) &&
     aucuneProprieteRenseignee(rMCSaisie.registreRepertoire) &&
     aucuneProprieteRenseignee(rMCSaisie.titulaire)

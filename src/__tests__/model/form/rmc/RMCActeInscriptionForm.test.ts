@@ -1,7 +1,8 @@
-import { IRMCActeInscriptionDto, IRMCActeInscriptionForm, RMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
+import { RMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
+import { ICriteresRMC, ICriteresRMCDto } from "@model/rmc/commun/IRMCFormulaire";
 import { describe, expect, test } from "vitest";
 
-const valeursInitialesRMCActeInscriptionAttendues: IRMCActeInscriptionForm = {
+const valeursInitialesRMCActeInscriptionAttendues: ICriteresRMC = {
   acte: {
     natureActe: "",
     familleRegistre: "",
@@ -49,7 +50,7 @@ const valeursInitialesRMCActeInscriptionAttendues: IRMCActeInscriptionForm = {
   }
 };
 
-const mockValeursRMCActeInscription: IRMCActeInscriptionForm = {
+const mockValeursRMCActeInscription: ICriteresRMC = {
   acte: {
     natureActe: "NAISSANCE",
     familleRegistre: "ACQ",
@@ -96,7 +97,7 @@ const mockValeursRMCActeInscription: IRMCActeInscriptionForm = {
   }
 };
 
-const mockDtoRMCActeInscription: IRMCActeInscriptionDto = {
+const mockDtoRMCActeInscription: ICriteresRMCDto = {
   acte: {
     referenceRegistre: {
       familleRegistre: "ACQ",
@@ -111,7 +112,8 @@ const mockDtoRMCActeInscription: IRMCActeInscriptionDto = {
   },
   inscription: {
     numeroInscription: "2000-1",
-    natureInscription: "contestation"
+    natureInscription: "contestation",
+    etInscriptionsSuivantes: false
   },
   evenement: {
     dateEvenement: {

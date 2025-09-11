@@ -1,7 +1,7 @@
 import { ETATCIVIL_API } from "@api/ApiDisponibles";
 import { TConfigurationApi } from "@model/api/Api";
-import { IRMCActeInscriptionDto } from "@model/form/rmc/RMCActeInscriptionForm";
 import { IResultatRMCInscriptionDto } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
+import { ICriteresRMCDto } from "@model/rmc/commun/IRMCFormulaire";
 
 const URI = "/repertoirecivil/rmc";
 
@@ -11,7 +11,7 @@ interface IQuery {
 
 export const CONFIG_POST_RMC_INSCRIPTION: TConfigurationApi<
   typeof URI,
-  IRMCActeInscriptionDto,
+  ICriteresRMCDto,
   IQuery,
   (IResultatRMCInscriptionDto<"PACS"> | IResultatRMCInscriptionDto<"RC"> | IResultatRMCInscriptionDto<"RCA">)[]
 > = {

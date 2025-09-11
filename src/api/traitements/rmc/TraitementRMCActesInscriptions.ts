@@ -1,8 +1,10 @@
 import { CONFIG_POST_RMC_ACTE } from "@api/configurations/etatCivil/acte/PostRMCActeConfigApi";
 import { CONFIG_POST_RMC_INSCRIPTION } from "@api/configurations/etatCivil/acte/PostRMCInscriptionConfigApi";
-import { IRMCActeInscriptionDto, IRMCActeInscriptionForm, RMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
+
+import { RMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import ResultatRMCInscription, { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
+import { ICriteresRMC, ICriteresRMCDto } from "@model/rmc/commun/IRMCFormulaire";
 import { getParamsTableauRMCDepuisHeaders, PARAMS_TABLEAU_RMC_VIDE, TParamsTableauRMC } from "@util/GestionDesLiensApi";
 import { NB_LIGNES_PAR_APPEL_ACTE, NB_LIGNES_PAR_APPEL_INSCRIPTION } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { useEffect, useState } from "react";
@@ -11,7 +13,7 @@ import AfficherMessage from "../../../utils/AfficherMessage";
 import { IErreurTraitement, TRAITEMENT_SANS_ERREUR, TTraitementApi } from "../TTraitementApi";
 
 interface IParamsRMCActesInscriptions {
-  valeursFormulaire: IRMCActeInscriptionForm;
+  valeursFormulaire: ICriteresRMC;
 }
 
 export interface IResultatRMCActesInscriptions {
@@ -21,7 +23,7 @@ export interface IResultatRMCActesInscriptions {
   paramsTableauRMCInscription: TParamsTableauRMC;
 }
 
-const rmcInscriptionAutorisee = (rmc: IRMCActeInscriptionDto): boolean =>
+const rmcInscriptionAutorisee = (rmc: ICriteresRMCDto): boolean =>
   !(
     rmc.acte?.natureActe ??
     rmc.acte?.referenceRegistre?.familleRegistre ??
@@ -31,7 +33,7 @@ const rmcInscriptionAutorisee = (rmc: IRMCActeInscriptionDto): boolean =>
     rmc.acte?.referenceRECE
   );
 
-const rmcActeAutorisee = (rmc: IRMCActeInscriptionDto): boolean =>
+const rmcActeAutorisee = (rmc: ICriteresRMCDto): boolean =>
   !(rmc.inscription?.typeRepertoire ?? rmc.inscription?.natureInscription ?? rmc.inscription?.numeroInscription);
 
 const TRAITEMENT_RMC_ACTES_INSCRIPTIONS: TTraitementApi<IParamsRMCActesInscriptions, IResultatRMCActesInscriptions> = {

@@ -1,4 +1,4 @@
-import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
+import { ICriteresRMC } from "@model/rmc/commun/IRMCFormulaire";
 import { useFormikContext } from "formik";
 import React, { useContext, useMemo } from "react";
 import { EBlocsRMC, RMCContext } from "../../../../contexts/RMCContextProvider";
@@ -7,10 +7,9 @@ import ChampTexte from "../../../commun/champs/ChampTexte";
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 
 const BlocEvenement: React.FC = () => {
-  const { values, setValues } = useFormikContext<IRMCActeInscriptionForm>();
+  const { values, setValues } = useFormikContext<ICriteresRMC>();
   const { blocsRenseignes } = useContext(RMCContext);
-
-  const blocRCRCAPACSAlimente = useMemo(() => blocsRenseignes?.includes(EBlocsRMC.RCRCAPACS), [blocsRenseignes]);
+  const blocRCRCAPACSAlimente = useMemo(() => blocsRenseignes?.includes(EBlocsRMC.INSCRIPTION), [blocsRenseignes]);
 
   const reinitialiserValeurs = () => {
     setValues({

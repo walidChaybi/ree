@@ -9,9 +9,9 @@ interface IRMCBoutonsProps {
   rappelCriteres?: () => any;
 }
 
-export type RMCBoutonsProps = IRMCBoutonsProps & FormikComponentProps;
+type RMCBoutonsProps = IRMCBoutonsProps & FormikComponentProps;
 
-// A SUPPRIMER APRES LA NOUVELLE RMC ARCHIVE
+// A SUPPRIMER APRES LA REFONT DE RMC REQUETE
 const RMCBoutons: React.FC<RMCBoutonsProps> = props => {
   const rmcBoutonRappelCriteresProps = {
     rappelCriteres: props.rappelCriteres

@@ -7,7 +7,7 @@ import { digitSeulement, traiteCarAutorises } from "../utils/ControlesUtil";
 import { ComponentFiltreProps, FormikComponentProps, onBlurChampNumero, withNamespace } from "../utils/FormUtil";
 
 const NUMERO_ACTE = "numeroActe";
-export const NUMERO_BIS_TER = "numeroBisTer";
+const NUMERO_BIS_TER = "numeroBisTer";
 const A_PARTIR_DE = "aPartirDe";
 
 export const NumeroActeDefaultValues = {
@@ -16,7 +16,7 @@ export const NumeroActeDefaultValues = {
   [A_PARTIR_DE]: false
 };
 
-export const NumeroActeValidationSchema = Yup.object({
+const NumeroActeValidationSchema = Yup.object({
   [NUMERO_ACTE]: Yup.string()
 });
 
@@ -24,7 +24,7 @@ interface INumeroActeFormProps {
   estInactifChampNumeroBisTer: boolean;
 }
 
-export type NumeroActeFormProps = INumeroActeFormProps & ComponentFiltreProps;
+type NumeroActeFormProps = INumeroActeFormProps & ComponentFiltreProps;
 
 const NumeroActeForm: React.FC<NumeroActeFormProps & FormikComponentProps> = props => {
   const nomChampNumeroActeOuOrdre = withNamespace(props.nomFiltre, NUMERO_ACTE);

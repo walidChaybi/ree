@@ -3,7 +3,7 @@ import React, { createContext, useState } from "react";
 export enum EBlocsRMC {
   TITULAIRE = "TITULAIRE",
   EVENEMENT = "EVENEMENT",
-  RCRCAPACS = "RCRCAPACS",
+  INSCRIPTION = "INSCRIPTION",
   ACTE = "ACTE"
 }
 export interface IRMCContextProps {

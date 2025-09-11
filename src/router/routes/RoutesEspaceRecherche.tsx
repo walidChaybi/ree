@@ -1,8 +1,9 @@
 import { Droit } from "@model/agent/enum/Droit";
-import { RMCArchivePage } from "@pages/rechercheMultiCriteres/acteArchive/RMCArchivePage";
+
 import { RMCRequetePage } from "@pages/rechercheMultiCriteres/requete/RMCRequetePage";
 import { RouteObject } from "react-router";
 import PageRMCActeInscription from "../../pages/rmc/PageRMCActeInscription";
+import PageRMCArchive from "../../pages/rmc/PageRMCArchive";
 import ElementPageRECE from "../ElementPageRECE";
 import {
   INFO_PAGE_RECHERCHE_ACTE,
@@ -42,7 +43,7 @@ export const ROUTES_ESPACE_RECHERCHE: RouteObject[] = [
         infoPage={INFO_PAGE_RECHERCHE_REQUETE}
         uniquementLesDroits={[Droit.CONSULTER_ARCHIVES]}
       >
-        <RMCArchivePage />
+        <PageRMCArchive />
       </ElementPageRECE>
     )
   }

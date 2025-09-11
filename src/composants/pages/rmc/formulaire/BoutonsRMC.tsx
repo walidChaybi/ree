@@ -1,15 +1,18 @@
-import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
 import { useFormikContext } from "formik";
 import { useContext, useMemo } from "react";
 import { RMCContext } from "../../../../contexts/RMCContextProvider";
-import { StockageLocal } from "../../../../utils/StockageLocal";
+import { ITypeDonneesStockees, StockageLocal } from "../../../../utils/StockageLocal";
 import Bouton from "../../../commun/bouton/Bouton";
 
-const BoutonsRMC: React.FC = () => {
-  const { resetForm, setValues, isSubmitting } = useFormikContext<IRMCActeInscriptionForm>();
+interface BoutonsRMCProps<TTypeRMC extends keyof ITypeDonneesStockees> {
+  typeRMC: TTypeRMC;
+}
+
+const BoutonsRMC = <TTypeRMC extends keyof ITypeDonneesStockees>({ typeRMC }: BoutonsRMCProps<TTypeRMC>) => {
+  const { resetForm, setValues, isSubmitting } = useFormikContext<ITypeDonneesStockees[TTypeRMC]>();
   const { blocsRenseignes } = useContext(RMCContext);
 
-  const derniersCriteresUtilises = useMemo(() => StockageLocal.recuperer("CRITERES_RMC_ACTE_INSCRIPTION"), [isSubmitting]);
+  const derniersCriteresUtilises = useMemo(() => StockageLocal.recuperer(typeRMC), [isSubmitting]);
 
   return (
     <div className="mt-12 flex w-full justify-end gap-4">

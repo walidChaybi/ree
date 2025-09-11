@@ -211,40 +211,6 @@ export function rechercheMultiCriteresPersonne(criteres: IRMCAutoPersonneRequest
   );
 }
 
-export function getPocopasParFamille(debutPocopa: string, familleRegistre: string, nombreResultatsMax: number): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetchCache({
-      method: HttpMethod.GET,
-      uri: URL_POCOPAS_DEBUTENT_PAR,
-      parameters: {
-        debutPocopa,
-        familleRegistre,
-        nombreResultatsMax
-      }
-    })
-  );
-}
-
-export function getPocopasOuvertsOuFermerParFamille(
-  debutPocopa: string,
-  familleRegistre: string,
-  nombreResultatsMax: number,
-  estOuvert?: boolean
-): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetchCache({
-      method: HttpMethod.GET,
-      uri: URL_POCOPAS_DEBUTENT_PAR,
-      parameters: {
-        debutPocopa,
-        familleRegistre,
-        nombreResultatsMax,
-        estOuvert
-      }
-    })
-  );
-}
-
 export async function getMentions(idActe: string, statutMention?: StatutMention): Promise<any> {
   const queryParams = statutMention !== undefined ? { statut: StatutMention[statutMention] } : undefined;
   return getApiManager().then(api =>

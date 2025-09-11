@@ -1,8 +1,8 @@
-import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
+import { ICriteresRMC } from "@model/rmc/commun/IRMCFormulaire";
 
-interface ITypeDonneesStockees {
-  CRITERES_RMC_ACTE_INSCRIPTION: IRMCActeInscriptionForm;
-  CRITERES_RMC_ACTE_ARCHIVE: any;
+export interface ITypeDonneesStockees {
+  CRITERES_RMC_ACTE_INSCRIPTION: ICriteresRMC;
+  CRITERES_RMC_ARCHIVE: ICriteresRMC;
   CRITERES_RMC_REQUETE: any;
 }
 

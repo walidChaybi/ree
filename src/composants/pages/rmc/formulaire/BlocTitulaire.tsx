@@ -1,4 +1,4 @@
-import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
+import { ICriteresRMC } from "@model/rmc/commun/IRMCFormulaire";
 import { useFormikContext } from "formik";
 import ChampDate from "../../../commun/champs/ChampDate";
 import ChampTexte from "../../../commun/champs/ChampTexte";
@@ -6,7 +6,7 @@ import { ChampsNomPrenomInterchangeables } from "../../../commun/champs/ChampsNo
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 
 const BlocTitulaire: React.FC = () => {
-  const { initialValues, setFieldValue } = useFormikContext<IRMCActeInscriptionForm>();
+  const { initialValues, setFieldValue } = useFormikContext<ICriteresRMC>();
 
   const reinitialiserValeurs = () => {
     setFieldValue("titulaire", structuredClone(initialValues.titulaire));

@@ -22,9 +22,3 @@ export function dateOuPaysNaissanceSaisiSansCritereDuBlocTitulaire(
     seulementUneProprieteRenseignee("paysNaissance", rMCSaisie.titulaire)
   );
 }
-
-export function filtreDateCreationInformatiqueSaisi(
-  rMCSaisie: IRMCActeInscription | IRMCRequeteForm<keyof typeof ETypeRequete | "">
-): boolean {
-  return estRenseigne(rMCSaisie.datesDebutFinAnnee?.dateDebut?.annee) && estRenseigne(rMCSaisie.datesDebutFinAnnee?.dateFin);
-}

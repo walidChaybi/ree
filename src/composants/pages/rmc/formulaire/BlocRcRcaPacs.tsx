@@ -1,7 +1,8 @@
 import { ETypePacsRcRca } from "@model/etatcivil/enum/ETypePacsRcRca";
 import { NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { NatureRca } from "@model/etatcivil/enum/NatureRca";
-import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
+
+import { ICriteresRMC } from "@model/rmc/commun/IRMCFormulaire";
 import { enumVersOptions } from "@util/Utils";
 import { useFormikContext } from "formik";
 import { useContext, useEffect, useMemo } from "react";
@@ -14,7 +15,7 @@ import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/Conteneu
 const typesRepertoire = [{ cle: "", libelle: "" }, ...enumVersOptions(ETypePacsRcRca)];
 
 const BlocRcRcaPacs: React.FC = () => {
-  const { values, setValues, setFieldValue } = useFormikContext<IRMCActeInscriptionForm>();
+  const { values, setValues, setFieldValue } = useFormikContext<ICriteresRMC>();
   const { blocsRenseignes } = useContext(RMCContext);
 
   const etInscriptionsSuivantes = values.inscription?.etInscriptionsSuivantes;
@@ -35,8 +36,7 @@ const BlocRcRcaPacs: React.FC = () => {
   }, [typeRepertoire]);
 
   const blocActeAlimente = blocsRenseignes?.includes(EBlocsRMC.ACTE);
-
-  const champPaysBlocEvenementAlimente = Boolean(values.evenement.paysEvenement);
+  const champPaysBlocEvenementAlimente = Boolean(values.evenement?.paysEvenement ?? false);
 
   const reinitialiserValeurs = () => {
     setValues({

@@ -1,4 +1,4 @@
-import { RMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
+import { RMCArchiveForm } from "@model/form/rmc/RMCArchiveForm";
 import { ICriteresRMC } from "@model/rmc/commun/IRMCFormulaire";
 import { Form, Formik } from "formik";
 import { useContext } from "react";
@@ -6,24 +6,23 @@ import { IRMCContextProps, RMCContext } from "../../../../contexts/RMCContextPro
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import BlocActe from "./BlocActe";
 import BlocEvenement from "./BlocEvenement";
-import BlocRcRcaPacs from "./BlocRcRcaPacs";
 import BlocTitulaire from "./BlocTitulaire";
 import BoutonsRMC from "./BoutonsRMC";
 import GestionBlocsRMC from "./GestionBlocsRMC";
 
-const titreForm = "Critères de recherche d'un acte et d'une inscription";
+const titreForm = "Critères de recherche d'un acte et d'une inscription ACT";
 
-interface RMCActeInscriptionProps {
+interface RMCArchiveProps {
   onSubmit: (valeursFormulaire: ICriteresRMC) => void;
 }
 
-const RMCActeInscription: React.FC<RMCActeInscriptionProps> = ({ onSubmit }) => {
+const RMCArchive: React.FC<RMCArchiveProps> = ({ onSubmit }) => {
   const { blocsRenseignes } = useContext<IRMCContextProps>(RMCContext);
 
   return (
     <Formik<ICriteresRMC>
-      initialValues={RMCActeInscriptionForm.valeursInitiales()}
-      validationSchema={RMCActeInscriptionForm.schemaValidation(blocsRenseignes)}
+      initialValues={RMCArchiveForm.valeursInitiales()}
+      validationSchema={RMCArchiveForm.schemaValidation(blocsRenseignes)}
       onSubmit={onSubmit}
     >
       <Form>
@@ -39,10 +38,9 @@ const RMCActeInscription: React.FC<RMCActeInscriptionProps> = ({ onSubmit }) => 
               </div>
               <div>
                 <BlocActe />
-                <BlocRcRcaPacs />
               </div>
             </div>
-            <BoutonsRMC typeRMC="CRITERES_RMC_ACTE_INSCRIPTION" />
+            <BoutonsRMC typeRMC="CRITERES_RMC_ARCHIVE" />
           </GestionBlocsRMC>
         </ConteneurAvecBordure>
       </Form>
@@ -50,4 +48,4 @@ const RMCActeInscription: React.FC<RMCActeInscriptionProps> = ({ onSubmit }) => 
   );
 };
 
-export default RMCActeInscription;
+export default RMCArchive;

@@ -1,7 +1,7 @@
 import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { EFamilleRegistre } from "@model/etatcivil/enum/TypeFamille";
-import { IRMCActeInscriptionForm } from "@model/form/rmc/RMCActeInscriptionForm";
 import { ETypeReference } from "@model/rmc/acteInscription/rechercheForm/ETypeReference";
+import { ICriteresRMC } from "@model/rmc/commun/IRMCFormulaire";
 import { enumVersOptions } from "@util/Utils";
 import { getIn, useFormikContext } from "formik";
 import { useCallback, useContext, useMemo } from "react";
@@ -12,8 +12,8 @@ import ChampDoubleTexte from "../../../commun/champs/ChampDoubleTexte";
 import ChampListeDeroulante from "../../../commun/champs/ChampListeDeroulante";
 import ChampRecherchePocopas from "../../../commun/champs/ChampRecherchePocopas";
 import ChampReferenceRECE from "../../../commun/champs/ChampReferenceRECE";
-import ChampsRadio from "../../../commun/champs/ChampsRadio";
 import ChampTexte from "../../../commun/champs/ChampTexte";
+import ChampsRadio from "../../../commun/champs/ChampsRadio";
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 
 const FAMILLES_REGISTRE = enumVersOptions(EFamilleRegistre, { avecOptionVide: true, cleDansLibelle: true });
@@ -21,7 +21,7 @@ const NATURES_ACTE = enumVersOptions(ENatureActe, { avecOptionVide: true, cleDan
 const TYPES_REFERENCE = enumVersOptions(ETypeReference);
 
 const BlocActe: React.FC = () => {
-  const { values, setFieldValue, initialValues } = useFormikContext<IRMCActeInscriptionForm>();
+  const { values, setFieldValue, initialValues } = useFormikContext<ICriteresRMC>();
   const { blocsRenseignes } = useContext(RMCContext);
 
   const familleRegistreSelectionnee: keyof typeof EFamilleRegistre = useMemo(
@@ -30,8 +30,7 @@ const BlocActe: React.FC = () => {
   );
 
   const champsDesactives = useRMCBlocActe(familleRegistreSelectionnee);
-
-  const blocRCRCAPACSAlimente = useMemo(() => blocsRenseignes?.includes(EBlocsRMC.RCRCAPACS), [blocsRenseignes]);
+  const blocRCRCAPACSAlimente = useMemo(() => blocsRenseignes?.includes(EBlocsRMC.INSCRIPTION), [blocsRenseignes]);
 
   const reinitialiserValeurs = useCallback(() => {
     setFieldValue("registre", structuredClone({ ...initialValues.acte, typeReference: values.acte?.typeReference }));

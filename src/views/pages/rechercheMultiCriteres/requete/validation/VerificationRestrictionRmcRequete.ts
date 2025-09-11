@@ -6,7 +6,6 @@ import {
 } from "@pages/rechercheMultiCriteres/common/validation/VerificationRestrictionProcesseur";
 import {
   dateOuPaysNaissanceSaisiSansCritereDuBlocTitulaire,
-  filtreDateCreationInformatiqueSaisi,
   messageErreurDateOuPaysNaissanceSaisiSansCritereDuBlocTitulaire,
   messageErreurFiltreDateCreationInformatiqueSaisiSeul,
   messageErreurPrenomSaisiSansNom,
@@ -41,7 +40,6 @@ export function getMessageSiVerificationRestrictionRmcRequeteEnErreur(
 
 function filtreDateCreationInformatiqueSaisiSeul(rMCSaisie: IRMCRequeteForm<keyof typeof ETypeRequete | "">): boolean {
   return (
-    filtreDateCreationInformatiqueSaisi(rMCSaisie) &&
     aucuneProprieteRenseignee(rMCSaisie.requerant) &&
     aucuneProprieteRenseignee(rMCSaisie.requete) &&
     aucuneProprieteRenseignee(rMCSaisie.titulaire)

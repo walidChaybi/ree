@@ -231,7 +231,7 @@ export const estChampRenseigne = (valeur: any): boolean => {
 };
 
 export const getValeursRenseigneesFormulaire = (valeur?: string | boolean | object | null, clesExclues?: string[]): string[] => {
-  if (!valeur || typeof valeur === "boolean") return [];
+  if (valeur === null || valeur === undefined || typeof valeur === "boolean") return [];
 
   if (typeof valeur === "object") {
     return Object.entries(valeur).flatMap(([cle, value]) => {
