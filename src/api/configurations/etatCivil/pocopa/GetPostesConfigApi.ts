@@ -4,7 +4,7 @@ import { ITypeRegistreDto } from "@model/etatcivil/acte/TypeRegistre";
 
 const URI = "/types-registres/pocopas";
 
-export const CONFIG_GET_POCOPAS: TConfigurationApi<typeof URI, undefined, undefined, ITypeRegistreDto[] | []> = {
+export const CONFIG_GET_POSTES: TConfigurationApi<typeof URI, undefined, undefined, ITypeRegistreDto[] | []> = {
   api: ETATCIVIL_API,
   methode: "GET",
   uri: URI,

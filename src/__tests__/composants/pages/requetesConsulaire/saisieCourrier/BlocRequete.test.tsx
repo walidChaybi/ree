@@ -1,20 +1,20 @@
-import { CONFIG_GET_POCOPAS } from "@api/configurations/etatCivil/pocopa/GetPocopasConfigApi";
 import { CONFIG_GET_POCOPAS_PAR_FAMILLE_REGISTRE } from "@api/configurations/etatCivil/pocopa/GetPocopasParFamilleRegistreConfigApi";
+import { CONFIG_GET_POSTES } from "@api/configurations/etatCivil/pocopa/GetPostesConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import { Form, Formik } from "formik";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import BlocRequete from "../../../../../composants/pages/requetesConsulaire/saisieCourrier/BlocRequete";
-import CacheOptionsPocopa from "../../../../../utils/CacheOptionsPocopa";
+import CacheOptionsPoste from "../../../../../utils/CacheOptionsPoste";
 
 describe("Test rendu du bloc requete en saisie courrier", async () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    CacheOptionsPocopa.clearPocopas();
+    CacheOptionsPoste.clearPostes();
   });
 
   afterEach(() => {
@@ -45,7 +45,7 @@ describe("Test rendu du bloc requete en saisie courrier", async () => {
   });
 
   test("DOIT afficher le champ select QUAND l'utilisateur n'éxerce pas sur le pémimètre TOUS_REGISTRE", async () => {
-    MockApi.deployer(CONFIG_GET_POCOPAS, {}, { data: [{ id: "123", pocopa: "Test 1" }] });
+    MockApi.deployer(CONFIG_GET_POSTES, {}, { data: [{ id: "123", poste: "Test 1" }] });
 
     const { container } = render(
       <MockRECEContextProvider
@@ -54,7 +54,14 @@ describe("Test rendu du bloc requete en saisie courrier", async () => {
           .generer()}
       >
         <Formik
-          initialValues={{ requete: { villeRegistre: "" } }}
+          initialValues={{
+            requete: {
+              typeRegistre: {
+                idTypeRegistre: "",
+                poste: ""
+              }
+            }
+          }}
           onSubmit={() => {}}
         >
           <Form>
@@ -75,15 +82,22 @@ describe("Test rendu du bloc requete en saisie courrier", async () => {
     MockApi.stopMock();
   });
 
-  test("DOIT afficher un message d'erreur QUAND l'utilisateur n'a aucun pocopa", async () => {
-    MockApi.deployer(CONFIG_GET_POCOPAS, {}, { data: [] });
+  test("DOIT afficher un message d'erreur QUAND l'utilisateur n'a aucun poste", async () => {
+    MockApi.deployer(CONFIG_GET_POSTES, {}, { data: [] });
 
-    render(
+    const { container } = render(
       <MockRECEContextProvider
         utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.SAISIR_REQUETE, { perimetres: [] }).generer()}
       >
         <Formik
-          initialValues={{ requete: { villeRegistre: "" } }}
+          initialValues={{
+            requete: {
+              typeRegistre: {
+                idTypeRegistre: "",
+                poste: ""
+              }
+            }
+          }}
           onSubmit={() => {}}
           initialTouched={{ requete: { villeRegistre: true } }}
         >
@@ -100,7 +114,7 @@ describe("Test rendu du bloc requete en saisie courrier", async () => {
       expect(mockApi.history.get.length).toBe(1);
     });
 
-    expect(screen.getByText("Aucun pocopa disponible, veuillez contacter votre administrateur.")).toBeDefined();
+    expect(container.firstChild).toMatchSnapshot();
 
     MockApi.stopMock();
   });

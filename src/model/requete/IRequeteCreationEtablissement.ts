@@ -41,7 +41,10 @@ export interface IRequeteCreationEtablissement extends IRequete {
   numeroDossier?: string;
   natureActeTranscrit: ENatureActeTranscrit;
   personnesSauvegardees: IPersonneSauvegardee[];
-  villeRegistre: string;
+  typeRegistre?: {
+    idTypeRegistre: string;
+    poste: string;
+  };
 }
 
 export const RequeteCreationEtablissement = {

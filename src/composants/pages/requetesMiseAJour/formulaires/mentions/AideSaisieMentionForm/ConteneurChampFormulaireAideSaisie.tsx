@@ -5,7 +5,7 @@ import { useFormikContext } from "formik";
 import { useCallback, useEffect, useMemo } from "react";
 import ChampCaseACocher from "../../../../../commun/champs/ChampCaseACocher";
 import ChampDate from "../../../../../commun/champs/ChampDate";
-import ChampRecherchePocopas from "../../../../../commun/champs/ChampRecherchePocopas";
+import ChampRecherchePostes from "../../../../../commun/champs/ChampRecherchePocopas";
 import ChampTexte from "../../../../../commun/champs/ChampTexte";
 import ChampZoneTexte from "../../../../../commun/champs/ChampZoneTexte";
 import ChampsNomSecable from "../../../../../commun/champs/ChampsNomSecable";
@@ -100,7 +100,7 @@ export const ConteneurChampFormulaireAideSaisie: React.FC<{
     case champ.type === "pocopa" && estAffiche:
       return (
         <ChampFormAideSaisie typeChamp={champ.type}>
-          <ChampRecherchePocopas
+          <ChampRecherchePostes
             name={nomChamp}
             libelle={champ.libelle}
             optionsRecherchePocopa={{ familleRegistre: "CSL", seulementPocopaOuvert: true }}

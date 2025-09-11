@@ -83,7 +83,7 @@ exports[`Test rendu du bloc requete en saisie courrier > DOIT afficher le champ 
         >
           <label
             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-            for="requete.villeRegistre"
+            for="requete.typeRegistre.poste"
           >
             Poste
             <span
@@ -94,8 +94,8 @@ exports[`Test rendu du bloc requete en saisie courrier > DOIT afficher le champ 
           </label>
           <select
             class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
-            id="requete.villeRegistre"
-            name="requete.villeRegistre"
+            id="requete.typeRegistre.poste"
+            name="requete.typeRegistre.poste"
           >
             <option
               value="Test 1"
@@ -193,7 +193,7 @@ exports[`Test rendu du bloc requete en saisie courrier > DOIT afficher le compos
         >
           <label
             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-            for="requete.villeRegistre"
+            for="requete.typeRegistre.poste"
           >
             Poste
             <span
@@ -205,13 +205,125 @@ exports[`Test rendu du bloc requete en saisie courrier > DOIT afficher le compos
           <select
             class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
             disabled=""
-            id="requete.villeRegistre"
-            name="requete.villeRegistre"
+            id="requete.typeRegistre.poste"
+            name="requete.typeRegistre.poste"
           >
             <option
               value=""
             />
           </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+`;
+
+exports[`Test rendu du bloc requete en saisie courrier > DOIT afficher un message d'erreur QUAND l'utilisateur n'a aucun poste 1`] = `
+<form
+  action="#"
+>
+  <div>
+    <div
+      class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+    >
+      <span
+        class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+      >
+        REQUÊTE
+      </span>
+      <div
+        class="text-start"
+      >
+        <label
+          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+          for="requete.natureActe"
+        >
+          Acte à transcrire
+          <span
+            class="ml-1 text-rouge"
+          >
+            *
+          </span>
+        </label>
+        <select
+          class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+          id="requete.natureActe"
+          name="requete.natureActe"
+        >
+          <option
+            value="NAISSANCE_MINEUR"
+          >
+            Acte de naissance d'une personne mineure
+          </option>
+        </select>
+      </div>
+      <div
+        class="grid grid-cols-2 gap-4 pt-4"
+      >
+        <div
+          class="text-start"
+        >
+          <label
+            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+            for="requete.lienRequerant"
+          >
+            Requérant
+            <span
+              class="ml-1 text-rouge"
+            >
+              *
+            </span>
+          </label>
+          <select
+            class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+            id="requete.lienRequerant"
+            name="requete.lienRequerant"
+          >
+            <option
+              value="PERE_MERE"
+            >
+              Père ou mère
+            </option>
+            <option
+              value="REPRESENTANT_LEGAL"
+            >
+              Représentant(e) légal(e)
+            </option>
+            <option
+              value="TITULAIRE_ACTE_MINEUR_EMANCIPE"
+            >
+              Mineur(e) émancipé(e)
+            </option>
+          </select>
+        </div>
+        <div
+          class="text-start"
+        >
+          <label
+            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+            for="requete.typeRegistre.poste"
+          >
+            Poste
+            <span
+              class="ml-1 text-rouge"
+            >
+              *
+            </span>
+          </label>
+          <select
+            class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+            disabled=""
+            id="requete.typeRegistre.poste"
+            name="requete.typeRegistre.poste"
+          >
+            <option
+              value=""
+            />
+          </select>
+          <div
+            class="text-start text-sm text-rouge"
+          />
         </div>
       </div>
     </div>

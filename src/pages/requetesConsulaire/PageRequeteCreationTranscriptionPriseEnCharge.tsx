@@ -45,10 +45,11 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
   const afficherBoutonModifierRequete = useMemo(() => {
     const statutActuel = requete?.statutCourant?.statut?.libelle ?? "";
 
+
     return (
       requete &&
       SousTypeCreation.estRCTC(requete?.sousType) &&
-      utilisateurConnecte.id === requete?.idUtilisateur &&
+      utilisateurConnecte.idService === requete?.idService &&
       ![StatutRequete.EN_TRAITEMENT.libelle, StatutRequete.A_SIGNER.libelle].includes(statutActuel)
     );
   }, [requete, utilisateurConnecte]);

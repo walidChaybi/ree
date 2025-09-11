@@ -1,3 +1,4 @@
+import { champsObligatoiresDuDtoAbsents } from "@model/commun/dtoUtils";
 import { Options } from "@util/Type";
 import { TypeFamille } from "../enum/TypeFamille";
 
@@ -14,34 +15,33 @@ export interface ITypeRegistre {
 
 export interface ITypeRegistreDto {
   id: string;
-  pocopa: string;
+  poste: string;
 }
 
 export class TypeRegistre {
-  private static readonly champsObligatoires: (keyof ITypeRegistreDto)[] = ["id", "pocopa"];
+  private static readonly champsObligatoires: (keyof ITypeRegistreDto)[] = ["id", "poste"];
 
   private constructor(
     public readonly id: string,
-    public readonly pocopa: string
+    public readonly poste: string
   ) {}
 
-  public static depuisDtos = (typeRegistres: ITypeRegistreDto[]): TypeRegistre[] => {
+  public static readonly depuisDtos = (typeRegistres: ITypeRegistreDto[]): TypeRegistre[] => {
     return typeRegistres.map(dto => TypeRegistre.depuisDto(dto)).filter((item): item is TypeRegistre => item !== null);
   };
 
-  public static depuisDto = (typeRegistre: ITypeRegistreDto): TypeRegistre | null => {
-    if (TypeRegistre.champsObligatoires.some(cle => typeRegistre[cle] === undefined)) {
+  public static readonly depuisDto = (typeRegistre: ITypeRegistreDto): TypeRegistre | null => {
+    if (champsObligatoiresDuDtoAbsents("TypeRegistre", typeRegistre, this.champsObligatoires)) {
       console.error(`Un champ obligatoire d'un typeRegistre n'est pas défini.`);
       return null;
     }
-
-    return new TypeRegistre(typeRegistre.id, typeRegistre.pocopa);
+    return new TypeRegistre(typeRegistre.id, typeRegistre.poste);
   };
 
   public static readonly versOptions = (typeRegistres: ITypeRegistreDto[]): Options => {
     return typeRegistres.map(typeRegistre => ({
-      cle: typeRegistre.pocopa,
-      libelle: typeRegistre.pocopa
+      cle: typeRegistre.poste,
+      libelle: typeRegistre.poste
     }));
   };
 }

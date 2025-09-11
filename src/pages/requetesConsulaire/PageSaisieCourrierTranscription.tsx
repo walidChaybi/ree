@@ -86,7 +86,6 @@ const PageSaisieCourrierTranscription: React.FC = () => {
             initialValues={SaisieRequeteRCTCForm.valeursInitiales(requeteModifiee)}
             enableReinitialize
             validationSchema={SaisieRequeteRCTCForm.schemaValidation}
-            initialTouched={{ requete: { villeRegistre: true } }}
             onSubmit={values =>
               enregistrerRCTC({
                 parametres: { valeurs: values, requeteModifiee: requeteModifiee },

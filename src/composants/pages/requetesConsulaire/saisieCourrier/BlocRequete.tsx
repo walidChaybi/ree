@@ -1,4 +1,4 @@
-import { CONFIG_GET_POCOPAS } from "@api/configurations/etatCivil/pocopa/GetPocopasConfigApi";
+import { CONFIG_GET_POSTES } from "@api/configurations/etatCivil/pocopa/GetPostesConfigApi";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { ITypeRegistreDto, TypeRegistre } from "@model/etatcivil/acte/TypeRegistre";
@@ -11,9 +11,9 @@ import { useFormikContext } from "formik";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
-import CacheOptionsPocopa from "../../../../utils/CacheOptionsPocopa";
+import CacheOptionsPoste from "../../../../utils/CacheOptionsPoste";
 import ChampListeDeroulante from "../../../commun/champs/ChampListeDeroulante";
-import ChampRecherchePocopas from "../../../commun/champs/ChampRecherchePocopas";
+import ChampRecherchePostes from "../../../commun/champs/ChampRecherchePocopas";
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 
 const OPTIONS_NATURE_ACTE: Options = [
@@ -24,8 +24,8 @@ const OPTIONS_LIEN_REQUERANT = enumVersOptions(ETypeLienRequerantCreation);
 const BlocRequete: React.FC = () => {
   const { setFieldError, setFieldValue, values } = useFormikContext<ISaisieRequeteRCTCForm>();
   const { utilisateurConnecte } = useContext(RECEContextData);
-  const [pocopas, setPocopas] = useState<ITypeRegistreDto[] | []>([]);
-  const { appelApi: appelGetPocopas } = useFetchApi(CONFIG_GET_POCOPAS);
+  const [postes, setPostes] = useState<ITypeRegistreDto[] | []>([]);
+  const { appelApi: appelGetPostes } = useFetchApi(CONFIG_GET_POSTES);
 
   const estHabiliteSaisieRequeteTousRegistre = useMemo(
     () =>
@@ -39,33 +39,34 @@ const BlocRequete: React.FC = () => {
   useEffect(() => {
     if (estHabiliteSaisieRequeteTousRegistre) return;
 
-    const pocopasCache = CacheOptionsPocopa.getPocopasFamilleRegistre("CSL");
-
-    if (pocopasCache?.length) {
-      setPocopas(pocopasCache);
-
+    const postesEnCache = CacheOptionsPoste.getPostesFamilleRegistre("CSL");
+    if (postesEnCache?.length) {
+      setPostes(postesEnCache);
       return;
     }
 
-    appelGetPocopas({
+    appelGetPostes({
       parametres: {},
-      apresSucces: pocopaDtos => {
-        if (!pocopaDtos.length) {
-          setFieldError("requete.villeRegistre", "Aucun pocopa disponible, veuillez contacter votre administrateur.");
+      apresSucces: posteDtos => {
+        if (!posteDtos.length) {
+          setFieldError("requete.typeRegistre.poste", "Aucun poste disponible, veuillez contacter votre administrateur.");
           return;
         }
 
-        CacheOptionsPocopa.setPocopasFamilleRegistre("CSL", pocopaDtos);
-        setPocopas(TypeRegistre.depuisDtos(pocopaDtos));
+        CacheOptionsPoste.setPostesFamilleRegistre("CSL", posteDtos);
+        setPostes(TypeRegistre.depuisDtos(posteDtos));
       }
     });
   }, []);
 
   useEffect(() => {
-    if (pocopas.length === 1 && !values.requete.villeRegistre) {
-      setFieldValue("requete.villeRegistre", pocopas[0].pocopa);
+    if (postes.length === 1 && !values.requete.typeRegistre.poste) {
+      setFieldValue("requete.typeRegistre", {
+        idTypeRegistre: postes[0].id,
+        poste: postes[0].poste
+      });
     }
-  }, [pocopas]);
+  }, [postes]);
 
   return (
     <ConteneurAvecBordure titreEnTete="REQUÊTE">
@@ -85,19 +86,23 @@ const BlocRequete: React.FC = () => {
         />
 
         {estHabiliteSaisieRequeteTousRegistre ? (
-          <ChampRecherchePocopas
-            name="requete.villeRegistre"
+          <ChampRecherchePostes
+            name="requete.typeRegistre.poste"
             libelle="Poste"
             optionsRecherchePocopa={{ familleRegistre: "CSL", seulementPocopaOuvert: true }}
             estObligatoire
           />
         ) : (
           <ChampListeDeroulante
-            name="requete.villeRegistre"
+            name="requete.typeRegistre.poste"
             libelle="Poste"
-            options={(pocopas.length === 1 ? [] : [{ cle: "", libelle: "" }]).concat(TypeRegistre.versOptions(pocopas))}
-            disabled={!pocopas.length}
+            options={(postes.length === 1 ? [] : [{ cle: "", libelle: "" }]).concat(TypeRegistre.versOptions(postes))}
+            disabled={!postes.length}
             estObligatoire
+            apresChangement={valeur => {
+              const posteSelectionne = postes.find(p => p.poste === valeur);
+              setFieldValue("requete.typeRegistre.idTypeRegistre", posteSelectionne?.id ?? "");
+            }}
           />
         )}
       </div>

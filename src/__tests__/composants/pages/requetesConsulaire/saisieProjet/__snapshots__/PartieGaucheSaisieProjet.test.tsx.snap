@@ -117,28 +117,9 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher correctem
                           class="relative z-50 inline-block w-full"
                         >
                           <div
-                            class="line-clamp-3 max-w-72 text-ellipsis break-words flex w-fit rounded-r-full border border-solid border-bleu-sombre bg-blue-50 px-2 py-1 text-bleu-sombre"
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words inline-flex w-fit items-center rounded-md border border-solid border-bleu-sombre bg-blue-50 px-2 py-1 text-sm font-semibold text-bleu-sombre"
                           >
                             Prise en charge
-                            <svg
-                              aria-hidden="true"
-                              class="ml-1 h-5 w-5"
-                              fill="currentColor"
-                              height="1em"
-                              stroke="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 24 24"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M0 0h24v24H0z"
-                                fill="none"
-                              />
-                              <path
-                                d="M17 12c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm1.65 7.35L16.5 17.2V14h1v2.79l1.85 1.85-.7.71zM18 3h-3.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H6c-1.1 0-2 .9-2 2v15c0 1.1.9 2 2 2h6.11a6.743 6.743 0 0 1-1.42-2H6V5h2v3h8V5h2v5.08c.71.1 1.38.31 2 .6V5c0-1.1-.9-2-2-2zm-6 2c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"
-                              />
-                            </svg>
                           </div>
                         </div>
                       </div>

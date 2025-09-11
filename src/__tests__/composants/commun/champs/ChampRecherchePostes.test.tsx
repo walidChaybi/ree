@@ -6,16 +6,16 @@ import { Form, Formik } from "formik";
 import { useState } from "react";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import ChampRecherchePocopas from "../../../../composants/commun/champs/ChampRecherchePocopas";
-import CacheOptionsPocopa from "../../../../utils/CacheOptionsPocopa";
+import CacheOptionsPoste from "../../../../utils/CacheOptionsPoste";
 
 vi.mock("../../../../../hooks/utilitaires/UseDelai", () => ({
   useDelai: (initialValue: string) => useState(initialValue)
 }));
 
-const mockPocopasDto: ITypeRegistreDto[] = [
-  { pocopa: "TUNIS", id: "1" },
-  { pocopa: "TURIN", id: "12" },
-  { pocopa: "TURIN ET GENES", id: "123" }
+const mockPostesDto: ITypeRegistreDto[] = [
+  { poste: "TUNIS", id: "1" },
+  { poste: "TURIN", id: "12" },
+  { poste: "TURIN ET GENES", id: "123" }
 ];
 
 const MockForm: React.FC<{ villeRegistre: string }> = ({ villeRegistre }) => (
@@ -26,28 +26,28 @@ const MockForm: React.FC<{ villeRegistre: string }> = ({ villeRegistre }) => (
     <Form>
       <ChampRecherchePocopas
         name="villeRegistre"
-        libelle="Pocopa"
+        libelle="Poste"
         optionsRecherchePocopa={{ familleRegistre: "CSL", seulementPocopaOuvert: true }}
       />
     </Form>
   </Formik>
 );
 
-describe("Test ChampRecherche Pocopa", () => {
+describe("Test ChampRecherche pocopa", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    CacheOptionsPocopa.clearPocopas();
+    CacheOptionsPoste.clearPostes();
   });
 
   afterEach(() => {
     vi.resetAllMocks();
   });
 
-  test("La recherche pocopa fonctionne correctement", async () => {
+  test("La recherche poste fonctionne correctement", async () => {
     MockApi.deployer(
       CONFIG_GET_POCOPAS_PAR_FAMILLE_REGISTRE,
       { path: { familleRegistre: "CSL" }, query: { seulementPocopaOuvert: true } },
-      { data: mockPocopasDto }
+      { data: mockPostesDto }
     );
 
     render(<MockForm villeRegistre={""} />);
@@ -78,8 +78,8 @@ describe("Test ChampRecherche Pocopa", () => {
   });
 
   test("DOIT utiliser les données du cache QUAND les données sont disponibles", async () => {
-    vi.spyOn(CacheOptionsPocopa, "getPocopasFamilleRegistre");
-    CacheOptionsPocopa.setPocopasFamilleRegistre("CSL", mockPocopasDto);
+    vi.spyOn(CacheOptionsPoste, "getPostesFamilleRegistre");
+    CacheOptionsPoste.setPostesFamilleRegistre("CSL", mockPostesDto);
     render(<MockForm villeRegistre={""}></MockForm>);
 
     const mockApi = MockApi.getMock();
@@ -91,7 +91,7 @@ describe("Test ChampRecherche Pocopa", () => {
     fireEvent.keyDown(input, { key: "Enter" });
 
     await waitFor(() => {
-      expect(CacheOptionsPocopa.getPocopasFamilleRegistre).toHaveBeenCalledWith("CSL");
+      expect(CacheOptionsPoste.getPostesFamilleRegistre).toHaveBeenCalledWith("CSL");
     });
 
     await waitFor(() => {

@@ -1,5 +1,6 @@
 import { AutocompleteRenderInputParams } from "@mui/material/Autocomplete";
 import { MdSearch } from "react-icons/md";
+import { CHAMP_EN_ERREUR } from "../../formulaire/ScrollVersErreur";
 
 export const InputChampRecherche: React.FC<AutocompleteRenderInputParams & { enErreur: boolean; error?: string }> = ({
   inputProps,
@@ -14,7 +15,7 @@ export const InputChampRecherche: React.FC<AutocompleteRenderInputParams & { enE
       <div
         ref={InputProps.ref}
         className={`flex items-center rounded-md border border-solid px-2 py-1 transition-colors focus-within:ring-2 focus-within:ring-opacity-70 ${
-          enErreur ? "border-rouge focus-within:ring-rouge" : "border-gris focus-within:ring-bleu"
+          enErreur ? `border-rouge focus-within:ring-rouge ${CHAMP_EN_ERREUR}` : "border-gris focus-within:ring-bleu"
         }`}
       >
         <MdSearch

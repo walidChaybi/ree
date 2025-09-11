@@ -5,7 +5,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { getIn, useField, useFormikContext } from "formik";
 import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
-import CacheOptionsPocopa from "../../../utils/CacheOptionsPocopa";
+import CacheOptionsPoste from "../../../utils/CacheOptionsPoste";
 import { InputChampRecherche } from "./geoApi/InputChampRechercheGeo";
 
 type TChampRecherchePocopasProps = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -32,7 +32,7 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
   estObligatoire
 }) => {
   const [pocopas, setPocopas] = useState<ITypeRegistreDto[]>([]);
-  const { values } = useFormikContext();
+  const { values, setFieldValue } = useFormikContext();
   const [field, meta, helpers] = useField(name);
 
   const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
@@ -46,35 +46,34 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
 
   const estTypeFamilleMAR = useMemo(() => valeurFamilleRegistre === TYPE_FAMILLE_MAR, [valeurFamilleRegistre]);
 
+  const cheminIdTypeRegistre = useMemo(() => `${name.split(".").slice(0, -1).join(".")}.idTypeRegistre`, [name]);
+
   useEffect(() => {
     if (!valeurFamilleRegistre || [...FAMILLES_SANS_POCOPA, TYPE_FAMILLE_MAR].includes(valeurFamilleRegistre)) {
       setPocopas([]);
       return;
     }
 
-    const pocopasCache = CacheOptionsPocopa.getPocopasFamilleRegistre(valeurFamilleRegistre);
-
-    if (Array.isArray(pocopasCache)) {
-      setPocopas(pocopasCache);
+    const postesEnCache = CacheOptionsPoste.getPostesFamilleRegistre(valeurFamilleRegistre);
+    if (Array.isArray(postesEnCache)) {
+      setPocopas(postesEnCache);
       return;
     }
 
     appelGetPocopasParFamilleRegistre({
       parametres: {
-        path: {
-          familleRegistre: valeurFamilleRegistre
-        },
+        path: { familleRegistre: valeurFamilleRegistre },
         query: {
           seulementPocopaOuvert: optionsRecherchePocopa.seulementPocopaOuvert ?? true
         }
       },
       apresSucces: pocopaDtos => {
-        CacheOptionsPocopa.setPocopasFamilleRegistre(valeurFamilleRegistre, pocopaDtos);
+        CacheOptionsPoste.setPostesFamilleRegistre(valeurFamilleRegistre, pocopaDtos);
 
         setPocopas(pocopaDtos);
       },
       apresErreur: erreur => {
-        console.error("Une erreur est survenue lors de la récupération des pocopas", erreur);
+        console.error("Erreur lors de la récupération des postes", erreur);
       }
     });
   }, [valeurFamilleRegistre]);
@@ -98,34 +97,26 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
       <Autocomplete
         id={name}
         options={pocopas}
-        value={pocopas.find(p => p.pocopa === field.value) || null}
+        value={pocopas.find(p => p.poste === field.value) || null}
         loading={enAttenteDeReponseApi}
-        getOptionLabel={option => option.pocopa ?? ""}
+        getOptionLabel={option => option.poste ?? ""}
         loadingText="Recherche en cours..."
         onInputChange={(_, nouvelleValeur, raison) => {
-          if (raison === "input") {
-            helpers.setValue(nouvelleValeur);
-          }
+          if (raison === "input") helpers.setValue(nouvelleValeur);
         }}
-        filterOptions={(options, { inputValue }) => {
-          if (!inputValue) return options;
-          return options.filter(option => option.pocopa.toLowerCase().startsWith(inputValue.toLowerCase()));
-        }}
-        isOptionEqualToValue={(option, value) => option.pocopa === value.pocopa}
-        noOptionsText={!field.value ? "Aucun résultat" : `Aucun pocopa trouvé pour ${field.value}`}
-        onChange={(_, valeurSelectionne: ITypeRegistreDto | null) => {
-          helpers.setValue(valeurSelectionne?.pocopa);
+        filterOptions={(options, { inputValue }) =>
+          !inputValue ? options : options.filter(opt => opt.poste.toLowerCase().startsWith(inputValue.toLowerCase()))
+        }
+        isOptionEqualToValue={(option, valeur) => option.poste === valeur.poste}
+        noOptionsText={!field.value ? "Aucun résultat" : `Aucun poste trouvé pour ${field.value}`}
+        onChange={(_, posteSelectionne: ITypeRegistreDto | null) => {
+          helpers.setValue(posteSelectionne?.poste ?? "");
+          setFieldValue(cheminIdTypeRegistre, posteSelectionne?.id ?? "");
         }}
         disabled={disabled}
         readOnly={estTypeFamilleMAR}
         componentsProps={{
-          popper: {
-            sx: {
-              "& .MuiAutocomplete-listbox": {
-                padding: 0
-              }
-            }
-          }
+          popper: { sx: { "& .MuiAutocomplete-listbox": { padding: 0 } } }
         }}
         renderInput={params => (
           <InputChampRecherche
@@ -134,19 +125,15 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
             {...params}
           />
         )}
-        renderOption={(renderProps, pocopa) => {
-          const { ...props } = renderProps;
-
-          return (
-            <li
-              className="cursor-pointer items-center justify-between border-b border-gray-100 px-3 py-2 last:border-b-0 hover:bg-bleu hover:text-blanc [&.Mui-focused]:bg-bleu [&.Mui-focused]:text-blanc"
-              {...props}
-              key={pocopa.id}
-            >
-              {pocopa.pocopa}
-            </li>
-          );
-        }}
+        renderOption={(props, pocopa) => (
+          <li
+            className="cursor-pointer items-center justify-between border-b border-gray-100 px-3 py-2 last:border-b-0 hover:bg-bleu hover:text-blanc [&.Mui-focused]:bg-bleu [&.Mui-focused]:text-blanc"
+            {...props}
+            key={pocopa.id}
+          >
+            {pocopa.poste}
+          </li>
+        )}
       />
     </div>
   );

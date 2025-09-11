@@ -1,4 +1,5 @@
 /* v8 ignore start A TESTER 03/25 */
+import { nettoyerAttributsDto } from "@model/commun/dtoUtils";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { ConditionChamp, EOperateurCondition } from "@model/form/commun/ConditionChamp";
 import { DateHeureFormUtils, IDateHeureForm } from "@model/form/commun/DateForm";
@@ -137,7 +138,10 @@ export interface ISaisieRequeteRCTCForm {
   requete: {
     natureActe: string;
     lienRequerant: keyof typeof ETypeLienRequerantCreation;
-    villeRegistre: string;
+    typeRegistre: {
+      idTypeRegistre: string;
+      poste: string;
+    };
   };
   titulaire: {
     identifiant: string;
@@ -237,7 +241,10 @@ export const SaisieRequeteRCTCForm = {
       requete: {
         natureActe: ENatureActeTranscrit.NAISSANCE_MINEUR,
         lienRequerant: requete?.lienRequerant?.typeLienRequerant ?? "PERE_MERE",
-        villeRegistre: requete?.villeRegistre ?? ""
+        typeRegistre: {
+          idTypeRegistre: requete?.typeRegistre?.idTypeRegistre ?? "",
+          poste: requete?.typeRegistre?.poste ?? ""
+        }
       },
       titulaire: {
         identifiant: titulaire?.id ?? "",
@@ -358,8 +365,11 @@ export const SaisieRequeteRCTCForm = {
         }
       : undefined;
 
-    return {
-      villeRegistre: valeurs.requete.villeRegistre,
+    return nettoyerAttributsDto({
+      typeRegistre: {
+        idTypeRegistre: valeurs.requete.typeRegistre.idTypeRegistre,
+        poste: valeurs.requete.typeRegistre.poste
+      },
       canal: TypeCanal.COURRIER.nom,
       type: TypeRequete.CREATION.nom,
       sousType: SousTypeCreation.RCTC.nom,
@@ -436,14 +446,17 @@ export const SaisieRequeteRCTCForm = {
         courrielAutreContact: valeurs.requerant.autreAdresseCourriel || undefined,
         telephoneAutreContact: valeurs.requerant.autreNumeroTelephone || undefined
       }
-    };
+    });
   },
 
   schemaValidation: SchemaValidation.objet({
     requete: SchemaValidation.objet({
       natureActe: SchemaValidation.texte({ obligatoire: true }),
       lienRequerant: SchemaValidation.texte({ obligatoire: true }),
-      villeRegistre: SchemaValidation.texte({ obligatoire: true })
+      typeRegistre: SchemaValidation.objet({
+        idTypeRegistre: SchemaValidation.texte({ obligatoire: true }),
+        poste: SchemaValidation.texte({ obligatoire: true })
+      })
     }),
     titulaire: SchemaValidation.objet({
       nomActeEtranger: SchemaValidation.texte({ obligatoire: true }),

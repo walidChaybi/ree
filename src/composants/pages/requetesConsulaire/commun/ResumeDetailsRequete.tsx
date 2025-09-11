@@ -76,6 +76,11 @@ const ResumeDetailsRequete: React.FC<IPartieGaucheSaisieProjetProps> = ({ requet
                 libelle="Numéro fonctionnel"
                 valeur={requete.numeroFonctionnel}
               />
+
+              <ConteneurDetailInformation
+                libelle="Poste"
+                valeur={requete.typeRegistre?.poste}
+              />
             </div>
           </ConteneurAvecBordure>
 
