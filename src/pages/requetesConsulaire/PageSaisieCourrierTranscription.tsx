@@ -22,6 +22,7 @@ import useFetchApi from "../../hooks/api/FetchApiHook";
 import useTraitementApi from "../../hooks/api/TraitementApiHook";
 import LiensRECE from "../../router/LiensRECE";
 import { INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE } from "../../router/infoPages/InfoPagesEspaceConsulaire";
+import AfficherMessage from "../../utils/AfficherMessage";
 
 const PageSaisieCourrierTranscription: React.FC = () => {
   const { idRequeteParam } = useParams();
@@ -43,8 +44,10 @@ const PageSaisieCourrierTranscription: React.FC = () => {
     appelGetDetailRequete({
       parametres: { path: { idRequete: idRequeteParam } },
       apresSucces: requete => setRequeteModifiee(requete as IRequeteConsulaire),
-      apresErreur: () => {
+      apresErreur: erreurs => {
         setRequeteModifiee(null);
+        AfficherMessage.erreur("Une erreur est survenue lors de la récupération de la requête", { erreurs });
+        navigate(LiensRECE.retourArriere());
       }
     });
   }, [idRequeteParam]);

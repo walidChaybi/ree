@@ -1,5 +1,4 @@
-import { Droit } from "@model/agent/enum/Droit";
-import { useContext, useMemo } from "react";
+import { useContext } from "react";
 import { MdAdd } from "react-icons/md";
 import { RECEContextData } from "../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../router/LiensRECE";
@@ -9,12 +8,14 @@ import BoutonListeDeroulante from "../../commun/bouton/BoutonListeDeroulante";
 
 const BoutonsTableauConsulaire: React.FC = () => {
   const { utilisateurConnecte } = useContext(RECEContextData);
-  const peutSaisirRequete = useMemo(
-    () => utilisateurConnecte.estHabilitePour({ leDroit: Droit.TRANSCRIPTION_SAISIR_REQUETE }),
-    [utilisateurConnecte]
-  );
 
-  return peutSaisirRequete ? (
+  //TODO [STRECE-7936] A Décommenter une fois les tests fonc effectués
+  // const peutSaisirRequete = useMemo(
+  //   () => utilisateurConnecte.estHabilitePour({ leDroit: Droit.TRANSCRIPTION_SAISIR_REQUETE }),
+  //   [utilisateurConnecte]
+  // );
+
+  return (
     <div className="flex justify-end">
       <BoutonListeDeroulante
         titre="Saisir requête courrier"
@@ -35,8 +36,6 @@ const BoutonsTableauConsulaire: React.FC = () => {
         </Bouton>
       </BoutonListeDeroulante>
     </div>
-  ) : (
-    <></>
   );
 };
 

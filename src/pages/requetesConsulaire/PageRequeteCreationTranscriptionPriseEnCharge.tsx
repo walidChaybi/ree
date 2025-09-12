@@ -75,7 +75,7 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
         setIsDirty(false);
       },
       apresErreur: erreurs => {
-        AfficherMessage.erreur("Une erreur est survenue lors de la récupération des informations de l'acte", { erreurs });
+        AfficherMessage.erreur("Une erreur est survenue lors de la récupération de la requête", { erreurs });
         navigate(-1);
       }
     });
