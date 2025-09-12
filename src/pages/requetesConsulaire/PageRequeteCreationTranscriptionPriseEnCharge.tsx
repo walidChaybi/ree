@@ -1,5 +1,6 @@
 import { CONFIG_GET_DETAIL_REQUETE } from "@api/configurations/requete/GetDetailRequeteConfigApi";
 import { CONFIG_POST_MAJ_STATUT_ET_ACTION } from "@api/configurations/requete/actions/PostMajStatutEtActionConfigApi";
+import { CONFIG_POST_PRENDRE_EN_CHARGE } from "@api/configurations/requete/creation/PostPrendreEnChargeRequeteTranscriptionConfigApi";
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { IRequete } from "@model/requete/IRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
@@ -38,21 +39,21 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
   const [ongletActif, setOngletActif] = useState<ECleOngletPage>(ECleOngletPage.DESCRIPTION);
 
   const estModeConsultation = useMemo<boolean>(() => LiensRECE.estPageConsultation(), [location.pathname]);
-  const { appelApi: appelApiGetDetail } = useFetchApi(CONFIG_GET_DETAIL_REQUETE);
+  const { appelApi: appelApiGetDetail } = useFetchApi(CONFIG_GET_DETAIL_REQUETE, true);
   const { appelApi: appelApiMajStatutEtAction, enAttenteDeReponseApi: enAttenteMajStatutEtAction } =
     useFetchApi(CONFIG_POST_MAJ_STATUT_ET_ACTION);
 
-  const afficherBoutonModifierRequete = useMemo(() => {
-    const statutActuel = requete?.statutCourant?.statut?.libelle ?? "";
+  const { appelApi: appelApiPrendreEnCharge, enAttenteDeReponseApi: enAttentePriseEnCharge } = useFetchApi(CONFIG_POST_PRENDRE_EN_CHARGE);
+  const afficherBoutonModifierRequete =
+    requete &&
+    SousTypeCreation.estRCTC(requete?.sousType) &&
+    utilisateurConnecte.idService === requete?.idService &&
+    ![StatutRequete.EN_TRAITEMENT.libelle, StatutRequete.A_SIGNER.libelle].includes(requete?.statutCourant?.statut?.libelle ?? "");
 
-
-    return (
-      requete &&
-      SousTypeCreation.estRCTC(requete?.sousType) &&
-      utilisateurConnecte.idService === requete?.idService &&
-      ![StatutRequete.EN_TRAITEMENT.libelle, StatutRequete.A_SIGNER.libelle].includes(statutActuel)
-    );
-  }, [requete, utilisateurConnecte]);
+  const afficherBoutonPrendreEnCharge =
+    requete &&
+    utilisateurConnecte.idService === requete?.idService &&
+    requete?.statutCourant?.statut?.libelle !== StatutRequete.PRISE_EN_CHARGE.libelle;
 
   useEffect(() => {
     if (!idRequeteParam) {
@@ -106,6 +107,45 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
     });
   };
 
+  const onClickOnPrendreEnCharge = () => {
+    if (!requete?.id) {
+      return;
+    }
+
+    appelApiPrendreEnCharge({
+      parametres: {
+        path: {
+          idRequete: requete.id
+        }
+      },
+      apresSucces: () => {
+        appelApiGetDetail({
+          parametres: {
+            path: {
+              idRequete: requete.id
+            },
+            query: {
+              isConsultationHistoriqueAction: false
+            }
+          },
+          apresSucces: data => {
+            setRequete(mappingRequeteCreation(data) as IRequeteCreationTranscription);
+            setIsDirty(false);
+          },
+          apresErreur: erreurs => {
+            AfficherMessage.erreur("Une erreur est survenue lors de la récupération des informations de la requête.", { erreurs });
+            navigate(-1);
+          }
+        });
+      },
+      apresErreur: erreurs =>
+        AfficherMessage.erreur("Impossible de mettre à jour le statut de la requête.", {
+          erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
+          fermetureAuto: true
+        })
+    });
+  };
+
   return (
     <div className="mt-4 flex flex-col">
       <div className="flex gap-8">
@@ -152,7 +192,7 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
 
       {requete && (
         <div className="mt-4 flex justify-between">
-          <div>
+          <div className="flex items-center gap-4">
             {afficherBoutonModifierRequete && (
               <Bouton
                 title="Modifier la requête"
@@ -164,6 +204,16 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
                   aria-hidden
                 />{" "}
                 {"MODIFIER LA REQUÊTE"}
+              </Bouton>
+            )}
+            {afficherBoutonPrendreEnCharge && (
+              <Bouton
+                title="Prendre en charge"
+                className="flex w-fit"
+                onClick={onClickOnPrendreEnCharge}
+                disabled={enAttentePriseEnCharge}
+              >
+                {"PRENDRE EN CHARGE"}
               </Bouton>
             )}
           </div>

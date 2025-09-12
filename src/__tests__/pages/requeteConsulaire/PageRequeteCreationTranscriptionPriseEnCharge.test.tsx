@@ -1,9 +1,14 @@
+import { CONFIG_POST_PRENDRE_EN_CHARGE } from "@api/configurations/requete/creation/PostPrendreEnChargeRequeteTranscriptionConfigApi";
+import { CONFIG_GET_DETAIL_REQUETE } from "@api/configurations/requete/GetDetailRequeteConfigApi";
+import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { TRequete } from "@model/requete/IRequete";
 import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { RouterProvider } from "react-router";
-import request from "superagent";
 import { describe, expect, test, vi } from "vitest";
 import PageRequeteCreationTranscriptionPriseEnCharge from "../../../pages/requetesConsulaire/PageRequeteCreationTranscriptionPriseEnCharge";
 import { createTestingRouter } from "../../__tests__utils__/testsUtil";
@@ -14,23 +19,17 @@ describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
   }));
 
   test("affiche PartieGauche et PartieDroite après récupération de la requête", async () => {
-    const superagentMock = require("superagent-mock")(request, [
-      {
-        pattern: "http://localhost/rece/rece-requete-api/v2/requetes(.*)",
-        fixtures: (match: any) => {
-          return { data: requeteCreationTranscription };
-        },
-        get: (_: any, data: any) => {
-          return {
-            body: data
-          };
-        }
-      }
-    ]);
-
     const router = createTestingRouter(
       [{ path: "/:idRequeteParam", element: <PageRequeteCreationTranscriptionPriseEnCharge /> }],
-      ["/test-id"]
+      ["/3ed9aa4e-921b-489f-b8fe-531dd703c60c"]
+    );
+
+    MockApi.deployer(
+      CONFIG_GET_DETAIL_REQUETE,
+      { path: { idRequete: "3ed9aa4e-921b-489f-b8fe-531dd703c60c" }, query: { isConsultationHistoriqueAction: false } },
+      {
+        data: { ...requeteCreationTranscription }
+      }
     );
 
     const { container } = render(
@@ -40,6 +39,12 @@ describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
         <RouterProvider router={router} />
       </MockRECEContextProvider>
     );
+
+    const mockApi = MockApi.getMock();
+
+    await waitFor(() => {
+      expect(mockApi.history.get.length).toBe(1);
+    });
 
     await waitFor(() => {
       const descriptionText = screen.getByText(/Description de la requête/i);
@@ -51,6 +56,54 @@ describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
 
     expect(container.firstChild).toMatchSnapshot();
 
-    superagentMock.unset();
+    MockApi.stopMock();
+  });
+
+  test("DOIT passer le statut de la requête à 'PRISE_EN_CHARGE' QUAND l'utilisateur clique sur le bouton 'PRENDRE EN CHARGE'", async () => {
+    const router = createTestingRouter(
+      [{ path: "/:idRequeteParam", element: <PageRequeteCreationTranscriptionPriseEnCharge /> }],
+      ["/3ed9aa4e-921b-489f-b8fe-531dd703c60c"]
+    );
+
+    MockApi.deployer(
+      CONFIG_GET_DETAIL_REQUETE,
+      { path: { idRequete: "3ed9aa4e-921b-489f-b8fe-531dd703c60c" }, query: { isConsultationHistoriqueAction: false } },
+      {
+        data: {
+          ...requeteCreationTranscription,
+          statut: {
+            statut: StatutRequete.A_TRAITER
+          }
+        } as TRequete
+      }
+    );
+
+    MockApi.deployer(CONFIG_POST_PRENDRE_EN_CHARGE, { path: { idRequete: "3ed9aa4e-921b-489f-b8fe-531dd703c60c" } });
+
+    render(
+      <MockRECEContextProvider
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte()
+          .avecAttributs({ id: "test-utilisateur-id", idService: "6737566d-0f25-45dc-8443-97b444e6753a" })
+          .generer()}
+      >
+        <RouterProvider router={router} />
+      </MockRECEContextProvider>
+    );
+
+    const mockApi = MockApi.getMock();
+
+    await waitFor(() => {
+      expect(mockApi.history.get.length).toBe(1);
+    });
+
+    const boutonPrendreEnCharge: HTMLButtonElement = screen.getByTitle("Prendre en charge");
+    await userEvent.click(boutonPrendreEnCharge);
+
+    await waitFor(() => {
+      expect(mockApi.history.post.length).toBe(1);
+      expect(mockApi.history.post[0].url).toContain("3ed9aa4e-921b-489f-b8fe-531dd703c60c/transcription/prendre-en-charge");
+    });
+
+    MockApi.stopMock();
   });
 });
