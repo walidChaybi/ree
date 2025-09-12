@@ -454,7 +454,7 @@ export const configRequetes = [
         return { data: requeteAvecDocsPlurilingue };
       }
       if (match[1] === "/requetes/3f52370d-14ed-4c55-8cf4-afe006d9aa39") {
-        const temp = { ...requeteAvecDocsPlurilingue };
+        const temp = structuredClone(requeteAvecDocsPlurilingue);
         temp.statut.statutRequete = "TRANSMISE_A_VALIDEUR";
         return { data: temp };
       }

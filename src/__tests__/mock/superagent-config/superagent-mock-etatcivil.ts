@@ -126,9 +126,7 @@ export const configEtatcivil = [
         match[1] ===
           "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&recupereImagesEtTexte=true" ||
         match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4da/resume" ||
-        match[1] === "/acte/f9279c00-5d2b-11ea-bc55-0242ac130004/resume" ||
-        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true" ||
-        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false"
+        match[1] === "/acte/f9279c00-5d2b-11ea-bc55-0242ac130004/resume"
       ) {
         return { data: acte };
       } else if (

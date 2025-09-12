@@ -5,26 +5,21 @@ import {
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
 import { IRegenerationDocumentsParams, useRegenerationDocumentsHook } from "@hook/requete/RegenerationDocumentsHook";
 import { IRetourValideurParams, useRetourValideurApiHook } from "@hook/requete/RetourValideur";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { getDefaultValuesCourrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
-
+import { EditionDelivranceContext } from "../../../../../contexts/EditionDelivranceContextProvider";
 import Bouton from "../../../../commun/bouton/Bouton";
 import BoutonListeDeroulante from "../../../../commun/bouton/BoutonListeDeroulante";
 import { BoutonsTerminer } from "./BoutonsTerminer";
 
-interface BoutonsTerminerOuRelectureProps {
-  requete: IRequeteDelivrance;
-  acte?: IFicheActe;
-}
+const BoutonsTerminerOuRelecture: React.FC = () => {
+  const { requete, acte, rechargerRequete } = useContext(EditionDelivranceContext);
 
-export const BoutonsTerminerOuRelecture: React.FC<BoutonsTerminerOuRelectureProps> = ({ requete, acte }) => {
   const [retourParams, setRetourParams] = useState<IRetourValideurParams>();
   const [majStatutParams, setMajStatutParams] = useState<ICreationActionMiseAjourStatutHookParams>();
   const [regenerationParams, setRegenerationParams] = useState<IRegenerationDocumentsParams>();
@@ -32,18 +27,38 @@ export const BoutonsTerminerOuRelecture: React.FC<BoutonsTerminerOuRelectureProp
   const location = useLocation();
   const navigate = useNavigate();
 
+  /* v8 ignore start : Appelle des hooks de views, pas testable en l'état */
+  const onClickReprise = useCallback(
+    (statutRequete: keyof typeof EStatutRequete) =>
+      setRegenerationParams({
+        acte: acte ?? undefined,
+        requete,
+        regenererCourrier: true,
+        valeursCourrierParDefaut: getDefaultValuesCourrier(requete),
+        callBack: () =>
+          setMajStatutParams({
+            statutRequete,
+            libelleAction: "Requête reprise",
+            requete: mappingRequeteDelivranceToRequeteTableau(requete),
+            callback: () => rechargerRequete("requete")
+          })
+      }),
+    [requete, acte, setRegenerationParams, setMajStatutParams]
+  );
+  /* v8 ignore stop */
+
   useRegenerationDocumentsHook(regenerationParams);
 
   useCreationActionMiseAjourStatut(majStatutParams);
 
-  function onClickValidate(statut: StatutRequete, texte?: string) {
+  const onClickValidate = useCallback((statut: StatutRequete, texte?: string) => {
     setRetourParams({
       libelleAction: statut === StatutRequete.A_REVOIR ? statut.libelle : `Requête approuvée - ${statut.libelle}`,
       statutDemande: statut.nom,
       requeteId: requete.id,
       texteObservation: statut === StatutRequete.A_REVOIR ? `Requête relue - ${texte ?? ""}` : "Requête approuvée"
     });
-  }
+  }, []);
 
   const idActionRetour = useRetourValideurApiHook(retourParams);
 
@@ -52,21 +67,6 @@ export const BoutonsTerminerOuRelecture: React.FC<BoutonsTerminerOuRelectureProp
       replaceUrl(navigate, getUrlPrecedente(location.pathname));
     }
   }, [idActionRetour]);
-
-  function onClickReprise(statut: keyof typeof EStatutRequete) {
-    setRegenerationParams({
-      requete: requete,
-      regenererCourrier: true,
-      acte: acte,
-      valeursCourrierParDefaut: getDefaultValuesCourrier(requete),
-      callBack: () =>
-        setMajStatutParams({
-          libelleAction: "Requête reprise",
-          statutRequete: statut,
-          requete: mappingRequeteDelivranceToRequeteTableau(requete)
-        })
-    });
-  }
 
   return (
     <>
@@ -99,7 +99,7 @@ export const BoutonsTerminerOuRelecture: React.FC<BoutonsTerminerOuRelectureProp
       ) : (
         <BoutonsTerminer
           requete={requete}
-          acte={acte}
+          acte={acte ?? undefined}
         />
       )}
       <TransfertPopin
@@ -112,3 +112,5 @@ export const BoutonsTerminerOuRelecture: React.FC<BoutonsTerminerOuRelectureProp
     </>
   );
 };
+
+export default BoutonsTerminerOuRelecture;

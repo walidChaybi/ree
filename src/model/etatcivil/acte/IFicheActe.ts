@@ -2,7 +2,6 @@ import { DATE_MES } from "@util/DateUtils";
 import {
   DEUX,
   premiereLettreEnMinuscule,
-  rechercheExpressionReguliereAvecTimeout,
   SNP,
   SPC,
   supprimeSautDeLigneEtEspaceInutiles,
@@ -10,7 +9,6 @@ import {
   TROIS,
   UN
 } from "@util/Utils";
-import AfficherMessage from "../../../utils/AfficherMessage";
 import { ChoixDelivrance } from "../../requete/enum/ChoixDelivrance";
 import { IPersonne } from "../commun/Personne";
 import { EOrigineActe } from "../enum/EOrigineActe";
@@ -383,37 +381,22 @@ const extraireMentionNationalite = (texte?: string): string => {
   const SOUS_LE_NOM = "sous le nom de";
   const SOUS_L_IDENTITE = "sous l'identité de";
 
-  let regex;
-  switch (true) {
-    case texte.indexOf(SOUS_LE_NOM) !== -1:
-      regex = /(Français par|Française par)[:\s]+(.*?)sous le nom de[^(]*(.*?)\r?\n\r?\n/gm; // NOSONAR  problème géré par rechercheExpressionReguliereAvecTimeout
-      break;
-    case texte.indexOf(SOUS_L_IDENTITE) !== -1:
-      regex = /(Français par|Française par)[:\s]+(.*?)sous l'identité de[^(]*(.*?)\r?\n\r?\n/gm; // NOSONAR  problème géré par rechercheExpressionReguliereAvecTimeout
-      break;
-    default:
-      regex = /(Français par|Française par)[:\s]+(.*?)\r?\n\r?\n/gm; // NOSONAR  problème géré par rechercheExpressionReguliereAvecTimeout
-      break;
-  }
+  const regex = (() => {
+    switch (true) {
+      case texte.indexOf(SOUS_LE_NOM) !== -1:
+        return /^(Français par|Française par)[:\s]+(.{1,750}?)sous le nom de[^(]*([^)]*?)$/gm; // NOSONAR catastrophic backtracking. Problème mitigé
+      case texte.indexOf(SOUS_L_IDENTITE) !== -1:
+        return /^(Français par|Française par)[:\s]+(.{1,750}?)sous l'identité de[^(]*([^)]*?)$/gm; // NOSONAR catastrophic backtracking. Problème mitigé
+      default:
+        return /^(Français par|Française par)[:\s]+(.{1,750})$/gm;
+    }
+  })();
 
-  const TIMEOUT = 2000;
-  let mentionNationalite: string = "";
+  const result = regex.exec(texte);
+  const partieMilieu = supprimeSautDeLigneEtEspaceInutiles(premiereLettreEnMinuscule(result?.[DEUX]));
+  const entreParenthese = supprimeSautDeLigneEtEspaceInutiles(result?.[TROIS]?.concat(")"));
 
-  rechercheExpressionReguliereAvecTimeout(regex, texte, TIMEOUT)
-    .then(matches => {
-      const partieMilieu = supprimeSautDeLigneEtEspaceInutiles(premiereLettreEnMinuscule(matches?.[DEUX]));
-      const entreParenthese = supprimeSautDeLigneEtEspaceInutiles(matches?.[TROIS]);
-
-      mentionNationalite = `${matches?.[UN]} ${partieMilieu} ${entreParenthese}`;
-    })
-    .catch(erreurs => {
-      console.error("Le temps alloué à la recherche d'expression régulière a expiré.");
-      AfficherMessage.erreur("Erreur lors de l'extraction de la mention de nationalité.", {
-        fermetureAuto: true
-      });
-    });
-
-  return mentionNationalite;
+  return `${result?.[UN]} ${partieMilieu} ${entreParenthese}`;
 };
 
 export function necessiteMentionNationalite(acte: IFicheActe, choixDelivrance?: ChoixDelivrance): boolean {

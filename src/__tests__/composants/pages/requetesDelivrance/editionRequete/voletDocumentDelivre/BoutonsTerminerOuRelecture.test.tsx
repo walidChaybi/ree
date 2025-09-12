@@ -1,70 +1,27 @@
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
-import { Nationalite } from "@model/etatcivil/enum/Nationalite";
-import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { Provenance } from "@model/requete/enum/Provenance";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { render } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router";
 import { describe, expect, test } from "vitest";
-import { BoutonsTerminerOuRelecture } from "../../../../../../composants/pages/requetesDelivrance/editionRequete/boutons/BoutonsTerminerOuRelecture";
+import BoutonsTerminerOuRelecture from "../../../../../../composants/pages/requetesDelivrance/editionRequete/boutons/BoutonsTerminerOuRelecture";
+import EditionDelivranceContextProvider from "../../../../../../contexts/EditionDelivranceContextProvider";
 import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 import { acte } from "../../../../../mock/data/ficheEtBandeau/ficheActe";
-import { idRequeteRDCSC } from "../../../../../mock/data/requeteDelivrance";
-
-const requeteTestCOURRIER = {
-  id: idRequeteRDCSC,
-  idService: "11",
-  type: TypeRequete.DELIVRANCE,
-  dateCreation: 1577836800000,
-  statutCourant: {
-    statut: StatutRequete.A_SIGNER,
-    dateEffet: 1577923200000
-  },
-  idUtilisateur: "idUtilisateurConnectedUser",
-  provenanceRequete: { provenance: Provenance.COURRIER },
-  titulaires: [
-    {
-      id: "0",
-      position: 0,
-      nationalite: Nationalite.FRANCAISE,
-      nomNaissance: "Garcia",
-      prenoms: [
-        {
-          prenom: "Hugo",
-          numeroOrdre: 1
-        }
-      ],
-      jourNaissance: 31,
-      moisNaissance: 12,
-      anneeNaissance: 1981,
-      sexe: Sexe.MASCULIN.libelle
-    }
-  ],
-  sousType: SousTypeDelivrance.RDD
-} as IRequeteDelivrance;
 
 describe("BoutonTerminerOuRelecture - ", () => {
-  test("Render page avec boutons agent", () => {
+  test("Doit afficher les boutons d'action pour traiter la requête", async () => {
     const router = createTestingRouter(
       [
         {
           path: "/test",
           element: (
-            <BoutonsTerminerOuRelecture
-              requete={{
-                ...requeteTestCOURRIER,
-                statutCourant: {
-                  statut: StatutRequete.TRANSMISE_A_VALIDEUR,
-                  dateEffet: 0
-                }
-              }}
-              acte={acte}
-            ></BoutonsTerminerOuRelecture>
+            <EditionDelivranceContextProvider
+              idActeParam={acte.id}
+              idRequeteParam={"3f52370d-14ed-4c55-8cf4-afe006d9aa38"}
+            >
+              <BoutonsTerminerOuRelecture />
+            </EditionDelivranceContextProvider>
           )
         },
         {
@@ -75,33 +32,29 @@ describe("BoutonTerminerOuRelecture - ", () => {
       ["/test"]
     );
 
-    const { getByText } = render(
+    render(
       <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER).generer()}>
         <RouterProvider router={router} />
       </MockRECEContextProvider>
     );
 
-    expect(getByText("Reprendre le traitement")).toBeDefined();
-    expect(getByText("Relecture")).toBeDefined();
+    await waitFor(() => {
+      expect(screen.getByText("Autres actions")).toBeDefined();
+    });
   });
 
-  test("Render page avec boutons valideur", () => {
+  test("Doit afficher les boutons d'action du valideur", async () => {
     const router = createTestingRouter(
       [
         {
           path: "/test",
           element: (
-            <BoutonsTerminerOuRelecture
-              requete={{
-                ...requeteTestCOURRIER,
-                sousType: SousTypeDelivrance.RDCSD,
-                statutCourant: {
-                  statut: StatutRequete.A_SIGNER,
-                  dateEffet: 0
-                }
-              }}
-              acte={acte}
-            ></BoutonsTerminerOuRelecture>
+            <EditionDelivranceContextProvider
+              idActeParam={acte.id}
+              idRequeteParam={"3f52370d-14ed-4c55-8cf4-afe006d9aa39"}
+            >
+              <BoutonsTerminerOuRelecture />
+            </EditionDelivranceContextProvider>
           )
         },
         {
@@ -112,12 +65,15 @@ describe("BoutonTerminerOuRelecture - ", () => {
       ["/test"]
     );
 
-    const { getByText } = render(
+    render(
       <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER).generer()}>
         <RouterProvider router={router} />
       </MockRECEContextProvider>
     );
 
-    expect(getByText("Autres actions")).toBeDefined();
+    await waitFor(() => {
+      expect(screen.getByText("Reprendre le traitement")).toBeDefined();
+      expect(screen.getByText("Relecture")).toBeDefined();
+    });
   });
 });

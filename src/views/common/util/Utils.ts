@@ -565,29 +565,6 @@ export const genererArrondissements = (length: number) =>
     libelle: `${i + 1}`
   }));
 
-export const rechercheExpressionReguliereAvecTimeout = (
-  pattern: RegExp,
-  input: string,
-  timeout: number
-): Promise<RegExpExecArray | null> => {
-  return new Promise((resolve, reject) => {
-    const timer = setTimeout(() => {
-      reject(new Error("La recherche d'expression régulière a dépassé la limite de temps alloué"));
-    }, timeout);
-
-    setImmediate(() => {
-      try {
-        const result = pattern.exec(input);
-        clearTimeout(timer);
-        resolve(result);
-      } catch (error) {
-        clearTimeout(timer);
-        reject(error as Error);
-      }
-    });
-  });
-};
-
 export const enumVersOptions = <TEnum extends Record<string, string>>(
   enumeration: TEnum,
   options?: {

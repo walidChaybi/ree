@@ -1,3 +1,4 @@
+import { LISTE_UTILISATEURS } from "@mock/data/ListeUtilisateurs";
 import { IService } from "@model/agent/IService";
 import { Utilisateur, UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { IDecret } from "@model/etatcivil/commun/IDecret";
@@ -15,7 +16,7 @@ interface IMockRECEContextProviderProps {
 
 const MockRECEContextProvider: React.FC<React.PropsWithChildren<IMockRECEContextProviderProps>> = ({
   utilisateurConnecte = UtilisateurConnecte.inconnu(),
-  utilisateurs = [] as Utilisateur[],
+  utilisateurs = LISTE_UTILISATEURS,
   services = servicesALL.data as any as IService[],
   decrets = [] as IDecret[],
   erreurConnexion = null,

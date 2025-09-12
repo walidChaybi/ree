@@ -3,10 +3,10 @@ import { useContext } from "react";
 import { EditionDelivranceContext } from "../../../../../contexts/EditionDelivranceContextProvider";
 import { ConteneurBoutonBasDePage } from "../../../../commun/bouton/conteneurBoutonBasDePage/ConteneurBoutonBasDePage";
 import { BoutonModifierTraitement } from "./BoutonModifierTraitement";
-import { BoutonsTerminerOuRelecture } from "./BoutonsTerminerOuRelecture";
+import BoutonsTerminerOuRelecture from "./BoutonsTerminerOuRelecture";
 
 const BoutonsEditionRequeteDelivrance: React.FC = () => {
-  const { requete, acte } = useContext(EditionDelivranceContext);
+  const { requete } = useContext(EditionDelivranceContext);
 
   return (
     <>
@@ -19,10 +19,7 @@ const BoutonsEditionRequeteDelivrance: React.FC = () => {
         </ConteneurBoutonBasDePage>
       )}
       <ConteneurBoutonBasDePage position="droite">
-        <BoutonsTerminerOuRelecture
-          requete={requete}
-          acte={acte ?? undefined}
-        />
+        <BoutonsTerminerOuRelecture />
       </ConteneurBoutonBasDePage>
     </>
   );
