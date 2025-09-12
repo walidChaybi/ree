@@ -20,7 +20,8 @@ import useFetchApi from "../../hooks/api/FetchApiHook";
 import LiensRECE from "../../router/LiensRECE";
 import {
   INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_SAISIE_PROJET,
-  INFO_PAGE_MODIFICATION_REQUETE_TRANSCRIPTION_COURRIER
+  INFO_PAGE_MODIFICATION_REQUETE_TRANSCRIPTION_COURRIER,
+  INFO_PAGE_SAISIE_REQUETE_TRANSCRIPTION_COURRIER
 } from "../../router/infoPages/InfoPagesEspaceConsulaire";
 import AfficherMessage, { estTableauErreurApi } from "../../utils/AfficherMessage";
 
@@ -100,7 +101,7 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
         });
       },
       apresErreur: erreurs =>
-        AfficherMessage.erreur("Impossible de démarrer le traitement du projet d'acte.", {
+        AfficherMessage.erreur("Impossible de créer le projet d'acte.", {
           erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
           fermetureAuto: true
         })
@@ -193,10 +194,18 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
       {requete && (
         <div className="mt-4 flex justify-between">
           <div className="flex items-center gap-4">
+            <Bouton
+              className="uppercase"
+              title="Saisir une nouvelle requête"
+              lienVers={LiensRECE.genererLien(INFO_PAGE_SAISIE_REQUETE_TRANSCRIPTION_COURRIER.url)}
+            >
+              {"Saisir une nouvelle requête"}
+            </Bouton>
+
             {afficherBoutonModifierRequete && (
               <Bouton
                 title="Modifier la requête"
-                className="flex w-fit"
+                className="flex w-fit items-center"
                 lienVers={LiensRECE.genererLien(INFO_PAGE_MODIFICATION_REQUETE_TRANSCRIPTION_COURRIER.url, { idRequeteParam: requete.id })}
               >
                 <MdEdit
@@ -206,6 +215,7 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
                 {"MODIFIER LA REQUÊTE"}
               </Bouton>
             )}
+
             {afficherBoutonPrendreEnCharge && (
               <Bouton
                 title="Prendre en charge"
@@ -219,12 +229,11 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
           </div>
 
           <Bouton
-            className="shrink-0"
             title="Créer le projet d'acte"
             onClick={onClickOnCreerProjetActe}
             disabled={enAttenteMajStatutEtAction}
           >
-            Créer le projet d'acte
+            {"Créer le projet d'acte"}
           </Bouton>
         </div>
       )}

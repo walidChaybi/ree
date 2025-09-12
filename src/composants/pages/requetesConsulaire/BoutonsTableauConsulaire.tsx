@@ -18,12 +18,12 @@ const BoutonsTableauConsulaire: React.FC = () => {
   return (
     <div className="flex justify-end">
       <BoutonListeDeroulante
-        titre="Saisir requête courrier"
+        titre="Saisir requête"
         pointAncrageMenu="bas-droite"
       >
         <Bouton
           className="shadow-xl"
-          title="Création suite transcription courrier"
+          title="Transcription"
           lienVers={LiensRECE.genererLien(INFO_PAGE_SAISIE_REQUETE_TRANSCRIPTION_COURRIER.url)}
         >
           <span className="flex items-center gap-1 normal-case">
@@ -31,7 +31,7 @@ const BoutonsTableauConsulaire: React.FC = () => {
               className="text-md"
               aria-hidden
             />
-            {"Création suite transcription courrier"}
+            {"Transcription"}
           </span>
         </Bouton>
       </BoutonListeDeroulante>

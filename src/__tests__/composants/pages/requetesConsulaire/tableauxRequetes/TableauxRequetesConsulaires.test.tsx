@@ -18,7 +18,7 @@ describe("Test des boutons d'actions des tableaux de requêtes consulaire", () =
   //     </MockRECEContextProvider>
   //   );
 
-  //   expect(screen.queryByTitle("Saisir requête courrier")).toBeNull();
+  //   expect(screen.queryByTitle("Saisir requête")).toBeNull();
   // });
 
   test("Le bouton de saisie courrier fonctionne correctement", async () => {
@@ -38,8 +38,8 @@ describe("Test des boutons d'actions des tableaux de requêtes consulaire", () =
       </MockRECEContextProvider>
     );
 
-    fireEvent.mouseEnter(await screen.findByTitle<HTMLButtonElement>("Saisir requête courrier"));
-    fireEvent.click(await screen.findByTitle<HTMLButtonElement>("Création suite transcription courrier"));
+    fireEvent.mouseEnter(await screen.findByTitle<HTMLButtonElement>("Saisir requête"));
+    fireEvent.click(await screen.findByTitle<HTMLButtonElement>("Transcription"));
     await waitFor(() => expect(screen.getByText("Page saisie RCTC")).toBeDefined());
   });
 });
