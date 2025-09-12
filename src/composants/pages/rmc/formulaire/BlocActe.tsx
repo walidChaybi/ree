@@ -33,12 +33,12 @@ const BlocActe: React.FC = () => {
   const blocRCRCAPACSAlimente = useMemo(() => blocsRenseignes?.includes(EBlocsRMC.INSCRIPTION), [blocsRenseignes]);
 
   const reinitialiserValeurs = useCallback(() => {
-    setFieldValue("registre", structuredClone({ ...initialValues.acte, typeReference: values.acte?.typeReference }));
+    setFieldValue("acte", structuredClone({ ...initialValues.acte, typeReference: values.acte?.typeReference }));
   }, [values.acte?.typeReference]);
 
   const reinitialiserValeursSaufNatureEtTypeReference = useCallback(() => {
     setFieldValue(
-      "registre",
+      "acte",
       structuredClone({
         ...initialValues.acte,
         natureActe: values.acte?.natureActe
