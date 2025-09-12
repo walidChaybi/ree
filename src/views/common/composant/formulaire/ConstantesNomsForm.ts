@@ -142,13 +142,6 @@ export const NB_EXEMPLAIRE = "nbExemplaire";
 export const MOTIF = "motif";
 export const COMPLEMENT_MOTIF = "complementMotif";
 
-// Noms des champs MandantForm
-export const TYPE_MANDANT = "typeMandant";
-
-// Noms des champs LienTitulaireForm
-export const LIEN = "lien";
-export const NATURE_LIEN = "natureLien";
-
 export const DOCUMENT = "document";
 export const TITULAIRES = "titulaires";
 export const REQUERANT = "requerant";
@@ -156,10 +149,6 @@ export const ADRESSE = "adresse";
 export const PIECES_JOINTES = "piecesJointes";
 
 export const REQUETE = "requete";
-export const TITULAIRE1 = "titulaire1";
-export const TITULAIRE2 = "titulaire2";
-export const MANDANT = "mandant";
-export const LIEN_TITULAIRE = "lienTitulaire";
 
 // Courrier
 export const CHOIX_COURRIER = "choixCourrier";

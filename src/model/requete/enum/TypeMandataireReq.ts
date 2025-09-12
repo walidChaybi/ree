@@ -2,6 +2,15 @@
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 import { Options } from "@util/Type";
 
+export enum ETypeMandataire {
+  AVOCAT = "Avocat",
+  TUTEUR = "Tuteur",
+  GENEALOGISTE = "Généalogiste",
+  NOTAIRE = "Notaire",
+  AUTRE = "Autre"
+}
+
+/** @deprecated supprimer la classe une fois le typage de la requête de délivrance faite */
 export class TypeMandataireReq extends EnumWithLibelle {
   public static readonly AVOCAT = new TypeMandataireReq("Avocat");
   public static readonly TUTEUR = new TypeMandataireReq("Tuteur");

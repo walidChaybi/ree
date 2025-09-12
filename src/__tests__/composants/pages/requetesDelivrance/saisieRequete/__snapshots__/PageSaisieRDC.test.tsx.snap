@@ -1,0 +1,1981 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Bloc identité > DOIT afficher le bloc identité QUAND le typeRequerant est autre professionnel 1`] = `
+<div>
+  <div
+    class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+  >
+    <span
+      class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+    >
+      RÉQUERANT
+    </span>
+    <div
+      class="grid grid-cols-2"
+    >
+      <div
+        class="text-start"
+      >
+        <label
+          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+          for="requerant.typeRequerant"
+        >
+          Type requérant
+        </label>
+        <select
+          class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+          id="requerant.typeRequerant"
+          name="requerant.typeRequerant"
+        >
+          <option
+            value="TITULAIRE1"
+          >
+            Titulaire 1
+          </option>
+          <option
+            value="PARTICULIER"
+          >
+            Particulier
+          </option>
+          <option
+            value="MANDATAIRE_HABILITE"
+          >
+            Mandataire habilité
+          </option>
+          <option
+            value="INSTITUTIONNEL"
+          >
+            Institutionnel
+          </option>
+          <option
+            value="AUTRE_PROFESSIONNEL"
+          >
+            Autre professionnel
+          </option>
+        </select>
+      </div>
+    </div>
+    <div
+      class="pb-4 pt-8"
+    >
+      <div
+        class="relative my-2.5 border-0 border-b-2 border-solid border-bleu text-start"
+      >
+        <label
+          class="absolute -bottom-2.5 left-8 bg-blanc px-1.5 text-bleu-sombre"
+        >
+          Identité du requérant
+        </label>
+      </div>
+    </div>
+    <div
+      class="grid grid-cols-2 gap-x-4 gap-y-2"
+    >
+      <div
+        class="flex w-full flex-col text-start"
+      >
+        <label
+          aria-label="aria-label-requerant.nature"
+          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+          for="requerant.nature"
+        >
+          Nature
+          <span
+            class="ml-1 text-rouge"
+          >
+            *
+          </span>
+        </label>
+        <div
+          class="relative flex rounded-md shadow-sm"
+        >
+          <input
+            class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+            id="requerant.nature"
+            maxlength="100"
+            name="requerant.nature"
+            value=""
+          />
+        </div>
+      </div>
+      <div
+        class="flex w-full flex-col text-start"
+      >
+        <label
+          aria-label="aria-label-requerant.raisonSociale"
+          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+          for="requerant.raisonSociale"
+        >
+          Raison sociale
+        </label>
+        <div
+          class="relative flex rounded-md shadow-sm"
+        >
+          <input
+            class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+            id="requerant.raisonSociale"
+            maxlength="100"
+            name="requerant.raisonSociale"
+            value=""
+          />
+        </div>
+      </div>
+      <div
+        class="flex w-full flex-col text-start"
+      >
+        <label
+          aria-label="aria-label-requerant.nom"
+          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+          for="requerant.nom"
+        >
+          Nom professionnel
+        </label>
+        <div
+          class="relative flex rounded-md shadow-sm"
+        >
+          <input
+            class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+            id="requerant.nom"
+            maxlength="100"
+            name="requerant.nom"
+            value=""
+          />
+        </div>
+      </div>
+      <div
+        class="flex w-full flex-col text-start"
+      >
+        <label
+          aria-label="aria-label-requerant.prenom"
+          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+          for="requerant.prenom"
+        >
+          Prénom professionnel
+        </label>
+        <div
+          class="relative flex rounded-md shadow-sm"
+        >
+          <input
+            class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+            id="requerant.prenom"
+            maxlength="100"
+            name="requerant.prenom"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Bloc identité > DOIT afficher le bloc identité QUAND le typeRequerant est mandataire habilité 1`] = `
+<div>
+  <div
+    class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+  >
+    <span
+      class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+    >
+      RÉQUERANT
+    </span>
+    <div
+      class="grid grid-cols-2"
+    >
+      <div
+        class="text-start"
+      >
+        <label
+          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+          for="requerant.typeRequerant"
+        >
+          Type requérant
+        </label>
+        <select
+          class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+          id="requerant.typeRequerant"
+          name="requerant.typeRequerant"
+        >
+          <option
+            value="TITULAIRE1"
+          >
+            Titulaire 1
+          </option>
+          <option
+            value="PARTICULIER"
+          >
+            Particulier
+          </option>
+          <option
+            value="MANDATAIRE_HABILITE"
+          >
+            Mandataire habilité
+          </option>
+          <option
+            value="INSTITUTIONNEL"
+          >
+            Institutionnel
+          </option>
+          <option
+            value="AUTRE_PROFESSIONNEL"
+          >
+            Autre professionnel
+          </option>
+        </select>
+      </div>
+    </div>
+    <div
+      class="pb-4 pt-8"
+    >
+      <div
+        class="relative my-2.5 border-0 border-b-2 border-solid border-bleu text-start"
+      >
+        <label
+          class="absolute -bottom-2.5 left-8 bg-blanc px-1.5 text-bleu-sombre"
+        >
+          Identité du requérant
+        </label>
+      </div>
+    </div>
+    <div
+      class="grid grid-cols-2 gap-x-4 gap-y-2"
+    >
+      <div
+        class="text-start"
+      >
+        <label
+          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+          for="requerant.type"
+        >
+          Type
+          <span
+            class="ml-1 text-rouge"
+          >
+            *
+          </span>
+        </label>
+        <select
+          class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+          id="requerant.type"
+          name="requerant.type"
+        >
+          <option
+            value=""
+          />
+          <option
+            value="AVOCAT"
+          >
+            Avocat
+          </option>
+          <option
+            value="TUTEUR"
+          >
+            Tuteur
+          </option>
+          <option
+            value="GENEALOGISTE"
+          >
+            Généalogiste
+          </option>
+          <option
+            value="NOTAIRE"
+          >
+            Notaire
+          </option>
+          <option
+            value="AUTRE"
+          >
+            Autre
+          </option>
+        </select>
+      </div>
+      <div
+        class="flex w-full flex-col text-start"
+      >
+        <label
+          aria-label="aria-label-requerant.raisonSociale"
+          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+          for="requerant.raisonSociale"
+        >
+          Raison sociale
+        </label>
+        <div
+          class="relative flex rounded-md shadow-sm"
+        >
+          <input
+            class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+            id="requerant.raisonSociale"
+            maxlength="100"
+            name="requerant.raisonSociale"
+            value=""
+          />
+        </div>
+      </div>
+      <div
+        class="flex w-full flex-col text-start"
+      >
+        <label
+          aria-label="aria-label-requerant.nom"
+          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+          for="requerant.nom"
+        >
+          Nom
+        </label>
+        <div
+          class="relative flex rounded-md shadow-sm"
+        >
+          <input
+            class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+            id="requerant.nom"
+            maxlength="100"
+            name="requerant.nom"
+            value=""
+          />
+        </div>
+      </div>
+      <div
+        class="flex w-full flex-col text-start"
+      >
+        <label
+          aria-label="aria-label-requerant.prenom"
+          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+          for="requerant.prenom"
+        >
+          Prénom
+        </label>
+        <div
+          class="relative flex rounded-md shadow-sm"
+        >
+          <input
+            class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+            id="requerant.prenom"
+            maxlength="100"
+            name="requerant.prenom"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Bloc mandant > DOIT afficher le bloc mandant 1`] = `
+<div>
+  <div
+    class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+  >
+    <span
+      class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+    >
+      MANDANT
+    </span>
+    <div
+      class="grid grid-cols-2 gap-4 pt-4"
+    >
+      <fieldset
+        class="m-0 flex w-full flex-col border-0 p-0 text-start"
+      >
+        <legend
+          class="m-0 mb-1 block w-fit text-start text-base transition-colors text-bleu-sombre"
+        >
+          Type
+        </legend>
+        <div
+          class="mt-1.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start"
+        >
+          <div>
+            <input
+              checked=""
+              class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+              id="mandant.type-PERSONNE_PHYSIQUE"
+              name="mandant.type"
+              type="radio"
+              value="PERSONNE_PHYSIQUE"
+            />
+            <label
+              class="cursor-pointer pl-2"
+              for="mandant.type-PERSONNE_PHYSIQUE"
+            >
+              Personne physique
+            </label>
+          </div>
+          <div>
+            <input
+              class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+              id="mandant.type-PERSONNE_MORALE"
+              name="mandant.type"
+              type="radio"
+              value="PERSONNE_MORALE"
+            />
+            <label
+              class="cursor-pointer pl-2"
+              for="mandant.type-PERSONNE_MORALE"
+            >
+              Personne morale
+            </label>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div
+      class="grid grid-cols-2 gap-4 pt-4"
+    >
+      <div
+        class="flex w-full flex-col text-start"
+      >
+        <label
+          aria-label="aria-label-mandant.nom"
+          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+          for="mandant.nom"
+        >
+          Nom
+        </label>
+        <div
+          class="relative flex rounded-md shadow-sm"
+        >
+          <input
+            class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+            id="mandant.nom"
+            maxlength="100"
+            name="mandant.nom"
+            value=""
+          />
+        </div>
+      </div>
+      <div
+        class="flex w-full flex-col text-start"
+      >
+        <label
+          aria-label="aria-label-mandant.prenom"
+          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+          for="mandant.prenom"
+        >
+          Prénom
+        </label>
+        <div
+          class="relative flex rounded-md shadow-sm"
+        >
+          <input
+            class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+            id="mandant.prenom"
+            maxlength="100"
+            name="mandant.prenom"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Bloc évènement > DOIT afficher le bloc évènement QUAND la nature de l'acte est mariage 1`] = `
+<div>
+  <div
+    class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+  >
+    <span
+      class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+    >
+      ÉVÈNEMENT
+    </span>
+    <div
+      class="grid grid-cols-2 gap-2 pt-2"
+    >
+      <div>
+        <label
+          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+          for="evenement.date.jour"
+        >
+          Date de l'évènement
+        </label>
+        <div
+          class="flex flex-wrap gap-2"
+        >
+          <input
+            class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+            id="evenement.date.jour"
+            maxlength="2"
+            placeholder="JJ"
+            value="12"
+          />
+          <span
+            class="mx-1 text-xl"
+          >
+            /
+          </span>
+          <input
+            class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+            id="evenement.date.mois"
+            maxlength="2"
+            placeholder="MM"
+            value="05"
+          />
+          <span
+            class="mx-1 text-xl"
+          >
+            /
+          </span>
+          <input
+            class="border-1 w-12 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+            id="evenement.date.annee"
+            maxlength="4"
+            placeholder="AAAA"
+            value="2019"
+          />
+        </div>
+      </div>
+      <div
+        class="flex w-full flex-col text-start"
+      >
+        <label
+          aria-label="aria-label-evenement.ville"
+          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+          for="evenement.ville"
+        >
+          Ville de l'évènement
+        </label>
+        <div
+          class="relative flex rounded-md shadow-sm"
+        >
+          <input
+            class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+            id="evenement.ville"
+            maxlength="100"
+            name="evenement.ville"
+            value=""
+          />
+        </div>
+      </div>
+      <div
+        class="flex w-full flex-col text-start"
+      >
+        <label
+          aria-label="aria-label-evenement.pays"
+          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+          for="evenement.pays"
+        >
+          Pays de l'évènement
+        </label>
+        <div
+          class="relative flex rounded-md shadow-sm"
+        >
+          <input
+            class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+            id="evenement.pays"
+            maxlength="100"
+            name="evenement.pays"
+            value="TUNISIE"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Formulaire saisie RDC - affichage des blocs > DOIT afficher le formulaire avec les valeurs de la requête QUAND l'ID est présent 1`] = `
+<div
+  class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
+>
+  <button
+    aria-label="Étendre la section"
+    class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
+    title="Étendre la section"
+    type="button"
+  >
+    <span
+      class="truncate"
+    >
+      Saisie courrier extrait/copie
+    </span>
+    <svg
+      aria-hidden="true"
+      class="absolute right-2 text-2xl transition-transform duration-200 ease-in rotate-180"
+      fill="currentColor"
+      height="1em"
+      stroke="currentColor"
+      stroke-width="0"
+      viewBox="0 0 24 24"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M0 0h24v24H0z"
+        fill="none"
+      />
+      <path
+        d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+      />
+    </svg>
+  </button>
+  <div
+    class="grid transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+  >
+    <div
+      class="min-h-0"
+    >
+      <div
+        class="grid gap-y-4 p-4 "
+      >
+        <div
+          class="h-[calc(100vh-22rem)] overflow-y-auto py-8"
+        >
+          <div
+            class="grid gap-10"
+          >
+            <div>
+              <div
+                class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+              >
+                <span
+                  class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                >
+                  REQUÊTE
+                </span>
+                <div
+                  class="grid grid-cols-2 gap-2 pt-2"
+                >
+                  <div
+                    class="text-start"
+                  >
+                    <label
+                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                      for="requete.natureActe"
+                    >
+                      Nature de l'acte concerné
+                    </label>
+                    <select
+                      class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                      id="requete.natureActe"
+                      name="requete.natureActe"
+                    >
+                      <option
+                        value="NAISSANCE"
+                      >
+                        Naissance
+                      </option>
+                      <option
+                        value="MARIAGE"
+                      >
+                        Mariage
+                      </option>
+                      <option
+                        value="DECES"
+                      >
+                        Décès
+                      </option>
+                    </select>
+                  </div>
+                  <div
+                    class="text-start"
+                  >
+                    <label
+                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                      for="requete.documentDemande"
+                    >
+                      Document demandé
+                    </label>
+                    <select
+                      class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                      id="requete.documentDemande"
+                      name="requete.documentDemande"
+                    >
+                      <option
+                        value="0e1e909f-f74c-4b16-9c03-b3733354c6ce"
+                      >
+                        Copie intégrale
+                      </option>
+                      <option
+                        value="28580709-06dd-4df2-bf6e-70a9482940a1"
+                      >
+                        Extrait avec filiation
+                      </option>
+                      <option
+                        value="ff7fe1fa-a2d6-4bc5-8681-deba65d9e2c6"
+                      >
+                        Extrait plurilingue
+                      </option>
+                      <option
+                        value="318a2726-0d04-4558-8b36-8fe48780def5"
+                      >
+                        Extrait sans filiation
+                      </option>
+                      <option
+                        value="8b808725-a83e-4ce5-81a2-192cd09e0cb2"
+                      >
+                        Copie intégrale archive
+                      </option>
+                    </select>
+                  </div>
+                  <div
+                    class="flex w-full flex-col text-start"
+                  >
+                    <label
+                      aria-label="aria-label-requete.nbExemplaire"
+                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                      for="requete.nbExemplaire"
+                    >
+                      Nombre d'exemplaires
+                    </label>
+                    <div
+                      class="relative flex rounded-md shadow-sm"
+                    >
+                      <input
+                        class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                        id="requete.nbExemplaire"
+                        max="5"
+                        maxlength="100"
+                        min="1"
+                        name="requete.nbExemplaire"
+                        type="number"
+                        value="1"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="text-start"
+                  >
+                    <label
+                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                      for="requete.motif"
+                    >
+                      Motif
+                    </label>
+                    <select
+                      class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                      id="requete.motif"
+                      name="requete.motif"
+                    >
+                      <option
+                        value="AUTRE"
+                      >
+                        Autre
+                      </option>
+                      <option
+                        value="CERTIFICAT_NATIONALITE_FRANCAISE"
+                      >
+                        Certificat de nationalité française
+                      </option>
+                      <option
+                        value="DECLARATION_ACQUISITION_NATIONALITE_FRANCAISE"
+                      >
+                        Déclaration d'acquisiton de nationalité française
+                      </option>
+                      <option
+                        value="DIVORCE_CONTENTIEUX"
+                      >
+                        Divorce / contentieux
+                      </option>
+                      <option
+                        value="GENEALOGIE"
+                      >
+                        Généalogie
+                      </option>
+                      <option
+                        value="MARIAGE_PACS"
+                      >
+                        Mariage / PACS
+                      </option>
+                      <option
+                        value="PENSION_REVERSION"
+                      >
+                        Pension de reversion
+                      </option>
+                      <option
+                        value="PRESTATIONS_SOCIALES_OU_FAMILIALES"
+                      >
+                        Prestations sociales ou familiales
+                      </option>
+                      <option
+                        value="RETRAITE"
+                      >
+                        Retraite
+                      </option>
+                      <option
+                        value="TITRE_SEJOUR_VISA_ETRANGER"
+                      >
+                        Titre de séjour / Visa étranger
+                      </option>
+                      <option
+                        value="SUCCESSION"
+                      >
+                        Succession
+                      </option>
+                      <option
+                        value="PAPIER_IDENTITE_PASSEPORT"
+                      >
+                        Papier d'identité / Passeport
+                      </option>
+                      <option
+                        value="NON_PRECISE_PAR_REQUERANT"
+                      >
+                        Non précisé par le requérant
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+              >
+                <span
+                  class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                >
+                  Titulaire 
+                </span>
+                <div
+                  class="grid grid-cols-2 gap-x-4 gap-y-2 pt-2"
+                >
+                  <div
+                    class="flex w-full flex-col text-start"
+                  >
+                    <label
+                      aria-label="aria-label-titulaires.titulaire1.nomNaissance"
+                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                      for="titulaires.titulaire1.nomNaissance"
+                    >
+                      Nom de naissance
+                    </label>
+                    <div
+                      class="relative flex rounded-md shadow-sm"
+                    >
+                      <input
+                        class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                        id="titulaires.titulaire1.nomNaissance"
+                        maxlength="100"
+                        name="titulaires.titulaire1.nomNaissance"
+                        value="Campball"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="flex w-full flex-col text-start"
+                  >
+                    <label
+                      aria-label="aria-label-titulaires.titulaire1.prenom"
+                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                      for="titulaires.titulaire1.prenom"
+                    >
+                      Prénom
+                    </label>
+                    <div
+                      class="relative flex rounded-md shadow-sm"
+                    >
+                      <input
+                        class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                        id="titulaires.titulaire1.prenom"
+                        maxlength="100"
+                        name="titulaires.titulaire1.prenom"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-4 pt-8"
+                >
+                  <div
+                    class="relative my-2.5 border-0 border-b-2 border-solid border-bleu text-start"
+                  >
+                    <label
+                      class="absolute -bottom-2.5 left-8 bg-blanc px-1.5 text-bleu-sombre"
+                    >
+                      Naissance
+                    </label>
+                  </div>
+                </div>
+                <div
+                  class="grid grid-cols-2 gap-x-4 gap-y-2"
+                >
+                  <div>
+                    <label
+                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                      for="titulaires.titulaire1.naissance.date.jour"
+                    >
+                      Date de naissance
+                    </label>
+                    <div
+                      class="flex flex-wrap gap-2"
+                    >
+                      <input
+                        class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                        id="titulaires.titulaire1.naissance.date.jour"
+                        maxlength="2"
+                        placeholder="JJ"
+                        value="10"
+                      />
+                      <span
+                        class="mx-1 text-xl"
+                      >
+                        /
+                      </span>
+                      <input
+                        class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                        id="titulaires.titulaire1.naissance.date.mois"
+                        maxlength="2"
+                        placeholder="MM"
+                        value="10"
+                      />
+                      <span
+                        class="mx-1 text-xl"
+                      >
+                        /
+                      </span>
+                      <input
+                        class="border-1 w-12 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                        id="titulaires.titulaire1.naissance.date.annee"
+                        maxlength="4"
+                        placeholder="AAAA"
+                        value="1963"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="flex w-full flex-col text-start"
+                  >
+                    <label
+                      aria-label="aria-label-titulaires.titulaire1.naissance.pays"
+                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                      for="titulaires.titulaire1.naissance.pays"
+                    >
+                      Pays de naissance
+                    </label>
+                    <div
+                      class="relative flex rounded-md shadow-sm"
+                    >
+                      <input
+                        class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                        id="titulaires.titulaire1.naissance.pays"
+                        maxlength="100"
+                        name="titulaires.titulaire1.naissance.pays"
+                        value="Samoa"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+              >
+                <span
+                  class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                >
+                  RÉQUERANT
+                </span>
+                <div
+                  class="grid grid-cols-2"
+                >
+                  <div
+                    class="text-start"
+                  >
+                    <label
+                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                      for="requerant.typeRequerant"
+                    >
+                      Type requérant
+                    </label>
+                    <select
+                      class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                      id="requerant.typeRequerant"
+                      name="requerant.typeRequerant"
+                    >
+                      <option
+                        value="TITULAIRE1"
+                      >
+                        Titulaire 1
+                      </option>
+                      <option
+                        value="PARTICULIER"
+                      >
+                        Particulier
+                      </option>
+                      <option
+                        value="MANDATAIRE_HABILITE"
+                      >
+                        Mandataire habilité
+                      </option>
+                      <option
+                        value="INSTITUTIONNEL"
+                      >
+                        Institutionnel
+                      </option>
+                      <option
+                        value="AUTRE_PROFESSIONNEL"
+                      >
+                        Autre professionnel
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div
+                  class="pb-4 pt-8"
+                >
+                  <div
+                    class="relative my-2.5 border-0 border-b-2 border-solid border-bleu text-start"
+                  >
+                    <label
+                      class="absolute -bottom-2.5 left-8 bg-blanc px-1.5 text-bleu-sombre"
+                    >
+                      Identité du requérant
+                    </label>
+                  </div>
+                </div>
+                <div
+                  class="grid grid-cols-2 gap-x-4 gap-y-2"
+                >
+                  <div
+                    class="text-start"
+                  >
+                    <label
+                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                      for="requerant.type"
+                    >
+                      Type
+                      <span
+                        class="ml-1 text-rouge"
+                      >
+                        *
+                      </span>
+                    </label>
+                    <select
+                      class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                      id="requerant.type"
+                      name="requerant.type"
+                    >
+                      <option
+                        value=""
+                      />
+                      <option
+                        value="TRIBUNAL"
+                      >
+                        Tribunal
+                      </option>
+                      <option
+                        value="ADMINISTRATION_PUBLIQUE_ETABLISSEMENT_PUBLIC"
+                      >
+                        Administration publique / Etablissement public
+                      </option>
+                      <option
+                        value="OFFICIER_ETAT_CIVIL"
+                      >
+                        Officier de l'état civil
+                      </option>
+                      <option
+                        value="PROCUREUR_REPUBLIQUE"
+                      >
+                        Procureur de la République
+                      </option>
+                      <option
+                        value="MAIRIE"
+                      >
+                        Mairie
+                      </option>
+                      <option
+                        value="AMBASSADE"
+                      >
+                        Ambassade
+                      </option>
+                      <option
+                        value="POSTE_CONSULAIRE"
+                      >
+                        Poste consulaire
+                      </option>
+                      <option
+                        value="AUTRE"
+                      >
+                        Autre
+                      </option>
+                    </select>
+                  </div>
+                  <div
+                    class="flex w-full flex-col text-start"
+                  >
+                    <label
+                      aria-label="aria-label-requerant.nomInstitution"
+                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                      for="requerant.nomInstitution"
+                    >
+                      Nom institution
+                    </label>
+                    <div
+                      class="relative flex rounded-md shadow-sm"
+                    >
+                      <input
+                        class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                        id="requerant.nomInstitution"
+                        maxlength="100"
+                        name="requerant.nomInstitution"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="flex w-full flex-col text-start"
+                  >
+                    <label
+                      aria-label="aria-label-requerant.nom"
+                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                      for="requerant.nom"
+                    >
+                      Nom représentant
+                    </label>
+                    <div
+                      class="relative flex rounded-md shadow-sm"
+                    >
+                      <input
+                        class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                        id="requerant.nom"
+                        maxlength="100"
+                        name="requerant.nom"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="flex w-full flex-col text-start"
+                  >
+                    <label
+                      aria-label="aria-label-requerant.prenom"
+                      class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                      for="requerant.prenom"
+                    >
+                      Prénom représentant
+                    </label>
+                    <div
+                      class="relative flex rounded-md shadow-sm"
+                    >
+                      <input
+                        class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                        id="requerant.prenom"
+                        maxlength="100"
+                        name="requerant.prenom"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+              >
+                <span
+                  class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                >
+                  PIÈCES JUSTIFICATIVES
+                </span>
+                <div
+                  class="flex gap-4 pt-4"
+                >
+                  <div
+                    class="PiecesJointes"
+                  >
+                    <div
+                      class="BoutonPiecesJointes"
+                    >
+                      <div>
+                        <label
+                          class="FakeLabel"
+                          for="piecesJointes"
+                        >
+                          <button
+                            class="BoutonUpload"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              class="iconeTrombone text-xl"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M0 0h24v24H0z"
+                                fill="none"
+                              />
+                              <path
+                                d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5a2.5 2.5 0 0 1 5 0v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5a2.5 2.5 0 0 0 5 0V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"
+                              />
+                            </svg>
+                             Ajouter
+                          </button>
+                          <input
+                            accept=".png, .pdf, .jpg, .jpeg"
+                            data-testid="piecesJointes"
+                            hidden=""
+                            id="piecesJointes"
+                            name="piecesJointes"
+                            type="file"
+                          />
+                        </label>
+                      </div>
+                    </div>
+                    <div
+                      class="BlocPiecesJointes"
+                    >
+                      <table
+                        class="TableauSimple"
+                      >
+                        <thead>
+                          <tr>
+                            <th>
+                              Nom
+                            </th>
+                            <th>
+                              Type
+                            </th>
+                            <th
+                              class="EnteteActionPJ"
+                            >
+                              Action
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <svg
+                                aria-hidden="true"
+                                class="iconeFichier text-lg"
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M0 0h24v24H0z"
+                                  fill="none"
+                                />
+                                <path
+                                  d="M6 2c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6H6zm7 7V3.5L18.5 9H13z"
+                                />
+                              </svg>
+                              <span>
+                                Carte professionelle
+                              </span>
+                            </td>
+                            <td />
+                            <td
+                              class="ActionPJ"
+                              title="Supprimer"
+                            >
+                              <svg
+                                aria-label="Supprimer"
+                                class="IconePoubelle text-sm"
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 448 512"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <title>
+                                  Supprimer
+                                </title>
+                                <path
+                                  d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+                                />
+                              </svg>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Formulaire saisie RDC - affichage des blocs > DOIT afficher le formulaire avec les valeurs par défaut QUAND l'ID n'est pas présent 1`] = `
+<div
+  class="mx-auto mt-4 max-w-[100rem]"
+>
+  <form
+    action="#"
+  >
+    <div
+      class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
+    >
+      <button
+        aria-label="Étendre la section"
+        class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
+        title="Étendre la section"
+        type="button"
+      >
+        <span
+          class="truncate"
+        >
+          Saisie courrier extrait/copie
+        </span>
+        <svg
+          aria-hidden="true"
+          class="absolute right-2 text-2xl transition-transform duration-200 ease-in rotate-180"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path
+            d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+          />
+        </svg>
+      </button>
+      <div
+        class="grid transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+      >
+        <div
+          class="min-h-0"
+        >
+          <div
+            class="grid gap-y-4 p-4 "
+          >
+            <div
+              class="h-[calc(100vh-22rem)] overflow-y-auto py-8"
+            >
+              <div
+                class="grid gap-10"
+              >
+                <div>
+                  <div
+                    class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                  >
+                    <span
+                      class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                    >
+                      REQUÊTE
+                    </span>
+                    <div
+                      class="grid grid-cols-2 gap-2 pt-2"
+                    >
+                      <div
+                        class="text-start"
+                      >
+                        <label
+                          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                          for="requete.natureActe"
+                        >
+                          Nature de l'acte concerné
+                        </label>
+                        <select
+                          class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                          id="requete.natureActe"
+                          name="requete.natureActe"
+                        >
+                          <option
+                            value="NAISSANCE"
+                          >
+                            Naissance
+                          </option>
+                          <option
+                            value="MARIAGE"
+                          >
+                            Mariage
+                          </option>
+                          <option
+                            value="DECES"
+                          >
+                            Décès
+                          </option>
+                        </select>
+                      </div>
+                      <div
+                        class="text-start"
+                      >
+                        <label
+                          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                          for="requete.documentDemande"
+                        >
+                          Document demandé
+                        </label>
+                        <select
+                          class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                          id="requete.documentDemande"
+                          name="requete.documentDemande"
+                        >
+                          <option
+                            value="0e1e909f-f74c-4b16-9c03-b3733354c6ce"
+                          >
+                            Copie intégrale
+                          </option>
+                          <option
+                            value="28580709-06dd-4df2-bf6e-70a9482940a1"
+                          >
+                            Extrait avec filiation
+                          </option>
+                          <option
+                            value="ff7fe1fa-a2d6-4bc5-8681-deba65d9e2c6"
+                          >
+                            Extrait plurilingue
+                          </option>
+                          <option
+                            value="318a2726-0d04-4558-8b36-8fe48780def5"
+                          >
+                            Extrait sans filiation
+                          </option>
+                          <option
+                            value="8b808725-a83e-4ce5-81a2-192cd09e0cb2"
+                          >
+                            Copie intégrale archive
+                          </option>
+                        </select>
+                      </div>
+                      <div
+                        class="flex w-full flex-col text-start"
+                      >
+                        <label
+                          aria-label="aria-label-requete.nbExemplaire"
+                          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                          for="requete.nbExemplaire"
+                        >
+                          Nombre d'exemplaires
+                        </label>
+                        <div
+                          class="relative flex rounded-md shadow-sm"
+                        >
+                          <input
+                            class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                            id="requete.nbExemplaire"
+                            max="5"
+                            maxlength="100"
+                            min="1"
+                            name="requete.nbExemplaire"
+                            type="number"
+                            value="1"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="text-start"
+                      >
+                        <label
+                          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                          for="requete.motif"
+                        >
+                          Motif
+                        </label>
+                        <select
+                          class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                          id="requete.motif"
+                          name="requete.motif"
+                        >
+                          <option
+                            value="AUTRE"
+                          >
+                            Autre
+                          </option>
+                          <option
+                            value="CERTIFICAT_NATIONALITE_FRANCAISE"
+                          >
+                            Certificat de nationalité française
+                          </option>
+                          <option
+                            value="DECLARATION_ACQUISITION_NATIONALITE_FRANCAISE"
+                          >
+                            Déclaration d'acquisiton de nationalité française
+                          </option>
+                          <option
+                            value="DIVORCE_CONTENTIEUX"
+                          >
+                            Divorce / contentieux
+                          </option>
+                          <option
+                            value="GENEALOGIE"
+                          >
+                            Généalogie
+                          </option>
+                          <option
+                            value="MARIAGE_PACS"
+                          >
+                            Mariage / PACS
+                          </option>
+                          <option
+                            value="PENSION_REVERSION"
+                          >
+                            Pension de reversion
+                          </option>
+                          <option
+                            value="PRESTATIONS_SOCIALES_OU_FAMILIALES"
+                          >
+                            Prestations sociales ou familiales
+                          </option>
+                          <option
+                            value="RETRAITE"
+                          >
+                            Retraite
+                          </option>
+                          <option
+                            value="TITRE_SEJOUR_VISA_ETRANGER"
+                          >
+                            Titre de séjour / Visa étranger
+                          </option>
+                          <option
+                            value="SUCCESSION"
+                          >
+                            Succession
+                          </option>
+                          <option
+                            value="PAPIER_IDENTITE_PASSEPORT"
+                          >
+                            Papier d'identité / Passeport
+                          </option>
+                          <option
+                            value="NON_PRECISE_PAR_REQUERANT"
+                          >
+                            Non précisé par le requérant
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                  >
+                    <span
+                      class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                    >
+                      Titulaire 
+                    </span>
+                    <div
+                      class="grid grid-cols-2 gap-x-4 gap-y-2 pt-2"
+                    >
+                      <div
+                        class="flex w-full flex-col text-start"
+                      >
+                        <label
+                          aria-label="aria-label-titulaires.titulaire1.nomNaissance"
+                          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                          for="titulaires.titulaire1.nomNaissance"
+                        >
+                          Nom de naissance
+                        </label>
+                        <div
+                          class="relative flex rounded-md shadow-sm"
+                        >
+                          <input
+                            class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                            id="titulaires.titulaire1.nomNaissance"
+                            maxlength="100"
+                            name="titulaires.titulaire1.nomNaissance"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="flex w-full flex-col text-start"
+                      >
+                        <label
+                          aria-label="aria-label-titulaires.titulaire1.prenom"
+                          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                          for="titulaires.titulaire1.prenom"
+                        >
+                          Prénom
+                        </label>
+                        <div
+                          class="relative flex rounded-md shadow-sm"
+                        >
+                          <input
+                            class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                            id="titulaires.titulaire1.prenom"
+                            maxlength="100"
+                            name="titulaires.titulaire1.prenom"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="pb-4 pt-8"
+                    >
+                      <div
+                        class="relative my-2.5 border-0 border-b-2 border-solid border-bleu text-start"
+                      >
+                        <label
+                          class="absolute -bottom-2.5 left-8 bg-blanc px-1.5 text-bleu-sombre"
+                        >
+                          Naissance
+                        </label>
+                      </div>
+                    </div>
+                    <div
+                      class="grid grid-cols-2 gap-x-4 gap-y-2"
+                    >
+                      <div>
+                        <label
+                          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                          for="titulaires.titulaire1.naissance.date.jour"
+                        >
+                          Date de naissance
+                        </label>
+                        <div
+                          class="flex flex-wrap gap-2"
+                        >
+                          <input
+                            class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                            id="titulaires.titulaire1.naissance.date.jour"
+                            maxlength="2"
+                            placeholder="JJ"
+                            value=""
+                          />
+                          <span
+                            class="mx-1 text-xl"
+                          >
+                            /
+                          </span>
+                          <input
+                            class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                            id="titulaires.titulaire1.naissance.date.mois"
+                            maxlength="2"
+                            placeholder="MM"
+                            value=""
+                          />
+                          <span
+                            class="mx-1 text-xl"
+                          >
+                            /
+                          </span>
+                          <input
+                            class="border-1 w-12 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                            id="titulaires.titulaire1.naissance.date.annee"
+                            maxlength="4"
+                            placeholder="AAAA"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="flex w-full flex-col text-start"
+                      >
+                        <label
+                          aria-label="aria-label-titulaires.titulaire1.naissance.pays"
+                          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                          for="titulaires.titulaire1.naissance.pays"
+                        >
+                          Pays de naissance
+                        </label>
+                        <div
+                          class="relative flex rounded-md shadow-sm"
+                        >
+                          <input
+                            class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                            id="titulaires.titulaire1.naissance.pays"
+                            maxlength="100"
+                            name="titulaires.titulaire1.naissance.pays"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                  >
+                    <span
+                      class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                    >
+                      RÉQUERANT
+                    </span>
+                    <div
+                      class="grid grid-cols-2"
+                    >
+                      <div
+                        class="text-start"
+                      >
+                        <label
+                          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                          for="requerant.typeRequerant"
+                        >
+                          Type requérant
+                        </label>
+                        <select
+                          class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                          id="requerant.typeRequerant"
+                          name="requerant.typeRequerant"
+                        >
+                          <option
+                            value="TITULAIRE1"
+                          >
+                            Titulaire 1
+                          </option>
+                          <option
+                            value="PARTICULIER"
+                          >
+                            Particulier
+                          </option>
+                          <option
+                            value="MANDATAIRE_HABILITE"
+                          >
+                            Mandataire habilité
+                          </option>
+                          <option
+                            value="INSTITUTIONNEL"
+                          >
+                            Institutionnel
+                          </option>
+                          <option
+                            value="AUTRE_PROFESSIONNEL"
+                          >
+                            Autre professionnel
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                  >
+                    <span
+                      class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                    >
+                      LIEN AVEC LE TITULAIRE
+                    </span>
+                    <div
+                      class="grid grid-cols-2 gap-4 pt-4"
+                    >
+                      <div
+                        class="text-start"
+                      >
+                        <label
+                          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                          for="lienTitulaire.lien"
+                        >
+                          Lien avec le titulaire
+                        </label>
+                        <select
+                          class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                          disabled=""
+                          id="lienTitulaire.lien"
+                          name="lienTitulaire.lien"
+                        >
+                          <option
+                            value="TITULAIRE"
+                          >
+                            Titulaire
+                          </option>
+                          <option
+                            value="PERE_MERE"
+                          >
+                            Père/mère
+                          </option>
+                          <option
+                            value="ENFANT"
+                          >
+                            Enfant
+                          </option>
+                          <option
+                            value="EPOUX_EPOUSE"
+                          >
+                            Conjoint(e) ou partenaire de PACS
+                          </option>
+                          <option
+                            value="GRAND_PARENT"
+                          >
+                            Grand-parent
+                          </option>
+                          <option
+                            value="PETIT_ENFANT"
+                          >
+                            Petit-enfant
+                          </option>
+                          <option
+                            value="AUTRE"
+                          >
+                            Autre
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                  >
+                    <span
+                      class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                    >
+                      PIÈCES JUSTIFICATIVES
+                    </span>
+                    <div
+                      class="flex gap-4 pt-4"
+                    >
+                      <div
+                        class="PiecesJointes"
+                      >
+                        <div
+                          class="BoutonPiecesJointes"
+                        >
+                          <div>
+                            <label
+                              class="FakeLabel"
+                              for="piecesJointes"
+                            >
+                              <button
+                                class="BoutonUpload"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  class="iconeTrombone text-xl"
+                                  fill="currentColor"
+                                  height="1em"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 24 24"
+                                  width="1em"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M0 0h24v24H0z"
+                                    fill="none"
+                                  />
+                                  <path
+                                    d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5a2.5 2.5 0 0 1 5 0v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5a2.5 2.5 0 0 0 5 0V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"
+                                  />
+                                </svg>
+                                 Ajouter
+                              </button>
+                              <input
+                                accept=".png, .pdf, .jpg, .jpeg"
+                                data-testid="piecesJointes"
+                                hidden=""
+                                id="piecesJointes"
+                                name="piecesJointes"
+                                type="file"
+                              />
+                            </label>
+                          </div>
+                        </div>
+                        <div
+                          class="BlocPiecesJointes"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="fixed bottom-0 left-0 right-0 bg-blanc py-4"
+    >
+      <div
+        class="mx-auto flex max-w-[100rem] justify-between px-8"
+      >
+        <button
+          class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-blanc text-bleu-sombre hover:text-bleu hover:border-bleu focus:text-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
+          title="Abandonner"
+          type="button"
+        >
+          Abandonner
+        </button>
+        <div
+          class="flex gap-4"
+        >
+          <button
+            class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
+            title="Prendre en charge"
+            type="submit"
+          >
+            Prendre en charge
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`Formulaire saisie RDC - affichage des blocs > NE DOIT PAS afficher le bloc identité QUAND le typeRequerant est titulaire 1 1`] = `
+<div>
+  <div
+    class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+  >
+    <span
+      class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+    >
+      RÉQUERANT
+    </span>
+    <div
+      class="grid grid-cols-2"
+    >
+      <div
+        class="text-start"
+      >
+        <label
+          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+          for="requerant.typeRequerant"
+        >
+          Type requérant
+        </label>
+        <select
+          class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+          id="requerant.typeRequerant"
+          name="requerant.typeRequerant"
+        >
+          <option
+            value="TITULAIRE1"
+          >
+            Titulaire 1
+          </option>
+          <option
+            value="PARTICULIER"
+          >
+            Particulier
+          </option>
+          <option
+            value="MANDATAIRE_HABILITE"
+          >
+            Mandataire habilité
+          </option>
+          <option
+            value="INSTITUTIONNEL"
+          >
+            Institutionnel
+          </option>
+          <option
+            value="AUTRE_PROFESSIONNEL"
+          >
+            Autre professionnel
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+`;

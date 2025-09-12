@@ -17,5 +17,8 @@ export const DateHeureFormUtils = {
         minute: date?.minute ? date.minute.padStart(2, "0") : ""
       })
     };
+  },
+  estDateVide: (date?: IDateHeureForm): boolean => {
+    return !date || (!date.jour && !date.mois && !date.annee);
   }
 };

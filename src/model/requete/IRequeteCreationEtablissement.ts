@@ -42,7 +42,7 @@ export interface IRequeteCreationEtablissement extends IRequete {
   natureActeTranscrit: ENatureActeTranscrit;
   personnesSauvegardees: IPersonneSauvegardee[];
   typeRegistre?: {
-    idTypeRegistre: string;
+    id: string;
     poste: string;
   };
 }

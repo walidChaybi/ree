@@ -46,7 +46,7 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
 
   const estTypeFamilleMAR = useMemo(() => valeurFamilleRegistre === TYPE_FAMILLE_MAR, [valeurFamilleRegistre]);
 
-  const cheminIdTypeRegistre = useMemo(() => `${name.split(".").slice(0, -1).join(".")}.idTypeRegistre`, [name]);
+  const cheminIdTypeRegistre = useMemo(() => `${name.split(".").slice(0, -1).join(".")}.id`, [name]);
 
   useEffect(() => {
     if (!valeurFamilleRegistre || [...FAMILLES_SANS_POCOPA, TYPE_FAMILLE_MAR].includes(valeurFamilleRegistre)) {

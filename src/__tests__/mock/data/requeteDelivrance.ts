@@ -254,7 +254,7 @@ export const requeteDelivranceRDC: IRequeteDelivrance = {
       nomUsage: "",
       parentsTitulaire: [],
       paysNaissance: "Espagne",
-      position: 1,
+      position: 2,
       prenoms: [
         {
           numeroOrdre: 1,

@@ -47,10 +47,6 @@ export interface Base64File {
   identifiantSwift?: string;
 }
 
-export const getPiecesJointesNonVides = (formulairePiecesJointes?: PieceJointe[]): PieceJointe[] | undefined => {
-  return formulairePiecesJointes?.filter(formulairePj => formulairePj.base64File.base64String);
-};
-
 const toBase64String = (file: File): Promise<string> => {
   const fileReader = new FileReader();
 

@@ -1,7 +1,7 @@
-import { TypeLienRequerant } from "./enum/TypeLienRequerant";
+import { ETypeLienRequerant } from "./enum/ETypeLienRequerant";
 
 export interface ILienRequerant {
   id: string;
-  lien: TypeLienRequerant;
+  lien: keyof typeof ETypeLienRequerant;
   natureLien?: string;
 }

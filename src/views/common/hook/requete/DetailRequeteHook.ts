@@ -37,8 +37,6 @@ import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TagPriorisation } from "@model/requete/enum/TagPriorisation";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
-import { TypeLienMandant } from "@model/requete/enum/TypeLienMandant";
-import { TypeMandant } from "@model/requete/enum/TypeMandant";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { UnionActuelle } from "@model/requete/enum/UnionActuelle";
@@ -218,11 +216,11 @@ function getStatutCourant(statut: any): IStatutCourant {
 function getMandant(mandant: any): IMandant {
   return {
     id: mandant.id,
-    type: TypeMandant.getEnumFor(mandant.typeMandant),
+    type: mandant.typeMandant,
     nom: mandant.nom,
     prenom: mandant.prenom,
     raisonSociale: mandant.raisonSociale,
-    typeLien: TypeLienMandant.getEnumFor(mandant.lienMandant),
+    typeLien: mandant.lienMandant,
     natureLien: mandant.natureLien
   };
 }

@@ -19,13 +19,6 @@ export const DOCUMENT_OBLIGATOIRE = "Le choix d'un document est obligatoire";
 
 export const NATURE_ACTE_OBLIGATOIRE = "La nature d'acte est obligatoire";
 
-export const DOCUMENT_DEMANDE_OBLIGATOIRE = "Le document demandé est obligatoire";
-
-export const NB_EXEMPLAIRE_OBLIGATOIRE = "Le nombre d'exemplaire est obligatoire";
-
-export const NB_EXEMPLAIRE_MINIMUM = "Le nombre minimum d'exemplaires est de 1";
-export const NB_EXEMPLAIRE_MAXIMUM = "Le nombre maximum d'exemplaires est de 5";
-
 export const ALERTE_OBLIGATOIRE = "Le choix d'un motif est obligatoire";
 export const ALERTE_AUTRE = `L'observation est obligatoire si le motif est "Autre"`;
 export const COMPLEMENT_DESCRIPTION_LIMITE_TAILLE = `L'observation ne peut pas dépasser 150 caractères`;

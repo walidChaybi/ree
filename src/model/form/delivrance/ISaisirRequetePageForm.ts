@@ -11,7 +11,6 @@ import {
   DOCUMENT_DEMANDE,
   INSTITUTI0NNEL,
   JOUR,
-  LIEN,
   LIEU_DIT,
   MANDATAIRE,
   MOIS,
@@ -20,7 +19,6 @@ import {
   NATIONALITE,
   NATURE,
   NATURE_ACTE,
-  NATURE_LIEN,
   NB_EXEMPLAIRE,
   NOM,
   NOMS,
@@ -38,7 +36,6 @@ import {
   RAISON_SOCIALE,
   SEXE,
   TYPE,
-  TYPE_MANDANT,
   TYPE_REQUERANT,
   VILLE_EVENEMENT,
   VOIE
@@ -112,7 +109,7 @@ export interface Prenoms {
   [key: string]: string;
 }
 
-export interface Evenement {
+interface Evenement {
   [DATE_EVENEMENT]: DateJourMoisAnne;
   [VILLE_EVENEMENT]: string;
   [PAYS_EVENEMENT]: string;
@@ -130,18 +127,6 @@ export interface Requete {
   [NB_EXEMPLAIRE]: number;
   [MOTIF]: string;
   [COMPLEMENT_MOTIF]: string;
-}
-
-export interface Mandant {
-  [TYPE_MANDANT]: string;
-  [NOM]: string;
-  [PRENOM]: string;
-  [RAISON_SOCIALE]: string;
-}
-
-export interface LienTitulaire {
-  [LIEN]: string;
-  [NATURE_LIEN]: string;
 }
 
 export interface ISaisieParent {

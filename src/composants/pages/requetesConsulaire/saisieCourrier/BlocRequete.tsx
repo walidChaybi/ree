@@ -62,7 +62,7 @@ const BlocRequete: React.FC = () => {
   useEffect(() => {
     if (postes.length === 1 && !values.requete.typeRegistre.poste) {
       setFieldValue("requete.typeRegistre", {
-        idTypeRegistre: postes[0].id,
+        id: postes[0].id,
         poste: postes[0].poste
       });
     }
@@ -101,7 +101,7 @@ const BlocRequete: React.FC = () => {
             estObligatoire
             apresChangement={valeur => {
               const posteSelectionne = postes.find(p => p.poste === valeur);
-              setFieldValue("requete.typeRegistre.idTypeRegistre", posteSelectionne?.id ?? "");
+              setFieldValue("requete.typeRegistre.id", posteSelectionne?.id ?? "");
             }}
           />
         )}

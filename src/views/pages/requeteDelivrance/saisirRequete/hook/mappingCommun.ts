@@ -57,7 +57,6 @@ import { ITitulaireRequete, TitulaireRequete } from "@model/requete/ITitulaireRe
 import { Qualite } from "@model/requete/enum/Qualite";
 import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
-import { TypeRequerantRDC } from "@model/requete/enum/TypeRequerantRDC";
 import { DEUX, UN } from "@util/Utils";
 import { PieceJointe } from "../../../../../utils/FileUtils";
 import { AutreProfessionnelFormDefaultValues } from "../sousFormulaires/requerant/autreProfessionnel/AutreProfessionnelForm";
@@ -162,15 +161,15 @@ export const saisieRequerant = (requete: IRequeteDelivrance): ISaisieRequerant =
 
   switch (qualite) {
     case Qualite.INSTITUTIONNEL:
-      requerant[TYPE_REQUERANT] = TypeRequerantRDC.INSTITUTIONNEL.nom;
+      requerant[TYPE_REQUERANT] = "INSTITUTIONNEL";
       requerant[INSTITUTI0NNEL] = mapRequerantInstitutionnel(requete.requerant);
       break;
     case Qualite.MANDATAIRE_HABILITE:
-      requerant[TYPE_REQUERANT] = TypeRequerantRDC.MANDATAIRE.nom;
+      requerant[TYPE_REQUERANT] = "MANDATAIRE";
       requerant[MANDATAIRE] = mapRequerantMandataireHabilite(requete.requerant);
       break;
     case Qualite.AUTRE_PROFESSIONNEL:
-      requerant[TYPE_REQUERANT] = TypeRequerantRDC.AUTRE_PROFESSIONNEL.nom;
+      requerant[TYPE_REQUERANT] = "AUTRE_PROFESSIONNEL";
       requerant[AUTRE_PROFESSIONNEL] = mapRequerantAutreProfessionnel(requete.requerant);
       break;
     case Qualite.PARTICULIER:
@@ -180,21 +179,21 @@ export const saisieRequerant = (requete: IRequeteDelivrance): ISaisieRequerant =
           titulaire: TitulaireRequete.getTitulaireParPosition(requete.titulaires || [], UN)
         })
       ) {
-        requerant[TYPE_REQUERANT] = TypeRequerantRDC.TITULAIRE1.nom;
+        requerant[TYPE_REQUERANT] = "TITULAIRE1";
       } else if (
         Requerant.estTitulaireX({
           requerant: requete.requerant,
           titulaire: TitulaireRequete.getTitulaireParPosition(requete.titulaires || [], DEUX)
         })
       ) {
-        requerant[TYPE_REQUERANT] = TypeRequerantRDC.TITULAIRE2.nom;
+        requerant[TYPE_REQUERANT] = "TITULAIRE2";
       } else {
-        requerant[TYPE_REQUERANT] = TypeRequerantRDC.PARTICULIER.nom;
+        requerant[TYPE_REQUERANT] = "PARTICULIER";
         requerant[PARTICULIER] = mapRequerantParticulier(requete.requerant);
       }
       break;
     default:
-      requerant[TYPE_REQUERANT] = TypeRequerantRDC.TITULAIRE1.nom;
+      requerant[TYPE_REQUERANT] = "TITULAIRE1";
   }
   return requerant;
 };

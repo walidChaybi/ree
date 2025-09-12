@@ -2,11 +2,14 @@
 import { EnumWithComplete } from "@util/enum/EnumWithComplete";
 import { Options } from "@util/Type";
 
+export enum ENatureActeRequete {
+  NAISSANCE = "Naissance",
+  MARIAGE = "Mariage",
+  DECES = "Décès"
+}
+
 export class NatureActeRequete extends EnumWithComplete {
-  public static readonly NAISSANCE = new NatureActeRequete(
-    "NAISSANCE",
-    "Naissance"
-  );
+  public static readonly NAISSANCE = new NatureActeRequete("NAISSANCE", "Naissance");
   public static readonly MARIAGE = new NatureActeRequete("MARIAGE", "Mariage");
   public static readonly DECES = new NatureActeRequete("DECES", "Décès");
 

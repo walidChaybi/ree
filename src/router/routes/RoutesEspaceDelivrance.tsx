@@ -3,11 +3,11 @@ import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercu
 import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
 import { ApercuRequetePriseEnChargePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
 import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
-import { SaisirRDCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCPage";
 import { SaisirRDCSCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { RouteObject } from "react-router";
 import PageEditionRequeteDelivrance from "../../pages/requetesDelivrance/PageEditionRequeteDelivrance";
+import PageSaisieRDC from "../../pages/requetesDelivrance/PageSaisieRDC";
 import ElementPageRECE from "../ElementPageRECE";
 import {
   INFO_PAGE_APERCU_REQUETE_DELIVRANCE_CONSULTATION,
@@ -57,7 +57,7 @@ export const ROUTES_ESPACE_DELIVRANCE: RouteObject[] = [
         tousLesDroits={[Droit.SAISIR_REQUETE]}
         featureFlags={[FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA]}
       >
-        <SaisirRDCPage />
+        <PageSaisieRDC />
       </ElementPageRECE>
     )
   },
@@ -69,7 +69,7 @@ export const ROUTES_ESPACE_DELIVRANCE: RouteObject[] = [
         infoPage={INFO_PAGE_MODIFICATION_REQUETE_DELIVRANCE_EXTRAIT_COPIE_COURRIER}
         auMoinsUnDesDroits={[Droit.CONSULTER, Droit.SAISIR_REQUETE]}
       >
-        <SaisirRDCPage />
+        <PageSaisieRDC />
       </ElementPageRECE>
     )
   },

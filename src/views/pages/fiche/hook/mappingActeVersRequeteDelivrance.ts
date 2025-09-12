@@ -12,7 +12,6 @@ import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
-import { TypeLienRequerant } from "@model/requete/enum/TypeLienRequerant";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { mapPrenomsVersPrenomsOrdonnes } from "@util/Utils";
 
@@ -32,7 +31,7 @@ export const mappingActeVersRequeteDelivrance = (acte: IFicheActe, numeroFonctio
     titulaires: getTitulaires(FicheActe.getTitulairesActeTabDansLOrdre(acte)),
     requerant: null,
     lienRequerant: {
-      typeLienRequerant: TypeLienRequerant.getKey(TypeLienRequerant.AUTRE),
+      typeLienRequerant: "AUTRE",
       natureLien: null
     }
   } as any as IRequeteDelivrance;

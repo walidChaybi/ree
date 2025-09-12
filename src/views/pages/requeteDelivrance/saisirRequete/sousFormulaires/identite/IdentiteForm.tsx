@@ -23,7 +23,7 @@ import EvenementForm, {
 import "./scss/IdentiteForm.scss";
 
 // Valeurs par défaut des champs pour RDAPC et RDC
-export const IdentiteFormDefaultValues = {
+const IdentiteFormDefaultValues = {
   [NOMS]: NomsFormDefaultValues,
   [PRENOMS]: genererDefaultValuesPrenoms(),
   [SEXE]: "INCONNU",
@@ -38,17 +38,6 @@ export const IdentiteFormDefaultValuesRDCSC = {
   ...IdentiteFormDefaultValues,
   nationalite: "ETRANGERE"
 };
-
-// Schéma de validation des champs
-export const IdentiteFormValidationSchema = Yup.object().shape({
-  [NOMS]: NomsFormValidationSchema,
-  [PRENOMS]: creerValidationSchemaPrenom(),
-  [SEXE]: Yup.string(),
-  [NAISSANCE]: EvenementFormValidationSchema,
-  [NATIONALITE]: Yup.string(),
-  [PARENT1]: ParentFormValidationSchema,
-  [PARENT2]: ParentFormValidationSchema
-});
 
 export const IdentiteFormValidationSchemaRDCSC = Yup.object().shape({
   [NOMS]: NomsFormValidationSchema,

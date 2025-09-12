@@ -8,12 +8,11 @@ import { IRequerant } from "@model/requete/IRequerant";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ITitulaireRequete, TitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { IdentiteType } from "@model/requete/IdentiteType";
+import { ETypeLienMandant } from "@model/requete/enum/ETypeLienMandant";
+import { ETypeLienRequerant } from "@model/requete/enum/ETypeLienRequerant";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { TypeLienMandant } from "@model/requete/enum/TypeLienMandant";
-import { TypeLienRequerant } from "@model/requete/enum/TypeLienRequerant";
-import { TypeMandant } from "@model/requete/enum/TypeMandant";
 import { formatLigne, getLibelle, getValeurOuUndefined, getValeurOuVide, triListeObjetsSurPropriete } from "@util/Utils";
 import React from "react";
 import { formatLigneLieu, formatLigneNomPrenoms, formatLigneQualiteType, formatPrenoms } from "./Formatages";
@@ -187,11 +186,12 @@ const getIdentiteRequerant = (requerant: IRequerant): string | undefined => {
 const getLienRequerant = (lienRequerant?: ILienRequerant, mandant?: IMandant): string | undefined => {
   let resultat: string | undefined = undefined;
 
+  const libelleLienRequerant = lienRequerant?.lien ? ETypeLienRequerant[lienRequerant.lien] : "";
+
   if (mandant?.typeLien) {
-    resultat = TypeLienMandant.estAutre(mandant?.typeLien) && mandant.natureLien ? mandant.natureLien : mandant.typeLien.libelle;
+    resultat = mandant?.typeLien === "AUTRE" && mandant.natureLien ? mandant.natureLien : ETypeLienMandant[mandant.typeLien];
   } else if (lienRequerant) {
-    resultat =
-      TypeLienRequerant.estAutre(lienRequerant.lien) && lienRequerant.natureLien ? lienRequerant.natureLien : lienRequerant.lien.libelle;
+    resultat = lienRequerant.lien === "AUTRE" && lienRequerant.natureLien ? lienRequerant.natureLien : libelleLienRequerant;
   }
 
   return resultat;
@@ -213,7 +213,7 @@ const getRaisonSocialeRequerant = (qualiteRequerant: IQualiteRequerant) => {
 const getIdentiteMandant = (qualite: Qualite, mandant?: IMandant): string | undefined => {
   let resultat: string | undefined = undefined;
 
-  if (Qualite.estMandataireHabilite(qualite) && TypeMandant.estPhysique(mandant?.type)) {
+  if (Qualite.estMandataireHabilite(qualite) && mandant?.type === "PERSONNE_PHYSIQUE") {
     const identiteMandant: IdentiteType = {
       noms: {
         naissance: mandant?.nom ?? ""
@@ -231,7 +231,7 @@ const getIdentiteMandant = (qualite: Qualite, mandant?: IMandant): string | unde
 const getRaisonSocialeMandant = (qualite: Qualite, mandant?: IMandant): string | undefined => {
   let resultat: string | undefined = undefined;
 
-  if (Qualite.estMandataireHabilite(qualite) && TypeMandant.estMorale(mandant?.type)) {
+  if (Qualite.estMandataireHabilite(qualite) && mandant?.type === "PERSONNE_MORALE") {
     resultat = mandant?.raisonSociale;
   }
 

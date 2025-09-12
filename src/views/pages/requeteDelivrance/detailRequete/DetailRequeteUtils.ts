@@ -1,7 +1,8 @@
+import { ETypeLienMandant } from "@model/requete/enum/ETypeLienMandant";
+import { ETypeLienRequerant } from "@model/requete/enum/ETypeLienRequerant";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
-import { TypeLienMandant } from "@model/requete/enum/TypeLienMandant";
-import { TypeLienRequerant } from "@model/requete/enum/TypeLienRequerant";
+import { ETypeMandant } from "@model/requete/enum/TypeMandant";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { EvenementRequete } from "@model/requete/IEvenementRequete";
@@ -197,10 +198,9 @@ const getNomOuRaisonSociale = (requerant: IRequerant) => {
 const getRequerantInfo2 = (requerant: IRequerant): SectionContentProps[] => {
   const infosRequerant = [] as SectionContentProps[];
 
-  const lienTitulaire =
-    requerant?.lienRequerant?.lien === TypeLienRequerant.AUTRE
-      ? requerant?.lienRequerant?.natureLien
-      : requerant?.lienRequerant?.lien.libelle;
+  const libelleLienRequerant = requerant?.lienRequerant?.lien ? ETypeLienRequerant[requerant?.lienRequerant?.lien] : "";
+
+  const lienTitulaire = requerant?.lienRequerant?.lien === "AUTRE" ? requerant?.lienRequerant?.natureLien : libelleLienRequerant;
 
   ajouterContentPartAuPartUneValeur(infosRequerant, "Type (si Mandataire ou Institutionnel", getTypeRequerant(requerant));
   ajouterContentPartAuPartUneValeur(infosRequerant, "N° de téléphone", requerant.telephone);
@@ -252,10 +252,11 @@ const getMandant = (mandant: IMandant): SectionPartProps[] => {
 
 const getMandantInfo1 = (mandant: IMandant): SectionContentProps[] => {
   const infosMandant = [] as SectionContentProps[];
+  const typeLienMandant = mandant.typeLien ? ETypeLienMandant[mandant.typeLien] : "";
 
-  const lienTitulaire = mandant?.typeLien === TypeLienMandant.AUTRE ? mandant?.natureLien : mandant?.typeLien?.libelle;
+  const lienTitulaire = mandant.typeLien === "AUTRE" ? mandant.natureLien : typeLienMandant;
 
-  ajouterContentPartAuPartUneValeur(infosMandant, "Type", mandant.type.libelle);
+  ajouterContentPartAuPartUneValeur(infosMandant, "Type", ETypeMandant[mandant.type]);
   ajouterContentPartAuPartUneValeur(infosMandant, "Lien avec titulaire", lienTitulaire);
 
   return infosMandant;

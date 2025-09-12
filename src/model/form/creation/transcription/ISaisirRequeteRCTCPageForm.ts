@@ -139,7 +139,7 @@ export interface ISaisieRequeteRCTCForm {
     natureActe: string;
     lienRequerant: keyof typeof ETypeLienRequerantCreation;
     typeRegistre: {
-      idTypeRegistre: string;
+      id: string;
       poste: string;
     };
   };
@@ -242,7 +242,7 @@ export const SaisieRequeteRCTCForm = {
         natureActe: ENatureActeTranscrit.NAISSANCE_MINEUR,
         lienRequerant: requete?.lienRequerant?.typeLienRequerant ?? "PERE_MERE",
         typeRegistre: {
-          idTypeRegistre: requete?.typeRegistre?.idTypeRegistre ?? "",
+          id: requete?.typeRegistre?.id ?? "",
           poste: requete?.typeRegistre?.poste ?? ""
         }
       },
@@ -367,7 +367,7 @@ export const SaisieRequeteRCTCForm = {
 
     return nettoyerAttributsDto({
       typeRegistre: {
-        idTypeRegistre: valeurs.requete.typeRegistre.idTypeRegistre,
+        idTypeRegistre: valeurs.requete.typeRegistre.id,
         poste: valeurs.requete.typeRegistre.poste
       },
       canal: TypeCanal.COURRIER.nom,
@@ -454,7 +454,7 @@ export const SaisieRequeteRCTCForm = {
       natureActe: SchemaValidation.texte({ obligatoire: true }),
       lienRequerant: SchemaValidation.texte({ obligatoire: true }),
       typeRegistre: SchemaValidation.objet({
-        idTypeRegistre: SchemaValidation.texte({ obligatoire: true }),
+        id: SchemaValidation.texte({ obligatoire: true }),
         poste: SchemaValidation.texte({ obligatoire: true })
       })
     }),

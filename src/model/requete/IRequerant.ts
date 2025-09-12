@@ -12,7 +12,6 @@ import {
 } from "@util/Utils";
 import { Qualite } from "./enum/Qualite";
 import { TypeInstitutionnel } from "./enum/TypeInstitutionnel";
-import { TypeLienRequerant } from "./enum/TypeLienRequerant";
 import { TypeMandataireReq } from "./enum/TypeMandataireReq";
 import { IAdresseRequerant } from "./IAdresseRequerant";
 import { IAutreProfessionnel } from "./IAutreProfessionnel";
@@ -158,7 +157,7 @@ export const Requerant = {
 function getLienRequerant(lienRequerant: any): ILienRequerant {
   return {
     id: lienRequerant.id,
-    lien: TypeLienRequerant.getEnumFor(lienRequerant.typeLienRequerant),
+    lien: lienRequerant.typeLienRequerant,
     natureLien: lienRequerant.nature
   };
 }

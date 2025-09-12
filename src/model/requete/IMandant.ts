@@ -1,16 +1,16 @@
 /* istanbul ignore file */
 
 import { formatPrenom } from "@util/Utils";
-import { TypeLienMandant } from "./enum/TypeLienMandant";
-import { TypeMandant } from "./enum/TypeMandant";
+import { ETypeLienMandant } from "./enum/ETypeLienMandant";
+import { ETypeMandant } from "./enum/TypeMandant";
 
 export interface IMandant {
   id: string;
-  type: TypeMandant;
+  type: keyof typeof ETypeMandant;
   nom?: string;
   prenom?: string;
   raisonSociale?: string;
-  typeLien?: TypeLienMandant;
+  typeLien?: keyof typeof ETypeLienMandant;
   natureLien?: string;
 }
 

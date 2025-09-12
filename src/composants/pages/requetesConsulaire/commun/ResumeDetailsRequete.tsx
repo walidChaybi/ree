@@ -4,6 +4,7 @@ import { Requete } from "@model/requete/IRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { TitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { ELibelleNatureActeTranscrit } from "@model/requete/NatureActeTranscription";
+import { ETypeLienRequerant } from "@model/requete/enum/ETypeLienRequerant";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import React, { Fragment, useMemo } from "react";
 import ConteneurDetailInformation from "../../../commun/conteneurs/ConteneurDetailInformation";
@@ -183,7 +184,7 @@ const ResumeDetailsRequete: React.FC<IPartieGaucheSaisieProjetProps> = ({ requet
               <ConteneurDetailInformation
                 key="requerant-lien"
                 libelle="Requérant"
-                valeur={requete.requerant?.lienRequerant?.lien?.libelle}
+                valeur={requete.requerant?.lienRequerant?.lien ? ETypeLienRequerant[requete.requerant?.lienRequerant?.lien] : ""}
               />
               <ConteneurDetailInformation
                 libelle="Courriel"

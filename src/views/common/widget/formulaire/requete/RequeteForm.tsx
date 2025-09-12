@@ -5,14 +5,6 @@ import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { Options } from "@util/Type";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
-import * as Yup from "yup";
-import {
-  DOCUMENT_DEMANDE_OBLIGATOIRE,
-  NATURE_ACTE_OBLIGATOIRE,
-  NB_EXEMPLAIRE_MAXIMUM,
-  NB_EXEMPLAIRE_MINIMUM,
-  NB_EXEMPLAIRE_OBLIGATOIRE
-} from "../FormulaireMessages";
 import { SousFormulaire } from "../SousFormulaire";
 import { InputField } from "../champsSaisie/InputField";
 import { OptionVide, SelectField } from "../champsSaisie/SelectField";
@@ -20,7 +12,7 @@ import { NB_CARACT_MAX_SAISIE, SubFormProps, withNamespace } from "../utils/Form
 import "./scss/RequeteForm.scss";
 
 // Valeurs par défaut des champs
-export const RequeteFormDefaultValues = {
+const RequeteFormDefaultValues = {
   [NATURE_ACTE]: "NAISSANCE",
   [DOCUMENT_DEMANDE]: "",
   [NB_EXEMPLAIRE]: "1",
@@ -31,29 +23,6 @@ export const RequeteFormDefaultValues = {
 const NB_EXEMPLAIRE_MAX = 5;
 
 const LISTE_DOCUMENT_DEMANDE_DECES = [ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE, ECodeDocumentDelivrance.CODE_EXTRAIT_PLURILINGUE];
-
-// Schéma de validation des champs
-export const RequeteFormValidationSchema = Yup.object()
-  .shape({
-    [NATURE_ACTE]: Yup.string().required(NATURE_ACTE_OBLIGATOIRE),
-    [DOCUMENT_DEMANDE]: Yup.string().required(DOCUMENT_DEMANDE_OBLIGATOIRE),
-    [NB_EXEMPLAIRE]: Yup.number()
-      .min(1, NB_EXEMPLAIRE_MINIMUM)
-      .max(NB_EXEMPLAIRE_MAX, NB_EXEMPLAIRE_MAXIMUM)
-      .required(NB_EXEMPLAIRE_OBLIGATOIRE),
-    [MOTIF]: Yup.string().notRequired(),
-    [COMPLEMENT_MOTIF]: Yup.string()
-  })
-  .test("complementMotifObligatoire", function (value, error) {
-    const motif = value[MOTIF] as string;
-    const complementMotif = value[COMPLEMENT_MOTIF] as string;
-
-    const paramsError = {
-      path: `${error.path}.complementMotif`,
-      message: 'La saisie d\'un complement motif est obligatoire pour un motif "Autre"'
-    };
-    return motif === "AUTRE" && complementMotif == null ? this.createError(paramsError) : true;
-  });
 
 const RequeteForm: React.FC<SubFormProps & { champDocumentDemandeCharge?: boolean }> = props => {
   const [documentDemandeOptions, setDocumentDemandeOptions] = useState<Options>(

@@ -28,14 +28,6 @@ export const RequerantFormDefaultValues = {
   [PARTICULIER]: ParticulierFormDefaultValues
 };
 
-export const TitulairesFormDefaultValues = {
-  [TYPE_REQUERANT]: "TITULAIRE1",
-  [MANDATAIRE]: MandataireFormDefaultValues,
-  [INSTITUTI0NNEL]: InstitutionnelFormDefaultValues,
-  [PARTICULIER]: ParticulierFormDefaultValues,
-  [AUTRE_PROFESSIONNEL]: AutreProfessionnelFormDefaultValues
-};
-
 // Schéma de validation des champs
 export const RequerantFormValidationSchema = Yup.object()
   .shape({
