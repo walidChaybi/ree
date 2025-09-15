@@ -134,10 +134,10 @@ const PageSaisieCourrierTranscription: React.FC = () => {
                     <div className="flex gap-4">
                       <Bouton
                         type="submit"
-                        title={idRequeteParam ? "Valider" : "Enregistrer"}
+                        title={idRequeteParam ? "Valider" : "Enregistrer la requête"}
                         disabled={Boolean(idRequeteParam) && !dirty}
                       >
-                        {idRequeteParam ? "Valider" : "Enregistrer"}
+                        {idRequeteParam ? "Valider" : "Enregistrer la requête"}
                       </Bouton>
                       {!idRequeteParam && optionsServices && <TransmissionService optionsServices={optionsServices} />}
                     </div>
