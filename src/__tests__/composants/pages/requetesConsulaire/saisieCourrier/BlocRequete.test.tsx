@@ -9,19 +9,22 @@ import { render, waitFor } from "@testing-library/react";
 import { Form, Formik } from "formik";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import BlocRequete from "../../../../../composants/pages/requetesConsulaire/saisieCourrier/BlocRequete";
-import CacheOptionsPoste from "../../../../../utils/CacheOptionsPoste";
+import CacheOptionsTypeRegistre from "../../../../../utils/CacheOptionsTypeRegistre";
 
 describe("Test rendu du bloc requete en saisie courrier", async () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    CacheOptionsPoste.clearPostes();
+    CacheOptionsTypeRegistre.clearTypeRegistres();
   });
 
   afterEach(() => {
     vi.resetAllMocks();
   });
   test("DOIT afficher le composant bloc requete de saisie de courrier", () => {
-    MockApi.deployer(CONFIG_GET_POCOPAS_PAR_FAMILLE_REGISTRE, { path: { familleRegistre: "CSL" }, query: { seulementPocopaOuvert: true } });
+    MockApi.deployer(CONFIG_GET_POCOPAS_PAR_FAMILLE_REGISTRE, {
+      path: { familleRegistre: "CSL" },
+      query: { seulementPocopaOuvert: true }
+    });
 
     const { container } = render(
       <MockRECEContextProvider

@@ -452,7 +452,7 @@ export const requeteCreationTranscription: IRequeteCreationTranscription = {
   dossierOrigines: null,
   decret: null,
   typeRegistre: {
-    idTypeRegistre: "7a091a3b-6835-4824-94fb-527d62926d45",
+    id: "7a091a3b-6835-4824-94fb-527d62926d45",
     poste: "CASABLANCA"
   }
 } as any as IRequeteCreationTranscription;

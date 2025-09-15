@@ -1,18 +1,18 @@
 import { CONFIG_GET_POCOPAS_PAR_FAMILLE_REGISTRE } from "@api/configurations/etatCivil/pocopa/GetPocopasParFamilleRegistreConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
-import { ITypeRegistrePocopaDto } from "@model/etatcivil/acte/TypeRegistre";
+import { ITypeRegistreDto } from "@model/etatcivil/acte/TypeRegistre";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Form, Formik } from "formik";
 import { useState } from "react";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import ChampRecherchePocopas from "../../../../composants/commun/champs/ChampRecherchePocopas";
-import CacheOptionsPoste from "../../../../utils/CacheOptionsPoste";
+import CacheOptionsTypeRegistre from "../../../../utils/CacheOptionsTypeRegistre";
 
 vi.mock("../../../../../hooks/utilitaires/UseDelai", () => ({
   useDelai: (initialValue: string) => useState(initialValue)
 }));
 
-const mockPostesDto: ITypeRegistrePocopaDto[] = [
+const mockPostesDto: ITypeRegistreDto[] = [
   { poste: "TUNIS", id: "1", pocopa: "" },
   { poste: "TURIN", id: "12", pocopa: "" },
   { poste: "TURIN ET GENES", id: "123", pocopa: "" }
@@ -36,7 +36,7 @@ const MockForm: React.FC<{ villeRegistre: string }> = ({ villeRegistre }) => (
 describe("Test ChampRecherche pocopa", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    CacheOptionsPoste.clearPostes();
+    CacheOptionsTypeRegistre.clearTypeRegistres();
   });
 
   afterEach(() => {
@@ -78,8 +78,8 @@ describe("Test ChampRecherche pocopa", () => {
   });
 
   test("DOIT utiliser les données du cache QUAND les données sont disponibles", async () => {
-    vi.spyOn(CacheOptionsPoste, "getPostesFamilleRegistre");
-    CacheOptionsPoste.setPostesFamilleRegistre("CSL", mockPostesDto);
+    vi.spyOn(CacheOptionsTypeRegistre, "getTypeRegistresParFamilleRegistre");
+    CacheOptionsTypeRegistre.setTypeRegistresParFamilleRegistre("CSL", mockPostesDto);
     render(<MockForm villeRegistre={""}></MockForm>);
 
     const mockApi = MockApi.getMock();
@@ -91,7 +91,7 @@ describe("Test ChampRecherche pocopa", () => {
     fireEvent.keyDown(input, { key: "Enter" });
 
     await waitFor(() => {
-      expect(CacheOptionsPoste.getPostesFamilleRegistre).toHaveBeenCalledWith("CSL");
+      expect(CacheOptionsTypeRegistre.getTypeRegistresParFamilleRegistre).toHaveBeenCalledWith("CSL");
     });
 
     await waitFor(() => {

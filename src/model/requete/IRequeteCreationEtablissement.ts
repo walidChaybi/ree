@@ -1,3 +1,4 @@
+import { ITypeRegistreDto } from "@model/etatcivil/acte/TypeRegistre";
 import ETypeLienRequerantCreation from "./enum/ETypeLienRequerantCreation";
 import { Provenance } from "./enum/Provenance";
 import { SousTypeCreation } from "./enum/SousTypeCreation";
@@ -41,10 +42,7 @@ export interface IRequeteCreationEtablissement extends IRequete {
   numeroDossier?: string;
   natureActeTranscrit: ENatureActeTranscrit;
   personnesSauvegardees: IPersonneSauvegardee[];
-  typeRegistre: {
-    idTypeRegistre: string;
-    poste: string;
-  };
+  typeRegistre: ITypeRegistreDto;
 }
 
 export const RequeteCreationEtablissement = {

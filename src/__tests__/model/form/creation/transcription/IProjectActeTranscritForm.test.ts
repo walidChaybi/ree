@@ -743,7 +743,7 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
       modeCreation: ETypeRedactionActe.TRANSCRIT,
       nature: "NAISSANCE",
       typeRegistre: {
-        idTypeRegistre: "7a091a3b-6835-4824-94fb-527d62926d45",
+        id: "7a091a3b-6835-4824-94fb-527d62926d45",
         poste: "CASABLANCA"
       }
     };

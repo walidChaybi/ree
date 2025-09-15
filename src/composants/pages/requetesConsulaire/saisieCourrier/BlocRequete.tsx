@@ -1,7 +1,7 @@
 import { CONFIG_GET_POSTES } from "@api/configurations/etatCivil/pocopa/GetPostesConfigApi";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
-import { ITypeRegistrePocopaDto, TypeRegistrePocopa } from "@model/etatcivil/acte/TypeRegistre";
+import { ITypeRegistreDto, TypeRegistre } from "@model/etatcivil/acte/TypeRegistre";
 import { ISaisieRequeteRCTCForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
 import { ELibelleNatureActeTranscrit, ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
 import ETypeLienRequerantCreation from "@model/requete/enum/ETypeLienRequerantCreation";
@@ -11,7 +11,7 @@ import { useFormikContext } from "formik";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
-import CacheOptionsPoste from "../../../../utils/CacheOptionsPoste";
+import CacheOptionsTypeRegistre from "../../../../utils/CacheOptionsTypeRegistre";
 import ChampListeDeroulante from "../../../commun/champs/ChampListeDeroulante";
 import ChampRecherchePostes from "../../../commun/champs/ChampRecherchePocopas";
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
@@ -24,7 +24,7 @@ const OPTIONS_LIEN_REQUERANT = enumVersOptions(ETypeLienRequerantCreation);
 const BlocRequete: React.FC = () => {
   const { setFieldError, setFieldValue, values } = useFormikContext<ISaisieRequeteRCTCForm>();
   const { utilisateurConnecte } = useContext(RECEContextData);
-  const [postes, setPostes] = useState<ITypeRegistrePocopaDto[] | []>([]);
+  const [postes, setPostes] = useState<ITypeRegistreDto[] | []>([]);
   const { appelApi: appelGetPostes } = useFetchApi(CONFIG_GET_POSTES);
 
   const estHabiliteSaisieRequeteTousRegistre = useMemo(
@@ -39,7 +39,7 @@ const BlocRequete: React.FC = () => {
   useEffect(() => {
     if (estHabiliteSaisieRequeteTousRegistre) return;
 
-    const postesEnCache = CacheOptionsPoste.getPostesFamilleRegistre("CSL");
+    const postesEnCache = CacheOptionsTypeRegistre.getTypeRegistresParFamilleRegistre("CSL");
     if (postesEnCache?.length) {
       setPostes(postesEnCache);
       return;
@@ -53,8 +53,8 @@ const BlocRequete: React.FC = () => {
           return;
         }
 
-        CacheOptionsPoste.setPostesFamilleRegistre("CSL", posteDtos);
-        setPostes(TypeRegistrePocopa.depuisDtos(posteDtos));
+        CacheOptionsTypeRegistre.setTypeRegistresParFamilleRegistre("CSL", posteDtos);
+        setPostes(TypeRegistre.depuisDtos(posteDtos));
       }
     });
   }, []);
@@ -96,7 +96,7 @@ const BlocRequete: React.FC = () => {
           <ChampListeDeroulante
             name="requete.typeRegistre.poste"
             libelle="Poste"
-            options={(postes.length === 1 ? [] : [{ cle: "", libelle: "" }]).concat(TypeRegistrePocopa.versOptionsPoste(postes))}
+            options={(postes.length === 1 ? [] : [{ cle: "", libelle: "" }]).concat(TypeRegistre.versOptions(postes))}
             disabled={!postes.length}
             estObligatoire
             apresChangement={valeur => {

@@ -143,7 +143,7 @@ export const projetActeNaissanceDto: IProjetActeTranscritDto = {
   visibiliteArchiviste: "",
   mentions: [],
   typeRegistre: {
-    idTypeRegistre: "7a091a3b-6835-4824-94fb-527d62926d45",
+    id: "7a091a3b-6835-4824-94fb-527d62926d45",
     poste: "CASABLANCA"
   }
 };
@@ -275,7 +275,7 @@ export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
   analyseMarginales: [],
   mentions: [],
   typeRegistre: {
-    idTypeRegistre: "7a091a3b-6835-4824-94fb-527d62926d45",
+    id: "7a091a3b-6835-4824-94fb-527d62926d45",
     poste: "CASABLANCA"
   }
 };
@@ -425,7 +425,7 @@ export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
   mentions: [],
   statut: "BROUILLON",
   typeRegistre: {
-    idTypeRegistre: "7a091a3b-6835-4824-94fb-527d62926d45",
+    id: "7a091a3b-6835-4824-94fb-527d62926d45",
     poste: "CASABLANCA"
   }
 };

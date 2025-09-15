@@ -1,11 +1,11 @@
 import { CONFIG_GET_POCOPAS_PAR_FAMILLE_REGISTRE } from "@api/configurations/etatCivil/pocopa/GetPocopasParFamilleRegistreConfigApi";
-import { ITypeRegistrePocopaDto } from "@model/etatcivil/acte/TypeRegistre";
+import { ITypeRegistreDto, TypeRegistre } from "@model/etatcivil/acte/TypeRegistre";
 import { EFamilleRegistre, FAMILLES_SANS_POCOPA } from "@model/etatcivil/enum/TypeFamille";
 import Autocomplete from "@mui/material/Autocomplete";
 import { getIn, useField, useFormikContext } from "formik";
 import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
-import CacheOptionsPoste from "../../../utils/CacheOptionsPoste";
+import CacheOptionsTypeRegistre from "../../../utils/CacheOptionsTypeRegistre";
 import { InputChampRecherche } from "./geoApi/InputChampRechercheGeo";
 
 type TChampRecherchePocopasProps = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -31,8 +31,8 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
   disabled,
   estObligatoire
 }) => {
-  const [pocopas, setPocopas] = useState<ITypeRegistrePocopaDto[]>([]);
-  const { values, setFieldValue } = useFormikContext();
+  const [typeRegistres, setTypeRegistres] = useState<ITypeRegistreDto[]>([]);
+  const { values } = useFormikContext();
   const [field, meta, helpers] = useField(name);
 
   const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
@@ -44,19 +44,20 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
     [values]
   );
 
-  const estTypeFamilleMAR = useMemo(() => valeurFamilleRegistre === TYPE_FAMILLE_MAR, [valeurFamilleRegistre]);
+  const estTypeFamilleMAR = valeurFamilleRegistre === TYPE_FAMILLE_MAR;
 
-  const cheminIdTypeRegistre = useMemo(() => `${name.split(".").slice(0, -1).join(".")}.id`, [name]);
+  const typeDeRegistre = useMemo(() => TypeRegistre.getTypeDeRegistre(typeRegistres), [typeRegistres]);
 
   useEffect(() => {
     if (!valeurFamilleRegistre || [...FAMILLES_SANS_POCOPA, TYPE_FAMILLE_MAR].includes(valeurFamilleRegistre)) {
-      setPocopas([]);
+      setTypeRegistres([]);
       return;
     }
 
-    const postesEnCache = CacheOptionsPoste.getPostesFamilleRegistre(valeurFamilleRegistre);
-    if (Array.isArray(postesEnCache)) {
-      setPocopas(postesEnCache);
+    const typeRegistreEnCache = CacheOptionsTypeRegistre.getTypeRegistresParFamilleRegistre(valeurFamilleRegistre);
+
+    if (Array.isArray(typeRegistreEnCache)) {
+      setTypeRegistres(typeRegistreEnCache);
       return;
     }
 
@@ -67,13 +68,12 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
           seulementPocopaOuvert: optionsRecherchePocopa.seulementPocopaOuvert ?? true
         }
       },
-      apresSucces: pocopaDtos => {
-        CacheOptionsPoste.setPostesFamilleRegistre(valeurFamilleRegistre, pocopaDtos);
-
-        setPocopas(pocopaDtos);
+      apresSucces: typeRegistreDto => {
+        CacheOptionsTypeRegistre.setTypeRegistresParFamilleRegistre(valeurFamilleRegistre, typeRegistreDto);
+        setTypeRegistres(TypeRegistre.depuisDtos(typeRegistreDto));
       },
       apresErreur: erreur => {
-        console.error("Erreur lors de la récupération des postes", erreur);
+        console.error("Erreur lors de la récupération des types registres", erreur);
       }
     });
   }, [valeurFamilleRegistre]);
@@ -82,7 +82,7 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
     if (estTypeFamilleMAR) {
       helpers.setValue("TR-ACTES");
     }
-  }, [pocopas]);
+  }, [typeRegistres]);
 
   return (
     <div className={`relative flex w-full flex-col text-start ${className ?? ""} ${enErreur ? "text-rouge" : ""}`.trim()}>
@@ -96,28 +96,35 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
 
       <Autocomplete
         id={name}
-        options={pocopas}
-        value={pocopas.find(p => (p.poste || p.pocopa) === field.value) || null}
+        options={typeRegistres}
+        value={typeRegistres.find(typeRegistre => typeRegistre[typeDeRegistre] === field.value)}
         loading={enAttenteDeReponseApi}
-        getOptionLabel={option => option.poste || option.pocopa || ""}
+        getOptionLabel={option => option[typeDeRegistre] ?? ""}
         loadingText="Recherche en cours..."
         onInputChange={(_, nouvelleValeur, raison) => {
-          if (raison === "input") helpers.setValue(nouvelleValeur);
+          if (raison === "input") {
+            helpers.setValue(nouvelleValeur);
+          }
         }}
-        filterOptions={(options, { inputValue }) =>
-          !inputValue ? options : options.filter(opt => opt.poste.toLowerCase().startsWith(inputValue.toLowerCase()))
-        }
-        isOptionEqualToValue={(option, valeur) => option.poste === valeur.poste}
-        noOptionsText={!field.value ? "Aucun résultat" : `Aucun poste trouvé pour ${field.value}`}
-        onChange={(_, itemSelectionne: ITypeRegistrePocopaDto | null) => {
-          const valeurADefinir = itemSelectionne ? itemSelectionne.poste || itemSelectionne.pocopa || "" : "";
-          helpers.setValue(valeurADefinir);
-          setFieldValue(cheminIdTypeRegistre, itemSelectionne?.id ?? "");
+        filterOptions={(options, { inputValue }) => {
+          if (!inputValue) return options;
+          return options.filter(option => option[typeDeRegistre]?.toLowerCase().startsWith(inputValue.toLowerCase()));
+        }}
+        isOptionEqualToValue={(option, value) => option[typeDeRegistre] === value[typeDeRegistre]}
+        noOptionsText={!field.value ? "Aucun résultat" : `Aucun ${typeDeRegistre} trouvé pour ${field.value}`}
+        onChange={(_, valeurSelectionne: ITypeRegistreDto | null) => {
+          helpers.setValue(valeurSelectionne?.[typeDeRegistre]);
         }}
         disabled={disabled}
         readOnly={estTypeFamilleMAR}
         componentsProps={{
-          popper: { sx: { "& .MuiAutocomplete-listbox": { padding: 0 } } }
+          popper: {
+            sx: {
+              "& .MuiAutocomplete-listbox": {
+                padding: 0
+              }
+            }
+          }
         }}
         renderInput={params => (
           <InputChampRecherche
@@ -126,15 +133,18 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
             {...params}
           />
         )}
-        renderOption={(props, pocopa) => (
-          <li
-            className="cursor-pointer items-center justify-between border-b border-gray-100 px-3 py-2 last:border-b-0 hover:bg-bleu hover:text-blanc [&.Mui-focused]:bg-bleu [&.Mui-focused]:text-blanc"
-            {...props}
-            key={pocopa.id}
-          >
-            {pocopa.poste || pocopa.pocopa || ""}
-          </li>
-        )}
+        renderOption={(renderProps, typeRegistre) => {
+          const { ...props } = renderProps;
+          return (
+            <li
+              className="cursor-pointer items-center justify-between border-b border-gray-100 px-3 py-2 last:border-b-0 hover:bg-bleu hover:text-blanc [&.Mui-focused]:bg-bleu [&.Mui-focused]:text-blanc"
+              {...props}
+              key={typeRegistre.id}
+            >
+              {typeRegistre[typeDeRegistre]}
+            </li>
+          );
+        }}
       />
     </div>
   );

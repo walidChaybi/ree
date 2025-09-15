@@ -571,7 +571,10 @@ export const ProjetActeNaissanceTranscriptionForm = {
       visibiliteArchiviste: TypeVisibiliteArchiviste.getKey(TypeVisibiliteArchiviste.NON),
       declarant: mapDeclarantProjectActe(valeursSaisies),
       mentions: [],
-      typeRegistre: { idTypeRegistre: requete.typeRegistre.idTypeRegistre, poste: requete.typeRegistre.poste }
+      typeRegistre: {
+        id: requete.typeRegistre.id,
+        poste: requete.typeRegistre.poste
+      }
     };
   },
   versDtoPatch: (
