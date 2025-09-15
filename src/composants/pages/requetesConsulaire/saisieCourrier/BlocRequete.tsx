@@ -62,7 +62,7 @@ const BlocRequete: React.FC = () => {
   useEffect(() => {
     if (postes.length === 1 && !values.requete.typeRegistre.poste) {
       setFieldValue("requete.typeRegistre", {
-        idTypeRegistre: postes[0].id,
+        id: postes[0].id,
         poste: postes[0].poste
       });
     }
