@@ -61,8 +61,7 @@ const FormulaireSaisieProjet: React.FC = () => {
       parametres: {
         valeursSaisies: valeursSaisies,
         projetActe: projetActe,
-        idRequete: requete.id,
-        idSuiviDossier: requete.titulaires?.[0]?.suiviDossiers?.[0]?.idSuiviDossier ?? ""
+        requete: requete
       },
       apresSucces: projetActeReponse => {
         mettreAJourDonneesContext(
@@ -89,8 +88,7 @@ const FormulaireSaisieProjet: React.FC = () => {
       parametres: {
         valeursSaisies: valeursSaisies,
         projetActe: projetActe,
-        idRequete: requete.id,
-        idSuiviDossier: requete.titulaires?.[0]?.suiviDossiers?.[0]?.idSuiviDossier ?? ""
+        requete: requete
       },
       apresSucces: projetActeReponse => {
         mettreAJourDonneesContext(projetActeReponse || projetActe, null);

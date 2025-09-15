@@ -1,12 +1,12 @@
-import { ITypeRegistreDto } from "@model/etatcivil/acte/TypeRegistre";
+import { ITypeRegistrePocopaDto } from "@model/etatcivil/acte/TypeRegistre";
 
 class CacheOptionsPoste {
-  private static postesParFamilleRegistre: Record<string, ITypeRegistreDto[]> = {};
+  private static postesParFamilleRegistre: Record<string, ITypeRegistrePocopaDto[]> = {};
 
-  public static readonly getPostesFamilleRegistre = (familleRegistre: string): ITypeRegistreDto[] | null =>
+  public static readonly getPostesFamilleRegistre = (familleRegistre: string): ITypeRegistrePocopaDto[] | null =>
     CacheOptionsPoste.postesParFamilleRegistre[familleRegistre] ?? null;
 
-  public static setPostesFamilleRegistre = (familleRegistre: string, postes: ITypeRegistreDto[]): void => {
+  public static setPostesFamilleRegistre = (familleRegistre: string, postes: ITypeRegistrePocopaDto[]): void => {
     CacheOptionsPoste.postesParFamilleRegistre[familleRegistre] = postes;
   };
 

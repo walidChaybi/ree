@@ -242,7 +242,7 @@ export const SaisieRequeteRCTCForm = {
         natureActe: ENatureActeTranscrit.NAISSANCE_MINEUR,
         lienRequerant: requete?.lienRequerant?.typeLienRequerant ?? "PERE_MERE",
         typeRegistre: {
-          id: requete?.typeRegistre?.id ?? "",
+          id: requete?.typeRegistre?.idTypeRegistre ?? "",
           poste: requete?.typeRegistre?.poste ?? ""
         }
       },

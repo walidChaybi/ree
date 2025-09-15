@@ -45,7 +45,7 @@ describe("Test rendu du bloc requete en saisie courrier", async () => {
   });
 
   test("DOIT afficher le champ select QUAND l'utilisateur n'éxerce pas sur le pémimètre TOUS_REGISTRE", async () => {
-    MockApi.deployer(CONFIG_GET_POSTES, {}, { data: [{ id: "123", poste: "Test 1" }] });
+    MockApi.deployer(CONFIG_GET_POSTES, {}, { data: [{ id: "123", poste: "Test 1", pocopa: "" }] });
 
     const { container } = render(
       <MockRECEContextProvider
@@ -57,7 +57,7 @@ describe("Test rendu du bloc requete en saisie courrier", async () => {
           initialValues={{
             requete: {
               typeRegistre: {
-                id: "",
+                idTypeRegistre: "",
                 poste: ""
               }
             }

@@ -1,7 +1,7 @@
 import { CONFIG_GET_POSTES } from "@api/configurations/etatCivil/pocopa/GetPostesConfigApi";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
-import { ITypeRegistreDto, TypeRegistre } from "@model/etatcivil/acte/TypeRegistre";
+import { ITypeRegistrePocopaDto, TypeRegistrePocopa } from "@model/etatcivil/acte/TypeRegistre";
 import { ISaisieRequeteRCTCForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
 import { ELibelleNatureActeTranscrit, ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
 import ETypeLienRequerantCreation from "@model/requete/enum/ETypeLienRequerantCreation";
@@ -24,7 +24,7 @@ const OPTIONS_LIEN_REQUERANT = enumVersOptions(ETypeLienRequerantCreation);
 const BlocRequete: React.FC = () => {
   const { setFieldError, setFieldValue, values } = useFormikContext<ISaisieRequeteRCTCForm>();
   const { utilisateurConnecte } = useContext(RECEContextData);
-  const [postes, setPostes] = useState<ITypeRegistreDto[] | []>([]);
+  const [postes, setPostes] = useState<ITypeRegistrePocopaDto[] | []>([]);
   const { appelApi: appelGetPostes } = useFetchApi(CONFIG_GET_POSTES);
 
   const estHabiliteSaisieRequeteTousRegistre = useMemo(
@@ -54,7 +54,7 @@ const BlocRequete: React.FC = () => {
         }
 
         CacheOptionsPoste.setPostesFamilleRegistre("CSL", posteDtos);
-        setPostes(TypeRegistre.depuisDtos(posteDtos));
+        setPostes(TypeRegistrePocopa.depuisDtos(posteDtos));
       }
     });
   }, []);
@@ -62,7 +62,7 @@ const BlocRequete: React.FC = () => {
   useEffect(() => {
     if (postes.length === 1 && !values.requete.typeRegistre.poste) {
       setFieldValue("requete.typeRegistre", {
-        id: postes[0].id,
+        idTypeRegistre: postes[0].id,
         poste: postes[0].poste
       });
     }
@@ -96,7 +96,7 @@ const BlocRequete: React.FC = () => {
           <ChampListeDeroulante
             name="requete.typeRegistre.poste"
             libelle="Poste"
-            options={(postes.length === 1 ? [] : [{ cle: "", libelle: "" }]).concat(TypeRegistre.versOptions(postes))}
+            options={(postes.length === 1 ? [] : [{ cle: "", libelle: "" }]).concat(TypeRegistrePocopa.versOptionsPoste(postes))}
             disabled={!postes.length}
             estObligatoire
             apresChangement={valeur => {

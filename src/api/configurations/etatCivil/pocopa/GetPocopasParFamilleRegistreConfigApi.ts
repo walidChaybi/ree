@@ -1,6 +1,6 @@
 import { ETATCIVIL_API } from "@api/ApiDisponibles";
 import { TConfigurationApi } from "@model/api/Api";
-import { ITypeRegistreDto } from "@model/etatcivil/acte/TypeRegistre";
+import { ITypeRegistrePocopaDto } from "@model/etatcivil/acte/TypeRegistre";
 
 interface IGetPocopasParFamilleRegistreParams {
   seulementPocopaOuvert: boolean;
@@ -12,7 +12,7 @@ export const CONFIG_GET_POCOPAS_PAR_FAMILLE_REGISTRE: TConfigurationApi<
   typeof URI,
   undefined,
   IGetPocopasParFamilleRegistreParams,
-  ITypeRegistreDto[] | []
+  ITypeRegistrePocopaDto[] | []
 > = {
   api: ETATCIVIL_API,
   methode: "GET",

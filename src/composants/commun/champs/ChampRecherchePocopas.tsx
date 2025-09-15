@@ -1,5 +1,5 @@
 import { CONFIG_GET_POCOPAS_PAR_FAMILLE_REGISTRE } from "@api/configurations/etatCivil/pocopa/GetPocopasParFamilleRegistreConfigApi";
-import { ITypeRegistreDto } from "@model/etatcivil/acte/TypeRegistre";
+import { ITypeRegistrePocopaDto } from "@model/etatcivil/acte/TypeRegistre";
 import { EFamilleRegistre, FAMILLES_SANS_POCOPA } from "@model/etatcivil/enum/TypeFamille";
 import Autocomplete from "@mui/material/Autocomplete";
 import { getIn, useField, useFormikContext } from "formik";
@@ -31,7 +31,7 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
   disabled,
   estObligatoire
 }) => {
-  const [pocopas, setPocopas] = useState<ITypeRegistreDto[]>([]);
+  const [pocopas, setPocopas] = useState<ITypeRegistrePocopaDto[]>([]);
   const { values, setFieldValue } = useFormikContext();
   const [field, meta, helpers] = useField(name);
 
@@ -97,9 +97,9 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
       <Autocomplete
         id={name}
         options={pocopas}
-        value={pocopas.find(p => p.poste === field.value) || null}
+        value={pocopas.find(p => (p.poste || p.pocopa) === field.value) || null}
         loading={enAttenteDeReponseApi}
-        getOptionLabel={option => option.poste ?? ""}
+        getOptionLabel={option => option.poste || option.pocopa || ""}
         loadingText="Recherche en cours..."
         onInputChange={(_, nouvelleValeur, raison) => {
           if (raison === "input") helpers.setValue(nouvelleValeur);
@@ -109,9 +109,10 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
         }
         isOptionEqualToValue={(option, valeur) => option.poste === valeur.poste}
         noOptionsText={!field.value ? "Aucun résultat" : `Aucun poste trouvé pour ${field.value}`}
-        onChange={(_, posteSelectionne: ITypeRegistreDto | null) => {
-          helpers.setValue(posteSelectionne?.poste ?? "");
-          setFieldValue(cheminIdTypeRegistre, posteSelectionne?.id ?? "");
+        onChange={(_, itemSelectionne: ITypeRegistrePocopaDto | null) => {
+          const valeurADefinir = itemSelectionne ? itemSelectionne.poste || itemSelectionne.pocopa || "" : "";
+          helpers.setValue(valeurADefinir);
+          setFieldValue(cheminIdTypeRegistre, itemSelectionne?.id ?? "");
         }}
         disabled={disabled}
         readOnly={estTypeFamilleMAR}
@@ -131,7 +132,7 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
             {...props}
             key={pocopa.id}
           >
-            {pocopa.poste}
+            {pocopa.poste || pocopa.pocopa || ""}
           </li>
         )}
       />

@@ -7,6 +7,7 @@ import DateRECE from "../../../../../utils/DateRECE";
 import { IActeEtrangerDto } from "../../IActeEtrangerDto";
 import { ICorpsTexte } from "../../ICorpsTexte";
 import { IMention } from "../../mention/IMention";
+import { ITypeRegistreRequeteDto } from "../../TypeRegistre";
 import { AnalyseMarginaleProjetActeTranscrit, IAnalyseMarginaleProjetActeTranscritDto } from "./AnalyseMarginaleProjetActeTranscrit";
 import { DeclarantProjetActeTranscrit, IDeclarantProjetActeTranscritDto } from "./DeclarantProjetActeTranscrit";
 import { EvenementProjetActeTranscrit, IEvenementProjetActeTranscritDto } from "./EvenementProjetActeTranscrit";
@@ -31,6 +32,7 @@ export interface IProjetActeTranscritDto {
   acteEtranger: IActeEtrangerDto;
   visibiliteArchiviste: string;
   mentions: IMention[];
+  typeRegistre: ITypeRegistreRequeteDto;
 }
 
 export type IProjetActeTranscritPatchDto = Omit<IProjetActeTranscritDto, "dateCreation" | "dateStatut" | "dateDerniereMaj" | "corpsTexte">;

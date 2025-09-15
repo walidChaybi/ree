@@ -141,7 +141,11 @@ export const projetActeNaissanceDto: IProjetActeTranscritDto = {
     mentions: undefined
   },
   visibiliteArchiviste: "",
-  mentions: []
+  mentions: [],
+  typeRegistre: {
+    idTypeRegistre: "7a091a3b-6835-4824-94fb-527d62926d45",
+    poste: "CASABLANCA"
+  }
 };
 
 export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
@@ -269,7 +273,11 @@ export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
     prepositionLieu: "A"
   },
   analyseMarginales: [],
-  mentions: []
+  mentions: [],
+  typeRegistre: {
+    idTypeRegistre: "7a091a3b-6835-4824-94fb-527d62926d45",
+    poste: "CASABLANCA"
+  }
 };
 
 export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
@@ -415,7 +423,11 @@ export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
     }
   ],
   mentions: [],
-  statut: "BROUILLON"
+  statut: "BROUILLON",
+  typeRegistre: {
+    idTypeRegistre: "7a091a3b-6835-4824-94fb-527d62926d45",
+    poste: "CASABLANCA"
+  }
 };
 
 export const projetActe = ProjetActeTranscrit.depuisDto(projetActeNaissanceDto);

@@ -1,6 +1,6 @@
 import { CONFIG_GET_POCOPAS_PAR_FAMILLE_REGISTRE } from "@api/configurations/etatCivil/pocopa/GetPocopasParFamilleRegistreConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
-import { ITypeRegistreDto } from "@model/etatcivil/acte/TypeRegistre";
+import { ITypeRegistrePocopaDto } from "@model/etatcivil/acte/TypeRegistre";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Form, Formik } from "formik";
 import { useState } from "react";
@@ -12,10 +12,10 @@ vi.mock("../../../../../hooks/utilitaires/UseDelai", () => ({
   useDelai: (initialValue: string) => useState(initialValue)
 }));
 
-const mockPostesDto: ITypeRegistreDto[] = [
-  { poste: "TUNIS", id: "1" },
-  { poste: "TURIN", id: "12" },
-  { poste: "TURIN ET GENES", id: "123" }
+const mockPostesDto: ITypeRegistrePocopaDto[] = [
+  { poste: "TUNIS", id: "1", pocopa: "" },
+  { poste: "TURIN", id: "12", pocopa: "" },
+  { poste: "TURIN ET GENES", id: "123", pocopa: "" }
 ];
 
 const MockForm: React.FC<{ villeRegistre: string }> = ({ villeRegistre }) => (

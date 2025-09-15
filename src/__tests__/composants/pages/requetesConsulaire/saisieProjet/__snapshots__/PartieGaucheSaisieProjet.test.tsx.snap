@@ -177,6 +177,24 @@ exports[`PartieGaucheSaisieProjet - Tests du composant > Doit afficher correctem
                           </div>
                         </div>
                       </div>
+                      <div
+                        class="mb-5 text-left"
+                      >
+                        <div
+                          class="mb-1 text-left text-xs uppercase text-gray-500"
+                        >
+                          Poste
+                        </div>
+                        <div
+                          class="relative z-50 inline-block w-full"
+                        >
+                          <div
+                            class="line-clamp-3 max-w-72 text-ellipsis break-words "
+                          >
+                            CASABLANCA
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

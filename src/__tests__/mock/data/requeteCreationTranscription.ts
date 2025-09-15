@@ -105,7 +105,7 @@ export const requeteCreationTranscription: IRequeteCreationTranscription = {
           estPrenomFrRetenuSdanf: null
         }
       ],
-      suiviDossiers: [],
+      suiviDossiers: [{ idSuiviDossier: "12563" }],
       retenueSdanf: {
         id: "3ed91bb9-1949-4625-b06f-7ce487f8f827",
         nomNaissance: "nomNaissance",
@@ -450,7 +450,11 @@ export const requeteCreationTranscription: IRequeteCreationTranscription = {
   nature: "NATURALISATION",
   dossierNouveaux: null,
   dossierOrigines: null,
-  decret: null
+  decret: null,
+  typeRegistre: {
+    idTypeRegistre: "7a091a3b-6835-4824-94fb-527d62926d45",
+    poste: "CASABLANCA"
+  }
 } as any as IRequeteCreationTranscription;
 
 export const requeteCreationTranscriptionStatutATraiter = {

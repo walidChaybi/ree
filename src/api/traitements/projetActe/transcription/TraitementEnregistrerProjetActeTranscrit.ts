@@ -10,14 +10,14 @@ import {
   ProjetActeNaissanceTranscriptionForm
 } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { useEffect, useState } from "react";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
 
 interface IPostProjetActeTranscrit {
-  idSuiviDossier: string;
   valeursSaisies: IProjetActeTranscritForm;
   projetActe: ProjetActeTranscrit | null;
-  idRequete: string;
+  requete: IRequeteCreationTranscription;
 }
 
 type TEtatAppel = "EN_ATTENTE" | "TERMINE";
@@ -42,7 +42,8 @@ const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetAc
     const { appelApi: appelPatchIdActeSuiviDossier } = useFetchApi(CONFIG_PATCH_ID_ACTE_SUIVI_DOSSIER);
 
     const lancer = (parametres: IPostProjetActeTranscrit): void => {
-      const idRequete = parametres.idRequete;
+      const idRequete = parametres.requete.id;
+      const idSuiviDossier = parametres.requete.titulaires?.[0]?.suiviDossiers?.[0]?.idSuiviDossier ?? "";
 
       if (!idRequete) {
         terminerTraitement();
@@ -53,7 +54,7 @@ const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetAc
         case Boolean(parametres.projetActe?.id && parametres.valeursSaisies.soumissionFormulaire.avecEnregistrement):
           appelPatchProjetActeTranscription({
             parametres: {
-              body: ProjetActeNaissanceTranscriptionForm.versDtoPatch(parametres.valeursSaisies, parametres.projetActe!)
+              body: ProjetActeNaissanceTranscriptionForm.versDtoPatch(parametres.valeursSaisies, parametres.projetActe!, parametres.requete)
             },
             apresSucces: (projetActe: IProjetActeTranscritDto) => {
               setProjetActe(ProjetActeTranscrit.depuisDto(projetActe));
@@ -61,7 +62,7 @@ const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetAc
               setDonneesTraitement({
                 idActe: projetActe.id ?? "",
                 idRequete: idRequete,
-                idSuiviDossier: parametres.idSuiviDossier,
+                idSuiviDossier: idSuiviDossier,
                 appelStatutRequete: parametres.valeursSaisies.soumissionFormulaire.avecMajStatut ? "EN_ATTENTE" : "TERMINE",
                 appelSuiviDossier: "TERMINE"
               });
@@ -83,7 +84,7 @@ const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetAc
           setDonneesTraitement({
             idActe: parametres.projetActe?.id ?? "",
             idRequete: idRequete ?? "",
-            idSuiviDossier: parametres.idSuiviDossier,
+            idSuiviDossier: idSuiviDossier,
             appelStatutRequete: "EN_ATTENTE",
             appelSuiviDossier: "TERMINE"
           });
@@ -92,14 +93,14 @@ const TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT: TTraitementApi<IPostProjetAc
         case Boolean(!parametres.projetActe?.id):
           appelPostProjetActeTranscription({
             parametres: {
-              body: ProjetActeNaissanceTranscriptionForm.versDtoPost(parametres.valeursSaisies)
+              body: ProjetActeNaissanceTranscriptionForm.versDtoPost(parametres.valeursSaisies, parametres.requete)
             },
             apresSucces: (projetActe: IProjetActeTranscritDto) => {
               setProjetActe(ProjetActeTranscrit.depuisDto(projetActe));
               setDonneesTraitement({
                 idActe: projetActe.id ?? "",
                 idRequete: idRequete ?? "",
-                idSuiviDossier: parametres.idSuiviDossier,
+                idSuiviDossier: idSuiviDossier,
                 appelStatutRequete: parametres.valeursSaisies.soumissionFormulaire.avecMajStatut ? "EN_ATTENTE" : "TERMINE",
                 appelSuiviDossier: "EN_ATTENTE"
               });

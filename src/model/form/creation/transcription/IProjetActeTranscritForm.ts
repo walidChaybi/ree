@@ -545,7 +545,7 @@ export const ProjetActeNaissanceTranscriptionForm = {
       acteEtranger: ActeEtrangerSchemaValidationFormulaire
     });
   },
-  versDtoPost: (valeursSaisies: IProjetActeTranscritForm): IProjetActeTranscritPostDto => {
+  versDtoPost: (valeursSaisies: IProjetActeTranscritForm, requete: IRequeteCreationTranscription): IProjetActeTranscritPostDto => {
     const naissanceTitulaireEvenement: IEvenementProjetActeTranscritDto = {
       annee: Number(valeursSaisies.titulaire?.dateNaissance?.annee),
       mois: Number(valeursSaisies.titulaire?.dateNaissance?.mois) || undefined,
@@ -570,16 +570,21 @@ export const ProjetActeNaissanceTranscriptionForm = {
       analyseMarginales: [],
       visibiliteArchiviste: TypeVisibiliteArchiviste.getKey(TypeVisibiliteArchiviste.NON),
       declarant: mapDeclarantProjectActe(valeursSaisies),
-      mentions: []
+      mentions: [],
+      typeRegistre: { idTypeRegistre: requete.typeRegistre.idTypeRegistre, poste: requete.typeRegistre.poste }
     };
   },
-  versDtoPatch: (valeursSaisies: IProjetActeTranscritForm, projetActe: ProjetActeTranscrit): IProjetActeTranscritPatchDto => ({
-    ...ProjetActeNaissanceTranscriptionForm.versDtoPost(valeursSaisies),
+  versDtoPatch: (
+    valeursSaisies: IProjetActeTranscritForm,
+    projetActe: ProjetActeTranscrit,
+    requete: IRequeteCreationTranscription
+  ): IProjetActeTranscritPatchDto => ({
+    ...ProjetActeNaissanceTranscriptionForm.versDtoPost(valeursSaisies, requete),
     id: projetActe.id,
     statut: projetActe.statut,
     type: projetActe.type,
     evenement: {
-      ...ProjetActeNaissanceTranscriptionForm.versDtoPost(valeursSaisies).evenement,
+      ...ProjetActeNaissanceTranscriptionForm.versDtoPost(valeursSaisies, requete).evenement,
       id: projetActe?.evenement.id
     },
     analyseMarginales: projetActe.analysesMarginales[0]

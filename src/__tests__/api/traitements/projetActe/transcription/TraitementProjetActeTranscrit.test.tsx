@@ -5,6 +5,7 @@ import { CONFIG_PATCH_STATUT_REQUETE_CREATION } from "@api/configurations/requet
 import TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT from "@api/traitements/projetActe/transcription/TraitementEnregistrerProjetActeTranscrit";
 import { MockApi } from "@mock/appelsApi/MockApi";
 import { projetActe, projetActeNaissanceDto } from "@mock/data/projetActeTranscrit";
+import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
 import { PrenomsForm } from "@model/form/commun/PrenomsForm";
 import {
   IProjetActeTranscritForm,
@@ -185,9 +186,8 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
 
     act(() => {
       result.current.lancer({
-        idSuiviDossier: "123",
-        idRequete: "",
         projetActe: null,
+        requete: { ...requeteCreationTranscription, id: "" },
         valeursSaisies: {} as IProjetActeTranscritForm
       });
     });
@@ -202,7 +202,7 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
     MockApi.deployer(
       CONFIG_PATCH_PROJET_ACTE_TRANSCRIPTION,
       {
-        body: ProjetActeNaissanceTranscriptionForm.versDtoPatch(saisieProjetActeTranscription, projetActe!)
+        body: ProjetActeNaissanceTranscriptionForm.versDtoPatch(saisieProjetActeTranscription, projetActe!, requeteCreationTranscription)
       },
       { data: projetActeNaissanceDto }
     );
@@ -211,8 +211,7 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
 
     act(() => {
       result.current.lancer({
-        idRequete: "12345",
-        idSuiviDossier: "123",
+        requete: requeteCreationTranscription,
         projetActe: projetActe,
         valeursSaisies: {
           ...saisieProjetActeTranscription,
@@ -238,7 +237,7 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
 
     MockApi.deployer(
       CONFIG_POST_PROJET_ACTE_TRANSCRIPTION,
-      { body: ProjetActeNaissanceTranscriptionForm.versDtoPost(saisieProjetActeTranscription) },
+      { body: ProjetActeNaissanceTranscriptionForm.versDtoPost(saisieProjetActeTranscription, requeteCreationTranscription) },
       { data: projetActeNaissanceDto }
     );
 
@@ -250,7 +249,7 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
 
     act(() => {
       result.current.lancer({
-        idSuiviDossier: "12563",
+        requete: requeteCreationTranscription,
         projetActe: null,
         valeursSaisies: {
           ...saisieProjetActeTranscription,
@@ -260,8 +259,7 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
             avecMajStatut: true,
             apresEnregistrement: false
           }
-        },
-        idRequete: "789"
+        }
       });
     });
 
@@ -294,8 +292,7 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
 
     act(() => {
       result.current.lancer({
-        idRequete: "12345",
-        idSuiviDossier: "12563",
+        requete: requeteCreationTranscription,
         projetActe: projetActe,
         valeursSaisies: {
           ...saisieProjetActeTranscription,
@@ -327,8 +324,7 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
 
     act(() => {
       result.current.lancer({
-        idRequete: "12345",
-        idSuiviDossier: "12563",
+        requete: requeteCreationTranscription,
         projetActe: null,
         valeursSaisies: {
           ...saisieProjetActeTranscription,

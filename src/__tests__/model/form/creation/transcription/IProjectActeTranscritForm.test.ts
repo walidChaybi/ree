@@ -162,13 +162,15 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
     }
   };
   test("DOIT retourner les bonnes valeurs lors de l'appel de versDtoPost", () => {
-    expect(ProjetActeNaissanceTranscriptionForm.versDtoPost(saisieProjetActeTranscriptionForm)).toStrictEqual(projetActeNaissancePostDto);
+    expect(ProjetActeNaissanceTranscriptionForm.versDtoPost(saisieProjetActeTranscriptionForm, requeteCreationTranscription)).toStrictEqual(
+      projetActeNaissancePostDto
+    );
   });
 
   test("DOIT retourner les bonnes valeurs lors de l'appel de versDtoPatch", () => {
-    expect(ProjetActeNaissanceTranscriptionForm.versDtoPatch(saisieProjetActeTranscriptionForm, projetActe!)).toStrictEqual(
-      projetActeNaissancePatchDto
-    );
+    expect(
+      ProjetActeNaissanceTranscriptionForm.versDtoPatch(saisieProjetActeTranscriptionForm, projetActe!, requeteCreationTranscription)
+    ).toStrictEqual(projetActeNaissancePatchDto);
   });
 
   test("DOIT faire le mapping correctement avec les valeurs initiales", () => {
@@ -421,6 +423,7 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
     expect(valeursInitialesProjetActe).toStrictEqual(valeursInitialesAttendues);
   });
 });
+
 describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIERS", () => {
   const saisieProjetActeTranscriptionTiers: IProjetActeTranscritForm = {
     titulaire: {
@@ -738,10 +741,14 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
       ],
       visibiliteArchiviste: "NON",
       modeCreation: ETypeRedactionActe.TRANSCRIT,
-      nature: "NAISSANCE"
+      nature: "NAISSANCE",
+      typeRegistre: {
+        idTypeRegistre: "7a091a3b-6835-4824-94fb-527d62926d45",
+        poste: "CASABLANCA"
+      }
     };
-    expect(ProjetActeNaissanceTranscriptionForm.versDtoPost(saisieProjetActeTranscriptionTiers)).toStrictEqual(
-      projetActeTranscriptionTiers
-    );
+    expect(
+      ProjetActeNaissanceTranscriptionForm.versDtoPost(saisieProjetActeTranscriptionTiers, requeteCreationTranscription)
+    ).toStrictEqual(projetActeTranscriptionTiers);
   });
 });
