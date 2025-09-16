@@ -1,0 +1,24 @@
+[
+  {
+    "numeroVersion": "2.0",
+    "dateProd": "15/09/2025",
+    "texteInfo": "Exemple de texte de la deuxième version",
+    "changements": [
+      {
+        "icone": "nouvelleLivraison",
+        "description": "Exemple d'ajout une fonctionnalité"
+      }
+    ]
+  },
+  {
+    "numeroVersion": "1.0",
+    "dateProd": "01/08/2025",
+    "texteInfo": "Exemple de texte informatif de la première version",
+    "changements": [
+      {
+        "icone": "correctionBug",
+        "description": "Exemple de correction de bug"
+      }
+    ]
+  }
+]

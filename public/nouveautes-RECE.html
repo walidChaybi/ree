@@ -6,7 +6,7 @@
       rel="icon"
       href="./favicon.ico"
     />
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <style type="text/css">
       @font-face {
         font-family: "Marianne";
@@ -158,7 +158,7 @@
     </button>
   </body>
 
-  <script>
+  <script type="module">
     /** Icones pour imager les changements d'une version */
     const ICONES = {
       // Fonctionnalitée / livraisons
@@ -180,7 +180,7 @@
 
     /**
      * EXEMPLE d'une version
-     * Copier/Coller l'objet en HAUT du table VERSIONS_RECE
+     * Copier/Coller l'objet en HAUT du changelog.json
      * Puis complétez-le avec les données voulues
      *
      * numeroVersion: OBLIGATOIRE pour l'affichage
@@ -196,41 +196,34 @@
       texteInfo: "Texte sous le titre de la version",
       changements: [
         {
-          icone: ICONES.correctionBug,
+          icone: "correctionBug",
           description: "Description du changement"
         }
       ]
     };
 
     /**
-     * !!! ⚠ AJOUT DES VERSIONS ICI ⚠ !!!
-     *
-     * Liste des versions RECE
-     * Ajoutez la prochaine version en HAUT du tableau (ordre antéchronologique)
-     *
-     * ⚠ NE PAS OUBLIER LA VIRGULE AVANT L'ÉLÉMENT SUIVANT :
-     * [
-     *    {
-     *       maVersion
-     *    }, ← ⚠⚠⚠ !!!
-     *    {
-     *       ancienneVersion
-     *    }
-     * ]
+     * Ajout des versions dans le changelog.json en respectant le format déjà présent
+     * Ajoutez la prochaine version en HAUT du tableau (ordre chronologique décroissant)
+     * Pour les icones, ajouter le nom parmis celles présentes ci-desssus (voir EXEMPLE_VERSION)
      **/
-    const VERSIONS_RECE = [];
+    const fichierChangelog = await fetch("changelog.json");
+
+    if (!fichierChangelog.ok) {
+      throw new Error("Erreur lors de la récupération du fichier de versions");
+    }
+
+    const VERSIONS_RECE = await fichierChangelog.json();
+
+    VERSIONS_RECE.sort((a, b) => b.numeroVersion.localeCompare(a.numeroVersion, undefined, { numeric: true }));
 
     /** DEV ONLY *********************************************************************************/
 
+    const afficherIcone = nomIcone => ICONES[nomIcone] ?? ICONES.autre;
+
     /** Récupération de la version actuelle en PROD */
     const infoVersionActuelle = document.getElementById("info-version-actuelle");
-    const versionProdActuelle = VERSIONS_RECE.find(version => {
-      if (!version.dateProd) return false;
-
-      const [jour, mois, annee] = version.dateProd.split("/");
-
-      return new Date(parseInt(annee), parseInt(mois) - 1, parseInt(jour)) <= new Date();
-    });
+    const versionProdActuelle = VERSIONS_RECE[0];
 
     if (infoVersionActuelle && versionProdActuelle) {
       const derniereVersion = versionProdActuelle.numeroVersion ?? "N.C.";
@@ -260,16 +253,16 @@
           conteneurVersion.appendChild(infoVersion);
         }
 
-        if (!version.evolutions.length) return;
+        if (!version.changements.length) return;
 
-        const conteneurEvolutionsVersion = document.createElement("ul");
-        version.evolutions.forEach(evolutionVersion => {
+        const conteneurChangementsVersion = document.createElement("ul");
+        version.changements.forEach(evolutionVersion => {
           const texteEvolution = document.createElement("li");
-          const iconeEvolution = Object.values(ICONES).includes(evolutionVersion.icone) ? evolutionVersion.icone : ICONES.autre;
+          const iconeEvolution = afficherIcone(evolutionVersion.icone);
           texteEvolution.innerHTML = `<span class="icone">${iconeEvolution}</span> ${evolutionVersion.description}`;
-          conteneurEvolutionsVersion.appendChild(texteEvolution);
+          conteneurChangementsVersion.appendChild(texteEvolution);
         });
-        conteneurVersion.appendChild(conteneurEvolutionsVersion);
+        conteneurVersion.appendChild(conteneurChangementsVersion);
 
         if (!conteneurBouton) return;
 
