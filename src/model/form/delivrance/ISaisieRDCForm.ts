@@ -175,6 +175,22 @@ export const requerantRDCForm = {
       obligatoire: ConditionChamp.depuisTableau([
         { idChampReference: "requerant.typeRequerant", operateur: EOperateurCondition.EGAL, valeurs: ["AUTRE_PROFESSIONNEL"] }
       ])
+    }),
+    nom: SchemaValidation.texte({
+      obligatoire: false,
+      listeRegexp: [{ valeur: CaracteresAutorises }]
+    }),
+    prenom: SchemaValidation.texte({
+      obligatoire: false,
+      listeRegexp: [{ valeur: CaracteresAutorises }]
+    }),
+    nomUsage: SchemaValidation.texte({
+      obligatoire: false,
+      listeRegexp: [{ valeur: CaracteresAutorises }]
+    }),
+    nomInstitution: SchemaValidation.texte({
+      obligatoire: false,
+      listeRegexp: [{ valeur: CaracteresAutorises }]
     })
   })
 };
