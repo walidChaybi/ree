@@ -367,7 +367,7 @@ export const SaisieRequeteRCTCForm = {
 
     return nettoyerAttributsDto({
       typeRegistre: {
-        idTypeRegistre: valeurs.requete.typeRegistre.id,
+        id: valeurs.requete.typeRegistre.id,
         poste: valeurs.requete.typeRegistre.poste
       },
       canal: TypeCanal.COURRIER.nom,

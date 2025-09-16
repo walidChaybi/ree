@@ -32,7 +32,7 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
   estObligatoire
 }) => {
   const [typeRegistres, setTypeRegistres] = useState<ITypeRegistreDto[]>([]);
-  const { values } = useFormikContext();
+  const { values, setFieldValue } = useFormikContext();
   const [field, meta, helpers] = useField(name);
 
   const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
@@ -45,6 +45,7 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
   );
 
   const estTypeFamilleMAR = valeurFamilleRegistre === TYPE_FAMILLE_MAR;
+  const cheminIdTypeRegistre = useMemo(() => `${name.split(".").slice(0, -1).join(".")}.id`, [name]);
 
   const typeDeRegistre = useMemo(() => TypeRegistre.getTypeDeRegistre(typeRegistres), [typeRegistres]);
 
@@ -97,7 +98,7 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
       <Autocomplete
         id={name}
         options={typeRegistres}
-        value={typeRegistres.find(typeRegistre => typeRegistre[typeDeRegistre] === field.value)}
+        value={typeRegistres.find(typeRegistre => typeRegistre?.[typeDeRegistre] === field.value) || null}
         loading={enAttenteDeReponseApi}
         getOptionLabel={option => option[typeDeRegistre] ?? ""}
         loadingText="Recherche en cours..."
@@ -114,6 +115,7 @@ const ChampRecherchePocopas: React.FC<TChampRecherchePocopasProps> = ({
         noOptionsText={!field.value ? "Aucun résultat" : `Aucun ${typeDeRegistre} trouvé pour ${field.value}`}
         onChange={(_, valeurSelectionne: ITypeRegistreDto | null) => {
           helpers.setValue(valeurSelectionne?.[typeDeRegistre]);
+          typeDeRegistre === "poste" && setFieldValue(cheminIdTypeRegistre, valeurSelectionne?.id ?? "");
         }}
         disabled={disabled}
         readOnly={estTypeFamilleMAR}

@@ -4,7 +4,6 @@ import { TypeFamille } from "../enum/TypeFamille";
 
 export interface ITypeRegistre {
   id: string;
-  idTypeRegistre?: string;
   famille: TypeFamille;
   pocopa: string;
   paysPocopa: string;

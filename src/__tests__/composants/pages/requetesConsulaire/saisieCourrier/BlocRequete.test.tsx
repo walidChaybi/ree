@@ -60,7 +60,7 @@ describe("Test rendu du bloc requete en saisie courrier", async () => {
           initialValues={{
             requete: {
               typeRegistre: {
-                idTypeRegistre: "",
+                id: "",
                 poste: ""
               }
             }
