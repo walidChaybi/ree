@@ -655,6 +655,9 @@ pays
                                   value=""
                                 />
                               </div>
+                              <div
+                                class="text-start text-sm text-rouge"
+                              />
                             </div>
                             <div
                               class="flex flex-nowrap items-center gap-3 pt-8"

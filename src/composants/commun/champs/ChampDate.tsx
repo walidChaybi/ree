@@ -14,8 +14,6 @@ type TChampDateProps = React.InputHTMLAttributes<HTMLInputElement> & {
   avecBoutonReinitialiser?: boolean;
 };
 
-const idElementActif = () => document.activeElement?.getAttribute("id");
-
 const ChampDate: React.FC<TChampDateProps> = ({
   name,
   libelle,
@@ -69,19 +67,19 @@ const ChampDate: React.FC<TChampDateProps> = ({
   ]);
 
   useEffect(() => {
-    metaJour?.value?.length === 2 && idElementActif() === champsDate.jour && refMois.current?.focus();
+    metaJour?.value?.length === 2 && refMois.current?.focus();
   }, [metaJour?.value]);
 
   useEffect(() => {
-    metaMois?.value?.length === 2 && idElementActif() === champsDate.mois && refAnnee.current?.focus();
+    metaMois?.value?.length === 2 && refAnnee.current?.focus();
   }, [metaMois?.value]);
 
   useEffect(() => {
-    metaAnnee?.value?.length === 4 && idElementActif() === champsDate.annee && refHeure.current?.focus();
+    metaAnnee?.value?.length === 4 && refHeure.current?.focus();
   }, [metaAnnee?.value]);
 
   useEffect(() => {
-    metaHeure?.value?.length === 2 && idElementActif() === champsDate.heure && refMinute.current?.focus();
+    metaHeure?.value?.length === 2 && refMinute.current?.focus();
   }, [metaHeure?.value]);
 
   const resetDate = () => {
