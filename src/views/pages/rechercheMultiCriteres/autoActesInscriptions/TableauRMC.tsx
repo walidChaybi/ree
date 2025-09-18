@@ -31,7 +31,6 @@ import useTraitementApi from "../../../../hooks/api/TraitementApiHook";
 import AfficherMessage from "../../../../utils/AfficherMessage";
 import { StockageLocal } from "../../../../utils/StockageLocal";
 import { RMCActeInscriptionResultats } from "../acteInscription/resultats/RMCActeInscriptionResultats";
-import { getMessageSiVerificationRestrictionRmcActeInscriptionCriteresEnErreur } from "../acteInscription/validation/VerificationRestrictionRmcActeInscription";
 import { BoutonNouvelleRMCActeInscription } from "./BoutonNouvelleRMCActeInscription";
 
 interface ITableauRMCProps {
@@ -160,24 +159,19 @@ export const TableauRMC: React.FC<ITableauRMCProps> = ({ requete, ...props }) =>
   /* Nouvelle RMC depuis la pop up */
   const nouvelleRMCActeInscription = useCallback(
     (valeurs: any) => {
-      const messageErreur = getMessageSiVerificationRestrictionRmcActeInscriptionCriteresEnErreur(valeurs);
-      if (messageErreur) {
-        AfficherMessage.erreur(messageErreur, { fermetureAuto: true });
-      } else {
-        setPopinAffichee(false);
-        setResetRMCActeInscription(true);
+      setPopinAffichee(false);
+      setResetRMCActeInscription(true);
 
-        lancerTraitement({
-          parametres: {
-            valeursFormulaire: valeurs
-          },
-          apresSucces: setResultatRMCActeInscription
-        });
+      lancerTraitement({
+        parametres: {
+          valeursFormulaire: valeurs
+        },
+        apresSucces: setResultatRMCActeInscription
+      });
 
-        StockageLocal.stocker("CRITERES_RMC_ACTE_INSCRIPTION", valeurs);
-        setResetRMCActeInscription(false);
-        props.reset?.();
-      }
+      StockageLocal.stocker("CRITERES_RMC_ACTE_INSCRIPTION", valeurs);
+      setResetRMCActeInscription(false);
+      props.reset?.();
     },
     [props.reset]
   );

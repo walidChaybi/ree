@@ -288,11 +288,6 @@ export const compactObject = (object: any): any => {
   return object;
 };
 
-/** @deprecated  fonction trop simple et empêche typescript d'analyser les types*/
-export const tousRenseignes = (...args: any[]): boolean => {
-  return args.length > 0 && args.every(elem => elem);
-};
-
 export const supprimeElement = (tableau: any[], fct: any) => {
   let nouveauTableau;
   const indexASupprimer = tableau.findIndex(element => fct(element));

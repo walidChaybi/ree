@@ -102,181 +102,197 @@ const AVANCEMENT: { [EtatAvancement in Exclude<TStatutSignature, "attente-pin" |
 
   const [donneesSignature, setDonneesSignature] = useState<IDonneesSignature>({ ...DONNEES_SIGNATURE_DEFAUT });
 
+  const recuperationInformations = () => {
+    console.info("[SIGNATURE] Récupération des informations de la carte ...");
+    donneesSignature.codePin &&
+      Signature.recupererInformationsCarte({
+        parametres: {
+          idActe: idActe,
+          codePin: donneesSignature.codePin,
+          idAgent: utilisateurConnecte.id,
+          prenomNomAgent: utilisateurConnecte.prenomNom,
+          estMiseAJour: signature.estMiseAJour
+        },
+        apresSucces: informations => {
+          console.info("[SIGNATURE] Récupération des informations de la carte effectuée");
+          setDonneesSignature(prec => ({
+            ...prec,
+            informationsCarte: informations,
+            statut: "composition-document"
+          }));
+        },
+        apresErreur: erreur => {
+          console.error(
+            `[SIGNATURE] Erreur récupération des informations de la carte : ${erreur.code} - ${erreur.libelle} - ${erreur?.detail ?? "AUCUN DETAIL"}`
+          );
+          setDonneesSignature(prec => ({
+            ...prec,
+            erreur: erreur.libelle,
+            erreurPin: erreur.code === CODE_PIN_INVALIDE,
+            statut: erreur.code === CODE_PIN_INVALIDE ? "attente-pin" : "termine"
+          }));
+        }
+      });
+  };
+
+  const compositionDocument = () => {
+    console.info("[SIGNATURE] Composition du document à signer ...");
+
+    donneesSignature.informationsCarte &&
+      (signature.estMiseAJour ? appelComposerMentions : appelComposerProjetActe)({
+        parametres: {
+          path: { idActe: idActe },
+          body: {
+            infosSignature: donneesSignature.informationsCarte
+          }
+        },
+        apresSucces: documentASigner => {
+          console.info("[SIGNATURE] Composition du document à signer effectuée");
+          setDonneesSignature(prec => ({
+            ...prec,
+            documentASigner: documentASigner,
+            statut: "signature-document"
+          }));
+        },
+        apresErreur: erreurs => {
+          const messageErreurServeur = ["FCT_16108", "TECH_16021"].includes(erreurs[0]?.code) ? erreurs[0]?.message : null;
+          const messageErreurDefaut = "Erreur lors de la composition du document à signer";
+          console.error(
+            `[SIGNATURE] ${messageErreurDefaut} : ${erreurs[0]?.code ?? "CODE_INCONNU"} - ${erreurs[0]?.message ?? "Erreur inconnue"}`
+          );
+
+          setDonneesSignature(prec => ({
+            ...prec,
+            erreur: messageErreurServeur ?? messageErreurDefaut,
+            statut: "termine"
+          }));
+        }
+      });
+  };
+
+  const signatureDocument = () => {
+    console.info(`[SIGNATURE] Signature du document ...`);
+    donneesSignature.codePin &&
+      donneesSignature.documentASigner &&
+      Signature.signerDocument({
+        parametres: {
+          idActe: idActe,
+          idAgent: utilisateurConnecte.id,
+          document: donneesSignature.documentASigner,
+          codePin: donneesSignature.codePin,
+          estMiseAJour: signature.estMiseAJour
+        },
+        apresReponse: reponse => {
+          const erreur = reponse.erreur?.libelle ?? null;
+          const documentSigne = reponse.document ?? null;
+          const messageErreur = !erreur && !documentSigne ? "Erreur inattendue" : erreur;
+          messageErreur
+            ? console.error(
+                `[SIGNATURE] Erreur lors de la signature du document : ${reponse.erreur?.code ?? "CODE_INCONNU"} - ${messageErreur} - ${reponse.erreur?.detail ?? "AUCUN DETAIL"}`
+              )
+            : console.info(`[SIGNATURE] Signature du document effectuée`);
+
+          setDonneesSignature(prec => ({
+            ...prec,
+            documentASigner: null,
+            documentSigne: documentSigne,
+            erreur: messageErreur,
+            informationsCarte: reponse.infosSignature ?? null,
+            statut: documentSigne ? "enregistrement-document" : "termine"
+          }));
+        }
+      });
+  };
+
+  const enregistrementDocument = () => {
+    console.info("[SIGNATURE] Enregistrement du document signé ...");
+    donneesSignature.documentSigne &&
+      donneesSignature.informationsCarte &&
+      (signature.estMiseAJour ? appelIntegrerMentions : appelIntegrerProjetActe)({
+        parametres: {
+          path: { idActe: idActe },
+          body: {
+            documentPadesBase64: donneesSignature.documentSigne,
+            signature: { infosSignature: donneesSignature.informationsCarte },
+            modeAuthentification: "AROBAS_MDP"
+          }
+        },
+        apresSucces: () => {
+          console.info("[SIGNATURE] Enregistrement du document signé effectué");
+          console.info("[SIGNATURE] Modification du statut de la requête ...");
+
+          const apresModificationStatut = {
+            apresSucces: () => console.info("[SIGNATURE] Modification du statut de la requête effectué"),
+            apresErreur: (erreurs: TErreurApi[]) =>
+              console.error(
+                `[SIGNATURE] Erreur lors de la modification du statut de la requête : ${erreurs[0]?.code ?? "CODE_INCONNU"} - ${erreurs[0]?.message ?? "Erreur inconnue"}`
+              ),
+            finalement: () =>
+              setDonneesSignature(prec => ({
+                ...prec,
+                statut: "termine"
+              }))
+          };
+
+          switch (true) {
+            case signature.estMiseAJour:
+              appelModifierStatutRequeteMiseAJour({
+                parametres: { path: { idRequete: idRequete, statut: StatutRequete.TRAITEE_MIS_A_JOUR.nom } },
+                ...apresModificationStatut
+              });
+
+              return;
+
+            case Boolean(idSuivi?.length):
+              appelModifierStatutRequeteCreation({
+                parametres: { path: { idRequete: idRequete, idSuiviDossier: idSuivi ?? "" } },
+                ...apresModificationStatut
+              });
+
+              return;
+
+            default:
+              console.error("[SIGNATURE] Erreur lors de la modification du statut de la requête : ID Suivi inconnu");
+              setDonneesSignature(prec => ({
+                ...prec,
+                statut: "termine"
+              }));
+
+              return;
+          }
+        },
+        apresErreur: erreurs => {
+          const messageErreurServeur = ["FCT_16108", "TECH_16021"].includes(erreurs[0]?.code) ? erreurs[0]?.message : null;
+          const messageErreurDefaut = `Erreur lors de l'enregistrement ${signature.estMiseAJour ? "des mentions signées" : "de l'acte signé"} `;
+          console.error(
+            `[SIGNATURE] ${messageErreurDefaut} : ${erreurs[0]?.code ?? "CODE_INCONNU"} - ${erreurs[0]?.message ?? "Erreur inconnue"}`
+          );
+
+          setDonneesSignature(prec => ({
+            ...prec,
+            erreur: messageErreurServeur ?? messageErreurDefaut,
+            statut: "termine"
+          }));
+        }
+      });
+  };
+
   useEffect(() => {
     switch (donneesSignature.statut) {
       case "recuperation-informations":
-        console.info("[SIGNATURE] Récupération des informations de la carte ...");
-        donneesSignature.codePin &&
-          Signature.recupererInformationsCarte({
-            parametres: {
-              idActe: idActe,
-              codePin: donneesSignature.codePin,
-              idAgent: utilisateurConnecte.id,
-              prenomNomAgent: utilisateurConnecte.prenomNom,
-              estMiseAJour: signature.estMiseAJour
-            },
-            apresSucces: informations => {
-              console.info("[SIGNATURE] Récupération des informations de la carte éffectué");
-              setDonneesSignature(prec => ({
-                ...prec,
-                informationsCarte: informations,
-                statut: "composition-document"
-              }));
-            },
-            apresErreur: erreur => {
-              console.error(
-                `[SIGNATURE] Erreur récupération des informations de la carte : ${erreur.code} - ${erreur.libelle} - ${erreur?.detail ?? "AUCUN DETAIL"}`
-              );
-              setDonneesSignature(prec => ({
-                ...prec,
-                erreur: erreur.libelle,
-                erreurPin: erreur.code === CODE_PIN_INVALIDE,
-                statut: erreur.code === CODE_PIN_INVALIDE ? "attente-pin" : "termine"
-              }));
-            }
-          });
+        recuperationInformations();
         break;
 
       case "composition-document":
-        console.info("[SIGNATURE] Composition du document à signer ...");
-
-        donneesSignature.informationsCarte &&
-          (signature.estMiseAJour ? appelComposerMentions : appelComposerProjetActe)({
-            parametres: {
-              path: { idActe: idActe },
-              body: {
-                infosSignature: donneesSignature.informationsCarte
-              }
-            },
-            apresSucces: documentASigner => {
-              console.info("[SIGNATURE] Composition du document à signer éffectué");
-              setDonneesSignature(prec => ({
-                ...prec,
-                documentASigner: documentASigner,
-                statut: "signature-document"
-              }));
-            },
-            apresErreur: erreurs => {
-              const messageErreurServeur = ["FCT_16108", "TECH_16021"].includes(erreurs[0]?.code) ? erreurs[0]?.message : null;
-              const messageErreurDefaut = "Erreur lors de la composition du document à signer";
-              console.error(
-                `[SIGNATURE] ${messageErreurDefaut} : ${erreurs[0]?.code ?? "CODE_INCONNU"} - ${erreurs[0]?.message ?? "Erreur inconne"}`
-              );
-
-              setDonneesSignature(prec => ({
-                ...prec,
-                erreur: messageErreurServeur ?? messageErreurDefaut,
-                statut: "termine"
-              }));
-            }
-          });
+        compositionDocument();
         break;
 
       case "signature-document":
-        console.info(`[SIGNATURE] Signature du document ...`);
-        donneesSignature.codePin &&
-          donneesSignature.documentASigner &&
-          Signature.signerDocument({
-            parametres: {
-              idActe: idActe,
-              idAgent: utilisateurConnecte.id,
-              document: donneesSignature.documentASigner,
-              codePin: donneesSignature.codePin,
-              estMiseAJour: signature.estMiseAJour
-            },
-            apresReponse: reponse => {
-              const erreur = reponse.erreur?.libelle ?? null;
-              const documentSigne = reponse.document ?? null;
-              const messageErreur = !erreur && !documentSigne ? "Erreur inattendue" : erreur;
-              messageErreur
-                ? console.error(
-                    `[SIGNATURE] Erreur lors de la signature du document : ${reponse.erreur?.code ?? "CODE_INCONNU"} - ${messageErreur} - ${reponse.erreur?.detail ?? "AUCUN DETAIL"}`
-                  )
-                : console.info(`[SIGNATURE] Signature du document effectuée`);
-
-              setDonneesSignature(prec => ({
-                ...prec,
-                documentASigner: null,
-                documentSigne: documentSigne,
-                erreur: messageErreur,
-                informationsCarte: reponse.infosSignature ?? null,
-                statut: documentSigne ? "enregistrement-document" : "termine"
-              }));
-            }
-          });
+        signatureDocument();
         break;
 
       case "enregistrement-document":
-        console.info("[SIGNATURE] Enregistrement du document signé ...");
-        donneesSignature.documentSigne &&
-          donneesSignature.informationsCarte &&
-          (signature.estMiseAJour ? appelIntegrerMentions : appelIntegrerProjetActe)({
-            parametres: {
-              path: { idActe: idActe },
-              body: {
-                documentPadesBase64: donneesSignature.documentSigne,
-                signature: { infosSignature: donneesSignature.informationsCarte },
-                modeAuthentification: "AROBAS_MDP"
-              }
-            },
-            apresSucces: () => {
-              console.info("[SIGNATURE] Enregistrement du document signé éffectué");
-              console.info("[SIGNATURE] Modification du statut de la requête ...");
-
-              const apresModificationStatut = {
-                apresSucces: () => console.info("[SIGNATURE] Modification du statut de la requête éffectué"),
-                apresErreur: (erreurs: TErreurApi[]) =>
-                  console.error(
-                    `[SIGNATURE] Erreur lors de la modification du statut de la requête : ${erreurs[0]?.code ?? "CODE_INCONNU"} - ${erreurs[0]?.message ?? "Erreur inconnue"}`
-                  ),
-                finalement: () =>
-                  setDonneesSignature(prec => ({
-                    ...prec,
-                    statut: "termine"
-                  }))
-              };
-
-              switch (true) {
-                case signature.estMiseAJour:
-                  appelModifierStatutRequeteMiseAJour({
-                    parametres: { path: { idRequete: idRequete, statut: StatutRequete.TRAITEE_MIS_A_JOUR.nom } },
-                    ...apresModificationStatut
-                  });
-
-                  return;
-
-                case Boolean(idSuivi?.length):
-                  appelModifierStatutRequeteCreation({
-                    parametres: { path: { idRequete: idRequete, idSuiviDossier: idSuivi ?? "" } },
-                    ...apresModificationStatut
-                  });
-
-                  return;
-
-                default:
-                  console.error("[SIGNATURE] Erreur lors de la modification du statut de la requête : ID Suivi inconnu");
-                  setDonneesSignature(prec => ({
-                    ...prec,
-                    statut: "termine"
-                  }));
-
-                  return;
-              }
-            },
-            apresErreur: erreurs => {
-              const messageErreurServeur = ["FCT_16108", "TECH_16021"].includes(erreurs[0]?.code) ? erreurs[0]?.message : null;
-              const messageErreurDefaut = `Erreur lors de l'enregistrement ${signature.estMiseAJour ? "des mentions signées" : "de l'acte signé"} `;
-              console.error(
-                `[SIGNATURE] ${messageErreurDefaut} : ${erreurs[0]?.code ?? "CODE_INCONNU"} - ${erreurs[0]?.message ?? "Erreur inconnue"}`
-              );
-
-              setDonneesSignature(prec => ({
-                ...prec,
-                erreur: messageErreurServeur ?? messageErreurDefaut,
-                statut: "termine"
-              }));
-            }
-          });
+        enregistrementDocument();
         break;
       default:
         break;
