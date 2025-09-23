@@ -1,77 +1,51 @@
 import { ITitulaireComposition } from "@model/composition/commun/ITitulaireComposition";
 import { Evenement } from "@model/etatcivil/acte/IEvenement";
-import {
-  ITitulaireActe,
-  TitulaireActe
-} from "@model/etatcivil/acte/ITitulaireActe";
+import { TitulaireActe } from "@model/etatcivil/acte/TitulaireActe";
+import { EValidation } from "@model/requete/enum/EValidation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { Validation } from "@model/requete/enum/Validation";
-import { getValeurOuVide } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
-import { FicheActe, IFicheActe } from "../../../../etatcivil/acte/IFicheActe";
+import { FicheActe } from "../../../../etatcivil/acte/FicheActe";
 import { IExtraitPlurilingueComposition } from "../IExtraitPlurilingueComposition";
 import { ExtraitPlurilingueCommunComposition } from "./ExtraitPlurilingueCommunComposition";
 
 export class ExtraitPlurilingueMariageComposition {
   public static compositionExtraitPlurilingueDeMariage(
-    acte: IFicheActe,
-    validation: Validation,
+    acte: FicheActe,
+    validation: EValidation,
     sousTypeRequete: SousTypeDelivrance,
     mentionsRetirees: string[],
     ctv?: string
   ): IExtraitPlurilingueComposition {
     const composition = {} as IExtraitPlurilingueComposition;
 
-    ExtraitPlurilingueCommunComposition.composerPlurilingue(
-      composition,
+    ExtraitPlurilingueCommunComposition.composerPlurilingue(composition, acte, validation, sousTypeRequete, mentionsRetirees, ctv);
+
+    composition.lieu_acte = Evenement.getLieuDeRepriseOuLieuEvenement(acte.evenement ?? undefined);
+
+    composition.titulaire_1 = this.mappingTitulaireExtraitPlurilingueMariageComposition(
       acte,
-      validation,
-      sousTypeRequete,
-      mentionsRetirees,
-      ctv
+      acte.titulaires.find(titulaire => titulaire.sexe === "MASCULIN")
     );
 
-    composition.lieu_acte = Evenement.getLieuDeRepriseOuLieuEvenement(
-      acte.evenement
+    composition.titulaire_2 = this.mappingTitulaireExtraitPlurilingueMariageComposition(
+      acte,
+      acte.titulaires.find(titulaire => titulaire.sexe === "FEMININ")
     );
-
-    composition.titulaire_1 =
-      this.mappingTitulaireExtraitPlurilingueMariageComposition(
-        acte,
-        FicheActe.getTitulaireMasculin(acte)
-      );
-
-    composition.titulaire_2 =
-      this.mappingTitulaireExtraitPlurilingueMariageComposition(
-        acte,
-        FicheActe.getTitulaireFeminin(acte)
-      );
 
     return composition;
   }
 
   public static mappingTitulaireExtraitPlurilingueMariageComposition(
-    acte: IFicheActe,
-    titulaire: ITitulaireActe | undefined
+    acte: FicheActe,
+    titulaire: TitulaireActe | undefined
   ): ITitulaireComposition | undefined {
     if (titulaire) {
       return {
-        nom_avant_mariage: ExtraitPlurilingueCommunComposition.getNomOuVide(
-          acte,
-          titulaire
-        ),
-        nom_apres_mariage: getValeurOuVide(titulaire.nomApresMariage),
-        prenoms: ExtraitPlurilingueCommunComposition.getPrenomOuVide(
-          acte,
-          titulaire
-        ),
-        date_naissance: Evenement.formatageDateCompositionExtraitPlurilingue(
-          titulaire.naissance
-        ),
-        lieu_naissance: TitulaireActe.getLieuDeRepriseOuLieuNaissance(
-          titulaire,
-          LieuxUtils.estPaysInconnu(titulaire.naissance?.pays)
-        )
+        nom_avant_mariage: ExtraitPlurilingueCommunComposition.getNomOuVide(acte, titulaire),
+        nom_apres_mariage: titulaire.nomApresMariage ?? "",
+        prenoms: ExtraitPlurilingueCommunComposition.getPrenomOuVide(acte, titulaire),
+        date_naissance: Evenement.formatageDateCompositionExtraitPlurilingue(titulaire.naissance ?? undefined),
+        lieu_naissance: titulaire.getLieuDeRepriseOuLieuNaissance(LieuxUtils.estPaysInconnu(titulaire.naissance?.pays))
       };
     }
   }

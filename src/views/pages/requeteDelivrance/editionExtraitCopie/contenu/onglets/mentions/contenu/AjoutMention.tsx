@@ -1,12 +1,12 @@
 import { IMentionAffichage } from "@model/etatcivil/acte/mention/IMentionAffichage";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { SelectRece } from "@widget/formulaire/champsSaisie/SelectField";
 import React from "react";
 import { MdAdd } from "react-icons/md";
 import { getOptionsMentions } from "../GestionMentionsUtil";
 
 interface AjoutMentionProps {
-  natureActe?: NatureActe;
+  natureActe?: keyof typeof ENatureActe;
   mentionAjout?: IMentionAffichage;
   handleAjoutSelect: (event: any) => void;
   handleAjoutMention: () => void;

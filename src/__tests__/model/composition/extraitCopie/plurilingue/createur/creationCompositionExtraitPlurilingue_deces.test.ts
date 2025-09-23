@@ -1,8 +1,7 @@
 import { creationCompositionExtraitPlurilingue } from "@hook/generation/generationECHook/creationComposition/creationCompositionExtraitPlurilingue";
-import { mapActe } from "@hook/repertoires/MappingRepertoires";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { FicheActe, IFicheActeDto } from "@model/etatcivil/acte/FicheActe";
+import { EValidation } from "@model/requete/enum/EValidation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { Validation } from "@model/requete/enum/Validation";
 import { describe, expect, test } from "vitest";
 import { ficheActeDeces } from "../../../../../mock/data/ficheActe";
 
@@ -10,14 +9,9 @@ const mentionsRetirees: string[] = [];
 
 describe("Composition extrait plurilingue de Décès", () => {
   test("Doit composer l'extrait avec les bonne données", () => {
-    const acte = mapActe(ficheActeDeces.data);
+    const acte = FicheActe.depuisDto(ficheActeDeces)!;
 
-    const compositionCorps = creationCompositionExtraitPlurilingue(
-      acte as any as IFicheActe,
-      Validation.O,
-      SousTypeDelivrance.RDC,
-      mentionsRetirees
-    );
+    const compositionCorps = creationCompositionExtraitPlurilingue(acte, EValidation.O, SousTypeDelivrance.RDC, mentionsRetirees);
 
     const nom = "GREENWALD";
     const prenoms = "Marie-paulita, Zaria, Léna";
@@ -55,34 +49,24 @@ describe("Composition extrait plurilingue de Décès", () => {
   });
 
   test("Doit composer les données de naissance de l'extrait avec les bonne données", () => {
-    const acte = {
-      ...ficheActeDeces.data,
-      ...(ficheActeDeces.data.titulaires[0] = {
+    const acteDto: IFicheActeDto = {
+      ...ficheActeDeces,
+      ...(ficheActeDeces.titulaires[0] = {
         nom: "GREENWALD",
         prenoms: ["marie-paulita", "zaria", "léna"],
-        autresNoms: null,
-        autresPrenoms: null,
         ordre: 729,
         sexe: "FEMININ",
         naissance: {
-          minute: null,
-          heure: null,
-          jour: null,
           mois: 3,
           annee: 1948,
-          voie: null,
           ville: "Milan",
-          arrondissement: null,
           region: "Lombardie",
-          pays: "Alger",
-          lieuReprise: null
+          pays: "Alger"
         },
         profession: "POMPIER",
-        age: null,
         domicile: {
           voie: "7 Rue du Noyer",
           ville: "Bruxelles",
-          arrondissement: null,
           region: "Flandre",
           pays: "BELGIQUE"
         },
@@ -92,36 +76,23 @@ describe("Composition extrait plurilingue de Décès", () => {
             ordre: 752,
             nom: "Sacken",
             sexe: "MASCULIN",
-            naissance: null,
             profession: "Informaticien",
-            age: null,
             domicile: {
               voie: "16 avenue des Palmiers",
               ville: "Djibouti",
-              arrondissement: null,
-              region: null,
               pays: "DJIBOUTI"
             },
             prenoms: ["Carmela", "Linzy"]
           }
         ],
-        typeDeclarationConjointe: null,
-        dateDeclarationConjointe: null,
-        nomPartie1: null,
-        nomPartie2: null,
-        nomAvantMariage: null,
-        nomApresMariage: null,
         nomDernierConjoint: "De fontaine",
         prenomsDernierConjoint: "Ratus"
       })
     };
 
-    const compositionCorps = creationCompositionExtraitPlurilingue(
-      mapActe(acte) as any as IFicheActe,
-      Validation.O,
-      SousTypeDelivrance.RDC,
-      mentionsRetirees
-    );
+    const acte: FicheActe = FicheActe.depuisDto(acteDto)!;
+
+    const compositionCorps = creationCompositionExtraitPlurilingue(acte, EValidation.O, SousTypeDelivrance.RDC, mentionsRetirees);
 
     const nom = "GREENWALD";
     const prenoms = "Marie-paulita, Zaria, Léna";
@@ -159,34 +130,24 @@ describe("Composition extrait plurilingue de Décès", () => {
   });
 
   test("Doit composer l'extrait avec le bon formatage du lieu de naissance quand le pays est inconnu", () => {
-    const acteDecesAvecPaysInconnu = {
-      ...ficheActeDeces.data,
-      ...(ficheActeDeces.data.titulaires[0] = {
+    const acteDecesAvecPaysInconnuDto: IFicheActeDto = {
+      ...ficheActeDeces,
+      ...(ficheActeDeces.titulaires[0] = {
         nom: "GREENWALD",
         prenoms: ["marie-paulita", "zaria", "léna"],
-        autresNoms: null,
-        autresPrenoms: null,
         ordre: 729,
         sexe: "FEMININ",
         naissance: {
-          minute: null,
-          heure: null,
-          jour: null,
           mois: 3,
           annee: 1948,
-          voie: null,
           ville: "Milan",
-          arrondissement: null,
           region: "Lombardie",
-          pays: "Inconnu",
-          lieuReprise: null
+          pays: "Inconnu"
         },
         profession: "POMPIER",
-        age: null,
         domicile: {
           voie: "7 Rue du Noyer",
           ville: "Bruxelles",
-          arrondissement: null,
           region: "Flandre",
           pays: "BELGIQUE"
         },
@@ -196,33 +157,25 @@ describe("Composition extrait plurilingue de Décès", () => {
             ordre: 752,
             nom: "Sacken",
             sexe: "MASCULIN",
-            naissance: null,
             profession: "Informaticien",
-            age: null,
             domicile: {
               voie: "16 avenue des Palmiers",
               ville: "Djibouti",
-              arrondissement: null,
-              region: null,
               pays: "DJIBOUTI"
             },
             prenoms: ["Carmela", "Linzy"]
           }
         ],
-        typeDeclarationConjointe: null,
-        dateDeclarationConjointe: null,
-        nomPartie1: null,
-        nomPartie2: null,
-        nomAvantMariage: null,
-        nomApresMariage: null,
         nomDernierConjoint: "De fontaine",
         prenomsDernierConjoint: "Ratus"
       })
     };
 
+    const acteDecesAvecPaysInconnu: FicheActe = FicheActe.depuisDto(acteDecesAvecPaysInconnuDto)!;
+
     const compositionCorps = creationCompositionExtraitPlurilingue(
-      mapActe(acteDecesAvecPaysInconnu) as any as IFicheActe,
-      Validation.O,
+      acteDecesAvecPaysInconnu,
+      EValidation.O,
       SousTypeDelivrance.RDC,
       mentionsRetirees
     );

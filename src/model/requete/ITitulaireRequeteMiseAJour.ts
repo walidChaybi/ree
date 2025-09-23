@@ -1,4 +1,5 @@
-import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { TitulaireActe } from "@model/etatcivil/acte/TitulaireActe";
+import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { IPrenomOrdonnes, PrenomsOrdonnes } from "./IPrenomOrdonnes";
 
 export interface ITitulaireRequeteMiseAJour {
@@ -11,13 +12,13 @@ export interface ITitulaireRequeteMiseAJour {
   regionNaissance?: string;
   arrondissementNaissance?: string;
   paysNaissance?: string;
-  sexe: string;
+  sexe: keyof typeof ESexe;
   prenoms: IPrenomOrdonnes[];
 }
 
 export const TitulaireRequeteMiseAJour = {
-  listeDepuisDonneesFiche: (titulaires: any[]): ITitulaireRequeteMiseAJour[] =>
-    titulaires.map(titulaire => ({
+  listeDepuisDonneesFiche: (titulaires: TitulaireActe[]): ITitulaireRequeteMiseAJour[] => {
+    return titulaires.map(titulaire => ({
       position: titulaire.ordre,
       nomNaissance: titulaire.nom,
       anneeNaissance: titulaire.naissance?.annee,
@@ -27,7 +28,8 @@ export const TitulaireRequeteMiseAJour = {
       regionNaissance: titulaire.naissance?.region,
       arrondissementNaissance: titulaire.naissance?.region,
       paysNaissance: titulaire.naissance?.pays,
-      sexe: Sexe.getKey(Sexe.getEnumFromLibelle(titulaire.sexe?.libelle)),
+      sexe: titulaire.sexe,
       prenoms: PrenomsOrdonnes.listeDepuisTableau(titulaire.prenoms)
-    }))
+    }));
+  }
 } as const;

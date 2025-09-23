@@ -1,18 +1,17 @@
 import { ITitulaireComposition } from "@model/composition/commun/ITitulaireComposition";
-import { AnalyseMarginale } from "@model/etatcivil/acte/IAnalyseMarginale";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
+import { Filiation } from "@model/etatcivil/acte/Filiation";
 import { Evenement } from "@model/etatcivil/acte/IEvenement";
-import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { IFiliation } from "@model/etatcivil/acte/IFiliation";
-import { ITitulaireActe, TitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
-import { IMention, Mention } from "@model/etatcivil/acte/mention/IMention";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { TitulaireActe } from "@model/etatcivil/acte/TitulaireActe";
+import { TitulaireAnalyseMarginale } from "@model/etatcivil/acte/TitulaireAnalyseMarginale";
+import { Mention } from "@model/etatcivil/acte/mention/Mention";
+import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { SCEAU_MINISTERE } from "@model/parametres/clesParametres";
 import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
+import { EValidation } from "@model/requete/enum/EValidation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { Validation } from "@model/requete/enum/Validation";
 import DateUtils from "@util/DateUtils";
-import { DEUX, TROIS, UN } from "@util/Utils";
+import { DEUX, SNP, SPC, triListeObjetsSurPropriete, TROIS, UN } from "@util/Utils";
 import { IExtraitPlurilingueComposition } from "../IExtraitPlurilingueComposition";
 
 export interface IMentionsExtraitPlurilingue {
@@ -28,17 +27,17 @@ const DESORMAIS = "désormais";
 export class ExtraitPlurilingueCommunComposition {
   public static composerPlurilingue(
     composition: IExtraitPlurilingueComposition,
-    acte: IFicheActe,
-    validation: Validation,
+    acte: FicheActe,
+    validation: EValidation,
     sousTypeRequete: SousTypeDelivrance,
     mentionsRetirees: string[],
     ctv?: string
   ) {
-    composition.nature_acte = NatureActe.getKey(acte.nature);
+    composition.nature_acte = acte.nature;
     composition.etat = ETAT;
     composition.service_etat_civil = ETAT_CIVIL;
-    composition.reference_acte = FicheActe.getReference(acte);
-    composition.date_acte = Evenement.formatageDateCompositionExtraitPlurilingue(acte.evenement);
+    composition.reference_acte = acte.referenceActe;
+    composition.date_acte = Evenement.formatageDateCompositionExtraitPlurilingue(acte.evenement ?? undefined);
 
     composition.date_delivrance = DateUtils.getDateComposeFromDate(new Date());
 
@@ -46,32 +45,37 @@ export class ExtraitPlurilingueCommunComposition {
       ExtraitPlurilingueCommunComposition.getMentionsAAfficher(mentionsRetirees, acte.mentions)
     );
 
-    composition.filigrane_erreur = FicheActe.estEnErreur(acte) || this.nombreMentionsMax(acte, mentionsRetirees);
-    composition.filigrane_incomplet = FicheActe.estIncomplet(acte);
+    composition.filigrane_erreur = acte.estEnErreur() || this.nombreMentionsMax(acte, mentionsRetirees);
+    composition.filigrane_incomplet = acte.estIncomplet();
     ExtraitPlurilingueCommunComposition.ajouteCTV(sousTypeRequete, composition, ctv);
     composition.pas_de_bloc_signature = ExtraitPlurilingueCommunComposition.pasDeBlocSignature(validation);
     composition.sceau_ministere = ParametreBaseRequete.depuisCle(SCEAU_MINISTERE)?.libelle ?? "";
   }
 
-  public static composerTitulairePlurilingue(compositionTitulaire: ITitulaireComposition, acte: IFicheActe, titulaire: ITitulaireActe) {
+  public static composerTitulairePlurilingue(compositionTitulaire: ITitulaireComposition, acte: FicheActe, titulaire: TitulaireActe) {
+    const parentDirectMasculin = titulaire.filiations.find(
+      filiation => filiation.lienParente === "PARENT" && filiation.sexe === "MASCULIN"
+    );
+    const parentDirectFeminin = titulaire.filiations.find(filiation => filiation.lienParente === "PARENT" && filiation.sexe === "FEMININ");
+
     compositionTitulaire.nom = this.getNomOuVide(acte, titulaire);
     compositionTitulaire.prenoms = this.getPrenomOuVide(acte, titulaire);
     compositionTitulaire.sexe = ExtraitPlurilingueCommunComposition.getSexeOuVideOuTiret(titulaire)[0];
-    compositionTitulaire.nom_pere = this.getNomOuVideFiliation(TitulaireActe.getParentDirectMasculin(titulaire));
-    compositionTitulaire.prenoms_pere = this.getPrenomOuVideFiliation(TitulaireActe.getParentDirectMasculin(titulaire));
-    compositionTitulaire.nom_mere = this.getNomOuVideFiliation(TitulaireActe.getParentDirectFeminin(titulaire));
-    compositionTitulaire.prenoms_mere = this.getPrenomOuVideFiliation(TitulaireActe.getParentDirectFeminin(titulaire));
+    compositionTitulaire.nom_pere = this.getNomOuVideFiliation(parentDirectMasculin);
+    compositionTitulaire.prenoms_pere = this.getPrenomOuVideFiliation(parentDirectMasculin);
+    compositionTitulaire.nom_mere = this.getNomOuVideFiliation(parentDirectFeminin);
+    compositionTitulaire.prenoms_mere = this.getPrenomOuVideFiliation(parentDirectFeminin);
   }
 
-  public static pasDeBlocSignature(validation: Validation): boolean {
-    if (validation === Validation.E) {
+  public static pasDeBlocSignature(validation: EValidation): boolean {
+    if (validation === EValidation.E) {
       return true;
     } else {
       return false;
     }
   }
 
-  public static mappingMentionsExtraitPlurilingue(mentions?: IMention[]): IMentionsExtraitPlurilingue {
+  public static mappingMentionsExtraitPlurilingue(mentions?: Mention[]): IMentionsExtraitPlurilingue {
     let i = 0;
     const mentionExtraitPlurilingue: IMentionsExtraitPlurilingue = {
       enonciations: [],
@@ -96,16 +100,15 @@ export class ExtraitPlurilingueCommunComposition {
     return mentionExtraitPlurilingue;
   }
 
-  public static getMentionsAAfficher(idMentionsRetirees: string[], mentions: IMention[] | undefined): IMention[] {
-    let mentionsFiltrees = Mention.filtreAvecTexteMentionPlurilingue(mentions);
+  public static getMentionsAAfficher(idMentionsRetirees: string[], mentions: Mention[] | undefined): Mention[] {
+    if (!mentions) return [];
 
-    mentionsFiltrees = mentionsFiltrees
-      .filter(mention => {
-        return !idMentionsRetirees.some(idMentionRetiree => idMentionRetiree === mention.id);
-      })
-      .sort((mention1, mentions2) => mention1.numeroOrdreExtrait - mentions2.numeroOrdreExtrait);
-
-    return mentionsFiltrees;
+    return triListeObjetsSurPropriete(
+      mentions.filter(
+        mention => mention.textes?.texteMentionPlurilingue && !idMentionsRetirees.some(idMentionRetiree => idMentionRetiree === mention.id)
+      ),
+      "numeroOrdreExtrait"
+    );
   }
 
   public static ajouteCTV(sousTypeRequete: SousTypeDelivrance, composition: IExtraitPlurilingueComposition, ctv?: string) {
@@ -114,59 +117,31 @@ export class ExtraitPlurilingueCommunComposition {
     }
   }
 
-  public static nombreMentionsMax(acte: IFicheActe, idMentionsRetirees: string[]): boolean {
+  public static nombreMentionsMax(acte: FicheActe, idMentionsRetirees: string[]): boolean {
     return this.getMentionsAAfficher(idMentionsRetirees, acte.mentions).length > NOMBRE_MAX_MENTIONS;
   }
 
-  public static getNomDerniereAnalyseMarginale(acte: IFicheActe, titulaire: ITitulaireActe): string | undefined {
-    const titulaires = FicheActe.getAnalyseMarginaleLaPlusRecente(acte)?.titulaires;
-
-    return titulaires?.find(titulaireAnalyseMarginale => {
-      return titulaireAnalyseMarginale.ordre === titulaire.ordre;
-    })?.nom;
-  }
-
-  public static getPrenomOuVide(acte: IFicheActe, titulaire: ITitulaireActe): string {
-    let prenom = "";
+  public static getPrenomOuVide(acte: FicheActe, titulaire: TitulaireActe): string {
     const titulaireAM = this.getTitulaireAM(acte, titulaire);
 
-    if (titulaireAM) {
-      if (TitulaireActe.prenomAbsentOuNomEgalSPC(titulaireAM)) {
-        prenom = "";
-      } else {
-        prenom = TitulaireActe.getPrenomsSeparerPar(titulaireAM);
-      }
-    }
-    return prenom;
+    if (!titulaireAM?.prenoms.length || titulaireAM.prenoms[0] === SPC) return "";
+
+    return titulaireAM.prenoms.join(", ");
   }
 
-  public static getNomOuVide(acte: IFicheActe, titulaire: ITitulaireActe): string {
+  public static getNomOuVide(acte: FicheActe, titulaire: TitulaireActe): string {
     const titulaireAM = this.getTitulaireAM(acte, titulaire);
 
-    if (titulaireAM) {
-      if (TitulaireActe.nomAbsentOuNomEgalSNP(titulaireAM)) {
-        return "";
-      } else {
-        return this.getNom(titulaireAM.nom);
-      }
-    } else {
-      return "";
-    }
+    if (!titulaireAM?.nom || titulaireAM?.nom === SNP) return "";
+
+    return this.getNom(titulaireAM.nom);
   }
 
-  public static getTitulaireAM(acte: IFicheActe, titulaire: ITitulaireActe): ITitulaireActe | undefined {
-    const titulairesAnalyseMarginale = AnalyseMarginale.getTitulairesAM(acte.analyseMarginales);
-
-    return this.getTitulaireParOrdre(titulairesAnalyseMarginale, titulaire.ordre);
+  static getTitulaireAM(acte: FicheActe, titulaireActe: TitulaireActe): TitulaireAnalyseMarginale | undefined {
+    return acte.getAnalyseMarginaleLaPlusRecente()?.titulaires?.find(titulaireAM => titulaireAM.ordre === titulaireActe.ordre);
   }
 
-  public static getTitulaireParOrdre(titulaires: ITitulaireActe[] | undefined, ordre: number): ITitulaireActe | undefined {
-    return titulaires?.find(titulaire => {
-      return titulaire.ordre === ordre;
-    });
-  }
-
-  public static getNom(nomTitulaire?: string): string {
+  public static getNom(nomTitulaire: string | null): string {
     let nom = "";
 
     if (nomTitulaire) {
@@ -189,41 +164,29 @@ export class ExtraitPlurilingueCommunComposition {
     }
   }
 
-  public static getSexeOuVideOuTiret(titulaire?: ITitulaireActe): string {
-    let sexe = "";
-    if (titulaire?.sexe) {
-      if (titulaire.sexe === Sexe.FEMININ || titulaire.sexe === Sexe.MASCULIN) {
-        sexe = titulaire.sexe.libelle;
-      } else {
-        sexe = "-";
-      }
-    }
+  public static getSexeOuVideOuTiret(titulaire?: TitulaireActe): string {
+    switch (titulaire?.sexe) {
+      case "MASCULIN":
+      case "FEMININ":
+        return ESexe[titulaire.sexe];
 
-    return sexe;
+      case "INDETERMINE":
+      case "INCONNU":
+        return "-";
+      default:
+        return "";
+    }
   }
 
-  public static getNomOuVideFiliation(filiation?: IFiliation): string {
-    let nom = "";
-    if (filiation) {
-      if (TitulaireActe.nomAbsentOuNomEgalSNP(filiation)) {
-        nom = "";
-      } else {
-        nom = this.getNom(filiation.nom);
-      }
-    }
+  public static getNomOuVideFiliation(filiation?: Filiation): string {
+    if (!filiation?.nom || filiation.nom === SNP) return "";
 
-    return nom;
+    return this.getNom(filiation.nom);
   }
 
-  public static getPrenomOuVideFiliation(filiation?: IFiliation): string {
-    let prenom = "";
-    if (filiation) {
-      if (TitulaireActe.prenomAbsentOuNomEgalSPC(filiation)) {
-        prenom = "";
-      } else {
-        prenom = TitulaireActe.getPrenomsSeparerPar(filiation);
-      }
-    }
-    return prenom;
+  public static getPrenomOuVideFiliation(filiation?: Filiation): string {
+    if (!filiation?.prenoms.length || filiation.prenoms[0] === SPC) return "";
+
+    return filiation.prenoms.join(", ");
   }
 }

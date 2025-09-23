@@ -5,9 +5,9 @@ import { IProjetAnalyseMarginale } from "@model/etatcivil/acte/projetActe/IAnaly
 import { IFiliationProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/IFiliationProjetActe";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { ITitulaireProjetActe } from "@model/etatcivil/acte/projetActe/ITitulaireProjetActe";
+import { ELienParente } from "@model/etatcivil/enum/ELienParente";
 import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
-import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { TypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteArchiviste";
 import {
@@ -125,7 +125,7 @@ function mapPostulantVersTitulaireProjetActe(
 function getFiliationParParent(parentForm: ISaisieParentSousForm, ordre: number): IFiliationProjetActeTranscrit {
   const prenoms = getPrenomsTableauStringVersPrenomsOrdonnes(parentForm.prenom.prenoms).map(p => p.prenom);
   return {
-    lienParente: LienParente.PARENT,
+    lienParente: ELienParente.PARENT,
     ordre,
     nom: parentForm.nom.trim() || null,
     sexe: parentForm.sexe,

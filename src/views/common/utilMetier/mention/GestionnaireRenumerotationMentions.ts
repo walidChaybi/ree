@@ -1,7 +1,7 @@
-import { IMention } from "@model/etatcivil/acte/mention/IMention";
 import { IMentionAffichage } from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { ITexteMention } from "@model/etatcivil/acte/mention/ITexteMention";
 import { ITypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
+import { Mention } from "@model/etatcivil/acte/mention/Mention";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 
 interface MentionPourRenumerotation {
@@ -15,9 +15,9 @@ interface MentionPourRenumerotation {
 }
 
 class GestionnaireRenumerotationMentions {
-  public renumerotationMentions(mentionsSurEcran: IMentionAffichage[], mentionsEnBase: IMention[], typeDocument: string) {
+  public renumerotationMentions(mentionsSurEcran: IMentionAffichage[], mentionsEnBase: Mention[], typeDocument: string) {
     let res: MentionPourRenumerotation[] = [];
-    mentionsEnBase.forEach(el => res.push({ ...el }));
+    mentionsEnBase.forEach(el => res.push({ ...el, numeroOrdreExtrait: el.numeroOrdreExtrait! })); // TOREFACTOR: supprimer le point d'exclamation
     res = res.filter(
       // Les mentions sont réellement supprimé de la base seulement si elles
       // sont supprimés et qu'elles étaient spécifiques à ce document

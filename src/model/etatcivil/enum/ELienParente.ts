@@ -1,4 +1,4 @@
-export enum LienParente {
+export enum ELienParente {
   PARENT = "PARENT",
   ENFANT = "ENFANT",
   PARENT_ADOPTANT = "PARENT_ADOPTANT",

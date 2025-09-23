@@ -7,6 +7,7 @@ import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
 import { SectionPartProps } from "@widget/section/SectionPart";
 import { AjoutePartAuPanelAreas } from "@widget/section/SectionUtils";
+import DateRECE from "../../../utils/DateRECE";
 import { IAutorite } from "../commun/IAutorite";
 import { IPersonneDTO, Personne } from "../commun/Personne";
 import { EStatutPacs } from "../enum/EStatutPacs";
@@ -31,8 +32,8 @@ export interface IFichePacsDto {
   paysEnregistrement?: string;
   dateInscription: TDateArrayDTO;
   dateEnregistrementParAutorite: TDateArrayDTO;
-  dateDerniereDelivrance: number | null;
-  dateDerniereMaj: number;
+  dateDerniereDelivrance?: number;
+  dateDerniereMaj?: number;
 }
 
 export class FichePacs {
@@ -49,8 +50,6 @@ export class FichePacs {
     "personnes",
     "dateInscription",
     "dateEnregistrementParAutorite",
-    "dateDerniereDelivrance",
-    "dateDerniereMaj",
     "partenaires"
   ];
 
@@ -68,8 +67,8 @@ export class FichePacs {
     public readonly partenaires: Partenaire[],
     public readonly dateInscription: Date,
     public readonly dateEnregistrementParAutorite: Date,
-    public readonly dateDerniereDelivrance?: Date,
-    public readonly dateDerniereMaj?: Date
+    public readonly dateDerniereDelivrance: DateRECE | null,
+    public readonly dateDerniereMaj: DateRECE | null
   ) {}
 
   public static readonly depuisDto = (fichePacs: IFichePacsDto): FichePacs | null => {
@@ -102,8 +101,8 @@ export class FichePacs {
       fichePacs.partenaires.map(Partenaire.depuisDto).filter((partenaire): partenaire is Partenaire => partenaire !== null),
       DateUtils.getDateDepuisDateArrayDto(fichePacs.dateInscription),
       DateUtils.getDateDepuisDateArrayDto(fichePacs.dateEnregistrementParAutorite),
-      fichePacs.dateDerniereDelivrance ? DateUtils.getDateFromTimestamp(fichePacs.dateDerniereDelivrance) : undefined,
-      fichePacs.dateDerniereMaj ? DateUtils.getDateFromTimestamp(fichePacs.dateDerniereMaj) : undefined
+      fichePacs.dateDerniereDelivrance ? DateRECE.depuisTimestamp(fichePacs.dateDerniereDelivrance) : null,
+      fichePacs.dateDerniereMaj ? DateRECE.depuisTimestamp(fichePacs.dateDerniereMaj) : null
     );
   };
 

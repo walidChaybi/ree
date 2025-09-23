@@ -5,7 +5,7 @@ import {
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
 import { IRegenerationDocumentsParams, useRegenerationDocumentsHook } from "@hook/requete/RegenerationDocumentsHook";
 import { IRetourValideurParams, useRetourValideurApiHook } from "@hook/requete/RetourValideur";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -19,7 +19,7 @@ import { BoutonsTerminer } from "./BoutonsTerminer";
 
 interface BoutonsTerminerOuRelectureProps {
   requete: IRequeteDelivrance;
-  acte?: IFicheActe;
+  acte?: FicheActe;
 }
 
 export const BoutonsTerminerOuRelecture: React.FC<BoutonsTerminerOuRelectureProps> = props => {

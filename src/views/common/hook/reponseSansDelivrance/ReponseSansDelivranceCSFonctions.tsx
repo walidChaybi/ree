@@ -1,5 +1,4 @@
-import { getInformationsFicheActe } from "@api/appels/etatcivilApi";
-import { mapActe } from "@hook/repertoires/MappingRepertoires";
+import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
 import {
   IReponseSansDelivranceCSDemandeIncompleteComposition,
   ReponseSansDelivranceCSDemandeIncompleteComposition
@@ -16,11 +15,14 @@ import {
   IReponseSansDelivranceCSPACSNonInscritComposition,
   ReponseSansDelivranceCSPACSNonInscritComposition
 } from "@model/composition/IReponseSansDelivranceCSPACSNonInscritComposition";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
+import { useEffect, useState } from "react";
+import useFetchApi from "../../../../hooks/api/FetchApiHook";
 import AfficherMessage from "../../../../utils/AfficherMessage";
 
 const ERREUR_PAS_DE_REQUERENT = "Erreur inattendue: Pas de requérant pour la requête";
@@ -59,17 +61,47 @@ export const createReponseSansDelivranceCSPourCompositionApiFrancais = (
   return {} as IReponseSansDelivranceCSFrancaisComposition;
 };
 
+export interface ICreateReponseSansDelivranceCSPourCompositionApiMariageParams {
+  requete?: IRequeteDelivrance;
+  acte?: ResultatRMCActe;
+}
+
 /** TRACE_MARIAGE_ACTIF */
-export const createReponseSansDelivranceCSPourCompositionApiMariage = async (
-  requete: IRequeteDelivrance,
-  acte: ResultatRMCActe | undefined
-): Promise<IReponseSansDelivranceCSMariageComposition> => {
-  if (requete?.requerant && acte) {
-    const infoActe = await getInformationsFicheActe(acte.id);
-    return ReponseSansDelivranceCSMariageComposition.creerReponseSansDelivranceCS(requete, mapActe(infoActe.body.data));
-  }
-  AfficherMessage.erreur(ERREUR_PAS_DE_REQUERENT, { fermetureAuto: true });
-  return {} as IReponseSansDelivranceCSMariageComposition;
+export const CreateReponseSansDelivranceCSPourCompositionApiMariage = ({
+  requete,
+  acte
+}: ICreateReponseSansDelivranceCSPourCompositionApiMariageParams): IReponseSansDelivranceCSMariageComposition | null => {
+  const [reponse, setReponse] = useState<IReponseSansDelivranceCSMariageComposition | null>(null);
+  const { appelApi: recupererFicheActe } = useFetchApi(CONFIG_GET_RESUME_ACTE);
+
+  useEffect(() => {
+    if (requete?.requerant && acte) {
+      recupererFicheActe({
+        parametres: {
+          path: { idActe: acte.id },
+          query: { recupereImagesEtTexte: false, remplaceIdentiteTitulaireParIdentiteTitulaireAM: true }
+        },
+        apresSucces: ficheActeDto => {
+          const ficheActe = FicheActe.depuisDto(ficheActeDto);
+
+          if (!ficheActe) {
+            setReponse({} as IReponseSansDelivranceCSMariageComposition);
+          } else {
+            setReponse(ReponseSansDelivranceCSMariageComposition.creerReponseSansDelivranceCS(requete, ficheActe));
+          }
+        },
+        apresErreur: erreurs => {
+          AfficherMessage.erreur("Erreur lors de la récupération des informations de l'acte", { erreurs });
+          setReponse({} as IReponseSansDelivranceCSMariageComposition);
+        }
+      });
+    }
+
+    AfficherMessage.erreur(ERREUR_PAS_DE_REQUERENT, { fermetureAuto: true });
+    setReponse({} as IReponseSansDelivranceCSMariageComposition);
+  }, []);
+
+  return reponse;
 };
 
 export function estSeulementActeMariage(

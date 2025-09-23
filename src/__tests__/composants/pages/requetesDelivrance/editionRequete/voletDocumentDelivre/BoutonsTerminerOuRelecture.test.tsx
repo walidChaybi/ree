@@ -1,4 +1,7 @@
+import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
+import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import { ficheActeTexte } from "@mock/data/ficheActe";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { render, screen, waitFor } from "@testing-library/react";
@@ -7,9 +10,13 @@ import { describe, expect, test } from "vitest";
 import BoutonsTerminerOuRelecture from "../../../../../../composants/pages/requetesDelivrance/editionRequete/boutons/BoutonsTerminerOuRelecture";
 import EditionDelivranceContextProvider from "../../../../../../contexts/EditionDelivranceContextProvider";
 import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
-import { acte } from "../../../../../mock/data/ficheEtBandeau/ficheActe";
 
 describe("BoutonTerminerOuRelecture - ", () => {
+  MockApi.deployer(
+    CONFIG_GET_RESUME_ACTE,
+    { path: { idActe: ficheActeTexte.id }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
+    { data: ficheActeTexte }
+  );
   test("Doit afficher les boutons d'action pour traiter la requête", async () => {
     const router = createTestingRouter(
       [
@@ -17,7 +24,7 @@ describe("BoutonTerminerOuRelecture - ", () => {
           path: "/test",
           element: (
             <EditionDelivranceContextProvider
-              idActeParam={acte.id}
+              idActeParam={ficheActeTexte.id}
               idRequeteParam={"3f52370d-14ed-4c55-8cf4-afe006d9aa38"}
             >
               <BoutonsTerminerOuRelecture />
@@ -50,7 +57,7 @@ describe("BoutonTerminerOuRelecture - ", () => {
           path: "/test",
           element: (
             <EditionDelivranceContextProvider
-              idActeParam={acte.id}
+              idActeParam={ficheActeTexte.id}
               idRequeteParam={"3f52370d-14ed-4c55-8cf4-afe006d9aa39"}
             >
               <BoutonsTerminerOuRelecture />

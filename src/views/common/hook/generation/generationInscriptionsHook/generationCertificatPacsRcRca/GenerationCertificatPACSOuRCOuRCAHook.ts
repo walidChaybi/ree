@@ -1,4 +1,4 @@
-import { CONFIG_GET_INFORMATIONS_FICHES_REPERTOIRE } from "@api/configurations/etatCivil/repertoireCivil/GetInformationsFicheRepertoire";
+import { CONFIG_GET_FICHE_INSCRIPTION } from "@api/configurations/etatCivil/repertoireCivil/GetFicheInscription";
 import { Orientation } from "@model/composition/enum/Orientation";
 import { TypeCertificatComposition } from "@model/composition/type/TypeCertificatCompoistion";
 import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
@@ -9,13 +9,13 @@ import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
+import { TFiche } from "@pages/fiche/FicheUtils";
 import { useEffect, useState } from "react";
 import useFetchApi from "../../../../../../hooks/api/FetchApiHook";
 import { MimeType } from "../../../../../../ressources/MimeType";
 import AfficherMessage, { estTableauErreurApi } from "../../../../../../utils/AfficherMessage";
 import { usePostDocumentsReponseApi } from "../../../DocumentReponseHook";
 import { useCertificatPacsRcRcaApiHook } from "../../../composition/CompositionCertificatPacsRcRca";
-import { TFiche, mapRcRca } from "../../../repertoires/MappingRepertoires";
 import { IResultGenerationInscriptions, RESULTAT_VIDE } from "../../generationUtils";
 import { useGestionCertificatCourant as useGestionPacsRcRcaCourant } from "./GenerationCertificatGestionPacsRcRcaCourantHook";
 import {
@@ -56,7 +56,7 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
   );
 
   // 1- Récupération des informations sur le PACS/RC/RCA courant
-  const { appelApi } = useFetchApi(CONFIG_GET_INFORMATIONS_FICHES_REPERTOIRE);
+  const { appelApi } = useFetchApi(CONFIG_GET_FICHE_INSCRIPTION);
   useEffect(() => {
     if (!(typeCertificat && pacsRcRcaCourant?.id)) return;
 
@@ -66,10 +66,10 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
         let ficheRepertoire: FichePacs | FicheRcRca | null = null;
         switch (getTypeFiche(typeCertificat)) {
           case ETypeFiche.RC:
-            ficheRepertoire = mapRcRca(informationsFicheRepertoire as IFicheRcDto);
+            ficheRepertoire = FicheRcRca.RcDepuisDto(informationsFicheRepertoire as IFicheRcDto);
             break;
           case ETypeFiche.RCA:
-            ficheRepertoire = mapRcRca(informationsFicheRepertoire as IFicheRcaDto);
+            ficheRepertoire = FicheRcRca.RcaDepuisDto(informationsFicheRepertoire as IFicheRcaDto);
             break;
           case ETypeFiche.PACS:
             ficheRepertoire = FichePacs.depuisDto(informationsFicheRepertoire as IFichePacsDto);

@@ -1,10 +1,9 @@
+import EExistenceContratMariage from "@model/etatcivil/enum/EExistenceContratMariage";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { getValeurOuVide } from "@util/Utils";
-import { IFicheActe } from "../../../etatcivil/acte/IFicheActe";
-import { ExistenceContratMariage } from "../../../etatcivil/enum/ExistenceContratMariage";
-import { LienParente } from "../../../etatcivil/enum/LienParente";
+import { FicheActe } from "../../../etatcivil/acte/FicheActe";
+import { ELienParente } from "../../../etatcivil/enum/ELienParente";
 import { NatureActe } from "../../../etatcivil/enum/NatureActe";
-import { Validation } from "../../../requete/enum/Validation";
+import { EValidation } from "../../../requete/enum/EValidation";
 import {
   CommunExtraitOuCopieActeTexteComposition,
   ICreerExtraitCopieActeTexteAvantCompositionParams,
@@ -13,16 +12,11 @@ import {
 } from "./CommunExtraitOuCopieActeTexteComposition";
 
 export class ExtraitCopieActeTexteMariageComposition {
-  public static creerExtraitCopieActeTexteMariage(
-    params: ICreerExtraitCopieActeTexteAvantCompositionParams
-  ) {
+  public static creerExtraitCopieActeTexteMariage(params: ICreerExtraitCopieActeTexteAvantCompositionParams) {
     const natureActe = NatureActe.MARIAGE.libelle.toUpperCase();
     const corpsTexte =
-      Validation.E !== params.validation
-        ? ExtraitCopieActeTexteMariageComposition.getCorpsTexte(
-            params.acte,
-            ChoixDelivrance.estAvecFiliation(params.choixDelivrance)
-          )
+      EValidation.E !== params.validation
+        ? ExtraitCopieActeTexteMariageComposition.getCorpsTexte(params.acte, ChoixDelivrance.estAvecFiliation(params.choixDelivrance))
         : undefined;
 
     return CommunExtraitOuCopieActeTexteComposition.creerExtraitCopieActeTexte({
@@ -37,14 +31,8 @@ export class ExtraitCopieActeTexteMariageComposition {
     });
   }
 
-  private static getCorpsTexte(
-    acteMariage: IFicheActe,
-    avecFiliation: boolean
-  ) {
-    const { ecTitulaire1, ecTitulaire2 } =
-      CommunExtraitOuCopieActeTexteComposition.getTitulairesCorpsText(
-        acteMariage
-      );
+  private static getCorpsTexte(acteMariage: FicheActe, avecFiliation: boolean) {
+    const { ecTitulaire1, ecTitulaire2 } = CommunExtraitOuCopieActeTexteComposition.getTitulairesCorpsTexte(acteMariage);
 
     let parents1 = "";
     let parents2 = "";
@@ -52,37 +40,28 @@ export class ExtraitCopieActeTexteMariageComposition {
     let parentsAdoptants2 = "";
 
     if (avecFiliation) {
-      ({ parents1, parentsAdoptants1, parents2, parentsAdoptants2 } =
-        ExtraitCopieActeTexteMariageComposition.getPhrasesParents(
-          ecTitulaire1,
-          ecTitulaire2
-        ));
+      ({ parents1, parentsAdoptants1, parents2, parentsAdoptants2 } = ExtraitCopieActeTexteMariageComposition.getPhrasesParents(
+        ecTitulaire1,
+        ecTitulaire2
+      ));
     }
 
     // Création de l'événement pour le corps
-    const evtActe =
-      CommunExtraitOuCopieActeTexteComposition.getEvenementActeCompositionEC(
-        acteMariage
-      );
+    const evtActe = CommunExtraitOuCopieActeTexteComposition.getEvenementActeCompositionEC(acteMariage);
 
     // Création le l'énonciation du contrat pour le corps
-    const enonciationContratDeMariage =
-      ExtraitCopieActeTexteMariageComposition.getEnonciationContratMariage(
-        acteMariage.detailMariage?.existenceContrat,
-        acteMariage.detailMariage?.contrat
-      ); //<énonciation contrat de mariage>
+    const enonciationContratDeMariage = ExtraitCopieActeTexteMariageComposition.getEnonciationContratMariage(
+      acteMariage.detailMariage?.existenceContrat,
+      acteMariage.detailMariage?.contrat
+    ); //<énonciation contrat de mariage>
 
     return `${evtActe.leouEnEvenement} ${evtActe.dateEvenement} à ${evtActe.lieuEvenement}
 a été célébré le mariage
-de ${ecTitulaire1.prenoms} ${ecTitulaire1.nom} ${
-      ecTitulaire1.partiesNom
-    }${this.getNaissance(
+de ${ecTitulaire1.prenoms} ${ecTitulaire1.nom} ${ecTitulaire1.partiesNom}${this.getNaissance(
       ecTitulaire1.dateNaissanceOuAge,
       ecTitulaire1.lieuNaissance
     )}${parents1}${parentsAdoptants1}
-et de ${ecTitulaire2?.prenoms} ${ecTitulaire2?.nom} ${
-      ecTitulaire2?.partiesNom
-    }${this.getNaissance(
+et de ${ecTitulaire2?.prenoms} ${ecTitulaire2?.nom} ${ecTitulaire2?.partiesNom}${this.getNaissance(
       ecTitulaire2?.dateNaissanceOuAge,
       ecTitulaire2?.lieuNaissance
     )}${parents2}${parentsAdoptants2}
@@ -91,10 +70,7 @@ Contrat de mariage : ${enonciationContratDeMariage}`;
   }
 
   //Gestion du retour chariot pour la ligne à propos de la naissance
-  private static getNaissance(
-    dateAge: string | undefined,
-    lieu: string | undefined
-  ) {
+  private static getNaissance(dateAge: string | undefined, lieu: string | undefined) {
     let naissance = "";
     if (dateAge || lieu) {
       naissance = `
@@ -103,50 +79,36 @@ ${dateAge}${lieu}`;
     return naissance;
   }
 
-  private static getPhrasesParents(
-    ecTitulaire1: ITitulaireCompositionEC,
-    ecTitulaire2?: ITitulaireCompositionEC
-  ) {
+  private static getPhrasesParents(ecTitulaire1: ITitulaireCompositionEC, ecTitulaire2?: ITitulaireCompositionEC) {
     let parents1 = "";
     let parents2 = "";
     let parentsAdoptants1 = "";
     let parentsAdoptants2 = "";
     //Construction phrase parents
     parents1 = this.constructionPhraseParents(
-      ecTitulaire1.parentsTitulaire.filter(
-        parent => parent.lienParente === LienParente.PARENT
-      ),
-      LienParente.PARENT
+      ecTitulaire1.parentsTitulaire.filter(parent => parent.lienParente === ELienParente.PARENT),
+      ELienParente.PARENT
     );
     parentsAdoptants1 = this.constructionPhraseParents(
-      ecTitulaire1.parentsTitulaire.filter(
-        parent => parent.lienParente !== LienParente.PARENT
-      ),
-      LienParente.PARENT_ADOPTANT
+      ecTitulaire1.parentsTitulaire.filter(parent => parent.lienParente !== ELienParente.PARENT),
+      ELienParente.PARENT_ADOPTANT
     );
 
     //Construction phrase parents adoptants
     if (ecTitulaire2) {
       parents2 = this.constructionPhraseParents(
-        ecTitulaire2.parentsTitulaire.filter(
-          parent => parent.lienParente === LienParente.PARENT
-        ),
-        LienParente.PARENT
+        ecTitulaire2.parentsTitulaire.filter(parent => parent.lienParente === ELienParente.PARENT),
+        ELienParente.PARENT
       );
       parentsAdoptants2 = this.constructionPhraseParents(
-        ecTitulaire2.parentsTitulaire.filter(
-          parent => parent.lienParente !== LienParente.PARENT
-        ),
-        LienParente.PARENT_ADOPTANT
+        ecTitulaire2.parentsTitulaire.filter(parent => parent.lienParente !== ELienParente.PARENT),
+        ELienParente.PARENT_ADOPTANT
       );
     }
     return { parents1, parentsAdoptants1, parents2, parentsAdoptants2 };
   }
 
-  private static constructionPhraseParents(
-    parents: IParentsTitulaireCompositionEC[],
-    lienParente: LienParente
-  ) {
+  private static constructionPhraseParents(parents: IParentsTitulaireCompositionEC[], lienParente: ELienParente) {
     let resultatPhraseParents = "";
     const parent1 = parents[0]
       ? `
@@ -156,37 +118,24 @@ ${dateAge}${lieu}`;
 
     resultatPhraseParents = parent1;
 
-    if (parent2 && lienParente === LienParente.PARENT) {
+    if (parent2 && lienParente === ELienParente.PARENT) {
       resultatPhraseParents += `
   et de ${parent2}`;
-    } else if (
-      parent2 &&
-      (lienParente === LienParente.PARENT_ADOPTANT ||
-        lienParente === LienParente.ADOPTANT_CONJOINT_DU_PARENT)
-    ) {
+    } else if (parent2 && (lienParente === ELienParente.PARENT_ADOPTANT || lienParente === ELienParente.ADOPTANT_CONJOINT_DU_PARENT)) {
       resultatPhraseParents += ` et par ${parent2}`;
     }
 
     return resultatPhraseParents;
   }
 
-  private static getEnonciationContratMariage(
-    existenceContratMariage?: ExistenceContratMariage,
-    text?: string
-  ): string {
-    let enonciationContratMariage;
+  private static getEnonciationContratMariage(existenceContratMariage?: keyof typeof EExistenceContratMariage, text?: string): string {
     switch (existenceContratMariage) {
-      case ExistenceContratMariage.OUI:
-        enonciationContratMariage = getValeurOuVide(text);
-        break;
-      case ExistenceContratMariage.NON:
-        enonciationContratMariage = "Sans contrat préalable";
-        break;
-
+      case "OUI":
+        return text ?? "";
+      case "NON":
+        return "Sans contrat préalable";
       default:
-        enonciationContratMariage = "--";
-        break;
+        return "--";
     }
-    return enonciationContratMariage;
   }
 }

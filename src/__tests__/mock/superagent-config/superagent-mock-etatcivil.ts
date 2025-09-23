@@ -1,54 +1,10 @@
 import { ReponseEnregistrementProjetActe } from "@mock/data/ProjetActe";
-import { fichePacs, idFichePacs, pacsModificationNotaire } from "@mock/data/fichePACS";
-import {
-  ActeAnalyseMarginales,
-  derniereAnalyseMarginaleAvecDeuxVocableEtNomPartie1,
-  derniereAnalyseMarginaleAvecDeuxVocablesEtNomPartie1Et2,
-  derniereAnalyseMarginaleAvecUneVocableEtNomPartie1
-} from "../data/ActeAnalyseMarginales";
 import { ReponseAppelAddAlerteActe, ReponseAppelGetAlertesActe } from "../data/Alertes";
-import { acteExtraitSaisie } from "../data/DonneesSaisieExtrait";
 import { imagePngVideBase64 } from "../data/ImagePng";
-import { ReponseAppelRMCActe, ReponseAppelRMCActe4DernierResultats, ReponseAppelRMCActe4PremiersResultats } from "../data/RMCActe";
 import { RMCAutoPersonneResponseAlpha, RMCAutoPersonneResponseBeta } from "../data/RMCAutoPersonne";
-import { ReponseAppelRMCInscription } from "../data/RMCInscription";
-import { getTitulairesActeAPI } from "../data/Titulaire";
 import { actesInscriptionsSauvegardes } from "../data/actesInscriptionsSauvegardes";
-import {
-  ficheActe1,
-  ficheActe2,
-  ficheActeAvecGenreIndetermine,
-  ficheActeAvecImage,
-  ficheActeAvecTitulaireMultiple,
-  ficheActeDeces2,
-  ficheActeEC,
-  ficheActeMariage,
-  ficheActeMariage2,
-  idFicheActe1,
-  idFicheActe2,
-  idFicheActeMariage
-} from "../data/ficheActe";
-import {
-  acte,
-  acte1,
-  acte2,
-  acte3,
-  acte4,
-  acte5,
-  acteMariage,
-  acteMariageElectronique,
-  acteNaissance,
-  acteNationalite
-} from "../data/ficheEtBandeau/ficheActe";
-import { mockRcDto } from "../data/ficheRC";
-import { ficheRca, ficheRcaDecisionJuridictionEtrangere, idFicheRca, mockRcaDto } from "../data/ficheRCA";
-import {
-  EnregistrerMentionsResultat,
-  MetamodeleAideSaisie,
-  MetamodeleAideSaisieMariageEtranger,
-  mentions,
-  mentionsPlurilingues
-} from "../data/mentions";
+import { idFicheActeMariage } from "../data/ficheActe";
+import { mentions, mentionsPlurilingues } from "../data/mentions";
 import {
   ReponseAppelNomenclatureMandataire,
   ReponseAppelNomenclatureNatureMention,
@@ -77,109 +33,8 @@ export const configEtatcivil = [
      * @param context object the context of running the fixtures function
      */
     fixtures: function (match: any, params: any, headers: any, context: any) {
-      if (match[1] === "/repertoirecivil/rc/7566e16c-2b0e-11eb-adc1-0242ac120002") {
-        return { data: mockRcDto.data };
-      }
-
-      if (match[1] === "/repertoirecivil/rca/135e4dfe-9757-4d5d-8715-359c6e73289b") {
-        return { data: mockRcaDto.data };
-      }
-
-      if (
-        match[1] === "/repertoirecivil/rca/215e4dfe-9757-4d5d-8715-359c6e73288c" ||
-        match[1] === "/repertoirecivil/rc/135e4dfe-9757-4d5d-8715-359c6e73289b"
-      ) {
-        return { data: ficheRcaDecisionJuridictionEtrangere };
-      }
-
-      if (match[1] === `/repertoirecivil/rca/${idFicheRca}`) {
-        return { ...ficheRca };
-      }
-
-      if (match[1] === `/repertoirecivil/pacs/${idFichePacs}`) {
-        return { ...fichePacs };
-      }
-
       if (match[1] === "/acte/6e89c1c1-16c4-4e40-9b72-7b567270b26f/saisieExtrait") {
         return { data: null };
-      }
-
-      if (
-        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134a/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true" ||
-        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true" ||
-        match[1] ===
-          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134a/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&recupereImagesEtTexte=true" ||
-        match[1] ===
-          "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&recupereImagesEtTexte=true"
-      ) {
-        return { data: acteNationalite };
-      }
-
-      if (
-        match[1] === "/repertoirecivil/pacs/89c9d030-26c3-41d3-bdde-8b4dcc0420e0" ||
-        match[1] === "/repertoirecivil/pacs/85160d6e-893b-47c2-a9a8-b25573189f0c"
-      ) {
-        return { data: pacsModificationNotaire.data };
-      } else if (
-        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true" ||
-        match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false" ||
-        match[1] ===
-          "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&recupereImagesEtTexte=true" ||
-        match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4da/resume" ||
-        match[1] === "/acte/f9279c00-5d2b-11ea-bc55-0242ac130004/resume"
-      ) {
-        return { data: acte };
-      } else if (
-        match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4dc/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false" ||
-        match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4dc/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true"
-      ) {
-        return { data: acte1 };
-      } else if (match[1] === "/acte/6e89c1c1-16c4-4e40-9b72-7b567270b26f/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true") {
-        return { data: acteExtraitSaisie };
-      } else if (
-        match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8/resume" ||
-        match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true" ||
-        match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a8/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false"
-      ) {
-        return { data: acte2 };
-      } else if (
-        match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4db/resume" ||
-        match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4db/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true" ||
-        match[1] === "/acte/d8708d77-a359-4553-be72-1eb5f246d4db/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false" ||
-        match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a9/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false"
-      ) {
-        return { data: acte3 };
-      } else if (
-        match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a9/resume" ||
-        match[1] === "/acte/2748bb45-22cd-41ea-90db-0483b8ffc8a9/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true"
-      ) {
-        return { data: acte4 };
-      } else if (match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true") {
-        return { data: acte5 };
-      } else if (match[1] === "/acte/b41079a5-9e8f-478a-b04c-c4c2ac671123/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true") {
-        return { data: ficheActeEC.data };
-      } else if (match[1] === "/acte/b45079a5-9e8f-488a-b07c-c4c2az613121/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true") {
-        return { data: ficheActeAvecTitulaireMultiple.data };
-      } else if (match[1] === "/acte/b45079a5-9e8f-478a-b07c-c4c2az671123/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true") {
-        return { data: ficheActeAvecGenreIndetermine.data };
-      } else if (match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134b/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true") {
-        return { data: ficheActeMariage.data };
-      } else if (match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac671348/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true") {
-        return { data: acteMariage };
-      } else if (match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac671349/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true") {
-        return { data: acteMariageElectronique };
-      } else if (match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235e/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true") {
-        return { data: acteNaissance };
-      } else if (match[1] === "/acte/923a10fb-0b15-452d-83c0-d24c76d1d19d/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true") {
-        return { data: ActeAnalyseMarginales };
-      } else if (match[1] === "/acte/0bce8edd-0183-495b-939d-0b3cf6918792/resume") {
-        return { data: ficheActeMariage2.data };
-      } else if (match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134c/resume") {
-        return { data: ficheActeDeces2.data };
-      }
-
-      if (match[1] === "/acte/923a10fb-0b15-452d-83c0-d24c76d1de8d/resume?recupereImagesEtTexte=true") {
-        return ficheActeAvecImage;
       }
 
       /////////////////////////////////////////////////////////////////////
@@ -209,122 +64,6 @@ export const configEtatcivil = [
         context.method === "post"
       ) {
         return { data: true };
-      }
-
-      if (
-        (match[1] === "/acte/b00ebeb2-8ddc-4928-b99e-b06a248d21ae/mentions-et-analyse-marginale" ||
-          match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/mentions-et-analyse-marginale") &&
-        context.method === "put"
-      ) {
-        return EnregistrerMentionsResultat;
-      }
-
-      if (
-        match[1] === "/types-mentions/b03c1503-d452-4751-8bb3-94d082db1e5e/metamodele-aide-a-saisie" ||
-        match[1] === "/types-mentions/b048e05c-ff6f-44fd-89dc-d07aa9b5fc80/metamodele-aide-a-saisie" ||
-        match[1] === "/types-mentions/b0485f4e-5d29-4f03-956b-0a53d02ae617/metamodele-aide-a-saisie"
-      ) {
-        return MetamodeleAideSaisie;
-      }
-
-      if (match[1] === "/types-mentions/b03c0e14-bad0-40a7-a895-8169e2b7f38e/metamodele-aide-a-saisie" && context.method === "get") {
-        return MetamodeleAideSaisieMariageEtranger;
-      }
-
-      /////////////////////////////////////////////////////////////////////
-      // actes utilisés pour le test de pagination (avec changement de plage)
-      if (
-        match[1] === `/acte/${idFicheActe1}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true` ||
-        match[1] === `/acte/${idFicheActe1}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false` ||
-        match[1] === `/acte/${idFicheActe1}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true` ||
-        match[1] === `/acte/${idFicheActe1}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false`
-      ) {
-        return ficheActe1;
-      }
-
-      if (
-        match[1] === `/acte/${idFicheActe2}/resume` ||
-        match[1] === `/acte/${idFicheActe2}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true` ||
-        match[1] === `/acte/${idFicheActe2}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=false`
-      ) {
-        return ficheActe2;
-      }
-      /////////////////////////////////////////////////////////////////////
-
-      if (
-        match[1] === `/acte/${idFicheActeMariage}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true` ||
-        match[1] === `/acte/${idFicheActeMariage}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true&recupereImagesEtTexte=true`
-      ) {
-        return ficheActeMariage;
-      }
-
-      if (
-        match[1] === `/acte/${idFicheActeMariage}/resume` ||
-        match[1] === `/acte/${idFicheActeMariage}/resume?recupereImagesEtTexte=true` ||
-        match[1] === "/acte/0bce8edd-0183-495b-939d-0b3cf6918792/resume?recupereImagesEtTexte=true"
-      ) {
-        return ficheActeMariage;
-      }
-
-      if (match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134c/resume?recupereImagesEtTexte=true") {
-        return ficheActeDeces2;
-      }
-
-      // RMC Acte
-      if (match[1] === "/acte/rmc?range=0-100") {
-        // RMC Acte Manuelle suite RMC Auto (vue ApercuRequetePriseEnChargePartieDroite)
-        if (params?.nomTitulaire === NORESULT) {
-          return {
-            headers: {
-              "content-range": "0-105/0",
-              link: ""
-            },
-            data: { registres: [] }
-          };
-        }
-        // RMC Acte Manuelle (vue RMCActeInscriptionPage)
-        else {
-          return {
-            headers: {
-              "content-range": "0-15/" + ReponseAppelRMCActe.data.length,
-              link: '<http://localhost:80/rece/rece-etatcivil-api/acte/rmc?range=0-100>;rel="next"'
-            },
-            data: ReponseAppelRMCActe.data
-          };
-        }
-      }
-
-      // RMC Inscription
-      if (match[1] === "/repertoirecivil/rmc?range=0-105") {
-        // RMC Inscription Manuelle suite RMC Auto (vue ApercuRequetePriseEnChargePartieDroite)
-        if (params?.nomTitulaire === NORESULT) {
-          return {
-            headers: {
-              "content-range": "0-105/0",
-              link: ""
-            },
-            data: { repertoiresCiviles: [] }
-          };
-        }
-        // RMC Inscription Manuelle (vue RMCActeInscriptionPage)
-        else {
-          return {
-            headers: {
-              "content-range": "0-15/" + ReponseAppelRMCInscription.length,
-              link: '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmc?range=0-105>;rel="next"'
-            },
-            data: ReponseAppelRMCInscription
-          };
-        }
-      }
-
-      ////////////////////////////////////////////////////////////////////////
-      // RMC Acte: test de pagination (avec changement de plage) sur les fiches Acte
-      if (match[1] === "/acte/rmc?range=0-4") {
-        return ReponseAppelRMCActe4PremiersResultats;
-      }
-      if (match[1] === "/acte/rmc?range=1-4") {
-        return ReponseAppelRMCActe4DernierResultats;
       }
 
       ///////////////
@@ -384,24 +123,6 @@ export const configEtatcivil = [
       // derniere analyse marginale pour mise a jours mentions //
       /////////////////
 
-      if (match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c4ey86537g/derniere-analyse-marginale-valide") {
-        return {
-          data: derniereAnalyseMarginaleAvecDeuxVocablesEtNomPartie1Et2
-        };
-      }
-
-      if (match[1] === "/acte/a5187320-d722-4673-abd7-a73ed41ad8c1/derniere-analyse-marginale-valide") {
-        return {
-          data: derniereAnalyseMarginaleAvecUneVocableEtNomPartie1
-        };
-      }
-
-      if (match[1] === "/acte/b51079a5-9e8d-478c-b04c-c4c4ey86537g/derniere-analyse-marginale-valide") {
-        return {
-          data: derniereAnalyseMarginaleAvecDeuxVocableEtNomPartie1
-        };
-      }
-
       if (match[1] === "/analyse-marginale/acte/e5fdfe01-655b-44b9-a1fd-86c1169bb2ee") {
         return {
           data: true
@@ -432,80 +153,6 @@ export const configEtatcivil = [
 
       if (match[1] === "/nomenclature/typemention") {
         return { data: ReponseAppelNomenclatureTypeMention.data };
-      }
-
-      if (match[1] === "/acte/pocopas/debutentPar?debutPocopa=t&familleRegistre=CSL&nombreResultatsMax=15&estOuvert=true") {
-        return {
-          data: ["TORONTO", "TOURANE", "TOURNAI", "TOKYO", "TULEAR", "TUNIS", "TURIN", "TURIN ET GENES"]
-        };
-      }
-
-      if (match[1] === "/acte/pocopas/debutentPar?debutPocopa=t&nombreResultatsMax=15") {
-        return {
-          data: ["TORONTO", "TOURANE", "TOURNAI", "TOKYO", "TULEAR", "TUNIS", "TURIN", "TURIN ET GENES"]
-        };
-      }
-
-      if (match[1] === "/acte/pocopas/debutentPar?debutPocopa=t&familleRegistre=ACQ&nombreResultatsMax=15") {
-        return {
-          data: ["TORONTO", "TOURANE", "TOURNAI", "TOKYO", "TULEAR", "TUNIS", "TURIN", "TURIN ET GENES"]
-        };
-      }
-
-      if (match[1] === "/acte/pocopas/debutentPar?debutPocopa=tu&nombreResultatsMax=15") {
-        return {
-          data: ["TULEAR", "TUNIS", "TURIN", "TURIN ET GENES"]
-        };
-      }
-
-      if (match[1] === "/acte/pocopas/debutentPar?debutPocopa=tun&nombreResultatsMax=15") {
-        return {
-          data: ["TUNIS"]
-        };
-      }
-
-      if (match[1] === "/acte/pocopas/debutentPar?debutPocopa=tuni&nombreResultatsMax=15") {
-        return {
-          data: ["TUNIS"]
-        };
-      }
-
-      if (match[1] === "/acte/pocopas/debutentPar?debutPocopa=tunis&nombreResultatsMax=15") {
-        return {
-          data: ["TUNIS"]
-        };
-      }
-
-      if (match[1] === "/acte/pocopas/debutentPar?debutPocopa=t&familleRegistre=ACQ&nombreResultatsMax=15") {
-        return {
-          data: ["TOKYO"]
-        };
-      }
-
-      if (String(match[1]).startsWith("/acte/pocopas/debutentPar")) {
-        return {
-          data: ["TUNIS"]
-        };
-      }
-
-      if (match[1] === "/acte/rmcauto?range=0-100") {
-        return {
-          headers: {
-            "content-range": "0-15/" + ReponseAppelRMCActe.data.length,
-            link: '<http://localhost:80/rece/rece-etatcivil-api/acte/rmcauto?range=0-100>;rel="next"'
-          },
-          data: ReponseAppelRMCActe.data
-        };
-      }
-
-      if (match[1] === "/repertoirecivil/rmcauto?range=0-105") {
-        return {
-          headers: {
-            "content-range": "0-15/" + ReponseAppelRMCInscription.length,
-            link: '<http://localhost:80/rece/rece-etatcivil-api/repertoirecivil/rmcauto?range=0-105>;rel="next"'
-          },
-          data: ReponseAppelRMCInscription
-        };
       }
 
       if (match[1] === "/acte/19c0d767-64e5-4376-aa1f-6d781a2a235a/dernieredelivrance") {
@@ -574,10 +221,6 @@ export const configEtatcivil = [
         match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/dernieredelivrance"
       ) {
         return { data: {} };
-      }
-
-      if (match[1] === "/acte/b41079a5-9e8d-478c-b04c-c4c2ac67134f/titulaire") {
-        return { data: getTitulairesActeAPI.data };
       }
 
       if (match[1] === "/acte/mespocopas") {

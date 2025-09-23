@@ -1,60 +1,58 @@
-import {
-  AlerteInscription,
-  AlerteInscriptionUtil
-} from "@model/etatcivil/enum/AlerteInscription";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
+import { AlerteInscription, AlerteInscriptionUtil } from "@model/etatcivil/enum/AlerteInscription";
+import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IBandeauFiche } from "@model/etatcivil/fiche/IBandeauFiche";
-import DateUtils from "@util/DateUtils";
-import { IDataFicheProps } from "../FichePage";
-import { getFicheTitle } from "../FicheUtils";
-import { fournisseurDonneesBandeauFactory } from "./fournisseurDonneesBandeau/fournisseurDonneesBandeauFactory";
+import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
+import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
+import { getTitreDeLaFiche, TFiche } from "../FicheUtils";
+import { FournisseurDonneeBandeauActe } from "./fournisseurDonneesBandeau/FournisseurDonneesBandeauActe";
+import { FournisseurDonneeBandeauPacs } from "./fournisseurDonneesBandeau/FournisseurDonneesBandeauPacs";
+import { FournisseurDonneesBandeauRcRca } from "./fournisseurDonneesBandeau/FournisseurDonneesBandeauRcRca";
 
-export function setDataBandeau(
-  dataFiche: IDataFicheProps,
-  data: any
-): IBandeauFiche {
-  const fournisseurDonneesBandeau =
-    fournisseurDonneesBandeauFactory.createFournisseur(
-      dataFiche.categorie,
-      data
-    );
+export function setDataBandeau(typeFiche: ETypeFiche, fiche: TFiche | null): IBandeauFiche {
+  if (!fiche) return {} as IBandeauFiche;
 
-  let bandeauFiche = {} as IBandeauFiche;
-  const dataBandeau = fournisseurDonneesBandeau.getData();
+  const fournisseurDonneesBandeau = (() => {
+    switch (typeFiche) {
+      case ETypeFiche.RC:
+      case ETypeFiche.RCA:
+        return new FournisseurDonneesBandeauRcRca(fiche as FicheRcRca);
+      case ETypeFiche.PACS:
+        return new FournisseurDonneeBandeauPacs(fiche as FichePacs);
+      case ETypeFiche.ACTE:
+        return new FournisseurDonneeBandeauActe(fiche as FicheActe);
+    }
+  })();
 
-  if (dataBandeau && dataFiche.categorie != null) {
-    const annee = fournisseurDonneesBandeau.getAnnee();
-    bandeauFiche = {
-      titreFenetre: getFicheTitle(
-        fournisseurDonneesBandeau.getTypeAbrege(),
-        annee,
-        dataBandeau.numero,
-        fournisseurDonneesBandeau.getSimplePersonnes(),
-        dataFiche.categorie
-      ),
-      categorie: fournisseurDonneesBandeau.getType(),
-      identifiant: dataBandeau.id,
-      registre: fournisseurDonneesBandeau.getRegistre(),
+  const annee = fournisseurDonneesBandeau.getAnnee();
+
+  return {
+    titreFenetre: getTitreDeLaFiche(
+      fournisseurDonneesBandeau.getTypeAbrege(),
       annee,
-      numero: dataBandeau.numero,
-      statutsFiche: dataBandeau.statutsFiche,
-      personnes: fournisseurDonneesBandeau.getSimplePersonnes(),
-      alertes: setAlertes(dataBandeau.alertes),
-      dateDerniereMaj: DateUtils.formatDateStringIso(dataBandeau.dateDerniereMaj),
-      dateDerniereDelivrance: DateUtils.formatDateStringIso(dataBandeau.dateDerniereDelivrance)
-    };
-  }
-
-  return bandeauFiche;
+      fiche.numero ?? "",
+      fournisseurDonneesBandeau.getSimplePersonnes(),
+      typeFiche
+    ),
+    categorie: fournisseurDonneesBandeau.getType(),
+    identifiant: fiche.id,
+    registre: fournisseurDonneesBandeau.getRegistre(),
+    annee,
+    numero: fiche.numero ?? "",
+    statutsFiche: fiche instanceof FicheActe ? [] : fiche.statutsFiche,
+    personnes: fournisseurDonneesBandeau.getSimplePersonnes(),
+    alertes: fiche instanceof FichePacs ? undefined : setAlertes(fiche.alertes),
+    dateDerniereMaj: fiche.dateDerniereMaj?.format("JJ/MM/AAAA") ?? "",
+    dateDerniereDelivrance: fiche.dateDerniereDelivrance?.format("JJ/MM/AAAA") ?? ""
+  };
 }
 
 function setAlertes(alertes: IAlerte[]) {
   const alertesInscription: IAlerte[] = [];
   if (alertes) {
     alertes.forEach(a => {
-      a.alerte = AlerteInscriptionUtil.getLibelle(
-        a.alerte as AlerteInscription
-      );
+      a.alerte = AlerteInscriptionUtil.getLibelle(a.alerte as AlerteInscription);
       alertesInscription.push(a);
     });
   }

@@ -170,7 +170,7 @@ describe("test FicheRcRca", () => {
     test("QUAND on utilise une fiche RCA", () => {
       const panels = (
         FicheRcRca.RcaDepuisDto({
-          ...mockRcaDto.data,
+          ...mockRcaDto,
           personnes: []
         }) as FicheRcRca
       ).commePanelAccordionReceSection;

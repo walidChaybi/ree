@@ -1,9 +1,8 @@
 import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
 import { CONFIG_GET_DETAIL_REQUETE } from "@api/configurations/requete/GetDetailRequeteConfigApi";
 import { TRAITEMENT_SANS_ERREUR, TTraitementApi } from "@api/traitements/TTraitementApi";
-import { mapActe } from "@hook/repertoires/MappingRepertoires";
 import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { useContext, useState } from "react";
 import { RECEContextData } from "../../../../contexts/RECEContextProvider";
@@ -17,7 +16,7 @@ interface IParamsChargement {
 
 interface IResultat {
   requete: IRequeteDelivrance | null;
-  acte: IFicheActe | null;
+  acte: FicheActe | null;
 }
 
 const TRAITEMENT_CHARGER_REQUETE_ET_ACTE: TTraitementApi<IParamsChargement, IResultat> = {
@@ -51,7 +50,7 @@ const TRAITEMENT_CHARGER_REQUETE_ET_ACTE: TTraitementApi<IParamsChargement, IRes
 
               appelActe({
                 parametres: { path: { idActe: idActe }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
-                apresSucces: acteDto => setResultat({ requete: requete, acte: mapActe(acteDto) }),
+                apresSucces: acteDto => setResultat({ requete: requete, acte: FicheActe.depuisDto(acteDto) }),
                 finalement: () => terminerTraitement()
               });
             }
@@ -73,7 +72,7 @@ const TRAITEMENT_CHARGER_REQUETE_ET_ACTE: TTraitementApi<IParamsChargement, IRes
 
           appelActe({
             parametres: { path: { idActe: parametres.idActe }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
-            apresSucces: acteDto => setResultat({ requete: null, acte: mapActe(acteDto) }),
+            apresSucces: acteDto => setResultat({ requete: null, acte: FicheActe.depuisDto(acteDto) }),
             finalement: () => terminerTraitement()
           });
       }

@@ -1,7 +1,7 @@
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
+import { TFiche } from "@pages/fiche/FicheUtils";
 import { useEffect, useState } from "react";
-import { TFiche } from "../../../repertoires/MappingRepertoires";
 import { IResultGenerationInscriptions } from "../../generationUtils";
 
 export function useGestionCertificatCourant(

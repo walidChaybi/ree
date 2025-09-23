@@ -4,8 +4,8 @@ import { ICorpsExtraitRectification } from "../ICorpsExtraitRectification";
 import { ICorpsTexte } from "../ICorpsTexte";
 import { IDeclarant } from "../IDeclarant";
 import { IEvenement } from "../IEvenement";
-import { IRegistre } from "../IRegistre";
-import { IMention } from "../mention/IMention";
+import { Registre } from "../Registre";
+import { Mention } from "../mention/Mention";
 import { IProjetAnalyseMarginale } from "./IAnalyseMarginaleProjetActe";
 import { ITitulaireProjetActe } from "./ITitulaireProjetActe";
 
@@ -18,7 +18,7 @@ export interface IProjetActe {
   numeroBisTer: string;
   personnes: IPersonne[];
   estReecrit?: boolean;
-  registre: IRegistre;
+  registre: Registre | null;
   dateDerniereMaj?: Date;
   dateDerniereDelivrance?: Date;
   dateCreation?: Date;
@@ -27,7 +27,7 @@ export interface IProjetActe {
   corpsTexte?: ICorpsTexte;
   type: string;
   corpsExtraitRectifications: ICorpsExtraitRectification[];
-  mentions: IMention[];
+  mentions: Mention[];
   declarant?: IDeclarant | null;
   numeroDossierNational?: string;
   statut: string;

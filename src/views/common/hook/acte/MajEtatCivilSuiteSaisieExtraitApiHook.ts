@@ -1,19 +1,19 @@
 import { majEtatCivilSuiteSaisieExtrait } from "@api/appels/etatcivilApi";
-import { IDetailMariage } from "@model/etatcivil/acte/IDetailMariage";
+import { IDetailMariageDto } from "@model/etatcivil/acte/DetailMariage";
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
-import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
+import { ITitulaireActeDto } from "@model/etatcivil/acte/TitulaireActe";
 import { useEffect, useState } from "react";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export interface IExtraitSaisiAEnvoyer {
   evenementActe: IEvenement;
-  titulaire1: ITitulaireActe;
-  titulaire2?: ITitulaireActe;
-  titulaireOrigine1: ITitulaireActe;
-  titulaireOrigine2?: ITitulaireActe;
+  titulaire1: ITitulaireActeDto;
+  titulaire2?: ITitulaireActeDto;
+  titulaireOrigine1: ITitulaireActeDto;
+  titulaireOrigine2?: ITitulaireActeDto;
   natureActe: string;
   idAnalyseMarginale: string;
-  detailMariage: IDetailMariage;
+  detailMariage: IDetailMariageDto;
 }
 
 export interface IMajEtatCivilSuiteSaisieExtraitParams {

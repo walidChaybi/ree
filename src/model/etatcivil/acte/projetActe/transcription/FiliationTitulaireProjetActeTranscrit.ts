@@ -1,10 +1,10 @@
-import { LienParente } from "@model/etatcivil/enum/LienParente";
+import { ELienParente } from "@model/etatcivil/enum/ELienParente";
 import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { IAdresse } from "../../IAdresse";
 import { EvenementProjetActeTranscrit, IEvenementProjetActeTranscritDto } from "./EvenementProjetActeTranscrit";
 
 export interface IFiliationTitulaireProjetActeTranscritDto {
-  lienParente: LienParente;
+  lienParente: ELienParente;
   ordre: number;
   nom: string;
   prenoms: string[];
@@ -26,7 +26,7 @@ export class FiliationTitulaireProjetActeTranscrit {
   private static readonly champsObligatoires: (keyof IFiliationTitulaireProjetActeTranscritDto)[] = ["lienParente", "ordre", "sexe"];
 
   private constructor(
-    public readonly lienParente: keyof typeof LienParente,
+    public readonly lienParente: keyof typeof ELienParente,
     public readonly sansProfession: boolean,
     public readonly ordre: number,
     public readonly nom: string,
@@ -50,9 +50,9 @@ export class FiliationTitulaireProjetActeTranscrit {
       case FiliationTitulaireProjetActeTranscrit.champsObligatoires.some(cle => filiation[cle] === undefined):
         console.error(`Un champ obligatoire d'un filiationTitulaireProjetActeTranscritDto n'est pas défini.`);
         return null;
-      case !Object.keys(LienParente).includes(filiation.lienParente):
+      case !Object.keys(ELienParente).includes(filiation.lienParente):
         console.error(
-          `Le lienParente d'un filiationTitulaireProjetActeTranscritDto a la valeur ${filiation.lienParente} au lieu d'une des suivantes : ${Object.keys(LienParente)}.`
+          `Le lienParente d'un filiationTitulaireProjetActeTranscritDto a la valeur ${filiation.lienParente} au lieu d'une des suivantes : ${Object.keys(ELienParente)}.`
         );
         return null;
     }

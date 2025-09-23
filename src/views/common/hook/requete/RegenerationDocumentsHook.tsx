@@ -1,10 +1,10 @@
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { DocumentReponse, IDocumentReponse, documentDejaCree } from "@model/requete/IDocumentReponse";
 import { OptionsCourrier } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance, RequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { Validation } from "@model/requete/enum/Validation";
+import { EValidation } from "@model/requete/enum/EValidation";
 import { useEffect, useState } from "react";
 import { IGenerationECParams, useGenerationEC } from "../generation/generationECHook/generationECHook";
 import { IGenerationCourrierParams, useGenerationCourrierHook } from "./GenerationCourrierHook";
@@ -13,7 +13,7 @@ export interface IRegenerationDocumentsParams {
   requete: IRequeteDelivrance;
   regenererCourrier: boolean;
   problemePlurilingue?: boolean;
-  acte?: IFicheActe;
+  acte?: FicheActe;
   callBack?: () => void;
   valeursCourrierParDefaut: SaisieCourrier;
 }
@@ -114,9 +114,9 @@ function genereEC(setGenerationECParams: any, document: IDocumentReponse, params
 
 function getValidation(document: IDocumentReponse, problemePlurilingue: boolean) {
   if (document.typeDocument === DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_PLURILINGUE) && problemePlurilingue) {
-    return Validation.E;
-  } else if (DocumentDelivrance.estExtraitAvecOuSansFilliation(document.typeDocument) && document.validation === Validation.E) {
-    return Validation.N;
+    return EValidation.E;
+  } else if (DocumentDelivrance.estExtraitAvecOuSansFilliation(document.typeDocument) && document.validation === EValidation.E) {
+    return EValidation.N;
   }
-  return document.validation ? document.validation : Validation.N;
+  return document.validation ?? EValidation.N;
 }

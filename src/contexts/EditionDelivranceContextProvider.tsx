@@ -1,5 +1,5 @@
 import TRAITEMENT_CHARGER_REQUETE_ET_ACTE from "@api/traitements/requeteDelivrance/edition/TraitementChargerRequeteEtActe";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import PageChargeur from "../composants/commun/chargeurs/PageChargeur";
@@ -8,12 +8,12 @@ import { RECEContextData } from "./RECEContextProvider";
 
 interface IRequeteActe {
   requete: IRequeteDelivrance;
-  acte: IFicheActe | null;
+  acte: FicheActe | null;
 }
 
 interface IEditionDelivranceContext {
   requete: IRequeteDelivrance;
-  acte: IFicheActe | null;
+  acte: FicheActe | null;
   rechargerRequete: (charger: "les-deux" | "requete" | "acte", onRechargementTermine?: () => void) => void;
 }
 

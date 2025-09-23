@@ -1,9 +1,9 @@
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { IMentionAffichage, mappingVersMentionsApi, modificationEffectuee } from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { IDocumentReponse, documentDejaCree } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { Validation } from "@model/requete/enum/Validation";
+import { EValidation } from "@model/requete/enum/EValidation";
 import { useEffect, useState } from "react";
 import { IGenerationECParams, useGenerationEC } from "../../generation/generationECHook/generationECHook";
 import { IMentionsResultat } from "./MentionsApiHook";
@@ -13,7 +13,7 @@ import { IMiseAJourMentionsParams, useMiseAJourMentionsApiHook } from "./MiseAJo
 export interface SauvegarderMentionsParam {
   mentionsApi: IMentionsResultat;
   mentions: IMentionAffichage[];
-  acte: IFicheActe;
+  acte: FicheActe;
   document: IDocumentReponse;
   requete: IRequeteDelivrance;
 }
@@ -63,9 +63,7 @@ export function useSauvegarderMentions(params?: SauvegarderMentionsParam) {
   useEffect(() => {
     if (!params || !mentionsRetireesSaved || !(resultatMajDocReponseAvecMentionRetirees || resultatGenerationEC)) return;
 
-    const idDoc = resultatGenerationEC?.resultGenerationUnDocument?.idDocumentReponse
-      ? resultatGenerationEC.resultGenerationUnDocument?.idDocumentReponse
-      : params.document.id;
+    const idDoc = resultatGenerationEC?.resultGenerationUnDocument?.idDocumentReponse ?? params.document.id;
 
     setResultat({
       idDoc,
@@ -100,7 +98,7 @@ function sauvegarderEnFonctionTypeDocument(
         setGenerationEC({
           idActe: params.acte.id,
           requete: params.requete,
-          validation: Validation.O,
+          validation: EValidation.O,
           pasDAction: documentDejaCree(params.requete.documentsReponses, params.requete.choixDelivrance),
           mentionsRetirees,
           choixDelivrance: DocumentDelivrance.getChoixDelivranceFromUUID(params.document.typeDocument)

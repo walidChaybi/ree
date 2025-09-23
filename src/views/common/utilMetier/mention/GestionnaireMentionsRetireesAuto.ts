@@ -1,5 +1,5 @@
-import { IMention, Mention } from "@model/etatcivil/acte/mention/IMention";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { Mention } from "@model/etatcivil/acte/mention/Mention";
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import {
   ANNULATION_EVENEMENT,
   ANNULATION_MARIAGE,
@@ -24,38 +24,45 @@ import {
   natureRetireesNaissanceSansFillation
 } from "@model/etatcivil/enum/NatureMention";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { DEUX } from "@util/Utils";
+import { DEUX, triListeObjetsSurPropriete } from "@util/Utils";
 
-type IMentionAvecRetiree = IMention & { retiree?: boolean };
+type IMentionAvecRetiree = Mention & { retiree?: boolean };
 
 class GestionnaireMentionsRetireesAuto {
-  public getIdsMentionsRetirees(mentions: IMentionAvecRetiree[], choixDelivrance?: ChoixDelivrance, natureActe?: NatureActe): string[] {
-    Mention.trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentions);
+  public getIdsMentionsRetirees(
+    mentions: IMentionAvecRetiree[],
+    choixDelivrance?: ChoixDelivrance,
+    natureActe?: keyof typeof ENatureActe
+  ): string[] {
+    const mentionsTriees = mentions.every(mention => mention.numeroOrdreExtrait !== null)
+      ? triListeObjetsSurPropriete(mentions, "numeroOrdreExtrait")
+      : triListeObjetsSurPropriete(mentions, "numeroOrdre");
+
     if (choixDelivrance && natureActe && !ChoixDelivrance.estCopieIntegrale(choixDelivrance)) {
       if (ChoixDelivrance.estAvecOuSansFiliation(choixDelivrance)) {
         switch (natureActe) {
-          case NatureActe.NAISSANCE:
-            this.deselectionnerRadieParPaire(this.garderMentionsNonRetiree(mentions));
-            this.deselectionnerAnnulationParPaire(this.garderMentionsNonRetiree(mentions));
-            this.deselectionneSituationFamilialePassee(this.garderMentionsNonRetiree(mentions));
+          case "NAISSANCE":
+            this.deselectionnerRadieParPaire(this.garderMentionsNonRetiree(mentionsTriees));
+            this.deselectionnerAnnulationParPaire(this.garderMentionsNonRetiree(mentionsTriees));
+            this.deselectionneSituationFamilialePassee(this.garderMentionsNonRetiree(mentionsTriees));
 
-            this.deselectionneExtraneite(this.garderMentionsNonRetiree(mentions));
+            this.deselectionneExtraneite(this.garderMentionsNonRetiree(mentionsTriees));
             break;
-          case NatureActe.MARIAGE:
-            this.deselectionnerAnnulationParPaire(this.garderMentionsNonRetiree(mentions));
+          case "MARIAGE":
+            this.deselectionnerAnnulationParPaire(this.garderMentionsNonRetiree(mentionsTriees));
             break;
         }
       } else {
-        this.deselectionnerAnnulationParPaire(mentions);
-        if (natureActe === NatureActe.NAISSANCE) {
-          this.deselectionneSituationFamilialePassee(this.garderMentionsNonRetiree(mentions));
+        this.deselectionnerAnnulationParPaire(mentionsTriees);
+        if (natureActe === "NAISSANCE") {
+          this.deselectionneSituationFamilialePassee(this.garderMentionsNonRetiree(mentionsTriees));
         }
       }
-      this.deselectionneMentionsSpecifiques(this.garderMentionsNonRetiree(mentions), choixDelivrance, natureActe);
-      this.deselectionneMentionsIncompatibleAvecActe(this.garderMentionsNonRetiree(mentions), natureActe);
+      this.deselectionneMentionsSpecifiques(this.garderMentionsNonRetiree(mentionsTriees), choixDelivrance, natureActe);
+      this.deselectionneMentionsIncompatibleAvecActe(this.garderMentionsNonRetiree(mentionsTriees), natureActe);
     }
 
-    return this.formaterMentionsRetirees(mentions);
+    return this.formaterMentionsRetirees(mentionsTriees);
   }
 
   public garderMentionsNonRetiree(mentions: IMentionAvecRetiree[]) {
@@ -100,10 +107,14 @@ class GestionnaireMentionsRetireesAuto {
     }
   }
 
-  public deselectionneMentionsSpecifiques(mentions: IMentionAvecRetiree[], choixDelivrance: ChoixDelivrance, natureActe: NatureActe) {
+  public deselectionneMentionsSpecifiques(
+    mentions: IMentionAvecRetiree[],
+    choixDelivrance: ChoixDelivrance,
+    natureActe: keyof typeof ENatureActe
+  ) {
     let mentionsRetirees: string[] = [];
     switch (natureActe) {
-      case NatureActe.NAISSANCE:
+      case "NAISSANCE":
         if (ChoixDelivrance.estAvecFiliation(choixDelivrance)) {
           mentionsRetirees = natureRetireesNaissanceAvecFillation;
         } else if (ChoixDelivrance.estSansFiliation(choixDelivrance)) {
@@ -112,7 +123,7 @@ class GestionnaireMentionsRetireesAuto {
           mentionsRetirees = natureRetireesNaissancePlurilingue;
         }
         break;
-      case NatureActe.MARIAGE:
+      case "MARIAGE":
         if (ChoixDelivrance.estAvecFiliation(choixDelivrance)) {
           mentionsRetirees = natureRetireesMariageAvecFilliation;
         } else if (ChoixDelivrance.estSansFiliation(choixDelivrance)) {
@@ -129,9 +140,9 @@ class GestionnaireMentionsRetireesAuto {
     });
   }
 
-  public deselectionneMentionsIncompatibleAvecActe(mentions: IMentionAvecRetiree[], natureActe: NatureActe) {
+  public deselectionneMentionsIncompatibleAvecActe(mentions: IMentionAvecRetiree[], natureActe: keyof typeof ENatureActe) {
     mentions.forEach(mention => {
-      if (mention.typeMention.natureActe !== natureActe && mention.typeMention.natureActe !== NatureActe.INCONNUE) {
+      if (mention.typeMention.natureActe !== natureActe && mention.typeMention.natureActe !== "INCONNUE") {
         mention.retiree = true;
       }
     });

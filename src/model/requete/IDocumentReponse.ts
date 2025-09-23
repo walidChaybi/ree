@@ -1,12 +1,12 @@
 import { DEUX } from "@util/Utils";
 import { Orientation } from "../composition/enum/Orientation";
-import { IMention } from "../etatcivil/acte/mention/IMention";
+import { Mention } from "../etatcivil/acte/mention/Mention";
 import { IOptionCourrierDocumentReponse } from "./IOptionCourrierDocumentReponse";
 import { ITexteLibreCourrier } from "./ITexteLibreCourrier";
 import { ChoixDelivrance } from "./enum/ChoixDelivrance";
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "./enum/DocumentDelivrance";
+import { EValidation } from "./enum/EValidation";
 import { MentionsRetirees } from "./enum/MentionsRetirees";
-import { Validation } from "./enum/Validation";
 
 export interface IDocumentReponse {
   id: string;
@@ -31,7 +31,7 @@ export interface IDocumentReponse {
   documentASignerElec?: {
     dateSignatureElectronique?: number;
   };
-  validation?: Validation;
+  validation?: EValidation;
   mentionsRetirees?: MentionsRetirees[];
   ordre?: number;
 }
@@ -70,7 +70,7 @@ export const DocumentReponse = {
 
   verifierDocumentsValides(documents?: IDocumentReponse[]): boolean {
     if (documents) {
-      return documents.every((el: IDocumentReponse) => el.validation === undefined || el.validation === Validation.O);
+      return documents.every((el: IDocumentReponse) => el.validation === undefined || el.validation === EValidation.O);
     } else return false;
   },
 
@@ -116,7 +116,7 @@ export const DocumentReponse = {
     return documents;
   },
 
-  estMentionRetiree(document: IDocumentReponse, mention: IMention): boolean {
+  estMentionRetiree(document: IDocumentReponse, mention: Mention): boolean {
     return document.mentionsRetirees?.find(mentionRetiree => mentionRetiree.idMention === mention.id) != null;
   },
 

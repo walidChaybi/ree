@@ -1,4 +1,4 @@
-import { IMentionMiseAJour } from "../../../../composants/pages/requetesMiseAJour/PartieFormulaire";
+import { IMentionMiseAJour } from "../../../../../../composants/pages/requetesMiseAJour/PartieFormulaire";
 
 export const MOCK_MENTIONS_MISE_A_JOUR: IMentionMiseAJour[] = [
   {

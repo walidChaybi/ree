@@ -21,7 +21,7 @@ import { useSauvegarderCourrierCreerActionMajStatutRequete } from "@hook/requete
 import { CourrierComposition, ICourrierComposition, IElementsJasperCourrier } from "@model/composition/ICourrierComposition";
 import { IDonneesComposition } from "@model/composition/commun/retourApiComposition/IDonneesComposition";
 import { Orientation } from "@model/composition/enum/Orientation";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { IAdresseRequerant } from "@model/requete/IAdresseRequerant";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
@@ -45,7 +45,7 @@ export interface IGenerationCourrierParams {
   optionsChoisies?: OptionsCourrier;
   requete?: IRequeteDelivrance;
   idActe?: string;
-  acte?: IFicheActe;
+  acte: FicheActe | null;
   mettreAJourStatut: boolean;
 }
 
@@ -56,13 +56,13 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
 
   const [courrier, setCourrier] = useState<{ doc?: IDocumentDelivrance | null }>();
 
-  const [acteApiHookParams, setActeApiHookParams] = useState<IActeApiHookParams>();
+  const [acteApiHookParams, setActeApiHookParams] = useState<IActeApiHookParams>({});
 
   const [requeteDelivrancePourSauvegarde, setRequeteDelivrancePourSauvegarde] = useState<ISauvegardeCourrier | undefined>();
 
   const [basculerConstructionCourrier, setBasculerConstructionCourrier] = useState<boolean>(false);
 
-  const [acte, setActe] = useState<IFicheActe>();
+  const [acte, setActe] = useState<FicheActe>();
 
   useEffect(() => {
     if (uuidCourrierPresent(params)) {
@@ -75,8 +75,8 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
         setActeApiHookParams,
         setBasculerConstructionCourrier,
         setActe,
-        params?.idActe,
-        params?.acte
+        params?.acte ?? undefined,
+        params?.idActe
       );
     }
   }, [params]);
@@ -85,7 +85,7 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
 
   useEffect(() => {
     if (acteApiHookResultat) {
-      setActe(acteApiHookResultat.acte);
+      setActe(acteApiHookResultat);
       setBasculerConstructionCourrier(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -169,8 +169,8 @@ function setActApiHookParamsOuBasculerConstructionCourrier(
   setActeApiHookParams: any,
   setBasculerConstructionCourrier: any,
   setActe: any,
-  idActe?: string,
-  acte?: IFicheActe
+  acte?: FicheActe,
+  idActe?: string
 ) {
   if (acte) {
     setActe(acte);
@@ -260,7 +260,7 @@ const mapCourrierPourSauvegarde = (
         return {
           code: optionChoisie.id,
           numeroOrdreEdition: optionChoisie.ordreEdition,
-          texte: optionChoisie.texteOptionCourrierModifie ? optionChoisie.texteOptionCourrierModifie : optionChoisie.texteOptionCourrier
+          texte: optionChoisie.texteOptionCourrierModifie ?? optionChoisie.texteOptionCourrier
         };
       }),
       texteLibreCourrier: {

@@ -7,15 +7,13 @@ import {
   NOM_DOCUMENT_EC_SANS_FILIATION
 } from "@model/composition/extraitCopie/IExtraitCopieComposition";
 import { IExtraitPlurilingueComposition } from "@model/composition/extraitCopie/plurilingue/IExtraitPlurilingueComposition";
-import { ICorpsExtraitRectification } from "@model/etatcivil/acte/ICorpsExtraitRectification";
-import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
+import { RectificationCorpsExtrait } from "@model/etatcivil/acte/ICorpsExtraitRectification";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { EValidation } from "@model/requete/enum/EValidation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { Validation } from "@model/requete/enum/Validation";
 import { IExtraitCopieApiHookResultat } from "../../composition/CompositionExtraitCopieHook";
 import { ICreerCourrierECParams } from "../../requete/creerCourrierECHook";
 import { creationCompositionCopieActeImage } from "./creationComposition/creationCompositionCopieActeImage";
@@ -23,10 +21,10 @@ import { creationCompositionExtraitCopieActeTexte } from "./creationComposition/
 import { creationCompositionExtraitPlurilingue } from "./creationComposition/creationCompositionExtraitPlurilingue";
 import { IGenerationECParams } from "./generationECHook";
 
-function estDemandeExtraitAvecOuSansFiliationOuCopieActeTexte(acte: IFicheActe, choixDelivrance: ChoixDelivrance) {
+function estDemandeExtraitAvecOuSansFiliationOuCopieActeTexte(acte: FicheActe, choixDelivrance: ChoixDelivrance) {
   return (
     ChoixDelivrance.estAvecOuSansFiliation(choixDelivrance) ||
-    (ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance) && FicheActe.estActeTexte(acte))
+    (ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance) && acte.estActeTexte())
   );
 }
 
@@ -34,39 +32,32 @@ function estDemandeExtraitPlurilingue(choixDelivrance: ChoixDelivrance) {
   return ChoixDelivrance.estPlurilingue(choixDelivrance);
 }
 
-function estDemandeCopieActeImage(acte: IFicheActe, choixDelivrance: ChoixDelivrance) {
-  return ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance) && FicheActe.estActeImage(acte);
+function estDemandeCopieActeImage(acte: FicheActe, choixDelivrance: ChoixDelivrance) {
+  return ChoixDelivrance.estCopieIntegraleOuArchive(choixDelivrance) && acte.estActeImage();
 }
 
-export function getNomDocument(choixDelivrance: ChoixDelivrance) {
-  let nomDocument = "";
+export const getNomDocument = (choixDelivrance: ChoixDelivrance): string => {
   switch (choixDelivrance) {
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION:
-      nomDocument = NOM_DOCUMENT_EC_SANS_FILIATION;
-      break;
+      return NOM_DOCUMENT_EC_SANS_FILIATION;
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION:
-      nomDocument = NOM_DOCUMENT_EC_AVEC_FILIATION;
-      break;
+      return NOM_DOCUMENT_EC_AVEC_FILIATION;
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_PLURILINGUE:
-      nomDocument = NOM_DOCUMENT_EC_PLURILINGUE;
-      break;
+      return NOM_DOCUMENT_EC_PLURILINGUE;
     case ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE:
-      nomDocument = NOM_DOCUMENT_COPIE_INTEGRALE;
-      break;
+      return NOM_DOCUMENT_COPIE_INTEGRALE;
     case ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE:
-      nomDocument = NOM_DOCUMENT_COPIE_ARCHIVE;
-      break;
+      return NOM_DOCUMENT_COPIE_ARCHIVE;
     // FIXME A Complèter
     default:
-      break;
+      return "";
   }
-  return nomDocument;
-}
+};
 
 function creationComposition(
-  acte: IFicheActe,
+  acte: FicheActe,
   requete: IRequeteDelivrance,
-  validation: Validation,
+  validation: EValidation,
   mentionsRetirees: string[],
   choixDelivrance: ChoixDelivrance,
   ctv: string
@@ -78,12 +69,12 @@ function creationComposition(
   } else if (estDemandeExtraitPlurilingue(choixDelivrance)) {
     composition = creationCompositionExtraitPlurilingue(acte, validation, requete.sousType, mentionsRetirees, ctv);
   } else if (estDemandeCopieActeImage(acte, choixDelivrance)) {
-    composition = creationCompositionCopieActeImage(acte, requete, choixDelivrance, Validation.O, ctv);
+    composition = creationCompositionCopieActeImage(acte, requete, choixDelivrance, EValidation.O, ctv);
   }
   return composition;
 }
 
-const getValidationEC = (acte: IFicheActe, choixDelivrance: ChoixDelivrance, validation = Validation.O) => {
+const getValidationEC = (acte: FicheActe, choixDelivrance: ChoixDelivrance, validation = EValidation.O) => {
   switch (choixDelivrance) {
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION:
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION:
@@ -93,7 +84,7 @@ const getValidationEC = (acte: IFicheActe, choixDelivrance: ChoixDelivrance, val
     case ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE:
     case ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE:
       if (!acte.corpsImage && !acte.corpsTexte) {
-        return Validation.E;
+        return EValidation.E;
       }
       break;
   }
@@ -101,61 +92,57 @@ const getValidationEC = (acte: IFicheActe, choixDelivrance: ChoixDelivrance, val
   return validation;
 };
 
-function getValidationExtrait(acte: IFicheActe, choixDelivrance: ChoixDelivrance, validation: Validation) {
+function getValidationExtrait(acte: FicheActe, choixDelivrance: ChoixDelivrance, validation: EValidation) {
   // Pour un choix de délivrance d'extrait avec ou sans filiation d'un acte de mariage ou de naissance
-  // Si l'acte ne comporte pas de corps d'extrait modifier correspondant au choix de delivrance
+  // Si l'acte ne comporte pas de corps d'extrait modifié correspondant au choix de delivrance
   // ou que les noms et prenoms de l'analyse marginales sont absents
   // ou que le genre est d'un des titulaires est inconnu
   // ou que l'année ou le lieux de l'évenement ne sont absents
   if (
-    aPasCorpsExtraitRectificationCorrespondant(acte.corpsExtraitRectifications, choixDelivrance) &&
-    (FicheActe.aNomEtPrenomTitulaireAbsentsAnalyseMarginale(acte) ||
-      FicheActe.aGenreTitulaireInconnu(acte) ||
-      FicheActe.aDonneesLieuOuAnneeEvenementAbsentes(acte))
+    !aRectificationCorpsExtraitCorrespondantAuChoixDelivrance(acte.rectificationsCorpsExtrait, choixDelivrance) &&
+    (acte.titulaireAnalyseMarginaleLaPlusRecenteANomEtPrenomAbsent() ||
+      acte.titulaires.find(titulaire => titulaire.sexe === "INCONNU") ||
+      acte.aDonneesLieuOuAnneeEvenementAbsentes())
   ) {
-    return Validation.E;
+    return EValidation.E;
   }
   return validation;
 }
 
-function getValidationExtraitPlurilingue(acte: IFicheActe, validation: Validation) {
+function getValidationExtraitPlurilingue(acte: FicheActe, validation: EValidation) {
   switch (acte.nature) {
-    case NatureActe.MARIAGE:
-    case NatureActe.NAISSANCE:
-    case NatureActe.DECES:
-      if (FicheActe.estIncomplet(acte) || FicheActe.estEnErreur(acte)) {
-        return Validation.E;
+    case "MARIAGE":
+    case "NAISSANCE":
+    case "DECES":
+      if (acte.estIncomplet() || acte.estEnErreur()) {
+        return EValidation.E;
       }
       break;
     default:
       return validation;
   }
 
-  if (validation === Validation.E) {
-    return Validation.N;
+  if (validation === EValidation.E) {
+    return EValidation.N;
   }
 
   return validation;
 }
 
-const aPasCorpsExtraitRectificationCorrespondant = function (
-  corpsExtraitRectifications: ICorpsExtraitRectification[],
+const aRectificationCorpsExtraitCorrespondantAuChoixDelivrance = (
+  rectificationsCorpsExtrait: RectificationCorpsExtrait[],
   choixDelivrance: ChoixDelivrance
-) {
-  return (
-    corpsExtraitRectifications.filter(el => {
-      if (choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION) {
-        return el.type === TypeExtrait.EXTRAIT_AVEC_FILIATION;
-      } else if (choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION) {
-        return el.type === TypeExtrait.EXTRAIT_SANS_FILIATION;
-      }
-      return false;
-    }).length === 0
+): boolean =>
+  Boolean(
+    rectificationsCorpsExtrait.find(
+      rectification =>
+        (choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION && rectification.type === "EXTRAIT_AVEC_FILIATION") ||
+        (choixDelivrance === ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION && rectification.type === "EXTRAIT_SANS_FILIATION")
+    )
   );
-};
 
 export function creationEC(
-  acte: IFicheActe | undefined,
+  acte: FicheActe | undefined,
   params: IGenerationECParams | undefined,
   setValidation: any,
   setExtraitCopieApiHookParams: any,
@@ -185,7 +172,7 @@ export function creationEC(
 }
 
 export function creationECSansCTV(
-  acte: IFicheActe | undefined,
+  acte: FicheActe | undefined,
   params: IGenerationECParams | undefined,
   setValidation: any,
   setExtraitCopieApiHookParams: any

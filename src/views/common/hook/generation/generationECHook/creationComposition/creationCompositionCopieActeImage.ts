@@ -1,34 +1,29 @@
 import { CopieActeImageComposition } from "@model/composition/extraitCopie/createur/CopieActeImageComposition";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { Validation } from "@model/requete/enum/Validation";
+import { EValidation } from "@model/requete/enum/EValidation";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { getLibelle } from "@util/Utils";
 
 export const creationCompositionCopieActeImage = function (
-  acte: IFicheActe,
+  acte: FicheActe,
   requete: IRequeteDelivrance,
   choixDelivrance: ChoixDelivrance,
-  validation: Validation,
+  validation: EValidation,
   ctv: string
 ) {
-  let composition;
-  if (acte.type === ETypeActe.IMAGE) {
-    const natureActe = acte.nature.libelle;
+  if (acte.type !== ETypeActe.IMAGE) return undefined;
 
-    const corpsImage = acte.corpsImage;
-    const erreur = Validation.E === validation ? getLibelle("L'absence d'informations ne permet pas de générer la copie.") : undefined;
-    composition = CopieActeImageComposition.creerCopieActeImage({
-      acte,
-      natureActe,
-      choixDelivrance,
-      requete,
-      validation,
-      corpsImage,
-      erreur,
-      ctv
-    });
-  }
-  return composition;
+  const erreur = validation === EValidation.E ? "L'absence d'informations ne permet pas de générer la copie." : undefined;
+  return CopieActeImageComposition.creerCopieActeImage({
+    acte,
+    natureActe: ENatureActe[acte.nature],
+    choixDelivrance,
+    requete,
+    validation,
+    corpsImage: acte.corpsImage ?? undefined,
+    erreur,
+    ctv
+  });
 };

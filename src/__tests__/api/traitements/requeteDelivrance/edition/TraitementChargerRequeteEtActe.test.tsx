@@ -1,4 +1,7 @@
+import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
 import TRAITEMENT_CHARGER_REQUETE_ET_ACTE from "@api/traitements/requeteDelivrance/edition/TraitementChargerRequeteEtActe";
+import { MockApi } from "@mock/appelsApi/MockApi";
+import { ficheActeTexte } from "@mock/data/ficheActe";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useState } from "react";
 import request from "superagent";
@@ -46,8 +49,6 @@ describe("Test du traitement chargement requête et acte édition délivrance", 
                 actions: []
               }
             };
-          case `${donneesTest.ID_ACTE}/resume?remplaceIdentiteTitulaireParIdentiteTitulaireAM=true`:
-            return { data: { id: "id-acte", personnes: [], titulaires: [] } };
           default:
             return;
         }
@@ -114,6 +115,12 @@ describe("Test du traitement chargement requête et acte édition délivrance", 
   });
 
   test("Le traitement charge la requête et l'acte depuis les documents requête", async () => {
+    MockApi.deployer(
+      CONFIG_GET_RESUME_ACTE,
+      { path: { idActe: donneesTest.ID_ACTE }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
+      { data: ficheActeTexte }
+    );
+
     render(
       <MockRECEContextProvider>
         <TraitementConsumer
@@ -127,6 +134,8 @@ describe("Test du traitement chargement requête et acte édition délivrance", 
     await waitFor(() => expect(screen.getByTitle(donneesTest.ETAT).innerHTML).toBe(donneesTest.OK));
     expect(screen.getByTitle(donneesTest.REQUETE).innerHTML).toBe(donneesTest.OK);
     expect(screen.getByTitle(donneesTest.ACTE).innerHTML).toBe(donneesTest.OK);
+
+    MockApi.stopMock();
   });
 
   test("Le traitement charge la requête et non l'acte sans id connu", async () => {
@@ -162,6 +171,12 @@ describe("Test du traitement chargement requête et acte édition délivrance", 
   });
 
   test("Le traitement charge uniquement l'acte", async () => {
+    MockApi.deployer(
+      CONFIG_GET_RESUME_ACTE,
+      { path: { idActe: donneesTest.ID_ACTE }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
+      { data: ficheActeTexte }
+    );
+
     render(
       <MockRECEContextProvider>
         <TraitementConsumer
@@ -176,6 +191,8 @@ describe("Test du traitement chargement requête et acte édition délivrance", 
     await waitFor(() => expect(screen.getByTitle(donneesTest.ETAT).innerHTML).toBe(donneesTest.OK));
     expect(screen.getByTitle(donneesTest.REQUETE).innerHTML).toBe(donneesTest.KO);
     expect(screen.getByTitle(donneesTest.ACTE).innerHTML).toBe(donneesTest.OK);
+
+    MockApi.stopMock();
   });
 
   test("Le traitement ne charge pas l'acte si pas d'id", async () => {

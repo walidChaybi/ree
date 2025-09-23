@@ -1,14 +1,16 @@
+import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
 import { Orientation } from "@model/composition/enum/Orientation";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { EValidation } from "@model/requete/enum/EValidation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { Validation } from "@model/requete/enum/Validation";
 import { useCallback, useEffect, useState } from "react";
+import useFetchApi from "../../../../../hooks/api/FetchApiHook";
 import { MimeType } from "../../../../../ressources/MimeType";
-import { IActeApiHookParams, useInformationsActeApiHook } from "../../acte/ActeApiHook";
+import AfficherMessage from "../../../../../utils/AfficherMessage";
 import { IExtraitCopieApiHookParams, useExtraitCopieApiHook } from "../../composition/CompositionExtraitCopieHook";
 import { ISauvegarderDocumentsParams, useSauvegarderDocument } from "../../requete/SauvegarderDocumentApiHook";
 import {
@@ -22,9 +24,9 @@ import { IStockeCTVParams, useStockeCTV } from "./televerification/stockeCtvApiH
 
 export interface IGenerationECParams {
   idActe?: string;
-  acte?: IFicheActe;
+  acte?: FicheActe;
   requete: IRequeteDelivrance;
-  validation?: Validation;
+  validation?: EValidation;
   pasDAction?: boolean;
   mentionsRetirees: string[];
   choixDelivrance: ChoixDelivrance;
@@ -42,53 +44,65 @@ export function useGenerationEC(params?: IGenerationECParams): IGenerationECResu
   const [sauvegarderDocumentParams, setSauvegarderDocumentParams] = useState<ISauvegarderDocumentsParams>();
   const [stockerDocumentCreerActionMajStatutRequeteParams, setStockerDocumentCreerActionMajStatutRequeteParams] =
     useState<IStockerDocumentCreerActionMajStatutRequeteParams>();
-  const [acteApiHookParams, setActeApiHookParams] = useState<IActeApiHookParams>();
-  const [acteDejaPresent, setActeDejaPresent] = useState<IFicheActe>();
+  const [acteDejaPresent, setActeDejaPresent] = useState<FicheActe>();
   const [triggerEtapeUnTer, setTriggerEtapeUnTer] = useState<boolean>(true);
-  const [validation, setValidation] = useState<Validation>();
+  const [validation, setValidation] = useState<EValidation>();
   const [recupererCtvApiHookParam, setRecupererCtvApiHookParam] = useState<{}>();
   const [stockeCtvApiHookParam, setStockeCtvApiHookParam] = useState<IStockeCTVParams>();
 
   useEffect(() => {
     if (!params?.choixDelivrance) return;
 
-    if (params.idActe) {
-      setActeApiHookParams({
-        idActe: params.idActe,
-        recupereImagesEtTexte: ChoixDelivrance.estCopieIntegraleOuArchive(params.choixDelivrance)
-      });
-    } else if (params.acte) {
+    if (!params.idActe && params.acte) {
       setActeDejaPresent(params.acte);
       setTriggerEtapeUnTer(!triggerEtapeUnTer);
     }
-  }, [params?.choixDelivrance, params?.idActe, params?.acte, params?.requete]);
+  }, [params?.choixDelivrance, params?.idActe, params?.acte]);
 
   // 1- Récupération de l'acte complet pour la génération du document + images corpsImage
-  const acteApiHookResultat = useInformationsActeApiHook(acteApiHookParams);
+  const [acte, setActe] = useState<FicheActe | null>(null);
+
+  const { appelApi: recupererActe } = useFetchApi(CONFIG_GET_RESUME_ACTE);
+
+  useEffect(() => {
+    if (!params?.idActe) return;
+
+    recupererActe({
+      parametres: {
+        path: { idActe: params.idActe },
+        query: {
+          recupereImagesEtTexte: ChoixDelivrance.estCopieIntegraleOuArchive(params.choixDelivrance),
+          remplaceIdentiteTitulaireParIdentiteTitulaireAM: true
+        }
+      },
+      apresSucces: acte => {
+        setActe(FicheActe.depuisDto(acte));
+      },
+      apresErreur: erreurs =>
+        AfficherMessage.erreur("Impossible de récupérer les informations de l'acte", {
+          erreurs,
+          fermetureAuto: true
+        })
+    });
+  }, [params?.choixDelivrance, params?.idActe]);
 
   // 1bis - Récupérer code CTV
   const recupererCtvResultat = useRecupererCTV(recupererCtvApiHookParam);
 
   // 1ter
   useEffect(() => {
-    if (acteApiHookResultat || acteDejaPresent) {
+    if (acte || acteDejaPresent) {
       if (estDocumentAvecCTV(DocumentDelivrance.getTypeDocument(params?.choixDelivrance), params?.requete.sousType)) {
         setRecupererCtvApiHookParam({});
       } else {
-        creationECSansCTV(acteApiHookResultat?.acte || acteDejaPresent, params, setValidation, setExtraitCopieApiHookParams);
+        creationECSansCTV(acte || acteDejaPresent, params, setValidation, setExtraitCopieApiHookParams);
       }
     }
-  }, [acteApiHookResultat, triggerEtapeUnTer]);
+  }, [acte, triggerEtapeUnTer]);
 
   // 2- Création du bon EC composition suivant le choix de délivrance
   useEffect(() => {
-    creationEC(
-      acteApiHookResultat?.acte || acteDejaPresent,
-      params,
-      setValidation,
-      setExtraitCopieApiHookParams,
-      recupererCtvResultat?.ctv
-    );
+    creationEC(acte || acteDejaPresent, params, setValidation, setExtraitCopieApiHookParams, recupererCtvResultat?.ctv);
   }, [recupererCtvResultat]);
 
   // 3 - Création de l'EC PDF pour un acte: appel api composition
@@ -115,7 +129,7 @@ export function useGenerationEC(params?: IGenerationECParams): IGenerationECResu
           mentionsRetirees: params?.mentionsRetirees.map(idMention => ({
             idMention
           })),
-          idActe: acteApiHookResultat?.acte?.id ?? acteDejaPresent?.id
+          idActe: acte?.id ?? acteDejaPresent?.id
         } as IDocumentReponse;
 
         if (params?.pasDAction) {
@@ -133,7 +147,7 @@ export function useGenerationEC(params?: IGenerationECParams): IGenerationECResu
         }
       }
     },
-    [acteApiHookResultat, acteDejaPresent, validation, params]
+    [acte, acteDejaPresent, validation, params]
   );
 
   useEffect(() => {

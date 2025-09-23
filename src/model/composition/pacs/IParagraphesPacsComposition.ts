@@ -1,7 +1,7 @@
 import DateUtils from "@util/DateUtils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { IAutorite } from "../../etatcivil/commun/IAutorite";
-import { TypeAutorite } from "../../etatcivil/enum/TypeAutorite";
+import { ETypeAutorite } from "../../etatcivil/enum/TypeAutorite";
 import { TypeJuridiction } from "../../etatcivil/enum/TypeJuridiction";
 import { FichePacs } from "../../etatcivil/pacs/FichePacs";
 import { IAnnulation } from "../../etatcivil/pacs/IAnnulation";
@@ -47,13 +47,13 @@ export const ParagrapheComposition = {
 
   getAutorite(autorite: IAutorite): string {
     switch (autorite.typeAutorite) {
-      case TypeAutorite.COMMUNE:
+      case ETypeAutorite.COMMUNE:
         return "en la commune de";
-      case TypeAutorite.JURIDICTION:
+      case ETypeAutorite.JURIDICTION:
         return `au ${autorite?.typeJuridiction?.toLocaleLowerCase()} de`;
-      case TypeAutorite.NOTAIRE:
+      case ETypeAutorite.NOTAIRE:
         return `par Maître ${autorite.prenomNotaire} ${autorite.nomNotaire}, notaire à`;
-      case TypeAutorite.POSTE_ETRANGER:
+      case ETypeAutorite.POSTE_ETRANGER:
         return `par ${autorite.typePoste} à`;
       default:
         return "";
@@ -82,7 +82,7 @@ export const ParagrapheComposition = {
       autorite.pays,
       autorite.arrondissement
     );
-    if (autorite.typeAutorite === TypeAutorite.NOTAIRE) {
+    if (autorite.typeAutorite === ETypeAutorite.NOTAIRE) {
       localisation += `, office notarial n°${autorite.numeroCrpcen}`;
     }
     return `${autoriteTexte} ${localisation}`;

@@ -1,46 +1,33 @@
-import { TypeDeclarationConjointe } from "@model/etatcivil/enum/TypeDeclarationConjointe";
-import { estRenseigne, getLibelle } from "@util/Utils";
-import DateComposeForm, {
-  DateComposeFormProps
-} from "@widget/formulaire/champsDate/DateComposeForm";
-import {
-  OptionVide,
-  SelectField,
-  SelectFieldProps
-} from "@widget/formulaire/champsSaisie/SelectField";
-import {
-  FormikComponentProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import ETypeDeclarationConjointe from "@model/etatcivil/enum/ETypeDeclarationConjointe";
+import { Option } from "@util/Type";
+import { enumVersOptions, estRenseigne, premiereLettreEnMajuscule } from "@util/Utils";
+import DateComposeForm, { DateComposeFormProps } from "@widget/formulaire/champsDate/DateComposeForm";
+import { OptionVide, SelectField, SelectFieldProps } from "@widget/formulaire/champsSaisie/SelectField";
+import { FormikComponentProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useCallback, useState } from "react";
 import { ANNEE, DATE, JOUR, MOIS, TYPE } from "./ConstantesNomsForm";
 
 interface ComponentFormProps {
   nom: string;
-  type?: TypeDeclarationConjointe;
+  type: keyof typeof ETypeDeclarationConjointe | null;
   date?: Date;
-  origineTitulaireActe?: boolean;
+  origineTitulaireActe: boolean | null;
   saisieVerrouillee: boolean;
 }
 
 type DeclarationConjointeFormProps = ComponentFormProps & FormikComponentProps;
 
-const DeclarationConjointeForm: React.FC<
-  DeclarationConjointeFormProps
-> = props => {
-  const [typeSelectionne, setTypeSelectionne] = useState<
-    TypeDeclarationConjointe | undefined
-  >(props.type);
+const DeclarationConjointeForm: React.FC<DeclarationConjointeFormProps> = props => {
+  const [typeSelectionne, setTypeSelectionne] = useState<keyof typeof ETypeDeclarationConjointe | null>(props.type);
 
   const onTypeChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       e.preventDefault();
-      const typeDeclaration = TypeDeclarationConjointe.getEnumFor(
-        e.target.value
-      );
-      setTypeSelectionne(TypeDeclarationConjointe.getEnumFor(typeDeclaration));
-      if (TypeDeclarationConjointe.estAbsenceDeclaration(typeDeclaration)) {
+      const typeDeclaration: keyof typeof ETypeDeclarationConjointe = e.target.value as keyof typeof ETypeDeclarationConjointe;
+
+      setTypeSelectionne(typeDeclaration);
+      if (["ABSENCE_DECLARATION_VALIDEE", "ABSENCE_DECLARATION"].includes(typeDeclaration)) {
         initDateDeclaration(props);
       }
       props.formik.handleChange(e);
@@ -50,11 +37,9 @@ const DeclarationConjointeForm: React.FC<
 
   const selectFieldProps = {
     name: withNamespace(props.nom, TYPE),
-    label: getLibelle("Déclaration conjointe"),
-    options: TypeDeclarationConjointe.getAllEnumsAsOptions(props.type),
-    disabled:
-      estDisabled(props.type, props.origineTitulaireActe) &&
-      props.saisieVerrouillee,
+    label: "Déclaration conjointe",
+    options: typeDeclarationConjointeVersOptions(props.type),
+    disabled: estDisabled(props.type, props.origineTitulaireActe ?? false) && props.saisieVerrouillee,
     optionVide: OptionVide.NON_PRESENTE,
     onChange: onTypeChange
   } as SelectFieldProps;
@@ -63,53 +48,53 @@ const DeclarationConjointeForm: React.FC<
     labelDate: "Date de déclaration",
     nomDate: withNamespace(props.nom, DATE),
     showDatePicker: false,
-    disabled:
-      estDisabled(props.type, props.origineTitulaireActe) &&
-      estRenseigne(props.date) &&
-      props.saisieVerrouillee
+    disabled: estDisabled(props.type, props.origineTitulaireActe ?? false) && estRenseigne(props.date) && props.saisieVerrouillee
   } as DateComposeFormProps;
 
   return (
     <div>
       <SelectField {...selectFieldProps} />
-      {afficheDate(typeSelectionne) && (
-        <DateComposeForm {...dateComposeFormProps} />
-      )}
+      {afficheDate(typeSelectionne) && <DateComposeForm {...dateComposeFormProps} />}
     </div>
   );
 };
 
-function initDateDeclaration(
-  props: React.PropsWithChildren<DeclarationConjointeFormProps>
-) {
-  props.formik.setFieldValue(
-    withNamespace(withNamespace(props.nom, DATE), JOUR),
-    ""
-  );
-  props.formik.setFieldValue(
-    withNamespace(withNamespace(props.nom, DATE), MOIS),
-    ""
-  );
-  props.formik.setFieldValue(
-    withNamespace(withNamespace(props.nom, DATE), ANNEE),
-    ""
-  );
+function initDateDeclaration(props: React.PropsWithChildren<DeclarationConjointeFormProps>) {
+  props.formik.setFieldValue(withNamespace(withNamespace(props.nom, DATE), JOUR), "");
+  props.formik.setFieldValue(withNamespace(withNamespace(props.nom, DATE), MOIS), "");
+  props.formik.setFieldValue(withNamespace(withNamespace(props.nom, DATE), ANNEE), "");
 }
 
-function afficheDate(type?: TypeDeclarationConjointe) {
-  return type != null && !TypeDeclarationConjointe.estAbsenceDeclaration(type);
+function afficheDate(type: keyof typeof ETypeDeclarationConjointe | null): boolean {
+  return Boolean(type && !["ABSENCE_DECLARATION_VALIDEE", "ABSENCE_DECLARATION"].includes(type));
 }
 
-function estDisabled(
-  type?: TypeDeclarationConjointe,
-  origineTitulaireActe = false
-) {
-  return (
-    type === TypeDeclarationConjointe.ABSENCE_DECLARATION_VALIDEE ||
-    (type !== TypeDeclarationConjointe.ABSENCE_DECLARATION &&
-      type != null &&
-      !origineTitulaireActe)
-  );
+function estDisabled(type: keyof typeof ETypeDeclarationConjointe | null, origineTitulaireActe = false) {
+  return type === "ABSENCE_DECLARATION_VALIDEE" || (type !== "ABSENCE_DECLARATION" && type != null && !origineTitulaireActe);
 }
+
+const typeDeclarationConjointeVersOptions = (typeDeclaration: keyof typeof ETypeDeclarationConjointe | null): Option[] => {
+  switch (typeDeclaration) {
+    case "ABSENCE_DECLARATION_VALIDEE":
+      return [
+        {
+          cle: "ABSENCE_DECLARATION_VALIDEE",
+          libelle: premiereLettreEnMajuscule(ETypeDeclarationConjointe.ABSENCE_DECLARATION_VALIDEE)
+        }
+      ];
+
+    case "ABSENCE_DECLARATION":
+      return enumVersOptions(ETypeDeclarationConjointe, { clesAExclure: ["ABSENCE_DECLARATION_VALIDEE"] });
+
+    case "ADJONCTION_NOM":
+    case "CHANGEMENT_NOM":
+    case "CHOIX_NOM":
+    case "INDETERMINE":
+      return enumVersOptions(ETypeDeclarationConjointe, { clesAExclure: ["ABSENCE_DECLARATION_VALIDEE", "ABSENCE_DECLARATION"] });
+
+    default:
+      return enumVersOptions(ETypeDeclarationConjointe);
+  }
+};
 
 export default connect<ComponentFormProps>(DeclarationConjointeForm);

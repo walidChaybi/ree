@@ -1,7 +1,7 @@
 import { Decret, IDecret } from "@model/etatcivil/commun/IDecret";
+import { ELienParente } from "@model/etatcivil/enum/ELienParente";
 import { DECISIONS_JURIDICTION, ETypeDecision } from "@model/etatcivil/enum/ETypeDecision";
 import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
-import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import { IMariageInteresse } from "@model/etatcivil/rcrca/IMariageInteresse";
 import { IParent } from "@model/etatcivil/rcrca/IParent";
@@ -175,7 +175,7 @@ function getLignesInteresseDecision(data: Interesse, showDeces: boolean) {
   // Partie Parents
   // Filtre pour n'afficher que les parents "adoptant" ou "adoptant conjoint du parent"
   const parents = data.parents?.filter(el => {
-    return el.lienParente === LienParente.PARENT_ADOPTANT || el.lienParente === LienParente.ADOPTANT_CONJOINT_DU_PARENT;
+    return el.lienParente === ELienParente.PARENT_ADOPTANT || el.lienParente === ELienParente.ADOPTANT_CONJOINT_DU_PARENT;
   });
   if (parents && parents?.length > 0) {
     interesse = addPhrase(interesse, "par");

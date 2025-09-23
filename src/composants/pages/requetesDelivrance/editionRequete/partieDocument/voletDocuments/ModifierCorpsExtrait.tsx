@@ -1,11 +1,10 @@
 import { IModifierCorpsExtraitParams, useModifierCorpsExtrait } from "@hook/acte/ModifierCorpsExtraitApiHook";
 import { creationCompositionExtraitCopieActeTexte } from "@hook/generation/generationECHook/creationComposition/creationCompositionExtraitCopieActeTexte";
 import { IGenerationECParams, useGenerationEC } from "@hook/generation/generationECHook/generationECHook";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
-import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { Validation } from "@model/requete/enum/Validation";
+import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { EValidation } from "@model/requete/enum/EValidation";
 import { Form, Formik } from "formik";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { EditionDelivranceContext } from "../../../../../../contexts/EditionDelivranceContextProvider";
@@ -21,13 +20,15 @@ const ModifierCorpsExtrait: React.FC<IModifierCorpsExtraitProps> = ({ documentRe
   const { acte, requete, rechargerRequete } = useContext(EditionDelivranceContext);
   const corpsTexteDefaut = useMemo(
     () =>
-      creationCompositionExtraitCopieActeTexte(
-        acte as IFicheActe,
-        requete,
-        documentReponse.validation ? documentReponse.validation : Validation.O,
-        documentReponse.mentionsRetirees ? documentReponse.mentionsRetirees.map(el => el.idMention) : [],
-        DocumentDelivrance.getChoixDelivranceFromUUID(documentReponse.typeDocument)
-      ).corps_texte ?? "",
+      (acte &&
+        creationCompositionExtraitCopieActeTexte(
+          acte,
+          requete,
+          documentReponse.validation ?? EValidation.O,
+          documentReponse.mentionsRetirees ? documentReponse.mentionsRetirees.map(el => el.idMention) : [],
+          DocumentDelivrance.getChoixDelivranceFromUUID(documentReponse.typeDocument)
+        ).corps_texte) ??
+      "",
     [acte]
   );
 
@@ -45,7 +46,7 @@ const ModifierCorpsExtrait: React.FC<IModifierCorpsExtraitProps> = ({ documentRe
     setGenerationECParams({
       idActe: acte?.id,
       requete: requete,
-      validation: documentReponse.validation ? documentReponse.validation : Validation.O,
+      validation: documentReponse.validation ?? EValidation.O,
       mentionsRetirees: documentReponse.mentionsRetirees ? documentReponse.mentionsRetirees.map(el => el.idMention) : [],
       pasDAction: true,
       choixDelivrance: DocumentDelivrance.getChoixDelivranceFromUUID(documentReponse.typeDocument)
@@ -70,8 +71,8 @@ const ModifierCorpsExtrait: React.FC<IModifierCorpsExtraitProps> = ({ documentRe
             idActe: acte?.id ?? "",
             corpsTexteModifie: values.corpsTexte,
             type: DocumentDelivrance.estExtraitAvecFilliation(documentReponse.typeDocument)
-              ? TypeExtrait.getEnumFor(ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION)
-              : TypeExtrait.getEnumFor(ECodeDocumentDelivrance.CODE_EXTRAIT_SANS_FILIATION)
+              ? TypeExtrait.EXTRAIT_AVEC_FILIATION
+              : TypeExtrait.EXTRAIT_SANS_FILIATION
           });
         }}
       >

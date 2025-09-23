@@ -1,7 +1,7 @@
 /* v8 ignore start */
 import { ECodeDocumentDelivrance, IDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { Option } from "@util/Type";
-import { NatureActe } from "./NatureActe";
+import { ENatureActe } from "./NatureActe";
 
 export const CODE_RC = "21";
 export const CODE_RC_RADIE = "22";
@@ -125,11 +125,11 @@ const natureMariageInterdites = [
 ];
 
 const naturesInterdites = {
-  Naissance: {
+  NAISSANCE: {
     [ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION]: natureNaissanceInterditePourExtraitAvecFiliation,
     [ECodeDocumentDelivrance.CODE_EXTRAIT_SANS_FILIATION]: [...natureNaissanceInterditePourExtraitAvecFiliation, NATIONALITE, ADOPTION]
   },
-  Mariage: {
+  MARIAGE: {
     [ECodeDocumentDelivrance.CODE_EXTRAIT_SANS_FILIATION]: [...natureMariageInterdites, ADOPTION],
     [ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION]: natureMariageInterdites
   }
@@ -169,12 +169,12 @@ export class NatureMention {
 
   public static ilExisteUneMentionInterdite(
     naturesMentions: (INatureMention | null)[],
-    natureActe?: NatureActe,
+    natureActe?: keyof typeof ENatureActe,
     document?: IDocumentDelivrance | null
   ): boolean {
     return (
       //@ts-ignore
-      naturesInterdites[`${natureActe?.libelle}`]?.[document?.code]?.find((codeMention: string) =>
+      naturesInterdites[natureActe]?.[document?.code]?.find((codeMention: string) =>
         naturesMentions.find(natureMention => natureMention?.code === codeMention)
       ) != null
     );

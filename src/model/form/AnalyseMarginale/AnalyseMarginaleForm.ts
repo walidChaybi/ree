@@ -1,23 +1,18 @@
 import { IMiseAJourAnalyseMarginaleDto } from "@api/configurations/etatCivil/PutMiseAJourAnalyseMarginaleConfigApi";
+import { TitulaireActe } from "@model/etatcivil/acte/TitulaireActe";
 import { IAnalyseMarginaleMiseAJour } from "../../../composants/pages/requetesMiseAJour/PartieFormulaire";
 import SchemaValidation from "../../../utils/SchemaValidation";
 import { PrenomsForm } from "../commun/PrenomsForm";
 
 const AnalyseMarginaleForm = {
-  genererValeursDefautFormulaire: (analyseMarginale: any, motif: string | null): IAnalyseMarginaleMiseAJour => {
-    const prenoms = Array.isArray(analyseMarginale.prenoms)
-      ? PrenomsForm.depuisStringDto(analyseMarginale.prenoms)
-      : analyseMarginale.prenoms;
-
-    return {
-      nom: analyseMarginale.nom ?? "",
-      nomSecable: Boolean(analyseMarginale.nomPartie1 && analyseMarginale.nomPartie2),
-      nomPartie1: analyseMarginale.nomPartie1 ?? "",
-      nomPartie2: analyseMarginale.nomPartie2 ?? "",
-      prenoms: prenoms ?? PrenomsForm.valeursInitiales(),
-      motif: motif ?? ""
-    };
-  },
+  genererValeursDefautFormulaire: (titulaire: TitulaireActe, motif: string | null): IAnalyseMarginaleMiseAJour => ({
+    nom: titulaire.nom ?? "",
+    nomSecable: Boolean(titulaire.nomPartie1 && titulaire.nomPartie2),
+    nomPartie1: titulaire.nomPartie1 ?? "",
+    nomPartie2: titulaire.nomPartie2 ?? "",
+    prenoms: PrenomsForm.depuisStringDto(titulaire.prenoms) ?? PrenomsForm.valeursInitiales(),
+    motif: motif ?? ""
+  }),
 
   versDto: (valeurs: IAnalyseMarginaleMiseAJour | null): IMiseAJourAnalyseMarginaleDto => {
     if (valeurs != null) {

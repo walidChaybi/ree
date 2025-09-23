@@ -3,15 +3,13 @@ import { AddAlerteActeApiHookParameters, useAddAlerteActeApiHook } from "@hook/a
 import { DeleteAlerteActeApiHookParameters, useDeleteAlerteActeApiHook } from "@hook/alertes/DeleteAlerteActeHookApi";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { EOrigineActe } from "@model/etatcivil/enum/EOrigineActe";
-import { EStatutActe } from "@model/etatcivil/enum/EStatutActe";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
 import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { EOptionMiseAJourActe, OptionMiseAJourActe } from "@model/etatcivil/enum/OptionMiseAJourActe";
 import { TitulaireRequeteMiseAJour } from "@model/requete/ITitulaireRequeteMiseAJour";
 import { SousTypeMiseAJour } from "@model/requete/enum/SousTypeMiseAJour";
-import { UN, ZERO } from "@util/Utils";
+import { UN } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
@@ -26,7 +24,6 @@ import { useNavigate } from "react-router";
 import { IFenetreExterneRef } from "../../../composants/commun/conteneurs/FenetreExterne";
 import { RECEContextData } from "../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
-import { estIFicheActe } from "../../../model/etatcivil/enum/ETypeFiche";
 import LiensRECE from "../../../router/LiensRECE";
 import {
   INFO_PAGE_MISE_A_JOUR_ANALYSE_MARGINALE,
@@ -47,8 +44,7 @@ export interface IIndex {
   value: number;
 }
 
-interface FichePageProps {
-  dataFicheIdentifiant: string;
+interface IFichePageProps {
   datasFiches: IDataFicheProps[];
   index: IIndex;
   numeroRequete?: string;
@@ -67,8 +63,8 @@ export const estActeEligibleMentionDIntegration = ({
   referenceActe,
   referenceRegistreSansNumeroDActe,
   type
-}: IFicheActe): boolean => {
-  const estOrigineScecDocs = EOrigineActe[origine as keyof typeof EOrigineActe] === EOrigineActe.SCEC_DOCS;
+}: FicheActe): boolean => {
+  const estOrigineScecDocs = origine === "SCEC_DOCS";
   const referenceActePresente = Boolean(referenceActe?.trim());
   const referenceRegistreSansNumeroDActeAbsente = !referenceRegistreSansNumeroDActe?.trim();
   const estTypeTexte = type === ETypeActe.TEXTE;
@@ -76,8 +72,7 @@ export const estActeEligibleMentionDIntegration = ({
   return estOrigineScecDocs && referenceActePresente && referenceRegistreSansNumeroDActeAbsente && estTypeTexte;
 };
 
-export const FichePage: React.FC<FichePageProps> = ({
-  dataFicheIdentifiant,
+export const FichePage: React.FC<IFichePageProps> = ({
   datasFiches,
   numeroRequete,
   index,
@@ -111,7 +106,7 @@ export const FichePage: React.FC<FichePageProps> = ({
 
   const { utilisateurConnecte } = useContext(RECEContextData);
 
-  const { fiche } = useFichePageApiHook(actualisationInfosFiche, ficheCourante?.categorie, ficheCourante?.identifiant);
+  const fiche = useFichePageApiHook(actualisationInfosFiche, ficheCourante?.categorie, ficheCourante?.identifiant);
 
   const { bandeauFiche, panelsFiche, alertes, visuBoutonAlertes } = setFiche(utilisateurConnecte, ficheCourante, fiche);
 
@@ -129,19 +124,15 @@ export const FichePage: React.FC<FichePageProps> = ({
 
     let autorise = false;
 
-    if (estIFicheActe(fiche)) {
-      const estActeValide = ficheCourante?.categorie === ETypeFiche.ACTE && fiche.statut !== EStatutActe.BROUILLON;
+    if (ficheCourante?.categorie === ETypeFiche.ACTE && "titulaires" in fiche && fiche.statut !== "BROUILLON") {
+      const estOrigineRece = fiche?.origine === "RECE";
 
-      if (estActeValide) {
-        const estOrigineRece = EOrigineActe[fiche?.origine as keyof typeof EOrigineActe] === EOrigineActe.RECE;
+      const peutSignerMentionIntegration =
+        estActeEligibleMentionDIntegration(fiche) &&
+        droitMentions &&
+        utilisateurConnecte.estHabilitePour({ leDroit: Droit.SIGNER_MENTION_INTEGRATION });
 
-        const peutSignerMentionIntegration =
-          estActeEligibleMentionDIntegration(fiche) &&
-          droitMentions &&
-          utilisateurConnecte.estHabilitePour({ leDroit: Droit.SIGNER_MENTION_INTEGRATION });
-
-        autorise = (estOrigineRece && (droitMentions || droitAnalyseMarginale)) || peutSignerMentionIntegration;
-      }
+      autorise = (estOrigineRece && (droitMentions || droitAnalyseMarginale)) || peutSignerMentionIntegration;
     }
 
     return {
@@ -153,53 +144,49 @@ export const FichePage: React.FC<FichePageProps> = ({
 
   useEffect(() => {
     const idActe = fiche?.id;
-    if (!(optionMiseAJour && idActe)) {
-      return;
-    }
+    if (!optionMiseAJour || !idActe || !(fiche instanceof FicheActe)) return;
 
     const estAnalyseMarginale = optionMiseAJour === EOptionMiseAJourActe.ANALYSE_MARGINALE;
     const sousTypeOptionMiseAJour = OptionMiseAJourActe.getSousType(optionMiseAJour);
 
-    if (estIFicheActe(fiche)) {
-      appelPostRequeteMiseAJour({
-        parametres: {
-          body: {
-            idActeMAJ: idActe,
-            choixMAJ: estAnalyseMarginale ? "MAJ_ACTE_ANALYSE_MARGINALE" : "MAJ_ACTE_APPOSER_MENTION",
-            sousType: sousTypeOptionMiseAJour.nom,
-            titulaires: TitulaireRequeteMiseAJour.listeDepuisDonneesFiche(fiche.titulaires)
+    appelPostRequeteMiseAJour({
+      parametres: {
+        body: {
+          idActeMAJ: idActe,
+          choixMAJ: estAnalyseMarginale ? "MAJ_ACTE_ANALYSE_MARGINALE" : "MAJ_ACTE_APPOSER_MENTION",
+          sousType: sousTypeOptionMiseAJour.nom,
+          titulaires: TitulaireRequeteMiseAJour.listeDepuisDonneesFiche(fiche.titulaires)
+        }
+      },
+      apresSucces: reponse => {
+        const urlNavigation = (() => {
+          switch (true) {
+            case estAnalyseMarginale:
+              return LiensRECE.genererLien(INFO_PAGE_MISE_A_JOUR_ANALYSE_MARGINALE.url, {
+                idRequeteParam: reponse.id,
+                idActeParam: idActe
+              });
+            case SousTypeMiseAJour.estRMAC(sousTypeOptionMiseAJour):
+              return LiensRECE.genererLien(INFO_PAGE_MISE_A_JOUR_MENTION_SUITE_AVIS.url, {
+                idRequeteParam: reponse.id,
+                idActeParam: idActe
+              });
+            default:
+              return LiensRECE.genererLien(INFO_PAGE_MISE_A_JOUR_MENTION_AUTRE.url, { idRequeteParam: reponse.id, idActeParam: idActe });
           }
-        },
-        apresSucces: reponse => {
-          const urlNavigation = (() => {
-            switch (true) {
-              case estAnalyseMarginale:
-                return LiensRECE.genererLien(INFO_PAGE_MISE_A_JOUR_ANALYSE_MARGINALE.url, {
-                  idRequeteParam: reponse.id,
-                  idActeParam: idActe
-                });
-              case SousTypeMiseAJour.estRMAC(sousTypeOptionMiseAJour):
-                return LiensRECE.genererLien(INFO_PAGE_MISE_A_JOUR_MENTION_SUITE_AVIS.url, {
-                  idRequeteParam: reponse.id,
-                  idActeParam: idActe
-                });
-              default:
-                return LiensRECE.genererLien(INFO_PAGE_MISE_A_JOUR_MENTION_AUTRE.url, { idRequeteParam: reponse.id, idActeParam: idActe });
-            }
-          })();
+        })();
 
-          navigate(urlNavigation);
-        },
-        apresErreur: erreurs => {
-          const messageErreur = erreurs[ZERO]?.code === "FCT_15181" ? erreurs[ZERO]?.message : "";
+        navigate(urlNavigation);
+      },
+      apresErreur: erreurs => {
+        const messageErreur = erreurs.find(erreur => erreur.code === "FCT_15181")?.message;
 
-          AfficherMessage.erreur(messageErreur || "Impossible d'accéder à la requête de mise à jour de l'acte", {
-            erreurs
-          });
-        },
-        finalement: () => setOptionMiseAJour(null)
-      });
-    }
+        AfficherMessage.erreur(messageErreur ?? "Impossible d'accéder à la requête de mise à jour de l'acte", {
+          erreurs
+        });
+      },
+      finalement: () => setOptionMiseAJour(null)
+    });
   }, [optionMiseAJour]);
 
   // Obligatoire pour les styles qui sont chargés dynamiquement
@@ -242,11 +229,6 @@ export const FichePage: React.FC<FichePageProps> = ({
   );
 
   const alerte = useAddAlerteActeApiHook(ajouterAlerteActeApiHookParameters);
-  useEffect(() => {
-    if (alerte) {
-      setActualisationInfosFiche(!actualisationInfosFiche);
-    }
-  }, [alerte]);
 
   /* Suppression d'une alerte */
   const [deleteAlerteActeApiHookParameters, setDeleteAlerteActeApiHookParameters] = useState<DeleteAlerteActeApiHookParameters>();
@@ -259,11 +241,12 @@ export const FichePage: React.FC<FichePageProps> = ({
   }, []);
 
   const resultatSuppressionAlerte = useDeleteAlerteActeApiHook(deleteAlerteActeApiHookParameters);
+
   useEffect(() => {
-    if (resultatSuppressionAlerte) {
+    if (alerte || resultatSuppressionAlerte) {
       setActualisationInfosFiche(!actualisationInfosFiche);
     }
-  }, [resultatSuppressionAlerte]);
+  }, [alerte, resultatSuppressionAlerte]);
 
   return (
     <div className="FichePage">
@@ -290,7 +273,7 @@ export const FichePage: React.FC<FichePageProps> = ({
             </div>
           )}
 
-          {estIFicheActe(fiche) && ficheCourante.categorie === ETypeFiche.ACTE && (
+          {fiche instanceof FicheActe && ficheCourante.categorie === ETypeFiche.ACTE && (
             <div className="headerFichePage">
               <BandeauAlertesActe
                 alertes={alertes}

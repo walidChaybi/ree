@@ -2,8 +2,8 @@ import VisionneuseActe from "@composant/visionneuseActe/VisionneuseActe";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { TypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteArchiviste";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
+import { ETypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteArchiviste";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
 import { IAccordionReceSection } from "../../../FicheUtils";
@@ -11,7 +11,7 @@ import { getFichesPersonneActe } from "../personne/FichePersonne";
 import { getEvenement } from "./EvenementActeUtils";
 import { getTitulairesAM } from "./TitulairesActeUtils";
 
-export function getPanelsActe(acte: IFicheActe, utilisateurConnecte: UtilisateurConnecte): IAccordionReceSection {
+export function getPanelsActe(acte: FicheActe, utilisateurConnecte: UtilisateurConnecte): IAccordionReceSection {
   const idTypeRegistre = acte?.registre?.type?.id;
   const paramsAffichage = getParamsAffichageFicheActe(idTypeRegistre, acte.visibiliteArchiviste, utilisateurConnecte);
   const fichesPersonne: SectionPanelProps[] = getFichesPersonneActe(acte?.personnes, paramsAffichage);
@@ -39,7 +39,7 @@ export function getPanelsActe(acte: IFicheActe, utilisateurConnecte: Utilisateur
   };
 }
 
-function getPanelAreasActeImage(acte: IFicheActe, params: IParamsAffichage): SectionPanelAreaProps[] {
+function getPanelAreasActeImage(acte: FicheActe, params: IParamsAffichage): SectionPanelAreaProps[] {
   if (params.visuActe === "classique" || params.visuActe === "filigrane") {
     return [
       {
@@ -47,7 +47,7 @@ function getPanelAreasActeImage(acte: IFicheActe, params: IParamsAffichage): Sec
           <VisionneuseActe
             idActe={acte.id}
             typeActe={acte.type}
-            estReecrit={params.visuActe === "classique" ? acte.estReecrit : undefined}
+            estReecrit={params.visuActe === "classique" ? (acte.estReecrit ?? undefined) : undefined}
           />
         ),
         nbColonne: 1
@@ -66,7 +66,7 @@ export interface IParamsAffichage {
 
 export function getParamsAffichageFicheActe(
   idTypeRegistre: string | undefined,
-  typeVisibiliteArchiviste: TypeVisibiliteArchiviste,
+  typeVisibiliteArchiviste: keyof typeof ETypeVisibiliteArchiviste,
   utilisateurConnecte: UtilisateurConnecte
 ): IParamsAffichage {
   const params: IParamsAffichage = {
@@ -90,10 +90,7 @@ export function getParamsAffichageFicheActe(
   }
 
   // Si c'est un acte archive et qu'il a le droit CONSULTER_ARCHIVE
-  else if (
-    typeVisibiliteArchiviste !== TypeVisibiliteArchiviste.NON &&
-    utilisateurConnecte.estHabilitePour({ leDroit: Droit.CONSULTER_ARCHIVES })
-  ) {
+  else if (typeVisibiliteArchiviste !== "NON" && utilisateurConnecte.estHabilitePour({ leDroit: Droit.CONSULTER_ARCHIVES })) {
     params.visuBoutonAlertes = false;
     params.visuActe = "filigrane";
     params.personnes = "none";

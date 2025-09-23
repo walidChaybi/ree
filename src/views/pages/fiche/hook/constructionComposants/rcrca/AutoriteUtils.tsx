@@ -1,6 +1,6 @@
 import { Autorite, IAutorite } from "@model/etatcivil/commun/IAutorite";
 import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
-import { TypeAutorite, TypeAutoriteUtil } from "@model/etatcivil/enum/TypeAutorite";
+import { ETypeAutorite, TypeAutoriteUtil } from "@model/etatcivil/enum/TypeAutorite";
 import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import { formatNom, formatPrenom, getValeurOuVide } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
@@ -134,7 +134,7 @@ function getNumeroCrpcen(autorite: IAutorite): SectionContentProps {
   };
 }
 
-function getTypeAutoriteContent(type?: TypeAutorite): SectionContentProps {
+function getTypeAutoriteContent(type?: ETypeAutorite): SectionContentProps {
   return { libelle: "Type", value: TypeAutoriteUtil.getLibelle(type) };
 }
 

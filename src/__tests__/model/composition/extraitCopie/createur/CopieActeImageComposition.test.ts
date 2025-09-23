@@ -1,25 +1,25 @@
 import { CopieActeImageComposition } from "@model/composition/extraitCopie/createur/CopieActeImageComposition";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { EValidation } from "@model/requete/enum/EValidation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { Validation } from "@model/requete/enum/Validation";
 import { expect, test } from "vitest";
 import { ficheActeMariage } from "../../../../mock/data/ficheActe";
 
 test("Attendu: corps image correct", () => {
-  const acte = ficheActeMariage.data as any as IFicheActe;
-  const natureActe = acte.nature.libelle;
+  const acte = ficheActeMariage;
+  const natureActe = acte.nature;
   const requete = {
     choixDelivrance: ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE,
     sousType: SousTypeDelivrance.RDD
   } as IRequeteDelivrance;
-  const validation = Validation.O;
+  const validation = EValidation.O;
   const corpsImage = acte.corpsImage;
   const erreur = "erreur";
 
   const compositionCorps = CopieActeImageComposition.creerCopieActeImage({
-    acte,
+    acte: FicheActe.depuisDto(acte)!,
     natureActe,
     requete,
     validation,

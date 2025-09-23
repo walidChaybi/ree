@@ -1,3 +1,6 @@
+import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
+import { MockApi } from "@mock/appelsApi/MockApi";
+import { ficheActeEC } from "@mock/data/ficheActe";
 import { Utilisateur } from "@model/agent/Utilisateur";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
@@ -13,6 +16,12 @@ describe("PartieActeRequete", () => {
   const idActe = "b41079a5-9e8f-478a-b04c-c4c2ac671123";
   const idRequete = "9d00fe88-9d21-482e-bb02-223636f78386";
 
+  MockApi.deployer(
+    CONFIG_GET_RESUME_ACTE,
+    { path: { idActe }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
+    { data: ficheActeEC }
+  );
+
   const mockedUseNavigate = vi.fn();
   vi.mock("react-router", async () => {
     const mod = await vi.importActual<typeof import("react-router")>("react-router");
@@ -24,7 +33,7 @@ describe("PartieActeRequete", () => {
 
   test("Affiche les deux onglets lorsque les deux id existent", async () => {
     render(
-      <MockRECEContextProvider utilisateurs={[{} as Utilisateur]}>
+      <MockRECEContextProvider>
         <EditionDelivranceContextProvider
           idRequeteParam={idRequete}
           idActeParam={idActe}

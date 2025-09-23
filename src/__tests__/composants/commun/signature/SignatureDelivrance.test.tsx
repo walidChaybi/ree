@@ -1,13 +1,14 @@
 import { CONFIG_POST_LOGS } from "@api/configurations/outilTech/PostLogsConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
+import { NATURE_MENTION } from "@mock/data/NomenclatureNatureMention";
+import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
+import { ficheActeTexte } from "@mock/data/ficheActe";
+import { mentions } from "@mock/data/mentions";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { IRegistre } from "@model/etatcivil/acte/IRegistre";
-import { IMention } from "@model/etatcivil/acte/mention/IMention";
-import { ITypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { INatureMention } from "@model/etatcivil/enum/NatureMention";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
+import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
+import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
@@ -103,7 +104,7 @@ describe("Test du composant Signature délivrance", () => {
   const renderComposant = (
     numerosFonctionnel: string[] = [],
     avecDroit: boolean = true,
-    paramsMention?: { acte?: IFicheActe; documents: IDocumentReponse[] }
+    paramsMention?: { acte?: FicheActe; documents: IDocumentReponse[] }
   ) =>
     render(
       <MockRECEContextProvider
@@ -257,16 +258,15 @@ describe("Test du composant Signature délivrance", () => {
   });
 
   test("Un avertissement concernant les mentions s'affiche", async () => {
-    const acte: IFicheActe = {
+    NatureMention.init(NATURE_MENTION);
+    TypeMention.init(TYPE_MENTION);
+
+    const acte: FicheActe = FicheActe.depuisDto({
+      ...ficheActeTexte,
       id: "idActe",
-      registre: { famille: "ACQ" } as IRegistre,
-      nature: NatureActe.NAISSANCE,
-      mentions: [
-        {
-          typeMention: { natureMention: { code: "4" } as INatureMention } as ITypeMention
-        } as IMention
-      ]
-    } as IFicheActe;
+      nature: "NAISSANCE",
+      mentions: [{ ...mentions[0], typeMention: { idTypeMention: "b04835d7-880e-45f2-9947-da18dd3237de" } }] // Nature de code 4
+    })!;
 
     const NOM_DOC = "nom doc";
     const documentsReponse = [{ nom: NOM_DOC, typeDocument: "28580709-06dd-4df2-bf6e-70a9482940a1" } as IDocumentReponse];

@@ -1,6 +1,5 @@
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { getLibelle } from "@util/Utils";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import { useEffect, useState } from "react";
 import AfficherMessage from "../../../../utils/AfficherMessage";
@@ -11,7 +10,7 @@ import "./scss/BoutonCreationRDD.scss";
 type BoutonCreationRDDProps = {
   label: string;
   labelPopin: string;
-  acte: IFicheActe;
+  acte: FicheActe;
   numeroFonctionnel?: string;
 };
 
@@ -26,16 +25,16 @@ export const BoutonCreationRDD = (props: BoutonCreationRDDProps) => {
     }
   }, [resultat]);
 
-  const messagesPopin = [getLibelle(props.labelPopin)];
+  const messagesPopin = [props.labelPopin];
   const boutonsPopin = [
     {
-      label: getLibelle("Non"),
+      label: "Non",
       action: () => {
         setPopinOpen(false);
       }
     },
     {
-      label: getLibelle("Oui"),
+      label: "Oui",
       action: () => {
         setPopinOpen(false);
         setCreationRequeteDelivranceParams({
@@ -60,11 +59,11 @@ export const BoutonCreationRDD = (props: BoutonCreationRDDProps) => {
     <>
       <div className="BoutonCreationRDD">
         <button
-          aria-label={getLibelle(props.label)}
+          aria-label={props.label}
           type="submit"
           onClick={() => setPopinOpen(true)}
         >
-          {getLibelle(props.label)}
+          {props.label}
         </button>
       </div>
 

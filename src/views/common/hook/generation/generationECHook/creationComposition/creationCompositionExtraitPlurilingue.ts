@@ -2,54 +2,45 @@ import { ExtraitPlurilingueDecesComposition } from "@model/composition/extraitCo
 import { ExtraitPlurilingueMariageComposition } from "@model/composition/extraitCopie/plurilingue/createur/ExtraitPlurilingueMariageComposition";
 import { ExtraitPlurilingueNaissanceComposition } from "@model/composition/extraitCopie/plurilingue/createur/ExtraitPlurilingueNaissanceComposition";
 import { IExtraitPlurilingueComposition } from "@model/composition/extraitCopie/plurilingue/IExtraitPlurilingueComposition";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
+import { EValidation } from "@model/requete/enum/EValidation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { Validation } from "@model/requete/enum/Validation";
 
 export const creationCompositionExtraitPlurilingue = function (
-  acteComplet: IFicheActe,
-  validation: Validation,
+  acteComplet: FicheActe,
+  validation: EValidation,
   sousTypeRequete: SousTypeDelivrance,
   mentionsRetirees: string[],
   ctv?: string
 ): IExtraitPlurilingueComposition | undefined {
-  let composition: IExtraitPlurilingueComposition | undefined;
-
   switch (acteComplet.nature) {
-    case NatureActe.MARIAGE:
-      composition =
-        ExtraitPlurilingueMariageComposition.compositionExtraitPlurilingueDeMariage(
-          acteComplet,
-          validation,
-          sousTypeRequete,
-          mentionsRetirees,
-          ctv
-        );
-      break;
-    case NatureActe.NAISSANCE:
-      composition =
-        ExtraitPlurilingueNaissanceComposition.compositionExtraitPlurilingueDeNaissance(
-          acteComplet,
-          validation,
-          sousTypeRequete,
-          mentionsRetirees,
-          ctv
-        );
-      break;
-    case NatureActe.DECES:
-      composition =
-        ExtraitPlurilingueDecesComposition.compositionExtraitPlurilingueDeDeces(
-          acteComplet,
-          validation,
-          sousTypeRequete,
-          mentionsRetirees,
-          ctv
-        );
-      break;
+    case "MARIAGE":
+      return ExtraitPlurilingueMariageComposition.compositionExtraitPlurilingueDeMariage(
+        acteComplet,
+        validation,
+        sousTypeRequete,
+        mentionsRetirees,
+        ctv
+      );
+    case "NAISSANCE":
+      return ExtraitPlurilingueNaissanceComposition.compositionExtraitPlurilingueDeNaissance(
+        acteComplet,
+        validation,
+        sousTypeRequete,
+        mentionsRetirees,
+        ctv
+      );
+    case "DECES":
+      return ExtraitPlurilingueDecesComposition.compositionExtraitPlurilingueDeDeces(
+        acteComplet,
+        validation,
+        sousTypeRequete,
+        mentionsRetirees,
+        ctv
+      );
     default:
       break;
   }
 
-  return composition;
+  return undefined;
 };

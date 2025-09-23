@@ -1,24 +1,24 @@
-import { mapActe } from "@hook/repertoires/MappingRepertoires";
+import { imagePngVideBase64 } from "@mock/data/ImagePng";
 import { ExtraitCopieActeTexteNaissanceComposition } from "@model/composition/extraitCopie/createur/ExtraitCopieActeTexteNaissanceComposition";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { FicheActe, IFicheActeDto } from "@model/etatcivil/acte/FicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { EValidation } from "@model/requete/enum/EValidation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { Validation } from "@model/requete/enum/Validation";
 import { expect, test } from "vitest";
 import { ficheActeNaissance } from "../../../../mock/data/ficheActe";
 
 test("Attendu: getCorpsTexte fonctionne correctement", () => {
-  const acte = mapActe(ficheActeNaissance.data);
+  const acte = FicheActe.depuisDto(ficheActeNaissance)!;
   const requete = {
     choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION,
     sousType: SousTypeDelivrance.RDD
   } as IRequeteDelivrance;
-  const validation = Validation.N;
+  const validation = EValidation.N;
   const ctv = "111111-222222";
 
   const compositionCorps = ExtraitCopieActeTexteNaissanceComposition.creerExtraitCopieActeTexteNaissance({
-    acte: acte as any as IFicheActe,
+    acte: acte,
     requete,
     validation,
     mentionsRetirees: [],
@@ -40,33 +40,22 @@ et de Louise, Jocelyne DUPOND née le 26 juin 1981 à Nantes (Catalogne)`;
 
 test("Ne doit pas afficher (Inconnu) dans le document généré sur la naissance des filiations", () => {
   const acte = {
-    ...ficheActeNaissance.data,
-    ...(ficheActeNaissance.data.titulaires[0].filiations = [
+    ...ficheActeNaissance,
+    ...(ficheActeNaissance.titulaires[0].filiations = [
       {
         lienParente: "PARENT",
         ordre: 1,
         nom: "Sacken",
         sexe: "MASCULIN",
         naissance: {
-          minute: null,
-          heure: null,
-          jour: null,
-          mois: null,
-          annee: null,
-          voie: null,
           ville: "Barcelone",
-          arrondissement: null,
           region: "",
-          pays: "Inconnu",
-          lieuReprise: null
+          pays: "Inconnu"
         },
         profession: "Informaticien",
-        age: null,
         domicile: {
           voie: "16 avenue des Palmiers",
           ville: "Djibouti",
-          arrondissement: null,
-          region: null,
           pays: "DJIBOUTI"
         },
         prenoms: ["Jean", "Louis"]
@@ -77,25 +66,17 @@ test("Ne doit pas afficher (Inconnu) dans le document généré sur la naissance
         nom: "DUPOND",
         sexe: "FEMININ",
         naissance: {
-          minute: null,
-          heure: null,
           jour: 26,
           mois: 6,
           annee: 1981,
-          voie: null,
           ville: "Nantes",
-          arrondissement: null,
           region: "",
-          pays: "",
-          lieuReprise: null
+          pays: ""
         },
         profession: "Dentiste",
-        age: null,
         domicile: {
           voie: "16 avenue des Palmiers",
           ville: "Djibouti",
-          arrondissement: null,
-          region: null,
           pays: "DJIBOUTI"
         },
         prenoms: ["Louise", "Jocelyne"]
@@ -107,11 +88,11 @@ test("Ne doit pas afficher (Inconnu) dans le document généré sur la naissance
     choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION,
     sousType: SousTypeDelivrance.RDD
   } as IRequeteDelivrance;
-  const validation = Validation.N;
+  const validation = EValidation.N;
   const ctv = "111111-222222";
 
   const compositionCorps = ExtraitCopieActeTexteNaissanceComposition.creerExtraitCopieActeTexteNaissance({
-    acte: mapActe(acte) as any as IFicheActe,
+    acte: FicheActe.depuisDto(acte)!,
     requete,
     validation,
     mentionsRetirees: [],
@@ -132,20 +113,15 @@ et de Louise, Jocelyne DUPOND née le 26 juin 1981 à Nantes`;
 });
 
 test("Doit afficher les bonne données de naissance de filiations dans le document généré", () => {
-  const acte = {
+  const acte: IFicheActeDto = {
+    origine: "RECE",
+    referenceActe: "",
     id: "923a10fb-0b15-452d-83c0-d24c76d1de8e",
-    dateInitialisation: null,
-    dateCreation: 1141815600000,
-    modeCreation: "ETABLI",
     statut: "ANNULE",
-    dateStatut: 1282816800000,
     nature: "NAISSANCE",
     numero: "254",
     numeroBisTer: "35",
-    nomOec: "DUCLOS",
-    prenomOec: "HENRI",
     dateDerniereDelivrance: 1207130400000,
-    dateDerniereMaj: 1041505200000,
     visibiliteArchiviste: "NON",
     evenement: {
       minute: 15,
@@ -153,34 +129,25 @@ test("Doit afficher les bonne données de naissance de filiations dans le docume
       jour: 10,
       mois: 10,
       annee: 1901,
-      voie: null,
       ville: "Nantes",
       arrondissement: "16",
       region: "Loire-Atlantique",
-      pays: "Inconnu",
-      lieuReprise: null
+      pays: "Inconnu"
     },
     mentions: [],
     titulaires: [
       {
         nom: "Micheldelavandièredugrand-large",
-        ordre: 2,
+        ordre: 1,
         prenoms: ["lolita"],
         sexe: "FEMININ",
         naissance: {
-          autresNoms: null,
-          autresPrenoms: null,
-          minute: null,
-          heure: null,
           jour: 17,
           mois: 4,
           annee: 1970,
-          voie: null,
           ville: "Sitka",
-          arrondissement: null,
           region: "Alaska",
-          pays: "États-Unis",
-          lieuReprise: null
+          pays: "États-Unis"
         },
         filiations: [
           {
@@ -189,25 +156,14 @@ test("Doit afficher les bonne données de naissance de filiations dans le docume
             nom: "Sacken",
             sexe: "MASCULIN",
             naissance: {
-              minute: null,
-              heure: null,
-              jour: null,
-              mois: null,
-              annee: null,
-              voie: null,
               ville: "Barcelone",
-              arrondissement: null,
               region: "Catalogne",
-              pays: "Espagne",
-              lieuReprise: null
+              pays: "Espagne"
             },
             profession: "Informaticien",
-            age: null,
             domicile: {
               voie: "16 avenue des Palmiers",
               ville: "Djibouti",
-              arrondissement: null,
-              region: null,
               pays: "DJIBOUTI"
             },
             prenoms: ["Jean", "Louis"]
@@ -218,37 +174,26 @@ test("Doit afficher les bonne données de naissance de filiations dans le docume
             nom: "DUPOND",
             sexe: "FEMININ",
             naissance: {
-              minute: null,
-              heure: null,
               jour: 26,
               mois: 6,
               annee: 1981,
-              voie: null,
               ville: "Alger",
-              arrondissement: null,
               region: "Paris",
-              pays: "Algérie",
-              lieuReprise: null
+              pays: "Algérie"
             },
             profession: "Dentiste",
-            age: null,
             domicile: {
               voie: "16 avenue des Palmiers",
               ville: "Djibouti",
-              arrondissement: null,
-              region: null,
               pays: "DJIBOUTI"
             },
             prenoms: ["Louise", "Jocelyne"]
           }
         ],
         profession: "DEVELOPPEUR",
-        age: null,
         domicile: {
           voie: "IlotduHéron",
           ville: "Djibouti",
-          arrondissement: null,
-          region: null,
           pays: "DJIBOUTI"
         },
         typeDeclarationConjointe: "CHOIX_NOM",
@@ -261,7 +206,6 @@ test("Doit afficher les bonne données de naissance de filiations dans le docume
         prenomsDernierConjoint: "Jean Maxime"
       }
     ],
-    piecesAnnexes: [],
     alerteActes: [],
     personnes: [
       {
@@ -270,30 +214,20 @@ test("Doit afficher les bonne données de naissance de filiations dans le docume
         sexe: "FEMININ",
         nationalite: "FRANCAISE",
         naissance: {
-          minute: null,
-          heure: null,
           jour: 1,
           mois: 10,
           annee: 1960,
-          voie: null,
           ville: "nantes",
-          arrondissement: null,
           region: "Pays de Loire",
-          pays: "France",
-          lieuReprise: null
+          pays: "France"
         },
         deces: {
-          minute: null,
-          heure: null,
           jour: 2,
           mois: 12,
           annee: 2020,
-          voie: null,
           ville: "bordeau",
-          arrondissement: null,
           region: "Nouvelle-Aquitaine",
-          pays: "France",
-          lieuReprise: null
+          pays: "France"
         },
         autresNoms: [
           {
@@ -305,40 +239,28 @@ test("Doit afficher les bonne données de naissance de filiations dans le docume
         autresPrenoms: ["Mireille"],
         parents: [
           {
-            id: null,
-            typeLienParente: "DIRECT",
             nom: "Glenn",
             prenoms: ["Pearl", "Ginger"]
           },
           {
-            id: null,
-            typeLienParente: "DIRECT",
             nom: "Nora",
             prenoms: ["Reed"]
           }
         ],
         enfants: [
           {
-            id: null,
-            typeLienParente: "DIRECT",
             nom: "Janine",
             prenoms: ["Alyce"]
           },
           {
-            id: null,
-            typeLienParente: "DIRECT",
             nom: "Kirsten",
             prenoms: ["Louella"]
           },
           {
-            id: null,
-            typeLienParente: "ADOPTION",
             nom: "Reynolds",
             prenoms: ["Mcleod", "Bates"]
           },
           {
-            id: null,
-            typeLienParente: "DIRECT",
             nom: "Barton",
             prenoms: ["Buck"]
           }
@@ -347,19 +269,22 @@ test("Doit afficher les bonne données de naissance de filiations dans le docume
           {
             id: "76b62678-8b06-4442-ad5b-b9207627a6e3",
             numero: "1",
-            statut: "ACTIF"
+            statut: "ACTIF",
+            referenceComplete: ""
           },
           {
             id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918",
             numero: "4",
-            statut: "INACTIF"
+            statut: "INACTIF",
+            referenceComplete: ""
           }
         ],
         rcas: [
           {
             id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e",
             numero: "4094",
-            statut: "ACTIF"
+            statut: "ACTIF",
+            referenceComplete: ""
           }
         ],
         pacss: [],
@@ -367,130 +292,60 @@ test("Doit afficher les bonne données de naissance de filiations dans le docume
           {
             id: "923a10fb-0b15-452d-83c0-d24c76d1de8e",
             numero: "254",
-            statut: null,
-            nature: "NAISSANCE"
+            referenceComplete: ""
           }
         ]
       }
     ],
     estReecrit: false,
-    detailMariage: null,
     registre: {
-      id: "e5f36d96-f1f8-437e-8371-76dba9837337",
       famille: "DEP",
-      pocopa: "IRAN",
       annee: 1987,
-      support1: null,
-      support2: null,
-      numeroDernierActe: "454",
-      pvOuverture: "pv_ouverture",
       dateOuverture: [1993, 6, 6],
-      pvFermeture: "pv_fermeture",
       dateFermeture: [1969, 2, 16],
-      decret2017: true,
       type: {
         id: "d5f36d96-f1f8-437e-8371-86dba9837341",
-        famille: "DEP",
-        pocopa: "TUNIS",
-        paysPocopa: "TUNISIE",
-        dateRattachement: [1993, 6, 6],
-        dateTransfertScec: [1969, 2, 16],
-        gereScec: true,
-        estOuvert: true,
-        description: ""
+        pocopa: "IRAN"
       }
     },
-    motifAnnulation: "",
-    dateInitialisationprojet: null,
-    numeroProjet: "a3",
     corpsExtraitRectifications: [],
     corpsImage: {
-      id: "ea2b891e-70f6-4f6e-a27f-dcb9d7d418a2",
-      idActe: "923a10fb-0b15-452d-83c0-d24c76d1de8e",
-      dateCreationActe: 1141815600000,
-      numeroActe: "254",
       images: [
         {
-          idActeImage: "960078ff-1671-4908-867e-d95f2ae42f80",
-          pathFichier: "actes\\L1_I00003_1.tif",
-          conteneur: "actes_image",
-          fichier: "L1_I00003_1.tif",
-          noPage: 1,
-          statutRepriseImageActe: "A_REPRENDRE",
-          dateDerniereTentative: null,
-          messageErreurDerniereTentative: null
+          contenu: imagePngVideBase64,
+          noPage: 1
         },
         {
-          idActeImage: "a666d2bc-0343-4c53-8f24-1c1c28a51eac",
-          pathFichier: "actes\\P1_I00001_1.tif",
-          conteneur: "actes_image",
-          fichier: "P1_I00001_1.tif",
-          noPage: 1,
-          statutRepriseImageActe: "A_REPRENDRE",
-          dateDerniereTentative: null,
-          messageErreurDerniereTentative: null
+          contenu: imagePngVideBase64,
+          noPage: 1
         }
-      ],
-      natureActe: "NAISSANCE"
+      ]
     },
     analyseMarginales: [
       {
+        id: "",
+        estValide: true,
         dateDebut: 1612782000000,
-        dateFin: null,
-        nomOec: null,
-        prenomOec: null,
-        motifModification: "FRANCISATION_PRENOM",
         titulaires: [
           {
             nom: "Patamob",
             prenoms: ["Alphonse"],
-            autresNoms: null,
-            autresPrenoms: null,
-            ordre: 2,
-            sexe: "FEMININ",
-            naissance: null,
-            profession: null,
-            age: null,
-            domicile: null,
-            filiations: null,
+            ordre: 1,
             typeDeclarationConjointe: "CHANGEMENT_NOM",
-            dateDeclarationConjointe: "2000-11-26",
-            nomPartie1: null,
-            nomPartie2: null,
-            nomAvantMariage: null,
-            nomApresMariage: null,
-            nomDernierConjoint: null,
-            prenomsDernierConjoint: null
+            dateDeclarationConjointe: [2000, 11, 26]
           }
         ]
       },
       {
+        id: "",
+        estValide: false,
         dateDebut: 1577358000000,
-        dateFin: null,
-        nomOec: "Lens",
-        prenomOec: "Alexis",
-        motifModification: "CHANGEMENT_PRENOM",
+        dateFin: 1612782000000,
         titulaires: [
           {
             nom: "Ozaur",
             prenoms: ["Amandine"],
-            autresNoms: null,
-            autresPrenoms: null,
-            ordre: 2,
-            sexe: null,
-            naissance: null,
-            profession: null,
-            age: null,
-            domicile: null,
-            filiations: null,
-            typeDeclarationConjointe: null,
-            dateDeclarationConjointe: null,
-            nomPartie1: null,
-            nomPartie2: null,
-            nomAvantMariage: null,
-            nomApresMariage: null,
-            nomDernierConjoint: null,
-            prenomsDernierConjoint: null
+            ordre: 1
           }
         ]
       }
@@ -502,11 +357,11 @@ test("Doit afficher les bonne données de naissance de filiations dans le docume
     choixDelivrance: ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION,
     sousType: SousTypeDelivrance.RDD
   } as IRequeteDelivrance;
-  const validation = Validation.N;
+  const validation = EValidation.N;
   const ctv = "111111-222222";
 
   const compositionCorps = ExtraitCopieActeTexteNaissanceComposition.creerExtraitCopieActeTexteNaissance({
-    acte: mapActe(acte) as any as IFicheActe,
+    acte: FicheActe.depuisDto(acte)!,
     requete,
     validation,
     mentionsRetirees: [],

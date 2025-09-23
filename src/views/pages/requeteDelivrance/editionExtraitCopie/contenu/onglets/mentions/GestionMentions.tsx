@@ -1,10 +1,10 @@
 import { ReinitialiserValiderBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
 import { IMentionsParams, useMentionsApiHook } from "@hook/acte/mentions/MentionsApiHook";
 import { SauvegarderMentionsParam, useSauvegarderMentions } from "@hook/acte/mentions/SauvegarderMentionsHook";
-import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { Mention } from "@model/etatcivil/acte/mention/IMention";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { IMentionAffichage, mappingVersMentionAffichage, modificationEffectuee } from "@model/etatcivil/acte/mention/IMentionAffichage";
-import { StatutMention } from "@model/etatcivil/enum/StatutMention";
+import { EStatutMention } from "@model/etatcivil/enum/EStatutMention";
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
@@ -14,13 +14,18 @@ import React, { useCallback, useContext, useEffect, useMemo, useState } from "re
 import { ECleOngletDocumentDelivre } from "../../../../../../../composants/pages/requetesDelivrance/editionRequete/partieDocument/voletDocuments/VoletDocumentDelivre";
 import { EditionDelivranceContext } from "../../../../../../../contexts/EditionDelivranceContextProvider";
 import { RECEContextActions } from "../../../../../../../contexts/RECEContextProvider";
-import { boutonReinitialiserEstDisabled, getValeurEstdeverrouillerCommencement, validerMentions } from "./GestionMentionsUtil";
+import {
+  boutonReinitialiserEstDisabled,
+  getTexteAPartirMentionPlurilingue,
+  getValeurEstdeverrouillerCommencement,
+  validerMentions
+} from "./GestionMentionsUtil";
 import { MentionsCopie } from "./contenu/MentionsCopie";
 import { MentionsExtrait } from "./contenu/MentionsExtrait";
 import "./scss/Mention.scss";
 
 interface GestionMentionsProps {
-  acte?: IFicheActe;
+  acte?: FicheActe;
   document?: IDocumentReponse;
   requete: IRequeteDelivrance;
   setOngletDocumentDelivre?: (nouvelOnglet: ECleOngletDocumentDelivre) => void;
@@ -54,7 +59,7 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
     if (idActe) {
       setMentionsParams({
         idActe: idActe,
-        statutMention: StatutMention.SIGNEE
+        statutMention: EStatutMention.SIGNEE
       });
     }
   }, [idActe]);
@@ -79,7 +84,7 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
         setMentions(mentionsAAfficher);
         const premiereMention = { ...mentionsAAfficher[0] };
         if (estExtraitPlurilingue) {
-          premiereMention.texte = Mention.getTexteAPartirPlurilingue(premiereMention.texte);
+          premiereMention.texte = getTexteAPartirMentionPlurilingue(premiereMention.texte);
         }
         setMentionSelect(premiereMention);
       }
@@ -112,11 +117,11 @@ export const GestionMentions: React.FC<GestionMentionsProps> = props => {
         <div className="Header">
           <div>
             <h3>{"Nature"}</h3>
-            <span>{props.acte?.nature.libelle}</span>
+            <span>{ENatureActe[props.acte?.nature] ?? ""}</span>
           </div>
           <div>
             <h3>{"Référence"}</h3>
-            <span>{FicheActe.getReference(props.acte)}</span>
+            <span>{props.acte.referenceActe ?? ""}</span>
           </div>
         </div>
       )}

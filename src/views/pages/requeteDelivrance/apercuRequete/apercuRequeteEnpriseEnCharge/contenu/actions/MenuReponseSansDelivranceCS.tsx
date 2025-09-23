@@ -18,15 +18,16 @@ import { INFO_PAGE_APERCU_REQUETE_DELIVRANCE_TRAITEMENT } from "../../../../../.
 import {
   createReponseSansDelivranceCSPourCompositionApiDemandeIncomplete,
   createReponseSansDelivranceCSPourCompositionApiFrancais,
-  createReponseSansDelivranceCSPourCompositionApiMariage,
+  CreateReponseSansDelivranceCSPourCompositionApiMariage,
   createReponseSansDelivranceCSPourCompositionApiPACSNonInscrit,
-  estSeulementActeMariage
+  estSeulementActeMariage,
+  ICreateReponseSansDelivranceCSPourCompositionApiMariageParams
 } from "../../../../../../common/hook/reponseSansDelivrance/ReponseSansDelivranceCSFonctions";
 import { IgnoreRequetePopin } from "../IgnoreRequetePopin";
 import { IChoixActionDelivranceProps } from "./ChoixAction";
 import {
-  INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE,
   filtrerListeActionsParDocumentDemande,
+  INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE,
   menuSansDelivranceActions
 } from "./MenuUtilsCS";
 
@@ -57,7 +58,7 @@ export const MenuReponseSansDelivranceCS: React.FC<IChoixActionDelivranceProps> 
 
   const [hasMessageBloquant, setHasMessageBloquant] = useState<boolean>(false);
 
-  const handleReponseSansDelivranceCSMenu = async (indexMenu: number) => {
+  const handleReponseSansDelivranceCSMenu = (indexMenu: number) => {
     switch (indexMenu) {
       case INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.REQUETE_INCOMPLETE_ILLISIBLE:
         setOperationEnCours(true);
@@ -84,11 +85,7 @@ export const MenuReponseSansDelivranceCS: React.FC<IChoixActionDelivranceProps> 
           setHasMessageBloquant(true);
         } else {
           setOperationEnCours(true);
-          const newReponseSansDelivranceCSMariage = await createReponseSansDelivranceCSPourCompositionApiMariage(props.requete, actes?.[0]);
-          setReponseSansDelivranceCS({
-            contenu: newReponseSansDelivranceCSMariage,
-            fichier: NOM_DOCUMENT_REFUS_MARIAGE
-          });
+          setReponseSansDelivranceCSParams({ requete: props.requete, acte: actes?.[0] });
         }
         break;
       case INDEX_CHOIX_ACTION_REPONSE_SANS_DELIVRANCE.NATIONALITE_OU_NAISSANCE_FRANCAIS:
@@ -104,6 +101,18 @@ export const MenuReponseSansDelivranceCS: React.FC<IChoixActionDelivranceProps> 
         break;
     }
   };
+
+  const [reponseSansDelivranceCSParams, setReponseSansDelivranceCSParams] =
+    useState<ICreateReponseSansDelivranceCSPourCompositionApiMariageParams>({});
+  const newReponseSansDelivranceCSMariage = CreateReponseSansDelivranceCSPourCompositionApiMariage(reponseSansDelivranceCSParams);
+
+  useEffect(() => {
+    if (newReponseSansDelivranceCSMariage)
+      setReponseSansDelivranceCS({
+        contenu: newReponseSansDelivranceCSMariage,
+        fichier: NOM_DOCUMENT_REFUS_MARIAGE
+      });
+  }, [newReponseSansDelivranceCSMariage]);
 
   const listeActionsFiltreParSousTypes: IActionOption[] = filtrerListeActionsParSousTypes(props.requete, menuSansDelivranceActions);
 

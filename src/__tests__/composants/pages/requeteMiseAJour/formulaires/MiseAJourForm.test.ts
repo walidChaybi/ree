@@ -1,4 +1,4 @@
-import { MOCK_MENTIONS_MISE_A_JOUR } from "@mock/data/etatcivil/mentionMiseAJour";
+import { MOCK_MENTIONS_MISE_A_JOUR } from "@mock/data/etatcivil/acte/mention/mentionMiseAJour";
 import MiseAJourForm from "@model/form/miseAJour/MiseAJourForm";
 import { describe, expect, it } from "vitest";
 import { IAnalyseMarginaleMiseAJour } from "../../../../../composants/pages/requetesMiseAJour/PartieFormulaire";

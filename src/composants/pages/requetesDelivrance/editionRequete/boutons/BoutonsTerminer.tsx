@@ -1,5 +1,5 @@
 import { Droit } from "@model/agent/enum/Droit";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -22,7 +22,7 @@ import { BoutonValiderTerminer } from "./BoutonValiderTerminer";
 
 interface BoutonsTerminerProps {
   requete: IRequeteDelivrance;
-  acte?: IFicheActe;
+  acte?: FicheActe;
 }
 
 export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({ requete, acte }) => {

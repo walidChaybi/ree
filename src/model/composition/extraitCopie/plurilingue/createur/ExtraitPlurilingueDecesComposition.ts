@@ -1,75 +1,41 @@
 import { ITitulaireComposition } from "@model/composition/commun/ITitulaireComposition";
 import { Evenement } from "@model/etatcivil/acte/IEvenement";
-import {
-  ITitulaireActe,
-  TitulaireActe
-} from "@model/etatcivil/acte/ITitulaireActe";
+import { TitulaireActe } from "@model/etatcivil/acte/TitulaireActe";
+import { EValidation } from "@model/requete/enum/EValidation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { Validation } from "@model/requete/enum/Validation";
-import { getValeurOuVide } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
-import { FicheActe, IFicheActe } from "../../../../etatcivil/acte/IFicheActe";
+import { FicheActe } from "../../../../etatcivil/acte/FicheActe";
 import { IExtraitPlurilingueComposition } from "../IExtraitPlurilingueComposition";
 import { ExtraitPlurilingueCommunComposition } from "./ExtraitPlurilingueCommunComposition";
 
 export class ExtraitPlurilingueDecesComposition {
   public static compositionExtraitPlurilingueDeDeces(
-    acte: IFicheActe,
-    validation: Validation,
+    acte: FicheActe,
+    validation: EValidation,
     sousTypeRequete: SousTypeDelivrance,
     mentionsRetirees: string[],
     ctv?: string
   ): IExtraitPlurilingueComposition {
     const composition = {} as IExtraitPlurilingueComposition;
 
-    ExtraitPlurilingueCommunComposition.composerPlurilingue(
-      composition,
-      acte,
-      validation,
-      sousTypeRequete,
-      mentionsRetirees,
-      ctv
-    );
+    ExtraitPlurilingueCommunComposition.composerPlurilingue(composition, acte, validation, sousTypeRequete, mentionsRetirees, ctv);
 
-    composition.titulaire_1 =
-      this.mappingTitulaireExtraitPlurilingueDecesComposition(
-        acte,
-        FicheActe.getTitulairesActeDansLOrdre(acte).titulaireActe1
-      );
+    composition.titulaire_1 = this.mappingTitulaireExtraitPlurilingueDecesComposition(acte, acte.titulaires[0]);
 
     return composition;
   }
 
-  public static mappingTitulaireExtraitPlurilingueDecesComposition(
-    acte: IFicheActe,
-    titulaire: ITitulaireActe
-  ): ITitulaireComposition {
+  public static mappingTitulaireExtraitPlurilingueDecesComposition(acte: FicheActe, titulaire: TitulaireActe): ITitulaireComposition {
     const compositionTitulaire = {} as ITitulaireComposition;
 
-    ExtraitPlurilingueCommunComposition.composerTitulairePlurilingue(
-      compositionTitulaire,
-      acte,
-      titulaire
-    );
+    ExtraitPlurilingueCommunComposition.composerTitulairePlurilingue(compositionTitulaire, acte, titulaire);
 
-    compositionTitulaire.date_naissance =
-      Evenement.formatageDateCompositionExtraitPlurilingue(titulaire.naissance);
-    compositionTitulaire.lieu_naissance =
-      TitulaireActe.getLieuDeRepriseOuLieuNaissance(
-        titulaire,
-        LieuxUtils.estPaysInconnu(titulaire.naissance?.pays)
-      );
-    compositionTitulaire.nom_dernier_conjoint = getValeurOuVide(
-      titulaire.nomDernierConjoint
-    );
-    compositionTitulaire.prenoms_dernier_conjoint = getValeurOuVide(
-      titulaire.prenomsDernierConjoint
-    );
-    compositionTitulaire.date_deces =
-      Evenement.formatageDateCompositionExtraitPlurilingue(acte.evenement);
-    compositionTitulaire.lieu_deces = Evenement.getLieuDeRepriseOuLieuEvenement(
-      acte.evenement
-    );
+    compositionTitulaire.date_naissance = Evenement.formatageDateCompositionExtraitPlurilingue(titulaire.naissance ?? undefined);
+    compositionTitulaire.lieu_naissance = titulaire.getLieuDeRepriseOuLieuNaissance(LieuxUtils.estPaysInconnu(titulaire.naissance?.pays));
+    compositionTitulaire.nom_dernier_conjoint = titulaire.nomDernierConjoint ?? "";
+    compositionTitulaire.prenoms_dernier_conjoint = titulaire.prenomsDernierConjoint ?? "";
+    compositionTitulaire.date_deces = Evenement.formatageDateCompositionExtraitPlurilingue(acte.evenement ?? undefined);
+    compositionTitulaire.lieu_deces = Evenement.getLieuDeRepriseOuLieuEvenement(acte.evenement ?? undefined);
 
     return compositionTitulaire;
   }

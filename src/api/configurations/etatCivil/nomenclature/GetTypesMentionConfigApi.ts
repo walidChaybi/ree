@@ -1,11 +1,12 @@
 import { ETATCIVIL_API } from "@api/ApiDisponibles";
 import { TConfigurationApi } from "@model/api/Api";
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 
 export interface ITypeMentionDto {
   idTypeMention: string;
   libelleType: string;
   idNatureMention?: string;
-  natureActe: string;
+  natureActe: keyof typeof ENatureActe;
   typeMentionEnfantList?: ITypeMentionDto[];
   affecteAnalyseMarginale: boolean;
   estPresentListeDeroulante: boolean;

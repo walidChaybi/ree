@@ -1,43 +1,42 @@
 import { IElementsJasperCourrier, OptionsJasper } from "@model/composition/ICourrierComposition";
-import { AnalyseMarginale, IAnalyseMarginale } from "@model/etatcivil/acte/IAnalyseMarginale";
-import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { TitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
+import { AnalyseMarginale } from "@model/etatcivil/acte/AnalyseMarginale";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { OptionCourrier, OptionsCourrier } from "@model/requete/IOptionCourrier";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { ITitulaireRequete, TitulaireRequete } from "@model/requete/ITitulaireRequete";
-import { getValeurOuVide, triListeObjetsSurPropriete, UN, ZERO } from "@util/Utils";
+import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
+import { triListeObjetsSurPropriete } from "@util/Utils";
 
-function ajoutInfosTitulaire(elementsJasper: IElementsJasperCourrier, requete: IRequeteDelivrance, acte?: IFicheActe) {
+function ajoutInfosTitulaire(elementsJasper: IElementsJasperCourrier, requete: IRequeteDelivrance, acte?: FicheActe) {
   let titulaires = [];
-  let analyseMarginale: IAnalyseMarginale | undefined;
-  if (acte?.id && acte?.analyseMarginales) {
-    analyseMarginale = AnalyseMarginale.getAnalyseMarginaleLaPlusRecente(acte?.analyseMarginales);
+  let analyseMarginale: AnalyseMarginale | undefined;
+  if (acte?.id && acte?.analysesMarginales) {
+    analyseMarginale = acte.getAnalyseMarginaleLaPlusRecente();
   }
 
   if (analyseMarginale?.titulaires) {
-    elementsJasper.referenceActe = FicheActe.getReference(acte);
+    elementsJasper.referenceActe = acte?.referenceActe ?? "";
 
     titulaires = triListeObjetsSurPropriete([...analyseMarginale.titulaires], "ordre");
 
-    elementsJasper.nomTitulaire1 = TitulaireActe.getNom(titulaires[ZERO]);
-    elementsJasper.prenomsTitulaire1 = getPrenomsTitulaireActe(titulaires[ZERO].prenoms);
+    elementsJasper.nomTitulaire1 = titulaires[0].nom ?? "";
+    elementsJasper.prenomsTitulaire1 = getPrenomsTitulaireActe(titulaires[0].prenoms);
 
-    if (titulaires.length > UN) {
-      elementsJasper.nomTitulaire2 = TitulaireActe.getNom(titulaires[UN]);
-      elementsJasper.prenomsTitulaire2 = getPrenomsTitulaireActe(titulaires[UN].prenoms);
+    if (titulaires.length > 1) {
+      elementsJasper.nomTitulaire2 = titulaires[1].nom ?? "";
+      elementsJasper.prenomsTitulaire2 = getPrenomsTitulaireActe(titulaires[1].prenoms);
     }
   } else if (requete.titulaires) {
-    titulaires = triListeObjetsSurPropriete([...requete.titulaires], "position") as ITitulaireRequete[];
-    elementsJasper.nomTitulaire1 = TitulaireRequete.getNom(titulaires[ZERO]);
-    elementsJasper.prenomsTitulaire1 = getPrenomsTitulaireRequete(titulaires[ZERO].prenoms);
+    titulaires = triListeObjetsSurPropriete([...requete.titulaires], "position");
+    elementsJasper.nomTitulaire1 = TitulaireRequete.getNom(titulaires[0]);
+    elementsJasper.prenomsTitulaire1 = getPrenomsTitulaireRequete(titulaires[0].prenoms);
 
-    if (titulaires.length > UN) {
-      elementsJasper.nomTitulaire2 = TitulaireRequete.getNom(titulaires[UN]);
-      elementsJasper.prenomsTitulaire2 = getPrenomsTitulaireRequete(titulaires[UN].prenoms);
+    if (titulaires.length > 1) {
+      elementsJasper.nomTitulaire2 = TitulaireRequete.getNom(titulaires[1]);
+      elementsJasper.prenomsTitulaire2 = getPrenomsTitulaireRequete(titulaires[1].prenoms);
     }
   }
 }
@@ -93,7 +92,7 @@ function optionOuOptionATiret(tabOptions: OptionsJasper[], option: OptionCourrie
 }
 
 function getTexteOption(option: OptionCourrier) {
-  return option.texteOptionCourrierModifie ? option.texteOptionCourrierModifie : option.texteOptionCourrier;
+  return option.texteOptionCourrierModifie ?? option.texteOptionCourrier;
 }
 
 const TEXTE_VARIABLE_RDD = `Le document d’état civil joint est délivré sur support électronique conformément à l’ordonnance n° 2019-724 du 10 juillet 2019 \
@@ -125,11 +124,11 @@ function ajoutTexteVariable(elementsJasper: IElementsJasperCourrier, sousTypeReq
 
 /////////////////////////////////////////////////////////////////////
 class SpecificationCourrier {
-  getElementsJasper(saisieCourrier: SaisieCourrier, requete: IRequeteDelivrance, optionsChoisies?: OptionsCourrier, acte?: IFicheActe) {
+  getElementsJasper(saisieCourrier: SaisieCourrier, requete: IRequeteDelivrance, optionsChoisies?: OptionsCourrier, acte?: FicheActe) {
     const elementsJasper = {} as IElementsJasperCourrier;
 
     if (requete && saisieCourrier) {
-      elementsJasper.natureActe = getValeurOuVide(requete.evenement?.natureActe.libelle).toLowerCase();
+      elementsJasper.natureActe = (requete.evenement?.natureActe.libelle ?? "").toLowerCase();
       ajoutInfosTitulaire(elementsJasper, requete, acte);
       ajoutOptions(elementsJasper, optionsChoisies);
       elementsJasper.texteLibre = saisieCourrier.texteLibre.texte;

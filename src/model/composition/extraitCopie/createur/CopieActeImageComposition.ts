@@ -1,16 +1,16 @@
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { IFicheActe } from "../../../etatcivil/acte/IFicheActe";
+import { FicheActe } from "../../../etatcivil/acte/FicheActe";
 import { ICorpsImage } from "../../../etatcivil/acte/imageActe/ICorpsImage";
 import { IRequeteDelivrance } from "../../../requete/IRequeteDelivrance";
-import { Validation } from "../../../requete/enum/Validation";
+import { EValidation } from "../../../requete/enum/EValidation";
 import { IExtraitCopieComposition } from "../IExtraitCopieComposition";
 import { CommunExtraitOuCopieActeTexteComposition } from "./CommunExtraitOuCopieActeTexteComposition";
 
 interface ICreerExtraitCopieActeImageParams {
-  acte: IFicheActe;
+  acte: FicheActe;
   natureActe: string;
   requete: IRequeteDelivrance;
-  validation: Validation;
+  validation: EValidation;
   choixDelivrance: ChoixDelivrance;
   corpsImage?: ICorpsImage;
   erreur?: string;
@@ -46,13 +46,7 @@ export class CopieActeImageComposition {
       params.validation
     );
 
-    CommunExtraitOuCopieActeTexteComposition.creerBlocNotice(
-      composition,
-      params.choixDelivrance,
-      params.requete.sousType,
-      params.acte.nature,
-      params.validation
-    );
+    CommunExtraitOuCopieActeTexteComposition.creerBlocNotice(composition, params.choixDelivrance, params.requete.sousType);
 
     return composition;
   }

@@ -1,9 +1,14 @@
-/* istanbul ignore file */
-
 import { EnumWithComplete } from "@util/enum/EnumWithComplete";
 import { EnumWithLibelle } from "@util/enum/EnumWithLibelle";
 import { Options } from "@util/Type";
 
+export enum ENationalite {
+  FRANCAISE = "Française",
+  ETRANGERE = "Étrangère",
+  INCONNUE = "Non renseignée"
+}
+
+/** @deprecated à remplacer par ENationalite */
 export class Nationalite extends EnumWithComplete {
   public static readonly FRANCAISE = new Nationalite("FRANCAISE", "Française");
   public static readonly ETRANGERE = new Nationalite("ETRANGERE", "Étrangère");
@@ -20,10 +25,4 @@ export class Nationalite extends EnumWithComplete {
   public static getKey(obj: Nationalite) {
     return EnumWithLibelle.getKey(Nationalite, obj);
   }
-}
-
-export enum ENationalite {
-  FRANCAISE = "Française",
-  ETRANGERE = "Étrangère",
-  INCONNUE = "Non renseignée"
 }

@@ -1,10 +1,10 @@
 import { nettoyerAttributsDto } from "@model/commun/dtoUtils";
-import { IEvenement } from "@model/etatcivil/acte/IEvenement";
-import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { IFiliation } from "@model/etatcivil/acte/IFiliation";
-import { ITitulaireActe, TitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
+import { Filiation } from "@model/etatcivil/acte/Filiation";
+import { IEvenementDto } from "@model/etatcivil/acte/IEvenement";
+import { TitulaireActe } from "@model/etatcivil/acte/TitulaireActe";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
@@ -15,7 +15,7 @@ import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { mapPrenomsVersPrenomsOrdonnes } from "@util/Utils";
 
-export const mappingActeVersRequeteDelivrance = (acte: IFicheActe, numeroFonctionnel?: string): IRequeteDelivrance => {
+export const mappingActeVersRequeteDelivrance = (acte: FicheActe, numeroFonctionnel?: string): IRequeteDelivrance => {
   const requete = {
     type: TypeRequete.DELIVRANCE.nom,
     sousType: SousTypeDelivrance.RDD.nom,
@@ -27,8 +27,8 @@ export const mappingActeVersRequeteDelivrance = (acte: IFicheActe, numeroFonctio
     documentDemande: DocumentDelivrance.getCopieIntegraleUUID(),
     motif: MotifDelivrance.getKey(MotifDelivrance.AUTRE),
     nombreExemplairesDemandes: 1,
-    evenement: getEvenement(acte.nature, acte.evenement),
-    titulaires: getTitulaires(FicheActe.getTitulairesActeTabDansLOrdre(acte)),
+    evenement: acte.evenement ? getEvenement(acte.nature, acte.evenement) : undefined,
+    titulaires: getTitulaires(acte.titulaires),
     requerant: null,
     lienRequerant: {
       typeLienRequerant: "AUTRE",
@@ -39,22 +39,18 @@ export const mappingActeVersRequeteDelivrance = (acte: IFicheActe, numeroFonctio
   return nettoyerAttributsDto(requete);
 };
 
-const getEvenement = (natureActe: NatureActe, evenement?: IEvenement) => {
-  return evenement
-    ? {
-        natureActe: NatureActe.getKey(natureActe),
-        jour: evenement.jour,
-        mois: evenement.mois,
-        annee: evenement.annee,
-        ville: evenement.ville,
-        pays: evenement.pays
-      }
-    : undefined;
-};
+const getEvenement = (natureActe: keyof typeof ENatureActe, evenement: IEvenementDto) => ({
+  natureActe: natureActe,
+  jour: evenement.jour,
+  mois: evenement.mois,
+  annee: evenement.annee,
+  ville: evenement.ville,
+  pays: evenement.pays
+});
 
-const getTitulaires = (titulaires: ITitulaireActe[]) => titulaires.map((titulaire, index) => getTitulaire(titulaire, index + 1));
+const getTitulaires = (titulaires: TitulaireActe[]) => titulaires.map((titulaire, index) => getTitulaire(titulaire, index + 1));
 
-const getTitulaire = (titulaire: ITitulaireActe, position: number) => {
+const getTitulaire = (titulaire: TitulaireActe, position: number) => {
   const { nom: nomNaissance, prenoms, naissance, sexe } = titulaire;
 
   return {
@@ -66,15 +62,15 @@ const getTitulaire = (titulaire: ITitulaireActe, position: number) => {
     anneeNaissance: naissance?.annee,
     villeNaissance: naissance?.ville,
     paysNaissance: naissance?.pays,
-    sexe: sexe ? Sexe.getKey(sexe) : Sexe.getKey(Sexe.INCONNU),
+    sexe: sexe ?? Sexe.getKey(Sexe.INCONNU),
     nationalite: Nationalite.getKey(Nationalite.ETRANGERE),
-    parentsTitulaire: getParents(TitulaireActe.getParentsDirects(titulaire))
+    parentsTitulaire: getParents(titulaire.filiations.filter(filiation => filiation.lienParente === "PARENT"))
   };
 };
 
-const getParents = (filiations: IFiliation[]) => filiations.map((filiation, index) => getParent(filiation, index + 1));
+const getParents = (filiations: Filiation[]) => filiations.map((filiation, index) => getParent(filiation, index + 1));
 
-const getParent = (filiation: IFiliation, position: number) => {
+const getParent = (filiation: Filiation, position: number) => {
   const { nom: nomNaissance, prenoms } = filiation;
   return {
     position,

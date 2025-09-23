@@ -1,11 +1,11 @@
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { INatureMention } from "@model/etatcivil/enum/NatureMention";
 import { DocumentReponse, IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { estNonRenseigne, shallowEgalTableau } from "@util/Utils";
+import { shallowEgalTableau, triListeObjetsSurPropriete } from "@util/Utils";
 import { gestionnaireRenumerotationMentions } from "@utilMetier/mention/GestionnaireRenumerotationMentions";
-import { IMention, Mention } from "./IMention";
 import { ITypeMention, TypeMention } from "./ITypeMention";
+import { filtrerFormaterEtTrierMentionsPlurilingues, Mention } from "./Mention";
 
 export interface IMentionAffichage {
   texte: string;
@@ -18,7 +18,7 @@ export interface IMentionAffichage {
   nouveau?: boolean;
 }
 
-export const mappingVersMentionsApi = (mentionsApi: IMention[], mentionsAffichage: IMentionAffichage[], typeDocument: string) => {
+export const mappingVersMentionsApi = (mentionsApi: Mention[], mentionsAffichage: IMentionAffichage[], typeDocument: string) => {
   const mentionsRetirees: string[] = [];
   const mentionsAEnvoyer: any[] = [];
   const mentionsRenumerotees = gestionnaireRenumerotationMentions.renumerotationMentions(mentionsAffichage, mentionsApi, typeDocument);
@@ -59,18 +59,18 @@ export const mappingVersMentionsApi = (mentionsApi: IMention[], mentionsAffichag
 
 export const modificationEffectuee = (
   mentions?: IMentionAffichage[],
-  mentionsApi?: IMention[],
+  mentionsApi?: Mention[],
   document?: IDocumentReponse,
-  natureActe?: NatureActe
+  natureActe?: keyof typeof ENatureActe
 ): boolean =>
   Boolean(
     mentions && mentionsApi && document && !shallowEgalTableau(mentions, mappingVersMentionAffichage(mentionsApi, document, natureActe))
   );
 
 export const mappingVersMentionAffichage = (
-  mentionsApi: IMention[],
+  mentionsApi: Mention[],
   documentReponse: IDocumentReponse,
-  natureActe?: NatureActe
+  natureActe?: keyof typeof ENatureActe
 ): IMentionAffichage[] => {
   switch (DocumentDelivrance.depuisId(documentReponse.typeDocument)?.code) {
     case ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE:
@@ -86,48 +86,50 @@ export const mappingVersMentionAffichage = (
 };
 
 const mappingVersMentionAffichagePourExtraitAvecOuSansFiliation = (
-  mentionsApi: IMention[],
+  mentionsApi: Mention[],
   document: IDocumentReponse
 ): IMentionAffichage[] => {
-  const mentions = Mention.filtreAvecTexteMentionEtTexteMentionDelivrance(mentionsApi);
+  const mentions = mentionsApi.filter(mention => mention.textes?.texteMention ?? mention.textes?.texteMentionDelivrance);
 
-  Mention.trierMentionsNumeroOrdreExtraitOuOrdreApposition(mentions);
+  const mentionsTriees = mentions.every(mention => mention.numeroOrdreExtrait !== null)
+    ? triListeObjetsSurPropriete(mentions, "numeroOrdreExtrait")
+    : triListeObjetsSurPropriete(mentions, "numeroOrdre");
 
-  return mentions.map((mentionApi: IMention) => ({
+  return mentionsTriees.map(mentionApi => ({
     nature: mentionApi.typeMention.natureMention,
-    texte: Mention.getTexteExtrait(mentionApi),
+    texte: mentionApi.getTexteExtrait(),
     estPresent: !DocumentReponse.estMentionRetiree(document, mentionApi),
     id: mentionApi.id,
-    numeroOrdre: mentionApi.numeroOrdreExtrait,
-    estSupprimable: estNonRenseigne(mentionApi.textes.texteMention),
+    numeroOrdre: mentionApi.numeroOrdreExtrait!, // TOREFACTOR: supprimer le point d'exclamation
+    estSupprimable: !mentionApi.textes.texteMention,
     estModifiable: false
   }));
 };
 
 const mappingVersMentionAffichagePourExtraitPlurilingue = (
-  mentionsApi: IMention[],
+  mentionsApi: Mention[],
   document: IDocumentReponse,
-  natureActe?: NatureActe
+  natureActe?: keyof typeof ENatureActe
 ): IMentionAffichage[] => {
-  const mentions = Mention.filtrerFormaterEtTrierMentionsPlurilingues(mentionsApi, natureActe);
+  const mentions = filtrerFormaterEtTrierMentionsPlurilingues(mentionsApi, natureActe);
 
-  return mentions.map((mentionApi: IMention) => ({
+  return mentions.map(mentionApi => ({
     nature: mentionApi.typeMention.natureMention,
     texte: mentionApi.textes.texteMentionPlurilingue ?? "",
     estPresent: !DocumentReponse.estMentionRetiree(document, mentionApi),
     id: mentionApi.id,
-    numeroOrdre: mentionApi.numeroOrdreExtrait,
-    estSupprimable: estNonRenseigne(mentionApi.textes.texteMention),
+    numeroOrdre: mentionApi.numeroOrdreExtrait!, // TOREFACTOR: supprimer le point d'exclamation
+    estSupprimable: !mentionApi.textes.texteMention,
     estModifiable: false
   }));
 };
 
-const mappingVersMentionAffichagePourCopieIntegrale = (mentionsApi: IMention[], document: IDocumentReponse): IMentionAffichage[] => {
-  const mentions = Mention.trierMentionsNumeroOrdreApposition([...mentionsApi]);
+const mappingVersMentionAffichagePourCopieIntegrale = (mentionsApi: Mention[], document: IDocumentReponse): IMentionAffichage[] => {
+  const mentions = triListeObjetsSurPropriete(mentionsApi, "numeroOrdre");
 
-  return mentions.map((mentionApi: IMention) => ({
+  return mentions.map(mentionApi => ({
     nature: mentionApi.typeMention.natureMention,
-    texte: Mention.getTexteCopie(mentionApi),
+    texte: mentionApi.getTexteCopie(),
     estPresent: !DocumentReponse.estMentionRetiree(document, mentionApi),
     id: mentionApi.id,
     numeroOrdre: mentionApi.numeroOrdre,

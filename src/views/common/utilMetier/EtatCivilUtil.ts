@@ -1,5 +1,5 @@
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
-import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { ESexe } from "@model/etatcivil/enum/Sexe";
 import DateUtils, { IDateCompose } from "@util/DateUtils";
 import { ABSENCE_VALIDEE, formatNom, formatPrenoms, getValeurOuVide } from "@util/Utils";
 
@@ -16,24 +16,20 @@ export class EtatCivilUtil {
     return EtatCivilUtil.formatLeOuEn(date?.jour);
   }
 
-  public static formatNeOuNee(sexe?: Sexe) {
-    return sexe === Sexe.FEMININ ? "née" : "né";
+  public static formatNeOuNee(sexe?: keyof typeof ESexe) {
+    return sexe === "FEMININ" ? "née" : "né";
   }
 
-  public static formatAgeOuAgee(sexe?: Sexe) {
-    return sexe === Sexe.FEMININ ? "agée" : "agé";
+  public static formatAgeOuAgee(sexe?: keyof typeof ESexe) {
+    return sexe === "FEMININ" ? "agée" : "agé";
   }
 
-  public static formatFilsOuFille(sexe: Sexe) {
-    return sexe === Sexe.FEMININ ? "fille de" : Sexe.MASCULIN ? "fils de" : "de";
+  public static formatGenreDetermineOuNon(sexe?: keyof typeof ESexe) {
+    return sexe && ["FEMININ", "MASCULIN"].includes(sexe) ? "du" : "de";
   }
 
-  public static formatGenreDetermineOuNon(sexe?: Sexe) {
-    return sexe === Sexe.FEMININ || Sexe.MASCULIN ? "du" : "de";
-  }
-
-  public static formatFilsOuFilleAdoptant(sexe?: Sexe) {
-    return sexe === Sexe.FEMININ ? "adoptée par" : "adopté par";
+  public static formatFilsOuFilleAdoptant(sexe?: keyof typeof ESexe) {
+    return sexe === "FEMININ" ? "adoptée par" : "adopté par";
   }
 
   public static formatDateEvenement(evenement?: IEvenement) {
@@ -45,18 +41,18 @@ export class EtatCivilUtil {
   }
 
   public static formatHeureEvenement(evenement?: IEvenement) {
-    return getValeurOuVide(DateUtils.formatAHeureExtrait(evenement?.heure, evenement?.minute));
+    return DateUtils.formatAHeureExtrait(evenement?.heure, evenement?.minute) ?? "";
   }
 
   public static getPrenomsOuVide(prenoms?: string[]) {
     return formatPrenoms(prenoms, "", false);
   }
 
-  public static getNomOuVide(nom?: string) {
+  public static getNomOuVide(nom: string | null) {
     return formatNom(nom, "", false);
   }
 
-  public static formatPartiesNomOuVide(nomPartie1?: string, nomPartie2?: string) {
+  public static formatPartiesNomOuVide(nomPartie1: string | null, nomPartie2: string | null) {
     return nomPartie1 && nomPartie1 !== ABSENCE_VALIDEE && nomPartie2 ? `(1re partie : ${nomPartie1}  2nde partie : ${nomPartie2})` : "";
   }
 

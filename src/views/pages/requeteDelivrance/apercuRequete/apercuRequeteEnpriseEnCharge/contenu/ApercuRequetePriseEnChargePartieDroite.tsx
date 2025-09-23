@@ -1,8 +1,8 @@
 import { CONFIG_GET_INSCRIPTIONS_RC_DE_LA_PERSONNE } from "@api/configurations/etatCivil/personnes/GetInscriptionsRCDeLaPersonneConfigApi";
 import { AlertesActes } from "@composant/alertesActe/AlertesActes";
 import { IGetAlertesActeApiHookParameters } from "@hook/alertes/GetAlertesActeApiHook";
-import { GetTitulairesActeHookParameters, useGetTitulairesActeApiHook } from "@hook/repertoires/TitulairesActeHook";
-import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
+import { IGetTitulairesActeHookParams, useGetTitulairesActeApiHook } from "@hook/repertoires/TitulairesActeHook";
+import { TitulaireActe } from "@model/etatcivil/acte/TitulaireActe";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IInscriptionRc, mappingInscriptionsRCDepuisFicheRcDto } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -35,10 +35,10 @@ export const ApercuRequetePriseEnChargePartieDroite: React.FC<ApercuRequetePrise
   const [idPersonne, setIdPersonne] = useState<string>("");
 
   /* Etat paramètres d'appel de l'API de récupération des titulaires d'un acte */
-  const [titulairesActeHookParameters, setTitulairesActeHookParameters] = useState<GetTitulairesActeHookParameters>();
+  const [titulairesActeHookParameters, setTitulairesActeHookParameters] = useState<IGetTitulairesActeHookParams>();
 
   /* Titulaires associés aux actes sélectionnés */
-  const [titulairesActe, setTitulairesActe] = useState<Map<string, ITitulaireActe[]>>(new Map([]));
+  const [titulairesActe, setTitulairesActe] = useState<Map<string, TitulaireActe[]>>(new Map([]));
 
   /* Nombre de titulaires associés aux actes sélectionnés */
   const [nbrTitulairesActe, setNbrTitulairesActe] = useState<Map<string, number>>(new Map([]));

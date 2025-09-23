@@ -1,8 +1,8 @@
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { ficheActeNaissance } from "@mock/data/ficheActe";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { RouteObject, createMemoryRouter } from "react-router";
 import { EditionDelivranceContext } from "../../contexts/EditionDelivranceContextProvider";
-import { acte as acteMock } from "../mock/data/ficheEtBandeau/ficheActe";
 import requeteDelivrance from "../mock/data/requeteDelivrance";
 
 export function deepCopie(objet: any) {
@@ -20,14 +20,10 @@ export function createTestingRouter(routes: RouteObject[], initialEntries: strin
   );
 }
 
-export const elementAvecEditionDelivranceContexte = (
-  children: React.ReactElement,
-  requete?: IRequeteDelivrance,
-  acte?: IFicheActe
-): any => {
+export const elementAvecEditionDelivranceContexte = (children: React.ReactElement, requete?: IRequeteDelivrance, acte?: FicheActe): any => {
   const valeursContext = {
     requete: requete ?? requeteDelivrance,
-    acte: acte ?? (acteMock as IFicheActe),
+    acte: acte ?? FicheActe.depuisDto(ficheActeNaissance),
     rechargerRequete: (charger: "les-deux" | "requete" | "acte", apresRechargement?: () => void) => apresRechargement?.()
   };
 

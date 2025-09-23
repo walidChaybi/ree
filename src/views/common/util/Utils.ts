@@ -41,7 +41,10 @@ const triObjetsSurPropriete = (o1: any, o2: any, propertyName: string) => {
   return 0;
 };
 
-export const triListeObjetsSurPropriete = (objets: any[], propriete: string) => {
+export const triListeObjetsSurPropriete = <TElement extends object>(
+  objets: TElement[] | undefined,
+  propriete: keyof TElement extends string ? keyof TElement : never
+): TElement[] => {
   return objets ? objets.sort((o1, o2) => triObjetsSurPropriete(o1, o2, propriete)) : [];
 };
 
@@ -122,7 +125,7 @@ export const remplaceSNP = (nom: string) => {
   return nom;
 };
 
-export const formatNom = (nom?: string, nomParDefaut = SANS_NOM_PATRONYMIQUE, enMajuscules = true): string => {
+export const formatNom = (nom?: string | null, nomParDefaut = SANS_NOM_PATRONYMIQUE, enMajuscules = true): string => {
   switch (nom) {
     case SANS_NOM_PATRONYMIQUE:
       return SANS_NOM_PATRONYMIQUE;
@@ -562,13 +565,18 @@ export const genererArrondissements = (length: number) =>
 
 export const enumVersOptions = <TEnum extends Record<string, string>>(
   enumeration: TEnum,
-  options?: {
+  parametres?: {
     avecOptionVide?: boolean;
     cleDansLibelle?: boolean;
+    clesAExclure?: (keyof TEnum)[];
   }
 ): Option[] => [
-  ...(options?.avecOptionVide ? [OPTION_VIDE] : []),
-  ...Object.entries(enumeration).map(
-    (entree): Option => ({ cle: entree[0], libelle: options?.cleDansLibelle ? `(${entree[0]}) ${entree[1]}` : entree[1] })
-  )
+  ...(parametres?.avecOptionVide ? [OPTION_VIDE] : []),
+  ...Object.entries(enumeration)
+    .map((entree): Option | null =>
+      (parametres?.clesAExclure ?? []).includes(entree[0])
+        ? null
+        : { cle: entree[0], libelle: parametres?.cleDansLibelle ? `(${entree[0]}) ${entree[1]}` : entree[1] }
+    )
+    .filter((option): option is Option => option !== null)
 ];

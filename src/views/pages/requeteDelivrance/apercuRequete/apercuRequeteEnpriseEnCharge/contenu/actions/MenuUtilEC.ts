@@ -1,6 +1,6 @@
 import { reinitialiserOnClick } from "@composant/menuTransfert/MenuTransfertUtil";
-import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
-import { LienParente } from "@model/etatcivil/enum/LienParente";
+import { TitulaireActe } from "@model/etatcivil/acte/TitulaireActe";
+import { ELienParente } from "@model/etatcivil/enum/ELienParente";
 import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { A_NE_PAS_DELIVRER, TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
@@ -50,7 +50,7 @@ type ControleCoherenceType = {
   actes?: ResultatRMCActe[];
   inscriptions?: TResultatRMCInscription[];
   requete?: IRequeteDelivrance;
-  titulairesActeMap?: Map<string, ITitulaireActe[]>;
+  titulairesActeMap?: Map<string, TitulaireActe[]>;
   nbTitulairesActeMap?: Map<string, number>;
   alertesActe?: IAlerte[];
   refs: MutableRefObject<HTMLElement[]>;
@@ -60,7 +60,7 @@ type ControleCoherenceType = {
 type ErreurType = {
   indexMenu: number;
   acte?: ResultatRMCActe;
-  titulaires?: ITitulaireActe[];
+  titulaires?: TitulaireActe[];
 };
 type ErreurResult = {
   enErreur: boolean;
@@ -222,12 +222,12 @@ const aNombreTitulairesIncoherent = (natureActe?: keyof typeof ENatureActe, nbTi
   return false;
 };
 
-const getGenreTitulaireConjointEtParents = (titulairesActe?: ITitulaireActe[]): GenresType =>
+const getGenreTitulaireConjointEtParents = (titulairesActe?: TitulaireActe[]): GenresType =>
   ({
     titulaire: titulairesActe?.[0]?.sexe,
     conjoint: titulairesActe?.[1]?.sexe,
     parents:
-      titulairesActe?.[0]?.filiations?.filter(filiation => filiation.lienParente === LienParente.PARENT).map(parent => parent.sexe) || []
+      titulairesActe?.[0]?.filiations?.filter(filiation => filiation.lienParente === ELienParente.PARENT).map(parent => parent.sexe) || []
   }) as unknown as GenresType;
 
 const aGenreIdentique = (genrePersonneA?: string, genrePersonneB?: string) => {

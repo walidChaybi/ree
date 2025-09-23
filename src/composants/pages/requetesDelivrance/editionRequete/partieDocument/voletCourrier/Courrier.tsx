@@ -1,6 +1,6 @@
 import { ADRESSE, CHOIX_COURRIER, OPTION, REQUERANT } from "@composant/formulaire/ConstantesNomsForm";
 import { ICreerCourrierECParams, useCreerCourrierEC } from "@hook/requete/creerCourrierECHook";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { OptionCourrier, OptionsCourrier } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -41,7 +41,7 @@ import { ECleOngletRequete } from "../../partieActeRequete/PartieActeRequete";
 interface ModificationCourrierProps {
   requete: IRequeteDelivrance;
   idActe?: string;
-  natureActe?: NatureActe;
+  natureActe?: keyof typeof ENatureActe;
   estNouvelEcranCourrier?: boolean;
 }
 

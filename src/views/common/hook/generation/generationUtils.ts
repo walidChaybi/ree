@@ -1,6 +1,6 @@
 import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
 import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
-import { TFiche } from "../repertoires/MappingRepertoires";
+import { TFiche } from "@pages/fiche/FicheUtils";
 
 export const RESULTAT_VIDE = {};
 

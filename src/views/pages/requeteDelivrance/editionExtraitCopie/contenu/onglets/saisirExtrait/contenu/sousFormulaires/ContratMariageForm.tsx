@@ -1,6 +1,6 @@
 import { EXISTENCE, TEXTE } from "@composant/formulaire/ConstantesNomsForm";
-import { ExistenceContratMariage } from "@model/etatcivil/enum/ExistenceContratMariage";
-import { getLibelle, TROIS } from "@util/Utils";
+import EExistenceContratMariage from "@model/etatcivil/enum/EExistenceContratMariage";
+import { enumVersOptions, TROIS } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
@@ -16,12 +16,12 @@ export const ContratMariageForm: React.FC<ContratMariageFormProps> = props => {
     <div className="ContratMariageForm">
       <SelectField
         name={withNamespace(props.nom, EXISTENCE)}
-        label={getLibelle("Contrat de mariage")}
-        options={ExistenceContratMariage.getAllEnumsAsOptions()}
+        label={"Contrat de mariage"}
+        options={enumVersOptions(EExistenceContratMariage)}
       />
       <InputField
         name={withNamespace(props.nom, TEXTE)}
-        label={getLibelle(" ")}
+        label={" "}
         component={"textarea"}
         rows={TROIS}
       />

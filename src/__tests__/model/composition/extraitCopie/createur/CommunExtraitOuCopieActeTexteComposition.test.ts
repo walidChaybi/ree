@@ -1,14 +1,17 @@
+import { NATURE_MENTION } from "@mock/data/NomenclatureNatureMention";
 import { PARAMETRE_BASE_REQUETE } from "@mock/data/NomenclatureParametresBaseRequete";
+import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
 import { CommunExtraitOuCopieActeTexteComposition } from "@model/composition/extraitCopie/createur/CommunExtraitOuCopieActeTexteComposition";
 import { IExtraitCopieComposition } from "@model/composition/extraitCopie/IExtraitCopieComposition";
-import { IMention } from "@model/etatcivil/acte/mention/IMention";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { INatureMention } from "@model/etatcivil/enum/NatureMention";
+import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
+import { IMentionDto, Mention } from "@model/etatcivil/acte/mention/Mention";
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
+import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { LIBELLE_FONCTION_AGENT_1 } from "@model/parametres/clesParametres";
 import { ParametreBaseRequete } from "@model/parametres/enum/ParametresBaseRequete";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { EValidation } from "@model/requete/enum/EValidation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { Validation } from "@model/requete/enum/Validation";
 import { describe, expect, test } from "vitest";
 
 describe("Test CommunExtraitOuCopieActeTexteComposition", () => {
@@ -17,7 +20,7 @@ describe("Test CommunExtraitOuCopieActeTexteComposition", () => {
     const composition = {} as IExtraitCopieComposition;
     let choixDelivrance = ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE;
     let sousType = SousTypeDelivrance.RDD;
-    let natureActe = NatureActe.ADOPTION;
+    let natureActe: keyof typeof ENatureActe = "ADOPTION";
 
     CommunExtraitOuCopieActeTexteComposition.creerFormuleSignatureDelivrance(composition, choixDelivrance, sousType, natureActe);
     expect(composition.formule_signature_delivrance).toBe(CommunExtraitOuCopieActeTexteComposition.FORMULE_SIGNATURE_DELIVRANCE[0]);
@@ -31,7 +34,7 @@ describe("Test CommunExtraitOuCopieActeTexteComposition", () => {
     expect(composition.formule_signature_delivrance).toBe(CommunExtraitOuCopieActeTexteComposition.FORMULE_SIGNATURE_DELIVRANCE[1]);
 
     choixDelivrance = ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION;
-    natureActe = NatureActe.ADOPTION_SIMPLE;
+    natureActe = "ADOPTION_SIMPLE";
     CommunExtraitOuCopieActeTexteComposition.creerFormuleSignatureDelivrance(composition, choixDelivrance, sousType, natureActe);
     expect(composition.formule_signature_delivrance).toBe(CommunExtraitOuCopieActeTexteComposition.FORMULE_SIGNATURE_DELIVRANCE[3]);
 
@@ -44,19 +47,19 @@ describe("Test CommunExtraitOuCopieActeTexteComposition", () => {
     const composition = {} as IExtraitCopieComposition;
     let choixDelivrance = ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE;
     let sousType = SousTypeDelivrance.RDD;
-    let natureActe = NatureActe.ADOPTION;
-    let validation = Validation.O;
+    let natureActe: keyof typeof ENatureActe = "ADOPTION";
+    let validation = EValidation.O;
 
     CommunExtraitOuCopieActeTexteComposition.creerBlocSignature(composition, choixDelivrance, sousType, natureActe, validation);
     expect(composition.pas_de_bloc_signature).toBeFalsy();
     expect(composition.cachet_signature).toBe(ParametreBaseRequete.depuisCle(LIBELLE_FONCTION_AGENT_1)?.libelle);
 
-    validation = Validation.E;
+    validation = EValidation.E;
     CommunExtraitOuCopieActeTexteComposition.creerBlocSignature(composition, choixDelivrance, sousType, natureActe, validation);
     expect(composition.pas_de_bloc_signature).toBeTruthy();
 
     sousType = SousTypeDelivrance.RDDP;
-    validation = Validation.O;
+    validation = EValidation.O;
     CommunExtraitOuCopieActeTexteComposition.creerBlocSignature(composition, choixDelivrance, sousType, natureActe, validation);
     expect(composition.pas_de_signature).toBeTruthy();
     expect(composition.pas_de_nomPrenomAgent).toBeTruthy();
@@ -68,18 +71,18 @@ describe("Test CommunExtraitOuCopieActeTexteComposition", () => {
   });
 
   test("Atttendu: getTexteMentions fonctionne correctement", () => {
-    const opposableAuTiers: INatureMention = {
-      opposableAuTiers: true
-    } as INatureMention;
-    const nonOpposableAuTiers: INatureMention = {
-      opposableAuTiers: false
-    } as INatureMention;
-    const mention1 = {
+    NatureMention.init(NATURE_MENTION);
+    TypeMention.init(TYPE_MENTION);
+
+    const idTypeMentionAvecNatureOpposableAuTiers = "eac6d665-ef10-4ed0-b617-e4b507f947d7";
+    const idTypeMentionAvecNatureNonOpposableAuTiers = "b04b3fd5-98fe-4ad4-b32b-951dcccce4c3";
+
+    const mention1: IMentionDto = {
       id: "1",
       numeroOrdre: 1,
       numeroOrdreExtrait: 1,
       typeMention: {
-        natureMention: opposableAuTiers
+        idTypeMention: idTypeMentionAvecNatureOpposableAuTiers
       },
       textes: {
         texteApposition: "texteApposition",
@@ -87,13 +90,14 @@ describe("Test CommunExtraitOuCopieActeTexteComposition", () => {
         texteMention: "texteMention",
         texteMentionPlurilingue: ""
       }
-    } as IMention;
-    const mention2 = {
+    };
+    const mention2: IMentionDto = {
+      ...mention1,
       id: "2",
       numeroOrdre: 2,
       numeroOrdreExtrait: 2,
       typeMention: {
-        natureMention: opposableAuTiers
+        idTypeMention: idTypeMentionAvecNatureOpposableAuTiers
       },
       textes: {
         texteApposition: "texteApposition2",
@@ -101,13 +105,14 @@ describe("Test CommunExtraitOuCopieActeTexteComposition", () => {
         texteMention: "texteMention2",
         texteMentionPlurilingue: ""
       }
-    } as IMention;
-    const mention3 = {
+    };
+    const mention3: IMentionDto = {
+      ...mention1,
       id: "3",
       numeroOrdre: 3,
       numeroOrdreExtrait: 3,
       typeMention: {
-        natureMention: nonOpposableAuTiers
+        idTypeMention: idTypeMentionAvecNatureNonOpposableAuTiers
       },
       textes: {
         texteApposition: "texteApposition3",
@@ -115,13 +120,14 @@ describe("Test CommunExtraitOuCopieActeTexteComposition", () => {
         texteMention: "texteMention3",
         texteMentionPlurilingue: ""
       }
-    } as IMention;
-    const mention4 = {
+    };
+    const mention4: IMentionDto = {
+      ...mention1,
       id: "4",
       numeroOrdre: 4,
       numeroOrdreExtrait: 4,
       typeMention: {
-        natureMention: opposableAuTiers
+        idTypeMention: idTypeMentionAvecNatureOpposableAuTiers
       },
       textes: {
         texteApposition: undefined,
@@ -129,9 +135,11 @@ describe("Test CommunExtraitOuCopieActeTexteComposition", () => {
         texteMention: "texteMention4",
         texteMentionPlurilingue: ""
       }
-    } as IMention;
+    };
 
-    const mentions = [mention3, mention4, mention2, mention1];
+    const mentions = [mention3, mention4, mention2, mention1]
+      .map(Mention.depuisDto)
+      .filter((mention): mention is Mention => mention !== null);
     const texteMentions = CommunExtraitOuCopieActeTexteComposition.getTexteMentions(mentions, false, ["1"]);
     expect(texteMentions).toEqual(["texteMention2", "texteMention3", "texteMention4"]);
   });

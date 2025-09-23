@@ -5,13 +5,10 @@ import { IFicheRcDto, IFicheRcaDto } from "@model/etatcivil/rcrca/FicheRcRca";
 
 const URI = "/repertoirecivil/:typeFiche/:idFiche";
 
-export const CONFIG_GET_INFORMATIONS_FICHES_REPERTOIRE: TConfigurationApi<
-  typeof URI,
-  undefined,
-  undefined,
-  IFicheRcDto | IFicheRcaDto | IFichePacsDto
-> = {
-  api: ETATCIVIL_API,
-  methode: "GET",
-  uri: URI
-};
+export const CONFIG_GET_FICHE_INSCRIPTION: TConfigurationApi<typeof URI, undefined, undefined, IFicheRcDto | IFicheRcaDto | IFichePacsDto> =
+  {
+    api: ETATCIVIL_API,
+    methode: "GET",
+    uri: URI,
+    avecAxios: true
+  };

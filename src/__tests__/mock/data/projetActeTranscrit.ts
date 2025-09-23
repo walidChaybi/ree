@@ -5,9 +5,9 @@ import {
   IProjetActeTranscritPostDto,
   ProjetActeTranscrit
 } from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
+import { ELienParente } from "@model/etatcivil/enum/ELienParente";
 import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
 import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
-import { LienParente } from "@model/etatcivil/enum/LienParente";
 
 export const projetActeNaissanceDto: IProjetActeTranscritDto = {
   id: "6190b304-18dc-43e5-a53a-02612dbadeae",
@@ -73,7 +73,7 @@ export const projetActeNaissanceDto: IProjetActeTranscritDto = {
             ville: "Nantes"
           },
           domicileCommun: false,
-          lienParente: LienParente.PARENT,
+          lienParente: ELienParente.PARENT,
           ordre: 1,
           profession: "Banquier",
           sansProfession: true
@@ -185,7 +185,7 @@ export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
             voie: "11 place du boulodrôme",
             prepositionLieu: "A"
           },
-          lienParente: LienParente.PARENT,
+          lienParente: ELienParente.PARENT,
           naissance: {
             annee: 2000,
             arrondissement: undefined,
@@ -211,7 +211,7 @@ export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
           age: 34,
           domicile: undefined,
           domicileCommun: true,
-          lienParente: LienParente.PARENT,
+          lienParente: ELienParente.PARENT,
           naissance: {
             annee: 1966,
             departement: "loire atlantique",
@@ -320,7 +320,7 @@ export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
             prepositionLieu: "A"
           },
           domicileCommun: undefined,
-          lienParente: LienParente.PARENT,
+          lienParente: ELienParente.PARENT,
           naissance: {
             annee: 2000,
             departement: undefined,
@@ -345,7 +345,7 @@ export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
           age: 34,
           domicile: undefined,
           domicileCommun: true,
-          lienParente: LienParente.PARENT,
+          lienParente: ELienParente.PARENT,
           naissance: {
             annee: 1966,
             departement: "loire atlantique",

@@ -1,18 +1,15 @@
-import { CONFIG_PUT_ANALYSE_MARGINALE_ET_MENTIONS } from "@api/configurations/etatCivil/PutAnalyseMarginaleEtMentionsConfigApi";
-import { CONFIG_PUT_MISE_A_JOUR_ANALYSE_MARGINALE } from "@api/configurations/etatCivil/PutMiseAJourAnalyseMarginaleConfigApi";
-import { TErreurApi } from "@model/api/Api";
-import AnalyseMarginaleForm from "@model/form/AnalyseMarginale/AnalyseMarginaleForm";
-import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
-import { TPrenomsForm } from "@model/form/commun/PrenomsForm";
-
 import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
-
 import CONFIG_GET_TYPES_MENTION_INTEGRATION_RECE, {
   ITypeMentionIntegrationDto
 } from "@api/configurations/etatCivil/nomenclature/GetTypesMentionIntegrationRECEApi";
-import { mapActe } from "@hook/repertoires/MappingRepertoires";
+import { CONFIG_PUT_ANALYSE_MARGINALE_ET_MENTIONS } from "@api/configurations/etatCivil/PutAnalyseMarginaleEtMentionsConfigApi";
+import { CONFIG_PUT_MISE_A_JOUR_ANALYSE_MARGINALE } from "@api/configurations/etatCivil/PutMiseAJourAnalyseMarginaleConfigApi";
 import { Droit } from "@model/agent/enum/Droit";
-import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { TErreurApi } from "@model/api/Api";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
+import AnalyseMarginaleForm from "@model/form/AnalyseMarginale/AnalyseMarginaleForm";
+import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
+import { TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import MiseAJourForm from "@model/form/miseAJour/MiseAJourForm";
 import { estActeEligibleMentionDIntegration } from "@pages/fiche/FichePage";
 import { Formik } from "formik";
@@ -80,7 +77,6 @@ const PartieFormulaire: React.FC = () => {
   );
   const [afficherAnalyseMarginale, setAfficherAnalyseMarginale] = useState(!estMiseAJourAvecMentions);
 
-  const [titulaire, setTitulaire] = useState<IInfoTitulaire | null>(null);
   const [formulaireMentionEnCoursDeSaisie, setFormulaireMentionEnCoursDeSaisie] = useState<boolean>(false);
 
   const [afficherModaleAnalyseMarginale, setAfficherModaleAnalyseMarginale] = useState<boolean>(false);
@@ -91,7 +87,7 @@ const PartieFormulaire: React.FC = () => {
   const [mentionEnCoursDeSaisie, setMentionEnCoursDeSaisie] = useState<IMentionEnCours | null>(null);
   const [motif, setMotif] = useState<string | null>(null);
 
-  const [acte, setActe] = useState<IFicheActe | null>(null);
+  const [acte, setActe] = useState<FicheActe | null>(null);
   const { appelApi: appelResumeActe } = useFetchApi(CONFIG_GET_RESUME_ACTE, true);
   const { appelApi: appelTypeMentionsIntegrationRece } = useFetchApi(CONFIG_GET_TYPES_MENTION_INTEGRATION_RECE, true);
   const [valeursInitialesFormulaireAnalyseMarginale, setValeursInitialesFormulaireAnalyseMarginale] =
@@ -228,22 +224,11 @@ const PartieFormulaire: React.FC = () => {
   useEffect(() => {
     appelResumeActe({
       parametres: {
-        path: { idActe: idActe },
+        path: { idActe },
         query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true }
       },
       apresSucces: acteDto => {
-        const acteTransforme = mapActe(acteDto);
-        setActe(acteTransforme);
-
-        const titulaireRep = acteTransforme.titulaires?.[0] || {};
-
-        setTitulaire({
-          nom: titulaireRep.nom ?? "",
-          nomPartie1: titulaireRep.nomPartie1 ?? "",
-          nomPartie2: titulaireRep.nomPartie2 ?? "",
-          nomSecable: Boolean(titulaireRep.nomPartie1 && titulaireRep.nomPartie2),
-          sexe: titulaireRep.sexe ?? null
-        });
+        setActe(FicheActe.depuisDto(acteDto));
       },
       apresErreur: erreurs =>
         AfficherMessage.erreur("Une erreur est survenue lors de la récupération des informations de l'acte", { erreurs })
@@ -253,10 +238,21 @@ const PartieFormulaire: React.FC = () => {
   useEffect(() => {
     if (!acte) return;
 
-    const analyseMarginale = (FicheActe.getAnalyseMarginaleLaPlusRecente(acte) ?? acte)?.titulaires[0];
+    const titulaire = acte.getAnalyseMarginaleLaPlusRecente()?.titulaires[0]?.versTitulaireActe() ?? acte?.titulaires[0];
 
-    setValeursInitialesFormulaireAnalyseMarginale(AnalyseMarginaleForm.genererValeursDefautFormulaire(analyseMarginale, motif));
+    setValeursInitialesFormulaireAnalyseMarginale(AnalyseMarginaleForm.genererValeursDefautFormulaire(titulaire, motif));
   }, [motif, acte]);
+
+  const infoTitulaire: IInfoTitulaire = useMemo(
+    () => ({
+      nom: acte?.titulaires?.[0].nom ?? "",
+      nomPartie1: acte?.titulaires?.[0].nomPartie1 ?? "",
+      nomPartie2: acte?.titulaires?.[0].nomPartie2 ?? "",
+      nomSecable: Boolean(acte?.titulaires?.[0].nomPartie1 && acte?.titulaires?.[0].nomPartie2),
+      sexe: acte?.titulaires?.[0].sexe ?? null
+    }),
+    [acte]
+  );
 
   return (
     <>
@@ -313,13 +309,7 @@ const PartieFormulaire: React.FC = () => {
                 </Form>
               </Formik>
               <MentionForm
-                infoTitulaire={{
-                  nom: titulaire?.nom ?? "",
-                  nomPartie1: titulaire?.nomPartie1 ?? "",
-                  nomPartie2: titulaire?.nomPartie2 ?? "",
-                  nomSecable: titulaire?.nomSecable ?? false,
-                  sexe: titulaire?.sexe ?? null
-                }}
+                infoTitulaire={infoTitulaire}
                 setEnCoursDeSaisie={setFormulaireMentionEnCoursDeSaisie}
                 enCoursDeSaisie={formulaireMentionEnCoursDeSaisie}
                 setMentionEnCoursDeSaisie={setMentionEnCoursDeSaisie}

@@ -14,11 +14,10 @@ import {
   VILLE_NAISSANCE
 } from "@composant/formulaire/ConstantesNomsForm";
 import { IDecretNaturalisation } from "@model/etatcivil/acte/IDecretNaturalisation";
-import { IRegistre } from "@model/etatcivil/acte/IRegistre";
+import { Registre } from "@model/etatcivil/acte/Registre";
 import { IProjetAnalyseMarginale } from "@model/etatcivil/acte/projetActe/IAnalyseMarginaleProjetActe";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { ITitulaireProjetActe } from "@model/etatcivil/acte/projetActe/ITitulaireProjetActe";
-import { TypeFamille } from "@model/etatcivil/enum/TypeFamille";
 import {
   ISaisieAnalyseMarginale,
   ISaisieDate,
@@ -85,17 +84,20 @@ export function getConteneurPieceJustificative(
   );
 }
 
-export const estOuvertRegistrePapier = (decretNaturalisaton?: IDecretNaturalisation | null, registrePapier?: IRegistre): boolean => {
+export const estOuvertRegistrePapier = (
+  decretNaturalisaton: IDecretNaturalisation | null | undefined,
+  registrePapier: Registre | null
+): boolean => {
   let estOuvert = false;
 
   if (decretNaturalisaton && registrePapier) {
     const [support1, annee] = decretNaturalisaton?.numeroDecret.split("/") ?? [undefined, undefined];
     const dateActuelle = DateUtils.getDateActuelle();
     estOuvert =
-      registrePapier.dateOuverture <= dateActuelle &&
-      (registrePapier.dateFermeture ? registrePapier.dateFermeture > dateActuelle : true) &&
-      TypeFamille.estACQ(TypeFamille.getEnumFor(registrePapier.famille)) &&
-      registrePapier.pocopa === "X" &&
+      new Date(registrePapier.dateOuverture.versTimestamp()) <= dateActuelle &&
+      (registrePapier.dateFermeture ? new Date(registrePapier.dateFermeture.versTimestamp()) > dateActuelle : true) &&
+      registrePapier.famille === "ACQ" &&
+      registrePapier.type?.pocopa === "X" &&
       Number(registrePapier.annee) === Number(annee) &&
       registrePapier.support1 === support1;
   }

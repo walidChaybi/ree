@@ -2,73 +2,57 @@ import { CommunExtraitOuCopieActeTexteComposition } from "@model/composition/ext
 import { CopieActeTexteDecesComposition } from "@model/composition/extraitCopie/createur/CopieActeTexteDecesComposition";
 import { ExtraitCopieActeTexteMariageComposition } from "@model/composition/extraitCopie/createur/ExtraitCopieActeTexteMariageComposition";
 import { ExtraitCopieActeTexteNaissanceComposition } from "@model/composition/extraitCopie/createur/ExtraitCopieActeTexteNaissanceComposition";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { Validation } from "@model/requete/enum/Validation";
+import { EValidation } from "@model/requete/enum/EValidation";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { getValeurOuVide } from "@util/Utils";
 
-export const creationCompositionExtraitCopieActeTexte = function (
-  acteComplet: IFicheActe,
+export const creationCompositionExtraitCopieActeTexte = (
+  acteComplet: FicheActe,
   requete: IRequeteDelivrance,
-  validation: Validation,
+  validation: EValidation,
   mentionsRetirees: string[],
   choixDelivranceEC: ChoixDelivrance,
   ctv = "ctv absent"
-) {
-  let composition;
-  const choixDelivrance = getValeurOuVide(choixDelivranceEC);
+) => {
   switch (acteComplet.nature) {
-    case NatureActe.MARIAGE:
-      composition =
-        ExtraitCopieActeTexteMariageComposition.creerExtraitCopieActeTexteMariage(
-          {
-            acte: acteComplet,
-            requete,
-            validation,
-            mentionsRetirees,
-            choixDelivrance,
-            ctv
-          }
-        );
-      break;
-    case NatureActe.DECES:
-      composition = CopieActeTexteDecesComposition.creerCopieActeTexteDeces({
+    case "MARIAGE":
+      return ExtraitCopieActeTexteMariageComposition.creerExtraitCopieActeTexteMariage({
         acte: acteComplet,
         requete,
         validation,
         mentionsRetirees,
-        choixDelivrance,
+        choixDelivrance: choixDelivranceEC,
         ctv
       });
-      break;
-    case NatureActe.NAISSANCE:
-      composition =
-        ExtraitCopieActeTexteNaissanceComposition.creerExtraitCopieActeTexteNaissance(
-          {
-            acte: acteComplet,
-            requete,
-            validation,
-            mentionsRetirees,
-            choixDelivrance,
-            ctv
-          }
-        );
-      break;
+    case "DECES":
+      return CopieActeTexteDecesComposition.creerCopieActeTexteDeces({
+        acte: acteComplet,
+        requete,
+        validation,
+        mentionsRetirees,
+        choixDelivrance: choixDelivranceEC,
+        ctv
+      });
+    case "NAISSANCE":
+      return ExtraitCopieActeTexteNaissanceComposition.creerExtraitCopieActeTexteNaissance({
+        acte: acteComplet,
+        requete,
+        validation,
+        mentionsRetirees,
+        choixDelivrance: choixDelivranceEC,
+        ctv
+      });
     default:
-      composition =
-        CommunExtraitOuCopieActeTexteComposition.creerExtraitCopieActeTexte({
-          acte: acteComplet,
-          natureActe: acteComplet.nature.libelle.toUpperCase(),
-          choixDelivrance,
-          sousTypeRequete: requete.sousType,
-          validation,
-          mentionsRetirees: [],
-          ctv
-        });
-      break;
+      return CommunExtraitOuCopieActeTexteComposition.creerExtraitCopieActeTexte({
+        acte: acteComplet,
+        natureActe: ENatureActe[acteComplet.nature].toUpperCase(),
+        sousTypeRequete: requete.sousType,
+        validation,
+        mentionsRetirees: [],
+        choixDelivrance: choixDelivranceEC,
+        ctv
+      });
   }
-
-  return composition;
 };

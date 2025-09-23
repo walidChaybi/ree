@@ -1,7 +1,5 @@
-import {
-  ITitulaireRequeteMiseAJour,
-  TitulaireRequeteMiseAJour
-} from "@model/requete/ITitulaireRequeteMiseAJour";
+import { ITitulaireActeDto, TitulaireActe } from "@model/etatcivil/acte/TitulaireActe";
+import { ITitulaireRequeteMiseAJour, TitulaireRequeteMiseAJour } from "@model/requete/ITitulaireRequeteMiseAJour";
 import { describe, expect, test } from "vitest";
 
 describe("Tests du model Titulaire d'une requête de mise à jour", () => {
@@ -41,7 +39,7 @@ describe("Tests du model Titulaire d'une requête de mise à jour", () => {
       }
     ];
 
-    const donneesTitulaires = [
+    const donneesTitulaires: ITitulaireActeDto[] = [
       {
         ordre: 0,
         nom: "Test",
@@ -53,8 +51,9 @@ describe("Tests du model Titulaire d'une requête de mise à jour", () => {
           region: "Region",
           pays: "Pays"
         },
-        sexe: { libelle: "Masculin" },
-        prenoms: ["John", "Paul"]
+        sexe: "MASCULIN",
+        prenoms: ["John", "Paul"],
+        filiations: []
       },
       {
         ordre: 1,
@@ -67,13 +66,16 @@ describe("Tests du model Titulaire d'une requête de mise à jour", () => {
           region: "Region2",
           pays: "Pays2"
         },
-        sexe: { libelle: "Féminin" },
-        prenoms: ["Jeanne", "Paulette"]
+        sexe: "FEMININ",
+        prenoms: ["Jeanne", "Paulette"],
+        filiations: []
       }
     ];
 
     expect(
-      TitulaireRequeteMiseAJour.listeDepuisDonneesFiche(donneesTitulaires)
+      TitulaireRequeteMiseAJour.listeDepuisDonneesFiche(
+        donneesTitulaires.map(TitulaireActe.depuisDto).filter((titulaire): titulaire is TitulaireActe => titulaire !== null)
+      )
     ).toStrictEqual(attendu);
   });
 });

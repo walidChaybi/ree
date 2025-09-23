@@ -1,9 +1,9 @@
-import { LienParente } from "@model/etatcivil/enum/LienParente";
+import { ELienParente } from "@model/etatcivil/enum/ELienParente";
 import { IAdresse } from "../IAdresse";
 import { IEvenement } from "../IEvenement";
 
 export interface IFiliationProjetActeTranscrit {
-  lienParente: LienParente;
+  lienParente: ELienParente;
   ordre: number;
   nom: string;
   sexe: string;

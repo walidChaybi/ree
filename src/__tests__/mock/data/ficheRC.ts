@@ -1,3 +1,4 @@
+import { ETypeAutorite } from "@model/etatcivil/enum/TypeAutorite";
 import { IFicheRcDto } from "@model/etatcivil/rcrca/FicheRcRca";
 
 export const mockRcDto = {
@@ -159,7 +160,7 @@ export const mockRcDto = {
   } as IFicheRcDto
 };
 
-export const FicheRcDecisionNotaire = {
+export const FicheRcDecisionNotaire: IFicheRcDto = {
   ...mockRcDto.data,
   id: "135e4dfe-9757-4d5d-8715-359c6e73289b",
   categorie: "RC",
@@ -173,7 +174,7 @@ export const FicheRcDecisionNotaire = {
     dateDecision: [2020, 11, 26],
     type: "ACTE_NOTARIE",
     autorite: {
-      typeAutorite: "NOTAIRE",
+      typeAutorite: ETypeAutorite.NOTAIRE,
       numeroDepartement: "75",
       ville: "paris",
       pays: "France",
@@ -221,17 +222,12 @@ export const FicheRcDecisionNotaire = {
       sexe: "MASCULIN",
       nationalite: "ETRANGERE",
       naissance: {
-        minute: null,
-        heure: null,
         jour: 13,
         mois: 4,
         annee: 1980,
-        voie: null,
         ville: "Barcelone",
-        arrondissement: null,
         region: "Catalogne",
-        pays: "Espagne",
-        lieuReprise: null
+        pays: "Espagne"
       },
       autresNoms: [],
       prenoms: ["Yann"],
@@ -261,4 +257,4 @@ export const FicheRcDecisionNotaire = {
   inscriptionsImpactees: [],
   inscriptionsLiees: [],
   duree: { nombreDuree: 1, uniteDuree: "année", dateFinDeMesure: [2016, 8, 3] }
-} as IFicheRcDto;
+};

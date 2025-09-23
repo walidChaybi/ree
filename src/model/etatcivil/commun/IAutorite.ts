@@ -1,10 +1,10 @@
 import { formatNom, formatPrenom, getValeurOuVide } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
-import { TypeAutorite, TypeAutoriteUtil } from "../enum/TypeAutorite";
+import { ETypeAutorite, TypeAutoriteUtil } from "../enum/TypeAutorite";
 
 // Regroupe les autorités commune, notaire, onac, juridiction, poste
 export interface IAutorite {
-  typeAutorite?: TypeAutorite;
+  typeAutorite?: ETypeAutorite;
   numeroDepartement?: string;
   libelleDepartement?: string;
   ville?: string;
@@ -28,37 +28,24 @@ export const Autorite = {
     return getValeurOuVide(autorite?.ville);
   },
   getDepartement(autorite?: IAutorite): string {
-    return autorite
-      ? LieuxUtils.getDepartement(autorite.libelleDepartement)
-      : "";
+    return autorite ? LieuxUtils.getDepartement(autorite.libelleDepartement) : "";
   },
   getArrondissement(autorite?: IAutorite): string {
-    return autorite
-      ? LieuxUtils.getArrondissement(autorite.ville, autorite.arrondissement)
-      : "";
+    return autorite ? LieuxUtils.getArrondissement(autorite.ville, autorite.arrondissement) : "";
   },
   getRegionDepartement(autorite?: IAutorite): string {
     return autorite
-      ? LieuxUtils.getRegionDepartement(
-          autorite.ville,
-          autorite.libelleDepartement,
-          autorite.numeroDepartement,
-          autorite.region
-        )
+      ? LieuxUtils.getRegionDepartement(autorite.ville, autorite.libelleDepartement, autorite.numeroDepartement, autorite.region)
       : "";
   },
   getPays(autorite?: IAutorite): string {
     return autorite ? getValeurOuVide(autorite.pays) : "";
   },
   isNotaire(autorite?: IAutorite): boolean {
-    return autorite ? autorite.typeAutorite === TypeAutorite.NOTAIRE : false;
+    return autorite ? autorite.typeAutorite === ETypeAutorite.NOTAIRE : false;
   },
   getLibelleNotaire(autorite?: IAutorite): string {
-    return autorite
-      ? `Maître ${formatPrenom(autorite.prenomNotaire)} ${formatNom(
-          autorite.nomNotaire
-        )}`
-      : "";
+    return autorite ? `Maître ${formatPrenom(autorite.prenomNotaire)} ${formatNom(autorite.nomNotaire)}` : "";
   },
   getNumeroCrpcen(autorite?: IAutorite): string {
     return getValeurOuVide(autorite?.numeroCrpcen);

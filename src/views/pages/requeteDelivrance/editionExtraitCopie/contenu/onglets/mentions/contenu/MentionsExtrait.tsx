@@ -1,12 +1,12 @@
-import { IMention, Mention } from "@model/etatcivil/acte/mention/IMention";
 import { IMentionAffichage } from "@model/etatcivil/acte/mention/IMentionAffichage";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { Mention } from "@model/etatcivil/acte/mention/Mention";
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { INatureMention, MARIAGE, NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { Generateur } from "@util/generateur/Generateur";
 import { ListeGlisserDeposer } from "@widget/listeGlisserDeposer/ListeGlisserDeposer";
 import React, { useCallback } from "react";
 import { mappingMentionAffichageVersListeItem } from "../../../../../../../common/mapping/mappingMentions";
-import { handleBlur, handleCheckBox, handleReorga, selectionneEtMiseAJour } from "../GestionMentionsUtil";
+import { getTextePlurilingueAPartirTexte, handleBlur, handleCheckBox, handleReorga, selectionneEtMiseAJour } from "../GestionMentionsUtil";
 import { AjoutMention } from "./AjoutMention";
 import { ModificationMention } from "./ModificationMention";
 
@@ -14,12 +14,12 @@ interface SectionModificationMentionProps {
   estExtraitPlurilingue: boolean;
   mentions: IMentionAffichage[];
   mentionSelect?: IMentionAffichage;
-  mentionsApi?: IMention[];
+  mentionsApi?: Mention[];
   setMentionSelect: any;
   setMentions: any;
   setMentionAjout: any;
   mentionAjout?: IMentionAffichage;
-  natureActe?: NatureActe;
+  natureActe?: keyof typeof ENatureActe;
 }
 
 export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
@@ -48,7 +48,7 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
         const indexMention = mentions?.findIndex(el => el.id === mentionSelect?.id);
         mentionsMiseAJour[indexMention].nature = nature;
         if (estExtraitPlurilingue) {
-          mentionsMiseAJour[indexMention].texte = Mention.getPlurilingueAPartirTexte(nouvelleMention?.texte, nature);
+          mentionsMiseAJour[indexMention].texte = getTextePlurilingueAPartirTexte(nouvelleMention?.texte, nature);
         }
         setMentions(mentionsMiseAJour);
       }
@@ -129,7 +129,7 @@ export const MentionsExtrait: React.FC<SectionModificationMentionProps> = ({
     if (mentionAjout) {
       const futurMentionSelect = { ...mentionAjout };
       if (estExtraitPlurilingue) {
-        mentionAjout.texte = Mention.getPlurilingueAPartirTexte(mentionAjout.texte, mentionAjout.nature);
+        mentionAjout.texte = getTextePlurilingueAPartirTexte(mentionAjout.texte, mentionAjout.nature);
       }
       let nouvellesMentions: IMentionAffichage[] = [];
       if (mentions) {

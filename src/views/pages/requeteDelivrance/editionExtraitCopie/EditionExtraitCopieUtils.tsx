@@ -1,38 +1,31 @@
-import { IActeApiHookResultat } from "@hook/acte/ActeApiHook";
 import { IGenerationECParams } from "@hook/generation/generationECHook/generationECHook";
-import { Mention } from "@model/etatcivil/acte/mention/IMention";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
+import { filtrerFormaterEtTrierMentionsPlurilingues } from "@model/etatcivil/acte/mention/Mention";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { Validation } from "@model/requete/enum/Validation";
+import { EValidation } from "@model/requete/enum/EValidation";
 import { gestionnaireMentionsRetireesAuto } from "@utilMetier/mention/GestionnaireMentionsRetireesAuto";
 
-export const getParamsCreationEC = (
-  typeDocument: string,
-  requete: IRequeteDelivrance,
-  resultatInformationsActeApiHook?: IActeApiHookResultat
-): IGenerationECParams => {
+export const getParamsCreationEC = (typeDocument: string, requete: IRequeteDelivrance, acte: FicheActe | null): IGenerationECParams => {
   const choixDelivrance = DocumentDelivrance.getChoixDelivranceFromUUID(typeDocument);
   const paramsCreationEC: IGenerationECParams = {
     requete,
-    validation: Validation.O,
+    validation: EValidation.O,
     pasDAction: true,
     choixDelivrance,
     mentionsRetirees: []
   };
   if (DocumentDelivrance.estCopieIntegrale(typeDocument)) {
-    paramsCreationEC.idActe = resultatInformationsActeApiHook?.acte?.id;
+    paramsCreationEC.idActe = acte?.id;
   } else {
-    let mentions = resultatInformationsActeApiHook?.acte?.mentions ? resultatInformationsActeApiHook?.acte?.mentions : [];
+    let mentions = acte?.mentions ?? [];
     if (ChoixDelivrance.estPlurilingue(choixDelivrance)) {
-      mentions = Mention.filtrerFormaterEtTrierMentionsPlurilingues(
-        resultatInformationsActeApiHook?.acte?.mentions ? resultatInformationsActeApiHook?.acte?.mentions : [],
-        resultatInformationsActeApiHook?.acte?.nature
-      );
+      mentions = filtrerFormaterEtTrierMentionsPlurilingues(acte?.mentions ?? [], acte?.nature);
     }
-    paramsCreationEC.acte = resultatInformationsActeApiHook?.acte;
+    paramsCreationEC.acte = acte ?? undefined;
     paramsCreationEC.mentionsRetirees.push(
-      ...gestionnaireMentionsRetireesAuto.getIdsMentionsRetirees(mentions, choixDelivrance, resultatInformationsActeApiHook?.acte?.nature)
+      ...gestionnaireMentionsRetireesAuto.getIdsMentionsRetirees(mentions, choixDelivrance, acte?.nature)
     );
   }
   return paramsCreationEC;

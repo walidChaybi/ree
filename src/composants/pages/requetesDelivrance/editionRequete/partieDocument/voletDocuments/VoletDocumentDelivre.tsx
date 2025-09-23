@@ -1,18 +1,18 @@
 import { CONFIG_GET_DOCUMENTS_REPONSE_DELIVRANCE } from "@api/configurations/requete/documentsReponses/GetDocumentsReponseDelivrance";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance, ECodeDocumentDelivrance, IDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { Validation } from "@model/requete/enum/Validation";
+import { EValidation } from "@model/requete/enum/EValidation";
 import { GestionMentions } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentions";
 import { SaisirExtraitForm } from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/saisirExtrait/SaisirExtraitForm";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { EditionDelivranceContext } from "../../../../../../contexts/EditionDelivranceContextProvider";
 import useFetchApi from "../../../../../../hooks/api/FetchApiHook";
 import AffichagePDF from "../../../../../commun/affichageDocument/AffichagePDF";
+import PageChargeur from "../../../../../commun/chargeurs/PageChargeur";
 import OngletsBouton from "../../../../../commun/onglets/OngletsBouton";
 import ConteneurVoletEdition from "../../ConteneurVoletEdition";
 import ModifierCorpsExtrait from "./ModifierCorpsExtrait";
@@ -34,10 +34,10 @@ const aOngletSaisirExtrait = (typeDelivrance: IDocumentDelivrance | null): boole
     (typeDelivrance?.code ?? "") as ECodeDocumentDelivrance
   );
 
-const aOngletMention = (typeDelivrance: IDocumentDelivrance | null, requete: IRequeteDelivrance, acte: IFicheActe | null) => {
+const aOngletMention = (typeDelivrance: IDocumentDelivrance | null, requete: IRequeteDelivrance, acte: FicheActe | null) => {
   switch (typeDelivrance?.code) {
     case ECodeDocumentDelivrance.CODE_EXTRAIT_PLURILINGUE:
-      return acte && [NatureActe.NAISSANCE, NatureActe.MARIAGE].includes(acte.nature);
+      return acte && ["NAISSANCE", "MARIAGE"].includes(acte.nature);
     case ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE:
     case ECodeDocumentDelivrance.CODE_COPIE_NON_SIGNEE:
       return acte?.type === ETypeActe.TEXTE && requete.choixDelivrance !== ChoixDelivrance.DELIVRER_EC_COPIE_ARCHIVE;
@@ -46,10 +46,10 @@ const aOngletMention = (typeDelivrance: IDocumentDelivrance | null, requete: IRe
   }
 };
 
-const aOngletSaisirCorps = (typeDelivrance: IDocumentDelivrance | null, validation: Validation | undefined): boolean =>
+const aOngletSaisirCorps = (typeDelivrance: IDocumentDelivrance | null, validation: EValidation | undefined): boolean =>
   [ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION, ECodeDocumentDelivrance.CODE_EXTRAIT_SANS_FILIATION].includes(
     typeDelivrance?.code as ECodeDocumentDelivrance
-  ) && validation !== Validation.E;
+  ) && validation !== EValidation.E;
 
 const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDelivre, resetOngletActif }) => {
   const idDocumentDelivre = useMemo(() => documentDelivre.id, [documentDelivre]);
@@ -78,7 +78,9 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
     });
   }, [idDocumentDelivre]);
 
-  return (
+  return !acte ? (
+    <PageChargeur />
+  ) : (
     <>
       <OngletsBouton
         onglets={[
@@ -122,7 +124,7 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
         >
           <div className="m-0 overflow-auto text-start">
             <SaisirExtraitForm
-              acte={acte as IFicheActe}
+              acte={acte}
               requete={requete}
               setOngletDocumentDelivre={(nouvelOnglet: ECleOngletDocumentDelivre) => setOngletActif(nouvelOnglet)}
             />
@@ -137,7 +139,7 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
           estSousOnglet
         >
           <GestionMentions
-            acte={acte as IFicheActe}
+            acte={acte ?? undefined}
             document={documentDelivre}
             requete={requete}
             setOngletDocumentDelivre={(nouvelOnglet: ECleOngletDocumentDelivre) => setOngletActif(nouvelOnglet)}

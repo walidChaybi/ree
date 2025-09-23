@@ -1,8 +1,8 @@
 import { projetActe, projetActeNaissancePatchDto, projetActeNaissancePostDto } from "@mock/data/projetActeTranscrit";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
 import { IProjetActeTranscritPostDto } from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
+import { ELienParente } from "@model/etatcivil/enum/ELienParente";
 import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
-import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { PrenomsForm } from "@model/form/commun/PrenomsForm";
 import {
   IProjetActeTranscritForm,
@@ -662,7 +662,7 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
                 prepositionLieu: undefined
               },
               domicileCommun: undefined,
-              lienParente: LienParente.PARENT,
+              lienParente: ELienParente.PARENT,
               naissance: {
                 annee: 1966,
                 departement: undefined,
@@ -694,7 +694,7 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
                 prepositionLieu: undefined
               },
               domicileCommun: undefined,
-              lienParente: LienParente.PARENT,
+              lienParente: ELienParente.PARENT,
               naissance: {
                 annee: 2000,
                 departement: "Loire atlantique",

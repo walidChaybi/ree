@@ -1,5 +1,5 @@
 import { DecisionAnnulation } from "@model/etatcivil/enum/DecisionAnnulation";
-import { TypeAutorite } from "@model/etatcivil/enum/TypeAutorite";
+import { ETypeAutorite } from "@model/etatcivil/enum/TypeAutorite";
 import { IFichePacsDto } from "@model/etatcivil/pacs/FichePacs";
 
 export const pacsModificationNotaire = {
@@ -105,8 +105,8 @@ export const pacsModificationNotaire = {
   errors: []
 };
 
-export const idFichePacs = "89c9d030-26c3-41d3-bdde-8b4dcc0420df";
-export const fichePacs = {
+const idFichePacs = "89c9d030-26c3-41d3-bdde-8b4dcc0420df";
+const fichePacs = {
   data: {
     id: idFichePacs,
     numero: "1234506",
@@ -388,7 +388,7 @@ export const pacsModificationNotaireMap: IFichePacsDto = {
   dateEnregistrementParAutorite: [1970, 1, 19],
   dateInscription: [2020, 12, 1],
   autorite: {
-    typeAutorite: TypeAutorite.NOTAIRE,
+    typeAutorite: ETypeAutorite.NOTAIRE,
     numeroDepartement: "75",
     ville: "paris",
     libelleDepartement: "",
@@ -406,7 +406,7 @@ export const pacsModificationNotaireMap: IFichePacsDto = {
       date: 1611334469000,
       dateEffet: 1611334469000,
       autorite: {
-        typeAutorite: TypeAutorite.NOTAIRE,
+        typeAutorite: ETypeAutorite.NOTAIRE,
         numeroDepartement: "44",
         ville: "nantes",
         libelleDepartement: "loire-Atlantique",
@@ -421,7 +421,7 @@ export const pacsModificationNotaireMap: IFichePacsDto = {
       date: 1606381200000,
       dateEffet: 1606381200000,
       autorite: {
-        typeAutorite: TypeAutorite.JURIDICTION,
+        typeAutorite: ETypeAutorite.JURIDICTION,
         numeroDepartement: "75",
         ville: "paris",
         libelleDepartement: "",
@@ -519,7 +519,7 @@ export const annulationJuridictionMap: IFichePacsDto = {
   dateEnregistrementParAutorite: [1970, 1, 19],
   dateInscription: [2020, 12, 4],
   autorite: {
-    typeAutorite: TypeAutorite.JURIDICTION,
+    typeAutorite: ETypeAutorite.JURIDICTION,
     numeroDepartement: "75",
     ville: "paris",
     libelleDepartement: "",
@@ -533,7 +533,7 @@ export const annulationJuridictionMap: IFichePacsDto = {
     dateEffet: 1606381200000,
     type: DecisionAnnulation.JUGEMENT,
     autorite: {
-      typeAutorite: TypeAutorite.JURIDICTION,
+      typeAutorite: ETypeAutorite.JURIDICTION,
       ville: "Paris",
       pays: "France",
       typeJuridiction: "Greffe du tribunal"
@@ -614,7 +614,7 @@ export const dissolutionJuridictionMap: IFichePacsDto = {
   dateEnregistrementParAutorite: [1970, 1, 19],
   dateInscription: [2020, 12, 1],
   autorite: {
-    typeAutorite: TypeAutorite.JURIDICTION,
+    typeAutorite: ETypeAutorite.JURIDICTION,
     numeroDepartement: "75",
     ville: "paris",
     libelleDepartement: "",
@@ -629,7 +629,7 @@ export const dissolutionJuridictionMap: IFichePacsDto = {
     dateEffet: 1606381200000,
     motif: "mariage",
     autorite: {
-      typeAutorite: TypeAutorite.JURIDICTION,
+      typeAutorite: ETypeAutorite.JURIDICTION,
       numeroDepartement: "75",
       ville: "paris",
       libelleDepartement: "",

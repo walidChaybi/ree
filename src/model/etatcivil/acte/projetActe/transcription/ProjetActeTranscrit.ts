@@ -6,7 +6,7 @@ import { TDateArrayDTO } from "@util/DateUtils";
 import DateRECE from "../../../../../utils/DateRECE";
 import { IActeEtrangerDto } from "../../IActeEtrangerDto";
 import { ICorpsTexte } from "../../ICorpsTexte";
-import { IMention } from "../../mention/IMention";
+import { IMentionDto } from "../../mention/Mention";
 import { ITypeRegistreDto } from "../../TypeRegistre";
 import { AnalyseMarginaleProjetActeTranscrit, IAnalyseMarginaleProjetActeTranscritDto } from "./AnalyseMarginaleProjetActeTranscrit";
 import { DeclarantProjetActeTranscrit, IDeclarantProjetActeTranscritDto } from "./DeclarantProjetActeTranscrit";
@@ -31,7 +31,7 @@ export interface IProjetActeTranscritDto {
   formuleFinale: IFormuleFinaleDto;
   acteEtranger: IActeEtrangerDto;
   visibiliteArchiviste: string;
-  mentions: IMention[];
+  mentions: IMentionDto[];
   typeRegistre: ITypeRegistreDto;
 }
 

@@ -1,8 +1,10 @@
 import { IFamille } from "@model/etatcivil/commun/IFamille";
 import { IFicheLien } from "@model/etatcivil/commun/IFicheLien";
 import { IFicheLienActes } from "@model/etatcivil/commun/IFicheLienActes";
-import { IPersonne, Personne, PersonneUtils } from "@model/etatcivil/commun/Personne";
+import { Personne } from "@model/etatcivil/commun/Personne";
 import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
+import { ENationalite } from "@model/etatcivil/enum/Nationalite";
+import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { remplaceSNP, remplaceSPC } from "@util/Utils";
 import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
@@ -12,7 +14,7 @@ import { SectionPartContentProps } from "@widget/section/SectionPartContent";
 import { LienFiche } from "../../../LienFiche";
 import { IParamsAffichage } from "../acte/FicheActeUtils";
 
-export function getFichesPersonneActe(personnes: IPersonne[], paramsAffichage: IParamsAffichage) {
+export function getFichesPersonneActe(personnes: Personne[], paramsAffichage: IParamsAffichage): SectionPanelProps[] {
   if (paramsAffichage.personnes === "visible") {
     return getFichesPersonne(personnes);
   } else if (paramsAffichage.personnes === "disabled") {
@@ -28,8 +30,7 @@ export function getFichesPersonneActe(personnes: IPersonne[], paramsAffichage: I
   }
 }
 
-// TOREFACTO: les types IPersonne et Personne cohabitent. IPersonne est vouée à disparaitre lorsque le mapping de acte sera typé
-export function getFichesPersonne(personnes: IPersonne[] | Personne[]): SectionPanelProps[] {
+export function getFichesPersonne(personnes: Personne[]): SectionPanelProps[] {
   return personnes.map((personne, index) => {
     return {
       panelAreas: getPanelAreasFichesPersonnes(personne),
@@ -38,7 +39,7 @@ export function getFichesPersonne(personnes: IPersonne[] | Personne[]): SectionP
   });
 }
 
-function getPanelAreasFichesPersonnes(personne: IPersonne | Personne): SectionPanelAreaProps[] {
+function getPanelAreasFichesPersonnes(personne: Personne): SectionPanelAreaProps[] {
   return [
     {
       parts: [
@@ -55,104 +56,52 @@ function getPanelAreasFichesPersonnes(personne: IPersonne | Personne): SectionPa
   ];
 }
 
-function getInformationsListeInscriptions(personne: IPersonne | Personne): SectionPartContentProps {
-  if (personne instanceof Personne) {
-    return {
-      contents: [getRcsPersonne(personne.rcs), getRcasPersonne(personne.rcas), getPacssPersonne(personne.pacss)],
-      title: "Liste d'inscriptions"
-    };
-  } else {
-    return {
+function getInformationsListeInscriptions(personne: Personne): SectionPartContentProps {
+  return {
+    contents: [getRcsPersonne(personne.rcs), getRcasPersonne(personne.rcas), getPacssPersonne(personne.pacss)],
+    title: "Liste d'inscriptions"
+  };
+}
+
+function getInformationsListeActes(personne: Personne): SectionPartContentProps {
+  return {
+    contents: [getActesPersonne(personne.actes)],
+    title: "Liste d'actes"
+  };
+}
+
+function getInformationsParents(personne: Personne): SectionPartContentProps {
+  return {
+    contents: [...getParentsPersonne(personne.parents)],
+    title: "Parents"
+  };
+}
+
+function getInformationsEnfants(personne: Personne): SectionPartContentProps {
+  return {
+    contents: [getEnfantsPersonne(personne.enfants)],
+    title: "Enfants"
+  };
+}
+
+function getInformationsPersonne(personne: Personne): SectionPartProps {
+  return {
+    partContent: {
       contents: [
-        getRcsPersonne(PersonneUtils.getRcs(personne)),
-        getRcasPersonne(PersonneUtils.getRcas(personne)),
-        getPacssPersonne(PersonneUtils.getPacss(personne))
+        getNomPersonne(personne.nom),
+        getAutresNomsPersonne(personne.autresNoms),
+        getPrenomsPersonne(personne.prenoms),
+        getAutresPrenomsPersonne(personne.autresPrenoms),
+        getLieuNaissance(personne.lieuNaissance),
+        getDateNaissance(personne.dateNaissance),
+        getNationalitePersonne(ENationalite[personne.nationalite]),
+        getSexePersonne(ESexe[personne.sexe]),
+        getLieuDeces(personne.lieuDeces),
+        getDateDeces(personne.dateDeces)
       ],
-      title: "Liste d'inscriptions"
-    };
-  }
-}
-
-function getInformationsListeActes(personne: IPersonne | Personne): SectionPartContentProps {
-  if (personne instanceof Personne) {
-    return {
-      contents: [getActesPersonne(personne.actes)],
-      title: "Liste d'actes"
-    };
-  } else {
-    return {
-      contents: [getActesPersonne(PersonneUtils.getActes(personne))],
-      title: "Liste d'actes"
-    };
-  }
-}
-
-function getInformationsParents(personne: IPersonne | Personne): SectionPartContentProps {
-  if (personne instanceof Personne) {
-    return {
-      contents: [...getParentsPersonne(personne.parents)],
-      title: "Parents"
-    };
-  } else {
-    return {
-      contents: [...getParentsPersonne(PersonneUtils.getParents(personne))],
-      title: "Parents"
-    };
-  }
-}
-
-function getInformationsEnfants(personne: IPersonne | Personne): SectionPartContentProps {
-  if (personne instanceof Personne) {
-    return {
-      contents: [getEnfantsPersonne(personne.enfants)],
-      title: "Enfants"
-    };
-  } else {
-    return {
-      contents: [getEnfantsPersonne(PersonneUtils.getEnfants(personne))],
-      title: "Enfants"
-    };
-  }
-}
-
-function getInformationsPersonne(personne: IPersonne | Personne): SectionPartProps {
-  if (personne instanceof Personne) {
-    return {
-      partContent: {
-        contents: [
-          getNomPersonne(personne.nom),
-          getAutresNomsPersonne(personne.autresNoms),
-          getPrenomsPersonne(personne.prenoms),
-          getAutresPrenomsPersonne(personne.autresPrenoms),
-          getLieuNaissance(personne.lieuNaissance),
-          getDateNaissance(personne.dateNaissance),
-          getNationalitePersonne(personne.nationalite.libelle),
-          getSexePersonne(personne.sexe.libelle),
-          getLieuDeces(personne.lieuDeces),
-          getDateDeces(personne.dateDeces)
-        ],
-        title: "Personne"
-      }
-    };
-  } else {
-    return {
-      partContent: {
-        contents: [
-          getNomPersonne(PersonneUtils.getNom(personne)),
-          getAutresNomsPersonne(PersonneUtils.getAutresNoms(personne)),
-          getPrenomsPersonne(PersonneUtils.getPrenoms(personne)),
-          getAutresPrenomsPersonne(PersonneUtils.getAutresPrenom(personne)),
-          getLieuNaissance(PersonneUtils.getLieuNaissance(personne)),
-          getDateNaissance(PersonneUtils.getDateNaissance(personne)),
-          getNationalitePersonne(PersonneUtils.getNationalite(personne)),
-          getSexePersonne(PersonneUtils.getSexe(personne)),
-          getLieuDeces(PersonneUtils.getLieuDeces(personne)),
-          getDateDeces(PersonneUtils.getDateDeces(personne))
-        ],
-        title: "Personne"
-      }
-    };
-  }
+      title: "Personne"
+    }
+  };
 }
 
 function getNomPersonne(nom: string): SectionContentProps {

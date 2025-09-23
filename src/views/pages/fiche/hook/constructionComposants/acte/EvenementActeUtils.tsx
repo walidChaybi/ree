@@ -1,9 +1,10 @@
-import { Evenement, IEvenement } from "@model/etatcivil/acte/IEvenement";
-import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
+import { Evenement, IEvenementDto } from "@model/etatcivil/acte/IEvenement";
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPartProps } from "@widget/section/SectionPart";
 
-export function getEvenement(acte: IFicheActe): SectionPartProps[] {
+export function getEvenement(acte: FicheActe): SectionPartProps[] {
   const evenement: SectionPartProps[] = [
     {
       partContent: {
@@ -17,7 +18,7 @@ export function getEvenement(acte: IFicheActe): SectionPartProps[] {
       contents: [
         {
           libelle: "Nature",
-          value: <span>{FicheActe.getNature(acte)}</span>
+          value: <span>{ENatureActe[acte.nature]}</span>
         }
       ],
       title: ""
@@ -27,15 +28,15 @@ export function getEvenement(acte: IFicheActe): SectionPartProps[] {
   return evenement;
 }
 
-function getDateLieuEvenement(evenement?: IEvenement): SectionContentProps[] {
+function getDateLieuEvenement(evenement: IEvenementDto | null): SectionContentProps[] {
   return [
     {
       libelle: `Date de l'évènement`,
-      value: <span>{Evenement.getDate(evenement)}</span>
+      value: <span>{Evenement.getDate(evenement ?? undefined)}</span>
     },
     {
       libelle: `Lieu de l'évènement`,
-      value: <span>{Evenement.getLieuFormate(evenement)}</span>
+      value: <span>{evenement?.lieuFormate ?? ""}</span>
     }
   ];
 }

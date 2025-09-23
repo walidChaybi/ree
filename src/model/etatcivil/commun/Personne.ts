@@ -1,18 +1,18 @@
+import { champsObligatoiresDuDtoAbsents, valeurDtoAbsenteDansEnum } from "@model/commun/dtoUtils";
 import DateUtils, { IDateCompose } from "@util/DateUtils";
-import { formatNom, getValeurOuVide } from "@util/Utils";
+import { formatNom } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { Evenement, IEvenementDto } from "../acte/IEvenement";
-import { AutresNoms, ETypeAutreNom } from "../enum/ETypeAutreNom";
-import { Nationalite } from "../enum/Nationalite";
-import { NatureActe } from "../enum/NatureActe";
-import { Sexe } from "../enum/Sexe";
+import { ETypeAutreNom } from "../enum/ETypeAutreNom";
+import { ENationalite, Nationalite } from "../enum/Nationalite";
+import { ESexe, Sexe } from "../enum/Sexe";
 import { AutreNom, IAutreNomDto, IAutresNoms } from "./AutresNoms";
 import { IFamille } from "./IFamille";
 import { IFicheLien } from "./IFicheLien";
 import { IFicheLienActes } from "./IFicheLienActes";
 import { ILieuEvenement } from "./ILieuEvenement";
 
-// TODO: supprimer après le refacto du mapping acte
+// TODO: supprimer après le refacto du projet acte établi
 export interface IPersonne {
   id: string;
   nom: string;
@@ -33,97 +33,14 @@ export interface IPersonne {
   rcas: IFicheLien[];
 }
 
-// TODO: supprimer après le refacto du mapping acte
-export const PersonneUtils = {
-  getNom(personne: IPersonne): string {
-    return personne.nom ?? "";
-  },
-
-  getAutresNoms(personne: IPersonne): string {
-    return personne.autresNoms
-      ? personne.autresNoms
-          .map(nom => {
-            const typeNom = ` (${nom.type.libelle})`;
-            return `${nom.nom}${AutresNoms.isAutre(nom.type) ? "" : typeNom}`;
-          })
-          .join(", ")
-      : "";
-  },
-
-  getPrenoms(personne: IPersonne): string {
-    return personne.prenoms ? personne.prenoms.join(", ") : "";
-  },
-
-  getAutresPrenom(personne: IPersonne): string {
-    return personne.autresPrenoms ? personne.autresPrenoms.join(", ") : "";
-  },
-
-  getLieuNaissance(personne: IPersonne): string {
-    return personne.lieuNaissance
-      ? LieuxUtils.getLieu(
-          personne.lieuNaissance.ville,
-          personne.lieuNaissance.region,
-          personne.lieuNaissance.pays,
-          personne.lieuNaissance.arrondissement
-        )
-      : "";
-  },
-
-  getLieuDeces(personne: IPersonne): string {
-    return personne.lieuDeces
-      ? LieuxUtils.getLieu(personne.lieuDeces.ville, personne.lieuDeces.region, personne.lieuDeces.pays, personne.lieuDeces.arrondissement)
-      : "";
-  },
-
-  getDateNaissance(personne: IPersonne): string {
-    return personne.dateNaissance ? DateUtils.getDateStringFromDateCompose(personne.dateNaissance) : "";
-  },
-
-  getDateDeces(personne: IPersonne): string {
-    return personne.dateDeces ? DateUtils.getDateStringFromDateCompose(personne.dateDeces) : "";
-  },
-
-  getNationalite(personne: IPersonne): string {
-    return getValeurOuVide(personne.nationalite?.libelle);
-  },
-
-  getSexe(personne: IPersonne): string {
-    return personne.sexe?.libelle;
-  },
-
-  getParents(personne: IPersonne): IFamille[] {
-    return personne.parents;
-  },
-
-  getEnfants(personne: IPersonne): IFamille[] {
-    return personne.enfants;
-  },
-
-  getActes(personne: IPersonne): IFicheLienActes[] {
-    return personne.actes;
-  },
-
-  getPacss(personne: IPersonne, numeroFiche?: string): IFicheLien[] {
-    return personne.pacss;
-  },
-
-  getRcs(personne: IPersonne, numeroFiche?: string): IFicheLien[] {
-    return personne.rcs;
-  },
-
-  getRcas(personne: IPersonne, numeroFiche?: string): IFicheLien[] {
-    return personne.rcas;
-  }
-};
-
 export interface IPersonneDTO {
   id: string;
   nom: string;
   autresNoms: IAutreNomDto[];
   prenoms: string[];
   autresPrenoms: string[];
-  nationalite: string;
-  sexe: string;
+  nationalite: keyof typeof ENationalite;
+  sexe: keyof typeof ESexe;
   parents: IFamille[];
   enfants: IFamille[];
   actes: IFicheLienActes[];
@@ -137,13 +54,13 @@ export interface IPersonneDTO {
 export class Personne {
   private static readonly champsObligatoires: (keyof IPersonneDTO)[] = ["id", "nom", "nationalite", "sexe", "naissance"];
 
-  private _autresNoms: AutreNom[];
-  private _prenoms: string[];
-  private _autresPrenoms: string[];
-  private _lieuNaissance: ILieuEvenement;
-  private _dateNaissance: IDateCompose;
-  private _lieuDeces?: ILieuEvenement;
-  private _dateDeces?: IDateCompose;
+  private readonly _autresNoms: AutreNom[];
+  private readonly _prenoms: string[];
+  private readonly _autresPrenoms: string[];
+  private readonly _lieuNaissance: ILieuEvenement;
+  private readonly _dateNaissance: IDateCompose;
+  private readonly _lieuDeces?: ILieuEvenement;
+  private readonly _dateDeces?: IDateCompose;
 
   private constructor(
     public readonly id: string,
@@ -151,8 +68,8 @@ export class Personne {
     autresNoms: AutreNom[],
     prenoms: string[],
     autresPrenoms: string[],
-    public readonly nationalite: Nationalite,
-    public readonly sexe: Sexe,
+    public readonly nationalite: keyof typeof ENationalite,
+    public readonly sexe: keyof typeof ESexe,
     public readonly parents: IFamille[],
     public readonly enfants: IFamille[],
     public readonly actes: IFicheLienActes[],
@@ -175,14 +92,9 @@ export class Personne {
 
   public static readonly depuisDto = (personne: IPersonneDTO, numero: string): Personne | null => {
     switch (true) {
-      case Personne.champsObligatoires.some(cle => personne[cle] === undefined):
-        console.error(`Un champ obligatoire d'un Personne n'est pas défini.`);
-        return null;
-      case !Object(Sexe).hasOwnProperty(personne.sexe):
-        console.error(`Le sexe d'un Personne a la valeur interdite : ${personne.sexe}.`);
-        return null;
-      case !Object(Nationalite).hasOwnProperty(personne.nationalite):
-        console.error(`La nationalité d'un Personne a la valeur interdite : ${personne.nationalite}.`);
+      case champsObligatoiresDuDtoAbsents("IPersonneDTO", personne, this.champsObligatoires):
+      case valeurDtoAbsenteDansEnum("IPersonneDTO", personne, "sexe", ESexe):
+      case valeurDtoAbsenteDansEnum("IPersonneDTO", personne, "nationalite", ENationalite):
         return null;
     }
 
@@ -194,21 +106,14 @@ export class Personne {
         .filter((autreNom: AutreNom | null): autreNom is AutreNom => autreNom !== null),
       personne.prenoms,
       personne.autresPrenoms,
-      Nationalite.getEnumFor(personne.nationalite),
-      Sexe.getEnumFor(personne.sexe),
+      personne.nationalite,
+      personne.sexe,
       personne.parents,
       personne.enfants,
-      personne.actes
-        ?.filter((acte: any) => acte.numero !== numero)
-        .map((acte: any) => {
-          return {
-            ...acte,
-            nature: NatureActe.getEnumFor(acte.nature)
-          };
-        }),
-      personne.pacss.filter((pacs: IFicheLien) => pacs.numero !== numero),
-      personne.rcs.filter((rc: IFicheLien) => rc.numero !== numero),
-      personne.rcas.filter((rca: IFicheLien) => rca.numero !== numero),
+      personne.actes?.filter(acte => acte.numero !== numero),
+      personne.pacss.filter(pacs => pacs.numero !== numero),
+      personne.rcs.filter(rc => rc.numero !== numero),
+      personne.rcas.filter(rca => rca.numero !== numero),
       Evenement.getLieuEvenement(personne.naissance),
       Evenement.getDateCompose(personne.naissance),
       personne.deces && Evenement.getLieuEvenement(personne.deces),

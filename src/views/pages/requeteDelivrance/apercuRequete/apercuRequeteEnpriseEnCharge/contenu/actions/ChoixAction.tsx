@@ -1,5 +1,5 @@
 import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
-import { ITitulaireActe } from "@model/etatcivil/acte/ITitulaireActe";
+import { TitulaireActe } from "@model/etatcivil/acte/TitulaireActe";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -22,7 +22,7 @@ export interface IChoixActionDelivranceProps {
   inscriptions?: TResultatRMCInscription[];
   inscriptionsRC?: IInscriptionRc[];
   dataHistory?: any;
-  titulairesActe?: Map<string, ITitulaireActe[]>;
+  titulairesActe?: Map<string, TitulaireActe[]>;
   nbrTitulairesActe?: Map<string, number>;
   alertesActe?: IAlerte[];
 }

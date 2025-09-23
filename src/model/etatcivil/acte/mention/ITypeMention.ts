@@ -1,14 +1,14 @@
 import { ITypeMentionDto } from "@api/configurations/etatCivil/nomenclature/GetTypesMentionConfigApi";
 import { Options } from "@util/Type";
 import { ZERO } from "@util/Utils";
-import { NatureActe } from "../../enum/NatureActe";
+import { ENatureActe } from "../../enum/NatureActe";
 import { INatureMention, NATIONALITE, NatureMention } from "../../enum/NatureMention";
 
 export interface ITypeMention {
   id: string;
   libelle: string;
   natureMention: INatureMention | null;
-  natureActe?: NatureActe;
+  natureActe?: keyof typeof ENatureActe;
   sousTypes?: ITypeMention[];
   affecteAnalyseMarginale: boolean;
   estPresentListeDeroulante: boolean;
@@ -26,7 +26,7 @@ export class TypeMention {
     return {
       id: typeMentionDto.idTypeMention,
       libelle: typeMentionDto.libelleType,
-      natureActe: NatureActe.getEnumFor(typeMentionDto.natureActe),
+      natureActe: typeMentionDto.natureActe,
       ...{ natureMention: natureMention },
       ...(sousTypes.length ? { sousTypes: sousTypes } : {}),
       affecteAnalyseMarginale: typeMentionDto.affecteAnalyseMarginale,
@@ -111,8 +111,13 @@ export class TypeMention {
     return liste;
   }
 
-  public static getTypeMentionById(id: string) {
-    return id ? TypeMention.getTypesMention(true).find(mention => mention.id === id) : undefined;
+  public static depuisIdTypeMention(id: string) {
+    const typeMention = TypeMention.getTypesMention(true).find(mention => mention.id === id);
+    if (!typeMention) {
+      console.error("Id de TypeMention inconnu");
+      return undefined;
+    }
+    return TypeMention.getTypesMention(true).find(mention => mention.id === id);
   }
 
   public static getTypeMentionAsOptions(mentions: ITypeMention[]): Options {
@@ -124,10 +129,10 @@ export class TypeMention {
       }));
   }
 
-  public static getTypeMentionParNatureActe(natureActe: NatureActe): ITypeMention[] {
+  public static getTypeMentionParNatureActe(natureActe: keyof typeof ENatureActe): ITypeMention[] {
     const typesMention = this.getTypesMention().filter(typeMention => typeMention.natureActe === natureActe);
 
-    if ([NatureActe.NAISSANCE, NatureActe.MARIAGE].includes(natureActe)) {
+    if (["NAISSANCE", "MARIAGE"].includes(natureActe)) {
       typesMention.push(this.getTypeMentionInconnue());
     }
 
@@ -135,7 +140,7 @@ export class TypeMention {
   }
 
   public static getTypeMentionInconnue(): ITypeMention {
-    return this.getTypesMention().find(typeMention => NatureActe.estInconnue(typeMention.natureActe)) as ITypeMention;
+    return this.getTypesMention().find(typeMention => typeMention.natureActe === "INCONNUE") as ITypeMention;
   }
 
   public static getIdTypeMentionNationalitePourAjoutMentionDelivrance() {

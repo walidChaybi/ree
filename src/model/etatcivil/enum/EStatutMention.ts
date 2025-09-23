@@ -1,0 +1,6 @@
+export enum EStatutMention {
+  BROUILLON = "BROUILLON",
+  SIGNEE = "SIGNEE",
+  ANNULEE = "ANNULEE",
+  REPUTEE_NON_ECRITE = "REPUTEE_NON_ECRITE"
+}

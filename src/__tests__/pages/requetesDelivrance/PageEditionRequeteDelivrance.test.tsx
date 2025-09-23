@@ -1,3 +1,6 @@
+import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
+import { MockApi } from "@mock/appelsApi/MockApi";
+import { ficheActeEC } from "@mock/data/ficheActe";
 import { idRequeteRDDASigner } from "@mock/data/requeteDelivrance";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Utilisateur } from "@model/agent/Utilisateur";
@@ -24,16 +27,21 @@ describe("Test de la page aperçu requête edition analyse marginale", () => {
   const idActe = "b41079a5-9e8f-478a-b04c-c4c2ac671123";
   const idRequete = "9d00fe88-9d21-482e-bb02-223636f78386";
 
+  MockApi.deployer(
+    CONFIG_GET_RESUME_ACTE,
+    { path: { idActe }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
+    {
+      data: ficheActeEC
+    }
+  );
+
   test("La page s'affiche correctement", async () => {
     const router = createTestingRouter(
       [
         {
           path: `${URL_ACCUEIL}${INFO_PAGE_APERCU_REQUETE_DELIVRANCE_EDITION.url}`,
           element: (
-            <MockRECEContextProvider
-              utilisateurConnecte={utilisateurConnecte}
-              utilisateurs={[{} as Utilisateur]}
-            >
+            <MockRECEContextProvider utilisateurConnecte={utilisateurConnecte}>
               <PageEditionRequeteDelivrance />
             </MockRECEContextProvider>
           )

@@ -1,21 +1,24 @@
 import { SimplePersonne } from "@model/etatcivil/fiche/SimplePersonne";
+import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
 import { Partenaire } from "@model/etatcivil/pacs/Partenaire";
-import { formatNom, formatPrenom, triListeObjetsSurPropriete } from "@util/Utils";
-import { FournisseurDonneesBandeauRcRca } from "./FournisseurDonneesBandeauRcRca";
-export class FournisseurDonneeBandeauPacs extends FournisseurDonneesBandeauRcRca {
-  getPersonnesAsAny() {
-    return triListeObjetsSurPropriete(this.data.partenaires, "numeroOrdreSaisi");
+import { formatNom, formatPrenom } from "@util/Utils";
+import IFournisseurDonneesBandeau from "./IFournisseurDonneesBandeau";
+
+export class FournisseurDonneeBandeauPacs implements IFournisseurDonneesBandeau {
+  public get fiche(): FichePacs {
+    return this._fiche;
   }
 
-  getSimplePersonnes(): SimplePersonne[] {
-    return this.personnes.map((p: Partenaire) => new SimplePersonne(formatNom(p.nomFamille), formatPrenom(p.prenoms.split(",")[0])));
-  }
+  constructor(private readonly _fiche: FichePacs) {}
 
-  getTypeAbrege(): string {
-    return "pacs";
-  }
+  public readonly getRegistre = (): string | undefined => undefined;
 
-  getType(): string {
-    return "pacs";
-  }
+  public readonly getSimplePersonnes = (): SimplePersonne[] =>
+    this.fiche.partenaires.map((p: Partenaire) => new SimplePersonne(formatNom(p.nomFamille), formatPrenom(p.prenoms.split(",")[0])));
+
+  public readonly getTypeAbrege = (): string => "pacs";
+
+  public readonly getType = (): string => "pacs";
+
+  public readonly getAnnee = (): string => this.fiche.annee ?? "";
 }

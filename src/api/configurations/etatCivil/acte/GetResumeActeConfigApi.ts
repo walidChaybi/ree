@@ -1,6 +1,6 @@
 import { ETATCIVIL_API } from "@api/ApiDisponibles";
 import { TConfigurationApi } from "@model/api/Api";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { IFicheActeDto } from "@model/etatcivil/acte/FicheActe";
 
 const URI = "/acte/:idActe/resume";
 
@@ -9,8 +9,9 @@ interface IQuery {
   recupereImagesEtTexte?: boolean;
 }
 
-export const CONFIG_GET_RESUME_ACTE: TConfigurationApi<typeof URI, undefined, IQuery, IFicheActe> = {
+export const CONFIG_GET_RESUME_ACTE: TConfigurationApi<typeof URI, undefined, IQuery, IFicheActeDto> = {
   api: ETATCIVIL_API,
   methode: "GET",
-  uri: URI
+  uri: URI,
+  avecAxios: true
 };

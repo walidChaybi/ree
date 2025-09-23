@@ -1,8 +1,9 @@
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import { ficheActe1, ficheActeTexte } from "@mock/data/ficheActe";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IProvenanceRece } from "@model/requete/IProvenanceRece";
@@ -21,7 +22,6 @@ import { elementAvecEditionDelivranceContexte } from "../../../../../__tests__ut
 import { DOCUMENT_DELIVRANCE } from "../../../../../mock/data/NomenclatureDocumentDelivrance";
 import { NATURE_MENTION } from "../../../../../mock/data/NomenclatureNatureMention";
 import { TYPE_MENTION } from "../../../../../mock/data/NomenclatureTypeMention";
-import { acte, acteNaissance } from "../../../../../mock/data/ficheEtBandeau/ficheActe";
 import requeteDelivrance from "../../../../../mock/data/requeteDelivrance";
 
 describe("VoletDocumentDelivre", () => {
@@ -33,7 +33,7 @@ describe("VoletDocumentDelivre", () => {
     id: "f63223ce-f425-441e-846c-114b0f36936d",
     nom: "test",
     typeDocument: DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_PLURILINGUE),
-    idActe: acteNaissance.id
+    idActe: "19c0d767-64e5-4376-aa1f-6d781a2a235e"
   } as IDocumentReponse;
 
   const mockRequete = {
@@ -66,12 +66,12 @@ describe("VoletDocumentDelivre", () => {
             resetOngletActif={false}
           />,
           mockRequete,
-          {
-            ...acte,
+          FicheActe.depuisDto({
+            ...ficheActe1,
             id: "19c0d767-64e5-4376-aa1f-6d781a2a235a",
-            nature: NatureActe.NAISSANCE,
+            nature: "NAISSANCE",
             mentions: []
-          }
+          })!
         )}
       </MockRECEContextProvider>
     );
@@ -96,10 +96,10 @@ describe("VoletDocumentDelivre", () => {
             resetOngletActif={false}
           />,
           mockRequete,
-          {
-            ...acte,
+          FicheActe.depuisDto({
+            ...ficheActe1,
             id: "19c0d767-64e5-4376-aa1f-6d781a2a235a"
-          }
+          })!
         )}
       </MockRECEContextProvider>
     );
@@ -115,10 +115,10 @@ describe("VoletDocumentDelivre", () => {
             resetOngletActif={true}
           />,
           mockRequete,
-          {
-            ...acte,
+          FicheActe.depuisDto({
+            ...ficheActeTexte,
             id: "19c0d767-64e5-4376-aa1f-6d781a2a235a"
-          }
+          })!
         )}
       </MockRECEContextProvider>
     );
@@ -138,11 +138,11 @@ describe("VoletDocumentDelivre", () => {
             resetOngletActif={false}
           />,
           mockRequete,
-          {
-            ...acte,
+          FicheActe.depuisDto({
+            ...ficheActe1,
             id: "19c0d767-64e5-4376-aa1f-6d781a2a235a",
-            nature: NatureActe.NAISSANCE
-          }
+            nature: "NAISSANCE"
+          })!
         )}
       </MockRECEContextProvider>
     );

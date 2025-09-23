@@ -6,11 +6,10 @@ import { CONFIG_GET_METAMODELE_TYPE_MENTION } from "@api/configurations/requete/
 import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
-import { ficheActe3, ficheActeMentionIntegrationRECE, ficheActeMentionIntegrationRECENonEligible } from "@mock/data/ficheActe";
+import { ficheActeMentionIntegrationRECE, ficheActeMentionIntegrationRECENonEligible, ficheActeTexte } from "@mock/data/ficheActe";
 import { MetaModeleAideSaisieMariageEnFrance } from "@mock/data/mentions";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -101,7 +100,7 @@ describe("Tests PartieFormulaire", () => {
       CONFIG_GET_RESUME_ACTE,
       { path: { idActe: ID_ACTE }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
       {
-        data: ficheActe3
+        data: ficheActeTexte
       }
     );
 
@@ -223,7 +222,6 @@ describe("Tests PartieFormulaire", () => {
 
     fireEvent.click(screen.getByRole("option", { name: "1-1 en France (mairie)" }));
 
-    //await waitFor(() => screen.debug);
     await waitFor(() => expect(screen.getByText("LIEU <ÉVÉNEMENT>")).toBeDefined());
 
     // On vérifie le remplissage de l'aide à la saisie
@@ -267,7 +265,7 @@ describe("Tests PartieFormulaire", () => {
     fireEvent.click(boutonValidation);
 
     await waitFor(() => {
-      expect(screen.getByText("Marié à")).toBeDefined();
+      expect(screen.getByText("Mariée à")).toBeDefined();
       expect(screen.getByText("superVille (superDepartement)")).toBeDefined();
       expect(screen.getByText("le 12 septembre 2000")).toBeDefined();
       expect(screen.getByText("avec")).toBeDefined();
@@ -276,14 +274,14 @@ describe("Tests PartieFormulaire", () => {
   });
 
   test("S'assurer que l'appel API de recuperation d'acte est correct avec data titulaires vide ", async () => {
-    let actAvecTitulaireVide = ficheActe3;
+    let actAvecTitulaireVide = ficheActeTexte;
     actAvecTitulaireVide.titulaires = [];
 
     MockApi.deployer(
       CONFIG_GET_RESUME_ACTE,
       { path: { idActe: ID_ACTE }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
       {
-        data: actAvecTitulaireVide as IFicheActe
+        data: actAvecTitulaireVide
       }
     );
 

@@ -1,4 +1,5 @@
 import DateUtils, { TDateArrayDTO } from "@util/DateUtils";
+import DateRECE from "../../../utils/DateRECE";
 import { champsObligatoiresDuDtoAbsents } from "../../commun/dtoUtils";
 import { IPersonneDTO, Personne } from "../commun/Personne";
 import { IAlerte } from "../fiche/IAlerte";
@@ -37,8 +38,8 @@ export class FicheInscription {
     public readonly annee: string,
     public readonly numero: string,
     public readonly dateInscription: Date,
-    public readonly dateDerniereDelivrance: Date | null,
-    public readonly dateDerniereMaj: Date | null,
+    public readonly dateDerniereDelivrance: DateRECE | null,
+    public readonly dateDerniereMaj: DateRECE | null,
     public readonly alertes: IAlerte[],
     public readonly interesses: Interesse[],
     public readonly statutsFiche: StatutFiche[],
@@ -54,8 +55,8 @@ export class FicheInscription {
       ficheInscription.annee,
       ficheInscription.numero,
       DateUtils.getDateDepuisDateArrayDto(ficheInscription.dateInscription),
-      ficheInscription.dateDerniereDelivrance ? DateUtils.getDateFromTimestamp(ficheInscription.dateDerniereDelivrance) : null,
-      ficheInscription.dateDerniereMaj ? DateUtils.getDateFromTimestamp(ficheInscription.dateDerniereMaj) : null,
+      ficheInscription.dateDerniereDelivrance ? DateRECE.depuisTimestamp(ficheInscription.dateDerniereDelivrance) : null,
+      ficheInscription.dateDerniereMaj ? DateRECE.depuisTimestamp(ficheInscription.dateDerniereMaj) : null,
       ficheInscription.alertes,
       ficheInscription.interesses.map(Interesse.depuisDto).filter((interesse): interesse is Interesse => interesse !== null),
       ficheInscription.statutsFiche
@@ -73,8 +74,8 @@ export class FicheInscription {
     annee: string,
     numero: string,
     dateInscription: Date,
-    dateDerniereDelivrance: Date | null,
-    dateDerniereMaj: Date | null,
+    dateDerniereDelivrance: DateRECE | null,
+    dateDerniereMaj: DateRECE | null,
     alertes: IAlerte[],
     interesses: Interesse[],
     statutsFiche: StatutFiche[],

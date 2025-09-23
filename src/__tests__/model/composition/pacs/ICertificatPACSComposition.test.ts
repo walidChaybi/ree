@@ -2,7 +2,7 @@ import { annulationJuridictionMap, dissolutionJuridictionMap, pacsModificationNo
 import { ICertificatPACSComposition } from "@model/composition/pacs/ICertificatPACSComposition";
 import { ParagrapheComposition } from "@model/composition/pacs/IParagraphesPacsComposition";
 import { IAutorite } from "@model/etatcivil/commun/IAutorite";
-import { TypeAutorite } from "@model/etatcivil/enum/TypeAutorite";
+import { ETypeAutorite } from "@model/etatcivil/enum/TypeAutorite";
 import { TypeJuridiction } from "@model/etatcivil/enum/TypeJuridiction";
 import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
 import { IAnnulation } from "@model/etatcivil/pacs/IAnnulation";
@@ -51,7 +51,7 @@ test("getLibelleJuridiction defaut", () => {
 test("getAutorite commune", () => {
   expect(
     ParagrapheComposition.getAutorite({
-      typeAutorite: TypeAutorite.COMMUNE
+      typeAutorite: ETypeAutorite.COMMUNE
     } as unknown as IAutorite)
   ).toBe("en la commune de");
 });
@@ -65,7 +65,7 @@ test("getAutorite commune", () => {
 test("getAutorite poste", () => {
   expect(
     ParagrapheComposition.getAutorite({
-      typeAutorite: TypeAutorite.POSTE_ETRANGER,
+      typeAutorite: ETypeAutorite.POSTE_ETRANGER,
       typePoste: "Benoît"
     } as unknown as IAutorite)
   ).toBe("par Benoît à");

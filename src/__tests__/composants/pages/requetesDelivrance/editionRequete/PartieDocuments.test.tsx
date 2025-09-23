@@ -13,13 +13,11 @@ import { describe, expect, test, vi } from "vitest";
 import PartieDocuments from "../../../../../composants/pages/requetesDelivrance/editionRequete/partieDocument/PartieDocuments";
 import { elementAvecEditionDelivranceContexte } from "../../../../__tests__utils__/testsUtil";
 import { DOCUMENT_DELIVRANCE } from "../../../../mock/data/NomenclatureDocumentDelivrance";
-import { acte } from "../../../../mock/data/ficheEtBandeau/ficheActe";
 import requeteDelivrance from "../../../../mock/data/requeteDelivrance";
 
 describe("Partie Documents", () => {
   DocumentDelivrance.init(DOCUMENT_DELIVRANCE);
 
-  const idActe = "b41079a5-9e8f-478a-b04c-c4c2ac671123";
   const idRequete = "9d00fe88-9d21-482e-bb02-223636f78386";
 
   const mockedUseNavigate = vi.fn();
@@ -87,8 +85,7 @@ describe("Partie Documents", () => {
             ongletActif={""}
             setOngletActif={() => {}}
           />,
-          mockRequete,
-          { ...acte, id: idActe }
+          mockRequete
         )}
       </MockRECEContextProvider>
     );

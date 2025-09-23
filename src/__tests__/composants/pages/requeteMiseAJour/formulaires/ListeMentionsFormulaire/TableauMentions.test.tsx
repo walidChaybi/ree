@@ -1,7 +1,7 @@
 import { act, render } from "@testing-library/react";
 import { describe, expect, test, vi } from "vitest";
 
-import { MOCK_MENTIONS_MISE_A_JOUR } from "@mock/data/etatcivil/mentionMiseAJour";
+import { MOCK_MENTIONS_MISE_A_JOUR } from "@mock/data/etatcivil/acte/mention/mentionMiseAJour";
 import { Formik } from "formik";
 import { Form, RouterProvider } from "react-router";
 import TableauMentions from "../../../../../../composants/pages/requetesMiseAJour/formulaires/mentions/ListeMentionsFormulaire/TableauMentions";

@@ -39,7 +39,7 @@ const TableauMentions: React.FC<ITableauMentionsProps> = ({
 
     const motifMention =
       mentionsAffectantAnalyseMarginale.length === 1
-        ? `Suite à apposition de mention ${TypeMention.getTypeMentionById(mentionsAffectantAnalyseMarginale[0].idTypeMention)?.libelle.split(" ")[0]}`
+        ? `Suite à apposition de mention ${TypeMention.depuisIdTypeMention(mentionsAffectantAnalyseMarginale[0].idTypeMention)?.libelle.split(" ")[0]}`
         : "";
 
     setMotif(motifMention);

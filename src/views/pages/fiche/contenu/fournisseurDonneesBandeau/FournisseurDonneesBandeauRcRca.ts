@@ -1,26 +1,24 @@
 import { SimplePersonne } from "@model/etatcivil/fiche/SimplePersonne";
+import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import { Interesse } from "@model/etatcivil/rcrca/Interesse";
-import { formatNom, formatPrenom, triListeObjetsSurPropriete } from "@util/Utils";
-import { FournisseurDonneesBandeau } from "./FournisseurDonneesBandeau";
+import { formatNom, formatPrenom } from "@util/Utils";
+import IFournisseurDonneesBandeau from "./IFournisseurDonneesBandeau";
 
-export class FournisseurDonneesBandeauRcRca extends FournisseurDonneesBandeau {
-  getPersonnesAsAny(): any[] {
-    return triListeObjetsSurPropriete(this.data.interesses, "numeroOrdreSaisi");
+export class FournisseurDonneesBandeauRcRca implements IFournisseurDonneesBandeau {
+  public get fiche(): FicheRcRca {
+    return this._fiche;
   }
 
-  getSimplePersonnes(): SimplePersonne[] {
-    return this.personnes.map((p: Interesse) => new SimplePersonne(formatNom(p.nomFamille), formatPrenom(p.prenoms.split(",")[0])));
-  }
+  constructor(private readonly _fiche: FicheRcRca) {}
 
-  getTypeAbrege(): string {
-    return this.data ? this.data.categorie : "";
-  }
+  public readonly getRegistre = (): string | undefined => undefined;
 
-  getType(): string {
-    return this.data ? this.data.categorie : "";
-  }
+  public readonly getSimplePersonnes = (): SimplePersonne[] =>
+    this.fiche.interesses.map((p: Interesse) => new SimplePersonne(formatNom(p.nomFamille), formatPrenom(p.prenoms.split(",")[0])));
 
-  getAnnee(): string {
-    return this.data ? this.data.annee : "";
-  }
+  public readonly getTypeAbrege = (): string => this.fiche.categorie ?? "";
+
+  public readonly getType = (): string => this.fiche.categorie ?? "";
+
+  public readonly getAnnee = (): string => this.fiche.annee ?? "";
 }

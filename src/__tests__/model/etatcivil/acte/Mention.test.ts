@@ -3,9 +3,6 @@ import {
   documentReponseCopieNonSignee,
   documentReponseExtraitAvecFiliation
 } from "@mock/data/DocumentReponse";
-import { IEvenement } from "@model/etatcivil/acte/IEvenement";
-import { IAutoriteEtatCivil } from "@model/etatcivil/acte/mention/IAutoriteEtatCivil";
-import { IMention, Mention } from "@model/etatcivil/acte/mention/IMention";
 import {
   IMentionAffichage,
   mappingVersMentionAffichage,
@@ -13,43 +10,35 @@ import {
   modificationEffectuee
 } from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { IMentionDto, Mention } from "@model/etatcivil/acte/mention/Mention";
 import { INatureMention, NatureMention } from "@model/etatcivil/enum/NatureMention";
-import { StatutMention } from "@model/etatcivil/enum/StatutMention";
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { beforeAll, describe, expect, test } from "vitest";
+import { describe, expect, test } from "vitest";
 import { DOCUMENT_DELIVRANCE } from "../../../mock/data/NomenclatureDocumentDelivrance";
 import { NATURE_MENTION } from "../../../mock/data/NomenclatureNatureMention";
 import { TYPE_MENTION } from "../../../mock/data/NomenclatureTypeMention";
 
-beforeAll(() => {
+describe("Test de IMention", () => {
   DocumentDelivrance.init(DOCUMENT_DELIVRANCE);
   NatureMention.init(NATURE_MENTION);
   TypeMention.init(TYPE_MENTION);
-});
 
-describe("Test de IMention", () => {
   test("test getTexte", () => {
-    const mention = {
+    const mention = Mention.depuisDto({
+      id: "",
+      numeroOrdre: 1,
       textes: {
         texteMention: "texteMention",
         texteApposition: "texteApposition"
       },
-      typeMention: {
-        natureMention: {
-          code: "5",
-          libelle: "Divorce",
-          estActif: true,
-          opposableAuTiers: true
-        } as INatureMention
-      }
-    } as IMention;
+      typeMention: { idTypeMention: "b048b66e-e0fa-4052-a63d-9111b442c3ee" }
+    })!;
 
-    expect(Mention.getTexteExtrait(mention)).toBe("texteMention texteApposition");
+    expect(mention.getTexteExtrait()).toBe("texteMention texteApposition");
 
     mention.textes.texteMentionDelivrance = "texteMentionDelivrance";
 
-    expect(Mention.getTexteExtrait(mention)).toBe("texteMentionDelivrance");
+    expect(mention.getTexteExtrait()).toBe("texteMentionDelivrance");
   });
 
   test("Attendu: ilExisteUneMentionInterdite fonctionne correctement", () => {
@@ -101,7 +90,7 @@ describe("Test de IMention", () => {
     expect(
       NatureMention.ilExisteUneMentionInterdite(
         mentionsAutorisees,
-        NatureActe.MARIAGE,
+        "MARIAGE",
         DocumentDelivrance.depuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION)
       )
     ).toBeFalsy();
@@ -109,7 +98,7 @@ describe("Test de IMention", () => {
     expect(
       NatureMention.ilExisteUneMentionInterdite(
         mentionsAvecUneMentionAnnulationMariage,
-        NatureActe.MARIAGE,
+        "MARIAGE",
         DocumentDelivrance.depuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION)
       )
     ).toBeTruthy();
@@ -117,7 +106,7 @@ describe("Test de IMention", () => {
     expect(
       NatureMention.ilExisteUneMentionInterdite(
         mentionsAvecUneMentionAnnulationMariage,
-        NatureActe.MARIAGE,
+        "MARIAGE",
         DocumentDelivrance.depuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_SANS_FILIATION)
       )
     ).toBeTruthy();
@@ -125,7 +114,7 @@ describe("Test de IMention", () => {
     expect(
       NatureMention.ilExisteUneMentionInterdite(
         mentionsAvecUneMentionAnnulationMariage,
-        NatureActe.NAISSANCE,
+        "NAISSANCE",
         DocumentDelivrance.depuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION)
       )
     ).toBeTruthy();
@@ -133,7 +122,7 @@ describe("Test de IMention", () => {
     expect(
       NatureMention.ilExisteUneMentionInterdite(
         mentionsAvecUneMentionAnnulationMariage,
-        NatureActe.NAISSANCE,
+        "NAISSANCE",
         DocumentDelivrance.depuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_SANS_FILIATION)
       )
     ).toBeTruthy();
@@ -141,7 +130,7 @@ describe("Test de IMention", () => {
     expect(
       NatureMention.ilExisteUneMentionInterdite(
         mentionsAvecUneMentionNationalite,
-        NatureActe.NAISSANCE,
+        "NAISSANCE",
         DocumentDelivrance.depuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION)
       )
     ).toBeFalsy();
@@ -149,7 +138,7 @@ describe("Test de IMention", () => {
     expect(
       NatureMention.ilExisteUneMentionInterdite(
         mentionsAvecUneMentionNationalite,
-        NatureActe.NAISSANCE,
+        "NAISSANCE",
         DocumentDelivrance.depuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_SANS_FILIATION)
       )
     ).toBeTruthy();
@@ -157,33 +146,20 @@ describe("Test de IMention", () => {
 });
 
 describe("Test de IMentionAffichage", () => {
-  const mentionApi: IMention = {
+  const mentionDto: IMentionDto = {
     textes: {
       texteMention: "texte mention",
       texteApposition: "texte apposition"
     },
     typeMention: {
-      id: "idTypeMention",
-      libelle: "libelle type mention",
-      natureMention: { opposableAuTiers: false } as INatureMention,
-      affecteAnalyseMarginale: false,
-      estPresentListeDeroulante: false,
-      estSousType: false,
-      estSaisieAssistee: false
+      idTypeMention: "eac6d665-ef10-4ed0-b617-e4b507f947d7"
     },
     numeroOrdreExtrait: 1,
     id: "1",
-    numeroOrdre: 1,
-    villeApposition: "",
-    regionApposition: "",
-    dateApposition: new Date(),
-    dateCreation: new Date(),
-    dateStatut: new Date(),
-    statut: {} as StatutMention,
-    titulaires: [],
-    autoriteEtatCivil: {} as IAutoriteEtatCivil,
-    evenement: {} as IEvenement
+    numeroOrdre: 1
   };
+
+  const mentionApi: Mention = Mention.depuisDto(mentionDto)!;
 
   const mentionOpposable: IMentionAffichage = {
     texte: "texte mention",
@@ -208,8 +184,15 @@ describe("Test de IMentionAffichage", () => {
   test("mappingVersMentionAffichage pour extrait avec filiation", () => {
     expect(mappingVersMentionAffichage([mentionApi], documentReponseExtraitAvecFiliation)).toStrictEqual([
       {
-        nature: { opposableAuTiers: false },
-        texte: "texte mention",
+        nature: {
+          code: "3",
+          estActif: true,
+          id: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
+          libelle: "Séparation de corps",
+          nom: "NATURE_MENTION",
+          opposableAuTiers: true
+        },
+        texte: "texte mention texte apposition",
         estPresent: true,
         id: "1",
         numeroOrdre: 1,
@@ -222,7 +205,14 @@ describe("Test de IMentionAffichage", () => {
   test("mappingVersMentionAffichage pour copie intégrale", () => {
     expect(mappingVersMentionAffichage([mentionApi], documentReponseCopieIntegrale)).toStrictEqual([
       {
-        nature: { opposableAuTiers: false },
+        nature: {
+          code: "3",
+          estActif: true,
+          id: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
+          libelle: "Séparation de corps",
+          nom: "NATURE_MENTION",
+          opposableAuTiers: true
+        },
         texte: "texte mention texte apposition ",
         estPresent: true,
         id: "1",
@@ -236,16 +226,23 @@ describe("Test de IMentionAffichage", () => {
   test("mappingVersMentionAffichage pour extrait plurilingue", () => {
     expect(
       mappingVersMentionAffichage(
-        [{ ...mentionApi, textes: { texteMentionPlurilingue: "Texte mention plurilingue" } }],
+        [Mention.depuisDto({ ...mentionDto, textes: { texteMentionPlurilingue: "Texte mention plurilingue" } })!],
         {
           ...documentReponseCopieIntegrale,
           typeDocument: DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_PLURILINGUE)
         },
-        NatureActe.NAISSANCE
+        "NAISSANCE"
       )
     ).toStrictEqual([
       {
-        nature: { opposableAuTiers: false },
+        nature: {
+          code: "3",
+          estActif: true,
+          id: "b03ceb0c-7bd0-4a0c-9adc-4af505fe2260",
+          libelle: "Séparation de corps",
+          nom: "NATURE_MENTION",
+          opposableAuTiers: true
+        },
         texte: "Texte mention plurilingue",
         estPresent: true,
         id: "1",
@@ -271,7 +268,7 @@ describe("Test de IMentionAffichage", () => {
           },
           typeMention: {
             idNatureMention: "",
-            idTypeMention: "idTypeMention"
+            idTypeMention: "eac6d665-ef10-4ed0-b617-e4b507f947d7"
           },
           numeroOrdreExtrait: 1
         }

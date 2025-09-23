@@ -1,6 +1,5 @@
 import { deleteDocumentComplementaire } from "@api/appels/requeteApi";
 import { IGenerationECParams, useGenerationEC } from "@hook/generation/generationECHook/generationECHook";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
@@ -46,7 +45,7 @@ const BoutonAjoutSuppressionDocument: React.FC<IBoutonAjoutSuppressionDocumentPr
           cle: DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE),
           libelle: "Copie intégrale"
         },
-        ...(acte?.nature !== NatureActe.DECES
+        ...(acte?.nature !== "DECES"
           ? [
               {
                 cle: DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_EXTRAIT_AVEC_FILIATION),
@@ -85,7 +84,7 @@ const BoutonAjoutSuppressionDocument: React.FC<IBoutonAjoutSuppressionDocumentPr
   const ajouterDocument = useCallback(
     (typeDocument: string) => {
       setOperationEnCours(true);
-      setCreationECParams(getParamsCreationEC(typeDocument, requete, { acte: acte ?? undefined }));
+      setCreationECParams(getParamsCreationEC(typeDocument, requete, acte));
     },
     [requete, acte]
   );

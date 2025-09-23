@@ -22,17 +22,17 @@ export interface IEvenement {
 
 export interface IEvenementDto {
   id?: string;
-  heure?: number | null;
-  minute?: number | null;
+  heure?: number;
+  minute?: number;
   jour?: number;
   mois?: number;
   annee?: number;
-  voie?: string | null;
+  voie?: string;
   ville?: string;
-  arrondissement?: string | null;
+  arrondissement?: string;
   region?: string;
   pays: string;
-  lieuReprise?: string | null;
+  lieuReprise?: string;
   lieuFormate?: string;
   neDansLeMariage?: boolean;
 }

@@ -4,8 +4,8 @@ import { ICorpsTexte } from "@model/etatcivil/acte/ICorpsTexte";
 import { IDeclarant } from "@model/etatcivil/acte/IDeclarant";
 import { IDecretNaturalisation } from "@model/etatcivil/acte/IDecretNaturalisation";
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
-import { IRegistre } from "@model/etatcivil/acte/IRegistre";
-import { IMention } from "@model/etatcivil/acte/mention/IMention";
+import { IRegistreDto, Registre } from "@model/etatcivil/acte/Registre";
+import { IMentionDto, Mention } from "@model/etatcivil/acte/mention/Mention";
 import { IProjetAnalyseMarginale } from "@model/etatcivil/acte/projetActe/IAnalyseMarginaleProjetActe";
 import { IFiliationProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/IFiliationProjetActe";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
@@ -19,7 +19,6 @@ import { IPersonne } from "@model/etatcivil/commun/Personne";
 import { AutresNoms } from "@model/etatcivil/enum/ETypeAutreNom";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { TypeDeclarationConjointe } from "@model/etatcivil/enum/TypeDeclarationConjointe";
 import { IDateCompose } from "@util/DateUtils";
 import { getValeurOuUndefined } from "@util/Utils";
 
@@ -33,7 +32,7 @@ export function mappingProjetActe(data: any): IProjetActe {
     numeroBisTer: getValeurOuUndefined(data.numeroBisTer),
     personnes: mapPersonnes(data.personnes),
     estReecrit: getValeurOuUndefined(data.estReecrit),
-    registre: mapRegistre(data.registre),
+    registre: Registre.depuisDto(data.registre as IRegistreDto),
     dateDerniereMaj: getValeurOuUndefined(data.dateDerniereMaj),
     dateDerniereDelivrance: getValeurOuUndefined(data.dateDerniereDelivrance),
     dateCreation: getValeurOuUndefined(data.dateCreation),
@@ -42,7 +41,7 @@ export function mappingProjetActe(data: any): IProjetActe {
     corpsTexte: mapCorpsTexte(data.corpsTexte),
     type: getValeurOuUndefined(data.type),
     corpsExtraitRectifications: mapCorpsExtraitRectification(data.corpsExtraitRectifications),
-    mentions: mapMentions(data.mentions),
+    mentions: (data.mentions as IMentionDto[]).map(Mention.depuisDto).filter((mention): mention is Mention => mention !== null),
     declarant: mapDeclarant(data.declarant),
     numeroDossierNational: getValeurOuUndefined(data.numeroDossierNational),
     statut: getValeurOuUndefined(data.statut),
@@ -69,7 +68,7 @@ function mapTitulairesProjetActe(titulaires: any[]): ITitulaireProjetActe[] {
     nomApresMariage: getValeurOuUndefined(titulaire.nomApresMariage),
     nomDernierConjoint: getValeurOuUndefined(titulaire.nomDernierConjoint),
     prenomsDernierConjoint: getValeurOuUndefined(titulaire.prenomsDernierConjoint),
-    typeDeclarationConjointe: TypeDeclarationConjointe.getEnumFor(getValeurOuUndefined(titulaire.typeDeclarationConjointe)),
+    typeDeclarationConjointe: titulaire.typeDeclarationConjointe,
     dateDeclarationConjointe: getValeurOuUndefined(titulaire.dateDeclarationConjointe),
     identiteAvantDecret: getValeurOuUndefined(titulaire.identiteAvantDecret),
     decretNaturalisation: mapDecretNaturalisation(getValeurOuUndefined(titulaire.decretNaturalisation)),
@@ -204,24 +203,6 @@ function mapFicheLien(ficheLiens: any[]): IFicheLien[] {
   }));
 }
 
-function mapRegistre(registre: any): IRegistre {
-  return {
-    id: getValeurOuUndefined(registre?.id),
-    famille: getValeurOuUndefined(registre?.famille),
-    pocopa: getValeurOuUndefined(registre?.pocopa),
-    type: getValeurOuUndefined(registre?.type),
-    annee: getValeurOuUndefined(registre?.annee),
-    support1: getValeurOuUndefined(registre?.support1),
-    support2: getValeurOuUndefined(registre?.support2),
-    numeroDernierActe: getValeurOuUndefined(registre?.numeroDernierActe),
-    pvOuverture: getValeurOuUndefined(registre?.pvOuverture),
-    dateOuverture: getValeurOuUndefined(registre?.dateOuverture),
-    pvFermeture: getValeurOuUndefined(registre?.pvFermeture),
-    dateFermeture: getValeurOuUndefined(registre?.dateFermeture),
-    decret2017: getValeurOuUndefined(registre?.decret2017)
-  };
-}
-
 function mapAnalyseMarginales(projetsAnalyseMarginale: any[]): IProjetAnalyseMarginale[] {
   return projetsAnalyseMarginale;
 }
@@ -232,10 +213,6 @@ function mapCorpsTexte(corpsTexte: any): ICorpsTexte {
 
 function mapCorpsExtraitRectification(corpsExtraitRectification: any[]): ICorpsExtraitRectification[] {
   return corpsExtraitRectification;
-}
-
-function mapMentions(mentions: any[]): IMention[] {
-  return mentions;
 }
 
 function mapDeclarant(declarant: any): IDeclarant {

@@ -21,12 +21,12 @@ import { ITitulaireProjetActeTranscritDto } from "@model/etatcivil/acte/projetAc
 import { NomSecable } from "@model/etatcivil/commun/NomSecable";
 import { CadreNaissance } from "@model/etatcivil/enum/CadreNaissance";
 import { ELegalisationApostille } from "@model/etatcivil/enum/ELegalisationApostille";
+import { ELienParente } from "@model/etatcivil/enum/ELienParente";
 import { EModeDepot } from "@model/etatcivil/enum/EModeDepot";
 import { EPieceProduite } from "@model/etatcivil/enum/EPieceProduite";
 import { EPrepositionLieu } from "@model/etatcivil/enum/EPrepositionLieu";
 import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
-import { LienParente } from "@model/etatcivil/enum/LienParente";
 import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { TypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteArchiviste";
 import { ConditionChamp, EOperateurCondition } from "@model/form/commun/ConditionChamp";
@@ -676,7 +676,7 @@ const mapFiliationParParent = (
     prenoms: PrenomsForm.versPrenomsStringDto(parentForm.prenomsChemin),
     sexe: parentForm.sexe || undefined,
     naissance: mapFiliationNaissance(parentForm),
-    lienParente: LienParente.PARENT,
+    lienParente: ELienParente.PARENT,
     ordre,
     age: Number(parentForm.age) || undefined,
     sansProfession: parentForm.sansProfession,

@@ -1,4 +1,4 @@
-import { TypeDeclarationConjointe } from "@model/etatcivil/enum/TypeDeclarationConjointe";
+import ETypeDeclarationConjointe from "@model/etatcivil/enum/ETypeDeclarationConjointe";
 import { IAdresse } from "../IAdresse";
 import { IDecretNaturalisation } from "../IDecretNaturalisation";
 import { IEvenement } from "../IEvenement";
@@ -19,7 +19,7 @@ export interface ITitulaireProjetActe {
   nomApresMariage?: string;
   nomDernierConjoint?: string;
   prenomsDernierConjoint?: string;
-  typeDeclarationConjointe?: TypeDeclarationConjointe;
+  typeDeclarationConjointe?: keyof typeof ETypeDeclarationConjointe;
   dateDeclarationConjointe?: Date;
   origineDeclarationConjointeTitulaireActe?: boolean;
   origineNomPartiesTitulaireActe?: boolean;

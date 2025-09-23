@@ -1,17 +1,5 @@
 import { champsObligatoiresDuDtoAbsents } from "@model/commun/dtoUtils";
 import { Options } from "@util/Type";
-import { TypeFamille } from "../enum/TypeFamille";
-
-export interface ITypeRegistre {
-  id: string;
-  famille: TypeFamille;
-  pocopa: string;
-  paysPocopa: string;
-  dateRattachement: Date;
-  dateTransfertScec: Date;
-  gereScec: boolean;
-  estOuvert: boolean;
-}
 
 export interface ITypeRegistreDto {
   id: string;
@@ -33,10 +21,8 @@ export class TypeRegistre {
   };
 
   public static readonly depuisDto = (typeRegistre: ITypeRegistreDto): TypeRegistre | null => {
-    if (champsObligatoiresDuDtoAbsents("TypeRegistre", typeRegistre, this.champsObligatoires)) {
-      console.error(`Un champ obligatoire d'un typeRegistre n'est pas défini.`);
-      return null;
-    }
+    if (champsObligatoiresDuDtoAbsents("ITypeRegistreDto", typeRegistre, this.champsObligatoires)) return null;
+
     return new TypeRegistre(typeRegistre.id, typeRegistre?.poste, typeRegistre?.pocopa);
   };
 
@@ -50,7 +36,7 @@ export class TypeRegistre {
           libelle: typeRegistre[typeDeRegistre] ?? ""
         };
       })
-      .filter(option => option.cle != "");
+      .filter(option => option.cle !== "");
   };
 
   public static readonly getTypeDeRegistre = (typeRegistres: ITypeRegistreDto[]) =>

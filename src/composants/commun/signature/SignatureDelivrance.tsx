@@ -1,7 +1,7 @@
 import { CONFIG_POST_RECUPERER_DOCUMENTS_REPONSES_A_SIGNER } from "@api/configurations/requete/documentsReponses/PostRecupererDocumentsReponsesASignerConfigApi";
 import TRAITEMENT_ENREGISTRER_DOCUMENTS_SIGNES from "@api/traitements/signature/TraitementEnregistrerDocumentsSignes";
 import { Droit } from "@model/agent/enum/Droit";
-import { FicheActe, IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
@@ -27,7 +27,7 @@ interface ISignatureDelivranceProps {
   titreModale: string;
   numerosFonctionnel: string[];
   apreSignature?: (succes?: boolean) => void;
-  donneesAvertissementsMentions?: { acte?: IFicheActe; documents: IDocumentReponse[] } | null;
+  donneesAvertissementsMentions?: { acte?: FicheActe; documents: IDocumentReponse[] } | null;
   chargerDocumentsAuClic?: boolean;
 }
 
@@ -55,9 +55,9 @@ const INFORMATIONS_SIGNATURE_DEFAUT: IInformationsSignature = {
   total: 0
 };
 
-const genererMessagesMentions = (acte?: IFicheActe, documents?: IDocumentReponse[]): string[] | null => {
-  const estActeACQouOP2ouOP3 = FicheActe.acteEstACQouOP2ouOP3(acte);
-  const estActeNaissance = FicheActe.estActeNaissance(acte);
+const genererMessagesMentions = (acte?: FicheActe, documents?: IDocumentReponse[]): string[] | null => {
+  const estActeACQouOP2ouOP3 = acte && ["OP2", "OP3", "ACQ"].includes(acte.registre.famille);
+  const estActeNaissance = acte?.nature === "NAISSANCE";
 
   const messagesMentions =
     documents?.reduce((messages: string[], document) => {

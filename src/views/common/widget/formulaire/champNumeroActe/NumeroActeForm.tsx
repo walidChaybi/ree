@@ -2,7 +2,6 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { getLibelle } from "@util/Utils";
 import { connect, Field } from "formik";
-import * as Yup from "yup";
 import { digitSeulement, traiteCarAutorises } from "../utils/ControlesUtil";
 import { ComponentFiltreProps, FormikComponentProps, onBlurChampNumero, withNamespace } from "../utils/FormUtil";
 
@@ -15,10 +14,6 @@ export const NumeroActeDefaultValues = {
   [NUMERO_BIS_TER]: "",
   [A_PARTIR_DE]: false
 };
-
-const NumeroActeValidationSchema = Yup.object({
-  [NUMERO_ACTE]: Yup.string()
-});
 
 interface INumeroActeFormProps {
   estInactifChampNumeroBisTer: boolean;

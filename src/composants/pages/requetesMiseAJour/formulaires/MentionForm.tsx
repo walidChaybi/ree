@@ -1,8 +1,8 @@
 import { CONFIG_GET_METAMODELE_TYPE_MENTION } from "@api/configurations/requete/miseAJour/GetMetamodeleTypeMentionConfigApi";
 import { TEXTE_MENTION } from "@composant/formulaire/ConstantesNomsForm";
 import { ITypeMention, TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
+import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { IMetaModeleTypeMentionDto, MetaModeleTypeMention } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
 import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { Form, Formik } from "formik";
@@ -26,7 +26,7 @@ export interface IInfoTitulaire {
   nomPartie1: string;
   nomPartie2: string;
   nomSecable: boolean;
-  sexe: Sexe | null;
+  sexe: keyof typeof ESexe | null;
 }
 
 export interface ITypeMentionDisponible {
@@ -59,7 +59,7 @@ const SCHEMA_VALIDATION_MENTIONS = {
   texteMention: Yup.string().required("Veuillez saisir le texte de la mention")
 };
 
-const getTypesMentionDisponibles = (natureActe: NatureActe): ITypeMentionDisponible[] => {
+const getTypesMentionDisponibles = (natureActe: keyof typeof ENatureActe): ITypeMentionDisponible[] => {
   const typesMentionDisponibles: ITypeMentionDisponible[] = [];
   const ajouterTypesMention = (
     typesMention: ITypeMention[],
@@ -112,7 +112,7 @@ const formaterTexteMention = (texteMention: string): string =>
 const DEFAUT_CREATION: TMentionForm = { idTypeMention: "", texteMention: "", textesEdites: {}, mentionAffecteAnalyseMarginale: false };
 
 const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeSaisie, setMentionEnCoursDeSaisie, enCoursDeSaisie }) => {
-  const typesMentionDisponibles = useMemo(() => getTypesMentionDisponibles(NatureActe.NAISSANCE), []);
+  const typesMentionDisponibles = useMemo(() => getTypesMentionDisponibles("NAISSANCE"), []);
   const [valeurDefaut, setValeurDefaut] = useState<TMentionForm>({ ...DEFAUT_CREATION });
   const [typeMentionChoisi, setTypeMentionChoisi] = useState<ITypeMentionDisponible | null>(null);
   const [metamodeleTypeMention, setMetamodeleTypeMention] = useState<MetaModeleTypeMention | null>(null);
@@ -164,7 +164,7 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
               nomPartie1: infoTitulaire.nomPartie1,
               nomPartie2: infoTitulaire.nomPartie2,
               nomSecable: infoTitulaire.nomSecable,
-              sexe: infoTitulaire.sexe?.libelle ?? ""
+              sexe: infoTitulaire.sexe ? ESexe[infoTitulaire.sexe] : ""
             },
             idTypeMention: typeMentionChoisi.id,
             texteMention: mentionModifiee?.mention.texte ?? "",

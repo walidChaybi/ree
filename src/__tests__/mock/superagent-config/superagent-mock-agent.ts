@@ -1,7 +1,5 @@
 import { MockHabilitation } from "../data/habilitationMock";
-import INFOS_UTILISATEURS from "../data/infosUtilisateurs.json";
 import { serviceEtablissement } from "../data/serviceEtablissement";
-import DONNEES_UTILISATEURS from "../data/utilisateurs.json";
 
 export const configAgent = [
   {
@@ -21,14 +19,6 @@ export const configAgent = [
     fixtures: function (match: any, params: any, headers: any, context: any) {
       if (match[1] === "/utilisateurs/connexion") {
         return { data: MockHabilitation };
-      }
-
-      if (match[1] === "/utilisateurs") {
-        return { data: DONNEES_UTILISATEURS.data };
-      }
-
-      if (match[1] === "/utilisateurs/infos?ids=204b8563-c7f8-4748-9daa-f26558985895&ids=204b8563-c7f8-4748-9daa-f26558985894") {
-        return { data: INFOS_UTILISATEURS.data };
       }
 
       if (match[1].startsWith("/services?idService=6737566d-0f25-45dc-8443-97b444e6753a")) {

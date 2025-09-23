@@ -31,5 +31,5 @@ export function mapAlertesActe(data: any[]): IAlerte[] {
 }
 
 function trierAlertesActeParDateCreationDesc(data: any[]): any[] {
-  return triListeObjetsSurPropriete(data, "dateCreation")?.reverse();
+  return triListeObjetsSurPropriete(data as { dateCreation: number }[], "dateCreation")?.reverse();
 }

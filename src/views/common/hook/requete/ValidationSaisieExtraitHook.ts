@@ -1,4 +1,4 @@
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { useEffect, useState } from "react";
@@ -7,35 +7,25 @@ import {
   IMajEtatCivilSuiteSaisieExtraitParams,
   useMajEtatCivilSuiteSaisieExtrait
 } from "../acte/MajEtatCivilSuiteSaisieExtraitApiHook";
-import {
-  IRegenerationDocumentsParams,
-  useRegenerationDocumentsHook
-} from "./RegenerationDocumentsHook";
+import { IRegenerationDocumentsParams, useRegenerationDocumentsHook } from "./RegenerationDocumentsHook";
 
 export interface ISauvegardeValidationSaisieExtraitParams {
   requete: IRequeteDelivrance;
-  acte: IFicheActe;
+  acte: FicheActe;
   extraitSaisiAEnvoyer: IExtraitSaisiAEnvoyer;
   callBack?: () => void;
   problemePlurilingue?: boolean;
   valeursCourrierParDefaut: SaisieCourrier;
 }
 
-export function useSauvegardeValidationSaisieExtrait(
-  params?: ISauvegardeValidationSaisieExtraitParams
-) {
-  const [regenerationDocumentsParams, setRegenerationDocumentsParams] =
-    useState<IRegenerationDocumentsParams>();
+export function useSauvegardeValidationSaisieExtrait(params?: ISauvegardeValidationSaisieExtraitParams) {
+  const [regenerationDocumentsParams, setRegenerationDocumentsParams] = useState<IRegenerationDocumentsParams>();
 
-  const [
-    majEtatCivilSuiteSaisieExtraitParams,
-    setMajEtatCivilSuiteSaisieExtraitParams
-  ] = useState<IMajEtatCivilSuiteSaisieExtraitParams>();
+  const [majEtatCivilSuiteSaisieExtraitParams, setMajEtatCivilSuiteSaisieExtraitParams] = useState<IMajEtatCivilSuiteSaisieExtraitParams>();
 
   useRegenerationDocumentsHook(regenerationDocumentsParams);
 
-  const resultatMajEtatCivilSuiteSaisieExtrait =
-    useMajEtatCivilSuiteSaisieExtrait(majEtatCivilSuiteSaisieExtraitParams);
+  const resultatMajEtatCivilSuiteSaisieExtrait = useMajEtatCivilSuiteSaisieExtrait(majEtatCivilSuiteSaisieExtraitParams);
 
   // 1 - Sauvegarde des données de l'acte
   useEffect(() => {
@@ -58,7 +48,5 @@ export function useSauvegardeValidationSaisieExtrait(
         valeursCourrierParDefaut: params.valeursCourrierParDefaut
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatMajEtatCivilSuiteSaisieExtrait]);
 }
-

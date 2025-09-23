@@ -1,8 +1,8 @@
-import { getInformationsFicheActe } from "@api/appels/etatcivilApi";
-import { IFicheActe } from "@model/etatcivil/acte/IFicheActe";
+import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { useEffect, useState } from "react";
-import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
-import { mapActe } from "../repertoires/MappingRepertoires";
+import useFetchApi from "../../../../hooks/api/FetchApiHook";
+import AfficherMessage from "../../../../utils/AfficherMessage";
 
 export interface IActeApiHookParams {
   idActe?: string;
@@ -10,28 +10,30 @@ export interface IActeApiHookParams {
   remplaceIdentiteTitulaireParIdentiteTitulaireAM?: boolean;
 }
 
-export interface IActeApiHookResultat {
-  acte?: IFicheActe;
-}
+export function useInformationsActeApiHook({
+  idActe,
+  recupereImagesEtTexte,
+  remplaceIdentiteTitulaireParIdentiteTitulaireAM
+}: IActeApiHookParams): FicheActe | null {
+  const [acte, setActe] = useState<FicheActe | null>(null);
 
-export function useInformationsActeApiHook(params?: IActeApiHookParams): IActeApiHookResultat | undefined {
-  const [acteApiHookResultat, setActeApiHookResultat] = useState<IActeApiHookResultat>();
+  const { appelApi: recupererActe } = useFetchApi(CONFIG_GET_RESUME_ACTE);
 
   useEffect(() => {
-    if (params?.idActe) {
-      getInformationsFicheActe(params.idActe, params.recupereImagesEtTexte, params.remplaceIdentiteTitulaireParIdentiteTitulaireAM)
-        .then((result: any) => {
-          const acte: IFicheActe = mapActe(result.body.data);
-          setActeApiHookResultat({ acte });
-        })
-        .catch((erreurs: any) => {
-          AfficherMessage.erreur("Impossible de récupérer les informations de l'acte", {
-            erreurs: estTableauErreurApi(erreurs) ? erreurs : [],
-            fermetureAuto: true
-          });
-        });
-    }
-  }, [params]);
+    if (!idActe) return;
 
-  return acteApiHookResultat;
+    recupererActe({
+      parametres: { path: { idActe: idActe }, query: { recupereImagesEtTexte, remplaceIdentiteTitulaireParIdentiteTitulaireAM } },
+      apresSucces: acte => {
+        setActe(FicheActe.depuisDto(acte));
+      },
+      apresErreur: erreurs =>
+        AfficherMessage.erreur("Impossible de récupérer les informations de l'acte", {
+          erreurs,
+          fermetureAuto: true
+        })
+    });
+  }, [idActe, recupereImagesEtTexte, remplaceIdentiteTitulaireParIdentiteTitulaireAM]);
+
+  return acte;
 }
