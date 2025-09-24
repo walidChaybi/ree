@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ESnext",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["vite/client"],
+    "types": ["vite/client", "cypress"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -31,5 +31,5 @@
       "@pageEtablissement/*": ["./src/views/pages/requeteCreation/apercuRequete/etablissement/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "e2e"]
 }
