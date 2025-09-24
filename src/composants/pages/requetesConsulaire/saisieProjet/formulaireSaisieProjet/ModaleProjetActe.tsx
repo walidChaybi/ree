@@ -4,12 +4,14 @@ import {
 } from "@api/configurations/composition/PostCompositionActeTexteApiConfigApi";
 import { ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
 import { TitulaireProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/TitulaireProjetActeTranscrit";
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
+import { SaisieProjetActeTranscritContext } from "../../../../../contexts/SaisieProjetActeTranscritContextProvider";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
 import AfficherMessage from "../../../../../utils/AfficherMessage";
 import AffichagePDF from "../../../../commun/affichageDocument/AffichagePDF";
 import Bouton from "../../../../commun/bouton/Bouton";
 import ConteneurModale from "../../../../commun/conteneurs/modale/ConteneurModale";
+import SignatureDocument from "../../../../commun/signature/SignatureDocument";
 
 // /!\ À supprimer après le FIX dans Composition API /ACTE_TEXTE/1
 /*v8 ignore start */
@@ -37,6 +39,7 @@ interface IModaleProjetActeProps {
 
 const ModaleProjetActe: React.FC<IModaleProjetActeProps> = ({ fermerModale, projetActe }) => {
   const [pdfBase64, setPdfBase64] = useState<string | null>(null);
+  const { requete } = useContext(SaisieProjetActeTranscritContext);
   const { appelApi: appelerCompositionPdf } = useFetchApi(CONFIG_POST_COMPOSITION_ACTE_TEXTE);
 
   const natureActe = useMemo(() => {
@@ -98,9 +101,18 @@ const ModaleProjetActe: React.FC<IModaleProjetActeProps> = ({ fermerModale, proj
             </div>
           </div>
 
-          <div className="h-full w-2/5 animate-entree-droite border-l border-gray-200 p-6">
-            <div className="flex h-full w-full flex-col items-center justify-center rounded-lg bg-gray-50 p-6">
-              <div className="mb-4 text-gray-500">{/*Zone de signature*/}</div>
+          <div className="h-full w-2/5 p-6">
+            <div className="m-auto flex h-full max-w-md items-center justify-center rounded-lg p-6 text-center">
+              <div className="text-center">
+                <SignatureDocument
+                  typeSignature="TRANSCRIT"
+                  idActe={projetActe.id}
+                  idRequete={requete.id}
+                  apresSignature={(succes: boolean) => {
+                    // TODO US[STRECE-8827]
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>

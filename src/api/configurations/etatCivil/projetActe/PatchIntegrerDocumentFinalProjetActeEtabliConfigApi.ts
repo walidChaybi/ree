@@ -11,7 +11,7 @@ interface IBody {
   modeAuthentification: TModeAuthentification;
 }
 
-export const CONFIG_PATCH_INTEGRER_DOCUMENT_FINAL_PROJET_ACTE: TConfigurationApi<typeof URI, IBody> = {
+export const CONFIG_PATCH_INTEGRER_DOCUMENT_FINAL_PROJET_ACTE_ETABLI: TConfigurationApi<typeof URI, IBody> = {
   api: ETATCIVIL_API,
   methode: "PATCH",
   uri: URI,

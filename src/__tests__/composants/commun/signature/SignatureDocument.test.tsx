@@ -74,7 +74,7 @@ describe("Test du composant SignatureDocument", () => {
   test("La modale de signature affiche correctement une erreur de composition du document", async () => {
     MockApi.deployer(
       CONFIG_PATCH_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES,
-      { path: { idActe: "idActe" }, body: { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } } },
+      { path: { idActe: "idActe" }, body: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } },
       { erreurs: [{ code: "TECH_16021", message: "Erreur composition", type: "TechnicalException" }], codeHttp: 500 }
     ).deployer(CONFIG_POST_LOGS);
 
@@ -102,7 +102,7 @@ describe("Test du composant SignatureDocument", () => {
   test("La modale de signature affiche correctement une erreur de signature du document", async () => {
     MockApi.deployer(
       CONFIG_PATCH_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES,
-      { path: { idActe: "idActe" }, body: { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } } },
+      { path: { idActe: "idActe" }, body: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } },
       { data: "documentASigner" }
     ).deployer(CONFIG_POST_LOGS);
 
@@ -130,7 +130,7 @@ describe("Test du composant SignatureDocument", () => {
   test("La modale de signature affiche correctement une erreur d'enregistrement du document signé", async () => {
     MockApi.deployer(
       CONFIG_PATCH_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES,
-      { path: { idActe: "idActe" }, body: { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } } },
+      { path: { idActe: "idActe" }, body: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } },
       { data: "documentASigner" }
     )
       .deployer(
@@ -170,7 +170,7 @@ describe("Test du composant SignatureDocument", () => {
   test("Une erreur de mise à jour du statut n'affecte pas la réussite de la signature", async () => {
     MockApi.deployer(
       CONFIG_PATCH_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES,
-      { path: { idActe: "idActe" }, body: { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } } },
+      { path: { idActe: "idActe" }, body: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } },
       { data: "documentASigner" }
     )
       .deployer(CONFIG_PATCH_INTEGRER_DOCUMENT_MENTION_SIGNER, {
@@ -230,7 +230,7 @@ describe("Test du composant SignatureDocument", () => {
   test("La signature se déroule correctement et appel la fonction apresSignature sans erreur", async () => {
     MockApi.deployer(
       CONFIG_PATCH_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES,
-      { path: { idActe: "idActe" }, body: { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } } },
+      { path: { idActe: "idActe" }, body: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } },
       { data: "documentASigner" }
     )
       .deployer(CONFIG_PATCH_INTEGRER_DOCUMENT_MENTION_SIGNER, {

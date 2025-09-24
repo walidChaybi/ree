@@ -45,14 +45,56 @@ exports[`ModaleProjetActe - Tests du composant > DOIT rendre le composant correc
             </div>
           </div>
           <div
-            class="h-full w-2/5 animate-entree-droite border-l border-gray-200 p-6"
+            class="h-full w-2/5 p-6"
           >
             <div
-              class="flex h-full w-full flex-col items-center justify-center rounded-lg bg-gray-50 p-6"
+              class="m-auto flex h-full max-w-md items-center justify-center rounded-lg p-6 text-center"
             >
               <div
-                class="mb-4 text-gray-500"
-              />
+                class="text-center"
+              >
+                <div>
+                  <form
+                    action="#"
+                  >
+                    <div
+                      class="flex w-full flex-col text-start"
+                    >
+                      <label
+                        aria-label="aria-label-pin"
+                        class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                        for="pin"
+                      >
+                        Code pin
+                      </label>
+                      <div
+                        class="relative flex rounded-md shadow-sm"
+                      >
+                        <input
+                          autocomplete="off"
+                          class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                          id="pin"
+                          maxlength="8"
+                          name="pin"
+                          type="password"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="mt-12 flex flex-nowrap justify-center gap-4"
+                    >
+                      <button
+                        class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
+                        title="Valider"
+                        type="submit"
+                      >
+                        Valider
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
         </div>

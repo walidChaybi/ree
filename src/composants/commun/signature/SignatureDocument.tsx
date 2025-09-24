@@ -1,8 +1,9 @@
 import { CONFIG_PATCH_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES } from "@api/configurations/etatCivil/acte/PatchComposerDocumentMentionsUlterieuresConfigApi";
 import { CONFIG_PATCH_INTEGRER_DOCUMENT_MENTION_SIGNER } from "@api/configurations/etatCivil/acte/PatchIntegrerDocumentMentionSigneConfigApi";
-import { CONFIG_PATCH_COMPOSER_DOCUMENT_FINAL_PROJET_ACTE } from "@api/configurations/etatCivil/projetActe/PatchComposerDocumentFinalProjetActeConfigApi";
-import { CONFIG_PATCH_INTEGRER_DOCUMENT_FINAL_PROJET_ACTE } from "@api/configurations/etatCivil/projetActe/PatchIntegrerDocumentFinalProjetActeConfigApi";
-import { CONFIG_PATCH_STATUT_REQUETE_CREATION_APRES_SIGNATURE } from "@api/configurations/requete/creation/PatchStatutRequeteCreationApresSignatureConfigApi";
+import { CONFIG_PATCH_COMPOSER_DOCUMENT_FINAL_PROJET_ACTE_ETABLI } from "@api/configurations/etatCivil/projetActe/PatchComposerDocumentFinalProjetActeEtabliConfigApi";
+import { CONFIG_PATCH_COMPOSER_DOCUMENT_FINAL_PROJET_ACTE_TRANSCRIT } from "@api/configurations/etatCivil/projetActe/PatchComposerDocumentFinalProjetActeTranscritConfigApi";
+import { CONFIG_PATCH_INTEGRER_DOCUMENT_FINAL_PROJET_ACTE_ETABLI } from "@api/configurations/etatCivil/projetActe/PatchIntegrerDocumentFinalProjetActeEtabliConfigApi";
+import { CONFIG_PATCH_STATUT_REQUETE_ETABLI_APRES_SIGNATURE } from "@api/configurations/requete/creation/PatchStatutRequeteEtabliApresSignatureConfigApi";
 import { CONFIG_PATCH_STATUT_REQUETE_MISE_A_JOUR } from "@api/configurations/requete/miseAJour/PatchStatutRequeteMiseAjourConfigApi";
 import { TErreurApi } from "@model/api/Api";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -24,6 +25,8 @@ type TStatutSignature =
   | "enregistrement-document"
   | "termine";
 
+type TTypeSignature = "MISE_A_JOUR" | "ETABLI" | "TRANSCRIT";
+
 interface IDonneesSignature {
   statut: TStatutSignature;
   codePin: string | null;
@@ -41,13 +44,18 @@ interface ISignatureCommunProps {
 }
 
 interface ISignatureMiseAJourProps extends ISignatureCommunProps {
-  typeSignature: "MISE_A_JOUR";
+  typeSignature: TTypeSignature;
   idSuivi?: never;
 }
 
-interface ISignatureCreationProps extends ISignatureCommunProps {
-  typeSignature: "CREATION";
+interface ISignatureEtablissementProps extends ISignatureCommunProps {
+  typeSignature: TTypeSignature;
   idSuivi: string;
+}
+
+interface ISignatureTranscriptionProps extends ISignatureCommunProps {
+  typeSignature: TTypeSignature;
+  idSuivi?: never;
 }
 
 const DONNEES_SIGNATURE_DEFAUT: IDonneesSignature = {
@@ -67,7 +75,7 @@ const AVANCEMENT: { [EtatAvancement in Exclude<TStatutSignature, "attente-pin" |
   "enregistrement-document": { niveau: 100, message: "Enregistrement du document signé..." }
 };
 
-/* NOSONAR */ const SignatureDocument: React.FC<ISignatureMiseAJourProps | ISignatureCreationProps> = ({
+/* NOSONAR */ const SignatureDocument: React.FC<ISignatureMiseAJourProps | ISignatureEtablissementProps | ISignatureTranscriptionProps> = ({
   idActe,
   idRequete,
   apresSignature,
@@ -83,7 +91,8 @@ const AVANCEMENT: { [EtatAvancement in Exclude<TStatutSignature, "attente-pin" |
         switch (typeSignature) {
           case "MISE_A_JOUR":
             return TypePopinSignature.getTextePopinSignatureMentions() ?? "";
-          case "CREATION":
+          case "ETABLI":
+          case "TRANSCRIT":
             return TypePopinSignature.getTextePopinSignatureActe() ?? "";
           default:
             return "";
@@ -95,12 +104,33 @@ const AVANCEMENT: { [EtatAvancement in Exclude<TStatutSignature, "attente-pin" |
 
   const { appelApi: appelComposerMentions } = useFetchApi(CONFIG_PATCH_COMPOSER_DOCUMENT_MENTIONS_ULTERIEURES);
   const { appelApi: appelIntegrerMentions } = useFetchApi(CONFIG_PATCH_INTEGRER_DOCUMENT_MENTION_SIGNER);
-  const { appelApi: appelComposerProjetActe } = useFetchApi(CONFIG_PATCH_COMPOSER_DOCUMENT_FINAL_PROJET_ACTE);
-  const { appelApi: appelIntegrerProjetActe } = useFetchApi(CONFIG_PATCH_INTEGRER_DOCUMENT_FINAL_PROJET_ACTE);
   const { appelApi: appelModifierStatutRequeteMiseAJour } = useFetchApi(CONFIG_PATCH_STATUT_REQUETE_MISE_A_JOUR, true);
-  const { appelApi: appelModifierStatutRequeteCreation } = useFetchApi(CONFIG_PATCH_STATUT_REQUETE_CREATION_APRES_SIGNATURE);
+
+  const { appelApi: appelComposerProjetActeEtabli } = useFetchApi(CONFIG_PATCH_COMPOSER_DOCUMENT_FINAL_PROJET_ACTE_ETABLI);
+  const { appelApi: appelIntegrerProjetActeEtabli } = useFetchApi(CONFIG_PATCH_INTEGRER_DOCUMENT_FINAL_PROJET_ACTE_ETABLI);
+  const { appelApi: appelModifierStatutRequeteEtabli } = useFetchApi(CONFIG_PATCH_STATUT_REQUETE_ETABLI_APRES_SIGNATURE);
+
+  const { appelApi: appelComposerProjetActeTranscrit } = useFetchApi(CONFIG_PATCH_COMPOSER_DOCUMENT_FINAL_PROJET_ACTE_TRANSCRIT);
 
   const [donneesSignature, setDonneesSignature] = useState<IDonneesSignature>({ ...DONNEES_SIGNATURE_DEFAUT });
+
+  const configurationSignature = {
+    MISE_A_JOUR: {
+      composer: appelComposerMentions,
+      enregistrer: appelIntegrerMentions,
+      modifierStatut: appelModifierStatutRequeteMiseAJour
+    },
+    ETABLI: {
+      composer: appelComposerProjetActeEtabli,
+      enregistrer: appelIntegrerProjetActeEtabli,
+      modifierStatut: appelModifierStatutRequeteEtabli
+    },
+    TRANSCRIT: {
+      composer: appelComposerProjetActeTranscrit,
+      enregistrer: appelIntegrerProjetActeEtabli,
+      modifierStatut: appelModifierStatutRequeteEtabli
+    }
+  } as const satisfies Record<TTypeSignature, unknown>;
 
   const recuperationInformations = () => {
     console.info("[SIGNATURE] Récupération des informations de la carte ...");
@@ -138,36 +168,40 @@ const AVANCEMENT: { [EtatAvancement in Exclude<TStatutSignature, "attente-pin" |
   const compositionDocument = () => {
     console.info("[SIGNATURE] Composition du document à signer ...");
 
-    donneesSignature.informationsCarte &&
-      (signature.estMiseAJour ? appelComposerMentions : appelComposerProjetActe)({
-        parametres: {
-          path: { idActe: idActe },
-          body: {
-            infosSignature: donneesSignature.informationsCarte
-          }
-        },
-        apresSucces: documentASigner => {
-          console.info("[SIGNATURE] Composition du document à signer effectuée");
-          setDonneesSignature(prec => ({
-            ...prec,
-            documentASigner: documentASigner,
-            statut: "signature-document"
-          }));
-        },
-        apresErreur: erreurs => {
-          const messageErreurServeur = ["FCT_16108", "TECH_16021"].includes(erreurs[0]?.code) ? erreurs[0]?.message : null;
-          const messageErreurDefaut = "Erreur lors de la composition du document à signer";
-          console.error(
-            `[SIGNATURE] ${messageErreurDefaut} : ${erreurs[0]?.code ?? "CODE_INCONNU"} - ${erreurs[0]?.message ?? "Erreur inconnue"}`
-          );
+    if (!donneesSignature.informationsCarte) return;
 
-          setDonneesSignature(prec => ({
-            ...prec,
-            erreur: messageErreurServeur ?? messageErreurDefaut,
-            statut: "termine"
-          }));
+    const config = configurationSignature[typeSignature];
+
+    config.composer({
+      parametres: {
+        path: { idActe: idActe },
+        body: {
+          issuerCertificat: donneesSignature.informationsCarte.issuerCertificat,
+          entiteCertificat: donneesSignature.informationsCarte.entiteCertificat
         }
-      });
+      },
+      apresSucces: documentASigner => {
+        console.info("[SIGNATURE] Composition du document à signer effectuée");
+        setDonneesSignature(prec => ({
+          ...prec,
+          documentASigner: documentASigner,
+          statut: "signature-document"
+        }));
+      },
+      apresErreur: erreurs => {
+        const messageErreurServeur = ["FCT_16108", "TECH_16021"].includes(erreurs[0]?.code) ? erreurs[0]?.message : null;
+        const messageErreurDefaut = "Erreur lors de la composition du document à signer";
+        console.error(
+          `[SIGNATURE] ${messageErreurDefaut} : ${erreurs[0]?.code ?? "CODE_INCONNU"} - ${erreurs[0]?.message ?? "Erreur inconnue"}`
+        );
+
+        setDonneesSignature(prec => ({
+          ...prec,
+          erreur: messageErreurServeur ?? messageErreurDefaut,
+          statut: "termine"
+        }));
+      }
+    });
   };
 
   const signatureDocument = () => {
@@ -208,7 +242,7 @@ const AVANCEMENT: { [EtatAvancement in Exclude<TStatutSignature, "attente-pin" |
     console.info("[SIGNATURE] Enregistrement du document signé ...");
     donneesSignature.documentSigne &&
       donneesSignature.informationsCarte &&
-      (signature.estMiseAJour ? appelIntegrerMentions : appelIntegrerProjetActe)({
+      (signature.estMiseAJour ? appelIntegrerMentions : appelIntegrerProjetActeEtabli)({
         parametres: {
           path: { idActe: idActe },
           body: {
@@ -244,7 +278,7 @@ const AVANCEMENT: { [EtatAvancement in Exclude<TStatutSignature, "attente-pin" |
               return;
 
             case Boolean(idSuivi?.length):
-              appelModifierStatutRequeteCreation({
+              appelModifierStatutRequeteEtabli({
                 parametres: { path: { idRequete: idRequete, idSuiviDossier: idSuivi ?? "" } },
                 ...apresModificationStatut
               });
@@ -299,6 +333,7 @@ const AVANCEMENT: { [EtatAvancement in Exclude<TStatutSignature, "attente-pin" |
     }
   }, [donneesSignature.statut]);
 
+  const avecBoutonAnnuler = ["ETABLI", "CREATION"].includes(typeSignature);
   switch (donneesSignature.statut) {
     case "attente-pin":
       return (
@@ -321,6 +356,7 @@ const AVANCEMENT: { [EtatAvancement in Exclude<TStatutSignature, "attente-pin" |
               apresSignature(false);
             }}
             erreurPin={donneesSignature.erreurPin}
+            avecBoutonAnnuler={avecBoutonAnnuler}
           />
         </>
       );
