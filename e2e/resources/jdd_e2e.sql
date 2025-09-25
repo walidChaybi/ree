@@ -14,7 +14,7 @@ DELETE FROM etape2.requerant r where r.id_requerant='89acb513-785e-4f5f-b8f6-c73
 
 
 
--- Recréation de la requête RDD en statut PRISE_EN_CHARGE
+-- Recréation de la requête RDD en statut A_TRAITER
 INSERT INTO etape2.requerant (id_requerant,date_creation,nom_famille,prenom,courriel,telephone,"qualite",courriel_autre_contact,telephone_autre_contact) VALUES
 	 ('89acb513-785e-4f5f-b8f6-c73a25714ea3'::uuid,'2025-08-22 14:41:23.87081+02','BRUTUS','Marcus','brutus@gmail.com','+331234567890','PARTICULIER'::etape2."qualite",NULL,NULL);
 INSERT INTO etape2.requete (id_requete,numero_fonctionnel,date_creation,"canal","type",id_utilisateur,id_service,id_requerant,id_mandant,date_modification,id_dernier_action) VALUES

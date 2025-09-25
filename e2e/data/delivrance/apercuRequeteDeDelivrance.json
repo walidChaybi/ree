@@ -1,0 +1,45 @@
+{
+    "titre": {
+        "bandeauRequete": {
+            "identifiant": "[class='BandeauRequete'] > h2"
+        },
+        "descriptionRequete": {
+            "label": "Description requête XXXXXX",
+            "identifiant": "[class='side left'] > div > [class='ResumeRequeteTitle']"
+        },
+        "typeRequete": {
+            "label": "Type requête",
+            "identifiant": "[class='side left'] > [class='TypeRequete'] > div > div > h3 > button > span > div > span"
+        },
+        "observationsRequete": {
+            "label": "Observations requête",
+            "identifiant": "[class='side left'] > [class='suivis-requete'] > div > div > h3 > button > span > div > span"
+        },
+        "historiqueDesActions": {
+            "label": "Historique des actions",
+            "identifiant": "[class='side left'] > [class='historique-actions'] > div > div > h3 > button > span > div > span"
+        },
+        "documentsADelivrer": {
+            "label": "Documents à délivrer",
+            "identifiant": "[class='side left'] > [class='documents-reponses'] > div > div > h3 > button > span > div > span",
+            "identifiantBouton": "[class='side left'] > [class='documents-reponses'] > div > div > h3 > button"
+        },
+        "apercuDesDocuments": {
+            "label": "Aperçu des documents",
+            "identifiant": "[class='side right'] > div > [class='Titre']"
+        }
+    },
+    "bouton": {
+        "prendreEnCharge": {
+            "label": "Prendre en charge",
+            "identifiant": "[class='BoutonPrendreEnCharge']",
+            "type": "button"
+        },
+        "retour": {
+            "label": "<< Retour",
+            "identifiant": "[class='Bouton BoutonRetour']",
+            "type": "a"
+        }
+
+    }
+}

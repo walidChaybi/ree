@@ -1,0 +1,31 @@
+{
+    "bouton": {
+        "delivrance": {
+            "mesRequetes": {
+                "label": "Mes requêtes",
+                "identifiant": "[href='/rece/rece-ui/espace-delivrance/mes-requetes']",
+                "type": "a"
+            },
+            "monService": {
+                "label": "Mon service",
+                "identifiant": "[href='/rece/rece-ui/espace-delivrance/mon-service']",
+                "type": "a"
+            }
+        }
+
+    },
+    "titre": {
+        "delivrance": {
+            "label": "Délivrance",
+            "type": "h2"
+        },
+        "recherche": {
+            "label": "Recherche",
+            "type": "h2"
+        },
+        "communicationAvceLesUsagers": {
+            "label": "Communication avec les usagers",
+            "type": "h2"
+        }
+    }
+}

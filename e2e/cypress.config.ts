@@ -25,6 +25,7 @@ export default defineConfig({
       overwrite: false,
       html: true,
       json: true,
+      charts: true,
       embeddedScrennshots: true,
       inlineAssets: true
     }
@@ -61,8 +62,8 @@ export default defineConfig({
       on('task', {
         async dynamicRequire(pathToModule: string) {
           // Permet la MAJ des datas dans le fichier JSON si nous effectuons une modif dedans sans avoir à relancer le browser cypress
-          delete require.cache[require.resolve(`./e2e/data/${pathToModule}`)];
-          const mod = require(`./e2e/data/${pathToModule}`); // ou await import(pathToModule) si ESM
+          delete require.cache[require.resolve(`./data/${pathToModule}`)];
+          const mod = require(`./data/${pathToModule}`); // ou await import(pathToModule) si ESM
           return mod;
         },
       });

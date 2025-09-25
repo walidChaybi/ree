@@ -1,0 +1,20 @@
+{
+    "delivrance": {
+        "label": "Délivrance",
+        "labelCamelCase": "delivrance",
+        "page": {
+            "lesRequetesDeDelivranceDeMonService": {
+                "label": "Les requêtes de délivrance de mon service",
+                "labelCamelCase": "lesRequetesDeDelivranceDeMonService"
+            },
+            "apercuRequeteDeDelivrance": {
+                "label": "Aperçu requête de délivrance",
+                "labelCamelCase": "apercuRequeteDeDelivrance"
+            },
+            "apercuRequeteDeDelivrancePriseEnCharge": {
+                "label": "Aperçu requête de délivrance (prise en charge)",
+                "labelCamelCase": "apercuRequeteDeDelivrancePriseEnCharge"
+            }
+        }
+    }
+}
