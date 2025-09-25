@@ -2,9 +2,9 @@ import { CONFIG_POST_LOGS } from "@api/configurations/outilTech/PostLogsConfigAp
 import { MockApi } from "@mock/appelsApi/MockApi";
 import { NATURE_MENTION } from "@mock/data/NomenclatureNatureMention";
 import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
-import { ficheActeTexte } from "@mock/data/ficheActe";
 import { mentions } from "@mock/data/mentions";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { MockFicheActeBuilder } from "@mock/model/etatcivil/acte/MockFicheActe";
 import { Droit } from "@model/agent/enum/Droit";
 import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
@@ -261,12 +261,11 @@ describe("Test du composant Signature délivrance", () => {
     NatureMention.init(NATURE_MENTION);
     TypeMention.init(TYPE_MENTION);
 
-    const acte: FicheActe = FicheActe.depuisDto({
-      ...ficheActeTexte,
-      id: "idActe",
-      nature: "NAISSANCE",
+    const acte = new MockFicheActeBuilder({
       mentions: [{ ...mentions[0], typeMention: { idTypeMention: "b04835d7-880e-45f2-9947-da18dd3237de" } }] // Nature de code 4
-    })!;
+    })
+      .deNature("NAISSANCE")
+      .generer()!;
 
     const NOM_DOC = "nom doc";
     const documentsReponse = [{ nom: NOM_DOC, typeDocument: "28580709-06dd-4df2-bf6e-70a9482940a1" } as IDocumentReponse];

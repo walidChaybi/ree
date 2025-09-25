@@ -1,4 +1,4 @@
-import { ficheActeNaissance } from "@mock/data/ficheActe";
+import { MockFicheActeBuilder } from "@mock/model/etatcivil/acte/MockFicheActe";
 import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { RouteObject, createMemoryRouter } from "react-router";
@@ -23,7 +23,7 @@ export function createTestingRouter(routes: RouteObject[], initialEntries: strin
 export const elementAvecEditionDelivranceContexte = (children: React.ReactElement, requete?: IRequeteDelivrance, acte?: FicheActe): any => {
   const valeursContext = {
     requete: requete ?? requeteDelivrance,
-    acte: acte ?? FicheActe.depuisDto(ficheActeNaissance),
+    acte: acte ?? new MockFicheActeBuilder().deType("TEXTE").deNature("NAISSANCE").generer(),
     rechargerRequete: (charger: "les-deux" | "requete" | "acte", apresRechargement?: () => void) => apresRechargement?.()
   };
 

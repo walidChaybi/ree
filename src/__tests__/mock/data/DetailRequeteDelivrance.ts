@@ -1,5 +1,4 @@
 import { documentReponseCARN_CSPAC_01, documentReponseCertificatRCA } from "./DocumentReponse";
-import { idFicheActeAvecGenreIndetermine, idFicheActeAvecTitulaireMultiple, idficheActeEC, idFicheActeMariage } from "./ficheActe";
 import { TYPE_PIECE_JUSTIFICATIVE } from "./NomenclatureTypePieceJustificative";
 
 export const ReponseAppelDetailRequeteDelivrance = {
@@ -1668,6 +1667,7 @@ export function getRequeteAvecDeuxDocs(requete: any) {
   return requeteAvecDeuxDoc;
 }
 
+export const idFicheActeMariage = "b41079a5-9e8d-478c-b04c-c4c2ac67134b";
 export const requeteAvecCopieIntegraleActeImage = {
   id: "9bfa282d-1e66-4538-b242-b9de4f683f77",
   numeroFonctionnel: "BBLMAN",
@@ -1959,6 +1959,7 @@ export const requeteSansDocument = {
   choixDelivrance: "DELIVRER_EC_EXTRAIT_AVEC_FILIATION"
 };
 
+const idficheActeEC = "b41079a5-9e8f-478a-b04c-c4c2ac671123";
 export const detailRequeteDelivranceCopieArchive = {
   id: "9bfa282d-1e66-4538-b272-b9de4g683aaf",
   numeroFonctionnel: "BBLMAN",
@@ -2122,6 +2123,9 @@ export const detailRequeteDelivranceCopieArchive = {
   },
   choixDelivrance: "DELIVRER_EC_COPIE_INTEGRALE"
 };
+
+const idFicheActeAvecGenreIndetermine = "b45079a5-9e8f-478a-b07c-c4c2az671123";
+const idFicheActeAvecTitulaireMultiple = "b45079a5-9e8f-488a-b07c-c4c2az613121";
 
 export const detailRequeteDelivranceGenreIndetermine = {
   id: "9bfa282d-1e66-4038-b272-b9de48683a8f",

@@ -1,8 +1,8 @@
 import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { ficheActeTexte } from "@mock/data/ficheActe";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { MockFicheActeBuilder } from "@mock/model/etatcivil/acte/MockFicheActe";
 import { Droit } from "@model/agent/enum/Droit";
 import { render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router";
@@ -12,10 +12,11 @@ import EditionDelivranceContextProvider from "../../../../../../contexts/Edition
 import { createTestingRouter } from "../../../../../__tests__utils__/testsUtil";
 
 describe("BoutonTerminerOuRelecture - ", () => {
+  const idFicheActe = "idFicheActe";
   MockApi.deployer(
     CONFIG_GET_RESUME_ACTE,
-    { path: { idActe: ficheActeTexte.id }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
-    { data: ficheActeTexte }
+    { path: { idActe: idFicheActe }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
+    { data: new MockFicheActeBuilder({ id: idFicheActe }).deType("TEXTE").deNature("NAISSANCE").genererDto() }
   );
   test("Doit afficher les boutons d'action pour traiter la requête", async () => {
     const router = createTestingRouter(
@@ -24,7 +25,7 @@ describe("BoutonTerminerOuRelecture - ", () => {
           path: "/test",
           element: (
             <EditionDelivranceContextProvider
-              idActeParam={ficheActeTexte.id}
+              idActeParam={idFicheActe}
               idRequeteParam={"3f52370d-14ed-4c55-8cf4-afe006d9aa38"}
             >
               <BoutonsTerminerOuRelecture />
@@ -57,7 +58,7 @@ describe("BoutonTerminerOuRelecture - ", () => {
           path: "/test",
           element: (
             <EditionDelivranceContextProvider
-              idActeParam={ficheActeTexte.id}
+              idActeParam={idFicheActe}
               idRequeteParam={"3f52370d-14ed-4c55-8cf4-afe006d9aa39"}
             >
               <BoutonsTerminerOuRelecture />

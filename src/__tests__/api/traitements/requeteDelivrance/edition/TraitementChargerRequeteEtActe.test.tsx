@@ -1,7 +1,7 @@
 import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
 import TRAITEMENT_CHARGER_REQUETE_ET_ACTE from "@api/traitements/requeteDelivrance/edition/TraitementChargerRequeteEtActe";
 import { MockApi } from "@mock/appelsApi/MockApi";
-import { ficheActeTexte } from "@mock/data/ficheActe";
+import { MockFicheActeBuilder } from "@mock/model/etatcivil/acte/MockFicheActe";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useState } from "react";
 import request from "superagent";
@@ -118,7 +118,7 @@ describe("Test du traitement chargement requête et acte édition délivrance", 
     MockApi.deployer(
       CONFIG_GET_RESUME_ACTE,
       { path: { idActe: donneesTest.ID_ACTE }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
-      { data: ficheActeTexte }
+      { data: new MockFicheActeBuilder().deNature("NAISSANCE").genererDto() }
     );
 
     render(
@@ -174,7 +174,7 @@ describe("Test du traitement chargement requête et acte édition délivrance", 
     MockApi.deployer(
       CONFIG_GET_RESUME_ACTE,
       { path: { idActe: donneesTest.ID_ACTE }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
-      { data: ficheActeTexte }
+      { data: new MockFicheActeBuilder().deNature("NAISSANCE").genererDto() }
     );
 
     render(

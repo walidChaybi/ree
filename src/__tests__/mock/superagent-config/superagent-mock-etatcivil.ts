@@ -1,9 +1,9 @@
+import { idFicheActeMariage } from "@mock/data/DetailRequeteDelivrance";
 import { ReponseEnregistrementProjetActe } from "@mock/data/ProjetActe";
 import { ReponseAppelAddAlerteActe, ReponseAppelGetAlertesActe } from "../data/Alertes";
 import { imagePngVideBase64 } from "../data/ImagePng";
 import { RMCAutoPersonneResponseAlpha, RMCAutoPersonneResponseBeta } from "../data/RMCAutoPersonne";
 import { actesInscriptionsSauvegardes } from "../data/actesInscriptionsSauvegardes";
-import { idFicheActeMariage } from "../data/ficheActe";
 import { mentions, mentionsPlurilingues } from "../data/mentions";
 import {
   ReponseAppelNomenclatureMandataire,

@@ -123,7 +123,6 @@ export class ExtraitPlurilingueCommunComposition {
 
   public static getPrenomOuVide(acte: FicheActe, titulaire: TitulaireActe): string {
     const titulaireAM = this.getTitulaireAM(acte, titulaire);
-
     if (!titulaireAM?.prenoms.length || titulaireAM.prenoms[0] === SPC) return "";
 
     return titulaireAM.prenoms.join(", ");

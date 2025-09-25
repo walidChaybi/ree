@@ -1,21 +1,16 @@
 import { creationCompositionExtraitPlurilingue } from "@hook/generation/generationECHook/creationComposition/creationCompositionExtraitPlurilingue";
+import { MOCK_EVENEMENT } from "@mock/data/etatcivil/acte/mockIEvenement";
+import { MOCK_TITULAIRE_ACTE } from "@mock/data/etatcivil/acte/mockTitulaireActe";
 import { NATURE_MENTION } from "@mock/data/NomenclatureNatureMention";
 import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
+import { MockFicheActeBuilder } from "@mock/model/etatcivil/acte/MockFicheActe";
 import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
-import { Mention } from "@model/etatcivil/acte/mention/Mention";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { EValidation } from "@model/requete/enum/EValidation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { SNP, SPC } from "@util/Utils";
 import { describe, expect, test } from "vitest";
-import {
-  ficheActeAvecAnneeNaissanceTitulaireAbsente,
-  ficheActeAvecTitulaireIndetermine,
-  ficheActeAvecUnParentTitulaireInconnu,
-  ficheActeAvecUnParentTitulaireIndetermine,
-  ficheActeNaissanceAvecParentsDeMemeSexe,
-  ficheActeNaissanceAvecTitulaireInconnu
-} from "../../../../../mock/data/ficheActe";
 import { mentionsPlurilinguesMariageAvec6 } from "../../../../../mock/data/mentions";
 
 const validation: EValidation = EValidation.O;
@@ -25,7 +20,16 @@ describe("Composition extrait plurilingue de Naissance", () => {
   NatureMention.init(NATURE_MENTION);
   TypeMention.init(TYPE_MENTION);
   test("Doit mettre le document en erreur si le titulaire est de sexe inconnu", () => {
-    const acte = FicheActe.depuisDto(ficheActeNaissanceAvecTitulaireInconnu)!;
+    const acte = new MockFicheActeBuilder({
+      titulaires: [
+        {
+          ...MOCK_TITULAIRE_ACTE,
+          sexe: "INCONNU"
+        }
+      ]
+    })
+      .deNature("NAISSANCE")
+      .generer()!;
 
     const compositionCorps = creationCompositionExtraitPlurilingue(acte, EValidation.O, SousTypeDelivrance.RDC, mentionsRetirees);
 
@@ -33,15 +37,35 @@ describe("Composition extrait plurilingue de Naissance", () => {
   });
 
   test("Doit mettre le document en erreur si un des parents est de sexe inconnu", () => {
-    const acte = FicheActe.depuisDto(ficheActeAvecUnParentTitulaireInconnu)!;
+    const acte = new MockFicheActeBuilder({
+      titulaires: [
+        {
+          ...MOCK_TITULAIRE_ACTE,
+          filiations: [
+            {
+              lienParente: "PARENT",
+              ordre: 1,
+              prenoms: ["Prenom Parent"],
+              sexe: "INCONNU"
+            }
+          ]
+        }
+      ]
+    })
+      .deNature("NAISSANCE")
+      .generer()!;
 
     const compositionCorps = creationCompositionExtraitPlurilingue(acte, EValidation.O, SousTypeDelivrance.RDC, mentionsRetirees);
 
     expect(compositionCorps?.filigrane_incomplet).toEqual(true);
   });
 
-  test("Doit mettre le document en erreur si l'annee de naissance du titulaire est manquante", () => {
-    const acte = FicheActe.depuisDto(ficheActeAvecAnneeNaissanceTitulaireAbsente)!;
+  test("Doit mettre le document en erreur si l'annee de l'évènement de l'acte de naissance est manquante", () => {
+    const acte = new MockFicheActeBuilder({
+      evenement: { ...MOCK_EVENEMENT, annee: undefined }
+    })
+      .deNature("NAISSANCE")
+      .generer()!;
 
     const compositionCorps = creationCompositionExtraitPlurilingue(acte, EValidation.O, SousTypeDelivrance.RDC, mentionsRetirees);
 
@@ -49,7 +73,16 @@ describe("Composition extrait plurilingue de Naissance", () => {
   });
 
   test("Doit mettre le document en erreur si le titulaire de l'acte est de genre indeterminé", () => {
-    const acte = FicheActe.depuisDto(ficheActeAvecTitulaireIndetermine)!;
+    const acte = new MockFicheActeBuilder({
+      titulaires: [
+        {
+          ...MOCK_TITULAIRE_ACTE,
+          sexe: "INDETERMINE"
+        }
+      ]
+    })
+      .deNature("NAISSANCE")
+      .generer()!;
 
     const compositionCorps = creationCompositionExtraitPlurilingue(acte, EValidation.O, SousTypeDelivrance.RDC, mentionsRetirees);
 
@@ -57,7 +90,29 @@ describe("Composition extrait plurilingue de Naissance", () => {
   });
 
   test("Doit mettre le document en erreur si les parents du titulaires sont de même sexe", () => {
-    const acte = FicheActe.depuisDto(ficheActeNaissanceAvecParentsDeMemeSexe)!;
+    const acte = new MockFicheActeBuilder({
+      titulaires: [
+        {
+          ...MOCK_TITULAIRE_ACTE,
+          filiations: [
+            {
+              lienParente: "PARENT",
+              ordre: 1,
+              prenoms: ["prenom parent 1"],
+              sexe: "MASCULIN"
+            },
+            {
+              lienParente: "PARENT",
+              ordre: 2,
+              prenoms: ["prenom parent 2"],
+              sexe: "MASCULIN"
+            }
+          ]
+        }
+      ]
+    })
+      .deNature("NAISSANCE")
+      .generer()!;
 
     const compositionCorps = creationCompositionExtraitPlurilingue(acte, EValidation.O, SousTypeDelivrance.RDC, mentionsRetirees);
 
@@ -65,7 +120,23 @@ describe("Composition extrait plurilingue de Naissance", () => {
   });
 
   test("Doit mettre le document en erreur si les parents du titulaires est de sexe indetermine", () => {
-    const acte = FicheActe.depuisDto(ficheActeAvecUnParentTitulaireIndetermine)!;
+    const acte = new MockFicheActeBuilder({
+      titulaires: [
+        {
+          ...MOCK_TITULAIRE_ACTE,
+          filiations: [
+            {
+              lienParente: "PARENT",
+              ordre: 1,
+              prenoms: ["Prenom Parent"],
+              sexe: "INDETERMINE"
+            }
+          ]
+        }
+      ]
+    })
+      .deNature("NAISSANCE")
+      .generer()!;
 
     const compositionCorps = creationCompositionExtraitPlurilingue(acte, EValidation.O, SousTypeDelivrance.RDC, mentionsRetirees);
 
@@ -73,38 +144,25 @@ describe("Composition extrait plurilingue de Naissance", () => {
   });
 
   test("Doit composer l'etrait avec les bonne données", () => {
-    const acte = FicheActe.depuisDto(ficheActeAvecUnParentTitulaireInconnu)!;
+    const acte = new MockFicheActeBuilder().deNature("NAISSANCE").generer()!;
 
     const compositionCorps = creationCompositionExtraitPlurilingue(acte, EValidation.O, SousTypeDelivrance.RDC, mentionsRetirees);
 
-    const nom = "Patamob";
-    const prenoms = "Alphonse";
-    const date_naissance = {
-      jour: 10,
-      mois: 10,
-      annee: 1901
-    };
-    const lieuNaissance = "Paris, Paris (France)";
-
-    const nomPere = "";
-    const prenomPere = "";
+    const lieuNaissance = "Ville évènement (Pays évènement)";
 
     if (compositionCorps?.titulaire_1) {
-      expect(compositionCorps?.titulaire_1.nom).toBe(nom);
-      expect(compositionCorps?.titulaire_1.prenoms).toBe(prenoms);
+      expect(compositionCorps?.titulaire_1.nom).toBe(MOCK_TITULAIRE_ACTE.nom);
+      expect(compositionCorps?.titulaire_1.prenoms).toBe(MOCK_TITULAIRE_ACTE.prenoms.join(", "));
       expect(compositionCorps?.titulaire_1?.lieu_naissance).toBe(lieuNaissance);
-      expect(compositionCorps?.titulaire_1.date_naissance?.jour).toBe(date_naissance.jour);
-      expect(compositionCorps?.titulaire_1.nom_pere).toBe(nomPere);
+      expect(compositionCorps?.titulaire_1.date_naissance?.annee).toBe(1970);
 
-      expect(compositionCorps?.titulaire_1?.prenoms_pere).toBe(prenomPere);
+      expect(compositionCorps?.titulaire_1.nom_pere).toBe("");
+      expect(compositionCorps?.titulaire_1?.prenoms_pere).toBe("");
     }
   });
 
   test("Doit afficher les mentions quand le nombre de mentions est en dessous ou égale de la limite", () => {
-    const acte = {
-      ...FicheActe.depuisDto(ficheActeAvecUnParentTitulaireInconnu)!,
-      mentions: mentionsPlurilinguesMariageAvec6.map(Mention.depuisDto).filter((mention): mention is Mention => mention !== null)
-    };
+    const acte: FicheActe = new MockFicheActeBuilder({ mentions: mentionsPlurilinguesMariageAvec6 }).deNature("NAISSANCE").generer()!;
 
     const compositionCorps = creationCompositionExtraitPlurilingue(acte, validation, SousTypeDelivrance.RDC, mentionsRetirees);
 
@@ -114,10 +172,8 @@ describe("Composition extrait plurilingue de Naissance", () => {
   });
 
   test("Ne doit pas affiché une mention sur l'extrait si elle est présente dans les mentions retirées", () => {
-    const acte = {
-      ...FicheActe.depuisDto(ficheActeAvecUnParentTitulaireInconnu)!,
-      mentions: mentionsPlurilinguesMariageAvec6.map(Mention.depuisDto).filter((mention): mention is Mention => mention !== null)
-    };
+    const acte: FicheActe = new MockFicheActeBuilder({ mentions: mentionsPlurilinguesMariageAvec6 }).deNature("NAISSANCE").generer()!;
+
     const mentionsRetirees: string[] = ["f6947623-9959-4d07-8963-f55b16a01071"];
 
     const compositionCorps = creationCompositionExtraitPlurilingue(acte, validation, SousTypeDelivrance.RDC, mentionsRetirees);
@@ -128,7 +184,24 @@ describe("Composition extrait plurilingue de Naissance", () => {
   });
 
   test("Ne doit pas éditer le nom si il est égale à SNP et prénom si égale à SPC", () => {
-    const acte = FicheActe.depuisDto(ficheActeAvecUnParentTitulaireInconnu)!;
+    const acte: FicheActe = new MockFicheActeBuilder({
+      titulaires: [
+        {
+          ...MOCK_TITULAIRE_ACTE,
+          filiations: [
+            {
+              lienParente: "PARENT",
+              ordre: 1,
+              prenoms: [SPC],
+              nom: SNP,
+              sexe: "MASCULIN"
+            }
+          ]
+        }
+      ]
+    })
+      .deNature("NAISSANCE")
+      .generer()!;
 
     const compositionCorps = creationCompositionExtraitPlurilingue(acte, validation, SousTypeDelivrance.RDC, mentionsRetirees);
 
@@ -137,7 +210,23 @@ describe("Composition extrait plurilingue de Naissance", () => {
   });
 
   test("Doit formater les prénoms correctement", () => {
-    const acte = FicheActe.depuisDto(ficheActeAvecAnneeNaissanceTitulaireAbsente)!;
+    const acte = new MockFicheActeBuilder({
+      titulaires: [
+        {
+          ...MOCK_TITULAIRE_ACTE,
+          filiations: [
+            {
+              lienParente: "PARENT",
+              ordre: 1,
+              prenoms: ["Jean", "Louis"],
+              sexe: "MASCULIN"
+            }
+          ]
+        }
+      ]
+    })
+      .deNature("NAISSANCE")
+      .generer()!;
 
     const compositionCorps = creationCompositionExtraitPlurilingue(acte, validation, SousTypeDelivrance.RDC, mentionsRetirees);
 

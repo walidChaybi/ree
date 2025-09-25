@@ -6,9 +6,10 @@ import { CONFIG_GET_METAMODELE_TYPE_MENTION } from "@api/configurations/requete/
 import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
-import { ficheActeMentionIntegrationRECE, ficheActeMentionIntegrationRECENonEligible, ficheActeTexte } from "@mock/data/ficheActe";
+import { MOCK_TITULAIRE_ACTE } from "@mock/data/etatcivil/acte/mockTitulaireActe";
 import { MetaModeleAideSaisieMariageEnFrance } from "@mock/data/mentions";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { MockFicheActeBuilder } from "@mock/model/etatcivil/acte/MockFicheActe";
 import { Droit } from "@model/agent/enum/Droit";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
@@ -100,7 +101,9 @@ describe("Tests PartieFormulaire", () => {
       CONFIG_GET_RESUME_ACTE,
       { path: { idActe: ID_ACTE }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
       {
-        data: ficheActeTexte
+        data: new MockFicheActeBuilder({ titulaires: [{ ...MOCK_TITULAIRE_ACTE, prenoms: ["Prenom 1", "Prenom 2", "Prenom 3"] }] })
+          .deNature("NAISSANCE")
+          .genererDto()
       }
     );
 
@@ -265,7 +268,7 @@ describe("Tests PartieFormulaire", () => {
     fireEvent.click(boutonValidation);
 
     await waitFor(() => {
-      expect(screen.getByText("Mariée à")).toBeDefined();
+      expect(screen.getByText("Marié à")).toBeDefined();
       expect(screen.getByText("superVille (superDepartement)")).toBeDefined();
       expect(screen.getByText("le 12 septembre 2000")).toBeDefined();
       expect(screen.getByText("avec")).toBeDefined();
@@ -274,14 +277,11 @@ describe("Tests PartieFormulaire", () => {
   });
 
   test("S'assurer que l'appel API de recuperation d'acte est correct avec data titulaires vide ", async () => {
-    let actAvecTitulaireVide = ficheActeTexte;
-    actAvecTitulaireVide.titulaires = [];
-
     MockApi.deployer(
       CONFIG_GET_RESUME_ACTE,
       { path: { idActe: ID_ACTE }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
       {
-        data: actAvecTitulaireVide
+        data: new MockFicheActeBuilder({ titulaires: [] }).deNature("NAISSANCE").genererDto()
       }
     );
 
@@ -299,7 +299,7 @@ describe("Tests PartieFormulaire", () => {
       CONFIG_GET_RESUME_ACTE,
       { path: { idActe: ID_ACTE }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
       {
-        data: ficheActeMentionIntegrationRECE
+        data: new MockFicheActeBuilder().deType("TEXTE").deNature("NAISSANCE").genererDto()
       }
     );
 
@@ -312,7 +312,7 @@ describe("Tests PartieFormulaire", () => {
       CONFIG_GET_RESUME_ACTE,
       { path: { idActe: ID_ACTE }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
       {
-        data: ficheActeMentionIntegrationRECE
+        data: new MockFicheActeBuilder().deType("TEXTE").deNature("NAISSANCE").genererDto()
       }
     );
 
@@ -325,7 +325,7 @@ describe("Tests PartieFormulaire", () => {
       CONFIG_GET_RESUME_ACTE,
       { path: { idActe: ID_ACTE }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
       {
-        data: ficheActeMentionIntegrationRECENonEligible
+        data: new MockFicheActeBuilder().deType("IMAGE").deNature("NAISSANCE").genererDto()
       }
     );
 

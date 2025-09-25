@@ -1,6 +1,6 @@
 import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
-import { ficheActeEC } from "@mock/data/ficheActe";
+import { MockFicheActeBuilder } from "@mock/model/etatcivil/acte/MockFicheActe";
 import { Utilisateur } from "@model/agent/Utilisateur";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
@@ -19,7 +19,7 @@ describe("PartieActeRequete", () => {
   MockApi.deployer(
     CONFIG_GET_RESUME_ACTE,
     { path: { idActe }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
-    { data: ficheActeEC }
+    { data: new MockFicheActeBuilder().deType("TEXTE").deNature("NAISSANCE").genererDto() }
   );
 
   const mockedUseNavigate = vi.fn();

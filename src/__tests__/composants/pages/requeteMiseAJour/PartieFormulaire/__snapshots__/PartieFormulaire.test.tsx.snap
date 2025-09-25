@@ -411,7 +411,7 @@ exports[`Tests PartieFormulaire > Mettre à jour le formulaire d'analyse margina
                             id="nom"
                             maxlength="100"
                             name="nom"
-                            value="GREENWALD"
+                            value="Nom Titulaire"
                           />
                         </div>
                       </div>
@@ -422,11 +422,10 @@ exports[`Tests PartieFormulaire > Mettre à jour le formulaire d'analyse margina
                           class=""
                         >
                           <label
-                            class="flex w-fit text-start cursor-default opacity-60"
+                            class="flex w-fit text-start cursor-pointer"
                           >
                             <input
-                              class="cursor-default"
-                              disabled=""
+                              class="cursor-pointer accent-bleu-sombre"
                               name="nomSecable"
                               type="checkbox"
                               value="false"
@@ -470,7 +469,7 @@ exports[`Tests PartieFormulaire > Mettre à jour le formulaire d'analyse margina
                         maxlength="100"
                         name="prenoms.prenom1"
                         type="text"
-                        value="marie-paulita"
+                        value="Prenom 1"
                       />
                     </div>
                   </div>
@@ -531,7 +530,7 @@ exports[`Tests PartieFormulaire > Mettre à jour le formulaire d'analyse margina
                           id="prenoms.prenom2"
                           maxlength="100"
                           name="prenoms.prenom2"
-                          value="zaria"
+                          value="Prenom 2"
                         />
                         <button
                           aria-label="Supprimer ce prénom"
@@ -581,7 +580,7 @@ exports[`Tests PartieFormulaire > Mettre à jour le formulaire d'analyse margina
                           id="prenoms.prenom3"
                           maxlength="100"
                           name="prenoms.prenom3"
-                          value="léna"
+                          value="Prenom 3"
                         />
                         <button
                           aria-label="Supprimer ce prénom"

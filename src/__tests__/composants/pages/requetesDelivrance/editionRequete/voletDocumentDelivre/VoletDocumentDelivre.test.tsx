@@ -1,8 +1,7 @@
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
-import { ficheActe1, ficheActeTexte } from "@mock/data/ficheActe";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { MockFicheActeBuilder } from "@mock/model/etatcivil/acte/MockFicheActe";
 import { Droit } from "@model/agent/enum/Droit";
-import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
@@ -66,12 +65,11 @@ describe("VoletDocumentDelivre", () => {
             resetOngletActif={false}
           />,
           mockRequete,
-          FicheActe.depuisDto({
-            ...ficheActe1,
-            id: "19c0d767-64e5-4376-aa1f-6d781a2a235a",
-            nature: "NAISSANCE",
-            mentions: []
-          })!
+          new MockFicheActeBuilder({
+            id: "19c0d767-64e5-4376-aa1f-6d781a2a235a"
+          })
+            .deNature("NAISSANCE")
+            .generer()!
         )}
       </MockRECEContextProvider>
     );
@@ -96,10 +94,11 @@ describe("VoletDocumentDelivre", () => {
             resetOngletActif={false}
           />,
           mockRequete,
-          FicheActe.depuisDto({
-            ...ficheActe1,
+          new MockFicheActeBuilder({
             id: "19c0d767-64e5-4376-aa1f-6d781a2a235a"
-          })!
+          })
+            .deNature("NAISSANCE")
+            .generer()!
         )}
       </MockRECEContextProvider>
     );
@@ -115,10 +114,11 @@ describe("VoletDocumentDelivre", () => {
             resetOngletActif={true}
           />,
           mockRequete,
-          FicheActe.depuisDto({
-            ...ficheActeTexte,
+          new MockFicheActeBuilder({
             id: "19c0d767-64e5-4376-aa1f-6d781a2a235a"
-          })!
+          })
+            .deNature("NAISSANCE")
+            .generer()!
         )}
       </MockRECEContextProvider>
     );
@@ -138,11 +138,11 @@ describe("VoletDocumentDelivre", () => {
             resetOngletActif={false}
           />,
           mockRequete,
-          FicheActe.depuisDto({
-            ...ficheActe1,
-            id: "19c0d767-64e5-4376-aa1f-6d781a2a235a",
-            nature: "NAISSANCE"
-          })!
+          new MockFicheActeBuilder({
+            id: "19c0d767-64e5-4376-aa1f-6d781a2a235a"
+          })
+            .deNature("NAISSANCE")
+            .generer()!
         )}
       </MockRECEContextProvider>
     );

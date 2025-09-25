@@ -1,7 +1,6 @@
-import { ficheActeTexte } from "@mock/data/ficheActe";
 import { NATURE_MENTION } from "@mock/data/NomenclatureNatureMention";
 import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
-import { FicheActe } from "@model/etatcivil/acte/FicheActe";
+import { MockFicheActeBuilder } from "@mock/model/etatcivil/acte/MockFicheActe";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
@@ -14,12 +13,12 @@ describe("test FicheActe", () => {
     TypeMention.init(TYPE_MENTION);
 
     expect(
-      FicheActe.depuisDto({
-        ...ficheActeTexte,
-        nature: "NAISSANCE",
-        registre: { ...ficheActeTexte.registre, famille: "ACQ" },
-        corpsTexte: { texte: "Française par : décret de naturalisation du 23 septembre 3515" }
-      })?.getMentionNationalite(ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION)
+      new MockFicheActeBuilder({ corpsTexte: { texte: "Française par : décret de naturalisation du 23 septembre 3515" } })
+        .deNature("NAISSANCE")
+        .deType("TEXTE")
+        .deFamille("ACQ")
+        .generer()
+        ?.getMentionNationalite(ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION)
     ).toStrictEqual([
       {
         numeroOrdreExtrait: 1,

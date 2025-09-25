@@ -1,8 +1,8 @@
 import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
-import { ficheActeEC } from "@mock/data/ficheActe";
 import { idRequeteRDDASigner } from "@mock/data/requeteDelivrance";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { MockFicheActeBuilder } from "@mock/model/etatcivil/acte/MockFicheActe";
 import { Utilisateur } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { TypeAlerte } from "@model/etatcivil/enum/TypeAlerte";
@@ -31,7 +31,7 @@ describe("Test de la page aperçu requête edition analyse marginale", () => {
     CONFIG_GET_RESUME_ACTE,
     { path: { idActe }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
     {
-      data: ficheActeEC
+      data: new MockFicheActeBuilder().deType("TEXTE").deNature("NAISSANCE").genererDto()
     }
   );
 
