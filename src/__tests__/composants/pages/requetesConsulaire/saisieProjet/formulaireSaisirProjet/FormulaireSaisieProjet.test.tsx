@@ -10,25 +10,16 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { RouterProvider, createMemoryRouter } from "react-router";
-import { beforeAll, beforeEach, describe, expect, test, vi } from "vitest";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import FormulaireSaisieProjet from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisieProjet/FormulaireSaisieProjet";
 import * as TraitementApiHook from "../../../../../../hooks/api/TraitementApiHook";
 
-describe("test du formulaire saisie projet acte transcrit de naissance", async () => {
+describe("test du formulaire saisie projet acte transcrit de naissance", () => {
   const mockLancerTraitement = vi.fn();
 
   vi.spyOn(TraitementApiHook, "default").mockReturnValue({
     lancerTraitement: mockLancerTraitement,
     traitementEnCours: false
-  });
-
-  beforeAll(() => {
-    vi.mock("../../../../../hooks/api/TraitementApiHook", () => ({
-      default: () => ({
-        lancerTraitement: mockLancerTraitement,
-        traitementEnCours: false
-      })
-    }));
   });
 
   beforeEach(() => {
@@ -149,7 +140,7 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
               }
             } as IRequeteCreationTranscription
           }
-          mettreAJourDonneesContext={vi.fn()}
+          mettreAJourDonneesContext={vi.fn().mockResolvedValue({})}
         >
           <FormulaireSaisieProjet />
         </MockSaisieProjetActeContextProvider>
@@ -162,7 +153,9 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
     const boutonEnregistrer = screen.getByRole("button", { name: "Enregistrer" });
     await userEvent.click(boutonEnregistrer);
 
-    expect(mockLancerTraitement).toHaveBeenCalled();
+    await waitFor(() => {
+      expect(mockLancerTraitement).toHaveBeenCalled();
+    });
   });
 
   test("DOIT appeler la fonction terminer et signer QUAND l'utilisateur clique sur 'Terminer et signer' avec des modifications", async () => {
@@ -180,7 +173,7 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
               }
             } as IRequeteCreationTranscription
           }
-          mettreAJourDonneesContext={vi.fn()}
+          mettreAJourDonneesContext={vi.fn().mockResolvedValue({})}
         >
           <FormulaireSaisieProjet />
         </MockSaisieProjetActeContextProvider>
@@ -193,7 +186,9 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
     const boutonTerminerEtSigner = screen.getByRole("button", { name: "Terminer et signer" });
     await userEvent.click(boutonTerminerEtSigner);
 
-    expect(mockLancerTraitement).toHaveBeenCalled();
+    await waitFor(() => {
+      expect(mockLancerTraitement).toHaveBeenCalled();
+    });
   });
 
   test("DOIT pas appeler la fonction enregistrer ou terminer et signer QUAND aucune modification n'est effectuées", async () => {

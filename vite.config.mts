@@ -33,6 +33,8 @@ export default defineConfig({
     testTimeout: 10000,
     include: ["src/__tests__/**/?(*.)test.ts?(x)"],
     coverage: {
+      all: true,
+      reporter: ["lcov"],
       include: ["src/*"],
       exclude: [
         "src/App.tsx",
