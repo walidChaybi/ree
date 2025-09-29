@@ -154,17 +154,6 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<ApercuReqCreatio
               )}
             </div>
           </VoletAvecOnglet>
-
-          <ConteneurRetractable
-            titre="Pièces justificatives / Annexes"
-            className="FocusPieceJustificative"
-            estADroite={true}
-          >
-            <OngletPiecesJustificatives
-              requete={requete}
-              onRenommePieceJustificative={onRenommePieceJustificativeApercuSimple}
-            />
-          </ConteneurRetractable>
         </>
       )}
     </div>
