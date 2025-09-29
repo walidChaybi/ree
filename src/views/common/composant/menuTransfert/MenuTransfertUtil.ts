@@ -5,7 +5,6 @@ import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { DoubleClicUtil } from "@util/DoubleClicUtil";
 import { Option, Options } from "@util/Type";
@@ -25,8 +24,8 @@ export function onValidateService(
     setParam({
       idRequete: props.idRequete,
       idService: service.cle,
-      idUtilisateur: "",
-      statutRequete: props.estTransfert ? StatutRequete.TRANSFEREE : StatutRequete.A_TRAITER,
+      idUtilisateurAAssigner: "",
+      statutRequete: props.estTransfert ? "TRANSFEREE" : "A_TRAITER",
       libelleAction: `${props.estTransfert ? "Transférée" : "Attribuée"} à ${service.libelle}`,
       estTransfert: props.estTransfert
     });
@@ -53,8 +52,8 @@ export function onValidateAgent(
     setParam({
       idRequete: props.idRequete,
       idService: utilisateurs.find(utilisateur => utilisateur.id === agent.cle)?.idService,
-      idUtilisateur: agent.cle,
-      statutRequete: props.estTransfert ? StatutRequete.TRANSFEREE : StatutRequete.A_TRAITER,
+      idUtilisateurAAssigner: agent.cle,
+      statutRequete: props.estTransfert ? "TRANSFEREE" : "A_TRAITER",
       libelleAction: `${props.estTransfert ? "Transférée" : "Attribuée"} à ${agent.libelle}`,
       estTransfert: props.estTransfert
     });
@@ -74,22 +73,25 @@ export function listeServicesToOptions(services: IService[]): Options {
   ];
 }
 
-export const listeUtilisateursToOptionsBis = (
+export const getUtilisateursParTypeRequeteVersOptions = (
   typeRequete: TypeRequete,
   sousTypeRequete: SousTypeRequete,
   idUtilisateurRequete: string,
   utilisateurConnecte: UtilisateurConnecte,
   estTransfert: boolean,
-  utilisateurs: Utilisateur[]
+  utilisateurs: Utilisateur[],
+  seulementUtilisateursActifs = false
 ): Options => {
+  const utilisateursFiltres = seulementUtilisateursActifs ? utilisateurs.filter(utilisateur => utilisateur.actif) : utilisateurs;
+
   return [
     { cle: "", libelle: "" },
-    ...utilisateurs
+    ...utilisateursFiltres
       .filter(utilisateur =>
         filterUtilisateur(utilisateur, typeRequete, sousTypeRequete, idUtilisateurRequete, utilisateurConnecte, estTransfert)
       )
       .sort((a, b) => a.prenomNom.localeCompare(b.prenomNom))
-      .map(utilisateur => mapUtilisateurToOption(utilisateur))
+      .map(utilisateur => utilisateur.versOption)
   ];
 };
 
@@ -180,20 +182,20 @@ const filtreUtilisateurRequeteDelivrance = (
 const filtrerValideur = (utilisateur: Utilisateur, idUtilisateurRequete?: string): boolean =>
   Boolean(utilisateur.estDuSCEC && utilisateur.estHabilitePour({ leDroit: Droit.DELIVRER }) && idUtilisateurRequete !== utilisateur.id);
 
-export function listeValideurToOptions(utilisateurs: Utilisateur[], idUtilisateurRequete?: string): Options {
+export function getValideursVersOptions(
+  utilisateurs: Utilisateur[],
+  idUtilisateurRequete?: string,
+  seulementUtilisateursActifs = false
+): Options {
+  const utilisateursFiltres = seulementUtilisateursActifs ? utilisateurs.filter(utilisateur => utilisateur.actif) : utilisateurs;
+
   return [
     { cle: "", libelle: "" },
-    ...utilisateurs
+    ...utilisateursFiltres
       .filter(utilisateur => filtrerValideur(utilisateur, idUtilisateurRequete))
       .sort((a, b) => a.prenomNom.localeCompare(b.prenomNom))
-      .map(utilisateur => mapUtilisateurToOption(utilisateur))
+      .map(utilisateur => utilisateur.versOption)
   ];
 }
 
-function mapUtilisateurToOption(utilisateur: Utilisateur): Option {
-  return {
-    cle: utilisateur.id,
-    libelle: utilisateur.prenomNom
-  };
-}
 /* v8 ignore end */

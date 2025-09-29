@@ -17,8 +17,8 @@ import LiensRECE from "../../../../router/LiensRECE";
 import { INFO_PAGE_MES_REQUETES_DELIVRANCE } from "../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import { INFO_PAGE_MES_REQUETES_INFORMATION } from "../../../../router/infoPages/InfoPagesEspaceInformation";
 import {
+  getUtilisateursParTypeRequeteVersOptions,
   listeServicesToOptions,
-  listeUtilisateursToOptionsBis,
   onValidateAgent,
   onValidateService,
   reinitialiserOnClick
@@ -214,13 +214,14 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
         onValidate={(valeurs: ITransfertPopinForm) =>
           onValidateAgent(setParam, props, setAgentPopinOpen, setOperationEnCours, utilisateurs, valeurs.optionChoisie)
         }
-        options={listeUtilisateursToOptionsBis(
+        options={getUtilisateursParTypeRequeteVersOptions(
           props.typeRequete,
           props.sousTypeRequete,
           props.idUtilisateurRequete,
           utilisateurConnecte,
           props.estTransfert,
-          utilisateurs
+          utilisateurs,
+          true
         )}
         titre={`${props.estTransfert ? "Transfert" : "Attribuer"} à un officier de l'état civil`}
       ></TransfertPopin>

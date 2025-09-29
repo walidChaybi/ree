@@ -1,4 +1,4 @@
-import { listeValideurToOptions } from "@composant/menuTransfert/MenuTransfertUtil";
+import { getValideursVersOptions } from "@composant/menuTransfert/MenuTransfertUtil";
 import { ITransfertPopinForm, TransfertPopin } from "@composant/menuTransfert/TransfertPopin";
 import { ITransmettreAValideurParams, useTransmettreAValideurApiHook } from "@hook/requete/TransmettreAValideur";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
@@ -26,7 +26,7 @@ export const BoutonTransmettreAValideur: React.FC<BoutonTransmettreAValideurProp
           libelleAction: "Requête transmise",
           texteObservation: `${"Requête transmise"}${valeurs.texte ? texteObservation : ""}`,
           requeteId: props.idRequete,
-          idUtilisateur: valeurs.optionChoisie.cle
+          idUtilisateurValideur: valeurs.optionChoisie.cle
         });
       }
     },
@@ -49,7 +49,7 @@ export const BoutonTransmettreAValideur: React.FC<BoutonTransmettreAValideurProp
         onValidate={onValidate}
         open={open}
         onClose={() => setOpen(false)}
-        options={listeValideurToOptions(utilisateurs, utilisateurConnecte.id)}
+        options={getValideursVersOptions(utilisateurs, utilisateurConnecte.id, true)}
         titre={"Transmettre à valideur"}
         placeholder={"Pour vérification"}
         libelleAvantTexte={"Message pour valideur :"}

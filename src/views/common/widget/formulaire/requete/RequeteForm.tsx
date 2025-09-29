@@ -20,8 +20,6 @@ const RequeteFormDefaultValues = {
   [COMPLEMENT_MOTIF]: ""
 };
 
-const NB_EXEMPLAIRE_MAX = 5;
-
 const LISTE_DOCUMENT_DEMANDE_DECES = [ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE, ECodeDocumentDelivrance.CODE_EXTRAIT_PLURILINGUE];
 
 const RequeteForm: React.FC<SubFormProps & { champDocumentDemandeCharge?: boolean }> = props => {

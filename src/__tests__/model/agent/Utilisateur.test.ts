@@ -205,7 +205,8 @@ describe("Test du modèle Utilisateur", () => {
       estDuSCEC: false,
       idServicesParent: [],
       idServicesFils: [],
-      optionsServicesFils: []
+      optionsServicesFils: [],
+      actif: false
     });
 
     expect(utilisateurInconnu.estHabilitePour({ leDroit: Droit.CONSULTER }) && utilisateurInconnu.estDansUnDesServices([""])).toBeFalsy();

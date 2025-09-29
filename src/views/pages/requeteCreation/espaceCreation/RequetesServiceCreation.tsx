@@ -1,5 +1,5 @@
 import { IQueryParametersPourRequetes, TypeAppelRequete } from "@api/appels/requeteApi";
-import { listeUtilisateursToOptionsBis } from "@composant/menuTransfert/MenuTransfertUtil";
+import { getUtilisateursParTypeRequeteVersOptions } from "@composant/menuTransfert/MenuTransfertUtil";
 import { ITransfertPopinForm, TransfertPopin } from "@composant/menuTransfert/TransfertPopin";
 import {
   NavigationApercuReqCreationParams,
@@ -14,7 +14,6 @@ import { Utilisateur } from "@model/agent/Utilisateur";
 import { IFiltreServiceRequeteCreationFormValues } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { Option, Options } from "@util/Type";
 import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
@@ -118,22 +117,28 @@ export const RequetesServiceCreation: React.FC<RequetesServiceCreationProps> = p
     setOpEnCours(true);
     setParamsAttributionParLot({
       idRequetes: requetesChecked.map(requete => requete.idRequete),
-      statutRequete: requetesChecked.map(requete => StatutRequete.getEnumFromLibelle(requete?.statut)),
-      idUtilisateur: agent?.cle,
+      statutRequete: requetesChecked.map(requete => requete?.statut),
+      idUtilisateurAAssigner: agent?.cle,
       libelleAction: `Attribuée à  ${agent?.libelle}`,
       estTransfert: false
     } as TransfertParLotParams);
   };
 
-  const getUtilisateursAsOptions = (requetes: IRequeteTableauCreation[], utilisateurs: Utilisateur[]): Options => {
+  const getUtilisateursAsOptions = (
+    requetes: IRequeteTableauCreation[],
+    utilisateurs: Utilisateur[],
+    seulementUtilisateursActifs = false
+  ): Options => {
+    const utilisateursFiltres = seulementUtilisateursActifs ? utilisateurs.filter(utilisateur => utilisateur.actif) : utilisateurs;
+
     return filtrerRequetesChecked(requetes).reduce((listeUtilisateurs, requete) => {
-      const options = listeUtilisateursToOptionsBis(
+      const options = getUtilisateursParTypeRequeteVersOptions(
         TypeRequete.CREATION,
         SousTypeCreation.getEnumFor(requete.sousType),
         "",
         utilisateurConnecte,
         false,
-        utilisateurs
+        utilisateursFiltres
       ).filter(option => !listeUtilisateurs.map(utilisateur => utilisateur.cle).includes(option.cle));
 
       return listeUtilisateurs.concat(options);
@@ -190,7 +195,7 @@ export const RequetesServiceCreation: React.FC<RequetesServiceCreationProps> = p
         open={props.popinAttribuerAOuvert}
         onClose={onClosePopinAttribuerA}
         titre={"Attribuer à un officier de l'état civil"}
-        options={getUtilisateursAsOptions(dataState, utilisateurs)}
+        options={getUtilisateursAsOptions(dataState, utilisateurs, true)}
         onValidate={(valeurs: ITransfertPopinForm) => onValidateAttribuerA(dataState, valeurs.optionChoisie)}
       />
     </>

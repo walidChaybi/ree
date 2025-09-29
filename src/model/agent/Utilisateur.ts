@@ -26,6 +26,7 @@ export interface IUtilisateurDto {
   prenom: string;
   service: IServiceUtilisateurDto;
   habilitations: IHabilitationDto[];
+  actif: boolean;
 }
 
 export interface IUtilisateurConnecteDto extends IUtilisateurDto {
@@ -101,7 +102,8 @@ export class Utilisateur {
     public readonly prenomNom: string,
     public readonly idService: string,
     public readonly estDuSCEC: boolean,
-    protected readonly habilitations: THabilitationsUtilisateur
+    protected readonly habilitations: THabilitationsUtilisateur,
+    public readonly actif: boolean
   ) {}
 
   public static depuisDto(utilisateurDto: Partial<IUtilisateurDto>): Utilisateur | null {
@@ -117,7 +119,8 @@ export class Utilisateur {
       Utilisateur.nomPrenomDepuisDto(utilisateurDto.prenom, utilisateurDto.nom),
       utilisateurDto.service?.idService ?? "",
       Boolean(utilisateurDto.service?.estDansScec),
-      Utilisateur.habilitationDepuisDto(utilisateurDto.habilitations)
+      Utilisateur.habilitationDepuisDto(utilisateurDto.habilitations),
+      utilisateurDto.actif ?? false
     );
   }
 
@@ -179,6 +182,13 @@ export class Utilisateur {
   public get nombreHabilitations(): number {
     return Object.keys(this.habilitations).length;
   }
+
+  public get versOption(): Option {
+    return {
+      cle: this.id,
+      libelle: this.prenomNom
+    };
+  }
 }
 
 export class UtilisateurConnecte extends Utilisateur {
@@ -190,7 +200,7 @@ export class UtilisateurConnecte extends Utilisateur {
     public readonly idServicesParent: string[],
     public readonly idServicesFils: string[],
     public readonly optionsServicesFils: Option[],
-    ...donneesUtilisateur: [string, string, string, boolean, THabilitationsUtilisateur]
+    ...donneesUtilisateur: [string, string, string, boolean, THabilitationsUtilisateur, boolean]
   ) {
     super(...donneesUtilisateur);
   }
@@ -232,11 +242,12 @@ export class UtilisateurConnecte extends Utilisateur {
       UtilisateurConnecte.nomPrenomDepuisDto(utilisateurConnecteDto.prenom, utilisateurConnecteDto.nom),
       utilisateurConnecteDto.service?.idService ?? "",
       Boolean(utilisateurConnecteDto.service?.estDansScec),
-      UtilisateurConnecte.habilitationDepuisDto(utilisateurConnecteDto.habilitations)
+      UtilisateurConnecte.habilitationDepuisDto(utilisateurConnecteDto.habilitations),
+      true
     );
   }
 
   public static inconnu(): UtilisateurConnecte {
-    return new UtilisateurConnecte("", "", [], [], [], "", "", "", false, {});
+    return new UtilisateurConnecte("", "", [], [], [], "", "", "", false, {}, false);
   }
 }

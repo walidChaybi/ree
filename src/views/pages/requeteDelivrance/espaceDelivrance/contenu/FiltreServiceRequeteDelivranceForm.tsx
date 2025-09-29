@@ -1,4 +1,4 @@
-import { listeUtilisateursToOptionsBis } from "@composant/menuTransfert/MenuTransfertUtil";
+import { getUtilisateursParTypeRequeteVersOptions } from "@composant/menuTransfert/MenuTransfertUtil";
 import {
   FILTRES_SERVICE_STATUTS_REQUETE_DELIVRANCE,
   IFiltreServiceRequeteDelivranceFormValues
@@ -66,7 +66,7 @@ export const FiltreServiceRequeteDelivranceForm: React.FC<IFiltreServiceRequeteD
               componentName="filtreAttribuerAAgent"
               name="attribueA"
               label={"Attribué à un agent"}
-              options={listeUtilisateursToOptionsBis(
+              options={getUtilisateursParTypeRequeteVersOptions(
                 TypeRequete.DELIVRANCE,
                 SousTypeDelivrance.RDC,
                 "",

@@ -433,45 +433,6 @@ export function postCreationActionEtMiseAjourStatut(idRequete: string, libelleAc
   );
 }
 
-export function postTransfertRequete(
-  idRequete: string,
-  idService: string,
-  idUtilisateur: string,
-  libelleAction: string,
-  statutRequete: StatutRequete,
-  estTransfert: boolean
-) {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.POST,
-      uri: `${URL_TRANSFERT}`,
-      parameters: {
-        idRequete,
-        idService,
-        idUtilisateur,
-        statutRequete: StatutRequete.getKey(statutRequete),
-        libelleAction,
-        attribuer: !estTransfert
-      }
-    })
-  );
-}
-
-export function postTransfertValideur(idRequete: string, idUtilisateurValideur: string, libelleAction: string, texteObservation: string) {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.POST,
-      uri: `${URL_TRANSFERT_VALIDEUR}`,
-      data: {
-        idRequete,
-        idUtilisateurValideur,
-        libelleAction,
-        texteObservation
-      }
-    })
-  );
-}
-
 export function postRetourValideur(idRequete: string, statutDemande: string, libelleAction: string, texteObservation: string) {
   return getApiManager().then(api =>
     api.fetch({

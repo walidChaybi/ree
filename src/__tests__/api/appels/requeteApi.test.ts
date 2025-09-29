@@ -11,7 +11,6 @@ import {
   postRetourValideur,
   postSauvegardePersonneEtActeSelectionne,
   postTableauRequetesDelivranceService,
-  postTransfertValideur,
   postValiderProjetActe
 } from "@api/appels/requeteApi";
 import { ITypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
@@ -70,9 +69,6 @@ describe("Test des appels API requête", () => {
     expect(spyFetch).toHaveBeenCalled();
 
     await postCreationAction("", "");
-    expect(spyFetch).toHaveBeenCalled();
-
-    await postTransfertValideur("", "", "", "");
     expect(spyFetch).toHaveBeenCalled();
 
     await postRetourValideur("", "", "", "");

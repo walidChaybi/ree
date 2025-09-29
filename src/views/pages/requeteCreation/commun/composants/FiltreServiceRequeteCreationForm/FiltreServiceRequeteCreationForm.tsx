@@ -1,4 +1,4 @@
-import { listeUtilisateursToOptionsBis } from "@composant/menuTransfert/MenuTransfertUtil";
+import { getUtilisateursParTypeRequeteVersOptions } from "@composant/menuTransfert/MenuTransfertUtil";
 import { IFiltreServiceRequeteCreationFormValues } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -32,7 +32,7 @@ const FiltreServiceRequeteCreationFormDefaultValues: IFiltreServiceRequeteCreati
 
 export const FiltreServiceRequeteCreationForm: React.FC<FiltreServiceRequeteCreationFormProps> = props => {
   const { utilisateurs, utilisateurConnecte } = useContext(RECEContextData);
-  const optionsUtilisateurs = listeUtilisateursToOptionsBis(
+  const optionsUtilisateurs = getUtilisateursParTypeRequeteVersOptions(
     TypeRequete.CREATION,
     SousTypeCreation.RCEDXC,
     "",

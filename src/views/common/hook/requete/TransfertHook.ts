@@ -1,47 +1,56 @@
-import { postTransfertRequete } from "@api/appels/requeteApi";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { getValeurOuVide } from "@util/Utils";
-import { useContext, useEffect, useState } from "react";
+import { CONFIG_POST_MAJ_ACTION_TRANSFERT } from "@api/configurations/requete/actions/PostMajActionTransfertConfigApi";
+import { EStatutRequete } from "@model/requete/enum/StatutRequete";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { RECEContextData } from "../../../../contexts/RECEContextProvider";
+import useFetchApi from "../../../../hooks/api/FetchApiHook";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 interface TransfertParams {
   idService?: string;
-  idUtilisateur?: string;
+  idUtilisateurAAssigner?: string;
   libelleAction: string;
   estTransfert: boolean;
 }
 
 export interface TransfertUnitaireParams extends TransfertParams {
   idRequete: string;
-  statutRequete: StatutRequete;
+  statutRequete: keyof typeof EStatutRequete;
 }
 
 export interface TransfertParLotParams extends TransfertParams {
   idRequetes: string[];
-  statutRequete: StatutRequete[];
+  statutRequete: (keyof typeof EStatutRequete)[];
   idService: string;
-  idUtilisateur: string;
+  idUtilisateurAAssigner: string;
 }
 
 export function useTransfertApi(params?: TransfertUnitaireParams) {
   const [res, setRes] = useState<string | undefined>();
+  const { appelApi: appelPostActionTransfert } = useFetchApi(CONFIG_POST_MAJ_ACTION_TRANSFERT);
+
   useEffect(() => {
-    if (params && (params.idService || params.idUtilisateur)) {
-      postTransfertRequete(
-        params.idRequete,
-        getValeurOuVide(params.idService),
-        getValeurOuVide(params.idUtilisateur),
-        params.libelleAction,
-        params.statutRequete,
-        params.estTransfert
-      )
-        .then(result => {
-          setRes(result.body.data);
-        })
-        .catch(errorFct);
+    if (params && (params.idService || params.idUtilisateurAAssigner)) {
+      appelPostActionTransfert({
+        parametres: {
+          query: {
+            idRequete: params.idRequete,
+            idService: params.idService ?? "",
+            idUtilisateurAAssigner: params.idUtilisateurAAssigner ?? "",
+            libelleAction: params.libelleAction,
+            statutRequete: params.statutRequete,
+            attribuer: !params.estTransfert
+          }
+        },
+        apresSucces: resultat => {
+          setRes(resultat);
+        },
+        apresErreur: erreurs => {
+          AfficherMessage.erreur("Impossible de mettre à jour le statut de la requête ou de créer une action associée", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : []
+          });
+        }
+      });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
   return res;
 }
@@ -49,35 +58,47 @@ export function useTransfertApi(params?: TransfertUnitaireParams) {
 export function useTransfertsApi(params?: TransfertParLotParams) {
   const [res, setRes] = useState<string[] | undefined>();
   const { utilisateurs } = useContext(RECEContextData);
+  const { appelApi: appelPostActionTransfert } = useFetchApi(CONFIG_POST_MAJ_ACTION_TRANSFERT);
+
+  const statutCleList = useMemo(() => {
+    if (!params?.statutRequete) return [];
+
+    return params.statutRequete.map(statut => {
+      return statut in EStatutRequete ? statut : "BROUILLON";
+    });
+  }, [params?.statutRequete]);
 
   useEffect(() => {
-    if (params && (params.idService || params.idUtilisateur)) {
-      Promise.all(
-        params.idRequetes.map((idRequete, idx) =>
-          postTransfertRequete(
-            idRequete,
-            params.idService
-              ? params.idService
-              : (utilisateurs.find(utilisateur => utilisateur.id === params.idUtilisateur)?.idService as string),
-            params.idUtilisateur,
-            params.libelleAction,
-            params.statutRequete[idx],
-            params.estTransfert
-          )
-        )
-      )
-        .then(results => {
-          setRes(results.map(result => result.body.data));
-        })
-        .catch(errorFct);
+    if (params && (params.idService || params.idUtilisateurAAssigner)) {
+      const appels = params.idRequetes.map((idRequete, idx) => {
+        return new Promise<string>((resolve, reject) => {
+          appelPostActionTransfert({
+            parametres: {
+              query: {
+                idRequete,
+                idService:
+                  (params.idService || utilisateurs.find(utilisateur => utilisateur.id === params.idUtilisateurAAssigner)?.idService) ?? "",
+                idUtilisateurAAssigner: params.idUtilisateurAAssigner ?? "",
+                libelleAction: params.libelleAction,
+                statutRequete: statutCleList[idx],
+                attribuer: !params.estTransfert
+              }
+            },
+            apresSucces: data => resolve(data),
+            apresErreur: erreurs => reject(erreurs)
+          });
+        });
+      });
+
+      Promise.all(appels)
+        .then(results => setRes(results))
+        .catch(erreurs => {
+          AfficherMessage.erreur("Impossible de mettre à jour le statut de la requête ou de créer une action associée", {
+            erreurs: estTableauErreurApi(erreurs) ? erreurs : []
+          });
+        });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
+
   return res;
 }
-
-const errorFct = (erreurs: any) => {
-  AfficherMessage.erreur("Impossible de mettre à jour le statut de la requête ou de créer une action associée", {
-    erreurs: estTableauErreurApi(erreurs) ? erreurs : []
-  });
-};
