@@ -1,6 +1,7 @@
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router";
 import request from "superagent";
@@ -32,7 +33,10 @@ describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
 
     const { container } = render(
       <MockRECEContextProvider
-        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecAttributs({ id: "test-utilisateur-id" }).generer()}
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte()
+          .avecAttributs({ id: "test-utilisateur-id" })
+          .avecDroit(Droit.CONSULTER)
+          .generer()}
       >
         <RouterProvider router={router} />
       </MockRECEContextProvider>

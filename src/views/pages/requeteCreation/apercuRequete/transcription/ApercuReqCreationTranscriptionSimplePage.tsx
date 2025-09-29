@@ -21,6 +21,7 @@ import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
+import AccessibleAvecDroits from "../../../../../composants/commun/accessibleAvecDroits/AccessibleAvecDroits";
 import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../../router/LiensRECE";
 import { INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE } from "../../../../../router/infoPages/InfoPagesEspaceConsulaire";
@@ -130,7 +131,9 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<ApercuReqCreatio
           >
             {getComposantResumeRequeteEnFonctionNatureActe(requete)}
 
-            {!estModeConsultation && <RMCRequetesAssocieesResultats requete={requete as IRequete} />}
+            <AccessibleAvecDroits auMoinsUnDesDroits={[Droit.CONSULTER]}>
+              {!estModeConsultation && <RMCRequetesAssocieesResultats requete={requete as IRequete} />}
+            </AccessibleAvecDroits>
           </ConteneurRetractable>
 
           <VoletAvecOnglet liste={getListeOnglets()}>

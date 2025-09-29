@@ -6,6 +6,7 @@ import {
   useCreationActionMiseAjourStatut
 } from "@hook/requete/CreationActionMiseAjourStatutHook";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { Requete, TRequete } from "@model/requete/IRequete";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
@@ -14,6 +15,7 @@ import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
+import AccessibleAvecDroits from "../../../../composants/commun/accessibleAvecDroits/AccessibleAvecDroits";
 import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import { IDetailRequeteParams, useAvecRejeuDetailRequeteApiHook } from "../../../common/hook/requete/DetailRequeteHook";
 import { TableauRMC } from "../../rechercheMultiCriteres/autoActesInscriptions/TableauRMC";
@@ -98,7 +100,9 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
                 observations={requete.observations}
                 idRequete={requete.id}
               ></SuiviObservationsRequete>
-              {!estModeConsultation && !affichageBoutonPrendreEnCharge && <RMCRequetesAssocieesResultats requete={requete} />}
+              <AccessibleAvecDroits auMoinsUnDesDroits={[Droit.CONSULTER]}>
+                {!estModeConsultation && !affichageBoutonPrendreEnCharge && <RMCRequetesAssocieesResultats requete={requete} />}
+              </AccessibleAvecDroits>
               <HistoriqueActionsRequete actions={requete.actions}></HistoriqueActionsRequete>
             </div>
             <div className="side right">

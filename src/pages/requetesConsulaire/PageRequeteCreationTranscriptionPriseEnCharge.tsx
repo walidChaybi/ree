@@ -2,6 +2,7 @@ import { CONFIG_GET_DETAIL_REQUETE } from "@api/configurations/requete/GetDetail
 import { CONFIG_POST_MAJ_STATUT_ET_ACTION } from "@api/configurations/requete/actions/PostMajStatutEtActionConfigApi";
 import { CONFIG_POST_PRENDRE_EN_CHARGE } from "@api/configurations/requete/creation/PostPrendreEnChargeRequeteTranscriptionConfigApi";
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
+import { Droit } from "@model/agent/enum/Droit";
 import { IRequete } from "@model/requete/IRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
@@ -10,6 +11,7 @@ import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/aut
 import { useContext, useEffect, useMemo, useState } from "react";
 import { MdEdit } from "react-icons/md";
 import { useLocation, useNavigate, useParams } from "react-router";
+import AccessibleAvecDroits from "../../composants/commun/accessibleAvecDroits/AccessibleAvecDroits";
 import Bouton from "../../composants/commun/bouton/Bouton";
 import PageChargeur from "../../composants/commun/chargeurs/PageChargeur";
 import OngletsBouton from "../../composants/commun/onglets/OngletsBouton";
@@ -176,13 +178,15 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
                   nombreColonnes={2}
                 />
 
-                <div className="mb-4 mr-4 mt-4">
-                  {!estModeConsultation && (
-                    <div className="mt-2">
-                      <RMCRequetesAssocieesResultats requete={requete as IRequete} />
-                    </div>
-                  )}
-                </div>
+                <AccessibleAvecDroits auMoinsUnDesDroits={[Droit.CONSULTER]}>
+                  <div className="mb-4 mr-4 mt-4">
+                    {!estModeConsultation && (
+                      <div className="mt-2">
+                        <RMCRequetesAssocieesResultats requete={requete as IRequete} />
+                      </div>
+                    )}
+                  </div>
+                </AccessibleAvecDroits>
               </ConteneurVoletEdition>
             </div>
 

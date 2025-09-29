@@ -454,9 +454,6 @@ pays
         </div>
       </div>
     </div>
-    <div
-      class="mb-4 mr-4 mt-4"
-    />
   </div>
   <div
     class="gap-2 rounded-lg grid overflow-hidden h-[calc(100vh-15.5rem)]"

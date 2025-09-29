@@ -4,6 +4,7 @@ import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
+import { Droit } from "@model/agent/enum/Droit";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TRequete } from "@model/requete/IRequete";
 import { render, screen, waitFor } from "@testing-library/react";
@@ -34,7 +35,10 @@ describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
 
     const { container } = render(
       <MockRECEContextProvider
-        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecAttributs({ id: "test-utilisateur-id" }).generer()}
+        utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte()
+          .avecAttributs({ id: "test-utilisateur-id" })
+          .avecDroit(Droit.CONSULTER)
+          .generer()}
       >
         <RouterProvider router={router} />
       </MockRECEContextProvider>
@@ -84,6 +88,7 @@ describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
       <MockRECEContextProvider
         utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte()
           .avecAttributs({ id: "test-utilisateur-id", idService: "6737566d-0f25-45dc-8443-97b444e6753a" })
+          .avecDroit(Droit.CONSULTER)
           .generer()}
       >
         <RouterProvider router={router} />
