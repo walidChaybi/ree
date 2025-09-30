@@ -1,11 +1,12 @@
 import { CONFIG_POST_COMPOSITION_ACTE_TEXTE } from "@api/configurations/composition/PostCompositionActeTexteApiConfigApi";
+import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import MockSaisieProjetActeContextProvider from "@mock/context/MockSaisieProjetActeContextProvider";
 import { projetActe } from "@mock/data/projetActeTranscrit";
+import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
-import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -14,7 +15,21 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 import FormulaireSaisieProjet from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisieProjet/FormulaireSaisieProjet";
 import * as TraitementApiHook from "../../../../../../hooks/api/TraitementApiHook";
 
-describe("test du formulaire saisie projet acte transcrit de naissance", () => {
+const requeteTranscriptionPriseEnCharge = mappingRequeteCreation({
+  ...requeteCreationTranscription,
+  statut: {
+    statutRequete: StatutRequete.PRISE_EN_CHARGE
+  }
+});
+
+const requeteTranscriptionASigner = mappingRequeteCreation({
+  ...requeteCreationTranscription,
+  statut: {
+    statutRequete: StatutRequete.A_SIGNER
+  }
+});
+
+describe("test du formulaire saisie projet acte transcrit de naissance", async () => {
   const mockLancerTraitement = vi.fn();
 
   vi.spyOn(TraitementApiHook, "default").mockReturnValue({
@@ -50,14 +65,7 @@ describe("test du formulaire saisie projet acte transcrit de naissance", () => {
       >
         <MockSaisieProjetActeContextProvider
           projetActe={null}
-          requete={
-            {
-              statutCourant: {
-                statut: StatutRequete.PRISE_EN_CHARGE,
-                dateEffet: 1111
-              }
-            } as IRequeteCreationTranscription
-          }
+          requete={requeteTranscriptionPriseEnCharge}
           mettreAJourDonneesContext={vi.fn()}
         >
           <FormulaireSaisieProjet />
@@ -75,14 +83,7 @@ describe("test du formulaire saisie projet acte transcrit de naissance", () => {
       >
         <MockSaisieProjetActeContextProvider
           projetActe={null}
-          requete={
-            {
-              statutCourant: {
-                statut: StatutRequete.EN_TRAITEMENT,
-                dateEffet: 1111
-              }
-            } as IRequeteCreationTranscription
-          }
+          requete={requeteTranscriptionPriseEnCharge}
           mettreAJourDonneesContext={vi.fn()}
         >
           <FormulaireSaisieProjet />
@@ -101,14 +102,7 @@ describe("test du formulaire saisie projet acte transcrit de naissance", () => {
       >
         <MockSaisieProjetActeContextProvider
           projetActe={null}
-          requete={
-            {
-              statutCourant: {
-                statut: StatutRequete.A_SIGNER,
-                dateEffet: 1111
-              }
-            } as IRequeteCreationTranscription
-          }
+          requete={requeteTranscriptionASigner}
           mettreAJourDonneesContext={vi.fn()}
         >
           <FormulaireSaisieProjet />
@@ -132,15 +126,8 @@ describe("test du formulaire saisie projet acte transcrit de naissance", () => {
       >
         <MockSaisieProjetActeContextProvider
           projetActe={projetActe}
-          requete={
-            {
-              statutCourant: {
-                statut: StatutRequete.A_SIGNER,
-                dateEffet: 1111
-              }
-            } as IRequeteCreationTranscription
-          }
           mettreAJourDonneesContext={vi.fn().mockResolvedValue({})}
+          requete={requeteTranscriptionASigner}
         >
           <FormulaireSaisieProjet />
         </MockSaisieProjetActeContextProvider>
@@ -165,15 +152,8 @@ describe("test du formulaire saisie projet acte transcrit de naissance", () => {
       >
         <MockSaisieProjetActeContextProvider
           projetActe={projetActe}
-          requete={
-            {
-              statutCourant: {
-                statut: StatutRequete.A_SIGNER,
-                dateEffet: 1111
-              }
-            } as IRequeteCreationTranscription
-          }
           mettreAJourDonneesContext={vi.fn().mockResolvedValue({})}
+          requete={requeteTranscriptionASigner}
         >
           <FormulaireSaisieProjet />
         </MockSaisieProjetActeContextProvider>
@@ -197,20 +177,14 @@ describe("test du formulaire saisie projet acte transcrit de naissance", () => {
       { body: { nature_acte: "A", texte_corps_acte: "texte corps acte", titulaires: "" } },
       { data: { contenu: "", nbPages: 1 } }
     );
+
     renderWithRouter(
       <MockRECEContextProvider
         utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.TRANSCRIPTION_SIGNER_ACTE).generer()}
       >
         <MockSaisieProjetActeContextProvider
           projetActe={projetActe}
-          requete={
-            {
-              statutCourant: {
-                statut: StatutRequete.A_SIGNER,
-                dateEffet: 1111
-              }
-            } as IRequeteCreationTranscription
-          }
+          requete={requeteTranscriptionASigner}
           mettreAJourDonneesContext={vi.fn()}
         >
           <FormulaireSaisieProjet />
@@ -232,20 +206,19 @@ describe("test du formulaire saisie projet acte transcrit de naissance", () => {
   });
 
   test("DOIT afficher la modale QUAND l'utilisateur clique sur le bouton 'terminer et signer'", async () => {
+    MockApi.deployer(
+      CONFIG_POST_COMPOSITION_ACTE_TEXTE,
+      { body: { nature_acte: "A", texte_corps_acte: "texte corps acte", titulaires: "" } },
+      { data: { contenu: "", nbPages: 1 } }
+    );
+
     renderWithRouter(
       <MockRECEContextProvider
         utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.TRANSCRIPTION_SIGNER_ACTE).generer()}
       >
         <MockSaisieProjetActeContextProvider
           projetActe={projetActe}
-          requete={
-            {
-              statutCourant: {
-                statut: StatutRequete.A_SIGNER,
-                dateEffet: 1111
-              }
-            } as IRequeteCreationTranscription
-          }
+          requete={requeteTranscriptionASigner}
           mettreAJourDonneesContext={vi.fn()}
         >
           <FormulaireSaisieProjet />

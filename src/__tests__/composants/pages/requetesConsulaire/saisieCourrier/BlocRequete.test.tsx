@@ -20,6 +20,7 @@ describe("Test rendu du bloc requete en saisie courrier", async () => {
   afterEach(() => {
     vi.resetAllMocks();
   });
+
   test("DOIT afficher le composant bloc requete de saisie de courrier", () => {
     MockApi.deployer(CONFIG_GET_POCOPAS_PAR_FAMILLE_REGISTRE, {
       path: { familleRegistre: "CSL" },

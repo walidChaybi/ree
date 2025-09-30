@@ -40,6 +40,7 @@ const BlocRequete: React.FC = () => {
     if (estHabiliteSaisieRequeteTousRegistre) return;
 
     const postesEnCache = CacheOptionsTypeRegistre.getTypeRegistresParFamilleRegistre("CSL");
+
     if (postesEnCache?.length) {
       setPostes(postesEnCache);
       return;
@@ -94,14 +95,14 @@ const BlocRequete: React.FC = () => {
           />
         ) : (
           <ChampListeDeroulante
-            name="requete.typeRegistre.poste"
+            name="requete.typeRegistre.id"
             libelle="Poste"
             options={(postes.length === 1 ? [] : [{ cle: "", libelle: "" }]).concat(TypeRegistre.versOptions(postes))}
             disabled={!postes.length}
             estObligatoire
             apresChangement={valeur => {
-              const posteSelectionne = postes.find(p => p.poste === valeur);
-              setFieldValue("requete.typeRegistre.id", posteSelectionne?.id ?? "");
+              const posteSelectionne = postes.find(p => p.id === valeur);
+              setFieldValue("requete.typeRegistre.poste", posteSelectionne?.poste ?? "");
             }}
           />
         )}

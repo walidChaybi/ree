@@ -149,7 +149,9 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
       autresPieces: "passeport",
       legalisationApostille: "LEGALISATION",
       modeDepot: "REMISE",
-      identiteTransmetteur: "LE_REQUERANT"
+      identiteTransmetteur: "LE_REQUERANT",
+      phraseSignature: "Titres Honorifiques, Qualité, Fonction,",
+      libelleDecret: ""
     },
     autresEnonciations: {
       enonciations: "tewt tewxt"
@@ -410,7 +412,9 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
         autresPieces: "",
         legalisationApostille: "",
         modeDepot: "TRANSMISE",
-        identiteTransmetteur: "LE_REQUERANT"
+        identiteTransmetteur: "LE_REQUERANT",
+        phraseSignature: "Titres Honorifiques, Qualité, Fonction,",
+        libelleDecret: ""
       },
       soumissionFormulaire: {
         avecEnregistrement: false,
@@ -564,7 +568,9 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
       autresPieces: "",
       legalisationApostille: "APOSTILLE",
       modeDepot: "TRANSMISE",
-      identiteTransmetteur: "LE_REQUERANT"
+      identiteTransmetteur: "LE_REQUERANT",
+      phraseSignature: "Titres Honorifiques, Qualité, Fonction,",
+      libelleDecret: ""
     },
     autresEnonciations: {
       enonciations: "RAS"

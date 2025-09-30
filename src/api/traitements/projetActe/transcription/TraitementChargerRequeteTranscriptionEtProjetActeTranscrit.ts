@@ -27,7 +27,7 @@ const TRAITEMENT_CHARGER_REQUETE_TRANSCRIPTION_ET_PROJET_ACTE_TRANSCRIT: TTraite
 
     const [erreurTraitement, setErreurTraitement] = useState<IErreurTraitement>({ enEchec: false });
 
-    const { appelApi: getDetailRequete } = useFetchApi(CONFIG_GET_DETAIL_REQUETE);
+    const { appelApi: getDetailRequete } = useFetchApi(CONFIG_GET_DETAIL_REQUETE, true);
     const { appelApi: getProjetActe } = useFetchApi(CONFIG_GET_PROJET_ACTE);
     const STATUTS_PROJET_ACTE_VALIDES = [StatutRequete.A_SIGNER, StatutRequete.EN_TRAITEMENT, StatutRequete.PRISE_EN_CHARGE];
 

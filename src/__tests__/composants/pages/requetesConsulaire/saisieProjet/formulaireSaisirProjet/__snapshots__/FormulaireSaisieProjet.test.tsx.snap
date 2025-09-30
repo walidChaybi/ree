@@ -79,7 +79,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       id="titulaire.nomActeEtranger"
                       maxlength="100"
                       name="titulaire.nomActeEtranger"
-                      value=""
+                      value="dupont"
                     />
                   </div>
                 </div>
@@ -199,7 +199,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                         maxlength="100"
                         name="titulaire.prenomsChemin.prenom1"
                         type="text"
-                        value=""
+                        value="paul"
                       />
                     </div>
                   </div>
@@ -259,6 +259,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                   >
                     <div>
                       <input
+                        checked=""
                         class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                         id="titulaire.sexe-MASCULIN"
                         name="titulaire.sexe"
@@ -314,7 +315,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       id="titulaire.dateNaissance.jour"
                       maxlength="2"
                       placeholder="JJ"
-                      value=""
+                      value="04"
                     />
                     <span
                       class="mx-1 text-xl"
@@ -326,7 +327,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       id="titulaire.dateNaissance.mois"
                       maxlength="2"
                       placeholder="MM"
-                      value=""
+                      value="03"
                     />
                     <span
                       class="mx-1 text-xl"
@@ -338,7 +339,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       id="titulaire.dateNaissance.annee"
                       maxlength="4"
                       placeholder="AAAA"
-                      value=""
+                      value="1963"
                     />
                     <span
                       class="mx-2 text-xl"
@@ -447,7 +448,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                         id="titulaire.lieuNaissance.ville"
                         maxlength="100"
                         name="titulaire.lieuNaissance.ville"
-                        value=""
+                        value="nantes"
                       />
                     </div>
                   </div>
@@ -470,7 +471,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       id="titulaire.lieuNaissance.region"
                       maxlength="100"
                       name="titulaire.lieuNaissance.region"
-                      value=""
+                      value="regionNaissance"
                     />
                   </div>
                 </div>
@@ -492,7 +493,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       id="titulaire.lieuNaissance.pays"
                       maxlength="100"
                       name="titulaire.lieuNaissance.pays"
-                      value=""
+                      value="paysNaissance"
                     />
                   </div>
                 </div>
@@ -577,7 +578,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
               <span
                 class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
               >
-                Parent 1
+                Père (Parent 1)
               </span>
               <div
                 class="space-y-4"
@@ -600,7 +601,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       id="parents.parent1.nom"
                       maxlength="100"
                       name="parents.parent1.nom"
-                      value=""
+                      value="nomUsage"
                     />
                   </div>
                 </div>
@@ -626,7 +627,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                         maxlength="100"
                         name="parents.parent1.prenomsChemin.prenom1"
                         type="text"
-                        value=""
+                        value="Yann"
                       />
                     </div>
                   </div>
@@ -685,6 +686,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                     >
                       <div>
                         <input
+                          checked=""
                           class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                           id="parents.parent1.sexe-MASCULIN"
                           name="parents.parent1.sexe"
@@ -733,7 +735,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                           id="parents.parent1.dateNaissance.jour"
                           maxlength="2"
                           placeholder="JJ"
-                          value=""
+                          value="01"
                         />
                         <span
                           class="mx-1 text-xl"
@@ -745,7 +747,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                           id="parents.parent1.dateNaissance.mois"
                           maxlength="2"
                           placeholder="MM"
-                          value=""
+                          value="02"
                         />
                         <span
                           class="mx-1 text-xl"
@@ -757,7 +759,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                           id="parents.parent1.dateNaissance.annee"
                           maxlength="4"
                           placeholder="AAAA"
-                          value=""
+                          value="2000"
                         />
                       </div>
                     </div>
@@ -827,6 +829,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                     </div>
                     <div>
                       <input
+                        checked=""
                         class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                         id="parents.parent1.lieuNaissance.typeLieu-Étranger"
                         name="parents.parent1.lieuNaissance.typeLieu"
@@ -842,7 +845,6 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                     </div>
                     <div>
                       <input
-                        checked=""
                         class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                         id="parents.parent1.lieuNaissance.typeLieu-Inconnu"
                         name="parents.parent1.lieuNaissance.typeLieu"
@@ -858,6 +860,120 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                     </div>
                   </div>
                 </fieldset>
+                <div>
+                  <div
+                    class="mt-4 grid grid-cols-2 gap-4"
+                  >
+                    <div
+                      class="flex gap-4"
+                    >
+                      <div
+                        class="text-start"
+                      >
+                        <label
+                          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                          for="parents.parent1.lieuNaissance.preposition"
+                        >
+                          Préposition
+                        </label>
+                        <select
+                          class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                          id="parents.parent1.lieuNaissance.preposition"
+                          name="parents.parent1.lieuNaissance.preposition"
+                        >
+                          <option
+                            value="A"
+                          >
+                            à
+                          </option>
+                          <option
+                            value="EN"
+                          >
+                            en
+                          </option>
+                          <option
+                            value="AU"
+                          >
+                            au
+                          </option>
+                          <option
+                            value="AUX"
+                          >
+                            aux
+                          </option>
+                        </select>
+                      </div>
+                      <div
+                        class="flex w-full flex-col text-start"
+                      >
+                        <label
+                          aria-label="aria-label-parents.parent1.lieuNaissance.ville"
+                          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                          for="parents.parent1.lieuNaissance.ville"
+                        >
+                          Ville
+                        </label>
+                        <div
+                          class="relative flex rounded-md shadow-sm"
+                        >
+                          <input
+                            class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                            id="parents.parent1.lieuNaissance.ville"
+                            maxlength="100"
+                            name="parents.parent1.lieuNaissance.ville"
+                            value="villeNaissance"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="flex w-full flex-col text-start"
+                    >
+                      <label
+                        aria-label="aria-label-parents.parent1.lieuNaissance.etatProvince"
+                        class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                        for="parents.parent1.lieuNaissance.etatProvince"
+                      >
+                        État, canton, province
+                      </label>
+                      <div
+                        class="relative flex rounded-md shadow-sm"
+                      >
+                        <input
+                          class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                          id="parents.parent1.lieuNaissance.etatProvince"
+                          maxlength="100"
+                          name="parents.parent1.lieuNaissance.etatProvince"
+                          value="regionNaissance"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <div
+                        class="flex w-full flex-col text-start"
+                      >
+                        <label
+                          aria-label="aria-label-parents.parent1.lieuNaissance.pays"
+                          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                          for="parents.parent1.lieuNaissance.pays"
+                        >
+                          Pays
+                        </label>
+                        <div
+                          class="relative flex rounded-md shadow-sm"
+                        >
+                          <input
+                            class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                            id="parents.parent1.lieuNaissance.pays"
+                            maxlength="100"
+                            name="parents.parent1.lieuNaissance.pays"
+                            value="paysNaissance"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div
                 class="pb-4 pt-8"
@@ -955,6 +1071,7 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       </div>
                       <div>
                         <input
+                          checked=""
                           class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                           id="parents.parent1.domicile.typeLieu-Étranger"
                           name="parents.parent1.domicile.typeLieu"
@@ -970,7 +1087,6 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       </div>
                       <div>
                         <input
-                          checked=""
                           class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                           id="parents.parent1.domicile.typeLieu-Inconnu"
                           name="parents.parent1.domicile.typeLieu"
@@ -986,6 +1102,144 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                       </div>
                     </div>
                   </fieldset>
+                  <div>
+                    <div
+                      class="mt-4 grid grid-cols-2 gap-4"
+                    >
+                      <div
+                        class="flex gap-4"
+                      >
+                        <div
+                          class="text-start"
+                        >
+                          <label
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="parents.parent1.domicile.preposition"
+                          >
+                            Préposition
+                          </label>
+                          <select
+                            class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                            id="parents.parent1.domicile.preposition"
+                            name="parents.parent1.domicile.preposition"
+                          >
+                            <option
+                              value="A"
+                            >
+                              à
+                            </option>
+                            <option
+                              value="EN"
+                            >
+                              en
+                            </option>
+                            <option
+                              value="AU"
+                            >
+                              au
+                            </option>
+                            <option
+                              value="AUX"
+                            >
+                              aux
+                            </option>
+                          </select>
+                        </div>
+                        <div
+                          class="flex w-full flex-col text-start"
+                        >
+                          <label
+                            aria-label="aria-label-parents.parent1.domicile.ville"
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="parents.parent1.domicile.ville"
+                          >
+                            Ville
+                          </label>
+                          <div
+                            class="relative flex rounded-md shadow-sm"
+                          >
+                            <input
+                              class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              id="parents.parent1.domicile.ville"
+                              maxlength="100"
+                              name="parents.parent1.domicile.ville"
+                              value="ville"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="flex w-full flex-col text-start"
+                      >
+                        <label
+                          aria-label="aria-label-parents.parent1.domicile.etatProvince"
+                          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                          for="parents.parent1.domicile.etatProvince"
+                        >
+                          État, canton, province
+                        </label>
+                        <div
+                          class="relative flex rounded-md shadow-sm"
+                        >
+                          <input
+                            class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                            id="parents.parent1.domicile.etatProvince"
+                            maxlength="100"
+                            name="parents.parent1.domicile.etatProvince"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <div
+                          class="flex w-full flex-col text-start"
+                        >
+                          <label
+                            aria-label="aria-label-parents.parent1.domicile.pays"
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="parents.parent1.domicile.pays"
+                          >
+                            Pays
+                          </label>
+                          <div
+                            class="relative flex rounded-md shadow-sm"
+                          >
+                            <input
+                              class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              id="parents.parent1.domicile.pays"
+                              maxlength="100"
+                              name="parents.parent1.domicile.pays"
+                              value="pays"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div
+                          class="flex w-full flex-col text-start"
+                        >
+                          <label
+                            aria-label="aria-label-parents.parent1.domicile.adresse"
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="parents.parent1.domicile.adresse"
+                          >
+                            Adresse
+                          </label>
+                          <div
+                            class="relative flex rounded-md shadow-sm"
+                          >
+                            <input
+                              class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              id="parents.parent1.domicile.adresse"
+                              maxlength="100"
+                              name="parents.parent1.domicile.adresse"
+                              value=""
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -2267,6 +2521,49 @@ exports[`test du formulaire saisie projet acte transcrit de naissance > Doit aff
                         Les requérantes
                       </option>
                     </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pt-4"
+              >
+                <div
+                  class="grid gap-2"
+                >
+                  <label
+                    class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                    for="formuleFinale.phraseSignature"
+                  >
+                    Phrase de signature
+                  </label>
+                  <p
+                    class="m-0 mb-2 ml-1 text-sm"
+                  >
+                    Veuillez indiquer, le cas échéant, vos titres honorifiques, votre qualité et votre fonction. Les informations prénom, nom, date et libellé du décret apparaîtront automatiquement lors de la signature de l'acte.
+                  </p>
+                  <div
+                    class="min-h-[80px] rounded border border-solid border-gris px-3 py-3"
+                  >
+                    <div
+                      class="text-left leading-relaxed"
+                    >
+                      <span
+                        class="select-none rounded bg-gris-transparent px-0.5"
+                      >
+                        Prénom Nom, 
+                      </span>
+                      <span
+                        class="rounded px-0.5 outline-none transition-colors hover:bg-bleu-transparent focus-visible:bg-bleu-transparent"
+                        contenteditable="true"
+                      >
+                        Titres Honorifiques, Qualité, Fonction,
+                      </span>
+                      <span
+                        class="select-none rounded bg-gris-transparent px-0.5"
+                      >
+                        Date, 
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>

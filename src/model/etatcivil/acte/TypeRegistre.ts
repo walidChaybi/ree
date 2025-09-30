@@ -27,13 +27,11 @@ export class TypeRegistre {
   };
 
   public static readonly versOptions = (typeRegistres: ITypeRegistreDto[]): Options => {
-    const typeDeRegistre = this.getTypeDeRegistre(typeRegistres);
-
     return typeRegistres
       .map(typeRegistre => {
         return {
-          cle: typeRegistre[typeDeRegistre] ?? "",
-          libelle: typeRegistre[typeDeRegistre] ?? ""
+          cle: typeRegistre.id ?? "",
+          libelle: typeRegistre.poste ?? ""
         };
       })
       .filter(option => option.cle !== "");

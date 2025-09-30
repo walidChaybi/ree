@@ -160,7 +160,9 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
       autresPieces: "",
       legalisationApostille: "APOSTILLE",
       modeDepot: "TRANSMISE",
-      identiteTransmetteur: "LE_REQUERANT"
+      identiteTransmetteur: "LE_REQUERANT",
+      phraseSignature: "Titres Honorifiques, Qualité, Fonction,",
+      libelleDecret: ""
     },
     autresEnonciations: {
       enonciations: "RAS"

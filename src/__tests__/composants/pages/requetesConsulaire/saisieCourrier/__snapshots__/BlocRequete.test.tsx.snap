@@ -83,7 +83,7 @@ exports[`Test rendu du bloc requete en saisie courrier > DOIT afficher le champ 
         >
           <label
             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-            for="requete.typeRegistre.poste"
+            for="requete.typeRegistre.id"
           >
             Poste
             <span
@@ -94,11 +94,11 @@ exports[`Test rendu du bloc requete en saisie courrier > DOIT afficher le champ 
           </label>
           <select
             class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
-            id="requete.typeRegistre.poste"
-            name="requete.typeRegistre.poste"
+            id="requete.typeRegistre.id"
+            name="requete.typeRegistre.id"
           >
             <option
-              value="Test 1"
+              value="123"
             >
               Test 1
             </option>
@@ -193,7 +193,7 @@ exports[`Test rendu du bloc requete en saisie courrier > DOIT afficher le compos
         >
           <label
             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-            for="requete.typeRegistre.poste"
+            for="requete.typeRegistre.id"
           >
             Poste
             <span
@@ -205,8 +205,8 @@ exports[`Test rendu du bloc requete en saisie courrier > DOIT afficher le compos
           <select
             class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
             disabled=""
-            id="requete.typeRegistre.poste"
-            name="requete.typeRegistre.poste"
+            id="requete.typeRegistre.id"
+            name="requete.typeRegistre.id"
           >
             <option
               value=""
@@ -302,7 +302,7 @@ exports[`Test rendu du bloc requete en saisie courrier > DOIT afficher un messag
         >
           <label
             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-            for="requete.typeRegistre.poste"
+            for="requete.typeRegistre.id"
           >
             Poste
             <span
@@ -314,16 +314,13 @@ exports[`Test rendu du bloc requete en saisie courrier > DOIT afficher un messag
           <select
             class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
             disabled=""
-            id="requete.typeRegistre.poste"
-            name="requete.typeRegistre.poste"
+            id="requete.typeRegistre.id"
+            name="requete.typeRegistre.id"
           >
             <option
               value=""
             />
           </select>
-          <div
-            class="text-start text-sm text-rouge"
-          />
         </div>
       </div>
     </div>

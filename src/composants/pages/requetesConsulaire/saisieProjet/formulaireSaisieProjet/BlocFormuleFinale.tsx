@@ -1,6 +1,7 @@
 import { Option } from "@util/Type";
 import { useFormikContext } from "formik";
 
+import { CONFIG_GET_LIBELLE_DECRET } from "@api/configurations/etatCivil/typesRegistres/GetLibelleDecretConfigApi";
 import { EIdentiteTransmetteur } from "@model/etatcivil/acte/projetActe/transcription/FormuleFinale";
 import { ELegalisationApostille } from "@model/etatcivil/enum/ELegalisationApostille";
 import { EModeDepot } from "@model/etatcivil/enum/EModeDepot";
@@ -8,13 +9,16 @@ import { EPieceProduite } from "@model/etatcivil/enum/EPieceProduite";
 import { PrenomsForm } from "@model/form/commun/PrenomsForm";
 import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { enumVersOptions } from "@util/Utils";
-import { useEffect, useMemo } from "react";
+import { useContext, useEffect, useMemo } from "react";
+import { SaisieProjetActeTranscritContext } from "../../../../../contexts/SaisieProjetActeTranscritContextProvider";
+import useFetchApi from "../../../../../hooks/api/FetchApiHook";
 import ChampListeDeroulante from "../../../../commun/champs/ChampListeDeroulante";
 import ChampTexte from "../../../../commun/champs/ChampTexte";
 import ChampsPrenoms from "../../../../commun/champs/ChampsPrenoms";
 import ChampsRadio from "../../../../commun/champs/ChampsRadio";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import SeparateurSection from "../../../../commun/conteneurs/formulaire/SeparateurSection";
+import ChampSignature from "./ChampPhraseSignature";
 
 const optionsTransmetteur: Option[] = enumVersOptions(EIdentiteTransmetteur);
 const optionsPieces: Option[] = enumVersOptions(EPieceProduite);
@@ -23,11 +27,15 @@ const optionsModeDepot: Option[] = enumVersOptions(EModeDepot);
 
 const BlocFormuleFinale: React.FC = () => {
   const { values, setFieldValue, setFieldTouched } = useFormikContext<IProjetActeTranscritForm>();
+  const { requete } = useContext(SaisieProjetActeTranscritContext);
+
   const valeurIdentiteDemandeur = values.formuleFinale.identiteDemandeur;
   const parent2Complet = useMemo(
     () => Boolean(values.parents.parent2?.nom?.trim() || values.parents.parent2?.prenomsChemin?.prenom1?.trim()),
     [values.parents.parent2?.nom, values.parents.parent2?.prenomsChemin?.prenom1]
   );
+
+  const { appelApi: appelGetLibelleDecret } = useFetchApi(CONFIG_GET_LIBELLE_DECRET);
 
   const optionsDemandeur: Option[] = useMemo(() => {
     return [
@@ -43,6 +51,17 @@ const BlocFormuleFinale: React.FC = () => {
       setFieldValue("formuleFinale.identiteDemandeur", "PARENT_1");
     }
   }, [parent2Complet, valeurIdentiteDemandeur]);
+
+  useEffect(() => {
+    if (!requete) return;
+
+    appelGetLibelleDecret({
+      parametres: { path: { idTypeRegistre: requete.typeRegistre.id } },
+      apresSucces: reponse => {
+        if (reponse.libelleDecret) setFieldValue("formuleFinale.libelleDecret", reponse.libelleDecret);
+      }
+    });
+  }, [requete]);
 
   return (
     <ConteneurAvecBordure className="py-6">
@@ -139,6 +158,13 @@ const BlocFormuleFinale: React.FC = () => {
             options={optionsTransmetteur}
           />
         </div>
+      </div>
+
+      <div className="pt-4">
+        <ChampSignature
+          name="formuleFinale.phraseSignature"
+          libelle="Phrase de signature"
+        />
       </div>
     </ConteneurAvecBordure>
   );

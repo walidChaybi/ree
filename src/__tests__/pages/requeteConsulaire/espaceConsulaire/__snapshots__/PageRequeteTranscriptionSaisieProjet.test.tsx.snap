@@ -3036,6 +3036,49 @@ pays
                           </div>
                         </div>
                       </div>
+                      <div
+                        class="pt-4"
+                      >
+                        <div
+                          class="grid gap-2"
+                        >
+                          <label
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="formuleFinale.phraseSignature"
+                          >
+                            Phrase de signature
+                          </label>
+                          <p
+                            class="m-0 mb-2 ml-1 text-sm"
+                          >
+                            Veuillez indiquer, le cas échéant, vos titres honorifiques, votre qualité et votre fonction. Les informations prénom, nom, date et libellé du décret apparaîtront automatiquement lors de la signature de l'acte.
+                          </p>
+                          <div
+                            class="min-h-[80px] rounded border border-solid border-gris px-3 py-3"
+                          >
+                            <div
+                              class="text-left leading-relaxed"
+                            >
+                              <span
+                                class="select-none rounded bg-gris-transparent px-0.5"
+                              >
+                                Prénom Nom, 
+                              </span>
+                              <span
+                                class="rounded px-0.5 outline-none transition-colors hover:bg-bleu-transparent focus-visible:bg-bleu-transparent"
+                                contenteditable="true"
+                              >
+                                Titres Honorifiques, Qualité, Fonction,
+                              </span>
+                              <span
+                                class="select-none rounded bg-gris-transparent px-0.5"
+                              >
+                                Date, 
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

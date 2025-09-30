@@ -22,7 +22,8 @@ describe("BlocFormuleFinale", () => {
             autresPieces: "",
             legalisationApostille: "",
             modeDepot: "Transmise",
-            identiteTransmetteur: "Identique au demandeur"
+            identiteTransmetteur: "Identique au demandeur",
+            phraseSignature: ""
           }
         }}
         onSubmit={() => {}}
@@ -49,7 +50,8 @@ describe("BlocFormuleFinale", () => {
             autresPieces: "",
             legalisationApostille: "",
             modeDepot: "Transmise",
-            identiteTransmetteur: "Identique au demandeur"
+            identiteTransmetteur: "Identique au demandeur",
+            phraseSignature: ""
           }
         }}
         onSubmit={() => {}}
@@ -203,7 +205,8 @@ describe("BlocFormuleFinale", () => {
               autresPieces: "",
               legalisationApostille: "",
               modeDepot: "Transmise",
-              identiteTransmetteur: "Identique au demandeur"
+              identiteTransmetteur: "Identique au demandeur",
+              phraseSignature: ""
             }
           }}
           onSubmit={() => {}}

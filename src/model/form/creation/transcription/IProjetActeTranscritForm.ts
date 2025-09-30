@@ -138,6 +138,8 @@ interface IFormuleFinaleTranscriptionForm {
   autresPieces: string;
   modeDepot: keyof typeof EModeDepot;
   identiteTransmetteur: keyof typeof EIdentiteTransmetteur;
+  phraseSignature: string;
+  libelleDecret: string;
 }
 
 export const declarantTranscriptionFormVide: IDeclarantTranscriptionForm = {
@@ -320,7 +322,9 @@ export const ProjetActeNaissanceTranscriptionForm = {
         autresPieces: projetActe?.formuleFinale.autresPieces || "",
         legalisationApostille: projetActe?.formuleFinale.legalisation ?? "",
         modeDepot: projetActe?.formuleFinale.modeDepot ?? "TRANSMISE",
-        identiteTransmetteur: projetActe?.formuleFinale.identiteTransmetteur ?? "LE_REQUERANT"
+        identiteTransmetteur: projetActe?.formuleFinale.identiteTransmetteur ?? "LE_REQUERANT",
+        phraseSignature: "Titres Honorifiques, Qualité, Fonction,",
+        libelleDecret: ""
       },
       soumissionFormulaire: {
         avecEnregistrement: false,

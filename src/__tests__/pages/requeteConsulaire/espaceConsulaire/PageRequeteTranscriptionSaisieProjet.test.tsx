@@ -1,10 +1,11 @@
+import { CONFIG_GET_DETAIL_REQUETE } from "@api/configurations/requete/GetDetailRequeteConfigApi";
+import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router";
-import request from "superagent";
 import { describe, expect, test, vi } from "vitest";
 import PageRequeteTranscriptionSaisieProjet from "../../../../pages/requetesConsulaire/PageRequeteTranscriptionSaisieProjet";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
@@ -14,22 +15,19 @@ vi.mock("@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocie
 }));
 
 describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
-  const superagentMock = require("superagent-mock")(request, [
-    {
-      pattern: "http://localhost/rece/rece-requete-api/v2/requetes(.*)",
-      fixtures: (match: any) => {
-        return { data: requeteCreationTranscription };
-      },
-      get: (_: any, data: any) => {
-        return {
-          body: data
-        };
-      }
-    }
-  ]);
-
   test("affiche PartieGauche et PartieDroite après récupération de la requête", async () => {
-    const router = createTestingRouter([{ path: "/:idRequeteParam", element: <PageRequeteTranscriptionSaisieProjet /> }], ["/test-id"]);
+    const router = createTestingRouter(
+      [{ path: "/:idRequeteParam", element: <PageRequeteTranscriptionSaisieProjet /> }],
+      ["/3ed9aa4e-921b-489f-b8fe-531dd703c60c"]
+    );
+
+    MockApi.deployer(
+      CONFIG_GET_DETAIL_REQUETE,
+      { path: { idRequete: "3ed9aa4e-921b-489f-b8fe-531dd703c60c" }, query: { isConsultationHistoriqueAction: false } },
+      {
+        data: { ...requeteCreationTranscription }
+      }
+    );
 
     const { container } = render(
       <MockRECEContextProvider
@@ -42,6 +40,12 @@ describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
       </MockRECEContextProvider>
     );
 
+    const mockApi = MockApi.getMock();
+
+    await waitFor(() => {
+      expect(mockApi.history.get.length).toBe(1);
+    });
+
     await waitFor(() => {
       const texteRequete = screen.getByText(/Description de la requête/i);
       expect(texteRequete).toBeDefined();
@@ -52,6 +56,6 @@ describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
 
     expect(container.firstChild).toMatchSnapshot();
 
-    superagentMock.unset();
+    MockApi.stopMock();
   });
 });
