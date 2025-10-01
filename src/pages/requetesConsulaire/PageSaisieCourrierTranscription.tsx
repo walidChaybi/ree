@@ -9,6 +9,7 @@ import { Form, Formik } from "formik";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import Bouton from "../../composants/commun/bouton/Bouton";
+import { ConteneurBoutonBasDePage } from "../../composants/commun/bouton/conteneurBoutonBasDePage/ConteneurBoutonBasDePage";
 import PageChargeur from "../../composants/commun/chargeurs/PageChargeur";
 import ConteneurAccordeon from "../../composants/commun/conteneurs/accordeon/ConteneurAccordeon";
 import ScrollVersErreur from "../../composants/commun/formulaire/ScrollVersErreur";
@@ -111,7 +112,7 @@ const PageSaisieCourrierTranscription: React.FC = () => {
                   estControlable={false}
                   ouvertParDefaut
                 >
-                  <div className="h-[calc(100vh-22rem)] overflow-y-auto py-14">
+                  <div className="h-[calc(100vh-22rem)] overflow-y-auto py-16">
                     <div className="grid gap-10">
                       <BlocRequete />
                       <BlocTitulaire />
@@ -120,29 +121,32 @@ const PageSaisieCourrierTranscription: React.FC = () => {
                     </div>
                   </div>
                 </ConteneurAccordeon>
-
-                <div className="fixed bottom-0 left-0 right-0 bg-blanc py-4">
-                  <div className="mx-auto flex max-w-[90rem] justify-between px-8">
-                    <Bouton
-                      type="button"
-                      title={idRequeteParam ? "Annuler" : "Abandonner"}
-                      onClick={() => navigate(LiensRECE.retourArriere(), { replace: true })}
-                      styleBouton="secondaire"
-                    >
-                      {idRequeteParam ? "Annuler" : "Abandonner"}
-                    </Bouton>
-                    <div className="flex gap-4">
-                      <Bouton
-                        type="submit"
-                        title={idRequeteParam ? "Valider" : "Enregistrer la requête"}
-                        disabled={Boolean(idRequeteParam) && !dirty}
-                      >
-                        {idRequeteParam ? "Valider" : "Enregistrer la requête"}
-                      </Bouton>
-                      {!idRequeteParam && optionsServices && <TransmissionService optionsServices={optionsServices} />}
-                    </div>
-                  </div>
-                </div>
+                <ConteneurBoutonBasDePage
+                  position={"gauche"}
+                  className="left-96"
+                >
+                  <Bouton
+                    type="button"
+                    title={idRequeteParam ? "Annuler" : "Abandonner"}
+                    onClick={() => navigate(LiensRECE.retourArriere(), { replace: true })}
+                    styleBouton="secondaire"
+                  >
+                    {idRequeteParam ? "Annuler" : "Abandonner"}
+                  </Bouton>
+                </ConteneurBoutonBasDePage>
+                <ConteneurBoutonBasDePage
+                  position={"droite"}
+                  className="right-96"
+                >
+                  <Bouton
+                    type="submit"
+                    title={idRequeteParam ? "Valider" : "Enregistrer la requête"}
+                    disabled={Boolean(idRequeteParam) && !dirty}
+                  >
+                    {idRequeteParam ? "Valider" : "Enregistrer la requête"}
+                  </Bouton>
+                  {!idRequeteParam && optionsServices && <TransmissionService optionsServices={optionsServices} />}
+                </ConteneurBoutonBasDePage>
               </Form>
             )}
           </Formik>
