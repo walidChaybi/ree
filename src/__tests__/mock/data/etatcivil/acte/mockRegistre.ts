@@ -6,6 +6,5 @@ export const MOCK_REGISTRE_ACQ: IRegistreDto = {
     id: "idTypeRegistre",
     pocopa: "X"
   },
-  annee: 1970,
-  dateOuverture: [1970, 1, 1]
+  annee: 1970
 };

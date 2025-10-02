@@ -315,8 +315,8 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
               }
               avancement={dossierProjetActe?.avancement}
               estRegistreOuvert={estOuvertRegistrePapier(
-                projetActe?.titulaires.find(titulaire => titulaire.ordre === UN)?.decretNaturalisation,
-                registrePapier
+                registrePapier,
+                projetActe?.titulaires.find(titulaire => titulaire.ordre === UN)?.decretNaturalisation
               )}
               estFormulaireModifie={isDirty}
               validerProjetActe={() => setEstPopinValiderProjetOuverte(true)}

@@ -1,30 +1,24 @@
 import { champsObligatoiresDuDtoAbsents, valeurDtoAbsenteDansEnum } from "@model/commun/dtoUtils";
-import { TDateArrayDTO } from "@util/DateUtils";
-import DateRECE from "../../../utils/DateRECE";
 import { EFamilleRegistre } from "../enum/TypeFamille";
 import { ITypeRegistreDto, TypeRegistre } from "./TypeRegistre";
 
 export interface IRegistreDto {
   famille: keyof typeof EFamilleRegistre;
-  type?: ITypeRegistreDto;
   annee: number;
+  type?: ITypeRegistreDto;
   support1?: string;
   support2?: string;
-  dateOuverture: TDateArrayDTO;
-  dateFermeture?: TDateArrayDTO;
 }
 
 export class Registre {
-  private static readonly champsObligatoires: (keyof IRegistreDto)[] = ["famille", "annee", "dateOuverture"];
+  private static readonly champsObligatoires: (keyof IRegistreDto)[] = ["famille", "annee"];
 
   private constructor(
     public readonly famille: keyof typeof EFamilleRegistre,
     public readonly annee: number,
     public readonly type: TypeRegistre | null,
     public readonly support1: string | null,
-    public readonly support2: string | null,
-    public readonly dateOuverture: DateRECE,
-    public readonly dateFermeture: DateRECE | null
+    public readonly support2: string | null
   ) {}
 
   public static readonly depuisDto = (registre: IRegistreDto): Registre | null => {
@@ -39,9 +33,7 @@ export class Registre {
       registre.annee,
       registre.type ? TypeRegistre.depuisDto(registre.type) : null,
       registre.support1 ?? null,
-      registre.support2 ?? null,
-      DateRECE.depuisDateArrayDTO(registre.dateOuverture),
-      registre.dateFermeture ? DateRECE.depuisDateArrayDTO(registre.dateFermeture) : null
+      registre.support2 ?? null
     );
   };
 }

@@ -30,7 +30,6 @@ import { IRequeteCreationEtablissement, RequeteCreationEtablissement } from "@mo
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import Labels from "@pages/requeteCreation/commun/Labels";
 import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
-import DateUtils from "@util/DateUtils";
 import { UN, getValeurOuVide, jointAvec, rempliAGaucheAvecZero } from "@util/Utils";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
 import { FormikHelpers } from "formik";
@@ -84,18 +83,13 @@ export function getConteneurPieceJustificative(
   );
 }
 
-export const estOuvertRegistrePapier = (
-  decretNaturalisaton: IDecretNaturalisation | null | undefined,
-  registrePapier: Registre | null
-): boolean => {
+export const estOuvertRegistrePapier = (registrePapier: Registre | null, decretNaturalisaton?: IDecretNaturalisation | null): boolean => {
   let estOuvert = false;
 
   if (decretNaturalisaton && registrePapier) {
     const [support1, annee] = decretNaturalisaton?.numeroDecret.split("/") ?? [undefined, undefined];
-    const dateActuelle = DateUtils.getDateActuelle();
     estOuvert =
-      new Date(registrePapier.dateOuverture.versTimestamp()) <= dateActuelle &&
-      (registrePapier.dateFermeture ? new Date(registrePapier.dateFermeture.versTimestamp()) > dateActuelle : true) &&
+      Boolean(registrePapier.type?.estOuvert) &&
       registrePapier.famille === "ACQ" &&
       registrePapier.type?.pocopa === "X" &&
       Number(registrePapier.annee) === Number(annee) &&

@@ -3,6 +3,7 @@ import { Options } from "@util/Type";
 
 export interface ITypeRegistreDto {
   id: string;
+  estOuvert?: boolean;
   poste?: string;
   pocopa?: string;
 }
@@ -12,6 +13,7 @@ export class TypeRegistre {
 
   private constructor(
     public readonly id: string,
+    public readonly estOuvert?: boolean,
     public readonly poste?: string,
     public readonly pocopa?: string
   ) {}
@@ -23,7 +25,7 @@ export class TypeRegistre {
   public static readonly depuisDto = (typeRegistre: ITypeRegistreDto): TypeRegistre | null => {
     if (champsObligatoiresDuDtoAbsents("ITypeRegistreDto", typeRegistre, this.champsObligatoires)) return null;
 
-    return new TypeRegistre(typeRegistre.id, typeRegistre?.poste, typeRegistre?.pocopa);
+    return new TypeRegistre(typeRegistre.id, typeRegistre?.estOuvert, typeRegistre?.poste, typeRegistre?.pocopa);
   };
 
   public static readonly versOptions = (typeRegistres: ITypeRegistreDto[]): Options => {

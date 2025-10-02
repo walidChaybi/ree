@@ -9,7 +9,7 @@ import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscri
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { RouterProvider, createMemoryRouter } from "react-router";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
@@ -151,7 +151,7 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
     await userEvent.type(inputNomRetenuOEC, "Xi phun bin");
 
     const boutonEnregistrer = screen.getByRole("button", { name: "Enregistrer" });
-    await userEvent.click(boutonEnregistrer);
+    fireEvent.click(boutonEnregistrer);
 
     await waitFor(() => {
       expect(mockLancerTraitement).toHaveBeenCalled();
