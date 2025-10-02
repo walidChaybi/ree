@@ -166,7 +166,8 @@ export const declarantTranscriptionFormVide: IDeclarantTranscriptionForm = {
 export const ProjetActeNaissanceTranscriptionForm = {
   valeursInitiales: (
     requete: IRequeteCreationTranscription,
-    projetActe: ProjetActeTranscrit | null
+    projetActe: ProjetActeTranscrit | null,
+    libelleDecret: string
   ): IProjetActeTranscritForm /* NOSONAR */ => {
     const donneesTitulaireParents: Pick<IProjetActeTranscritForm, "titulaire" | "parents"> = projetActe
       ? (() => {
@@ -324,7 +325,7 @@ export const ProjetActeNaissanceTranscriptionForm = {
         modeDepot: projetActe?.formuleFinale.modeDepot ?? "TRANSMISE",
         identiteTransmetteur: projetActe?.formuleFinale.identiteTransmetteur ?? "LE_REQUERANT",
         phraseSignature: projetActe?.phraseSignature?.phraseSignature ?? "Titres Honorifiques, Qualité, Fonction",
-        libelleDecret: ""
+        libelleDecret: libelleDecret
       },
       soumissionFormulaire: {
         avecEnregistrement: false,

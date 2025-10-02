@@ -1,12 +1,16 @@
+import { compositionApi } from "@api/appels/compositionApi";
 import {
   CONFIG_POST_COMPOSITION_ACTE_TEXTE,
   IReponseCompositionActePDF
 } from "@api/configurations/composition/PostCompositionActeTexteApiConfigApi";
+import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR } from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteMisAJourConfigApi";
 import { ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
 import { TitulaireProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/TitulaireProjetActeTranscrit";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { SaisieProjetActeTranscritContext } from "../../../../../contexts/SaisieProjetActeTranscritContextProvider";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
+import LiensRECE from "../../../../../router/LiensRECE";
+import { INFO_PAGE_MES_REQUETES_CONSULAIRES } from "../../../../../router/infoPages/InfoPagesEspaceConsulaire";
 import AfficherMessage from "../../../../../utils/AfficherMessage";
 import AffichagePDF from "../../../../commun/affichageDocument/AffichagePDF";
 import Bouton from "../../../../commun/bouton/Bouton";
@@ -40,7 +44,9 @@ interface IModaleProjetActeProps {
 const ModaleProjetActe: React.FC<IModaleProjetActeProps> = ({ fermerModale, projetActe }) => {
   const [pdfBase64, setPdfBase64] = useState<string | null>(null);
   const { requete } = useContext(SaisieProjetActeTranscritContext);
+  const [estActeSigne, setEstActeSigne] = useState<boolean>(false);
   const { appelApi: appelerCompositionPdf } = useFetchApi(CONFIG_POST_COMPOSITION_ACTE_TEXTE);
+  const { appelApi: getDonneesPourCompositionActeTexte } = useFetchApi(CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR);
 
   const natureActe = useMemo(() => {
     const { prefixeTitre, natureActe } = (() => {
@@ -54,6 +60,22 @@ const ModaleProjetActe: React.FC<IModaleProjetActeProps> = ({ fermerModale, proj
 
     return `${prefixeTitre} ${natureActe}`;
   }, [projetActe.nature]);
+
+  useEffect(() => {
+    if (!estActeSigne) return;
+
+    getDonneesPourCompositionActeTexte({
+      parametres: { path: { idActe: projetActe.id } },
+      apresSucces: donneesComposition => {
+        compositionApi.getCompositionActeTexte(donneesComposition).then(retour => {
+          setPdfBase64(retour.body.data.contenu ?? "");
+        });
+      },
+      apresErreur: messageErreur => {
+        console.error(`Erreur lors de la récupération de l'acte: ${messageErreur}`);
+      }
+    });
+  }, [estActeSigne]);
 
   useEffect(() => {
     appelerCompositionPdf({
@@ -76,7 +98,7 @@ const ModaleProjetActe: React.FC<IModaleProjetActeProps> = ({ fermerModale, proj
         AfficherMessage.erreur("Une erreur est survenue lors de la composition de l'acte", { erreurs: messageErreur });
       }
     });
-  }, [projetActe]);
+  }, [projetActe, estActeSigne]);
 
   return (
     <ConteneurModale fermerModale={fermerModale}>
@@ -101,17 +123,32 @@ const ModaleProjetActe: React.FC<IModaleProjetActeProps> = ({ fermerModale, proj
             </div>
           </div>
 
-          <div className="h-full w-2/5 p-6">
+          <div className="w-2/5 p-6">
             <div className="m-auto flex h-full max-w-md items-center justify-center rounded-lg p-6 text-center">
               <div className="text-center">
-                <SignatureDocument
-                  typeSignature="TRANSCRIT"
-                  idActe={projetActe.id}
-                  idRequete={requete.id}
-                  apresSignature={(succes: boolean) => {
-                    // TODO US[STRECE-8827]
-                  }}
-                />
+                {!estActeSigne ? (
+                  <SignatureDocument
+                    typeSignature="TRANSCRIT"
+                    idActe={projetActe.id}
+                    idRequete={requete.id}
+                    apresSignature={(succes: boolean) => {
+                      if (succes) {
+                        setEstActeSigne(true);
+                        AfficherMessage.succes("L'acte a été signé avec succès.", { fermetureAuto: true });
+                      } else {
+                        fermerModale();
+                      }
+                    }}
+                  />
+                ) : (
+                  <Bouton
+                    title="Mes requêtes consulaires"
+                    styleBouton="principal"
+                    lienVers={LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_CONSULAIRES.url)}
+                  >
+                    {"Mes requêtes consulaires"}
+                  </Bouton>
+                )}
               </div>
             </div>
           </div>

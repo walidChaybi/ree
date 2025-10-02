@@ -139,7 +139,7 @@ describe("Test du composant SignatureDocument", () => {
           path: { idActe: "idActe" },
           body: {
             documentPadesBase64: "documentSigne",
-            signature: { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } as IInformationsCarte },
+            signature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } as IInformationsCarte,
             modeAuthentification: "AROBAS_MDP"
           }
         },
@@ -177,7 +177,7 @@ describe("Test du composant SignatureDocument", () => {
         path: { idActe: "idActe" },
         body: {
           documentPadesBase64: "documentSigne",
-          signature: { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } as IInformationsCarte },
+          signature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } as IInformationsCarte,
           modeAuthentification: "AROBAS_MDP"
         }
       })
@@ -237,7 +237,7 @@ describe("Test du composant SignatureDocument", () => {
         path: { idActe: "idActe" },
         body: {
           documentPadesBase64: "documentSigne",
-          signature: { infosSignature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } as IInformationsCarte },
+          signature: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" } as IInformationsCarte,
           modeAuthentification: "AROBAS_MDP"
         }
       })

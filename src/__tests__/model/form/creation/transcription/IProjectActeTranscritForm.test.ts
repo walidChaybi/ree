@@ -176,7 +176,12 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
   });
 
   test("DOIT faire le mapping correctement avec les valeurs initiales", () => {
-    const valeursInitialesProjetActe = ProjetActeNaissanceTranscriptionForm.valeursInitiales(requeteCreationTranscription, projetActe);
+    const libelleDecret = "article 2, alinéa 2 du décret n°2008-521 du 2 juin 2008";
+    const valeursInitialesProjetActe = ProjetActeNaissanceTranscriptionForm.valeursInitiales(
+      requeteCreationTranscription,
+      projetActe,
+      libelleDecret
+    );
 
     const valeursInitialesAttendues: IProjetActeTranscritForm = {
       titulaire: {
@@ -414,7 +419,7 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
         modeDepot: "TRANSMISE",
         identiteTransmetteur: "LE_REQUERANT",
         phraseSignature: "Titres Honorifiques, Qualité, Fonction,",
-        libelleDecret: ""
+        libelleDecret: libelleDecret
       },
       soumissionFormulaire: {
         avecEnregistrement: false,

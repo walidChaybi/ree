@@ -1,5 +1,8 @@
 import { CONFIG_POST_COMPOSITION_ACTE_TEXTE } from "@api/configurations/composition/PostCompositionActeTexteApiConfigApi";
+import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR } from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteMisAJourConfigApi";
 import { CONFIG_PATCH_COMPOSER_DOCUMENT_FINAL_PROJET_ACTE_TRANSCRIT } from "@api/configurations/etatCivil/projetActe/PatchComposerDocumentFinalProjetActeTranscritConfigApi";
+import { CONFIG_PATCH_INTEGRER_DOCUMENT_FINAL_PROJET_ACTE_TRANSCRIT } from "@api/configurations/etatCivil/projetActe/PatchIntegrerDocumentFinalProjetActeTranscritConfigApi";
+import { CONFIG_PATCH_STATUT_REQUETE_CREATION } from "@api/configurations/requete/creation/PatchStatutRequeteCreationConfigApi";
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
@@ -10,8 +13,10 @@ import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { MemoryRouter } from "react-router";
 import { describe, expect, test, vi } from "vitest";
 import { ConteneurParentModales } from "../../../../../../composants/commun/conteneurs/modale/ConteneurModale";
 import ModaleProjetActe from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisieProjet/ModaleProjetActe";
@@ -127,18 +132,51 @@ describe("ModaleProjetActe - Tests du composant", () => {
     MockApi.stopMock();
   });
 
-  test("DOIT composer le document final QUAND l'utilisateur clique sur 'Valider'", async () => {
+  test("DOIT composer et intégrer le document final QUAND l'utilisateur clique sur 'Valider'", async () => {
+    MockApi.deployer(CONFIG_POST_COMPOSITION_ACTE_TEXTE, {}, { data: { contenu: "Q29udGVudSBkZSB0ZXN0IHBvdXIgbGUgUERG", nbPages: 1 } })
+      .deployer(
+        CONFIG_PATCH_COMPOSER_DOCUMENT_FINAL_PROJET_ACTE_TRANSCRIT,
+        {
+          path: { idActe: "6190b304-18dc-43e5-a53a-02612dbadeae" },
+          body: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" }
+        },
+        { data: "documentASigner" }
+      )
+      .deployer(
+        CONFIG_PATCH_INTEGRER_DOCUMENT_FINAL_PROJET_ACTE_TRANSCRIT,
+        {
+          path: { idActe: "6190b304-18dc-43e5-a53a-02612dbadeae" },
+          body: {
+            documentPadesBase64: "",
+            signature: {
+              entiteCertificat: "",
+              noSerieCarte: "",
+              manufacturerIDCarte: "",
+              modelCarte: "",
+              flagsCarte: "",
+              algoSignature: "",
+              notBeforeCertificat: "",
+              notAfterCertificat: "",
+              noSerieCertificat: "",
+              issuerCertificat: ""
+            },
+            modeAuthentification: "AROBAS_MDP"
+          }
+        },
+        { data: "documentASigner" }
+      );
+
+    MockApi.deployer(CONFIG_PATCH_STATUT_REQUETE_CREATION, {
+      path: { idRequete: "3ed9aa4e-921b-489f-b8fe-531dd703c60c" },
+      query: { statut: StatutRequete.getKey(StatutRequete.TRAITE) }
+    });
+
     MockApi.deployer(
-      CONFIG_POST_COMPOSITION_ACTE_TEXTE,
-      {},
-      { data: { contenu: "Q29udGVudSBkZSB0ZXN0IHBvdXIgbGUgUERG", nbPages: 1 } }
-    ).deployer(
-      CONFIG_PATCH_COMPOSER_DOCUMENT_FINAL_PROJET_ACTE_TRANSCRIT,
+      CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR,
       {
-        path: { idActe: "6190b304-18dc-43e5-a53a-02612dbadeae" },
-        body: { issuerCertificat: "testIssuer", entiteCertificat: "testEntity" }
+        path: { idActe: "6190b304-18dc-43e5-a53a-02612dbadeae" }
       },
-      { data: "documentASigner" }
+      { data: "documentComposer" }
     );
 
     const mockApi = MockApi.getMock();
@@ -147,22 +185,24 @@ describe("ModaleProjetActe - Tests du composant", () => {
       <>
         <ConteneurParentModales />
         {projetActe && (
-          <MockRECEContextProvider
-            utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte()
-              .avecDroit(Droit.SIGNER_DELIVRANCE_DEMAT, { perimetres: [Perimetre.TOUS_REGISTRES] })
-              .generer()}
-          >
-            <MockSaisieProjetActeContextProvider
-              projetActe={projetActe}
-              requete={mappingRequeteCreation(requeteCreationTranscription)}
-              mettreAJourDonneesContext={vi.fn()}
+          <MemoryRouter>
+            <MockRECEContextProvider
+              utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte()
+                .avecDroit(Droit.SIGNER_ACTE, { perimetres: [Perimetre.TOUS_REGISTRES] })
+                .generer()}
             >
-              <ModaleProjetActe
+              <MockSaisieProjetActeContextProvider
                 projetActe={projetActe}
-                fermerModale={() => {}}
-              />
-            </MockSaisieProjetActeContextProvider>
-          </MockRECEContextProvider>
+                requete={mappingRequeteCreation(requeteCreationTranscription)}
+                mettreAJourDonneesContext={vi.fn()}
+              >
+                <ModaleProjetActe
+                  projetActe={projetActe}
+                  fermerModale={() => {}}
+                />
+              </MockSaisieProjetActeContextProvider>
+            </MockRECEContextProvider>
+          </MemoryRouter>
         )}
       </>
     );
@@ -180,7 +220,13 @@ describe("ModaleProjetActe - Tests du composant", () => {
     await userEvent.click(screen.getByTitle("Valider"));
 
     await waitFor(() => {
-      expect(mockApi.history.patch.length).toBe(2);
+      expect(mockApi.history.patch.length).toBe(3);
+    });
+
+    await waitFor(() => {
+      expect(mockApi.history.get.length).toBe(1);
+      expect(mockApi.history.get[0].url).contain("6190b304-18dc-43e5-a53a-02612dbadeae/donnees-pour-composition-acte-texte-mis-a-jour");
+      expect(screen.getByText("Mes requêtes consulaires")).toBeDefined();
     });
 
     demonterListener();

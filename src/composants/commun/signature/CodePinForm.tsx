@@ -7,7 +7,6 @@ interface ICodePinFormProps {
   onSubmit: (codePin: string) => void;
   fermerModale: () => void;
   erreurPin: boolean;
-  avecBoutonAnnuler?: boolean;
 }
 
 const SCHEMA_VALIDATION = Yup.object().shape({
@@ -18,7 +17,7 @@ const SCHEMA_VALIDATION = Yup.object().shape({
     .matches(/^\d+$/, "Le code pin doit être un nombre")
 });
 
-const CodePinForm: React.FC<ICodePinFormProps> = ({ onSubmit, fermerModale, erreurPin, avecBoutonAnnuler = true }) => (
+const CodePinForm: React.FC<ICodePinFormProps> = ({ onSubmit, fermerModale, erreurPin }) => (
   <div>
     <Formik
       initialValues={{ pin: "" }}
@@ -45,7 +44,6 @@ const CodePinForm: React.FC<ICodePinFormProps> = ({ onSubmit, fermerModale, erre
         />
 
         <div className="mt-12 flex flex-nowrap justify-center gap-4">
-          {avecBoutonAnnuler && (
             <Bouton
               title="Annuler"
               styleBouton="secondaire"
@@ -53,7 +51,6 @@ const CodePinForm: React.FC<ICodePinFormProps> = ({ onSubmit, fermerModale, erre
             >
               {"Annuler"}
             </Bouton>
-          )}
 
           <Bouton
             title="Valider"

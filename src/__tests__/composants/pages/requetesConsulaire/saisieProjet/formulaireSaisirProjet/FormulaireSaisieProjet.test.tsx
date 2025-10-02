@@ -1,4 +1,5 @@
 import { CONFIG_POST_COMPOSITION_ACTE_TEXTE } from "@api/configurations/composition/PostCompositionActeTexteApiConfigApi";
+import { CONFIG_GET_LIBELLE_DECRET } from "@api/configurations/etatCivil/typesRegistres/GetLibelleDecretConfigApi";
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
@@ -11,7 +12,7 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { RouterProvider, createMemoryRouter } from "react-router";
-import { beforeEach, describe, expect, test, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import FormulaireSaisieProjet from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/formulaireSaisieProjet/FormulaireSaisieProjet";
 import * as TraitementApiHook from "../../../../../../hooks/api/TraitementApiHook";
 
@@ -40,6 +41,18 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
   beforeEach(() => {
     vi.clearAllMocks();
     mockLancerTraitement.mockClear();
+
+    MockApi.deployer(
+      CONFIG_GET_LIBELLE_DECRET,
+      {
+        path: { idTypeRegistre: "7a091a3b-6835-4824-94fb-527d62926d45" }
+      },
+      { data: { libelleDecret: "libelleDecret" } }
+    );
+  });
+
+  afterEach(() => {
+    MockApi.stopMock();
   });
 
   const renderWithRouter = (component: React.ReactElement, initialEntries = ["/"]) => {
@@ -198,6 +211,7 @@ describe("test du formulaire saisie projet acte transcrit de naissance", async (
     await userEvent.click(boutonTerminerSigner);
 
     await waitFor(() => {
+      expect(mockApi.history.get[0].url).contain("7a091a3b-6835-4824-94fb-527d62926d45/libelle-decret");
       expect(mockApi.history.post.length).toBe(1);
     });
 

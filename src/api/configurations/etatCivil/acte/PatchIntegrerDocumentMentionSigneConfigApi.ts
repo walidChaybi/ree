@@ -7,7 +7,7 @@ const URI = "/acte/:idActe/integrer-document-mention-signe";
 
 interface IBody {
   documentPadesBase64: string;
-  signature: { infosSignature: IInformationsCarte };
+  signature: IInformationsCarte;
   modeAuthentification: TModeAuthentification;
 }
 

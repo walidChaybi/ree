@@ -45,7 +45,7 @@ exports[`ModaleProjetActe - Tests du composant > DOIT rendre le composant correc
             </div>
           </div>
           <div
-            class="h-full w-2/5 p-6"
+            class="w-2/5 p-6"
           >
             <div
               class="m-auto flex h-full max-w-md items-center justify-center rounded-lg p-6 text-center"
@@ -84,6 +84,13 @@ exports[`ModaleProjetActe - Tests du composant > DOIT rendre le composant correc
                     <div
                       class="mt-12 flex flex-nowrap justify-center gap-4"
                     >
+                      <button
+                        class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-blanc text-bleu-sombre hover:text-bleu hover:border-bleu focus:text-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
+                        title="Annuler"
+                        type="button"
+                      >
+                        Annuler
+                      </button>
                       <button
                         class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc"
                         title="Valider"

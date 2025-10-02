@@ -1,8 +1,9 @@
 import TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT from "@api/traitements/projetActe/transcription/TraitementEnregistrerProjetActeTranscrit";
 import { Form, Formik } from "formik";
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import useTraitementApi from "../../../../../hooks/api/TraitementApiHook";
 
+import { CONFIG_GET_LIBELLE_DECRET } from "@api/configurations/etatCivil/typesRegistres/GetLibelleDecretConfigApi";
 import { Droit } from "@model/agent/enum/Droit";
 import {
   EActionFormulaireProjetActeTranscrit,
@@ -12,6 +13,7 @@ import {
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import { SaisieProjetActeTranscritContext } from "../../../../../contexts/SaisieProjetActeTranscritContextProvider";
+import useFetchApi from "../../../../../hooks/api/FetchApiHook";
 import AfficherMessage from "../../../../../utils/AfficherMessage";
 import Bouton from "../../../../commun/bouton/Bouton";
 import { ConteneurBoutonBasDePage } from "../../../../commun/bouton/conteneurBoutonBasDePage/ConteneurBoutonBasDePage";
@@ -32,8 +34,13 @@ import ValeursVersApercuProjet from "./ValeursVersApercuProjet";
 const FormulaireSaisieProjet: React.FC = () => {
   const { requete, projetActe, mettreAJourDonneesContext } = useContext(SaisieProjetActeTranscritContext);
   const [modaleOuverte, setModaleOuverte] = useState(false);
+  const [libelleDecret, setLibelleDecret] = useState<string>("");
+  const { appelApi: getLibelleDecret } = useFetchApi(CONFIG_GET_LIBELLE_DECRET);
 
-  const valeursInitiales = useMemo(() => ProjetActeNaissanceTranscriptionForm.valeursInitiales(requete, projetActe), [requete, projetActe]);
+  const valeursInitiales = useMemo(
+    () => ProjetActeNaissanceTranscriptionForm.valeursInitiales(requete, projetActe, libelleDecret),
+    [requete, projetActe, libelleDecret]
+  );
 
   const { utilisateurConnecte } = useContext(RECEContextData);
 
@@ -41,6 +48,22 @@ const FormulaireSaisieProjet: React.FC = () => {
     () => utilisateurConnecte.estHabilitePour({ leDroit: Droit.TRANSCRIPTION_SIGNER_ACTE }),
     [utilisateurConnecte]
   );
+
+  useEffect(() => {
+    if (!requete) return;
+    getLibelleDecret({
+      parametres: { path: { idTypeRegistre: requete.typeRegistre.id } },
+      apresSucces: reponse => {
+        if (reponse?.libelleDecret) {
+          setLibelleDecret(reponse?.libelleDecret);
+        }
+      },
+      apresErreur: messageErreur => {
+        console.error(`Erreur: ${messageErreur}`);
+        AfficherMessage.erreur("Une erreur est survenue lors de la récupération du libellé de décret");
+      }
+    });
+  }, [requete]);
 
   const { lancerTraitement: lancerEnregistrement, traitementEnCours: enregistrementEnCours } = useTraitementApi(
     TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT
@@ -74,6 +97,7 @@ const FormulaireSaisieProjet: React.FC = () => {
       },
       apresErreur: messageErreur => {
         console.error(`Erreur: ${messageErreur}`);
+
         AfficherMessage.erreur("Une erreur est survenue lors du traitement");
       }
     });

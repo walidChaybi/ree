@@ -1,22 +1,16 @@
 import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { ErrorMessage, useField, useFormikContext } from "formik";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
 type TChampSignatureProps = {
   name: string;
   libelle?: string;
-  libelleDecret: string;
 };
 
-const ChampSignature: React.FC<TChampSignatureProps> = ({ name, libelle, libelleDecret }) => {
+const ChampPhraseSignature: React.FC<TChampSignatureProps> = ({ name, libelle }) => {
   const [field, meta, helpers] = useField(name);
-  const { setFieldValue, setFieldTouched } = useFormikContext<IProjetActeTranscritForm>();
   const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
-
-  useEffect(() => {
-    setFieldValue("formuleFinale.libelleDecret", libelleDecret, false);
-    setFieldTouched("formuleFinale.libelleDecret", false, false);
-  }, []);
+  const { values } = useFormikContext<IProjetActeTranscritForm>();
 
   return (
     <div className="grid gap-2">
@@ -47,7 +41,7 @@ const ChampSignature: React.FC<TChampSignatureProps> = ({ name, libelle, libelle
 
           <span className="select-none rounded bg-gris-transparent px-0.5">
             {", Date, "}
-            {libelleDecret}
+            {values.formuleFinale.libelleDecret}
           </span>
         </div>
       </div>
@@ -61,4 +55,4 @@ const ChampSignature: React.FC<TChampSignatureProps> = ({ name, libelle, libelle
   );
 };
 
-export default ChampSignature;
+export default ChampPhraseSignature;
