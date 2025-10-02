@@ -145,6 +145,10 @@ export const projetActeNaissanceDto: IProjetActeTranscritDto = {
   typeRegistre: {
     id: "7a091a3b-6835-4824-94fb-527d62926d45",
     poste: "CASABLANCA"
+  },
+  phraseSignature: {
+    phraseSignature: "Titres Honorifiques, Qualité, Fonction,",
+    idPhraseSignature: "6190b304-38dh-43e5-a53a-02612dbadeae"
   }
 };
 
@@ -277,6 +281,9 @@ export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
   typeRegistre: {
     id: "7a091a3b-6835-4824-94fb-527d62926d45",
     poste: "CASABLANCA"
+  },
+  phraseSignature: {
+    phraseSignature: "Titres Honorifiques, Qualité, Fonction,"
   }
 };
 
@@ -427,6 +434,10 @@ export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
   typeRegistre: {
     id: "7a091a3b-6835-4824-94fb-527d62926d45",
     poste: "CASABLANCA"
+  },
+  phraseSignature: {
+    phraseSignature: "Titres Honorifiques, Qualité, Fonction,",
+    idPhraseSignature: "6190b304-38dh-43e5-a53a-02612dbadeae"
   }
 };
 

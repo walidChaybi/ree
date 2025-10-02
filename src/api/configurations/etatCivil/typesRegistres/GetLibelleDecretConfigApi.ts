@@ -3,11 +3,7 @@ import { TConfigurationApi } from "@model/api/Api";
 
 const URI = "/types-registres/:idTypeRegistre/libelle-decret";
 
-interface IReponse {
-  libelleDecret: string;
-}
-
-export const CONFIG_GET_LIBELLE_DECRET: TConfigurationApi<typeof URI, undefined, undefined, IReponse> = {
+export const CONFIG_GET_LIBELLE_DECRET: TConfigurationApi<typeof URI, undefined, undefined, { libelleDecret: string }> = {
   api: ETATCIVIL_API,
   methode: "GET",
   uri: URI,

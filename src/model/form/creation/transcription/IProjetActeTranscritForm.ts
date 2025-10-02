@@ -323,7 +323,7 @@ export const ProjetActeNaissanceTranscriptionForm = {
         legalisationApostille: projetActe?.formuleFinale.legalisation ?? "",
         modeDepot: projetActe?.formuleFinale.modeDepot ?? "TRANSMISE",
         identiteTransmetteur: projetActe?.formuleFinale.identiteTransmetteur ?? "LE_REQUERANT",
-        phraseSignature: "Titres Honorifiques, Qualité, Fonction,",
+        phraseSignature: projetActe?.phraseSignature?.phraseSignature ?? "Titres Honorifiques, Qualité, Fonction",
         libelleDecret: ""
       },
       soumissionFormulaire: {
@@ -578,6 +578,9 @@ export const ProjetActeNaissanceTranscriptionForm = {
       typeRegistre: {
         id: requete.typeRegistre.id,
         poste: requete.typeRegistre.poste
+      },
+      phraseSignature: {
+        phraseSignature: valeursSaisies.formuleFinale.phraseSignature
       }
     };
   },
@@ -590,6 +593,10 @@ export const ProjetActeNaissanceTranscriptionForm = {
     id: projetActe.id,
     statut: projetActe.statut,
     type: projetActe.type,
+    phraseSignature: {
+      idPhraseSignature: projetActe.phraseSignature?.idPhraseSignature ?? "",
+      phraseSignature: valeursSaisies.formuleFinale.phraseSignature
+    },
     evenement: {
       ...ProjetActeNaissanceTranscriptionForm.versDtoPost(valeursSaisies, requete).evenement,
       id: projetActe?.evenement.id

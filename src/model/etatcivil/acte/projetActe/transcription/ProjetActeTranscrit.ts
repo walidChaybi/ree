@@ -12,6 +12,11 @@ import { AnalyseMarginaleProjetActeTranscrit, IAnalyseMarginaleProjetActeTranscr
 import { DeclarantProjetActeTranscrit, IDeclarantProjetActeTranscritDto } from "./DeclarantProjetActeTranscrit";
 import { EvenementProjetActeTranscrit, IEvenementProjetActeTranscritDto } from "./EvenementProjetActeTranscrit";
 import { FormuleFinale, IFormuleFinaleDto } from "./FormuleFinale";
+import {
+  IPhraseSignatureProjectActeDto,
+  PhraseSignatureProjetActeTranscrit,
+  TPhraseSignatureProjectActePostDto
+} from "./PhraseSignatureProjectActeTranscrit";
 import { ITitulaireProjetActeTranscritDto, TitulaireProjetActeTranscrit } from "./TitulaireProjetActeTranscrit";
 
 export interface IProjetActeTranscritDto {
@@ -33,13 +38,16 @@ export interface IProjetActeTranscritDto {
   visibiliteArchiviste: string;
   mentions: IMentionDto[];
   typeRegistre: ITypeRegistreDto;
+  phraseSignature?: IPhraseSignatureProjectActeDto;
 }
 
 export type IProjetActeTranscritPatchDto = Omit<IProjetActeTranscritDto, "dateCreation" | "dateStatut" | "dateDerniereMaj" | "corpsTexte">;
 export type IProjetActeTranscritPostDto = Omit<
   IProjetActeTranscritDto,
-  "dateCreation" | "id" | "dateStatut" | "dateDerniereMaj" | "corpsTexte" | "statut" | "type"
->;
+  "dateCreation" | "id" | "dateStatut" | "dateDerniereMaj" | "corpsTexte" | "statut" | "type" | "phraseSignature"
+> & {
+  phraseSignature?: TPhraseSignatureProjectActePostDto;
+};
 
 export class ProjetActeTranscrit {
   private static readonly champsObligatoires: (keyof IProjetActeTranscritDto)[] = [
@@ -75,7 +83,8 @@ export class ProjetActeTranscrit {
     public readonly type: ETypeActe,
     public readonly declarant: DeclarantProjetActeTranscrit,
     public readonly formuleFinale: FormuleFinale,
-    public readonly acteEtranger: IActeEtrangerDto
+    public readonly acteEtranger: IActeEtrangerDto,
+    public readonly phraseSignature: PhraseSignatureProjetActeTranscrit | null
   ) {}
 
   public static readonly depuisDto = (projetActeTranscrit: IProjetActeTranscritDto): ProjetActeTranscrit | null => {
@@ -130,7 +139,8 @@ export class ProjetActeTranscrit {
       ETypeActe[projetActeTranscrit.type],
       declarant,
       formuleFinale,
-      projetActeTranscrit.acteEtranger
+      projetActeTranscrit.acteEtranger,
+      projetActeTranscrit.phraseSignature ? PhraseSignatureProjetActeTranscrit.depuisDto(projetActeTranscrit.phraseSignature) : null
     );
   };
 }

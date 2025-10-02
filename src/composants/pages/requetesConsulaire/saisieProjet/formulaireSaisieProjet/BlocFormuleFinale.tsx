@@ -9,7 +9,7 @@ import { EPieceProduite } from "@model/etatcivil/enum/EPieceProduite";
 import { PrenomsForm } from "@model/form/commun/PrenomsForm";
 import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
 import { enumVersOptions } from "@util/Utils";
-import { useContext, useEffect, useMemo } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { SaisieProjetActeTranscritContext } from "../../../../../contexts/SaisieProjetActeTranscritContextProvider";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
 import ChampListeDeroulante from "../../../../commun/champs/ChampListeDeroulante";
@@ -28,6 +28,7 @@ const optionsModeDepot: Option[] = enumVersOptions(EModeDepot);
 const BlocFormuleFinale: React.FC = () => {
   const { values, setFieldValue, setFieldTouched } = useFormikContext<IProjetActeTranscritForm>();
   const { requete } = useContext(SaisieProjetActeTranscritContext);
+  const [libelleDecret, setLibelleDecret] = useState<string>("");
 
   const valeurIdentiteDemandeur = values.formuleFinale.identiteDemandeur;
   const parent2Complet = useMemo(
@@ -54,11 +55,12 @@ const BlocFormuleFinale: React.FC = () => {
 
   useEffect(() => {
     if (!requete) return;
-
     appelGetLibelleDecret({
       parametres: { path: { idTypeRegistre: requete.typeRegistre.id } },
-      apresSucces: reponse => {
-        if (reponse.libelleDecret) setFieldValue("formuleFinale.libelleDecret", reponse.libelleDecret);
+      apresSucces: ({ libelleDecret }) => {
+        if (libelleDecret) {
+          setLibelleDecret(libelleDecret);
+        }
       }
     });
   }, [requete]);
@@ -163,7 +165,8 @@ const BlocFormuleFinale: React.FC = () => {
       <div className="pt-4">
         <ChampSignature
           name="formuleFinale.phraseSignature"
-          libelle="Phrase de signature"
+          libelle="Phrase de signature de l'officier d'état civil"
+          libelleDecret={libelleDecret}
         />
       </div>
     </ConteneurAvecBordure>

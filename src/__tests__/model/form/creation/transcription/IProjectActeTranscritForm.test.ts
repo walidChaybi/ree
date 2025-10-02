@@ -748,6 +748,9 @@ describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIE
       visibiliteArchiviste: "NON",
       modeCreation: ETypeRedactionActe.TRANSCRIT,
       nature: "NAISSANCE",
+      phraseSignature: {
+        phraseSignature: "Titres Honorifiques, Qualité, Fonction,"
+      },
       typeRegistre: {
         id: "7a091a3b-6835-4824-94fb-527d62926d45",
         poste: "CASABLANCA"

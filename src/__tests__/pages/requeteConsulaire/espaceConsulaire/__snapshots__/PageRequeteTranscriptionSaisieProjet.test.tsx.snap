@@ -3046,7 +3046,7 @@ pays
                             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                             for="formuleFinale.phraseSignature"
                           >
-                            Phrase de signature
+                            Phrase de signature de l'officier d'état civil
                           </label>
                           <p
                             class="m-0 mb-2 ml-1 text-sm"
@@ -3068,12 +3068,12 @@ pays
                                 class="rounded px-0.5 outline-none transition-colors hover:bg-bleu-transparent focus-visible:bg-bleu-transparent"
                                 contenteditable="true"
                               >
-                                Titres Honorifiques, Qualité, Fonction,
+                                Titres Honorifiques, Qualité, Fonction
                               </span>
                               <span
                                 class="select-none rounded bg-gris-transparent px-0.5"
                               >
-                                Date, 
+                                , Date, 
                               </span>
                             </div>
                           </div>
