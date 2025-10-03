@@ -23,12 +23,6 @@ export function setParamsUseApercuCreation(
   });
 }
 
-export interface OngletProps {
-  titre: string;
-  index: number;
-  component: JSX.Element;
-}
-
 function getPostulantNationalite(requete: IRequeteCreationEtablissement): ITitulaireRequeteCreation {
   return Requete.getTitulaireAvecTypeObjet(requete, TypeObjetTitulaire.POSTULANT_NATIONALITE) as ITitulaireRequeteCreation;
 }

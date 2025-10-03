@@ -13,7 +13,6 @@ import { mappingUneRequeteTableauCreation } from "@model/requete/IRequeteTableau
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
-import { OngletProps } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
@@ -26,9 +25,8 @@ import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../../router/LiensRECE";
 import { INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE } from "../../../../../router/infoPages/InfoPagesEspaceConsulaire";
 import Labels from "../../commun/Labels";
-import { OngletPiecesJustificatives } from "../../commun/composants/OngletPiecesJustificatives";
 import "../../commun/scss/ApercuReqCreationPage.scss";
-import { getComposantResumeRequeteEnFonctionNatureActe, onRenommePieceJustificative } from "./ApercuReqCreationTranscriptionUtils";
+import { getComposantResumeRequeteEnFonctionNatureActe } from "./ApercuReqCreationTranscriptionUtils";
 
 interface ApercuReqCreationTranscriptionSimplePageProps {
   idRequeteAAfficher?: string;
@@ -62,33 +60,10 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<ApercuReqCreatio
     });
   }, [props.idRequeteAAfficher, location.pathname, idRequeteParam]);
 
-  function onRenommePieceJustificativeApercuSimple(idPieceJustificative: string, nouveauLibelle: string) {
-    onRenommePieceJustificative(idPieceJustificative, nouveauLibelle, requete, setRequete);
-  }
-
   function redirectApercuRequetePriseEnCharge() {
     if (requete) {
       navigate(LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE.url, { idRequeteParam: requete.id }));
     }
-  }
-
-  function getListeOnglets(): OngletProps[] {
-    return requete
-      ? [
-          {
-            titre: "Pièces justificatives / Annexes",
-            component: (
-              <OngletPiecesJustificatives
-                requete={requete}
-                autoriseOuvertureFenetreExt={true}
-                onRenommePieceJustificative={onRenommePieceJustificativeApercuSimple}
-              />
-            ),
-
-            index: 1
-          }
-        ]
-      : [];
   }
 
   const estPresentBoutonPrendreEnCharge = (utilisateurConnecte: UtilisateurConnecte): boolean => {
@@ -136,7 +111,7 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<ApercuReqCreatio
             </AccessibleAvecDroits>
           </ConteneurRetractable>
 
-          <VoletAvecOnglet liste={getListeOnglets()}>
+          <VoletAvecOnglet liste={[]}>
             <div className="boutons">
               {LiensRECE.estPageConsultation() && <BoutonRetour />}
 

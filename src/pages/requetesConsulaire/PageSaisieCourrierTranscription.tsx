@@ -112,7 +112,7 @@ const PageSaisieCourrierTranscription: React.FC = () => {
                   estControlable={false}
                   ouvertParDefaut
                 >
-                  <div className="h-[calc(100vh-22rem)] overflow-y-auto py-16">
+                  <div className="h-[calc(100vh-22rem)] overflow-y-auto py-10">
                     <div className="grid gap-10">
                       <BlocRequete />
                       <BlocTitulaire />
