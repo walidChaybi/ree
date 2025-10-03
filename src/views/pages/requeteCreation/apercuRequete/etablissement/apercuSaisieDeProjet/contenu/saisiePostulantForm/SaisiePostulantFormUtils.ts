@@ -23,9 +23,7 @@ export function getNomSecable(retenueSdanf?: IRetenueSdanf): INomSecablePostulan
   };
 }
 
-export function estJourMoisVide(retenueSdanf?: IRetenueSdanf): boolean {
-  return !retenueSdanf?.jourNaissance && !retenueSdanf?.moisNaissance && !!retenueSdanf?.anneeNaissance;
-}
+export const estJourMoisVide = (jour?: number, mois?: number, annee?: number): boolean => !jour && !mois && Boolean(annee);
 
 export function filtrePrenomsNonFrancises(prenoms: IPrenomOrdonnes[] = []): IPrenomOrdonnes[] {
   return prenoms.filter(prenom => !prenom.estPrenomFrRetenuSdanf);

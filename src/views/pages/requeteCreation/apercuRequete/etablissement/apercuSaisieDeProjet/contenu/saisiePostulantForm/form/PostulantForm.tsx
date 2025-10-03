@@ -18,7 +18,6 @@ import PrenomsConnusForm from "@composant/formulaire/nomsPrenoms/PrenomsConnusFo
 import PrenomsForm from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { OuiNon } from "@model/etatcivil/enum/OuiNon";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { getLibelle } from "@util/Utils";
 import DateComposeForm, { ChampDateModifie } from "@widget/formulaire/champsDate/DateComposeForm";
 import { IDateComposeForm } from "@widget/formulaire/champsDate/DateComposeFormUtil";
 import { CheckboxField } from "@widget/formulaire/champsSaisie/CheckBoxField";
@@ -27,7 +26,7 @@ import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import { MessageAvertissement } from "@widget/formulaire/erreur/MessageAvertissement";
 import { FormikComponentProps, NB_CARACT_MAX_SAISIE, compteNombreDePrenoms, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Item from "../../../../commun/resumeRequeteCreationEtablissement/items/Item";
 
 interface IPostulantFormProps {
@@ -56,11 +55,15 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
     }
   }
 
+  useEffect(() => {
+    setAfficherMessageNaissance(props.afficherMessageNaissance);
+  }, [props.afficherMessageNaissance]);
+
   return (
     <Item titre={"Postulant"}>
       <InputField
         name={withNamespace(props.nom, NOM)}
-        label={getLibelle("Nom")}
+        label={"Nom"}
         maxLength={NB_CARACT_MAX_SAISIE}
       />
       <NomSecableForm
@@ -70,16 +73,16 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
         afficherAvertissementVocable={true}
       />
       <PrenomsConnusForm
-        libelleAucunPrenom={getLibelle("Pas de prénom")}
+        libelleAucunPrenom={"Pas de prénom"}
         nom={withNamespace(props.nom, PRENOMS)}
         nbPrenomsAffiche={nbPrenoms}
         nbPrenoms={nbPrenoms}
         pasDePrenomConnu
       />
-      <div className="Titre">{getLibelle("Analyse marginale")}</div>
+      <div className="Titre">{"Analyse marginale"}</div>
       <InputField
         name={withNamespace(analyseMarginale, NOM)}
-        label={getLibelle("Nom")}
+        label={"Nom"}
         maxLength={NB_CARACT_MAX_SAISIE}
       />
       <PrenomsForm
@@ -89,56 +92,54 @@ const PostulantForm: React.FC<PostulantFormProps> = props => {
       />
       <InputField
         name={withNamespace(props.nom, IDENTITE)}
-        label={getLibelle("Identité avant décret")}
+        label={"Identité avant décret"}
         maxLength={NB_CARACT_MAX_SAISIE}
       />
       <div className="AvertissementConteneur">
         <RadioField
           name={withNamespace(props.nom, SEXE)}
-          label={getLibelle("Sexe")}
+          label={"Sexe"}
           values={Sexe.getAllEnumsAsOptionsSansInconnu()}
         />
-        <MessageAvertissement afficherMessage={afficherMessageSexe}>{getLibelle("Attention, sexe indéterminé")}</MessageAvertissement>
+        <MessageAvertissement afficherMessage={afficherMessageSexe}>{"Attention, sexe indéterminé"}</MessageAvertissement>
       </div>
       <div className="AvertissementConteneur">
         <div className={"ConteneurDateCompose" + (afficherMessageNaissance ? " AvertissementDateCompose" : "")}>
           <DateComposeForm
             nomDate={withNamespace(props.nom, DATE_NAISSANCE)}
-            labelDate={getLibelle("Date de naissance")}
+            labelDate={"Date de naissance"}
             anneeObligatoire={true}
             anneeMax={new Date().getFullYear()}
             showCroixSuppression={false}
             onChange={onChangeDateNaissance}
           />
         </div>
-        <MessageAvertissement afficherMessage={afficherMessageNaissance}>
-          {getLibelle("Jour et mois valorisés par défaut")}
-        </MessageAvertissement>
+        <MessageAvertissement afficherMessage={afficherMessageNaissance}>{"Jour et mois valorisés par défaut"}</MessageAvertissement>
       </div>
-      <div className="Titre">{getLibelle("Lieu de naissance")}</div>
+      <div className="Titre">{"Lieu de naissance"}</div>
       <InputField
         name={withNamespace(lieuNaissance, VILLE_NAISSANCE)}
-        label={getLibelle("Ville")}
+        label={"Ville"}
         maxLength={NB_CARACT_MAX_SAISIE}
       />
       <InputField
         name={withNamespace(lieuNaissance, ETAT_CANTON_PROVINCE)}
-        label={getLibelle("Etat, canton, province")}
+        label={"Etat, canton, province"}
         maxLength={NB_CARACT_MAX_SAISIE}
       />
       <InputField
         name={withNamespace(lieuNaissance, PAYS_NAISSANCE)}
-        label={getLibelle("Pays")}
+        label={"Pays"}
         maxLength={NB_CARACT_MAX_SAISIE}
       />
       <RadioField
         name={withNamespace(lieuNaissance, NE_DANS_MARIAGE)}
-        label={getLibelle("Né dans le mariage")}
+        label={"Né dans le mariage"}
         values={OuiNon.getAllEnumsAsOptions()}
       />
       <CheckboxField
         name={withNamespace(props.nom, ADOPTE_PAR)}
-        label={getLibelle("Adopté par")}
+        label={"Adopté par"}
         values={[{ libelle: "", cle: "true" }]}
       />
     </Item>

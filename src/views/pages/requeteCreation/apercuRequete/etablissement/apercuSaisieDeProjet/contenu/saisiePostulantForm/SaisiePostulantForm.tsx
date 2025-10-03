@@ -21,7 +21,7 @@ import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { getLibelleParentFromSexe, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import FormikEffect from "@widget/formulaire/utils/FormikEffect";
 import { FormikHelpers } from "formik";
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import { RECEContextActions, RECEContextData } from "../../../../../../../../contexts/RECEContextProvider";
 import { estJourMoisVide } from "./SaisiePostulantFormUtils";
 import AcquisitionForm from "./form/AcquisitionForm";
@@ -45,6 +45,30 @@ export const SaisiePostulantForm: React.FC<ISaisiePostulantFormProps> = props =>
   const { isDirty } = useContext(RECEContextData);
   const { setIsDirty } = useContext(RECEContextActions);
 
+  const afficherMessageNaissance = useMemo(
+    () =>
+      props.estProjetExistant
+        ? estJourMoisVide(
+            Number(props.valeursForm?.titulaire.dateNaissance.jour),
+            Number(props.valeursForm?.titulaire.dateNaissance.mois),
+            Number(props.valeursForm?.titulaire.dateNaissance.annee)
+          )
+        : estJourMoisVide(
+            props.postulant.retenueSdanf?.jourNaissance,
+            props.postulant.retenueSdanf?.moisNaissance,
+            props.postulant.retenueSdanf?.anneeNaissance
+          ),
+    [
+      props.estProjetExistant,
+      props.valeursForm?.titulaire.dateNaissance.jour,
+      props.valeursForm?.titulaire.dateNaissance.mois,
+      props.valeursForm?.titulaire.dateNaissance.annee,
+      props.postulant.retenueSdanf?.jourNaissance,
+      props.postulant.retenueSdanf?.moisNaissance,
+      props.postulant.retenueSdanf?.anneeNaissance
+    ]
+  );
+
   const libelleParent1 = getLibelleParentFromSexe(UN, props.valeursForm?.parents.parent1);
   const libelleParent2 = getLibelleParentFromSexe(DEUX, props.valeursForm?.parents.parent2);
   const elementListe = [
@@ -53,7 +77,7 @@ export const SaisiePostulantForm: React.FC<ISaisiePostulantFormProps> = props =>
       element: (
         <PostulantForm
           nom={TITULAIRE}
-          afficherMessageNaissance={estJourMoisVide(props.postulant.retenueSdanf)}
+          afficherMessageNaissance={afficherMessageNaissance}
         />
       )
     },
