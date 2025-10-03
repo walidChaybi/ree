@@ -12,6 +12,7 @@ import { CSRF_HEADER_NAME, getCsrfCookieValue } from "@util/CsrfUtil";
 import { Generateur } from "@util/generateur/Generateur";
 import * as superagent from "superagent";
 import AfficherMessage from "../utils/AfficherMessage";
+import { StockageLocal } from "../utils/StockageLocal";
 
 const ID_CORRELATION_HEADER_NAME = "X-Correlation-Id";
 
@@ -114,6 +115,14 @@ export class GestionnaireApi {
       httpRequest = this.desactiverCacheNavigateur(httpRequest);
       httpRequest.set("Content-Type", "application/json");
       httpRequest.set(ID_CORRELATION_HEADER_NAME, Generateur.genereCleUnique());
+
+      // Lit d’éventuels Id/profil AROBAS dans le local storage et les fixe en header pour bouchonner AROBAS (à l'usage des UAT).
+      // Sur tous les environnements protégés par le SSO AROBAS, le service provider détecte la présence de l'ID et rejette la requête car c'est lui qui fixe ce header.
+      const profil = StockageLocal.recuperer("PROFIL_RECE", false);
+      const idSSO = StockageLocal.recuperer("ID_SSO", false);
+
+      profil && httpRequest.set("profil", profil);
+      idSSO && httpRequest.set("id_sso", idSSO);
     }
   }
 

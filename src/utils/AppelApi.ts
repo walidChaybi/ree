@@ -11,6 +11,7 @@ import {
 import { CSRF_HEADER_NAME, getCsrfCookieValue } from "@util/CsrfUtil";
 import axios from "axios";
 import AfficherMessage from "./AfficherMessage";
+import { StockageLocal } from "./StockageLocal";
 
 interface IReponseErreur extends Error {
   response: {
@@ -60,15 +61,22 @@ const genererUri = <TUri extends TBaseUri, TBody extends object | undefined, TQu
 const API = {
   appel: <TUri extends TBaseUri, TBody extends object | undefined, TQuery extends object | undefined, TResultat extends object>(
     appelParams: TAppelParams<TUri, TBody, TQuery>
-  ) =>
-    axios({
+  ) => {
+    // Lit d’éventuels Id/profil AROBAS dans le local storage et les fixe en header pour bouchonner AROBAS (à l'usage des UAT).
+    // Sur tous les environnements protégés par le SSO AROBAS, le service provider détecte la présence de l'ID et rejette la requête car c'est lui qui fixe ce header.
+    const profil = StockageLocal.recuperer("PROFIL_RECE", false);
+    const idSSO = StockageLocal.recuperer("ID_SSO", false);
+
+    return axios({
       method: appelParams.configurationRequete.methode.toLowerCase(),
       url: genererUri(appelParams),
       responseType: appelParams.configurationRequete.responseType,
       data: appelParams.configurationRequete.body ?? {},
       headers: {
         ...appelParams.configurationRequete.headers,
-        ...(appelParams.api.estExterne ? {} : { [CSRF_HEADER_NAME]: getCsrfCookieValue() })
+        ...(appelParams.api.estExterne ? {} : { [CSRF_HEADER_NAME]: getCsrfCookieValue() }),
+        ...(profil ? { profil: profil } : {}),
+        ...(idSSO ? { id_sso: idSSO } : {})
       }
     })
       .then(response => {
@@ -109,7 +117,8 @@ const API = {
         }
 
         return Promise.reject<TReponseApiEchec>(erreur);
-      })
+      });
+  }
 } as const;
 
 export const appelApiAvecAxios = <

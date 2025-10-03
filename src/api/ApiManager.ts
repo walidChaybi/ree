@@ -7,6 +7,7 @@ import { Generateur } from "@util/generateur/Generateur";
 import * as superagent from "superagent";
 import { URL_ACCUEIL } from "../router/infoPages/InfoPagesBase";
 import AfficherMessage from "../utils/AfficherMessage";
+import { StockageLocal } from "../utils/StockageLocal";
 
 const ID_CORRELATION_HEADER_NAME = "X-Correlation-Id";
 const EXPIRATION_CACHE_SECONDS = 43200; // Expiration du cache au bout de 12h (43200 secondes)
@@ -106,6 +107,16 @@ export class ApiManager {
 
     // Ajout de la valeur du cookie csrf dans l'entête
     this.addCsrfInfosToConfigHeader(httpRequestConfig);
+
+    // Lit d’éventuels Id/profil AROBAS dans le local storage et les fixe en header pour bouchonner AROBAS (à l'usage des UAT).
+    // Sur tous les environnements protégés par le SSO AROBAS, le service provider détecte la présence de l'ID et rejette la requête car c'est lui qui fixe ce header.
+    if (httpRequestConfig.headers) {
+      const profil = StockageLocal.recuperer("PROFIL_RECE", false);
+      const idSSO = StockageLocal.recuperer("ID_SSO", false);
+
+      profil && httpRequestConfig.headers.push({ header: "profil", value: profil });
+      idSSO && httpRequestConfig.headers.push({ header: "id_sso", value: idSSO });
+    }
 
     if (httpRequestConfig.parameters) {
       httpRequete = this.processRequestQueyParameters(httpRequestConfig.parameters, httpRequete);

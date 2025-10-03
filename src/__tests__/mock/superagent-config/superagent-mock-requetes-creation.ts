@@ -108,19 +108,6 @@ export const configRequetesCreation = [
         return requetesServiceCreationTableauResultatQuery;
       }
 
-      /////////////////////////////////
-      // Attribution requête service //
-      /////////////////////////////////
-      if (
-        url ===
-        "/requetes/action/transfert?idRequete=c9b817ca-1899-450e-9f04-979541946011&idService=6737d2f8-f2af-450d-a376-f22f6df6ff1d&idUtilisateur=7a091a3b-6835-4824-94fb-527d68926d56&statutRequete=A_SIGNER&libelleAction=Attribu%C3%A9e%20%C3%A0%20%20Young%20Ashley&attribuer=true"
-      ) {
-        let result = requetesServiceCreationTableauResultatQuery;
-        result.data[0].idUtilisateur = "7a091a3b-6835-4824-94fb-527d68926d56";
-
-        return result;
-      }
-
       ///////////////////////////////
       // Requêtes de consulaires    //
       ///////////////////////////////
