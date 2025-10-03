@@ -26,7 +26,8 @@ export enum ECleOngletDocumentDelivre {
   SAISIE = "saisie",
   MENTION = "mention",
   SAISIE_CORPS = "saisie-corps",
-  DOCUMENT_EDITE = "document-edite"
+  DOCUMENT_EDITE = "document-edite",
+  RETOUCHE_IMAGE = "retouche-image"
 }
 
 const aOngletSaisirExtrait = (typeDelivrance: IDocumentDelivrance | null): boolean =>
@@ -51,26 +52,37 @@ const aOngletSaisirCorps = (typeDelivrance: IDocumentDelivrance | null, validati
     typeDelivrance?.code as ECodeDocumentDelivrance
   ) && validation !== EValidation.E;
 
+const aOngletRetoucheImage = (typeDelivrance: IDocumentDelivrance | null, typeActe: keyof typeof ETypeActe): boolean =>
+  typeActe === "IMAGE" && typeDelivrance?.code === ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE;
+
 const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDelivre, resetOngletActif }) => {
   const idDocumentDelivre = useMemo(() => documentDelivre.id, [documentDelivre]);
   const { requete, acte } = useContext(EditionDelivranceContext);
   const [contenuDocument, setContenuDocument] = useState<string | null>(null);
-  const [ongletActif, setOngletActif] = useState<ECleOngletDocumentDelivre>(ECleOngletDocumentDelivre.DOCUMENT_EDITE);
   const ongletsDisponible = useMemo(() => {
     const typeDocument = DocumentDelivrance.depuisId(documentDelivre.typeDocument);
 
     return {
       saisie: aOngletSaisirExtrait(typeDocument),
       mention: aOngletMention(typeDocument, requete, acte),
-      saisieCorps: aOngletSaisirCorps(typeDocument, documentDelivre.validation)
+      saisieCorps: aOngletSaisirCorps(typeDocument, documentDelivre.validation),
+      retoucheImage: aOngletRetoucheImage(typeDocument, acte?.type ?? "INCONNU"),
+      documentEdite: !aOngletRetoucheImage(typeDocument, acte?.type ?? "INCONNU")
     };
   }, [idDocumentDelivre]);
-  const { appelApi: getDocumentsReponse } = useFetchApi(CONFIG_GET_DOCUMENTS_REPONSE_DELIVRANCE);
+
+  const ongletParDefaut: ECleOngletDocumentDelivre = useMemo(
+    () => (ongletsDisponible.documentEdite ? ECleOngletDocumentDelivre.DOCUMENT_EDITE : ECleOngletDocumentDelivre.RETOUCHE_IMAGE),
+    [ongletsDisponible]
+  );
+
+  const [ongletActif, setOngletActif] = useState<ECleOngletDocumentDelivre>(ongletParDefaut);
 
   useEffect(() => {
-    resetOngletActif && setOngletActif(ECleOngletDocumentDelivre.DOCUMENT_EDITE);
-  }, [resetOngletActif]);
+    resetOngletActif && setOngletActif(ongletParDefaut);
+  }, [resetOngletActif, ongletParDefaut]);
 
+  const { appelApi: getDocumentsReponse } = useFetchApi(CONFIG_GET_DOCUMENTS_REPONSE_DELIVRANCE);
   useEffect(() => {
     getDocumentsReponse({
       parametres: { path: { idDcumentReponse: idDocumentDelivre } },
@@ -108,10 +120,22 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
                 }
               ]
             : []),
-          {
-            cle: ECleOngletDocumentDelivre.DOCUMENT_EDITE,
-            libelle: "Document édité"
-          }
+          ...(ongletsDisponible.retoucheImage
+            ? [
+                {
+                  cle: ECleOngletDocumentDelivre.RETOUCHE_IMAGE,
+                  libelle: "Retouche image"
+                }
+              ]
+            : []),
+          ...(ongletsDisponible.documentEdite
+            ? [
+                {
+                  cle: ECleOngletDocumentDelivre.DOCUMENT_EDITE,
+                  libelle: "Document édité"
+                }
+              ]
+            : [])
         ]}
         cleOngletActif={ongletActif}
         changerOnglet={(valeur: string) => setOngletActif(valeur as ECleOngletDocumentDelivre)}
@@ -160,15 +184,26 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
         </ConteneurVoletEdition>
       )}
 
-      <ConteneurVoletEdition
-        estActif={ongletActif === ECleOngletDocumentDelivre.DOCUMENT_EDITE}
-        estSousOnglet
-      >
-        <AffichagePDF
-          contenuBase64={contenuDocument}
-          typeZoom={90}
-        />
-      </ConteneurVoletEdition>
+      {ongletsDisponible.documentEdite && (
+        <ConteneurVoletEdition
+          estActif={ongletActif === ECleOngletDocumentDelivre.DOCUMENT_EDITE}
+          estSousOnglet
+        >
+          <AffichagePDF
+            contenuBase64={contenuDocument}
+            typeZoom={90}
+          />
+        </ConteneurVoletEdition>
+      )}
+
+      {ongletsDisponible.retoucheImage && (
+        <ConteneurVoletEdition
+          estActif={ongletActif === ECleOngletDocumentDelivre.RETOUCHE_IMAGE}
+          estSousOnglet
+        >
+          Outil retouche image
+        </ConteneurVoletEdition>
+      )}
     </>
   );
 };

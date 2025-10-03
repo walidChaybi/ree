@@ -42,7 +42,7 @@ const PartieActeRequete: React.FC<IPartieActeRequeteProps> = React.memo(({ ongle
   const { appelApi: recupererDonneesCompositionActeTexte } = useFetchApi(CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE);
 
   useEffect(() => {
-    if (contenuActe !== null || !acte) return;
+    if (contenuActe !== null || acte?.type !== "TEXTE") return;
 
     recupererDonneesCompositionActeTexte({
       parametres: { path: { idActe: acte.id } },

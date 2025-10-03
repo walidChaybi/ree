@@ -82,6 +82,33 @@ describe("VoletDocumentDelivre", () => {
     });
   });
 
+  test("Render correctement avec l'onglet actif de base à 'Retouche image'", async () => {
+    render(
+      <MockRECEContextProvider utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.DELIVRER).generer()}>
+        {elementAvecEditionDelivranceContexte(
+          <VoletDocumentDelivre
+            documentDelivre={{
+              ...documentReponse,
+              typeDocument: DocumentDelivrance.idDepuisCode(ECodeDocumentDelivrance.CODE_COPIE_INTEGRALE),
+              contenu: "Coucou"
+            }}
+            resetOngletActif={false}
+          />,
+          mockRequete,
+          new MockFicheActeBuilder({
+            id: "19c0d767-64e5-4376-aa1f-6d781a2a235a"
+          })
+            .deType("IMAGE")
+            .generer()!
+        )}
+      </MockRECEContextProvider>
+    );
+    await waitFor(() => {
+      expect(screen.getByText("Retouche image")).toBeDefined();
+      expect(screen.queryByText("Document édité")).toBeNull();
+    });
+  });
+
   test("Reset l'onglet actif à 'Document édité' quand resetOngletActif est true", async () => {
     const { rerender } = render(
       <MockRECEContextProvider>
