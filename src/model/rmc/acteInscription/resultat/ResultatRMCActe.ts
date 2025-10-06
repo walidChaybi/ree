@@ -7,7 +7,7 @@ import { formatNoms, jointPrenoms } from "@util/Utils";
 import DateRECE from "../../../../utils/DateRECE";
 import { champsObligatoiresDuDtoAbsents, valeurDtoAbsenteDansEnum } from "../../../commun/dtoUtils";
 
-// CODE EXEMPLE développement OBJET des modèles métier + contrôle des DTO
+// EXEMPLAR développement OBJET des modèles métier + contrôle des DTO
 
 export interface IResultatRMCActeDto {
   id: string;

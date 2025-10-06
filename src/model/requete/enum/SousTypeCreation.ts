@@ -16,7 +16,7 @@ export enum ESousTypeCreation {
   RCADC = "RCADC"
 }
 
-// CODE EXEMPLE enumération avec deux libellés et utilitaire
+// EXEMPLAR enumération avec deux libellés et utilitaire
 
 export const ELibelleSousTypeCreation: TEnumAvecDeuxLibelles<ESousTypeCreation> = {
   RCEDXR: {
