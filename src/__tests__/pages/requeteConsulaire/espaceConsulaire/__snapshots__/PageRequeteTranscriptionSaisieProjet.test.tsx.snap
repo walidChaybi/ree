@@ -3051,31 +3051,29 @@ pays
                           <p
                             class="m-0 mb-2 ml-1 text-sm"
                           >
-                            Veuillez indiquer, le cas échéant, vos titres honorifiques, votre qualité et votre fonction. Les informations prénom, nom, date et libellé du décret apparaîtront automatiquement lors de la signature de l'acte.
+                            Veuillez indiquer, le cas échéant, vos titres honorifiques, votre qualité et votre fonction.
+                            <span
+                              class="rounded px-1 py-0.5 font-bold"
+                            >
+                              Les informations prénom, nom, date et libellé du décret apparaîtront automatiquement lors de la signature de l'acte.
+                            </span>
                           </p>
                           <div
-                            class="min-h-[80px] rounded border border-solid border-gris px-3 py-3"
+                            class="grid"
                           >
-                            <div
-                              class="text-left leading-relaxed"
+                            <label
+                              aria-label="aria-label-formuleFinale.phraseSignature"
+                              class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                              for="formuleFinale.phraseSignature"
+                            />
+                            <textarea
+                              class="font-marianne text-base resize-y transition-colors border-gris focus-visible:ring-bleu"
+                              id="formuleFinale.phraseSignature"
+                              maxlength="3000"
+                              name="formuleFinale.phraseSignature"
                             >
-                              <span
-                                class="select-none rounded bg-gris-transparent px-0.5"
-                              >
-                                Prénom Nom, 
-                              </span>
-                              <span
-                                class="rounded px-0.5 outline-none transition-colors hover:bg-bleu-transparent focus-visible:bg-bleu-transparent"
-                                contenteditable="true"
-                              >
-                                Titres Honorifiques, Qualité, Fonction
-                              </span>
-                              <span
-                                class="select-none rounded bg-gris-transparent px-0.5"
-                              >
-                                , Date, 
-                              </span>
-                            </div>
+                              Titres Honorifiques, Qualité, Fonction
+                            </textarea>
                           </div>
                         </div>
                       </div>

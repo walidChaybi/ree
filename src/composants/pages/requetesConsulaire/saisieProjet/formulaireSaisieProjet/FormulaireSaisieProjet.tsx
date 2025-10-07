@@ -44,7 +44,7 @@ const FormulaireSaisieProjet: React.FC = () => {
 
   const { utilisateurConnecte } = useContext(RECEContextData);
 
-  const peutSigner = useMemo(
+  const aLeDroitDeSignerActe = useMemo(
     () => utilisateurConnecte.estHabilitePour({ leDroit: Droit.TRANSCRIPTION_SIGNER_ACTE }),
     [utilisateurConnecte]
   );
@@ -70,7 +70,7 @@ const FormulaireSaisieProjet: React.FC = () => {
   );
 
   const terminerEtSigner = (valeursSaisies: IProjetActeTranscritForm) => {
-    if (!peutSigner) {
+    if (!aLeDroitDeSignerActe) {
       AfficherMessage.erreur("Vous n'avez pas l'habilitation nécessaire pour terminer et signer le projet d'acte");
       return;
     }
@@ -219,7 +219,7 @@ const FormulaireSaisieProjet: React.FC = () => {
                   {"Enregistrer"}
                 </Bouton>
 
-                {peutSigner && (
+                {aLeDroitDeSignerActe && (
                   <Bouton
                     title="Terminer et signer"
                     type="button"

@@ -1,6 +1,6 @@
-import { IProjetActeTranscritForm } from "@model/form/creation/transcription/IProjetActeTranscritForm";
-import { ErrorMessage, useField, useFormikContext } from "formik";
+import { ErrorMessage, useField } from "formik";
 import { useMemo } from "react";
+import ChampZoneTexte from "../../../../commun/champs/ChampZoneTexte";
 
 type TChampSignatureProps = {
   name: string;
@@ -8,9 +8,8 @@ type TChampSignatureProps = {
 };
 
 const ChampPhraseSignature: React.FC<TChampSignatureProps> = ({ name, libelle }) => {
-  const [field, meta, helpers] = useField(name);
+  const [_, meta] = useField(name);
   const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
-  const { values } = useFormikContext<IProjetActeTranscritForm>();
 
   return (
     <div className="grid gap-2">
@@ -22,30 +21,17 @@ const ChampPhraseSignature: React.FC<TChampSignatureProps> = ({ name, libelle })
           {libelle}
         </label>
       )}
-
       <p className="m-0 mb-2 ml-1 text-sm">
-        Veuillez indiquer, le cas échéant, vos titres honorifiques, votre qualité et votre fonction. Les informations prénom, nom, date et
-        libellé du décret apparaîtront automatiquement lors de la signature de l'acte.
+        {"Veuillez indiquer, le cas échéant, vos titres honorifiques, votre qualité et votre fonction."}
+        <span className="rounded px-1 py-0.5 font-bold">
+          {"Les informations prénom, nom, date et libellé du décret apparaîtront automatiquement lors de la signature de l'acte."}
+        </span>
       </p>
-
-      <div className="min-h-[80px] rounded border border-solid border-gris px-3 py-3">
-        <div className="text-left leading-relaxed">
-          <span className="select-none rounded bg-gris-transparent px-0.5">{"Prénom Nom, "}</span>
-
-          <span
-            contentEditable
-            className="rounded px-0.5 outline-none transition-colors hover:bg-bleu-transparent focus-visible:bg-bleu-transparent"
-            onBlur={e => helpers.setValue(e.target.innerText || "")}
-            dangerouslySetInnerHTML={{ __html: field.value || "" }}
-          />
-
-          <span className="select-none rounded bg-gris-transparent px-0.5">
-            {", Date, "}
-            {values.formuleFinale.libelleDecret}
-          </span>
-        </div>
-      </div>
-
+      <ChampZoneTexte
+        name="formuleFinale.phraseSignature"
+        typeRedimensionnement="vertical"
+        maxLength={3000}
+      />
       {meta.error && (
         <div className="text-start text-sm text-rouge">
           <ErrorMessage name={name} />
