@@ -5,7 +5,7 @@ import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
 
 const InformationsDeveloppeur: React.FC = () =>
-  gestionnaireFeatureFlag.estActif(FeatureFlag.FF_SIMULER_SIGNATURE) ? (
+  gestionnaireFeatureFlag.estActif(FeatureFlag.FF_SIMULER_SIGNATURE) && process.env.NODE_ENV === "development" ? (
     <div className="pb-2 text-start text-sm text-orange">
       <div>
         {"⚠ Vous êtes en mode développement."}

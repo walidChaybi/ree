@@ -124,7 +124,7 @@ const ModeDeveloppement = {
   } as { [cle: string]: string },
 
   ignorer: (codePin: string) =>
-    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_SIMULER_SIGNATURE)
+    gestionnaireFeatureFlag.estActif(FeatureFlag.FF_SIMULER_SIGNATURE) && process.env.NODE_ENV === "development"
       ? !Object.values(ModeDeveloppement.CODES_PIN).includes(codePin)
       : true,
 
