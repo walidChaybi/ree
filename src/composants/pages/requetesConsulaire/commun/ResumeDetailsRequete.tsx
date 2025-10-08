@@ -168,12 +168,15 @@ const ResumeDetailsRequete: React.FC<IPartieGaucheSaisieProjetProps> = ({ requet
                 </div>
               ))}
 
-              {parents.length > 0 && (
-                <ConteneurDetailInformation
-                  key="mariage"
-                  libelle="Mariage"
-                  valeur={EvenementUnion.getDateEtLieuFormate(TitulaireRequeteCreation.getEvenementUnionTypeMariage(parents[0]))}
-                />
+              {parents[0].evenementUnions?.[0] && (
+                <ConteneurAvecBordure titreEnTete="Mariage">
+                  <div className="pt-4">
+                    <ConteneurDetailInformation
+                      libelle="Date et lieu"
+                      valeur={EvenementUnion.getDateEtLieuFormate(TitulaireRequeteCreation.getEvenementUnionTypeMariage(parents[0]))}
+                    />
+                  </div>
+                </ConteneurAvecBordure>
               )}
             </>
           )}
