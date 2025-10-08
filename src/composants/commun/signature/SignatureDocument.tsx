@@ -94,8 +94,9 @@ const AVANCEMENT: { [EtatAvancement in Exclude<TStatutSignature, "attente-pin" |
           case "MISE_A_JOUR":
             return TypePopinSignature.getTextePopinSignatureMentions() ?? "";
           case "ETABLI":
-          case "TRANSCRIT":
             return TypePopinSignature.getTextePopinSignatureActe() ?? "";
+          case "TRANSCRIT":
+            return TypePopinSignature.getTextePopinSignatureActeTranscrit() ?? "";
           default:
             return "";
         }

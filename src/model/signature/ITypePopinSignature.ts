@@ -1,5 +1,6 @@
 const POPIN_SIGNATURE_MENTION = "POPIN_SIGNATURE_MENTION";
 const POPIN_SIGNATURE_ACTE = "POPIN_SIGNATURE_ACTE";
+const POPIN_SIGNATURE_ACTE_TRANSCRIT = "POPIN_SIGNATURE_ACTE_TRANSCRIT";
 
 export interface ITypePopinSignature {
   id: string;
@@ -25,6 +26,10 @@ export class TypePopinSignature {
 
   public static getTextePopinSignatureActe(): string | undefined {
     return TypePopinSignature.liste?.find(el => el.sousType === POPIN_SIGNATURE_ACTE)?.description;
+  }
+
+  public static getTextePopinSignatureActeTranscrit(): string | undefined {
+    return TypePopinSignature.liste?.find(el => el.sousType === POPIN_SIGNATURE_ACTE_TRANSCRIT)?.description;
   }
 
   public static getTextePopinSignatureMentions(): string | undefined {
