@@ -44,11 +44,13 @@ function getPanelAreasActeImage(acte: FicheActe, params: IParamsAffichage): Sect
     return [
       {
         value: (
-          <VisionneuseActe
-            idActe={acte.id}
-            typeActe={acte.type}
-            estReecrit={params.visuActe === "classique" ? (acte.estReecrit ?? undefined) : undefined}
-          />
+          <div className="h-screen">
+            <VisionneuseActe
+              idActe={acte.id}
+              typeActe={acte.type}
+              estReecrit={params.visuActe === "classique" ? (acte.estReecrit ?? undefined) : undefined}
+            />
+          </div>
         ),
         nbColonne: 1
       }

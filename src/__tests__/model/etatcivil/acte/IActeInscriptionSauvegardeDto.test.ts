@@ -1,6 +1,7 @@
 import { ActeInscriptionSauvegardeDto } from "@model/etatcivil/acte/IActeInscriptionSauvegardeDto";
 import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
 import { describe, expect, test } from "vitest";
+import { EMimeType } from "../../../../ressources/EMimeType";
 
 describe("Test du dto IActeInscriptionSauvegardeDto", () => {
   test("Méthodes ActeInscriptionSauvegardeDto mapResultatGetActesInscriptionsSauvegardes", () => {
@@ -41,7 +42,7 @@ describe("Test du dto IActeInscriptionSauvegardeDto", () => {
     const pieceJustificative: IPieceJustificativeCreation = {
       id: "idPieceJustificative",
       nom: "PJ",
-      mimeType: "image/png",
+      mimeType: EMimeType.IMAGE_PNG,
       extension: "png",
       taille: 1670093,
       contenu: "contenu",

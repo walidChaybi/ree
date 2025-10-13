@@ -14,6 +14,7 @@ import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { EMimeType } from "../../../ressources/EMimeType";
 import { documentReponseCourrier117 } from "./DocumentReponse";
 import { TYPE_PIECE_JUSTIFICATIVE } from "./NomenclatureTypePieceJustificative";
 
@@ -46,7 +47,7 @@ const requeteDelivrance: IRequeteDelivrance = {
     {
       contenu: "",
       id: "salut",
-      mimeType: "",
+      mimeType: EMimeType.APPLI_PDF,
       nom: "Jérome",
       taille: 0,
       typePieceJustificative: TYPE_PIECE_JUSTIFICATIVE[0]
@@ -174,7 +175,7 @@ export const requeteDelivranceRDC: IRequeteDelivrance = {
     {
       contenu: "",
       id: "salut",
-      mimeType: "",
+      mimeType: EMimeType.APPLI_PDF,
       nom: "Jérome",
       taille: 0,
       typePieceJustificative: TYPE_PIECE_JUSTIFICATIVE[0]

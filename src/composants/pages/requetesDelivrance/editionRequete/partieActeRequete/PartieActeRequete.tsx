@@ -1,13 +1,11 @@
-import { compositionApi } from "@api/appels/compositionApi";
 import { getDocumentReponseById } from "@api/appels/requeteApi";
-import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE } from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteConfigApi";
 import { AlertesActes } from "@composant/alertesActe/AlertesActes";
+import VisionneuseActe from "@composant/visionneuseActe/VisionneuseActe";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import React, { Dispatch, SetStateAction, useContext, useEffect, useMemo, useState } from "react";
 import { EditionDelivranceContext } from "../../../../../contexts/EditionDelivranceContextProvider";
-import useFetchApi from "../../../../../hooks/api/FetchApiHook";
-import AfficherMessage from "../../../../../utils/AfficherMessage";
-import AffichagePDF from "../../../../commun/affichageDocument/AffichagePDF";
+import { EMimeType } from "../../../../../ressources/EMimeType";
+import AffichageDocument from "../../../../commun/affichageDocument/AffichageDocument";
 import OngletsBouton from "../../../../commun/onglets/OngletsBouton";
 import ConteneurVoletEdition from "../ConteneurVoletEdition";
 import VoletRequete from "./VoletRequete";
@@ -26,7 +24,6 @@ interface IPartieActeRequeteProps {
 const PartieActeRequete: React.FC<IPartieActeRequeteProps> = React.memo(({ ongletActif, setOngletActif }) => {
   const { requete, acte } = useContext(EditionDelivranceContext);
 
-  const [contenuActe, setContenuActe] = useState<string | null>(null);
   const [contenuCourrier, setContenuCourrier] = useState<string | null>(null);
   const idDocumentCourrier = useMemo(
     () => requete.documentsReponses.filter(doc => DocumentDelivrance.estCourrierDelivranceEC(doc.typeDocument)).shift()?.id,
@@ -38,25 +35,6 @@ const PartieActeRequete: React.FC<IPartieActeRequeteProps> = React.memo(({ ongle
 
     getDocumentReponseById(idDocumentCourrier).then(data => setContenuCourrier(data.body.data.contenu ?? ""));
   }, [idDocumentCourrier]);
-
-  const { appelApi: recupererDonneesCompositionActeTexte } = useFetchApi(CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE);
-
-  useEffect(() => {
-    if (contenuActe !== null || acte?.type !== "TEXTE") return;
-
-    recupererDonneesCompositionActeTexte({
-      parametres: { path: { idActe: acte.id } },
-      apresSucces: donneesPourCompositionActeTexte => {
-        compositionApi
-          .getCompositionActeTexte(donneesPourCompositionActeTexte)
-          .then(dataComposition => setContenuActe(dataComposition.body.data.contenu ?? ""));
-      },
-      apresErreur: erreurs =>
-        AfficherMessage.erreur("Une erreur est survenue lors de la récupération de l'acte texte.", {
-          erreurs
-        })
-    });
-  }, [contenuActe, acte]);
 
   return (
     <div className="w-1/2">
@@ -91,9 +69,11 @@ const PartieActeRequete: React.FC<IPartieActeRequeteProps> = React.memo(({ ongle
         <ConteneurVoletEdition estActif={ongletActif === ECleOngletRequete.ACTE}>
           <div className="flex flex-col gap-2">
             <AlertesActes idActeInit={acte?.id} />
-            <AffichagePDF
-              contenuBase64={contenuActe}
-              typeZoom={90}
+
+            <VisionneuseActe
+              idActe={acte.id}
+              estReecrit={acte.estReecrit ?? false}
+              typeActe={acte.type}
             />
           </div>
         </ConteneurVoletEdition>
@@ -108,9 +88,10 @@ const PartieActeRequete: React.FC<IPartieActeRequeteProps> = React.memo(({ ongle
 
       {idDocumentCourrier && (
         <ConteneurVoletEdition estActif={ongletActif === ECleOngletRequete.COURRIER_EDITE}>
-          <AffichagePDF
+          <AffichageDocument
             contenuBase64={contenuCourrier}
             typeZoom={90}
+            typeMime={EMimeType.APPLI_PDF}
           />
         </ConteneurVoletEdition>
       )}

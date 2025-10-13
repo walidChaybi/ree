@@ -13,7 +13,7 @@ import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useContext, useEffect, useState } from "react";
 import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
-import { MimeType } from "../../../../../ressources/MimeType";
+import { EMimeType } from "../../../../../ressources/EMimeType";
 import { useCertificatSituationApiHook } from "../../composition/CompositionCertificatSituationHook";
 import {
   IStockerDocumentCreerActionMajStatutRequeteParams,
@@ -82,7 +82,7 @@ export function useGenerationCertificatSituationHook(params?: IGenerationCertifi
         documentReponsePourStockage: {
           contenu: donneesComposition.contenu,
           nom: NOM_DOCUMENT_CERTIFICAT_SITUATION,
-          mimeType: MimeType.APPLI_PDF,
+          mimeType: EMimeType.APPLI_PDF,
           typeDocument: DocumentDelivrance.idDepuisCode("CERTIFICAT_SITUATION"), // UUID du type de document demandé (nomenclature)
           nbPages: donneesComposition.nbPages,
           orientation: Orientation.PORTRAIT

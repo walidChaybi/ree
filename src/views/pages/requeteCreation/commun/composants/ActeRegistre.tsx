@@ -1,10 +1,10 @@
 import { CONFIG_GET_RECOMPOSER_DOCUMENT_FINAL } from "@api/configurations/etatCivil/acte/GetRecomposerDocumentFinalConfigApi";
 import { AlertesActes } from "@composant/alertesActe/AlertesActes";
 import VisionneuseActe from "@composant/visionneuseActe/VisionneuseActe";
-import { VisionneuseDocument } from "@widget/visionneuseDocument/VisionneuseDocument";
 import React, { useEffect, useState } from "react";
+import AffichageDocument from "../../../../../composants/commun/affichageDocument/AffichageDocument";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
-import { MimeType } from "../../../../../ressources/MimeType";
+import { EMimeType } from "../../../../../ressources/EMimeType";
 import AfficherMessage from "../../../../../utils/AfficherMessage";
 
 interface ActeRegistreProps {
@@ -35,12 +35,13 @@ const ActeRegistre: React.FC<ActeRegistreProps> = ({ idActeAAfficher, affichageA
   }, [idActeAAfficher, affichageApresSignature]);
 
   return (
-    <div className="ActeRegistre">
+    <div className="h-screen">
       {affichageApresSignature ? (
-        <VisionneuseDocument
-          infoBulle="Visionneuse acte registre"
-          typeMime={MimeType.APPLI_PDF}
+        <AffichageDocument
           contenuBlob={acteRecompose}
+          typeZoom={"page-fit"}
+          typeMime={EMimeType.APPLI_PDF}
+          titre={"Visionneuse acte registre"}
         />
       ) : (
         <>

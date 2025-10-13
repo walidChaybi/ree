@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { expect, it as test, vi } from "vitest";
-import AffichagePDF from "../../../../composants/commun/affichageDocument/AffichagePDF";
+import AffichageDocument from "../../../../composants/commun/affichageDocument/AffichageDocument";
+import { EMimeType } from "../../../../ressources/EMimeType";
 import { base64EnBlobUrl } from "../../../../utils/FileUtils";
 
 vi.mock("../../../../utils/FileUtils", () => {
@@ -16,9 +17,10 @@ test("renders un PDF  dans l'iframe quand un contenuBase64 est fourni", () => {
   const contenuBase64 = "sampleBase64String";
 
   render(
-    <AffichagePDF
+    <AffichageDocument
       contenuBase64={contenuBase64}
       typeZoom="auto"
+      typeMime={EMimeType.APPLI_PDF}
     />
   );
 
@@ -29,7 +31,12 @@ test("renders un PDF  dans l'iframe quand un contenuBase64 est fourni", () => {
 });
 
 test("renders un message informatif quand le contenuBase64 est null", () => {
-  render(<AffichagePDF contenuBase64={null} />);
+  render(
+    <AffichageDocument
+      contenuBase64={null}
+      typeMime={EMimeType.APPLI_PDF}
+    />
+  );
 
   const fallbackText = screen.getByText("Aucun document à afficher");
   expect(fallbackText).toBeDefined();
@@ -37,14 +44,24 @@ test("renders un message informatif quand le contenuBase64 est null", () => {
 
 test("doit mémoriser le blob pour ne pas re-calculer lorsque le contenuBase64 reste inchangé", () => {
   let contenuBase64 = "mockDocBase64";
-  const { rerender } = render(<AffichagePDF contenuBase64={contenuBase64} />);
+  const { rerender } = render(
+    <AffichageDocument
+      typeMime={EMimeType.APPLI_PDF}
+      contenuBase64={contenuBase64}
+    />
+  );
 
   let iframe = screen.getByTitle("Document PDF");
   expect(iframe).toBeDefined();
   expect(iframe.getAttribute("src")).toBe("blobUrl://mockDocBase64#zoom=page-fit");
   expect(base64EnBlobUrl).toHaveBeenCalledTimes(2);
 
-  rerender(<AffichagePDF contenuBase64={contenuBase64} />);
+  rerender(
+    <AffichageDocument
+      typeMime={EMimeType.APPLI_PDF}
+      contenuBase64={contenuBase64}
+    />
+  );
 
   iframe = screen.getByTitle("Document PDF");
 
@@ -55,7 +72,12 @@ test("doit mémoriser le blob pour ne pas re-calculer lorsque le contenuBase64 r
 
   contenuBase64 = "nouveauMockDocBase64";
 
-  rerender(<AffichagePDF contenuBase64={contenuBase64} />);
+  rerender(
+    <AffichageDocument
+      typeMime={EMimeType.APPLI_PDF}
+      contenuBase64={contenuBase64}
+    />
+  );
 
   iframe = screen.getByTitle("Document PDF");
 

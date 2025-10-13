@@ -9,13 +9,14 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { RouterProvider } from "react-router";
 import { describe, expect, test, vi } from "vitest";
 import BoutonAjoutSuppressionDocument from "../../../../../composants/pages/requetesDelivrance/editionRequete/boutons/BoutonAjoutSuppressionDocument";
+import { EMimeType } from "../../../../../ressources/EMimeType";
 import { createTestingRouter, elementAvecEditionDelivranceContexte } from "../../../../__tests__utils__/testsUtil";
 import requeteDelivrance from "../../../../mock/data/requeteDelivrance";
 
 describe("Test BoutonAjoutSuppressionDocument", () => {
   const mockDocument = {
     id: "doc",
-    mimeType: "mimeType",
+    mimeType: EMimeType.APPLI_PDF,
     taille: 10,
     contenu: "ContenuTest",
     nbPages: 1,
@@ -102,7 +103,7 @@ describe("Test BoutonAjoutSuppressionDocument", () => {
   test("Ajoute un document au clic sur le bouton d'ajout", async () => {
     const mockDocument = {
       id: "doc",
-      mimeType: "mimeType",
+      mimeType: EMimeType.APPLI_PDF,
       taille: 10,
       contenu: "ContenuTest",
       nbPages: 1,

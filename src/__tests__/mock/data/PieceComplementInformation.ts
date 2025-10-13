@@ -1,5 +1,6 @@
 import { Provenance } from "@model/requete/enum/Provenance";
 import { IPieceComplementInformation } from "@model/requete/pieceJointe/IPieceComplementInformation";
+import { EMimeType } from "../../../ressources/EMimeType";
 import { imagePngVideBase64 } from "./ImagePng";
 
 const idPieceComplementInformation = ["c4306a3c-6bd4-422f-a56b-20760795ba61"];
@@ -10,5 +11,5 @@ export const pieceComplementInformation: IPieceComplementInformation = {
   nom: "nom",
   cheminSwift: "chemin",
   contenu: imagePngVideBase64, // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
-  mimeType: "image/png"
+  mimeType: EMimeType.IMAGE_PNG
 };

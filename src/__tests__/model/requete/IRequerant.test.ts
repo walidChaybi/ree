@@ -7,6 +7,7 @@ import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
 import { mappingRequeteDelivranceVersFormulaireRDCSC } from "@pages/requeteDelivrance/saisirRequete/hook/mappingRequeteDelivranceVersFormulaireRDCSC";
 import { describe, expect, test } from "vitest";
+import { EMimeType } from "../../../ressources/EMimeType";
 
 describe("Test du bloc Postulant de l'onglet Postulant", () => {
   test("Attendu: Requerant.setRequerant mandataire", () => {
@@ -220,7 +221,7 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
             taille: 0,
             conteneurSwift: undefined,
             identifiantSwift: undefined,
-            mimeType: "",
+            mimeType: EMimeType.APPLI_PDF,
             extension: undefined
           },
           type: {
@@ -445,7 +446,7 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
             taille: 0,
             conteneurSwift: undefined,
             identifiantSwift: undefined,
-            mimeType: "",
+            mimeType: EMimeType.APPLI_PDF,
             extension: undefined
           },
           type: {
@@ -668,7 +669,7 @@ describe("Test du bloc Postulant de l'onglet Postulant", () => {
             taille: 0,
             conteneurSwift: undefined,
             identifiantSwift: undefined,
-            mimeType: "",
+            mimeType: EMimeType.APPLI_PDF,
             extension: undefined
           },
           type: {

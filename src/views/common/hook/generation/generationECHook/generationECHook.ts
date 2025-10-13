@@ -9,7 +9,7 @@ import { EValidation } from "@model/requete/enum/EValidation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useCallback, useEffect, useState } from "react";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
-import { MimeType } from "../../../../../ressources/MimeType";
+import { EMimeType } from "../../../../../ressources/EMimeType";
 import AfficherMessage from "../../../../../utils/AfficherMessage";
 import { IExtraitCopieApiHookParams, useExtraitCopieApiHook } from "../../composition/CompositionExtraitCopieHook";
 import { ISauvegarderDocumentsParams, useSauvegarderDocument } from "../../requete/SauvegarderDocumentApiHook";
@@ -123,7 +123,7 @@ export function useGenerationEC(params?: IGenerationECParams): IGenerationECResu
           typeDocument, // UUID du type de document demandé (nomenclature),
           avecCtv,
           nbPages,
-          mimeType: MimeType.APPLI_PDF,
+          mimeType: EMimeType.APPLI_PDF,
           orientation: Orientation.PORTRAIT,
           validation,
           mentionsRetirees: params?.mentionsRetirees.map(idMention => ({

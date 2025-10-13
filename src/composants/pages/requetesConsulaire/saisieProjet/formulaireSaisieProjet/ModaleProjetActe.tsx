@@ -9,10 +9,11 @@ import { TitulaireProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/t
 import { useContext, useEffect, useMemo, useState } from "react";
 import { SaisieProjetActeTranscritContext } from "../../../../../contexts/SaisieProjetActeTranscritContextProvider";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
+import { EMimeType } from "../../../../../ressources/EMimeType";
 import LiensRECE from "../../../../../router/LiensRECE";
 import { INFO_PAGE_MES_REQUETES_CONSULAIRES } from "../../../../../router/infoPages/InfoPagesEspaceConsulaire";
 import AfficherMessage from "../../../../../utils/AfficherMessage";
-import AffichagePDF from "../../../../commun/affichageDocument/AffichagePDF";
+import AffichageDocument from "../../../../commun/affichageDocument/AffichageDocument";
 import Bouton from "../../../../commun/bouton/Bouton";
 import ConteneurModale from "../../../../commun/conteneurs/modale/ConteneurModale";
 import SignatureDocument from "../../../../commun/signature/SignatureDocument";
@@ -116,9 +117,10 @@ const ModaleProjetActe: React.FC<IModaleProjetActeProps> = ({ fermerModale, proj
         <div className="flex flex-grow overflow-hidden">
           <div className="h-full w-3/5 animate-entree-gauche overflow-hidden p-6">
             <div className="flex h-[calc(100%-2rem)] w-full rounded-lg border border-gray-100 shadow-md">
-              <AffichagePDF
+              <AffichageDocument
                 contenuBase64={pdfBase64}
                 typeZoom={90}
+                typeMime={EMimeType.APPLI_PDF}
               />
             </div>
           </div>

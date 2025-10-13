@@ -1,3 +1,4 @@
+import { EMimeType } from "../../../ressources/EMimeType";
 import { ProvenancePiece } from "../enum/ProvenancePiece";
 import { mapDocumentSwift } from "./IPieceJustificative";
 
@@ -7,7 +8,7 @@ export interface IPieceComplementInformation {
   nom?: string;
   cheminSwift?: string;
   contenu?: string;
-  mimeType: string;
+  mimeType: EMimeType;
 }
 
 export function mapPieceComplementInformation(pci: any) {

@@ -4,8 +4,9 @@ import { AlertesActes } from "@composant/alertesActe/AlertesActes";
 import { useContext, useEffect, useState } from "react";
 import { EditionMiseAJourContext } from "../../../../contexts/EditionMiseAJourContextProvider";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
+import { EMimeType } from "../../../../ressources/EMimeType";
 import AfficherMessage from "../../../../utils/AfficherMessage";
-import AffichagePDF from "../../../commun/affichageDocument/AffichagePDF";
+import AffichageDocument from "../../../commun/affichageDocument/AffichageDocument";
 import OngletsContenu from "../../../commun/onglets/OngletsContenu";
 
 interface IOngletActeProps {
@@ -39,9 +40,10 @@ const OngletActe: React.FC<IOngletActeProps> = ({ estActif }) => {
     <OngletsContenu estActif={estActif}>
       <div className="flex h-[calc(100vh-16rem)] flex-col gap-1">
         <AlertesActes idActeInit={idActe} />
-        <AffichagePDF
+        <AffichageDocument
           contenuBase64={contenuActe}
           typeZoom={90}
+          typeMime={EMimeType.APPLI_PDF}
         />
       </div>
     </OngletsContenu>

@@ -3,8 +3,9 @@ import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR } from "@api/
 import { useContext, useEffect, useState } from "react";
 import { EditionMiseAJourContext } from "../../../../contexts/EditionMiseAJourContextProvider";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
+import { EMimeType } from "../../../../ressources/EMimeType";
 import AfficherMessage from "../../../../utils/AfficherMessage";
-import AffichagePDF from "../../../commun/affichageDocument/AffichagePDF";
+import AffichageDocument from "../../../commun/affichageDocument/AffichageDocument";
 import OngletsContenu from "../../../commun/onglets/OngletsContenu";
 
 interface IOngletActeMisAJourProps {
@@ -38,9 +39,10 @@ const OngletActeMisAJour: React.FC<IOngletActeMisAJourProps> = ({ estActif }) =>
   return (
     <OngletsContenu estActif={estActif}>
       <div className="flex h-[calc(100vh-16rem)] flex-col gap-1">
-        <AffichagePDF
+        <AffichageDocument
           contenuBase64={contenuActeMisAJour}
           typeZoom={90}
+          typeMime={EMimeType.APPLI_PDF}
         />
       </div>
     </OngletsContenu>

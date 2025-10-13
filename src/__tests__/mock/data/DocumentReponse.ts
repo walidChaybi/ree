@@ -1,6 +1,7 @@
 import { Orientation } from "@model/composition/enum/Orientation";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { EValidation } from "@model/requete/enum/EValidation";
+import { EMimeType } from "../../../ressources/EMimeType";
 import { imagePngVideBase64 } from "./ImagePng";
 
 export const idDocumentsReponse = ["bbac2335-562c-4b14-96aa-4386814c02a2", "ccac2335-562c-4b14-96aa-4386814c02b3"];
@@ -9,7 +10,7 @@ export const documentReponseCARN_CSPAC_01: IDocumentReponse = {
   id: idDocumentsReponse[0],
   nom: "CARN_CSPAC_01",
   typeDocument: "0c82b27a-7ade-4dce-aa61-b88f07726c1b",
-  mimeType: "image/png",
+  mimeType: EMimeType.IMAGE_PNG,
   taille: 37236,
   contenu: imagePngVideBase64, // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
   nbPages: 1,
@@ -21,7 +22,7 @@ export const documentReponseCertificatRCA: IDocumentReponse = {
   id: idDocumentsReponse[1],
   nom: "CERTIFICAT_INSCRIPTION_RCA",
   typeDocument: "d407f403-ca22-4e06-9c46-b7ab7fa5b9fc",
-  mimeType: "image/png",
+  mimeType: EMimeType.IMAGE_PNG,
   taille: 37236,
   contenu: imagePngVideBase64, // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
   nbPages: 1,
@@ -33,7 +34,7 @@ export const documentReponseCourrier117: IDocumentReponse = {
   id: "c4f4c8fb-562c-4b14-96aa-4386814c05d8",
   nom: "CARN_EC_117",
   typeDocument: "b36f9a2c-64fa-42bb-a3f6-adca6fec28f2",
-  mimeType: "image/png",
+  mimeType: EMimeType.IMAGE_PNG,
   taille: 37236,
   contenu: imagePngVideBase64, // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
   nbPages: 1,
@@ -58,7 +59,7 @@ export const documentReponseCopieIntegrale: IDocumentReponse = {
   id: idDocumentsReponse[1],
   nom: "COPIE_INTEGRALE",
   typeDocument: "0e1e909f-f74c-4b16-9c03-b3733354c6ce",
-  mimeType: "image/png",
+  mimeType: EMimeType.IMAGE_PNG,
   taille: 37236,
   contenu: imagePngVideBase64, // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
   nbPages: 1,
@@ -71,7 +72,7 @@ export const documentReponseExtraitAvecFiliation: IDocumentReponse = {
   id: "9bfa865e-6d7a-4d66-900e-b548178854db",
   nom: "Extrait copie avec filiation",
   typeDocument: "28580709-06dd-4df2-bf6e-70a9482940a1",
-  mimeType: "application/pdf",
+  mimeType: EMimeType.APPLI_PDF,
   taille: 28828,
   contenu: imagePngVideBase64,
   avecCtv: false,
@@ -89,7 +90,7 @@ export const documentReponseCopieNonSignee: IDocumentReponse = {
   id: idDocumentsReponse[1],
   nom: "COPIE_NON_SIGNEE",
   typeDocument: "8b808725-a83e-4ce5-81a2-192cd09e0cb2",
-  mimeType: "image/png",
+  mimeType: EMimeType.IMAGE_PNG,
   taille: 37236,
   contenu: imagePngVideBase64, // on utilise une image base64 plutôt qu'un pdf pour les tests (prend beaucoup moins de place)
   nbPages: 1,

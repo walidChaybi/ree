@@ -1,4 +1,5 @@
 import { DEUX } from "@util/Utils";
+import { EMimeType } from "../../ressources/EMimeType";
 import { Orientation } from "../composition/enum/Orientation";
 import { Mention } from "../etatcivil/acte/mention/Mention";
 import { IOptionCourrierDocumentReponse } from "./IOptionCourrierDocumentReponse";
@@ -12,7 +13,7 @@ export interface IDocumentReponse {
   id: string;
   nom: string;
   typeDocument: string; // UUID nomenclature
-  mimeType: string;
+  mimeType: EMimeType;
   taille: number;
   contenu: string; // Base64
   nbPages: number;

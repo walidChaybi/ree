@@ -12,7 +12,7 @@ import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/Res
 import { TFiche } from "@pages/fiche/FicheUtils";
 import { useEffect, useState } from "react";
 import useFetchApi from "../../../../../../hooks/api/FetchApiHook";
-import { MimeType } from "../../../../../../ressources/MimeType";
+import { EMimeType } from "../../../../../../ressources/EMimeType";
 import AfficherMessage, { estTableauErreurApi } from "../../../../../../utils/AfficherMessage";
 import { usePostDocumentsReponseApi } from "../../../DocumentReponseHook";
 import { useCertificatPacsRcRcaApiHook } from "../../../composition/CompositionCertificatPacsRcRca";
@@ -112,7 +112,7 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
         {
           contenu: compositionData.contenu,
           nom: getNomDocument(typeCertificat),
-          mimeType: MimeType.APPLI_PDF,
+          mimeType: EMimeType.APPLI_PDF,
           typeDocument: getTypeDocument(typeCertificat),
           nbPages: compositionData.nbPages,
           orientation: Orientation.PORTRAIT,

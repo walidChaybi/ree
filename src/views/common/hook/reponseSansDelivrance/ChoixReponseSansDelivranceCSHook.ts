@@ -9,7 +9,7 @@ import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useEffect, useState } from "react";
-import { MimeType } from "../../../../ressources/MimeType";
+import { EMimeType } from "../../../../ressources/EMimeType";
 
 export function useReponseSansDelivranceCS(
   libelleAction: string,
@@ -35,7 +35,7 @@ export function useReponseSansDelivranceCS(
         documentReponsePourStockage: {
           contenu: compositionData.contenu,
           nom: reponseSansDelivranceCS?.fichier,
-          mimeType: MimeType.APPLI_PDF,
+          mimeType: EMimeType.APPLI_PDF,
           typeDocument: DocumentDelivrance.idDepuisCode(reponseSansDelivranceCS.fichier),
           nbPages: compositionData.nbPages,
           orientation: Orientation.PORTRAIT

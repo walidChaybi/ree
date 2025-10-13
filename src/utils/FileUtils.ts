@@ -1,31 +1,26 @@
 import { Option } from "@util/Type";
+import { EMimeType } from "../ressources/EMimeType";
 
 const DATA_URL_BASE_64 = ";base64,";
 const NB_BYTES_IN_KILOBYTES = 1000;
 
-enum MimeType {
-  APPLI_PDF = "application/pdf",
-  IMAGE_PNG = "image/png",
-  IMAGE_TIFF = "image/tiff"
-}
-
 export const FILE_TYPES: ExtensionDocumentTypeMime[] = [
-  { extension: "png", mimeType: "image/png" },
-  { extension: "pdf", mimeType: "application/pdf" },
-  { extension: "jpg", mimeType: "image/jpeg" },
-  { extension: "jpeg", mimeType: "image/jpeg" }
+  { extension: "png", mimeType: EMimeType.IMAGE_PNG },
+  { extension: "pdf", mimeType: EMimeType.APPLI_PDF },
+  { extension: "jpg", mimeType: EMimeType.IMAGE_JPG },
+  { extension: "jpeg", mimeType: EMimeType.IMAGE_JPG }
 ];
 
 const FILE_TYPES_ET_SIGNATURES: ExtensionDocumentTypeMimeAvecSignature[] = [
-  { extension: "png", mimeType: "image/png", signature: [0x89, 0x50, 0x4e, 0x47] },
-  { extension: "pdf", mimeType: "application/pdf", signature: [0x25, 0x50, 0x44, 0x46] },
-  { extension: "jpg", mimeType: "image/jpeg", signature: [0xff, 0xd8, 0xff] },
-  { extension: "jpeg", mimeType: "image/jpeg", signature: [0xff, 0xd8, 0xff] }
+  { extension: "png", mimeType: EMimeType.IMAGE_PNG, signature: [0x89, 0x50, 0x4e, 0x47] },
+  { extension: "pdf", mimeType: EMimeType.APPLI_PDF, signature: [0x25, 0x50, 0x44, 0x46] },
+  { extension: "jpg", mimeType: EMimeType.IMAGE_JPG, signature: [0xff, 0xd8, 0xff] },
+  { extension: "jpeg", mimeType: EMimeType.IMAGE_JPG, signature: [0xff, 0xd8, 0xff] }
 ];
 
 export interface ExtensionDocumentTypeMime {
   extension: string;
-  mimeType: string;
+  mimeType: EMimeType;
 }
 
 interface ExtensionDocumentTypeMimeAvecSignature extends ExtensionDocumentTypeMime {
@@ -41,7 +36,7 @@ export interface Base64File {
   fileName: string;
   base64String: string;
   extension?: string;
-  mimeType?: string;
+  mimeType?: EMimeType;
   taille: number;
   conteneurSwift?: string;
   identifiantSwift?: string;
@@ -126,7 +121,7 @@ export const getMimeTypeEtExtension = async (file: File) => {
 export const validationFichier = (
   fileSizeBytes: number,
   fileExtension?: string,
-  fileMimeType?: string,
+  fileMimeType?: EMimeType,
   maxSizeBytes?: number,
   extensionsEtTypeMimeAutorisees?: ExtensionDocumentTypeMime[]
 ): void => {
@@ -146,31 +141,16 @@ export const validationFichier = (
   }
 };
 
-export const base64EnBlobUrl = (base64String: string, type: string): string => {
-  const byteCharacters = window.atob(base64String);
-  const byteNumbers = new Array(byteCharacters.length);
-  for (let i = 0; i < byteCharacters.length; i++) {
-    byteNumbers[i] = byteCharacters.charCodeAt(i);
-  }
-  const byteArray = new Uint8Array(byteNumbers);
-  const blob = new Blob([byteArray], { type });
-  return URL.createObjectURL(blob);
-};
+export const base64EnBlobUrl = (base64String: string, type: EMimeType): string => blobEnBlobUrl(base64EnBlob(base64String, type), type);
 
-export const bloblEnBlobUrl = (blob: Blob, type: string): string => {
-  return URL.createObjectURL(new Blob([blob], { type }));
-};
+export const blobEnBlobUrl = (blob: Blob, type: EMimeType): string => URL.createObjectURL(new Blob([blob], { type }));
 
-export const estTypeMimePdf = (typeMime?: string) => {
-  return typeMime === MimeType.APPLI_PDF;
-};
-
-export const base64EnBlob = (base64: string): Blob => {
+const base64EnBlob = (base64: string, type: EMimeType): Blob => {
   const byteCharacters = atob(base64);
   const byteNumbers = new Array(byteCharacters.length);
   for (let i = 0; i < byteCharacters.length; i++) {
     byteNumbers[i] = byteCharacters.charCodeAt(i);
   }
   const byteArray = new Uint8Array(byteNumbers);
-  return new Blob([byteArray], { type: "application/pdf" });
+  return new Blob([byteArray], { type });
 };

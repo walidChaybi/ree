@@ -1,5 +1,6 @@
 import { imagePngVideBase64 } from "@mock/data/ImagePng";
 import { describe, expect, test, vi } from "vitest";
+import { EMimeType } from "../../ressources/EMimeType";
 import { base64EnBlobUrl, getMimeTypeEtExtension, validationFichier } from "../../utils/FileUtils";
 
 describe("Test du traitement d'un fichier", () => {
@@ -50,25 +51,25 @@ describe("Test du traitement d'un fichier", () => {
 
   test("Un fichier trop volumineux est refusé en raison de sa taille", () => {
     expect(() => {
-      validationFichier(30, "png", "image/png", 20, [{ extension: "png", mimeType: "image/png" }]);
+      validationFichier(30, "png", EMimeType.IMAGE_PNG, 20, [{ extension: "png", mimeType: EMimeType.IMAGE_PNG }]);
     }).toThrow("La taille du fichier ne peut pas excéder 0.02 KB");
   });
 
   test("Un fichier avec une extension éronée est refusé", () => {
     expect(() => {
-      validationFichier(10, "png", "image/png", 20, [{ extension: "jpeg", mimeType: "image/png" }]);
+      validationFichier(10, "png", EMimeType.IMAGE_PNG, 20, [{ extension: "jpeg", mimeType: EMimeType.IMAGE_JPG }]);
     }).toThrow("Les types d'extensions acceptés sont jpeg");
   });
 
   test("Un fichier avec un mimetype éroné est refusé", () => {
     expect(() => {
-      validationFichier(10, "png", "image/png", 20, [{ extension: "png", mimeType: "image/jpeg" }]);
+      validationFichier(10, "png", EMimeType.IMAGE_PNG, 20, [{ extension: "png", mimeType: EMimeType.IMAGE_JPG }]);
     }).toThrow("Les types mime acceptés sont image/jpeg");
   });
 
   test("Attendu: base64EnBlob fonctionne correctement", () => {
     window.URL.createObjectURL = vi.fn(p => p);
-    const blob = base64EnBlobUrl(imagePngVideBase64, "image/png");
+    const blob = base64EnBlobUrl(imagePngVideBase64, EMimeType.IMAGE_PNG);
     expect(blob).toBeDefined();
   });
 });

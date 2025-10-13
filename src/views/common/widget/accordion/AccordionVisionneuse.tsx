@@ -4,11 +4,10 @@ import { useGetPieceJointeApi } from "@hook/requete/piecesJointes/GetPieceJointe
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import { getValeurOuVide } from "@util/Utils";
-import { VisionneuseDocument } from "@widget/visionneuseDocument/VisionneuseDocument";
 import React, { useEffect, useState } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { FaSquareXmark } from "react-icons/fa6";
+import AffichageDocument from "../../../../composants/commun/affichageDocument/AffichageDocument";
 import { AccordionTitle } from "./AccordionTitle";
 import { BoutonAccordionTitle } from "./BoutonAccordionTitle";
 import "./scss/AccordionVisionneuse.scss";
@@ -51,7 +50,6 @@ export const AccordionVisionneuse: React.FC<AccordionVisionneuseProps> = ({
     if (resultatMaj && resultatMaj.resultat && majTitreParams?.nouveauLibelle) {
       setTitreActuel(majTitreParams?.nouveauLibelle);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultatMaj]);
 
   const documentApi = useGetPieceJointeApi(TypePieceJointe.PIECE_JUSTIFICATIVE, idDocument);
@@ -98,17 +96,22 @@ export const AccordionVisionneuse: React.FC<AccordionVisionneuseProps> = ({
           }
         />
         <AccordionDetails>
-          <VisionneuseDocument
-            infoBulle={titre ?? titreOrigine}
-            typeMime={getValeurOuVide(documentApi?.mimeType)}
-            contenuBase64={documentApi?.contenu}
-          />
+          {documentApi && (
+            <div className="h-screen">
+              <AffichageDocument
+                contenuBase64={documentApi.contenu}
+                typeZoom={"page-fit"}
+                typeMime={documentApi.mimeType}
+                titre={titre ?? titreOrigine}
+              />
+            </div>
+          )}
         </AccordionDetails>
       </Accordion>
       {fenetreExtOuverte && (
         <FenetrePiecesJointes
           idPiece={idDocumentAAfficher}
-          nom={titre ? titre : titreOrigine}
+          nom={titre ?? titreOrigine}
           numRequete={numRequete}
           typePiece={typePiece}
           toggleFenetre={toggleFenetreExtState}

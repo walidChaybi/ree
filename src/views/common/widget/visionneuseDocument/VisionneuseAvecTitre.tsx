@@ -1,25 +1,25 @@
 import React from "react";
+import AffichageDocument from "../../../../composants/commun/affichageDocument/AffichageDocument";
+import { EMimeType } from "../../../../ressources/EMimeType";
 import { Fieldset } from "../fieldset/Fieldset";
-import { VisionneuseDocument } from "./VisionneuseDocument";
 
 interface IVisionneuseDocumentProps {
   titre: string;
   contenuBase64?: string;
-  typeMime: string;
-  children?: JSX.Element;
+  typeMime: EMimeType;
 }
 
-export const VisionneuseAvecTitre: React.FC<
-  IVisionneuseDocumentProps
-> = props => {
+export const VisionneuseAvecTitre: React.FC<IVisionneuseDocumentProps> = ({ titre, contenuBase64, typeMime }) => {
   return (
-    <Fieldset titre={props.titre}>
-      {props.children}
-      <VisionneuseDocument
-        contenuBase64={props.contenuBase64}
-        typeMime={props.typeMime}
-        infoBulle={props.titre}
-      ></VisionneuseDocument>
+    <Fieldset titre={titre}>
+      <div className="h-screen">
+        <AffichageDocument
+          contenuBase64={contenuBase64}
+          typeZoom={"page-fit"}
+          typeMime={typeMime}
+          titre={titre}
+        />
+      </div>
     </Fieldset>
   );
 };

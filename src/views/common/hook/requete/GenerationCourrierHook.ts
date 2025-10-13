@@ -34,7 +34,7 @@ import { DocumentDelivrance, IDocumentDelivrance } from "@model/requete/enum/Doc
 import { Qualite } from "@model/requete/enum/Qualite";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { useEffect, useState } from "react";
-import { MimeType } from "../../../../ressources/MimeType";
+import { EMimeType } from "../../../../ressources/EMimeType";
 import { IActeApiHookParams, useInformationsActeApiHook } from "../acte/ActeApiHook";
 import { ICourrierParams, useCourrierApiHook } from "../composition/CompositionCourrierHook";
 import { specificationCourrier } from "../generation/generationCourrierHook/specificationCourrier";
@@ -252,7 +252,7 @@ const mapCourrierPourSauvegarde = (
     documentReponse: {
       contenu: donneesComposition.contenu,
       nom: courrier.libelle,
-      mimeType: MimeType.APPLI_PDF,
+      mimeType: EMimeType.APPLI_PDF,
       typeDocument: courrier.id, // UUID du courrier (nomenclature)
       nbPages: donneesComposition.nbPages,
       orientation: Orientation.PORTRAIT,

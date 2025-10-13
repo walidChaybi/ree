@@ -15,6 +15,7 @@ import {
 } from "@api/appels/requeteApi";
 import { ITypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { describe, expect, test, vi } from "vitest";
+import { EMimeType } from "../../../ressources/EMimeType";
 
 describe("Test des appels API requête", () => {
   test("Couverture en attendant le passage a useFetch", async () => {
@@ -61,7 +62,7 @@ describe("Test des appels API requête", () => {
     await postPieceJustificative("", {
       id: "",
       nom: "",
-      mimeType: "",
+      mimeType: EMimeType.APPLI_PDF,
       taille: 0,
       contenu: "",
       typePieceJustificative: {} as ITypePieceJustificative

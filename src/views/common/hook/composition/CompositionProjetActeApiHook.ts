@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 interface ICompositionProjetActeApiHookResultat {
-  documentComposer: ICompositionDto;
+  documentCompose: ICompositionDto;
 }
 
 export interface ICompositionProjetActeParams {
@@ -30,6 +30,6 @@ export function useCompositionProjetActeApiHook(params?: ICompositionProjetActeP
   }, [params]);
 
   return {
-    documentComposer: document
+    documentCompose: document
   };
 }

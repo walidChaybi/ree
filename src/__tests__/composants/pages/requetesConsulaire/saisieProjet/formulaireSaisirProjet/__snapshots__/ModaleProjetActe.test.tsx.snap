@@ -34,9 +34,10 @@ exports[`ModaleProjetActe - Tests du composant > DOIT rendre le composant correc
               class="flex h-[calc(100%-2rem)] w-full rounded-lg border border-gray-100 shadow-md"
             >
               <div
-                class="flex-grow overflow-hidden"
+                class="h-full flex-grow overflow-auto"
               >
                 <iframe
+                  aria-label="Document PDF"
                   class="h-full w-full overflow-auto border-0"
                   src="url_test#zoom=90"
                   title="Document PDF"

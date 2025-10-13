@@ -41,9 +41,9 @@ export class ResultatRMCActe {
     public readonly autresNoms: string,
     /** Ordonnés, séparés par des virgules */
     public readonly prenoms: string,
-    /** Format JJ/MM/AAA */
+    /** Format JJ/MM/AAAA */
     public readonly dateEvenement: string,
-    /** Format JJ/MM/AAA */
+    /** Format JJ/MM/AAAA */
     public readonly dateNaissance: string,
     public readonly paysNaissance: string,
     public readonly nature: keyof typeof ENatureActe,

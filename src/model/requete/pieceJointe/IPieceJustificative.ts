@@ -1,9 +1,10 @@
+import { EMimeType } from "../../../ressources/EMimeType";
 import { ITypePieceJustificative, TypePieceJustificative } from "../enum/TypePieceJustificative";
 
 export interface IPieceJustificative {
   id: string;
   nom: string;
-  mimeType: string;
+  mimeType: EMimeType;
   extension?: string;
   taille: number;
   referenceSwift?: string;

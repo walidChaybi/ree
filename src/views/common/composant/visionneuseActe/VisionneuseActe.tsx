@@ -4,13 +4,12 @@ import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_REPRIS } from "@api/configurat
 import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE } from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteConfigApi";
 import { IDonneesComposition } from "@model/composition/commun/retourApiComposition/IDonneesComposition";
 import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
-import { VisionneuseDocument } from "@widget/visionneuseDocument/VisionneuseDocument";
 import React, { useEffect, useState } from "react";
+import AffichageDocument from "../../../../composants/commun/affichageDocument/AffichageDocument";
+import Bouton from "../../../../composants/commun/bouton/Bouton";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
-import { MimeType } from "../../../../ressources/MimeType";
+import { EMimeType } from "../../../../ressources/EMimeType";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
-import { base64EnBlob } from "../../../../utils/FileUtils";
-import "./scss/VisionneuseActe.scss";
 
 interface IVisionneuseActeProps {
   idActe?: string;
@@ -19,8 +18,11 @@ interface IVisionneuseActeProps {
 }
 
 const VisionneuseActe: React.FC<IVisionneuseActeProps> = ({ idActe, typeActe, estReecrit }) => {
-  const [contenuBlob, setContenuBlob] = useState<Blob>();
+  const [contenuTexteBase64, setContenuTexteBase64] = useState<string | null>(null);
+  const [contenuImageBase64, setContenuImageBase64] = useState<string | null>(null);
   const [estImage, setEstImage] = useState(typeActe === ETypeActe.IMAGE);
+
+  const contenuBase64AAfficher = estImage ? contenuImageBase64 : contenuTexteBase64;
 
   const [donneesPourCompositionActeTexte, setDonneesPourCompositionActeTexte] = useState<string | null>(null);
 
@@ -33,10 +35,10 @@ const VisionneuseActe: React.FC<IVisionneuseActeProps> = ({ idActe, typeActe, es
 
     switch (true) {
       case estImage:
-        !contenuBlob &&
+        !contenuImageBase64 &&
           recupererCorpsActeImage({
             parametres: { path: { idActe } },
-            apresSucces: corpsActeImage => setContenuBlob(base64EnBlob(corpsActeImage.contenu)),
+            apresSucces: corpsActeImage => setContenuImageBase64(corpsActeImage.contenu),
             apresErreur: erreurs =>
               AfficherMessage.erreur("Une erreur est survenue lors de la récupération de l'acte image.", {
                 erreurs
@@ -80,7 +82,7 @@ const VisionneuseActe: React.FC<IVisionneuseActeProps> = ({ idActe, typeActe, es
           AfficherMessage.erreur("La visualisation de l'acte n'est pas disponible");
           return;
         }
-        setContenuBlob(base64EnBlob((reponse.body.data as IDonneesComposition).contenu));
+        setContenuTexteBase64((reponse.body.data as IDonneesComposition).contenu);
       })
       .catch(erreurs => {
         AfficherMessage.erreur("Impossible d'obtenir les informations de l'acte", {
@@ -90,31 +92,28 @@ const VisionneuseActe: React.FC<IVisionneuseActeProps> = ({ idActe, typeActe, es
   }, [donneesPourCompositionActeTexte]);
 
   const onClickSwitchActeExtraitRepris = () => {
-    setContenuBlob(undefined);
     setEstImage(prec => !prec);
   };
 
   return (
-    <div
-      id="docActeViewer"
-      className="DocumentActeViewer"
-    >
+    <>
       {estReecrit && (
-        <button
-          className="ButtonSwitchActe"
+        <Bouton
+          className="float-right"
           onClick={onClickSwitchActeExtraitRepris}
+          styleBouton="principal"
         >
           {estImage ? "Voir extrait repris" : "Voir acte"}
-        </button>
+        </Bouton>
       )}
-      {contenuBlob && (
-        <VisionneuseDocument
-          infoBulle="Visionneuse PDF"
-          contenuBlob={contenuBlob}
-          typeMime={MimeType.APPLI_PDF}
+      {contenuBase64AAfficher && (
+        <AffichageDocument
+          contenuBase64={contenuBase64AAfficher}
+          typeZoom={estImage ? "auto" : 90}
+          typeMime={EMimeType.APPLI_PDF}
         />
       )}
-    </div>
+    </>
   );
 };
 

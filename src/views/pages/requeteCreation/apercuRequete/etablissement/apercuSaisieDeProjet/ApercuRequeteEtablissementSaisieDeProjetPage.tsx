@@ -17,7 +17,6 @@ import { ISuiviDossier } from "@model/requete/ISuiviDossier";
 import { ITitulaireRequeteCreation, TitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
-import { ApercuProjet } from "@pages/requeteCreation/commun/composants/ApercuProjet";
 import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
 import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
 import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
@@ -29,7 +28,9 @@ import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import { FormikHelpers } from "formik";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
+import AffichageDocument from "../../../../../../composants/commun/affichageDocument/AffichageDocument";
 import { RECEContextActions, RECEContextData } from "../../../../../../contexts/RECEContextProvider";
+import { EMimeType } from "../../../../../../ressources/EMimeType";
 import LiensRECE from "../../../../../../router/LiensRECE";
 import {
   INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_CONSULTATION,
@@ -92,7 +93,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
 
   const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
   useModifierAvancementSuiviDossierApiHook(modifierAvancementProjetParams);
-  const { documentComposer } = useCompositionProjetActeApiHook(compositionProjetActeParams);
+  const { documentCompose } = useCompositionProjetActeApiHook(compositionProjetActeParams);
 
   const parentMasculinEtOuPositionUn = TitulaireRequeteCreation.getParentParSexeEtOuParPosition(Sexe.MASCULIN, UN, requete?.titulaires);
   const parentFemininEtOuPositionDeux = TitulaireRequeteCreation.getParentParSexeEtOuParPosition(Sexe.FEMININ, DEUX, requete?.titulaires);
@@ -262,7 +263,17 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
     },
     {
       titre: "Apercu du projet",
-      component: <ApercuProjet documentAAfficher={documentComposer} />,
+      component: (
+        <div className="h-screen">
+          {documentCompose && (
+            <AffichageDocument
+              contenuBase64={documentCompose.contenu}
+              typeZoom={"page-fit"}
+              typeMime={EMimeType.APPLI_PDF}
+            />
+          )}
+        </div>
+      ),
       index: 2
     }
   ];
@@ -311,7 +322,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
             <BoutonsApercuRequeteCreationEtablissement
               requete={requete}
               conditionAffichageBoutonsApercuActe={
-                ongletSelectionne === DEUX && Boolean(documentComposer) && utilisateurConnecte.id === requete?.idUtilisateur
+                ongletSelectionne === DEUX && Boolean(documentCompose) && utilisateurConnecte.id === requete?.idUtilisateur
               }
               avancement={dossierProjetActe?.avancement}
               estRegistreOuvert={estOuvertRegistrePapier(

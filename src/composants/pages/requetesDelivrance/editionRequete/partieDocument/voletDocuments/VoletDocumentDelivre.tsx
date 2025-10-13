@@ -11,7 +11,8 @@ import { SaisirExtraitForm } from "@pages/requeteDelivrance/editionExtraitCopie/
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { EditionDelivranceContext } from "../../../../../../contexts/EditionDelivranceContextProvider";
 import useFetchApi from "../../../../../../hooks/api/FetchApiHook";
-import AffichagePDF from "../../../../../commun/affichageDocument/AffichagePDF";
+import { EMimeType } from "../../../../../../ressources/EMimeType";
+import AffichageDocument from "../../../../../commun/affichageDocument/AffichageDocument";
 import PageChargeur from "../../../../../commun/chargeurs/PageChargeur";
 import OngletsBouton from "../../../../../commun/onglets/OngletsBouton";
 import ConteneurVoletEdition from "../../ConteneurVoletEdition";
@@ -189,9 +190,10 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
           estActif={ongletActif === ECleOngletDocumentDelivre.DOCUMENT_EDITE}
           estSousOnglet
         >
-          <AffichagePDF
+          <AffichageDocument
             contenuBase64={contenuDocument}
             typeZoom={90}
+            typeMime={EMimeType.APPLI_PDF}
           />
         </ConteneurVoletEdition>
       )}
