@@ -67,7 +67,7 @@ export const ROUTES_ESPACE_CONSULAIRE: RouteObject[] = [
     element: (
       <ElementPageRECE
         infoPage={Consulaire.INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_CONSULTATION}
-        tousLesDroits={[Droit.TRANSCRIPTION_CONSULTER_REQUETES]}
+        tousLesDroits={[Droit.TRANSCRIPTION_CONSULTER]}
       >
         <PageRequeteCreationTranscriptionPriseEnCharge />
       </ElementPageRECE>
@@ -79,7 +79,7 @@ export const ROUTES_ESPACE_CONSULAIRE: RouteObject[] = [
     element: (
       <ElementPageRECE
         infoPage={Consulaire.INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE}
-        tousLesDroits={[Droit.TRANSCRIPTION_CONSULTER_REQUETES]}
+        tousLesDroits={[Droit.TRANSCRIPTION_CONSULTER]}
       >
         <PageRequeteCreationTranscriptionPriseEnCharge />
       </ElementPageRECE>
@@ -91,7 +91,7 @@ export const ROUTES_ESPACE_CONSULAIRE: RouteObject[] = [
     element: (
       <ElementPageRECE
         infoPage={Consulaire.INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_SAISIE_PROJET}
-        tousLesDroits={[Droit.TRANSCRIPTION_CONSULTER_REQUETES]}
+        tousLesDroits={[Droit.TRANSCRIPTION_CONSULTER]}
       >
         <PageRequeteTranscriptionSaisieProjet />
       </ElementPageRECE>
