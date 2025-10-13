@@ -5,9 +5,9 @@ import { MdClose, MdInfoOutline, MdLogout, MdOutlineAccountCircle } from "react-
 import { useNavigate } from "react-router";
 import { RECEContextData } from "../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
-import LiensRECE from "../../../router/LiensRECE";
+
 import { URL_DECONNEXION } from "../../../router/infoPages/InfoPagesBase";
-import { INFO_PAGE_MES_REQUETES_DELIVRANCE } from "../../../router/infoPages/InfoPagesEspaceDelivrance";
+
 import Texte from "../../../utils/Texte";
 import Bouton from "../../commun/bouton/Bouton";
 import ConteneurModale from "../../commun/conteneurs/modale/ConteneurModale";
@@ -127,11 +127,10 @@ const MenuUtilisateur: React.FC = () => {
             <div className="flex items-center justify-center gap-6 pt-6">
               <Bouton
                 styleBouton="secondaire"
-                title="Non, voir les requêtes à signer"
+                title="Non"
                 onClick={() => {
                   setNombreRequeteASigner(0);
                   setMenuOuvert(false);
-                  navigate(LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_DELIVRANCE.url));
                 }}
               >
                 {"Non"}

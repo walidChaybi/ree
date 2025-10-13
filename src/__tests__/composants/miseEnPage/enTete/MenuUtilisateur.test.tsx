@@ -114,20 +114,4 @@ describe("test du composant MenuUtilisateur", () => {
 
     MockApi.stopMock();
   });
-
-  test("L'utilisateur peut consulter ses requêtes à signer au lieu de se déconnecter", async () => {
-    MockApi.deployer(CONFIG_GET_NOMBRE_REQUETE, { query: { statuts: StatutRequete.A_SIGNER.nom } }, { data: 1 });
-    snapshotMenuUtilisateur(UTILISATEUR_CONNECTE);
-
-    fireEvent.click(screen.getByTitle("Menu utilisateur"));
-    fireEvent.click(screen.getByTitle("Déconnexion"));
-
-    await waitFor(() => expect(screen.getByTitle("Non, voir les requêtes à signer")).toBeDefined());
-
-    fireEvent.click(screen.getByTitle("Non, voir les requêtes à signer"));
-
-    await waitFor(() => expect(screen.getByText(REDIRECTION_DELIVRANCE)).toBeDefined());
-
-    MockApi.stopMock();
-  });
 });
