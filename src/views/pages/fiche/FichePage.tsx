@@ -130,7 +130,7 @@ export const FichePage: React.FC<IFichePageProps> = ({
       const peutSignerMentionIntegration =
         estActeEligibleMentionDIntegration(fiche) &&
         droitMentions &&
-        utilisateurConnecte.estHabilitePour({ leDroit: Droit.SIGNER_MENTION_INTEGRATION });
+        utilisateurConnecte.estHabilitePour({ leDroit: Droit.MISE_A_JOUR_CREER_DOUBLE_NUMERIQUE });
 
       autorise = (estOrigineRece && (droitMentions || droitAnalyseMarginale)) || peutSignerMentionIntegration;
     }

@@ -687,7 +687,7 @@ exports[`Tests PartieFormulaire > Mettre à jour le formulaire d'analyse margina
 </div>
 `;
 
-exports[`Tests PartieFormulaire > N'affiche pas le bloc 'Mention intégration RECE' quand l'utilisateur ne possède pas le droit SIGNER_MENTION_INTEGRATION 1`] = `
+exports[`Tests PartieFormulaire > N'affiche pas le bloc 'Mention intégration RECE' quand l'utilisateur ne possède pas le droit MISE_A_JOUR_CREER_DOUBLE_NUMERIQUE 1`] = `
 <div
   class="w-1/2"
 >

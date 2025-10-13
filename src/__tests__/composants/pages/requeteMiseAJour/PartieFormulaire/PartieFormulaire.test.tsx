@@ -303,11 +303,14 @@ describe("Tests PartieFormulaire", () => {
       }
     );
 
-    const snapshot = await renderSnapshot(ONGLETS_ACTIFS_MENTION, true, [Droit.METTRE_A_JOUR_ACTE, Droit.SIGNER_MENTION_INTEGRATION]);
+    const snapshot = await renderSnapshot(ONGLETS_ACTIFS_MENTION, true, [
+      Droit.METTRE_A_JOUR_ACTE,
+      Droit.MISE_A_JOUR_CREER_DOUBLE_NUMERIQUE
+    ]);
     expect(snapshot).toMatchSnapshot();
   });
 
-  test("N'affiche pas le bloc 'Mention intégration RECE' quand l'utilisateur ne possède pas le droit SIGNER_MENTION_INTEGRATION", async () => {
+  test("N'affiche pas le bloc 'Mention intégration RECE' quand l'utilisateur ne possède pas le droit MISE_A_JOUR_CREER_DOUBLE_NUMERIQUE", async () => {
     MockApi.deployer(
       CONFIG_GET_RESUME_ACTE,
       { path: { idActe: ID_ACTE }, query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true } },
@@ -329,7 +332,10 @@ describe("Tests PartieFormulaire", () => {
       }
     );
 
-    const snapshot = await renderSnapshot(ONGLETS_ACTIFS_MENTION, true, [Droit.METTRE_A_JOUR_ACTE, Droit.SIGNER_MENTION_INTEGRATION]);
+    const snapshot = await renderSnapshot(ONGLETS_ACTIFS_MENTION, true, [
+      Droit.METTRE_A_JOUR_ACTE,
+      Droit.MISE_A_JOUR_CREER_DOUBLE_NUMERIQUE
+    ]);
     expect(snapshot).toMatchSnapshot();
   });
 });

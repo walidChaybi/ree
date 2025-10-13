@@ -100,7 +100,7 @@ const PartieFormulaire: React.FC = () => {
     if (acte !== null) {
       return (
         estActeEligibleMentionDIntegration(acte) &&
-        utilisateurConnecte.estHabilitePour({ tousLesDroits: [Droit.METTRE_A_JOUR_ACTE, Droit.SIGNER_MENTION_INTEGRATION] })
+        utilisateurConnecte.estHabilitePour({ tousLesDroits: [Droit.METTRE_A_JOUR_ACTE, Droit.MISE_A_JOUR_CREER_DOUBLE_NUMERIQUE] })
       );
     }
     return false;
