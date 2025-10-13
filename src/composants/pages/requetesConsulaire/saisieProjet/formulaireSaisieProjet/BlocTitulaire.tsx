@@ -21,23 +21,9 @@ const optionsPreposition = enumVersOptions(EPrepositionLieu);
 const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
   return (
     <ConteneurAvecBordure className="py-6">
-      <div className="grid grid-cols-2 gap-4 text-start">
-        <ChampTexte
-          name="titulaire.nomActeEtranger"
-          libelle="Nom sur l'acte étranger"
-          estObligatoire
-        />
-        <div className="grid w-full gap-4 text-start">
-          <ChampTexte
-            name="titulaire.nomSouhaite"
-            libelle="Nom souhaité"
-            disabled
-          />
-        </div>
-      </div>
-      <div className="grid grid-cols-1 pt-4">
+      <div className="grid w-full gap-4 text-start">
         <ChampsNomSecable
-          nom={{ name: "titulaire.nomRetenuOEC", libelle: "Nom retenu par l'OEC" }}
+          nom={{ name: "titulaire.nomActeEtranger", libelle: "Nom sur l'acte étranger" }}
           secable={{ name: "titulaire.nomSecable.secable", libelle: "Nom sécable" }}
           nomPartie1={{
             name: "titulaire.nomSecable.nomPartie1",
@@ -49,6 +35,18 @@ const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
           }}
           estObligatoire
           afficherInfo={false}
+        />
+      </div>
+      <div className="grid grid-cols-2 gap-4 pt-4 text-start">
+        <ChampTexte
+          name="titulaire.nomSouhaite"
+          libelle="Nom souhaité"
+          disabled
+        />
+        <ChampTexte
+          name="titulaire.nomRetenuOEC"
+          libelle="Nom retenu par l'OEC"
+          estObligatoire
         />
       </div>
 

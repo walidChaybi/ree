@@ -84,8 +84,8 @@ export const projetActeNaissanceDto: IProjetActeTranscritDto = {
         region: "",
         pays: ""
       },
-      nomPartie1: "",
-      nomPartie2: "",
+      nomActeEtrangerPartie1: "",
+      nomActeEtrangerPartie2: "",
       pasDePrenom: false
     }
   ],
@@ -252,8 +252,8 @@ export const projetActeNaissancePostDto: IProjetActeTranscritPostDto = {
       },
       nom: "Xi phun bin",
       nomActeEtranger: "Xi-phun bin",
-      nomPartie1: "Xi",
-      nomPartie2: "phun bin",
+      nomActeEtrangerPartie1: "Xi",
+      nomActeEtrangerPartie2: "phun bin",
       ordre: 1,
       pasDePrenom: false,
       prenoms: ["lao", "xiar", "sehoo"],
@@ -389,8 +389,8 @@ export const projetActeNaissancePatchDto: IProjetActeTranscritPatchDto = {
       },
       nom: "Xi phun bin",
       nomActeEtranger: "Xi-phun bin",
-      nomPartie1: "Xi",
-      nomPartie2: "phun bin",
+      nomActeEtrangerPartie1: "Xi",
+      nomActeEtrangerPartie2: "phun bin",
       ordre: 1,
       pasDePrenom: false,
       prenoms: ["lao", "xiar", "sehoo"],

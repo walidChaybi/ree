@@ -4,7 +4,7 @@ import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import MockSaisieProjetActeContextProvider from "@mock/context/MockSaisieProjetActeContextProvider";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
-import { render } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import { describe, expect, test, vi } from "vitest";
 import PartieGaucheSaisieProjet from "../../../../../composants/pages/requetesConsulaire/saisieProjet/PartieGaucheSaisieProjet";
 
@@ -23,6 +23,12 @@ describe("PartieGaucheSaisieProjet - Tests du composant", () => {
         </MockSaisieProjetActeContextProvider>
       </MockRECEContextProvider>
     );
+
+    const mockApi = MockApi.getMock();
+
+    await waitFor(() => {
+      expect(mockApi.history.get.length).toBe(1);
+    });
 
     expect(container.firstChild).toMatchSnapshot();
     MockApi.stopMock();

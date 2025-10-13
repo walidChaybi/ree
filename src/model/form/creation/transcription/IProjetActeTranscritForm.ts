@@ -63,12 +63,12 @@ export interface IActeEtrangerTranscriptionForm {
   typeActe: keyof typeof ETypeActeEtranger;
   infoTypeActe: string;
   dateEnregistrement: IDateHeureForm;
-  lieuEnregistrement: ILieuEtranger;
+  lieuEnregistrement: ILieuEtrangerForm;
   redacteur: string;
   referenceComplement: string;
 }
 
-interface ILieuEtranger {
+interface ILieuEtrangerForm {
   ville: string;
   etatProvince: string;
   pays: string;
@@ -179,9 +179,9 @@ export const ProjetActeNaissanceTranscriptionForm = {
               nomRetenuOEC: titulaireProjetActe?.nom ?? "",
               nomSouhaite: "",
               nomSecable: {
-                nomPartie1: titulaireProjetActe?.nomPartie1 ?? "",
-                nomPartie2: titulaireProjetActe?.nomPartie2 ?? "",
-                secable: Boolean(titulaireProjetActe?.nomPartie2)
+                nomPartie1: titulaireProjetActe?.nomActeEtrangerPartie1 ?? "",
+                nomPartie2: titulaireProjetActe?.nomActeEtrangerPartie2 ?? "",
+                secable: Boolean(titulaireProjetActe?.nomActeEtrangerPartie2)
               },
               prenomsChemin: PrenomsForm.valeursInitiales(
                 titulaireProjetActe?.prenoms?.map((prenom: string, index: number) => ({ prenom: prenom, numeroOrdre: index + 1 })) ?? []
@@ -667,8 +667,8 @@ const mapTitulaire = (
   return {
     nomActeEtranger: titulaire.nomActeEtranger,
     nom: titulaire.nomRetenuOEC,
-    nomPartie1: titulaire.nomSecable.nomPartie1 || undefined,
-    nomPartie2: titulaire.nomSecable.nomPartie2 || undefined,
+    nomActeEtrangerPartie1: titulaire.nomSecable.nomPartie1 || undefined,
+    nomActeEtrangerPartie2: titulaire.nomSecable.nomPartie2 || undefined,
     prenoms,
     sexe: titulaire.sexe,
     ordre: 1,

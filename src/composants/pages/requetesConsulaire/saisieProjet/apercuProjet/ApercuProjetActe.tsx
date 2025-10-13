@@ -14,7 +14,7 @@ import DocumentTexte from "../../../../commun/conteneurs/DocumentTexte";
 
 const ApercuProjetActe: React.FC = () => {
   const { requete } = useContext(SaisieProjetActeTranscritContext);
-  const { appelApi: appelGetModeleTexte, enAttenteDeReponseApi: enAttenteModeleTexte } = useFetchApi(CONFIG_GET_MODELE_TEXTE);
+  const { appelApi: getModeleTexte, enAttenteDeReponseApi: enAttenteModeleTexte } = useFetchApi(CONFIG_GET_MODELE_TEXTE);
 
   const [valeurs] = useEventState<IProjetActeTranscritForm | null>(EEventState.APERCU_PROJET_ACTE, null);
   const [modeleTexte, setModeleTexte] = useState<ModeleTexte | null>(null);
@@ -71,7 +71,7 @@ const ApercuProjetActe: React.FC = () => {
       return;
     }
 
-    appelGetModeleTexte({
+    getModeleTexte({
       parametres: { path: { modeleTexte: typeModelTexteRequete } },
       apresSucces: donneesModeleTexte => {
         ModeleTexte.enregistrerModeleTexteDocument(donneesModeleTexte.natureProjet, donneesModeleTexte.modeleTexte);

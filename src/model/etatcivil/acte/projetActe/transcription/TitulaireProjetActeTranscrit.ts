@@ -16,8 +16,8 @@ export interface ITitulaireProjetActeTranscritDto {
   naissance: IEvenementProjetActeTranscritDto;
   filiations: IFiliationTitulaireProjetActeTranscritDto[];
   domicile?: IAdresse;
-  nomPartie1?: string;
-  nomPartie2?: string;
+  nomActeEtrangerPartie1?: string;
+  nomActeEtrangerPartie2?: string;
   pasDePrenom: boolean | null;
 }
 
@@ -42,8 +42,8 @@ export class TitulaireProjetActeTranscrit {
     public readonly naissance: EvenementProjetActeTranscrit,
     public readonly filiations: IFiliationsTitulaireProjetActeTranscrit,
     public readonly domicile?: IAdresse,
-    public readonly nomPartie1?: string,
-    public readonly nomPartie2?: string
+    public readonly nomActeEtrangerPartie1?: string,
+    public readonly nomActeEtrangerPartie2?: string
   ) {}
 
   public static readonly depuisDto = (
@@ -77,8 +77,8 @@ export class TitulaireProjetActeTranscrit {
         parent2: filiations.find(filiation => filiation.ordre === 2) ?? null
       },
       titulaireProjetActeTranscrit.domicile,
-      titulaireProjetActeTranscrit.nomPartie1,
-      titulaireProjetActeTranscrit.nomPartie2
+      titulaireProjetActeTranscrit.nomActeEtrangerPartie1,
+      titulaireProjetActeTranscrit.nomActeEtrangerPartie2
     );
   };
 }

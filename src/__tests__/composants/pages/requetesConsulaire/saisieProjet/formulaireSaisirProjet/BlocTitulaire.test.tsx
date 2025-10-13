@@ -65,12 +65,9 @@ describe("SaisirProjet - BlocTitulaire", () => {
 
     await userEvent.tab();
     expect(document.activeElement).toBe(inputNomActeEtranger);
+    await userEvent.type(inputNomActeEtranger, "Xi phun bin");
 
     expect(inputNomSouhait.disabled).toBeTruthy();
-
-    await userEvent.tab();
-    expect(document.activeElement).toStrictEqual(inputNomRetenuOEC);
-    await userEvent.type(inputNomRetenuOEC, "Xi phun bin");
 
     await userEvent.tab();
 
@@ -102,6 +99,10 @@ describe("SaisirProjet - BlocTitulaire", () => {
     await waitFor(() => {
       expect(document.activeElement).toStrictEqual(boutonDéplacerVocable);
     });
+    await userEvent.tab();
+
+    expect(document.activeElement).toStrictEqual(inputNomRetenuOEC);
+    await userEvent.type(inputNomRetenuOEC, "Xi phun bin");
 
     await userEvent.tab();
     await waitFor(() => {
