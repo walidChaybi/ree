@@ -1,5 +1,6 @@
 // A tester Alex 5/02/25
 
+import { TSansNullOuUndefined } from "../../../types/typeUtils";
 import { IDateHeureForm } from "./DateForm";
 import { INumeroRcRcaPacs } from "./NumeroRcRcaPacsForm";
 import { TPrenomsForm } from "./PrenomsForm";
@@ -108,6 +109,15 @@ export const ObjetFormulaire = {
 
   estNumeroRcRca: (valeur: TValeurFormulaire): valeur is INumeroRcRcaPacs => {
     return typeof valeur === "object" && "annee" in valeur;
-  }
+  },
+  /* v8 ignore stop */
+
+  remplacerValeursAbsentesParChainesVides: <T extends Record<string, any>>(objet: T): TSansNullOuUndefined<T> =>
+    Object.fromEntries(
+      Object.entries(objet).map(([cle, valeur]) => {
+        if (valeur && typeof valeur === "object") return [cle, ObjetFormulaire.remplacerValeursAbsentesParChainesVides(valeur)];
+        if (typeof valeur === "boolean") return [cle, valeur];
+        return [cle, valeur ?? ""];
+      })
+    ) as TSansNullOuUndefined<T>
 } as const;
-/* v8 ignore end */

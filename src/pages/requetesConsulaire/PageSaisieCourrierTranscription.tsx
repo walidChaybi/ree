@@ -17,7 +17,6 @@ import BlocParents from "../../composants/pages/requetesConsulaire/saisieCourrie
 import BlocRequerant from "../../composants/pages/requetesConsulaire/saisieCourrier/BlocRequerant";
 import BlocRequete from "../../composants/pages/requetesConsulaire/saisieCourrier/BlocRequete";
 import BlocTitulaire from "../../composants/pages/requetesConsulaire/saisieCourrier/BlocTitulaire";
-import TransmissionService from "../../composants/pages/requetesConsulaire/saisieCourrier/TransmissionService";
 import { RECEContextData } from "../../contexts/RECEContextProvider";
 import useFetchApi from "../../hooks/api/FetchApiHook";
 import useTraitementApi from "../../hooks/api/TraitementApiHook";
@@ -145,7 +144,6 @@ const PageSaisieCourrierTranscription: React.FC = () => {
                   >
                     {idRequeteParam ? "Valider" : "Enregistrer la requête"}
                   </Bouton>
-                  {!idRequeteParam && optionsServices && <TransmissionService optionsServices={optionsServices} />}
                 </ConteneurBoutonBasDePage>
               </Form>
             )}

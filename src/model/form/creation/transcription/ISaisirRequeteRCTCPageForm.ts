@@ -4,6 +4,7 @@ import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { ConditionChamp, EOperateurCondition } from "@model/form/commun/ConditionChamp";
 import { DateHeureFormUtils, IDateHeureForm } from "@model/form/commun/DateForm";
 import { INationalitesForm, NationalitesForm } from "@model/form/commun/NationalitesForm";
+import { ObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { PrenomsForm, TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import { IRequeteConsulaire } from "@model/requete/IRequeteConsulaire";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
@@ -17,6 +18,7 @@ import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import { TAvecValeursOptionnelles } from "../../../../types/typeUtils";
 import { PieceJointe } from "../../../../utils/FileUtils";
 import SchemaValidation from "../../../../utils/SchemaValidation";
 
@@ -200,10 +202,6 @@ export interface ISaisieRequeteRCTCForm {
     autreNumeroTelephone: string;
   };
   pieceJointe: PieceJointe[];
-  service: {
-    avecService: boolean;
-    idService: string;
-  };
 }
 
 export const SaisieRequeteRCTCForm = {
@@ -237,34 +235,34 @@ export const SaisieRequeteRCTCForm = {
       };
     })();
 
-    return {
+    return ObjetFormulaire.remplacerValeursAbsentesParChainesVides<TAvecValeursOptionnelles<ISaisieRequeteRCTCForm>>({
       requete: {
         natureActe: ENatureActeTranscrit.NAISSANCE_MINEUR,
         lienRequerant: requete?.lienRequerant?.typeLienRequerant ?? "PERE_MERE",
         typeRegistre: {
-          id: requete?.typeRegistre?.id ?? "",
-          poste: requete?.typeRegistre?.poste ?? ""
+          id: requete?.typeRegistre?.id,
+          poste: requete?.typeRegistre?.poste
         }
       },
       titulaire: {
-        identifiant: titulaire?.id ?? "",
-        nomActeEtranger: titulaire?.nomNaissance ?? "",
-        nomSouhaite: titulaire?.nomSouhaite ?? "",
+        identifiant: titulaire?.id,
+        nomActeEtranger: titulaire?.nomNaissance,
+        nomSouhaite: titulaire?.nomSouhaite,
         prenoms: PrenomsForm.valeursInitiales(titulaire?.prenoms),
-        sexe: titulaire?.sexe ?? "",
+        sexe: titulaire?.sexe,
         naissance: {
           date: DateHeureFormUtils.valeursDefauts(
             titulaire
               ? {
-                  jour: `${titulaire.jourNaissance ?? ""}`,
-                  mois: `${titulaire.moisNaissance ?? ""}`,
-                  annee: `${titulaire.anneeNaissance ?? ""}`
+                  jour: titulaire.jourNaissance?.toString(),
+                  mois: titulaire.moisNaissance?.toString(),
+                  annee: titulaire.anneeNaissance?.toString()
                 }
               : null
           ),
-          ville: titulaire?.villeNaissance ?? "",
-          etatProvince: titulaire?.regionNaissance ?? "",
-          pays: titulaire?.paysNaissance ?? ""
+          ville: titulaire?.villeNaissance,
+          etatProvince: titulaire?.regionNaissance,
+          pays: titulaire?.paysNaissance
         }
       },
       parents: {
@@ -278,9 +276,9 @@ export const SaisieRequeteRCTCForm = {
           date: DateHeureFormUtils.valeursDefauts(
             mariageParent1
               ? {
-                  jour: `${mariageParent1.jour ?? ""}`,
-                  mois: `${mariageParent1.mois ?? ""}`,
-                  annee: `${mariageParent1.annee ?? ""}`
+                  jour: mariageParent1.jour?.toString(),
+                  mois: mariageParent1.mois?.toString(),
+                  annee: mariageParent1.annee?.toString()
                 }
               : null
           ),
@@ -294,18 +292,18 @@ export const SaisieRequeteRCTCForm = {
                 return "ETRANGER";
             }
           })(),
-          ville: mariageParent1?.ville ?? "",
-          pays: mariageParent1?.pays ?? ""
+          ville: mariageParent1?.ville,
+          pays: mariageParent1?.pays
         },
         reconnaissance: {
-          identifiant: reconnaissance?.id ?? "",
+          identifiant: reconnaissance?.id,
           titulaireReconnu: reconnaissance ? "oui" : "",
           date: DateHeureFormUtils.valeursDefauts(
             reconnaissance
               ? {
-                  jour: `${reconnaissance.jour ?? ""}`,
-                  mois: `${reconnaissance.mois ?? ""}`,
-                  annee: `${reconnaissance.annee ?? ""}`
+                  jour: reconnaissance.jour?.toString(),
+                  mois: reconnaissance.mois?.toString(),
+                  annee: reconnaissance.annee?.toString()
                 }
               : null
           ),
@@ -313,23 +311,23 @@ export const SaisieRequeteRCTCForm = {
         }
       },
       requerant: {
-        id: requete?.requerant.id ?? "",
-        nom: requete?.requerant.nomFamille ?? "",
-        nomUsage: requete?.requerant.nomUsage ?? "",
-        prenom: requete?.requerant.prenom ?? "",
+        id: requete?.requerant.id,
+        nom: requete?.requerant.nomFamille,
+        nomUsage: requete?.requerant.nomUsage,
+        prenom: requete?.requerant.prenom,
         adresse: {
-          complementDestinataire: requete?.requerant.adresse?.ligne2 ?? "",
-          complementPointGeo: requete?.requerant.adresse?.ligne3 ?? "",
-          voie: requete?.requerant.adresse?.ligne4 ?? "",
-          lieuDit: requete?.requerant.adresse?.ligne5 ?? "",
-          codePostal: requete?.requerant.adresse?.codePostal ?? "",
-          commune: requete?.requerant.adresse?.ville ?? "",
-          pays: requete?.requerant.adresse?.pays ?? "",
-          adresseCourriel: requete?.requerant.courriel ?? "",
-          numeroTelephone: requete?.requerant.telephone ?? ""
+          complementDestinataire: requete?.requerant.adresse?.ligne2,
+          complementPointGeo: requete?.requerant.adresse?.ligne3,
+          voie: requete?.requerant.adresse?.ligne4,
+          lieuDit: requete?.requerant.adresse?.ligne5,
+          codePostal: requete?.requerant.adresse?.codePostal,
+          commune: requete?.requerant.adresse?.ville,
+          pays: requete?.requerant.adresse?.pays,
+          adresseCourriel: requete?.requerant.courriel,
+          numeroTelephone: requete?.requerant.telephone
         },
-        autreAdresseCourriel: requete?.requerant.courrielAutreContact ?? "",
-        autreNumeroTelephone: requete?.requerant.telephoneAutreContact ?? ""
+        autreAdresseCourriel: requete?.requerant.courrielAutreContact,
+        autreNumeroTelephone: requete?.requerant.telephoneAutreContact
       },
       pieceJointe:
         requete?.piecesJustificatives?.map<PieceJointe>(piece => ({
@@ -345,12 +343,8 @@ export const SaisieRequeteRCTCForm = {
             conteneurSwift: piece.conteneurSwift,
             identifiantSwift: piece.referenceSwift
           }
-        })) ?? [],
-      service: {
-        avecService: false,
-        idService: ""
-      }
-    };
+        })) ?? []
+    });
   },
 
   versDto: (valeurs: ISaisieRequeteRCTCForm) => {
@@ -507,14 +501,7 @@ export const SaisieRequeteRCTCForm = {
       }),
       autreAdresseCourriel: SchemaValidation.texte({ obligatoire: false }),
       autreNumeroTelephone: SchemaValidation.texte({ obligatoire: false })
-    }),
-    service: SchemaValidation.objet({
-      idService: SchemaValidation.texte({
-        obligatoire: ConditionChamp.depuisTableau([
-          { idChampReference: "service.avecService", operateur: EOperateurCondition.EGAL, valeurs: ["true"] }
-        ])
-      })
     })
   })
 };
-/* v8 ignore end */
+/* v8 ignore stop */
