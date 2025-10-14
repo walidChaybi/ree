@@ -1,7 +1,7 @@
 import { ETATCIVIL_API } from "@api/ApiDisponibles";
 import { TConfigurationApi } from "@model/api/Api";
 
-export interface ITypeMentionIntegrationDto {
+export interface IFormuleIntegrationDto {
   idTypeMention: string;
   affecteAnalyseMarginale: boolean;
   texteMention: string;
@@ -9,11 +9,11 @@ export interface ITypeMentionIntegrationDto {
 
 const URI = "/types-mentions/integration-registre-electronique";
 
-const CONFIG_GET_TYPES_MENTION_INTEGRATION_RECE: TConfigurationApi<typeof URI, undefined, undefined, ITypeMentionIntegrationDto> = {
+const CONFIG_GET_FORMULE_INTEGRATION_RECE: TConfigurationApi<typeof URI, undefined, undefined, IFormuleIntegrationDto> = {
   api: ETATCIVIL_API,
   methode: "GET",
   uri: URI,
   avecAxios: true
 };
 
-export default CONFIG_GET_TYPES_MENTION_INTEGRATION_RECE;
+export default CONFIG_GET_FORMULE_INTEGRATION_RECE;

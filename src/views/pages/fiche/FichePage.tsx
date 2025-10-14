@@ -58,7 +58,7 @@ export interface IDataFicheProps {
   categorie: ETypeFiche;
 }
 
-export const estActeEligibleMentionDIntegration = ({
+export const estActeEligibleFormuleDIntegration = ({
   origine,
   referenceActe,
   referenceRegistreSansNumeroDActe,
@@ -127,12 +127,12 @@ export const FichePage: React.FC<IFichePageProps> = ({
     if (ficheCourante?.categorie === ETypeFiche.ACTE && "titulaires" in fiche && fiche.statut !== "BROUILLON") {
       const estOrigineRece = fiche?.origine === "RECE";
 
-      const peutSignerMentionIntegration =
-        estActeEligibleMentionDIntegration(fiche) &&
+      const peutSignerFormuleIntegration =
+        estActeEligibleFormuleDIntegration(fiche) &&
         droitMentions &&
         utilisateurConnecte.estHabilitePour({ leDroit: Droit.MISE_A_JOUR_CREER_DOUBLE_NUMERIQUE });
 
-      autorise = (estOrigineRece && (droitMentions || droitAnalyseMarginale)) || peutSignerMentionIntegration;
+      autorise = (estOrigineRece && (droitMentions || droitAnalyseMarginale)) || peutSignerFormuleIntegration;
     }
 
     return {

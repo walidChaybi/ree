@@ -32,7 +32,7 @@ exports[`Tests PartieFormulaire > Afficher le bloc 'Mention intégration RECE' 1
             <span
               class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
             >
-              Mention intégration dans RECE
+              Formule intégration dans RECE
             </span>
             <div
               class="mt-3 bg-slate-400"

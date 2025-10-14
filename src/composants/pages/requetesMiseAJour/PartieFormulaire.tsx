@@ -1,7 +1,7 @@
 import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
-import CONFIG_GET_TYPES_MENTION_INTEGRATION_RECE, {
-  ITypeMentionIntegrationDto
-} from "@api/configurations/etatCivil/nomenclature/GetTypesMentionIntegrationRECEApi";
+import CONFIG_GET_FORMULE_INTEGRATION_RECE, {
+  IFormuleIntegrationDto
+} from "@api/configurations/etatCivil/nomenclature/GetFormuleIntegrationRECEApi";
 import { CONFIG_PUT_ANALYSE_MARGINALE_ET_MENTIONS } from "@api/configurations/etatCivil/PutAnalyseMarginaleEtMentionsConfigApi";
 import { CONFIG_PUT_MISE_A_JOUR_ANALYSE_MARGINALE } from "@api/configurations/etatCivil/PutMiseAJourAnalyseMarginaleConfigApi";
 import { Droit } from "@model/agent/enum/Droit";
@@ -11,7 +11,7 @@ import AnalyseMarginaleForm from "@model/form/AnalyseMarginale/AnalyseMarginaleF
 import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import MiseAJourForm from "@model/form/miseAJour/MiseAJourForm";
-import { estActeEligibleMentionDIntegration } from "@pages/fiche/FichePage";
+import { estActeEligibleFormuleDIntegration } from "@pages/fiche/FichePage";
 import { Formik } from "formik";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { Form } from "react-router";
@@ -88,18 +88,18 @@ const PartieFormulaire: React.FC = () => {
   const [motif, setMotif] = useState<string | null>(null);
 
   const [acte, setActe] = useState<FicheActe | null>(null);
-  const { appelApi: appelResumeActe } = useFetchApi(CONFIG_GET_RESUME_ACTE, true);
-  const { appelApi: appelTypeMentionsIntegrationRece } = useFetchApi(CONFIG_GET_TYPES_MENTION_INTEGRATION_RECE, true);
+  const { appelApi: getResumeActe } = useFetchApi(CONFIG_GET_RESUME_ACTE, true);
+  const { appelApi: getFormuleIntegrationRece } = useFetchApi(CONFIG_GET_FORMULE_INTEGRATION_RECE, true);
   const [valeursInitialesFormulaireAnalyseMarginale, setValeursInitialesFormulaireAnalyseMarginale] =
     useState<IAnalyseMarginaleMiseAJour | null>(null);
   const { utilisateurConnecte } = useContext(RECEContextData);
 
-  const [mentionDIntegration, setMentionDIntegration] = useState<ITypeMentionIntegrationDto | null>(null);
+  const [formuleDIntegration, setFormuleDIntegration] = useState<IFormuleIntegrationDto | null>(null);
 
-  const acteEstEligibleMentionDIntegrationEtUtilisateurALesDroits = useMemo(() => {
+  const acteEstEligibleFormuleDIntegrationEtUtilisateurALesDroits = useMemo(() => {
     if (acte !== null) {
       return (
-        estActeEligibleMentionDIntegration(acte) &&
+        estActeEligibleFormuleDIntegration(acte) &&
         utilisateurConnecte.estHabilitePour({ tousLesDroits: [Droit.METTRE_A_JOUR_ACTE, Droit.MISE_A_JOUR_CREER_DOUBLE_NUMERIQUE] })
       );
     }
@@ -107,19 +107,19 @@ const PartieFormulaire: React.FC = () => {
   }, [acte, utilisateurConnecte]);
 
   useEffect(() => {
-    if (acteEstEligibleMentionDIntegrationEtUtilisateurALesDroits && mentionDIntegration === null) {
-      appelTypeMentionsIntegrationRece({
+    if (acteEstEligibleFormuleDIntegrationEtUtilisateurALesDroits && formuleDIntegration === null) {
+      getFormuleIntegrationRece({
         parametres: {},
-        apresSucces: mentionDIntegration => {
-          setMentionDIntegration(mentionDIntegration);
+        apresSucces: formuleDIntegration => {
+          setFormuleDIntegration(formuleDIntegration);
         },
         apresErreur: erreurs =>
-          AfficherMessage.erreur("Une erreur est survenue lors de la récupération des informations de la mention d'intégration au RECE", {
+          AfficherMessage.erreur("Une erreur est survenue lors de la récupération des informations de la formule d'intégration au RECE", {
             erreurs
           })
       });
     }
-  }, [acteEstEligibleMentionDIntegrationEtUtilisateurALesDroits]);
+  }, [acteEstEligibleFormuleDIntegrationEtUtilisateurALesDroits]);
 
   useEffect(() => {
     if (estMiseAJourAvecMentions) {
@@ -157,12 +157,12 @@ const PartieFormulaire: React.FC = () => {
           body: MiseAJourForm.versDto(
             idActe,
             [
-              ...(mentionDIntegration !== null
+              ...(formuleDIntegration !== null
                 ? [
                     {
-                      idTypeMention: mentionDIntegration.idTypeMention,
-                      affecteAnalyseMarginale: mentionDIntegration.affecteAnalyseMarginale,
-                      texte: mentionDIntegration.texteMention
+                      idTypeMention: formuleDIntegration.idTypeMention,
+                      affecteAnalyseMarginale: formuleDIntegration.affecteAnalyseMarginale,
+                      texte: formuleDIntegration.texteMention
                     }
                   ]
                 : []),
@@ -222,7 +222,7 @@ const PartieFormulaire: React.FC = () => {
   }, [donneesAnalyseMarginale, mentionEnCoursDeSaisie, mentionsDuTableau]);
 
   useEffect(() => {
-    appelResumeActe({
+    getResumeActe({
       parametres: {
         path: { idActe },
         query: { remplaceIdentiteTitulaireParIdentiteTitulaireAM: true }
@@ -285,10 +285,10 @@ const PartieFormulaire: React.FC = () => {
         <div className="mt-4 flex h-[calc(100vh-16rem)] flex-col overflow-y-auto">
           {estMiseAJourAvecMentions && (
             <OngletsContenu estActif={ongletsActifs.formulaires === ECleOngletsMiseAJour.MENTIONS}>
-              {acteEstEligibleMentionDIntegrationEtUtilisateurALesDroits && (
+              {acteEstEligibleFormuleDIntegrationEtUtilisateurALesDroits && (
                 <div className="pb-4 text-left">
-                  <ConteneurAvecBordure titreEnTete="Mention intégration dans RECE">
-                    <div className="mt-3 bg-slate-400">{mentionDIntegration?.texteMention}</div>
+                  <ConteneurAvecBordure titreEnTete="Formule intégration dans RECE">
+                    <div className="mt-3 bg-slate-400">{formuleDIntegration?.texteMention}</div>
                   </ConteneurAvecBordure>
                 </div>
               )}

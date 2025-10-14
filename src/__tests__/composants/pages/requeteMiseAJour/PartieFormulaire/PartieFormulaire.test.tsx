@@ -1,7 +1,7 @@
 import { CONFIG_PUT_ANALYSE_MARGINALE_ET_MENTIONS } from "@api/configurations/etatCivil/PutAnalyseMarginaleEtMentionsConfigApi";
 import { CONFIG_PUT_MISE_A_JOUR_ANALYSE_MARGINALE } from "@api/configurations/etatCivil/PutMiseAJourAnalyseMarginaleConfigApi";
 import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
-import CONFIG_GET_TYPES_MENTION_INTEGRATION_RECE from "@api/configurations/etatCivil/nomenclature/GetTypesMentionIntegrationRECEApi";
+import CONFIG_GET_FORMULE_INTEGRATION_RECE from "@api/configurations/etatCivil/nomenclature/GetFormuleIntegrationRECEApi";
 import { CONFIG_GET_METAMODELE_TYPE_MENTION } from "@api/configurations/requete/miseAJour/GetMetamodeleTypeMentionConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
@@ -22,6 +22,15 @@ import {
   EditionMiseAJourContext,
   IEditionMiseAJourContext
 } from "../../../../../contexts/EditionMiseAJourContextProvider";
+
+const remplirChamp = (input: HTMLElement, valeur: string) => {
+  fireEvent.change(input, { target: { value: valeur } });
+};
+
+const remplirSelectOption = async (input: HTMLElement, valeur: string) => {
+  fireEvent.change(input, { target: { value: valeur } });
+  fireEvent.click(await screen.findByText(valeur));
+};
 
 describe("Tests PartieFormulaire", () => {
   const ID_ACTE = "1010";
@@ -138,7 +147,7 @@ describe("Tests PartieFormulaire", () => {
     );
 
     MockApi.deployer(
-      CONFIG_GET_TYPES_MENTION_INTEGRATION_RECE,
+      CONFIG_GET_FORMULE_INTEGRATION_RECE,
       {},
       {
         data: {
@@ -156,19 +165,16 @@ describe("Tests PartieFormulaire", () => {
   });
 
   const ajoutMention = async (option: string, textMention: string) => {
-    await userEvent.click(await screen.findByPlaceholderText("Recherche..."));
-    fireEvent.click(await screen.findByRole("option", { name: option }));
+    const typeMention = await screen.findByPlaceholderText("Recherche...");
+    await remplirSelectOption(typeMention, option);
 
     const textarea = await screen.findByRole("textbox", { name: /texteMention/i });
-    expect(textarea).toBeDefined();
-
-    await userEvent.type(textarea, textMention);
+    fireEvent.change(textarea, { target: { value: textMention } });
 
     const ajouterMentionBtn = await screen.findByRole("button", { name: "Ajouter mention" });
-    await userEvent.click(ajouterMentionBtn);
+    fireEvent.click(ajouterMentionBtn);
 
-    const mention = await screen.findByText(new RegExp(textMention, "i"));
-    expect(mention).toBeDefined();
+    expect(await screen.findByText(new RegExp(textMention, "i"))).toBeDefined();
   };
 
   const modiferMotifAnalyseMarginale = async (motif: string) => {
@@ -218,8 +224,8 @@ describe("Tests PartieFormulaire", () => {
     const snapshot = await renderSnapshot(ONGLETS_ACTIFS_MENTION, true, []);
     expect(snapshot).toMatchSnapshot();
 
-    await userEvent.click(await screen.findByPlaceholderText("Recherche..."));
-    fireEvent.click(await screen.findByRole("option", { name: "1 Mariage" }));
+    const typeMention = await screen.findByPlaceholderText("Recherche...");
+    await remplirSelectOption(typeMention, "1 Mariage");
 
     await waitFor(() => expect(screen.getByRole("option", { name: "1-1 en France (mairie)" })).toBeDefined());
 
@@ -252,12 +258,12 @@ describe("Tests PartieFormulaire", () => {
     await waitFor(() => expect(screen.getAllByText(/⚠ La saisie du champ est obligatoire/i)).toBeDefined());
 
     // Le remplissage du texte d'aide à la saisie fonctionne
-    await userEvent.type(inputVille, "superVille");
-    await userEvent.type(inputDepartement, "superDepartement");
-    await userEvent.type(inputJourEvenement, "12");
-    await userEvent.type(inputMoisEvenement, "09");
-    await userEvent.type(inputAnneeEvenement, "2000");
-    await userEvent.type(inputNom, "superNom");
+    remplirChamp(inputVille, "superVille");
+    remplirChamp(inputDepartement, "superDepartement");
+    remplirChamp(inputJourEvenement, "12");
+    remplirChamp(inputMoisEvenement, "09");
+    remplirChamp(inputAnneeEvenement, "2000");
+    remplirChamp(inputNom, "superNom");
 
     await waitFor(() => {
       expect(screen.getByText("superVille (superDepartement)")).toBeDefined();
