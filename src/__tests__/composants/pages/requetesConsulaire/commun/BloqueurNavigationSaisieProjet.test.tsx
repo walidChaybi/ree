@@ -41,7 +41,11 @@ describe("GestionnaireNavigationFormik", () => {
   });
 
   function renderComponent() {
-    return render(<BloqueurNavigationSaisieProjet></BloqueurNavigationSaisieProjet>);
+    return render(
+      <BloqueurNavigationSaisieProjet>
+        <div>Saisie projet</div>
+      </BloqueurNavigationSaisieProjet>
+    );
   }
 
   test("ouvre la modale quand blocker.state est 'blocked' et dirty=true", () => {

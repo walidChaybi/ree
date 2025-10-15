@@ -6,6 +6,7 @@ import {
 import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR } from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteMisAJourConfigApi";
 import { ProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/ProjetActeTranscrit";
 import { TitulaireProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/transcription/TitulaireProjetActeTranscrit";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { SaisieProjetActeTranscritContext } from "../../../../../contexts/SaisieProjetActeTranscritContextProvider";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
@@ -44,7 +45,7 @@ interface IModaleProjetActeProps {
 
 const ModaleProjetActe: React.FC<IModaleProjetActeProps> = ({ fermerModale, projetActe }) => {
   const [pdfBase64, setPdfBase64] = useState<string | null>(null);
-  const { requete } = useContext(SaisieProjetActeTranscritContext);
+  const { requete, mettreAJourDonneesContext } = useContext(SaisieProjetActeTranscritContext);
   const [estActeSigne, setEstActeSigne] = useState<boolean>(false);
   const { appelApi: appelerCompositionPdf } = useFetchApi(CONFIG_POST_COMPOSITION_ACTE_TEXTE);
   const { appelApi: getDonneesPourCompositionActeTexte } = useFetchApi(CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE_MIS_A_JOUR);
@@ -136,6 +137,7 @@ const ModaleProjetActe: React.FC<IModaleProjetActeProps> = ({ fermerModale, proj
                     apresSignature={(succes: boolean) => {
                       if (succes) {
                         setEstActeSigne(true);
+                        mettreAJourDonneesContext(projetActe, StatutRequete.TRAITE);
                         AfficherMessage.succes("L'acte a été signé avec succès.", { fermetureAuto: true });
                       } else {
                         fermerModale();

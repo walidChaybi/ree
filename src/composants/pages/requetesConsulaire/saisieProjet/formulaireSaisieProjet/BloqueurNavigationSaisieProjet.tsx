@@ -8,12 +8,17 @@ import { MdClose, MdDone, MdUndo } from "react-icons/md";
 import { useBlocker } from "react-router";
 import { useModaleConfirmation } from "../../commun/ConfirmationModale";
 
-const BloqueurNavigationSaisieProjet: React.FC<React.PropsWithChildren> = ({ children }) => {
+interface IBloqueurNavigationSaisieProjetProps {
+  doitBloquer?: boolean;
+  children: React.ReactNode;
+}
+
+const BloqueurNavigationSaisieProjet: React.FC<IBloqueurNavigationSaisieProjetProps> = ({ children, doitBloquer }) => {
   const { dirty, setFieldValue, submitForm } = useFormikContext<IProjetActeTranscritForm>();
 
   const { ouvrir, ModaleAlerte } = useModaleConfirmation();
 
-  const blocker = useBlocker(dirty);
+  const blocker = useBlocker(doitBloquer ?? dirty);
 
   useEffect(() => {
     if (blocker.state === "blocked") {

@@ -10,7 +10,7 @@ import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscri
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { RouterProvider, createMemoryRouter } from "react-router";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
@@ -37,6 +37,10 @@ describe("Test du composant FormulaireSaiseProjet", async () => {
         {
           path: "/",
           element: component
+        },
+        {
+          path: "/autre-page",
+          element: <div>Autre page</div>
         }
       ],
       {
@@ -44,7 +48,10 @@ describe("Test du composant FormulaireSaiseProjet", async () => {
       }
     );
 
-    return render(<RouterProvider router={router} />);
+    return {
+      ...render(<RouterProvider router={router} />),
+      router
+    };
   };
   beforeEach(() => {
     vi.clearAllMocks();
@@ -149,7 +156,7 @@ describe("Test du composant FormulaireSaiseProjet", async () => {
       await userEvent.type(inputNomRetenuOEC, "Xi phun bin");
 
       const boutonEnregistrer = screen.getByRole("button", { name: "Enregistrer" });
-      fireEvent.click(boutonEnregistrer);
+      await userEvent.click(boutonEnregistrer);
 
       await waitFor(() => {
         expect(mockApi.history.patch.length).toBe(1);
@@ -253,6 +260,66 @@ describe("Test du composant FormulaireSaiseProjet", async () => {
       await waitFor(() => {
         expect(mockApi.history.post.length).toBe(1);
         expect(mockApi.history.post[0].url).toContain("composition/ACTE_TEXTE/1");
+      });
+    });
+
+    test("DOIT afficher la modale du blocker QUAND l'utilisateur tente de quitter la page en ayant fait une modification", async () => {
+      const { router } = renderWithRouter(
+        <MockRECEContextProvider
+          utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.TRANSCRIPTION_CREER_PROJET_ACTE).generer()}
+        >
+          <MockSaisieProjetActeContextProvider
+            projetActe={null}
+            requete={requeteTranscriptionASigner}
+            mettreAJourDonneesContext={vi.fn()}
+          >
+            <FormulaireSaisieProjet />
+          </MockSaisieProjetActeContextProvider>
+        </MockRECEContextProvider>
+      );
+
+      const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /titulaire.nomRetenuOEC/i });
+
+      await userEvent.type(inputNomRetenuOEC, "Xi phun bin");
+
+      act(() => {
+        router.navigate("/autre-page");
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText("Modifications à enregistrer")).toBeDefined();
+        expect(screen.getByText("Des modifications ont été apportées au projet. Que souhaitez-vous faire ?")).toBeDefined();
+      });
+    });
+
+    test("DOIT pas afficher la modale du blocker QUAND l'utilisateur tente de quitter la page si le statut de la requête est TRAITE ", async () => {
+      const { router } = renderWithRouter(
+        <MockRECEContextProvider
+          utilisateurConnecte={MockUtilisateurBuilder.utilisateurConnecte().avecDroit(Droit.TRANSCRIPTION_CREER_PROJET_ACTE).generer()}
+        >
+          <MockSaisieProjetActeContextProvider
+            projetActe={null}
+            requete={{
+              ...requeteTranscriptionASigner,
+              statutCourant: { ...requeteTranscriptionASigner.statutCourant, statut: StatutRequete.TRAITE }
+            }}
+            mettreAJourDonneesContext={vi.fn()}
+          >
+            <FormulaireSaisieProjet />
+          </MockSaisieProjetActeContextProvider>
+        </MockRECEContextProvider>
+      );
+
+      const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /titulaire.nomRetenuOEC/i });
+
+      await userEvent.type(inputNomRetenuOEC, "Xi phun bin");
+
+      act(() => {
+        router.navigate("/autre-page");
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText("Autre page")).toBeDefined();
       });
     });
   });

@@ -146,7 +146,7 @@ const FormulaireSaisieProjet: React.FC = () => {
     >
       {({ setFieldValue, dirty, submitForm }) => {
         return (
-          <BloqueurNavigationSaisieProjet>
+          <BloqueurNavigationSaisieProjet doitBloquer={requete.statutCourant.statut !== StatutRequete.TRAITE}>
             <Form>
               {enregistrementEnCours && <PageChargeur />}
 
@@ -202,42 +202,44 @@ const FormulaireSaisieProjet: React.FC = () => {
                 <BlocFormuleFinale />
               </ConteneurAccordeon>
 
-              <ConteneurBoutonBasDePage position="droite">
-                <Bouton
-                  title="Enregistrer"
-                  type="button"
-                  disabled={enregistrementEnCours}
-                  onClick={() => {
-                    setFieldValue("soumissionFormulaire", {
-                      action: EActionFormulaireProjetActeTranscrit.ENREGISTRER,
-                      avecEnregistrement: dirty
-                    }).then(() => {
-                      submitForm();
-                    });
-                  }}
-                >
-                  {"Enregistrer"}
-                </Bouton>
-
-                {aLeDroitDeSignerActe && (
+              {requete.statutCourant.statut !== StatutRequete.TRAITE && (
+                <ConteneurBoutonBasDePage position="droite">
                   <Bouton
-                    title="Terminer et signer"
+                    title="Enregistrer"
                     type="button"
                     disabled={enregistrementEnCours}
                     onClick={() => {
                       setFieldValue("soumissionFormulaire", {
-                        action: EActionFormulaireProjetActeTranscrit.TERMINER_SIGNER,
-                        avecEnregistrement: dirty,
-                        avecMajStatut: requete.statutCourant.statut !== StatutRequete.A_SIGNER
+                        action: EActionFormulaireProjetActeTranscrit.ENREGISTRER,
+                        avecEnregistrement: dirty
                       }).then(() => {
                         submitForm();
                       });
                     }}
                   >
-                    {"Terminer et signer"}
+                    {"Enregistrer"}
                   </Bouton>
-                )}
-              </ConteneurBoutonBasDePage>
+
+                  {aLeDroitDeSignerActe && (
+                    <Bouton
+                      title="Terminer et signer"
+                      type="button"
+                      disabled={enregistrementEnCours}
+                      onClick={() => {
+                        setFieldValue("soumissionFormulaire", {
+                          action: EActionFormulaireProjetActeTranscrit.TERMINER_SIGNER,
+                          avecEnregistrement: dirty,
+                          avecMajStatut: requete.statutCourant.statut !== StatutRequete.A_SIGNER
+                        }).then(() => {
+                          submitForm();
+                        });
+                      }}
+                    >
+                      {"Terminer et signer"}
+                    </Bouton>
+                  )}
+                </ConteneurBoutonBasDePage>
+              )}
 
               {modaleOuverte && projetActe && (
                 <ModaleProjetActe
