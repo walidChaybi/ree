@@ -97,7 +97,11 @@ class DateRECE {
   public static readonly depuisDateArrayDTO = (dateArrayDto: TDateArrayDTO): DateRECE =>
     DateRECE.depuisObjetDate({ annee: dateArrayDto[0], mois: dateArrayDto[1], jour: dateArrayDto[2] });
 
-  public readonly versDateArrayDTO = (): TDateArrayDTO => [Number(this.date.annee), Number(this.date.mois), Number(this.date.jour)];
+  public readonly versDateArrayDTO = (): TDateArrayDTO => [
+    Number(this.date.annee),
+    Number(this.date.mois) ? Number(this.date.mois) : 1,
+    Number(this.date.jour) ? Number(this.date.jour) : 1
+  ];
 
   /* Validations */
   public get estDateHeureValide(): boolean {

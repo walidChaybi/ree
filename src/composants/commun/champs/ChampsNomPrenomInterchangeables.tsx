@@ -1,5 +1,5 @@
 import { getIn, useFormikContext } from "formik";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { MdCompareArrows } from "react-icons/md";
 import BoutonIcon from "../bouton/BoutonIcon";
 import ChampTexte from "./ChampTexte";
@@ -16,6 +16,10 @@ export const ChampsNomPrenomInterchangeables: React.FC<{ cheminNom: string; chem
     setFieldValue(cheminNom, getIn(values, cheminPrenom)).finally(() => setFieldTouched(cheminNom, true));
     setFieldValue(cheminPrenom, getIn(values, cheminNom)).finally(() => setFieldTouched(cheminPrenom, true));
   };
+
+  useEffect(() => {
+    nomRef.current?.focus();
+  }, []);
 
   const appauvrirValeur = (cheminValeur: string, nombreCaracteresMax = 2) => {
     const valeurNettoyee = (getIn(values, cheminValeur) as string).trim();

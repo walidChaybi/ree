@@ -46,7 +46,7 @@ const PageRMCActeInscription: React.FC = () => {
       <RMCContextProvider>
         <RMCActeInscription onSubmit={onSubmitRMCActeInscription} />
       </RMCContextProvider>
-      <DefilementAutomatique faireDefiler={Boolean(resultatRMCActeInscription)} />
+      <DefilementAutomatique faireDefiler={!enAttenteRMC && Boolean(resultatRMCActeInscription)} />
       {resultatRMCActeInscription && (
         <RMCActeInscriptionResultats
           typeRMC="Classique"

@@ -12,7 +12,10 @@ import {
   REQUETE_MAJ_RMC_AUTO_DTO
 } from "@mock/data/rmc/requete/RequetesRMCAuto";
 import { ESousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { ETypeRequete } from "@model/requete/enum/TypeRequete";
+import { mappingCriteresRMCRequeteVersDto } from "@model/rmc/requete/ICriteresRMCRequeteDto";
+import { IRMCRequeteForm } from "@model/rmc/requete/IRMCRequete";
 import RequeteAssociee from "@model/rmc/requete/RequeteAssociee";
 import { IRequeteTableauRMCDto, RequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 import { ITitulaireRequeteAssocieeDto, TitulaireRequeteAssociee } from "@model/rmc/requete/TitulaireRequeteAssociee";
@@ -157,5 +160,47 @@ describe("Test TitulaireRequeteAssociee", () => {
     const titulaire = TitulaireRequeteAssociee.depuisDto({} as ITitulaireRequeteAssocieeDto);
 
     expect(titulaire).toBeNull();
+  });
+});
+
+describe("Test ICriteresRMCRequeteDto", () => {
+  const criteresRMCRequeteMinimaux: IRMCRequeteForm<""> = {
+    datesDebutFinAnnee: { dateDebut: { annee: "", mois: "", jour: "" }, dateFin: { annee: "", mois: "", jour: "" } },
+    requete: {
+      numeroRequete: "",
+      typeRequete: "",
+      sousTypeRequete: "",
+      statutRequete: "" as keyof typeof EStatutRequete,
+      numeroTeledossier: "",
+      numeroDossierNational: ""
+    },
+    titulaire: {
+      nom: "",
+      prenom: "",
+      paysNaissance: "",
+      dateNaissance: {}
+    },
+    requerant: {}
+  };
+
+  test("mappingCriteresRMCRequeteVersDto ne DOIT pas envoyer de date de création si elle est vide", () => {
+    expect(
+      mappingCriteresRMCRequeteVersDto({
+        ...criteresRMCRequeteMinimaux,
+        datesDebutFinAnnee: { dateDebut: { annee: "", mois: "", jour: "" }, dateFin: { annee: "", mois: "", jour: "" } }
+      })
+    ).toStrictEqual({});
+  });
+
+  test("mappingCriteresRMCRequeteVersDto DOIT envoyer la date de création au format DateArrayDTO", () => {
+    expect(
+      mappingCriteresRMCRequeteVersDto({
+        ...criteresRMCRequeteMinimaux,
+        datesDebutFinAnnee: { dateDebut: { annee: "1999", mois: "02", jour: "" }, dateFin: { annee: "2000", mois: "10", jour: "15" } }
+      })
+    ).toStrictEqual({
+      dateCreationDebut: [1999, 2, 1],
+      dateCreationFin: [2000, 10, 15]
+    });
   });
 });

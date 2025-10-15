@@ -125,7 +125,7 @@ const DateUtils = {
     return DateUtils.getDateDepuisDateArrayDto(dateArray).getTime();
   },
 
-  estDateValide: (dateCompose: IDateCompose) => {
+  estDateValide: (dateCompose: IDate) => {
     let dateValide = false;
     if (dateCompose) {
       const dateObj = new Date(Number(dateCompose.annee), Number(dateCompose.mois) - 1, Number(dateCompose.jour));
@@ -136,7 +136,7 @@ const DateUtils = {
     return dateValide;
   },
 
-  estDateReceValide: (dateCompose: IDateCompose): boolean => {
+  estDateReceValide: (dateCompose: IDate): boolean => {
     let dateValide = false;
     if (dateCompose) {
       if (!dateCompose.jour && dateCompose.mois && dateCompose.annee) {
@@ -178,7 +178,7 @@ const DateUtils = {
     return date ? `${date.annee}-${date.mois}-${date.jour}` : "";
   },
 
-  estDateVide: (date?: IDateCompose): boolean => {
+  estDateVide: (date?: IDate): boolean => {
     return !date || (!date.jour && !date.mois && !date.annee);
   },
 

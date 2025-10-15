@@ -24,7 +24,7 @@ export const RMCRequetePage: React.FC = () => {
   const [dataRMCRequete, setDataRMCRequete] = useState<TRequeteTableauRMC[]>();
   const [dataTableauRMCRequete, setDataTableauRMCRequete] = useState<IParamsTableau>();
   const { utilisateurs, services } = useContext(RECEContextData);
-  const { appelApi: rechercheRequetes } = useFetchApi(CONFIG_POST_RMC_REQUETE);
+  const { appelApi: rechercheRequetes, enAttenteDeReponseApi: enAttenteRMC } = useFetchApi(CONFIG_POST_RMC_REQUETE);
 
   useEffect(() => {
     if (!criteresRMCRequete?.valeurs) return;
@@ -76,12 +76,12 @@ export const RMCRequetePage: React.FC = () => {
       <OperationEnCours
         visible={opEnCours}
         onTimeoutEnd={() => setOpEnCours(false)}
-      ></OperationEnCours>
+      />
       <RMCRequeteForm
         setValuesRMCRequete={setValuesRMCRequete}
         setCriteresRechercheRequete={lancerRercherche}
       />
-      <DefilementAutomatique faireDefiler={Boolean(dataRMCRequete)} />
+      <DefilementAutomatique faireDefiler={!enAttenteRMC && Boolean(dataRMCRequete)} />
 
       {dataRMCRequete &&
         dataTableauRMCRequete &&

@@ -1,6 +1,7 @@
 import { TSousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
-import DateUtils from "@util/DateUtils";
+import DateUtils, { TDateArrayDTO } from "@util/DateUtils";
+import DateRECE from "../../../utils/DateRECE";
 import { nettoyerAttributsDto } from "../../commun/dtoUtils";
 import { ETypeRequete } from "../../requete/enum/TypeRequete";
 import { IRMCRequeteForm } from "./IRMCRequete";
@@ -23,9 +24,8 @@ export interface ICriteresRMCRequeteDto<TTypeRequete extends keyof typeof ETypeR
   paysNaissance?: string;
 
   // Filtre Date de création
-  dateCreationDebut?: Date;
-  dateCreationFin?: Date;
-  annee?: string;
+  dateCreationDebut?: TDateArrayDTO;
+  dateCreationFin?: TDateArrayDTO;
 
   // Filtre Requerant
   nomRequerant?: string;
@@ -35,7 +35,7 @@ export interface ICriteresRMCRequeteDto<TTypeRequete extends keyof typeof ETypeR
 export const mappingCriteresRMCRequeteVersDto = <TTypeRequete extends keyof typeof ETypeRequete | "">(
   criteres: IRMCRequeteForm<TTypeRequete>
 ): ICriteresRMCRequeteDto<TTypeRequete> =>
-  nettoyerAttributsDto({
+  nettoyerAttributsDto<ICriteresRMCRequeteDto<TTypeRequete>>({
     // Filtre Requete
     numeroRequete: criteres.requete?.numeroRequete,
     typeRequete: criteres.requete?.typeRequete,
@@ -53,10 +53,16 @@ export const mappingCriteresRMCRequeteVersDto = <TTypeRequete extends keyof type
     paysNaissance: criteres.titulaire?.paysNaissance,
 
     // Filtre Date de création
-    dateCreationDebut: DateUtils.getDateDebutFromDate(criteres.datesDebutFinAnnee?.dateDebut),
-    dateCreationFin: DateUtils.getDateFinFromDate(criteres.datesDebutFinAnnee?.dateFin),
+    dateCreationDebut:
+      criteres.datesDebutFinAnnee?.dateDebut && !DateUtils.estDateVide(criteres.datesDebutFinAnnee?.dateDebut)
+        ? DateRECE.depuisObjetDate(criteres.datesDebutFinAnnee.dateDebut).versDateArrayDTO()
+        : undefined,
+    dateCreationFin:
+      criteres.datesDebutFinAnnee?.dateFin && !DateUtils.estDateVide(criteres.datesDebutFinAnnee?.dateFin)
+        ? DateRECE.depuisObjetDate(criteres.datesDebutFinAnnee.dateFin).versDateArrayDTO()
+        : undefined,
 
-    // Filtre Requerant
+    // Filtre Requérant
     nomRequerant: criteres.requerant?.nom,
     raisonSociale: criteres.requerant?.raisonSociale
   });

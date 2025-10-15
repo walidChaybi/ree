@@ -20,6 +20,7 @@ describe("test du Helper dateRECEComplete", () => {
         "JJ/MM/AAAA à HHhmm"
       )
     ).toBe("2000");
+    expect(DateRECE.depuisDateArrayDTO([2000, 1, 1]).format("JJ/MM/AAAA")).toStrictEqual("01/01/2000");
   });
 
   test("validations de date", () => {
@@ -156,5 +157,13 @@ describe("test du Helper dateRECEComplete", () => {
       const date = DateRECE.depuisObjetDate({ jour: 15, mois: i + 1, annee: 2000 });
       expect(date.format("JJ mois AAAA")).toBe(`15 ${mois} 2000`);
     });
+  });
+
+  test("versDateArrayDTO", () => {
+    expect(DateRECE.depuisObjetDate(DATE_COMPLETE).versDateArrayDTO()).toStrictEqual([2000, 1, 1]);
+    expect(DateRECE.depuisDateArrayDTO([2000, 1, 1]).versDateArrayDTO()).toStrictEqual([2000, 1, 1]);
+
+    // DOIT compléter le mois et le jour du DateArray avec des 1 QUAND ils ne sont pas définis
+    expect(DateRECE.depuisObjetDate({ annee: 2000 }).versDateArrayDTO()).toStrictEqual([2000, 1, 1]);
   });
 });

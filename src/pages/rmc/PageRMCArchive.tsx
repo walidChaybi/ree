@@ -29,7 +29,7 @@ const PageRMCArchive: React.FC = () => {
 
   const [nouvelleRecherche, setNouvelleRecherche] = useState<boolean>(false);
   const [resultatRMCArchive, setResultatRMCArchive] = useState<IRMCActeArchiveApiResultat | null>(null);
-  const { appelApi: getRmcActe } = useFetchApi(CONFIG_POST_RMC_ARCHIVE);
+  const { appelApi: getRmcActe, enAttenteDeReponseApi: enAttenteRMC } = useFetchApi(CONFIG_POST_RMC_ARCHIVE);
 
   const onSubmitRMCArchive = (valeurs: ICriteresRMC) => {
     StockageLocal.stocker("CRITERES_RMC_ARCHIVE", valeurs);
@@ -61,7 +61,7 @@ const PageRMCArchive: React.FC = () => {
       <RMCContextProvider>
         <RMCArchive onSubmit={onSubmitRMCArchive} />
       </RMCContextProvider>
-      <DefilementAutomatique faireDefiler={Boolean(resultatRMCArchive)} />
+      <DefilementAutomatique faireDefiler={!enAttenteRMC && Boolean(resultatRMCArchive)} />
       {resultatRMCArchive?.resultatRMCActe && resultatRMCArchive.paramsTableauRMCActe && (
         <RMCActeArchiveResultats
           dataRMCActeArchive={resultatRMCArchive.resultatRMCActe}
