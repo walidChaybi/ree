@@ -118,6 +118,12 @@ const ChampsNomSecable: React.FC<IChampsNomSecableProps> = ({
             name={secable.name}
             libelle={secable.libelle}
             disabled={!secablePossible}
+            apresChangement={estNomSecable => {
+              if (!estNomSecable) {
+                setFieldValue(nomPartie1.name, "");
+                setFieldValue(nomPartie2.name, "");
+              }
+            }}
           />
           {afficherInfo && (
             <span
