@@ -1,6 +1,7 @@
 import { CONFIG_GET_METAMODELE_TYPE_MENTION } from "@api/configurations/requete/miseAJour/GetMetamodeleTypeMentionConfigApi";
+import { CONFIG_GET_TYPES_MENTION_PAR_NATURE } from "@api/configurations/requete/miseAJour/GetTypesMentionParNatureConfigApi";
 import { TEXTE_MENTION } from "@composant/formulaire/ConstantesNomsForm";
-import { ITypeMention, TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
+import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { IMetaModeleTypeMentionDto, MetaModeleTypeMention } from "@model/etatcivil/typesMention/MetaModeleTypeMention";
@@ -52,6 +53,7 @@ interface IMentionFormProps {
   setEnCoursDeSaisie: React.Dispatch<React.SetStateAction<boolean>>;
   enCoursDeSaisie: boolean;
   setMentionEnCoursDeSaisie: React.Dispatch<React.SetStateAction<IMentionEnCours | null>>;
+  natureActe?: keyof typeof ENatureActe;
 }
 
 const SCHEMA_VALIDATION_MENTIONS = {
@@ -59,65 +61,27 @@ const SCHEMA_VALIDATION_MENTIONS = {
   texteMention: Yup.string().required("Veuillez saisir le texte de la mention")
 };
 
-const getTypesMentionDisponibles = (natureActe: keyof typeof ENatureActe): ITypeMentionDisponible[] => {
-  const typesMentionDisponibles: ITypeMentionDisponible[] = [];
-  const ajouterTypesMention = (
-    typesMention: ITypeMention[],
-    parents: { parent1: string | null; parent2: string | null },
-    libellesParents: string[] = []
-  ) => {
-    typesMention.forEach(typeMention => {
-      if (!typeMention.estPresentListeDeroulante) {
-        return;
-      }
-
-      typesMentionDisponibles.push({
-        id: typeMention.id,
-        libelle: typeMention.libelle,
-        parents: parents,
-        aideSaisie: typeMention.estSaisieAssistee,
-        affecteAnalyseMarginale: typeMention.affecteAnalyseMarginale,
-        avecEnfants: Boolean(typeMention.sousTypes?.length),
-        libellesEnfants:
-          typeMention.sousTypes?.reduce((libelles: string[], sousType) => {
-            if (sousType.estPresentListeDeroulante) {
-              libelles.push(sousType.libelle);
-              sousType.sousTypes?.forEach(sousSousType => sousSousType.estPresentListeDeroulante && libelles.push(sousSousType.libelle));
-            }
-            return libelles;
-          }, []) ?? [],
-        libellesParents: libellesParents
-      });
-      if (typeMention.sousTypes?.length) {
-        ajouterTypesMention(
-          typeMention.sousTypes,
-          {
-            parent1: parents.parent1 ?? typeMention.id,
-            parent2: parents.parent1 ? typeMention.id : null
-          },
-          [...libellesParents, typeMention.libelle]
-        );
-      }
-    });
-  };
-
-  ajouterTypesMention(TypeMention.getTypeMentionParNatureActe(natureActe), { parent1: null, parent2: null });
-
-  return typesMentionDisponibles;
-};
-
 const formaterTexteMention = (texteMention: string): string =>
   `${texteMention.charAt(0).toUpperCase()}${texteMention.substring(1)}${texteMention.endsWith(".") ? "" : "."}`;
 
 const DEFAUT_CREATION: TMentionForm = { idTypeMention: "", texteMention: "", textesEdites: {}, mentionAffecteAnalyseMarginale: false };
 
-const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeSaisie, setMentionEnCoursDeSaisie, enCoursDeSaisie }) => {
-  const typesMentionDisponibles = useMemo(() => getTypesMentionDisponibles("NAISSANCE"), []);
+const MentionForm: React.FC<IMentionFormProps> = ({
+  infoTitulaire,
+  setEnCoursDeSaisie,
+  setMentionEnCoursDeSaisie,
+  enCoursDeSaisie,
+  natureActe
+}) => {
   const [valeurDefaut, setValeurDefaut] = useState<TMentionForm>({ ...DEFAUT_CREATION });
   const [typeMentionChoisi, setTypeMentionChoisi] = useState<ITypeMentionDisponible | null>(null);
   const [metamodeleTypeMention, setMetamodeleTypeMention] = useState<MetaModeleTypeMention | null>(null);
-  const { appelApi: appelApiGetMetamodeleTypeMention, enAttenteDeReponseApi: enAttenteMetamodele } =
+  const { appelApi: getMetamodeleTypeMention, enAttenteDeReponseApi: enAttenteMetamodele } =
     useFetchApi(CONFIG_GET_METAMODELE_TYPE_MENTION);
+
+  const { appelApi: getTypesMentionParNature } = useFetchApi(CONFIG_GET_TYPES_MENTION_PAR_NATURE);
+  const [typesMentionDisponibles, setTypesMentionDisponibles] = useState<ITypeMentionDisponible[]>();
+
   const [mentionModifiee, setMentionModifiee] = useEventState<IMentionEnCours | null>(EEventState.MODIFIER_MENTION, null);
   const schemaValidation = useMemo(
     () =>
@@ -129,10 +93,35 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
   );
 
   useEffect(() => {
+    if (!natureActe) return;
+
+    getTypesMentionParNature({
+      parametres: {
+        path: {
+          natureActe: natureActe
+        }
+      },
+      apresSucces: typeMentionDtos => {
+        if (!typeMentionDtos.length) {
+          AfficherMessage.erreur("La liste des types mention est vide.");
+          setTypesMentionDisponibles([]);
+          return;
+        }
+
+        const typesMentionDisponibles = TypeMention.genererListeTypesMentionDisponibles(
+          typeMentionDtos.map(typeMentionDto => TypeMention.depuisDto(typeMentionDto))
+        );
+        setTypesMentionDisponibles(typesMentionDisponibles);
+      },
+      apresErreur: erreurs => AfficherMessage.erreur("Erreur lors de la récupération des types mention", { erreurs })
+    });
+  }, [natureActe]);
+
+  useEffect(() => {
     if (!mentionModifiee) return;
 
     const idModifie = mentionModifiee.mention.idTypeMention;
-    const typeMentionModifie = typesMentionDisponibles.find(typeMention => typeMention.id === idModifie) ?? null;
+    const typeMentionModifie = typesMentionDisponibles?.find(typeMention => typeMention.id === idModifie) ?? null;
     if (!typeMentionModifie) return;
 
     setTypeMentionChoisi(typeMentionModifie);
@@ -148,7 +137,7 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
     }
 
     if (typeMentionChoisi?.aideSaisie) {
-      appelApiGetMetamodeleTypeMention({
+      getMetamodeleTypeMention({
         parametres: { path: { idTypeMention: typeMentionChoisi.id } },
         apresSucces: (metamodele: IMetaModeleTypeMentionDto) => {
           const modele = MetaModeleTypeMention.depuisDto(metamodele);
@@ -230,58 +219,63 @@ const MentionForm: React.FC<IMentionFormProps> = ({ infoTitulaire, setEnCoursDeS
       >
         {({ values, initialValues }) => (
           <ConteneurAvecBordure titreEnTete={mentionModifiee ? "Modification d'une mention" : "Ajout d'une mention"}>
-            <Form className="grid gap-9 px-1 pt-3">
-              <ScrollVersErreur />
-              <ChampTypeMention
-                name="idTypeMention"
-                typesMentionDisponibles={typesMentionDisponibles}
-                setIdTypeMentionChoisi={id => setTypeMentionChoisi(typesMentionDisponibles.find(mention => mention.id === id) ?? null)}
-              />
+            {!typesMentionDisponibles ? (
+              <ComposantChargeur />
+            ) : (
+              <Form className="grid gap-9 px-1 pt-3">
+                <ScrollVersErreur />
 
-              {initialValues.idTypeMention && (
-                <>
-                  {enAttenteMetamodele ? (
-                    <ComposantChargeur />
-                  ) : (
-                    <>
-                      {metamodeleTypeMention ? (
-                        <AideALaSaisieMention metamodeleTypeMention={metamodeleTypeMention} />
-                      ) : (
-                        <ChampZoneTexte
-                          libelle="Texte mention"
-                          name={TEXTE_MENTION}
-                          rows={8}
-                          typeRedimensionnement="fixe"
-                        />
-                      )}
-                    </>
-                  )}
+                <ChampTypeMention
+                  name="idTypeMention"
+                  typesMentionDisponibles={typesMentionDisponibles}
+                  setIdTypeMentionChoisi={id => setTypeMentionChoisi(typesMentionDisponibles.find(mention => mention.id === id) ?? null)}
+                />
 
-                  <div className="flex justify-end gap-6">
-                    <Bouton
-                      title="Valider"
-                      disabled={!values.texteMention}
-                      type="submit"
-                    >
-                      {mentionModifiee ? "Modifier mention" : "Ajouter mention"}
-                    </Bouton>
-                    <Bouton
-                      title="Annuler"
-                      styleBouton="secondaire"
-                      onClick={() => {
-                        if (mentionModifiee) {
-                          setMentionModifiee(null);
-                        }
-                        setValeurDefaut({ ...DEFAUT_CREATION });
-                        setTypeMentionChoisi(null);
-                      }}
-                    >
-                      {"Annuler"}
-                    </Bouton>
-                  </div>
-                </>
-              )}
-            </Form>
+                {initialValues.idTypeMention && (
+                  <>
+                    {enAttenteMetamodele ? (
+                      <ComposantChargeur />
+                    ) : (
+                      <>
+                        {metamodeleTypeMention ? (
+                          <AideALaSaisieMention metamodeleTypeMention={metamodeleTypeMention} />
+                        ) : (
+                          <ChampZoneTexte
+                            libelle="Texte mention"
+                            name={TEXTE_MENTION}
+                            rows={8}
+                            typeRedimensionnement="fixe"
+                          />
+                        )}
+                      </>
+                    )}
+
+                    <div className="flex justify-end gap-6">
+                      <Bouton
+                        title="Valider"
+                        disabled={!values.texteMention}
+                        type="submit"
+                      >
+                        {mentionModifiee ? "Modifier mention" : "Ajouter mention"}
+                      </Bouton>
+                      <Bouton
+                        title="Annuler"
+                        styleBouton="secondaire"
+                        onClick={() => {
+                          if (mentionModifiee) {
+                            setMentionModifiee(null);
+                          }
+                          setValeurDefaut({ ...DEFAUT_CREATION });
+                          setTypeMentionChoisi(null);
+                        }}
+                      >
+                        {"Annuler"}
+                      </Bouton>
+                    </div>
+                  </>
+                )}
+              </Form>
+            )}
           </ConteneurAvecBordure>
         )}
       </Formik>

@@ -313,6 +313,7 @@ const PartieFormulaire: React.FC = () => {
                 setEnCoursDeSaisie={setFormulaireMentionEnCoursDeSaisie}
                 enCoursDeSaisie={formulaireMentionEnCoursDeSaisie}
                 setMentionEnCoursDeSaisie={setMentionEnCoursDeSaisie}
+                natureActe={acte?.nature}
               />
             </OngletsContenu>
           )}

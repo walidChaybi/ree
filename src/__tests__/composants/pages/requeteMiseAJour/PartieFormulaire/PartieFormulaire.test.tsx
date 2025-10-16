@@ -3,6 +3,7 @@ import { CONFIG_PUT_MISE_A_JOUR_ANALYSE_MARGINALE } from "@api/configurations/et
 import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
 import CONFIG_GET_FORMULE_INTEGRATION_RECE from "@api/configurations/etatCivil/nomenclature/GetFormuleIntegrationRECEApi";
 import { CONFIG_GET_METAMODELE_TYPE_MENTION } from "@api/configurations/requete/miseAJour/GetMetamodeleTypeMentionConfigApi";
+import { CONFIG_GET_TYPES_MENTION_PAR_NATURE } from "@api/configurations/requete/miseAJour/GetTypesMentionParNatureConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import { TYPE_MENTION } from "@mock/data/NomenclatureTypeMention";
@@ -143,6 +144,14 @@ describe("Tests PartieFormulaire", () => {
       { path: { idTypeMention: ID_TYPE_MENTION } },
       {
         data: MetaModeleAideSaisieMariageEnFrance
+      }
+    );
+
+    MockApi.deployer(
+      CONFIG_GET_TYPES_MENTION_PAR_NATURE,
+      { path: { natureActe: "NAISSANCE" } },
+      {
+        data: TYPE_MENTION
       }
     );
 

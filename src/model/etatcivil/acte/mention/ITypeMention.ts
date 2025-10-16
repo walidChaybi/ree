@@ -1,6 +1,7 @@
 import { ITypeMentionDto } from "@api/configurations/etatCivil/nomenclature/GetTypesMentionConfigApi";
 import { Options } from "@util/Type";
 import { ZERO } from "@util/Utils";
+import { ITypeMentionDisponible } from "../../../../composants/pages/requetesMiseAJour/formulaires/MentionForm";
 import { ENatureActe } from "../../enum/NatureActe";
 import { INatureMention, NATIONALITE, NatureMention } from "../../enum/NatureMention";
 
@@ -19,7 +20,7 @@ export interface ITypeMention {
 export class TypeMention {
   private static liste: ITypeMention[] | null = null;
 
-  private static depuisDto(typeMentionDto: ITypeMentionDto): ITypeMention {
+  public static depuisDto(typeMentionDto: ITypeMentionDto): ITypeMention {
     const natureMention = typeMentionDto.idNatureMention ? NatureMention.depuisId(typeMentionDto.idNatureMention) : null;
     const sousTypes = typeMentionDto.typeMentionEnfantList?.map(dtoEnfant => TypeMention.depuisDto(dtoEnfant)) ?? [];
 
@@ -148,4 +149,51 @@ export class TypeMention {
       typeMention => typeMention.natureMention === NatureMention.depuisCode(NATIONALITE) && typeMention.estSousType
     )?.[ZERO].id;
   }
+
+  public static genererListeTypesMentionDisponibles = (typesMention: ITypeMention[]) => {
+    const typesMentionDisponibles: ITypeMentionDisponible[] = [];
+
+    const ajouterTypesMentionDisponibles = (
+      typesMention: ITypeMention[],
+      parents: { parent1: string | null; parent2: string | null },
+      libellesParents: string[] = []
+    ) => {
+      typesMention.forEach(typeMention => {
+        if (!typeMention.estPresentListeDeroulante) {
+          return;
+        }
+
+        typesMentionDisponibles.push({
+          id: typeMention.id,
+          libelle: typeMention.libelle,
+          parents: parents,
+          aideSaisie: typeMention.estSaisieAssistee,
+          affecteAnalyseMarginale: typeMention.affecteAnalyseMarginale,
+          avecEnfants: Boolean(typeMention.sousTypes?.length),
+          libellesEnfants:
+            typeMention.sousTypes?.reduce((libelles: string[], sousType) => {
+              if (sousType.estPresentListeDeroulante) {
+                libelles.push(sousType.libelle);
+                sousType.sousTypes?.forEach(sousSousType => sousSousType.estPresentListeDeroulante && libelles.push(sousSousType.libelle));
+              }
+              return libelles;
+            }, []) ?? [],
+          libellesParents: libellesParents
+        });
+        if (typeMention.sousTypes?.length) {
+          ajouterTypesMentionDisponibles(
+            typeMention.sousTypes,
+            {
+              parent1: parents.parent1 ?? typeMention.id,
+              parent2: parents.parent1 ? typeMention.id : null
+            },
+            [...libellesParents, typeMention.libelle]
+          );
+        }
+      });
+    };
+    ajouterTypesMentionDisponibles(typesMention, { parent1: null, parent2: null });
+
+    return typesMentionDisponibles;
+  };
 }
