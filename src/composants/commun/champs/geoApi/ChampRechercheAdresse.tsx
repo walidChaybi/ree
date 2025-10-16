@@ -71,7 +71,6 @@ const ChampRechercheAdresse: React.FC<TChampRechercheAdresse> = ({
       <label
         className={`m-0 mb-1 ml-1 block w-fit text-start transition-colors ${enErreur ? "text-rouge" : "text-bleu-sombre"}`}
         htmlFor={name}
-        aria-label={`aria-label-${name}`}
       >
         {libelle}
         {estObligatoire && <span className="ml-1 text-rouge">*</span>}

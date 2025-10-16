@@ -30,7 +30,7 @@ export const LibelleEditable: React.FC<ILibelleEditable> = props => {
           id={`input-creation-${props.libelle ?? props.libelleOrigine}`}
           name={`input-creation-${props.libelle ?? props.libelleOrigine}`}
           title={props.libelle}
-          aria-label={`input-creation-${props.libelle ?? props.libelleOrigine}`}
+          aria-label={props.libelle ?? props.libelleOrigine}
           type="text"
           defaultValue={props.libelle ?? props.libelleOrigine}
           onBlur={e => fermerInputEdition(e.target.value)}

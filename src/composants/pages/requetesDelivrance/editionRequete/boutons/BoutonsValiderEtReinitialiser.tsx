@@ -25,7 +25,6 @@ const BoutonsValiderEtReinitialiser: React.FC<BoutonsValiderEtReinitialiserProps
         type="reset"
         onClick={onReinitialiser}
         disabled={!formik.dirty}
-        aria-label="Réinitialiser"
       >
         Réinitialiser
       </Bouton>
@@ -34,7 +33,6 @@ const BoutonsValiderEtReinitialiser: React.FC<BoutonsValiderEtReinitialiserProps
         className={`${styleBoutonValider === "secondaire" && "hover:bg-bleu hover:text-white"}`}
         type="submit"
         disabled={desactiverBoutonValider || !utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER })}
-        aria-label="Valider"
       >
         Valider
       </Bouton>

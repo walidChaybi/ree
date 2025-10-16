@@ -57,7 +57,7 @@ export const ConfirmationPopin: React.FC<ConfirmationPopinProps> = ({ estOuvert,
                 onClick={bouton.action}
                 color={bouton.color ? bouton.color : "primary"}
                 key={`boutonPopin${idx}`}
-                aria-label={`confirmation ${bouton.label}`}
+                aria-label={`Confirmation ${bouton.label}`}
               >
                 {bouton.label}
               </BoutonDoubleSubmit>

@@ -575,7 +575,6 @@ pays
                               class="flex w-full flex-col text-start"
                             >
                               <label
-                                aria-label="aria-label-titulaire.nomActeEtranger"
                                 class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                                 for="titulaire.nomActeEtranger"
                               >
@@ -632,7 +631,6 @@ pays
                           class="flex w-full flex-col text-start"
                         >
                           <label
-                            aria-label="aria-label-titulaire.nomSouhaite"
                             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                             for="titulaire.nomSouhaite"
                           >
@@ -655,7 +653,6 @@ pays
                           class="flex w-full flex-col text-start"
                         >
                           <label
-                            aria-label="aria-label-titulaire.nomRetenuOEC"
                             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                             for="titulaire.nomRetenuOEC"
                           >
@@ -692,7 +689,6 @@ pays
                             class="flex w-full flex-col text-start  w-full"
                           >
                             <label
-                              aria-label="aria-label-titulaire.prenomsChemin.prenom1"
                               class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                               for="titulaire.prenomsChemin.prenom1"
                             >
@@ -942,7 +938,6 @@ pays
                             class="flex w-full flex-col text-start"
                           >
                             <label
-                              aria-label="aria-label-titulaire.lieuNaissance.ville"
                               class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                               for="titulaire.lieuNaissance.ville"
                             >
@@ -965,7 +960,6 @@ pays
                           class="flex w-full flex-col text-start"
                         >
                           <label
-                            aria-label="aria-label-titulaire.lieuNaissance.region"
                             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                             for="titulaire.lieuNaissance.region"
                           >
@@ -987,7 +981,6 @@ pays
                           class="flex w-full flex-col text-start"
                         >
                           <label
-                            aria-label="aria-label-titulaire.lieuNaissance.pays"
                             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                             for="titulaire.lieuNaissance.pays"
                           >
@@ -1009,7 +1002,6 @@ pays
                           class="flex w-full flex-col text-start"
                         >
                           <label
-                            aria-label="aria-label-titulaire.lieuNaissance.adresse"
                             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                             for="titulaire.lieuNaissance.adresse"
                           >
@@ -1095,7 +1087,6 @@ pays
                           class="flex w-full flex-col text-start"
                         >
                           <label
-                            aria-label="aria-label-parents.parent1.nom"
                             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                             for="parents.parent1.nom"
                           >
@@ -1120,7 +1111,6 @@ pays
                             class="flex w-full flex-col text-start  w-full"
                           >
                             <label
-                              aria-label="aria-label-parents.parent1.prenomsChemin.prenom1"
                               class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                               for="parents.parent1.prenomsChemin.prenom1"
                             >
@@ -1415,7 +1405,6 @@ pays
                                 class="flex w-full flex-col text-start"
                               >
                                 <label
-                                  aria-label="aria-label-parents.parent1.lieuNaissance.ville"
                                   class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                                   for="parents.parent1.lieuNaissance.ville"
                                 >
@@ -1438,7 +1427,6 @@ pays
                               class="flex w-full flex-col text-start"
                             >
                               <label
-                                aria-label="aria-label-parents.parent1.lieuNaissance.etatProvince"
                                 class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                                 for="parents.parent1.lieuNaissance.etatProvince"
                               >
@@ -1461,7 +1449,6 @@ pays
                                 class="flex w-full flex-col text-start"
                               >
                                 <label
-                                  aria-label="aria-label-parents.parent1.lieuNaissance.pays"
                                   class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                                   for="parents.parent1.lieuNaissance.pays"
                                 >
@@ -1657,7 +1644,6 @@ pays
                                   class="flex w-full flex-col text-start"
                                 >
                                   <label
-                                    aria-label="aria-label-parents.parent1.domicile.ville"
                                     class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                                     for="parents.parent1.domicile.ville"
                                   >
@@ -1680,7 +1666,6 @@ pays
                                 class="flex w-full flex-col text-start"
                               >
                                 <label
-                                  aria-label="aria-label-parents.parent1.domicile.etatProvince"
                                   class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                                   for="parents.parent1.domicile.etatProvince"
                                 >
@@ -1703,7 +1688,6 @@ pays
                                   class="flex w-full flex-col text-start"
                                 >
                                   <label
-                                    aria-label="aria-label-parents.parent1.domicile.pays"
                                     class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                                     for="parents.parent1.domicile.pays"
                                   >
@@ -1727,7 +1711,6 @@ pays
                                   class="flex w-full flex-col text-start"
                                 >
                                   <label
-                                    aria-label="aria-label-parents.parent1.domicile.adresse"
                                     class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                                     for="parents.parent1.domicile.adresse"
                                   >
@@ -1770,7 +1753,6 @@ pays
                           class="flex w-full flex-col text-start"
                         >
                           <label
-                            aria-label="aria-label-parents.parent2.nom"
                             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                             for="parents.parent2.nom"
                           >
@@ -1795,7 +1777,6 @@ pays
                             class="flex w-full flex-col text-start  w-full"
                           >
                             <label
-                              aria-label="aria-label-parents.parent2.prenomsChemin.prenom1"
                               class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                               for="parents.parent2.prenomsChemin.prenom1"
                             >
@@ -2359,7 +2340,6 @@ pays
                         class="grid"
                       >
                         <label
-                          aria-label="aria-label-autresEnonciations.enonciations"
                           class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                           for="autresEnonciations.enonciations"
                         >
@@ -2579,7 +2559,6 @@ pays
                             class="flex w-full flex-col text-start"
                           >
                             <label
-                              aria-label="aria-label-acteEtranger.lieuEnregistrement.ville"
                               class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                               for="acteEtranger.lieuEnregistrement.ville"
                             >
@@ -2602,7 +2581,6 @@ pays
                           class="flex w-full flex-col text-start"
                         >
                           <label
-                            aria-label="aria-label-acteEtranger.lieuEnregistrement.etatProvince"
                             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                             for="acteEtranger.lieuEnregistrement.etatProvince"
                           >
@@ -2624,7 +2602,6 @@ pays
                           class="flex w-full flex-col text-start"
                         >
                           <label
-                            aria-label="aria-label-acteEtranger.lieuEnregistrement.pays"
                             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                             for="acteEtranger.lieuEnregistrement.pays"
                           >
@@ -2647,7 +2624,6 @@ pays
                         class="flex w-full flex-col text-start  my-4"
                       >
                         <label
-                          aria-label="aria-label-acteEtranger.redacteur"
                           class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                           for="acteEtranger.redacteur"
                         >
@@ -2669,7 +2645,6 @@ pays
                         class="grid"
                       >
                         <label
-                          aria-label="aria-label-acteEtranger.referenceComplement"
                           class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                           for="acteEtranger.referenceComplement"
                         >
@@ -2741,7 +2716,6 @@ pays
                         class="grid"
                       >
                         <label
-                          aria-label="aria-label-mentions.mentions"
                           class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                           for="mentions.mentions"
                         >
@@ -3058,7 +3032,6 @@ pays
                             class="grid"
                           >
                             <label
-                              aria-label="aria-label-formuleFinale.phraseSignature"
                               class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                               for="formuleFinale.phraseSignature"
                             />

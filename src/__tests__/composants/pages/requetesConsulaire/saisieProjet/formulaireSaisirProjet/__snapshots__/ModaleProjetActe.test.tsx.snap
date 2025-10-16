@@ -62,7 +62,6 @@ exports[`ModaleProjetActe - Tests du composant > DOIT rendre le composant correc
                       class="flex w-full flex-col text-start"
                     >
                       <label
-                        aria-label="aria-label-pin"
                         class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                         for="pin"
                       >

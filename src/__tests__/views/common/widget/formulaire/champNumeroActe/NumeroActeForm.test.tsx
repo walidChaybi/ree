@@ -64,11 +64,11 @@ describe("Test NumeroActeForm", () => {
       estVerrouille: false
     }
   ])(
-    "$libelleTestDebut verrouiller la case à cocher 'A partir de' QUAND le champ 'Numero acte ou d'ordre' $libelleTestFin saisie.",
+    "$libelleTestDebut verrouiller la case à cocher 'A partir de' QUAND le champ 'Numéro acte ou d'ordre' $libelleTestFin saisie.",
     async params => {
       render(<HookNumeroActeForm />);
 
-      const champNumeroActeOuOrdre: HTMLInputElement = screen.getByLabelText("Numero d'acte ou d'ordre");
+      const champNumeroActeOuOrdre: HTMLInputElement = screen.getByLabelText("Numéro d'acte ou d'ordre");
       const caseAPartirDe: HTMLInputElement = screen.getByLabelText("A partir de");
 
       fireEvent.change(champNumeroActeOuOrdre, {

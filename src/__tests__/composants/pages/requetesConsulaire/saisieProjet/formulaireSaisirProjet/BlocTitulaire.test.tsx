@@ -34,7 +34,7 @@ describe("SaisirProjet - BlocTitulaire", () => {
   test("Vérifier valeur des champs", async () => {
     renderComponent();
 
-    const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /titulaire.nomRetenuOEC/i });
+    const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /nom retenu par l'OEC/i });
     await userEvent.type(inputNomRetenuOEC, "Roberto Dos Santos");
     fireEvent.blur(inputNomRetenuOEC);
     await waitFor(() => {
@@ -44,11 +44,11 @@ describe("SaisirProjet - BlocTitulaire", () => {
 
   test("Vérifier la navigation à la tabulation", async () => {
     renderComponent();
-    const inputNomActeEtranger: HTMLInputElement = screen.getByRole("textbox", { name: /titulaire.nomActeEtranger/i });
+    const inputNomActeEtranger: HTMLInputElement = screen.getByRole("textbox", { name: /nom sur l'acte étranger/i });
     const inputNomSouhait: HTMLInputElement = screen.getByLabelText("Nom souhaité");
-    const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /titulaire.nomRetenuOEC/i });
+    const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /nom retenu par l'OEC/i });
     const checkboxSecable = screen.getAllByRole("checkbox")[0] as HTMLInputElement;
-    const inputPrenom: HTMLInputElement = screen.getByRole("textbox", { name: /titulaire.prenomsChemin.prenom1/i });
+    const inputPrenom: HTMLInputElement = screen.getByRole("textbox", { name: /prénom/i });
     const bouttonAjoutPrenom = screen.getByTitle(/Ajouter un prénom/i);
 
     const jourInput: HTMLInputElement = screen.getByPlaceholderText("JJ");
@@ -81,8 +81,8 @@ describe("SaisirProjet - BlocTitulaire", () => {
     });
 
     await userEvent.tab();
-    const inputNomPartie1: HTMLInputElement = screen.getByRole("textbox", { name: /titulaire.nomSecable.nomPartie1/i });
-    const inputNomPartie2: HTMLInputElement = screen.getByRole("textbox", { name: /titulaire.nomSecable.nomPartie2/i });
+    const inputNomPartie1: HTMLInputElement = screen.getByRole("textbox", { name: /nom 1re partie/i });
+    const inputNomPartie2: HTMLInputElement = screen.getByRole("textbox", { name: /nom 2nde partie/i });
     const boutonDéplacerVocable = screen.getByTitle("Déplacer le premier vocable");
 
     await waitFor(() => {

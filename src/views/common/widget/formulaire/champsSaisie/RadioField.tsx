@@ -47,11 +47,13 @@ export const RadioField: React.FC<RadioFieldProps> = ({
     <div className={`InputField ${className}`}>
       <div className="BlockInput">
         <label htmlFor={name}>{label}</label>
-        <div id={name} aria-label={name} className="RadioInput">
+        <div
+          id={name}
+          aria-label={label}
+          className="RadioInput"
+        >
           {values.map((option: Option) => {
-            const nomValeur = `${name}.${option.cle}`
-              .trim()
-              .toLocaleLowerCase();
+            const nomValeur = `${name}.${option.cle}`.trim().toLocaleLowerCase();
             return (
               <span key={nomValeur}>
                 <Field
@@ -59,7 +61,6 @@ export const RadioField: React.FC<RadioFieldProps> = ({
                   id={nomValeur}
                   value={option.cle}
                   name={name}
-                  aria-label={nomValeur}
                   disabled={disabled}
                   title={title}
                   {...otherProps}
@@ -72,7 +73,10 @@ export const RadioField: React.FC<RadioFieldProps> = ({
       </div>
       {!noErrorMessage && (
         <div className="BlockErreur">
-          <ErrorMessage component={IconErrorMessage} name={name} />
+          <ErrorMessage
+            component={IconErrorMessage}
+            name={name}
+          />
         </div>
       )}
     </div>

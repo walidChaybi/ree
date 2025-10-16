@@ -71,7 +71,7 @@ export const ConfirmationPopinAvecMessage: React.FC<ConfirmationPopinAvecMessage
                 onClick={bouton.action}
                 color={bouton.color ? bouton.color : "primary"}
                 key={`boutonPopin${idx}`}
-                aria-label={`confirmation ${bouton.label}`}
+                aria-label={`Confirmation ${bouton.label}`}
                 disabled={bouton.isDisabled && bouton.disabled}
               >
                 {bouton.label}

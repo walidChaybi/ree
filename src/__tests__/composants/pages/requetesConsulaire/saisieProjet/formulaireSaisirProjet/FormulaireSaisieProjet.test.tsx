@@ -123,7 +123,7 @@ describe("Test du composant FormulaireSaiseProjet", async () => {
           </MockSaisieProjetActeContextProvider>
         </MockRECEContextProvider>
       );
-      const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /titulaire.nomRetenuOEC/i });
+      const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /Nom retenu par l'OEC/i });
 
       await userEvent.type(inputNomRetenuOEC, "Xi phun bin");
 
@@ -152,7 +152,7 @@ describe("Test du composant FormulaireSaiseProjet", async () => {
 
       const mockApi = MockApi.getMock();
 
-      const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /titulaire.nomRetenuOEC/i });
+      const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /Nom retenu par l'OEC/i });
       await userEvent.type(inputNomRetenuOEC, "Xi phun bin");
 
       const boutonEnregistrer = screen.getByRole("button", { name: "Enregistrer" });
@@ -187,7 +187,7 @@ describe("Test du composant FormulaireSaiseProjet", async () => {
 
       const mockApi = MockApi.getMock();
 
-      const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /titulaire.nomRetenuOEC/i });
+      const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /Nom retenu par l'OEC/i });
       await userEvent.type(inputNomRetenuOEC, "Xi phun bin");
 
       const boutonTerminerEtSigner = screen.getByRole("button", { name: "Terminer et signer" });
@@ -278,7 +278,7 @@ describe("Test du composant FormulaireSaiseProjet", async () => {
         </MockRECEContextProvider>
       );
 
-      const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /titulaire.nomRetenuOEC/i });
+      const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /Nom retenu par l'OEC/i });
 
       await userEvent.type(inputNomRetenuOEC, "Xi phun bin");
 
@@ -310,7 +310,7 @@ describe("Test du composant FormulaireSaiseProjet", async () => {
         </MockRECEContextProvider>
       );
 
-      const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /titulaire.nomRetenuOEC/i });
+      const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /Nom retenu par l'OEC/i });
 
       await userEvent.type(inputNomRetenuOEC, "Xi phun bin");
 

@@ -168,7 +168,7 @@ describe("Tests PartieFormulaire", () => {
     const typeMention = await screen.findByPlaceholderText("Recherche...");
     await remplirSelectOption(typeMention, option);
 
-    const textarea = await screen.findByRole("textbox", { name: /texteMention/i });
+    const textarea = await screen.findByRole("textbox", { name: /Texte mention/i });
     fireEvent.change(textarea, { target: { value: textMention } });
 
     const ajouterMentionBtn = await screen.findByRole("button", { name: "Ajouter mention" });
@@ -234,9 +234,9 @@ describe("Tests PartieFormulaire", () => {
     await waitFor(() => expect(screen.getByText("LIEU <ÉVÉNEMENT>")).toBeDefined());
 
     // On vérifie le remplissage de l'aide à la saisie
-    const inputVille = screen.getByRole("textbox", { name: /evenementFrance.ville/i });
-    const inputDepartement = screen.getByRole("textbox", { name: /evenementFrance.departement/i });
-    const inputNom = screen.getByRole("textbox", { name: /conjoint.nom/i });
+    const inputVille = screen.getByRole("textbox", { name: /Ville/i });
+    const inputDepartement = screen.getByRole("textbox", { name: /Département/i });
+    const inputNom = screen.getByLabelText("Nom");
     const inputJourEvenement = screen.getByPlaceholderText("JJ");
     const inputMoisEvenement = screen.getByPlaceholderText("MM");
     const inputAnneeEvenement = screen.getByPlaceholderText("AAAA");

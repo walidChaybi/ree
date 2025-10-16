@@ -33,7 +33,6 @@ export const ReinitialiserValiderBoutons: React.FC<IReinitialiserValiderBoutonsP
             type="reset"
             onClick={onClickReInitialiser}
             disabled={reInitialiserDisabled}
-            aria-label="Réinitialiser"
             title={titreBoutons ? `Réinitialiser ${titreBoutons}` : undefined}
           >
             {"Réinitialiser"}
@@ -42,7 +41,6 @@ export const ReinitialiserValiderBoutons: React.FC<IReinitialiserValiderBoutonsP
             type="button"
             onClick={onClickValider}
             disabled={validerDisabled || !utilisateurConnecte.estHabilitePour({ leDroit: Droit.DELIVRER })}
-            aria-label="Valider"
             title={titreBoutons ? `Valider ${titreBoutons}` : undefined}
           >
             {"Valider"}

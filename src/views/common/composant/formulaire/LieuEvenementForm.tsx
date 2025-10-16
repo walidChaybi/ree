@@ -1,34 +1,16 @@
 import { IEvenement } from "@model/etatcivil/acte/IEvenement";
 import { ILieuEvenement } from "@model/etatcivil/commun/ILieuEvenement";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
-import {
-  estRenseigne,
-  executeEnDiffere,
-  getLibelle,
-  getValeurProprieteAPartirChemin
-} from "@util/Utils";
+import { estRenseigne, executeEnDiffere, getLibelle, getValeurProprieteAPartirChemin } from "@util/Utils";
 import { FRANCE, LieuxUtils } from "@utilMetier/LieuxUtils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
-import {
-  FormikComponentProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { FormikComponentProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useCallback, useState } from "react";
-import {
-  ARRONDISSEMENT,
-  ETRANGER_FRANCE,
-  LIEU_COMPLET,
-  PAYS,
-  REGION_DEPARTEMENT,
-  VILLE
-} from "./ConstantesNomsForm";
-import {
-  estModeSaisieFrance as getEstModeSaisieFrance,
-  getLabelOuDepartement
-} from "./LieuEvenementFormUtil";
+import { ARRONDISSEMENT, ETRANGER_FRANCE, LIEU_COMPLET, PAYS, REGION_DEPARTEMENT, VILLE } from "./ConstantesNomsForm";
+import { estModeSaisieFrance as getEstModeSaisieFrance, getLabelOuDepartement } from "./LieuEvenementFormUtil";
 import "./scss/LieuEvenementForm.scss";
 import { valideCompletudeLieu, valideLieuReprise } from "./validation/LieuEvenementFormValidation";
 
@@ -48,15 +30,11 @@ type LieuEvenementFormProps = ComponentFormProps & FormikComponentProps;
  * - Un événement en France: affichage ville/arrondissement/département
  * - Radios boutons Etranger/France pour basculer d'un affichage à l'autre si props.gestionEtrangerFrance = true
  *
- */ 
+ */
 const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
   const [decomposerLieu, setDecomposerLieu] = useState(false);
   const [estModeSaisieFrance, setEstModeSaisieFrance] = useState<boolean>(
-    getEstModeSaisieFrance(
-      props.evenement?.ville,
-      props.evenement?.pays,
-      props.etrangerParDefaut
-    )
+    getEstModeSaisieFrance(props.evenement?.ville, props.evenement?.pays, props.etrangerParDefaut)
   );
 
   const nomVille = withNamespace(props.nom, VILLE);
@@ -68,9 +46,7 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
 
   const lieuCompletRenseigne = estRenseigne(props.evenement?.lieuReprise);
   const modeSaisiLieuInconnu =
-    props.formik.getFieldProps(nomEtrangerFrance).value ===
-      EtrangerFrance.getKey(EtrangerFrance.INCONNU) &&
-    props.gestionEtrangerFrance;
+    props.formik.getFieldProps(nomEtrangerFrance).value === EtrangerFrance.getKey(EtrangerFrance.INCONNU) && props.gestionEtrangerFrance;
 
   const majLieuComplet = useCallback(
     (lieu: ILieuEvenement, modeFrance: boolean) => {
@@ -81,12 +57,7 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
       }
       props.formik.setFieldValue(
         nomLieuComplet,
-        LieuxUtils.getLocalisationEtrangerOuFrance(
-          lieuPourMaj.ville,
-          lieuPourMaj.region,
-          lieuPourMaj.pays,
-          lieuPourMaj.arrondissement
-        )
+        LieuxUtils.getLocalisationEtrangerOuFrance(lieuPourMaj.ville, lieuPourMaj.region, lieuPourMaj.pays, lieuPourMaj.arrondissement)
       );
     },
     [nomLieuComplet, props.formik]
@@ -99,13 +70,7 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
       pays: props.formik.getFieldProps(nomPays).value,
       arrondissement: props.formik.getFieldProps(nomArrondissement).value
     } as ILieuEvenement;
-  }, [
-    nomArrondissement,
-    nomPays,
-    nomRegionDepartement,
-    nomVille,
-    props.formik
-  ]);
+  }, [nomArrondissement, nomPays, nomRegionDepartement, nomVille, props.formik]);
 
   const onClickDecomposer = useCallback(() => {
     setDecomposerLieu(true);
@@ -115,13 +80,7 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
     } else {
       props.formik.setFieldValue(nomLieuComplet, "");
     }
-    props.formik.setFieldValue(
-      nomEtrangerFrance,
-      LieuxUtils.getEtrangerOuFranceOuInconnuEnMajuscule(
-        evt,
-        props.etrangerParDefaut
-      )
-    );
+    props.formik.setFieldValue(nomEtrangerFrance, LieuxUtils.getEtrangerOuFranceOuInconnuEnMajuscule(evt, props.etrangerParDefaut));
 
     // Force la validatin du champs lieu en différé car il faut le temps de mettre sa valeur à jour (cf. majLieuComplet)
     executeEnDiffere(() => props.formik.validateField(nomLieuComplet));
@@ -157,15 +116,7 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
       majLieuComplet(lieuEvt, estModeSaisieFrance);
       props.formik.handleChange(e);
     },
-    [
-      creerEvenementAPartirDeLaSaisie,
-      majLieuComplet,
-      estModeSaisieFrance,
-      nomPays,
-      nomRegionDepartement,
-      nomVille,
-      props.formik
-    ]
+    [creerEvenementAPartirDeLaSaisie, majLieuComplet, estModeSaisieFrance, nomPays, nomRegionDepartement, nomVille, props.formik]
   );
 
   const onChangeArrondissement = useCallback(
@@ -176,21 +127,14 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
       majLieuComplet(lieuEvt, estModeSaisieFrance);
       props.formik.handleChange(e);
     },
-    [
-      creerEvenementAPartirDeLaSaisie,
-      majLieuComplet,
-      estModeSaisieFrance,
-      props.formik
-    ]
+    [creerEvenementAPartirDeLaSaisie, majLieuComplet, estModeSaisieFrance, props.formik]
   );
 
   const onChangeRadioEtrangerFranceInconnu = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const evt = creerEvenementAPartirDeLaSaisie();
-      const estModeFrance =
-        e.target.value === EtrangerFrance.getKey(EtrangerFrance.FRANCE);
-      const estModeInconnu =
-        e.target.value === EtrangerFrance.getKey(EtrangerFrance.INCONNU);
+      const estModeFrance = e.target.value === EtrangerFrance.getKey(EtrangerFrance.FRANCE);
+      const estModeInconnu = e.target.value === EtrangerFrance.getKey(EtrangerFrance.INCONNU);
       setEstModeSaisieFrance(estModeFrance);
       if (estModeFrance) {
         majLieuComplet(evt, estModeFrance);
@@ -202,13 +146,7 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
       props.formik.setFieldValue(nomPays, evt.pays);
       props.formik.handleChange(e);
     },
-    [
-      creerEvenementAPartirDeLaSaisie,
-      majLieuComplet,
-      nomLieuComplet,
-      nomPays,
-      props.formik
-    ]
+    [creerEvenementAPartirDeLaSaisie, majLieuComplet, nomLieuComplet, nomPays, props.formik]
   );
 
   return (
@@ -219,13 +157,7 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
           name={nomLieuComplet}
           disabled={decomposerLieuActifOuPasDeLieuRepriseRenseigne()}
           validate={
-            props.validation
-              ? (value: string) =>
-                  valideLieuReprise(
-                    value,
-                    !decomposerLieuActifOuPasDeLieuRepriseRenseigne()
-                  )
-              : undefined
+            props.validation ? (value: string) => valideLieuReprise(value, !decomposerLieuActifOuPasDeLieuRepriseRenseigne()) : undefined
           }
         />
         {lieuCompletRenseigne && (
@@ -233,22 +165,21 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
             type="button"
             onClick={onClickDecomposer}
             disabled={decomposerLieu}
-            aria-label="décomposer le lieu"
+            aria-label="Décomposer le lieu"
           >
-            {getLibelle("Décomposer")}
+            {"Décomposer"}
           </button>
         )}
       </div>
 
-      {props.gestionEtrangerFrance &&
-        decomposerLieuActifOuPasDeLieuRepriseRenseigne() && (
-          <RadioField
-            name={nomEtrangerFrance}
-            label={getLibelle("")}
-            values={EtrangerFrance.getAllEnumsAsOptions()}
-            onChange={onChangeRadioEtrangerFranceInconnu}
-          />
-        )}
+      {props.gestionEtrangerFrance && decomposerLieuActifOuPasDeLieuRepriseRenseigne() && (
+        <RadioField
+          name={nomEtrangerFrance}
+          label=""
+          values={EtrangerFrance.getAllEnumsAsOptions()}
+          onChange={onChangeRadioEtrangerFranceInconnu}
+        />
+      )}
 
       {affichageVilleRegionPays() && (
         <>
@@ -258,19 +189,14 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
             onChange={onChangeVilleRegionPays}
             validate={getFonctionValidation(VILLE)}
           />
-          {estModeSaisieFrance &&
-            LieuxUtils.estVilleAvecArrondissement(
-              props.formik.getFieldProps(nomVille).value
-            ) && (
-              <SelectField
-                name={nomArrondissement}
-                label={getLibelle("Arrondissement")}
-                options={LieuxUtils.getOptionsArrondissement(
-                  props.formik.getFieldProps(nomVille).value
-                )}
-                onChange={onChangeArrondissement}
-              />
-            )}
+          {estModeSaisieFrance && LieuxUtils.estVilleAvecArrondissement(props.formik.getFieldProps(nomVille).value) && (
+            <SelectField
+              name={nomArrondissement}
+              label={getLibelle("Arrondissement")}
+              options={LieuxUtils.getOptionsArrondissement(props.formik.getFieldProps(nomVille).value)}
+              onChange={onChangeArrondissement}
+            />
+          )}
           <InputField
             name={nomRegionDepartement}
             label={getLabelOuDepartement(estModeSaisieFrance)}
@@ -292,14 +218,7 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
 
   function getFonctionValidation(nomChamp: string) {
     return props.validation
-      ? (value: string) =>
-          valideCompletudeLieu(
-            props.formik,
-            nomChamp,
-            value,
-            props.nom,
-            modeSaisiLieuInconnu
-          )
+      ? (value: string) => valideCompletudeLieu(props.formik, nomChamp, value, props.nom, modeSaisiLieuInconnu)
       : undefined;
   }
 
@@ -316,10 +235,7 @@ const LieuEvenementForm: React.FC<LieuEvenementFormProps> = props => {
     // Mise à jour de la propriété "villeEstAffichee" sans passer par Formik pour ne pas positionner le flag dirty à true
     // On a besoin de de positionner cette propriété pour le mapping (cf. mappingFormulaireSaisirExtraitVersExtraitAEnvoyer.ts)
     //   mais sans que pour autant le formulaire soit dirty
-    const lieuEvenementForm: any = getValeurProprieteAPartirChemin(
-      props.nom,
-      props.formik.values
-    );
+    const lieuEvenementForm: any = getValeurProprieteAPartirChemin(props.nom, props.formik.values);
     if (lieuEvenementForm) {
       lieuEvenementForm.villeEstAffichee = afficheVilleRegionPays;
     }

@@ -64,12 +64,15 @@ export const InputField: React.FC<InputFieldProps> = ({
     <div className="InputField">
       <div className="BlockInput">
         {label !== undefined && label !== null && (
-          <label className="label" htmlFor={name}>
+          <label
+            className="label"
+            htmlFor={name}
+          >
             {label}
           </label>
         )}
         <Field
-          aria-label={`${ariaLabel || name}`}
+          aria-label={`${ariaLabel ?? label ?? name}`}
           component={component}
           name={name}
           id={name}
@@ -87,7 +90,10 @@ export const InputField: React.FC<InputFieldProps> = ({
       </div>
       {!noErrorMessage && (
         <div className="BlockErreur">
-          <ErrorMessage component={IconErrorMessage} name={name} />
+          <ErrorMessage
+            component={IconErrorMessage}
+            name={name}
+          />
         </div>
       )}
     </div>

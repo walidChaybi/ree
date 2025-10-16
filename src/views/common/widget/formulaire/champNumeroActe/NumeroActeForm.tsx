@@ -1,6 +1,5 @@
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { getLibelle } from "@util/Utils";
 import { connect, Field } from "formik";
 import { digitSeulement, traiteCarAutorises } from "../utils/ControlesUtil";
 import { ComponentFiltreProps, FormikComponentProps, onBlurChampNumero, withNamespace } from "../utils/FormUtil";
@@ -35,7 +34,7 @@ const NumeroActeForm: React.FC<NumeroActeFormProps & FormikComponentProps> = pro
 
   const caseACocherAPartirDe = (
     <Checkbox
-      inputProps={{ "aria-label": getLibelle("A partir de") }}
+      inputProps={{ "aria-label": "A partir de" }}
       name={nomChampAPartirDe}
       checked={props.formik.getFieldProps(nomChampAPartirDe).value}
       disabled={!props.formik.getFieldProps(nomChampNumeroActeOuOrdre).value}
@@ -46,13 +45,13 @@ const NumeroActeForm: React.FC<NumeroActeFormProps & FormikComponentProps> = pro
   return (
     <div className="InputField">
       <div className="BlockInput TroisInputs">
-        <label htmlFor={nomChampNumeroActeOuOrdre}>{getLibelle("N° d'acte / N° d'ordre")}</label>
+        <label htmlFor={nomChampNumeroActeOuOrdre}>{"N° d'acte / N° d'ordre"}</label>
         <Field
           component="input"
           name={nomChampNumeroActeOuOrdre}
           id={nomChampNumeroActeOuOrdre}
-          aria-label={getLibelle("Numero d'acte ou d'ordre")}
-          placeholder={getLibelle("N° d'acte ou d'ordre")}
+          aria-label={"Numéro d'acte ou d'ordre"}
+          placeholder={"N° d'acte ou d'ordre"}
           onBlur={(e: React.ChangeEvent<HTMLInputElement>) => onBlurChampNumero(e, props.formik)}
           onInput={onInputNumeroActeOuOrdre}
         />
@@ -60,13 +59,13 @@ const NumeroActeForm: React.FC<NumeroActeFormProps & FormikComponentProps> = pro
           component="input"
           name={nomChampNumeroBisTer}
           id={nomChampNumeroBisTer}
-          aria-label={getLibelle("Numero BisTer")}
-          placeholder={getLibelle("N° BisTer")}
+          aria-label={"Numéro BisTer"}
+          placeholder={"N° BisTer"}
           disabled={props.estInactifChampNumeroBisTer}
         />
         <FormControlLabel
           control={caseACocherAPartirDe}
-          label={getLibelle("A partir de")}
+          label={"À partir de"}
         />
       </div>
     </div>

@@ -30,12 +30,12 @@ const ChampDoubleTexte: React.FC<IDoubleTexteProps> = ({ proprietesPremierChamp,
         {[
           { proprietes: proprietesPremierChamp, field: fieldPremierChamp },
           { proprietes: proprietesSecondChamp, field: fieldSecondChamp }
-        ].map(champ => {
+        ].map((champ, index) => {
           return (
             <input
               id={champ.proprietes.name}
               key={champ.proprietes.name}
-              aria-label={champ.proprietes.name}
+              aria-label={champ.proprietes.placeholder ?? `${libelle} ${index + 1}`}
               className={`border-1 flex w-auto flex-grow rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
               {...champ.field}
               {...champ.proprietes}

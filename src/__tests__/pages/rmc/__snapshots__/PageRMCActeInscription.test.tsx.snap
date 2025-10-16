@@ -67,7 +67,6 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                       class="flex w-full flex-col text-start"
                     >
                       <label
-                        aria-label="aria-label-titulaire.nom"
                         class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                         for="titulaire.nom"
                       >
@@ -133,7 +132,6 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                     class="flex w-full flex-col text-start"
                   >
                     <label
-                      aria-label="aria-label-titulaire.prenom"
                       class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                       for="titulaire.prenom"
                     >
@@ -240,7 +238,6 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                     class="flex w-full flex-col text-start"
                   >
                     <label
-                      aria-label="aria-label-titulaire.paysNaissance"
                       class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                       for="titulaire.paysNaissance"
                     >
@@ -374,7 +371,6 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                     class="flex w-full flex-col text-start"
                   >
                     <label
-                      aria-label="aria-label-evenement.paysEvenement"
                       class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                       for="evenement.paysEvenement"
                     >
@@ -704,7 +700,6 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                       class="flex w-full flex-col text-start"
                     >
                       <label
-                        aria-label="aria-label-acte.anneeRegistre"
                         class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                         for="acte.anneeRegistre"
                       >
@@ -737,14 +732,14 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                         class="grid grid-cols-2 gap-3 rounded-md shadow-sm"
                       >
                         <input
-                          aria-label="acte.registreSupport.support1"
+                          aria-label="Registre (support) 1"
                           class="border-1 flex w-auto flex-grow rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                           id="acte.registreSupport.support1"
                           name="acte.registreSupport.support1"
                           value=""
                         />
                         <input
-                          aria-label="acte.registreSupport.support2"
+                          aria-label="Registre (support) 2"
                           class="border-1 flex w-auto flex-grow rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                           id="acte.registreSupport.support2"
                           name="acte.registreSupport.support2"
@@ -767,14 +762,14 @@ exports[`Le formulaire s'affiche correctement 1`] = `
                         class="grid grid-cols-2 gap-3 rounded-md shadow-sm"
                       >
                         <input
-                          aria-label="acte.numeroActe.numeroActe"
+                          aria-label="N° d'acte 1"
                           class="border-1 flex w-auto flex-grow rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                           id="acte.numeroActe.numeroActe"
                           name="acte.numeroActe.numeroActe"
                           value=""
                         />
                         <input
-                          aria-label="acte.numeroActe.numeroBisTer"
+                          aria-label="N° Bis"
                           class="border-1 flex w-auto flex-grow rounded border border-solid px-2 py-1 transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                           id="acte.numeroActe.numeroBisTer"
                           name="acte.numeroActe.numeroBisTer"

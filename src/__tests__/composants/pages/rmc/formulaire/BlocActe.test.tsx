@@ -54,11 +54,11 @@ describe("RMC - BlocActe", () => {
       name: /Nature de l'acte/i
     });
 
-    const inputAnnee: HTMLInputElement = screen.getByRole("textbox", { name: /annee/i });
-    const inputSupportUn: HTMLInputElement = screen.getByLabelText("acte.registreSupport.support1");
-    const inputSupportDeux: HTMLInputElement = screen.getByLabelText("acte.registreSupport.support2");
-    const inputNumeroActe: HTMLInputElement = screen.getByLabelText("acte.numeroActe.numeroActe");
-    const inputNumeroBisTer: HTMLInputElement = screen.getByLabelText("acte.numeroActe.numeroBisTer");
+    const inputAnnee: HTMLInputElement = screen.getByRole("textbox", { name: /Année/i });
+    const inputSupportUn: HTMLInputElement = screen.getByLabelText("Registre (support) 1");
+    const inputSupportDeux: HTMLInputElement = screen.getByLabelText("Registre (support) 2");
+    const inputNumeroActe: HTMLInputElement = screen.getByLabelText("N° d'acte");
+    const inputNumeroBisTer: HTMLInputElement = screen.getByLabelText("N° Bis");
     const checkBoxActesSuivants: HTMLInputElement = screen.getByRole("checkbox", { name: /actes suivants/i });
 
     // changement des valeurs
@@ -105,7 +105,7 @@ describe("RMC - BlocActe", () => {
       name: /Famille de registre/i
     });
 
-    const inputSupportDeux: HTMLInputElement = screen.getByLabelText("acte.registreSupport.support2");
+    const inputSupportDeux: HTMLInputElement = screen.getByLabelText("Registre (support) 2");
 
     fireEvent.change(selectFamilleDeRegistre, { target: { value: "CSL" } });
 
@@ -122,7 +122,7 @@ describe("RMC - BlocActe", () => {
       name: /Famille de registre/i
     });
 
-    const inputSupportDeux: HTMLInputElement = screen.getByLabelText("acte.registreSupport.support2");
+    const inputSupportDeux: HTMLInputElement = screen.getByLabelText("Registre (support) 2");
 
     fireEvent.change(selectFamilleDeRegistre, { target: { value: "DEP" } });
 
@@ -139,7 +139,7 @@ describe("RMC - BlocActe", () => {
       name: /Famille de registre/i
     });
 
-    const inputSupportDeux: HTMLInputElement = screen.getByLabelText("acte.registreSupport.support2");
+    const inputSupportDeux: HTMLInputElement = screen.getByLabelText("Registre (support) 2");
 
     fireEvent.change(selectFamilleDeRegistre, { target: { value: "AR2" } });
 
@@ -156,7 +156,7 @@ describe("RMC - BlocActe", () => {
       name: /Famille de registre/i
     });
 
-    const inputSupportDeux: HTMLInputElement = screen.getByLabelText("acte.registreSupport.support2");
+    const inputSupportDeux: HTMLInputElement = screen.getByLabelText("Registre (support) 2");
 
     fireEvent.change(selectFamilleDeRegistre, { target: { value: "AR3" } });
 
@@ -173,7 +173,7 @@ describe("RMC - BlocActe", () => {
       name: /Famille de registre/i
     });
 
-    const inputSupportDeux: HTMLInputElement = screen.getByLabelText("acte.registreSupport.support2");
+    const inputSupportDeux: HTMLInputElement = screen.getByLabelText("Registre (support) 2");
 
     fireEvent.change(selectFamilleDeRegistre, { target: { value: "JUG" } });
 
@@ -190,7 +190,7 @@ describe("RMC - BlocActe", () => {
       name: /Famille de registre/i
     });
 
-    const inputSupportDeux: HTMLInputElement = screen.getByLabelText("acte.registreSupport.support2");
+    const inputSupportDeux: HTMLInputElement = screen.getByLabelText("Registre (support) 2");
 
     fireEvent.change(selectFamilleDeRegistre, { target: { value: "MAR" } });
 
@@ -207,9 +207,9 @@ describe("RMC - BlocActe", () => {
       name: /Famille de registre/i
     });
 
-    const inputAnnee: HTMLInputElement = screen.getByRole("textbox", { name: /annee/i });
+    const inputAnnee: HTMLInputElement = screen.getByRole("textbox", { name: /Année/i });
     const inputPocopa: HTMLInputElement = screen.getByRole("combobox", { name: /type/i });
-    const inputSupportDeux: HTMLInputElement = screen.getByLabelText("acte.registreSupport.support2");
+    const inputSupportDeux: HTMLInputElement = screen.getByLabelText("Registre (support) 2");
 
     fireEvent.change(selectFamilleDeRegistre, { target: { value: "OP2" } });
 
@@ -228,9 +228,9 @@ describe("RMC - BlocActe", () => {
       name: /Famille de registre/i
     });
 
-    const inputAnnee: HTMLInputElement = screen.getByRole("textbox", { name: /annee/i });
+    const inputAnnee: HTMLInputElement = screen.getByRole("textbox", { name: /Année/i });
     const inputPocopa: HTMLInputElement = screen.getByRole("combobox", { name: /type/i });
-    const inputSupportDeux: HTMLInputElement = screen.getByLabelText("acte.registreSupport.support2");
+    const inputSupportDeux: HTMLInputElement = screen.getByLabelText("Registre (support) 2");
 
     fireEvent.change(selectFamilleDeRegistre, { target: { value: "OP3" } });
 
@@ -254,9 +254,9 @@ describe("RMC - BlocActe", () => {
     });
 
     const inputPocopa: HTMLInputElement = screen.getByRole("combobox", { name: /type/i });
-    const inputSupportUn: HTMLInputElement = screen.getByLabelText("acte.registreSupport.support1");
-    const inputSupportDeux: HTMLInputElement = screen.getByLabelText("acte.registreSupport.support2");
-    const inputNumeroBis: HTMLInputElement = screen.getByLabelText("acte.numeroActe.numeroBisTer");
+    const inputSupportUn: HTMLInputElement = screen.getByLabelText("Registre (support) 1");
+    const inputSupportDeux: HTMLInputElement = screen.getByLabelText("Registre (support) 2");
+    const inputNumeroBis: HTMLInputElement = screen.getByLabelText("N° Bis");
 
     fireEvent.change(selectFamilleDeRegistre, { target: { value: "CPN" } });
 

@@ -26,7 +26,6 @@ exports[`Tests du formulaire AnalyseMarginaleFormulaire > Doit afficher le formu
                     class="flex w-full flex-col text-start"
                   >
                     <label
-                      aria-label="aria-label-nom"
                       class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                       for="nom"
                     >
@@ -89,7 +88,6 @@ exports[`Tests du formulaire AnalyseMarginaleFormulaire > Doit afficher le formu
                 class="flex w-full flex-col text-start  w-full"
               >
                 <label
-                  aria-label="aria-label-prenoms.prenom1"
                   class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                   for="prenoms.prenom1"
                 >
@@ -151,7 +149,6 @@ exports[`Tests du formulaire AnalyseMarginaleFormulaire > Doit afficher le formu
                   class="flex w-full flex-col text-start  w-full"
                 >
                   <label
-                    aria-label="aria-label-prenoms.prenom2"
                     class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                     for="prenoms.prenom2"
                   >
@@ -201,7 +198,6 @@ exports[`Tests du formulaire AnalyseMarginaleFormulaire > Doit afficher le formu
                   class="flex w-full flex-col text-start  w-full"
                 >
                   <label
-                    aria-label="aria-label-prenoms.prenom3"
                     class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                     for="prenoms.prenom3"
                   >
@@ -251,7 +247,6 @@ exports[`Tests du formulaire AnalyseMarginaleFormulaire > Doit afficher le formu
               class="flex w-full flex-col text-start  champs-motif"
             >
               <label
-                aria-label="aria-label-motif"
                 class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                 for="motif"
               >
