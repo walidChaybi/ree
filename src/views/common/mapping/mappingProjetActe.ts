@@ -1,5 +1,4 @@
 import { IAdresse } from "@model/etatcivil/acte/IAdresse";
-import { ICorpsExtraitRectification } from "@model/etatcivil/acte/ICorpsExtraitRectification";
 import { ICorpsTexte } from "@model/etatcivil/acte/ICorpsTexte";
 import { IDeclarant } from "@model/etatcivil/acte/IDeclarant";
 import { IDecretNaturalisation } from "@model/etatcivil/acte/IDecretNaturalisation";
@@ -11,7 +10,6 @@ import { IFiliationProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { ITitulaireProjetActe } from "@model/etatcivil/acte/projetActe/ITitulaireProjetActe";
 import { IAutresNoms } from "@model/etatcivil/commun/AutresNoms";
-import { IFamille } from "@model/etatcivil/commun/IFamille";
 import { IFicheLien } from "@model/etatcivil/commun/IFicheLien";
 import { IFicheLienActes } from "@model/etatcivil/commun/IFicheLienActes";
 import { ILieuEvenement } from "@model/etatcivil/commun/ILieuEvenement";
@@ -40,7 +38,6 @@ export function mappingProjetActe(data: any): IProjetActe {
     analyseMarginales: mapAnalyseMarginales(data.analyseMarginales),
     corpsTexte: mapCorpsTexte(data.corpsTexte),
     type: getValeurOuUndefined(data.type),
-    corpsExtraitRectifications: mapCorpsExtraitRectification(data.corpsExtraitRectifications),
     mentions: (data.mentions as IMentionDto[]).map(Mention.depuisDto).filter((mention): mention is Mention => mention !== null),
     declarant: mapDeclarant(data.declarant),
     numeroDossierNational: getValeurOuUndefined(data.numeroDossierNational),
@@ -144,8 +141,6 @@ function mapPersonnes(personnes?: any[]): IPersonne[] {
       dateDeces: mapDateEvenement(personne.dateDeces),
       lieuDeces: mapLieuEvenement(personne.lieuDeces),
       sexe: getValeurOuUndefined(personne.sexe),
-      parents: mapFamille(personne.parents),
-      enfants: mapFamille(personne.enfants),
       actes: mapFicheLienActes(personne.actes),
       pacss: mapFicheLien(personne.pacss),
       rcs: mapFicheLien(personne.rcs),
@@ -178,13 +173,6 @@ function mapDateEvenement(evenement: any): IDateCompose {
   };
 }
 
-function mapFamille(familles: any[]): IFamille[] {
-  return familles.map(famille => ({
-    nom: getValeurOuUndefined(famille.nom),
-    prenoms: getValeurOuUndefined(famille.prenoms)
-  }));
-}
-
 function mapFicheLienActes(ficheLienActes: any[]): IFicheLienActes[] {
   return ficheLienActes.map(ficheLienActe => ({
     numero: getValeurOuUndefined(ficheLienActe.numero),
@@ -209,10 +197,6 @@ function mapAnalyseMarginales(projetsAnalyseMarginale: any[]): IProjetAnalyseMar
 
 function mapCorpsTexte(corpsTexte: any): ICorpsTexte {
   return corpsTexte;
-}
-
-function mapCorpsExtraitRectification(corpsExtraitRectification: any[]): ICorpsExtraitRectification[] {
-  return corpsExtraitRectification;
 }
 
 function mapDeclarant(declarant: any): IDeclarant {

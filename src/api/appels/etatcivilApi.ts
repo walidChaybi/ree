@@ -6,7 +6,7 @@ import { IDerniereDelivranceRcRcaPacsParams } from "@hook/repertoires/DerniereDe
 import { TModeAuthentification } from "@model/agent/types";
 import { IActeInscriptionSauvegardeDto } from "@model/etatcivil/acte/IActeInscriptionSauvegardeDto";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
-import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
+import { ETypeExtrait } from "@model/etatcivil/enum/ETypeExtrait";
 import { IRMCAutoPersonneRequest } from "@model/rmc/personne/IRMCAutoPersonneRequest";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import { EStatutMention } from "../../model/etatcivil/enum/EStatutMention";
@@ -168,12 +168,12 @@ export async function postMentions(idActe: string, mentions: IMentionMiseAJourDt
   );
 }
 
-export async function postCorpsTexte(idActe: string, corpsExtrait: string, type: TypeExtrait): Promise<any> {
+export async function postCorpsTexte(idActe: string, corpsExtrait: string, type: keyof typeof ETypeExtrait): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.POST,
       uri: `${URL_ACTE}/${idActe}${URL_CORPS_TEXTE}`,
-      parameters: { type: type.nom },
+      parameters: { type },
       data: { corpsExtrait }
     })
   );

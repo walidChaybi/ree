@@ -1,11 +1,9 @@
-import { IFamille } from "@model/etatcivil/commun/IFamille";
 import { IFicheLien } from "@model/etatcivil/commun/IFicheLien";
 import { IFicheLienActes } from "@model/etatcivil/commun/IFicheLienActes";
 import { Personne } from "@model/etatcivil/commun/Personne";
 import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { ENationalite } from "@model/etatcivil/enum/Nationalite";
 import { ESexe } from "@model/etatcivil/enum/Sexe";
-import { remplaceSNP, remplaceSPC } from "@util/Utils";
 import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
@@ -45,9 +43,6 @@ function getPanelAreasFichesPersonnes(personne: Personne): SectionPanelAreaProps
       parts: [
         getInformationsPersonne(personne),
         {
-          subParts: [getInformationsParents(personne), getInformationsEnfants(personne)]
-        },
-        {
           subParts: [getInformationsListeActes(personne), getInformationsListeInscriptions(personne)]
         }
       ],
@@ -67,20 +62,6 @@ function getInformationsListeActes(personne: Personne): SectionPartContentProps 
   return {
     contents: [getActesPersonne(personne.actes)],
     title: "Liste d'actes"
-  };
-}
-
-function getInformationsParents(personne: Personne): SectionPartContentProps {
-  return {
-    contents: [...getParentsPersonne(personne.parents)],
-    title: "Parents"
-  };
-}
-
-function getInformationsEnfants(personne: Personne): SectionPartContentProps {
-  return {
-    contents: [getEnfantsPersonne(personne.enfants)],
-    title: "Enfants"
   };
 }
 
@@ -171,46 +152,6 @@ function getSexePersonne(sexe: string): SectionContentProps {
   return {
     libelle: "Sexe",
     value: sexe
-  };
-}
-
-function getParentsPersonne(parents: IFamille[]): SectionContentProps[] {
-  let result: SectionContentProps[] = [];
-  const indexPremierParentAdoptif = 2;
-  const indexDeuxiemeParentAdoptif = 3;
-
-  parents?.forEach((parent, index) => {
-    if (index === 0 || index === 1) {
-      result = result.concat([
-        {
-          libelle: `Nom parent ${index + 1}`,
-          value: parent.nom
-        },
-        {
-          libelle: `Prénom parent ${index + 1}`,
-          value: remplaceSPC(parent.prenoms[0])
-        }
-      ]);
-    } else if (index === indexPremierParentAdoptif || index === indexDeuxiemeParentAdoptif) {
-      result = result.concat([
-        {
-          libelle: `Prénom et nom (parent adoptif ${index - 1})`,
-          value: `${remplaceSPC(parent.prenoms[0])} ${remplaceSNP(parent.nom)}`
-        }
-      ]);
-    }
-  });
-  return result;
-}
-
-function getEnfantsPersonne(enfants: IFamille[]): SectionContentProps {
-  const enfantsHtml = enfants?.map(enfant => {
-    return <p key={`enfant-${enfant.nom}-${enfant.prenoms}`}>{`${remplaceSNP(enfant.nom)} ${remplaceSPC(enfant.prenoms[0])}`}</p>;
-  });
-
-  return {
-    value: enfantsHtml,
-    className: "contentDownside"
   };
 }
 

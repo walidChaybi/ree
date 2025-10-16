@@ -1,7 +1,6 @@
 import { IModifierCorpsExtraitParams, useModifierCorpsExtrait } from "@hook/acte/ModifierCorpsExtraitApiHook";
 import { creationCompositionExtraitCopieActeTexte } from "@hook/generation/generationECHook/creationComposition/creationCompositionExtraitCopieActeTexte";
 import { IGenerationECParams, useGenerationEC } from "@hook/generation/generationECHook/generationECHook";
-import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { EValidation } from "@model/requete/enum/EValidation";
@@ -71,8 +70,8 @@ const ModifierCorpsExtrait: React.FC<IModifierCorpsExtraitProps> = ({ documentRe
             idActe: acte?.id ?? "",
             corpsTexteModifie: values.corpsTexte,
             type: DocumentDelivrance.estExtraitAvecFilliation(documentReponse.typeDocument)
-              ? TypeExtrait.EXTRAIT_AVEC_FILIATION
-              : TypeExtrait.EXTRAIT_SANS_FILIATION
+              ? "EXTRAIT_AVEC_FILIATION"
+              : "EXTRAIT_SANS_FILIATION"
           });
         }}
       >

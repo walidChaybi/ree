@@ -161,7 +161,7 @@ describe("test FicheRcRca", () => {
 
   describe("test commePanelAccordionReceSection", () => {
     test("QUAND on utilise une fiche RC", () => {
-      const panels = (FicheRcRca.RcDepuisDto(mockRcDto.data) as FicheRcRca).commePanelAccordionReceSection;
+      const panels = (FicheRcRca.RcDepuisDto(mockRcDto) as FicheRcRca).commePanelAccordionReceSection;
       expect(panels.panels).toHaveLength(1);
       expect(panels.panels[0].panelAreas).toHaveLength(5);
       expect(panels.panels[0].title).toBe("Visualisation du RC");

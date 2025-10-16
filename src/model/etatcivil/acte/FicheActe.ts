@@ -21,12 +21,12 @@ import { ETypeVisibiliteArchiviste } from "../enum/TypeVisibiliteArchiviste";
 import { AlerteFicheActe, IAlerteFicheActeDto } from "../fiche/AlerteFicheActe";
 import { AnalyseMarginale, IAnalyseMarginaleDto } from "./AnalyseMarginale";
 import { DetailMariage, IDetailMariageDto } from "./DetailMariage";
-import { IRectificationCorpsExtraitDto, RectificationCorpsExtrait } from "./ICorpsExtraitRectification";
 import { ICorpsTexte } from "./ICorpsTexte";
 import { IEvenementDto } from "./IEvenement";
 import { ICorpsImage } from "./imageActe/ICorpsImage";
 import { TypeMention } from "./mention/ITypeMention";
 import { IMentionDto, Mention } from "./mention/Mention";
+import { IRectificationCorpsExtraitDto, RectificationCorpsExtrait } from "./RectificationCorpsExtrait";
 import { IRegistreDto, Registre } from "./Registre";
 import { ITitulaireActeDto, TitulaireActe } from "./TitulaireActe";
 

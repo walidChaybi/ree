@@ -8,7 +8,7 @@ import {
 } from "@model/composition/extraitCopie/IExtraitCopieComposition";
 import { IExtraitPlurilingueComposition } from "@model/composition/extraitCopie/plurilingue/IExtraitPlurilingueComposition";
 import { FicheActe } from "@model/etatcivil/acte/FicheActe";
-import { RectificationCorpsExtrait } from "@model/etatcivil/acte/ICorpsExtraitRectification";
+import { RectificationCorpsExtrait } from "@model/etatcivil/acte/RectificationCorpsExtrait";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";

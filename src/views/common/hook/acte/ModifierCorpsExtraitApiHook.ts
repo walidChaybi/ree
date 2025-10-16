@@ -1,12 +1,12 @@
 import { postCorpsTexte } from "@api/appels/etatcivilApi";
-import { TypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
+import { ETypeExtrait } from "@model/etatcivil/enum/ETypeExtrait";
 import { useEffect, useState } from "react";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export interface IModifierCorpsExtraitParams {
   idActe: string;
   corpsTexteModifie: string;
-  type: TypeExtrait;
+  type: keyof typeof ETypeExtrait;
 }
 
 interface IModifierCorpsExtraitResultat {
@@ -23,7 +23,6 @@ export function useModifierCorpsExtrait(params?: IModifierCorpsExtraitParams) {
           setResultat({ resultat: true });
         })
         .catch(erreurs => {
-          /* istanbul ignore next */
           setResultat({ resultat: false });
           AfficherMessage.erreur("Impossible de mettre à jour le corps du texte", {
             erreurs: estTableauErreurApi(erreurs) ? erreurs : [],

@@ -1,6 +1,5 @@
 import { IPersonne } from "@model/etatcivil/commun/Personne";
 import { ETypeRedactionActe } from "../../enum/ETypeRedactionActe";
-import { ICorpsExtraitRectification } from "../ICorpsExtraitRectification";
 import { ICorpsTexte } from "../ICorpsTexte";
 import { IDeclarant } from "../IDeclarant";
 import { IEvenement } from "../IEvenement";
@@ -26,7 +25,6 @@ export interface IProjetActe {
   analyseMarginales?: IProjetAnalyseMarginale[];
   corpsTexte?: ICorpsTexte;
   type: string;
-  corpsExtraitRectifications: ICorpsExtraitRectification[];
   mentions: Mention[];
   declarant?: IDeclarant | null;
   numeroDossierNational?: string;

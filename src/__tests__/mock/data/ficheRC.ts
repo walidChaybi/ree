@@ -1,167 +1,145 @@
 import { ETypeAutorite } from "@model/etatcivil/enum/TypeAutorite";
 import { IFicheRcDto } from "@model/etatcivil/rcrca/FicheRcRca";
 
-export const mockRcDto = {
-  hasTechnicalError: false,
-  hasBusinessError: false,
-  status: 200,
-  url: "/rece/rece-requete-api/v1/repertoirecivil/rc/7566e16c-2b0e-11eb-adc1-0242ac120002",
-  data: {
-    id: "7566e16c-2b0e-11eb-adc1-0242ac120002",
-    categorie: "RC",
-    annee: "2018",
-    numero: "56533",
-    dateInscription: [2018, 2, 15],
-    dateDerniereMaj: 1583971200,
-    dateDerniereDelivrance: 1592092800,
-    alertes: [
-      {
-        alerte: "DATE_DE_FIN_MESURE_DEPASSEE",
-        dateCreation: 1581807600
-      }
-    ],
-    decision: {
-      dateDecision: [2018, 2, 15],
-      type: "JUGEMENT",
+export const mockRcDto: IFicheRcDto = {
+  id: "7566e16c-2b0e-11eb-adc1-0242ac120002",
+  categorie: "RC",
+  annee: "2018",
+  numero: "56533",
+  dateInscription: [2018, 2, 15],
+  dateDerniereMaj: 1583971200,
+  dateDerniereDelivrance: 1592092800,
+  alertes: [
+    {
+      alerte: "DATE_DE_FIN_MESURE_DEPASSEE",
+      dateCreation: 1581807600
+    }
+  ],
+  decision: {
+    dateDecision: [2018, 2, 15],
+    type: "JUGEMENT",
+    autorite: {
+      numeroDepartement: "75",
+      libelleDepartement: "Seine",
+      pays: "France",
+      arrondissement: "18"
+    },
+    enrolementRg: "1345",
+    enrolementPortalis: "789521545",
+    sourceConfirmation: {
       autorite: {
-        type: "TRIBUNAL_JUDICIAIRE",
-        numeroDepartement: "75",
-        libelleDepartement: "Seine",
+        ville: "Marseille",
+        arrondissement: "10",
+        numeroDepartement: "13",
+        libelleDepartement: "Bouches-du-Rhône",
         pays: "France",
-        arrondissement: "18"
+        region: "Ile de france",
+        nomNotaire: "nomnotaire",
+        prenomNotaire: "prenomnotaire",
+        numeroCrpcen: ""
       },
-      enrolementRg: "1345",
-      enrolementPortalis: "789521545",
-      sourceConfirmation: {
-        autorite: {
-          type: null,
-          ville: "Marseille",
-          arrondissement: "10",
-          numeroDepartement: "13",
-          libelleDepartement: "Bouches-du-Rhône",
-          pays: "France",
-          region: "Ile de france",
-          nomNotaire: "nomnotaire",
-          prenomNotaire: "prenomnotaire",
-          numeroCrpcen: "",
-          nomOnac: "",
-          prenomOnac: ""
-        },
-        dateDecision: [2020, 3, 17],
-        enrolementRg: "enrolementRg",
-        enrolementPortalis: "enrolementPortalis",
-        type: "ARRET"
-      }
+      dateDecision: [2020, 3, 17],
+      enrolementRg: "enrolementRg",
+      enrolementPortalis: "enrolementPortalis",
+      type: "ARRET"
+    }
+  },
+  mariageInteresses: {
+    villeMariage: "Caen",
+    regionMariage: "Normandie",
+    paysMariage: "France",
+    dateMariage: {
+      annee: "2020"
     },
-    mariageInterresses: [
-      {
-        villeMariage: "Caen",
-        regionNaissance: "Normandie",
-        paysNaissance: "France",
-        dateMariage: {
-          jour: null,
-          mois: null,
-          annee: "2020"
-        },
-        aletranger: false
-      }
-    ],
-    interesses: [
-      {
-        numeroOrdreSaisi: 1,
-        nomFamille: "FAVARO",
-        autresNoms: ["FAVAROTTI"],
-        prenoms: [{ valeur: "Enrico", numeroOrdre: 0 }],
-        autresPrenoms: [],
-        dateNaissance: {
-          jour: "17",
-          mois: "05",
-          annee: "1945"
-        },
-        villeNaissance: "San remo",
-        paysNaissance: "Italie",
-        regionNaissance: "",
-        arrondissementNaissance: "",
-        nationalite: "ETRANGERE",
-        sexe: "FEMININ"
+    aletranger: false
+  },
+  interesses: [
+    {
+      numeroOrdreSaisi: 1,
+      nomFamille: "FAVARO",
+      prenoms: [{ valeur: "Enrico", numeroOrdre: 0 }],
+      dateNaissance: {
+        jour: "17",
+        mois: "05",
+        annee: "1945"
       },
-      {
-        numeroOrdreSaisi: 2,
-        nomFamille: "FAVARO",
-        autreNoms: ["MAHMOUDI"],
-        prenoms: [{ valeur: "Ahmeda", numeroOrdre: 0 }],
-        autrePrenoms: [],
-        dateNaissance: {
-          jour: "17",
-          mois: "05",
-          annee: "1946"
-        },
-        villeNaissance: "San remo",
-        paysNaissance: "Italie",
-        regionNaissance: "",
-        arrondissementNaissance: "",
-        nationalite: "ETRANGERE",
-        sexe: "FEMININ"
-      }
-    ],
-    statutsFiche: [
-      {
-        statut: "ACTIF",
-        dateStatut: 1584403200,
-        statutFicheEvenement: {
-          id: "",
-          date: { annee: "2020" },
-          ville: "Nantes",
-          region: "Pays de la Loire",
-          pays: "France"
-        },
-        motif: "",
-        complementMotif: ""
-      }
-    ],
-    nature: {
-      id: "058a436b-330d-4c3c-83e0-e49d27390127",
-      nom: "NATURE_RC",
-      code: "CURATELLE_AMENAGEE",
-      libelle: "curatelle aménagée",
-      estActif: true,
-      type: "Protection des majeurs",
-      decisionCouple: false,
-      article: "la",
-      categorieRCRCA: "CURATELLE"
+      villeNaissance: "San remo",
+      paysNaissance: "Italie",
+      regionNaissance: "",
+      arrondissementNaissance: "",
+      nationalite: "ETRANGERE",
+      sexe: "FEMININ"
     },
-    typeInscription: "RENOUVELLEMENT",
-    dureeInscription: {
-      nombreDuree: 2,
-      uniteDuree: "ans",
-      dateFinDeMesure: [2020, 2, 15]
-    },
-    duree: {
-      nombreDuree: 2,
-      uniteDuree: "années",
-      dateFinDeMesure: [2020, 2, 15]
-    },
-    codesMandataires: ["Mandataire judiciaire à la protection des majeurs association", "Préposé d'établissement"],
-    inscriptionsImpactees: [
-      { id: "0", numero: "2015-36547", annee: "2015", typeInscription: "INSCRIPTION", nature: "" },
-      { id: "1", numero: "2020-36547", annee: "2020", typeInscription: "RENOUVELLEMENT", nature: "" }
-    ],
-    inscriptionsLiees: [
-      {
+    {
+      numeroOrdreSaisi: 2,
+      nomFamille: "FAVARO",
+      autreNoms: ["MAHMOUDI"],
+      prenoms: [{ valeur: "Ahmeda", numeroOrdre: 0 }],
+      autrePrenoms: [],
+      dateNaissance: {
+        jour: "17",
+        mois: "05",
+        annee: "1946"
+      },
+      villeNaissance: "San remo",
+      paysNaissance: "Italie",
+      regionNaissance: "",
+      arrondissementNaissance: "",
+      nationalite: "ETRANGERE",
+      sexe: "FEMININ"
+    }
+  ],
+  statutsFiche: [
+    {
+      statut: "ACTIF",
+      dateStatut: 1584403200,
+      statutFicheEvenement: {
         id: "",
-        typeInscription: "MODIFICATION",
-        numero: "2017 - 145235",
-        annee: "2017",
-        nature: ""
-      }
-    ],
-    personnes: [],
-    mandataires: []
-  } as IFicheRcDto
+        date: { annee: "2020" },
+        ville: "Nantes",
+        region: "Pays de la Loire",
+        pays: "France"
+      },
+      motif: "",
+      complementMotif: ""
+    }
+  ],
+  nature: {
+    id: "058a436b-330d-4c3c-83e0-e49d27390127",
+    nom: "NATURE_RC",
+    code: "CURATELLE_AMENAGEE",
+    libelle: "curatelle aménagée",
+    estActif: true,
+    type: "Protection des majeurs",
+    decisionCouple: false,
+    article: "la",
+    categorieRCRCA: "CURATELLE"
+  },
+  typeInscription: "RENOUVELLEMENT",
+  duree: {
+    nombreDuree: 2,
+    uniteDuree: "années",
+    dateFinDeMesure: [2020, 2, 15]
+  },
+  inscriptionsImpactees: [
+    { id: "0", numero: "2015-36547", annee: "2015", typeInscription: "INSCRIPTION", nature: "" },
+    { id: "1", numero: "2020-36547", annee: "2020", typeInscription: "RENOUVELLEMENT", nature: "" }
+  ],
+  inscriptionsLiees: [
+    {
+      id: "",
+      typeInscription: "MODIFICATION",
+      numero: "2017 - 145235",
+      annee: "2017",
+      nature: ""
+    }
+  ],
+  personnes: [],
+  mandataires: []
 };
 
 export const FicheRcDecisionNotaire: IFicheRcDto = {
-  ...mockRcDto.data,
+  ...mockRcDto,
   id: "135e4dfe-9757-4d5d-8715-359c6e73289b",
   categorie: "RC",
   annee: "2020",
@@ -232,8 +210,6 @@ export const FicheRcDecisionNotaire: IFicheRcDto = {
       autresNoms: [],
       prenoms: ["Yann"],
       autresPrenoms: [],
-      parents: [],
-      enfants: [],
       rcs: [{ id: "76b62678-8b06-4442-ad5b-b9207627a6eb", numero: "11", referenceComplete: "" }],
       rcas: [],
       pacss: [],

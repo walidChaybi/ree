@@ -1,5 +1,5 @@
 import ETypeDeclarationConjointe from "@model/etatcivil/enum/ETypeDeclarationConjointe";
-import { ETypeExtrait } from "@model/etatcivil/enum/TypeExtrait";
+import { ETypeExtrait } from "@model/etatcivil/enum/ETypeExtrait";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DEUX, jointAvecEspace, jointAvecRetourALaLigne, triListeObjetsSurPropriete, TROIS, UN, ZERO } from "@util/Utils";
 import { EtatCivilUtil } from "@utilMetier/EtatCivilUtil";

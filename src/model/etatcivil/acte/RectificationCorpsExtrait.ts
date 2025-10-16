@@ -1,10 +1,5 @@
 import { champsObligatoiresDuDtoAbsents, valeurDtoAbsenteDansEnum } from "@model/commun/dtoUtils";
-import { ETypeExtrait, TypeExtrait } from "../enum/TypeExtrait";
-
-export interface ICorpsExtraitRectification {
-  type: TypeExtrait;
-  texte: string;
-}
+import { ETypeExtrait } from "../enum/ETypeExtrait";
 
 export interface IRectificationCorpsExtraitDto {
   type: keyof typeof ETypeExtrait;

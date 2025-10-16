@@ -1,4 +1,5 @@
 import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
+import { nettoyerAttributsDto } from "@model/commun/dtoUtils";
 import { IDetailMariageDto } from "@model/etatcivil/acte/DetailMariage";
 import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { IFiliationDto } from "@model/etatcivil/acte/Filiation";
@@ -87,7 +88,7 @@ export function mappingFormulaireSaisirExtraitVersExtraitAEnvoyer(
     extraitSaisiAEnvoyer.idAnalyseMarginale = analyseMarginaleLaPlusRecente.id;
   }
 
-  return extraitSaisiAEnvoyer;
+  return nettoyerAttributsDto(extraitSaisiAEnvoyer);
 }
 
 function paysSaisieEtrangerActiveEtPasRenseigneEtAuMoinsVilleOuRegionSaisie(
