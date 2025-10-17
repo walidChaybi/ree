@@ -7,7 +7,7 @@ export interface IFormuleIntegrationDto {
   texteMention: string;
 }
 
-const URI = "/types-mentions/integration-registre-electronique";
+const URI = "/types-mentions/formule-integration-registre-electronique";
 
 const CONFIG_GET_FORMULE_INTEGRATION_RECE: TConfigurationApi<typeof URI, undefined, undefined, IFormuleIntegrationDto> = {
   api: ETATCIVIL_API,
