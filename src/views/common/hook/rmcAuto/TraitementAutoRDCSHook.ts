@@ -29,9 +29,8 @@ import {
 
 export interface ITraitementAutoRDCSParams {
   requete: IRequeteTableauDelivrance;
-  urlCourante: string;
-  dataRMCAutoActe: ResultatRMCActe[];
-  dataRMCAutoInscription: TResultatRMCInscription[];
+  resultatRMCAutoActe: ResultatRMCActe[];
+  resultatRMCAutoInscription: TResultatRMCInscription[];
 }
 
 export const useTraitementAutoRDCSHook = (params: ITraitementAutoRDCSParams | null): boolean => {
@@ -45,10 +44,10 @@ export const useTraitementAutoRDCSHook = (params: ITraitementAutoRDCSParams | nu
     setTraitementEnCours(true);
     return {
       requete: params.requete,
-      nbInscriptionsInfos: getNbInscriptionsInfos(params.dataRMCAutoActe, params.dataRMCAutoInscription),
+      nbInscriptionsInfos: getNbInscriptionsInfos(params.resultatRMCAutoActe, params.resultatRMCAutoInscription),
       specificationPhrase: specificationPhraseRMCAutoVide
     };
-  }, [params?.dataRMCAutoInscription, params?.dataRMCAutoActe]);
+  }, [params?.resultatRMCAutoInscription, params?.resultatRMCAutoActe]);
 
   // Génération du certificat de situation si la RMC n'a pas trouvé les Fiches Inscription ni d'actes. Sinon, renvoie un objet vide
   const resultGenerationCertificatSituationRMCAutoVide = useGenerationCertificatSituationHook(paramsCertificatSituation);
@@ -62,7 +61,7 @@ export const useTraitementAutoRDCSHook = (params: ITraitementAutoRDCSParams | nu
     } else if (
       !params.requete.documentsReponses?.length &&
       DocumentDelivrance.estAttestationPacs(params.requete.document) &&
-      !contientPacsAuStatutActif(params.dataRMCAutoInscription)
+      !contientPacsAuStatutActif(params.resultatRMCAutoInscription)
     ) {
       const contenuReponseSansDelivranceCSPACSNonInscrit = createReponseSansDelivranceCSPourCompositionApiPACSNonInscrit(
         mappingRequeteTableauVersRequeteDelivrance(params?.requete)
@@ -86,7 +85,7 @@ export const useTraitementAutoRDCSHook = (params: ITraitementAutoRDCSParams | nu
   );
 
   useEffect(() => {
-    if (!resultatReponseSansDelivranceCS || !params?.dataRMCAutoActe || !params.dataRMCAutoInscription) return;
+    if (!resultatReponseSansDelivranceCS || !params?.resultatRMCAutoActe || !params.resultatRMCAutoInscription) return;
 
     setTraitementAutoRDCSEffectue(true);
     setTraitementEnCours(false);

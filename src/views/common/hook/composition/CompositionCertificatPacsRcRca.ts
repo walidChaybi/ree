@@ -1,11 +1,11 @@
 import { compositionApi } from "@api/appels/compositionApi";
 import { IDonneesComposition } from "@model/composition/commun/retourApiComposition/IDonneesComposition";
 import { TypeCertificatComposition } from "@model/composition/type/TypeCertificatCompoistion";
-import { ETypePacsRcRca } from "@model/etatcivil/enum/ETypePacsRcRca";
+import { ETypeRcRcaPacs } from "@model/etatcivil/enum/ETypeRcRcaPacs";
 import { useEffect, useState } from "react";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
-export function useCertificatPacsRcRcaApiHook(typeCertificat: ETypePacsRcRca, certificatComposition?: TypeCertificatComposition) {
+export function useCertificatPacsRcRcaApiHook(typeCertificat: ETypeRcRcaPacs, certificatComposition?: TypeCertificatComposition) {
   const [donneesComposition, setDonneesComposition] = useState<IDonneesComposition>();
 
   useEffect(() => {

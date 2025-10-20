@@ -1,30 +1,30 @@
 import { EStatutRcRcaPacs } from "@model/etatcivil/enum/EStatutRcRcaPacs";
 import { ETypeInscriptionRc } from "@model/etatcivil/enum/ETypeInscriptionRc";
 import { ETypeInscriptionRca } from "@model/etatcivil/enum/ETypeInscriptionRca";
-import { ETypePacsRcRca } from "@model/etatcivil/enum/ETypePacsRcRca";
+import { ETypeRcRcaPacs } from "@model/etatcivil/enum/ETypeRcRcaPacs";
 import { champsObligatoiresDuDtoAbsents, valeurDtoAbsenteDansEnum } from "../../../commun/dtoUtils";
 import PersonneRMCInscription, { IPersonneRMCInscriptionDto } from "./PersonneRMCInscription";
 
-export type IResultatRMCInscriptionDto<TTypeFiche extends keyof typeof ETypePacsRcRca> = {
+export type IResultatRMCInscriptionDto<TTypeFiche extends keyof typeof ETypeRcRcaPacs> = {
   id: string;
   annee: string;
   numero: string;
   personne: IPersonneRMCInscriptionDto;
   statut: keyof typeof EStatutRcRcaPacs;
   categorie: TTypeFiche;
-  idNature: TTypeFiche extends Extract<keyof typeof ETypePacsRcRca, "RC" | "RCA"> ? string : undefined;
-  type: TTypeFiche extends Extract<keyof typeof ETypePacsRcRca, "PACS">
+  idNature: TTypeFiche extends Extract<keyof typeof ETypeRcRcaPacs, "RC" | "RCA"> ? string : undefined;
+  type: TTypeFiche extends Extract<keyof typeof ETypeRcRcaPacs, "PACS">
     ? undefined
-    : TTypeFiche extends Extract<keyof typeof ETypePacsRcRca, "RC">
+    : TTypeFiche extends Extract<keyof typeof ETypeRcRcaPacs, "RC">
       ? keyof typeof ETypeInscriptionRc
-      : TTypeFiche extends Extract<keyof typeof ETypePacsRcRca, "RCA">
+      : TTypeFiche extends Extract<keyof typeof ETypeRcRcaPacs, "RCA">
         ? keyof typeof ETypeInscriptionRca
         : never;
 };
 
 export type TResultatRMCInscription = ResultatRMCInscription<"PACS"> | ResultatRMCInscription<"RCA"> | ResultatRMCInscription<"RC">;
 
-export default class ResultatRMCInscription<TTypeFiche extends keyof typeof ETypePacsRcRca> {
+export default class ResultatRMCInscription<TTypeFiche extends keyof typeof ETypeRcRcaPacs> {
   private static readonly champsObligatoires: (keyof (
     | IResultatRMCInscriptionDto<"PACS">
     | IResultatRMCInscriptionDto<"RCA">
@@ -39,17 +39,17 @@ export default class ResultatRMCInscription<TTypeFiche extends keyof typeof ETyp
     public readonly personne: PersonneRMCInscription,
     public readonly statut: keyof typeof EStatutRcRcaPacs,
     public readonly categorie: TTypeFiche,
-    public readonly idNature: TTypeFiche extends Extract<keyof typeof ETypePacsRcRca, "RC" | "RCA"> ? string : undefined,
-    public readonly type: TTypeFiche extends Extract<keyof typeof ETypePacsRcRca, "PACS">
+    public readonly idNature: TTypeFiche extends Extract<keyof typeof ETypeRcRcaPacs, "RC" | "RCA"> ? string : undefined,
+    public readonly type: TTypeFiche extends Extract<keyof typeof ETypeRcRcaPacs, "PACS">
       ? undefined
-      : TTypeFiche extends Extract<keyof typeof ETypePacsRcRca, "RC">
+      : TTypeFiche extends Extract<keyof typeof ETypeRcRcaPacs, "RC">
         ? keyof typeof ETypeInscriptionRc
-        : TTypeFiche extends Extract<keyof typeof ETypePacsRcRca, "RCA">
+        : TTypeFiche extends Extract<keyof typeof ETypeRcRcaPacs, "RCA">
           ? keyof typeof ETypeInscriptionRca
           : never
   ) {}
 
-  public static readonly depuisDto = <TTypeFiche extends keyof typeof ETypePacsRcRca>(
+  public static readonly depuisDto = <TTypeFiche extends keyof typeof ETypeRcRcaPacs>(
     rcRcaPacs: IResultatRMCInscriptionDto<TTypeFiche>
   ): ResultatRMCInscription<TTypeFiche> | null => {
     switch (true) {
@@ -68,7 +68,7 @@ export default class ResultatRMCInscription<TTypeFiche extends keyof typeof ETyp
         return null;
 
       case valeurDtoAbsenteDansEnum("IResultatRMCInscriptionDto", rcRcaPacs, "statut", EStatutRcRcaPacs):
-      case valeurDtoAbsenteDansEnum("IResultatRMCInscriptionDto", rcRcaPacs, "categorie", ETypePacsRcRca):
+      case valeurDtoAbsenteDansEnum("IResultatRMCInscriptionDto", rcRcaPacs, "categorie", ETypeRcRcaPacs):
       case rcRcaPacs.categorie === "RC" && valeurDtoAbsenteDansEnum("IResultatRMCInscriptionDto", rcRcaPacs, "type", ETypeInscriptionRc):
       case rcRcaPacs.categorie === "RCA" && valeurDtoAbsenteDansEnum("IResultatRMCInscriptionDto", rcRcaPacs, "type", ETypeInscriptionRca):
         return null;

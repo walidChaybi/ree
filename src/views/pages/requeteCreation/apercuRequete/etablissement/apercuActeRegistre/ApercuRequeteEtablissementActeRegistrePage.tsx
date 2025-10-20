@@ -39,7 +39,7 @@ export const ApercuRequeteEtablissementActeRegistrePage: React.FC = () => {
   const {
     dataActesInscriptionsSelectionnes,
     setDataActesInscriptionsSelectionnes,
-    setRmcAutoPersonneParams,
+    setCriteresRMCAutoPersonne: setRmcAutoPersonneParams,
     resultatRMCAutoPersonne,
     rmcAutoPersonneEnChargement
   } = useDataTableauxOngletRMCPersonne(requete);
@@ -52,7 +52,6 @@ export const ApercuRequeteEtablissementActeRegistrePage: React.FC = () => {
 
   useEffect(() => {
     rechargerRequete();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idRequeteParam]);
 
   function rechargerRequete() {
@@ -78,10 +77,9 @@ export const ApercuRequeteEtablissementActeRegistrePage: React.FC = () => {
           listeTitulaires={requete?.titulaires}
           natureActeRequete={NatureActeRequete.getEnumFor(requete?.nature)}
           tableauRMCPersonneEnChargement={rmcAutoPersonneEnChargement}
-          tableauActesInscriptionsSelectionnesEnChargement={!dataActesInscriptionsSelectionnes}
           dataActesInscriptionsSelectionnes={dataActesInscriptionsSelectionnes || []}
           setDataActesInscriptionsSelectionnes={setDataActesInscriptionsSelectionnes}
-          setRmcAutoPersonneParams={setRmcAutoPersonneParams}
+          setCriteresRMCAutoPersonne={setRmcAutoPersonneParams}
         />
       ),
       index: ZERO

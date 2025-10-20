@@ -1,11 +1,11 @@
 import { updateDateDerniereDelivranceRcRcaPacs } from "@api/appels/etatcivilApi";
-import { ETypePacsRcRca } from "@model/etatcivil/enum/ETypePacsRcRca";
+import { ETypeRcRcaPacs } from "@model/etatcivil/enum/ETypeRcRcaPacs";
 import { useEffect, useState } from "react";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
 export interface IDerniereDelivranceRcRcaPacsParams {
   idRepertoire: string;
-  typeRepertoire: ETypePacsRcRca;
+  typeRepertoire: ETypeRcRcaPacs;
 }
 
 interface IDerniereDelivranceRcRcaPacsResultat {

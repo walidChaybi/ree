@@ -1,10 +1,4 @@
 import { RMCActeInscriptionResultats } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCActeInscriptionResultats";
-import {
-  NB_LIGNES_PAR_APPEL_ACTE,
-  NB_LIGNES_PAR_APPEL_INSCRIPTION,
-  NB_LIGNES_PAR_PAGE_ACTE,
-  NB_LIGNES_PAR_PAGE_INSCRIPTION
-} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useEffect, useState } from "react";
 
 import TRAITEMENT_RMC_ACTES_INSCRIPTIONS, { IResultatRMCActesInscriptions } from "@api/traitements/rmc/TraitementRMCActesInscriptions";
@@ -55,12 +49,7 @@ const PageRMCActeInscription: React.FC = () => {
           dataRMCInscription={resultatRMCActeInscription.resultatRMCInscription}
           dataTableauRMCInscription={resultatRMCActeInscription.paramsTableauRMCInscription}
           resetRMC={nouvelleRMCActeInscription}
-          nbLignesParPageActe={NB_LIGNES_PAR_PAGE_ACTE}
-          nbLignesParAppelActe={NB_LIGNES_PAR_APPEL_ACTE}
-          nbLignesParPageInscription={NB_LIGNES_PAR_PAGE_INSCRIPTION}
-          nbLignesParAppelInscription={NB_LIGNES_PAR_APPEL_INSCRIPTION}
-          rmcActeEnCours={enAttenteRMC}
-          rmcInscriptionEnCours={enAttenteRMC}
+          rmcEnCours={enAttenteRMC}
         />
       )}
     </>

@@ -4,7 +4,7 @@ import {
 } from "@hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
 import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import { Droit } from "@model/agent/enum/Droit";
-import { ETypePacsRcRca } from "@model/etatcivil/enum/ETypePacsRcRca";
+import { ETypeRcRcaPacs } from "@model/etatcivil/enum/ETypeRcRcaPacs";
 import { Provenance } from "@model/requete/enum/Provenance";
 import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
@@ -115,17 +115,17 @@ function recupererIdRepertoiresDocumentReponsesCs(requete: IRequeteDelivrance): 
     if (el.idPacs != null) {
       repertoiresAMaj.push({
         idRepertoire: el.idPacs,
-        typeRepertoire: ETypePacsRcRca.PACS
+        typeRepertoire: ETypeRcRcaPacs.PACS
       });
     } else if (el.idRc != null) {
       repertoiresAMaj.push({
         idRepertoire: el.idRc,
-        typeRepertoire: ETypePacsRcRca.RC
+        typeRepertoire: ETypeRcRcaPacs.RC
       });
     } else if (el.idRca != null) {
       repertoiresAMaj.push({
         idRepertoire: el.idRca,
-        typeRepertoire: ETypePacsRcRca.RCA
+        typeRepertoire: ETypeRcRcaPacs.RCA
       });
     }
   });

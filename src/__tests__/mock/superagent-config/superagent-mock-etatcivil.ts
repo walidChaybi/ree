@@ -2,7 +2,6 @@ import { idFicheActeMariage } from "@mock/data/DetailRequeteDelivrance";
 import { ReponseEnregistrementProjetActe } from "@mock/data/ProjetActe";
 import { ReponseAppelAddAlerteActe, ReponseAppelGetAlertesActe } from "../data/Alertes";
 import { imagePngVideBase64 } from "../data/ImagePng";
-import { RMCAutoPersonneResponseAlpha, RMCAutoPersonneResponseBeta } from "../data/RMCAutoPersonne";
 import { actesInscriptionsSauvegardes } from "../data/actesInscriptionsSauvegardes";
 import { mentions, mentionsPlurilingues } from "../data/mentions";
 import {
@@ -64,18 +63,6 @@ export const configEtatcivil = [
         context.method === "post"
       ) {
         return { data: true };
-      }
-
-      ///////////////
-      // Personnes //
-      ///////////////
-
-      // RMC
-      if (match[1] === "/personnes/rmcauto?range=0-25") {
-        if (params.nomTitulaire === "dupont") {
-          return RMCAutoPersonneResponseBeta;
-        }
-        return RMCAutoPersonneResponseAlpha;
       }
 
       /////////////////

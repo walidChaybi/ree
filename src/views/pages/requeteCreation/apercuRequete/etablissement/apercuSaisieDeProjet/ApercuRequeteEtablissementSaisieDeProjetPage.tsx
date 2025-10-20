@@ -119,7 +119,7 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
   const {
     dataActesInscriptionsSelectionnes,
     setDataActesInscriptionsSelectionnes,
-    setRmcAutoPersonneParams,
+    setCriteresRMCAutoPersonne: setRmcAutoPersonneParams,
     resultatRMCAutoPersonne,
     rmcAutoPersonneEnChargement
   } = useDataTableauxOngletRMCPersonne(requete);
@@ -241,10 +241,9 @@ export const ApercuRequeteEtablissementSaisieDeProjetPage: React.FC<ApercuRequet
           listeTitulaires={requete?.titulaires}
           natureActeRequete={NatureActeRequete.getEnumFor(requete?.nature ?? "")}
           tableauRMCPersonneEnChargement={rmcAutoPersonneEnChargement}
-          tableauActesInscriptionsSelectionnesEnChargement={!dataActesInscriptionsSelectionnes}
           dataActesInscriptionsSelectionnes={dataActesInscriptionsSelectionnes || []}
           setDataActesInscriptionsSelectionnes={setDataActesInscriptionsSelectionnes}
-          setRmcAutoPersonneParams={setRmcAutoPersonneParams}
+          setCriteresRMCAutoPersonne={setRmcAutoPersonneParams}
         />
       ),
       index: 0

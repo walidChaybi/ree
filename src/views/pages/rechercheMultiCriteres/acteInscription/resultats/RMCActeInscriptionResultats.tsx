@@ -5,7 +5,12 @@ import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/Res
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
-import { forwardRef } from "react";
+import {
+  NB_LIGNES_PAR_APPEL_ACTE,
+  NB_LIGNES_PAR_APPEL_INSCRIPTION,
+  NB_LIGNES_PAR_PAGE_ACTE,
+  NB_LIGNES_PAR_PAGE_INSCRIPTION
+} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import PageChargeur from "../../../../../composants/commun/chargeurs/PageChargeur";
 import "../scss/RMCActeInscriptionResultats.scss";
 import { RMCTableauActes } from "./RMCTableauActes";
@@ -23,83 +28,73 @@ interface IRMCActeInscriptionResultatsProps {
   resetRMC?: boolean;
   onClickCheckboxTableauActes?: (event: TChangeEventSurHTMLInputElement, data: ResultatRMCActe) => void;
   onClickCheckboxTableauInscriptions?: (event: TChangeEventSurHTMLInputElement, data: TResultatRMCInscription) => void;
-  nbLignesParPageActe: number;
-  nbLignesParAppelActe: number;
-  nbLignesParPageInscription: number;
-  nbLignesParAppelInscription: number;
-  rmcActeEnCours: boolean;
-  rmcInscriptionEnCours: boolean;
+  nbLignesParPageActe?: number;
+  nbLignesParAppelActe?: number;
+  nbLignesParPageInscription?: number;
+  nbLignesParAppelInscription?: number;
+  rmcEnCours: boolean;
 }
 
-export const RMCActeInscriptionResultats = forwardRef<HTMLDivElement, IRMCActeInscriptionResultatsProps>(
-  (
-    {
-      typeRMC,
-      dataAlertes,
-      dataRequete,
-      dataRMCActe,
-      dataTableauRMCActe,
-      dataRMCInscription,
-      dataTableauRMCInscription,
-      resetRMC,
-      onClickCheckboxTableauActes,
-      onClickCheckboxTableauInscriptions,
-      nbLignesParPageActe,
-      nbLignesParAppelActe,
-      nbLignesParPageInscription,
-      nbLignesParAppelInscription,
-      rmcActeEnCours,
-      rmcInscriptionEnCours
-    },
-    refTableau
-  ) => {
-    return (
-      <div
-        className={`ResultatsRMC${typeRMC}`}
-        ref={refTableau}
-      >
-        <Fieldset titre={"Résultats de la recherche multi-critères"}>
-          <div className="SubResultatsRMC">
-            <div className="SousTitre">
-              <span>{"Recherche dans les registres d'état civil"}</span>
-            </div>
-            {rmcActeEnCours ? (
-              <PageChargeur />
-            ) : (
-              <RMCTableauActes
-                typeRMC={typeRMC}
-                dataRequete={dataRequete}
-                dataAlertes={dataAlertes}
-                dataRMCActe={dataRMCActe}
-                dataTableauRMCActe={dataTableauRMCActe}
-                resetTableauActe={resetRMC}
-                onClickCheckboxCallBack={onClickCheckboxTableauActes}
-                nbLignesParPage={nbLignesParPageActe}
-                nbLignesParAppel={nbLignesParAppelActe}
-              />
-            )}
+export const RMCActeInscriptionResultats: React.FC<IRMCActeInscriptionResultatsProps> = ({
+  typeRMC,
+  dataAlertes,
+  dataRequete,
+  dataRMCActe,
+  dataTableauRMCActe,
+  dataRMCInscription,
+  dataTableauRMCInscription,
+  resetRMC,
+  onClickCheckboxTableauActes,
+  onClickCheckboxTableauInscriptions,
+  nbLignesParPageActe = NB_LIGNES_PAR_PAGE_ACTE,
+  nbLignesParAppelActe = NB_LIGNES_PAR_APPEL_ACTE,
+  nbLignesParPageInscription = NB_LIGNES_PAR_PAGE_INSCRIPTION,
+  nbLignesParAppelInscription = NB_LIGNES_PAR_APPEL_INSCRIPTION,
+  rmcEnCours
+}) => {
+  return (
+    <div className={`ResultatsRMC${typeRMC}`}>
+      <Fieldset titre={"Résultats de la recherche multi-critères"}>
+        <div className="SubResultatsRMC">
+          <div className="SousTitre">
+            <span>{"Recherche dans les registres d'état civil"}</span>
           </div>
-          <div className="SubResultatsRMC">
-            <div className="SousTitre">
-              <span>{"Recherche dans les répertoires de greffe et registre des PACS des étrangers nés à l'étranger"}</span>
-            </div>
-            {rmcInscriptionEnCours ? (
-              <PageChargeur />
-            ) : (
-              <RMCTableauInscriptions
-                typeRMC={typeRMC}
-                dataRequete={dataRequete}
-                dataRMCInscription={dataRMCInscription}
-                dataTableauRMCInscription={dataTableauRMCInscription}
-                resetTableauInscription={resetRMC}
-                onClickCheckboxCallBack={onClickCheckboxTableauInscriptions}
-                nbLignesParPage={nbLignesParPageInscription}
-                nbLignesParAppel={nbLignesParAppelInscription}
-              />
-            )}
+          {rmcEnCours ? (
+            <PageChargeur />
+          ) : (
+            <RMCTableauActes
+              typeRMC={typeRMC}
+              dataRequete={dataRequete}
+              dataAlertes={dataAlertes}
+              dataRMCActe={dataRMCActe}
+              dataTableauRMCActe={dataTableauRMCActe}
+              resetTableauActe={resetRMC}
+              onClickCheckboxCallBack={onClickCheckboxTableauActes}
+              nbLignesParPage={nbLignesParPageActe}
+              nbLignesParAppel={nbLignesParAppelActe}
+            />
+          )}
+        </div>
+        <div className="SubResultatsRMC">
+          <div className="SousTitre">
+            <span>{"Recherche dans les répertoires de greffe et registre des PACS des étrangers nés à l'étranger"}</span>
           </div>
-        </Fieldset>
-      </div>
-    );
-  }
-);
+          {rmcEnCours ? (
+            <PageChargeur />
+          ) : (
+            <RMCTableauInscriptions
+              typeRMC={typeRMC}
+              dataRequete={dataRequete}
+              dataRMCInscription={dataRMCInscription}
+              dataTableauRMCInscription={dataTableauRMCInscription}
+              resetTableauInscription={resetRMC}
+              onClickCheckboxCallBack={onClickCheckboxTableauInscriptions}
+              nbLignesParPage={nbLignesParPageInscription}
+              nbLignesParAppel={nbLignesParAppelInscription}
+            />
+          )}
+        </div>
+      </Fieldset>
+    </div>
+  );
+};

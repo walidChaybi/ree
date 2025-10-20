@@ -7,7 +7,6 @@ import { TModeAuthentification } from "@model/agent/types";
 import { IActeInscriptionSauvegardeDto } from "@model/etatcivil/acte/IActeInscriptionSauvegardeDto";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { ETypeExtrait } from "@model/etatcivil/enum/ETypeExtrait";
-import { IRMCAutoPersonneRequest } from "@model/rmc/personne/IRMCAutoPersonneRequest";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import { EStatutMention } from "../../model/etatcivil/enum/EStatutMention";
 import { HttpMethod } from "../ApiManager";
@@ -24,7 +23,6 @@ const URL_ALERTES_ACTE = "/alertes";
 const URL_ALERTE_ACTE = "/alerte";
 const URL_DERNIERE_DELIVRANCE_RC_RCA_PACS = "/repertoirecivil/datedernieredelivrance";
 const URL_SAISIE_EXTRAIT = "/saisieExtrait";
-const URL_PERSONNES_RMC_AUTO = "/personnes/rmcauto";
 const URL_PROJET_ACTE = "/projetacte";
 const URL_ETABLI = "/etabli";
 const URL_PROJET_ACTE_INSCRIPTION_LISTE = "/projetacte/actesinscriptionssauvegardes";
@@ -130,19 +128,6 @@ export function getRegistrePapierParIdProjetActe(idActe: string): Promise<any> {
     api.fetch({
       method: HttpMethod.GET,
       uri: `${URL_PROJET_ACTE}/${idActe}${URL_REGISTRE_PAPIER_PROJET_ACTE}`
-    })
-  );
-}
-
-export function rechercheMultiCriteresPersonne(criteres: IRMCAutoPersonneRequest, range?: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.POST,
-      uri: `${URL_PERSONNES_RMC_AUTO}`,
-      data: criteres,
-      parameters: {
-        range
-      }
     })
   );
 }

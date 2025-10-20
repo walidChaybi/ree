@@ -4,7 +4,7 @@ import {
   MOCK_RESULTAT_RMC_INSCRIPTION_RCA
 } from "@mock/data/RMCInscription";
 import { ETypeInscriptionRca } from "@model/etatcivil/enum/ETypeInscriptionRca";
-import { ETypePacsRcRca } from "@model/etatcivil/enum/ETypePacsRcRca";
+import { ETypeRcRcaPacs } from "@model/etatcivil/enum/ETypeRcRcaPacs";
 import PersonneRMCInscription, { IPersonneRMCInscriptionDto } from "@model/rmc/acteInscription/resultat/PersonneRMCInscription";
 import ResultatRMCInscription, { IResultatRMCInscriptionDto } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { describe, expect, test } from "vitest";
@@ -15,7 +15,7 @@ describe("Test ResultatRMCInscription", () => {
 
     expect(rc).not.toBeNull();
     expect(rc?.numero).toStrictEqual("RC - 2009 - 1004");
-    expect(rc?.categorie).toStrictEqual("RC" as keyof typeof ETypePacsRcRca);
+    expect(rc?.categorie).toStrictEqual("RC" as keyof typeof ETypeRcRcaPacs);
   });
 
   test("ResultatRMCInscription depuis IResultatRMCInscriptionDto<'RCA'>", () => {
@@ -23,7 +23,7 @@ describe("Test ResultatRMCInscription", () => {
 
     expect(rca).not.toBeNull();
     expect(rca?.numero).toStrictEqual("RCA - 2007 - 1005");
-    expect(rca?.categorie).toStrictEqual("RCA" as keyof typeof ETypePacsRcRca);
+    expect(rca?.categorie).toStrictEqual("RCA" as keyof typeof ETypeRcRcaPacs);
   });
 
   test("ResultatRMCInscription depuis IResultatRMCInscriptionDto<'PACS'>", () => {
@@ -31,7 +31,7 @@ describe("Test ResultatRMCInscription", () => {
 
     expect(pacs).not.toBeNull();
     expect(pacs?.numero).toStrictEqual("PACS - 2013 - 1234508");
-    expect(pacs?.categorie).toStrictEqual("PACS" as keyof typeof ETypePacsRcRca);
+    expect(pacs?.categorie).toStrictEqual("PACS" as keyof typeof ETypeRcRcaPacs);
   });
 
   test("DOIT retourner null QUAND un champ obligatoire manque", () => {

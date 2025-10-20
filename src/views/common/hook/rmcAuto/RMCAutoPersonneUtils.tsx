@@ -4,42 +4,23 @@ import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { ETypeInscriptionRc } from "@model/etatcivil/enum/ETypeInscriptionRc";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { IRMCAutoPersonneRequest } from "@model/rmc/personne/IRMCAutoPersonneRequest";
+import { IRMCAutoTitulaireDto } from "@model/rmc/acteInscription/rechercheForm/IRMCAutoTitulaireDto";
 import DateUtils, { IDateCompose } from "@util/DateUtils";
-import { UN, getValeurOuUndefined, getValeurOuVide, jointAvec } from "@util/Utils";
+import { jointAvec } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
-import { NB_LIGNES_PAR_APPEL_PERSONNE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { IActeInscriptionRMCPersonne, IPersonneRMCPersonne, IRMCPersonneResultat } from "./IRMCPersonneResultat";
-import { IRMCAutoPersonneParams } from "./RMCAutoPersonneApiHook";
 
-export function mapTitulaireVersRMCAutoPersonneParams(titulaire: ITitulaireRequeteCreation): IRMCAutoPersonneParams {
-  return {
-    valeurs: {
-      nomTitulaire: getValeurOuUndefined(titulaire?.nomNaissance),
-      prenomTitulaire: getValeurOuUndefined(titulaire?.prenoms?.filter(prenom => prenom.numeroOrdre === UN).pop()?.prenom),
-      jourNaissance: getValeurOuUndefined(titulaire?.jourNaissance?.toString()),
-      moisNaissance: getValeurOuUndefined(titulaire?.moisNaissance?.toString()),
-      anneeNaissance: getValeurOuUndefined(titulaire?.anneeNaissance?.toString())
-    },
-    range: `0-${NB_LIGNES_PAR_APPEL_PERSONNE}`
-  };
-}
-
-export function concatValeursRMCAutoPersonneRequest(request?: IRMCAutoPersonneRequest): string {
-  return request
-    ? jointAvec(
-        [
-          getValeurOuVide(request?.nomTitulaire),
-          getValeurOuVide(request?.prenomTitulaire),
-          getValeurOuVide(request?.jourNaissance),
-          getValeurOuVide(request?.moisNaissance),
-          getValeurOuVide(request?.anneeNaissance)
-        ],
-        "-"
-      )
-    : "";
-}
+export const concatValeursRMCAutoPersonneRequest = (criteresTitulaire?: IRMCAutoTitulaireDto): string =>
+  jointAvec(
+    [
+      criteresTitulaire?.nom ?? "",
+      criteresTitulaire?.prenom ?? "",
+      criteresTitulaire?.dateNaissance?.jour ?? "",
+      criteresTitulaire?.dateNaissance?.mois ?? "",
+      criteresTitulaire?.dateNaissance?.annee ?? ""
+    ],
+    "-"
+  );
 
 export function mappingRMCPersonneResultat(resultatRMCPersonne: any[]): IRMCPersonneResultat[] {
   const resultat: IRMCPersonneResultat[] = [];
@@ -58,15 +39,15 @@ export function mappingRMCPersonneResultat(resultatRMCPersonne: any[]): IRMCPers
 
 function mapPersonne(personne: any): IPersonneRMCPersonne {
   return {
-    idPersonne: getValeurOuVide(personne.idPersonne),
-    nom: getValeurOuVide(personne.nom),
-    autresNoms: getValeurOuVide(personne.autresNoms),
-    prenoms: getValeurOuVide(personne.prenoms),
-    sexe: Sexe.getEnumFor(getValeurOuVide(personne.sexe)),
+    idPersonne: personne.idPersonne ?? "",
+    nom: personne.nom ?? "",
+    autresNoms: personne.autresNoms ?? "",
+    prenoms: personne.prenoms ?? "",
+    sexe: Sexe.getEnumFor(personne.sexe ?? ""),
     dateNaissance: DateUtils.getDateStringFromDateCompose({
-      annee: getValeurOuVide(personne.anneeNaissance),
-      mois: getValeurOuVide(personne.moisNaissance),
-      jour: getValeurOuVide(personne.jourNaissance)
+      annee: personne.anneeNaissance ?? "",
+      mois: personne.moisNaissance ?? "",
+      jour: personne.jourNaissance ?? ""
     } as IDateCompose),
     lieuNaissance: LieuxUtils.getLieu(personne.villeNaissance, undefined, personne.paysNaissance)
   };
@@ -81,7 +62,7 @@ function mapActeInscription(acteInscriptionLie: any): IActeInscriptionRMCPersonn
   switch (typeFiche) {
     case ETypeFiche.RC:
     case ETypeFiche.RCA:
-      nature = getValeurOuVide(acteInscriptionLie.nature);
+      nature = acteInscriptionLie.nature ?? "";
       statutOuType = ETypeInscriptionRc[acteInscriptionLie.typeInscription as keyof typeof ETypeInscriptionRc];
       break;
     case ETypeFiche.PACS:
@@ -91,16 +72,16 @@ function mapActeInscription(acteInscriptionLie: any): IActeInscriptionRMCPersonn
         : "";
       break;
     case ETypeFiche.ACTE:
-      nature = NatureActe.getEnumFor(getValeurOuVide(acteInscriptionLie.nature)).libelle;
+      nature = NatureActe.getEnumFor(acteInscriptionLie.nature ?? "").libelle;
       statutOuType = EStatutActe[acteInscriptionLie.statut as keyof typeof EStatutActe] ?? "";
       break;
   }
 
   return {
-    idActeInscription: getValeurOuVide(acteInscriptionLie.id),
+    idActeInscription: acteInscriptionLie.id ?? "",
     nature,
-    statut: getValeurOuVide(acteInscriptionLie.statut),
-    reference: getValeurOuVide(acteInscriptionLie.reference),
+    statut: acteInscriptionLie.statut ?? "",
+    reference: acteInscriptionLie.reference ?? "",
     typeFiche,
     statutOuType
   };

@@ -1,4 +1,4 @@
-import { ETypePacsRcRca } from "@model/etatcivil/enum/ETypePacsRcRca";
+import { ETypeRcRcaPacs } from "@model/etatcivil/enum/ETypeRcRcaPacs";
 import { NatureRc } from "@model/etatcivil/enum/NatureRc";
 import { NatureRca } from "@model/etatcivil/enum/NatureRca";
 
@@ -12,7 +12,7 @@ import ChampListeDeroulante from "../../../commun/champs/ChampListeDeroulante";
 import ChampRcRcaPacs from "../../../commun/champs/ChampRcRcaPacs";
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 
-const typesRepertoire = [{ cle: "", libelle: "" }, ...enumVersOptions(ETypePacsRcRca)];
+const typesRepertoire = [{ cle: "", libelle: "" }, ...enumVersOptions(ETypeRcRcaPacs)];
 
 const BlocRcRcaPacs: React.FC = () => {
   const { values, setValues, setFieldValue } = useFormikContext<ICriteresRMC>();

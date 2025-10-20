@@ -1,6 +1,6 @@
 import { ETATCIVIL_API } from "@api/ApiDisponibles";
 import { TConfigurationApi } from "@model/api/Api";
-import { ICriteresRMCAutoActeInscription } from "@model/rmc/acteInscription/envoi/IRMCRequestActesInscriptions";
+import { IRMCAutoTitulaireDto } from "@model/rmc/acteInscription/rechercheForm/IRMCAutoTitulaireDto";
 import { IResultatRMCInscriptionDto } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 
 const URI = "/repertoirecivil/rmcauto";
@@ -11,7 +11,7 @@ interface IQuery {
 
 export const CONFIG_POST_RMC_AUTO_INSCRIPTION: TConfigurationApi<
   typeof URI,
-  ICriteresRMCAutoActeInscription,
+  IRMCAutoTitulaireDto[],
   IQuery,
   (IResultatRMCInscriptionDto<"PACS"> | IResultatRMCInscriptionDto<"RC"> | IResultatRMCInscriptionDto<"RCA">)[]
 > = {

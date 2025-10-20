@@ -106,7 +106,9 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
               <HistoriqueActionsRequete actions={requete.actions}></HistoriqueActionsRequete>
             </div>
             <div className="side right">
-              {!estModeConsultation && !affichageBoutonPrendreEnCharge && <TableauRMC requete={detailRequeteState} />}
+              {!estModeConsultation && !affichageBoutonPrendreEnCharge && (
+                <TableauRMC requete={detailRequeteState as IRequeteInformation} />
+              )}
               <ReponseReqInfo
                 requete={requete}
                 disabled={props.idRequeteAAfficher !== undefined}

@@ -1,40 +1,28 @@
-import { CONFIG_POST_RMC_AUTO_ACTE } from "@api/configurations/etatCivil/acte/PostRMCAutoActeConfigApi";
-import { CONFIG_POST_RMC_AUTO_INSCRIPTION } from "@api/configurations/etatCivil/acte/PostRMCAutoInscriptionConfigApi";
 import TRAITEMENT_RMC_ACTES_INSCRIPTIONS, { IResultatRMCActesInscriptions } from "@api/traitements/rmc/TraitementRMCActesInscriptions";
-import { getCriteresRMCAuto } from "@hook/rmcAuto/RMCAutoActesInscriptionsUtils";
+import TRAITEMENT_RMC_AUTO_ACTES_INSCRIPTIONS from "@api/traitements/rmc/TraitementRMCAutoActesInscriptions";
 import {
   ITraitementAutoRDCSParams,
   estEligibleAuTraitementAutoRDCS,
   useTraitementAutoRDCSHook
 } from "@hook/rmcAuto/TraitementAutoRDCSHook";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
-import { TRequete } from "@model/requete/IRequete";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
-import ResultatRMCInscription, { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
+import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
-import { TParamsTableauRMC, getParamsTableauRMCDepuisHeaders } from "@util/GestionDesLiensApi";
-import {
-  NB_LIGNES_PAR_APPEL_ACTE,
-  NB_LIGNES_PAR_APPEL_DEFAUT,
-  NB_LIGNES_PAR_APPEL_INSCRIPTION,
-  NB_LIGNES_PAR_PAGE_ACTE,
-  NB_LIGNES_PAR_PAGE_INSCRIPTION
-} from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router";
 import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
-import useFetchApi from "../../../../hooks/api/FetchApiHook";
 import useTraitementApi from "../../../../hooks/api/TraitementApiHook";
-import AfficherMessage from "../../../../utils/AfficherMessage";
 import { StockageLocal } from "../../../../utils/StockageLocal";
 import { RMCActeInscriptionResultats } from "../acteInscription/resultats/RMCActeInscriptionResultats";
 import { BoutonNouvelleRMCActeInscription } from "./BoutonNouvelleRMCActeInscription";
 
 interface ITableauRMCProps {
-  requete?: TRequete;
+  requete?: IRequeteDelivrance | IRequeteInformation;
   dataAlertes?: IAlerte[];
   onClickCheckboxTableauActes?: (event: TChangeEventSurHTMLInputElement, data: ResultatRMCActe) => void;
   onClickCheckboxTableauInscriptions?: (event: TChangeEventSurHTMLInputElement, data: TResultatRMCInscription) => void;
@@ -50,111 +38,44 @@ export const TableauRMC: React.FC<ITableauRMCProps> = ({ requete, ...props }) =>
   const [resultatRMCActeInscription, setResultatRMCActeInscription] = useState<IResultatRMCActesInscriptions | null>(null);
 
   /* Etats RMC Auto */
-  const [dataRMCAutoActe, setDataRMCAutoActe] = useState<ResultatRMCActe[] | null>(null);
-  const [dataRMCAutoInscription, setDataRMCAutoInscription] = useState<TResultatRMCInscription[] | null>(null);
-  const [paramsTableauRMCAutoActe, setParamsTableauRMCAutoActe] = useState<TParamsTableauRMC | null>(null);
-  const [paramsTableauRMCAutoInscription, setParamsTableauRMCAutoInscription] = useState<TParamsTableauRMC | null>(null);
-  const [tropDeResultatsRMCAuto, setTropDeResultatsRMCAuto] = useState<boolean>(false);
+  const [resultatRMCAutoActeInscription, setResultatRMCAutoActeInscription] = useState<IResultatRMCActesInscriptions | null>(null);
 
-  /* RMC Auto Actes */
-  const { appelApi: appelRMCAutoActe } = useFetchApi(CONFIG_POST_RMC_AUTO_ACTE);
+  /* Traitement RMC auto */
+  const { lancerTraitement: lancerRMCAutoActeInscription, traitementEnCours: enAttenteRMCAuto } = useTraitementApi(
+    TRAITEMENT_RMC_AUTO_ACTES_INSCRIPTIONS
+  );
 
   useEffect(() => {
     if (!requete) return;
 
-    const criteresRMCAutoActe = getCriteresRMCAuto(requete);
-
-    appelRMCAutoActe({
-      parametres: { body: criteresRMCAutoActe, query: { range: `0-${NB_LIGNES_PAR_APPEL_ACTE}` } },
-      apresSucces: (actes, headers) => {
-        setDataRMCAutoActe(actes.map(ResultatRMCActe.depuisDto).filter((acte): acte is ResultatRMCActe => acte !== null));
-        setParamsTableauRMCAutoActe(getParamsTableauRMCDepuisHeaders(headers));
-      },
-      apresErreur: (erreurs, statut) => {
-        console.error("Erreur lors de la RMC auto acte :", erreurs);
-        statut === 413
-          ? setTropDeResultatsRMCAuto(true)
-          : AfficherMessage.erreur("Une erreur est survenue lors de la recherche multi-critères automatique d'actes", {
-              erreurs,
-              fermetureAuto: true
-            });
-      }
-    });
+    lancerRMCAutoActeInscription({ parametres: { titulairesRequete: requete.titulaires }, apresSucces: setResultatRMCAutoActeInscription });
   }, [requete]);
 
-  /* RMC Auto Inscriptions */
-  const { appelApi: rmcAutoInscriptions } = useFetchApi(CONFIG_POST_RMC_AUTO_INSCRIPTION);
-
+  /* Actualisation des résultats de la RMC */
   useEffect(() => {
-    if (!requete) return;
-
-    const criteresRMCAutoInscription = getCriteresRMCAuto(requete);
-
-    rmcAutoInscriptions({
-      parametres: { body: criteresRMCAutoInscription, query: { range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}` } },
-      apresSucces: (inscriptions, headers) => {
-        setDataRMCAutoInscription(
-          inscriptions
-            .map(ResultatRMCInscription.depuisDto)
-            .filter((inscription): inscription is TResultatRMCInscription => inscription !== null)
-        );
-        setParamsTableauRMCAutoInscription(getParamsTableauRMCDepuisHeaders(headers));
-      },
-      apresErreur: (erreurs, statut) => {
-        console.error("Erreur lors de la RMC auto inscription :", erreurs);
-        statut === 413
-          ? setTropDeResultatsRMCAuto(true)
-          : AfficherMessage.erreur("Une erreur est survenue lors de la recherche multi-critères automatique de RC/RCA/PACS", {
-              erreurs,
-              fermetureAuto: true
-            });
-      }
-    });
-  }, [requete]);
-
-  useEffect(() => {
-    if (tropDeResultatsRMCAuto)
-      AfficherMessage.info(" La recherche automatique renvoie plus de 100 résultats. Veuillez affiner votre recherche.", {
-        fermetureAuto: true
-      });
-  }, [tropDeResultatsRMCAuto]);
+    if (resultatRMCAutoActeInscription) setResultatRMCActeInscription(resultatRMCAutoActeInscription);
+  }, [resultatRMCAutoActeInscription]);
 
   /* Hook traitement auto RDCS*/
   const traitementAutoRDCSParams: ITraitementAutoRDCSParams | null = useMemo(() => {
-    if (requete?.type !== TypeRequete.DELIVRANCE || !dataRMCAutoActe || !dataRMCAutoInscription || tropDeResultatsRMCAuto) return null;
-
-    const requeteDelivrance: IRequeteDelivrance = requete as IRequeteDelivrance;
+    if (requete?.type !== TypeRequete.DELIVRANCE || !resultatRMCAutoActeInscription) return null;
 
     const { autoriserTraitementAutoRDCS } = location.state ?? { autoriserTraitementAutoRDCS: true };
 
-    const lancerTraitementAutoRDCS: boolean = autoriserTraitementAutoRDCS && estEligibleAuTraitementAutoRDCS(requeteDelivrance);
+    if (!autoriserTraitementAutoRDCS || !estEligibleAuTraitementAutoRDCS(requete as IRequeteDelivrance)) return null;
 
-    return lancerTraitementAutoRDCS
-      ? {
-          requete: mappingRequeteDelivranceToRequeteTableau(requeteDelivrance),
-          urlCourante: location.pathname,
-          dataRMCAutoActe: dataRMCAutoActe,
-          dataRMCAutoInscription: dataRMCAutoInscription
-        }
-      : null;
-  }, [requete, dataRMCAutoActe, dataRMCAutoInscription]);
+    return {
+      requete: mappingRequeteDelivranceToRequeteTableau(requete as IRequeteDelivrance),
+      resultatRMCAutoActe: resultatRMCAutoActeInscription.resultatRMCActe,
+      resultatRMCAutoInscription: resultatRMCAutoActeInscription.resultatRMCInscription
+    };
+  }, [requete, resultatRMCAutoActeInscription]);
 
   const traitementAutoRDCSEnCours = useTraitementAutoRDCSHook(traitementAutoRDCSParams);
 
   /* Traitement RMC manuelle */
-  const { lancerTraitement, traitementEnCours: enAttenteRMC } = useTraitementApi(TRAITEMENT_RMC_ACTES_INSCRIPTIONS);
-
-  /* Actualisation des résultats de la RMC */
-  useEffect(() => {
-    if (!dataRMCAutoActe || !dataRMCAutoInscription || !paramsTableauRMCAutoActe || !paramsTableauRMCAutoInscription) return;
-
-    setResultatRMCActeInscription({
-      resultatRMCActe: dataRMCAutoActe,
-      resultatRMCInscription: dataRMCAutoInscription,
-      paramsTableauRMCActe: paramsTableauRMCAutoActe,
-      paramsTableauRMCInscription: paramsTableauRMCAutoInscription
-    });
-  }, [dataRMCAutoActe, dataRMCAutoInscription, paramsTableauRMCAutoActe, paramsTableauRMCAutoInscription]);
+  const { lancerTraitement: lancerRMCActeInscription, traitementEnCours: enAttenteRMC } =
+    useTraitementApi(TRAITEMENT_RMC_ACTES_INSCRIPTIONS);
 
   /* Nouvelle RMC depuis la pop up */
   const nouvelleRMCActeInscription = useCallback(
@@ -162,7 +83,7 @@ export const TableauRMC: React.FC<ITableauRMCProps> = ({ requete, ...props }) =>
       setPopinAffichee(false);
       setResetRMCActeInscription(true);
 
-      lancerTraitement({
+      lancerRMCActeInscription({
         parametres: {
           valeursFormulaire: valeurs
         },
@@ -190,12 +111,7 @@ export const TableauRMC: React.FC<ITableauRMCProps> = ({ requete, ...props }) =>
           onClickCheckboxTableauActes={props.onClickCheckboxTableauActes}
           onClickCheckboxTableauInscriptions={props.onClickCheckboxTableauInscriptions}
           resetRMC={resetRMCActeInscription}
-          nbLignesParPageActe={NB_LIGNES_PAR_PAGE_ACTE}
-          nbLignesParAppelActe={NB_LIGNES_PAR_APPEL_ACTE}
-          nbLignesParPageInscription={NB_LIGNES_PAR_PAGE_INSCRIPTION}
-          nbLignesParAppelInscription={NB_LIGNES_PAR_APPEL_INSCRIPTION}
-          rmcActeEnCours={enAttenteRMC}
-          rmcInscriptionEnCours={enAttenteRMC}
+          rmcEnCours={enAttenteRMC || enAttenteRMCAuto}
         />
       )}
       <BoutonNouvelleRMCActeInscription

@@ -2,7 +2,7 @@ import { CONFIG_GET_FICHE_INSCRIPTION } from "@api/configurations/etatCivil/repe
 import { Orientation } from "@model/composition/enum/Orientation";
 import { TypeCertificatComposition } from "@model/composition/type/TypeCertificatCompoistion";
 import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
-import { ETypePacsRcRca } from "@model/etatcivil/enum/ETypePacsRcRca";
+import { ETypeRcRcaPacs } from "@model/etatcivil/enum/ETypeRcRcaPacs";
 import { FichePacs, IFichePacsDto } from "@model/etatcivil/pacs/FichePacs";
 import { FicheRcRca, IFicheRcDto, IFicheRcaDto } from "@model/etatcivil/rcrca/FicheRcRca";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
@@ -26,7 +26,7 @@ import {
 } from "./GenerationCertificatGestionTypeCertificat";
 
 export function useGenerationCertificatPACSOuRCOuRCAHook(
-  typeCertificat: ETypePacsRcRca,
+  typeCertificat: ETypeRcRcaPacs,
   requete?: IRequeteTableauDelivrance,
   listePacsRcRca?: TResultatRMCInscription[],
   inscriptionsRcRadiation?: IInscriptionRc
@@ -116,9 +116,9 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
           typeDocument: getTypeDocument(typeCertificat),
           nbPages: compositionData.nbPages,
           orientation: Orientation.PORTRAIT,
-          idPacs: recupererIdByTypeRcRcaPacs(ETypePacsRcRca.PACS, pacsRcRcaCourant),
-          idRc: recupererIdByTypeRcRcaPacs(ETypePacsRcRca.RC, pacsRcRcaCourant),
-          idRca: recupererIdByTypeRcRcaPacs(ETypePacsRcRca.RCA, pacsRcRcaCourant)
+          idPacs: recupererIdByTypeRcRcaPacs(ETypeRcRcaPacs.PACS, pacsRcRcaCourant),
+          idRc: recupererIdByTypeRcRcaPacs(ETypeRcRcaPacs.RC, pacsRcRcaCourant),
+          idRca: recupererIdByTypeRcRcaPacs(ETypeRcRcaPacs.RCA, pacsRcRcaCourant)
         } as IDocumentReponse
       ]);
     }
@@ -148,6 +148,6 @@ export function useGenerationCertificatPACSOuRCOuRCAHook(
   return resultGenerationCertificat;
 }
 
-const recupererIdByTypeRcRcaPacs = (type: ETypePacsRcRca, pacsRcRcaCourant?: TResultatRMCInscription): string | null => {
+const recupererIdByTypeRcRcaPacs = (type: ETypeRcRcaPacs, pacsRcRcaCourant?: TResultatRMCInscription): string | null => {
   return pacsRcRcaCourant?.categorie === type ? pacsRcRcaCourant.id : null;
 };

@@ -1,12 +1,14 @@
 import { IRMCPersonneResultat } from "@hook/rmcAuto/IRMCPersonneResultat";
-import { IRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneApiHook";
-import { mapTitulaireVersRMCAutoPersonneParams } from "@hook/rmcAuto/RMCAutoPersonneUtils";
 import { getTypeRedactionActeParSousTypeCreation } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { RolePersonneSauvegardee } from "@model/requete/enum/RolePersonneSauvegardee";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { ITypePieceJustificative, TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
+import {
+  IRMCAutoTitulaireDto,
+  titulaireRequeteVersRMCAutoTitulaireDto
+} from "@model/rmc/acteInscription/rechercheForm/IRMCAutoTitulaireDto";
 import { IDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/IDataTableauRMCPersonne";
 import { TableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonne";
 import { mapDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
@@ -31,7 +33,7 @@ import {
 } from "./OngletRMCPersonneUtils";
 import "./scss/OngletRMCPersonne.scss";
 
-interface OngletRMCPersonneProps {
+interface IOngletRMCPersonneProps {
   sousTypeRequete?: SousTypeCreation;
   natureActeRequete: NatureActeRequete;
   resultatRMCPersonne: IRMCPersonneResultat[];
@@ -42,13 +44,12 @@ interface OngletRMCPersonneProps {
   setDataActesInscriptionsSelectionnes: React.Dispatch<React.SetStateAction<IDataTableauActeInscriptionSelectionne[] | undefined>>;
   tableauRMCPersonneEnChargement: boolean;
   tableauPersonnesSelectionneesEnChargement?: boolean;
-  tableauActesInscriptionsSelectionnesEnChargement: boolean;
-  setRmcAutoPersonneParams: React.Dispatch<React.SetStateAction<IRMCAutoPersonneParams | undefined>>;
+  setCriteresRMCAutoPersonne: React.Dispatch<React.SetStateAction<IRMCAutoTitulaireDto | undefined>>;
   onSavePersonneEtActeInscription?: () => void;
   idRequeteParam?: string;
 }
 
-export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
+export const OngletRMCPersonne: React.FC<IOngletRMCPersonneProps> = props => {
   const { isDirty } = useContext(RECEContextData);
   const { setIsDirty } = useContext(RECEContextActions);
 
@@ -109,7 +110,7 @@ export const OngletRMCPersonne: React.FC<OngletRMCPersonneProps> = props => {
   function handleClickMenuItemRMCPersonneRequete(idTitulaire: string) {
     const titulaire = props.listeTitulaires?.filter(titulaireCourant => titulaireCourant.id === idTitulaire).pop();
     if (titulaire) {
-      props.setRmcAutoPersonneParams(mapTitulaireVersRMCAutoPersonneParams(titulaire));
+      props.setCriteresRMCAutoPersonne(titulaireRequeteVersRMCAutoTitulaireDto(titulaire));
     }
   }
 

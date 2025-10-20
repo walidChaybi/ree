@@ -1,4 +1,4 @@
-import { ETypePacsRcRca } from "../enum/ETypePacsRcRca";
+import { ETypeRcRcaPacs } from "../enum/ETypeRcRcaPacs";
 
 export enum DocumentDecret {
   ATTESTATION_PACS = "ATTESTATION_PACS",
@@ -13,7 +13,7 @@ export interface IDecret {
   ordre: number;
   libelle: string;
   principal: boolean;
-  type: ETypePacsRcRca;
+  type: ETypeRcRcaPacs;
 }
 
 export const Decret = {
@@ -30,15 +30,15 @@ export const Decret = {
   },
 
   getDecretsCertificatSituationPacs(decrets: IDecret[]): IDecret[] {
-    return this.getDecrets(decrets, DocumentDecret.CERTIFICAT_SITUATION).filter(d => d.type === ETypePacsRcRca.PACS);
+    return this.getDecrets(decrets, DocumentDecret.CERTIFICAT_SITUATION).filter(d => d.type === ETypeRcRcaPacs.PACS);
   },
 
   getDecretsCertificatSituationRC(decrets: IDecret[]): IDecret[] {
-    return this.getDecrets(decrets, DocumentDecret.CERTIFICAT_SITUATION).filter(d => d.type === ETypePacsRcRca.RC);
+    return this.getDecrets(decrets, DocumentDecret.CERTIFICAT_SITUATION).filter(d => d.type === ETypeRcRcaPacs.RC);
   },
 
   getDecretsCertificatSituationRCA(decrets: IDecret[]): IDecret[] {
-    return this.getDecrets(decrets, DocumentDecret.CERTIFICAT_SITUATION).filter(d => d.type === ETypePacsRcRca.RCA);
+    return this.getDecrets(decrets, DocumentDecret.CERTIFICAT_SITUATION).filter(d => d.type === ETypeRcRcaPacs.RCA);
   },
 
   getDecretInscriptionRC(decrets: IDecret[]): IDecret {
@@ -49,17 +49,17 @@ export const Decret = {
     return this.getDecrets(decrets, DocumentDecret.CERTIFICAT_INSCRIPTION_RCA)[0];
   },
 
-  getEnumTypeDecretFrom(typeDecretStr: string): ETypePacsRcRca | undefined {
-    let typeDecret: ETypePacsRcRca | undefined;
+  getEnumTypeDecretFrom(typeDecretStr: string): ETypeRcRcaPacs | undefined {
+    let typeDecret: ETypeRcRcaPacs | undefined;
     switch (typeDecretStr) {
       case "RC":
-        typeDecret = ETypePacsRcRca.RC;
+        typeDecret = ETypeRcRcaPacs.RC;
         break;
       case "RCA":
-        typeDecret = ETypePacsRcRca.RCA;
+        typeDecret = ETypeRcRcaPacs.RCA;
         break;
       case "PACS":
-        typeDecret = ETypePacsRcRca.PACS;
+        typeDecret = ETypeRcRcaPacs.PACS;
         break;
     }
 

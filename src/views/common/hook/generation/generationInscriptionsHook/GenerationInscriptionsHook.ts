@@ -1,4 +1,4 @@
-import { ETypePacsRcRca } from "@model/etatcivil/enum/ETypePacsRcRca";
+import { ETypeRcRcaPacs } from "@model/etatcivil/enum/ETypeRcRcaPacs";
 import { FichePacs } from "@model/etatcivil/pacs/FichePacs";
 import { FicheRcRca } from "@model/etatcivil/rcrca/FicheRcRca";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
@@ -40,7 +40,7 @@ export function useGenerationInscriptionsHook(
 
   // 1.1 - Génération d'une ou des incriptions RC
   const resultGenerationCertificatRC = useGenerationCertificatPACSOuRCOuRCAHook(
-    ETypePacsRcRca.RC,
+    ETypeRcRcaPacs.RC,
     requete,
     listeRC,
     inscriptionsRcRadiation
@@ -61,7 +61,7 @@ export function useGenerationInscriptionsHook(
   }, [resultGenerationCertificatRC]);
 
   // 2.1 Génération d'une ou des incriptions RCA
-  const resultGenerationCertificatRCA = useGenerationCertificatPACSOuRCOuRCAHook(ETypePacsRcRca.RCA, requete, listeRCA);
+  const resultGenerationCertificatRCA = useGenerationCertificatPACSOuRCOuRCAHook(ETypeRcRcaPacs.RCA, requete, listeRCA);
 
   // 3 - Stockage en mémoire des RCA générés
   //   - On récupère les PACS
@@ -78,7 +78,7 @@ export function useGenerationInscriptionsHook(
   }, [resultGenerationCertificatRCA]);
 
   // 3.1 Génération d'une ou des incriptions PACS
-  const resultGenerationCertificatPACS = useGenerationCertificatPACSOuRCOuRCAHook(ETypePacsRcRca.PACS, requete, listePACS);
+  const resultGenerationCertificatPACS = useGenerationCertificatPACSOuRCOuRCAHook(ETypeRcRcaPacs.PACS, requete, listePACS);
 
   // 4 - Maj du state résultat 'resultGenerationInscription' pour invoquer ensuite la génération du certificat de situation général (cf. DelivrerCertificatSituationHook.ts)
   useEffect(() => {

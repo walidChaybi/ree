@@ -1,8 +1,8 @@
 /* v8 ignore start */
+import { ETypeRcRcaPacs } from "@model/etatcivil/enum/ETypeRcRcaPacs";
 import { Option } from "@util/Type";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
-import { TypeRepertoire } from "../../etatcivil/enum/TypeRepertoire";
 import { ChoixDelivrance } from "./ChoixDelivrance";
 
 const CATEGORIE_DOCUMENT_DELIVRANCE = "DOCUMENT_DELIVRANCE";
@@ -105,28 +105,28 @@ export class DocumentDelivrance {
   private static controleDocumentDelivranceSelonTypeRepertoire(codeDocumentDemande: string, categorieInscription: string): boolean {
     switch (codeDocumentDemande) {
       case ECodeDocumentDelivrance.CODE_ATTESTATION_PACS:
-        return TypeRepertoire.PACS.libelle === categorieInscription;
+        return ETypeRcRcaPacs.PACS === categorieInscription;
 
       case ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS:
-        return TypeRepertoire.PACS.libelle === categorieInscription;
+        return ETypeRcRcaPacs.PACS === categorieInscription;
 
       case ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS_RC:
-        return TypeRepertoire.PACS.libelle === categorieInscription || TypeRepertoire.RC.libelle === categorieInscription;
+        return ETypeRcRcaPacs.PACS === categorieInscription || ETypeRcRcaPacs.RC === categorieInscription;
 
       case ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS_RCA:
-        return TypeRepertoire.PACS.libelle === categorieInscription || TypeRepertoire.RCA.libelle === categorieInscription;
+        return ETypeRcRcaPacs.PACS === categorieInscription || ETypeRcRcaPacs.RCA === categorieInscription;
 
       case ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_PACS_RC_RCA:
         return true;
 
       case ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_RC:
-        return TypeRepertoire.RC.libelle === categorieInscription;
+        return ETypeRcRcaPacs.RC === categorieInscription;
 
       case ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_RCA:
-        return TypeRepertoire.RCA.libelle === categorieInscription;
+        return ETypeRcRcaPacs.RCA === categorieInscription;
 
       case ECodeDocumentDelivrance.CODE_CERTIFICAT_SITUATION_RC_RCA:
-        return TypeRepertoire.RC.libelle === categorieInscription || TypeRepertoire.RCA.libelle === categorieInscription;
+        return ETypeRcRcaPacs.RC === categorieInscription || ETypeRcRcaPacs.RCA === categorieInscription;
 
       default:
         return false;

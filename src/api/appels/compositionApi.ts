@@ -1,6 +1,6 @@
 import { IContenuReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
 import { IExtraitCopieComposition } from "@model/composition/extraitCopie/IExtraitCopieComposition";
-import { ETypePacsRcRca } from "@model/etatcivil/enum/ETypePacsRcRca";
+import { ETypeRcRcaPacs } from "@model/etatcivil/enum/ETypeRcRcaPacs";
 import { NatureActe } from "@model/etatcivil/enum/NatureActe";
 import { ApiManager, HttpMethod } from "../ApiManager";
 
@@ -35,18 +35,18 @@ function getCompositionCertificatSituation(obj: any): Promise<any> {
   return getComposition(URL_COMPOSITION_CERTIFICAT_SITUATION, obj);
 }
 
-function getCompositionCertificatPacsRcRca(obj: any, typeCertificat: ETypePacsRcRca): Promise<any> {
+function getCompositionCertificatPacsRcRca(obj: any, typeCertificat: ETypeRcRcaPacs): Promise<any> {
   let fonctionAAppeler: any;
   switch (typeCertificat) {
-    case ETypePacsRcRca.PACS:
+    case ETypeRcRcaPacs.PACS:
       fonctionAAppeler = getCompositionCertificatPACS;
       break;
 
-    case ETypePacsRcRca.RC:
+    case ETypeRcRcaPacs.RC:
       fonctionAAppeler = getCompositionCertificatRC;
       break;
 
-    case ETypePacsRcRca.RCA:
+    case ETypeRcRcaPacs.RCA:
       fonctionAAppeler = getCompositionCertificatRCA;
       break;
 
