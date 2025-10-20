@@ -4,7 +4,6 @@ import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { waitFor } from "@testing-library/react";
 import { expect, test } from "vitest";
-import { actions } from "../../mock/data/Actions";
 
 test("Attendu: RequeteDelivrance.getDocumentsDeDelivrance fonctionne correctement", () => {
   let documentDelivrance: IDocumentReponse;
@@ -47,34 +46,4 @@ test("estAuStatutASigner", () => {
     }
   } as IRequeteDelivrance;
   expect(RequeteDelivrance.estAuStatutASigner(requete)).toBeFalsy();
-});
-
-test("RequeteDelivrance.estARevoir DOIT retourner VRAI QUAND une action à revoir est présente en dernier ou avant des actions 'a signer sinon FAUX'", () => {
-  expect(RequeteDelivrance.estARevoir({ actions: [] } as any as IRequeteDelivrance)).toBeFalsy();
-
-  expect(RequeteDelivrance.estARevoir({ actions } as IRequeteDelivrance)).toBeTruthy();
-
-  expect(
-    RequeteDelivrance.estARevoir({
-      actions: [...actions, { libelle: "À revoir", numeroOrdre: 7 }]
-    } as IRequeteDelivrance)
-  ).toBeTruthy();
-
-  expect(
-    RequeteDelivrance.estARevoir({
-      actions: [actions[0]]
-    } as IRequeteDelivrance)
-  ).toBeFalsy();
-
-  expect(
-    RequeteDelivrance.estARevoir({
-      actions: [actions[0], actions[1]]
-    } as IRequeteDelivrance)
-  ).toBeFalsy();
-
-  expect(
-    RequeteDelivrance.estARevoir({
-      actions: [...actions, { libelle: "Requête transmise", numeroOrdre: 7 }]
-    } as IRequeteDelivrance)
-  ).toBeFalsy();
 });

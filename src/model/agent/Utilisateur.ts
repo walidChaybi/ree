@@ -2,7 +2,7 @@ import { Option } from "@util/Type";
 import Texte from "../../utils/Texte";
 import { Droit } from "./enum/Droit";
 
-export const UTILISATEUR_SYSTEME = "Système RECE";
+export const UTILISATEUR_SYSTEME = "RECE Système";
 
 interface IServiceUtilisateurParentDto {
   serviceParent: IServiceUtilisateurDto;

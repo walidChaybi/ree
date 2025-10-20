@@ -1,7 +1,5 @@
-import { UTILISATEUR_SYSTEME } from "@model/agent/Utilisateur";
-import { IAction } from "@model/requete/IActions";
+import { ActionRequete } from "@model/requete/ActionRequete";
 import { TagPriorisation } from "@model/requete/enum/TagPriorisation";
-import DateUtils from "@util/DateUtils";
 import { estRenseigne, formatLigne, getValeurOuVide } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import React from "react";
@@ -36,7 +34,7 @@ export interface ItemRequeteProps {
   dossierSignaleInfos?: string;
   campagneInfos?: string;
   nomInstitution?: string;
-  actions: IAction[];
+  actions: ActionRequete[];
 }
 
 const ItemRequete: React.FC<ItemRequeteProps> = props => {
@@ -67,11 +65,6 @@ const ItemRequete: React.FC<ItemRequeteProps> = props => {
   ]);
 
   const texteSpecificite = formatLigneSpecificite([props.natureDANF, specificite], " • ");
-
-  const getFormatLigneHistoriqueSdanf = (libelle: string, date?: string, nomUtilisateur?: string, prenomUtilisateur?: string) =>
-    `${libelle} - ${date}`.concat(
-      `${prenomUtilisateur} ${nomUtilisateur}` === UTILISATEUR_SYSTEME ? "" : `- ${prenomUtilisateur} ${nomUtilisateur}`
-    );
 
   const TitreTag = () => {
     return (
@@ -137,14 +130,7 @@ const ItemRequete: React.FC<ItemRequeteProps> = props => {
         >
           <div className="ligneSdanfContainer">
             {props.actions.map(action => (
-              <ItemLigne
-                texte={getFormatLigneHistoriqueSdanf(
-                  action.libelle,
-                  DateUtils.getDateString(DateUtils.getDateFromTimestamp(action.dateAction)),
-                  action.nomUtilisateur,
-                  action.prenomUtilisateur
-                )}
-              />
+              <ItemLigne texte={action.phraseHistorique} />
             ))}
           </div>
         </Item>

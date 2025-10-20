@@ -1,8 +1,8 @@
 import { getDetailRequete } from "@api/appels/requeteApi";
 import { Utilisateur } from "@model/agent/Utilisateur";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
+import { ActionRequete } from "@model/requete/ActionRequete";
 import { CategorieDocument } from "@model/requete/CategorieDocument";
-import { IAction } from "@model/requete/IActions";
 import { DocumentPJ, IDocumentPJ } from "@model/requete/IDocumentPj";
 import { IEchange } from "@model/requete/IEchange";
 import { IEvenementRequete } from "@model/requete/IEvenementRequete";
@@ -134,7 +134,7 @@ export function mappingRequeteDelivrance(data: any, utilisateurs?: Utilisateur[]
     mandant: data.mandant ? getMandant(data.mandant) : undefined,
     idUtilisateur: data.idUtilisateur,
     idService: data.idService,
-    actions: getActions(data?.actions, utilisateurs),
+    actions: ActionRequete.depuisDtos(data.actions),
     observations: data.observations ? getObservations(data.observations, utilisateurs) : undefined,
     piecesJustificatives: mapPiecesJustificatives(data.piecesJustificatives),
     numeroRequeteOrigine: data.numeroRequeteOrigine,
@@ -169,19 +169,6 @@ function mapUnePieceJustificative(piece?: any): IPieceJustificative {
 
 function mapPiecesJustificatives(pieces?: any): IPieceJustificative[] {
   return pieces?.map((pj: any) => mapUnePieceJustificative(pj));
-}
-
-function getActions(actions: any, utilisateurs?: Utilisateur[]): IAction[] {
-  const actionsRequete: IAction[] = [];
-  actions.forEach((a: any) => {
-    const action = a as IAction;
-    const trigramme = utilisateurs?.find(utilisateur => utilisateur.id === action?.idUtilisateur)?.prenomNom ?? "";
-    action.trigramme = trigramme ?? "";
-    action.nomUtilisateur = a.nomUtilisateur ? a.nomUtilisateur : "";
-    action.prenomUtilisateur = a.prenomUtilisateur ? a.prenomUtilisateur : "";
-    actionsRequete.push(action);
-  });
-  return actionsRequete;
 }
 
 function getObservations(observations: any, utilisateurs?: Utilisateur[]): IObservation[] {
@@ -260,7 +247,7 @@ function mappingRequete(data: any, utilisateurs?: Utilisateur[]) {
     idService: data.idService,
     observations: data.observations ? getObservations(data.observations, utilisateurs) : undefined,
     canal: TypeCanal.getEnumFor(data.canal),
-    actions: getActions(data?.actions, utilisateurs),
+    actions: ActionRequete.depuisDtos(data.actions),
     numeroRequeteOrigine: data.numeroRequeteOrigine
   };
 }
@@ -371,7 +358,8 @@ export function mappingRequeteCreation(data: any, utilisateurs?: Utilisateur[]):
     provenance: Provenance.getEnumFor(data.provenance),
     titulaires: mapTitulairesCreation(requete.titulaires),
     natureActeTranscrit,
-    personnesSauvegardees: mapPersonnesSauvegardees(data.personnesSauvegardees || undefined, estRequeteMariage)
+    personnesSauvegardees: mapPersonnesSauvegardees(data.personnesSauvegardees || undefined, estRequeteMariage),
+    actions: ActionRequete.depuisDtos(data.actions)
   };
 }
 

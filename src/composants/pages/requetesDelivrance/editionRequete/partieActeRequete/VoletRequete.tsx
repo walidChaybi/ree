@@ -1,6 +1,5 @@
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ResumeRequetePartieHaute } from "@pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequetePartieHaute";
-import DateUtils from "@util/DateUtils";
 import { UN } from "@util/Utils";
 import React from "react";
 import ConteneurAccordeon from "../../../../commun/conteneurs/accordeon/ConteneurAccordeon";
@@ -36,9 +35,7 @@ const VoletRequete: React.FC<IVoletRequeteProps> = ({ requete }) => (
         {requete.actions
           ?.sort((actA, actB) => (actA.numeroOrdre > actB.numeroOrdre ? UN : -UN))
           .map(action => (
-            <div key={action.id}>{`${action.libelle} - ${DateUtils.getFormatDateFromTimestamp(action.dateAction)} ${
-              action.trigramme && action.trigramme !== "RECE Système" ? ` - ${action.trigramme}` : ""
-            }`}</div>
+            <div key={action.id}>{action.phraseHistorique}</div>
           ))}
       </div>
     </ConteneurAccordeon>

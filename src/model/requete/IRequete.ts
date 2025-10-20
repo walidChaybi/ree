@@ -1,7 +1,7 @@
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 /* istanbul ignore file */
 import DateUtils from "@util/DateUtils";
-import { IAction } from "./IActions";
+import { ActionRequete } from "./ActionRequete";
 import { IEvenementRequete } from "./IEvenementRequete";
 import { IObservation } from "./IObservation";
 import { IRequerant } from "./IRequerant";
@@ -31,7 +31,7 @@ export interface IRequete {
   idUtilisateur: string;
   idService: string;
   observations?: IObservation[];
-  actions?: IAction[];
+  actions: ActionRequete[];
   numeroRequeteOrigine?: string;
   piecesJustificatives?: IPieceJustificative[];
 }

@@ -1,31 +1,32 @@
-import { IAction } from "@model/requete/IActions";
+import { ActionRequete } from "@model/requete/ActionRequete";
+import { ListItemText } from "@mui/material";
 import List from "@mui/material/List";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import React from "react";
-import { ActionRequete } from "./ActionRequete";
 import "./scss/Suivis.scss";
 
-interface HistoriqueActionsRequeteProps {
-  actions?: IAction[];
+//TODO Supprimer ce composant et utiliser le nouveau une fois la refonte de la page effectué
+
+interface IHistoriqueActionsRequeteProps {
+  actions?: ActionRequete[];
 }
 
-export const HistoriqueActionsRequete: React.FC<HistoriqueActionsRequeteProps> = props => (
-  <div className="historique-actions">
-    <AccordionRece
-      titre={"Historique des actions"}
-      disabled={false}
-      expanded={false}
-    >
-      <List>
-        {props.actions
-          ?.sort((a, b) => (a.numeroOrdre > b.numeroOrdre ? -1 : 1))
-          .map(el => (
-            <ActionRequete
-              key={el.id}
-              action={el}
-            />
+export const HistoriqueActionsRequete: React.FC<IHistoriqueActionsRequeteProps> = ({ actions }) => {
+  return actions ? (
+    <div className="historique-actions">
+      <AccordionRece
+        titre={"Historique des actions"}
+        disabled={false}
+        expanded={false}
+      >
+        <List>
+          {actions.map(action => (
+            <ListItemText>{action.phraseHistorique}</ListItemText>
           ))}
-      </List>
-    </AccordionRece>
-  </div>
-);
+        </List>
+      </AccordionRece>
+    </div>
+  ) : (
+    <></>
+  );
+};

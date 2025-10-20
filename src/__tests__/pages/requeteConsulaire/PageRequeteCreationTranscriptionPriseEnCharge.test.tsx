@@ -27,7 +27,7 @@ describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
 
     MockApi.deployer(
       CONFIG_GET_DETAIL_REQUETE,
-      { path: { idRequete: "3ed9aa4e-921b-489f-b8fe-531dd703c60c" }, query: { isConsultationHistoriqueAction: false } },
+      { path: { idRequete: "3ed9aa4e-921b-489f-b8fe-531dd703c60c" }, query: { isConsultationHistoriqueAction: true } },
       {
         data: { ...requeteCreationTranscription }
       }
@@ -71,7 +71,7 @@ describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
 
     MockApi.deployer(
       CONFIG_GET_DETAIL_REQUETE,
-      { path: { idRequete: "3ed9aa4e-921b-489f-b8fe-531dd703c60c" }, query: { isConsultationHistoriqueAction: false } },
+      { path: { idRequete: "3ed9aa4e-921b-489f-b8fe-531dd703c60c" }, query: { isConsultationHistoriqueAction: true } },
       {
         data: {
           ...requeteCreationTranscription,

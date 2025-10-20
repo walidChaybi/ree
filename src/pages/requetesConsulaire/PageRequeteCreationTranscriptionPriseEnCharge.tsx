@@ -15,6 +15,7 @@ import AccessibleAvecDroits from "../../composants/commun/accessibleAvecDroits/A
 import Bouton from "../../composants/commun/bouton/Bouton";
 import PageChargeur from "../../composants/commun/chargeurs/PageChargeur";
 import OngletsBouton from "../../composants/commun/onglets/OngletsBouton";
+import HistoriqueActionsRequete from "../../composants/commun/suivi/HistoriqueActionsRequete";
 import ResumeDetailsRequete from "../../composants/pages/requetesConsulaire/commun/ResumeDetailsRequete";
 import ConteneurVoletEdition from "../../composants/pages/requetesDelivrance/editionRequete/ConteneurVoletEdition";
 import { RECEContextActions, RECEContextData } from "../../contexts/RECEContextProvider";
@@ -70,7 +71,7 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
           idRequete: idRequeteParam
         },
         query: {
-          isConsultationHistoriqueAction: false
+          isConsultationHistoriqueAction: true
         }
       },
       apresSucces: data => {
@@ -128,7 +129,7 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
               idRequete: requete.id
             },
             query: {
-              isConsultationHistoriqueAction: false
+              isConsultationHistoriqueAction: true
             }
           },
           apresSucces: data => {
@@ -177,6 +178,8 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
                   requete={requete}
                   nombreColonnes={2}
                 />
+
+                <HistoriqueActionsRequete actions={requete.actions} />
 
                 <AccessibleAvecDroits auMoinsUnDesDroits={[Droit.CONSULTER]}>
                   <div className="mb-4 mr-4 mt-4">

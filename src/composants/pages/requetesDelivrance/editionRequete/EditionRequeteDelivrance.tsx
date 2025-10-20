@@ -1,5 +1,5 @@
-import { Action } from "@model/requete/IActions";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { chainesEgalesIgnoreCasse } from "@util/Utils";
 import { useContext, useEffect, useRef, useState } from "react";
 import { EditionDelivranceContext } from "../../../../contexts/EditionDelivranceContextProvider";
 import PartieActeRequete, { ECleOngletRequete } from "./partieActeRequete/PartieActeRequete";
@@ -9,8 +9,9 @@ const EditionRequeteDelivrance: React.FC = () => {
   const { acte, requete } = useContext(EditionDelivranceContext);
 
   const getOngletActifActeRequeteParDefaut = () => {
+    const libelleActionEstARevoir = requete?.actions && chainesEgalesIgnoreCasse(requete?.actions.at(-2)?.libelle, "a revoir");
     switch (true) {
-      case Action.estARevoir(Action.getActionsDansLOrdre(requete.actions).at(-2)):
+      case libelleActionEstARevoir:
         return ECleOngletRequete.REQUETE;
       case Boolean(acte):
         return ECleOngletRequete.ACTE;
