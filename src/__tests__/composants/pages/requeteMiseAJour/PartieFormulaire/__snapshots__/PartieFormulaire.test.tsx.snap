@@ -408,7 +408,6 @@ exports[`Tests PartieFormulaire > Mettre à jour le formulaire d'analyse margina
                           <input
                             class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                             id="nom"
-                            maxlength="100"
                             name="nom"
                             value="Nom Titulaire"
                           />
@@ -464,7 +463,6 @@ exports[`Tests PartieFormulaire > Mettre à jour le formulaire d'analyse margina
                       <input
                         class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                         id="prenoms.prenom1"
-                        maxlength="100"
                         name="prenoms.prenom1"
                         type="text"
                         value="Prenom 1"
@@ -525,7 +523,6 @@ exports[`Tests PartieFormulaire > Mettre à jour le formulaire d'analyse margina
                         <input
                           class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                           id="prenoms.prenom2"
-                          maxlength="100"
                           name="prenoms.prenom2"
                           value="Prenom 2"
                         />
@@ -574,7 +571,6 @@ exports[`Tests PartieFormulaire > Mettre à jour le formulaire d'analyse margina
                         <input
                           class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                           id="prenoms.prenom3"
-                          maxlength="100"
                           name="prenoms.prenom3"
                           value="Prenom 3"
                         />
@@ -628,7 +624,6 @@ exports[`Tests PartieFormulaire > Mettre à jour le formulaire d'analyse margina
                     <input
                       class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                       id="motif"
-                      maxlength="100"
                       name="motif"
                       type="text"
                       value=""

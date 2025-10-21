@@ -27,7 +27,6 @@ export const DOUZE = 12;
 export const QUINZE = 15;
 export const SEIZE = 16;
 export const VINGT = 20;
-export const CENT = 100;
 export const DIX_MILLE = 10000;
 
 export const CAR_ETOILE = "*";

@@ -1,4 +1,3 @@
-import { CENT } from "@util/Utils";
 import { ErrorMessage, useField } from "formik";
 import { Ref, useCallback, useMemo } from "react";
 import { CHAMP_EN_ERREUR } from "../formulaire/ScrollVersErreur";
@@ -92,7 +91,7 @@ const ChampTexte: React.FC<TChampsTexteProps> = ({
           id={name}
           ref={refChamp}
           className={`border-1 flex w-full flex-grow rounded border border-solid px-2 py-1 ${boutonChamp?.estAGauche ? "pl-12" : ""} transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
-          maxLength={maxLength ?? CENT}
+          maxLength={maxLength}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             const regexTexte = numerique ? /\D/ : regex;
             if (regexTexte) {

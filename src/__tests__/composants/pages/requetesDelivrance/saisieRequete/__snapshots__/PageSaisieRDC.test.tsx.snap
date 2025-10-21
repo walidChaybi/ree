@@ -429,7 +429,6 @@ exports[`Bloc mandant > DOIT afficher le bloc mandant 1`] = `
           <input
             class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
             id="mandant.nom"
-            maxlength="100"
             name="mandant.nom"
             value=""
           />
@@ -450,7 +449,6 @@ exports[`Bloc mandant > DOIT afficher le bloc mandant 1`] = `
           <input
             class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
             id="mandant.prenom"
-            maxlength="100"
             name="mandant.prenom"
             value=""
           />
@@ -714,7 +712,6 @@ exports[`Formulaire saisie RDC - affichage des blocs > DOIT afficher le formulai
                         class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                         id="requete.nbExemplaire"
                         max="5"
-                        maxlength="100"
                         min="1"
                         name="requete.nbExemplaire"
                         type="number"
@@ -1445,7 +1442,6 @@ exports[`Formulaire saisie RDC - affichage des blocs > DOIT afficher le formulai
                             class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                             id="requete.nbExemplaire"
                             max="5"
-                            maxlength="100"
                             min="1"
                             name="requete.nbExemplaire"
                             type="number"

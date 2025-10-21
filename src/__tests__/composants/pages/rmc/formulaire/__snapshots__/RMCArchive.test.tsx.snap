@@ -78,7 +78,6 @@ exports[`RMCArchive > doit afficher correctement le formulaire (snapshot) 1`] = 
                         <input
                           class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                           id="titulaire.nom"
-                          maxlength="100"
                           name="titulaire.nom"
                           value=""
                         />
@@ -143,7 +142,6 @@ exports[`RMCArchive > doit afficher correctement le formulaire (snapshot) 1`] = 
                       <input
                         class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                         id="titulaire.prenom"
-                        maxlength="100"
                         name="titulaire.prenom"
                         value=""
                       />
@@ -249,7 +247,6 @@ exports[`RMCArchive > doit afficher correctement le formulaire (snapshot) 1`] = 
                       <input
                         class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                         id="titulaire.paysNaissance"
-                        maxlength="100"
                         name="titulaire.paysNaissance"
                         value=""
                       />
@@ -382,7 +379,6 @@ exports[`RMCArchive > doit afficher correctement le formulaire (snapshot) 1`] = 
                       <input
                         class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                         id="evenement.paysEvenement"
-                        maxlength="100"
                         name="evenement.paysEvenement"
                         value=""
                       />

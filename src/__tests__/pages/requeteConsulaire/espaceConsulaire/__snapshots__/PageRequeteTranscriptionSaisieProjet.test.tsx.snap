@@ -591,7 +591,6 @@ pays
                                 <input
                                   class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                   id="titulaire.nomActeEtranger"
-                                  maxlength="100"
                                   name="titulaire.nomActeEtranger"
                                   value="dupont"
                                 />
@@ -643,7 +642,6 @@ pays
                               class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               disabled=""
                               id="titulaire.nomSouhaite"
-                              maxlength="100"
                               name="titulaire.nomSouhaite"
                               value=""
                             />
@@ -669,7 +667,6 @@ pays
                             <input
                               class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               id="titulaire.nomRetenuOEC"
-                              maxlength="100"
                               name="titulaire.nomRetenuOEC"
                               value=""
                             />
@@ -700,7 +697,6 @@ pays
                               <input
                                 class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                 id="titulaire.prenomsChemin.prenom1"
-                                maxlength="100"
                                 name="titulaire.prenomsChemin.prenom1"
                                 type="text"
                                 value="paul"
@@ -949,7 +945,6 @@ pays
                               <input
                                 class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                 id="titulaire.lieuNaissance.ville"
-                                maxlength="100"
                                 name="titulaire.lieuNaissance.ville"
                                 value="nantes"
                               />
@@ -971,7 +966,6 @@ pays
                             <input
                               class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               id="titulaire.lieuNaissance.region"
-                              maxlength="100"
                               name="titulaire.lieuNaissance.region"
                               value="regionNaissance"
                             />
@@ -992,7 +986,6 @@ pays
                             <input
                               class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               id="titulaire.lieuNaissance.pays"
-                              maxlength="100"
                               name="titulaire.lieuNaissance.pays"
                               value="paysNaissance"
                             />
@@ -1013,7 +1006,6 @@ pays
                             <input
                               class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               id="titulaire.lieuNaissance.adresse"
-                              maxlength="100"
                               name="titulaire.lieuNaissance.adresse"
                               value=""
                             />
@@ -1098,7 +1090,6 @@ pays
                             <input
                               class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               id="parents.parent1.nom"
-                              maxlength="100"
                               name="parents.parent1.nom"
                               value="nomUsage"
                             />
@@ -1122,7 +1113,6 @@ pays
                               <input
                                 class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                 id="parents.parent1.prenomsChemin.prenom1"
-                                maxlength="100"
                                 name="parents.parent1.prenomsChemin.prenom1"
                                 type="text"
                                 value="Yann"
@@ -1416,7 +1406,6 @@ pays
                                   <input
                                     class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                     id="parents.parent1.lieuNaissance.ville"
-                                    maxlength="100"
                                     name="parents.parent1.lieuNaissance.ville"
                                     value="villeNaissance"
                                   />
@@ -1438,7 +1427,6 @@ pays
                                 <input
                                   class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                   id="parents.parent1.lieuNaissance.etatProvince"
-                                  maxlength="100"
                                   name="parents.parent1.lieuNaissance.etatProvince"
                                   value="regionNaissance"
                                 />
@@ -1460,7 +1448,6 @@ pays
                                   <input
                                     class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                     id="parents.parent1.lieuNaissance.pays"
-                                    maxlength="100"
                                     name="parents.parent1.lieuNaissance.pays"
                                     value="paysNaissance"
                                   />
@@ -1497,7 +1484,6 @@ pays
                               class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               data-testid="parents.parent1-profession"
                               id="parents.parent1.profession"
-                              maxlength="100"
                               name="parents.parent1.profession"
                               value=""
                             />
@@ -1655,7 +1641,6 @@ pays
                                     <input
                                       class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                       id="parents.parent1.domicile.ville"
-                                      maxlength="100"
                                       name="parents.parent1.domicile.ville"
                                       value="ville"
                                     />
@@ -1677,7 +1662,6 @@ pays
                                   <input
                                     class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                     id="parents.parent1.domicile.etatProvince"
-                                    maxlength="100"
                                     name="parents.parent1.domicile.etatProvince"
                                     value=""
                                   />
@@ -1699,7 +1683,6 @@ pays
                                     <input
                                       class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                       id="parents.parent1.domicile.pays"
-                                      maxlength="100"
                                       name="parents.parent1.domicile.pays"
                                       value="pays"
                                     />
@@ -1722,7 +1705,6 @@ pays
                                     <input
                                       class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                       id="parents.parent1.domicile.adresse"
-                                      maxlength="100"
                                       name="parents.parent1.domicile.adresse"
                                       value=""
                                     />
@@ -1764,7 +1746,6 @@ pays
                             <input
                               class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               id="parents.parent2.nom"
-                              maxlength="100"
                               name="parents.parent2.nom"
                               value=""
                             />
@@ -1788,7 +1769,6 @@ pays
                               <input
                                 class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                 id="parents.parent2.prenomsChemin.prenom1"
-                                maxlength="100"
                                 name="parents.parent2.prenomsChemin.prenom1"
                                 type="text"
                                 value=""
@@ -2051,7 +2031,6 @@ pays
                               class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               data-testid="parents.parent2-profession"
                               id="parents.parent2.profession"
-                              maxlength="100"
                               name="parents.parent2.profession"
                               value=""
                             />
@@ -2570,7 +2549,6 @@ pays
                               <input
                                 class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                 id="acteEtranger.lieuEnregistrement.ville"
-                                maxlength="100"
                                 name="acteEtranger.lieuEnregistrement.ville"
                                 value=""
                               />
@@ -2592,7 +2570,6 @@ pays
                             <input
                               class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               id="acteEtranger.lieuEnregistrement.etatProvince"
-                              maxlength="100"
                               name="acteEtranger.lieuEnregistrement.etatProvince"
                               value=""
                             />
@@ -2613,7 +2590,6 @@ pays
                             <input
                               class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               id="acteEtranger.lieuEnregistrement.pays"
-                              maxlength="100"
                               name="acteEtranger.lieuEnregistrement.pays"
                               value=""
                             />
