@@ -1,29 +1,18 @@
-import {
-  ICreationActionMiseAjourStatutHookParams,
-  useCreationActionMiseAjourStatut
-} from "@hook/requete/CreationActionMiseAjourStatutHook";
 import { IDetailRequeteParams, useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
-import { IService } from "@model/agent/IService";
-import { Utilisateur, UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { IRequete } from "@model/requete/IRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
-import { mappingUneRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
-import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import AccessibleAvecDroits from "../../../../../composants/commun/accessibleAvecDroits/AccessibleAvecDroits";
 import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../../router/LiensRECE";
-import { INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE } from "../../../../../router/infoPages/InfoPagesEspaceConsulaire";
 import Labels from "../../commun/Labels";
 import "../../commun/scss/ApercuReqCreationPage.scss";
 import { getComposantResumeRequeteEnFonctionNatureActe } from "./ApercuReqCreationTranscriptionUtils";
@@ -35,16 +24,9 @@ interface ApercuReqCreationTranscriptionSimplePageProps {
 export const ApercuReqCreationTranscriptionSimplePage: React.FC<ApercuReqCreationTranscriptionSimplePageProps> = props => {
   const { idRequeteParam } = useParams<TUuidRequeteParams>();
   const [requete, setRequete] = useState<IRequeteCreationTranscription>();
-  const navigate = useNavigate();
   const location = useLocation();
   const [detailRequeteParams, setDetailRequeteParams] = useState<IDetailRequeteParams>({});
   const { detailRequeteState } = useDetailRequeteApiHook(detailRequeteParams);
-
-  const [paramsCreationActionMiseAjourStatut, setParamsCreationActionMiseAjourStatut] = useState<
-    ICreationActionMiseAjourStatutHookParams | undefined
-  >();
-
-  useCreationActionMiseAjourStatut(paramsCreationActionMiseAjourStatut);
 
   const estModeConsultation = props.idRequeteAAfficher !== undefined;
 
@@ -59,37 +41,6 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<ApercuReqCreatio
       idRequete: props.idRequeteAAfficher ?? idRequeteParam
     });
   }, [props.idRequeteAAfficher, location.pathname, idRequeteParam]);
-
-  function redirectApercuRequetePriseEnCharge() {
-    if (requete) {
-      navigate(LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE.url, { idRequeteParam: requete.id }));
-    }
-  }
-
-  const estPresentBoutonPrendreEnCharge = (utilisateurConnecte: UtilisateurConnecte): boolean => {
-    if (requete) {
-      return (
-        SousTypeCreation.estRCTDOuRCTC(requete.sousType) &&
-        StatutRequete.estATraiterOuTransferee(requete.statutCourant?.statut) &&
-        utilisateurConnecte.estHabilitePour({ leDroit: Droit.TRANSCRIPTION_CREER_PROJET_ACTE }) &&
-        (!requete.idUtilisateur || utilisateurConnecte.id === requete.idUtilisateur) &&
-        [utilisateurConnecte.idService, ...utilisateurConnecte.idServicesFils, ...utilisateurConnecte.idServicesParent].includes(
-          requete.idService
-        )
-      );
-    } else {
-      return false;
-    }
-  };
-
-  function handlePrendreEnCharge(utilisateurs: Utilisateur[], services: IService[]) {
-    setParamsCreationActionMiseAjourStatut({
-      libelleAction: EStatutRequete.PRISE_EN_CHARGE,
-      statutRequete: "PRISE_EN_CHARGE",
-      requete: mappingUneRequeteTableauCreation(requete, false, utilisateurs, services),
-      callback: redirectApercuRequetePriseEnCharge
-    });
-  }
 
   const { utilisateurs, services, utilisateurConnecte } = useContext(RECEContextData);
 
@@ -112,22 +63,11 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<ApercuReqCreatio
           </ConteneurRetractable>
 
           <VoletAvecOnglet liste={[]}>
-            <div className="boutons">
-              {LiensRECE.estPageConsultation() && <BoutonRetour />}
-
-              {estPresentBoutonPrendreEnCharge(utilisateurConnecte) && (
-                <BoutonDoubleSubmit
-                  type="button"
-                  aria-label={"Prendre en charge"}
-                  id="boutonAnnuler"
-                  onClick={() => {
-                    handlePrendreEnCharge(utilisateurs, services);
-                  }}
-                >
-                  {"Prendre en charge"}
-                </BoutonDoubleSubmit>
-              )}
-            </div>
+            {LiensRECE.estPageConsultation() && (
+              <div className="boutons">
+                <BoutonRetour />
+              </div>
+            )}
           </VoletAvecOnglet>
         </>
       )}

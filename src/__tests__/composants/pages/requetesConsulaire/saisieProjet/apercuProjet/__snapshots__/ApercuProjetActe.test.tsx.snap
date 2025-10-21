@@ -21,7 +21,7 @@ exports[`ApercuProjetActe - Tests du composant > Doit afficher l'aperçu du proj
         >
           <svg
             aria-hidden="true"
-            class="text-lg"
+            class="text-3xl"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -117,7 +117,7 @@ exports[`ApercuProjetActe - Tests du composant > Doit afficher l'aperçu du proj
         >
           <svg
             aria-hidden="true"
-            class="text-lg"
+            class="text-3xl"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -213,7 +213,7 @@ exports[`ApercuProjetActe - Tests du composant > Doit afficher l'aperçu du proj
         >
           <svg
             aria-hidden="true"
-            class="text-lg"
+            class="text-3xl"
             fill="currentColor"
             height="1em"
             stroke="currentColor"

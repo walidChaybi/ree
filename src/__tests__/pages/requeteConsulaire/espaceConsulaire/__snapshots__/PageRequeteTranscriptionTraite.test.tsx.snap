@@ -1,0 +1,550 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PageRequeteTranscriptionTraite > DOIT afficher la PartieGauche et PartieDroite après récupération de la requête 1`] = `
+<div
+  class="mt-4 flex gap-8"
+>
+  <div
+    class="flex w-1/2 flex-col"
+  >
+    <div
+      class="flex items-end border-0 border-b border-solid border-gris"
+    >
+      <button
+        class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre false m-0 h-11 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
+        disabled=""
+        title="Description"
+        type="button"
+      >
+        Description
+      </button>
+    </div>
+    <div
+      class="gap-2 rounded-lg grid overflow-auto pt-4 h-[calc(100vh-16.5rem)]"
+    >
+      <div
+        class="pr-4"
+      >
+        <div
+          class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
+        >
+          <button
+            aria-label="Étendre la section"
+            class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
+            title="Étendre la section"
+            type="button"
+          >
+            <span
+              class="truncate"
+            >
+              Transcription d'un acte de naissance d'une personne mineure
+            </span>
+            <svg
+              aria-hidden="true"
+              class="absolute right-2 text-2xl transition-transform duration-200 ease-in rotate-180"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+              />
+            </svg>
+          </button>
+          <div
+            class="grid transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+          >
+            <div
+              class="min-h-0"
+            >
+              <div
+                class="grid gap-y-4 p-4 "
+              >
+                <div
+                  class="grid gap-12 py-4"
+                >
+                  <div>
+                    <div
+                      class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                    >
+                      <span
+                        class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                      >
+                        Informations générales
+                      </span>
+                      <div
+                        class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
+                      >
+                        <div
+                          class="mb-5 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Type Requête
+                          </div>
+                          <div
+                            class="relative z-50 inline-block w-full"
+                          >
+                            <div
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
+                            >
+                              Création suite Transcription Courrier
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="mb-5 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Statut
+                          </div>
+                          <div
+                            class="relative z-50 inline-block w-full"
+                          >
+                            <div
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words inline-flex w-fit items-center rounded-md border border-solid border-bleu-sombre bg-blue-50 px-2 py-1 text-sm font-semibold text-bleu-sombre"
+                            >
+                              Prise en charge
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="mb-5 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Provenance
+                          </div>
+                          <div
+                            class="relative z-50 inline-block w-full"
+                          >
+                            <div
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
+                            >
+                              Courrier
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="mb-5 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Date création
+                          </div>
+                          <div
+                            class="relative z-50 inline-block w-full"
+                          >
+                            <div
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
+                            >
+                              28/06/2022
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="mb-5 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Numéro fonctionnel
+                          </div>
+                          <div
+                            class="relative z-50 inline-block w-full"
+                          >
+                            <div
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
+                            >
+                              2H5U3Q
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="mb-5 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Poste
+                          </div>
+                          <div
+                            class="relative z-50 inline-block w-full"
+                          >
+                            <div
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
+                            >
+                              CASABLANCA
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                    >
+                      <span
+                        class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                      >
+                        Titulaire
+                      </span>
+                      <div
+                        class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
+                      >
+                        <div
+                          class="mb-5 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Nom
+                          </div>
+                          <div
+                            class="relative z-50 inline-block w-full"
+                          >
+                            <div
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
+                            >
+                              dupont
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="mb-5 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Prénoms
+                          </div>
+                          <div
+                            class="relative z-50 inline-block w-full"
+                          >
+                            <div
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
+                            >
+                              paul
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="mb-5 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Sexe
+                          </div>
+                          <div
+                            class="relative z-50 inline-block w-full"
+                          >
+                            <div
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
+                            >
+                              Masculin
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+                      <div
+                        class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                      >
+                        <span
+                          class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                        >
+                          Père
+                        </span>
+                        <div
+                          class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
+                        >
+                          <div
+                            class="mb-5 text-left"
+                          >
+                            <div
+                              class="mb-1 text-left text-xs uppercase text-gray-500"
+                            >
+                              Nom
+                            </div>
+                            <div
+                              class="relative z-50 inline-block w-full"
+                            >
+                              <div
+                                class="line-clamp-3 max-w-72 text-ellipsis break-words "
+                              >
+                                Philips
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="mb-5 text-left"
+                          >
+                            <div
+                              class="mb-1 text-left text-xs uppercase text-gray-500"
+                            >
+                              Prénoms
+                            </div>
+                            <div
+                              class="relative z-50 inline-block w-full"
+                            >
+                              <div
+                                class="line-clamp-3 max-w-72 text-ellipsis break-words "
+                              >
+                                Yann
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="mb-5 text-left"
+                          >
+                            <div
+                              class="mb-1 text-left text-xs uppercase text-gray-500"
+                            >
+                              Sexe
+                            </div>
+                            <div
+                              class="relative z-50 inline-block w-full"
+                            >
+                              <div
+                                class="line-clamp-3 max-w-72 text-ellipsis break-words "
+                              >
+                                Masculin
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="mb-5 text-left"
+                          >
+                            <div
+                              class="mb-1 text-left text-xs uppercase text-gray-500"
+                            >
+                              Nationalité
+                            </div>
+                            <div
+                              class="relative z-50 inline-block w-full"
+                            >
+                              <div
+                                class="line-clamp-3 max-w-72 text-ellipsis break-words "
+                              >
+                                nationalite
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      class="relative rounded-md border border-solid border-blue-200 bg-white px-5 pb-8 pt-4 shadow-md mx-4"
+                    >
+                      <span
+                        class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
+                      >
+                        Requérant
+                      </span>
+                      <div
+                        class="grid grid-cols-1 gap-y-4 pt-4 md:grid-cols-2 xl:grid-cols-3"
+                      >
+                        <div
+                          class="mb-5 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Requérant
+                          </div>
+                          <div
+                            class="relative z-50 inline-block w-full"
+                          >
+                            <div
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
+                            >
+                              Titulaire
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="mb-5 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Courriel
+                          </div>
+                          <div
+                            class="relative z-50 inline-block w-full"
+                          >
+                            <div
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
+                            >
+                              courriel
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="mb-5 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Téléphone
+                          </div>
+                          <div
+                            class="relative z-50 inline-block w-full"
+                          >
+                            <div
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
+                            >
+                              telephone
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="mb-5 text-left"
+                        >
+                          <div
+                            class="mb-1 text-left text-xs uppercase text-gray-500"
+                          >
+                            Coordonnées
+                          </div>
+                          <div
+                            class="relative z-50 inline-block w-full"
+                          >
+                            <div
+                              class="line-clamp-3 max-w-72 text-ellipsis break-words "
+                            >
+                              ligne2
+ligne3
+ligne4
+ligne5
+codePostal ville
+pays
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="pr-4"
+      >
+        <div
+          class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
+        >
+          <button
+            aria-label="Étendre la section"
+            class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
+            title="Étendre la section"
+            type="button"
+          >
+            <span
+              class="truncate"
+            >
+              Historique des actions
+            </span>
+            <svg
+              aria-hidden="true"
+              class="absolute right-2 text-2xl transition-transform duration-200 ease-in rotate-180"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+              />
+            </svg>
+          </button>
+          <div
+            class="grid transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+          >
+            <div
+              class="min-h-0"
+            >
+              <div
+                class="grid gap-y-4 p-4 "
+              >
+                <ul
+                  class="max-h-32 overflow-y-auto pl-8"
+                >
+                  <li
+                    class="list-none text-start"
+                  >
+                    A traiter - 28/06/2022
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="flex h-screen w-1/2 flex-col"
+  >
+    <div
+      class="flex items-end border-0 border-b border-solid border-gris"
+    >
+      <button
+        class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre false m-0 h-11 rounded-b-none rounded-t-lg border-b-0 px-4 py-1.5 transition duration-200 ease-in-out [&:not(:first-child)]:border-l-0"
+        disabled=""
+        title="Acte recomposé"
+        type="button"
+      >
+        Acte recomposé
+      </button>
+    </div>
+    <div
+      class="gap-2 rounded-lg grid overflow-auto pt-4 h-[calc(100vh-16.5rem)]"
+    >
+      <div
+        class="mr-2"
+      >
+        <div
+          class="h-full flex-grow overflow-auto"
+        >
+          <iframe
+            aria-label="Document PDF"
+            class="h-full w-full overflow-auto border-0"
+            src="url_test#zoom=90"
+            title="Document PDF"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

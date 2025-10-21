@@ -3,6 +3,7 @@ import { RouteObject } from "react-router";
 import PageMesRequetesConsulaires from "../../pages/requetesConsulaire/PageMesRequetesConsulaires";
 import PageRequeteCreationTranscriptionPriseEnCharge from "../../pages/requetesConsulaire/PageRequeteCreationTranscriptionPriseEnCharge";
 import PageRequeteTranscriptionSaisieProjet from "../../pages/requetesConsulaire/PageRequeteTranscriptionSaisieProjet";
+import PageRequeteTranscriptionTraite from "../../pages/requetesConsulaire/PageRequeteTranscriptionTraite";
 import PageRequetesServiceConsulaire from "../../pages/requetesConsulaire/PageRequetesServiceConsulaire";
 import PageSaisieCourrierTranscription from "../../pages/requetesConsulaire/PageSaisieCourrierTranscription";
 import ElementPageRECE from "../ElementPageRECE";
@@ -94,6 +95,18 @@ export const ROUTES_ESPACE_CONSULAIRE: RouteObject[] = [
         tousLesDroits={[Droit.TRANSCRIPTION_CONSULTER]}
       >
         <PageRequeteTranscriptionSaisieProjet />
+      </ElementPageRECE>
+    )
+  },
+
+  {
+    path: Consulaire.INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_TRAITE.url,
+    element: (
+      <ElementPageRECE
+        infoPage={Consulaire.INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_TRAITE}
+        tousLesDroits={[Droit.TRANSCRIPTION_CONSULTER]}
+      >
+        <PageRequeteTranscriptionTraite />
       </ElementPageRECE>
     )
   }

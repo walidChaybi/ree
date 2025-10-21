@@ -42,7 +42,7 @@ const ConteneurDocument: React.FC<React.PropsWithChildren<IConteneurDocumentProp
             onClick={imprimerDocument}
           >
             <MdPrint
-              className="text-lg"
+              className="text-3xl"
               aria-hidden
             />
           </button>

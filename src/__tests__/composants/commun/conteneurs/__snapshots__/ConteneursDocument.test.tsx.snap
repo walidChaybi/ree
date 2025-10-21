@@ -30,7 +30,7 @@ exports[`Test des composants conteneur de documents texte > Test de composant Co
     >
       <svg
         aria-hidden="true"
-        class="text-lg"
+        class="text-3xl"
         fill="currentColor"
         height="1em"
         stroke="currentColor"

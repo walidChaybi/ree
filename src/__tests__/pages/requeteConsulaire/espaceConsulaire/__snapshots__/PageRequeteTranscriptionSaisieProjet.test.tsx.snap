@@ -652,7 +652,7 @@ pays
                                   class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                   id="titulaire.nomActeEtranger"
                                   name="titulaire.nomActeEtranger"
-                                  value="dupont"
+                                  value="Toto"
                                 />
                               </div>
                             </div>
@@ -728,12 +728,9 @@ pays
                               class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               id="titulaire.nomRetenuOEC"
                               name="titulaire.nomRetenuOEC"
-                              value=""
+                              value="Jo"
                             />
                           </div>
-                          <div
-                            class="text-start text-sm text-rouge"
-                          />
                         </div>
                       </div>
                       <div
@@ -759,7 +756,7 @@ pays
                                 id="titulaire.prenomsChemin.prenom1"
                                 name="titulaire.prenomsChemin.prenom1"
                                 type="text"
-                                value="paul"
+                                value="Michel"
                               />
                             </div>
                           </div>
@@ -875,7 +872,7 @@ pays
                               id="titulaire.dateNaissance.jour"
                               maxlength="2"
                               placeholder="JJ"
-                              value="04"
+                              value="12"
                             />
                             <span
                               class="mx-1 text-xl"
@@ -887,7 +884,7 @@ pays
                               id="titulaire.dateNaissance.mois"
                               maxlength="2"
                               placeholder="MM"
-                              value="03"
+                              value="10"
                             />
                             <span
                               class="mx-1 text-xl"
@@ -899,7 +896,7 @@ pays
                               id="titulaire.dateNaissance.annee"
                               maxlength="4"
                               placeholder="AAAA"
-                              value="1963"
+                              value="1966"
                             />
                             <span
                               class="mx-2 text-xl"
@@ -912,7 +909,7 @@ pays
                                 id="titulaire.dateNaissance.heure"
                                 maxlength="2"
                                 placeholder="HH"
-                                value=""
+                                value="10"
                               />
                               <span
                                 class="mx-2 text-xl"
@@ -924,7 +921,7 @@ pays
                                 id="titulaire.dateNaissance.minute"
                                 maxlength="2"
                                 placeholder="MN"
-                                value=""
+                                value="10"
                               />
                               <span
                                 class="mx-2 text-xl"
@@ -1006,7 +1003,7 @@ pays
                                 class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                 id="titulaire.lieuNaissance.ville"
                                 name="titulaire.lieuNaissance.ville"
-                                value="nantes"
+                                value="Nantes"
                               />
                             </div>
                           </div>
@@ -1027,7 +1024,7 @@ pays
                               class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               id="titulaire.lieuNaissance.region"
                               name="titulaire.lieuNaissance.region"
-                              value="regionNaissance"
+                              value=""
                             />
                           </div>
                         </div>
@@ -1047,7 +1044,7 @@ pays
                               class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               id="titulaire.lieuNaissance.pays"
                               name="titulaire.lieuNaissance.pays"
-                              value="paysNaissance"
+                              value="France"
                             />
                           </div>
                         </div>
@@ -1151,7 +1148,7 @@ pays
                               class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               id="parents.parent1.nom"
                               name="parents.parent1.nom"
-                              value="nomUsage"
+                              value="Perez"
                             />
                           </div>
                         </div>
@@ -1175,7 +1172,7 @@ pays
                                 id="parents.parent1.prenomsChemin.prenom1"
                                 name="parents.parent1.prenomsChemin.prenom1"
                                 type="text"
-                                value="Yann"
+                                value="Joseph"
                               />
                             </div>
                           </div>
@@ -1283,7 +1280,7 @@ pays
                                   id="parents.parent1.dateNaissance.jour"
                                   maxlength="2"
                                   placeholder="JJ"
-                                  value="01"
+                                  value="05"
                                 />
                                 <span
                                   class="mx-1 text-xl"
@@ -1295,7 +1292,7 @@ pays
                                   id="parents.parent1.dateNaissance.mois"
                                   maxlength="2"
                                   placeholder="MM"
-                                  value="02"
+                                  value="05"
                                 />
                                 <span
                                   class="mx-1 text-xl"
@@ -1307,7 +1304,7 @@ pays
                                   id="parents.parent1.dateNaissance.annee"
                                   maxlength="4"
                                   placeholder="AAAA"
-                                  value="2000"
+                                  value="2010"
                                 />
                               </div>
                             </div>
@@ -1362,6 +1359,7 @@ pays
                           >
                             <div>
                               <input
+                                checked=""
                                 class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                 id="parents.parent1.lieuNaissance.typeLieu-France"
                                 name="parents.parent1.lieuNaissance.typeLieu"
@@ -1377,7 +1375,6 @@ pays
                             </div>
                             <div>
                               <input
-                                checked=""
                                 class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                 id="parents.parent1.lieuNaissance.typeLieu-Étranger"
                                 name="parents.parent1.lieuNaissance.typeLieu"
@@ -1408,7 +1405,9 @@ pays
                             </div>
                           </div>
                         </fieldset>
-                        <div>
+                        <div
+                          class="mt-4 space-y-4"
+                        >
                           <div
                             class="mt-4 grid grid-cols-2 gap-4"
                           >
@@ -1452,64 +1451,112 @@ pays
                                 </select>
                               </div>
                               <div
-                                class="flex w-full flex-col text-start"
+                                class="relative flex w-full flex-col text-start"
                               >
                                 <label
                                   class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                                   for="parents.parent1.lieuNaissance.ville"
                                 >
                                   Ville
+                                  <span
+                                    class="ml-1 text-rouge"
+                                  >
+                                    *
+                                  </span>
                                 </label>
                                 <div
-                                  class="relative flex rounded-md shadow-sm"
+                                  class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1tlcqt-MuiAutocomplete-root"
                                 >
-                                  <input
-                                    class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                                    id="parents.parent1.lieuNaissance.ville"
-                                    name="parents.parent1.lieuNaissance.ville"
-                                    value="villeNaissance"
-                                  />
+                                  <div
+                                    class="flex items-center rounded-md border border-solid px-2 py-1 transition-colors focus-within:ring-2 focus-within:ring-opacity-70 border-gris focus-within:ring-bleu"
+                                  >
+                                    <svg
+                                      aria-hidden="true"
+                                      class="text-xl text-gris"
+                                      fill="currentColor"
+                                      height="1em"
+                                      stroke="currentColor"
+                                      stroke-width="0"
+                                      viewBox="0 0 24 24"
+                                      width="1em"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M0 0h24v24H0z"
+                                        fill="none"
+                                      />
+                                      <path
+                                        d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                                      />
+                                    </svg>
+                                    <input
+                                      aria-autocomplete="list"
+                                      aria-expanded="false"
+                                      autocapitalize="none"
+                                      autocomplete="off"
+                                      class="flex-grow border-none bg-transparent p-0 pl-1 read-only:bg-gris-clair focus:border-none focus:outline-none focus:ring-0"
+                                      id="parents.parent1.lieuNaissance.ville"
+                                      placeholder="Recherche..."
+                                      role="combobox"
+                                      spellcheck="false"
+                                      type="text"
+                                      value="Nantes"
+                                    />
+                                  </div>
                                 </div>
                               </div>
                             </div>
                             <div
-                              class="flex w-full flex-col text-start"
+                              class="relative flex w-full flex-col text-start"
                             >
                               <label
                                 class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                                for="parents.parent1.lieuNaissance.etatProvince"
+                                for="parents.parent1.lieuNaissance.departement"
                               >
-                                État, canton, province
+                                Département
+                                <span
+                                  class="ml-1 text-rouge"
+                                >
+                                  *
+                                </span>
                               </label>
                               <div
-                                class="relative flex rounded-md shadow-sm"
+                                class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1tlcqt-MuiAutocomplete-root"
                               >
-                                <input
-                                  class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                                  id="parents.parent1.lieuNaissance.etatProvince"
-                                  name="parents.parent1.lieuNaissance.etatProvince"
-                                  value="regionNaissance"
-                                />
-                              </div>
-                            </div>
-                            <div>
-                              <div
-                                class="flex w-full flex-col text-start"
-                              >
-                                <label
-                                  class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                                  for="parents.parent1.lieuNaissance.pays"
-                                >
-                                  Pays
-                                </label>
                                 <div
-                                  class="relative flex rounded-md shadow-sm"
+                                  class="flex items-center rounded-md border border-solid px-2 py-1 transition-colors focus-within:ring-2 focus-within:ring-opacity-70 border-gris focus-within:ring-bleu"
                                 >
+                                  <svg
+                                    aria-hidden="true"
+                                    class="text-xl text-gris"
+                                    fill="currentColor"
+                                    height="1em"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 24 24"
+                                    width="1em"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M0 0h24v24H0z"
+                                      fill="none"
+                                    />
+                                    <path
+                                      d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                                    />
+                                  </svg>
                                   <input
-                                    class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                                    id="parents.parent1.lieuNaissance.pays"
-                                    name="parents.parent1.lieuNaissance.pays"
-                                    value="paysNaissance"
+                                    aria-autocomplete="list"
+                                    aria-expanded="false"
+                                    autocapitalize="none"
+                                    autocomplete="off"
+                                    class="flex-grow border-none bg-transparent p-0 pl-1 read-only:bg-gris-clair focus:border-none focus:outline-none focus:ring-0"
+                                    id="parents.parent1.lieuNaissance.departement"
+                                    placeholder="Recherche..."
+                                    role="combobox"
+                                    spellcheck="false"
+                                    type="text"
+                                    value="Loire-atlantique"
                                   />
                                 </div>
                               </div>
@@ -1543,9 +1590,10 @@ pays
                             <input
                               class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               data-testid="parents.parent1-profession"
+                              disabled=""
                               id="parents.parent1.profession"
                               name="parents.parent1.profession"
-                              value=""
+                              value="Banquier"
                             />
                           </div>
                         </div>
@@ -1556,10 +1604,11 @@ pays
                             class="flex w-fit text-start cursor-pointer"
                           >
                             <input
+                              checked=""
                               class="cursor-pointer accent-bleu-sombre"
                               name="parents.parent1.sansProfession"
                               type="checkbox"
-                              value="false"
+                              value="true"
                             />
                             <span
                               class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
@@ -1597,6 +1646,7 @@ pays
                             >
                               <div>
                                 <input
+                                  checked=""
                                   class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                   id="parents.parent1.domicile.typeLieu-France"
                                   name="parents.parent1.domicile.typeLieu"
@@ -1612,7 +1662,6 @@ pays
                               </div>
                               <div>
                                 <input
-                                  checked=""
                                   class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                                   id="parents.parent1.domicile.typeLieu-Étranger"
                                   name="parents.parent1.domicile.typeLieu"
@@ -1643,7 +1692,9 @@ pays
                               </div>
                             </div>
                           </fieldset>
-                          <div>
+                          <div
+                            class="mt-4 space-y-4"
+                          >
                             <div
                               class="mt-4 grid grid-cols-2 gap-4"
                             >
@@ -1687,85 +1738,161 @@ pays
                                   </select>
                                 </div>
                                 <div
-                                  class="flex w-full flex-col text-start"
+                                  class="relative flex w-full flex-col text-start"
                                 >
                                   <label
                                     class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
                                     for="parents.parent1.domicile.ville"
                                   >
                                     Ville
+                                    <span
+                                      class="ml-1 text-rouge"
+                                    >
+                                      *
+                                    </span>
                                   </label>
                                   <div
-                                    class="relative flex rounded-md shadow-sm"
+                                    class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1tlcqt-MuiAutocomplete-root"
                                   >
+                                    <div
+                                      class="flex items-center rounded-md border border-solid px-2 py-1 transition-colors focus-within:ring-2 focus-within:ring-opacity-70 border-gris focus-within:ring-bleu"
+                                    >
+                                      <svg
+                                        aria-hidden="true"
+                                        class="text-xl text-gris"
+                                        fill="currentColor"
+                                        height="1em"
+                                        stroke="currentColor"
+                                        stroke-width="0"
+                                        viewBox="0 0 24 24"
+                                        width="1em"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M0 0h24v24H0z"
+                                          fill="none"
+                                        />
+                                        <path
+                                          d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                                        />
+                                      </svg>
+                                      <input
+                                        aria-autocomplete="list"
+                                        aria-expanded="false"
+                                        autocapitalize="none"
+                                        autocomplete="off"
+                                        class="flex-grow border-none bg-transparent p-0 pl-1 read-only:bg-gris-clair focus:border-none focus:outline-none focus:ring-0"
+                                        id="parents.parent1.domicile.ville"
+                                        placeholder="Recherche..."
+                                        role="combobox"
+                                        spellcheck="false"
+                                        type="text"
+                                        value="Nantes"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                class="relative flex w-full flex-col text-start"
+                              >
+                                <label
+                                  class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                                  for="parents.parent1.domicile.departement"
+                                >
+                                  Département
+                                  <span
+                                    class="ml-1 text-rouge"
+                                  >
+                                    *
+                                  </span>
+                                </label>
+                                <div
+                                  class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1tlcqt-MuiAutocomplete-root"
+                                >
+                                  <div
+                                    class="flex items-center rounded-md border border-solid px-2 py-1 transition-colors focus-within:ring-2 focus-within:ring-opacity-70 border-gris focus-within:ring-bleu"
+                                  >
+                                    <svg
+                                      aria-hidden="true"
+                                      class="text-xl text-gris"
+                                      fill="currentColor"
+                                      height="1em"
+                                      stroke="currentColor"
+                                      stroke-width="0"
+                                      viewBox="0 0 24 24"
+                                      width="1em"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M0 0h24v24H0z"
+                                        fill="none"
+                                      />
+                                      <path
+                                        d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                                      />
+                                    </svg>
                                     <input
-                                      class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                                      id="parents.parent1.domicile.ville"
-                                      name="parents.parent1.domicile.ville"
-                                      value="ville"
+                                      aria-autocomplete="list"
+                                      aria-expanded="false"
+                                      autocapitalize="none"
+                                      autocomplete="off"
+                                      class="flex-grow border-none bg-transparent p-0 pl-1 read-only:bg-gris-clair focus:border-none focus:outline-none focus:ring-0"
+                                      id="parents.parent1.domicile.departement"
+                                      placeholder="Recherche..."
+                                      role="combobox"
+                                      spellcheck="false"
+                                      type="text"
+                                      value="Loire-atlantique"
                                     />
                                   </div>
                                 </div>
                               </div>
                               <div
-                                class="flex w-full flex-col text-start"
+                                class="relative flex w-full flex-col text-start undefined "
                               >
                                 <label
                                   class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                                  for="parents.parent1.domicile.etatProvince"
+                                  for="parents.parent1.domicile.adresse"
                                 >
-                                  État, canton, province
+                                  Adresse
                                 </label>
                                 <div
-                                  class="relative flex rounded-md shadow-sm"
+                                  class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1tlcqt-MuiAutocomplete-root"
                                 >
-                                  <input
-                                    class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                                    id="parents.parent1.domicile.etatProvince"
-                                    name="parents.parent1.domicile.etatProvince"
-                                    value=""
-                                  />
-                                </div>
-                              </div>
-                              <div>
-                                <div
-                                  class="flex w-full flex-col text-start"
-                                >
-                                  <label
-                                    class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                                    for="parents.parent1.domicile.pays"
-                                  >
-                                    Pays
-                                  </label>
                                   <div
-                                    class="relative flex rounded-md shadow-sm"
+                                    class="flex items-center rounded-md border border-solid px-2 py-1 transition-colors focus-within:ring-2 focus-within:ring-opacity-70 border-gris focus-within:ring-bleu"
                                   >
+                                    <svg
+                                      aria-hidden="true"
+                                      class="text-xl text-gris"
+                                      fill="currentColor"
+                                      height="1em"
+                                      stroke="currentColor"
+                                      stroke-width="0"
+                                      viewBox="0 0 24 24"
+                                      width="1em"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M0 0h24v24H0z"
+                                        fill="none"
+                                      />
+                                      <path
+                                        d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                                      />
+                                    </svg>
                                     <input
-                                      class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                                      id="parents.parent1.domicile.pays"
-                                      name="parents.parent1.domicile.pays"
-                                      value="pays"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                              <div>
-                                <div
-                                  class="flex w-full flex-col text-start"
-                                >
-                                  <label
-                                    class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                                    for="parents.parent1.domicile.adresse"
-                                  >
-                                    Adresse
-                                  </label>
-                                  <div
-                                    class="relative flex rounded-md shadow-sm"
-                                  >
-                                    <input
-                                      class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                      aria-autocomplete="list"
+                                      aria-expanded="false"
+                                      autocapitalize="none"
+                                      autocomplete="off"
+                                      class="flex-grow border-none bg-transparent p-0 pl-1 read-only:bg-gris-clair focus:border-none focus:outline-none focus:ring-0"
                                       id="parents.parent1.domicile.adresse"
-                                      name="parents.parent1.domicile.adresse"
+                                      placeholder="Recherche..."
+                                      role="combobox"
+                                      spellcheck="false"
+                                      type="text"
                                       value=""
                                     />
                                   </div>
@@ -2320,6 +2447,475 @@ pays
                           </div>
                         </div>
                       </div>
+                      <div
+                        class="pt-4"
+                      >
+                        <div
+                          class="flex w-full flex-col text-start"
+                        >
+                          <label
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="declarant.nom"
+                          >
+                            Nom
+                            <span
+                              class="ml-1 text-rouge"
+                            >
+                              *
+                            </span>
+                          </label>
+                          <div
+                            class="relative flex rounded-md shadow-sm"
+                          >
+                            <input
+                              class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              id="declarant.nom"
+                              name="declarant.nom"
+                              value="Garcion"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="pt-4"
+                      >
+                        <div
+                          class="grid grid-cols-2 gap-4"
+                        >
+                          <div
+                            class="flex w-full flex-col text-start  w-full"
+                          >
+                            <label
+                              class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                              for="declarant.prenomsChemin.prenom1"
+                            >
+                              Prénom
+                            </label>
+                            <div
+                              class="relative flex rounded-md shadow-sm"
+                            >
+                              <input
+                                class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="declarant.prenomsChemin.prenom1"
+                                name="declarant.prenomsChemin.prenom1"
+                                type="text"
+                                value="Patrick"
+                              />
+                            </div>
+                          </div>
+                          <div
+                            class="pt-[1.6rem]"
+                          >
+                            <button
+                              aria-label="Ajouter un prénom"
+                              class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out  bg-bleu-sombre text-blanc hover:bg-bleu focus-visible:bg-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-gris-sombre disabled:cursor-not-allowed"
+                              title="Ajouter un prénom"
+                              type="button"
+                            >
+                              <div
+                                class="flex items-center gap-4 px-2"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  fill="currentColor"
+                                  height="1em"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 24 24"
+                                  width="1em"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M0 0h24v24H0z"
+                                    fill="none"
+                                  />
+                                  <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"
+                                  />
+                                </svg>
+                                <span
+                                  class="font-marianne text-sm font-bold"
+                                >
+                                  Ajouter un prénom
+                                </span>
+                              </div>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="col-span-2 grid grid-cols-2 gap-x-4 pt-4"
+                      >
+                        <fieldset
+                          class="m-0 flex w-full flex-col border-0 p-0 text-start"
+                        >
+                          <legend
+                            class="m-0 mb-1 block w-fit text-start text-base transition-colors text-bleu-sombre"
+                          >
+                            Sexe
+                          </legend>
+                          <div
+                            class="mt-1.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start"
+                          >
+                            <div>
+                              <input
+                                class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="declarant.sexe-MASCULIN"
+                                name="declarant.sexe"
+                                type="radio"
+                                value="MASCULIN"
+                              />
+                              <label
+                                class="cursor-pointer pl-2"
+                                for="declarant.sexe-MASCULIN"
+                              >
+                                Masculin
+                              </label>
+                            </div>
+                            <div>
+                              <input
+                                class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="declarant.sexe-FEMININ"
+                                name="declarant.sexe"
+                                type="radio"
+                                value="FEMININ"
+                              />
+                              <label
+                                class="cursor-pointer pl-2"
+                                for="declarant.sexe-FEMININ"
+                              >
+                                Féminin
+                              </label>
+                            </div>
+                          </div>
+                        </fieldset>
+                        <div
+                          class="flex w-full flex-col text-start  w-1/2"
+                        >
+                          <label
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="declarant.age"
+                          >
+                            Âge
+                          </label>
+                          <div
+                            class="relative flex rounded-md shadow-sm"
+                          >
+                            <input
+                              class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              id="declarant.age"
+                              maxlength="3"
+                              name="declarant.age"
+                              value="52"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="col-span-2 grid grid-cols-2 gap-x-4 pt-4"
+                      >
+                        <div
+                          class="flex w-full flex-col text-start"
+                        >
+                          <label
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="declarant.qualite"
+                          >
+                            Qualité
+                          </label>
+                          <div
+                            class="relative flex rounded-md shadow-sm"
+                          >
+                            <input
+                              class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              id="declarant.qualite"
+                              name="declarant.qualite"
+                              placeholder="Ex: la grand-mère"
+                              value="le copain"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="col-span-2 grid grid-cols-2 gap-x-4 pt-4"
+                      >
+                        <div
+                          class="flex w-full flex-col text-start"
+                        >
+                          <label
+                            class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                            for="declarant.profession"
+                          >
+                            Profession
+                          </label>
+                          <div
+                            class="relative flex rounded-md shadow-sm"
+                          >
+                            <input
+                              class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                              data-testid="declarant-profession"
+                              id="declarant.profession"
+                              name="declarant.profession"
+                              value=""
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="w-full pt-[2rem] text-start"
+                        >
+                          <div
+                            class=""
+                          >
+                            <label
+                              class="flex w-fit text-start cursor-pointer"
+                            >
+                              <input
+                                class="cursor-pointer accent-bleu-sombre"
+                                name="declarant.sansProfession"
+                                type="checkbox"
+                                value="false"
+                              />
+                              <span
+                                class="ml-2 select-none text-nowrap font-semibold text-bleu-sombre"
+                              >
+                                Sans profession
+                              </span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="pb-4 pt-8"
+                      >
+                        <div
+                          class="relative my-2.5 border-0 border-b-2 border-solid border-bleu text-start"
+                        >
+                          <label
+                            class="absolute -bottom-2.5 left-8 bg-blanc px-1.5 text-bleu-sombre"
+                            for="declarant.domicile"
+                          >
+                            Domicile
+                          </label>
+                        </div>
+                      </div>
+                      <div>
+                        <fieldset
+                          class="m-0 flex w-full flex-col border-0 p-0 text-start"
+                        >
+                          <legend
+                            class="m-0 mb-1 block w-fit text-start text-base transition-colors text-bleu-sombre"
+                          />
+                          <div
+                            class="mt-1.5 flex w-full flex-wrap gap-x-10 gap-y-4 text-start"
+                          >
+                            <div>
+                              <input
+                                class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="declarant.domicile.typeLieu-France"
+                                name="declarant.domicile.typeLieu"
+                                type="radio"
+                                value="France"
+                              />
+                              <label
+                                class="cursor-pointer pl-2"
+                                for="declarant.domicile.typeLieu-France"
+                              >
+                                France
+                              </label>
+                            </div>
+                            <div>
+                              <input
+                                checked=""
+                                class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="declarant.domicile.typeLieu-Étranger"
+                                name="declarant.domicile.typeLieu"
+                                type="radio"
+                                value="Étranger"
+                              />
+                              <label
+                                class="cursor-pointer pl-2"
+                                for="declarant.domicile.typeLieu-Étranger"
+                              >
+                                Étranger
+                              </label>
+                            </div>
+                            <div>
+                              <input
+                                class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                id="declarant.domicile.typeLieu-Inconnu"
+                                name="declarant.domicile.typeLieu"
+                                type="radio"
+                                value="Inconnu"
+                              />
+                              <label
+                                class="cursor-pointer pl-2"
+                                for="declarant.domicile.typeLieu-Inconnu"
+                              >
+                                Inconnu
+                              </label>
+                            </div>
+                          </div>
+                        </fieldset>
+                        <div>
+                          <div
+                            class="mt-4 grid grid-cols-2 gap-4"
+                          >
+                            <div
+                              class="flex gap-4"
+                            >
+                              <div
+                                class="text-start"
+                              >
+                                <label
+                                  class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                                  for="declarant.domicile.preposition"
+                                >
+                                  Préposition
+                                </label>
+                                <select
+                                  class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
+                                  id="declarant.domicile.preposition"
+                                  name="declarant.domicile.preposition"
+                                >
+                                  <option
+                                    value="A"
+                                  >
+                                    à
+                                  </option>
+                                  <option
+                                    value="EN"
+                                  >
+                                    en
+                                  </option>
+                                  <option
+                                    value="AU"
+                                  >
+                                    au
+                                  </option>
+                                  <option
+                                    value="AUX"
+                                  >
+                                    aux
+                                  </option>
+                                </select>
+                              </div>
+                              <div
+                                class="flex w-full flex-col text-start"
+                              >
+                                <label
+                                  class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                                  for="declarant.domicile.ville"
+                                >
+                                  Ville
+                                </label>
+                                <div
+                                  class="relative flex rounded-md shadow-sm"
+                                >
+                                  <input
+                                    class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                    id="declarant.domicile.ville"
+                                    name="declarant.domicile.ville"
+                                    value="Tunis"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="flex w-full flex-col text-start"
+                            >
+                              <label
+                                class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                                for="declarant.domicile.etatProvince"
+                              >
+                                État, canton, province
+                              </label>
+                              <div
+                                class="relative flex rounded-md shadow-sm"
+                              >
+                                <input
+                                  class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                  id="declarant.domicile.etatProvince"
+                                  name="declarant.domicile.etatProvince"
+                                  value=""
+                                />
+                              </div>
+                            </div>
+                            <div>
+                              <div
+                                class="flex w-full flex-col text-start"
+                              >
+                                <label
+                                  class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                                  for="declarant.domicile.pays"
+                                >
+                                  Pays
+                                </label>
+                                <div
+                                  class="relative flex rounded-md shadow-sm"
+                                >
+                                  <input
+                                    class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                    id="declarant.domicile.pays"
+                                    name="declarant.domicile.pays"
+                                    value="Tunisie"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                            <div>
+                              <div
+                                class="flex w-full flex-col text-start"
+                              >
+                                <label
+                                  class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                                  for="declarant.domicile.adresse"
+                                >
+                                  Adresse
+                                </label>
+                                <div
+                                  class="relative flex rounded-md shadow-sm"
+                                >
+                                  <input
+                                    class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
+                                    id="declarant.domicile.adresse"
+                                    name="declarant.domicile.adresse"
+                                    value=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="pb-4 pt-8"
+                      >
+                        <div
+                          class="relative my-2.5 border-0 border-b-2 border-solid border-bleu text-start"
+                        >
+                          <label
+                            class="absolute -bottom-2.5 left-8 bg-blanc px-1.5 text-bleu-sombre"
+                            for="declarant.complement"
+                          >
+                            Complément
+                          </label>
+                        </div>
+                      </div>
+                      <div
+                        class="grid"
+                      >
+                        <label
+                          class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
+                          for="declarant.complement"
+                        />
+                        <textarea
+                          class="font-marianne text-base resize-none transition-colors border-gris focus-visible:ring-bleu"
+                          id="declarant.complement"
+                          maxlength="250"
+                          name="declarant.complement"
+                          placeholder="Ex: Chez qui l'accouchement a eu lieu"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -2673,7 +3269,7 @@ pays
                             id="acteEtranger.redacteur"
                             maxlength="300"
                             name="acteEtranger.redacteur"
-                            value=""
+                            value="redacteur acte"
                           />
                         </div>
                       </div>
@@ -2691,7 +3287,9 @@ pays
                           id="acteEtranger.referenceComplement"
                           maxlength="2000"
                           name="acteEtranger.referenceComplement"
-                        />
+                        >
+                          referenceComplement acte
+                        </textarea>
                       </div>
                     </div>
                   </div>
@@ -3077,7 +3675,7 @@ pays
                               maxlength="3000"
                               name="formuleFinale.phraseSignature"
                             >
-                              Titres Honorifiques, Qualité, Fonction
+                              Titres Honorifiques, Qualité, Fonction,
                             </textarea>
                           </div>
                         </div>

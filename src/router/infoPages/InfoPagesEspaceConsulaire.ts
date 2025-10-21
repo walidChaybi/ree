@@ -48,3 +48,9 @@ export const INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_SAISIE_PROJET = creerInfoPag
   titre: "Aperçu requête de transcription (saisie du projet)",
   niveauNavigation: 2
 });
+
+export const INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_TRAITE = creerInfoPageRECE({
+  url: `${BASE_PAGES_CONSULAIRE}/requete/${ID_REQUETE}/traite`,
+  titre: "Aperçu requête de transcription (traité)",
+  niveauNavigation: 2
+});

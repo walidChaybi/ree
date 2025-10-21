@@ -105,7 +105,7 @@ export const requeteCreationTranscription: IRequeteCreationTranscription = {
           estPrenomFrRetenuSdanf: null
         }
       ],
-      suiviDossiers: [{ idSuiviDossier: "12563" }],
+      suiviDossiers: [{ idSuiviDossier: "12563", idActe: "3ed99ec3-a80f-480d-b91f-b4068f0b3bfj" }],
       retenueSdanf: {
         id: "3ed91bb9-1949-4625-b06f-7ce487f8f827",
         nomNaissance: "nomNaissance",

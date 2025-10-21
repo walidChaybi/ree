@@ -1,6 +1,10 @@
+import { CONFIG_GET_PROJET_ACTE } from "@api/configurations/etatCivil/acte/GetProjetActeConfigApi";
+import { CONFIG_GET_MODELE_TEXTE } from "@api/configurations/etatCivil/acte/transcription/GetModeleTexteConfigApi";
+import { CONFIG_GET_LIBELLE_DECRET } from "@api/configurations/etatCivil/typesRegistres/GetLibelleDecretConfigApi";
 import { CONFIG_GET_DETAIL_REQUETE } from "@api/configurations/requete/GetDetailRequeteConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
+import { projetActeNaissanceDto } from "@mock/data/projetActeTranscrit";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
@@ -27,7 +31,12 @@ describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
       {
         data: { ...requeteCreationTranscription }
       }
-    );
+    )
+      .deployer(CONFIG_GET_PROJET_ACTE, { path: { idActe: "3ed99ec3-a80f-480d-b91f-b4068f0b3bfj" } }, { data: projetActeNaissanceDto })
+      .deployer(CONFIG_GET_LIBELLE_DECRET, {
+        path: { idTypeRegistre: "7a091a3b-6835-4824-94fb-527d62926d45" }
+      })
+      .deployer(CONFIG_GET_MODELE_TEXTE);
 
     const { container } = render(
       <MockRECEContextProvider
@@ -43,7 +52,7 @@ describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
     const mockApi = MockApi.getMock();
 
     await waitFor(() => {
-      expect(mockApi.history.get.length).toBe(1);
+      expect(mockApi.history.get.length).toBe(4);
     });
 
     await waitFor(() => {

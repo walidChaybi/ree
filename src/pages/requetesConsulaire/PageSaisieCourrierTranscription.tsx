@@ -1,12 +1,10 @@
 /* v8 ignore start A TESTER 03/25 */
-import { CONFIG_GET_TOUS_SERVICES_FILS } from "@api/configurations/agent/services/GetServicesFilsConfigApi";
 import { CONFIG_GET_DETAIL_REQUETE } from "@api/configurations/requete/GetDetailRequeteConfigApi";
 import TRAITEMENT_ENREGISTRER_RCTC from "@api/traitements/requetesConsulaire/TraitementEnregistrerRCTC";
 import { ISaisieRequeteRCTCForm, SaisieRequeteRCTCForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
 import { IRequeteConsulaire } from "@model/requete/IRequeteConsulaire";
-import { Option } from "@util/Type";
 import { Form, Formik } from "formik";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import Bouton from "../../composants/commun/bouton/Bouton";
 import { ConteneurBoutonBasDePage } from "../../composants/commun/bouton/conteneurBoutonBasDePage/ConteneurBoutonBasDePage";
@@ -17,7 +15,6 @@ import BlocParents from "../../composants/pages/requetesConsulaire/saisieCourrie
 import BlocRequerant from "../../composants/pages/requetesConsulaire/saisieCourrier/BlocRequerant";
 import BlocRequete from "../../composants/pages/requetesConsulaire/saisieCourrier/BlocRequete";
 import BlocTitulaire from "../../composants/pages/requetesConsulaire/saisieCourrier/BlocTitulaire";
-import { RECEContextData } from "../../contexts/RECEContextProvider";
 import useFetchApi from "../../hooks/api/FetchApiHook";
 import useTraitementApi from "../../hooks/api/TraitementApiHook";
 import LiensRECE from "../../router/LiensRECE";
@@ -26,12 +23,9 @@ import AfficherMessage from "../../utils/AfficherMessage";
 
 const PageSaisieCourrierTranscription: React.FC = () => {
   const { idRequeteParam } = useParams();
-  const { services } = useContext(RECEContextData);
   const navigate = useNavigate();
   const [requeteModifiee, setRequeteModifiee] = useState<IRequeteConsulaire | false | null>(false);
-  const [optionsServices, setOptionsServices] = useState<Option[] | null>(null);
   const { appelApi: appelGetDetailRequete } = useFetchApi(CONFIG_GET_DETAIL_REQUETE);
-  const { appelApi: appelGetServicesFils } = useFetchApi(CONFIG_GET_TOUS_SERVICES_FILS);
   const { lancerTraitement: enregistrerRCTC, traitementEnCours: enregistrementEnCours } = useTraitementApi(TRAITEMENT_ENREGISTRER_RCTC);
 
   useEffect(() => {
@@ -52,36 +46,9 @@ const PageSaisieCourrierTranscription: React.FC = () => {
     });
   }, [idRequeteParam]);
 
-  useEffect(() => {
-    if (optionsServices !== null || !services.length) {
-      return;
-    }
-
-    const departementTranscription = services.find(service => service.code === "TR");
-    if (!departementTranscription) {
-      setOptionsServices([]);
-
-      return;
-    }
-
-    const options = [{ cle: departementTranscription.idService, libelle: departementTranscription.libelleService }];
-    appelGetServicesFils({
-      parametres: { query: { idService: departementTranscription.idService } },
-      apresSucces: servicesDtos =>
-        setOptionsServices([
-          ...options,
-          ...servicesDtos.map(serviceDto => ({ cle: serviceDto.idService ?? "", libelle: serviceDto.libelleService ?? "" }))
-        ]),
-      apresErreur: erreurs => {
-        console.error(erreurs);
-        setOptionsServices(options);
-      }
-    });
-  }, [optionsServices, services]);
-
   return (
     <>
-      {(enregistrementEnCours || requeteModifiee === false || optionsServices === null) && <PageChargeur />}
+      {(enregistrementEnCours || requeteModifiee === false) && <PageChargeur />}
 
       {requeteModifiee !== false && (
         <div className="mx-auto mt-4 max-w-[90rem]">
