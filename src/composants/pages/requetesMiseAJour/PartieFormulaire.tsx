@@ -162,7 +162,7 @@ const PartieFormulaire: React.FC = () => {
                     {
                       idTypeMention: formuleDIntegration.idTypeMention,
                       affecteAnalyseMarginale: formuleDIntegration.affecteAnalyseMarginale,
-                      texte: formuleDIntegration.texteMention
+                      texte: formuleDIntegration.texteFormule
                     }
                   ]
                 : []),
@@ -288,7 +288,7 @@ const PartieFormulaire: React.FC = () => {
               {acteEstEligibleFormuleDIntegrationEtUtilisateurALesDroits && (
                 <div className="pb-4 text-left">
                   <ConteneurAvecBordure titreEnTete="Formule intégration dans RECE">
-                    <div className="mt-3 bg-slate-400">{formuleDIntegration?.texteMention}</div>
+                    <div className="mt-3 bg-slate-400">{formuleDIntegration?.texteFormule}</div>
                   </ConteneurAvecBordure>
                 </div>
               )}

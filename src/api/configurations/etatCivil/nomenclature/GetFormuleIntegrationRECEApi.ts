@@ -4,7 +4,7 @@ import { TConfigurationApi } from "@model/api/Api";
 export interface IFormuleIntegrationDto {
   idTypeMention: string;
   affecteAnalyseMarginale: boolean;
-  texteMention: string;
+  texteFormule: string;
 }
 
 const URI = "/types-mentions/formule-integration-registre-electronique";

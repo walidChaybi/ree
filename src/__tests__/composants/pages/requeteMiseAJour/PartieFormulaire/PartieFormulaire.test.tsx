@@ -162,7 +162,7 @@ describe("Tests PartieFormulaire", () => {
         data: {
           idTypeMention: "0123456789",
           affecteAnalyseMarginale: false,
-          texteMention: "Acte intégré au registre électronique sous la référence"
+          texteFormule: "Acte intégré au registre électronique sous la référence"
         }
       }
     );
