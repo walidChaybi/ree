@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import { SaisieProjetActeTranscritContext } from "../../../../contexts/SaisieProjetActeTranscritContextProvider";
 import AccessibleAvecDroits from "../../../commun/accessibleAvecDroits/AccessibleAvecDroits";
 import OngletsBouton from "../../../commun/onglets/OngletsBouton";
+import HistoriqueActionsRequete from "../../../commun/suivi/HistoriqueActionsRequete";
 import ConteneurVoletEdition from "../../requetesDelivrance/editionRequete/ConteneurVoletEdition";
 import ResumeDetailsRequete from "../commun/ResumeDetailsRequete";
 import ApercuProjetActe from "./apercuProjet/ApercuProjetActe";
@@ -45,6 +46,8 @@ const PartieGaucheSaisieProjet: React.FC<IPartieGaucheSaisieProjetProps> = ({ es
         estScrollable
       >
         <ResumeDetailsRequete requete={requete} />
+
+        <HistoriqueActionsRequete actions={requete.actions} />
 
         <AccessibleAvecDroits auMoinsUnDesDroits={[Droit.CONSULTER]}>
           <div className="mb-4 mr-4 mt-4">

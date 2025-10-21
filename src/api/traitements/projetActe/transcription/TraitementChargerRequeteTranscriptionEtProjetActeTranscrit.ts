@@ -40,7 +40,7 @@ const TRAITEMENT_CHARGER_REQUETE_TRANSCRIPTION_ET_PROJET_ACTE_TRANSCRIT: TTraite
             idRequete: idRequete
           },
           query: {
-            isConsultationHistoriqueAction: false
+            isConsultationHistoriqueAction: true
           }
         },
         apresSucces: requeteDto => {

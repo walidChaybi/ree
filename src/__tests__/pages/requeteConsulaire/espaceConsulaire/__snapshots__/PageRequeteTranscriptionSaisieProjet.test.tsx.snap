@@ -458,6 +458,66 @@ pays
         </div>
       </div>
       <div
+        class="pr-4"
+      >
+        <div
+          class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
+        >
+          <button
+            aria-label="Étendre la section"
+            class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
+            title="Étendre la section"
+            type="button"
+          >
+            <span
+              class="truncate"
+            >
+              Historique des actions
+            </span>
+            <svg
+              aria-hidden="true"
+              class="absolute right-2 text-2xl transition-transform duration-200 ease-in rotate-180"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+              />
+            </svg>
+          </button>
+          <div
+            class="grid transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+          >
+            <div
+              class="min-h-0"
+            >
+              <div
+                class="grid gap-y-4 p-4 "
+              >
+                <ul
+                  class="max-h-32 overflow-y-auto pl-8"
+                >
+                  <li
+                    class="list-none text-start"
+                  >
+                    A traiter - 28/06/2022
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
         class="mb-4 mr-4 mt-4"
       >
         <div
