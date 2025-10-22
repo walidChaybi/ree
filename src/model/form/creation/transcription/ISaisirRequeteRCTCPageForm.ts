@@ -18,6 +18,12 @@ import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
+import {
+  CaracteresAlphanumeriques,
+  CaracteresAutorises,
+  CaracteresAutorisesRecherchePays,
+  NumeroTelephone
+} from "../../../../ressources/Regex";
 import { TAvecValeursOptionnelles } from "../../../../types/typeUtils";
 import { PieceJointe } from "../../../../utils/FileUtils";
 import SchemaValidation from "../../../../utils/SchemaValidation";
@@ -41,16 +47,26 @@ export interface IParentFormRCTC {
 
 const ParentRCTCForm = {
   valeursInitiales: (parent: ITitulaireRequeteCreation | null): IParentFormRCTC => {
-    const donneesLieuNaissance = (() => {
-      const estFrance = parent?.paysNaissance === "France";
-      const regionDepartement = parent?.regionNaissance ?? "";
+    const donneesLieuNaissance = (parent: ITitulaireRequeteCreation | null) => {
+      if (!parent?.paysNaissance) {
+        return {
+          typeLieu: "Inconnu",
+          etatProvince: "",
+          departement: "",
+          estFrance: false
+        };
+      }
+
+      const estFrance = parent.paysNaissance === "France";
+      const regionDepartement = parent.regionNaissance ?? "";
 
       return {
-        region: estFrance ? "" : regionDepartement,
+        typeLieu: estFrance ? "FRANCE" : "ETRANGER",
+        etatProvince: estFrance ? "" : regionDepartement,
         departement: estFrance ? regionDepartement : "",
         estFrance
       };
-    })();
+    };
 
     return {
       identifiant: parent?.id ?? "",
@@ -67,13 +83,12 @@ const ParentRCTCForm = {
           : null
       ),
       naissance: {
-        typeLieu: parent?.paysNaissance ? (donneesLieuNaissance.estFrance ? "FRANCE" : "ETRANGER") : "Inconnu",
         ville: parent?.villeNaissance ?? "",
         arrondissement: parent?.arrondissementNaissance ?? "",
-        departement: donneesLieuNaissance.departement,
-        etatProvince: donneesLieuNaissance.region,
-        pays: parent?.paysNaissance ?? ""
+        pays: parent?.paysNaissance ?? "",
+        ...donneesLieuNaissance(parent)
       },
+
       nationalites: NationalitesForm.valeursDefauts(parent?.nationalites)
     };
   },
@@ -101,7 +116,7 @@ const ParentRCTCForm = {
     const cleParent = `parent${estParent1 ? "1" : "2"}`;
 
     return SchemaValidation.objet({
-      nom: SchemaValidation.texte({ obligatoire: false }),
+      nom: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }] }),
       prenoms: SchemaValidation.prenoms(`parents.${cleParent}.prenoms.prenom`),
       sexe: SchemaValidation.texte({
         obligatoire: ConditionChamp.depuisTableau([
@@ -120,17 +135,17 @@ const ParentRCTCForm = {
       }),
       dateNaissance: SchemaValidation.dateIncomplete({ obligatoire: false }),
       naissance: SchemaValidation.objet({
-        typeLieu: SchemaValidation.texte({ obligatoire: false }),
-        ville: SchemaValidation.texte({ obligatoire: false }),
-        arrondissement: SchemaValidation.texte({ obligatoire: false }),
-        departement: SchemaValidation.texte({ obligatoire: false }),
-        etatProvince: SchemaValidation.texte({ obligatoire: false }),
-        pays: SchemaValidation.texte({ obligatoire: false })
+        typeLieu: SchemaValidation.texte({}),
+        ville: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }], max: { valeur: 500 } }),
+        arrondissement: SchemaValidation.texte({}),
+        departement: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }], max: { valeur: 500 } }),
+        etatProvince: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }], max: { valeur: 500 } }),
+        pays: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorisesRecherchePays }], max: { valeur: 500 } })
       }),
       nationalites: SchemaValidation.objet({
-        nationalite1: SchemaValidation.texte({ obligatoire: false }),
-        nationalite2: SchemaValidation.texte({ obligatoire: false }),
-        nationalite3: SchemaValidation.texte({ obligatoire: false })
+        nationalite1: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }] }),
+        nationalite2: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }] }),
+        nationalite3: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }] })
       })
     });
   }
@@ -448,59 +463,61 @@ export const SaisieRequeteRCTCForm = {
       natureActe: SchemaValidation.texte({ obligatoire: true }),
       lienRequerant: SchemaValidation.texte({ obligatoire: true }),
       typeRegistre: SchemaValidation.objet({
-        id: SchemaValidation.texte({ obligatoire: true }),
         poste: SchemaValidation.texte({ obligatoire: true })
       })
     }),
     titulaire: SchemaValidation.objet({
-      nomActeEtranger: SchemaValidation.texte({ obligatoire: true }),
-      nomSouhaite: SchemaValidation.texte({ obligatoire: false }),
+      nomActeEtranger: SchemaValidation.texte({ obligatoire: true, listeRegexp: [{ valeur: CaracteresAutorises }] }),
+      nomSouhaite: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }] }),
       prenoms: SchemaValidation.prenoms("titulaire.prenoms.prenom"),
       sexe: SchemaValidation.texte({ obligatoire: true }),
       naissance: SchemaValidation.objet({
         date: SchemaValidation.dateIncomplete({ obligatoire: true }),
-        ville: SchemaValidation.texte({ obligatoire: false }),
-        etatProvince: SchemaValidation.texte({ obligatoire: false }),
-        pays: SchemaValidation.texte({ obligatoire: false })
+        ville: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }], max: { valeur: 500 } }),
+        etatProvince: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }], max: { valeur: 500 } }),
+        pays: SchemaValidation.texte({
+          listeRegexp: [{ valeur: CaracteresAutorisesRecherchePays }],
+          max: { valeur: 500 }
+        })
       })
     }),
     parents: SchemaValidation.objet({
       parent1: ParentRCTCForm.schemaValidation(true),
       parent2: ParentRCTCForm.schemaValidation(false),
       mariage: SchemaValidation.objet({
-        parentsMaries: SchemaValidation.texte({ obligatoire: false }),
-        date: SchemaValidation.dateIncomplete({ obligatoire: false }),
-        lieu: SchemaValidation.texte({ obligatoire: false }),
-        ville: SchemaValidation.texte({ obligatoire: false }),
-        pays: SchemaValidation.texte({ obligatoire: false })
+        parentsMaries: SchemaValidation.texte({}),
+        date: SchemaValidation.dateIncomplete({}),
+        lieu: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }] }),
+        ville: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }], max: { valeur: 500 } }),
+        pays: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorisesRecherchePays }], max: { valeur: 500 } })
       }),
       reconnaissance: SchemaValidation.objet({
-        titulaireReconnu: SchemaValidation.texte({ obligatoire: false }),
-        date: SchemaValidation.dateIncomplete({ obligatoire: false }),
-        lieu: SchemaValidation.texte({ obligatoire: false }),
-        ville: SchemaValidation.texte({ obligatoire: false }),
-        region: SchemaValidation.texte({ obligatoire: false }),
-        departement: SchemaValidation.texte({ obligatoire: false }),
-        pays: SchemaValidation.texte({ obligatoire: false })
+        titulaireReconnu: SchemaValidation.texte({}),
+        date: SchemaValidation.dateIncomplete({}),
+        lieu: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }], max: { valeur: 500 } }),
+        ville: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }], max: { valeur: 500 } }),
+        region: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }], max: { valeur: 500 } }),
+        departement: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }] }),
+        pays: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorisesRecherchePays }], max: { valeur: 500 } })
       })
     }),
     requerant: SchemaValidation.objet({
-      nom: SchemaValidation.texte({ obligatoire: false }),
-      nomUsage: SchemaValidation.texte({ obligatoire: false }),
-      prenom: SchemaValidation.texte({ obligatoire: false }),
+      nom: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }] }),
+      nomUsage: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }] }),
+      prenom: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }] }),
       adresse: SchemaValidation.objet({
-        voie: SchemaValidation.texte({ obligatoire: false }),
-        lieuDit: SchemaValidation.texte({ obligatoire: false }),
-        complementDestinataire: SchemaValidation.texte({ obligatoire: false }),
-        complementPointGeo: SchemaValidation.texte({ obligatoire: false }),
-        codePostal: SchemaValidation.texte({ obligatoire: false }),
-        commune: SchemaValidation.texte({ obligatoire: false }),
-        pays: SchemaValidation.texte({ obligatoire: false }),
-        adresseCourriel: SchemaValidation.texte({ obligatoire: false }),
-        numeroTelephone: SchemaValidation.texte({ obligatoire: false })
+        voie: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }] }),
+        lieuDit: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }] }),
+        complementDestinataire: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }], max: { valeur: 38 } }),
+        complementPointGeo: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }], max: { valeur: 38 } }),
+        codePostal: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAlphanumeriques }], max: { valeur: 38 } }),
+        commune: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }], max: { valeur: 38 } }),
+        pays: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorisesRecherchePays }], max: { valeur: 38 } }),
+        adresseCourriel: SchemaValidation.courriel({}),
+        numeroTelephone: SchemaValidation.texte({ listeRegexp: [{ valeur: NumeroTelephone }] })
       }),
-      autreAdresseCourriel: SchemaValidation.texte({ obligatoire: false }),
-      autreNumeroTelephone: SchemaValidation.texte({ obligatoire: false })
+      autreAdresseCourriel: SchemaValidation.courriel({}),
+      autreNumeroTelephone: SchemaValidation.texte({ listeRegexp: [{ valeur: NumeroTelephone }] })
     })
   })
 };

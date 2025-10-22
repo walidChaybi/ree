@@ -42,7 +42,7 @@ describe("GestionnaireNavigationFormik", () => {
 
   function renderComponent() {
     return render(
-      <BloqueurNavigationSaisieProjet>
+      <BloqueurNavigationSaisieProjet doitBloquer>
         <div>Saisie projet</div>
       </BloqueurNavigationSaisieProjet>
     );

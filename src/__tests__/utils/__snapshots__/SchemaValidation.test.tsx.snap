@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE le formulaire est soumis et que le champ n'est pas valide, ALORS une erreur apparait 1`] = `
+exports[`Schéma de validation: champsNumeroRcRcaPacs > LORSQUE le formulaire est soumis et que le champ n'est pas valide, ALORS une erreur apparait 1`] = `
 <form
   action="#"
 >
@@ -61,7 +61,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE le formulaire est
 </form>
 `;
 
-exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE le formulaire est soumis et que le champ n'est pas valide, ALORS une erreur apparait 2`] = `
+exports[`Schéma de validation: champsNumeroRcRcaPacs > LORSQUE le formulaire est soumis et que le champ n'est pas valide, ALORS une erreur apparait 2`] = `
 <form
   action="#"
 >
@@ -122,7 +122,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE le formulaire est
 </form>
 `;
 
-exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE le formulaire est soumis et que le champ n'est pas valide, ALORS une erreur apparait 3`] = `
+exports[`Schéma de validation: champsNumeroRcRcaPacs > LORSQUE le formulaire est soumis et que le champ n'est pas valide, ALORS une erreur apparait 3`] = `
 <form
   action="#"
 >
@@ -183,7 +183,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE le formulaire est
 </form>
 `;
 
-exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE le formulaire est soumis et que le champ n'est pas valide, ALORS une erreur apparait 4`] = `
+exports[`Schéma de validation: champsNumeroRcRcaPacs > LORSQUE le formulaire est soumis et que le champ n'est pas valide, ALORS une erreur apparait 4`] = `
 <form
   action="#"
 >
@@ -244,7 +244,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE le formulaire est
 </form>
 `;
 
-exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs sont présents, ALORS les bonnes erreurs apparaissent sur les bons champs 1`] = `
+exports[`Schéma de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs sont présents, ALORS les bonnes erreurs apparaissent sur les bons champs 1`] = `
 <form
   action="#"
 >
@@ -674,7 +674,7 @@ exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs 
 </form>
 `;
 
-exports[`Schema de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs sont présents, ALORS les bonnes erreurs apparaissent sur les bons champs 2`] = `
+exports[`Schéma de validation: champsNumeroRcRcaPacs > LORSQUE plusieurs champs sont présents, ALORS les bonnes erreurs apparaissent sur les bons champs 2`] = `
 <form
   action="#"
 >

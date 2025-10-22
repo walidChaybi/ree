@@ -1,5 +1,5 @@
 import { ErrorMessage, useField } from "formik";
-import { Ref, useCallback, useMemo } from "react";
+import { Ref, useCallback } from "react";
 import { CHAMP_EN_ERREUR } from "../formulaire/ScrollVersErreur";
 
 type TFormatChampsTexte = "PREMIER_MAJUSCULE" | "NOMS_PROPRES" | "MAJUSCULES" | "SANS_ESPACES";
@@ -10,6 +10,7 @@ interface IBoutonIcon {
 }
 
 type TChampsTexteProps = React.InputHTMLAttributes<HTMLInputElement> & {
+  name: string;
   libelle?: string;
   numerique?: boolean;
   optionFormatage?: TFormatChampsTexte;
@@ -35,43 +36,51 @@ const ChampTexte: React.FC<TChampsTexteProps> = ({
   refChamp,
   ...props
 }) => {
-  const [field, meta, helper] = useField(name as string);
-  const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
+  const [field, meta, helper] = useField(name);
+  const enErreur = Boolean(meta.error) && meta.touched;
+
+  const formaterValeur = useCallback(
+    (valeur: string): string => {
+      if (!valeur) return "";
+      switch (optionFormatage) {
+        case "PREMIER_MAJUSCULE":
+          return valeur.charAt(0).toUpperCase() + valeur.slice(1).toLowerCase();
+        case "NOMS_PROPRES":
+          return valeur.toLowerCase().replace(/(?:^|\s|-)\p{L}/gu, l => l.toUpperCase());
+        case "MAJUSCULES":
+          return valeur.toUpperCase();
+        case "SANS_ESPACES":
+          return valeur.replace(/\s+/g, "");
+        default:
+          return valeur;
+      }
+    },
+    [optionFormatage]
+  );
 
   const handleBlur = useCallback(
     (event: React.FocusEvent<HTMLInputElement>) => {
-      let nouveauFormatValeur = event.target.value;
-
-      switch (optionFormatage) {
-        case "PREMIER_MAJUSCULE":
-          nouveauFormatValeur = `${event.target.value.charAt(0).toUpperCase()}${event.target.value.substring(1)}`;
-          break;
-        case "NOMS_PROPRES":
-          nouveauFormatValeur = event.target.value
-            .split(/\s/g)
-            .map(nom => `${nom.charAt(0)?.toUpperCase() ?? ""}${nom.substring(1)}`)
-            .join(" ")
-            .split("-")
-            .map(nom => `${nom.charAt(0)?.toUpperCase() ?? ""}${nom.substring(1)}`)
-            .join("-");
-          break;
-        case "MAJUSCULES":
-          nouveauFormatValeur = event.target.value.toUpperCase();
-          break;
-        case "SANS_ESPACES":
-          nouveauFormatValeur = event.target.value.replace(/\s/g, "");
-          break;
-        default:
-          break;
-      }
-
+      const valeurFormatee = formaterValeur(event.target.value.trim());
       field.onBlur(event);
-      helper.setValue(nouveauFormatValeur.trim());
+      helper.setValue(valeurFormatee);
     },
-    [optionFormatage, field, helper]
+    [formaterValeur, field, helper]
   );
 
-  const { onBlur, onChange, ...fieldProps } = field;
+  const handleChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      let valeur = event.target.value;
+
+      if (numerique) {
+        valeur = valeur.replace(/\D/g, "");
+      } else if (regex) {
+        valeur = valeur.replace(regex, "");
+      }
+
+      helper.setValue(valeur);
+    },
+    [helper, numerique, regex]
+  );
 
   return (
     <div
@@ -80,7 +89,7 @@ const ChampTexte: React.FC<TChampsTexteProps> = ({
       {libelle && (
         <label
           className={`m-0 mb-1 ml-1 block w-fit text-start transition-colors ${enErreur ? "text-rouge" : "text-bleu-sombre"}`}
-          htmlFor={name as string}
+          htmlFor={name}
         >
           {libelle}
           {estObligatoire && <span className="ml-1 text-rouge">*</span>}
@@ -88,22 +97,16 @@ const ChampTexte: React.FC<TChampsTexteProps> = ({
       )}
       <div className="relative flex rounded-md shadow-sm">
         <input
+          {...field}
+          {...props}
           id={name}
           ref={refChamp}
-          className={`border-1 flex w-full flex-grow rounded border border-solid px-2 py-1 ${boutonChamp?.estAGauche ? "pl-12" : ""} transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
           maxLength={maxLength}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            const regexTexte = numerique ? /\D/ : regex;
-            if (regexTexte) {
-              event.target.value = event.target.value.replace(regexTexte, "");
-            }
-            field.onChange(event);
-          }}
+          onChange={handleChange}
           onBlur={handleBlur}
-          {...fieldProps}
-          {...props}
+          className={`border-1 flex w-full flex-grow rounded border border-solid px-2 py-1 ${boutonChamp?.estAGauche ? "pl-12" : ""} transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
         />
-        {boutonChamp?.composant}
+        {boutonChamp.composant}
       </div>
       {meta.error && (
         <div className="text-start text-sm text-rouge">

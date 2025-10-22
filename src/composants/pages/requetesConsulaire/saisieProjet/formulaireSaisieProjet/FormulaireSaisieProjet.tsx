@@ -37,17 +37,14 @@ const FormulaireSaisieProjet: React.FC = () => {
   const [libelleDecret, setLibelleDecret] = useState<string>("");
   const { appelApi: getLibelleDecret } = useFetchApi(CONFIG_GET_LIBELLE_DECRET);
 
+  const { utilisateurConnecte } = useContext(RECEContextData);
+
   const valeursInitiales = useMemo(
     () => ProjetActeNaissanceTranscriptionForm.valeursInitiales(requete, projetActe, libelleDecret),
     [requete, projetActe, libelleDecret]
   );
 
-  const { utilisateurConnecte } = useContext(RECEContextData);
-
-  const aLeDroitDeSignerActe = useMemo(
-    () => utilisateurConnecte.estHabilitePour({ leDroit: Droit.TRANSCRIPTION_SIGNER_ACTE }),
-    [utilisateurConnecte]
-  );
+  const aLeDroitDeSignerActe = utilisateurConnecte.estHabilitePour({ leDroit: Droit.TRANSCRIPTION_SIGNER_ACTE });
 
   useEffect(() => {
     if (!requete) return;
@@ -58,9 +55,8 @@ const FormulaireSaisieProjet: React.FC = () => {
           setLibelleDecret(reponse?.libelleDecret);
         }
       },
-      apresErreur: messageErreur => {
-        console.error(`Erreur: ${messageErreur}`);
-        AfficherMessage.erreur("Une erreur est survenue lors de la récupération du libellé de décret");
+      apresErreur: erreurs => {
+        AfficherMessage.erreur("Une erreur est survenue lors de la récupération du libellé de décret", { erreurs });
       }
     });
   }, [requete]);
@@ -95,9 +91,8 @@ const FormulaireSaisieProjet: React.FC = () => {
         setModaleOuverte(true);
         AfficherMessage.succes("Le projet d'acte a bien été enregistré", { fermetureAuto: true });
       },
-      apresErreur: messageErreur => {
-        console.error(`Erreur: ${messageErreur}`);
-
+      apresErreur: erreurs => {
+        console.error("Erreur API lors de l'enregistrement :", erreurs);
         AfficherMessage.erreur("Une erreur est survenue lors du traitement");
       }
     });
@@ -131,7 +126,6 @@ const FormulaireSaisieProjet: React.FC = () => {
     <Formik<IProjetActeTranscritForm>
       validationSchema={ProjetActeNaissanceTranscriptionForm.schemaValidation()}
       initialValues={valeursInitiales}
-      enableReinitialize
       onSubmit={(values, helper) => {
         if (values.soumissionFormulaire.action === EActionFormulaireProjetActeTranscrit.ENREGISTRER) {
           enregistrer(values);
@@ -208,13 +202,12 @@ const FormulaireSaisieProjet: React.FC = () => {
                     title="Enregistrer"
                     type="button"
                     disabled={enregistrementEnCours}
-                    onClick={() => {
-                      setFieldValue("soumissionFormulaire", {
+                    onClick={async () => {
+                      await setFieldValue("soumissionFormulaire", {
                         action: EActionFormulaireProjetActeTranscrit.ENREGISTRER,
                         avecEnregistrement: dirty
-                      }).then(() => {
-                        submitForm();
                       });
+                      submitForm();
                     }}
                   >
                     {"Enregistrer"}
@@ -225,14 +218,13 @@ const FormulaireSaisieProjet: React.FC = () => {
                       title="Terminer et signer"
                       type="button"
                       disabled={enregistrementEnCours}
-                      onClick={() => {
-                        setFieldValue("soumissionFormulaire", {
+                      onClick={async () => {
+                        await setFieldValue("soumissionFormulaire", {
                           action: EActionFormulaireProjetActeTranscrit.TERMINER_SIGNER,
                           avecEnregistrement: dirty,
                           avecMajStatut: requete.statutCourant.statut !== StatutRequete.A_SIGNER
-                        }).then(() => {
-                          submitForm();
                         });
+                        submitForm();
                       }}
                     >
                       {"Terminer et signer"}

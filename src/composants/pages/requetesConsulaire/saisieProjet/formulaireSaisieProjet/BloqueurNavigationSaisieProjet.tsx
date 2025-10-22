@@ -9,7 +9,7 @@ import { useBlocker } from "react-router";
 import { useModaleConfirmation } from "../../commun/ConfirmationModale";
 
 interface IBloqueurNavigationSaisieProjetProps {
-  doitBloquer?: boolean;
+  doitBloquer: boolean;
   children: React.ReactNode;
 }
 
@@ -18,7 +18,7 @@ const BloqueurNavigationSaisieProjet: React.FC<IBloqueurNavigationSaisieProjetPr
 
   const { ouvrir, ModaleAlerte } = useModaleConfirmation();
 
-  const blocker = useBlocker(doitBloquer ?? dirty);
+  const blocker = useBlocker(doitBloquer && dirty);
 
   useEffect(() => {
     if (blocker.state === "blocked") {

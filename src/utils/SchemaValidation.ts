@@ -4,7 +4,7 @@ import { INumeroRcRcaPacs } from "@model/form/commun/NumeroRcRcaPacsForm";
 import dayjs from "dayjs";
 import { getIn } from "formik";
 import * as Yup from "yup";
-import { REGEX_ANNEE_QUATRE_CHIFFRES } from "../ressources/Regex";
+import { CaracteresAutorises, REGEX_ANNEE_QUATRE_CHIFFRES } from "../ressources/Regex";
 
 // MODULE CLE centralisation des validations de formulaire
 
@@ -87,7 +87,7 @@ type TNomSecableChamp = {
 
 interface ISchemaValidation {
   objet: TSchemaValidationFonction<{ [cle: string]: Yup.AnySchema }, Yup.AnyObjectSchema>;
-  texte: TSchemaValidationFonction<{ listeRegexp?: TValidationText[] }, Yup.StringSchema>;
+  texte: TSchemaValidationFonction<{ listeRegexp?: TValidationText[]; max?: TValidationEntier }, Yup.StringSchema>;
   entier: TSchemaValidationFonction<{ min?: TValidationEntier; max?: TValidationEntier }, Yup.NumberSchema>;
   booleen: TSchemaValidationFonction<{}, Yup.BooleanSchema>;
   listeDeroulante: TSchemaValidationFonction<{ options?: string[]; valeursPossibles?: ValeursConditionneesMetaModele[] }, Yup.StringSchema>;
@@ -100,6 +100,7 @@ interface ISchemaValidation {
   numeroRcRcaPacs: TSchemaValidationFonction;
   numerosRcRcaPacs: TSchemaValidationFonction<{ prefix: string; tailleMax: number }>;
   referenceRECE: TSchemaValidationFonction<{ autoriserAnneeSeulement?: boolean }>;
+  courriel: TSchemaValidationFonction<{ max?: TValidationEntier }, Yup.StringSchema>;
   inconnu: () => Yup.AnySchema;
 }
 
@@ -123,7 +124,12 @@ export const messagesErreur = {
   CARACTERES_POST_ASTERISQUE: "⚠ L'astérisque ne doit être suivi d'aucun caractère",
   ASTERISQUE_PRECEDE_DE_UN: "⚠ L'astérisque doit être précédé d'au moins un caractère",
   ASTERISQUE_PRECEDE_DE_DEUX: "⚠ L'astérisque doit être précédé d'au moins deux caractères",
-  ASTERISQUE_PRECEDE_ESPACE: "⚠ L'astérisque doit être accolé à un vocable"
+  ASTERISQUE_PRECEDE_ESPACE: "⚠ L'astérisque doit être accolé à un vocable",
+  CARACTERE_NON_AUTORISE: "⚠ Le champ comporte au moins un caractère non autorisé.",
+  MAX_100_CARACTERES: "⚠ Le maximum de caractères autorisés est de 100.",
+  MAX_38_CARACTERES: "⚠ Le maximum de caractères autorisés est de 38.",
+  COURRIEL_INVALIDE: "⚠ L'adresse courriel est invalide",
+  ANNEE_POST_2020: "⚠ L'année doit être postérieure à 2020"
 };
 
 const erreurSurDateEntiere = (message: string, baseChemin: string) =>
@@ -391,9 +397,16 @@ const SchemaValidation: ISchemaValidation = {
   texte: (schemaParams = {}) => {
     let schema = Yup.string();
 
+    const nombreCaractereMax = schemaParams.max?.valeur ?? 100;
+
+    schema = schema.max(
+      nombreCaractereMax,
+      schemaParams.max?.message ?? `⚠ Le maximum de caractères autorisés est de ${nombreCaractereMax}.`
+    );
+
     if (schemaParams.listeRegexp?.length)
       schemaParams.listeRegexp.forEach(regexp => {
-        schema = schema.matches(regexp.valeur, regexp.message ?? "⚠ La valeur n'est pas conforme");
+        schema = schema.matches(regexp.valeur, regexp.message ?? messagesErreur.CARACTERE_NON_AUTORISE);
       });
 
     return gestionObligation({
@@ -494,7 +507,7 @@ const SchemaValidation: ISchemaValidation = {
             })
           : true
       )
-      .test("dateCompleteObligatoireJour", (date, error) =>
+      .test("dateCompleteObligatoireMois", (date, error) =>
         !date.mois && (Boolean(date.jour) || Boolean(date.annee))
           ? error.createError({
               path: `${error.path}.mois`,
@@ -502,7 +515,7 @@ const SchemaValidation: ISchemaValidation = {
             })
           : true
       )
-      .test("dateCompleteObligatoireJour", (date, error) =>
+      .test("dateCompleteObligatoireAnnee", (date, error) =>
         !date.annee && (Boolean(date.jour) || Boolean(date.mois))
           ? error.createError({
               path: `${error.path}.annee`,
@@ -600,7 +613,9 @@ const SchemaValidation: ISchemaValidation = {
   prenoms: (prefix: string) => {
     const schemaPrenoms: { [cle: string]: Yup.StringSchema } = {};
     Array.from({ length: 15 }).forEach((_, index) => {
-      let schema = Yup.string();
+      let schema = Yup.string()
+        .matches(CaracteresAutorises, messagesErreur.CARACTERE_NON_AUTORISE)
+        .max(100, messagesErreur.MAX_100_CARACTERES);
 
       if (index < 14) {
         const prenomsSuivants = Array.from({ length: 14 - index }).map((_, idx) => `$${prefix}${idx + index + 2}`);
@@ -739,7 +754,7 @@ const SchemaValidation: ISchemaValidation = {
     autoriserAnneeSeulement
   } = {}) => {
     let schema = SchemaValidation.champsAnneeEtNumero({
-      min: { valeur: 2021, message: "L'année doit être postérieure à 2020" },
+      min: { valeur: 2021, message: messagesErreur.ANNEE_POST_2020 },
       obligatoire,
       operateurConditionsOu,
       interditSeul,
@@ -758,6 +773,28 @@ const SchemaValidation: ISchemaValidation = {
       interditSeul: interditSeul,
       interditAvec: interditAvec,
       comparaisonValeurAutreChamp: comparaisonValeurAutreChamp
+    });
+  },
+
+  courriel: (schemaParams = {}) => {
+    let schema = Yup.string().email(messagesErreur.COURRIEL_INVALIDE).max(100, messagesErreur.MAX_100_CARACTERES);
+
+    if (schemaParams.max) {
+      schema = schema.max(
+        schemaParams.max.valeur,
+        schemaParams.max.message ?? `Le maximum de caractères autorisés est de ${schemaParams.max.valeur}.`
+      );
+    }
+
+    return gestionObligation({
+      schema: schema,
+      obligatoire: schemaParams.obligatoire ?? false,
+      actionObligation: () => schema.required(messagesErreur.CHAMP_OBLIGATOIRE),
+      conditionOu: schemaParams.operateurConditionsOu,
+      dansTableauConditionsOu: schemaParams.dansTableauOperateurConditionsOu,
+      interditSeul: schemaParams.interditSeul,
+      interditAvec: schemaParams.interditAvec,
+      comparaisonValeurAutreChamp: schemaParams.comparaisonValeurAutreChamp
     });
   },
 
