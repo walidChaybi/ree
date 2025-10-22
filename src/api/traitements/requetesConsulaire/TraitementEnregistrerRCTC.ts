@@ -50,7 +50,8 @@ const TRAITEMENT_ENREGISTRER_RCTC: TTraitementApi<IParametresTraitement, IRepons
         setDonneesTraitement(prec => ({
           ...prec,
           idRequete: (estRequeteModifiee ? parametres.requeteModifiee?.id : requeteCreee?.[0]?.id) ?? "",
-          piecesASauvergarder: parametres.valeurs.pieceJointe
+          piecesASauvergarder: parametres.valeurs.pieceJointe,
+          messageErreur: ""
         }));
 
       const apresErreur = (erreurs: TErreurApi[]) => {
