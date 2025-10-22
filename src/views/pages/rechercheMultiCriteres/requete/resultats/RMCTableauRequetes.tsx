@@ -20,7 +20,6 @@ import { Perimetre } from "@model/agent/enum/Perimetre";
 import { ESousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { RequeteTableauRMC, TRequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
-import { setParamsUseApercuCreation } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { autorisePrendreEnChargeReqTableauCreation, autorisePrendreEnChargeReqTableauDelivrance } from "@util/RequetesUtils";
 import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
@@ -122,8 +121,8 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({ dataRMC
       estRequeteRCTDOuRCTCEtALeDroitActeTranscrit(requete.sousType, utilisateurConnecte) ||
       estRequeteRCEXREtALeDroitActeEtabli(requete.sousType, utilisateurConnecte)
     ) {
-      setOperationEnCours(true);
       if (autorisePrendreEnChargeReqTableauCreation(requete, utilisateurConnecte)) {
+        setOperationEnCours(true);
         setParamsMiseAJour({
           libelleAction: EStatutRequete.PRISE_EN_CHARGE,
           statutRequete: "PRISE_EN_CHARGE",
@@ -131,7 +130,12 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({ dataRMC
           typeRequete: "CREATION"
         });
       } else {
-        setParamsUseApercuCreation(requete.id, setParamsCreation, requete.sousType, requete.statut, requete.idUtilisateur ?? undefined);
+        setParamsCreation({
+          idRequete: requete.id,
+          sousType: requete.sousType,
+          statut: requete.statut,
+          idUtilisateur: requete.idUtilisateur ?? undefined
+        });
       }
     }
   };

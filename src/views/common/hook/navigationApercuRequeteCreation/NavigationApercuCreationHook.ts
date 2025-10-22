@@ -7,12 +7,14 @@ import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../router/LiensRECE";
 import {
   INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE,
-  INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_SAISIE_PROJET
+  INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_SAISIE_PROJET,
+  INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_TRAITE
 } from "../../../../router/infoPages/InfoPagesEspaceConsulaire";
 import {
   INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_CONSULTATION,
   INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_SUIVI_DOSSIER
 } from "../../../../router/infoPages/InfoPagesEspaceEtablissement";
+import AfficherMessage from "../../../../utils/AfficherMessage";
 
 export type NavigationApercuReqCreationParams = {
   idRequete: string;
@@ -74,10 +76,26 @@ function redirectionTranscription(
 ) {
   let path: string;
   const appartientAUtilisateurConnecte = utilisateurConnecte.id === idUtilisateur;
-  if (appartientAUtilisateurConnecte && (statut === "EN_TRAITEMENT" || statut === "A_SIGNER")) {
-    path = LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_SAISIE_PROJET.url, { idRequeteParam: idRequete });
-  } else {
-    path = LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE.url, { idRequeteParam: idRequete });
+
+  if (!statut) return;
+
+  if (!appartientAUtilisateurConnecte && ["EN_TRAITEMENT", "A_SIGNER", "PRISE_EN_CHARGE"].includes(statut)) {
+    AfficherMessage.erreur("Vous ne pouvez pas accéder à cette requête");
+
+    return;
   }
+
+  switch (statut) {
+    case "EN_TRAITEMENT":
+    case "A_SIGNER":
+      path = LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_SAISIE_PROJET.url, { idRequeteParam: idRequete });
+      break;
+    case "TRAITE":
+      path = LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_TRAITE.url, { idRequeteParam: idRequete });
+      break;
+    default:
+      path = LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE.url, { idRequeteParam: idRequete });
+  }
+
   navigate(path);
 }
