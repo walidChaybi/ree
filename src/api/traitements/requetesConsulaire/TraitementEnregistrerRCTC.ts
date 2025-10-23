@@ -1,5 +1,4 @@
 /* v8 ignore start A TESTER 03/25 */
-import { CONFIG_PATCH_REQUETE_TRANSCRIPTION } from "@api/configurations/requete/creation/PatchRequeteTranscriptionConfigApi";
 import { CONFIG_POST_REQUETE_TRANSCRIPTION } from "@api/configurations/requete/creation/PostRequeteTranscriptionConfigApi";
 import { CONFIG_POST_PIECE_JUSTIFICATIVE } from "@api/configurations/requete/pieceJustificative/PostPieceJustificativeConfigApi";
 import { TErreurApi } from "@model/api/Api";
@@ -12,7 +11,6 @@ import { TTraitementApi } from "../TTraitementApi";
 
 interface IParametresTraitement {
   valeurs: ISaisieRequeteRCTCForm;
-  requeteModifiee: IRequeteConsulaire | null;
 }
 
 interface IReponseTraitment {
@@ -40,16 +38,14 @@ const TRAITEMENT_ENREGISTRER_RCTC: TTraitementApi<IParametresTraitement, IRepons
       messageErreur: ""
     });
     const { appelApi: postRequeteTranscription } = useFetchApi(CONFIG_POST_REQUETE_TRANSCRIPTION);
-    const { appelApi: patchRequeteTranscription } = useFetchApi(CONFIG_PATCH_REQUETE_TRANSCRIPTION);
     const { appelApi: postPieceJustificative } = useFetchApi(CONFIG_POST_PIECE_JUSTIFICATIVE);
 
     const lancer = (parametres: IParametresTraitement) => {
-      const estRequeteModifiee = Boolean(parametres.requeteModifiee);
 
       const apresSucces = (requeteCreee?: { id: string }[]) =>
         setDonneesTraitement(prec => ({
           ...prec,
-          idRequete: (estRequeteModifiee ? parametres.requeteModifiee?.id : requeteCreee?.[0]?.id) ?? "",
+          idRequete: requeteCreee?.[0]?.id ?? "",
           piecesASauvergarder: parametres.valeurs.pieceJointe,
           messageErreur: ""
         }));
@@ -58,22 +54,6 @@ const TRAITEMENT_ENREGISTRER_RCTC: TTraitementApi<IParametresTraitement, IRepons
         setDonneesTraitement(prec => ({ ...prec, messageErreur: "Erreur lors de l'enregistrement de la requête" }));
         terminerTraitement();
       };
-
-      if (estRequeteModifiee) {
-        patchRequeteTranscription({
-          parametres: {
-            path: { idRequete: parametres.requeteModifiee?.id ?? "" },
-            body: {
-              idUtilisateur: parametres.requeteModifiee?.idUtilisateur,
-              statut: parametres.requeteModifiee?.statut,
-              ...SaisieRequeteRCTCForm.versDto(parametres.valeurs)
-            }
-          },
-          apresSucces,
-          apresErreur
-        });
-        return;
-      }
 
       postRequeteTranscription({
         parametres: { body: [SaisieRequeteRCTCForm.versDto(parametres.valeurs)] },

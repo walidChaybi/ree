@@ -48,11 +48,7 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
     useFetchApi(CONFIG_POST_MAJ_STATUT_ET_ACTION);
 
   const { appelApi: appelApiPrendreEnCharge, enAttenteDeReponseApi: enAttentePriseEnCharge } = useFetchApi(CONFIG_POST_PRENDRE_EN_CHARGE);
-  const afficherBoutonModifierRequete =
-    requete &&
-    SousTypeCreation.estRCTC(requete?.sousType) &&
-    utilisateurConnecte.idService === requete?.idService &&
-    ![StatutRequete.EN_TRAITEMENT.libelle, StatutRequete.A_SIGNER.libelle].includes(requete?.statutCourant?.statut?.libelle ?? "");
+
 
   const afficherBoutonPrendreEnCharge =
     requete &&
@@ -208,20 +204,6 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
             >
               {"Saisir une nouvelle requête"}
             </Bouton>
-
-            {afficherBoutonModifierRequete && (
-              <Bouton
-                title="Modifier la requête"
-                className="flex w-fit items-center"
-                lienVers={LiensRECE.genererLien(INFO_PAGE_MODIFICATION_REQUETE_TRANSCRIPTION_COURRIER.url, { idRequeteParam: requete.id })}
-              >
-                <MdEdit
-                  className="mr-2"
-                  aria-hidden
-                />{" "}
-                {"MODIFIER LA REQUÊTE"}
-              </Bouton>
-            )}
 
             {afficherBoutonPrendreEnCharge && (
               <Bouton

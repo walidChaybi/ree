@@ -58,7 +58,7 @@ const PageSaisieCourrierTranscription: React.FC = () => {
             validationSchema={SaisieRequeteRCTCForm.schemaValidation}
             onSubmit={values =>
               enregistrerRCTC({
-                parametres: { valeurs: values, requeteModifiee: requeteModifiee },
+                parametres: { valeurs: values },
                 apresSucces: requeteEnregistree =>
                   navigate(
                     LiensRECE.genererLien(INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_PRISE_EN_CHARGE.url, {
