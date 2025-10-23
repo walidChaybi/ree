@@ -2983,7 +2983,6 @@ pays
                         <textarea
                           class="font-marianne text-base resize-y transition-colors border-gris focus-visible:ring-bleu"
                           id="autresEnonciations.enonciations"
-                          maxlength="2000"
                           name="autresEnonciations.enonciations"
                         />
                       </div>

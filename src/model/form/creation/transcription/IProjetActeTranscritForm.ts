@@ -36,6 +36,7 @@ import { IParentRequeteTranscription, ParentsRequeteTranscription } from "@model
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { TitulaireRequeteTranscription } from "@model/requete/ITitulaireRequeteTranscription";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
+import { CaracteresAutorises, CaracteresEtatCivilHorsNomPrenom } from "../../../../ressources/Regex";
 import SchemaValidation from "../../../../utils/SchemaValidation";
 
 export enum EActionFormulaireProjetActeTranscrit {
@@ -337,8 +338,8 @@ export const ProjetActeNaissanceTranscriptionForm = {
   },
   schemaValidation: () => {
     const TitulaireSchemaValidationFormulaire = SchemaValidation.objet({
-      nomActeEtranger: SchemaValidation.texte({ obligatoire: true }),
-      nomRetenuOEC: SchemaValidation.texte({ obligatoire: true }),
+      nomActeEtranger: SchemaValidation.texte({ obligatoire: true, listeRegexp: [{ valeur: CaracteresAutorises }] }),
+      nomRetenuOEC: SchemaValidation.texte({ obligatoire: true, listeRegexp: [{ valeur: CaracteresAutorises }] }),
       prenomsChemin: SchemaValidation.prenoms("titulaire.prenomsChemin.prenom"),
       sexe: SchemaValidation.texte({ obligatoire: true }),
       dateNaissance: SchemaValidation.dateIncomplete({ obligatoire: true }),
@@ -350,11 +351,16 @@ export const ProjetActeNaissanceTranscriptionForm = {
               operateur: EOperateurCondition.DIFF,
               valeurs: [""]
             }
-          ])
+          ]),
+          listeRegexp: [{ valeur: CaracteresEtatCivilHorsNomPrenom }],
+          max: { valeur: 500 }
         }),
-        region: SchemaValidation.texte(),
-        pays: SchemaValidation.texte(),
-        adresse: SchemaValidation.texte()
+        region: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresEtatCivilHorsNomPrenom }], max: { valeur: 500 } }),
+        pays: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresEtatCivilHorsNomPrenom }], max: { valeur: 500 } }),
+        adresse: SchemaValidation.texte({
+          listeRegexp: [{ valeur: CaracteresEtatCivilHorsNomPrenom }],
+          max: { valeur: 500 }
+        })
       })
     });
 
@@ -377,9 +383,14 @@ export const ProjetActeNaissanceTranscriptionForm = {
                   }
                 ]
               : [])
-          ])
+          ]),
+          listeRegexp: [{ valeur: CaracteresEtatCivilHorsNomPrenom }],
+          max: { valeur: 500 }
         }),
-        adresse: SchemaValidation.texte(),
+        adresse: SchemaValidation.texte({
+          listeRegexp: [{ valeur: CaracteresEtatCivilHorsNomPrenom }],
+          max: { valeur: 500 }
+        }),
         departement: SchemaValidation.texte({
           obligatoire: ConditionChamp.depuisTableau([
             {
@@ -401,11 +412,19 @@ export const ProjetActeNaissanceTranscriptionForm = {
                   }
                 ]
               : [])
-          ])
-        }).transform(val => val?.toLowerCase?.()),
+          ]),
+          listeRegexp: [{ valeur: CaracteresEtatCivilHorsNomPrenom }],
+          max: { valeur: 500 }
+        }),
         arrondissement: SchemaValidation.texte(),
-        pays: SchemaValidation.texte(),
-        etatProvince: SchemaValidation.texte()
+        pays: SchemaValidation.texte({
+          listeRegexp: [{ valeur: CaracteresEtatCivilHorsNomPrenom }],
+          max: { valeur: 500 }
+        }),
+        etatProvince: SchemaValidation.texte({
+          listeRegexp: [{ valeur: CaracteresEtatCivilHorsNomPrenom }],
+          max: { valeur: 500 }
+        })
       }).test("au-moins-un-champ-etranger", "La saisie d'au moins un champ est obligatoire", function (adresse, context) {
         if (adresse.typeLieu !== "Étranger") {
           return true;
@@ -431,30 +450,34 @@ export const ProjetActeNaissanceTranscriptionForm = {
               ? ConditionChamp.depuisTableau([
                   { idChampReference: "parents.parent1.prenomsChemin.prenom1", operateur: EOperateurCondition.EGAL, valeurs: [""] }
                 ])
-              : false
+              : false,
+          listeRegexp: [{ valeur: CaracteresAutorises }],
+          max: { valeur: 100 }
         }),
         prenomsChemin: SchemaValidation.prenoms(`${parentPrefix}.prenomsChemin.prenom`),
-        sexe: SchemaValidation.texte().test(
-          "sexe-required-if-nom-or-prenom",
-          "Le sexe est obligatoire lorsque le nom ou le prénom est renseigné",
-          function (valeurSexe) {
-            const parent = this.parent;
-
-            const aNom = parent.nom && parent.nom !== "";
-            const aPrenom = parent.prenomsChemin.prenom1 && parent.prenomsChemin.prenom1 !== "";
-
-            if ((aNom || aPrenom) && !valeurSexe) {
-              return false;
+        sexe: SchemaValidation.texte({
+          obligatoire: ConditionChamp.depuisTableau([
+            {
+              idChampReference: `${parentPrefix}.nom`,
+              operateur: EOperateurCondition.DIFF,
+              valeurs: [""]
+            },
+            {
+              idChampReference: `${parentPrefix}.prenomsChemin.prenom1`,
+              operateur: EOperateurCondition.DIFF,
+              valeurs: [""]
             }
-
-            return true;
-          }
-        ),
+          ]),
+          operateurConditionsOu: true,
+          dansTableauOperateurConditionsOu: true
+        }),
         dateNaissance: SchemaValidation.dateIncomplete(),
         renseignerAge: SchemaValidation.booleen(),
-        age: SchemaValidation.entier(),
+        age: SchemaValidation.entier({
+          max: { valeur: 999 }
+        }),
         lieuNaissance: AdresseSchemaValidationFormulaire(`${parentPrefix}.lieuNaissance`),
-        profession: SchemaValidation.texte(),
+        profession: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }] }),
         sansProfession: SchemaValidation.booleen(),
         domicile: AdresseSchemaValidationFormulaire(`${parentPrefix}.domicile`)
       });
@@ -474,18 +497,26 @@ export const ProjetActeNaissanceTranscriptionForm = {
             operateur: EOperateurCondition.EGAL,
             valeurs: ["TIERS"]
           }
-        ])
+        ]),
+        listeRegexp: [{ valeur: CaracteresAutorises }]
       }),
       prenomsChemin: SchemaValidation.prenoms("declarant.prenomsChemin.prenom"),
       age: SchemaValidation.entier(),
-      qualite: SchemaValidation.texte(),
-      profession: SchemaValidation.texte(),
+      qualite: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }] }),
+      profession: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }] }),
       domicile: AdresseSchemaValidationFormulaire("declarant.domicile", true),
-      complement: SchemaValidation.texte()
+      complement: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresEtatCivilHorsNomPrenom }], max: { valeur: 500 } })
     });
 
     const MentionsSchemaValidationFormulaire = SchemaValidation.objet({
-      mentions: SchemaValidation.texte()
+      mentions: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresEtatCivilHorsNomPrenom }], max: { valeur: 5000 } })
+    });
+
+    const AutresEnonciationsSchemaValidationFormulaire = SchemaValidation.objet({
+      enonciations: SchemaValidation.texte({
+        listeRegexp: [{ valeur: CaracteresEtatCivilHorsNomPrenom }],
+        max: { valeur: 5000 }
+      })
     });
 
     const FormuleFinaleSchemaValidationFormulaire = SchemaValidation.objet({
@@ -497,10 +528,11 @@ export const ProjetActeNaissanceTranscriptionForm = {
             operateur: EOperateurCondition.EGAL,
             valeurs: ["TIERS"]
           }
-        ])
+        ]),
+        listeRegexp: [{ valeur: CaracteresAutorises }]
       }),
       prenomsChemin: SchemaValidation.prenoms("mentionsEtFormuleFinale.prenomsChemin.prenom"),
-      qualite: SchemaValidation.texte(),
+      qualite: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresAutorises }] }),
       pieceProduite: SchemaValidation.texte({ obligatoire: true }),
       legalisationApostille: SchemaValidation.texte(),
       autresPieces: SchemaValidation.texte({
@@ -510,16 +542,18 @@ export const ProjetActeNaissanceTranscriptionForm = {
             operateur: EOperateurCondition.EGAL,
             valeurs: ["COPIES", "COPIES_ET_TRADUCTION"]
           }
-        ])
+        ]),
+        listeRegexp: [{ valeur: CaracteresAutorises }],
+        max: { valeur: 5000 }
       }),
       modeDepot: SchemaValidation.texte({ obligatoire: true }),
       identiteTransmetteur: SchemaValidation.texte({ obligatoire: true })
     });
 
     const LieuEnregistrementSchemaValidation = SchemaValidation.objet({
-      ville: SchemaValidation.texte(),
-      etatProvince: SchemaValidation.texte(),
-      pays: SchemaValidation.texte()
+      ville: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresEtatCivilHorsNomPrenom }], max: { valeur: 500 } }),
+      etatProvince: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresEtatCivilHorsNomPrenom }], max: { valeur: 500 } }),
+      pays: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresEtatCivilHorsNomPrenom }], max: { valeur: 500 } })
     });
 
     const ActeEtrangerSchemaValidationFormulaire = SchemaValidation.objet({
@@ -538,8 +572,8 @@ export const ProjetActeNaissanceTranscriptionForm = {
       }),
       dateEnregistrement: SchemaValidation.dateIncomplete({ bloquerDateFuture: true }),
       lieuEnregistrement: LieuEnregistrementSchemaValidation,
-      redacteur: SchemaValidation.texte(),
-      referenceComplement: SchemaValidation.texte()
+      redacteur: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresEtatCivilHorsNomPrenom }], max: { valeur: 500 } }),
+      referenceComplement: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresEtatCivilHorsNomPrenom }], max: { valeur: 500 } })
     });
     return SchemaValidation.objet({
       titulaire: TitulaireSchemaValidationFormulaire,
@@ -547,7 +581,8 @@ export const ProjetActeNaissanceTranscriptionForm = {
       parents: ParentsSchemaValidationFormulaire,
       mentions: MentionsSchemaValidationFormulaire,
       formuleFinale: FormuleFinaleSchemaValidationFormulaire,
-      acteEtranger: ActeEtrangerSchemaValidationFormulaire
+      acteEtranger: ActeEtrangerSchemaValidationFormulaire,
+      autresEnonciations: AutresEnonciationsSchemaValidationFormulaire
     });
   },
   versDtoPost: (valeursSaisies: IProjetActeTranscritForm, requete: IRequeteCreationTranscription): IProjetActeTranscritPostDto => {

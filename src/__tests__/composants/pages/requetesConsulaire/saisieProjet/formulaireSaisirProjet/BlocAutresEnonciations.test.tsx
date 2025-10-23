@@ -34,15 +34,4 @@ describe("BlocAutresEnonciations", () => {
 
     expect(textArea.value).toBe("Test d'énonciation");
   });
-
-  test("ne doit pas permettre de dépasser 2000 caractères", () => {
-    renderComponent(initialValues);
-    const textArea = screen.getByLabelText(/Texte énonciations/) as HTMLTextAreaElement;
-
-    const longTexte = "a".repeat(2005);
-
-    fireEvent.change(textArea, { target: { value: longTexte } });
-
-    expect(textArea.value.length).toBe(2000);
-  });
 });

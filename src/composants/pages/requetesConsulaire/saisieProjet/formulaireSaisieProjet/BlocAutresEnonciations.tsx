@@ -7,7 +7,6 @@ const BlocAutresEnonciations: React.FC = () => (
     <ChampZoneTexte
       name="autresEnonciations.enonciations"
       libelle="Texte énonciations"
-      maxLength={2000}
       typeRedimensionnement="vertical"
     />
   </ConteneurAvecBordure>

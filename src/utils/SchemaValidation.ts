@@ -777,7 +777,7 @@ const SchemaValidation: ISchemaValidation = {
   },
 
   courriel: (schemaParams = {}) => {
-    let schema = Yup.string().email(messagesErreur.COURRIEL_INVALIDE).max(100, messagesErreur.MAX_100_CARACTERES);
+    let schema = Yup.string().email(messagesErreur.COURRIEL_INVALIDE).max(255, `Le maximum de caractères autorisés est de 255`);
 
     if (schemaParams.max) {
       schema = schema.max(
