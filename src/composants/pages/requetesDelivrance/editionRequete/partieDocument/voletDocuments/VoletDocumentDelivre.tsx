@@ -1,4 +1,5 @@
-import { CONFIG_GET_DOCUMENTS_REPONSE_DELIVRANCE } from "@api/configurations/requete/documentsReponses/GetDocumentsReponseDelivrance";
+import { CONFIG_GET_DOCUMENTS_REPONSE_DELIVRANCE } from "@api/configurations/requete/documentsReponses/GetDocumentsReponseDelivranceConfigApi";
+import { CONFIG_GET_DOCUMENTS_REPONSE_DELIVRANCE_FORMAT_IMAGE } from "@api/configurations/requete/documentsReponses/GetDocumentsReponseDelivranceFormatImageConfigApi";
 import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
@@ -15,6 +16,7 @@ import { EMimeType } from "../../../../../../ressources/EMimeType";
 import AffichageDocument from "../../../../../commun/affichageDocument/AffichageDocument";
 import PageChargeur from "../../../../../commun/chargeurs/PageChargeur";
 import OngletsBouton from "../../../../../commun/onglets/OngletsBouton";
+import RetoucheImage from "../../../../../commun/retoucheImage/RetoucheImage";
 import ConteneurVoletEdition from "../../ConteneurVoletEdition";
 import ModifierCorpsExtrait from "./ModifierCorpsExtrait";
 
@@ -78,18 +80,30 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
   );
 
   const [ongletActif, setOngletActif] = useState<ECleOngletDocumentDelivre>(ongletParDefaut);
+  const [imagesDocumentsReponse, setImagesDocumentsReponse] = useState<string[]>([]);
 
   useEffect(() => {
     resetOngletActif && setOngletActif(ongletParDefaut);
   }, [resetOngletActif, ongletParDefaut]);
 
   const { appelApi: getDocumentsReponse } = useFetchApi(CONFIG_GET_DOCUMENTS_REPONSE_DELIVRANCE);
+  const { appelApi: getDocumentsReponseFormatImage } = useFetchApi(CONFIG_GET_DOCUMENTS_REPONSE_DELIVRANCE_FORMAT_IMAGE);
+
   useEffect(() => {
     getDocumentsReponse({
-      parametres: { path: { idDcumentReponse: idDocumentDelivre } },
+      parametres: { path: { idDocumentReponse: idDocumentDelivre } },
       apresSucces: document => setContenuDocument(document.contenu)
     });
   }, [idDocumentDelivre]);
+
+  useEffect(() => {
+    if (ongletsDisponible.retoucheImage) {
+      getDocumentsReponseFormatImage({
+        parametres: { path: { idDocumentReponse: idDocumentDelivre } },
+        apresSucces: imagesBase64 => setImagesDocumentsReponse(imagesBase64)
+      });
+    }
+  }, [ongletsDisponible]);
 
   return !acte ? (
     <PageChargeur />
@@ -201,9 +215,10 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
       {ongletsDisponible.retoucheImage && (
         <ConteneurVoletEdition
           estActif={ongletActif === ECleOngletDocumentDelivre.RETOUCHE_IMAGE}
+          estScrollable
           estSousOnglet
         >
-          Outil retouche image
+          <RetoucheImage images={imagesDocumentsReponse} />
         </ConteneurVoletEdition>
       )}
     </>

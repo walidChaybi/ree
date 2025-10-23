@@ -1,7 +1,7 @@
 import { REQUETE_API } from "@api/ApiDisponibles";
 import { TConfigurationApi } from "@model/api/Api";
 
-const URI = "/documentsreponses/:idDcumentReponse";
+const URI = "/documentsreponses/:idDocumentReponse";
 
 interface IDocumentReponseDto {
   contenu: string;

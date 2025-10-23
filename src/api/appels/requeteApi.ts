@@ -345,11 +345,11 @@ export function deleteDocumentsReponseApi(idRequete: string) {
   );
 }
 
-export function getDocumentReponseById(idDcumentReponse: string): Promise<any> {
+export function getDocumentReponseById(idDocumentReponse: string): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
-      uri: `${URL_DOCUMENT_REPONSE}/${idDcumentReponse}`
+      uri: `${URL_DOCUMENT_REPONSE}/${idDocumentReponse}`
     })
   );
 }

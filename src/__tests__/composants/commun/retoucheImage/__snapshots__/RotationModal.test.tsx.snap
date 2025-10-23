@@ -1,0 +1,35 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Test du composant RotationModal > Le composant s'affiche correctement 1`] = `
+<div>
+  <div
+    class="fixed left-0 top-0 z-[1000] flex h-full w-full items-center justify-center"
+  >
+    <div
+      class="flex h-4/5 w-4/5 flex-col justify-between rounded-md bg-white p-16"
+    >
+      <canvas
+        class="border border-solid border-black"
+        height="576"
+        width="819.2"
+      />
+      <div
+        class="mt-2 flex justify-center"
+      >
+        <button
+          class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc mr-2"
+          type="button"
+        >
+          Annuler
+        </button>
+        <button
+          class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc ml-2"
+          type="button"
+        >
+          Valider
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
