@@ -1166,6 +1166,7 @@ exports[`Formulaire saisie RDC - affichage des blocs > DOIT afficher le formulai
                         >
                           <button
                             class="BoutonUpload"
+                            type="button"
                           >
                             <svg
                               aria-hidden="true"
@@ -1819,6 +1820,7 @@ exports[`Formulaire saisie RDC - affichage des blocs > DOIT afficher le formulai
                             >
                               <button
                                 class="BoutonUpload"
+                                type="button"
                               >
                                 <svg
                                   aria-hidden="true"

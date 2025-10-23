@@ -87,6 +87,7 @@ const UploadFileField: React.FC<UploadFileFieldProps> = props => {
           className="BoutonUpload"
           onClick={e => handleClickBoutonChoisirFichier(e)}
           disabled={props.disabled}
+          type="button"
         >
           {props.iconBouton}
           {props.libelleBouton ?? "..."}
