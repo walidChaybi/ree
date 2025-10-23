@@ -1,4 +1,3 @@
-import { TransfertUnitaireParams } from "@hook/requete/TransfertHook";
 import { IService } from "@model/agent/IService";
 import { Utilisateur, UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
@@ -7,31 +6,8 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { DoubleClicUtil } from "@util/DoubleClicUtil";
-import { Option, Options } from "@util/Type";
+import { Options } from "@util/Type";
 import { MutableRefObject } from "react";
-import { IMenuTransfertProps } from "./MenuTransfert";
-/* v8 ignore start */
-
-export function onValidateService(
-  setOperationEnCours: React.Dispatch<React.SetStateAction<boolean>>,
-  setParam: React.Dispatch<React.SetStateAction<TransfertUnitaireParams | undefined>>,
-  props: React.PropsWithChildren<IMenuTransfertProps>,
-  setServicePopinOpen: React.Dispatch<React.SetStateAction<boolean>>,
-  service?: Option
-) {
-  setOperationEnCours(true);
-  if (service) {
-    setParam({
-      idRequete: props.idRequete,
-      idService: service.cle,
-      idUtilisateurAAssigner: "",
-      statutRequete: props.estTransfert ? "TRANSFEREE" : "A_TRAITER",
-      libelleAction: `${props.estTransfert ? "Transférée" : "Attribuée"} à ${service.libelle}`,
-      estTransfert: props.estTransfert
-    });
-    setServicePopinOpen(false);
-  }
-}
 
 export function reinitialiserOnClick(refs: MutableRefObject<HTMLElement[]>) {
   refs.current.forEach(ref => {
@@ -39,31 +15,8 @@ export function reinitialiserOnClick(refs: MutableRefObject<HTMLElement[]>) {
   });
 }
 
-export function onValidateAgent(
-  setParam: React.Dispatch<React.SetStateAction<TransfertUnitaireParams | undefined>>,
-  props: React.PropsWithChildren<IMenuTransfertProps>,
-  setAgentPopinOpen: React.Dispatch<React.SetStateAction<boolean>>,
-  setOperationEnCours: (operation: boolean) => void,
-  utilisateurs: Utilisateur[],
-  agent?: Option
-) {
-  setOperationEnCours(true);
-  if (agent) {
-    setParam({
-      idRequete: props.idRequete,
-      idService: utilisateurs.find(utilisateur => utilisateur.id === agent.cle)?.idService,
-      idUtilisateurAAssigner: agent.cle,
-      statutRequete: props.estTransfert ? "TRANSFEREE" : "A_TRAITER",
-      libelleAction: `${props.estTransfert ? "Transférée" : "Attribuée"} à ${agent.libelle}`,
-      estTransfert: props.estTransfert
-    });
-    setAgentPopinOpen(false);
-  }
-}
-
 export function listeServicesToOptions(services: IService[]): Options {
   return [
-    { cle: "", libelle: "" },
     ...services
       .filter(service => service.estDansScec)
       .sort((a, b) => a.libelleService.localeCompare(b.libelleService))
@@ -85,7 +38,6 @@ export const getUtilisateursParTypeRequeteVersOptions = (
   const utilisateursFiltres = seulementUtilisateursActifs ? utilisateurs.filter(utilisateur => utilisateur.actif) : utilisateurs;
 
   return [
-    { cle: "", libelle: "" },
     ...utilisateursFiltres
       .filter(utilisateur =>
         filterUtilisateur(utilisateur, typeRequete, sousTypeRequete, idUtilisateurRequete, utilisateurConnecte, estTransfert)
@@ -190,12 +142,9 @@ export function getValideursVersOptions(
   const utilisateursFiltres = seulementUtilisateursActifs ? utilisateurs.filter(utilisateur => utilisateur.actif) : utilisateurs;
 
   return [
-    { cle: "", libelle: "" },
     ...utilisateursFiltres
       .filter(utilisateur => filtrerValideur(utilisateur, idUtilisateurRequete))
       .sort((a, b) => a.prenomNom.localeCompare(b.prenomNom))
       .map(utilisateur => utilisateur.versOption)
   ];
 }
-
-/* v8 ignore end */

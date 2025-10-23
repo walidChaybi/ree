@@ -82,7 +82,6 @@ export const ChoixAction: React.FC<IChoixActionDelivranceProps> = props => {
             sousTypeRequete={props.requete.sousType}
             typeRequete={props.requete.type}
             estTransfert={true}
-            provenance={props.requete.provenanceRequete}
             idUtilisateurRequete={props.requete.idUtilisateur}
           />
         )}

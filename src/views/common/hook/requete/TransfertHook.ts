@@ -1,104 +1,46 @@
-import { CONFIG_POST_MAJ_ACTION_TRANSFERT } from "@api/configurations/requete/actions/PostMajActionTransfertConfigApi";
+import { CONFIG_PATCH_ACTION_TRANSFERT_REQUETES } from "@api/configurations/requete/actions/PatchActionTransfertRequetesConfigApi";
+import { nettoyerAttributsDto } from "@model/commun/dtoUtils";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
-import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
+import AfficherMessage from "../../../../utils/AfficherMessage";
 
-interface TransfertParams {
+export interface ITransfertRequetesParams {
   idService?: string;
   idUtilisateurAAssigner?: string;
   libelleAction: string;
   estTransfert: boolean;
+  requetes: { id: string; statut: keyof typeof EStatutRequete }[];
 }
 
-export interface TransfertUnitaireParams extends TransfertParams {
-  idRequete: string;
-  statutRequete: keyof typeof EStatutRequete;
-}
-
-export interface TransfertParLotParams extends TransfertParams {
-  idRequetes: string[];
-  statutRequete: (keyof typeof EStatutRequete)[];
-  idService: string;
-  idUtilisateurAAssigner: string;
-}
-
-export function useTransfertApi(params?: TransfertUnitaireParams) {
-  const [res, setRes] = useState<string | undefined>();
-  const { appelApi: appelPostActionTransfert } = useFetchApi(CONFIG_POST_MAJ_ACTION_TRANSFERT);
-
-  useEffect(() => {
-    if (params && (params.idService || params.idUtilisateurAAssigner)) {
-      appelPostActionTransfert({
-        parametres: {
-          query: {
-            idRequete: params.idRequete,
-            idService: params.idService ?? "",
-            idUtilisateurAAssigner: params.idUtilisateurAAssigner ?? "",
-            libelleAction: params.libelleAction,
-            statutRequete: params.statutRequete,
-            attribuer: !params.estTransfert
-          }
-        },
-        apresSucces: resultat => {
-          setRes(resultat);
-        },
-        apresErreur: erreurs => {
-          AfficherMessage.erreur("Impossible de mettre à jour le statut de la requête ou de créer une action associée", {
-            erreurs: estTableauErreurApi(erreurs) ? erreurs : []
-          });
-        }
-      });
-    }
-  }, [params]);
-  return res;
-}
-
-export function useTransfertsApi(params?: TransfertParLotParams) {
-  const [res, setRes] = useState<string[] | undefined>();
+export const useTransfertRequetesApi = (params?: ITransfertRequetesParams): { succesDuTransfert: boolean; transfertEnCours: boolean } => {
+  const [succesDuTransfert, setSuccesDuTransfert] = useState<boolean>(false);
   const { utilisateurs } = useContext(RECEContextData);
-  const { appelApi: appelPostActionTransfert } = useFetchApi(CONFIG_POST_MAJ_ACTION_TRANSFERT);
-
-  const statutCleList = useMemo(() => {
-    if (!params?.statutRequete) return [];
-
-    return params.statutRequete.map(statut => {
-      return statut in EStatutRequete ? statut : "BROUILLON";
-    });
-  }, [params?.statutRequete]);
+  const { appelApi: patchTransfertRequetes, enAttenteDeReponseApi: transfertEnCours } = useFetchApi(CONFIG_PATCH_ACTION_TRANSFERT_REQUETES);
 
   useEffect(() => {
-    if (params && (params.idService || params.idUtilisateurAAssigner)) {
-      const appels = params.idRequetes.map((idRequete, idx) => {
-        return new Promise<string>((resolve, reject) => {
-          appelPostActionTransfert({
-            parametres: {
-              query: {
-                idRequete,
-                idService:
-                  (params.idService || utilisateurs.find(utilisateur => utilisateur.id === params.idUtilisateurAAssigner)?.idService) ?? "",
-                idUtilisateurAAssigner: params.idUtilisateurAAssigner ?? "",
-                libelleAction: params.libelleAction,
-                statutRequete: statutCleList[idx],
-                attribuer: !params.estTransfert
-              }
-            },
-            apresSucces: data => resolve(data),
-            apresErreur: erreurs => reject(erreurs)
-          });
-        });
-      });
+    if (!params?.idService && !params?.idUtilisateurAAssigner) return;
 
-      Promise.all(appels)
-        .then(results => setRes(results))
-        .catch(erreurs => {
-          AfficherMessage.erreur("Impossible de mettre à jour le statut de la requête ou de créer une action associée", {
-            erreurs: estTableauErreurApi(erreurs) ? erreurs : []
-          });
-        });
-    }
+    setSuccesDuTransfert(false);
+    patchTransfertRequetes({
+      parametres: nettoyerAttributsDto({
+        body: {
+          requetes: params.requetes,
+          idService:
+            params.idService ?? utilisateurs.find(utilisateur => utilisateur.id === params.idUtilisateurAAssigner)?.idService ?? "",
+          idUtilisateurAAssigner: params.idUtilisateurAAssigner,
+          libelleAction: params.libelleAction,
+          attribuer: !params.estTransfert
+        }
+      }),
+      apresSucces: () => setSuccesDuTransfert(true),
+      apresErreur: erreurs =>
+        AfficherMessage.erreur(params.estTransfert ? "Impossible de transférer la requête" : "Impossible d'attribuer la requête", {
+          erreurs
+        })
+    });
   }, [params]);
 
-  return res;
-}
+  return { succesDuTransfert, transfertEnCours };
+};

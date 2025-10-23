@@ -27,8 +27,7 @@ const ChampRecherche: React.FC<IChampRechercheProps> = ({
   filterOptions,
   optionsValidesNonAffichees,
   noOptionsText,
-  seulementCle,
-  ...props
+  seulementCle
 }) => {
   const [field, meta, helpers] = useField(name);
 

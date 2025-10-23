@@ -42,12 +42,12 @@ export const BoutonOperationEnCours: React.FC<BoutonOperationEnCoursProps> = pro
         onTimeoutEnd={() => setOpEnCours(false)}
         onClick={() => setOpEnCours(false)}
         timeoutInMiliSec={props.timeoutInMiliSec}
-      ></OperationEnCours>
+      />
       <BoutonDoubleSubmit
         title={props.title}
         id={props.id}
         className={props.class}
-        type={props.type ? props.type : "button"}
+        type={props.type ?? "button"}
         disabled={props.estDesactive}
         onClick={handleClick}
       >

@@ -18,7 +18,8 @@ import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/Affic
 export function useRequeteDelivranceApiHook(
   parametresLienRequete: IQueryParametersPourRequetes | undefined,
   typeRequete: TypeAppelRequete,
-  setParametresLienRequete?: React.Dispatch<React.SetStateAction<IQueryParametersPourRequetes | undefined>>
+  setParametresLienRequete?: React.Dispatch<React.SetStateAction<IQueryParametersPourRequetes | undefined>>,
+  rafraichirLaRecherche?: boolean
 ) {
   const { utilisateurs, services } = useContext(RECEContextData);
   const [dataState, setDataState] = useState<IRequeteTableauDelivrance[]>([]);
@@ -48,7 +49,7 @@ export function useRequeteDelivranceApiHook(
       }
     }
     fetchMesRequetes();
-  }, [parametresLienRequete, typeRequete, filtresReq]);
+  }, [parametresLienRequete, typeRequete, filtresReq, rafraichirLaRecherche]);
 
   function onSubmitFiltres(values: IFiltreServiceRequeteDelivranceFormValues) {
     setFiltresReq({ ...values });

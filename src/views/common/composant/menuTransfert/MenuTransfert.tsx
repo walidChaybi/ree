@@ -1,39 +1,34 @@
-import { TransfertUnitaireParams, useTransfertApi } from "@hook/requete/TransfertHook";
+import { ITransfertRequetesParams, useTransfertRequetesApi } from "@hook/requete/TransfertHook";
 import { IActionOption } from "@model/requete/IActionOption";
-import { IProvenanceRequete } from "@model/requete/IProvenanceRequete";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { Option } from "@util/Type";
 import { replaceUrl } from "@util/route/UrlUtil";
-import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { MdAssignmentInd } from "react-icons/md";
 import { useNavigate } from "react-router";
+import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
 import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../router/LiensRECE";
 import { INFO_PAGE_MES_REQUETES_DELIVRANCE } from "../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import { INFO_PAGE_MES_REQUETES_INFORMATION } from "../../../../router/infoPages/InfoPagesEspaceInformation";
-import {
-  getUtilisateursParTypeRequeteVersOptions,
-  listeServicesToOptions,
-  onValidateAgent,
-  onValidateService,
-  reinitialiserOnClick
-} from "./MenuTransfertUtil";
+import { getUtilisateursParTypeRequeteVersOptions, listeServicesToOptions, reinitialiserOnClick } from "./MenuTransfertUtil";
 import { ITransfertPopinForm, TransfertPopin } from "./TransfertPopin";
 
-const INDEX_ACTION_TRANSFERT_SERVICE = 0;
-const INDEX_ACTION_TRANSFERT_OFFICIER = 1;
+enum EActionTransfert {
+  TRANSFERT_SERVICE = 0,
+  TRANSFERT_OFFICIER = 1
+}
 
-export interface IMenuTransfertProps {
+interface IMenuTransfertProps {
   idRequete: string;
   typeRequete: TypeRequete;
   idUtilisateurRequete: string;
   sousTypeRequete: SousTypeRequete;
-  provenance?: IProvenanceRequete;
   menuFermer?: boolean;
   disabled?: boolean;
   estTransfert: boolean;
@@ -44,38 +39,33 @@ export interface IMenuTransfertProps {
 export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
   const navigate = useNavigate();
   const refs = useRef([]);
-  const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [options, setOptions] = useState<IActionOption[]>([]);
 
   /* Gestion des options */
-  const reponseSansDelivranceCSOptions: IActionOption[] = [
-    {
-      value: INDEX_ACTION_TRANSFERT_SERVICE,
-      label: "À un service"
-    },
-    {
-      value: INDEX_ACTION_TRANSFERT_OFFICIER,
-      label: "À un officier de l'état civil"
-    }
-  ];
+  useEffect(() => {
+    const reponseSansDelivranceCSOptions: IActionOption[] = [
+      {
+        value: EActionTransfert.TRANSFERT_SERVICE,
+        label: "À un service"
+      },
+      {
+        value: EActionTransfert.TRANSFERT_OFFICIER,
+        label: "À un officier de l'état civil"
+      }
+    ];
 
-  useEffect(
-    () => {
-      setOptions(reponseSansDelivranceCSOptions);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [props.typeRequete]
-  );
+    setOptions(reponseSansDelivranceCSOptions);
+  }, [props.typeRequete]);
 
   const handleTransfertMenu = async (indexMenu: number, e: any) => {
     if (e) {
       e.stopPropagation();
     }
     switch (indexMenu) {
-      case INDEX_ACTION_TRANSFERT_SERVICE:
+      case EActionTransfert.TRANSFERT_SERVICE:
         setServicePopinOpen(true);
         break;
-      case INDEX_ACTION_TRANSFERT_OFFICIER:
+      case EActionTransfert.TRANSFERT_OFFICIER:
         setAgentPopinOpen(true);
         break;
     }
@@ -102,7 +92,7 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
   /* Gestion des pop-in de transfère */
   const [servicePopinOpen, setServicePopinOpen] = useState<boolean>(false);
   const [agentPopinOpen, setAgentPopinOpen] = useState<boolean>(false);
-  const [param, setParam] = useState<TransfertUnitaireParams>();
+  const [transfertRequetesParams, setTransfertRequetesParams] = useState<ITransfertRequetesParams>();
 
   const { utilisateurs, services, utilisateurConnecte } = useContext(RECEContextData);
 
@@ -115,31 +105,38 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
     reinitialiserOnClick(refs);
   };
 
-  const idAction = useTransfertApi(param);
+  const { succesDuTransfert, transfertEnCours } = useTransfertRequetesApi(transfertRequetesParams);
 
   useEffect(() => {
-    if (idAction) {
-      setOperationEnCours(false);
-      if (props.estTransfert) {
-        if (props.typeRequete === TypeRequete.DELIVRANCE) {
-          replaceUrl(navigate, LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_DELIVRANCE.url));
-        } else {
-          replaceUrl(navigate, LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_INFORMATION.url));
-        }
-      } else if (props.rafraichirParent) {
-        props.rafraichirParent();
+    if (!succesDuTransfert) return;
+
+    if (props.estTransfert) {
+      if (props.typeRequete === TypeRequete.DELIVRANCE) {
+        replaceUrl(navigate, LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_DELIVRANCE.url));
+      } else {
+        replaceUrl(navigate, LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_INFORMATION.url));
       }
+    } else if (props.rafraichirParent) {
+      props.rafraichirParent();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [idAction]);
+  }, [succesDuTransfert]);
+
+  const onValidateTransfertRequete = useCallback(
+    (typeTransfert: "agent" | "service", agentOuService: Option) => {
+      setTransfertRequetesParams({
+        requetes: [{ id: props.idRequete, statut: props.estTransfert ? "TRANSFEREE" : "A_TRAITER" }],
+        libelleAction: `${props.estTransfert ? "Transférée" : "Attribuée"} à ${agentOuService.libelle}`,
+        estTransfert: props.estTransfert,
+        ...(typeTransfert === "service" ? { idService: agentOuService.cle } : { idUtilisateurAAssigner: agentOuService.cle })
+      });
+      typeTransfert === "service" ? setServicePopinOpen(false) : setAgentPopinOpen(false);
+    },
+    [props.idRequete, props.estTransfert, setServicePopinOpen, setTransfertRequetesParams]
+  );
 
   return (
     <>
-      <OperationEnCours
-        visible={operationEnCours || !utilisateurs || !services || !utilisateurConnecte}
-        onTimeoutEnd={() => setOperationEnCours(false)}
-        onClick={() => setOperationEnCours(false)}
-      />
+      {transfertEnCours || !utilisateurs || !services || (!utilisateurConnecte && <PageChargeur />)}
       {props.menuFermer ? (
         <div>
           {props.icone ? (
@@ -202,18 +199,14 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
       <TransfertPopin
         open={servicePopinOpen}
         onClose={onCloseService}
-        onValidate={(valeurs: ITransfertPopinForm) =>
-          onValidateService(setOperationEnCours, setParam, props, setServicePopinOpen, valeurs.optionChoisie)
-        }
+        onValidate={(valeurs: ITransfertPopinForm) => onValidateTransfertRequete("service", valeurs.optionChoisie)}
         options={listeServicesToOptions(services)}
         titre={`${props.estTransfert ? "Transfert" : "Attribuer"} à un service`}
-      ></TransfertPopin>
+      />
       <TransfertPopin
         open={agentPopinOpen}
         onClose={onCloseAgent}
-        onValidate={(valeurs: ITransfertPopinForm) =>
-          onValidateAgent(setParam, props, setAgentPopinOpen, setOperationEnCours, utilisateurs, valeurs.optionChoisie)
-        }
+        onValidate={(valeurs: ITransfertPopinForm) => onValidateTransfertRequete("agent", valeurs.optionChoisie)}
         options={getUtilisateursParTypeRequeteVersOptions(
           props.typeRequete,
           props.sousTypeRequete,
@@ -224,7 +217,7 @@ export const MenuTransfert: React.FC<IMenuTransfertProps> = props => {
           true
         )}
         titre={`${props.estTransfert ? "Transfert" : "Attribuer"} à un officier de l'état civil`}
-      ></TransfertPopin>
+      />
     </>
   );
 };

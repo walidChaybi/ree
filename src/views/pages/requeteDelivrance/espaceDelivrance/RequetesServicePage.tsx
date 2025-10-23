@@ -46,27 +46,30 @@ const columnsRequestesService = [
   }),
   ...dateStatutColumnHeaders
 ];
-interface MesRequetesServicePageProps {
+
+interface IMesRequetesServicePageProps {
   setNavigationApercuDelivranceParams: (requete: IRequeteTableauDelivrance, urlWithParam: string) => void;
 }
 
-const defaultParamsRequetes = {
+const defaultParamsRequetes: IQueryParametersPourRequetes = {
   statuts: StatutRequete.getStatutsRequetesService(),
   tri: "dateCreation",
   sens: "ASC",
   range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
-} as IQueryParametersPourRequetes;
+};
 
-export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props => {
+export const RequetesServicePage: React.FC<IMesRequetesServicePageProps> = ({ setNavigationApercuDelivranceParams }) => {
   const [paramsMiseAJour, setParamsMiseAJour] = useState<ICreationActionMiseAjourStatutEtRedirectionParams | undefined>();
   const [parametresLienRequete, setParametresLienRequete] = React.useState<IQueryParametersPourRequetes>();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [estTableauARafraichir, setEstTableauARafraichir] = useState<boolean>(false);
+  const [resultatsTableauARafraichir, setResultatsTableauARafraichir] = useState<boolean>(false);
   const { decrets, utilisateurConnecte } = useContext(RECEContextData);
   const { dataState, paramsTableau, onSubmitFiltres } = useRequeteDelivranceApiHook(
     parametresLienRequete,
     TypeAppelRequete.REQUETE_DELIVRANCE_SERVICE,
-    setParametresLienRequete
+    setParametresLienRequete,
+    resultatsTableauARafraichir
   );
 
   function goToLink(link: string) {
@@ -76,30 +79,18 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
     }
   }
   useEffect(() => {
-    if (estTableauARafraichir) {
-      setEstTableauARafraichir(false);
-    }
+    estTableauARafraichir && setEstTableauARafraichir(false);
   }, [estTableauARafraichir]);
-
-  function rafraichirParent() {
-    setParametresLienRequete({
-      statuts: StatutRequete.getStatutsRequetesService(),
-      tri: "dateCreation",
-      sens: "ASC",
-      range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
-    });
-  }
 
   useCreationActionMiseAjourStatutEtRedirectionHook(paramsMiseAJour);
 
   const handleChangeSort = useCallback((tri: string, sens: SortOrder) => {
-    const queryParameters = {
+    setParametresLienRequete({
       statuts: StatutRequete.getStatutsRequetesService(),
       tri,
       sens,
       range: `0-${NB_LIGNES_PAR_APPEL_ESPACE_DELIVRANCE}`
-    };
-    setParametresLienRequete(queryParameters);
+    });
   }, []);
 
   function onClickOnLine(_: string, data: IRequeteTableauDelivrance[], idx: number) {
@@ -108,7 +99,7 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
     miseAjourOuRedirection(
       requeteSelect,
       setParamsMiseAJour,
-      props.setNavigationApercuDelivranceParams,
+      setNavigationApercuDelivranceParams,
       data,
       idx,
       LiensRECE.genererLien(INFO_PAGE_REQUETES_DELIVRANCE_SERVICE.url),
@@ -116,28 +107,25 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
     );
   }
 
-  const finOperationEnCours = () => {
-    setOperationEnCours(false);
-  };
-
-  const getIconeAssigneeA = (idRequete: string, sousType: string, idUtilisateur: string) => {
-    return (
-      <>
-        {gestionFeatureFlagAssigneeA(sousType) && (
-          <MenuTransfert
-            idRequete={idRequete}
-            typeRequete={TypeRequete.DELIVRANCE}
-            sousTypeRequete={SousTypeDelivrance.getEnumFor(sousType)}
-            estTransfert={false}
-            menuFermer={true}
-            icone={true}
-            idUtilisateurRequete={idUtilisateur}
-            rafraichirParent={rafraichirParent}
-          />
-        )}
-      </>
-    );
-  };
+  const getIconeAssigneeA = (idRequete: string, sousType: string, idUtilisateur: string) => (
+    <>
+      {gestionFeatureFlagAssigneeA(sousType) && (
+        <MenuTransfert
+          idRequete={idRequete}
+          typeRequete={TypeRequete.DELIVRANCE}
+          sousTypeRequete={SousTypeDelivrance.getEnumFor(sousType)}
+          estTransfert={false}
+          menuFermer={true}
+          icone={true}
+          idUtilisateurRequete={idUtilisateur}
+          rafraichirParent={() => {
+            setParametresLienRequete(defaultParamsRequetes);
+            setResultatsTableauARafraichir(prec => !prec);
+          }}
+        />
+      )}
+    </>
+  );
 
   function onSubmitFiltreServiceRequeteDelivrance(values: IFiltreServiceRequeteDelivranceFormValues) {
     if (!parametresLienRequete) {
@@ -151,8 +139,8 @@ export const RequetesServicePage: React.FC<MesRequetesServicePageProps> = props 
     <>
       <OperationEnCours
         visible={operationEnCours || !decrets}
-        onTimeoutEnd={finOperationEnCours}
-        onClick={finOperationEnCours}
+        onTimeoutEnd={() => setOperationEnCours(false)}
+        onClick={() => setOperationEnCours(false)}
       />
       <FiltreServiceRequeteDelivranceForm onSubmit={onSubmitFiltreServiceRequeteDelivrance} />
       {estTableauARafraichir ? (

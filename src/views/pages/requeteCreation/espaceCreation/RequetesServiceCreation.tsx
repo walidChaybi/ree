@@ -9,11 +9,12 @@ import {
   ICreationActionMiseAjourStatutEtRedirectionParams,
   useCreationActionMiseAjourStatutEtRedirectionHook
 } from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
-import { TransfertParLotParams, useTransfertsApi } from "@hook/requete/TransfertHook";
+import { ITransfertRequetesParams, useTransfertRequetesApi } from "@hook/requete/TransfertHook";
 import { Utilisateur } from "@model/agent/Utilisateur";
 import { IFiltreServiceRequeteCreationFormValues } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { Option, Options } from "@util/Type";
 import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
@@ -39,11 +40,11 @@ interface RequetesServiceCreationProps {
 }
 
 export const RequetesServiceCreation: React.FC<RequetesServiceCreationProps> = props => {
-  // STATEs
+  // STATES
   const [opEnCours, setOpEnCours] = useState<boolean>(false);
   const [paramsMiseAJour, setParamsMiseAJour] = useState<ICreationActionMiseAjourStatutEtRedirectionParams | undefined>();
   const [parametresLienRequete, setParametresLienRequete] = useState<IQueryParametersPourRequetes>();
-  const [paramsAttributionParLot, setParamsAttributionParLot] = useState<TransfertParLotParams>();
+  const [paramsAttributionParLot, setParamsAttributionParLot] = useState<ITransfertRequetesParams>();
   const [paramsCreation, setParamsCreation] = useState<NavigationApercuReqCreationParams | undefined>();
   const [idRequetesSelectionneesAttribueeA, setIdRequetesSelectionneesAttribueeA] = useState<string[]>([]);
   const [estTableauARafraichir, setEstTableauARafraichir] = useState<boolean>(false);
@@ -59,7 +60,7 @@ export const RequetesServiceCreation: React.FC<RequetesServiceCreationProps> = p
   useCreationActionMiseAjourStatutEtRedirectionHook(paramsMiseAJour);
   useNavigationApercuCreation(paramsCreation);
 
-  const resultatTransfertsApi = useTransfertsApi(paramsAttributionParLot);
+  const { succesDuTransfert } = useTransfertRequetesApi(paramsAttributionParLot);
 
   const changementDePage = (link: string) => {
     const queryParametersPourRequetes = goToLinkRequete(link, "requetes-service");
@@ -86,18 +87,13 @@ export const RequetesServiceCreation: React.FC<RequetesServiceCreationProps> = p
     setIdRequetesSelectionneesAttribueeA([]);
   };
 
-  const finOpEnCours = () => {
-    setOpEnCours(false);
-  };
-
   useEffect(() => {
-    if (resultatTransfertsApi) {
-      onClosePopinAttribuerA();
+    if (succesDuTransfert) {
+      props.setPopinAttribuerAOuvert(false);
       rafraichirTableau();
-      finOpEnCours();
+      setOpEnCours(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resultatTransfertsApi]);
+  }, [succesDuTransfert]);
 
   useEffect(() => {
     if (estTableauARafraichir) {
@@ -105,23 +101,18 @@ export const RequetesServiceCreation: React.FC<RequetesServiceCreationProps> = p
     }
   }, [estTableauARafraichir]);
 
-  const onClosePopinAttribuerA = () => {
-    props.setPopinAttribuerAOuvert(false);
-  };
-
-  const filtrerRequetesChecked = (requetes: IRequeteTableauCreation[]) =>
-    requetes.filter(requete => idRequetesSelectionneesAttribueeA.includes(requete.idRequete));
-
   const onValidateAttribuerA = (requetes: IRequeteTableauCreation[], agent?: Option) => {
-    const requetesChecked = filtrerRequetesChecked(requetes);
+    const requetesSelectionnees = requetes.filter(requete => idRequetesSelectionneesAttribueeA.includes(requete.idRequete));
     setOpEnCours(true);
     setParamsAttributionParLot({
-      idRequetes: requetesChecked.map(requete => requete.idRequete),
-      statutRequete: requetesChecked.map(requete => requete?.statut),
+      requetes: requetesSelectionnees.map(requete => ({
+        id: requete.idRequete,
+        statut: StatutRequete.getEnumFromLibelle(requete.statut).nom
+      })),
       idUtilisateurAAssigner: agent?.cle,
       libelleAction: `Attribuée à  ${agent?.libelle}`,
       estTransfert: false
-    } as TransfertParLotParams);
+    });
   };
 
   const getUtilisateursAsOptions = (
@@ -131,18 +122,20 @@ export const RequetesServiceCreation: React.FC<RequetesServiceCreationProps> = p
   ): Options => {
     const utilisateursFiltres = seulementUtilisateursActifs ? utilisateurs.filter(utilisateur => utilisateur.actif) : utilisateurs;
 
-    return filtrerRequetesChecked(requetes).reduce((listeUtilisateurs, requete) => {
-      const options = getUtilisateursParTypeRequeteVersOptions(
-        TypeRequete.CREATION,
-        SousTypeCreation.getEnumFor(requete.sousType),
-        "",
-        utilisateurConnecte,
-        false,
-        utilisateursFiltres
-      ).filter(option => !listeUtilisateurs.map(utilisateur => utilisateur.cle).includes(option.cle));
+    return requetes
+      .filter(requete => idRequetesSelectionneesAttribueeA.includes(requete.idRequete))
+      .reduce((listeUtilisateurs, requete) => {
+        const options = getUtilisateursParTypeRequeteVersOptions(
+          TypeRequete.CREATION,
+          SousTypeCreation.getEnumFor(requete.sousType),
+          "",
+          utilisateurConnecte,
+          false,
+          utilisateursFiltres
+        ).filter(option => !listeUtilisateurs.map(utilisateur => utilisateur.cle).includes(option.cle));
 
-      return listeUtilisateurs.concat(options);
-    }, [] as Options);
+        return listeUtilisateurs.concat(options);
+      }, [] as Options);
   };
 
   const colonneCaseACocherAttribueAParams: IColonneCaseACocherParams<IRequeteTableauCreation, string> = {
@@ -167,9 +160,9 @@ export const RequetesServiceCreation: React.FC<RequetesServiceCreationProps> = p
   return (
     <>
       <OperationEnCours
-        visible={opEnCours || !decrets || !utilisateurConnecte}
-        onTimeoutEnd={finOpEnCours}
-        onClick={finOpEnCours}
+        visible={opEnCours || !decrets || !utilisateurConnecte || !utilisateurs}
+        onTimeoutEnd={() => setOpEnCours(false)}
+        onClick={() => setOpEnCours(false)}
       />
       <FiltreServiceRequeteCreationForm onSubmit={soumettreFiltre} />
       {estTableauARafraichir ? (
@@ -193,7 +186,7 @@ export const RequetesServiceCreation: React.FC<RequetesServiceCreationProps> = p
       )}
       <TransfertPopin
         open={props.popinAttribuerAOuvert}
-        onClose={onClosePopinAttribuerA}
+        onClose={() => props.setPopinAttribuerAOuvert(false)}
         titre={"Attribuer à un officier de l'état civil"}
         options={getUtilisateursAsOptions(dataState, utilisateurs, true)}
         onValidate={(valeurs: ITransfertPopinForm) => onValidateAttribuerA(dataState, valeurs.optionChoisie)}

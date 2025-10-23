@@ -5,10 +5,10 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { FilterOptionsState } from "@mui/material/useAutocomplete";
 import { OPTION_VIDE, Option } from "@util/Type";
-import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import { Formik } from "formik";
 import React from "react";
 import * as Yup from "yup";
+import Bouton from "../../../../composants/commun/bouton/Bouton";
 import ChampRecherche from "../../../../composants/commun/champs/ChampRecherche";
 import "./scss/TransfertPopin.scss";
 
@@ -67,7 +67,7 @@ export const TransfertPopin: React.FC<ITransfertPopinProps> = ({
         validationSchema={validationSchemaTransfertPopin}
         onSubmit={onValidate}
       >
-        {({ handleChange, handleBlur, values, errors, touched }) => {
+        {({ handleChange, values }) => {
           return (
             <>
               {options && (
@@ -85,7 +85,7 @@ export const TransfertPopin: React.FC<ITransfertPopinProps> = ({
                     placeholder={placeholder}
                     value={values.texte}
                     onChange={handleChange}
-                  ></textarea>
+                  />
                 </>
               )}
               <DialogActions>
@@ -93,15 +93,15 @@ export const TransfertPopin: React.FC<ITransfertPopinProps> = ({
                   type="button"
                   onClick={onClose}
                 >
-                  Annuler
+                  {"Annuler"}
                 </Button>
-                <BoutonOperationEnCours
+                <Bouton
                   onClick={() => onValidate({ ...values } as ITransfertPopinForm)}
-                  estDesactive={estDesactive(values.optionChoisie ?? OPTION_VIDE, values.texte, Boolean(placeholder), Boolean(options))}
+                  disabled={estDesactive(values.optionChoisie ?? OPTION_VIDE, values.texte, Boolean(placeholder), Boolean(options))}
                   type="submit"
                 >
-                  Valider
-                </BoutonOperationEnCours>
+                  {"Valider"}
+                </Bouton>
               </DialogActions>
             </>
           );

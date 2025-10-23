@@ -8,7 +8,7 @@ type TChampSignatureProps = {
 };
 
 const ChampPhraseSignature: React.FC<TChampSignatureProps> = ({ name, libelle }) => {
-  const [_, meta] = useField(name);
+  const [, meta] = useField(name);
   const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
 
   return (

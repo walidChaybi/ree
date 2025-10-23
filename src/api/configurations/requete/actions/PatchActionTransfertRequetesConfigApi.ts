@@ -2,20 +2,19 @@ import { REQUETE_API } from "@api/ApiDisponibles";
 import { TConfigurationApi } from "@model/api/Api";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 
-interface IQuery {
-  idRequete: string;
+interface IBody {
+  requetes: { id: string; statut: keyof typeof EStatutRequete }[];
   idService: string;
-  idUtilisateurAAssigner: string;
+  idUtilisateurAAssigner?: string;
   libelleAction: string;
-  statutRequete: keyof typeof EStatutRequete;
   attribuer: boolean;
 }
 
 const URI = "/requetes/action/transfert";
 
-export const CONFIG_POST_MAJ_ACTION_TRANSFERT: TConfigurationApi<typeof URI, undefined, IQuery, string> = {
+export const CONFIG_PATCH_ACTION_TRANSFERT_REQUETES: TConfigurationApi<typeof URI, IBody, undefined, string> = {
   api: REQUETE_API,
-  methode: "POST",
+  methode: "PATCH",
   uri: URI,
   avecAxios: true
 };
