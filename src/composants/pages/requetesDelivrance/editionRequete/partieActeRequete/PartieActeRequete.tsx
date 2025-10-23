@@ -1,9 +1,10 @@
-import { getDocumentReponseById } from "@api/appels/requeteApi";
+import { CONFIG_GET_DOCUMENTS_REPONSE_DELIVRANCE } from "@api/configurations/requete/documentsReponses/GetDocumentsReponseDelivranceConfigApi";
 import { AlertesActes } from "@composant/alertesActe/AlertesActes";
 import VisionneuseActe from "@composant/visionneuseActe/VisionneuseActe";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import React, { Dispatch, SetStateAction, useContext, useEffect, useMemo, useState } from "react";
 import { EditionDelivranceContext } from "../../../../../contexts/EditionDelivranceContextProvider";
+import useFetchApi from "../../../../../hooks/api/FetchApiHook";
 import { EMimeType } from "../../../../../ressources/EMimeType";
 import AffichageDocument from "../../../../commun/affichageDocument/AffichageDocument";
 import OngletsBouton from "../../../../commun/onglets/OngletsBouton";
@@ -25,15 +26,21 @@ const PartieActeRequete: React.FC<IPartieActeRequeteProps> = React.memo(({ ongle
   const { requete, acte } = useContext(EditionDelivranceContext);
 
   const [contenuCourrier, setContenuCourrier] = useState<string | null>(null);
+
   const idDocumentCourrier = useMemo(
     () => requete.documentsReponses.filter(doc => DocumentDelivrance.estCourrierDelivranceEC(doc.typeDocument)).shift()?.id,
     [requete]
   );
 
+  const { appelApi: getDocumentReponse } = useFetchApi(CONFIG_GET_DOCUMENTS_REPONSE_DELIVRANCE);
+
   useEffect(() => {
     if (!idDocumentCourrier) return;
 
-    getDocumentReponseById(idDocumentCourrier).then(data => setContenuCourrier(data.body.data.contenu ?? ""));
+    getDocumentReponse({
+      parametres: { path: { idDocumentReponse: idDocumentCourrier } },
+      apresSucces: document => setContenuCourrier(document.contenu)
+    });
   }, [idDocumentCourrier]);
 
   return (

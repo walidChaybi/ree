@@ -345,15 +345,6 @@ export function deleteDocumentsReponseApi(idRequete: string) {
   );
 }
 
-export function getDocumentReponseById(idDocumentReponse: string): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.GET,
-      uri: `${URL_DOCUMENT_REPONSE}/${idDocumentReponse}`
-    })
-  );
-}
-
 export function postDocumentReponseApi(idRequete: string, documentsReponse: IDocumentReponse[]) {
   return getApiManager().then(api =>
     api.fetch({
