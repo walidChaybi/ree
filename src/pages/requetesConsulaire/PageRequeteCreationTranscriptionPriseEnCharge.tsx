@@ -3,13 +3,12 @@ import { CONFIG_POST_MAJ_STATUT_ET_ACTION } from "@api/configurations/requete/ac
 import { CONFIG_POST_PRENDRE_EN_CHARGE } from "@api/configurations/requete/creation/PostPrendreEnChargeRequeteTranscriptionConfigApi";
 import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { Droit } from "@model/agent/enum/Droit";
+import { Perimetre } from "@model/agent/enum/Perimetre";
 import { IRequete } from "@model/requete/IRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { useContext, useEffect, useMemo, useState } from "react";
-import { MdEdit } from "react-icons/md";
 import { useLocation, useNavigate, useParams } from "react-router";
 import AccessibleAvecDroits from "../../composants/commun/accessibleAvecDroits/AccessibleAvecDroits";
 import Bouton from "../../composants/commun/bouton/Bouton";
@@ -23,7 +22,6 @@ import useFetchApi from "../../hooks/api/FetchApiHook";
 import LiensRECE from "../../router/LiensRECE";
 import {
   INFO_PAGE_APERCU_REQUETE_TRANSCRIPTION_SAISIE_PROJET,
-  INFO_PAGE_MODIFICATION_REQUETE_TRANSCRIPTION_COURRIER,
   INFO_PAGE_SAISIE_REQUETE_TRANSCRIPTION_COURRIER
 } from "../../router/infoPages/InfoPagesEspaceConsulaire";
 import AfficherMessage, { estTableauErreurApi } from "../../utils/AfficherMessage";
@@ -49,11 +47,11 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
 
   const { appelApi: appelApiPrendreEnCharge, enAttenteDeReponseApi: enAttentePriseEnCharge } = useFetchApi(CONFIG_POST_PRENDRE_EN_CHARGE);
 
-
-  const afficherBoutonPrendreEnCharge =
-    requete &&
-    utilisateurConnecte.idService === requete?.idService &&
-    requete?.statutCourant?.statut?.libelle !== StatutRequete.PRISE_EN_CHARGE.libelle;
+  const estHabiliteCreerProjetActe =
+    utilisateurConnecte.estHabilitePour({
+      leDroit: Droit.TRANSCRIPTION_CREER_PROJET_ACTE,
+      pourIdTypeRegistre: requete?.typeRegistre.id
+    }) || utilisateurConnecte.estHabilitePour({ leDroit: Droit.TRANSCRIPTION_CREER_PROJET_ACTE, surLePerimetre: Perimetre.TOUS_REGISTRES });
 
   useEffect(() => {
     if (!idRequeteParam) {
@@ -204,26 +202,26 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
             >
               {"Saisir une nouvelle requête"}
             </Bouton>
-
-            {afficherBoutonPrendreEnCharge && (
-              <Bouton
-                title="Prendre en charge"
-                className="flex w-fit"
-                onClick={onClickOnPrendreEnCharge}
-                disabled={enAttentePriseEnCharge}
-              >
-                {"PRENDRE EN CHARGE"}
-              </Bouton>
-            )}
           </div>
 
-          <Bouton
-            title="Créer le projet d'acte"
-            onClick={onClickOnCreerProjetActe}
-            disabled={enAttenteMajStatutEtAction}
-          >
-            {"Créer le projet d'acte"}
-          </Bouton>
+          {requete?.statutCourant?.statut === StatutRequete.A_TRAITER && estHabiliteCreerProjetActe && (
+            <Bouton
+              title="Prendre en charge"
+              onClick={onClickOnPrendreEnCharge}
+              disabled={enAttentePriseEnCharge}
+            >
+              {"Prendre en charge"}
+            </Bouton>
+          )}
+          {requete?.statutCourant?.statut === StatutRequete.PRISE_EN_CHARGE && estHabiliteCreerProjetActe && (
+            <Bouton
+              title="Créer le projet d'acte"
+              onClick={onClickOnCreerProjetActe}
+              disabled={enAttenteMajStatutEtAction}
+            >
+              {"Créer le projet d'acte"}
+            </Bouton>
+          )}
         </div>
       )}
     </div>
