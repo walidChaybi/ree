@@ -8,7 +8,6 @@ import { ENationalite, Nationalite } from "../enum/Nationalite";
 import { ESexe, Sexe } from "../enum/Sexe";
 import { AutreNom, IAutreNomDto, IAutresNoms } from "./AutresNoms";
 import { IFicheLien } from "./IFicheLien";
-import { IFicheLienActes } from "./IFicheLienActes";
 import { ILieuEvenement } from "./ILieuEvenement";
 
 // TODO: supprimer après le refacto du projet acte établi
@@ -24,7 +23,6 @@ export interface IPersonne {
   dateDeces?: IDateCompose;
   lieuDeces?: ILieuEvenement;
   sexe: Sexe;
-  actes: IFicheLienActes[];
   pacss: IFicheLien[];
   rcs: IFicheLien[];
   rcas: IFicheLien[];
@@ -38,7 +36,6 @@ export interface IPersonneDTO {
   autresPrenoms: string[];
   nationalite: keyof typeof ENationalite;
   sexe: keyof typeof ESexe;
-  actes: IFicheLienActes[];
   pacss: IFicheLien[];
   rcs: IFicheLien[];
   rcas: IFicheLien[];
@@ -65,7 +62,6 @@ export class Personne {
     autresPrenoms: string[],
     public readonly nationalite: keyof typeof ENationalite,
     public readonly sexe: keyof typeof ESexe,
-    public readonly actes: IFicheLienActes[],
     public readonly pacss: IFicheLien[],
     public readonly rcs: IFicheLien[],
     public readonly rcas: IFicheLien[],
@@ -101,7 +97,6 @@ export class Personne {
       personne.autresPrenoms,
       personne.nationalite,
       personne.sexe,
-      personne.actes?.filter(acte => acte.numero !== numero),
       personne.pacss.filter(pacs => pacs.numero !== numero),
       personne.rcs.filter(rc => rc.numero !== numero),
       personne.rcas.filter(rca => rca.numero !== numero),

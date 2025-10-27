@@ -145,13 +145,6 @@ export const mockRcaDto: IFicheRcaDto = {
           numero: "1234510",
           referenceComplete: ""
         }
-      ],
-      actes: [
-        {
-          id: "b41079a5-9e8d-478c-b04c-c4c2ac67134f",
-          numero: "413",
-          referenceComplete: ""
-        }
       ]
     }
   ]
@@ -262,8 +255,7 @@ export const ficheRcaDecisionJuridictionEtrangere: IFicheRcaDto = {
         { id: "8c9ea77f-55dc-494f-8e75-b136ac7ce61c", numero: "4012", referenceComplete: "" },
         { id: "8c9ea77f-55dc-494f-8e75-b136ac7ce61d", numero: "4013", referenceComplete: "" }
       ],
-      pacss: [],
-      actes: []
+      pacss: []
     }
   ],
   nature: {

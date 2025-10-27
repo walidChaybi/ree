@@ -11,7 +11,6 @@ import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { ITitulaireProjetActe } from "@model/etatcivil/acte/projetActe/ITitulaireProjetActe";
 import { IAutresNoms } from "@model/etatcivil/commun/AutresNoms";
 import { IFicheLien } from "@model/etatcivil/commun/IFicheLien";
-import { IFicheLienActes } from "@model/etatcivil/commun/IFicheLienActes";
 import { ILieuEvenement } from "@model/etatcivil/commun/ILieuEvenement";
 import { IPersonne } from "@model/etatcivil/commun/Personne";
 import { AutresNoms } from "@model/etatcivil/enum/ETypeAutreNom";
@@ -141,7 +140,6 @@ function mapPersonnes(personnes?: any[]): IPersonne[] {
       dateDeces: mapDateEvenement(personne.dateDeces),
       lieuDeces: mapLieuEvenement(personne.lieuDeces),
       sexe: getValeurOuUndefined(personne.sexe),
-      actes: mapFicheLienActes(personne.actes),
       pacss: mapFicheLien(personne.pacss),
       rcs: mapFicheLien(personne.rcs),
       rcas: mapFicheLien(personne.rcas)
@@ -171,15 +169,6 @@ function mapDateEvenement(evenement: any): IDateCompose {
     mois: getValeurOuUndefined(evenement.mois),
     annee: evenement.annee
   };
-}
-
-function mapFicheLienActes(ficheLienActes: any[]): IFicheLienActes[] {
-  return ficheLienActes.map(ficheLienActe => ({
-    numero: getValeurOuUndefined(ficheLienActe.numero),
-    id: getValeurOuUndefined(ficheLienActe.id),
-    nature: NatureActe.getEnumFor(getValeurOuUndefined(ficheLienActe.nature)),
-    referenceComplete: getValeurOuUndefined(ficheLienActe.referenceComplete)
-  }));
 }
 
 function mapFicheLien(ficheLiens: any[]): IFicheLien[] {

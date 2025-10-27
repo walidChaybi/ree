@@ -1,5 +1,4 @@
 import { IFicheLien } from "@model/etatcivil/commun/IFicheLien";
-import { IFicheLienActes } from "@model/etatcivil/commun/IFicheLienActes";
 import { Personne } from "@model/etatcivil/commun/Personne";
 import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { ENationalite } from "@model/etatcivil/enum/Nationalite";
@@ -43,7 +42,7 @@ function getPanelAreasFichesPersonnes(personne: Personne): SectionPanelAreaProps
       parts: [
         getInformationsPersonne(personne),
         {
-          subParts: [getInformationsListeActes(personne), getInformationsListeInscriptions(personne)]
+          subParts: [getInformationsListeInscriptions(personne)]
         }
       ],
       nbColonne: 3
@@ -55,13 +54,6 @@ function getInformationsListeInscriptions(personne: Personne): SectionPartConten
   return {
     contents: [getRcsPersonne(personne.rcs), getRcasPersonne(personne.rcas), getPacssPersonne(personne.pacss)],
     title: "Liste d'inscriptions"
-  };
-}
-
-function getInformationsListeActes(personne: Personne): SectionPartContentProps {
-  return {
-    contents: [getActesPersonne(personne.actes)],
-    title: "Liste d'actes"
   };
 }
 
@@ -152,22 +144,6 @@ function getSexePersonne(sexe: string): SectionContentProps {
   return {
     libelle: "Sexe",
     value: sexe
-  };
-}
-
-function getActesPersonne(actes: IFicheLienActes[]): SectionContentProps {
-  const liensActes = actes?.map(acte => (
-    <div key={`acte-${acte.numero}`}>
-      <LienFiche
-        categorie={ETypeFiche.ACTE}
-        numero={acte.referenceComplete}
-        identifiant={acte.id}
-      />
-    </div>
-  ));
-  return {
-    libelle: "",
-    value: liensActes
   };
 }
 
