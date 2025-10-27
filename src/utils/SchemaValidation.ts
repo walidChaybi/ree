@@ -87,6 +87,7 @@ type TNomSecableChamp = {
 
 interface ISchemaValidation {
   objet: TSchemaValidationFonction<{ [cle: string]: Yup.AnySchema }, Yup.AnyObjectSchema>;
+  tableau: TSchemaValidationFonction<{ [cle: string]: Yup.AnySchema }, Yup.ArraySchema<any, any, any>>;
   texte: TSchemaValidationFonction<{ listeRegexp?: TValidationText[]; max?: TValidationEntier }, Yup.StringSchema>;
   entier: TSchemaValidationFonction<{ min?: TValidationEntier; max?: TValidationEntier }, Yup.NumberSchema>;
   booleen: TSchemaValidationFonction<{}, Yup.BooleanSchema>;
@@ -393,6 +394,8 @@ const gestionObligation = <TSchemaChamp extends Yup.AnySchema = Yup.AnySchema>({
 
 const SchemaValidation: ISchemaValidation = {
   objet: (objet = {}) => Yup.object().shape(objet),
+
+  tableau: (objet = {}) => Yup.array().of(Yup.object().shape(objet)),
 
   texte: (schemaParams = {}) => {
     let schema = Yup.string();

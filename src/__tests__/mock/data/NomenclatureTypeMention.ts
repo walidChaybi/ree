@@ -1,6 +1,6 @@
 import { ITypeMentionDto } from "@api/configurations/etatCivil/nomenclature/GetTypesMentionConfigApi";
 
-export const TYPE_MENTION = [
+export const TYPE_MENTION: ITypeMentionDto[] = [
   {
     idTypeMention: "126ad458-fd77-4c8c-bd88-db0b818f7d91",
     libelleType: "1 Mariage",
@@ -2460,4 +2460,4 @@ export const TYPE_MENTION = [
     estSousType: true,
     estSaisieAssistee: false
   }
-] as ITypeMentionDto[];
+];

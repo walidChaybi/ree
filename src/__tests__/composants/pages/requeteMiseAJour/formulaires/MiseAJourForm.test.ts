@@ -8,11 +8,15 @@ describe("MiseAJourForm.versDto", () => {
     const idActe = "12345";
 
     const analyseMarginale = {
-      nom: "DUPONT",
-      nomSecable: true,
-      nomPartie1: "DU",
-      nomPartie2: "PONT",
-      prenoms: ["Jean"],
+      titulaires: [
+        {
+          nom: "DUPONT",
+          nomSecable: true,
+          nomPartie1: "DU",
+          nomPartie2: "PONT",
+          prenoms: ["Jean"]
+        }
+      ],
       motif: "Changement de nom"
     } as unknown as IAnalyseMarginaleMiseAJour;
 

@@ -50,13 +50,16 @@ export interface IMentionEnCours {
 }
 
 export interface IAnalyseMarginaleMiseAJour extends TObjetFormulaire {
-  nom: string;
-  nomSecable: boolean;
-  nomPartie1: string;
-  nomPartie2: string;
-  prenoms: TPrenomsForm;
   motif: string;
+  titulaires: {
+    nom: string;
+    nomSecable: boolean;
+    nomPartie1: string;
+    nomPartie2: string;
+    prenoms: TPrenomsForm;
+  }[];
 }
+
 export interface IMiseAJourForm {
   mentions: IMentionMiseAJour[];
   analyseMarginale: IAnalyseMarginaleMiseAJour;
@@ -238,9 +241,9 @@ const PartieFormulaire: React.FC = () => {
   useEffect(() => {
     if (!acte) return;
 
-    const titulaire = acte.getAnalyseMarginaleLaPlusRecente()?.titulaires[0]?.versTitulaireActe() ?? acte?.titulaires[0];
-
-    setValeursInitialesFormulaireAnalyseMarginale(AnalyseMarginaleForm.genererValeursDefautFormulaire(titulaire, motif));
+    setValeursInitialesFormulaireAnalyseMarginale(
+      AnalyseMarginaleForm.genererValeursDefautFormulaire(acte.getTitulairesPourAnalyseMarginale(), motif)
+    );
   }, [motif, acte]);
 
   const infoTitulaire: IInfoTitulaire = useMemo(

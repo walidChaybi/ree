@@ -11,9 +11,14 @@ import { IAnalyseMarginaleMiseAJour } from "../../../PartieFormulaire";
 interface IChampsAnalyseMarginaleFormulaireProps {
   setAnalyseMarginaleModifiee: (estModifiee: boolean) => void;
   motif: string | null;
+  nombreDeTitulaires?: number;
 }
 
-const ChampsAnalyseMarginaleFormulaire: React.FC<IChampsAnalyseMarginaleFormulaireProps> = ({ setAnalyseMarginaleModifiee, motif }) => {
+const ChampsAnalyseMarginaleFormulaire: React.FC<IChampsAnalyseMarginaleFormulaireProps> = ({
+  setAnalyseMarginaleModifiee,
+  motif,
+  nombreDeTitulaires = 1
+}) => {
   const { values, initialValues, dirty, resetForm, isValid } = useFormikContext<IAnalyseMarginaleMiseAJour>();
 
   useEffect(() => {
@@ -40,28 +45,36 @@ const ChampsAnalyseMarginaleFormulaire: React.FC<IChampsAnalyseMarginaleFormulai
 
   return (
     <ConteneurAvecBordure>
-      <div className="pb-4 pt-3">
+      <div className="pb-4 pt-6">
         <div className="grid gap-6">
-          <div>
-            <ChampsNomSecable
-              nom={{ name: "nom", libelle: "Nom" }}
-              secable={{ name: "nomSecable", libelle: "Nom sécable" }}
-              nomPartie1={{
-                name: "nomPartie1",
-                libelle: "Nom 1re partie"
-              }}
-              nomPartie2={{
-                name: "nomPartie2",
-                libelle: "Nom 2nde partie"
-              }}
-              estObligatoire
-            />
-          </div>
+          {[...Array(nombreDeTitulaires).keys()].map(index => (
+            <ConteneurAvecBordure
+              key={`conteneurTitulaire${index}`}
+              titreEnTete={nombreDeTitulaires > 1 ? `Titulaire ${index + 1}` : "Titulaire"}
+              sansMargeHorizontale
+            >
+              <div>
+                <ChampsNomSecable
+                  nom={{ name: `titulaires[${index}].nom`, libelle: "Nom" }}
+                  secable={{ name: `titulaires[${index}].nomSecable`, libelle: "Nom sécable" }}
+                  nomPartie1={{
+                    name: `titulaires[${index}].nomPartie1`,
+                    libelle: "Nom 1re partie"
+                  }}
+                  nomPartie2={{
+                    name: `titulaires[${index}].nomPartie2`,
+                    libelle: "Nom 2nde partie"
+                  }}
+                  estObligatoire
+                />
+              </div>
 
-          <ChampsPrenoms
-            cheminPrenoms={"prenoms"}
-            prefixePrenom={"prenom"}
-          />
+              <ChampsPrenoms
+                cheminPrenoms={`titulaires[${index}].prenoms`}
+                prefixePrenom={"prenom"}
+              />
+            </ConteneurAvecBordure>
+          ))}
 
           <ChampTexte
             className="champs-motif"
@@ -70,10 +83,7 @@ const ChampsAnalyseMarginaleFormulaire: React.FC<IChampsAnalyseMarginaleFormulai
             type="text"
             estObligatoire
           />
-        </div>
-
-        <div className="sticky bottom-8 mt-8 flex w-full justify-between">
-          <div className="w-fit text-start">
+          <div className="flex justify-between pt-6">
             <Bouton
               disabled={!dirty}
               onClick={() => {
@@ -82,9 +92,6 @@ const ChampsAnalyseMarginaleFormulaire: React.FC<IChampsAnalyseMarginaleFormulai
             >
               {"Annuler la saisie en cours"}
             </Bouton>
-          </div>
-
-          <div className="w-fit text-end">
             <Bouton
               disabled={!(isValid && dirty)}
               type="submit"

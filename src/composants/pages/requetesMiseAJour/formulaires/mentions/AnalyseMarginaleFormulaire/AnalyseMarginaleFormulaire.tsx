@@ -35,6 +35,7 @@ const AnalyseMarginaleFormulaire: React.FC<IAnalyseMarginaleFormProps> = ({
           <ChampsAnalyseMarginaleFormulaire
             setAnalyseMarginaleModifiee={setAnalyseMarginaleModifiee}
             motif={motif}
+            nombreDeTitulaires={valeursInitiales.titulaires.length}
           />
         </Form>
       </Formik>
