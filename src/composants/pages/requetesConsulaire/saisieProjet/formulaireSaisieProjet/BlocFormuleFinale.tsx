@@ -11,6 +11,7 @@ import { enumVersOptions } from "@util/Utils";
 import { useEffect, useMemo } from "react";
 import ChampListeDeroulante from "../../../../commun/champs/ChampListeDeroulante";
 import ChampTexte from "../../../../commun/champs/ChampTexte";
+import ChampZoneTexte from "../../../../commun/champs/ChampZoneTexte";
 import ChampsPrenoms from "../../../../commun/champs/ChampsPrenoms";
 import ChampsRadio from "../../../../commun/champs/ChampsRadio";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
@@ -115,11 +116,12 @@ const BlocFormuleFinale: React.FC = () => {
       </div>
 
       {values.formuleFinale.pieceProduite?.includes("COPIES") && (
-        <div className="grid grid-cols-2 pt-4">
-          <ChampTexte
+        <div className="grid grid-cols-1 pt-4">
+          <ChampZoneTexte
             name="formuleFinale.autresPieces"
             libelle="Autres pièces"
             estObligatoire
+            typeRedimensionnement="vertical"
           />
         </div>
       )}

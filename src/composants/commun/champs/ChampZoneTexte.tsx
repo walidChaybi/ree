@@ -1,5 +1,6 @@
 import { ErrorMessage, useField } from "formik";
 import { useMemo } from "react";
+import { CHAMP_EN_ERREUR } from "../formulaire/ScrollVersErreur";
 
 type TRedimensionnement = "fixe" | "vertical" | "horizontal";
 
@@ -7,6 +8,7 @@ type TChampsZoneTexteProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> &
   libelle?: string;
   typeRedimensionnement?: TRedimensionnement;
   sansRetourChariot?: boolean;
+  estObligatoire?: boolean;
 };
 
 const getClasseRedimensionnement = (typeRedimensionnement?: TRedimensionnement) => {
@@ -27,18 +29,20 @@ const ChampZoneTexte: React.FC<TChampsZoneTexteProps> = ({
   libelle,
   typeRedimensionnement = "fixe",
   sansRetourChariot,
+  estObligatoire,
   ...props
 }) => {
   const [field, meta] = useField(name as string);
   const enErreur = useMemo<boolean>(() => Boolean(meta.error) && meta.touched, [meta]);
 
   return (
-    <div className="grid">
+    <div className={`grid ${enErreur ? CHAMP_EN_ERREUR : ""}`.trim()}>
       <label
         className={`m-0 mb-1 ml-1 block w-fit text-start transition-colors ${enErreur ? "text-rouge" : "text-bleu-sombre"}`}
         htmlFor={name as string}
       >
         {libelle}
+        {estObligatoire && <span className="ml-1 text-rouge">*</span>}
       </label>
       <textarea
         className={`font-marianne text-base ${getClasseRedimensionnement(typeRedimensionnement)} transition-colors ${enErreur ? "border-rouge focus-visible:ring-rouge" : "border-gris focus-visible:ring-bleu"}`}
