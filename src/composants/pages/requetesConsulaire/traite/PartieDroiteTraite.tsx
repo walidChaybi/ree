@@ -35,7 +35,7 @@ const PartieDroiteTraite: React.FC<IPartieDroiteTraiteProps> = ({ idActe }) => {
   }, []);
 
   return (
-    <div className="flex h-screen w-1/2 flex-col">
+    <div className="flex w-1/2 flex-col">
       <OngletsBouton<ECleOngletPartieDroite>
         onglets={[
           {

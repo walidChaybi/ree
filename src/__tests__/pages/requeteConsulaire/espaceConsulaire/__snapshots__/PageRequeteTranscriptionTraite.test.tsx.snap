@@ -513,7 +513,7 @@ pays
     </div>
   </div>
   <div
-    class="flex h-screen w-1/2 flex-col"
+    class="flex w-1/2 flex-col"
   >
     <div
       class="flex items-end border-0 border-b border-solid border-gris"
