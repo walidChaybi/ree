@@ -422,7 +422,7 @@ exports[`Test du composant RetoucheImage > Le composant s'affiche correctement 1
           aria-label="Image en cours de retouche"
           class="mb-4 block border-2 border-solid border-bleu-sombre"
           height="230.4"
-          style="cursor: default;"
+          style="cursor: default; width: 460.8px; height: 230.4px;"
           width="460.8"
         />
       </div>

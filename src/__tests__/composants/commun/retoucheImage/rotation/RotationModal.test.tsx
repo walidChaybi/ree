@@ -1,7 +1,7 @@
 import EtatImage from "@model/retoucheImage/EtatImage";
 import { render } from "@testing-library/react";
 import { beforeEach, describe, expect, test, vi } from "vitest";
-import RotationModal from "../../../../composants/commun/retoucheImage/RotationModal";
+import RotationModal from "../../../../../composants/commun/retoucheImage/rotation/RotationModal";
 
 const mockImage = {
   width: 300,

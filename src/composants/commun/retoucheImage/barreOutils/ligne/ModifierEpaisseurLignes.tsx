@@ -2,14 +2,14 @@ import type EtatImage from "../../../../../model/retoucheImage/EtatImage";
 
 interface IModifierEpaisseurLignesProps {
   etatImage: EtatImage;
-  forcerRendu: React.Dispatch<React.SetStateAction<number>>;
+  redessiner(): void;
 }
 
-const ModifierEpaisseurLignes: React.FC<IModifierEpaisseurLignesProps> = ({ etatImage, forcerRendu }) => {
+const ModifierEpaisseurLignes: React.FC<IModifierEpaisseurLignesProps> = ({ etatImage, redessiner }) => {
   const changerEpaisseur = (e: React.ChangeEvent<HTMLInputElement>): void => {
     etatImage.changerEpaisseurLignes(Number(e.target.value));
 
-    forcerRendu(actuel => actuel + 1);
+    redessiner();
   };
 
   return (

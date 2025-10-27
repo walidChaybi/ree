@@ -34,7 +34,6 @@ interface IBarreOutilsProps {
   pointsSelectionPolygonale: TCoordonnees[];
   setZoom: React.Dispatch<React.SetStateAction<number>>;
   setOffset: React.Dispatch<React.SetStateAction<TCoordonnees>>;
-  forcerRendu: React.Dispatch<React.SetStateAction<number>>;
   setPointsSelectionPolygonale: React.Dispatch<React.SetStateAction<TCoordonnees[]>>;
   setDebutSelectionRectangulaire(valeur: TCoordonnees | null): void;
   setFinSelectionRectangulaire(valeur: TCoordonnees | null): void;
@@ -57,7 +56,6 @@ const BarreOutils: React.FC<IBarreOutilsProps> = ({
   pointsSelectionPolygonale,
   setZoom,
   setOffset,
-  forcerRendu,
   setPointsSelectionPolygonale,
   setDebutSelectionRectangulaire,
   setFinSelectionRectangulaire,
@@ -170,7 +168,7 @@ const BarreOutils: React.FC<IBarreOutilsProps> = ({
       <li>
         <ModifierEpaisseurLignes
           etatImage={etatImage}
-          forcerRendu={forcerRendu}
+          redessiner={appelerRedessiner}
         />
       </li>
       <li>

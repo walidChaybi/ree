@@ -3,18 +3,23 @@
 exports[`Test du composant RotationModal > Le composant s'affiche correctement 1`] = `
 <div>
   <div
-    class="fixed left-0 top-0 z-[1000] flex h-full w-full items-center justify-center"
+    class="fixed left-0 top-0 z-[1000] flex h-full w-full items-center justify-center bg-gray-600 bg-opacity-60"
   >
     <div
-      class="flex h-4/5 w-4/5 flex-col justify-between rounded-md bg-white p-16"
+      class="relative flex h-4/5 w-3/5 flex-col items-center justify-between rounded-md bg-white p-16"
     >
+      <h2
+        class="mt-0"
+      >
+        Recadrer l'image
+      </h2>
       <canvas
         class="border border-solid border-black"
-        height="576"
-        width="819.2"
+        height="537.5999999999999"
+        width="512"
       />
       <div
-        class="mt-2 flex justify-center"
+        class="mt-2 flex justify-center gap-4"
       >
         <button
           class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc mr-2"
@@ -22,6 +27,13 @@ exports[`Test du composant RotationModal > Le composant s'affiche correctement 1
         >
           Annuler
         </button>
+        <input
+          class="w-16 rounded-md border-[3px] border-solid border-bleu-sombre p-2"
+          id="rotation"
+          title="Modifier l'angle de rotation de l'image"
+          type="number"
+          value="0"
+        />
         <button
           class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc ml-2"
           type="button"

@@ -23,12 +23,12 @@ describe("Test du composant ModifierEpaisseurLignes", () => {
 
     const spyChangerEpaisseurLignes = vi.spyOn(mockEtatImage, "changerEpaisseurLignes");
 
-    const mockForcerRendu = vi.fn();
+    const mockRedessiner = vi.fn();
 
     render(
       <ModifierEpaisseurLignes
         etatImage={mockEtatImage}
-        forcerRendu={mockForcerRendu}
+        redessiner={mockRedessiner}
       />
     );
 
@@ -39,6 +39,6 @@ describe("Test du composant ModifierEpaisseurLignes", () => {
     fireEvent.change(inputEpaisseur, { target: { value: nouvelleEpaisseur } });
 
     expect(spyChangerEpaisseurLignes).toHaveBeenCalledWith(Number(nouvelleEpaisseur));
-    expect(mockForcerRendu).toHaveBeenCalled();
+    expect(mockRedessiner).toHaveBeenCalled();
   });
 });

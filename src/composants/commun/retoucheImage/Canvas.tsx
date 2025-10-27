@@ -6,7 +6,7 @@ import UtilitaireRetoucheImage from "../../../utils/UtilitaireRetoucheImage";
 import BarreOutils, { type TOutilRetoucheImage } from "./barreOutils/BarreOutils";
 import AffichageSelection from "./barreOutils/selection/AffichageSelection";
 import { ITaille } from "./RetoucheImage";
-import RotationModal from "./RotationModal";
+import RotationModal from "./rotation/RotationModal";
 
 export type TCoordonnees = { x: number; y: number };
 export type TCanvasRef = React.RefObject<HTMLCanvasElement | null>;
@@ -22,7 +22,6 @@ interface ICanvasProps {
 const Canvas: React.FC<ICanvasProps> = ({ tailleCanvas, etatImage, pageCourante }) => {
   const refCanvas = useRef<HTMLCanvasElement>(null);
 
-  const [_, forcerRendu] = useState<number>(0);
   const [zoom, setZoom] = useState<number>(1);
   const [offset, setOffset] = useState<TCoordonnees>({ x: 0, y: 0 });
   const [curseur, setCurseur] = useState<string>("default");
@@ -111,7 +110,6 @@ const Canvas: React.FC<ICanvasProps> = ({ tailleCanvas, etatImage, pageCourante 
           pointsSelectionPolygonale={pointsSelectionPolygonale}
           setZoom={setZoom}
           setOffset={setOffset}
-          forcerRendu={forcerRendu}
           setPointsSelectionPolygonale={setPointsSelectionPolygonale}
           setDebutSelectionRectangulaire={setDebutSelectionRectangulaire}
           setFinSelectionRectangulaire={setFinSelectionRectangulaire}
@@ -127,7 +125,7 @@ const Canvas: React.FC<ICanvasProps> = ({ tailleCanvas, etatImage, pageCourante 
           ref={refCanvas}
           aria-label="Image en cours de retouche"
           className="mb-4 block border-2 border-solid border-bleu-sombre"
-          style={{ cursor: curseur }}
+          style={{ cursor: curseur, width: tailleCanvas.largeur, height: tailleCanvas.hauteur }}
           width={tailleCanvas.largeur}
           height={tailleCanvas.hauteur}
         />

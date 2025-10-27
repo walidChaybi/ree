@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import type EtatImage from "../../../model/retoucheImage/EtatImage";
-import UtilitaireRetoucheImage from "../../../utils/UtilitaireRetoucheImage";
-import Bouton from "../bouton/Bouton";
-import type { TOutilRetoucheImage } from "./barreOutils/BarreOutils";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type EtatImage from "../../../../model/retoucheImage/EtatImage";
+import UtilitaireRetoucheImage from "../../../../utils/UtilitaireRetoucheImage";
+import type { TOutilRetoucheImage } from "../barreOutils/BarreOutils";
+import InteractionsRotation from "./InteractionsRotation";
 
 interface IRotationModalProps {
   etatImage: EtatImage;
@@ -13,6 +13,37 @@ const RotationModal: React.FC<IRotationModalProps> = ({ etatImage, setOutilSelec
   const refCanvas = useRef<HTMLCanvasElement>(null);
 
   const [rotationTemporaire, setRotationTemporaire] = useState<number>(0);
+
+  const redessiner = useCallback((angle: number = 0) => {
+    const canvas = refCanvas.current;
+
+    const ctx = canvas?.getContext("2d");
+
+    if (!canvas || !ctx) return;
+
+    const centre = { x: canvas.width / 2, y: canvas.height / 2 };
+
+    const img = etatImage.recupererImage;
+
+    UtilitaireRetoucheImage.effacerCanvas(ctx, canvas);
+
+    ctx.save();
+    ctx.translate(centre.x, centre.y);
+
+    if (angle) ctx.rotate(angle);
+
+    const largeurMaximale = canvas.width * 0.9;
+    const hauteurMaximale = canvas.height * 0.8;
+
+    const miseAEchelle = Math.min(largeurMaximale / img.width, hauteurMaximale / img.height);
+
+    const largeurAEchelle = img.width * miseAEchelle;
+    const hauteurAEchelle = img.height * miseAEchelle;
+
+    ctx.drawImage(img, -largeurAEchelle / 2, -hauteurAEchelle / 2, largeurAEchelle, hauteurAEchelle);
+
+    ctx.restore();
+  }, []);
 
   useEffect(() => {
     const canvas = refCanvas.current;
@@ -27,27 +58,6 @@ const RotationModal: React.FC<IRotationModalProps> = ({ etatImage, setOutilSelec
     const centre = { x: canvas.width / 2, y: canvas.height / 2 };
 
     const img = etatImage.recupererImage;
-
-    const redessiner = (angle: number = 0) => {
-      UtilitaireRetoucheImage.effacerCanvas(ctx, canvas);
-
-      ctx.save();
-      ctx.translate(centre.x, centre.y);
-
-      if (angle) ctx.rotate(angle);
-
-      const largeurMaximale = canvas.width * 0.9;
-      const hauteurMaximale = canvas.height * 0.8;
-
-      const miseAEchelle = Math.min(largeurMaximale / img.width, hauteurMaximale / img.height);
-
-      const largeurAEchelle = img.width * miseAEchelle;
-      const hauteurAEchelle = img.height * miseAEchelle;
-
-      ctx.drawImage(img, -largeurAEchelle / 2, -hauteurAEchelle / 2, largeurAEchelle, hauteurAEchelle);
-
-      ctx.restore();
-    };
 
     if (img.complete) {
       redessiner();
@@ -78,7 +88,6 @@ const RotationModal: React.FC<IRotationModalProps> = ({ etatImage, setOutilSelec
       const angle = Math.atan2(y - centre.y, x - centre.x) - debutAngle;
 
       setRotationTemporaire(angle);
-      redessiner(angle);
     };
 
     const terminerRotation = () => {
@@ -96,41 +105,26 @@ const RotationModal: React.FC<IRotationModalProps> = ({ etatImage, setOutilSelec
     };
   }, [etatImage]);
 
-  const validerRotation = () => {
-    etatImage.appliquerRotation((rotationTemporaire * 180) / Math.PI);
-    setRotationTemporaire(0);
-    setOutilSelectionne("deplacement");
-  };
-
-  const annulerRotation = () => {
-    setOutilSelectionne("deplacement");
-  };
+  useEffect(() => {
+    redessiner(rotationTemporaire);
+  }, [rotationTemporaire]);
 
   return (
-    <div className="fixed left-0 top-0 z-[1000] flex h-full w-full items-center justify-center">
-      <div className="flex h-4/5 w-4/5 flex-col justify-between rounded-md bg-white p-16">
+    <div className="fixed left-0 top-0 z-[1000] flex h-full w-full items-center justify-center bg-gray-600 bg-opacity-60">
+      <div className="relative flex h-4/5 w-3/5 flex-col items-center justify-between rounded-md bg-white p-16">
+        <h2 className="mt-0">{"Recadrer l'image"}</h2>
         <canvas
           ref={refCanvas}
-          height={window.innerHeight * 0.75}
-          width={window.innerWidth * 0.8}
+          height={window.innerHeight * 0.7}
+          width={window.innerWidth * 0.5}
           className="border border-solid border-black"
         />
-        <div className="mt-2 flex justify-center">
-          <Bouton
-            onClick={annulerRotation}
-            className="mr-2"
-            type="button"
-          >
-            Annuler
-          </Bouton>
-          <Bouton
-            onClick={validerRotation}
-            className="ml-2"
-            type="button"
-          >
-            Valider
-          </Bouton>
-        </div>
+        <InteractionsRotation
+          etatImage={etatImage}
+          rotationTemporaire={rotationTemporaire}
+          setRotationTemporaire={setRotationTemporaire}
+          setOutilSelectionne={setOutilSelectionne}
+        />
       </div>
     </div>
   );

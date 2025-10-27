@@ -80,31 +80,26 @@ class EtatImage {
   appliquerRotation = (degres: number) => {
     const radiusAngle = (degres * Math.PI) / 180;
 
-    const cos = Math.abs(Math.cos(radiusAngle));
-    const sin = Math.abs(Math.sin(radiusAngle));
-
-    const largeurOriginale = this.buffer.width;
-    const hauteurOriginale = this.buffer.height;
-
-    const nouvelleLargeur = Math.ceil(largeurOriginale * cos + hauteurOriginale * sin);
-    const nouvelleHauteur = Math.ceil(largeurOriginale * sin + hauteurOriginale * cos);
+    const largeur = this.buffer.width;
+    const hauteur = this.buffer.height;
 
     const tempCanvas = document.createElement("canvas");
-    tempCanvas.width = nouvelleLargeur;
-    tempCanvas.height = nouvelleHauteur;
+
+    tempCanvas.width = largeur;
+    tempCanvas.height = hauteur;
 
     const tempCtx = tempCanvas.getContext("2d");
     if (!tempCtx) return;
 
-    tempCtx.translate(nouvelleLargeur / 2, nouvelleHauteur / 2);
+    tempCtx.translate(largeur / 2, hauteur / 2);
     tempCtx.rotate(radiusAngle);
-    tempCtx.drawImage(this.buffer, -largeurOriginale / 2, -hauteurOriginale / 2);
+    tempCtx.drawImage(this.buffer, -largeur / 2, -hauteur / 2);
 
-    this.buffer.width = nouvelleLargeur;
-    this.buffer.height = nouvelleHauteur;
+    const ctxBuffer = this.buffer.getContext("2d");
+    if (!ctxBuffer) return;
 
-    UtilitaireRetoucheImage.effacerCanvas(this.ctx, this.buffer);
-    this.ctx.drawImage(tempCanvas, 0, 0);
+    ctxBuffer.clearRect(0, 0, largeur, hauteur);
+    ctxBuffer.drawImage(tempCanvas, 0, 0);
 
     this.enregistrerVersionDansHistorique();
   };
