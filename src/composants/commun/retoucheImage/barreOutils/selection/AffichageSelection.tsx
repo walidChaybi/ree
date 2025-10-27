@@ -59,7 +59,11 @@ const AffichageSelection: React.FC<IAffichageSelectionProps> = ({
   }
 
   // Sélection polygonale en cours
-  if (pointsSelectionPolygonale.length > 1 && UtilitaireRetoucheImage.estSelectionPolygonaleComplete(pointsSelectionPolygonale) === false) {
+  if (
+    outilSelectionne === "selectionPolygonale" &&
+    pointsSelectionPolygonale.length > 1 &&
+    !UtilitaireRetoucheImage.estSelectionPolygonaleComplete(pointsSelectionPolygonale)
+  ) {
     return (
       <svg
         id="selection-polygonale-temporaire"

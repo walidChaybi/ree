@@ -52,6 +52,14 @@ const Canvas: React.FC<ICanvasProps> = ({ tailleCanvas, etatImage, pageCourante 
   }, [pageCourante]);
 
   useEffect(() => {
+    // En cas de changement d'outil lors d'une sélection en cours, suppression de celle-ci
+    if (
+      (pointsSelectionPolygonale.length > 1 && !UtilitaireRetoucheImage.estSelectionPolygonaleComplete(pointsSelectionPolygonale)) ||
+      (debutSelectionRectangulaire && !finSelectionRectangulaire)
+    ) {
+      annulerSelectionActuelle();
+    }
+
     switch (outilSelectionne) {
       case "deplacement":
         setCurseur("grab");
