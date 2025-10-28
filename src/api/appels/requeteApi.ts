@@ -111,25 +111,22 @@ export function postTableauRequetesDelivranceService(
     })
   );
 }
-export const getTableauRequetesConsulaires = (
-  listeStatuts: string,
-  listeSousType: string,
-  queryParameters: IQueryParametersPourRequetes
-): Promise<any> => {
+
+export function getRequetesCreation(listeStatuts: string, queryParameters: IQueryParametersPourRequetes): Promise<any> {
   return getApiManager().then(api =>
     api.fetch({
       method: HttpMethod.GET,
       uri: URL_MES_REQUETES_CREATION,
       parameters: {
         statuts: listeStatuts,
-        sousTypes: listeSousType,
-        tri: queryParameters.tri !== "prioriteRequete" ? queryParameters.tri : "statutEtDateCreation",
+        tri: queryParameters.tri !== "prioriteRequete" ? queryParameters.tri : "dateStatut",
         sens: queryParameters.sens,
-        range: queryParameters.range
+        range: queryParameters.range,
+        sousTypes: queryParameters.sousTypes
       }
     })
   );
-};
+}
 
 export function getRequetesInformation(queryParameters: IQueryParametersPourRequetes): Promise<any> {
   return getApiManager().then(api =>
@@ -171,22 +168,6 @@ export function postRequetesInformation(
   );
 }
 /* v8 ignore stop */
-
-export function getRequetesCreation(listeStatuts: string, queryParameters: IQueryParametersPourRequetes): Promise<any> {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.GET,
-      uri: URL_MES_REQUETES_CREATION,
-      parameters: {
-        statuts: listeStatuts,
-        tri: queryParameters.tri !== "prioriteRequete" ? queryParameters.tri : "dateStatut",
-        sens: queryParameters.sens,
-        range: queryParameters.range,
-        sousTypes: queryParameters.sousTypes
-      }
-    })
-  );
-}
 
 export function postRequetesServiceCreation(
   queryParameters: IQueryParametersPourRequetes,

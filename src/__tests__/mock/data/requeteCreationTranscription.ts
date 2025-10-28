@@ -1,3 +1,4 @@
+import { IRequeteConsulaire } from "@model/requete/IRequeteConsulaire";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 
 export const requeteCreationTranscription: IRequeteCreationTranscription = {
@@ -567,7 +568,7 @@ export const mesRequetesConsulaire = [
       }
     ]
   }
-];
+] as unknown as IRequeteConsulaire[];
 
 export const creationRequeteRCTCResultat = [
   {

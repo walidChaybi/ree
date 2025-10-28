@@ -1,46 +1,20 @@
-import { getTableauRequetesConsulaires } from "@api/appels/requeteApi";
+import { CONFIG_GET_REQUETES_CONSULAIRES } from "@api/configurations/requete/consulaire/GetRequetesConsulaires";
 import { IRequeteTableauConsulaire, mappingRequetesTableauConsulaire } from "@model/requete/IRequeteTableauConsulaire";
-import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
-import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { UN } from "@util/Utils";
+import { ESousTypeCreation } from "@model/requete/enum/SousTypeCreation";
+import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { RECEContextData } from "../../../../contexts/RECEContextProvider";
+import useFetchApi from "../../../../hooks/api/FetchApiHook";
 import useNavigationRequeteTableauConsulaire from "../../../../hooks/requeteConsulaire/NavigationRequeteTableauConsulaireHook";
 import AfficherMessage from "../../../../utils/AfficherMessage";
-import PageChargeur from "../../../commun/chargeurs/PageChargeur";
-import Tableau, { IEnTeteTableau, TSensTri } from "../../../commun/tableau/Tableau";
+import ComposantChargeur from "../../../commun/chargeurs/ComposantChargeur";
+import Tableau, { IEnTeteTableau, IParametresRecherche, TLigneTableau } from "../../../commun/tableau/Tableau";
 
-interface IParamtresTableau {
-  statuts: string[];
-  sousType: string[];
-  tri: string;
-  sens: TSensTri;
-  range: string;
-}
+const LIGNES_PAR_PAGE = 25;
+const ELEMENTS_PAR_PLAGE = 100;
 
-interface IParametresPagination {
-  pageActuelle: number;
-  totalLignes: number;
-}
-
-type TLigneTableau = {
-  cle: string;
-  numeroDossier: string;
-  sousType: string;
-  natureActe: string;
-  titulaires: React.JSX.Element;
-  requerant: string;
-  dateCreation: string;
-  dateDerniereAction: string;
-  statut: string;
-  onClick?: () => void;
-};
-
-const VALEUR_MINIMUM = 0;
-const NOMBRE_MINIMUM_LIGNES = 0;
-const DIVISEUR_POSITION_PAGE = 4;
-const LIGNE_PAR_PAGE = 25;
-const PAGINATION_PLAGE_MAX = 100;
+const STATUTS_REQUETES_A_AFFICHER: (keyof typeof EStatutRequete)[] = ["A_TRAITER", "PRISE_EN_CHARGE", "EN_TRAITEMENT", "A_SIGNER"];
+const SOUS_TYPES_REQUETES_A_AFFICHER: (keyof typeof ESousTypeCreation)[] = ["RCTC", "RCTD", "RCADC"];
 
 const EN_TETE_MES_REQUETES_CONSULAIRES: IEnTeteTableau[] = [
   {
@@ -80,119 +54,88 @@ const EN_TETE_MES_REQUETES_CONSULAIRES: IEnTeteTableau[] = [
   }
 ];
 
-const getPortionTableau = (tableau: TLigneTableau[], pageActuelle: number) => {
-  return tableau.slice(pageActuelle * LIGNE_PAR_PAGE, pageActuelle * LIGNE_PAR_PAGE + LIGNE_PAR_PAGE);
-};
-
 const TableauMesRequetesConsulaire: React.FC = () => {
   const { utilisateurs, services } = useContext(RECEContextData);
 
-  const [parametresTableau, setParametresTableau] = useState<IParamtresTableau>({
-    statuts: [StatutRequete.A_TRAITER.nom, StatutRequete.PRISE_EN_CHARGE.nom, StatutRequete.EN_TRAITEMENT.nom, StatutRequete.A_SIGNER.nom],
-    sousType: [SousTypeCreation.RCTC.nom, SousTypeCreation.RCTD.nom, SousTypeCreation.RCADC.nom],
+  const [parametresRecherche, setParametresRecherche] = useState<IParametresRecherche>({
     tri: "statutEtDateCreation",
     sens: "ASC",
-    range: `0-${PAGINATION_PLAGE_MAX}`
+    range: `0-${ELEMENTS_PAR_PLAGE}`
   });
-  const [lignesTableau, setLignesTableau] = useState<TLigneTableau[]>();
-  const [parametresPagination, setParametresPagination] = useState<IParametresPagination>({
-    pageActuelle: VALEUR_MINIMUM,
-    totalLignes: NOMBRE_MINIMUM_LIGNES
-  });
-  const [enRecuperation, setEnRecuperation] = useState<boolean>(true);
+  const [lignesTableau, setLignesTableau] = useState<TLigneTableau[] | null>(null);
+  const [nombreTotalLignes, setNombreTotalLignes] = useState<number>(0);
 
-  const { naviguerVersRequeteConsulaire, enAttenteDeReponseApi } = useNavigationRequeteTableauConsulaire();
+  const { naviguerVersRequeteConsulaire, enAttenteDeReponseApi: navigationEnCours } = useNavigationRequeteTableauConsulaire();
 
   const mapResultatCommeLignesTableau = useCallback(
     (resultat: IRequeteTableauConsulaire[]): TLigneTableau[] =>
       resultat.map(requete => ({
         cle: requete.idRequete ?? "",
-        numeroDossier: requete.numeroDossier ?? "",
-        sousType: requete.sousType ?? "",
-        natureActe: requete.natureActe ?? "",
-        titulaires: (
-          <>
-            {(requete.titulaires || []).map((titulaire: any) => (
-              <span key={`${titulaire.nom} ${titulaire.prenoms[0] ?? ""}`.trim()}>
-                {`${titulaire.nom.toUpperCase()} ${titulaire.prenoms[0] || ""}`.trim()}
-                <br />
-              </span>
-            ))}
-          </>
-        ),
-        requerant: requete?.nomCompletRequerant ?? "",
-        dateCreation: requete.dateCreation ?? "",
-        dateDerniereAction: requete.dateDerniereAction ?? "",
-        statut: requete.statut ?? "",
+        donnees: {
+          numeroDossier: requete.numeroDossier ?? "",
+          sousType: requete.sousType ?? "",
+          natureActe: requete.natureActe ?? "",
+          titulaires: (
+            <>
+              {(requete.titulaires || []).map((titulaire: any) => (
+                <span key={`${titulaire.nom} ${titulaire.prenoms[0] ?? ""}`.trim()}>
+                  {`${titulaire.nom.toUpperCase()} ${titulaire.prenoms[0] ?? ""}`.trim()}
+                  <br />
+                </span>
+              ))}
+            </>
+          ),
+          requerant: requete?.nomCompletRequerant ?? "",
+          dateCreation: requete.dateCreation ?? "",
+          dateDerniereAction: requete.dateDerniereAction ?? "",
+          statut: requete.statut ?? ""
+        },
         onClick: () => naviguerVersRequeteConsulaire(requete)
       })),
     [naviguerVersRequeteConsulaire]
   );
 
-  useEffect(() => {
-    const plageActuelle = parseInt(parametresTableau.range.split("-")[VALEUR_MINIMUM] ?? `${VALEUR_MINIMUM}`);
-    const nouvellePlage = Math.floor(parametresPagination.pageActuelle / DIVISEUR_POSITION_PAGE);
-    if (plageActuelle === nouvellePlage) {
-      return;
-    }
+  const { appelApi: getRequetesConsulaires, enAttenteDeReponseApi: recuperationRequetesEnCours } =
+    useFetchApi(CONFIG_GET_REQUETES_CONSULAIRES);
 
-    setParametresTableau({
-      ...parametresTableau,
-      range: `${nouvellePlage}-${PAGINATION_PLAGE_MAX}`
+  useEffect(() => {
+    if (!parametresRecherche.range) return;
+
+    getRequetesConsulaires({
+      parametres: {
+        query: {
+          range: parametresRecherche.range,
+          sens: parametresRecherche.sens,
+          tri: parametresRecherche.tri,
+          sousTypes: SOUS_TYPES_REQUETES_A_AFFICHER.join(","),
+          statuts: STATUTS_REQUETES_A_AFFICHER.join(",")
+        }
+      },
+      apresSucces: (requetes, headers) => {
+        const requetesTableau: IRequeteTableauConsulaire[] = mappingRequetesTableauConsulaire(requetes, false, utilisateurs, services);
+        setLignesTableau(mapResultatCommeLignesTableau(requetesTableau));
+
+        setNombreTotalLignes(parseInt((headers["content-range"] ?? "").split("/")[1] ?? ""));
+      },
+      apresErreur: erreurs => {
+        AfficherMessage.erreur("Impossible de récupérer les requêtes consulaires", { erreurs });
+      }
     });
-  }, [parametresPagination]);
-
-  useEffect(() => {
-    setEnRecuperation(true);
-    getTableauRequetesConsulaires(parametresTableau.statuts.join(","), parametresTableau.sousType.join(","), parametresTableau)
-      .then(res => {
-        const requetes: IRequeteTableauConsulaire[] = mappingRequetesTableauConsulaire(res.body.data, false, utilisateurs, services);
-        setLignesTableau(mapResultatCommeLignesTableau(requetes));
-
-        const totalLignes = parseInt((res.headers["content-range"] ?? "").split("/")[UN] ?? "");
-        setParametresPagination({
-          ...parametresPagination,
-          totalLignes: totalLignes
-        });
-      })
-      .catch(erreurs => {
-        console.error(`Une erreur est survenue lors de l'appel API GET requêtes consulaire ${JSON.stringify(erreurs)}`);
-        AfficherMessage.erreur("Impossible de récupérer les requêtes consulaires", { erreurs, fermetureAuto: true });
-      })
-      .finally(() => setEnRecuperation(false));
-  }, [parametresTableau]);
+  }, [parametresRecherche]);
 
   return (
     <div className="m-0 mt-4">
-      {enRecuperation || enAttenteDeReponseApi ? (
-        <PageChargeur />
-      ) : (
-        <Tableau
-          enTetes={EN_TETE_MES_REQUETES_CONSULAIRES}
-          lignes={lignesTableau ? (getPortionTableau(lignesTableau, parametresPagination.pageActuelle) as any) : undefined}
-          messageAucuneLigne="Aucune requête n'a été trouvée."
-          parametresTri={{
-            cle: parametresTableau.tri,
-            sens: parametresTableau.sens,
-            onChangeTri: (cle: string, sens: TSensTri) =>
-              setParametresTableau({
-                ...parametresTableau,
-                tri: cle,
-                sens: sens,
-                range: `0-${PAGINATION_PLAGE_MAX}`
-              })
-          }}
-          parametresPagination={{
-            ...parametresPagination,
-            lignesParPage: LIGNE_PAR_PAGE,
-            onChangePage: (pageSuivante: boolean) =>
-              setParametresPagination({
-                ...parametresPagination,
-                pageActuelle: parametresPagination.pageActuelle + (pageSuivante ? UN : -UN)
-              })
-          }}
-        />
-      )}
+      <Tableau
+        enTetes={EN_TETE_MES_REQUETES_CONSULAIRES}
+        lignes={lignesTableau}
+        messageAucuneLigne="Aucune requête n'a été trouvée."
+        nombreLignesParPage={LIGNES_PAR_PAGE}
+        nombreElementsParPlage={ELEMENTS_PAR_PLAGE}
+        nombreTotalLignes={nombreTotalLignes}
+        parametresRecherche={parametresRecherche}
+        setParametresRecherche={setParametresRecherche}
+      />
+      {(recuperationRequetesEnCours || navigationEnCours) && <ComposantChargeur />}
     </div>
   );
 };

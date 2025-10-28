@@ -1,14 +1,9 @@
-import React from "react";
+import { NB_LIGNES_PAR_APPEL_DEFAUT, NB_LIGNES_PAR_PAGE_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import React, { useEffect, useMemo, useState } from "react";
 import { MdArrowUpward, MdChevronLeft, MdChevronRight, MdReport } from "react-icons/md";
 import Bouton from "../bouton/Bouton";
 
-export type TSensTri = "ASC" | "DESC";
-
-interface IParametresPagination {
-  pageActuelle: number;
-  lignesParPage: number;
-  totalLignes: number;
-}
+type TSensTri = "ASC" | "DESC";
 
 export interface IEnTeteTableau {
   cle: string;
@@ -16,39 +11,68 @@ export interface IEnTeteTableau {
   triable?: boolean;
 }
 
-interface ITableauProps {
-  enTetes: IEnTeteTableau[];
-  lignes:
-    | ({ cle: string; onClick?: () => void } & {
-        [cleCollone: string]: string | number | boolean | React.JSX.Element | undefined;
-      })[]
-    | undefined;
-  messageAucuneLigne?: string;
-  onClickLigne?: (cle: string) => void;
-  parametresTri?: {
-    cle: string;
-    sens: TSensTri;
-    onChangeTri: (cle: string, sens: TSensTri) => void;
-  };
-  parametresPagination?: IParametresPagination & {
-    onChangePage: (pageSuivante: boolean) => void;
-  };
+export interface IParametresRecherche {
+  tri: string;
+  sens: TSensTri;
+  range?: string;
 }
 
-const libellePagination = (infoPagination: IParametresPagination) => {
-  const premiereLigne = infoPagination.pageActuelle * infoPagination.lignesParPage + 1;
-  const derniereLigne = (infoPagination.pageActuelle + 1) * infoPagination.lignesParPage;
+interface ITableauProps {
+  enTetes: IEnTeteTableau[];
+  lignes: TLigneTableau[] | null;
+  messageAucuneLigne?: string;
+  nombreTotalLignes: number;
+  nombreLignesParPage?: number;
+  nombreElementsParPlage?: number;
+  parametresRecherche: IParametresRecherche;
+  setParametresRecherche: React.Dispatch<React.SetStateAction<IParametresRecherche>>;
+}
 
-  return `${premiereLigne}-${
-    derniereLigne > infoPagination.totalLignes ? infoPagination.totalLignes : derniereLigne
-  } sur ${infoPagination.totalLignes}`;
-};
+const Tableau: React.FC<ITableauProps> = ({
+  enTetes,
+  lignes,
+  messageAucuneLigne,
+  nombreLignesParPage = NB_LIGNES_PAR_PAGE_DEFAUT,
+  nombreElementsParPlage = NB_LIGNES_PAR_APPEL_DEFAUT,
+  nombreTotalLignes,
+  parametresRecherche,
+  setParametresRecherche
+}) => {
+  const [pageActuelle, setPageActuelle] = useState<number>(0);
 
-const pasDePageSuivante = (infoPagination: IParametresPagination) =>
-  (infoPagination.pageActuelle + 1) * infoPagination.lignesParPage >= infoPagination.totalLignes;
+  const lignesAAfficher = useMemo(() => {
+    if (!lignes) return null;
 
-const Tableau: React.FC<ITableauProps> = ({ enTetes, lignes, messageAucuneLigne, onClickLigne, parametresTri, parametresPagination }) =>
-  lignes ? (
+    const plageActuelle = parseInt(parametresRecherche.range?.split("-")[0] ?? "0");
+
+    return lignes.slice(
+      pageActuelle * nombreLignesParPage - plageActuelle * nombreElementsParPlage,
+      (pageActuelle + 1) * nombreLignesParPage - plageActuelle * nombreElementsParPlage
+    );
+  }, [nombreLignesParPage, lignes, pageActuelle]);
+
+  const parametresPagination: { libellePagination: string; pasDePageSuivante: boolean } = useMemo(() => {
+    const premiereLigne = Math.min(pageActuelle * nombreLignesParPage + 1, nombreTotalLignes);
+    const derniereLigne = Math.min((pageActuelle + 1) * nombreLignesParPage, nombreTotalLignes);
+
+    return {
+      libellePagination: `${premiereLigne}-${derniereLigne} sur ${nombreTotalLignes}`,
+      pasDePageSuivante: (pageActuelle + 1) * nombreLignesParPage >= nombreTotalLignes
+    };
+  }, [nombreLignesParPage, nombreTotalLignes, pageActuelle]);
+
+  useEffect(() => {
+    const plageActuelle = parseInt(parametresRecherche.range?.split("-")[0] ?? "0");
+    const nouvellePlage = Math.floor((pageActuelle * nombreLignesParPage) / nombreElementsParPlage);
+    if (plageActuelle === nouvellePlage) return;
+
+    setParametresRecherche(prec => ({
+      ...prec,
+      range: `${nouvellePlage}-${nombreElementsParPlage}`
+    }));
+  }, [pageActuelle]);
+
+  return lignesAAfficher ? (
     <>
       <table className="min-w-full border-spacing-0 rounded-t-xl border border-solid border-gris-sombre text-sm shadow-lg">
         <thead className="">
@@ -58,35 +82,29 @@ const Tableau: React.FC<ITableauProps> = ({ enTetes, lignes, messageAucuneLigne,
                 key={enTete.cle}
                 className="text-center first:text-left"
               >
-                {enTete.triable && parametresTri ? (
+                {enTete.triable ? (
                   <Bouton
-                    key={enTete.cle}
                     title={`Trier par ${enTete.libelle.toLowerCase()}`}
                     aria-label={`Trier par ${enTete.libelle.toLowerCase()}`}
                     className="relative border-none bg-transparent text-bleu hover:bg-transparent focus:bg-transparent"
                     onClick={() => {
-                      if (!parametresTri) return;
-                      parametresTri.onChangeTri(
-                        enTete.cle,
-                        enTete.cle === parametresTri.cle && parametresTri.sens === "ASC" ? "DESC" : "ASC"
-                      );
+                      setParametresRecherche(prec => ({
+                        tri: enTete.cle,
+                        sens: enTete.cle === prec.tri && prec.sens === "ASC" ? "DESC" : "ASC",
+                        range: `0-${nombreElementsParPlage}`
+                      }));
                     }}
                   >
                     <span className="text-sm normal-case underline">{enTete.libelle}</span>
                     <MdArrowUpward
                       fontSize="inherit"
                       className={`absolute -right-1 top-1/2 -translate-y-1/2 ${
-                        enTete.cle !== parametresTri?.cle ? "opacity-0" : ""
-                      } ${parametresTri?.sens === "DESC" ? "rotate-180" : ""}`}
+                        enTete.cle !== parametresRecherche.tri ? "opacity-0" : ""
+                      } ${parametresRecherche.sens === "DESC" ? "rotate-180" : ""}`}
                     />
                   </Bouton>
                 ) : (
-                  <span
-                    key={enTete.cle}
-                    className="font-marianne-bold px-4 text-bleu"
-                  >
-                    {enTete.libelle}
-                  </span>
+                  <span className="px-4 font-marianne-bold text-bleu">{enTete.libelle}</span>
                 )}
               </th>
             ))}
@@ -94,8 +112,8 @@ const Tableau: React.FC<ITableauProps> = ({ enTetes, lignes, messageAucuneLigne,
         </thead>
 
         <tbody>
-          {lignes.length
-            ? lignes.map(ligne => (
+          {lignesAAfficher.length
+            ? lignesAAfficher.map(ligne => (
                 <LigneTableau
                   ligne={ligne}
                   enTetes={enTetes}
@@ -111,48 +129,48 @@ const Tableau: React.FC<ITableauProps> = ({ enTetes, lignes, messageAucuneLigne,
         </tbody>
       </table>
 
-      {parametresPagination && (
-        <div className="mt-4 flex items-center justify-end gap-4">
-          <span className="text-gris">{libellePagination(parametresPagination)}</span>
-          <button
-            type="button"
-            onClick={() => parametresPagination.onChangePage(false)}
-            disabled={!parametresPagination.pageActuelle}
-            title="Page précédente"
-            aria-label="Page précédente"
-            className="m-0 min-w-0 p-0 text-gris hover:text-bleu-sombre disabled:bg-transparent disabled:text-gris"
-          >
-            <MdChevronLeft
-              className="text-xl"
-              aria-hidden
-            />
-          </button>
-          <button
-            type="button"
-            onClick={() => parametresPagination.onChangePage(true)}
-            disabled={pasDePageSuivante(parametresPagination)}
-            title="Page suivante"
-            aria-label="Page suivante"
-            className="m-0 min-w-0 p-0 text-gris-sombre hover:text-bleu-sombre disabled:bg-transparent disabled:text-gris"
-          >
-            <MdChevronRight
-              className="text-xl"
-              aria-hidden
-            />
-          </button>
-        </div>
-      )}
+      <div className="mt-4 flex items-center justify-end gap-4">
+        <span className="text-gris">{parametresPagination.libellePagination}</span>
+        <button
+          type="button"
+          onClick={() => setPageActuelle(pagePrec => pagePrec - 1)}
+          disabled={pageActuelle === 0}
+          title="Page précédente"
+          aria-label="Page précédente"
+          className="m-0 min-w-0 p-0 text-gris hover:text-bleu-sombre disabled:bg-transparent disabled:text-gris"
+        >
+          <MdChevronLeft
+            className="text-xl"
+            aria-hidden
+          />
+        </button>
+        <button
+          type="button"
+          onClick={() => setPageActuelle(pagePrec => pagePrec + 1)}
+          disabled={parametresPagination.pasDePageSuivante}
+          title="Page suivante"
+          aria-label="Page suivante"
+          className="m-0 min-w-0 p-0 text-gris-sombre hover:text-bleu-sombre disabled:bg-transparent disabled:text-gris"
+        >
+          <MdChevronRight
+            className="text-xl"
+            aria-hidden
+          />
+        </button>
+      </div>
     </>
   ) : (
     <></>
   );
+};
 
 type TDonneesLigne = {
   [cleColonne: string]: string | number | boolean | React.JSX.Element | undefined;
 };
 
-type TLigneTableau = TDonneesLigne & {
+export type TLigneTableau = {
   cle: string;
+  donnees: TDonneesLigne;
   onClick?: () => void;
 };
 
@@ -166,7 +184,7 @@ const LigneTableau: React.FC<{ ligne: TLigneTableau; enTetes: IEnTeteTableau[] }
         key={`${ligne.cle}-${enTete.cle}`}
         className="px-4 py-1.5 text-center first:text-left"
       >
-        {ligne[enTete.cle]}
+        {ligne.donnees[enTete.cle]}
       </td>
     ))}
   </tr>

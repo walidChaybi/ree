@@ -8,6 +8,8 @@ import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
 import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { EFamilleRegistre } from "@model/etatcivil/enum/TypeFamille";
 
+// EXEMPLAR builder de mocks pour assurer la cohérence des données de tests
+
 const ficheActeDtoMinimal: IFicheActeDto = {
   id: "idFicheActe",
   registre: MOCK_REGISTRE_ACQ,

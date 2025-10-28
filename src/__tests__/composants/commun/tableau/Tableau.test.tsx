@@ -1,6 +1,6 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, test, vi } from "vitest";
-import Tableau, { IEnTeteTableau } from "../../../../composants/commun/tableau/Tableau";
+import Tableau, { IEnTeteTableau, TLigneTableau } from "../../../../composants/commun/tableau/Tableau";
 
 describe("Test du composant Tableau", () => {
   const mockEnTetes: IEnTeteTableau[] = [
@@ -16,16 +16,20 @@ describe("Test du composant Tableau", () => {
     }
   ];
 
-  const mockLignes = [
+  const mockLignes: TLigneTableau[] = [
     {
       cle: "1",
-      n: "001",
-      natureActe: "Naissance mineur"
+      donnees: {
+        n: "001",
+        natureActe: "Naissance mineur"
+      }
     },
     {
       cle: "2",
-      n: "002",
-      natureActe: "Naissance mineur"
+      donnees: {
+        n: "002",
+        natureActe: "Naissance mineur"
+      }
     }
   ];
 
@@ -34,6 +38,9 @@ describe("Test du composant Tableau", () => {
       <Tableau
         enTetes={mockEnTetes}
         lignes={mockLignes}
+        nombreTotalLignes={mockLignes.length}
+        parametresRecherche={{ tri: "n", sens: "ASC" }}
+        setParametresRecherche={() => {}}
       />
     );
 
@@ -47,6 +54,9 @@ describe("Test du composant Tableau", () => {
         enTetes={mockEnTetes}
         lignes={[]}
         messageAucuneLigne={message}
+        nombreTotalLignes={0}
+        parametresRecherche={{ tri: "n", sens: "ASC" }}
+        setParametresRecherche={() => {}}
       />
     );
 
@@ -67,6 +77,9 @@ describe("Test du composant Tableau", () => {
       <Tableau
         enTetes={mockEnTetes}
         lignes={lignesAvecClick as any}
+        nombreTotalLignes={lignesAvecClick.length}
+        parametresRecherche={{ tri: "n", sens: "ASC" }}
+        setParametresRecherche={() => {}}
       />
     );
 
@@ -81,43 +94,49 @@ describe("Test du composant Tableau", () => {
       <Tableau
         enTetes={mockEnTetes}
         lignes={mockLignes}
-        parametresTri={{
-          cle: "id",
-          sens: "DESC",
-          onChangeTri: onChangeTriMock
+        parametresRecherche={{
+          tri: "id",
+          sens: "DESC"
         }}
+        setParametresRecherche={onChangeTriMock}
+        nombreTotalLignes={mockLignes.length}
       />
     );
 
     fireEvent.click(screen.getByTitle(/Trier par n dossier/i));
-    expect(onChangeTriMock).toHaveBeenCalledWith("n", "ASC");
+    expect(onChangeTriMock).toHaveBeenCalledOnce();
 
     fireEvent.click(screen.getByTitle(/Trier par nature acte/i));
-    expect(onChangeTriMock).toHaveBeenCalledWith("natureActe", "ASC");
+    expect(onChangeTriMock).toHaveBeenCalledTimes(2);
   });
 
-  test("DOIT gérer correctement la pagination", () => {
-    const onChangePageMock = vi.fn();
-
+  test("DOIT gérer correctement la pagination", async () => {
     render(
       <Tableau
         enTetes={mockEnTetes}
         lignes={mockLignes}
-        parametresPagination={{
-          pageActuelle: 1,
-          lignesParPage: 10,
-          totalLignes: 25,
-          onChangePage: onChangePageMock
+        nombreLignesParPage={10}
+        nombreTotalLignes={25}
+        parametresRecherche={{
+          tri: "id",
+          sens: "DESC"
         }}
+        setParametresRecherche={vi.fn()}
       />
     );
 
-    expect(screen.getByText("11-20 sur 25")).toBeDefined();
-
-    fireEvent.click(screen.getByTitle("Page précédente"));
-    expect(onChangePageMock).toHaveBeenCalledWith(false);
+    await waitFor(() => {
+      expect(screen.getByText("1-10 sur 25")).toBeDefined();
+    });
 
     fireEvent.click(screen.getByTitle("Page suivante"));
-    expect(onChangePageMock).toHaveBeenCalledWith(true);
+    await waitFor(() => {
+      expect(screen.getByText("11-20 sur 25")).toBeDefined();
+    });
+
+    fireEvent.click(screen.getByTitle("Page précédente"));
+    await waitFor(() => {
+      expect(screen.getByText("1-10 sur 25")).toBeDefined();
+    });
   });
 });

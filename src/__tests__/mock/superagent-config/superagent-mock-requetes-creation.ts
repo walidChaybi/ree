@@ -1,9 +1,8 @@
 import { NOMENCLATURE_OPTION_COURRIER } from "../data/NomenclatureOptionCourrier";
 import { ReponseAppelNomenclatureDocummentDelivrance, ReponseAppelNomenclatureTypePiecesJustificative } from "../data/nomenclatures";
-import { requeteCreationATraiter, requetesCreationAlimentationTableau } from "../data/requeteCreation";
+import { requeteCreationATraiter } from "../data/requeteCreation";
 import {
   creationRequeteRCTCResultat,
-  mesRequetesConsulaire,
   requeteCreationTranscription,
   requeteCreationTranscriptionStatutATraiter
 } from "../data/requeteCreationTranscription";
@@ -67,26 +66,6 @@ export const configRequetesCreation = [
         };
       }
 
-      ////////////////////////////
-      // Mes requêtes
-      ////////////////////////////
-      if (
-        url ===
-          "/requetes/creation/mes-requetes?statuts=A_SIGNER%2CA_TRAITER%2CBI_A_ENVOYER%2CBI_VALIDE%2CEN_TRAITEMENT%2CPRISE_EN_CHARGE%2CPROJET_VALIDE%2CRETOUR_SDANF%2CTRAITE&tri=dateCreation&sens=ASC&range=0-105" ||
-        url ===
-          "/requetes/creation/mes-requetes?statuts=A_SIGNER%2CA_TRAITER%2CBI_A_ENVOYER%2CBI_VALIDE%2CEN_TRAITEMENT%2CPRISE_EN_CHARGE%2CPROJET_VALIDE%2CRETOUR_SDANF%2CTRAITE&tri=alerte&sens=ASC&range=0-105" ||
-        url ===
-          "/requetes/creation/mes-requetes?statuts=A_SIGNER%2CA_TRAITER%2CBI_A_ENVOYER%2CBI_VALIDE%2CEN_TRAITEMENT%2CPRISE_EN_CHARGE%2CPROJET_VALIDE%2CRETOUR_SDANF%2CTRAITE&tri=alerte&sens=DESC&range=0-105"
-      ) {
-        return {
-          headers: {
-            "content-range": "",
-            link: ""
-          },
-          data: requetesCreationAlimentationTableau
-        };
-      }
-
       if (url === "/requetes/creation/3ed9efe4-c196-4888-8ffe-938f37a5f73f") {
         return {
           data: {
@@ -123,19 +102,6 @@ export const configRequetesCreation = [
         context.method === "post"
       ) {
         return { data: creationRequeteRCTCResultat };
-      }
-
-      // Appel des requêtes de création pour "Mes requêtes consulaires"
-      if (
-        match[1] ===
-        "/requetes/creation/mes-requetes?statuts=A_TRAITER%2CPRISE_EN_CHARGE%2CEN_TRAITEMENT&sousTypes=RCTC%2CRCTD%2CRCADC&tri=statutEtDateCreation&sens=ASC&range=0-100"
-      ) {
-        return {
-          headers: {
-            "content-range": "0-100/2"
-          },
-          data: mesRequetesConsulaire
-        };
       }
 
       // Nomenclatures requetes

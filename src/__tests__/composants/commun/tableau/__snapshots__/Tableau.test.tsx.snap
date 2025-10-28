@@ -11,20 +11,72 @@ exports[`Test du composant Tableau > DOIT afficher correctement les en-têtes et
       <th
         class="text-center first:text-left"
       >
-        <span
-          class="font-marianne-bold px-4 text-bleu"
+        <button
+          aria-label="Trier par n dossier"
+          class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc relative border-none bg-transparent text-bleu hover:bg-transparent focus:bg-transparent"
+          title="Trier par n dossier"
+          type="button"
         >
-          N dossier
-        </span>
+          <span
+            class="text-sm normal-case underline"
+          >
+            N dossier
+          </span>
+          <svg
+            class="absolute -right-1 top-1/2 -translate-y-1/2  "
+            fill="currentColor"
+            font-size="inherit"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0V0z"
+              fill="none"
+            />
+            <path
+              d="m4 12 1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
+            />
+          </svg>
+        </button>
       </th>
       <th
         class="text-center first:text-left"
       >
-        <span
-          class="font-marianne-bold px-4 text-bleu"
+        <button
+          aria-label="Trier par nature acte"
+          class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc relative border-none bg-transparent text-bleu hover:bg-transparent focus:bg-transparent"
+          title="Trier par nature acte"
+          type="button"
         >
-          Nature acte
-        </span>
+          <span
+            class="text-sm normal-case underline"
+          >
+            Nature acte
+          </span>
+          <svg
+            class="absolute -right-1 top-1/2 -translate-y-1/2 opacity-0 "
+            fill="currentColor"
+            font-size="inherit"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0V0z"
+              fill="none"
+            />
+            <path
+              d="m4 12 1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
+            />
+          </svg>
+        </button>
       </th>
     </tr>
   </thead>
@@ -72,20 +124,72 @@ exports[`Test du composant Tableau > DOIT afficher un message lorsqu'il n'y a pa
       <th
         class="text-center first:text-left"
       >
-        <span
-          class="font-marianne-bold px-4 text-bleu"
+        <button
+          aria-label="Trier par n dossier"
+          class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc relative border-none bg-transparent text-bleu hover:bg-transparent focus:bg-transparent"
+          title="Trier par n dossier"
+          type="button"
         >
-          N dossier
-        </span>
+          <span
+            class="text-sm normal-case underline"
+          >
+            N dossier
+          </span>
+          <svg
+            class="absolute -right-1 top-1/2 -translate-y-1/2  "
+            fill="currentColor"
+            font-size="inherit"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0V0z"
+              fill="none"
+            />
+            <path
+              d="m4 12 1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
+            />
+          </svg>
+        </button>
       </th>
       <th
         class="text-center first:text-left"
       >
-        <span
-          class="font-marianne-bold px-4 text-bleu"
+        <button
+          aria-label="Trier par nature acte"
+          class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc relative border-none bg-transparent text-bleu hover:bg-transparent focus:bg-transparent"
+          title="Trier par nature acte"
+          type="button"
         >
-          Nature acte
-        </span>
+          <span
+            class="text-sm normal-case underline"
+          >
+            Nature acte
+          </span>
+          <svg
+            class="absolute -right-1 top-1/2 -translate-y-1/2 opacity-0 "
+            fill="currentColor"
+            font-size="inherit"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0V0z"
+              fill="none"
+            />
+            <path
+              d="m4 12 1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
+            />
+          </svg>
+        </button>
       </th>
     </tr>
   </thead>

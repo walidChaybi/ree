@@ -1,7 +1,7 @@
 import { NB_LIGNES_PAR_PAGE_PERSONNE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
-import Tableau from "../../../../../../composants/commun/tableau/Tableau";
+import Tableau, { IParametresRecherche } from "../../../../../../composants/commun/tableau/Tableau";
 import { IDataTableauActeInscriptionSelectionne } from "./IDataTableauActeInscriptionSelectionne";
 
 interface ITableauActesInscriptionsSelectionnesProps {
@@ -52,15 +52,18 @@ const EN_TETES_ACTE_INSCRIPTION_SELECTIONNE = [
   }
 ];
 
-export const TableauActesInscriptionsSelectionnes: React.FC<ITableauActesInscriptionsSelectionnesProps> = props => {
-  const [pageActuelle, setPageActuelle] = useState(0);
+export const TableauActesInscriptionsSelectionnes: React.FC<ITableauActesInscriptionsSelectionnesProps> = ({
+  dataActesInscriptionsSelectionnes,
+  onClickBoutonRetirerActeInscription
+}) => {
+  const [parametresTableau, setParametresTableau] = useState<IParametresRecherche>({ tri: "nom", sens: "DESC" });
 
   const getIconeSuppression = (data: IDataTableauActeInscriptionSelectionne) => (
     <FaTrashAlt
       className="text-xl"
       title="Retirer cet acte ou inscription du projet"
       aria-label="Retirer cet acte ou inscription du projet"
-      onClick={() => props.onClickBoutonRetirerActeInscription(data)}
+      onClick={() => onClickBoutonRetirerActeInscription(data)}
     />
   );
 
@@ -71,28 +74,26 @@ export const TableauActesInscriptionsSelectionnes: React.FC<ITableauActesInscrip
       </div>
       <Tableau
         enTetes={EN_TETES_ACTE_INSCRIPTION_SELECTIONNE}
-        lignes={props.dataActesInscriptionsSelectionnes.map(ligne => ({
+        lignes={dataActesInscriptionsSelectionnes.map(ligne => ({
           cle: ligne.idPersonne,
-          nom: ligne.nom,
-          autresNoms: ligne.autresNoms,
-          prenoms: ligne.prenoms,
-          sexe: ligne.sexe,
-          dateNaissance: ligne.dateNaissance,
-          lieuNaissance: ligne.lieuNaissance,
-          nature: ligne.nature,
-          reference: ligne.reference,
-          typePJ: ligne.typePJ,
-          actions: getIconeSuppression(ligne)
+          donnees: {
+            nom: ligne.nom,
+            autresNoms: ligne.autresNoms,
+            prenoms: ligne.prenoms,
+            sexe: ligne.sexe,
+            dateNaissance: ligne.dateNaissance,
+            lieuNaissance: ligne.lieuNaissance,
+            nature: ligne.nature,
+            reference: ligne.reference,
+            typePJ: ligne.typePJ,
+            actions: getIconeSuppression(ligne)
+          }
         }))}
         messageAucuneLigne="Aucun acte ou inscription sélectionné pour le projet."
-        parametresPagination={{
-          pageActuelle: pageActuelle,
-          lignesParPage: NB_LIGNES_PAR_PAGE_PERSONNE,
-          totalLignes: props.dataActesInscriptionsSelectionnes.length,
-          onChangePage: () => {
-            setPageActuelle(pageActuelle + 1);
-          }
-        }}
+        nombreTotalLignes={dataActesInscriptionsSelectionnes.length}
+        parametresRecherche={parametresTableau}
+        setParametresRecherche={setParametresTableau}
+        nombreLignesParPage={NB_LIGNES_PAR_PAGE_PERSONNE}
       />
     </div>
   );

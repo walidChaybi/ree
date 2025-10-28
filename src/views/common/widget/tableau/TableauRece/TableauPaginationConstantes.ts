@@ -24,4 +24,4 @@ export const NB_LIGNES_PAR_PAGE_REQUETE = 10;
 
 // Personnes
 export const NB_LIGNES_PAR_APPEL_PERSONNE = 25;
-export const NB_LIGNES_PAR_PAGE_PERSONNE = -1;
+export const NB_LIGNES_PAR_PAGE_PERSONNE = 5;

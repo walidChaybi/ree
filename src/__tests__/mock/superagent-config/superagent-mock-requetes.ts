@@ -34,12 +34,7 @@ import {
   ReponseAppelNomenclatureTypePiecesJustificative
 } from "../data/nomenclatures";
 import { pieceComplementInformation } from "../data/PieceComplementInformation";
-import {
-  reponseRequeteCreationMessageSdanf,
-  requeteCreationEtablissement,
-  requeteCreationTranscription,
-  requetesCreationAlimentationTableau
-} from "../data/requeteCreation";
+import { reponseRequeteCreationMessageSdanf, requeteCreationEtablissement, requeteCreationTranscription } from "../data/requeteCreation";
 import {
   requeteCreationEtablissement as reqEtablissement,
   requeteCreationEtablissementProjetSigne,
@@ -541,14 +536,6 @@ export const configRequetes = [
       ) {
         return {
           data: CreationRDCSC
-        };
-      }
-      if (
-        match[1] === `/requetes/b63ebccd-ba5e-443a-8837-c5e1e111e846` ||
-        match[1] === `/requetes/b63ebccd-ba5e-443a-8837-c5e1e111e846?isConsultationHistoriqueAction=true`
-      ) {
-        return {
-          data: requetesCreationAlimentationTableau
         };
       }
 

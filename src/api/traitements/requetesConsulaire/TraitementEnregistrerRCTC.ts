@@ -3,7 +3,6 @@ import { CONFIG_POST_REQUETE_TRANSCRIPTION } from "@api/configurations/requete/c
 import { CONFIG_POST_PIECE_JUSTIFICATIVE } from "@api/configurations/requete/pieceJustificative/PostPieceJustificativeConfigApi";
 import { TErreurApi } from "@model/api/Api";
 import { ISaisieRequeteRCTCForm, SaisieRequeteRCTCForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
-import { IRequeteConsulaire } from "@model/requete/IRequeteConsulaire";
 import { useEffect, useState } from "react";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import { PieceJointe } from "../../../utils/FileUtils";
@@ -41,7 +40,6 @@ const TRAITEMENT_ENREGISTRER_RCTC: TTraitementApi<IParametresTraitement, IRepons
     const { appelApi: postPieceJustificative } = useFetchApi(CONFIG_POST_PIECE_JUSTIFICATIVE);
 
     const lancer = (parametres: IParametresTraitement) => {
-
       const apresSucces = (requeteCreee?: { id: string }[]) =>
         setDonneesTraitement(prec => ({
           ...prec,

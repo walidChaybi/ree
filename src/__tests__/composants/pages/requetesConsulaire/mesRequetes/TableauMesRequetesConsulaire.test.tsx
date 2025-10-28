@@ -1,4 +1,5 @@
-import { getTableauRequetesConsulaires } from "@api/appels/requeteApi";
+import { CONFIG_GET_REQUETES_CONSULAIRES } from "@api/configurations/requete/consulaire/GetRequetesConsulaires";
+import { MockApi } from "@mock/appelsApi/MockApi";
 import { mesRequetesConsulaire } from "@mock/data/requeteCreationTranscription";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, test, vi } from "vitest";
@@ -38,16 +39,24 @@ vi.mock("@api/appels/requeteApi", async () => {
 
 describe("TableauMesRequetesConsulaire ", () => {
   beforeEach(() => {
-    vi.mocked(getTableauRequetesConsulaires).mockResolvedValue({
-      body: { data: mesRequetesConsulaire },
-      headers: { "content-range": "0/4" }
-    });
+    MockApi.deployer(
+      CONFIG_GET_REQUETES_CONSULAIRES,
+      { regexp: true },
+      {
+        data: mesRequetesConsulaire,
+        headers: { "content-range": "0/4" }
+      }
+    );
+  });
+
+  afterEach(() => {
+    MockApi.stopMock();
   });
 
   test("doit appeler l'API et naviguer lorsque le statut est 'À Traiter'", async () => {
     render(<TableauMesRequetesConsulaire />);
 
-    await waitFor(() => expect(getTableauRequetesConsulaires).toHaveBeenCalled());
+    await waitFor(() => expect(MockApi.getMock().history.get.length).toStrictEqual(1));
 
     const numeroDossier = await waitFor(() => screen.getByText("111111"));
     expect(numeroDossier).toBeDefined();
