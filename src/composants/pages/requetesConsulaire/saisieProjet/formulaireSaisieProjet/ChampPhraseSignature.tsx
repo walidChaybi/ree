@@ -1,4 +1,4 @@
-import { ErrorMessage, useField } from "formik";
+import { useField } from "formik";
 import { useMemo } from "react";
 import ChampZoneTexte from "../../../../commun/champs/ChampZoneTexte";
 
@@ -32,11 +32,6 @@ const ChampPhraseSignature: React.FC<TChampSignatureProps> = ({ name, libelle })
         typeRedimensionnement="vertical"
         maxLength={3000}
       />
-      {meta.error && (
-        <div className="text-start text-sm text-rouge">
-          <ErrorMessage name={name} />
-        </div>
-      )}
     </div>
   );
 };

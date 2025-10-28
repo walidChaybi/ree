@@ -1,5 +1,8 @@
 export const UUID = new RegExp(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/, "i");
+
 export const CaracteresAutorises = new RegExp(/^[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .-]+$/);
+
+export const CaracteresAdresseCourrielAutorises = /^[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ._%+\-@]+$/;
 
 export const CaracteresEtatCivilHorsNomPrenom = new RegExp(/^[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ',;:/()°"«». \n\r-]+$/);
 
@@ -23,5 +26,8 @@ export const CARACTERES_POST_ASTERISQUE = new RegExp(/^([0-9a-zA-ZÂÄÀÊËÉÈ
 export const CaracteresAlphanumeriques = new RegExp(/^[0-9a-zA-Z]+$/);
 
 export const NumeroTelephone = new RegExp(/^[+]*[(]?\d{1,4}[)]?[-\s./0-9]*$/);
+
+// Besoin des caractères xeX dans TRANSCRIPTION
+export const NumeroTelephoneRequerant = new RegExp(/^[0-9xeX+().\s-]+$/);
 
 export const REGEX_ANNEE_QUATRE_CHIFFRES = new RegExp(/^[1-9]\d{3}$/);

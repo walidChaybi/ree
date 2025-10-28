@@ -544,10 +544,11 @@ export const ProjetActeNaissanceTranscriptionForm = {
           }
         ]),
         listeRegexp: [{ valeur: CaracteresAutorises }],
-        max: { valeur: 5000 }
+        max: { valeur: 500 }
       }),
       modeDepot: SchemaValidation.texte({ obligatoire: true }),
-      identiteTransmetteur: SchemaValidation.texte({ obligatoire: true })
+      identiteTransmetteur: SchemaValidation.texte({ obligatoire: true }),
+      phraseSignature: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresEtatCivilHorsNomPrenom }], max: { valeur: 5000 } })
     });
 
     const LieuEnregistrementSchemaValidation = SchemaValidation.objet({
@@ -568,7 +569,8 @@ export const ProjetActeNaissanceTranscriptionForm = {
             operateur: EOperateurCondition.EGAL,
             valeurs: ["AUTRE"]
           }
-        ])
+        ]),
+        listeRegexp: [{ valeur: CaracteresAutorises }]
       }),
       dateEnregistrement: SchemaValidation.dateIncomplete({ bloquerDateFuture: true }),
       lieuEnregistrement: LieuEnregistrementSchemaValidation,

@@ -32,44 +32,37 @@ const BlocRequerant: React.FC = () => (
           name="requerant.adresse.complementDestinataire"
           libelle="Complément d'identification du destinataire"
           placeholder="Appartement, boite aux lettres, escalier, chez..."
-          maxLength={38}
         />
 
         <ChampTexte
           name="requerant.adresse.complementPointGeo"
           libelle="Complément d'identification du point géographique"
           placeholder="Entrée, bâtiment, immeuble, résidence..."
-          maxLength={38}
         />
 
         <ChampTexte
           name="requerant.adresse.voie"
           libelle="Numéro, type et nom de la voie"
-          maxLength={38}
         />
 
         <ChampTexte
           name="requerant.adresse.lieuDit"
           libelle="Lieu-dit, boite postale ou état/province (à l'étranger)"
-          maxLength={38}
         />
 
         <ChampTexte
           name="requerant.adresse.codePostal"
           libelle="Code postal"
-          maxLength={38}
         />
 
         <ChampTexte
           name="requerant.adresse.commune"
           libelle="Commune"
-          maxLength={38}
         />
 
         <ChampTexte
           name="requerant.adresse.pays"
           libelle="Pays"
-          maxLength={38}
         />
       </div>
 

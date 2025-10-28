@@ -16,7 +16,7 @@ import ChampsAnneeEtNumero from "../../composants/commun/champs/ChampsAnneeEtNum
 import ChampsNomSecable from "../../composants/commun/champs/ChampsNomSecable";
 import ChampsNumerosRcRcaPacs from "../../composants/commun/champs/ChampsNumerosRcRcaPacs";
 import ChampsPrenoms from "../../composants/commun/champs/ChampsPrenoms";
-import { CaracteresAutorises } from "../../ressources/Regex";
+import { CaracteresAdresseCourrielAutorises, CaracteresAutorises } from "../../ressources/Regex";
 import SchemaValidation, { messagesErreur } from "../../utils/SchemaValidation";
 
 const conditionToujoursObligatoire = (idChampReference: string): ConditionChamp[] | boolean => [
@@ -242,7 +242,7 @@ describe("Schéma de validation: listeDeroulante", () => {
 });
 
 describe("Schéma de validation: dateComplete", () => {
-  test("LORSQUE la date est incomplète, ALORS une erreur indique qu’elle est incomplète", async () => {
+  test("LORSQUE la date est incomplète, ALORS une erreur indique qu'elle est incomplète", async () => {
     render(
       <MockFormulaire
         valeursInitiales={{ date: { jour: "", mois: "01", annee: "2023" } }}
@@ -261,7 +261,7 @@ describe("Schéma de validation: dateComplete", () => {
     await waitFor(() => expect(screen.getByText(messagesErreur.DATE_INCOMPLETE)).toBeDefined());
   });
 
-  test("LORSQUE la date est future et que cela est bloqué, ALORS une erreur indique qu’elle dépasse la date du jour", async () => {
+  test("LORSQUE la date est future et que cela est bloqué, ALORS une erreur indique qu'elle dépasse la date du jour", async () => {
     const anneeFuture = dayjs().year() + 2;
     render(
       <MockFormulaire
@@ -281,7 +281,7 @@ describe("Schéma de validation: dateComplete", () => {
     await waitFor(() => expect(screen.getByText(/⚠ La date ne peut pas être supérieure à la date du jour/i)).toBeDefined());
   });
 
-  test("LORSQUE la date est invalide, ALORS une erreur indique que la date n’est pas valide", async () => {
+  test("LORSQUE la date est invalide, ALORS une erreur indique que la date n'est pas valide", async () => {
     render(
       <MockFormulaire
         valeursInitiales={{ date: { jour: "30", mois: "02", annee: "2023" } }}
@@ -298,6 +298,85 @@ describe("Schéma de validation: dateComplete", () => {
 
     userEvent.click(screen.getByRole("button", { name: "Valider" }));
     await waitFor(() => expect(screen.getByText(messagesErreur.DATE_INVALIDE)).toBeDefined());
+  });
+
+  test("LORSQUE l'heure est >= 24, ALORS une erreur de date invalide apparait", async () => {
+    render(
+      <MockFormulaire
+        valeursInitiales={{ date: { jour: "01", mois: "01", annee: "2023", heure: "25", minute: "00" } }}
+        schemaDeValidation={SchemaValidation.objet({
+          date: SchemaValidation.dateComplete({ obligatoire: true })
+        })}
+      >
+        <ChampDate
+          libelle="date"
+          name="date"
+        />
+      </MockFormulaire>
+    );
+
+    userEvent.click(screen.getByRole("button", { name: "Valider" }));
+    await waitFor(() => expect(screen.getByText(messagesErreur.DATE_INVALIDE)).toBeDefined());
+  });
+
+  test("LORSQUE les minutes sont >= 60, ALORS une erreur de date invalide apparait", async () => {
+    render(
+      <MockFormulaire
+        valeursInitiales={{ date: { jour: "01", mois: "01", annee: "2023", heure: "12", minute: "60" } }}
+        schemaDeValidation={SchemaValidation.objet({
+          date: SchemaValidation.dateComplete({ obligatoire: true })
+        })}
+      >
+        <ChampDate
+          libelle="date"
+          name="date"
+        />
+      </MockFormulaire>
+    );
+
+    userEvent.click(screen.getByRole("button", { name: "Valider" }));
+    await waitFor(() => expect(screen.getByText(messagesErreur.DATE_INVALIDE)).toBeDefined());
+  });
+
+  test("LORSQUE seule l'année est future avec bloquerDateFuture, ALORS erreur", async () => {
+    const anneeFuture = dayjs().year() + 1;
+    render(
+      <MockFormulaire
+        valeursInitiales={{ date: { jour: "", mois: "", annee: `${anneeFuture}` } }}
+        schemaDeValidation={SchemaValidation.objet({
+          date: SchemaValidation.dateComplete({ bloquerDateFuture: true })
+        })}
+      >
+        <ChampDate
+          libelle="date"
+          name="date"
+        />
+      </MockFormulaire>
+    );
+
+    userEvent.click(screen.getByRole("button", { name: "Valider" }));
+    await waitFor(() => expect(screen.getByText(messagesErreur.DATE_FUTURE)).toBeDefined());
+  });
+
+  test("LORSQUE année et mois futurs avec bloquerDateFuture, ALORS erreur", async () => {
+    const anneeActuelle = dayjs().year();
+    const moisFutur = dayjs().month() + 2;
+    render(
+      <MockFormulaire
+        valeursInitiales={{ date: { jour: "", mois: `${moisFutur}`, annee: `${anneeActuelle}` } }}
+        schemaDeValidation={SchemaValidation.objet({
+          date: SchemaValidation.dateComplete({ bloquerDateFuture: true })
+        })}
+      >
+        <ChampDate
+          libelle="date"
+          name="date"
+        />
+      </MockFormulaire>
+    );
+
+    userEvent.click(screen.getByRole("button", { name: "Valider" }));
+    await waitFor(() => expect(screen.getByText(messagesErreur.DATE_FUTURE)).toBeDefined());
   });
 });
 
@@ -804,6 +883,32 @@ describe("Schéma de validation: courriel", () => {
       unmount();
     }
   });
+
+  test("LORSQUE une regex personnalisée est fournie, ALORS elle est appliquée à la validation du courriel", async () => {
+    render(
+      <MockFormulaire
+        valeursInitiales={{ courriel: "" }}
+        schemaDeValidation={SchemaValidation.objet({
+          courriel: SchemaValidation.courriel({
+            obligatoire: true,
+            listeRegexp: [{ valeur: CaracteresAdresseCourrielAutorises, message: messagesErreur.COURRIEL_INVALIDE }]
+          })
+        })}
+      >
+        <ChampTexte
+          name="courriel"
+          libelle="courriel"
+        />
+      </MockFormulaire>
+    );
+
+    await userEvent.type(screen.getByLabelText("courriel"), "te(st@example.com");
+    await userEvent.click(screen.getByRole("button", { name: "Valider" }));
+
+    await waitFor(() => {
+      expect(screen.getByText(messagesErreur.COURRIEL_INVALIDE)).toBeDefined();
+    });
+  });
 });
 
 describe("Schéma de validation: inconnu", () => {
@@ -887,5 +992,55 @@ describe("Schéma de validation: comparerValeurChamps", () => {
       expect(screen.getByText("⚠ Incohérence entre les valeurs champ2/champ1")).toBeDefined();
       expect(screen.getByText("⚠ Incohérence entre les valeurs champ1/champ2")).toBeDefined();
     });
+  });
+});
+
+describe("Schéma de validation: cas spécifiques ", () => {
+  test("LORSQUE la condition est AlwaysFalse, ALORS le champ n’est jamais obligatoire", async () => {
+    render(
+      <MockFormulaire
+        valeursInitiales={{ champ: "" }}
+        schemaDeValidation={SchemaValidation.objet({
+          champ: SchemaValidation.texte({
+            obligatoire: [
+              {
+                idChampReference: "champ",
+                operateur: "AlwaysFalse",
+                valeurs: []
+              } as any
+            ]
+          })
+        })}
+      >
+        <ChampTexte
+          name="champ"
+          libelle="Champ"
+        />
+      </MockFormulaire>
+    );
+
+    await userEvent.click(screen.getByRole("button", { name: "Valider" }));
+    await waitFor(() => expect(screen.queryByText(messagesErreur.CHAMP_OBLIGATOIRE)).toBeNull());
+  });
+
+  test("LORSQUE interditSeul est actif et le champ est seul, ALORS une erreur apparait", async () => {
+    render(
+      <MockFormulaire
+        valeursInitiales={{ champ: "valeur" }}
+        schemaDeValidation={SchemaValidation.objet({
+          champ: SchemaValidation.texte({
+            interditSeul: { messageErreurSpecifique: "⚠ Champ seul interdit" }
+          })
+        })}
+      >
+        <ChampTexte
+          name="champ"
+          libelle="Champ"
+        />
+      </MockFormulaire>
+    );
+
+    await userEvent.click(screen.getByRole("button", { name: "Valider" }));
+    await waitFor(() => expect(screen.getByText("⚠ Champ seul interdit")).toBeDefined());
   });
 });

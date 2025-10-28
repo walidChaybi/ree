@@ -101,7 +101,7 @@ interface ISchemaValidation {
   numeroRcRcaPacs: TSchemaValidationFonction;
   numerosRcRcaPacs: TSchemaValidationFonction<{ prefix: string; tailleMax: number }>;
   referenceRECE: TSchemaValidationFonction<{ autoriserAnneeSeulement?: boolean }>;
-  courriel: TSchemaValidationFonction<{ max?: TValidationEntier }, Yup.StringSchema>;
+  courriel: TSchemaValidationFonction<{ listeRegexp?: TValidationText[]; max?: TValidationEntier }, Yup.StringSchema>;
   inconnu: () => Yup.AnySchema;
 }
 
@@ -780,7 +780,12 @@ const SchemaValidation: ISchemaValidation = {
   },
 
   courriel: (schemaParams = {}) => {
-    let schema = Yup.string().email(messagesErreur.COURRIEL_INVALIDE).max(255, `Le maximum de caractères autorisés est de 255`);
+    let schema = Yup.string().email(messagesErreur.COURRIEL_INVALIDE).max(254, `Le maximum de caractères autorisés est de 254`);
+
+    if (schemaParams.listeRegexp?.length)
+      schemaParams.listeRegexp.forEach(regexp => {
+        schema = schema.matches(regexp.valeur, regexp.message ?? messagesErreur.CARACTERE_NON_AUTORISE);
+      });
 
     if (schemaParams.max) {
       schema = schema.max(
