@@ -10,7 +10,7 @@ import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscri
 import MockUtilisateurBuilder from "@mock/model/agent/MockUtilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { RouterProvider, createMemoryRouter } from "react-router";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
@@ -123,12 +123,10 @@ describe("Test du composant FormulaireSaiseProjet", async () => {
           </MockSaisieProjetActeContextProvider>
         </MockRECEContextProvider>
       );
-      const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /Nom retenu par l'OEC/i });
 
-      await userEvent.type(inputNomRetenuOEC, "Xi phun bin");
+      const boutonTerminerSigner = await screen.findByRole("button", { name: "Terminer et signer" });
+      const boutonEnregistrer = await screen.findByRole("button", { name: "Enregistrer" });
 
-      const boutonTerminerSigner = screen.getByRole("button", { name: "Terminer et signer" });
-      const boutonEnregistrer = screen.getByRole("button", { name: "Enregistrer" });
       expect(boutonTerminerSigner).toBeDefined();
       expect(boutonEnregistrer).toBeDefined();
     });
@@ -153,10 +151,12 @@ describe("Test du composant FormulaireSaiseProjet", async () => {
       const mockApi = MockApi.getMock();
 
       const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /Nom retenu par l'OEC/i });
-      await userEvent.type(inputNomRetenuOEC, "Xi phun bin");
+
+      fireEvent.change(inputNomRetenuOEC, { target: { value: "Xi phun bin" } });
 
       const boutonEnregistrer = screen.getByRole("button", { name: "Enregistrer" });
-      await userEvent.click(boutonEnregistrer);
+
+      fireEvent.click(boutonEnregistrer);
 
       await waitFor(() => {
         expect(mockApi.history.patch.length).toBe(1);
@@ -188,10 +188,12 @@ describe("Test du composant FormulaireSaiseProjet", async () => {
       const mockApi = MockApi.getMock();
 
       const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /Nom retenu par l'OEC/i });
-      await userEvent.type(inputNomRetenuOEC, "Xi phun bin");
+
+      fireEvent.change(inputNomRetenuOEC, { target: { value: "Xi phun bin" } });
 
       const boutonTerminerEtSigner = screen.getByRole("button", { name: "Terminer et signer" });
-      await userEvent.click(boutonTerminerEtSigner);
+
+      fireEvent.click(boutonTerminerEtSigner);
 
       await waitFor(() => {
         expect(mockApi.history.patch.length).toBe(1);
@@ -280,9 +282,8 @@ describe("Test du composant FormulaireSaiseProjet", async () => {
 
       const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /Nom retenu par l'OEC/i });
 
-      await userEvent.type(inputNomRetenuOEC, "Xi phun bin");
-
-      act(() => {
+      await waitFor(() => {
+        fireEvent.change(inputNomRetenuOEC, { target: { value: "Xi phun bin" } });
         router.navigate("/autre-page");
       });
 
@@ -312,13 +313,10 @@ describe("Test du composant FormulaireSaiseProjet", async () => {
 
       const inputNomRetenuOEC: HTMLInputElement = screen.getByRole("textbox", { name: /Nom retenu par l'OEC/i });
 
-      await userEvent.type(inputNomRetenuOEC, "Xi phun bin");
-
-      act(() => {
-        router.navigate("/autre-page");
-      });
+      fireEvent.change(inputNomRetenuOEC, { target: { value: "Xi phun bin" } });
 
       await waitFor(() => {
+        router.navigate("/autre-page");
         expect(screen.getByText("Autre page")).toBeDefined();
       });
     });

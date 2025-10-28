@@ -118,7 +118,7 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({ dataRMC
 
   const onClickReqCreation = (requete: RequeteTableauRMC<"CREATION">, utilisateurConnecte: UtilisateurConnecte) => {
     if (
-      estRequeteRCTDOuRCTCEtALeDroitActeTranscrit(requete.sousType, utilisateurConnecte) ||
+      estRequeteRCTDOuRCTCEtALeDroitTranscriptionConsulter(requete.sousType, utilisateurConnecte) ||
       estRequeteRCEXREtALeDroitActeEtabli(requete.sousType, utilisateurConnecte)
     ) {
       if (autorisePrendreEnChargeReqTableauCreation(requete, utilisateurConnecte)) {
@@ -160,11 +160,10 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({ dataRMC
   );
 };
 
-const estRequeteRCTDOuRCTCEtALeDroitActeTranscrit = (
+const estRequeteRCTDOuRCTCEtALeDroitTranscriptionConsulter = (
   sousType: keyof typeof ESousTypeCreation,
   utilisateurConnecte: UtilisateurConnecte
-): boolean =>
-  ["RCTC", "RCTD"].includes(sousType) && utilisateurConnecte.estHabilitePour({ leDroit: Droit.TRANSCRIPTION_CREER_PROJET_ACTE });
+): boolean => ["RCTC", "RCTD"].includes(sousType) && utilisateurConnecte.estHabilitePour({ leDroit: Droit.TRANSCRIPTION_CONSULTER });
 
 const estRequeteRCEXREtALeDroitActeEtabli = (sousType: keyof typeof ESousTypeCreation, utilisateurConnecte: UtilisateurConnecte): boolean =>
   sousType === "RCEXR" &&
