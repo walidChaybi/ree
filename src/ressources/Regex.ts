@@ -2,7 +2,7 @@ export const UUID = new RegExp(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab]
 
 export const CaracteresAutorises = new RegExp(/^[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ' .-]+$/);
 
-export const CaracteresAdresseCourrielAutorises = /^[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ._%+\-@]+$/;
+export const CaracteresAdresseCourrielAutorises = /^[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ._%+\-@*!?]+$/;
 
 export const CaracteresEtatCivilHorsNomPrenom = new RegExp(/^[0-9a-zA-ZÂÄÀÊËÉÈÎÏÔÖÛÜÙÇŸæÆœŒâäàêëéèîïôöûüùçÿ',;:/()°"«». \n\r-]+$/);
 
