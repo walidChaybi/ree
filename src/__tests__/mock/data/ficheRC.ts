@@ -209,10 +209,7 @@ export const FicheRcDecisionNotaire: IFicheRcDto = {
       },
       autresNoms: [],
       prenoms: ["Yann"],
-      autresPrenoms: [],
-      rcs: [{ id: "76b62678-8b06-4442-ad5b-b9207627a6eb", numero: "11", referenceComplete: "" }],
-      rcas: [],
-      pacss: []
+      autresPrenoms: []
     }
   ],
   nature: {

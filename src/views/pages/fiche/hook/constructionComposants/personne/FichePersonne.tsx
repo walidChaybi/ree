@@ -1,14 +1,10 @@
-import { IFicheLien } from "@model/etatcivil/commun/IFicheLien";
 import { Personne } from "@model/etatcivil/commun/Personne";
-import { ETypeFiche } from "@model/etatcivil/enum/ETypeFiche";
 import { ENationalite } from "@model/etatcivil/enum/Nationalite";
 import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
 import { SectionPartProps } from "@widget/section/SectionPart";
-import { SectionPartContentProps } from "@widget/section/SectionPartContent";
-import { LienFiche } from "../../../LienFiche";
 import { IParamsAffichage } from "../acte/FicheActeUtils";
 
 export function getFichesPersonneActe(personnes: Personne[], paramsAffichage: IParamsAffichage): SectionPanelProps[] {
@@ -39,22 +35,10 @@ export function getFichesPersonne(personnes: Personne[]): SectionPanelProps[] {
 function getPanelAreasFichesPersonnes(personne: Personne): SectionPanelAreaProps[] {
   return [
     {
-      parts: [
-        getInformationsPersonne(personne),
-        {
-          subParts: [getInformationsListeInscriptions(personne)]
-        }
-      ],
+      parts: [getInformationsPersonne(personne)],
       nbColonne: 3
     }
   ];
-}
-
-function getInformationsListeInscriptions(personne: Personne): SectionPartContentProps {
-  return {
-    contents: [getRcsPersonne(personne.rcs), getRcasPersonne(personne.rcas), getPacssPersonne(personne.pacss)],
-    title: "Liste d'inscriptions"
-  };
 }
 
 function getInformationsPersonne(personne: Personne): SectionPartProps {
@@ -144,59 +128,5 @@ function getSexePersonne(sexe: string): SectionContentProps {
   return {
     libelle: "Sexe",
     value: sexe
-  };
-}
-
-function getRcsPersonne(rcs: IFicheLien[]): SectionContentProps {
-  const liensRcs = rcs?.map(rc => {
-    return (
-      <div key={`rc-${rc.numero}`}>
-        <LienFiche
-          categorie={ETypeFiche.RC}
-          numero={rc.referenceComplete}
-          identifiant={rc.id}
-        />
-      </div>
-    );
-  });
-  return {
-    libelle: "",
-    value: liensRcs
-  };
-}
-
-function getRcasPersonne(rcas: IFicheLien[]): SectionContentProps {
-  const liensRcas = rcas?.map(rca => {
-    return (
-      <div key={`rca-${rca.numero}`}>
-        <LienFiche
-          categorie={ETypeFiche.RCA}
-          numero={rca.referenceComplete}
-          identifiant={rca.id}
-        />
-      </div>
-    );
-  });
-  return {
-    libelle: "",
-    value: liensRcas
-  };
-}
-
-function getPacssPersonne(pacss: IFicheLien[]): SectionContentProps {
-  const liensPacss = pacss?.map(pacs => {
-    return (
-      <div key={`pacs-${pacs.numero}`}>
-        <LienFiche
-          categorie={ETypeFiche.PACS}
-          numero={pacs.referenceComplete}
-          identifiant={pacs.id}
-        />
-      </div>
-    );
-  });
-  return {
-    libelle: "",
-    value: liensPacss
   };
 }

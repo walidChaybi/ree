@@ -118,9 +118,7 @@ export class FicheActe {
         ficheActe.titulaires.map(TitulaireActe.depuisDto).filter((titulaire): titulaire is TitulaireActe => titulaire !== null),
         "ordre"
       ),
-      ficheActe.personnes
-        .map(personne => Personne.depuisDto(personne, ficheActe.numero ?? ""))
-        .filter((personne): personne is Personne => personne !== null),
+      ficheActe.personnes.map(personne => Personne.depuisDto(personne)).filter((personne): personne is Personne => personne !== null),
       ficheActe.type,
       ficheActe.nature,
       ficheActe.statut,

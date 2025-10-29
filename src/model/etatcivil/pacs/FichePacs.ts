@@ -96,7 +96,7 @@ export class FichePacs {
         .map<StatutFiche | null>(StatutFiche.depuisDto)
         .filter((statutFiche): statutFiche is StatutFiche => statutFiche !== null),
       fichePacs.personnes
-        .map<Personne | null>(personne => Personne.depuisDto(personne, fichePacs.numero))
+        .map<Personne | null>(personne => Personne.depuisDto(personne))
         .filter((personne: Personne | null): personne is Personne => personne !== null),
       fichePacs.partenaires.map(Partenaire.depuisDto).filter((partenaire): partenaire is Partenaire => partenaire !== null),
       DateUtils.getDateDepuisDateArrayDto(fichePacs.dateInscription),

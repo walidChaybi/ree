@@ -63,7 +63,7 @@ export class FicheInscription {
         .map<StatutFiche | null>(StatutFiche.depuisDto)
         .filter((statutFiche): statutFiche is StatutFiche => statutFiche !== null),
       ficheInscription.personnes
-        .map<Personne | null>(personne => Personne.depuisDto(personne, ficheInscription.numero))
+        .map<Personne | null>(personne => Personne.depuisDto(personne))
         .filter((personne: Personne | null): personne is Personne => personne !== null),
       ficheInscription.mariageInteresses
     );

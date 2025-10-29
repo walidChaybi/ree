@@ -7,7 +7,6 @@ import { ETypeAutreNom } from "../enum/ETypeAutreNom";
 import { ENationalite, Nationalite } from "../enum/Nationalite";
 import { ESexe, Sexe } from "../enum/Sexe";
 import { AutreNom, IAutreNomDto, IAutresNoms } from "./AutresNoms";
-import { IFicheLien } from "./IFicheLien";
 import { ILieuEvenement } from "./ILieuEvenement";
 
 // TODO: supprimer après le refacto du projet acte établi
@@ -23,9 +22,6 @@ export interface IPersonne {
   dateDeces?: IDateCompose;
   lieuDeces?: ILieuEvenement;
   sexe: Sexe;
-  pacss: IFicheLien[];
-  rcs: IFicheLien[];
-  rcas: IFicheLien[];
 }
 
 export interface IPersonneDTO {
@@ -36,9 +32,6 @@ export interface IPersonneDTO {
   autresPrenoms: string[];
   nationalite: keyof typeof ENationalite;
   sexe: keyof typeof ESexe;
-  pacss: IFicheLien[];
-  rcs: IFicheLien[];
-  rcas: IFicheLien[];
   naissance: IEvenementDto;
   deces?: IEvenementDto;
 }
@@ -62,9 +55,6 @@ export class Personne {
     autresPrenoms: string[],
     public readonly nationalite: keyof typeof ENationalite,
     public readonly sexe: keyof typeof ESexe,
-    public readonly pacss: IFicheLien[],
-    public readonly rcs: IFicheLien[],
-    public readonly rcas: IFicheLien[],
     lieuNaissance: ILieuEvenement,
     dateNaissance: IDateCompose,
     lieuDeces?: ILieuEvenement,
@@ -79,7 +69,7 @@ export class Personne {
     this._dateDeces = dateDeces;
   }
 
-  public static readonly depuisDto = (personne: IPersonneDTO, numero: string): Personne | null => {
+  public static readonly depuisDto = (personne: IPersonneDTO): Personne | null => {
     switch (true) {
       case champsObligatoiresDuDtoAbsents("IPersonneDTO", personne, this.champsObligatoires):
       case valeurDtoAbsenteDansEnum("IPersonneDTO", personne, "sexe", ESexe):
@@ -97,9 +87,6 @@ export class Personne {
       personne.autresPrenoms,
       personne.nationalite,
       personne.sexe,
-      personne.pacss.filter(pacs => pacs.numero !== numero),
-      personne.rcs.filter(rc => rc.numero !== numero),
-      personne.rcas.filter(rca => rca.numero !== numero),
       Evenement.getLieuEvenement(personne.naissance),
       Evenement.getDateCompose(personne.naissance),
       personne.deces && Evenement.getLieuEvenement(personne.deces),

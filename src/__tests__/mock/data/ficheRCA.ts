@@ -113,39 +113,7 @@ export const mockRcaDto: IFicheRcaDto = {
       },
       autresNoms: [{ nom: "Elisa", type: "PSEUDONYME" }],
       prenoms: ["Elie_madelaine-henriette", "Maëlla", "Marie-Charlotte"],
-      autresPrenoms: ["Solomon"],
-      rcs: [
-        { id: "85df1d10-71b7-4336-9463-bb1c5760d1a0", numero: "3", referenceComplete: "" },
-        { id: "a3d1eeb9-a01e-455d-8fc4-ee595bcc3918", numero: "4", referenceComplete: "" }
-      ],
-      rcas: [{ id: "8c9ea77f-55dc-494f-8e75-b136ac7ce63e", numero: "4094", referenceComplete: "" }],
-      pacss: [
-        {
-          id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e0",
-          numero: "123456",
-          referenceComplete: ""
-        },
-        {
-          id: "89c9d030-26c3-41d3-bdde-8b4dcc0420df",
-          numero: "1234506",
-          referenceComplete: ""
-        },
-        {
-          id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e1",
-          numero: "1234508",
-          referenceComplete: ""
-        },
-        {
-          id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e2",
-          numero: "1234509",
-          referenceComplete: ""
-        },
-        {
-          id: "89c9d030-26c3-41d3-bdde-8b4dcc0420e3",
-          numero: "1234510",
-          referenceComplete: ""
-        }
-      ]
+      autresPrenoms: ["Solomon"]
     }
   ]
 };
@@ -249,13 +217,7 @@ export const ficheRcaDecisionJuridictionEtrangere: IFicheRcaDto = {
       },
       autresNoms: [],
       prenoms: ["Elodie"],
-      autresPrenoms: [],
-      rcs: [],
-      rcas: [
-        { id: "8c9ea77f-55dc-494f-8e75-b136ac7ce61c", numero: "4012", referenceComplete: "" },
-        { id: "8c9ea77f-55dc-494f-8e75-b136ac7ce61d", numero: "4013", referenceComplete: "" }
-      ],
-      pacss: []
+      autresPrenoms: []
     }
   ],
   nature: {
