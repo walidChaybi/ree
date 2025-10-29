@@ -520,7 +520,7 @@ export const SaisieRequeteRCTCForm = {
         numeroTelephone: SchemaValidation.texte({ listeRegexp: [{ valeur: NumeroTelephoneRequerant }], max: { valeur: 100 } })
       }),
       autreAdresseCourriel: SchemaValidation.courriel({ listeRegexp: [{ valeur: CaracteresAdresseCourrielAutorises }] }),
-      autreNumeroTelephoneRequerant: SchemaValidation.texte({ listeRegexp: [{ valeur: NumeroTelephoneRequerant }], max: { valeur: 100 } })
+      autreNumeroTelephone: SchemaValidation.texte({ listeRegexp: [{ valeur: NumeroTelephoneRequerant }], max: { valeur: 100 } })
     })
   })
 };
