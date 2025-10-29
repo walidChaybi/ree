@@ -96,9 +96,6 @@ export const CreateReponseSansDelivranceCSPourCompositionApiMariage = ({
         }
       });
     }
-
-    AfficherMessage.erreur(ERREUR_PAS_DE_REQUERENT, { fermetureAuto: true });
-    setReponse({} as IReponseSansDelivranceCSMariageComposition);
   }, []);
 
   return reponse;
