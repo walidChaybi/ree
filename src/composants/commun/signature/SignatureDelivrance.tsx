@@ -56,7 +56,7 @@ const INFORMATIONS_SIGNATURE_DEFAUT: IInformationsSignature = {
 };
 
 const genererMessagesMentions = (acte?: FicheActe, documents?: IDocumentReponse[]): string[] | null => {
-  const estActeACQouOP2ouOP3 = acte && ["OP2", "OP3", "ACQ"].includes(acte.registre.famille);
+  const estActeACQouOP2ouOP3 = acte?.registre && ["OP2", "OP3", "ACQ"].includes(acte.registre.famille);
   const estActeNaissance = acte?.nature === "NAISSANCE";
 
   const messagesMentions =

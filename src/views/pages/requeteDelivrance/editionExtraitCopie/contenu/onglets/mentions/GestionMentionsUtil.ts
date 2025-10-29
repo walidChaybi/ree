@@ -225,9 +225,9 @@ function controleMentions(mentions?: IMentionAffichage[], acte?: FicheActe, docu
   let message = "";
   if (
     estExtraitAvecFilliation &&
-    acte &&
+    acte?.registre &&
     ["OP2", "OP3", "ACQ"].includes(acte.registre.famille) &&
-    acte?.nature === "NAISSANCE" &&
+    acte.nature === "NAISSANCE" &&
     aucuneMentionsAffichageNationalite(mentions)
   ) {
     message = `Aucune mention de nationalité n'a été cochée.\n\n`;
@@ -268,7 +268,7 @@ function controleMentionsPlusieursDocs(acte?: FicheActe, documents?: IDocumentRe
     const estDocumentExtrait = DocumentDelivrance.estExtraitAvecOuSansFilliation(document?.typeDocument);
     if (
       estExtraitAvecFilliation &&
-      acte &&
+      acte?.registre &&
       ["OP2", "OP3", "ACQ"].includes(acte.registre.famille) &&
       acte?.nature === "NAISSANCE" &&
       aucuneMentionsNationalite(

@@ -38,7 +38,7 @@ export interface IFicheActeDto {
   titulaires: ITitulaireActeDto[];
   personnes: IPersonneDTO[];
   estReecrit?: boolean;
-  registre: IRegistreDto;
+  registre?: IRegistreDto;
   dateDerniereMaj?: TDateArrayDTO;
   dateDerniereDelivrance?: number;
   nature: keyof typeof ENatureActe;
@@ -71,7 +71,6 @@ export class FicheActe {
     "referenceActe",
     "origine",
     "statut",
-    "registre",
     "alerteActes"
   ];
 
@@ -90,7 +89,7 @@ export class FicheActe {
     public readonly mentions: Mention[],
     public readonly alertes: AlerteFicheActe[],
     public readonly numero: string | null,
-    public readonly registre: Registre,
+    public readonly registre: Registre | null,
     public readonly dateDerniereMaj: DateRECE | null,
     public readonly dateDerniereDelivrance: DateRECE | null,
     public readonly numeroBisTer: string | null,
@@ -113,8 +112,7 @@ export class FicheActe {
         return null;
     }
 
-    const registre = Registre.depuisDto(ficheActe.registre);
-    if (!registre) return null;
+    const registre = ficheActe.registre ? Registre.depuisDto(ficheActe.registre) : null;
 
     return new FicheActe(
       ficheActe.id,
@@ -255,7 +253,8 @@ export class FicheActe {
 
   public readonly necessiteMentionNationalite = (choixDelivrance?: ChoixDelivrance): boolean =>
     this.nature === "NAISSANCE" &&
-    ["ACQ", "OP2", "OP3"].includes(this.registre.famille) &&
+    Boolean(this.registre) &&
+    Boolean(this.registre && ["ACQ", "OP2", "OP3"].includes(this.registre?.famille)) &&
     (this.estActeTexte || this.estActeImageReecrit()) &&
     !this.mentions.some(mention => mention.typeMention.natureMention?.code === NATIONALITE) &&
     ChoixDelivrance.estAvecFiliation(choixDelivrance);
