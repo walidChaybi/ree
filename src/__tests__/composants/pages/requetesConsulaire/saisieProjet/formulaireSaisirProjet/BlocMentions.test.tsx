@@ -43,14 +43,5 @@ describe("BlocMentions", () => {
         )
       );
     });
-
-    test("Doit gérer la saisie de taille maximum", async () => {
-      renderComponent();
-      expect(screen.getByText("Mention(s)")).toBeDefined();
-      const mentionsTextArea: HTMLTextAreaElement = screen.getByLabelText("Mention(s)");
-      expect(mentionsTextArea).toBeDefined();
-      fireEvent.change(mentionsTextArea, { target: { value: "x".repeat(3100) } });
-      await waitFor(() => expect(mentionsTextArea.value).toHaveLength(3000));
-    });
   });
 });

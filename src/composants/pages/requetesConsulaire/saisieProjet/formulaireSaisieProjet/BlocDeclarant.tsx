@@ -113,8 +113,7 @@ const BlocDeclarant: React.FC = () => {
             name="declarant.complement"
             libelle=""
             placeholder="Ex: Chez qui l'accouchement a eu lieu"
-            maxLength={250}
-            typeRedimensionnement="fixe"
+            typeRedimensionnement="vertical"
           />
         </>
       )}

@@ -7,7 +7,6 @@ const BlocMentions: React.FC = () => (
       name="mentions.mentions"
       libelle="Mention(s)"
       typeRedimensionnement="vertical"
-      maxLength={3000}
     />
   </ConteneurAvecBordure>
 );

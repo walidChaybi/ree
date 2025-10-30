@@ -126,6 +126,7 @@ const FormulaireSaisieProjet: React.FC = () => {
     <Formik<IProjetActeTranscritForm>
       validationSchema={ProjetActeNaissanceTranscriptionForm.schemaValidation()}
       initialValues={valeursInitiales}
+      enableReinitialize
       onSubmit={(values, helper) => {
         if (values.soumissionFormulaire.action === EActionFormulaireProjetActeTranscrit.ENREGISTRER) {
           enregistrer(values);

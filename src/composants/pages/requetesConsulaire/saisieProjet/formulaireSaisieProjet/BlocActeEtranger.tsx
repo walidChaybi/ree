@@ -75,13 +75,11 @@ const BlocActeEtranger: React.FC = () => {
         name="acteEtranger.redacteur"
         libelle="Rédacteur"
         className="my-4"
-        maxLength={300}
       />
 
       <ChampZoneTexte
         name="acteEtranger.referenceComplement"
         libelle="Référence et/ou complément"
-        maxLength={2000}
         typeRedimensionnement="vertical"
       />
     </ConteneurAvecBordure>

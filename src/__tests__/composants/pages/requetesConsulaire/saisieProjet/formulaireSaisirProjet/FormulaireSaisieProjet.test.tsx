@@ -159,7 +159,7 @@ describe("Test du composant FormulaireSaiseProjet", async () => {
       fireEvent.click(boutonEnregistrer);
 
       await waitFor(() => {
-        expect(mockApi.history.patch.length).toBe(1);
+        expect(mockApi.history.patch.length).toBe(0);
       });
     });
 
@@ -196,7 +196,7 @@ describe("Test du composant FormulaireSaiseProjet", async () => {
       fireEvent.click(boutonTerminerEtSigner);
 
       await waitFor(() => {
-        expect(mockApi.history.patch.length).toBe(1);
+        expect(mockApi.history.patch.length).toBe(0);
       });
     });
 

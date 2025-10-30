@@ -30,7 +30,6 @@ const ChampPhraseSignature: React.FC<TChampSignatureProps> = ({ name, libelle })
       <ChampZoneTexte
         name="formuleFinale.phraseSignature"
         typeRedimensionnement="vertical"
-        maxLength={3000}
       />
     </div>
   );
