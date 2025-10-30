@@ -68,10 +68,10 @@ describe("Test du hook useDeplacerLigne", () => {
     vi.clearAllMocks();
   });
 
-  test("Lorsqu'une ligne existe sur mon image et que je clique dessus, celle-ci est extraite de l'état maître", () => {
+  test("Lorsqu'une ligne existe sur mon image et que je clique dessus, le déplacement de celle-ci débute", () => {
     const mockEtatImage = new EtatImage(mockImage.width, mockImage.height, mockImage);
 
-    const spyExtraireLigne = vi.spyOn(mockEtatImage, "extraireLigne");
+    const spyDebuterDeplacementLigne = vi.spyOn(mockEtatImage, "debuterDeplacementLigne");
 
     rendreComposant(mockEtatImage);
     tracerligneMock();
@@ -84,7 +84,7 @@ describe("Test du hook useDeplacerLigne", () => {
 
     fireEvent.mouseDown(canvas, pointSurLigne);
 
-    expect(spyExtraireLigne).toHaveBeenCalled();
+    expect(spyDebuterDeplacementLigne).toHaveBeenCalled();
   });
 
   test("Lorsque je reste cliqué sur une ligne extraite et que je déplace ma souris, ma ligne se déplace en même temps", () => {
@@ -127,7 +127,7 @@ describe("Test du hook useDeplacerLigne", () => {
     rendreComposant(mockEtatImage);
     tracerligneMock();
 
-    const spyReintegrerLigne = vi.spyOn(mockEtatImage, "reintegrerLigne");
+    const spyFinaliserDeplacementLigne = vi.spyOn(mockEtatImage, "finaliserDeplacementLigne");
 
     const canvas = screen.getByLabelText("Image en cours de retouche");
 
@@ -153,7 +153,7 @@ describe("Test du hook useDeplacerLigne", () => {
       clientY: finLigne.clientY + deltaY
     };
 
-    expect(spyReintegrerLigne).toHaveBeenCalledWith(mockEtatImage.lignes[mockEtatImage.lignes.length - 1].id, deltaX, deltaY, [
+    expect(spyFinaliserDeplacementLigne).toHaveBeenCalledWith(mockEtatImage.lignes[mockEtatImage.lignes.length - 1].id, deltaX, deltaY, [
       "debut",
       "fin"
     ]);

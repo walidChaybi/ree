@@ -58,13 +58,7 @@ const useDeplacerExtremiteLigne = ({
         }
       };
 
-      etatImage.extraireLigne(ligneAvecExtremiteSelectionnee.current.id);
-
-      UtilitaireRetoucheImage.reinitialiserEtatCanvas(ctx);
-      UtilitaireRetoucheImage.effacerCanvas(ctx, canvas);
-
-      ctx.setTransform(zoom, 0, 0, zoom, offset.x, offset.y);
-      ctx.drawImage(etatImage.recupererBuffer, 0, 0);
+      etatImage.debuterDeplacementLigne(ligneAvecExtremiteSelectionnee.current.id);
     };
 
     const deplacerExtremiteLigne = (e: MouseEvent) => {
@@ -75,11 +69,7 @@ const useDeplacerExtremiteLigne = ({
       const deltaX = x - dragExtremiteRef.current.start.x;
       const deltaY = y - dragExtremiteRef.current.start.y;
 
-      UtilitaireRetoucheImage.reinitialiserEtatCanvas(ctx);
-      UtilitaireRetoucheImage.effacerCanvas(ctx, canvas);
-
-      ctx.setTransform(zoom, 0, 0, zoom, offset.x, offset.y);
-      ctx.drawImage(etatImage.recupererBuffer, 0, 0);
+      redessiner();
 
       const nouvelleExtremite = {
         x: dragExtremiteRef.current.positionOriginale.x + deltaX,
@@ -111,7 +101,7 @@ const useDeplacerExtremiteLigne = ({
       const deltaX = x - dragExtremiteRef.current.start.x;
       const deltaY = y - dragExtremiteRef.current.start.y;
 
-      etatImage.reintegrerLigne(ligneAvecExtremiteSelectionnee.current.id, deltaX, deltaY, [
+      etatImage.finaliserDeplacementLigne(ligneAvecExtremiteSelectionnee.current.id, deltaX, deltaY, [
         ligneAvecExtremiteSelectionnee.current.extremite
       ]);
 

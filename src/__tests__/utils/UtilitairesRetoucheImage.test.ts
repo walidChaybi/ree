@@ -337,9 +337,9 @@ describe("Test de l'objet utilitaire UtilitaireRetoucheImage", () => {
 
   test("Lorsque la fonction 'detecterClicSurLigne' est appelée avec un clic positionné sur l'une des lignes, le résultat retourné est la ligne correspondante", () => {
     const lignes: ILigne[] = [
-      { id: "1", debutLigne: { x: 1, y: 1 }, finLigne: { x: 10, y: 10 } },
-      { id: "2", debutLigne: { x: 3, y: 3 }, finLigne: { x: 3, y: 7 } },
-      { id: "3", debutLigne: { x: 22, y: 25 }, finLigne: { x: 37, y: 41 } }
+      { id: "1", debutLigne: { x: 1, y: 1 }, finLigne: { x: 10, y: 10 }, enDeplacement: false, selectionnee: false },
+      { id: "2", debutLigne: { x: 3, y: 3 }, finLigne: { x: 3, y: 7 }, enDeplacement: false, selectionnee: false },
+      { id: "3", debutLigne: { x: 22, y: 25 }, finLigne: { x: 37, y: 41 }, enDeplacement: false, selectionnee: false }
     ];
 
     const positionClic = { x: 7, y: 7 };
@@ -349,9 +349,9 @@ describe("Test de l'objet utilitaire UtilitaireRetoucheImage", () => {
 
   test("Lorsque la fonction 'detecterClicSurLigne' est appelée avec un clic positionné sur aucune des lignes, le résultat retourné est NULL", () => {
     const lignes: ILigne[] = [
-      { id: "1", debutLigne: { x: 1, y: 1 }, finLigne: { x: 10, y: 10 } },
-      { id: "2", debutLigne: { x: 3, y: 3 }, finLigne: { x: 3, y: 7 } },
-      { id: "3", debutLigne: { x: 22, y: 25 }, finLigne: { x: 37, y: 41 } }
+      { id: "1", debutLigne: { x: 1, y: 1 }, finLigne: { x: 10, y: 10 }, enDeplacement: false, selectionnee: false },
+      { id: "2", debutLigne: { x: 3, y: 3 }, finLigne: { x: 3, y: 7 }, enDeplacement: false, selectionnee: false },
+      { id: "3", debutLigne: { x: 22, y: 25 }, finLigne: { x: 37, y: 41 }, enDeplacement: false, selectionnee: false }
     ];
 
     const positionClic = { x: 11, y: 17 };
@@ -360,21 +360,21 @@ describe("Test de l'objet utilitaire UtilitaireRetoucheImage", () => {
   });
 
   test("Lorsque la fonction 'clicSurExtremite' est appelée, si le clic est proche de l'extrémité de début de la ligne, alors le résultat retourné est 'debut'", () => {
-    const ligne: ILigne = { id: "1", debutLigne: { x: 5, y: 10 }, finLigne: { x: 15, y: 30 } };
+    const ligne: ILigne = { id: "1", debutLigne: { x: 5, y: 10 }, finLigne: { x: 15, y: 30 }, enDeplacement: false, selectionnee: false };
     const positionClic = { x: 4, y: 10 };
 
     expect(UtilitaireRetoucheImage.clicSurExtremite(positionClic, ligne)).toBe("debut");
   });
 
   test("Lorsque la fonction 'clicSurExtremite' est appelée, si le clic est proche de l'extrémité de fin de la ligne, alors le résultat retourné est 'fin'", () => {
-    const ligne: ILigne = { id: "1", debutLigne: { x: 5, y: 10 }, finLigne: { x: 15, y: 30 } };
+    const ligne: ILigne = { id: "1", debutLigne: { x: 5, y: 10 }, finLigne: { x: 15, y: 30 }, enDeplacement: false, selectionnee: false };
     const positionClic = { x: 15, y: 28 };
 
     expect(UtilitaireRetoucheImage.clicSurExtremite(positionClic, ligne)).toBe("fin");
   });
 
   test("Lorsque la fonction 'clicSurExtremite' est appelée, si le clic n'est pas proche d'une extrémité de la ligne, alors le résultat retourné est NULL", () => {
-    const ligne: ILigne = { id: "1", debutLigne: { x: 5, y: 10 }, finLigne: { x: 15, y: 30 } };
+    const ligne: ILigne = { id: "1", debutLigne: { x: 5, y: 10 }, finLigne: { x: 15, y: 30 }, enDeplacement: false, selectionnee: false };
     const positionClic = { x: 8, y: 28 };
 
     expect(UtilitaireRetoucheImage.clicSurExtremite(positionClic, ligne)).toBe(null);
@@ -382,8 +382,8 @@ describe("Test de l'objet utilitaire UtilitaireRetoucheImage", () => {
 
   test("Lorsque la fonction 'detecterClicSurExtremite' est appelée, si le clic est proche de l'extrémité de début d'une ligne, alors le résultat retourné est la ligne et 'debut'", () => {
     const lignes: ILigne[] = [
-      { id: "1", debutLigne: { x: 5, y: 10 }, finLigne: { x: 15, y: 30 } },
-      { id: "2", debutLigne: { x: 7, y: 12 }, finLigne: { x: 9, y: 12 } }
+      { id: "1", debutLigne: { x: 5, y: 10 }, finLigne: { x: 15, y: 30 }, enDeplacement: false, selectionnee: false },
+      { id: "2", debutLigne: { x: 7, y: 12 }, finLigne: { x: 9, y: 12 }, enDeplacement: false, selectionnee: false }
     ];
 
     const positionClic = { x: 4, y: 10 };
@@ -393,8 +393,8 @@ describe("Test de l'objet utilitaire UtilitaireRetoucheImage", () => {
 
   test("Lorsque la fonction 'detecterClicSurExtremite' est appelée, si le clic est proche de l'extrémité de fin d'une ligne, alors le résultat retourné est la ligne et 'fin'", () => {
     const lignes: ILigne[] = [
-      { id: "1", debutLigne: { x: 5, y: 10 }, finLigne: { x: 15, y: 30 } },
-      { id: "2", debutLigne: { x: 7, y: 12 }, finLigne: { x: 9, y: 12 } }
+      { id: "1", debutLigne: { x: 5, y: 10 }, finLigne: { x: 15, y: 30 }, enDeplacement: false, selectionnee: false },
+      { id: "2", debutLigne: { x: 7, y: 12 }, finLigne: { x: 9, y: 12 }, enDeplacement: false, selectionnee: false }
     ];
 
     const positionClic = { x: 15, y: 28 };
@@ -404,8 +404,8 @@ describe("Test de l'objet utilitaire UtilitaireRetoucheImage", () => {
 
   test("Lorsque la fonction 'detecterClicSurExtremite' est appelée, si le clic n'est pas proche d'une extrémité d'une ligne, alors le résultat retourné est NULL", () => {
     const lignes: ILigne[] = [
-      { id: "1", debutLigne: { x: 5, y: 10 }, finLigne: { x: 15, y: 30 } },
-      { id: "2", debutLigne: { x: 7, y: 12 }, finLigne: { x: 9, y: 12 } }
+      { id: "1", debutLigne: { x: 5, y: 10 }, finLigne: { x: 15, y: 30 }, enDeplacement: false, selectionnee: false },
+      { id: "2", debutLigne: { x: 7, y: 12 }, finLigne: { x: 9, y: 12 }, enDeplacement: false, selectionnee: false }
     ];
 
     const positionClic = { x: 8, y: 28 };
@@ -424,8 +424,8 @@ describe("Test de l'objet utilitaire UtilitaireRetoucheImage", () => {
     expect(UtilitaireRetoucheImage.recupererCoordonneesClic(mockEvenementClic, mockCanvas, 1, { x: 0, y: 0 }));
 
     const lignes: ILigne[] = [
-      { id: "1", debutLigne: { x: 5, y: 10 }, finLigne: { x: 15, y: 30 } },
-      { id: "2", debutLigne: { x: 7, y: 12 }, finLigne: { x: 9, y: 12 } }
+      { id: "1", debutLigne: { x: 5, y: 10 }, finLigne: { x: 15, y: 30 }, enDeplacement: false, selectionnee: false },
+      { id: "2", debutLigne: { x: 7, y: 12 }, finLigne: { x: 9, y: 12 }, enDeplacement: false, selectionnee: false }
     ];
 
     const positionClic = { x: 8, y: 28 };

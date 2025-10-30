@@ -53,13 +53,7 @@ const useDeplacerLigne = ({ zoom, offset, refCanvas, etatImage, outilSelectionne
         originalFin: { ...ligneSelectionnee.current.finLigne }
       };
 
-      etatImage.extraireLigne(ligneSelectionnee.current.id);
-
-      UtilitaireRetoucheImage.reinitialiserEtatCanvas(ctx);
-      UtilitaireRetoucheImage.effacerCanvas(ctx, canvas);
-
-      ctx.setTransform(zoom, 0, 0, zoom, offset.x, offset.y);
-      ctx.drawImage(etatImage.recupererBuffer, 0, 0);
+      etatImage.debuterDeplacementLigne(ligneSelectionnee.current.id);
     };
 
     const deplacerLigne = (e: MouseEvent) => {
@@ -70,11 +64,7 @@ const useDeplacerLigne = ({ zoom, offset, refCanvas, etatImage, outilSelectionne
       const deltaX = x - dragLigneRef.current.start.x;
       const deltaY = y - dragLigneRef.current.start.y;
 
-      UtilitaireRetoucheImage.reinitialiserEtatCanvas(ctx);
-      UtilitaireRetoucheImage.effacerCanvas(ctx, canvas);
-
-      ctx.setTransform(zoom, 0, 0, zoom, offset.x, offset.y);
-      ctx.drawImage(etatImage.recupererBuffer, 0, 0);
+      redessiner();
 
       ctx.save();
       ctx.strokeStyle = "red";
@@ -94,7 +84,7 @@ const useDeplacerLigne = ({ zoom, offset, refCanvas, etatImage, outilSelectionne
       const deltaX = x - dragLigneRef.current.start.x;
       const deltaY = y - dragLigneRef.current.start.y;
 
-      etatImage.reintegrerLigne(ligneSelectionnee.current.id, deltaX, deltaY, ["debut", "fin"]);
+      etatImage.finaliserDeplacementLigne(ligneSelectionnee.current.id, deltaX, deltaY, ["debut", "fin"]);
 
       UtilitaireRetoucheImage.reinitialiserEtatCanvas(ctx);
       UtilitaireRetoucheImage.effacerCanvas(ctx, canvas);

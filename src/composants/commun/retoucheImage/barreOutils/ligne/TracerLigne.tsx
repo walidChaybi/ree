@@ -10,6 +10,8 @@ export interface ILigne {
   id: string;
   debutLigne: TCoordonnees;
   finLigne: TCoordonnees;
+  enDeplacement: boolean;
+  selectionnee: boolean;
 }
 
 interface ITracerLigneProps {

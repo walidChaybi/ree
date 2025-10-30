@@ -68,10 +68,10 @@ describe("Test du hook useDeplacerExtremiteLigne", () => {
     vi.clearAllMocks();
   });
 
-  test("Lorsqu'une ligne existe sur mon image et que je clique sur une de ses extremité, celle-ci est extraite de l'état maître", () => {
+  test("Lorsqu'une ligne existe sur mon image et que je clique sur une de ses extremité, le déplacement de celle-ci débute", () => {
     const mockEtatImage = new EtatImage(mockImage.width, mockImage.height, mockImage);
 
-    const spyExtraireLigne = vi.spyOn(mockEtatImage, "extraireLigne");
+    const spyDebuterDeplacementLigne = vi.spyOn(mockEtatImage, "debuterDeplacementLigne");
 
     rendreComposant(mockEtatImage);
     tracerligneMock();
@@ -82,7 +82,7 @@ describe("Test du hook useDeplacerExtremiteLigne", () => {
 
     fireEvent.mouseDown(canvas, debutLigne);
 
-    expect(spyExtraireLigne).toHaveBeenCalled();
+    expect(spyDebuterDeplacementLigne).toHaveBeenCalled();
   });
 
   test("Lorsque je reste cliqué sur l'extremité de début d'une ligne extraite et que je déplace ma souris, l'extremité se déplace en même temps", () => {
@@ -131,7 +131,7 @@ describe("Test du hook useDeplacerExtremiteLigne", () => {
     rendreComposant(mockEtatImage);
     tracerligneMock();
 
-    const spyReintegrerLigne = vi.spyOn(mockEtatImage, "reintegrerLigne");
+    const spyFinaliserDeplacementLigne = vi.spyOn(mockEtatImage, "finaliserDeplacementLigne");
 
     const canvas = screen.getByLabelText("Image en cours de retouche");
 
@@ -146,7 +146,9 @@ describe("Test du hook useDeplacerExtremiteLigne", () => {
     const deltaX = nouveauPointSurCanvas.clientX - debutLigne.clientX;
     const deltaY = nouveauPointSurCanvas.clientY - debutLigne.clientY;
 
-    expect(spyReintegrerLigne).toHaveBeenCalledWith(mockEtatImage.lignes[mockEtatImage.lignes.length - 1].id, deltaX, deltaY, ["debut"]);
+    expect(spyFinaliserDeplacementLigne).toHaveBeenCalledWith(mockEtatImage.lignes[mockEtatImage.lignes.length - 1].id, deltaX, deltaY, [
+      "debut"
+    ]);
 
     expect(mockEtatImage.lignes[mockEtatImage.lignes.length - 1].debutLigne).toStrictEqual({
       x: nouveauPointSurCanvas.clientX,
@@ -165,7 +167,7 @@ describe("Test du hook useDeplacerExtremiteLigne", () => {
     rendreComposant(mockEtatImage);
     tracerligneMock();
 
-    const spyReintegrerLigne = vi.spyOn(mockEtatImage, "reintegrerLigne");
+    const spyFinaliserDeplacementLigne = vi.spyOn(mockEtatImage, "finaliserDeplacementLigne");
 
     const canvas = screen.getByLabelText("Image en cours de retouche");
 
@@ -180,7 +182,9 @@ describe("Test du hook useDeplacerExtremiteLigne", () => {
     const deltaX = nouveauPointSurCanvas.clientX - finLigne.clientX;
     const deltaY = nouveauPointSurCanvas.clientY - finLigne.clientY;
 
-    expect(spyReintegrerLigne).toHaveBeenCalledWith(mockEtatImage.lignes[mockEtatImage.lignes.length - 1].id, deltaX, deltaY, ["fin"]);
+    expect(spyFinaliserDeplacementLigne).toHaveBeenCalledWith(mockEtatImage.lignes[mockEtatImage.lignes.length - 1].id, deltaX, deltaY, [
+      "fin"
+    ]);
 
     expect(mockEtatImage.lignes[mockEtatImage.lignes.length - 1].debutLigne).toStrictEqual({
       x: debutLigne.clientX,

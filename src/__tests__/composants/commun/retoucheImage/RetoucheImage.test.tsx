@@ -6,6 +6,8 @@ import RetoucheImage from "../../../../composants/commun/retoucheImage/RetoucheI
 vi.mock("../../../../model/retoucheImage/EtatImage", () => {
   return {
     default: class MockEtatImage {
+      lignes = [];
+
       constructor(
         public largeur: number,
         public hauteur: number,

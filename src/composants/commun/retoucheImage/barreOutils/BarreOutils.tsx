@@ -115,6 +115,7 @@ const BarreOutils: React.FC<IBarreOutilsProps> = ({
           pointsSelectionPolygonale={pointsSelectionPolygonale}
           outilSelectionne={outilSelectionne}
           setOutilSelectionne={setOutilSelectionne}
+          redessiner={appelerRedessiner}
         />
       </li>
       <li>

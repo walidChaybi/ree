@@ -109,9 +109,6 @@ describe("Test du model EtatImage", () => {
   });
 
   test("Lorsque la méthode 'dessinerLigne' est appelée, une ligne est dessinée sur le canvas selon les paramètres donnés", () => {
-    const spyDeplacerA = vi.spyOn(mockCtx, "moveTo");
-    const spyDessinerLigne = vi.spyOn(mockCtx, "lineTo");
-
     const etatImage = new EtatImage(mockImage.width, mockImage.height, mockImage);
 
     const pointDepart = { x: 5, y: 5 };
@@ -119,14 +116,20 @@ describe("Test du model EtatImage", () => {
 
     etatImage.dessinerLigne(pointDepart.x, pointDepart.y, pointFin.x, pointFin.y);
 
-    expect(spyDeplacerA).toHaveBeenCalledWith(pointDepart.x, pointDepart.y);
-    expect(spyDessinerLigne).toHaveBeenCalledWith(pointFin.x, pointFin.y);
+    expect(etatImage.lignes).toHaveLength(1);
+    expect(etatImage.lignes[0]).toStrictEqual({
+      id: etatImage.lignes[0].id,
+      debutLigne: pointDepart,
+      finLigne: pointFin,
+      enDeplacement: false,
+      selectionnee: false
+    });
   });
 
   test("Lorsque la méthode 'dessinerLigne' est appelée, la nouvelle ligne est enregistrée dans le tableau dédié", () => {
     const etatImage = new EtatImage(mockImage.width, mockImage.height, mockImage);
 
-    const spyEnregistrerNouvelleLigne = vi.spyOn(etatImage, "enregistrerNouvelleLigne");
+    const spyEnregistrerNouvelleLigne = vi.spyOn(etatImage as any, "enregistrerNouvelleLigne");
 
     const pointDepart = { x: 5, y: 5 };
     const pointFin = { x: 17, y: 19 };
@@ -210,11 +213,9 @@ describe("Test du model EtatImage", () => {
     expect(spyDessinerImage).toHaveBeenCalledWith(expect.any(HTMLCanvasElement), 0, 0);
   });
 
-  test("Lorsque la méthode 'extraireLigne' est appelée et qu'une ligne existe, la ligne demandée est extraite du canvas", () => {
+  test("Lorsque la méthode 'debuterDeplacementLigne' est appelée et qu'une ligne existe, la ligne demandée est considérée comme étant en deplacement", () => {
     const etatImage = new EtatImage(mockImage.width, mockImage.height, mockImage);
 
-    const spyDeplacerA = vi.spyOn(mockCtx, "moveTo");
-    const spyDessinerLigne = vi.spyOn(mockCtx, "lineTo");
     const spyRecupererLigneParId = vi.spyOn(etatImage, "recupererLigneParId");
 
     const pointDepart = { x: 5, y: 5 };
@@ -224,43 +225,28 @@ describe("Test du model EtatImage", () => {
 
     const nouvelleLigne = etatImage.lignes[0];
 
-    etatImage.extraireLigne(nouvelleLigne.id);
+    etatImage.debuterDeplacementLigne(nouvelleLigne.id);
 
     expect(spyRecupererLigneParId).toHaveBeenCalledWith(nouvelleLigne.id);
-    expect(etatImage.recupererLigneParId(nouvelleLigne.id)).toBe(nouvelleLigne);
-
-    expect(mockCtx.globalCompositeOperation).toBe("destination-out");
-    expect(mockCtx.lineWidth).toBe(etatImage.epaisseurLignes + 2);
-
-    expect(mockCtx.beginPath).toHaveBeenCalled();
-    expect(spyDeplacerA).toHaveBeenCalledWith(pointDepart.x, pointDepart.y);
-    expect(spyDessinerLigne).toHaveBeenCalledWith(pointFin.x, pointFin.y);
-    expect(mockCtx.stroke).toHaveBeenCalled();
+    expect(etatImage.recupererLigneParId(nouvelleLigne.id)).toStrictEqual({ ...nouvelleLigne, enDeplacement: true });
   });
 
-  test("Lorsque la méthode 'extraireLigne' est appelée et qu'aucune ligne n'existe, la méthode ne fait rien", () => {
+  test("Lorsque la méthode 'debuterDeplacementLigne' est appelée et qu'aucune ligne n'existe, la méthode ne fait rien", () => {
     const etatImage = new EtatImage(mockImage.width, mockImage.height, mockImage);
 
     const spyRecupererLigneParId = vi.spyOn(etatImage, "recupererLigneParId");
 
     const fauxId = "6423843";
 
-    etatImage.extraireLigne(fauxId);
+    etatImage.debuterDeplacementLigne(fauxId);
 
     expect(spyRecupererLigneParId).toHaveBeenCalledWith(fauxId);
     expect(etatImage.recupererLigneParId(fauxId)).toBe(undefined);
-
-    expect(mockCtx.beginPath).not.toHaveBeenCalled();
-    expect(mockCtx.moveTo).not.toHaveBeenCalled();
-    expect(mockCtx.lineTo).not.toHaveBeenCalled();
-    expect(mockCtx.stroke).not.toHaveBeenCalled();
   });
 
-  test("Lorsque la méthode 'reintegrerLigne' est appelée et qu'une ligne existe, la ligne demandée est réintégrée au canvas", () => {
+  test("Lorsque la méthode 'finaliserDeplacementLigne' est appelée et qu'une ligne existe, le déplacement de celle-ci est finalisé", () => {
     const etatImage = new EtatImage(mockImage.width, mockImage.height, mockImage);
 
-    const spyDeplacerA = vi.spyOn(mockCtx, "moveTo");
-    const spyDessinerLigne = vi.spyOn(mockCtx, "lineTo");
     const spyRecupererLigneParId = vi.spyOn(etatImage, "recupererLigneParId");
 
     const pointDepart = { x: 5, y: 5 };
@@ -273,36 +259,25 @@ describe("Test du model EtatImage", () => {
     const deltaX = 8;
     const deltaY = 11;
 
-    etatImage.reintegrerLigne(nouvelleLigne.id, deltaX, deltaY, ["debut", "fin"]);
+    etatImage.finaliserDeplacementLigne(nouvelleLigne.id, deltaX, deltaY, ["debut", "fin"]);
 
     expect(spyRecupererLigneParId).toHaveBeenCalledWith(nouvelleLigne.id);
     expect(etatImage.recupererLigneParId(nouvelleLigne.id)).toBe(nouvelleLigne);
-
-    expect(mockCtx.strokeStyle).toBe("black");
-    expect(mockCtx.lineWidth).toBe(etatImage.epaisseurLignes);
-
-    expect(mockCtx.beginPath).toHaveBeenCalled();
-    expect(spyDeplacerA).toHaveBeenCalledWith(pointDepart.x + deltaX, pointDepart.y + deltaY);
-    expect(spyDessinerLigne).toHaveBeenCalledWith(pointFin.x + deltaX, pointFin.y + deltaY);
-    expect(mockCtx.stroke).toHaveBeenCalled();
+    expect(etatImage.lignes[0].debutLigne).toStrictEqual({ x: pointDepart.x + deltaX, y: pointDepart.y + deltaY });
+    expect(etatImage.lignes[0].finLigne).toStrictEqual({ x: pointFin.x + deltaX, y: pointFin.y + deltaY });
   });
 
-  test("Lorsque la méthode 'reintegrerLigne' est appelée et qu'aucune ligne n'existe, la méthode ne fait rien", () => {
+  test("Lorsque la méthode 'finaliserDeplacementLigne' est appelée et qu'aucune ligne n'existe, la méthode ne fait rien", () => {
     const etatImage = new EtatImage(mockImage.width, mockImage.height, mockImage);
 
     const spyRecupererLigneParId = vi.spyOn(etatImage, "recupererLigneParId");
 
     const fauxId = "6423843";
 
-    etatImage.reintegrerLigne(fauxId, 34, 52, []);
+    etatImage.finaliserDeplacementLigne(fauxId, 34, 52, []);
 
     expect(spyRecupererLigneParId).toHaveBeenCalledWith(fauxId);
     expect(etatImage.recupererLigneParId(fauxId)).toBe(undefined);
-
-    expect(mockCtx.beginPath).not.toHaveBeenCalled();
-    expect(mockCtx.moveTo).not.toHaveBeenCalled();
-    expect(mockCtx.lineTo).not.toHaveBeenCalled();
-    expect(mockCtx.stroke).not.toHaveBeenCalled();
   });
 
   test("Lorsque la méthode 'changerEpaisseurLignes' est appelée, l'épaisseur des lignes change pour celle passée en paramètre", () => {
@@ -325,24 +300,12 @@ describe("Test du model EtatImage", () => {
     expect(etatImage.epaisseurLignes).toBe(1);
   });
 
-  test("Lorsque la méthode 'changerEpaisseurLignes' est appelée et qu'au moins une ligne existe, la méthode 'redessinerToutesLesLignes' est appelée", () => {
-    const etatImage = new EtatImage(mockImage.width, mockImage.height, mockImage);
-
-    const spyRedessinerToutesLesLignes = vi.spyOn(etatImage, "redessinerToutesLesLignes");
-
-    etatImage.dessinerLigne(10, 10, 22, 26);
-
-    etatImage.changerEpaisseurLignes(2);
-
-    expect(spyRedessinerToutesLesLignes).toHaveBeenCalledWith(1);
-  });
-
   test("Lorsque la méthode 'enregistrerVersionDansHistorique' est appelée, une nouvelle versions du buffer est enregistrée dans l'historique", () => {
     const etatImage = new EtatImage(mockImage.width, mockImage.height, mockImage);
 
     expect(etatImage.historique).toHaveLength(1);
 
-    etatImage.enregistrerVersionDansHistorique();
+    etatImage.enregistrerVersionDansHistorique("initialiser");
 
     expect(etatImage.historique).toHaveLength(2);
   });
@@ -352,7 +315,7 @@ describe("Test du model EtatImage", () => {
 
     const fauxId = "723473";
 
-    etatImage.enregistrerVersionDansHistorique(fauxId);
+    etatImage.enregistrerVersionDansHistorique("ajouterLigne", fauxId);
 
     expect(etatImage.historique[etatImage.historique.length - 1].idLigne).toBe("723473");
   });
@@ -360,14 +323,14 @@ describe("Test du model EtatImage", () => {
   test("Lorsque la méthode 'enregistrerVersionDansHistorique' est appelée et que la version active n'est pas la dernière, les suivantes enregistrées sont effacées", () => {
     const etatImage = new EtatImage(mockImage.width, mockImage.height, mockImage);
 
-    etatImage.enregistrerVersionDansHistorique();
-    etatImage.enregistrerVersionDansHistorique();
+    etatImage.enregistrerVersionDansHistorique("initialiser");
+    etatImage.enregistrerVersionDansHistorique("effacer");
 
     expect(etatImage.historique).toHaveLength(3);
 
     etatImage.indexHistorique = 0;
 
-    etatImage.enregistrerVersionDansHistorique();
+    etatImage.enregistrerVersionDansHistorique("deplacerLigne");
 
     expect(etatImage.historique).toHaveLength(2);
   });
@@ -375,7 +338,7 @@ describe("Test du model EtatImage", () => {
   test("Lorsque la méthode 'annuler' est appelée, la version active recule de 1 version", () => {
     const etatImage = new EtatImage(mockImage.width, mockImage.height, mockImage);
 
-    etatImage.enregistrerVersionDansHistorique();
+    etatImage.enregistrerVersionDansHistorique("initialiser");
 
     expect(etatImage.indexHistorique).toBe(1);
 
@@ -387,7 +350,7 @@ describe("Test du model EtatImage", () => {
   test("Lorsque la méthode 'retablir' est appelée, la version active avance de 1 version", () => {
     const etatImage = new EtatImage(mockImage.width, mockImage.height, mockImage);
 
-    etatImage.enregistrerVersionDansHistorique();
+    etatImage.enregistrerVersionDansHistorique("initialiser");
 
     etatImage.indexHistorique = 0;
 
@@ -407,7 +370,13 @@ describe("Test du model EtatImage", () => {
   test("Lorsque la méthode 'recupererLigneParId' est appelée et que la ligne existe, elle est retournée", () => {
     const etatImage = new EtatImage(mockImage.width, mockImage.height, mockImage);
 
-    const fausseLigne: ILigne = { id: "478359", debutLigne: { x: 8, y: 12 }, finLigne: { x: 23, y: 24 } };
+    const fausseLigne: ILigne = {
+      id: "478359",
+      debutLigne: { x: 8, y: 12 },
+      finLigne: { x: 23, y: 24 },
+      enDeplacement: false,
+      selectionnee: false
+    };
 
     etatImage.lignes = [fausseLigne];
 

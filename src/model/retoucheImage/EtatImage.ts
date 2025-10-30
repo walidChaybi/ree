@@ -3,11 +3,20 @@ import type { TCoordonnees } from "../../composants/commun/retoucheImage/Canvas"
 import type { ILigne } from "../../composants/commun/retoucheImage/barreOutils/ligne/TracerLigne";
 import UtilitaireRetoucheImage, { TExtremite } from "../../utils/UtilitaireRetoucheImage";
 
+interface IPositionLigne {
+  debutLigne: TCoordonnees;
+  finLigne: TCoordonnees;
+}
+
+type TActionRetoucheImage = "ajouterLigne" | "deplacerLigne" | "effacerLigne" | "recadrer" | "effacer" | "initialiser";
+
 class EtatImage {
-  public historique: { buffer: HTMLCanvasElement; idLigne?: string }[] = [];
+  public historique: { buffer: HTMLCanvasElement; action: TActionRetoucheImage; idLigne?: string; dernierePosition?: IPositionLigne }[] =
+    [];
   public indexHistorique: number = -1;
 
   public lignes: ILigne[] = [];
+  public lignesSupprimees: ILigne[] = [];
   public epaisseurLignes: number = 1;
 
   private buffer: HTMLCanvasElement;
@@ -28,18 +37,18 @@ class EtatImage {
       this.ctx.drawImage(image, 0, 0, largeur, hauteur);
     }
 
-    this.enregistrerVersionDansHistorique();
+    this.enregistrerVersionDansHistorique("initialiser");
   }
 
-  effacer = (x: number, y: number, taille: number) => {
+  public effacer = (x: number, y: number, taille: number) => {
     this.ctx.clearRect(x - taille / 2, y - taille / 2, taille, taille);
   };
 
-  effacerDansRectangle = (x: number, y: number, largeur: number, hauteur: number) => {
+  public effacerDansRectangle = (x: number, y: number, largeur: number, hauteur: number) => {
     this.ctx.clearRect(x, y, largeur, hauteur);
   };
 
-  effacerDansPolygone = (x: number, y: number, taille: number, polygone: TCoordonnees[]) => {
+  public effacerDansPolygone = (x: number, y: number, taille: number, polygone: TCoordonnees[]) => {
     this.ctx.save();
 
     this.ctx.beginPath();
@@ -57,27 +66,12 @@ class EtatImage {
     this.ctx.restore();
   };
 
-  dessinerLigne = (x1: number, y1: number, x2: number, y2: number) => {
-    this.ctx.strokeStyle = "black";
-    this.ctx.lineWidth = this.epaisseurLignes;
-    this.ctx.beginPath();
-    this.ctx.moveTo(x1, y1);
-    this.ctx.lineTo(x2, y2);
-    this.ctx.stroke();
-
+  public dessinerLigne = (x1: number, y1: number, x2: number, y2: number) => {
     this.enregistrerNouvelleLigne(x1, y1, x2, y2);
-    this.enregistrerVersionDansHistorique(this.lignes[this.lignes.length - 1].id);
+    this.enregistrerVersionDansHistorique("ajouterLigne", this.lignes[this.lignes.length - 1].id);
   };
 
-  enregistrerNouvelleLigne = (x1: number, y1: number, x2: number, y2: number) => {
-    this.lignes.push({
-      id: uuidv6(),
-      debutLigne: { x: x1, y: y1 },
-      finLigne: { x: x2, y: y2 }
-    });
-  };
-
-  appliquerRotation = (degres: number) => {
+  public appliquerRotation = (degres: number) => {
     const radiusAngle = (degres * Math.PI) / 180;
 
     const largeur = this.buffer.width;
@@ -101,10 +95,10 @@ class EtatImage {
     ctxBuffer.clearRect(0, 0, largeur, hauteur);
     ctxBuffer.drawImage(tempCanvas, 0, 0);
 
-    this.enregistrerVersionDansHistorique();
+    this.enregistrerVersionDansHistorique("recadrer");
   };
 
-  effacerHorsRectangle = (x: number, y: number, largeur: number, hauteur: number) => {
+  public effacerHorsRectangle = (x: number, y: number, largeur: number, hauteur: number) => {
     const canvasTemporaire = document.createElement("canvas");
 
     canvasTemporaire.width = this.buffer.width;
@@ -123,10 +117,10 @@ class EtatImage {
 
     this.ctx.drawImage(canvasTemporaire, 0, 0);
 
-    this.enregistrerVersionDansHistorique();
+    this.enregistrerVersionDansHistorique("effacer");
   };
 
-  effacerHorsPolygone = (pointsSelectionPolygonale: TCoordonnees[]) => {
+  public effacerHorsPolygone = (pointsSelectionPolygonale: TCoordonnees[]) => {
     const canvasTemporaire = document.createElement("canvas");
 
     canvasTemporaire.width = this.buffer.width;
@@ -158,80 +152,66 @@ class EtatImage {
 
     this.ctx.restore();
 
-    this.enregistrerVersionDansHistorique();
+    this.enregistrerVersionDansHistorique("effacer");
   };
 
-  extraireLigne = (id: string, epaisseurLigne: number = this.epaisseurLignes) => {
-    const ligne = this.recupererLigneParId(id);
+  public debuterDeplacementLigne = (id: string) => {
+    const ligneAExtraire = this.recupererLigneParId(id);
 
-    if (!ligne) return;
+    if (!ligneAExtraire) return;
 
-    this.ctx.save();
-
-    this.ctx.globalCompositeOperation = "destination-out";
-    this.ctx.lineWidth = epaisseurLigne + 2; // + 2 pour que tout le trait soit bien pris en compte
-    this.ctx.lineCap = "round";
-    this.ctx.beginPath();
-    this.ctx.moveTo(ligne.debutLigne.x, ligne.debutLigne.y);
-    this.ctx.lineTo(ligne.finLigne.x, ligne.finLigne.y);
-    this.ctx.stroke();
-    this.ctx.restore();
+    this.lignes = this.lignes.map(ligne => ({ ...ligne, enDeplacement: ligne.id === ligneAExtraire.id }));
   };
 
-  reintegrerLigne = (id: string, deltaX: number, deltaY: number, extremites: TExtremite[]) => {
-    const ligne = this.recupererLigneParId(id);
+  public finaliserDeplacementLigne = (id: string, deltaX: number, deltaY: number, extremites: TExtremite[]) => {
+    const ligneAReintegrer = this.recupererLigneParId(id);
 
-    if (!ligne) return;
+    if (!ligneAReintegrer) return;
+
+    const dernierePosition = { debutLigne: ligneAReintegrer.debutLigne, finLigne: ligneAReintegrer.finLigne };
+
+    ligneAReintegrer.enDeplacement = false;
 
     if (extremites.includes("debut")) {
-      ligne.debutLigne = {
-        x: ligne.debutLigne.x + deltaX,
-        y: ligne.debutLigne.y + deltaY
+      ligneAReintegrer.debutLigne = {
+        x: ligneAReintegrer.debutLigne.x + deltaX,
+        y: ligneAReintegrer.debutLigne.y + deltaY
       };
     }
 
     if (extremites.includes("fin")) {
-      ligne.finLigne = {
-        x: ligne.finLigne.x + deltaX,
-        y: ligne.finLigne.y + deltaY
+      ligneAReintegrer.finLigne = {
+        x: ligneAReintegrer.finLigne.x + deltaX,
+        y: ligneAReintegrer.finLigne.y + deltaY
       };
     }
 
-    this.ctx.save();
-    this.ctx.strokeStyle = "black";
-    this.ctx.lineWidth = this.epaisseurLignes;
-    this.ctx.lineCap = "round";
-    this.ctx.beginPath();
-    this.ctx.moveTo(ligne.debutLigne.x, ligne.debutLigne.y);
-    this.ctx.lineTo(ligne.finLigne.x, ligne.finLigne.y);
-    this.ctx.stroke();
-    this.ctx.restore();
+    this.lignes = this.lignes.map(ligne => (ligne.id === ligneAReintegrer.id ? ligneAReintegrer : ligne));
 
-    this.enregistrerVersionDansHistorique(id);
+    this.enregistrerVersionDansHistorique("deplacerLigne", id, dernierePosition);
   };
 
-  changerEpaisseurLignes = (nouvelleEpaisseur: number): void => {
+  public selectionnerLigne = (idLigne: string): void => {
+    this.lignes = this.lignes.map(ligne => ({ ...ligne, selectionnee: ligne.id === idLigne }));
+  };
+
+  public annulerSelectionLignes = (): void => {
+    this.lignes = this.lignes.map(ligne => ({ ...ligne, selectionnee: false }));
+  };
+
+  public effacerLigne = (idLigne: string): void => {
+    this.supprimerLigne(idLigne);
+
+    this.enregistrerVersionDansHistorique("effacerLigne", idLigne);
+  };
+
+  public changerEpaisseurLignes = (nouvelleEpaisseur: number): void => {
     if (nouvelleEpaisseur < 1) return;
 
-    const precedenteEpaisseurLignes = this.epaisseurLignes;
-
     this.epaisseurLignes = nouvelleEpaisseur;
-
-    if (this.lignes.length > 0) {
-      this.redessinerToutesLesLignes(precedenteEpaisseurLignes);
-    }
   };
 
-  redessinerToutesLesLignes = (precedenteEpaisseurLignes: number): void => {
-    for (const ligne of this.lignes) {
-      this.extraireLigne(ligne.id, precedenteEpaisseurLignes);
-      this.reintegrerLigne(ligne.id, 0, 0, []);
-    }
-
-    this.enregistrerVersionDansHistorique();
-  };
-
-  enregistrerVersionDansHistorique = (idLigne?: string): void => {
+  public enregistrerVersionDansHistorique = (action: TActionRetoucheImage, idLigne?: string, dernierePosition?: IPositionLigne): void => {
     this.historique = this.historique.slice(0, this.indexHistorique + 1);
 
     const clone = document.createElement("canvas");
@@ -241,23 +221,132 @@ class EtatImage {
 
     clone.getContext("2d")!.drawImage(this.buffer, 0, 0);
 
-    this.historique.push({ buffer: clone, idLigne });
+    this.historique.push({ buffer: clone, action, idLigne, dernierePosition });
     this.indexHistorique = this.historique.length - 1;
   };
 
-  annuler = (): void => {
+  public annuler = (): void => {
     if (this.indexHistorique > 0) {
+      const idPotentielleLigne = this.historique[this.indexHistorique].idLigne;
+
+      if (idPotentielleLigne) {
+        this.annulerActionLigne(this.historique[this.indexHistorique].action, idPotentielleLigne);
+      }
+
       this.indexHistorique--;
 
       this.retablirDepuisHistorique();
     }
   };
 
-  retablir = (): void => {
+  public retablir = (): void => {
     if (this.indexHistorique < this.historique.length - 1) {
       this.indexHistorique++;
 
+      const idPotentielleLigne = this.historique[this.indexHistorique].idLigne;
+
+      if (idPotentielleLigne) {
+        this.retablirActionLigne(this.historique[this.indexHistorique].action, idPotentielleLigne);
+      }
+
       this.retablirDepuisHistorique();
+    }
+  };
+
+  public recupererLigneParId = (id: string) => {
+    return this.lignes.find(ligne => ligne.id === id);
+  };
+
+  private readonly enregistrerNouvelleLigne = (x1: number, y1: number, x2: number, y2: number) => {
+    this.lignes.push({
+      id: uuidv6(),
+      debutLigne: { x: x1, y: y1 },
+      finLigne: { x: x2, y: y2 },
+      enDeplacement: false,
+      selectionnee: false
+    });
+  };
+
+  private readonly supprimerLigne = (idLigne: string): void => {
+    const ligneASupprimer = this.lignes.find(ligne => ligne.id === idLigne);
+
+    if (ligneASupprimer) {
+      this.lignesSupprimees.push(ligneASupprimer);
+      this.lignes = this.lignes.filter(ligne => ligne.id !== ligneASupprimer.id);
+    }
+  };
+
+  private readonly reintegrerLigne = (idLigne: string): void => {
+    const ligneAReintegrer = this.lignesSupprimees.find(ligne => ligne.id === idLigne);
+
+    if (ligneAReintegrer) {
+      this.lignes.push(ligneAReintegrer);
+      this.lignesSupprimees = this.lignesSupprimees.filter(ligne => ligne.id !== ligneAReintegrer.id);
+    }
+  };
+
+  private readonly deplacerLigneDepuisDernierePosition = (
+    ligneADeplacer: ILigne,
+    idLigne: string,
+    dernierePositionLigne: IPositionLigne
+  ): void => {
+    const nouvelleDernierePosition: IPositionLigne = { debutLigne: ligneADeplacer.debutLigne, finLigne: ligneADeplacer.finLigne };
+
+    this.lignes = this.lignes.map(ligne =>
+      ligne.id === idLigne ? { ...ligne, debutLigne: dernierePositionLigne.debutLigne, finLigne: dernierePositionLigne.finLigne } : ligne
+    );
+
+    this.historique[this.indexHistorique].dernierePosition = nouvelleDernierePosition;
+  };
+
+  private readonly annulerActionLigne = (action: TActionRetoucheImage, idLigne: string): void => {
+    switch (action) {
+      case "ajouterLigne":
+        this.supprimerLigne(idLigne);
+
+        break;
+      case "deplacerLigne": {
+        const dernierePositionLigne = this.historique[this.indexHistorique].dernierePosition;
+        const ligneADeplacer = this.lignes.find(ligne => ligne.id === idLigne);
+
+        if (dernierePositionLigne && ligneADeplacer) {
+          this.deplacerLigneDepuisDernierePosition(ligneADeplacer, idLigne, dernierePositionLigne);
+        }
+
+        break;
+      }
+      case "effacerLigne":
+        this.reintegrerLigne(idLigne);
+
+        break;
+      default:
+        break;
+    }
+  };
+
+  private readonly retablirActionLigne = (action: TActionRetoucheImage, idLigne: string): void => {
+    switch (action) {
+      case "ajouterLigne": {
+        this.reintegrerLigne(idLigne);
+
+        break;
+      }
+      case "deplacerLigne": {
+        const dernierePositionLigne = this.historique[this.indexHistorique].dernierePosition;
+        const ligneADeplacer = this.lignes.find(ligne => ligne.id === idLigne);
+
+        if (dernierePositionLigne && ligneADeplacer) {
+          this.deplacerLigneDepuisDernierePosition(ligneADeplacer, idLigne, dernierePositionLigne);
+        }
+
+        break;
+      }
+      case "effacerLigne":
+        this.supprimerLigne(idLigne);
+
+        break;
+      default:
+        break;
     }
   };
 
@@ -271,10 +360,6 @@ class EtatImage {
 
     this.ctx = this.buffer.getContext("2d")!;
     this.ctx.drawImage(version.buffer, 0, 0);
-  };
-
-  recupererLigneParId = (id: string) => {
-    return this.lignes.find(ligne => ligne.id === id);
   };
 
   get recupererImage(): HTMLImageElement {

@@ -16,6 +16,7 @@ interface IGommeProps {
   pointsSelectionPolygonale: TCoordonnees[];
   outilSelectionne: TOutilRetoucheImage;
   setOutilSelectionne(valeur: TOutilRetoucheImage): void;
+  redessiner(): void;
 }
 
 const RAYON = 20;
@@ -29,7 +30,8 @@ const Gomme: React.FC<IGommeProps> = ({
   finSelectionRectangulaire,
   pointsSelectionPolygonale,
   outilSelectionne,
-  setOutilSelectionne
+  setOutilSelectionne,
+  redessiner
 }) => {
   const gommageRef = useRef<boolean>(false);
 
@@ -66,12 +68,7 @@ const Gomme: React.FC<IGommeProps> = ({
         etatImage.effacer(x, y, RAYON);
       }
 
-      UtilitaireRetoucheImage.reinitialiserEtatCanvas(ctx);
-      UtilitaireRetoucheImage.effacerCanvas(ctx, canvas);
-
-      ctx.setTransform(zoom, 0, 0, zoom, offset.x, offset.y);
-
-      ctx.drawImage(etatImage.recupererBuffer, 0, 0);
+      redessiner();
     };
 
     const commencerAGommer = (e: MouseEvent) => {
@@ -83,7 +80,7 @@ const Gomme: React.FC<IGommeProps> = ({
     const arreterDeGommer = () => {
       gommageRef.current = false;
 
-      etatImage.enregistrerVersionDansHistorique();
+      etatImage.enregistrerVersionDansHistorique("effacer");
     };
 
     canvas.addEventListener("mousedown", commencerAGommer);

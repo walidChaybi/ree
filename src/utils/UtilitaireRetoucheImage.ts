@@ -67,6 +67,17 @@ const UtilitaireRetoucheImage = {
 
     ctx.drawImage(etatImage.recupererBuffer, OFFSET_PAR_DEFAUT, OFFSET_PAR_DEFAUT, canvas.width, canvas.height);
 
+    etatImage.lignes.forEach(ligne => {
+      if (ligne.enDeplacement === false) {
+        ctx.strokeStyle = ligne.selectionnee ? "red" : "black";
+        ctx.lineWidth = etatImage.epaisseurLignes;
+        ctx.beginPath();
+        ctx.moveTo(ligne.debutLigne.x, ligne.debutLigne.y);
+        ctx.lineTo(ligne.finLigne.x, ligne.finLigne.y);
+        ctx.stroke();
+      }
+    });
+
     UtilitaireRetoucheImage.dessinerLigneTemporaire({
       ctx,
       zoom,

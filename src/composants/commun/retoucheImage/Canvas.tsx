@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import useDeplacerExtremiteLigne from "../../../hooks/retoucheImage/useDeplacerExtremiteLigne";
-import useDeplacerLigne from "../../../hooks/retoucheImage/useDeplacerLigne";
+import useDeplacerExtremiteLigne from "../../../hooks/retoucheImage/DeplacerExtremiteLigneHook";
+import useDeplacerLigne from "../../../hooks/retoucheImage/DeplacerLigneHook";
+import useSupprimerLigne from "../../../hooks/retoucheImage/SupprimerLigneHook";
 import type EtatImage from "../../../model/retoucheImage/EtatImage";
 import UtilitaireRetoucheImage from "../../../utils/UtilitaireRetoucheImage";
 import BarreOutils, { type TOutilRetoucheImage } from "./barreOutils/BarreOutils";
@@ -59,6 +60,12 @@ const Canvas: React.FC<ICanvasProps> = ({ tailleCanvas, etatImage, pageCourante 
       annulerSelectionActuelle();
     }
 
+    if (etatImage.lignes.length > 0) {
+      etatImage.annulerSelectionLignes();
+
+      appelerRedessiner();
+    }
+
     switch (outilSelectionne) {
       case "deplacement":
         setCurseur("grab");
@@ -94,6 +101,7 @@ const Canvas: React.FC<ICanvasProps> = ({ tailleCanvas, etatImage, pageCourante 
 
   useDeplacerLigne({ zoom, offset, refCanvas, etatImage, outilSelectionne, redessiner: appelerRedessiner });
   useDeplacerExtremiteLigne({ zoom, offset, refCanvas, etatImage, outilSelectionne, redessiner: appelerRedessiner });
+  useSupprimerLigne({ zoom, offset, refCanvas, etatImage, outilSelectionne, redessiner: appelerRedessiner });
 
   return (
     <div>
