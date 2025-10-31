@@ -282,14 +282,15 @@ export class FicheActe {
     ];
   };
 
-  public readonly getTitulairesPourAnalyseMarginale = () => {
-    const nombreDeTitulaires = this.nature === "MARIAGE" ? 2 : 1;
-
-    return [...Array(nombreDeTitulaires).keys()].map(index => this.getTitulairePourAnalyseMarginale(index));
-  };
+  public readonly getTitulairesPourAnalyseMarginale = () =>
+    [...Array(this.getNombreTitulairesSelonNature()).keys()].map(index => this.getTitulairePourAnalyseMarginale(index));
 
   public readonly getTitulairePourAnalyseMarginale = (indexTitulaire: number) => {
     return this.getAnalyseMarginaleLaPlusRecente()?.titulaires[indexTitulaire]?.versTitulaireActe() ?? this.titulaires[indexTitulaire];
+  };
+
+  public readonly getNombreTitulairesSelonNature = () => {
+    return this.nature === "MARIAGE" ? 2 : 1;
   };
 }
 

@@ -49,7 +49,7 @@ export type TMentionForm = {
 } & TObjetFormulaire;
 
 interface IMentionFormProps {
-  infoTitulaire: IInfoTitulaire;
+  infoTitulaires: IInfoTitulaire[];
   setEnCoursDeSaisie: React.Dispatch<React.SetStateAction<boolean>>;
   enCoursDeSaisie: boolean;
   setMentionEnCoursDeSaisie: React.Dispatch<React.SetStateAction<IMentionEnCours | null>>;
@@ -67,7 +67,7 @@ const formaterTexteMention = (texteMention: string): string =>
 const DEFAUT_CREATION: TMentionForm = { idTypeMention: "", texteMention: "", textesEdites: {}, mentionAffecteAnalyseMarginale: false };
 
 const MentionForm: React.FC<IMentionFormProps> = ({
-  infoTitulaire,
+  infoTitulaires,
   setEnCoursDeSaisie,
   setMentionEnCoursDeSaisie,
   enCoursDeSaisie,
@@ -148,13 +148,15 @@ const MentionForm: React.FC<IMentionFormProps> = ({
           setMetamodeleTypeMention(modele);
           setValeurDefaut({
             ...modele.valeursInitiales(mentionModifiee?.mention.donneesAideSaisie?.champs),
-            titulaire: {
-              nom: infoTitulaire.nom,
-              nomPartie1: infoTitulaire.nomPartie1,
-              nomPartie2: infoTitulaire.nomPartie2,
-              nomSecable: infoTitulaire.nomSecable,
-              sexe: infoTitulaire.sexe ? ESexe[infoTitulaire.sexe] : ""
-            },
+            titulaires: infoTitulaires.map(infoTitulaire => {
+              return {
+                nom: infoTitulaire.nom,
+                nomPartie1: infoTitulaire.nomPartie1,
+                nomPartie2: infoTitulaire.nomPartie2,
+                nomSecable: infoTitulaire.nomSecable,
+                sexe: infoTitulaire.sexe ? ESexe[infoTitulaire.sexe] : ""
+              };
+            }),
             idTypeMention: typeMentionChoisi.id,
             texteMention: mentionModifiee?.mention.texte ?? "",
             textesEdites: mentionModifiee?.mention.donneesAideSaisie?.textesEdites ?? {},

@@ -246,16 +246,19 @@ const PartieFormulaire: React.FC = () => {
     );
   }, [motif, acte]);
 
-  const infoTitulaire: IInfoTitulaire = useMemo(
-    () => ({
-      nom: acte?.titulaires?.[0].nom ?? "",
-      nomPartie1: acte?.titulaires?.[0].nomPartie1 ?? "",
-      nomPartie2: acte?.titulaires?.[0].nomPartie2 ?? "",
-      nomSecable: Boolean(acte?.titulaires?.[0].nomPartie1 && acte?.titulaires?.[0].nomPartie2),
-      sexe: acte?.titulaires?.[0].sexe ?? null
-    }),
-    [acte]
-  );
+  const infoTitulaires: IInfoTitulaire[] = useMemo(() => {
+    if (!acte) return [];
+
+    return [...Array(acte.getNombreTitulairesSelonNature()).keys()].map(index => {
+      return {
+        nom: acte?.titulaires?.[index].nom ?? "",
+        nomPartie1: acte?.titulaires?.[index].nomPartie1 ?? "",
+        nomPartie2: acte?.titulaires?.[index].nomPartie2 ?? "",
+        nomSecable: Boolean(acte?.titulaires?.[index].nomPartie1 && acte?.titulaires?.[index].nomPartie2),
+        sexe: acte?.titulaires?.[index].sexe ?? null
+      };
+    });
+  }, [acte]);
 
   return (
     <>
@@ -312,7 +315,7 @@ const PartieFormulaire: React.FC = () => {
                 </Form>
               </Formik>
               <MentionForm
-                infoTitulaire={infoTitulaire}
+                infoTitulaires={infoTitulaires}
                 setEnCoursDeSaisie={setFormulaireMentionEnCoursDeSaisie}
                 enCoursDeSaisie={formulaireMentionEnCoursDeSaisie}
                 setMentionEnCoursDeSaisie={setMentionEnCoursDeSaisie}
