@@ -28,7 +28,7 @@ import OngletsBouton from "../../commun/onglets/OngletsBouton";
 import OngletsContenu from "../../commun/onglets/OngletsContenu";
 import BoutonTerminerEtSigner from "./formulaires/BoutonTerminerEtSigner";
 import BoutonValiderEtTerminer from "./formulaires/BoutonValiderEtTerminer";
-import MentionForm, { IInfoTitulaire } from "./formulaires/MentionForm";
+import MentionForm, { ITitulaireMention } from "./formulaires/MentionForm";
 import AnalyseMarginaleFormulaire from "./formulaires/mentions/AnalyseMarginaleFormulaire/AnalyseMarginaleFormulaire";
 import TableauMentions from "./formulaires/mentions/ListeMentionsFormulaire/TableauMentions";
 
@@ -246,7 +246,7 @@ const PartieFormulaire: React.FC = () => {
     );
   }, [motif, acte]);
 
-  const infoTitulaires: IInfoTitulaire[] = useMemo(() => {
+  const titulairesMention: ITitulaireMention[] = useMemo(() => {
     if (!acte) return [];
 
     return [...Array(acte.getNombreTitulairesSelonNature()).keys()].map(index => {
@@ -315,7 +315,7 @@ const PartieFormulaire: React.FC = () => {
                 </Form>
               </Formik>
               <MentionForm
-                infoTitulaires={infoTitulaires}
+                titulaires={titulairesMention}
                 setEnCoursDeSaisie={setFormulaireMentionEnCoursDeSaisie}
                 enCoursDeSaisie={formulaireMentionEnCoursDeSaisie}
                 setMentionEnCoursDeSaisie={setMentionEnCoursDeSaisie}

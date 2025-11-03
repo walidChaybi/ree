@@ -22,7 +22,7 @@ import { IMentionEnCours } from "../PartieFormulaire";
 import AideALaSaisieMention from "./mentions/AideALaSaisieMentionForm";
 import ChampTypeMention from "./mentions/ChampTypeMention";
 
-export interface IInfoTitulaire {
+export interface ITitulaireMention {
   nom: string;
   nomPartie1: string;
   nomPartie2: string;
@@ -49,7 +49,7 @@ export type TMentionForm = {
 } & TObjetFormulaire;
 
 interface IMentionFormProps {
-  infoTitulaires: IInfoTitulaire[];
+  titulaires: ITitulaireMention[];
   setEnCoursDeSaisie: React.Dispatch<React.SetStateAction<boolean>>;
   enCoursDeSaisie: boolean;
   setMentionEnCoursDeSaisie: React.Dispatch<React.SetStateAction<IMentionEnCours | null>>;
@@ -67,7 +67,7 @@ const formaterTexteMention = (texteMention: string): string =>
 const DEFAUT_CREATION: TMentionForm = { idTypeMention: "", texteMention: "", textesEdites: {}, mentionAffecteAnalyseMarginale: false };
 
 const MentionForm: React.FC<IMentionFormProps> = ({
-  infoTitulaires,
+  titulaires,
   setEnCoursDeSaisie,
   setMentionEnCoursDeSaisie,
   enCoursDeSaisie,
@@ -148,13 +148,13 @@ const MentionForm: React.FC<IMentionFormProps> = ({
           setMetamodeleTypeMention(modele);
           setValeurDefaut({
             ...modele.valeursInitiales(mentionModifiee?.mention.donneesAideSaisie?.champs),
-            titulaires: infoTitulaires.map(infoTitulaire => {
+            titulaires: titulaires.map(titulaire => {
               return {
-                nom: infoTitulaire.nom,
-                nomPartie1: infoTitulaire.nomPartie1,
-                nomPartie2: infoTitulaire.nomPartie2,
-                nomSecable: infoTitulaire.nomSecable,
-                sexe: infoTitulaire.sexe ? ESexe[infoTitulaire.sexe] : ""
+                nom: titulaire.nom,
+                nomPartie1: titulaire.nomPartie1,
+                nomPartie2: titulaire.nomPartie2,
+                nomSecable: titulaire.nomSecable,
+                sexe: titulaire.sexe ? ESexe[titulaire.sexe] : ""
               };
             }),
             idTypeMention: typeMentionChoisi.id,
