@@ -1667,7 +1667,8 @@ export function getRequeteAvecDeuxDocs(requete: any) {
   return requeteAvecDeuxDoc;
 }
 
-export const idFicheActeMariage = "b41079a5-9e8d-478c-b04c-c4c2ac67134b";
+const idFicheActeMariage = "b41079a5-9e8d-478c-b04c-c4c2ac67134b";
+
 export const requeteAvecCopieIntegraleActeImage = {
   id: "9bfa282d-1e66-4538-b242-b9de4f683f77",
   numeroFonctionnel: "BBLMAN",

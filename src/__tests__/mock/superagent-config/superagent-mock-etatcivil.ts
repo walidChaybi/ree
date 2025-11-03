@@ -1,4 +1,3 @@
-import { idFicheActeMariage } from "@mock/data/DetailRequeteDelivrance";
 import { ReponseEnregistrementProjetActe } from "@mock/data/ProjetActe";
 import { ReponseAppelAddAlerteActe, ReponseAppelGetAlertesActe } from "../data/Alertes";
 import { imagePngVideBase64 } from "../data/ImagePng";
@@ -177,14 +176,6 @@ export const configEtatcivil = [
         match[1] === "/acte/alerte/a0adc2b2-03b6-4b80-a90d-7f96e780df15"
       ) {
         return { data: null };
-      }
-
-      // Récupération des images d'un acte
-      if (match[1] === "/acteimage/images/abcdc2b2-03b6-4b80-a90d-7f96e7807788") {
-        return { data: ["imgBase64_1", "imgBase64_2"] };
-      }
-      if (match[1] === `/acteimage/images/${idFicheActeMariage}`) {
-        return { data: [imagePngVideBase64] };
       }
 
       if (match[1] === `/requetes/piecesjustificatives/3ed9ad41-ca61-416a-91df-448690804363`) {

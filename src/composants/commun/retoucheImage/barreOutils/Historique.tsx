@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { FaArrowRotateLeft, FaArrowRotateRight } from "react-icons/fa6";
 import type EtatImage from "../../../../model/retoucheImage/EtatImage";
 import BoutonIcon from "../../bouton/BoutonIcon";
@@ -17,6 +18,23 @@ const Historique: React.FC<IHistoriqueProps> = ({ etatImage, redessiner }) => {
     etatImage.retablir();
     redessiner();
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      e.preventDefault();
+
+      if (e.ctrlKey && e.key.toLowerCase() === "z") {
+        defaireDerniereModification();
+      } else if (e.ctrlKey && e.key.toLowerCase() === "y") {
+        refaireDerniereModification();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   return (
     <div className="flex items-center gap-0.5 2xl:gap-1">

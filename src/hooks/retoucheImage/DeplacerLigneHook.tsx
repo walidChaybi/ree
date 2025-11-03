@@ -86,13 +86,8 @@ const useDeplacerLigne = ({ zoom, offset, refCanvas, etatImage, outilSelectionne
 
       etatImage.finaliserDeplacementLigne(ligneSelectionnee.current.id, deltaX, deltaY, ["debut", "fin"]);
 
-      UtilitaireRetoucheImage.reinitialiserEtatCanvas(ctx);
-      UtilitaireRetoucheImage.effacerCanvas(ctx, canvas);
-
-      ctx.setTransform(zoom, 0, 0, zoom, offset.x, offset.y);
-      ctx.drawImage(etatImage.recupererBuffer, 0, 0);
-
       dragLigneRef.current = null;
+      ligneSelectionnee.current = null;
 
       redessiner();
     };
@@ -100,11 +95,13 @@ const useDeplacerLigne = ({ zoom, offset, refCanvas, etatImage, outilSelectionne
     canvas.addEventListener("mousedown", commencerADeplacer);
     canvas.addEventListener("mousemove", deplacerLigne);
     canvas.addEventListener("mouseup", finirDeDeplacer);
+    canvas.addEventListener("mouseleave", finirDeDeplacer);
 
     return () => {
       canvas.removeEventListener("mousedown", commencerADeplacer);
       canvas.removeEventListener("mousemove", deplacerLigne);
       canvas.removeEventListener("mouseup", finirDeDeplacer);
+      canvas.removeEventListener("mouseleave", finirDeDeplacer);
     };
   }, [outilSelectionne, zoom, offset, etatImage, redessiner]);
 };

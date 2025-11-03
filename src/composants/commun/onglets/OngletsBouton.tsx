@@ -10,6 +10,7 @@ export interface IOngletBouton<T extends string = string> {
 interface IOngletsBoutonProps<T extends string = string> {
   onglets: IOngletBouton<T>[];
   cleOngletActif: T;
+  masquerSeparateur?: boolean;
   changerOnglet: (valeur: T) => void;
   renderBoutonAjout?: (style: string) => JSX.Element;
 }
@@ -17,11 +18,12 @@ interface IOngletsBoutonProps<T extends string = string> {
 const OngletsBouton: <T extends string = string>(props: IOngletsBoutonProps<T>) => React.ReactElement = ({
   onglets,
   cleOngletActif,
+  masquerSeparateur = false,
   changerOnglet,
   renderBoutonAjout
 }) => {
   return (
-    <div className="flex items-end border-0 border-b border-solid border-gris">
+    <div className={`flex items-end border-0 ${masquerSeparateur ? "" : "border-b border-solid border-gris"}`}>
       {onglets.map(onglet => (
         <Bouton
           key={onglet.cle}

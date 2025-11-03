@@ -38,7 +38,7 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
   const [majMentionsParams, setMajMentionsParams] = useState<IMiseAJourMentionsParams>();
   const [acteApiHookParams, setActeApiHookParams] = useState<IActeApiHookParams>({});
 
-  // 1- Récupération de l'acte complet pour la génération du document + images corpsImage
+  // 1- Récupération de l'acte complet pour la génération du document + images
   const acte = useInformationsActeApiHook(acteApiHookParams);
 
   useEffect(() => {
@@ -113,6 +113,7 @@ export function useCreerCourrierEC(params?: ICreerCourrierECParams) {
   useEffect(() => {
     if (params) {
       const mentionNationaliteAjoute = nationaliteAjouteeSiBesoin(mentionNationaliteAjoutee, params, acte);
+
       if (
         params.idActe &&
         resultatGenerationCourrier &&

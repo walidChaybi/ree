@@ -135,14 +135,7 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
                 }
               ]
             : []),
-          ...(ongletsDisponible.retoucheImage
-            ? [
-                {
-                  cle: ECleOngletDocumentDelivre.RETOUCHE_IMAGE,
-                  libelle: "Retouche image"
-                }
-              ]
-            : []),
+
           ...(ongletsDisponible.documentEdite
             ? [
                 {
@@ -154,6 +147,7 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
         ]}
         cleOngletActif={ongletActif}
         changerOnglet={(valeur: string) => setOngletActif(valeur as ECleOngletDocumentDelivre)}
+        masquerSeparateur={ongletsDisponible.retoucheImage}
       />
 
       {ongletsDisponible.saisie && (
@@ -215,8 +209,7 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
       {ongletsDisponible.retoucheImage && (
         <ConteneurVoletEdition
           estActif={ongletActif === ECleOngletDocumentDelivre.RETOUCHE_IMAGE}
-          estScrollable
-          estSousOnglet
+          sansMargeHaute
         >
           <RetoucheImage images={imagesDocumentsReponse} />
         </ConteneurVoletEdition>

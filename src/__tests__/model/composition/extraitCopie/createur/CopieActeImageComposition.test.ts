@@ -16,7 +16,7 @@ test("Attendu: corps image correct", () => {
     sousType: SousTypeDelivrance.RDD
   } as IRequeteDelivrance;
   const validation = EValidation.O;
-  const corpsImage = acte.corpsImage;
+  const images = [{ contenu: imagePngVideBase64, noPage: 1 }];
   const erreur = "erreur";
 
   const compositionCorps = CopieActeImageComposition.creerCopieActeImage({
@@ -25,7 +25,7 @@ test("Attendu: corps image correct", () => {
     requete,
     validation,
     choixDelivrance: ChoixDelivrance.DELIVRER_EC_COPIE_INTEGRALE,
-    corpsImage,
+    images,
     erreur,
     ctv: "111111-222222"
   });

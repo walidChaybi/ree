@@ -128,7 +128,7 @@ const Canvas: React.FC<ICanvasProps> = ({ tailleCanvas, etatImage, pageCourante 
           appelerRedessiner={appelerRedessiner}
         />
       </div>
-      <div className="relative mt-4">
+      <div className="relative mt-4 max-h-[65vh] overflow-y-auto 2xl:max-h-[72vh]">
         <canvas
           ref={refCanvas}
           aria-label="Image en cours de retouche"

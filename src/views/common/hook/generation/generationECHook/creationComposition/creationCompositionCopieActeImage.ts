@@ -11,18 +11,20 @@ export const creationCompositionCopieActeImage = function (
   requete: IRequeteDelivrance,
   choixDelivrance: ChoixDelivrance,
   validation: EValidation,
-  ctv: string
+  ctv: string,
+  images?: string[]
 ) {
   if (acte.type !== ETypeActe.IMAGE) return undefined;
 
   const erreur = validation === EValidation.E ? "L'absence d'informations ne permet pas de générer la copie." : undefined;
+
   return CopieActeImageComposition.creerCopieActeImage({
     acte,
     natureActe: ENatureActe[acte.nature],
     choixDelivrance,
     requete,
     validation,
-    corpsImage: acte.corpsImage ?? undefined,
+    images: images?.map((image, index) => ({ contenu: image, noPage: index + 1 })),
     erreur,
     ctv
   });

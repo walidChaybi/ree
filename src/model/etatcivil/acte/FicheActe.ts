@@ -23,7 +23,6 @@ import { AnalyseMarginale, IAnalyseMarginaleDto } from "./AnalyseMarginale";
 import { DetailMariage, IDetailMariageDto } from "./DetailMariage";
 import { ICorpsTexte } from "./ICorpsTexte";
 import { IEvenementDto } from "./IEvenement";
-import { ICorpsImage } from "./imageActe/ICorpsImage";
 import { TypeMention } from "./mention/ITypeMention";
 import { IMentionDto, Mention } from "./mention/Mention";
 import { IRectificationCorpsExtraitDto, RectificationCorpsExtrait } from "./RectificationCorpsExtrait";
@@ -52,7 +51,6 @@ export interface IFicheActeDto {
   alerteActes: IAlerteFicheActeDto[];
   detailMariage?: IDetailMariageDto;
   corpsTexte?: ICorpsTexte;
-  corpsImage?: ICorpsImage;
   referenceActe: string;
   referenceRegistreSansNumeroDActe?: string;
 }
@@ -97,8 +95,7 @@ export class FicheActe {
     public readonly evenement: IEvenementDto | null,
     public readonly detailMariage: DetailMariage | null,
     public readonly estReecrit: boolean | null,
-    public readonly corpsTexte: ICorpsTexte | null,
-    public readonly corpsImage: ICorpsImage | null
+    public readonly corpsTexte: ICorpsTexte | null
   ) {}
 
   public static readonly depuisDto = (ficheActe: IFicheActeDto): FicheActe | null => {
@@ -147,8 +144,7 @@ export class FicheActe {
       ficheActe.evenement ?? null,
       ficheActe.detailMariage ? DetailMariage.depuisDto(ficheActe.detailMariage) : null,
       ficheActe.estReecrit ?? null,
-      ficheActe.corpsTexte ?? null,
-      ficheActe.corpsImage ?? null
+      ficheActe.corpsTexte ?? null
     );
   };
 
@@ -193,11 +189,6 @@ export class FicheActe {
 
   public readonly aDonneesLieuOuAnneeEvenementAbsentes = (): boolean =>
     !this.evenement?.annee || (!this.evenement?.lieuReprise && !this.evenement?.ville && !this.evenement?.region && !this.evenement?.pays);
-
-  public readonly estActeTexte = (): boolean => this.type === "TEXTE" || !this.corpsImage;
-
-  public readonly estActeImage = (): boolean =>
-    Boolean(this.type === "IMAGE" || (this.corpsImage?.images && this.corpsImage.images.length > 0));
 
   public readonly estActeImageReecrit = (): boolean => Boolean(this.type === "IMAGE" && this.estReecrit && this.corpsTexte?.texte);
 
@@ -255,7 +246,7 @@ export class FicheActe {
     this.nature === "NAISSANCE" &&
     Boolean(this.registre) &&
     Boolean(this.registre && ["ACQ", "OP2", "OP3"].includes(this.registre?.famille)) &&
-    (this.estActeTexte || this.estActeImageReecrit()) &&
+    (this.type === "TEXTE" || this.estActeImageReecrit()) &&
     !this.mentions.some(mention => mention.typeMention.natureMention?.code === NATIONALITE) &&
     ChoixDelivrance.estAvecFiliation(choixDelivrance);
 

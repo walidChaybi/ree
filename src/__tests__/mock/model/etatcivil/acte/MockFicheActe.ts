@@ -2,7 +2,6 @@ import { creerMockAnalyseMarginaleDtoDepuisTitulaireActeDto } from "@mock/data/e
 import { MOCK_EVENEMENT } from "@mock/data/etatcivil/acte/mockIEvenement";
 import { MOCK_REGISTRE_ACQ } from "@mock/data/etatcivil/acte/mockRegistre";
 import { MOCK_DEUX_TITULAIRES_ACTE, MOCK_TITULAIRE_ACTE } from "@mock/data/etatcivil/acte/mockTitulaireActe";
-import { imagePngVideBase64 } from "@mock/data/ImagePng";
 import { FicheActe, IFicheActeDto } from "@model/etatcivil/acte/FicheActe";
 import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
 import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
@@ -42,15 +41,12 @@ export class MockFicheActeBuilder {
     switch (typeActe) {
       case "IMAGE":
         this.ficheActeDto.corpsTexte = undefined;
-        this.ficheActeDto.corpsImage = { images: [{ contenu: imagePngVideBase64, noPage: 1 }] };
         break;
       case "TEXTE":
         this.ficheActeDto.corpsTexte = { texte: "Corps texte" };
-        this.ficheActeDto.corpsImage = undefined;
         break;
       case "INCONNU":
         this.ficheActeDto.corpsTexte = undefined;
-        this.ficheActeDto.corpsImage = undefined;
         break;
     }
 

@@ -1,6 +1,6 @@
+import { IImage } from "@model/etatcivil/acte/imageActe/IImage";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { FicheActe } from "../../../etatcivil/acte/FicheActe";
-import { ICorpsImage } from "../../../etatcivil/acte/imageActe/ICorpsImage";
 import { IRequeteDelivrance } from "../../../requete/IRequeteDelivrance";
 import { EValidation } from "../../../requete/enum/EValidation";
 import { IExtraitCopieComposition } from "../IExtraitCopieComposition";
@@ -12,7 +12,7 @@ interface ICreerExtraitCopieActeImageParams {
   requete: IRequeteDelivrance;
   validation: EValidation;
   choixDelivrance: ChoixDelivrance;
-  corpsImage?: ICorpsImage;
+  images?: IImage[];
   erreur?: string;
   ctv: string;
 }
@@ -36,7 +36,7 @@ export class CopieActeImageComposition {
     // Erreur (Dans le cas d'un manque d'information pour la génération du document)
     composition.erreur = params.erreur;
 
-    composition.corps_image = CopieActeImageComposition.mapCorpsImage(params.corpsImage);
+    composition.corps_image = CopieActeImageComposition.mapImages(params.images);
 
     CommunExtraitOuCopieActeTexteComposition.creerBlocSignature(
       composition,
@@ -51,7 +51,7 @@ export class CopieActeImageComposition {
     return composition;
   }
 
-  private static mapCorpsImage(corpsImage?: ICorpsImage): string[] | undefined {
-    return corpsImage?.images.sort((image1, image2) => image1.noPage - image2.noPage).map(image => image.contenu);
+  private static mapImages(images?: IImage[]): string[] | undefined {
+    return images?.sort((image1, image2) => image1.noPage - image2.noPage).map(image => image.contenu);
   }
 }

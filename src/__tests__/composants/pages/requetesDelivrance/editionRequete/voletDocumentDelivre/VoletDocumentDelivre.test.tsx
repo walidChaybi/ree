@@ -104,7 +104,7 @@ describe("VoletDocumentDelivre", () => {
       </MockRECEContextProvider>
     );
     await waitFor(() => {
-      expect(screen.getByText("Retouche image")).toBeDefined();
+      expect(screen.getByText("Aucune image à afficher")).toBeDefined();
       expect(screen.queryByText("Document édité")).toBeNull();
     });
   });

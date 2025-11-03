@@ -26,6 +26,7 @@ export function useExtraitCopieApiHook(params?: IExtraitCopieApiHookParams) {
   useEffect(() => {
     if (params && params.extraitCopieComposition) {
       let apiCompositionAAppeler;
+
       if (ChoixDelivrance.estPlurilingue(params.choixDelivrance)) {
         apiCompositionAAppeler = compositionApi.getCompositionExtraitPlurilingue;
       } else if (params.extraitCopieComposition.corps_image && params.extraitCopieComposition.corps_image.length > 0) {

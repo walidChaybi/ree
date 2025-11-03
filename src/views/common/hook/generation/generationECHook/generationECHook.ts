@@ -1,3 +1,4 @@
+import { CONFIG_GET_IMAGES_ACTE_FORMAT_TIFF } from "@api/configurations/etatCivil/acte/GetImagesActeFormatTiffConfigApi";
 import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
 import { Orientation } from "@model/composition/enum/Orientation";
 import { FicheActe } from "@model/etatcivil/acte/FicheActe";
@@ -37,6 +38,16 @@ export interface IGenerationECResultat {
   erreur?: any;
 }
 
+const estActeImage = (acte: FicheActe | null, acteDejaPresent?: FicheActe): boolean => {
+  const acteAUtiliser = acte ?? acteDejaPresent;
+
+  if (!acteAUtiliser) {
+    return false;
+  }
+
+  return acteAUtiliser.type === "IMAGE";
+};
+
 export function useGenerationEC(params?: IGenerationECParams): IGenerationECResultat | undefined {
   const [resultat, setResultat] = useState<IGenerationECResultat>();
 
@@ -59,10 +70,12 @@ export function useGenerationEC(params?: IGenerationECParams): IGenerationECResu
     }
   }, [params?.choixDelivrance, params?.idActe, params?.acte]);
 
-  // 1- Récupération de l'acte complet pour la génération du document + images corpsImage
+  // 1- Récupération de l'acte complet pour la génération du document + images
   const [acte, setActe] = useState<FicheActe | null>(null);
+  const [imagesActe, setImagesActe] = useState<string[]>();
 
   const { appelApi: recupererActe } = useFetchApi(CONFIG_GET_RESUME_ACTE);
+  const { appelApi: getImagesActeFormatTiff } = useFetchApi(CONFIG_GET_IMAGES_ACTE_FORMAT_TIFF);
 
   useEffect(() => {
     if (!params?.idActe) return;
@@ -86,24 +99,39 @@ export function useGenerationEC(params?: IGenerationECParams): IGenerationECResu
     });
   }, [params?.choixDelivrance, params?.idActe]);
 
-  // 1bis - Récupérer code CTV
+  // 1bis - Récupérer les images de l'acte si besoin
+  useEffect(() => {
+    if (!estActeImage(acte, acteDejaPresent)) return;
+
+    getImagesActeFormatTiff({
+      parametres: { path: { idActe: acte ? acte.id : acteDejaPresent!.id } },
+      apresSucces: images => setImagesActe(images),
+      apresErreur: erreurs => AfficherMessage.erreur("Impossible de récupérer les images associées à l'acte", { erreurs })
+    });
+  }, [acte, acteDejaPresent]);
+
+  // 1ter - Récupérer code CTV
   const recupererCtvResultat = useRecupererCTV(recupererCtvApiHookParam);
 
-  // 1ter
+  // 1quater
   useEffect(() => {
+    if (estActeImage(acte, acteDejaPresent) && !imagesActe) return;
+
     if (acte || acteDejaPresent) {
       if (estDocumentAvecCTV(DocumentDelivrance.getTypeDocument(params?.choixDelivrance), params?.requete.sousType)) {
         setRecupererCtvApiHookParam({});
       } else {
-        creationECSansCTV(acte || acteDejaPresent, params, setValidation, setExtraitCopieApiHookParams);
+        creationECSansCTV(acte || acteDejaPresent, params, setValidation, setExtraitCopieApiHookParams, imagesActe);
       }
     }
-  }, [acte, triggerEtapeUnTer]);
+  }, [acte, triggerEtapeUnTer, imagesActe]);
 
   // 2- Création du bon EC composition suivant le choix de délivrance
   useEffect(() => {
-    creationEC(acte || acteDejaPresent, params, setValidation, setExtraitCopieApiHookParams, recupererCtvResultat?.ctv);
-  }, [recupererCtvResultat]);
+    if (estActeImage(acte, acteDejaPresent) && !imagesActe) return;
+
+    creationEC(acte || acteDejaPresent, params, setValidation, setExtraitCopieApiHookParams, recupererCtvResultat?.ctv, imagesActe);
+  }, [recupererCtvResultat, imagesActe]);
 
   // 3 - Création de l'EC PDF pour un acte: appel api composition
   // récupération du document en base64

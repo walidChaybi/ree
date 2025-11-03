@@ -10,13 +10,13 @@ export function useSauvegarderCourrierCreerActionMajStatutRequete(
   requete?: ISauvegardeCourrier | undefined,
   requeteId?: string
 ) {
-  const [uuidDocumentsReponse, setUuidDocumentsReponse] = useState<string[] | undefined>();
+  const [uuidDocumentsReponse, setUuidDocumentsReponse] = useState<string | undefined>();
   useEffect(
     () => {
       if (requete && requeteId) {
         postSauvCourrierCreerActionMajStatutRequete(requeteId, statutRequete, requete, libelleAction)
           .then(result => {
-            setUuidDocumentsReponse(result.body.data);
+            setUuidDocumentsReponse(result.body.data[0]);
           })
           .catch(erreurs => {
             AfficherMessage.erreur("Impossible de sauvegarder le courrier d'accompagnement", {

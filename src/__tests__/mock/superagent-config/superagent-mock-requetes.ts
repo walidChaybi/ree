@@ -230,36 +230,6 @@ export const configRequetes = [
         };
       }
 
-      // Stockage Document Maj Statut
-      if (
-        match[1] ===
-          "/requetes/delivrance/d19650ed-012b-41ec-b7be-9e6ea9101eaa/document?libelleAction=%C3%80%20valider&statutRequete=A_VALIDER" ||
-        match[1] ===
-          "/requetes/delivrance/7b448d64-add5-4dbd-8041-b7081ea7bc86/document?libelleAction=%C3%80%20valider&statutRequete=A_VALIDER" ||
-        match[1] ===
-          "/requetes/delivrance/1072bc37-f889-4365-8f75-912166b767dd/document?libelleAction=Trait%C3%A9e%20-%20A%20imprimer&statutRequete=TRAITE_A_IMPRIMER" ||
-        match[1] ===
-          "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d884/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
-        match[1] ===
-          "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d404/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
-        match[1] ===
-          "/requetes/delivrance/a4cefb71-8457-4f6b-937e-34b49335d666/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
-        match[1] ===
-          "/requetes/delivrance/9bfa282d-1e66-4538-b242-b9de4f683f0f/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
-        match[1] ===
-          "/requetes/delivrance/0ad85c1f-57cf-45cc-ab66-6a17f31247df/document?libelleAction=%C3%80%20valider&statutRequete=A_VALIDER" ||
-        match[1] ===
-          "/requetes/delivrance/9bfa282d-1e66-4538-b242-b9de4f683f77/document?libelleAction=%C3%80%20valider&statutRequete=A_VALIDER" ||
-        match[1] ===
-          "/requetes/delivrance/9bfa282d-1e66-4538-b272-b9de4g683aaf/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
-        // match[1] ===
-        //   "/requetes/delivrance/9bfa282d-1e66-4038-b272-b9de48683a1f/document?libelleAction=%C3%80%20signer&statutRequete=A_SIGNER" ||
-        match[1] ===
-          "/requetes/delivrance/f0ea8f29-ddcd-494b-86e4-0a58f6990c96/document?libelleAction=%C3%80%20valider&statutRequete=A_VALIDER"
-      ) {
-        return { data: ["bbac2335-562c-4b14-96aa-4386814c02a2"] };
-      }
-
       // Nomenclatures requetes
       if (match[1] === "/nomenclature/DOCUMENT_DELIVRANCE,TYPE_PIECE_JUSTIFICATIVE,PAYS_SECABILITE") {
         return {

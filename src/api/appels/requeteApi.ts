@@ -29,7 +29,6 @@ const URL_REQUETES_DELIVRANCE = "/requetes/delivrance";
 const URL_REQUETES_CREATION = "/requetes/creation";
 const URL_CHOIX_DELIVRANCE = "/choixdelivrance";
 const URL_COURRIER = "/courrier";
-const URL_DOCUMENT = "/document";
 const URL_DOCUMENT_REPONSE = "/documentsreponses";
 const URL_PIECES_COMPLEMENT_INFORMATION = "/piecescomplementinformations";
 const URL_PIECE_COMPLEMENT_INFORMATION = "/piececomplementinformation";
@@ -284,25 +283,6 @@ export async function postSauvCourrierCreerActionMajStatutRequete(
         statutRequete: StatutRequete.getKey(statutRequete)
       },
       data: requete
-    })
-  );
-}
-
-export async function patchSauvDocumentCreerActionMajStatutRequete(
-  idRequete: string,
-  libelleAction: string,
-  statutRequete: StatutRequete,
-  document: Object
-) {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.PATCH,
-      uri: `${URL_REQUETES_DELIVRANCE}/${idRequete}${URL_DOCUMENT}`,
-      parameters: {
-        libelleAction,
-        statutRequete: StatutRequete.getKey(statutRequete)
-      },
-      data: document
     })
   );
 }

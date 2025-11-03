@@ -105,13 +105,8 @@ const useDeplacerExtremiteLigne = ({
         ligneAvecExtremiteSelectionnee.current.extremite
       ]);
 
-      UtilitaireRetoucheImage.reinitialiserEtatCanvas(ctx);
-      UtilitaireRetoucheImage.effacerCanvas(ctx, canvas);
-
-      ctx.setTransform(zoom, 0, 0, zoom, offset.x, offset.y);
-      ctx.drawImage(etatImage.recupererBuffer, 0, 0);
-
       dragExtremiteRef.current = null;
+      ligneAvecExtremiteSelectionnee.current = null;
 
       redessiner();
     };
@@ -119,11 +114,13 @@ const useDeplacerExtremiteLigne = ({
     canvas.addEventListener("mousedown", commencerADeplacer);
     canvas.addEventListener("mousemove", deplacerExtremiteLigne);
     canvas.addEventListener("mouseup", finirDeDeplacer);
+    canvas.addEventListener("mouseleave", finirDeDeplacer);
 
     return () => {
       canvas.removeEventListener("mousedown", commencerADeplacer);
       canvas.removeEventListener("mousemove", deplacerExtremiteLigne);
       canvas.removeEventListener("mouseup", finirDeDeplacer);
+      canvas.removeEventListener("mouseleave", finirDeDeplacer);
     };
   }, [refCanvas, zoom, offset, outilSelectionne]);
 };

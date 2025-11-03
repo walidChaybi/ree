@@ -147,15 +147,12 @@ export function useGenerationCourrierHook(params?: IGenerationCourrierParams) {
 
   // 6- Une fois la requête mise à jour et l'action créé, changement de page
   useEffect(() => {
-    if (uuidDocumentReponseEtDonneesCompositionPresents(uuidDocumentsReponse, donneesComposition)) {
+    if (uuidDocumentsReponse && donneesComposition) {
       setResultatGenerationCourrier({
-        //@ts-ignore non null
-        idDocumentReponse: uuidDocumentsReponse[0],
-        //@ts-ignore non null
+        idDocumentReponse: uuidDocumentsReponse,
         contenuDocumentReponse: donneesComposition.contenu
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uuidDocumentsReponse]);
 
   return resultatGenerationCourrier;
@@ -184,13 +181,6 @@ function setActApiHookParamsOuBasculerConstructionCourrier(
 
 function uuidCourrierPresent(generationCourrierParams?: IGenerationCourrierParams): boolean {
   return generationCourrierParams?.saisieCourrier?.choixCourrier.courrier != null;
-}
-
-function uuidDocumentReponseEtDonneesCompositionPresents(
-  uuidDocumentsReponse: string[] | undefined,
-  donneesComposition: IDonneesComposition | undefined
-) {
-  return uuidDocumentsReponse != null && donneesComposition != null;
 }
 
 function presenceDeLaRequeteDuDocEtSaisieCourrier(params: IGenerationCourrierParams | undefined, basculerConstructionCourrier: boolean) {

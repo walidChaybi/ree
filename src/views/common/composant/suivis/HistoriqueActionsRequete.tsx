@@ -21,7 +21,7 @@ export const HistoriqueActionsRequete: React.FC<IHistoriqueActionsRequeteProps> 
       >
         <List>
           {actions.map(action => (
-            <ListItemText>{action.phraseHistorique}</ListItemText>
+            <ListItemText key={action.id}>{action.phraseHistorique}</ListItemText>
           ))}
         </List>
       </AccordionRece>
