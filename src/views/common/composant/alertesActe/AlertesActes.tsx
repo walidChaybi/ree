@@ -136,7 +136,7 @@ export const AlertesActes: React.FC<AlertesActesProps> = ({ idActeInit, addActe,
               key={`alertes-${index}`}
               className={`Alertes ${index === 0 ? "" : "SeparateurAlertes"}`}
             >
-              {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA) && (
+              {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CIBLE_EXTRAITS_COPIES) && (
                 <BoutonAjouterAlerte
                   key={`bouton-ajouter-alerte-${index}`}
                   ajouterAlerteCallBack={ajouterAlerteCallBack.bind(null, entry?.[0])}

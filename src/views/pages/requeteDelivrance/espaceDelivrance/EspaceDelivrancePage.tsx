@@ -31,7 +31,7 @@ const getElementEntreDeux = (selectedTabState: number) => {
   return (
     <>
       {gestionnaireFeatureFlag.auMoinUnEstActif(
-        FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA,
+        FeatureFlag.FF_DELIVRANCE_CIBLE_EXTRAITS_COPIES,
         FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATION
       ) && (
         <div className="BlocBoutons">

@@ -73,9 +73,8 @@ const TRAITEMENT_ENREGISTRER_DOCUMENTS_SIGNES: TTraitementApi<IParamTraitement> 
           }))
         },
         apresSucces: () =>
-          gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA)
-            ? mettreAJourDerniereDelivrance(idsActesConcernes)
-            : appelRecupererDonneesPourTeleverification({
+          gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CIBLE_EXTRAITS_COPIES)
+            ? appelRecupererDonneesPourTeleverification({
                 parametres: { body: idsActesConcernes },
                 apresSucces: donneesPourTeleverificationDtos => {
                   donneesPourTeleverification = donneesPourTeleverificationDtos.reduce(
@@ -99,7 +98,8 @@ const TRAITEMENT_ENREGISTRER_DOCUMENTS_SIGNES: TTraitementApi<IParamTraitement> 
                     apresErreur: () => setEnEchec(true),
                     finalement: () => mettreAJourDerniereDelivrance(idsActesConcernes)
                   })
-              }),
+              })
+            : mettreAJourDerniereDelivrance(idsActesConcernes),
         apresErreur: () => setEnEchec(true)
       });
     };

@@ -55,7 +55,7 @@ export const ROUTES_ESPACE_DELIVRANCE: RouteObject[] = [
       <ElementPageRECE
         infoPage={INFO_PAGE_SAISIE_REQUETE_DELIVRANCE_EXTRAIT_COPIE_COURRIER}
         tousLesDroits={[Droit.SAISIR_REQUETE]}
-        featureFlags={[FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA]}
+        featureFlags={[FeatureFlag.FF_DELIVRANCE_CIBLE_EXTRAITS_COPIES]}
       >
         <PageSaisieRDC />
       </ElementPageRECE>
@@ -153,7 +153,7 @@ export const ROUTES_ESPACE_DELIVRANCE: RouteObject[] = [
       <ElementPageRECE
         infoPage={INFO_PAGE_APERCU_REQUETE_DELIVRANCE_EDITION}
         auMoinsUnDesDroits={[Droit.DELIVRER]}
-        featureFlags={[FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA]}
+        featureFlags={[FeatureFlag.FF_DELIVRANCE_CIBLE_EXTRAITS_COPIES]}
       >
         <PageEditionRequeteDelivrance />
       </ElementPageRECE>

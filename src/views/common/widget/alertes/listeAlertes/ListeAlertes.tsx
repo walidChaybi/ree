@@ -74,7 +74,7 @@ export const ListeAlertes: React.FC<ListeAlertesProps> = ({ alertes, displayRefe
               title={alerte?.complementDescription}
             >
               {displayReference ? Alerte.toReferenceString(alerte, utilisateurs) : Alerte.toAlertString(alerte, utilisateurs)}
-              {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA) && (
+              {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CIBLE_EXTRAITS_COPIES) && (
                 <FaTrashAlt
                   className="IconeBoutonSupprimerAlerte"
                   title="Supprimer l'alerte"

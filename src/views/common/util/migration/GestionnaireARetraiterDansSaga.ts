@@ -25,7 +25,7 @@ export class GestionnaireARetraiterDansSaga {
 
   public static init() {
     if (
-      !gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA) &&
+      !gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CIBLE_EXTRAITS_COPIES) &&
       // @ts-ignore
       !StatutRequete[A_RETRAITER]
     ) {
@@ -47,7 +47,7 @@ export class GestionnaireARetraiterDansSaga {
     const statut = requete.statutCourant.statut;
     const sousType = requete.sousType;
     return (
-      !gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA) &&
+      !gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CIBLE_EXTRAITS_COPIES) &&
       ((SousTypeDelivrance.estRDD(sousType) && StatutRequete.estAuStatutTraiteADelivrerDematOuASigner(statut)) ||
         (SousTypeDelivrance.estRDC(sousType) && StatutRequete.estAuStatutTraiteAImprimer(statut)))
     );

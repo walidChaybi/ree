@@ -315,8 +315,9 @@ describe("Test du composant FormulaireSaiseProjet", async () => {
 
       fireEvent.change(inputNomRetenuOEC, { target: { value: "Xi phun bin" } });
 
+      router.navigate("/autre-page");
+
       await waitFor(() => {
-        router.navigate("/autre-page");
         expect(screen.getByText("Autre page")).toBeDefined();
       });
     });

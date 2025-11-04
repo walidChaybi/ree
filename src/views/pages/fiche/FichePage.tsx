@@ -304,7 +304,7 @@ export const FichePage: React.FC<IFichePageProps> = ({
                     pourIdTypeRegistre: fiche.registre?.type?.id
                   }) || utilisateurConnecte.estHabilitePour({ leDroit: Droit.CONSULTER, surLePerimetre: Perimetre.TOUS_REGISTRES })
                 ) &&
-                gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA) && (
+                gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CIBLE_EXTRAITS_COPIES) && (
                   <BoutonCreationRDD
                     label="Demander la délivrance"
                     labelPopin={`Vous allez demander la délivrance de cet acte. Souhaitez-vous continuer ?`}

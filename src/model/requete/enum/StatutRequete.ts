@@ -206,8 +206,8 @@ export class StatutRequete extends EnumWithComplete {
 
   public static getStatutsRequetesService() {
     const statuts = StatutRequete.getStatutsMesRequetes();
-    // A_TRAITER est ramené par le back si FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA n'est pas positionné (étape 1)
-    if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA)) {
+    // A_TRAITER est ramené par le back si FF_DELIVRANCE_CIBLE_EXTRAITS_COPIES n'est pas positionné (étape 1)
+    if (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CIBLE_EXTRAITS_COPIES)) {
       statuts.push(StatutRequete.A_TRAITER.nom);
     }
 

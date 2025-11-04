@@ -71,7 +71,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({ requete, acte 
             chargerDocumentsAuClic
             apreSignature={succes => succes && navigate(LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_DELIVRANCE.url))}
           />
-          {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA) && (
+          {gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CIBLE_EXTRAITS_COPIES) && (
             <BoutonDoubleSubmit
               title={"Terminer"}
               onClick={onClickTerminer}
@@ -87,7 +87,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({ requete, acte 
 };
 
 const afficherBoutonValiderTerminer = (requete: IRequeteDelivrance) =>
-  (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA) &&
+  (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CIBLE_EXTRAITS_COPIES) &&
     SousTypeDelivrance.estRDDouRDCouRDDP(requete?.sousType)) ||
   (gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATION) && SousTypeDelivrance.estRDCSDouRDCSC(requete.sousType));
 
@@ -104,5 +104,5 @@ const estPossibleDeSigner = (
 };
 
 const possibleDeTransmettreAValideur = (statut: StatutRequete): boolean => {
-  return StatutRequete.estASignerOuAValider(statut) && gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA);
+  return StatutRequete.estASignerOuAValider(statut) && gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CIBLE_EXTRAITS_COPIES);
 };

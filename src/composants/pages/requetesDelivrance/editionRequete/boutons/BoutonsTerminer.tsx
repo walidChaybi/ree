@@ -31,7 +31,7 @@ export const BoutonsTerminer: React.FC<BoutonsTerminerProps> = ({ requete, acte 
   const { setIsDirty } = useContext(RECEContextActions);
   const FFEstActif = useMemo(
     () => ({
-      delivranceExtraitCopie: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_EXTRAITS_COPIES_VIA_SAGA),
+      delivranceExtraitCopie: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CIBLE_EXTRAITS_COPIES),
       delivCS: gestionnaireFeatureFlag.estActif(FeatureFlag.FF_DELIVRANCE_CERTIFS_SITUATION)
     }),
     []
