@@ -27,6 +27,7 @@ export interface ITitulaireMention {
   nomPartie1: string;
   nomPartie2: string;
   nomSecable: boolean;
+  prenoms: string[];
   sexe: keyof typeof ESexe | null;
 }
 
@@ -154,7 +155,8 @@ const MentionForm: React.FC<IMentionFormProps> = ({
                 nomPartie1: titulaire.nomPartie1,
                 nomPartie2: titulaire.nomPartie2,
                 nomSecable: titulaire.nomSecable,
-                sexe: titulaire.sexe ? ESexe[titulaire.sexe] : ""
+                sexe: titulaire.sexe ? ESexe[titulaire.sexe] : "",
+                prenoms: Object.fromEntries(titulaire.prenoms.map((prenom, i) => [`prenom${i + 1}`, prenom]))
               };
             }),
             idTypeMention: typeMentionChoisi.id,

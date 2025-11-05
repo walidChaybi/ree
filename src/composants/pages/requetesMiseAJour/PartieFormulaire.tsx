@@ -255,6 +255,7 @@ const PartieFormulaire: React.FC = () => {
         nomPartie1: acte?.titulaires?.[index].nomPartie1 ?? "",
         nomPartie2: acte?.titulaires?.[index].nomPartie2 ?? "",
         nomSecable: Boolean(acte?.titulaires?.[index].nomPartie1 && acte?.titulaires?.[index].nomPartie2),
+        prenoms: acte?.titulaires?.[index].prenoms ?? [],
         sexe: acte?.titulaires?.[index].sexe ?? null
       };
     });
