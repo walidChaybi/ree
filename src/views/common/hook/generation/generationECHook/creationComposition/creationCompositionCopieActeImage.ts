@@ -1,5 +1,6 @@
 import { CopieActeImageComposition } from "@model/composition/extraitCopie/createur/CopieActeImageComposition";
 import { FicheActe } from "@model/etatcivil/acte/FicheActe";
+import { IImage } from "@model/etatcivil/acte/imageActe/IImage";
 import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
 import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
@@ -12,7 +13,7 @@ export const creationCompositionCopieActeImage = function (
   choixDelivrance: ChoixDelivrance,
   validation: EValidation,
   ctv: string,
-  images?: string[]
+  images: IImage[]
 ) {
   if (acte.type !== ETypeActe.IMAGE) return undefined;
 
@@ -24,7 +25,7 @@ export const creationCompositionCopieActeImage = function (
     choixDelivrance,
     requete,
     validation,
-    images: images?.map((image, index) => ({ contenu: image, noPage: index + 1 })),
+    images,
     erreur,
     ctv
   });

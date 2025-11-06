@@ -9,6 +9,7 @@ import {
 import { IExtraitPlurilingueComposition } from "@model/composition/extraitCopie/plurilingue/IExtraitPlurilingueComposition";
 import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { RectificationCorpsExtrait } from "@model/etatcivil/acte/RectificationCorpsExtrait";
+import { IImage } from "@model/etatcivil/acte/imageActe/IImage";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
@@ -61,7 +62,7 @@ function creationComposition(
   mentionsRetirees: string[],
   choixDelivrance: ChoixDelivrance,
   ctv: string,
-  images?: string[]
+  images: IImage[]
 ): IExtraitCopieComposition | IExtraitPlurilingueComposition | undefined {
   let composition;
 
@@ -75,7 +76,7 @@ function creationComposition(
   return composition;
 }
 
-const getValidationEC = (acte: FicheActe, choixDelivrance: ChoixDelivrance, images: string[], validation = EValidation.O) => {
+const getValidationEC = (acte: FicheActe, choixDelivrance: ChoixDelivrance, images: IImage[], validation = EValidation.O) => {
   switch (choixDelivrance) {
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_AVEC_FILIATION:
     case ChoixDelivrance.DELIVRER_EC_EXTRAIT_SANS_FILIATION:
@@ -147,8 +148,8 @@ export function creationEC(
   params: IGenerationECParams | undefined,
   setValidation: any,
   setExtraitCopieApiHookParams: any,
-  ctv?: string,
-  images?: string[]
+  images: IImage[],
+  ctv?: string
 ) {
   if (acte && params) {
     // Verification des données pour la génération d'extrait mariage/naissance
@@ -179,9 +180,9 @@ export function creationECSansCTV(
   params: IGenerationECParams | undefined,
   setValidation: any,
   setExtraitCopieApiHookParams: any,
-  images?: string[]
+  images: IImage[]
 ) {
-  creationEC(acte, params, setValidation, setExtraitCopieApiHookParams, "", images);
+  creationEC(acte, params, setValidation, setExtraitCopieApiHookParams, images, "");
 }
 
 export function toutesLesDonneesSontPresentes(

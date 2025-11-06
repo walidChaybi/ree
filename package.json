@@ -22,6 +22,7 @@
     "react-router": "7.8.0",
     "react-toastify": "11.0.5",
     "superagent": "10.2.3",
+    "utif": "3.1.0",
     "uuid": "11.1.0",
     "yup": "0.32.8"
   },
@@ -39,6 +40,7 @@
     "@types/react-datepicker": "4.3.4",
     "@types/react-dom": "18.3.0",
     "@types/superagent": "8.1.9",
+    "@types/utif": "3.0.6",
     "@types/uuid": "10.0.0",
     "@vitejs/plugin-react": "5.0.2",
     "@vitest/coverage-v8": "3.2.4",

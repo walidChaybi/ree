@@ -1,5 +1,4 @@
 import { CONFIG_GET_DOCUMENTS_REPONSE_DELIVRANCE } from "@api/configurations/requete/documentsReponses/GetDocumentsReponseDelivranceConfigApi";
-import { CONFIG_GET_DOCUMENTS_REPONSE_DELIVRANCE_FORMAT_IMAGE } from "@api/configurations/requete/documentsReponses/GetDocumentsReponseDelivranceFormatImageConfigApi";
 import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { ETypeActe } from "@model/etatcivil/enum/ETypeActe";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
@@ -80,14 +79,12 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
   );
 
   const [ongletActif, setOngletActif] = useState<ECleOngletDocumentDelivre>(ongletParDefaut);
-  const [imagesDocumentsReponse, setImagesDocumentsReponse] = useState<string[]>([]);
 
   useEffect(() => {
     resetOngletActif && setOngletActif(ongletParDefaut);
   }, [resetOngletActif, ongletParDefaut]);
 
   const { appelApi: getDocumentsReponse } = useFetchApi(CONFIG_GET_DOCUMENTS_REPONSE_DELIVRANCE);
-  const { appelApi: getDocumentsReponseFormatImage } = useFetchApi(CONFIG_GET_DOCUMENTS_REPONSE_DELIVRANCE_FORMAT_IMAGE);
 
   useEffect(() => {
     getDocumentsReponse({
@@ -95,15 +92,6 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
       apresSucces: document => setContenuDocument(document.contenu)
     });
   }, [idDocumentDelivre]);
-
-  useEffect(() => {
-    if (ongletsDisponible.retoucheImage) {
-      getDocumentsReponseFormatImage({
-        parametres: { path: { idDocumentReponse: idDocumentDelivre } },
-        apresSucces: imagesBase64 => setImagesDocumentsReponse(imagesBase64)
-      });
-    }
-  }, [ongletsDisponible]);
 
   return !acte ? (
     <PageChargeur />
@@ -211,7 +199,7 @@ const VoletDocumentDelivre: React.FC<IVoletDocumentDelivreProps> = ({ documentDe
           estActif={ongletActif === ECleOngletDocumentDelivre.RETOUCHE_IMAGE}
           sansMargeHaute
         >
-          <RetoucheImage images={imagesDocumentsReponse} />
+          <RetoucheImage idActe={acte.id} />
         </ConteneurVoletEdition>
       )}
     </>

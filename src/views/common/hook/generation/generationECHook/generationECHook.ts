@@ -2,6 +2,7 @@ import { CONFIG_GET_IMAGES_ACTE_FORMAT_TIFF } from "@api/configurations/etatCivi
 import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
 import { Orientation } from "@model/composition/enum/Orientation";
 import { FicheActe } from "@model/etatcivil/acte/FicheActe";
+import { IImage } from "@model/etatcivil/acte/imageActe/IImage";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
@@ -72,7 +73,7 @@ export function useGenerationEC(params?: IGenerationECParams): IGenerationECResu
 
   // 1- Récupération de l'acte complet pour la génération du document + images
   const [acte, setActe] = useState<FicheActe | null>(null);
-  const [imagesActe, setImagesActe] = useState<string[]>();
+  const [imagesActe, setImagesActe] = useState<IImage[]>([]);
 
   const { appelApi: recupererActe } = useFetchApi(CONFIG_GET_RESUME_ACTE);
   const { appelApi: getImagesActeFormatTiff } = useFetchApi(CONFIG_GET_IMAGES_ACTE_FORMAT_TIFF);
@@ -115,7 +116,7 @@ export function useGenerationEC(params?: IGenerationECParams): IGenerationECResu
 
   // 1quater
   useEffect(() => {
-    if (estActeImage(acte, acteDejaPresent) && !imagesActe) return;
+    if (estActeImage(acte, acteDejaPresent) && imagesActe.length === 0) return;
 
     if (acte || acteDejaPresent) {
       if (estDocumentAvecCTV(DocumentDelivrance.getTypeDocument(params?.choixDelivrance), params?.requete.sousType)) {
@@ -128,9 +129,9 @@ export function useGenerationEC(params?: IGenerationECParams): IGenerationECResu
 
   // 2- Création du bon EC composition suivant le choix de délivrance
   useEffect(() => {
-    if (estActeImage(acte, acteDejaPresent) && !imagesActe) return;
+    if (estActeImage(acte, acteDejaPresent) && imagesActe.length === 0) return;
 
-    creationEC(acte || acteDejaPresent, params, setValidation, setExtraitCopieApiHookParams, recupererCtvResultat?.ctv, imagesActe);
+    creationEC(acte || acteDejaPresent, params, setValidation, setExtraitCopieApiHookParams, imagesActe, recupererCtvResultat?.ctv);
   }, [recupererCtvResultat, imagesActe]);
 
   // 3 - Création de l'EC PDF pour un acte: appel api composition

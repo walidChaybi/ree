@@ -12,7 +12,7 @@ interface ICreerExtraitCopieActeImageParams {
   requete: IRequeteDelivrance;
   validation: EValidation;
   choixDelivrance: ChoixDelivrance;
-  images?: IImage[];
+  images: IImage[];
   erreur?: string;
   ctv: string;
 }
@@ -51,7 +51,7 @@ export class CopieActeImageComposition {
     return composition;
   }
 
-  private static mapImages(images?: IImage[]): string[] | undefined {
-    return images?.sort((image1, image2) => image1.noPage - image2.noPage).map(image => image.contenu);
+  private static mapImages(images: IImage[]): string[] | undefined {
+    return images.sort((image1, image2) => image1.noPage - image2.noPage).map(image => image.contenu);
   }
 }
