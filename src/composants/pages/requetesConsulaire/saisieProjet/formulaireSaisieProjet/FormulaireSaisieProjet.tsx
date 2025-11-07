@@ -46,6 +46,9 @@ const FormulaireSaisieProjet: React.FC = () => {
 
   const aLeDroitDeSignerActe = utilisateurConnecte.estHabilitePour({ leDroit: Droit.TRANSCRIPTION_SIGNER_ACTE });
 
+  // TODO: à variabiliser lors de l'intégration des autres natures dactes au sprint prochain
+  const nombreDeTitulaires = 1;
+
   useEffect(() => {
     if (!requete) return;
     getLibelleDecret({
@@ -148,10 +151,15 @@ const FormulaireSaisieProjet: React.FC = () => {
               <ValeursVersApercuProjet />
 
               <ConteneurAccordeon
-                titre="Titulaire"
+                titre={nombreDeTitulaires > 1 ? "Titulaires" : "Titulaire"}
                 ouvertParDefaut
               >
-                <BlocTitulaire />
+                {[...Array(nombreDeTitulaires).keys()].map(index => (
+                  <BlocTitulaire
+                    indexTitulaire={index}
+                    key={index}
+                  />
+                ))}
               </ConteneurAccordeon>
 
               <ConteneurAccordeon

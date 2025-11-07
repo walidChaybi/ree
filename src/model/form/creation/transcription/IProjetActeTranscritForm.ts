@@ -45,7 +45,7 @@ export enum EActionFormulaireProjetActeTranscrit {
 }
 
 export interface IProjetActeTranscritForm {
-  titulaire: ITitulaireTranscriptionForm;
+  titulaires: ITitulaireTranscriptionForm[];
   declarant: IDeclarantTranscriptionForm;
   parents: IParentsTranscriptionForm;
   mentions: IMentionsTranscriptionForm;
@@ -170,42 +170,44 @@ export const ProjetActeNaissanceTranscriptionForm = {
     projetActe: ProjetActeTranscrit | null,
     libelleDecret: string
   ): IProjetActeTranscritForm /* NOSONAR */ => {
-    const donneesTitulaireParents: Pick<IProjetActeTranscritForm, "titulaire" | "parents"> = projetActe
+    const donneesTitulaireParents: Pick<IProjetActeTranscritForm, "titulaires" | "parents"> = projetActe
       ? (() => {
           const titulaireProjetActe = projetActe.titulaires?.[0];
 
           return {
-            titulaire: {
-              nomActeEtranger: titulaireProjetActe?.nomActeEtranger ?? "",
-              nomRetenuOEC: titulaireProjetActe?.nom ?? "",
-              nomSouhaite: "",
-              nomSecable: {
-                nomPartie1: titulaireProjetActe?.nomActeEtrangerPartie1 ?? "",
-                nomPartie2: titulaireProjetActe?.nomActeEtrangerPartie2 ?? "",
-                secable: Boolean(titulaireProjetActe?.nomActeEtrangerPartie2)
-              },
-              prenomsChemin: PrenomsForm.valeursInitiales(
-                titulaireProjetActe?.prenoms?.map((prenom: string, index: number) => ({ prenom: prenom, numeroOrdre: index + 1 })) ?? []
-              ),
-              sexe: titulaireProjetActe?.sexe ?? null,
-              dateNaissance: DateHeureFormUtils.valeursDefauts(
-                {
-                  jour: titulaireProjetActe?.naissance?.jour?.toString(),
-                  mois: titulaireProjetActe?.naissance?.mois?.toString(),
-                  annee: titulaireProjetActe?.naissance?.annee?.toString(),
-                  heure: projetActe.evenement?.heure?.toString(),
-                  minute: projetActe.evenement?.minute?.toString()
+            titulaires: [
+              {
+                nomActeEtranger: titulaireProjetActe?.nomActeEtranger ?? "",
+                nomRetenuOEC: titulaireProjetActe?.nom ?? "",
+                nomSouhaite: "",
+                nomSecable: {
+                  nomPartie1: titulaireProjetActe?.nomActeEtrangerPartie1 ?? "",
+                  nomPartie2: titulaireProjetActe?.nomActeEtrangerPartie2 ?? "",
+                  secable: Boolean(titulaireProjetActe?.nomActeEtrangerPartie2)
                 },
-                true
-              ),
-              lieuNaissance: {
-                preposition: titulaireProjetActe?.naissance.preposition ?? "A",
-                ville: titulaireProjetActe?.naissance.ville ?? "",
-                region: titulaireProjetActe?.naissance.region ?? "",
-                pays: titulaireProjetActe?.naissance.pays ?? "",
-                adresse: titulaireProjetActe?.naissance.voie ?? ""
+                prenomsChemin: PrenomsForm.valeursInitiales(
+                  titulaireProjetActe?.prenoms?.map((prenom: string, index: number) => ({ prenom: prenom, numeroOrdre: index + 1 })) ?? []
+                ),
+                sexe: titulaireProjetActe?.sexe ?? null,
+                dateNaissance: DateHeureFormUtils.valeursDefauts(
+                  {
+                    jour: titulaireProjetActe?.naissance?.jour?.toString(),
+                    mois: titulaireProjetActe?.naissance?.mois?.toString(),
+                    annee: titulaireProjetActe?.naissance?.annee?.toString(),
+                    heure: projetActe.evenement?.heure?.toString(),
+                    minute: projetActe.evenement?.minute?.toString()
+                  },
+                  true
+                ),
+                lieuNaissance: {
+                  preposition: titulaireProjetActe?.naissance.preposition ?? "A",
+                  ville: titulaireProjetActe?.naissance.ville ?? "",
+                  region: titulaireProjetActe?.naissance.region ?? "",
+                  pays: titulaireProjetActe?.naissance.pays ?? "",
+                  adresse: titulaireProjetActe?.naissance.voie ?? ""
+                }
               }
-            },
+            ],
             parents: {
               parent1: mappingParentProjetActeVersParentForm(titulaireProjetActe.filiations.parent1),
               parent2: mappingParentProjetActeVersParentForm(titulaireProjetActe.filiations.parent2),
@@ -218,33 +220,35 @@ export const ProjetActeNaissanceTranscriptionForm = {
           const parents = ParentsRequeteTranscription.getDepuisTitulairesRequeteTranscription(requete.titulaires);
 
           return {
-            titulaire: {
-              nomActeEtranger: titulaire?.nomNaissance ?? "",
-              nomRetenuOEC: "",
-              nomSouhaite: titulaire?.nomSouhaite ?? "",
-              nomSecable: {
-                nomPartie1: "",
-                nomPartie2: "",
-                secable: false
-              },
-              prenomsChemin: PrenomsForm.valeursInitiales(titulaire?.prenoms ?? []),
-              sexe: (titulaire?.sexe as keyof typeof ESexe) ?? null,
-              dateNaissance: DateHeureFormUtils.valeursDefauts(
-                {
-                  jour: titulaire?.jourNaissance?.toString(),
-                  mois: titulaire?.moisNaissance?.toString(),
-                  annee: titulaire?.anneeNaissance?.toString()
+            titulaires: [
+              {
+                nomActeEtranger: titulaire?.nomNaissance ?? "",
+                nomRetenuOEC: "",
+                nomSouhaite: titulaire?.nomSouhaite ?? "",
+                nomSecable: {
+                  nomPartie1: "",
+                  nomPartie2: "",
+                  secable: false
                 },
-                true
-              ),
-              lieuNaissance: {
-                preposition: "A",
-                ville: titulaire?.villeNaissance ?? "",
-                region: titulaire?.regionNaissance ?? "",
-                pays: titulaire?.paysNaissance ?? "",
-                adresse: ""
+                prenomsChemin: PrenomsForm.valeursInitiales(titulaire?.prenoms ?? []),
+                sexe: (titulaire?.sexe as keyof typeof ESexe) ?? null,
+                dateNaissance: DateHeureFormUtils.valeursDefauts(
+                  {
+                    jour: titulaire?.jourNaissance?.toString(),
+                    mois: titulaire?.moisNaissance?.toString(),
+                    annee: titulaire?.anneeNaissance?.toString()
+                  },
+                  true
+                ),
+                lieuNaissance: {
+                  preposition: "A",
+                  ville: titulaire?.villeNaissance ?? "",
+                  region: titulaire?.regionNaissance ?? "",
+                  pays: titulaire?.paysNaissance ?? "",
+                  adresse: ""
+                }
               }
-            },
+            ],
             parents: {
               parent1: mappingParentRequeteVersParentForm(parents?.parent1),
               parent2: mappingParentRequeteVersParentForm(parents?.parent2),
@@ -337,17 +341,17 @@ export const ProjetActeNaissanceTranscriptionForm = {
     };
   },
   schemaValidation: () => {
-    const TitulaireSchemaValidationFormulaire = SchemaValidation.objet({
+    const TitulaireSchemaValidationFormulaire = SchemaValidation.tableau({
       nomActeEtranger: SchemaValidation.texte({ obligatoire: true, listeRegexp: [{ valeur: CaracteresAutorises }] }),
       nomRetenuOEC: SchemaValidation.texte({ obligatoire: true, listeRegexp: [{ valeur: CaracteresAutorises }] }),
-      prenomsChemin: SchemaValidation.prenoms("titulaire.prenomsChemin.prenom"),
+      prenomsChemin: SchemaValidation.prenoms("titulaires.0.prenomsChemin.prenom"),
       sexe: SchemaValidation.texte({ obligatoire: true }),
       dateNaissance: SchemaValidation.dateIncomplete({ obligatoire: true }),
       lieuNaissance: SchemaValidation.objet({
         ville: SchemaValidation.texte({
           obligatoire: ConditionChamp.depuisTableau([
             {
-              idChampReference: "titulaire.lieuNaissance.adresse",
+              idChampReference: "titulaire.0.lieuNaissance.adresse",
               operateur: EOperateurCondition.DIFF,
               valeurs: [""]
             }
@@ -578,7 +582,7 @@ export const ProjetActeNaissanceTranscriptionForm = {
       referenceComplement: SchemaValidation.texte({ listeRegexp: [{ valeur: CaracteresEtatCivilHorsNomPrenom }], max: { valeur: 500 } })
     });
     return SchemaValidation.objet({
-      titulaire: TitulaireSchemaValidationFormulaire,
+      titulaires: TitulaireSchemaValidationFormulaire,
       declarant: DeclarantSchemaValidationFormulaire,
       parents: ParentsSchemaValidationFormulaire,
       mentions: MentionsSchemaValidationFormulaire,
@@ -588,18 +592,20 @@ export const ProjetActeNaissanceTranscriptionForm = {
     });
   },
   versDtoPost: (valeursSaisies: IProjetActeTranscritForm, requete: IRequeteCreationTranscription): IProjetActeTranscritPostDto => {
+    const titulaireSaisi = valeursSaisies.titulaires[0];
+
     const naissanceTitulaireEvenement: IEvenementProjetActeTranscritDto = {
-      annee: Number(valeursSaisies.titulaire?.dateNaissance?.annee),
-      mois: Number(valeursSaisies.titulaire?.dateNaissance?.mois) || undefined,
-      jour: Number(valeursSaisies.titulaire?.dateNaissance?.jour) || undefined,
-      heure: valeursSaisies.titulaire?.dateNaissance?.heure ? Number(valeursSaisies.titulaire.dateNaissance.heure) : undefined,
-      minute: valeursSaisies.titulaire?.dateNaissance?.minute ? Number(valeursSaisies.titulaire.dateNaissance.minute) : undefined,
-      pays: valeursSaisies.titulaire?.lieuNaissance.pays || undefined,
-      ville: valeursSaisies.titulaire?.lieuNaissance.ville || undefined,
-      region: valeursSaisies.titulaire?.lieuNaissance.region || undefined,
-      voie: valeursSaisies.titulaire?.lieuNaissance.adresse || undefined,
+      annee: Number(titulaireSaisi?.dateNaissance?.annee),
+      mois: Number(titulaireSaisi?.dateNaissance?.mois) || undefined,
+      jour: Number(titulaireSaisi?.dateNaissance?.jour) || undefined,
+      heure: titulaireSaisi?.dateNaissance?.heure ? Number(titulaireSaisi.dateNaissance.heure) : undefined,
+      minute: titulaireSaisi?.dateNaissance?.minute ? Number(titulaireSaisi.dateNaissance.minute) : undefined,
+      pays: titulaireSaisi?.lieuNaissance.pays || undefined,
+      ville: titulaireSaisi?.lieuNaissance.ville || undefined,
+      region: titulaireSaisi?.lieuNaissance.region || undefined,
+      voie: titulaireSaisi?.lieuNaissance.adresse || undefined,
       neDansLeMariage: true,
-      prepositionLieu: getPrepositionLieu(valeursSaisies.titulaire.lieuNaissance)
+      prepositionLieu: getPrepositionLieu(titulaireSaisi.lieuNaissance)
     };
 
     return {
@@ -650,8 +656,8 @@ export const ProjetActeNaissanceTranscriptionForm = {
               ? [
                   {
                     ordre: projetActe.analysesMarginales[0].titulaires[0].ordre,
-                    nom: valeursSaisies.titulaire.nomRetenuOEC,
-                    prenoms: PrenomsForm.versPrenomsStringDto(valeursSaisies.titulaire.prenomsChemin)
+                    nom: valeursSaisies.titulaires[0].nomRetenuOEC,
+                    prenoms: PrenomsForm.versPrenomsStringDto(valeursSaisies.titulaires[0].prenomsChemin)
                   }
                 ]
               : []
@@ -699,15 +705,15 @@ const mapTitulaire = (
   projetActe: IProjetActeTranscritForm,
   naissanceTitulaireEvenement: IEvenementProjetActeTranscritDto
 ): ITitulaireProjetActeTranscritDto => {
-  const titulaire: ITitulaireTranscriptionForm = projetActe.titulaire;
-  const prenoms: string[] = PrenomsForm.versPrenomsStringDto(projetActe.titulaire?.prenomsChemin);
+  const titulaires: ITitulaireTranscriptionForm[] = projetActe.titulaires;
+  const prenoms: string[] = PrenomsForm.versPrenomsStringDto(projetActe.titulaires[0]?.prenomsChemin);
   return {
-    nomActeEtranger: titulaire.nomActeEtranger,
-    nom: titulaire.nomRetenuOEC,
-    nomActeEtrangerPartie1: titulaire.nomSecable.nomPartie1 || undefined,
-    nomActeEtrangerPartie2: titulaire.nomSecable.nomPartie2 || undefined,
+    nomActeEtranger: titulaires[0].nomActeEtranger,
+    nom: titulaires[0].nomRetenuOEC,
+    nomActeEtrangerPartie1: titulaires[0].nomSecable.nomPartie1 || undefined,
+    nomActeEtrangerPartie2: titulaires[0].nomSecable.nomPartie2 || undefined,
     prenoms,
-    sexe: titulaire.sexe,
+    sexe: titulaires[0].sexe,
     ordre: 1,
     naissance: { ...naissanceTitulaireEvenement },
     pasDePrenom: !prenoms.length,

@@ -112,12 +112,18 @@ export const ObjetFormulaire = {
   },
   /* v8 ignore stop */
 
-  remplacerValeursAbsentesParChainesVides: <T extends Record<string, any>>(objet: T): TSansNullOuUndefined<T> =>
-    Object.fromEntries(
+  remplacerValeursAbsentesParChainesVides: <T extends Record<string, any>>(objet: T): TSansNullOuUndefined<T> => {
+    if (Array.isArray(objet))
+      return objet.map(valeur =>
+        typeof valeur === "object" && valeur !== null ? ObjetFormulaire.remplacerValeursAbsentesParChainesVides(valeur) : (valeur ?? "")
+      ) as unknown as TSansNullOuUndefined<T>;
+
+    return Object.fromEntries(
       Object.entries(objet).map(([cle, valeur]) => {
         if (valeur && typeof valeur === "object") return [cle, ObjetFormulaire.remplacerValeursAbsentesParChainesVides(valeur)];
         if (typeof valeur === "boolean") return [cle, valeur];
         return [cle, valeur ?? ""];
       })
-    ) as TSansNullOuUndefined<T>
+    ) as TSansNullOuUndefined<T>;
+  }
 } as const;

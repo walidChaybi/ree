@@ -636,7 +636,7 @@ pays
                             >
                               <label
                                 class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                                for="titulaire.nomActeEtranger"
+                                for="titulaires.0.nomActeEtranger"
                               >
                                 Nom sur l'acte étranger
                                 <span
@@ -650,8 +650,8 @@ pays
                               >
                                 <input
                                   class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                                  id="titulaire.nomActeEtranger"
-                                  name="titulaire.nomActeEtranger"
+                                  id="titulaires.0.nomActeEtranger"
+                                  name="titulaires.0.nomActeEtranger"
                                   value="Toto"
                                 />
                               </div>
@@ -668,7 +668,7 @@ pays
                                   <input
                                     class="cursor-default"
                                     disabled=""
-                                    name="titulaire.nomSecable.secable"
+                                    name="titulaires.0.nomSecable.secable"
                                     type="checkbox"
                                     value="false"
                                   />
@@ -691,7 +691,7 @@ pays
                         >
                           <label
                             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                            for="titulaire.nomSouhaite"
+                            for="titulaires.0.nomSouhaite"
                           >
                             Nom souhaité
                           </label>
@@ -701,8 +701,8 @@ pays
                             <input
                               class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
                               disabled=""
-                              id="titulaire.nomSouhaite"
-                              name="titulaire.nomSouhaite"
+                              id="titulaires.0.nomSouhaite"
+                              name="titulaires.0.nomSouhaite"
                               value=""
                             />
                           </div>
@@ -712,7 +712,7 @@ pays
                         >
                           <label
                             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                            for="titulaire.nomRetenuOEC"
+                            for="titulaires.0.nomRetenuOEC"
                           >
                             Nom retenu par l'OEC
                             <span
@@ -726,8 +726,8 @@ pays
                           >
                             <input
                               class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                              id="titulaire.nomRetenuOEC"
-                              name="titulaire.nomRetenuOEC"
+                              id="titulaires.0.nomRetenuOEC"
+                              name="titulaires.0.nomRetenuOEC"
                               value="Jo"
                             />
                           </div>
@@ -744,7 +744,7 @@ pays
                           >
                             <label
                               class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                              for="titulaire.prenomsChemin.prenom1"
+                              for="titulaires.0.prenomsChemin.prenom1"
                             >
                               Prénom
                             </label>
@@ -753,8 +753,8 @@ pays
                             >
                               <input
                                 class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                                id="titulaire.prenomsChemin.prenom1"
-                                name="titulaire.prenomsChemin.prenom1"
+                                id="titulaires.0.prenomsChemin.prenom1"
+                                name="titulaires.0.prenomsChemin.prenom1"
                                 type="text"
                                 value="Michel"
                               />
@@ -818,14 +818,14 @@ pays
                               <input
                                 checked=""
                                 class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                                id="titulaire.sexe-MASCULIN"
-                                name="titulaire.sexe"
+                                id="titulaires.0.sexe-MASCULIN"
+                                name="titulaires.0.sexe"
                                 type="radio"
                                 value="MASCULIN"
                               />
                               <label
                                 class="cursor-pointer pl-2"
-                                for="titulaire.sexe-MASCULIN"
+                                for="titulaires.0.sexe-MASCULIN"
                               >
                                 Masculin
                               </label>
@@ -833,14 +833,14 @@ pays
                             <div>
                               <input
                                 class="m-0 mt-0.5 cursor-pointer accent-bleu-sombre selection:transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                                id="titulaire.sexe-FEMININ"
-                                name="titulaire.sexe"
+                                id="titulaires.0.sexe-FEMININ"
+                                name="titulaires.0.sexe"
                                 type="radio"
                                 value="FEMININ"
                               />
                               <label
                                 class="cursor-pointer pl-2"
-                                for="titulaire.sexe-FEMININ"
+                                for="titulaires.0.sexe-FEMININ"
                               >
                                 Féminin
                               </label>
@@ -850,7 +850,7 @@ pays
                         <div>
                           <label
                             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                            for="titulaire.dateNaissance.jour"
+                            for="titulaires.0.dateNaissance.jour"
                           >
                             Date de naissance
                             <span
@@ -869,7 +869,7 @@ pays
                           >
                             <input
                               class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                              id="titulaire.dateNaissance.jour"
+                              id="titulaires.0.dateNaissance.jour"
                               maxlength="2"
                               placeholder="JJ"
                               value="12"
@@ -881,7 +881,7 @@ pays
                             </span>
                             <input
                               class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                              id="titulaire.dateNaissance.mois"
+                              id="titulaires.0.dateNaissance.mois"
                               maxlength="2"
                               placeholder="MM"
                               value="10"
@@ -893,7 +893,7 @@ pays
                             </span>
                             <input
                               class="border-1 w-12 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                              id="titulaire.dateNaissance.annee"
+                              id="titulaires.0.dateNaissance.annee"
                               maxlength="4"
                               placeholder="AAAA"
                               value="1966"
@@ -906,7 +906,7 @@ pays
                             <div>
                               <input
                                 class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                                id="titulaire.dateNaissance.heure"
+                                id="titulaires.0.dateNaissance.heure"
                                 maxlength="2"
                                 placeholder="HH"
                                 value="10"
@@ -918,7 +918,7 @@ pays
                               </span>
                               <input
                                 class="border-1 w-8 rounded border border-solid px-2 py-1 text-center transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                                id="titulaire.dateNaissance.minute"
+                                id="titulaires.0.dateNaissance.minute"
                                 maxlength="2"
                                 placeholder="MN"
                                 value="10"
@@ -956,14 +956,14 @@ pays
                           >
                             <label
                               class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                              for="titulaire.lieuNaissance.preposition"
+                              for="titulaires.0.lieuNaissance.preposition"
                             >
                               Préposition
                             </label>
                             <select
                               class="select-rece border-1 flex w-full flex-grow rounded border border-solid bg-blanc px-2 py-[.325rem] shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 disabled:bg-gris-clair border-gris focus-visible:ring-bleu"
-                              id="titulaire.lieuNaissance.preposition"
-                              name="titulaire.lieuNaissance.preposition"
+                              id="titulaires.0.lieuNaissance.preposition"
+                              name="titulaires.0.lieuNaissance.preposition"
                             >
                               <option
                                 value="A"
@@ -992,7 +992,7 @@ pays
                           >
                             <label
                               class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                              for="titulaire.lieuNaissance.ville"
+                              for="titulaires.0.lieuNaissance.ville"
                             >
                               Ville
                             </label>
@@ -1001,8 +1001,8 @@ pays
                             >
                               <input
                                 class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                                id="titulaire.lieuNaissance.ville"
-                                name="titulaire.lieuNaissance.ville"
+                                id="titulaires.0.lieuNaissance.ville"
+                                name="titulaires.0.lieuNaissance.ville"
                                 value="Nantes"
                               />
                             </div>
@@ -1013,7 +1013,7 @@ pays
                         >
                           <label
                             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                            for="titulaire.lieuNaissance.region"
+                            for="titulaires.0.lieuNaissance.region"
                           >
                             État, canton, province
                           </label>
@@ -1022,8 +1022,8 @@ pays
                           >
                             <input
                               class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                              id="titulaire.lieuNaissance.region"
-                              name="titulaire.lieuNaissance.region"
+                              id="titulaires.0.lieuNaissance.region"
+                              name="titulaires.0.lieuNaissance.region"
                               value=""
                             />
                           </div>
@@ -1033,7 +1033,7 @@ pays
                         >
                           <label
                             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                            for="titulaire.lieuNaissance.pays"
+                            for="titulaires.0.lieuNaissance.pays"
                           >
                             Pays
                           </label>
@@ -1042,8 +1042,8 @@ pays
                           >
                             <input
                               class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                              id="titulaire.lieuNaissance.pays"
-                              name="titulaire.lieuNaissance.pays"
+                              id="titulaires.0.lieuNaissance.pays"
+                              name="titulaires.0.lieuNaissance.pays"
                               value="France"
                             />
                           </div>
@@ -1053,7 +1053,7 @@ pays
                         >
                           <label
                             class="m-0 mb-1 ml-1 block w-fit text-start transition-colors text-bleu-sombre"
-                            for="titulaire.lieuNaissance.adresse"
+                            for="titulaires.0.lieuNaissance.adresse"
                           >
                             Adresse
                           </label>
@@ -1062,8 +1062,8 @@ pays
                           >
                             <input
                               class="border-1 flex w-full flex-grow rounded border border-solid px-2 py-1  transition-colors read-only:bg-gris-clair focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-opacity-70 border-gris focus-visible:ring-bleu"
-                              id="titulaire.lieuNaissance.adresse"
-                              name="titulaire.lieuNaissance.adresse"
+                              id="titulaires.0.lieuNaissance.adresse"
+                              name="titulaires.0.lieuNaissance.adresse"
                               value=""
                             />
                           </div>

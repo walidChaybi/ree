@@ -2,7 +2,7 @@ import { CONFIG_GET_POSTES } from "@api/configurations/etatCivil/pocopa/GetPoste
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { ITypeRegistreDto, TypeRegistre } from "@model/etatcivil/acte/TypeRegistre";
-import { ISaisieRequeteRCTCForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
+import { ISaisieRequeteCTCForm } from "@model/form/creation/transcription/ISaisirRequeteCTCPageForm";
 import { ELibelleNatureActeTranscrit, ENatureActeTranscrit } from "@model/requete/NatureActeTranscription";
 import ETypeLienRequerantCreation from "@model/requete/enum/ETypeLienRequerantCreation";
 import { Options } from "@util/Type";
@@ -22,7 +22,7 @@ const OPTIONS_NATURE_ACTE: Options = [
 const OPTIONS_LIEN_REQUERANT = enumVersOptions(ETypeLienRequerantCreation);
 
 const BlocRequete: React.FC = () => {
-  const { setFieldError, setFieldValue, values } = useFormikContext<ISaisieRequeteRCTCForm>();
+  const { setFieldError, setFieldValue, values } = useFormikContext<ISaisieRequeteCTCForm>();
   const { utilisateurConnecte } = useContext(RECEContextData);
   const [postes, setPostes] = useState<ITypeRegistreDto[] | []>([]);
   const { appelApi: appelGetPostes } = useFetchApi(CONFIG_GET_POSTES);

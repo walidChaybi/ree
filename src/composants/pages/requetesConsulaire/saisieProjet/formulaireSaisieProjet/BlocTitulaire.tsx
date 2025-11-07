@@ -1,6 +1,5 @@
 import { EPrepositionLieu } from "@model/etatcivil/enum/EPrepositionLieu";
-import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { ESexe } from "@model/etatcivil/enum/Sexe";
 import { enumVersOptions } from "@util/Utils";
 import React from "react";
 import ChampDate from "../../../../commun/champs/ChampDate";
@@ -12,25 +11,21 @@ import ChampsRadio from "../../../../commun/champs/ChampsRadio";
 import ConteneurAvecBordure from "../../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import SeparateurSection from "../../../../commun/conteneurs/formulaire/SeparateurSection";
 
-interface IBlocTitulairetitulaireProps {
-  titulaire?: ITitulaireRequeteCreation;
-}
-
 const optionsPreposition = enumVersOptions(EPrepositionLieu);
 
-const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
+const BlocTitulaire: React.FC<{ indexTitulaire: number }> = ({ indexTitulaire }) => {
   return (
     <ConteneurAvecBordure className="py-6">
       <div className="grid w-full gap-4 text-start">
         <ChampsNomSecable
-          nom={{ name: "titulaire.nomActeEtranger", libelle: "Nom sur l'acte étranger" }}
-          secable={{ name: "titulaire.nomSecable.secable", libelle: "Nom sécable" }}
+          nom={{ name: `titulaires.${indexTitulaire}.nomActeEtranger`, libelle: "Nom sur l'acte étranger" }}
+          secable={{ name: `titulaires.${indexTitulaire}.nomSecable.secable`, libelle: "Nom sécable" }}
           nomPartie1={{
-            name: "titulaire.nomSecable.nomPartie1",
+            name: `titulaires.${indexTitulaire}.nomSecable.nomPartie1`,
             libelle: "Nom 1re partie"
           }}
           nomPartie2={{
-            name: "titulaire.nomSecable.nomPartie2",
+            name: `titulaires.${indexTitulaire}.nomSecable.nomPartie2`,
             libelle: "Nom 2nde partie"
           }}
           estObligatoire
@@ -39,12 +34,12 @@ const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
       </div>
       <div className="grid grid-cols-2 gap-4 pt-4 text-start">
         <ChampTexte
-          name="titulaire.nomSouhaite"
+          name={`titulaires.${indexTitulaire}.nomSouhaite`}
           libelle="Nom souhaité"
           disabled
         />
         <ChampTexte
-          name="titulaire.nomRetenuOEC"
+          name={`titulaires.${indexTitulaire}.nomRetenuOEC`}
           libelle="Nom retenu par l'OEC"
           estObligatoire
         />
@@ -52,21 +47,18 @@ const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
 
       <div className="pt-4">
         <ChampsPrenoms
-          cheminPrenoms="titulaire.prenomsChemin"
+          cheminPrenoms={`titulaires.${indexTitulaire}.prenomsChemin`}
           prefixePrenom="prenom"
         />
       </div>
       <div className="grid w-full grid-cols-2 gap-4 pt-4 text-start">
         <ChampsRadio
-          name="titulaire.sexe"
+          name={`titulaires.${indexTitulaire}.sexe`}
           libelle="Sexe"
-          options={[
-            { libelle: Sexe.MASCULIN.libelle, cle: Sexe.getKey(Sexe.MASCULIN) },
-            { libelle: Sexe.FEMININ.libelle, cle: Sexe.getKey(Sexe.FEMININ) }
-          ]}
+          options={enumVersOptions(ESexe, { clesAExclure: ["INDETERMINE", "INCONNU"] })}
         />
         <ChampDate
-          name="titulaire.dateNaissance"
+          name={`titulaires.${indexTitulaire}.dateNaissance`}
           libelle="Date de naissance"
           avecHeure
           estObligatoire="année"
@@ -78,27 +70,27 @@ const BlocTitulaire: React.FC<IBlocTitulairetitulaireProps> = () => {
       <div className="grid grid-cols-2 gap-4">
         <div className="flex gap-4">
           <ChampListeDeroulante
-            name="titulaire.lieuNaissance.preposition"
+            name={`titulaires.${indexTitulaire}.lieuNaissance.preposition`}
             libelle="Préposition"
             options={optionsPreposition}
           />
           <ChampTexte
-            name="titulaire.lieuNaissance.ville"
+            name={`titulaires.${indexTitulaire}.lieuNaissance.ville`}
             libelle="Ville"
             optionFormatage="PREMIER_MAJUSCULE"
           />
         </div>
         <ChampTexte
-          name="titulaire.lieuNaissance.region"
+          name={`titulaires.${indexTitulaire}.lieuNaissance.region`}
           libelle="État, canton, province"
         />
         <ChampTexte
-          name="titulaire.lieuNaissance.pays"
+          name={`titulaires.${indexTitulaire}.lieuNaissance.pays`}
           libelle="Pays"
           optionFormatage="PREMIER_MAJUSCULE"
         />
         <ChampTexte
-          name="titulaire.lieuNaissance.adresse"
+          name={`titulaires.${indexTitulaire}.lieuNaissance.adresse`}
           libelle="Adresse"
         />
       </div>

@@ -1,7 +1,7 @@
 /* v8 ignore start A TESTER 03/25 */
 import { CONFIG_GET_DETAIL_REQUETE } from "@api/configurations/requete/GetDetailRequeteConfigApi";
 import TRAITEMENT_ENREGISTRER_RCTC from "@api/traitements/requetesConsulaire/TraitementEnregistrerRCTC";
-import { ISaisieRequeteRCTCForm, SaisieRequeteRCTCForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
+import { ISaisieRequeteCTCForm, SaisieRequeteCTCForm } from "@model/form/creation/transcription/ISaisirRequeteCTCPageForm";
 import { IRequeteConsulaire } from "@model/requete/IRequeteConsulaire";
 import { Form, Formik } from "formik";
 import { useEffect, useState } from "react";
@@ -14,7 +14,7 @@ import ScrollVersErreur from "../../composants/commun/formulaire/ScrollVersErreu
 import BlocParents from "../../composants/pages/requetesConsulaire/saisieCourrier/BlocParents";
 import BlocRequerant from "../../composants/pages/requetesConsulaire/saisieCourrier/BlocRequerant";
 import BlocRequete from "../../composants/pages/requetesConsulaire/saisieCourrier/BlocRequete";
-import BlocTitulaire from "../../composants/pages/requetesConsulaire/saisieCourrier/BlocTitulaire";
+import BlocTitulaires from "../../composants/pages/requetesConsulaire/saisieCourrier/BlocTitulaire";
 import useFetchApi from "../../hooks/api/FetchApiHook";
 import useTraitementApi from "../../hooks/api/TraitementApiHook";
 import LiensRECE from "../../router/LiensRECE";
@@ -27,6 +27,9 @@ const PageSaisieCourrierTranscription: React.FC = () => {
   const [requeteModifiee, setRequeteModifiee] = useState<IRequeteConsulaire | false | null>(false);
   const { appelApi: appelGetDetailRequete } = useFetchApi(CONFIG_GET_DETAIL_REQUETE);
   const { lancerTraitement: enregistrerRCTC, traitementEnCours: enregistrementEnCours } = useTraitementApi(TRAITEMENT_ENREGISTRER_RCTC);
+
+  // TODO: à variabiliser lors de l'intégration des autres natures dactes au sprint prochain
+  const nombreDeTitulaires = 1;
 
   useEffect(() => {
     if (!idRequeteParam) {
@@ -52,10 +55,10 @@ const PageSaisieCourrierTranscription: React.FC = () => {
 
       {requeteModifiee !== false && (
         <div className="mx-auto mt-4 max-w-[90rem]">
-          <Formik<ISaisieRequeteRCTCForm>
-            initialValues={SaisieRequeteRCTCForm.valeursInitiales(requeteModifiee)}
+          <Formik<ISaisieRequeteCTCForm>
+            initialValues={SaisieRequeteCTCForm.valeursInitiales(requeteModifiee)}
             enableReinitialize
-            validationSchema={SaisieRequeteRCTCForm.schemaValidation}
+            validationSchema={SaisieRequeteCTCForm.schemaValidation}
             onSubmit={values =>
               enregistrerRCTC({
                 parametres: { valeurs: values },
@@ -81,7 +84,7 @@ const PageSaisieCourrierTranscription: React.FC = () => {
                   <div className="h-[calc(100vh-22rem)] overflow-y-auto py-10">
                     <div className="grid gap-10">
                       <BlocRequete />
-                      <BlocTitulaire />
+                      <BlocTitulaires nombreDeTitulaires={nombreDeTitulaires} />
                       <BlocParents />
                       <BlocRequerant />
                     </div>

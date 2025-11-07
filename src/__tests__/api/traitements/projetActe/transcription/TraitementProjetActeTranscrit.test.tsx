@@ -20,32 +20,34 @@ describe("TRAITEMENT_ENREGISTRER_PROJET_ACTE_TRANSCRIT", () => {
   const appelPostProjetActeTranscription = vi.fn();
 
   const saisieProjetActeTranscription: IProjetActeTranscritForm = {
-    titulaire: {
-      nomActeEtranger: "greenwald",
-      nomRetenuOEC: "prenomUn prenomDeux prenomTrois",
-      nomSouhaite: "",
-      nomSecable: {
-        nomPartie1: "prenomUn prenomDeux",
-        nomPartie2: "prenomTrois",
-        secable: true
-      },
-      prenomsChemin: PrenomsForm.valeursInitiales(),
-      sexe: "FEMININ",
-      dateNaissance: {
-        jour: "19",
-        mois: "01",
-        annee: "2025",
-        heure: "09",
-        minute: "42"
-      },
-      lieuNaissance: {
-        preposition: "A",
-        ville: "",
-        region: "",
-        pays: "",
-        adresse: ""
+    titulaires: [
+      {
+        nomActeEtranger: "greenwald",
+        nomRetenuOEC: "prenomUn prenomDeux prenomTrois",
+        nomSouhaite: "",
+        nomSecable: {
+          nomPartie1: "prenomUn prenomDeux",
+          nomPartie2: "prenomTrois",
+          secable: true
+        },
+        prenomsChemin: PrenomsForm.valeursInitiales(),
+        sexe: "FEMININ",
+        dateNaissance: {
+          jour: "19",
+          mois: "01",
+          annee: "2025",
+          heure: "09",
+          minute: "42"
+        },
+        lieuNaissance: {
+          preposition: "A",
+          ville: "",
+          region: "",
+          pays: "",
+          adresse: ""
+        }
       }
-    },
+    ],
     declarant: {
       identite: "TIERS",
       nom: "LeTiers",

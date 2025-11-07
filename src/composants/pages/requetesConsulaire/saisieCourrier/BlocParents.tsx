@@ -1,6 +1,6 @@
 /* v8 ignore start A TESTER 03/25 */
 
-import { IParentFormRCTC, ISaisieRequeteRCTCForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
+import { IParentFormRCTC, ISaisieRequeteCTCForm } from "@model/form/creation/transcription/ISaisirRequeteCTCPageForm";
 
 import { Option } from "@util/Type";
 import { genererArrondissements } from "@util/Utils";
@@ -26,7 +26,7 @@ const ARRONDISSEMENTS: { [ville: string]: Option[] } = {
 };
 
 const BlocParent: React.FC<{ valeursParent: IParentFormRCTC; indexParent: number }> = ({ valeursParent, indexParent }) => {
-  const { setFieldValue } = useFormikContext<ISaisieRequeteRCTCForm>();
+  const { setFieldValue } = useFormikContext<ISaisieRequeteCTCForm>();
   const prefixParent = useMemo(() => `parents.parent${indexParent}`, [indexParent]);
 
   return (
@@ -135,7 +135,7 @@ const BlocParent: React.FC<{ valeursParent: IParentFormRCTC; indexParent: number
 };
 
 const BlocParents: React.FC = () => {
-  const { values, setFieldValue } = useFormikContext<ISaisieRequeteRCTCForm>();
+  const { values, setFieldValue } = useFormikContext<ISaisieRequeteCTCForm>();
 
   return (
     <ConteneurAvecBordure titreEnTete="PARENTS">

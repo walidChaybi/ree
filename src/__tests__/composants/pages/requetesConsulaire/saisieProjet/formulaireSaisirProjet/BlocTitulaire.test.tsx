@@ -8,10 +8,10 @@ describe("SaisirProjet - BlocTitulaire", () => {
   const renderComponent = (name = "test", libelle = "Date") => {
     return render(
       <Formik
-        initialValues={{ titulaire: { nomNaissance: "Roberto Dos Santos", prenomsChemin: { prenom1: "Decastillo" }, secable: false } }}
+        initialValues={{ titulaires: [{ nomNaissance: "Roberto Dos Santos", prenomsChemin: { prenom1: "Decastillo" }, secable: false }] }}
         onSubmit={() => {}}
       >
-        <BlocTitulaire />
+        <BlocTitulaire indexTitulaire={0} />
       </Formik>
     );
   };

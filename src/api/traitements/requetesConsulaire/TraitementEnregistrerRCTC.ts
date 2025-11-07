@@ -2,14 +2,14 @@
 import { CONFIG_POST_REQUETE_TRANSCRIPTION } from "@api/configurations/requete/creation/PostRequeteTranscriptionConfigApi";
 import { CONFIG_POST_PIECE_JUSTIFICATIVE } from "@api/configurations/requete/pieceJustificative/PostPieceJustificativeConfigApi";
 import { TErreurApi } from "@model/api/Api";
-import { ISaisieRequeteRCTCForm, SaisieRequeteRCTCForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
+import { ISaisieRequeteCTCForm, SaisieRequeteCTCForm } from "@model/form/creation/transcription/ISaisirRequeteCTCPageForm";
 import { useEffect, useState } from "react";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import { PieceJointe } from "../../../utils/FileUtils";
 import { TTraitementApi } from "../TTraitementApi";
 
 interface IParametresTraitement {
-  valeurs: ISaisieRequeteRCTCForm;
+  valeurs: ISaisieRequeteCTCForm;
 }
 
 interface IReponseTraitment {
@@ -54,7 +54,7 @@ const TRAITEMENT_ENREGISTRER_RCTC: TTraitementApi<IParametresTraitement, IRepons
       };
 
       postRequeteTranscription({
-        parametres: { body: [SaisieRequeteRCTCForm.versDto(parametres.valeurs)] },
+        parametres: { body: [SaisieRequeteCTCForm.versDto(parametres.valeurs)] },
         apresSucces,
         apresErreur
       });

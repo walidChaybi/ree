@@ -1,5 +1,5 @@
 import { CONFIG_GET_COMMUNES, ICommuneDto } from "@api/configurations/adresse/GetCommunesConfigApi";
-import { ISaisieRequeteRCTCForm } from "@model/form/creation/transcription/ISaisirRequeteRCTCPageForm";
+import { ISaisieRequeteCTCForm } from "@model/form/creation/transcription/ISaisirRequeteCTCPageForm";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useField, useFormikContext } from "formik";
 import { useEffect, useMemo, useState } from "react";
@@ -24,7 +24,7 @@ const ChampRechercheVille: React.FC<TChampRechercheVille> = ({
   estObligatoire,
   cheminChampDepartement: champARemplir = ""
 }) => {
-  const { setFieldValue } = useFormikContext<ISaisieRequeteRCTCForm>();
+  const { setFieldValue } = useFormikContext<ISaisieRequeteCTCForm>();
   const [communes, setCommunes] = useState<ICommuneDto[]>([]);
   const [field, meta, helpers] = useField(name);
   const [communeRecherchee, setCommuneRecherchee] = useDelai("", 300);

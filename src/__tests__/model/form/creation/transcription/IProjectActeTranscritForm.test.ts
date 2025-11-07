@@ -12,32 +12,34 @@ import { describe, expect, test } from "vitest";
 
 describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
   const saisieProjetActeTranscriptionForm: IProjetActeTranscritForm = {
-    titulaire: {
-      nomActeEtranger: "Xi-phun bin",
-      nomRetenuOEC: "Xi phun bin",
-      nomSouhaite: "xiPhunBin",
-      nomSecable: {
-        nomPartie1: "Xi",
-        nomPartie2: "phun bin",
-        secable: false
-      },
-      prenomsChemin: PrenomsForm.depuisStringDto(["lao", "xiar", "sehoo"]),
-      sexe: "FEMININ",
-      dateNaissance: {
-        jour: "03",
-        mois: "12",
-        annee: "2024",
-        heure: "",
-        minute: ""
-      },
-      lieuNaissance: {
-        preposition: "A",
-        ville: "Bejin",
-        region: "China",
-        pays: "Chine",
-        adresse: "Place du riz"
+    titulaires: [
+      {
+        nomActeEtranger: "Xi-phun bin",
+        nomRetenuOEC: "Xi phun bin",
+        nomSouhaite: "xiPhunBin",
+        nomSecable: {
+          nomPartie1: "Xi",
+          nomPartie2: "phun bin",
+          secable: false
+        },
+        prenomsChemin: PrenomsForm.depuisStringDto(["lao", "xiar", "sehoo"]),
+        sexe: "FEMININ",
+        dateNaissance: {
+          jour: "03",
+          mois: "12",
+          annee: "2024",
+          heure: "",
+          minute: ""
+        },
+        lieuNaissance: {
+          preposition: "A",
+          ville: "Bejin",
+          region: "China",
+          pays: "Chine",
+          adresse: "Place du riz"
+        }
       }
-    },
+    ],
     declarant: {
       identite: "PERE",
       complement: "",
@@ -184,49 +186,51 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
     );
 
     const valeursInitialesAttendues: IProjetActeTranscritForm = {
-      titulaire: {
-        nomActeEtranger: "Toto",
-        nomRetenuOEC: "Jo",
-        nomSouhaite: "",
-        nomSecable: {
-          nomPartie1: "",
-          nomPartie2: "",
-          secable: false
-        },
-        prenomsChemin: {
-          nombrePrenomsAffiches: 1,
-          prenom1: "Michel",
-          prenom10: "",
-          prenom11: "",
-          prenom12: "",
-          prenom13: "",
-          prenom14: "",
-          prenom15: "",
-          prenom2: "",
-          prenom3: "",
-          prenom4: "",
-          prenom5: "",
-          prenom6: "",
-          prenom7: "",
-          prenom8: "",
-          prenom9: ""
-        },
-        sexe: "MASCULIN",
-        dateNaissance: {
-          jour: "12",
-          mois: "10",
-          annee: "1966",
-          heure: "10",
-          minute: "10"
-        },
-        lieuNaissance: {
-          preposition: "A",
-          ville: "Nantes",
-          region: "",
-          pays: "France",
-          adresse: ""
+      titulaires: [
+        {
+          nomActeEtranger: "Toto",
+          nomRetenuOEC: "Jo",
+          nomSouhaite: "",
+          nomSecable: {
+            nomPartie1: "",
+            nomPartie2: "",
+            secable: false
+          },
+          prenomsChemin: {
+            nombrePrenomsAffiches: 1,
+            prenom1: "Michel",
+            prenom10: "",
+            prenom11: "",
+            prenom12: "",
+            prenom13: "",
+            prenom14: "",
+            prenom15: "",
+            prenom2: "",
+            prenom3: "",
+            prenom4: "",
+            prenom5: "",
+            prenom6: "",
+            prenom7: "",
+            prenom8: "",
+            prenom9: ""
+          },
+          sexe: "MASCULIN",
+          dateNaissance: {
+            jour: "12",
+            mois: "10",
+            annee: "1966",
+            heure: "10",
+            minute: "10"
+          },
+          lieuNaissance: {
+            preposition: "A",
+            ville: "Nantes",
+            region: "",
+            pays: "France",
+            adresse: ""
+          }
         }
-      },
+      ],
       parents: {
         parent1: {
           age: "12",
@@ -435,32 +439,34 @@ describe("Test des fonctions de mapping versDto et valeurs initiales", () => {
 
 describe("Test des fonctions de mapping de la saisie projet d'acte transcrit TIERS", () => {
   const saisieProjetActeTranscriptionTiers: IProjetActeTranscritForm = {
-    titulaire: {
-      nomActeEtranger: "greenwald",
-      nomRetenuOEC: "prenomUn prenomDeux prenomTrois",
-      nomSouhaite: "",
-      nomSecable: {
-        nomPartie1: "prenomUn prenomDeux",
-        nomPartie2: "prenomTrois",
-        secable: true
-      },
-      prenomsChemin: PrenomsForm.depuisStringDto(["Consulaire"]),
-      sexe: "FEMININ",
-      dateNaissance: {
-        jour: "19",
-        mois: "01",
-        annee: "2025",
-        heure: "09",
-        minute: "42"
-      },
-      lieuNaissance: {
-        preposition: "A",
-        ville: "",
-        region: "",
-        pays: "",
-        adresse: ""
+    titulaires: [
+      {
+        nomActeEtranger: "greenwald",
+        nomRetenuOEC: "prenomUn prenomDeux prenomTrois",
+        nomSouhaite: "",
+        nomSecable: {
+          nomPartie1: "prenomUn prenomDeux",
+          nomPartie2: "prenomTrois",
+          secable: true
+        },
+        prenomsChemin: PrenomsForm.depuisStringDto(["Consulaire"]),
+        sexe: "FEMININ",
+        dateNaissance: {
+          jour: "19",
+          mois: "01",
+          annee: "2025",
+          heure: "09",
+          minute: "42"
+        },
+        lieuNaissance: {
+          preposition: "A",
+          ville: "",
+          region: "",
+          pays: "",
+          adresse: ""
+        }
       }
-    },
+    ],
     declarant: {
       identite: "TIERS",
       nom: "LeTiers",

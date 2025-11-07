@@ -6,8 +6,8 @@ import ChampTexte from "../../../commun/champs/ChampTexte";
 import ConteneurAvecBordure from "../../../commun/conteneurs/formulaire/ConteneurAvecBordure";
 import SeparateurSection from "../../../commun/conteneurs/formulaire/SeparateurSection";
 
-interface IBlocTitulaireProps {
-  indexTitulaire?: 1 | 2;
+export interface IBlocTitulaireProps {
+  indexTitulaire: number;
   unSeulTitulaire?: boolean;
 }
 
@@ -16,7 +16,7 @@ const BlocTitulaire: React.FC<IBlocTitulaireProps> = ({ indexTitulaire, unSeulTi
 
   return (
     <ConteneurAvecBordure
-      titreEnTete={`Titulaire ${unSeulTitulaire ? "" : indexTitulaire}`}
+      titreEnTete={unSeulTitulaire ? "Titulaire" : `Titulaire ${indexTitulaire + 1}`}
       sansMargeHorizontale={!unSeulTitulaire}
     >
       <div className="grid grid-cols-2 gap-x-4 gap-y-2 pt-2">
