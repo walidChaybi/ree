@@ -176,14 +176,12 @@ const PartieFormulaire: React.FC = () => {
           )
         },
         apresSucces: () => {
-          setFormulaireMentionEnCoursDeSaisie(false);
           setMentionsDeLActe(mentions);
-          activerOngletActeMisAJour();
-          setComposerActeMisAJour(true);
-          changerOnglet(ECleOngletsMiseAJour.ACTE_MIS_A_JOUR, null);
+          activerMiseAJourActe();
+          resetModificationMention();
+
           !analyseMarginaleEstMiseAJour &&
             setAfficherModaleAnalyseMarginale(mentions[mentionEnCoursDeSaisie?.index ?? mentions.length - 1].affecteAnalyseMarginale);
-          setMentionEnCoursDeSaisie(null);
         },
         apresErreur: (erreurs: TErreurApi[]) => {
           const messageErreur = (() => {
@@ -245,6 +243,18 @@ const PartieFormulaire: React.FC = () => {
       AnalyseMarginaleForm.genererValeursDefautFormulaire(acte.getTitulairesPourAnalyseMarginale(), motif)
     );
   }, [motif, acte]);
+
+  const resetModificationMention = () => {
+    setMentionEnCoursDeSaisie(mention => (mention ? null : mention));
+    setMentionsDuTableau(mentions => (mentions.length > 0 ? [] : mentions));
+    setFormulaireMentionEnCoursDeSaisie(false);
+  };
+
+  const activerMiseAJourActe = () => {
+    activerOngletActeMisAJour();
+    setComposerActeMisAJour(true);
+    changerOnglet(ECleOngletsMiseAJour.ACTE_MIS_A_JOUR, null);
+  };
 
   const titulairesMention: ITitulaireMention[] = useMemo(() => {
     if (!acte) return [];

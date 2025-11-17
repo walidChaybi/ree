@@ -120,6 +120,7 @@ const TableauMentions: React.FC<ITableauMentionsProps> = ({
             <div className="flex justify-center gap-6">
               <Bouton
                 title="Confirmer la suppression de la mention"
+                type="submit"
                 onClick={() => {
                   const mentions = [...values.mentions];
                   mentions.splice(indexASupprimer, 1);
