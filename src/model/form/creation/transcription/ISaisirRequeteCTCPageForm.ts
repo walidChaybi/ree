@@ -426,24 +426,24 @@ export const SaisieRequeteCTCForm = {
                 }
               ]
             : []
-        }
+        },
+        ...(valeurs.parents.parent1.nom || valeurs.parents.parent1.prenoms.prenom1
+          ? [
+              {
+                ...ParentRCTCForm.valeursVersDto(valeurs.parents.parent1, 2),
+                evenementUnions: mariageParents ? [{ id: valeurs.parents.mariage.idMariageParent1, ...mariageParents }] : []
+              }
+            ]
+          : []),
+        ...(valeurs.parents.avecParent2 && (valeurs.parents.parent2.nom || valeurs.parents.parent2.prenoms.prenom1)
+          ? [
+              {
+                ...ParentRCTCForm.valeursVersDto(valeurs.parents.parent2, 3),
+                evenementUnions: mariageParents ? [{ id: valeurs.parents.mariage.idMariageParent2, ...mariageParents }] : []
+              }
+            ]
+          : [])
       ],
-      ...(valeurs.parents.parent1.nom || valeurs.parents.parent1.prenoms.prenom1
-        ? [
-            {
-              ...ParentRCTCForm.valeursVersDto(valeurs.parents.parent1, 2),
-              evenementUnions: mariageParents ? [{ id: valeurs.parents.mariage.idMariageParent1, ...mariageParents }] : []
-            }
-          ]
-        : []),
-      ...(valeurs.parents.avecParent2 && (valeurs.parents.parent2.nom || valeurs.parents.parent2.prenoms.prenom1)
-        ? [
-            {
-              ...ParentRCTCForm.valeursVersDto(valeurs.parents.parent2, 3),
-              evenementUnions: mariageParents ? [{ id: valeurs.parents.mariage.idMariageParent2, ...mariageParents }] : []
-            }
-          ]
-        : []),
       requerant: {
         id: valeurs.requerant.id,
         nomFamille: valeurs.requerant.nom,
