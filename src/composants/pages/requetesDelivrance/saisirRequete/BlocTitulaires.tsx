@@ -16,7 +16,7 @@ const BlocTitulaire: React.FC<IBlocTitulaireProps> = ({ indexTitulaire, unSeulTi
 
   return (
     <ConteneurAvecBordure
-      titreEnTete={unSeulTitulaire ? "Titulaire" : `Titulaire ${indexTitulaire + 1}`}
+      titreEnTete={unSeulTitulaire ? "TITULAIRE" : `Titulaire ${indexTitulaire}`}
       sansMargeHorizontale={!unSeulTitulaire}
     >
       <div className="grid grid-cols-2 gap-x-4 gap-y-2 pt-2">

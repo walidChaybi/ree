@@ -22,7 +22,8 @@ const BlocRequerant = () => {
     }
 
     const { TITULAIRE2, ...enumSansTitulaire2 } = ETypeRequerantRDC;
-    return enumVersOptions(enumSansTitulaire2);
+
+    return enumVersOptions({ ...enumSansTitulaire2, TITULAIRE1: "Titulaire" });
   }, [values.requete.natureActe]);
 
   const requerant = useMemo(
@@ -49,7 +50,7 @@ const BlocRequerant = () => {
   }, []);
 
   return (
-    <ConteneurAvecBordure titreEnTete={"RÉQUERANT"}>
+    <ConteneurAvecBordure titreEnTete={"REQUÉRANT"}>
       <div className="grid grid-cols-2">
         <ChampListeDeroulante
           name="requerant.typeRequerant"

@@ -19,7 +19,7 @@ const FormulaireExtraitCopieDelivrance: React.FC = () => {
   return (
     <ConteneurAccordeon
       titre="Saisie courrier extrait/copie"
-      estControlable
+      estControlable={false}
       ouvertParDefaut
     >
       <div className="h-[calc(100vh-22rem)] overflow-y-auto py-8">

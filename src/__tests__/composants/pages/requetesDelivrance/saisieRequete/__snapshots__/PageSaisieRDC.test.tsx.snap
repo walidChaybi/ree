@@ -8,7 +8,7 @@ exports[`Bloc identité > DOIT afficher le bloc identité QUAND le typeRequerant
     <span
       class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
     >
-      RÉQUERANT
+      REQUÉRANT
     </span>
     <div
       class="grid grid-cols-2"
@@ -30,7 +30,7 @@ exports[`Bloc identité > DOIT afficher le bloc identité QUAND le typeRequerant
           <option
             value="TITULAIRE1"
           >
-            Titulaire 1
+            Titulaire
           </option>
           <option
             value="PARTICULIER"
@@ -173,7 +173,7 @@ exports[`Bloc identité > DOIT afficher le bloc identité QUAND le typeRequerant
     <span
       class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
     >
-      RÉQUERANT
+      REQUÉRANT
     </span>
     <div
       class="grid grid-cols-2"
@@ -195,7 +195,7 @@ exports[`Bloc identité > DOIT afficher le bloc identité QUAND le typeRequerant
           <option
             value="TITULAIRE1"
           >
-            Titulaire 1
+            Titulaire
           </option>
           <option
             value="PARTICULIER"
@@ -566,37 +566,11 @@ exports[`Formulaire saisie RDC - affichage des blocs > DOIT afficher le formulai
 <div
   class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
 >
-  <button
-    aria-label="Étendre la section"
-    class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
-    title="Étendre la section"
-    type="button"
+  <div
+    class="font-marianne-bold relative m-0 truncate bg-bleu px-4 py-1 text-lg text-blanc"
   >
-    <span
-      class="truncate"
-    >
-      Saisie courrier extrait/copie
-    </span>
-    <svg
-      aria-hidden="true"
-      class="absolute right-2 text-2xl transition-transform duration-200 ease-in rotate-180"
-      fill="currentColor"
-      height="1em"
-      stroke="currentColor"
-      stroke-width="0"
-      viewBox="0 0 24 24"
-      width="1em"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M0 0h24v24H0z"
-        fill="none"
-      />
-      <path
-        d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-      />
-    </svg>
-  </button>
+    Saisie courrier extrait/copie
+  </div>
   <div
     class="grid transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
   >
@@ -810,7 +784,7 @@ exports[`Formulaire saisie RDC - affichage des blocs > DOIT afficher le formulai
                 <span
                   class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
                 >
-                  Titulaire
+                  TITULAIRE
                 </span>
                 <div
                   class="grid grid-cols-2 gap-x-4 gap-y-2 pt-2"
@@ -948,7 +922,7 @@ exports[`Formulaire saisie RDC - affichage des blocs > DOIT afficher le formulai
                 <span
                   class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
                 >
-                  RÉQUERANT
+                  REQUÉRANT
                 </span>
                 <div
                   class="grid grid-cols-2"
@@ -970,7 +944,7 @@ exports[`Formulaire saisie RDC - affichage des blocs > DOIT afficher le formulai
                       <option
                         value="TITULAIRE1"
                       >
-                        Titulaire 1
+                        Titulaire
                       </option>
                       <option
                         value="PARTICULIER"
@@ -1297,37 +1271,11 @@ exports[`Formulaire saisie RDC - affichage des blocs > DOIT afficher le formulai
     <div
       class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
     >
-      <button
-        aria-label="Étendre la section"
-        class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
-        title="Étendre la section"
-        type="button"
+      <div
+        class="font-marianne-bold relative m-0 truncate bg-bleu px-4 py-1 text-lg text-blanc"
       >
-        <span
-          class="truncate"
-        >
-          Saisie courrier extrait/copie
-        </span>
-        <svg
-          aria-hidden="true"
-          class="absolute right-2 text-2xl transition-transform duration-200 ease-in rotate-180"
-          fill="currentColor"
-          height="1em"
-          stroke="currentColor"
-          stroke-width="0"
-          viewBox="0 0 24 24"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M0 0h24v24H0z"
-            fill="none"
-          />
-          <path
-            d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-          />
-        </svg>
-      </button>
+        Saisie courrier extrait/copie
+      </div>
       <div
         class="grid transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
       >
@@ -1541,7 +1489,7 @@ exports[`Formulaire saisie RDC - affichage des blocs > DOIT afficher le formulai
                     <span
                       class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
                     >
-                      Titulaire
+                      TITULAIRE
                     </span>
                     <div
                       class="grid grid-cols-2 gap-x-4 gap-y-2 pt-2"
@@ -1679,7 +1627,7 @@ exports[`Formulaire saisie RDC - affichage des blocs > DOIT afficher le formulai
                     <span
                       class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
                     >
-                      RÉQUERANT
+                      REQUÉRANT
                     </span>
                     <div
                       class="grid grid-cols-2"
@@ -1701,7 +1649,7 @@ exports[`Formulaire saisie RDC - affichage des blocs > DOIT afficher le formulai
                           <option
                             value="TITULAIRE1"
                           >
-                            Titulaire 1
+                            Titulaire
                           </option>
                           <option
                             value="PARTICULIER"
@@ -1905,7 +1853,7 @@ exports[`Formulaire saisie RDC - affichage des blocs > NE DOIT PAS afficher le b
     <span
       class="absolute -top-4 left-8 bg-white px-2 text-start text-xl font-bold text-bleu-sombre"
     >
-      RÉQUERANT
+      REQUÉRANT
     </span>
     <div
       class="grid grid-cols-2"
@@ -1927,7 +1875,7 @@ exports[`Formulaire saisie RDC - affichage des blocs > NE DOIT PAS afficher le b
           <option
             value="TITULAIRE1"
           >
-            Titulaire 1
+            Titulaire
           </option>
           <option
             value="PARTICULIER"
