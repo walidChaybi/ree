@@ -1,14 +1,3 @@
-import {
-  IRecupererRegistrePapierParIdActeParams,
-  useRecupererRegistrePapierParIdActeApiHook
-} from "@hook/acte/RecupererRegistrePapierParIdActeApiHook";
-import { useValiderProjetActeApiHook } from "@hook/acte/ValiderProjetActeApiHook";
-import { ICompositionProjetActeParams, useCompositionProjetActeApiHook } from "@hook/composition/CompositionProjetActeApiHook";
-import { IDetailRequeteParams, useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
-import {
-  IModifierAvancementProjetActeParams,
-  useModifierAvancementSuiviDossierApiHook
-} from "@hook/requete/ModifierAvancementSuiviDossierApiHook";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { TUuidSuiviDossierParams } from "@model/params/TUuidSuiviDossierParams";
@@ -17,9 +6,6 @@ import { ISuiviDossier } from "@model/requete/ISuiviDossier";
 import { ITitulaireRequeteCreation, TitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
-import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
-import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
-import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { DEUX, UN } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
@@ -37,6 +23,23 @@ import {
   INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_SUIVI_DOSSIER
 } from "../../../../../../router/infoPages/InfoPagesEspaceEtablissement";
 import AfficherMessage from "../../../../../../utils/AfficherMessage";
+import {
+  IRecupererRegistrePapierParIdActeParams,
+  useRecupererRegistrePapierParIdActeApiHook
+} from "../../../../../common/hook/acte/RecupererRegistrePapierParIdActeApiHook";
+import { useValiderProjetActeApiHook } from "../../../../../common/hook/acte/ValiderProjetActeApiHook";
+import {
+  ICompositionProjetActeParams,
+  useCompositionProjetActeApiHook
+} from "../../../../../common/hook/composition/CompositionProjetActeApiHook";
+import { IDetailRequeteParams, useDetailRequeteApiHook } from "../../../../../common/hook/requete/DetailRequeteHook";
+import {
+  IModifierAvancementProjetActeParams,
+  useModifierAvancementSuiviDossierApiHook
+} from "../../../../../common/hook/requete/ModifierAvancementSuiviDossierApiHook";
+import { OngletPiecesJustificatives } from "../../../commun/composants/OngletPiecesJustificatives";
+import { OngletRMCPersonne } from "../../../commun/composants/ongletRMCPersonne/OngletRMCPersonne";
+import { useDataTableauxOngletRMCPersonne } from "../../../commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import "../../../commun/scss/ApercuReqCreationPage.scss";
 import {
   annulerModificationBulletinIdentification,

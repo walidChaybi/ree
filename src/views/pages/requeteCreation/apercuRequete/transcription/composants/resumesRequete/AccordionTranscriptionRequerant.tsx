@@ -1,11 +1,10 @@
 import { IAdresseRequerant } from "@model/requete/IAdresseRequerant";
 import { IRequerant, Requerant } from "@model/requete/IRequerant";
-import { resume } from "@pages/requeteCreation/commun/Labels";
-
 import { ETypeLienRequerant } from "@model/requete/enum/ETypeLienRequerant";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import React from "react";
+import { resume } from "../../../../commun/Labels";
 import { LigneAccordion } from "./LigneAccordion";
 
 interface AccordionTranscriptionRequerantProps {
@@ -59,7 +58,7 @@ export const AccordionTranscriptionRequerant: React.FC<AccordionTranscriptionReq
   return (
     <div className="AccordionTranscriptionRequerant">
       <AccordionRece
-        key={`${props.requerant}`}
+        key={`${props.requerant?.id}`}
         titre={`${resume.requerant}`}
         className={{
           container: "accordionContainer",

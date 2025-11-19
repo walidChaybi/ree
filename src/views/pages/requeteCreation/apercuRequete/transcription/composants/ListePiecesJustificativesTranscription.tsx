@@ -3,12 +3,12 @@ import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTr
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { PieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
-import { typeFctRenommePieceJustificative } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
 import { estRenseigne } from "@util/Utils";
 import { AccordionVisionneuse } from "@widget/accordion/AccordionVisionneuse";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { ListeGlisserDeposer, ListeItem } from "@widget/listeGlisserDeposer/ListeGlisserDeposer";
 import React, { useEffect, useState } from "react";
+import { TFctRenommePieceJustificative } from "../../../commun/composants/OngletPiecesJustificatives";
 
 interface GroupePJTranscription {
   typePieceJustificative: ITypePieceJustificative | null;
@@ -18,7 +18,7 @@ interface GroupePJTranscription {
 interface ListePiecesJustificativesTranscriptionProps {
   requete: IRequeteCreationTranscription;
   autoriseOuvertureFenetreExt?: boolean;
-  onRenommePieceJustificative: typeFctRenommePieceJustificative;
+  onRenommePieceJustificative: TFctRenommePieceJustificative;
 }
 
 export const ListePiecesJustificativesTranscription: React.FC<ListePiecesJustificativesTranscriptionProps> = props => {

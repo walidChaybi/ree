@@ -1,3 +1,24 @@
+import { DetailMariage } from "@model/etatcivil/acte/DetailMariage";
+import { FicheActe } from "@model/etatcivil/acte/FicheActe";
+import { Filiation } from "@model/etatcivil/acte/Filiation";
+import { Evenement, IEvenement } from "@model/etatcivil/acte/IEvenement";
+import { TitulaireActe } from "@model/etatcivil/acte/TitulaireActe";
+import { ELienParente } from "@model/etatcivil/enum/ELienParente";
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
+import {
+  IContratMariageForm,
+  IDateNaissanceAgeDe,
+  IDonneesComplementairesPlurilingueForm,
+  IEvenementForm,
+  ILieuEvenementForm,
+  IParentNaissanceForm,
+  ISaisieExtraitForm,
+  ITitulaireEvtForm
+} from "@model/form/delivrance/ISaisieExtraitForm";
+import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
+import DateUtils, { IDateCompose } from "@util/DateUtils";
+import { ABSENCE_VALIDEE, QUINZE, rempliAGaucheAvecZero } from "@util/Utils";
+import { FRANCE, LieuxUtils } from "@utilMetier/LieuxUtils";
 import {
   ADOPTE_PAR,
   AGE,
@@ -39,28 +60,7 @@ import {
   TITULAIRE_EVT_2,
   TYPE,
   VILLE
-} from "@composant/formulaire/ConstantesNomsForm";
-import { DetailMariage } from "@model/etatcivil/acte/DetailMariage";
-import { FicheActe } from "@model/etatcivil/acte/FicheActe";
-import { Filiation } from "@model/etatcivil/acte/Filiation";
-import { Evenement, IEvenement } from "@model/etatcivil/acte/IEvenement";
-import { TitulaireActe } from "@model/etatcivil/acte/TitulaireActe";
-import { ELienParente } from "@model/etatcivil/enum/ELienParente";
-import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
-import {
-  IContratMariageForm,
-  IDateNaissanceAgeDe,
-  IDonneesComplementairesPlurilingueForm,
-  IEvenementForm,
-  ILieuEvenementForm,
-  IParentNaissanceForm,
-  ISaisieExtraitForm,
-  ITitulaireEvtForm
-} from "@model/form/delivrance/ISaisieExtraitForm";
-import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
-import DateUtils, { IDateCompose } from "@util/DateUtils";
-import { ABSENCE_VALIDEE, QUINZE, rempliAGaucheAvecZero } from "@util/Utils";
-import { FRANCE, LieuxUtils } from "@utilMetier/LieuxUtils";
+} from "../../../../../../../common/composant/formulaire/ConstantesNomsForm";
 
 export function mappingActeVerFormulaireSaisirExtrait(acte: FicheActe, titulairesAMs: (TitulaireActe | undefined)[]): ISaisieExtraitForm {
   // Titulaire 1

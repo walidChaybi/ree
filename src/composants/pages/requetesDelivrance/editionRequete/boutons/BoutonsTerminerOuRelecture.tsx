@@ -1,15 +1,15 @@
-import { ITransfertPopinForm, TransfertPopin } from "@composant/menuTransfert/TransfertPopin";
+import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
+import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
+import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
+import { ITransfertPopinForm, TransfertPopin } from "@views/common/composant/menuTransfert/TransfertPopin";
 import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
-} from "@hook/requete/CreationActionMiseAjourStatutHook";
-import { IRegenerationDocumentsParams, useRegenerationDocumentsHook } from "@hook/requete/RegenerationDocumentsHook";
-import { IRetourValideurParams, useRetourValideurApiHook } from "@hook/requete/RetourValideur";
-import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
-import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
-import { getDefaultValuesCourrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
-import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
-import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
+} from "@views/common/hook/requete/CreationActionMiseAjourStatutHook";
+import { IRegenerationDocumentsParams, useRegenerationDocumentsHook } from "@views/common/hook/requete/RegenerationDocumentsHook";
+import { IRetourValideurParams, useRetourValideurApiHook } from "@views/common/hook/requete/RetourValideur";
+import { getDefaultValuesCourrier } from "@views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
+import { mappingRequeteDelivranceToRequeteTableau } from "@views/pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { EditionDelivranceContext } from "../../../../../contexts/EditionDelivranceContextProvider";

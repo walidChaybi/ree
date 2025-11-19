@@ -1,13 +1,13 @@
-import { useCompositionReponseSansDelivranceCSApi } from "@hook/composition/CompositionReponseSansDelivranceCSHook";
-import {
-  IStockerDocumentCreerActionMajStatutRequeteParams,
-  useStockerDocumentCreerActionMajStatutRequete
-} from "@hook/requete/StockerDocumentCreerActionMajStatutRequete";
 import { IReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
 import { Orientation } from "@model/composition/enum/Orientation";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { useCompositionReponseSansDelivranceCSApi } from "@views/common/hook/composition/CompositionReponseSansDelivranceCSHook";
+import {
+  IStockerDocumentCreerActionMajStatutRequeteParams,
+  useStockerDocumentCreerActionMajStatutRequete
+} from "@views/common/hook/requete/StockerDocumentCreerActionMajStatutRequete";
 import { useEffect, useState } from "react";
 import { EMimeType } from "../../../../ressources/EMimeType";
 

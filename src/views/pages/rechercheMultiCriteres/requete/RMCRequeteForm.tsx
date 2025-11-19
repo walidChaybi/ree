@@ -1,4 +1,3 @@
-import { DATES_DEBUT_FIN_ANNEE, REQUERANT, REQUETE, TITULAIRE } from "@composant/formulaire/ConstantesNomsForm";
 import { ETypeRequete } from "@model/requete/enum/TypeRequete";
 import { ICriteresRMCRequete } from "@model/rmc/requete/ICriteresRMCRequete";
 import { IRMCRequeteForm } from "@model/rmc/requete/IRMCRequete";
@@ -9,6 +8,7 @@ import { NB_LIGNES_PAR_APPEL_REQUETE } from "@widget/tableau/TableauRece/Tableau
 import React from "react";
 import * as Yup from "yup";
 import AfficherMessage from "../../../../utils/AfficherMessage";
+import { DATES_DEBUT_FIN_ANNEE, REQUERANT, REQUETE, TITULAIRE } from "../../../common/composant/formulaire/ConstantesNomsForm";
 import RMCBoutons from "../boutons/RMCBoutons";
 import DatesDebutFinAnneeFiltre, {
   DatesDebutFinAnneeDefaultValues,

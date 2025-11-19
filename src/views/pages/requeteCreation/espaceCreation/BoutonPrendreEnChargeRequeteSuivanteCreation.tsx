@@ -1,4 +1,3 @@
-import { usePrendreEnChargeRequeteSuivanteApiHook } from "@hook/requete/PrendreEnChargeRequeteSuivanteApiHook";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
@@ -7,6 +6,7 @@ import { useNavigate } from "react-router";
 import LiensRECE from "../../../../router/LiensRECE";
 import { INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_SUIVI_DOSSIER } from "../../../../router/infoPages/InfoPagesEspaceEtablissement";
 import AfficherMessage from "../../../../utils/AfficherMessage";
+import { usePrendreEnChargeRequeteSuivanteApiHook } from "../../../common/hook/requete/PrendreEnChargeRequeteSuivanteApiHook";
 
 interface BoutonPrendreEnChargeRequeteSuivanteProps {
   typeRequete: TypeRequete;

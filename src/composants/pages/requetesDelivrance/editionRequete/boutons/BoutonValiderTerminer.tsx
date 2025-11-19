@@ -1,8 +1,3 @@
-import {
-  IDerniereDelivranceRcRcaPacsParams,
-  useDerniereDelivranceRcRcaPacsApiHook
-} from "@hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
-import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import { Droit } from "@model/agent/enum/Droit";
 import { ETypeRcRcaPacs } from "@model/etatcivil/enum/ETypeRcRcaPacs";
 import { DocumentReponse } from "@model/requete/IDocumentReponse";
@@ -11,6 +6,11 @@ import { Provenance } from "@model/requete/enum/Provenance";
 import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeCanal } from "@model/requete/enum/TypeCanal";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
+import {
+  IDerniereDelivranceRcRcaPacsParams,
+  useDerniereDelivranceRcRcaPacsApiHook
+} from "@views/common/hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
+import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@views/common/hook/requete/ActionHook";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { RECEContextData } from "../../../../../contexts/RECEContextProvider";

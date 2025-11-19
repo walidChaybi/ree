@@ -14,7 +14,7 @@ import { describe, expect, test, vi } from "vitest";
 import PageRequeteTranscriptionSaisieProjet from "../../../../pages/requetesConsulaire/PageRequeteTranscriptionSaisieProjet";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 
-vi.mock("@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats", () => ({
+vi.mock("@views/pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats", () => ({
   RMCRequetesAssocieesResultats: () => <div data-testid="rmc-mock">Requetes associees</div>
 }));
 

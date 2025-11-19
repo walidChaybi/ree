@@ -1,4 +1,3 @@
-import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
 import { nettoyerAttributsDto } from "@model/commun/dtoUtils";
 import { IDetailMariageDto } from "@model/etatcivil/acte/DetailMariage";
 import { FicheActe } from "@model/etatcivil/acte/FicheActe";
@@ -23,6 +22,7 @@ import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
 import DateUtils from "@util/DateUtils";
 import { DEUX, UN, estNonRenseigne, estRenseigne, getNombreOuUndefined } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
+import { IExtraitSaisiAEnvoyer } from "../../../../../../../common/hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
 
 function retirePrenomVide(prenomsSaisie?: Prenoms) {
   const prenoms = [];

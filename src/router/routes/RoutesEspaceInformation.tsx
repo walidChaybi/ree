@@ -1,6 +1,6 @@
 import { Droit } from "@model/agent/enum/Droit";
-import { ApercuReqInfoPage } from "@pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
-import EspaceInformationPage from "@pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
+import { ApercuReqInfoPage } from "@views/pages/requeteInformation/apercuRequeteInformation/ApercuReqInfoPage";
+import EspaceInformationPage from "@views/pages/requeteInformation/espaceInformation/EspaceReqInfoPage";
 import { RouteObject } from "react-router";
 import ElementPageRECE from "../ElementPageRECE";
 import {

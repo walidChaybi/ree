@@ -1,22 +1,11 @@
-import {
-  DATE_EVENEMENT,
-  PAYS_EVENEMENT,
-  VILLE_EVENEMENT
-} from "@composant/formulaire/ConstantesNomsForm";
 import { getLibelle } from "@util/Utils";
+import { DATE_EVENEMENT, PAYS_EVENEMENT, VILLE_EVENEMENT } from "@views/common/composant/formulaire/ConstantesNomsForm";
 import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
-import DateComposeForm, {
-  DateComposeFormProps,
-  DateDefaultValues
-} from "@widget/formulaire/champsDate/DateComposeForm";
+import DateComposeForm, { DateComposeFormProps, DateDefaultValues } from "@widget/formulaire/champsDate/DateComposeForm";
 import { DateValidationSchemaSansTestFormat } from "@widget/formulaire/champsDate/DateComposeFormValidation";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
-import {
-  NB_CARACT_MAX_SAISIE,
-  SubFormProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { NB_CARACT_MAX_SAISIE, SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect } from "react";
 import * as Yup from "yup";
@@ -33,14 +22,8 @@ export const EvenementFormDefaultValues = {
 // Schéma de validation des champs
 export const EvenementFormValidationSchema = Yup.object().shape({
   [DATE_EVENEMENT]: DateValidationSchemaSansTestFormat,
-  [VILLE_EVENEMENT]: Yup.string().matches(
-    CaracteresAutorises,
-    CARACTERES_AUTORISES_MESSAGE
-  ),
-  [PAYS_EVENEMENT]: Yup.string().matches(
-    CaracteresAutorises,
-    CARACTERES_AUTORISES_MESSAGE
-  )
+  [VILLE_EVENEMENT]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
+  [PAYS_EVENEMENT]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
 });
 
 interface EvenementFormProps {
@@ -78,13 +61,7 @@ const EvenementForm: React.FC<EvenementSubFormProps> = props => {
             label={getLibelle("à")}
             placeholder={getLibelle(`Ville de ${props.libelle}`)}
             maxLength={NB_CARACT_MAX_SAISIE}
-            onBlur={e =>
-              sortieChampPremiereLettreEnMajuscule(
-                e,
-                props.formik,
-                villeWithNamespace
-              )
-            }
+            onBlur={e => sortieChampPremiereLettreEnMajuscule(e, props.formik, villeWithNamespace)}
           />
         </div>
       </div>
@@ -92,13 +69,7 @@ const EvenementForm: React.FC<EvenementSubFormProps> = props => {
         name={withNamespace(props.nom, PAYS_EVENEMENT)}
         label={getLibelle(`Pays de ${props.libelle}`)}
         maxLength={NB_CARACT_MAX_SAISIE}
-        onBlur={e =>
-          sortieChampPremiereLettreEnMajuscule(
-            e,
-            props.formik,
-            paysWithNamespace
-          )
-        }
+        onBlur={e => sortieChampPremiereLettreEnMajuscule(e, props.formik, paysWithNamespace)}
       />
     </>
   );

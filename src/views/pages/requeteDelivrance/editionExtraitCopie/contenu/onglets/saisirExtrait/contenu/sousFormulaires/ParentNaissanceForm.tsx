@@ -1,7 +1,3 @@
-import { DATE_NAISSANCE_OU_AGE_DE, LIEU_NAISSANCE, NOM_NAISSANCE, PRENOMS, SEXE } from "@composant/formulaire/ConstantesNomsForm";
-import DateNaissanceOuAgeDeForm from "@composant/formulaire/DateNaissanceOuAgeDeForm";
-import LieuEvenementForm from "@composant/formulaire/LieuEvenementForm";
-import PrenomsForm from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { Filiation } from "@model/etatcivil/acte/Filiation";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
@@ -10,6 +6,16 @@ import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
 import React, { useContext } from "react";
+import {
+  DATE_NAISSANCE_OU_AGE_DE,
+  LIEU_NAISSANCE,
+  NOM_NAISSANCE,
+  PRENOMS,
+  SEXE
+} from "../../../../../../../../common/composant/formulaire/ConstantesNomsForm";
+import DateNaissanceOuAgeDeForm from "../../../../../../../../common/composant/formulaire/DateNaissanceOuAgeDeForm";
+import LieuEvenementForm from "../../../../../../../../common/composant/formulaire/LieuEvenementForm";
+import PrenomsForm from "../../../../../../../../common/composant/formulaire/nomsPrenoms/PrenomsForm";
 import { SaisirExtraitFormContext } from "../../SaisirExtraitForm";
 import "./scss/ParentNaissanceForm.scss";
 

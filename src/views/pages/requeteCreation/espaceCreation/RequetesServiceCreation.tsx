@@ -1,15 +1,4 @@
 import { IQueryParametersPourRequetes, TypeAppelRequete } from "@api/appels/requeteApi";
-import { getUtilisateursParTypeRequeteVersOptions } from "@composant/menuTransfert/MenuTransfertUtil";
-import { ITransfertPopinForm, TransfertPopin } from "@composant/menuTransfert/TransfertPopin";
-import {
-  NavigationApercuReqCreationParams,
-  useNavigationApercuCreation
-} from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
-import {
-  ICreationActionMiseAjourStatutEtRedirectionParams,
-  useCreationActionMiseAjourStatutEtRedirectionHook
-} from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
-import { ITransfertRequetesParams, useTransfertRequetesApi } from "@hook/requete/TransfertHook";
 import { Utilisateur } from "@model/agent/Utilisateur";
 import { IFiltreServiceRequeteCreationFormValues } from "@model/form/creation/etablissement/IFiltreServiceRequeteCreation";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
@@ -26,6 +15,17 @@ import { IColonneCaseACocherParams } from "@widget/tableau/TableauRece/colonneEl
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
 import { RECEContextData } from "../../../../contexts/RECEContextProvider";
+import { getUtilisateursParTypeRequeteVersOptions } from "../../../common/composant/menuTransfert/MenuTransfertUtil";
+import { ITransfertPopinForm, TransfertPopin } from "../../../common/composant/menuTransfert/TransfertPopin";
+import {
+  NavigationApercuReqCreationParams,
+  useNavigationApercuCreation
+} from "../../../common/hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
+import {
+  ICreationActionMiseAjourStatutEtRedirectionParams,
+  useCreationActionMiseAjourStatutEtRedirectionHook
+} from "../../../common/hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
+import { ITransfertRequetesParams, useTransfertRequetesApi } from "../../../common/hook/requete/TransfertHook";
 import { useRequeteCreationApiHook } from "../../../common/hook/requete/creation/RequeteCreationApiHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { FiltreServiceRequeteCreationForm } from "../commun/composants/FiltreServiceRequeteCreationForm/FiltreServiceRequeteCreationForm";

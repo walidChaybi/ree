@@ -1,6 +1,5 @@
 import { CONFIG_GET_METAMODELE_TYPE_MENTION } from "@api/configurations/requete/miseAJour/GetMetamodeleTypeMentionConfigApi";
 import { CONFIG_GET_TYPES_MENTION_PAR_NATURE } from "@api/configurations/requete/miseAJour/GetTypesMentionParNatureConfigApi";
-import { TEXTE_MENTION } from "@composant/formulaire/ConstantesNomsForm";
 import { TypeMention } from "@model/etatcivil/acte/mention/ITypeMention";
 import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { ESexe } from "@model/etatcivil/enum/Sexe";
@@ -13,6 +12,7 @@ import { EEventState, useEventState } from "../../../../hooks/EventHook";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
 import AfficherMessage from "../../../../utils/AfficherMessage";
 import SchemaValidation from "../../../../utils/SchemaValidation";
+import { TEXTE_MENTION } from "../../../../views/common/composant/formulaire/ConstantesNomsForm";
 import Bouton from "../../../commun/bouton/Bouton";
 import ChampZoneTexte from "../../../commun/champs/ChampZoneTexte";
 import ComposantChargeur from "../../../commun/chargeurs/ComposantChargeur";

@@ -1,7 +1,4 @@
 import { CONFIG_GET_INSCRIPTIONS_RC_DE_LA_PERSONNE } from "@api/configurations/etatCivil/personnes/GetInscriptionsRCDeLaPersonneConfigApi";
-import { AlertesActes } from "@composant/alertesActe/AlertesActes";
-import { IGetAlertesActeApiHookParameters } from "@hook/alertes/GetAlertesActeApiHook";
-import { IGetTitulairesActeHookParams, useGetTitulairesActeApiHook } from "@hook/repertoires/TitulairesActeHook";
 import { TitulaireActe } from "@model/etatcivil/acte/TitulaireActe";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IInscriptionRc, mappingInscriptionsRCDepuisFicheRcDto } from "@model/etatcivil/rcrca/IInscriptionRC";
@@ -9,6 +6,9 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { aplatirTableau } from "@util/Utils";
+import { AlertesActes } from "@views/common/composant/alertesActe/AlertesActes";
+import { IGetAlertesActeApiHookParameters } from "@views/common/hook/alertes/GetAlertesActeApiHook";
+import { IGetTitulairesActeHookParams, useGetTitulairesActeApiHook } from "@views/common/hook/repertoires/TitulairesActeHook";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import React, { useCallback, useEffect, useState } from "react";
 import useFetchApi from "../../../../../../hooks/api/FetchApiHook";

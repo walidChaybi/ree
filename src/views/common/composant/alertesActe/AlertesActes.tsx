@@ -1,7 +1,7 @@
-import { AddAlerteActeApiHookParameters, useAddAlerteActeApiHook } from "@hook/alertes/AddAlerteActeHookApi";
-import { DeleteAlerteActeApiHookParameters, useDeleteAlerteActeApiHook } from "@hook/alertes/DeleteAlerteActeHookApi";
-import { IGetAlertesActeApiHookParameters, useGetAlertesActeApiHook } from "@hook/alertes/GetAlertesActeApiHook";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
+import { AddAlerteActeApiHookParameters, useAddAlerteActeApiHook } from "@views/common/hook/alertes/AddAlerteActeHookApi";
+import { DeleteAlerteActeApiHookParameters, useDeleteAlerteActeApiHook } from "@views/common/hook/alertes/DeleteAlerteActeHookApi";
+import { IGetAlertesActeApiHookParameters, useGetAlertesActeApiHook } from "@views/common/hook/alertes/GetAlertesActeApiHook";
 
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";

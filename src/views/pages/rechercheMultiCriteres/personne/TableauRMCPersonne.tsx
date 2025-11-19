@@ -4,7 +4,6 @@ import { ETypeRedactionActe } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { TypePieceJustificative } from "@model/requete/enum/TypePieceJustificative";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
-import { FenetreFiche } from "@pages/fiche/FenetreFiche";
 import { supprimeElement, UN, ZERO } from "@util/Utils";
 import { CelluleBoutonMenu, ICelluleBoutonMenuProps } from "@widget/tableau/TableauRece/colonneElements/boutonMenu/CelluleBoutonMenu";
 import { IColonneBoutonMenuParams } from "@widget/tableau/TableauRece/colonneElements/boutonMenu/ColonneBoutonMenu";
@@ -16,6 +15,7 @@ import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn
 import { getLigneTableauVide } from "@widget/tableau/TableUtils";
 import React, { useContext, useState } from "react";
 import { RECEContextData } from "../../../../contexts/RECEContextProvider";
+import { FenetreFiche } from "../../fiche/FenetreFiche";
 import { IFenetreFicheActeInscription } from "../common/IFenetreFicheActeInscription";
 import { DataTableauRMCPersonne, IDataTableauRMCPersonne } from "./IDataTableauRMCPersonne";
 import "./scss/TableauRMCPersonne.scss";

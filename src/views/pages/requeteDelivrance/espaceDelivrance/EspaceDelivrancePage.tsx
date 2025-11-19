@@ -1,7 +1,3 @@
-import {
-  INavigationApercuDelivranceParams,
-  useNavigationApercuDelivrance
-} from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceHook";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
@@ -16,6 +12,10 @@ import {
   INFO_PAGE_MES_REQUETES_DELIVRANCE,
   INFO_PAGE_REQUETES_DELIVRANCE_SERVICE
 } from "../../../../router/infoPages/InfoPagesEspaceDelivrance";
+import {
+  INavigationApercuDelivranceParams,
+  useNavigationApercuDelivrance
+} from "../../../common/hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceHook";
 import { MesRequetesPage } from "./MesRequetesPage";
 import { RequetesServicePage } from "./RequetesServicePage";
 import BoutonPrendreEnChargeAleatoirement from "./contenu/BoutonPrendreEnChargeAleatoirement";

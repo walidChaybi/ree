@@ -1,5 +1,5 @@
-import { TEXTE } from "@composant/formulaire/ConstantesNomsForm";
 import { getLibelle } from "@util/Utils";
+import { TEXTE } from "@views/common/composant/formulaire/ConstantesNomsForm";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import { SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";

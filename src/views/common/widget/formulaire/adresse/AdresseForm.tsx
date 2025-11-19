@@ -1,3 +1,4 @@
+import { getLibelle } from "@util/Utils";
 import {
   ADRESSE_COURRIEL,
   CODE_POSTAL,
@@ -8,8 +9,7 @@ import {
   NUMERO_TELEPHONE,
   PAYS,
   VOIE
-} from "@composant/formulaire/ConstantesNomsForm";
-import { getLibelle } from "@util/Utils";
+} from "@views/common/composant/formulaire/ConstantesNomsForm";
 import { connect } from "formik";
 import React from "react";
 import * as Yup from "yup";

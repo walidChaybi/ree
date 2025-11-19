@@ -1,26 +1,23 @@
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
-import { ListePiecesJustificativesEtablissement } from "@pages/requeteCreation/apercuRequete/etablissement/commun/ListePiecesJustificativesEtablissement";
-import { ListePiecesJustificativesTranscription } from "@pages/requeteCreation/apercuRequete/transcription/composants/ListePiecesJustificativesTranscription";
 import React from "react";
+import { ListePiecesJustificativesEtablissement } from "../../apercuRequete/etablissement/commun/ListePiecesJustificativesEtablissement";
+import { ListePiecesJustificativesTranscription } from "../../apercuRequete/transcription/composants/ListePiecesJustificativesTranscription";
 import "./scss/VoletPiecesJustificatives.scss";
 
-export type typeFctRenommePieceJustificative = (
-  idPieceJustificative: string,
-  nouveauLibelle: string,
-  idDocumentPJ?: string
-) => void;
+export type TFctRenommePieceJustificative = (idPieceJustificative: string, nouveauLibelle: string, idDocumentPJ?: string) => void;
 
-interface OngletPiecesJustificativesProps {
+interface IOngletPiecesJustificativesProps {
   requete: IRequeteCreation;
   autoriseOuvertureFenetreExt?: boolean;
-  onRenommePieceJustificative: typeFctRenommePieceJustificative;
+  onRenommePieceJustificative: TFctRenommePieceJustificative;
   rechargerRequete?: () => void;
 }
 
-export const OngletPiecesJustificatives: React.FC<
-  OngletPiecesJustificativesProps
-> = ({ autoriseOuvertureFenetreExt = false, ...props }) => {
+export const OngletPiecesJustificatives: React.FC<IOngletPiecesJustificativesProps> = ({
+  autoriseOuvertureFenetreExt = false,
+  ...props
+}) => {
   return (
     <span className="PiecesJustificatives">
       {SousTypeCreation.estSousTypeTranscription(props.requete?.sousType) && (

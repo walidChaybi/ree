@@ -1,8 +1,8 @@
 import { HTTP_NOT_FOUND } from "@api/ApiManager";
 import CONFIG_GET_REQUETE_DELIVRANCE_A_PRENDRE_EN_CHARGE from "@api/configurations/requete/delivrance/GetRequeteDelivranceAPrendreEnChargeConfigApi";
-import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
+import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@views/common/hook/requete/ActionHook";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router";

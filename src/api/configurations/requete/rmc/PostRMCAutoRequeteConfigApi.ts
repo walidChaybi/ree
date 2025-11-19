@@ -4,7 +4,7 @@ import { TSousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { ETypeRequete } from "@model/requete/enum/TypeRequete";
 import { ITitulaireRequeteAssocieeDto } from "@model/rmc/requete/TitulaireRequeteAssociee";
-import { IEnveloppeCriteresRMCAutoRequete } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
+import { IEnveloppeCriteresRMCAutoRequete } from "@views/pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 
 const URI = "/requetes/rmcauto";
 

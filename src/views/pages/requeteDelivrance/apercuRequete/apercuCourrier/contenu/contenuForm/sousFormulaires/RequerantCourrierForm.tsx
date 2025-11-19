@@ -1,27 +1,16 @@
-import {
-  NOM,
-  PRENOM,
-  RAISON_SOCIALE,
-  REQUERANT
-} from "@composant/formulaire/ConstantesNomsForm";
 import { IRequerant, Requerant } from "@model/requete/IRequerant";
-import { getLibelle } from "@util/Utils";
+import { NOM, PRENOM, RAISON_SOCIALE, REQUERANT } from "@views/common/composant/formulaire/ConstantesNomsForm";
 import { connect } from "formik";
 import * as Yup from "yup";
 import { SousFormulaire } from "../../../../../../../common/widget/formulaire/SousFormulaire";
 import { InputField } from "../../../../../../../common/widget/formulaire/champsSaisie/InputField";
-import {
-  SubFormProps,
-  withNamespace
-} from "../../../../../../../common/widget/formulaire/utils/FormUtil";
+import { SubFormProps, withNamespace } from "../../../../../../../common/widget/formulaire/utils/FormUtil";
 
 export interface IRequerantCourrierFormProps {
   requerant: IRequerant;
 }
 
-const MESSAGE_VALEUR_OBLIGATOIRE = getLibelle(
-  "Au moins un champ de l'identité du requérant doit être rempli."
-);
+const MESSAGE_VALEUR_OBLIGATOIRE = "Au moins un champ de l'identité du requérant doit être rempli.";
 
 export const RequerantCourrierFormValidationSchema = Yup.object().shape(
   {
@@ -33,25 +22,23 @@ export const RequerantCourrierFormValidationSchema = Yup.object().shape(
   [[NOM, RAISON_SOCIALE]]
 );
 
-const RequerantCourrierForm: React.FC<
-  SubFormProps & IRequerantCourrierFormProps
-> = props => {
+const RequerantCourrierForm: React.FC<SubFormProps & IRequerantCourrierFormProps> = props => {
   return (
     <SousFormulaire titre={props.titre}>
       <div className="RequerantForm">
         {Requerant.estRaisonSociale(props.requerant) && (
           <InputField
             name={withNamespace(REQUERANT, RAISON_SOCIALE)}
-            label={getLibelle("Raison sociale")}
+            label={"Raison sociale"}
           />
         )}
         <InputField
           name={withNamespace(REQUERANT, NOM)}
-          label={getLibelle("Nom")}
+          label={"Nom"}
         />
         <InputField
           name={withNamespace(REQUERANT, PRENOM)}
-          label={getLibelle("Prénom")}
+          label={"Prénom"}
         />
       </div>
     </SousFormulaire>

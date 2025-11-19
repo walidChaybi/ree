@@ -1,4 +1,3 @@
-import { ITransfertRequetesParams, useTransfertRequetesApi } from "@hook/requete/TransfertHook";
 import { IActionOption } from "@model/requete/IActionOption";
 import { SousTypeRequete } from "@model/requete/enum/SousTypeRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
@@ -6,6 +5,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { Option } from "@util/Type";
 import { replaceUrl } from "@util/route/UrlUtil";
+import { ITransfertRequetesParams, useTransfertRequetesApi } from "@views/common/hook/requete/TransfertHook";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";

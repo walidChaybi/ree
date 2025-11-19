@@ -1,5 +1,4 @@
 import { CONFIG_POST_REQUETE_TRANSCRIPTION } from "@api/configurations/requete/creation/PostRequeteTranscriptionConfigApi";
-import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
 import { MockApi } from "@mock/appelsApi/MockApi";
 import { DOCUMENT_DELIVRANCE } from "@mock/data/NomenclatureDocumentDelivrance";
 import { TYPE_PIECE_JUSTIFICATIVE } from "@mock/data/NomenclatureTypePieceJustificative";
@@ -7,6 +6,7 @@ import { ISaisieRDCForm, SaisieRDCForm } from "@model/form/delivrance/ISaisieRDC
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { mappingRequeteDelivrance } from "@views/common/hook/requete/DetailRequeteHook";
 import { Formik } from "formik";
 import { useParams } from "react-router";
 import { describe, expect, test, vi } from "vitest";

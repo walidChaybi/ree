@@ -15,7 +15,7 @@ import {
   TEXTE,
   TEXTE_LIBRE,
   TYPE_MEMO
-} from "@composant/formulaire/ConstantesNomsForm";
+} from "../../../views/common/composant/formulaire/ConstantesNomsForm";
 import { ISaisieAdresse, Requete } from "./ISaisirRequetePageForm";
 
 export interface SaisieCourrier {

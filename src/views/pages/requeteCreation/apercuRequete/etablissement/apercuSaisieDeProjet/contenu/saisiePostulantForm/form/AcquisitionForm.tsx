@@ -1,17 +1,11 @@
-import { DATE, NATURE } from "@composant/formulaire/ConstantesNomsForm";
 import { TypeNature } from "@model/requete/enum/TypeNature";
-import Item from "@pages/requeteCreation/apercuRequete/etablissement/commun/resumeRequeteCreationEtablissement/items/Item";
 import { getLibelle } from "@util/Utils";
+import { DATE, NATURE } from "@views/common/composant/formulaire/ConstantesNomsForm";
+import Item from "@views/pages/requeteCreation/apercuRequete/etablissement/commun/resumeRequeteCreationEtablissement/items/Item";
 import DateComposeForm from "@widget/formulaire/champsDate/DateComposeForm";
-import {
-  OptionVide,
-  SelectField
-} from "@widget/formulaire/champsSaisie/SelectField";
+import { OptionVide, SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { MessageAvertissement } from "@widget/formulaire/erreur/MessageAvertissement";
-import {
-  FormikComponentProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { FormikComponentProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import { useState } from "react";
 
@@ -22,12 +16,8 @@ interface IAcquisitionFormProps {
 type AcquisitionFormProps = IAcquisitionFormProps & FormikComponentProps;
 
 const AcquisitionForm: React.FC<AcquisitionFormProps> = props => {
-  const [afficherDateDecret, setAfficherDateDecret] = useState<boolean>(
-    props.estAvancementASigner
-  );
-  const nature = props.formik.getFieldProps(
-    withNamespace(props.nom, NATURE)
-  ).value;
+  const [afficherDateDecret, setAfficherDateDecret] = useState<boolean>(props.estAvancementASigner);
+  const nature = props.formik.getFieldProps(withNamespace(props.nom, NATURE)).value;
 
   function onClickAfficherDecret() {
     setAfficherDateDecret(true);
@@ -42,9 +32,7 @@ const AcquisitionForm: React.FC<AcquisitionFormProps> = props => {
           options={TypeNature.getAllEnumsAsOptions()}
           optionVide={OptionVide.SELECTIONNABLE}
         />
-        <MessageAvertissement
-          afficherMessage={!nature && props.estAvancementASigner}
-        >
+        <MessageAvertissement afficherMessage={!nature && props.estAvancementASigner}>
           {getLibelle("La nature du décret n'est pas spécifiée")}
         </MessageAvertissement>
       </div>

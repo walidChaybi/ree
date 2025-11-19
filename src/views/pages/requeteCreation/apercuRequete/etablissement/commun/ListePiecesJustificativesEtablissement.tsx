@@ -2,7 +2,6 @@ import { DocumentPJ, IDocumentPJ } from "@model/requete/IDocumentPj";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { IPieceJustificativeCreation } from "@model/requete/pieceJointe/IPieceJustificativeCreation";
-import { typeFctRenommePieceJustificative } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
 import { Options } from "@util/Type";
 import { estRenseigne } from "@util/Utils";
 import { AccordionVisionneuse } from "@widget/accordion/AccordionVisionneuse";
@@ -11,13 +10,14 @@ import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleS
 import { IconePlus } from "@widget/icones/IconePlus";
 import { ListeGlisserDeposer, ListeItem } from "@widget/listeGlisserDeposer/ListeGlisserDeposer";
 import React, { useEffect, useState } from "react";
+import { TFctRenommePieceJustificative } from "../../../commun/composants/OngletPiecesJustificatives";
 import { ModaleAjoutPieceJustificativeRequeteCreation } from "./ModalAjoutPieceJustificative";
 import "./scss/ListePiecesJustificativesEtablissement.scss";
 
 interface ListePiecesJustificativesEtablissementProps {
   requete?: IRequeteCreationEtablissement;
   autoriseOuvertureFenetreExt?: boolean;
-  onRenommePieceJustificative: typeFctRenommePieceJustificative;
+  onRenommePieceJustificative: TFctRenommePieceJustificative;
   rechargerRequete?: () => void;
 }
 
@@ -25,7 +25,7 @@ export const ListePiecesJustificativesEtablissement: React.FC<ListePiecesJustifi
   autoriseOuvertureFenetreExt = false,
   ...props
 }) => {
-  const [documentPJTries, setDocumentPjTries] = useState<IDocumentPJ[]>([]);
+  const [documentPJTries, setDocumentPJTries] = useState<IDocumentPJ[]>([]);
   const [estModaleOuverte, setEstModaleOuverte] = useState<boolean>(false);
 
   useEffect(() => {
@@ -36,10 +36,10 @@ export const ListePiecesJustificativesEtablissement: React.FC<ListePiecesJustifi
       } else {
         nouveauxDocumentPJTries = [...props.requete.documentsPj];
       }
-      setDocumentPjTries(nouveauxDocumentPJTries);
+      setDocumentPJTries(nouveauxDocumentPJTries);
     }
     return () => {
-      setDocumentPjTries([]);
+      setDocumentPJTries([]);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.requete]);
@@ -48,7 +48,7 @@ export const ListePiecesJustificativesEtablissement: React.FC<ListePiecesJustifi
     const pieceJTrouvee = DocumentPJ.getPieceJustificative(documentPJTries, idDocumentPJ, idPieceJustificative);
     if (pieceJTrouvee) {
       pieceJTrouvee.nouveauLibelleFichierPJ = nouveauLibelle;
-      setDocumentPjTries([...documentPJTries]);
+      setDocumentPJTries([...documentPJTries]);
       props.onRenommePieceJustificative(idPieceJustificative, nouveauLibelle, idDocumentPJ);
     }
   };
@@ -89,7 +89,7 @@ export const ListePiecesJustificativesEtablissement: React.FC<ListePiecesJustifi
 
   function fermerModal() {
     setEstModaleOuverte(false);
-    setDocumentPjTries([]);
+    setDocumentPJTries([]);
     if (props.rechargerRequete) {
       props.rechargerRequete();
     }
@@ -144,7 +144,7 @@ export const ListePiecesJustificativesEtablissement: React.FC<ListePiecesJustifi
       const item = newList[oldIndex];
       newList.splice(oldIndex, 1);
       newList.splice(newIndex, 0, item);
-      setDocumentPjTries(newList);
+      setDocumentPJTries(newList);
     }
   }
 };

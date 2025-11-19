@@ -1,3 +1,11 @@
+import { Filiation } from "@model/etatcivil/acte/Filiation";
+import { IEvenement } from "@model/etatcivil/acte/IEvenement";
+import { ITitulaireActeDto, TitulaireActe } from "@model/etatcivil/acte/TitulaireActe";
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
+import { ISaisieExtraitForm } from "@model/form/delivrance/ISaisieExtraitForm";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { DEUX, UN } from "@util/Utils";
 import {
   CONTRAT_MARIAGE,
   DATE_EVENEMENT,
@@ -8,17 +16,9 @@ import {
   PARENT_NAISS,
   TITULAIRE_EVT_1,
   TITULAIRE_EVT_2
-} from "@composant/formulaire/ConstantesNomsForm";
-import { EvenementForm } from "@composant/formulaire/EvenementForm";
-import { EvenementValidationSchema } from "@composant/formulaire/validation/EvenementValidationSchema";
-import { Filiation } from "@model/etatcivil/acte/Filiation";
-import { IEvenement } from "@model/etatcivil/acte/IEvenement";
-import { ITitulaireActeDto, TitulaireActe } from "@model/etatcivil/acte/TitulaireActe";
-import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
-import { ISaisieExtraitForm } from "@model/form/delivrance/ISaisieExtraitForm";
-import { IDocumentReponse } from "@model/requete/IDocumentReponse";
-import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { DEUX, UN } from "@util/Utils";
+} from "@views/common/composant/formulaire/ConstantesNomsForm";
+import { EvenementForm } from "@views/common/composant/formulaire/EvenementForm";
+import { EvenementValidationSchema } from "@views/common/composant/formulaire/validation/EvenementValidationSchema";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import { DateValidationSchema } from "@widget/formulaire/champsDate/DateComposeFormValidation";
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";

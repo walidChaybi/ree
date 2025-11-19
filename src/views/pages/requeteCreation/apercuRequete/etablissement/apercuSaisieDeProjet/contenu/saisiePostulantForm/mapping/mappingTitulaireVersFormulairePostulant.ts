@@ -1,3 +1,35 @@
+import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import {
+  ISaisieAcquisitionSousForm,
+  ISaisieAnalyseMarginale,
+  ISaisieAutresSousForm,
+  ISaisieDate,
+  ISaisieDateNaissanceOuAgeDe,
+  ISaisieFrancisationPostulantSousForm,
+  ISaisieLieuNaissance,
+  ISaisieLieuNaissanceParent,
+  ISaisieNomSecable,
+  ISaisieParentSousForm,
+  ISaisiePostulantSousForm,
+  ISaisiePrenoms,
+  ISaisieProjetPostulantForm,
+  ISaisieProjetSousForm
+} from "@model/form/creation/etablissement/ISaisiePostulantForm";
+import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
+import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
+import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
+import { TypeNature } from "@model/requete/enum/TypeNature";
+import {
+  formatMajusculesMinusculesMotCompose,
+  formatPremieresLettresMajusculesNomCompose,
+  getValeurOuVide,
+  joint,
+  numberToString,
+  rempliAGaucheAvecZero
+} from "@util/Utils";
 import {
   ACQUISITION,
   ADOPTE_PAR,
@@ -44,40 +76,8 @@ import {
   TYPE,
   VILLE,
   VILLE_NAISSANCE
-} from "@composant/formulaire/ConstantesNomsForm";
-import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
-import { Sexe } from "@model/etatcivil/enum/Sexe";
-import {
-  ISaisieAcquisitionSousForm,
-  ISaisieAnalyseMarginale,
-  ISaisieAutresSousForm,
-  ISaisieDate,
-  ISaisieDateNaissanceOuAgeDe,
-  ISaisieFrancisationPostulantSousForm,
-  ISaisieLieuNaissance,
-  ISaisieLieuNaissanceParent,
-  ISaisieNomSecable,
-  ISaisieParentSousForm,
-  ISaisiePostulantSousForm,
-  ISaisiePrenoms,
-  ISaisieProjetPostulantForm,
-  ISaisieProjetSousForm
-} from "@model/form/creation/etablissement/ISaisiePostulantForm";
-import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
-import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
-import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
-import { TypeNature } from "@model/requete/enum/TypeNature";
-import { getPrenomsOrdonneVersPrenomsDefaultValues } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
-import {
-  formatMajusculesMinusculesMotCompose,
-  formatPremieresLettresMajusculesNomCompose,
-  getValeurOuVide,
-  joint,
-  numberToString,
-  rempliAGaucheAvecZero
-} from "@util/Utils";
+} from "../../../../../../../../common/composant/formulaire/ConstantesNomsForm";
+import { getPrenomsOrdonneVersPrenomsDefaultValues } from "../../../../../../../requeteDelivrance/saisirRequete/hook/mappingCommun";
 import { estJourMoisVide, filtrePrenomsFrancises, filtrePrenomsNonFrancises, getNomSecable } from "../SaisiePostulantFormUtils";
 
 export function mappingTitulairesVersFormulairePostulant(

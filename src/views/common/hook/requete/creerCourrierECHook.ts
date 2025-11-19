@@ -1,4 +1,3 @@
-import { IGenerationCourrierParams, useGenerationCourrierHook } from "@hook/requete/GenerationCourrierHook";
 import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { filtrerFormaterEtTrierMentionsPlurilingues } from "@model/etatcivil/acte/mention/Mention";
 import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
@@ -10,6 +9,7 @@ import { OptionCourrier } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DEUX } from "@util/Utils";
 import { gestionnaireMentionsRetireesAuto } from "@utilMetier/mention/GestionnaireMentionsRetireesAuto";
+import { IGenerationCourrierParams, useGenerationCourrierHook } from "@views/common/hook/requete/GenerationCourrierHook";
 import { useEffect, useState } from "react";
 import { IActeApiHookParams, useInformationsActeApiHook } from "../acte/ActeApiHook";
 import {

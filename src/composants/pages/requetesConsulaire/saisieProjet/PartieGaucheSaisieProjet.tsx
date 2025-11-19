@@ -1,6 +1,6 @@
 import { Droit } from "@model/agent/enum/Droit";
 import { IRequete } from "@model/requete/IRequete";
-import { RMCRequetesAssocieesResultats } from "@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
+import { RMCRequetesAssocieesResultats } from "@views/pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { useContext, useState } from "react";
 import { SaisieProjetActeTranscritContext } from "../../../../contexts/SaisieProjetActeTranscritContextProvider";
 import AccessibleAvecDroits from "../../../commun/accessibleAvecDroits/AccessibleAvecDroits";

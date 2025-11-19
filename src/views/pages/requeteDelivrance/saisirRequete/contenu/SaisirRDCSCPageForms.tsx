@@ -1,9 +1,9 @@
-import { ADRESSE, DOCUMENT, PIECES_JOINTES, REQUERANT, TITULAIRES } from "@composant/formulaire/ConstantesNomsForm";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { TypeRequerant } from "@model/requete/enum/TypeRequerant";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { TRequete } from "@model/requete/IRequete";
 import { getLibelle } from "@util/Utils";
+import { ADRESSE, DOCUMENT, PIECES_JOINTES, REQUERANT, TITULAIRES } from "@views/common/composant/formulaire/ConstantesNomsForm";
 import AdresseForm from "@widget/formulaire/adresse/AdresseForm";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import PiecesJointesForm from "@widget/formulaire/piecesJointes/PiecesJointesForm";

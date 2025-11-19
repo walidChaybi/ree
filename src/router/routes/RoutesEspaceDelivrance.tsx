@@ -1,13 +1,13 @@
 import { Droit } from "@model/agent/enum/Droit";
-import { ApercuRequetePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
-import { ApercuRequeteTraitementPage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
-import { ApercuRequetePriseEnChargePage } from "@pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
-import EspaceDelivrancePage from "@pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
-import { SaisirRDCSCPage } from "@pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { RouteObject } from "react-router";
 import PageEditionRequeteDelivrance from "../../pages/requetesDelivrance/PageEditionRequeteDelivrance";
 import PageSaisieRDC from "../../pages/requetesDelivrance/PageSaisieRDC";
+import { ApercuRequetePage } from "../../views/pages/requeteDelivrance/apercuRequete/apercuRequete/ApercuRequetePage";
+import { ApercuRequetePriseEnChargePage } from "../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnpriseEnCharge/ApercuRequetePriseEnChargePage";
+import { ApercuRequeteTraitementPage } from "../../views/pages/requeteDelivrance/apercuRequete/apercuRequeteEnTraitement/ApercuRequeteTraitementPage";
+import EspaceDelivrancePage from "../../views/pages/requeteDelivrance/espaceDelivrance/EspaceDelivrancePage";
+import { SaisirRDCSCPage } from "../../views/pages/requeteDelivrance/saisirRequete/SaisirRDCSCPage";
 import ElementPageRECE from "../ElementPageRECE";
 import {
   INFO_PAGE_APERCU_REQUETE_DELIVRANCE_CONSULTATION,

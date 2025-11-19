@@ -41,7 +41,7 @@ import {
   TYPE,
   VILLE,
   VILLE_EST_AFFICHEE
-} from "@composant/formulaire/ConstantesNomsForm";
+} from "../../../views/common/composant/formulaire/ConstantesNomsForm";
 import { Prenoms } from "./ISaisirRequetePageForm";
 
 export interface ISaisieExtraitForm {

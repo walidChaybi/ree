@@ -1,11 +1,14 @@
-import { IAnalyseMarginaleResultat, useTitulaireAnalyseMarginaleApiHook } from "@hook/acte/TitulaireAnalyseMarginaleApiHook";
 import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import DateUtils from "@util/DateUtils";
-import { getValeurOuUndefined, joint } from "@util/Utils";
+import { joint } from "@util/Utils";
 import { useEffect, useMemo, useState } from "react";
+import {
+  IAnalyseMarginaleResultat,
+  useTitulaireAnalyseMarginaleApiHook
+} from "../../../../../common/hook/acte/TitulaireAnalyseMarginaleApiHook";
 
 export interface ITableauSuiviDossierParams {
   requete: IRequeteCreationEtablissement;
@@ -56,7 +59,7 @@ export function useTableauSuiviDossierHook(
             prenoms: getPrenomTitulaire(titulaireCourant, dataAnalyseMarginale),
             nom: getNomTitulaire(titulaireCourant, dataAnalyseMarginale),
             qualite: QualiteFamille.afficheLibelleEnfantSiEstEnfant(QualiteFamille.getEnumFromTitulaire(titulaireCourant)) ?? "",
-            decret: titulaireCourant.decret?.numeroDecret || "",
+            decret: titulaireCourant.decret?.numeroDecret ?? "",
             evenement: "",
             dateEvenement: "",
             avancement: "",
@@ -126,5 +129,5 @@ const getPrenomTitulaire = (titulaire: ITitulaireRequeteCreation, analyseMargina
 };
 
 const getNomTitulaire = (titulaire: ITitulaireRequeteCreation, analyseMarginale?: IAnalyseMarginaleResultat): string => {
-  return getValeurOuUndefined(analyseMarginale?.nom) || getValeurOuUndefined(titulaire.retenueSdanf?.nomNaissance);
+  return analyseMarginale?.nom ?? titulaire.retenueSdanf?.nomNaissance ?? "";
 };

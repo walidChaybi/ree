@@ -1,4 +1,3 @@
-import { DOCUMENT } from "@composant/formulaire/ConstantesNomsForm";
 import {
   CreationRequeteRDCSC,
   IComplementCreationUpdateRequete,
@@ -9,6 +8,7 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { DEUX } from "@util/Utils";
+import { DOCUMENT } from "@views/common/composant/formulaire/ConstantesNomsForm";
 import React, { useEffect, useRef, useState } from "react";
 import { ITitulairesState } from "../SaisirRDCSCPage";
 import { IdentiteSubFormProps } from "../sousFormulaires/identite/IdentiteForm";

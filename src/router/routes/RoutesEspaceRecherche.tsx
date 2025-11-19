@@ -1,9 +1,8 @@
 import { Droit } from "@model/agent/enum/Droit";
-
-import { RMCRequetePage } from "@pages/rechercheMultiCriteres/requete/RMCRequetePage";
 import { RouteObject } from "react-router";
 import PageRMCActeInscription from "../../pages/rmc/PageRMCActeInscription";
 import PageRMCArchive from "../../pages/rmc/PageRMCArchive";
+import { RMCRequetePage } from "../../views/pages/rechercheMultiCriteres/requete/RMCRequetePage";
 import ElementPageRECE from "../ElementPageRECE";
 import {
   INFO_PAGE_RECHERCHE_ACTE,

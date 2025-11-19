@@ -1,6 +1,6 @@
-import { DATE_EVENEMENT, LIEU_EVENEMENT } from "@composant/formulaire/ConstantesNomsForm";
-import LieuEvenementForm from "@composant/formulaire/LieuEvenementForm";
 import { Evenement, IEvenement } from "@model/etatcivil/acte/IEvenement";
+import { DATE_EVENEMENT, LIEU_EVENEMENT } from "@views/common/composant/formulaire/ConstantesNomsForm";
+import LieuEvenementForm from "@views/common/composant/formulaire/LieuEvenementForm";
 import DateComposeForm from "@widget/formulaire/champsDate/DateComposeForm";
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
 import React from "react";

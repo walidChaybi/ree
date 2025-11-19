@@ -16,19 +16,19 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "@composant/*": ["./src/views/common/composant/*"],
-      "@hook/*": ["./src/views/common/hook/*"],
-      "@util/*": ["./src/views/common/util/*"],
-      "@utilMetier/*": ["./src/views/common/utilMetier/*"],
-      "@widget/*": ["./src/views/common/widget/*"],
-      "@core/*": ["./src/views/core/*"],
-      "@pages/*": ["./src/views/pages/*"],
-      "@router/*": ["./src/views/router/*"],
       "@api/*": ["./src/api/*"],
-      "@model/*": ["./src/model/*"],
-      "@scss/*": ["./src/scss/*"],
       "@mock/*": ["./src/__tests__/mock/*"],
-      "@pageEtablissement/*": ["./src/views/pages/requeteCreation/apercuRequete/etablissement/*"]
+      "@model/*": ["./src/model/*"],
+      "@ressources/*": ["./src/ressources/*"],
+      "@scss/*": ["./src/scss/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@router/*": ["./src/router/*"],
+      "@util/*": ["./src/views/common/util/*"],
+      "@hook/*": ["./src/hook/*"],
+      "@composants/*": ["./src/composants/*"],
+      "@widget/*": ["./src/views/common/widget/*"],
+      "@utilMetier/*": ["./src/views/common/utilMetier/*"],
+      "@views/*": ["./src/views/*"]
     }
   },
   "include": ["src", "e2e"]

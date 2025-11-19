@@ -1,10 +1,10 @@
-import { IComposerDocumentFinalApiHookParams, useComposerDocumentFinalApiHook } from "@hook/acte/ComposerDocumentFinalApiHook";
-import { IIntegrerActeSigneApiHookParams, useIntegrerActeSigneApiHook } from "@hook/acte/IntegrerActeSigneApiHook";
-import useMettreAJourStatutApresSignatureApiHook, {
-  IMettreAJourStatutApresSignatureParams
-} from "@hook/requete/MettreAJourStatutApresSignatureApiHook";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
+import { IComposerDocumentFinalApiHookParams, useComposerDocumentFinalApiHook } from "@views/common/hook/acte/ComposerDocumentFinalApiHook";
+import { IIntegrerActeSigneApiHookParams, useIntegrerActeSigneApiHook } from "@views/common/hook/acte/IntegrerActeSigneApiHook";
+import useMettreAJourStatutApresSignatureApiHook, {
+  IMettreAJourStatutApresSignatureParams
+} from "@views/common/hook/requete/MettreAJourStatutApresSignatureApiHook";
 import { useState } from "react";
 import useComposerEtIntegrerDocumentFinalHook, {
   IMettreAJourStatutRequeteApresIntegration,

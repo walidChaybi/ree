@@ -1,19 +1,8 @@
-import {
-  NATURE,
-  NOM,
-  PRENOM,
-  RAISON_SOCIALE,
-  TYPE
-} from "@composant/formulaire/ConstantesNomsForm";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
-import { getLibelle } from "@util/Utils";
+import { NATURE, NOM, PRENOM, RAISON_SOCIALE, TYPE } from "@views/common/composant/formulaire/ConstantesNomsForm";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
-import {
-  NB_CARACT_MAX_SAISIE,
-  SubFormProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { NB_CARACT_MAX_SAISIE, SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useState } from "react";
 import { getBlockRaisonSocialeNomPrenom } from "../../commun/communForm";
@@ -30,8 +19,7 @@ export const MandataireFormDefaultValues = {
 };
 
 // Schéma de validation des champs
-export const MandataireFormValidationSchema =
-  getFormValidationCarAutorisesEtNAtureObligatoireShema(RAISON_SOCIALE);
+export const MandataireFormValidationSchema = getFormValidationCarAutorisesEtNAtureObligatoireShema(RAISON_SOCIALE);
 const MandataireForm: React.FC<SubFormProps> = props => {
   const nomWithNamespace = withNamespace(props.nom, NOM);
   const prenomWithNamespace = withNamespace(props.nom, PRENOM);
@@ -41,10 +29,7 @@ const MandataireForm: React.FC<SubFormProps> = props => {
   const onChangeTypeMandataire = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNatureInactif(e.target.value !== "AUTRE");
     if (e.target.value !== "AUTRE") {
-      props.formik.setFieldValue(
-        withNamespace(props.nom, NATURE),
-        MandataireFormDefaultValues[NATURE]
-      );
+      props.formik.setFieldValue(withNamespace(props.nom, NATURE), MandataireFormDefaultValues[NATURE]);
     }
     props.formik.handleChange(e);
   };
@@ -53,7 +38,7 @@ const MandataireForm: React.FC<SubFormProps> = props => {
     <div className="RequerantSousForm">
       <SelectField
         name={withNamespace(props.nom, TYPE)}
-        label={getLibelle("Type")}
+        label={"Type"}
         options={TypeMandataireReq.getAllEnumsAsOptions()}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           onChangeTypeMandataire(e);
@@ -62,18 +47,18 @@ const MandataireForm: React.FC<SubFormProps> = props => {
       {!natureInactif && (
         <InputField
           name={withNamespace(props.nom, NATURE)}
-          label={getLibelle("Nature")}
+          label={"Nature"}
           maxLength={NB_CARACT_MAX_SAISIE}
           disabled={natureInactif}
         />
       )}
       {getBlockRaisonSocialeNomPrenom(
         raisonSocialeWithNamespace,
-        getLibelle("Raison sociale"),
+        "Raison sociale",
         nomWithNamespace,
-        getLibelle("Nom mandataire"),
+        "Nom mandataire",
         prenomWithNamespace,
-        getLibelle("Prénom mandataire"),
+        "Prénom mandataire",
         props.formik
       )}
     </div>

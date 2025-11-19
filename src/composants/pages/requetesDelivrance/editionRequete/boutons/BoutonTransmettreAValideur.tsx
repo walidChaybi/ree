@@ -1,11 +1,11 @@
-import { getValideursVersOptions } from "@composant/menuTransfert/MenuTransfertUtil";
-import { ITransfertPopinForm, TransfertPopin } from "@composant/menuTransfert/TransfertPopin";
-import { ITransmettreAValideurParams, useTransmettreAValideurApiHook } from "@hook/requete/TransmettreAValideur";
 import { Option } from "@util/Type";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
+import { getValideursVersOptions } from "../../../../../views/common/composant/menuTransfert/MenuTransfertUtil";
+import { ITransfertPopinForm, TransfertPopin } from "../../../../../views/common/composant/menuTransfert/TransfertPopin";
+import { ITransmettreAValideurParams, useTransmettreAValideurApiHook } from "../../../../../views/common/hook/requete/TransmettreAValideur";
 import Bouton, { IBoutonProps } from "../../../../commun/bouton/Bouton";
 
 interface BoutonTransmettreAValideurProps extends IBoutonProps {

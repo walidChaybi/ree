@@ -1,7 +1,7 @@
-import NomSecableForm, { ComponentFormProps } from "@composant/formulaire/NomSecableForm";
 import { render } from "@testing-library/react";
 import { Formik } from "formik";
 import { describe, expect, test } from "vitest";
+import NomSecableForm, { ComponentFormProps } from "../../../../../views/common/composant/formulaire/NomSecableForm";
 
 const afficherComposant = (valeursForm: object, props?: ComponentFormProps) => {
   const propsAUtiliser: ComponentFormProps = {

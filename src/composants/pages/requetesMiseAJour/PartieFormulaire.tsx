@@ -11,7 +11,6 @@ import AnalyseMarginaleForm from "@model/form/AnalyseMarginale/AnalyseMarginaleF
 import { TObjetFormulaire } from "@model/form/commun/ObjetFormulaire";
 import { TPrenomsForm } from "@model/form/commun/PrenomsForm";
 import MiseAJourForm from "@model/form/miseAJour/MiseAJourForm";
-import { estActeEligibleFormuleDIntegration } from "@pages/fiche/FichePage";
 import { Formik } from "formik";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { Form } from "react-router";
@@ -19,6 +18,7 @@ import { ECleOngletsMiseAJour, EditionMiseAJourContext } from "../../../contexts
 import { RECEContextData } from "../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../hooks/api/FetchApiHook";
 import AfficherMessage from "../../../utils/AfficherMessage";
+import { estActeEligibleFormuleDIntegration } from "../../../views/pages/fiche/FichePage";
 import Bouton from "../../commun/bouton/Bouton";
 import { ConteneurBoutonBasDePage } from "../../commun/bouton/conteneurBoutonBasDePage/ConteneurBoutonBasDePage";
 import PageChargeur from "../../commun/chargeurs/PageChargeur";

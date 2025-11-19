@@ -1,9 +1,4 @@
 import { IQueryParametersPourRequetes, TypeAppelRequete } from "@api/appels/requeteApi";
-import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
-import {
-  INavigationApercuReqInfoParams,
-  useNavigationApercuInformation
-} from "@hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
 import { IFiltresServiceRequeteInformationFormValues } from "@model/requete/IFiltreServiceRequeteInformation";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
@@ -17,6 +12,11 @@ import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
+import { MenuTransfert } from "../../../common/composant/menuTransfert/MenuTransfert";
+import {
+  INavigationApercuReqInfoParams,
+  useNavigationApercuInformation
+} from "../../../common/hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import FiltresServiceRequeteInformationForm, {
   VALEUR_FILTRE_INFORMATION_DEFAUT

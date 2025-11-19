@@ -1,3 +1,5 @@
+import { OuiNon } from "@model/etatcivil/enum/OuiNon";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
 import {
   ADOPTE_PAR,
   ANALYSE_MARGINALE,
@@ -12,12 +14,10 @@ import {
   PRENOMS,
   SEXE,
   VILLE_NAISSANCE
-} from "@composant/formulaire/ConstantesNomsForm";
-import NomSecableForm from "@composant/formulaire/NomSecableForm";
-import PrenomsConnusForm from "@composant/formulaire/nomsPrenoms/PrenomsConnusForm";
-import PrenomsForm from "@composant/formulaire/nomsPrenoms/PrenomsForm";
-import { OuiNon } from "@model/etatcivil/enum/OuiNon";
-import { Sexe } from "@model/etatcivil/enum/Sexe";
+} from "@views/common/composant/formulaire/ConstantesNomsForm";
+import NomSecableForm from "@views/common/composant/formulaire/NomSecableForm";
+import PrenomsConnusForm from "@views/common/composant/formulaire/nomsPrenoms/PrenomsConnusForm";
+import PrenomsForm from "@views/common/composant/formulaire/nomsPrenoms/PrenomsForm";
 import DateComposeForm, { ChampDateModifie } from "@widget/formulaire/champsDate/DateComposeForm";
 import { IDateComposeForm } from "@widget/formulaire/champsDate/DateComposeFormUtil";
 import { CheckboxField } from "@widget/formulaire/champsSaisie/CheckBoxField";

@@ -2,12 +2,8 @@ import { UN } from "@util/Utils";
 import React from "react";
 import Labels, { UNION, UNION_ACTUELLE } from "../../../../commun/Labels";
 import "../scss/ResumeRequeteCreation.scss";
-import ItemEnfantMajeur, {
-  ItemEnfantMajeurProps
-} from "./items/ItemEnfantMajeur";
-import ItemEnfantMineur, {
-  ItemEnfantMineurProps
-} from "./items/ItemEnfantMineur";
+import ItemEnfantMajeur, { ItemEnfantMajeurProps } from "./items/ItemEnfantMajeur";
+import ItemEnfantMineur, { IItemEnfantMineurProps } from "./items/ItemEnfantMineur";
 import ItemFraterie, { ItemFraterieProps } from "./items/ItemFraterie";
 import ItemRequete, { ItemRequeteProps } from "./items/ItemRequete";
 import ItemTitulaire, { ItemTitulaireProps } from "./items/ItemTitulaire";
@@ -18,23 +14,29 @@ export interface ResumeRequeteCreationEtablissementProps {
   titulaire?: ItemTitulaireProps;
   union?: ItemUnionProps;
   unionsAnterieurs: ItemUnionProps[];
-  effetsCollectifs: ItemEnfantMineurProps[];
-  enfantsMineursHorsEffetCollectif: ItemEnfantMineurProps[];
-  enfantsMineursAttenteSDANF: ItemEnfantMineurProps[];
+  effetsCollectifs: IItemEnfantMineurProps[];
+  enfantsMineursHorsEffetCollectif: IItemEnfantMineurProps[];
+  enfantsMineursAttenteSDANF: IItemEnfantMineurProps[];
   enfantsMajeurs: ItemEnfantMajeurProps[];
   frateries: ItemFraterieProps[];
 }
 
-const ResumeRequeteCreationEtablissement: React.FC<
-  ResumeRequeteCreationEtablissementProps
-> = props => {
+const ResumeRequeteCreationEtablissement: React.FC<ResumeRequeteCreationEtablissementProps> = props => {
   return (
     <>
       <ItemRequete {...props.requete} />
       {props.titulaire && (
-        <ItemTitulaire {...props.titulaire} titre={Labels.resume.titulaire} />
+        <ItemTitulaire
+          {...props.titulaire}
+          titre={Labels.resume.titulaire}
+        />
       )}
-      {props.union && <ItemUnion {...props.union} titre={UNION_ACTUELLE} />}
+      {props.union && (
+        <ItemUnion
+          {...props.union}
+          titre={UNION_ACTUELLE}
+        />
+      )}
 
       {props.unionsAnterieurs.map((union, id) => (
         <ItemUnion
@@ -56,17 +58,15 @@ const ResumeRequeteCreationEtablissement: React.FC<
         />
       ))}
 
-      {props.enfantsMineursHorsEffetCollectif.map(
-        (enfantMineurHorsEffetCollectif, id) => (
-          <ItemEnfantMineur
-            {...enfantMineurHorsEffetCollectif}
-            key={Labels.resume.enfantMineurHorsEffetCollectif + String(id + UN)}
-            titre={Labels.resume.enfantMineurHorsEffetCollectif}
-            numeroItem={id + UN}
-            totalItems={props.enfantsMineursHorsEffetCollectif.length}
-          />
-        )
-      )}
+      {props.enfantsMineursHorsEffetCollectif.map((enfantMineurHorsEffetCollectif, id) => (
+        <ItemEnfantMineur
+          {...enfantMineurHorsEffetCollectif}
+          key={Labels.resume.enfantMineurHorsEffetCollectif + String(id + UN)}
+          titre={Labels.resume.enfantMineurHorsEffetCollectif}
+          numeroItem={id + UN}
+          totalItems={props.enfantsMineursHorsEffetCollectif.length}
+        />
+      ))}
 
       {props.enfantsMineursAttenteSDANF.map((enfantMineurAttenteSDANF, id) => (
         <ItemEnfantMineur

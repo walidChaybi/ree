@@ -1,8 +1,3 @@
-import {
-  IDerniereDelivranceRcRcaPacsParams,
-  useDerniereDelivranceRcRcaPacsApiHook
-} from "@hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
-import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import { Droit } from "@model/agent/enum/Droit";
 import { ETypeRcRcaPacs } from "@model/etatcivil/enum/ETypeRcRcaPacs";
 import { Provenance } from "@model/requete/enum/Provenance";
@@ -15,12 +10,20 @@ import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { RECEContextData } from "../../../../../../contexts/RECEContextProvider";
+import {
+  IDerniereDelivranceRcRcaPacsParams,
+  useDerniereDelivranceRcRcaPacsApiHook
+} from "../../../../../common/hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
+import {
+  ICreationActionEtMiseAjourStatutParams,
+  usePostCreationActionEtMiseAjourStatutApi
+} from "../../../../../common/hook/requete/ActionHook";
 
-interface BoutonValiderTerminerProps {
+interface IBoutonValiderTerminerProps {
   requete: IRequeteDelivrance;
 }
 
-export const BoutonValiderTerminer: React.FC<BoutonValiderTerminerProps> = props => {
+export const BoutonValiderTerminer: React.FC<IBoutonValiderTerminerProps> = props => {
   const requeteDelivrance = props.requete;
   const location = useLocation();
   const navigate = useNavigate();

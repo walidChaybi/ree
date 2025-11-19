@@ -1,8 +1,8 @@
 import { postMessageRetourSDANFEtUpdateStatutRequete } from "@api/appels/requeteApi";
-import { mapEchangeRetourSDANF } from "@hook/requete/DetailRequeteHook";
 import { IEchange } from "@model/requete/IEchange";
 import { useEffect, useState } from "react";
 import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
+import { mapEchangeRetourSDANF } from "../DetailRequeteHook";
 
 export interface RetourSDANFParams {
   idRequete: string;

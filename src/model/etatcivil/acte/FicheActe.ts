@@ -1,4 +1,3 @@
-import { IMentionMiseAJourDto } from "@hook/acte/mentions/MiseAJourMentionsApiHook";
 import { champsObligatoiresDuDtoAbsents, valeurDtoAbsenteDansEnum } from "@model/commun/dtoUtils";
 import { TDateArrayDTO } from "@util/DateUtils";
 import {
@@ -10,6 +9,7 @@ import {
   triListeObjetsSurPropriete
 } from "@util/Utils";
 import DateRECE from "../../../utils/DateRECE";
+import { IMentionMiseAJourDto } from "../../../views/common/hook/acte/mentions/MiseAJourMentionsApiHook";
 import { ChoixDelivrance } from "../../requete/enum/ChoixDelivrance";
 import { IPersonneDTO, Personne } from "../commun/Personne";
 import { EOrigineActe } from "../enum/EOrigineActe";

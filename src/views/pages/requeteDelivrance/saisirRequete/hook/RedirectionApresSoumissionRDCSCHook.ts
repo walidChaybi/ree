@@ -1,21 +1,21 @@
-import {
-  INavigationApercuDelivranceParams,
-  useNavigationApercuDelivrance
-} from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceHook";
-import { CreationActionHookParams, useCreationAction } from "@hook/requete/CreationAction";
-import {
-  ICreationActionMiseAjourStatutHookParams,
-  useCreationActionMiseAjourStatut
-} from "@hook/requete/CreationActionMiseAjourStatutHook";
 import { IReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
 import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "@model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
 import { CreationRequeteRDCSC, IComplementCreationUpdateRequete, UpdateRequeteRDCSC } from "@model/form/delivrance/ISaisirRDCSCPageForm";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
-import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { useCallback, useState } from "react";
 import AfficherMessage from "../../../../../utils/AfficherMessage";
+import {
+  INavigationApercuDelivranceParams,
+  useNavigationApercuDelivrance
+} from "../../../../common/hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceHook";
+import { CreationActionHookParams, useCreationAction } from "../../../../common/hook/requete/CreationAction";
+import {
+  ICreationActionMiseAjourStatutHookParams,
+  useCreationActionMiseAjourStatut
+} from "../../../../common/hook/requete/CreationActionMiseAjourStatutHook";
+import { mappingRequeteDelivranceToRequeteTableau } from "../../apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { createReponseSansDelivranceCS } from "../contenu/SaisirRDCSCPageFonctions";
 import { ICreationOuMiseAJourRDCSCResultat } from "./SoumissionFormulaireRDCSCHook";
 

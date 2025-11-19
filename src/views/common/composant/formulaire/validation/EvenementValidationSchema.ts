@@ -1,7 +1,4 @@
-import {
-  DATE_EVENEMENT,
-  DATE_NAISSANCE_OU_AGE_DE
-} from "@composant/formulaire/ConstantesNomsForm";
+import { DATE_EVENEMENT, DATE_NAISSANCE_OU_AGE_DE } from "@views/common/composant/formulaire/ConstantesNomsForm";
 import { DateValidationSchema } from "@widget/formulaire/champsDate/DateComposeFormValidation";
 import * as Yup from "yup";
 import { DateNaissanceOuAgeDeValidationSchema } from "./DateNaissanceOuAgeDeFormValidation";

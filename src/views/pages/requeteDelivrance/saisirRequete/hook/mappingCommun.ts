@@ -1,4 +1,25 @@
 import {
+  ISaisieAdresse,
+  ISaisieAutreProfessionnel,
+  ISaisieIdentite,
+  ISaisieInstitutionnel,
+  ISaisieMandataireHabilite,
+  ISaisieParent,
+  ISaisieParticulier,
+  ISaisieRequerant,
+  Prenoms
+} from "@model/form/delivrance/ISaisirRequetePageForm";
+import { IParent } from "@model/requete/IParent";
+import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
+import { IRequerant, Requerant } from "@model/requete/IRequerant";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { ITitulaireRequete, TitulaireRequete } from "@model/requete/ITitulaireRequete";
+import { Qualite } from "@model/requete/enum/Qualite";
+import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
+import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
+import { DEUX, UN } from "@util/Utils";
+import { PieceJointe } from "../../../../../utils/FileUtils";
+import {
   ADRESSE_COURRIEL,
   ANNEE,
   AUTRE_PROFESSIONNEL,
@@ -34,31 +55,9 @@ import {
   TYPE_REQUERANT,
   VILLE_EVENEMENT,
   VOIE
-} from "@composant/formulaire/ConstantesNomsForm";
-import { ParentFormDefaultValues } from "@composant/formulaire/ParentForm";
-
-import { genererDefaultValuesPrenoms } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
-import {
-  ISaisieAdresse,
-  ISaisieAutreProfessionnel,
-  ISaisieIdentite,
-  ISaisieInstitutionnel,
-  ISaisieMandataireHabilite,
-  ISaisieParent,
-  ISaisieParticulier,
-  ISaisieRequerant,
-  Prenoms
-} from "@model/form/delivrance/ISaisirRequetePageForm";
-import { IParent } from "@model/requete/IParent";
-import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
-import { IRequerant, Requerant } from "@model/requete/IRequerant";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { ITitulaireRequete, TitulaireRequete } from "@model/requete/ITitulaireRequete";
-import { Qualite } from "@model/requete/enum/Qualite";
-import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
-import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
-import { DEUX, UN } from "@util/Utils";
-import { PieceJointe } from "../../../../../utils/FileUtils";
+} from "../../../../common/composant/formulaire/ConstantesNomsForm";
+import { ParentFormDefaultValues } from "../../../../common/composant/formulaire/ParentForm";
+import { genererDefaultValuesPrenoms } from "../../../../common/composant/formulaire/nomsPrenoms/PrenomsForm";
 import { AutreProfessionnelFormDefaultValues } from "../sousFormulaires/requerant/autreProfessionnel/AutreProfessionnelForm";
 import { InstitutionnelFormDefaultValues } from "../sousFormulaires/requerant/institutionnel/InstitutionnelForm";
 import { MandataireFormDefaultValues } from "../sousFormulaires/requerant/mandataire/MandataireForm";

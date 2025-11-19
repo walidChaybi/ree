@@ -1,6 +1,6 @@
-import { ANNEE, JOUR, MOIS, NB_HEURE, NB_MINUTE } from "@composant/formulaire/ConstantesNomsForm";
 import DateUtils from "@util/DateUtils";
 import { executeEnDiffere } from "@util/Utils";
+import { ANNEE, JOUR, MOIS, NB_HEURE, NB_MINUTE } from "@views/common/composant/formulaire/ConstantesNomsForm";
 import { ErrorMessage, Field, connect } from "formik";
 import React, { useState } from "react";
 import { IconeCroix } from "../../icones/IconeCroix";

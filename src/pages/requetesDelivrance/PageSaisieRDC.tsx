@@ -1,8 +1,8 @@
 import { CONFIG_GET_DETAIL_REQUETE } from "@api/configurations/requete/GetDetailRequeteConfigApi";
 import TRAITEMENT_ENREGISTRER_RDC from "@api/traitements/requeteDelivrance/saisir/TraitementEnregistrerRDC";
-import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
 import { ISaisieRDCForm, SaisieRDCForm } from "@model/form/delivrance/ISaisieRDCForm";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { mappingRequeteDelivrance } from "@views/common/hook/requete/DetailRequeteHook";
 import { Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";

@@ -1,3 +1,8 @@
+import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { IParentNaissanceForm } from "@model/form/delivrance/ISaisieExtraitForm";
+import { auMoinsUneProprieteEstRenseigne, estNonRenseigne } from "@util/Utils";
+import * as Yup from "yup";
 import {
   DATE_NAISSANCE_OU_AGE_DE,
   ETRANGER_FRANCE,
@@ -8,18 +13,9 @@ import {
   REGION_DEPARTEMENT,
   SEXE,
   VILLE
-} from "@composant/formulaire/ConstantesNomsForm";
-import { DateNaissanceOuAgeDeValidationSchema } from "@composant/formulaire/validation/DateNaissanceOuAgeDeFormValidation";
-import { sexeObligatoireValidation } from "@composant/formulaire/validation/SexeObligatoireValidation";
-import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
-import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { IParentNaissanceForm } from "@model/form/delivrance/ISaisieExtraitForm";
-import {
-  auMoinsUneProprieteEstRenseigne,
-  estNonRenseigne,
-  getLibelle
-} from "@util/Utils";
-import * as Yup from "yup";
+} from "../../../../../../../../../common/composant/formulaire/ConstantesNomsForm";
+import { DateNaissanceOuAgeDeValidationSchema } from "../../../../../../../../../common/composant/formulaire/validation/DateNaissanceOuAgeDeFormValidation";
+import { sexeObligatoireValidation } from "../../../../../../../../../common/composant/formulaire/validation/SexeObligatoireValidation";
 
 export const ParentNaissValidationSchema = Yup.object({
   [DATE_NAISSANCE_OU_AGE_DE]: DateNaissanceOuAgeDeValidationSchema,
@@ -39,12 +35,9 @@ export const ParentNaissValidationSchema = Yup.object({
     return nomParentObligatoireValidation(this, value, error);
   });
 
-export const ParentNaissSansSexeDateAgeDeValidationSchema = Yup.object().test(
-  "nomParentObligatoire2",
-  function (value: any, error: any) {
-    return nomParentObligatoireValidation(this, value, error);
-  }
-);
+export const ParentNaissSansSexeDateAgeDeValidationSchema = Yup.object().test("nomParentObligatoire2", function (value: any, error: any) {
+  return nomParentObligatoireValidation(this, value, error);
+});
 
 export const ParentNaissSansDateAgeDeValidationSchema = Yup.object({
   [SEXE]: Yup.string().required()
@@ -59,8 +52,7 @@ export const ParentNaissSansDateAgeDeValidationSchema = Yup.object({
 function nomParentObligatoireValidation(context: any, value: any, error: any) {
   let res: any = true;
   const parentNaissanceForm: IParentNaissanceForm = value;
-  const parentNaissanceFormSansValeurInconnu =
-    supprimeValeurInconnu(parentNaissanceForm);
+  const parentNaissanceFormSansValeurInconnu = supprimeValeurInconnu(parentNaissanceForm);
 
   if (
     parentNaissanceFormSansValeurInconnu &&
@@ -69,28 +61,22 @@ function nomParentObligatoireValidation(context: any, value: any, error: any) {
   ) {
     const paramsError = {
       path: `${error.path}.${NOM_NAISSANCE}`,
-      message: getLibelle("Le nom de naissance est obligatoire")
+      message: "Le nom de naissance est obligatoire"
     };
     res = context.createError(paramsError);
   }
   return res;
 }
 
-function supprimeValeurInconnu(
-  parentNaissanceForm?: IParentNaissanceForm
-): IParentNaissanceForm | undefined {
+function supprimeValeurInconnu(parentNaissanceForm?: IParentNaissanceForm): IParentNaissanceForm | undefined {
   let parentNaissanceFormSansValeurInconnu;
   if (parentNaissanceForm) {
     parentNaissanceFormSansValeurInconnu = { ...parentNaissanceForm };
     parentNaissanceFormSansValeurInconnu.lieuNaissance = {
       ...parentNaissanceForm.lieuNaissance
     };
-    parentNaissanceFormSansValeurInconnu.lieuNaissance.villeEstAffichee =
-      undefined;
-    if (
-      parentNaissanceForm.lieuNaissance?.EtrangerFrance ===
-      EtrangerFrance.getKey(EtrangerFrance.INCONNU)
-    ) {
+    parentNaissanceFormSansValeurInconnu.lieuNaissance.villeEstAffichee = undefined;
+    if (parentNaissanceForm.lieuNaissance?.EtrangerFrance === EtrangerFrance.getKey(EtrangerFrance.INCONNU)) {
       parentNaissanceFormSansValeurInconnu.lieuNaissance.EtrangerFrance = "";
       parentNaissanceFormSansValeurInconnu.lieuNaissance.lieuComplet = "";
       parentNaissanceFormSansValeurInconnu.lieuNaissance.ville = "";

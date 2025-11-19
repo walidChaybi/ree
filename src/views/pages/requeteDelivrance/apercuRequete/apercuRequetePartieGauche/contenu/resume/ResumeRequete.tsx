@@ -1,10 +1,10 @@
-import { ListePiecesJointes } from "@composant/piecesJointes/ListePiecesJointes";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IPieceJointe, TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import { getUrlWithParam } from "@util/route/UrlUtil";
+import { ListePiecesJointes } from "@views/common/composant/piecesJointes/ListePiecesJointes";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useContext, useState } from "react";
 import { FaEdit } from "react-icons/fa";

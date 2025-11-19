@@ -1,4 +1,3 @@
-import { TITULAIRES } from "@composant/formulaire/ConstantesNomsForm";
 import {
   IReponseSansDelivranceCSDemandeIncompleteComposition,
   ReponseSansDelivranceCSDemandeIncompleteComposition
@@ -8,6 +7,7 @@ import { ECodeDocumentDelivrance, IDocumentDelivrance } from "@model/requete/enu
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
 import AfficherMessage from "../../../../../utils/AfficherMessage";
 import { PieceJointe } from "../../../../../utils/FileUtils";
+import { TITULAIRES } from "../../../../common/composant/formulaire/ConstantesNomsForm";
 import { limitesTitulaires } from "../SaisirRDCSCPage";
 import { IdentiteSubFormProps } from "../sousFormulaires/identite/IdentiteForm";
 

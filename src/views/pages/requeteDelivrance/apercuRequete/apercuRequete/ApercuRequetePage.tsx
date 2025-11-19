@@ -1,7 +1,3 @@
-import {
-  ICreationActionMiseAjourStatutHookParams,
-  useCreationActionMiseAjourStatut
-} from "@hook/requete/CreationActionMiseAjourStatutHook";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -14,6 +10,10 @@ import { VisionneuseAvecTitre } from "@widget/visionneuseDocument/VisionneuseAve
 import React, { useCallback, useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
+import {
+  ICreationActionMiseAjourStatutHookParams,
+  useCreationActionMiseAjourStatut
+} from "../../../../common/hook/requete/CreationActionMiseAjourStatutHook";
 import { ApercuRequeteTemplate } from "../apercuRequeteTemplate/ApercuRequeteTemplate";
 import { mappingRequeteDelivranceToRequeteTableau } from "../mapping/ReqDelivranceToReqTableau";
 import { BoutonPrendreEnCharge } from "./contenu/BoutonPrendreEnCharge";
@@ -66,7 +66,6 @@ export const ApercuRequetePage: React.FC<ApercuRequetePageProps> = ({ idRequeteA
 
   return (
     <ApercuRequeteTemplate
-      title={"Aperçu de la requête"}
       setRequete={setRequeteCallback}
       setDocumentAfficheCallback={setDocumentAfficheCallback}
       idRequeteAAfficher={idRequeteAAfficher}

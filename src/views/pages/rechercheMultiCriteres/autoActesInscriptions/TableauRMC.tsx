@@ -1,17 +1,17 @@
 import TRAITEMENT_RMC_ACTES_INSCRIPTIONS, { IResultatRMCActesInscriptions } from "@api/traitements/rmc/TraitementRMCActesInscriptions";
 import TRAITEMENT_RMC_AUTO_ACTES_INSCRIPTIONS from "@api/traitements/rmc/TraitementRMCAutoActesInscriptions";
-import {
-  ITraitementAutoRDCSParams,
-  estEligibleAuTraitementAutoRDCS,
-  useTraitementAutoRDCSHook
-} from "@hook/rmcAuto/TraitementAutoRDCSHook";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
-import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
+import {
+  ITraitementAutoRDCSParams,
+  estEligibleAuTraitementAutoRDCS,
+  useTraitementAutoRDCSHook
+} from "@views/common/hook/rmcAuto/TraitementAutoRDCSHook";
+import { mappingRequeteDelivranceToRequeteTableau } from "@views/pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { TChangeEventSurHTMLInputElement } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router";

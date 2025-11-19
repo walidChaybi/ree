@@ -1,7 +1,3 @@
-import {
-  ICreationActionMiseAjourStatutEtRedirectionParams,
-  useCreationActionMiseAjourStatutEtRedirectionHook
-} from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
@@ -9,6 +5,10 @@ import { autorisePrendreEnChargeDelivrance } from "@util/RequetesUtils";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
 import React, { useContext, useState } from "react";
 import { RECEContextData } from "../../../../../../contexts/RECEContextProvider";
+import {
+  ICreationActionMiseAjourStatutEtRedirectionParams,
+  useCreationActionMiseAjourStatutEtRedirectionHook
+} from "../../../../../common/hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../mapping/ReqDelivranceToReqTableau";
 import "./scss/BoutonPrendreEnCharge.scss";
 

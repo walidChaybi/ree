@@ -1,4 +1,3 @@
-import { creationCompositionExtraitPlurilingue } from "@hook/generation/generationECHook/creationComposition/creationCompositionExtraitPlurilingue";
 import { creerMockAnalyseMarginaleDtoDepuisTitulaireActeDto } from "@mock/data/etatcivil/acte/mockAnalyseMarginale";
 import { MOCK_EVENEMENT } from "@mock/data/etatcivil/acte/mockIEvenement";
 import { MOCK_DEUX_TITULAIRES_ACTE, MOCK_TITULAIRE_ACTE } from "@mock/data/etatcivil/acte/mockTitulaireActe";
@@ -10,6 +9,7 @@ import { NatureMention } from "@model/etatcivil/enum/NatureMention";
 import { EValidation } from "@model/requete/enum/EValidation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { describe, expect, test } from "vitest";
+import { creationCompositionExtraitPlurilingue } from "../../../../../../views/common/hook/generation/generationECHook/creationComposition/creationCompositionExtraitPlurilingue";
 import { mentionsPlurilinguesMariageAvec6, mentionsPlurilinguesMariageNombre10 } from "../../../../../mock/data/mentions";
 
 const validation = EValidation.O;

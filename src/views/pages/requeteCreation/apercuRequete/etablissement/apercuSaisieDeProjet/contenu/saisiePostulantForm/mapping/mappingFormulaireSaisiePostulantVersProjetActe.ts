@@ -16,9 +16,9 @@ import {
   ISaisieProjetPostulantForm
 } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
-import { getPrenomsTableauStringVersPrenomsOrdonnes } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
 import { SPC, UN, ZERO, getNombreOuNull } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
+import { getPrenomsTableauStringVersPrenomsOrdonnes } from "../../../../../../../requeteDelivrance/saisirRequete/hook/mappingCommun";
 
 export function mappingSaisieProjetPostulantFormVersProjetActe(
   saisieProjetPostulant: ISaisieProjetPostulantForm,

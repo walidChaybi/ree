@@ -1,14 +1,14 @@
-import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
-import { IMentionMiseAJourDto } from "@hook/acte/mentions/MiseAJourMentionsApiHook";
-import { AddAlerteActeApiHookParameters } from "@hook/alertes/AddAlerteActeHookApi";
-import { DeleteAlerteActeApiHookParameters } from "@hook/alertes/DeleteAlerteActeHookApi";
-import { IDerniereDelivranceRcRcaPacsParams } from "@hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
 import { TModeAuthentification } from "@model/agent/types";
 import { IActeInscriptionSauvegardeDto } from "@model/etatcivil/acte/IActeInscriptionSauvegardeDto";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { ETypeExtrait } from "@model/etatcivil/enum/ETypeExtrait";
 import { IInfosCarteSignature } from "@model/signature/IInfosCarteSignature";
 import { EStatutMention } from "../../model/etatcivil/enum/EStatutMention";
+import { IExtraitSaisiAEnvoyer } from "../../views/common/hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
+import { IMentionMiseAJourDto } from "../../views/common/hook/acte/mentions/MiseAJourMentionsApiHook";
+import { AddAlerteActeApiHookParameters } from "../../views/common/hook/alertes/AddAlerteActeHookApi";
+import { DeleteAlerteActeApiHookParameters } from "../../views/common/hook/alertes/DeleteAlerteActeHookApi";
+import { IDerniereDelivranceRcRcaPacsParams } from "../../views/common/hook/repertoires/DerniereDelivranceRcRcaPacsApiHook";
 import { HttpMethod } from "../ApiManager";
 
 async function getApiManager() {

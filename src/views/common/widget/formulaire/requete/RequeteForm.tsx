@@ -1,8 +1,14 @@
-import { COMPLEMENT_MOTIF, DOCUMENT_DEMANDE, MOTIF, NATURE_ACTE, NB_EXEMPLAIRE } from "@composant/formulaire/ConstantesNomsForm";
 import { CodesExtraitCopie, DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
 import { Options } from "@util/Type";
+import {
+  COMPLEMENT_MOTIF,
+  DOCUMENT_DEMANDE,
+  MOTIF,
+  NATURE_ACTE,
+  NB_EXEMPLAIRE
+} from "@views/common/composant/formulaire/ConstantesNomsForm";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import { SousFormulaire } from "../SousFormulaire";

@@ -1,10 +1,10 @@
-import { NavigationApercuReqCreationParams } from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
-import { ICreationActionMiseAjourStatutEtRedirectionParams } from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { ESousTypeCreation, SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { autorisePrendreEnChargeReqTableauCreation } from "@util/RequetesUtils";
+import { NavigationApercuReqCreationParams } from "../../../common/hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
+import { ICreationActionMiseAjourStatutEtRedirectionParams } from "../../../common/hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { setParamsUseApercuCreation } from "../commun/requeteCreationUtils";
 
 export function getOnClickSurLigneTableauEspaceCreation(

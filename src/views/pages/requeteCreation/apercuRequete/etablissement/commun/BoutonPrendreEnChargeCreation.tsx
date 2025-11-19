@@ -1,11 +1,11 @@
-import {
-  ICreationActionMiseAjourStatutEtRedirectionParams,
-  useCreationActionMiseAjourStatutEtRedirectionHook
-} from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { mappingUneRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
-import "@pages/requeteDelivrance/apercuRequete/apercuRequete/contenu/scss/BoutonPrendreEnCharge.scss";
+import {
+  ICreationActionMiseAjourStatutEtRedirectionParams,
+  useCreationActionMiseAjourStatutEtRedirectionHook
+} from "@views/common/hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
+import "@views/pages/requeteDelivrance/apercuRequete/apercuRequete/contenu/scss/BoutonPrendreEnCharge.scss";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useContext, useState } from "react";

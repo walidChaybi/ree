@@ -1,10 +1,10 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
-import { ICreationActionMiseAjourStatutEtRedirectionParams } from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
 import { autorisePrendreEnChargeReqTableauDelivrance, indexParamsReq } from "@util/RequetesUtils";
 import { DEUX, UN, ZERO } from "@util/Utils";
+import { ICreationActionMiseAjourStatutEtRedirectionParams } from "@views/common/hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { SortOrder } from "@widget/tableau/TableUtils";
 
 export const goToLinkRequete = (link: string, separator: string): IQueryParametersPourRequetes | undefined => {

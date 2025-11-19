@@ -1,8 +1,4 @@
 import { IQueryParametersPourRequetes, TypeAppelRequete } from "@api/appels/requeteApi";
-import {
-  INavigationApercuReqInfoParams,
-  useNavigationApercuInformation
-} from "@hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
@@ -12,6 +8,10 @@ import { NB_LIGNES_PAR_APPEL_DEFAUT, NB_LIGNES_PAR_PAGE_DEFAUT } from "@widget/t
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useState } from "react";
 import { useLocation } from "react-router";
+import {
+  INavigationApercuReqInfoParams,
+  useNavigationApercuInformation
+} from "../../../common/hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
 import { goToLinkRequete } from "../../requeteDelivrance/espaceDelivrance/EspaceDelivranceUtils";
 import { StatutsRequetesInformation, requeteInformationMesRequetesColumnHeaders } from "./EspaceReqInfoParams";
 import { useRequeteInformationApi } from "./hook/DonneesRequeteInformationApiHook";

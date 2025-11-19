@@ -1,9 +1,6 @@
-import { PIECES_JOINTES, REPONSE } from "@composant/formulaire/ConstantesNomsForm";
-import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import { IReponseRequeteInfo } from "@model/requete/IReponseRequeteInfo";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
-import { getLibelle } from "@util/Utils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import { Formulaire } from "@widget/formulaire/Formulaire";
@@ -13,6 +10,8 @@ import * as Yup from "yup";
 import LiensRECE from "../../../../../../router/LiensRECE";
 import { INFO_PAGE_MES_REQUETES_INFORMATION } from "../../../../../../router/infoPages/InfoPagesEspaceInformation";
 import { PieceJointe } from "../../../../../../utils/FileUtils";
+import { PIECES_JOINTES, REPONSE } from "../../../../../common/composant/formulaire/ConstantesNomsForm";
+import { usePostPiecesJointesApi } from "../../../../../common/hook/requete/piecesJointes/PostPiecesJointesHook";
 import { IEnvoyerReponseReqInfoParams, useEnvoyerReponsesReqInfoHook } from "../hook/EnvoyerReponseReqInfoHook";
 import { ISauvegarderReponseReqInfoParams, useSauvegarderReponsesReqInfoHook } from "../hook/SauvegarderReponseReqInfoHook";
 import "../scss/ReponseReqInfo.scss";
@@ -133,7 +132,7 @@ export const ReponseReqInfoForm: React.FC<ReponseReqInfoProps> = ({
           setOperationEnCours(false);
         }}
       />
-      <Fieldset titre={getLibelle("Votre réponse")}>
+      <Fieldset titre={"Votre réponse"}>
         <Formulaire
           formDefaultValues={DefaultValuesReponseInfoForm}
           formValidationSchema={ValidationSchemaReponseInfoForm}
@@ -169,7 +168,7 @@ function getReponseForm(
         <PiecesJointesReqInfoForm
           key={PIECES_JOINTES}
           nom={PIECES_JOINTES}
-          titre={getLibelle("Pièces justificatives")}
+          titre={"Pièces justificatives"}
           visible={boutonVisible}
           disabled={formulaireDisabled}
         />

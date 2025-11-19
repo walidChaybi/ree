@@ -1,11 +1,11 @@
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
-import { ApercuRequeteEtablissementActeRegistrePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuActeRegistre/ApercuRequeteEtablissementActeRegistrePage";
-import { ApercuRequeteEtablissementSuiviDossierPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/ApercuRequeteEtablissementSuiviDossierPage";
-import { ApercuRequeteEtablissementSaisieDeProjetPage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/ApercuRequeteEtablissementSaisieDeProjetPage";
-import { ApercuRequeteEtablissementSimplePage } from "@pages/requeteCreation/apercuRequete/etablissement/apercuSimple/ApercuRequeteEtablissementSimplePage";
-import EspaceCreationPage from "@pages/requeteCreation/espaceCreation/EspaceCreationPage";
 import { RouteObject } from "react-router";
+import { ApercuRequeteEtablissementActeRegistrePage } from "../../views/pages/requeteCreation/apercuRequete/etablissement/apercuActeRegistre/ApercuRequeteEtablissementActeRegistrePage";
+import { ApercuRequeteEtablissementSuiviDossierPage } from "../../views/pages/requeteCreation/apercuRequete/etablissement/apercuPriseEnCharge/ApercuRequeteEtablissementSuiviDossierPage";
+import { ApercuRequeteEtablissementSaisieDeProjetPage } from "../../views/pages/requeteCreation/apercuRequete/etablissement/apercuSaisieDeProjet/ApercuRequeteEtablissementSaisieDeProjetPage";
+import { ApercuRequeteEtablissementSimplePage } from "../../views/pages/requeteCreation/apercuRequete/etablissement/apercuSimple/ApercuRequeteEtablissementSimplePage";
+import EspaceCreationPage from "../../views/pages/requeteCreation/espaceCreation/EspaceCreationPage";
 import ElementPageRECE from "../ElementPageRECE";
 import {
   INFO_PAGE_APERCU_REQUETE_ETABLISSEMENT_ACTE_REGISTRE,

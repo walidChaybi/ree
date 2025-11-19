@@ -1,20 +1,36 @@
-import { NAISSANCE, NATIONALITE, NOMS, PARENT1, PARENT2, PRENOMS, SEXE } from "@composant/formulaire/ConstantesNomsForm";
-import ParentForm, { ParentFormDefaultValues, ParentFormValidationSchema, ParentSubFormProps } from "@composant/formulaire/ParentForm";
-import PrenomsForm, { creerValidationSchemaPrenom, genererDefaultValuesPrenoms } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
-import { Nationalite } from "@model/etatcivil/enum/Nationalite";
+import { ENationalite } from "@model/etatcivil/enum/Nationalite";
 import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
-import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
+import { enumVersOptions } from "@util/Utils";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
+import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import { SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useMemo, useState } from "react";
 import * as Yup from "yup";
+import {
+  NAISSANCE,
+  NATIONALITE,
+  NOMS,
+  PARENT1,
+  PARENT2,
+  PRENOMS,
+  SEXE
+} from "../../../../../common/composant/formulaire/ConstantesNomsForm";
 import NomsForm, {
   NomsFormDefaultValues,
   NomsFormProps,
   NomsFormValidationSchema
 } from "../../../../../common/composant/formulaire/nomsPrenoms/NomsForm";
+import PrenomsForm, {
+  creerValidationSchemaPrenom,
+  genererDefaultValuesPrenoms
+} from "../../../../../common/composant/formulaire/nomsPrenoms/PrenomsForm";
+import ParentForm, {
+  ParentFormDefaultValues,
+  ParentFormValidationSchema,
+  ParentSubFormProps
+} from "../../../../../common/composant/formulaire/ParentForm";
 import EvenementForm, {
   EvenementFormDefaultValues,
   EvenementFormValidationSchema,
@@ -99,55 +115,52 @@ const IdentiteForm: React.FC<IdentiteSubFormProps> = props => {
     if (props.reset) {
       props.formik.setFieldValue(props.nom, IdentiteFormDefaultValues);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.reset]);
 
   return (
-    <>
-      <SousFormulaire titre={props.titre}>
-        <div className="IdentiteForm">
-          <NomsForm {...nomsFormProps} />
-          <PrenomsForm
-            nom={withNamespace(props.nom, PRENOMS)}
-            nbPrenoms={props.titulaire?.prenoms?.length}
-          />
-          <RadioField
-            name={withNamespace(props.nom, SEXE)}
-            label="Sexe"
-            values={Sexe.getAllEnumsAsOptions()}
-          />
-          <EvenementForm {...naissanceFormProps} />
-          <RadioField
-            name={withNamespace(props.nom, NATIONALITE)}
-            label="Nationalité"
-            values={Nationalite.getAllEnumsAsOptions()}
-          />
-          {!afficherParents && props.filiation && (
-            <button
-              type="button"
-              onClick={toggleAffichageChampsParents}
-            >
-              {"Ajouter une filiation"}
-            </button>
-          )}
-          {afficherParents && props.filiation && (
-            <button
-              type="button"
-              className="BoutonDanger"
-              onClick={toggleAffichageChampsParents}
-            >
-              {"Supprimer une filiation"}
-            </button>
-          )}
-          {afficherParents && props.filiation && (
-            <>
-              <ParentForm {...parent1FormProps} />
-              <ParentForm {...parent2FormProps} />
-            </>
-          )}
-        </div>
-      </SousFormulaire>
-    </>
+    <SousFormulaire titre={props.titre}>
+      <div className="IdentiteForm">
+        <NomsForm {...nomsFormProps} />
+        <PrenomsForm
+          nom={withNamespace(props.nom, PRENOMS)}
+          nbPrenoms={props.titulaire?.prenoms?.length}
+        />
+        <RadioField
+          name={withNamespace(props.nom, SEXE)}
+          label="Sexe"
+          values={Sexe.getAllEnumsAsOptions()}
+        />
+        <EvenementForm {...naissanceFormProps} />
+        <RadioField
+          name={withNamespace(props.nom, NATIONALITE)}
+          label="Nationalité"
+          values={enumVersOptions(ENationalite)}
+        />
+        {!afficherParents && props.filiation && (
+          <button
+            type="button"
+            onClick={toggleAffichageChampsParents}
+          >
+            {"Ajouter une filiation"}
+          </button>
+        )}
+        {afficherParents && props.filiation && (
+          <button
+            type="button"
+            className="BoutonDanger"
+            onClick={toggleAffichageChampsParents}
+          >
+            {"Supprimer une filiation"}
+          </button>
+        )}
+        {afficherParents && props.filiation && (
+          <>
+            <ParentForm {...parent1FormProps} />
+            <ParentForm {...parent2FormProps} />
+          </>
+        )}
+      </div>
+    </SousFormulaire>
   );
 };
 

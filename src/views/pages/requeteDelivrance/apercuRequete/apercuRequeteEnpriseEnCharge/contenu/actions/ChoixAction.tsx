@@ -1,4 +1,3 @@
-import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
 import { TitulaireActe } from "@model/etatcivil/acte/TitulaireActe";
 import { IAlerte } from "@model/etatcivil/fiche/IAlerte";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
@@ -7,6 +6,7 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
+import { MenuTransfert } from "@views/common/composant/menuTransfert/MenuTransfert";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import React, { useContext } from "react";
 import { RECEContextData } from "../../../../../../../contexts/RECEContextProvider";

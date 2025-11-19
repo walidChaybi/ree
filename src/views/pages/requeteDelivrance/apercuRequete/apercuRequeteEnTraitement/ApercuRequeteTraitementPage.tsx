@@ -35,7 +35,6 @@ export const ApercuRequeteTraitementPage: React.FC = () => {
 
   return (
     <ApercuRequeteTemplate
-      title={"Aperçu de la requête en traitement"}
       setRequete={setRequeteCallback}
       setDocumentAfficheCallback={setDocumentAfficheCallback}
     >

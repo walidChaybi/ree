@@ -1,4 +1,3 @@
-import { useAjoutPieceJustificativeToRequete } from "@hook/requete/piecesJointes/AjoutPieceJustificativeToRequeteApiHook";
 import Dialog from "@mui/material/Dialog";
 import { Options } from "@util/Type";
 import { Formulaire } from "@widget/formulaire/Formulaire";
@@ -6,6 +5,7 @@ import { useFormik } from "formik";
 import React, { useState } from "react";
 import * as Yup from "yup";
 import { PieceJointe } from "../../../../../../utils/FileUtils";
+import { useAjoutPieceJustificativeToRequete } from "../../../../../common/hook/requete/piecesJointes/AjoutPieceJustificativeToRequeteApiHook";
 import ContenuModalAjoutPieceJustificative from "./ContenuModalAjoutPieceJustificative";
 import "./scss/ModalAjoutPieceJustificative.scss";
 

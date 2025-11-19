@@ -1,13 +1,12 @@
-import { RMCActeInscriptionResultats } from "@pages/rechercheMultiCriteres/acteInscription/resultats/RMCActeInscriptionResultats";
-import React, { useEffect, useState } from "react";
-
 import TRAITEMENT_RMC_ACTES_INSCRIPTIONS, { IResultatRMCActesInscriptions } from "@api/traitements/rmc/TraitementRMCActesInscriptions";
 import { ICriteresRMC } from "@model/rmc/commun/IRMCFormulaire";
+import React, { useEffect, useState } from "react";
 import DefilementAutomatique from "../../composants/commun/defilementAutomatique/DefilementAutomatique";
 import RMCActeInscription from "../../composants/pages/rmc/formulaire/RMCActeInscription";
 import { RMCContextProvider } from "../../contexts/RMCContextProvider";
 import useTraitementApi from "../../hooks/api/TraitementApiHook";
 import { StockageLocal } from "../../utils/StockageLocal";
+import { RMCActeInscriptionResultats } from "../../views/pages/rechercheMultiCriteres/acteInscription/resultats/RMCActeInscriptionResultats";
 
 const PageRMCActeInscription: React.FC = () => {
   useEffect(() => {

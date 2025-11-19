@@ -1,3 +1,9 @@
+import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
+import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
+import { ZERO } from "@util/Utils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import {
   ACQUISITION,
   ADRESSE,
@@ -28,17 +34,11 @@ import {
   TITULAIRE,
   VILLE,
   VILLE_NAISSANCE
-} from "@composant/formulaire/ConstantesNomsForm";
-import { PrenomsConnusValidationSchema } from "@composant/formulaire/nomsPrenoms/PrenomsConnusForm";
-import { creerValidationSchemaPrenom, creerValidationSchemaPrenomParent } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
-import { NomSecableStrictFormValidation } from "@composant/formulaire/validation/NomSecableFormValidation";
-import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
-import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
-import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
-import { getPrenomsTableauStringVersPrenomsOrdonnes } from "@pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
-import { ZERO } from "@util/Utils";
-import { LieuxUtils } from "@utilMetier/LieuxUtils";
+} from "@views/common/composant/formulaire/ConstantesNomsForm";
+import { PrenomsConnusValidationSchema } from "@views/common/composant/formulaire/nomsPrenoms/PrenomsConnusForm";
+import { creerValidationSchemaPrenom, creerValidationSchemaPrenomParent } from "@views/common/composant/formulaire/nomsPrenoms/PrenomsForm";
+import { NomSecableStrictFormValidation } from "@views/common/composant/formulaire/validation/NomSecableFormValidation";
+import { getPrenomsTableauStringVersPrenomsOrdonnes } from "@views/pages/requeteDelivrance/saisirRequete/hook/mappingCommun";
 import {
   CARACTERES_AUTORISES_AVEC_VIRGULE_MESSAGE,
   CARACTERES_AUTORISES_MESSAGE,

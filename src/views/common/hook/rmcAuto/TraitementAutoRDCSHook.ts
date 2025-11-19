@@ -1,5 +1,3 @@
-import { useReponseSansDelivranceCS } from "@hook/reponseSansDelivrance/ChoixReponseSansDelivranceCSHook";
-import { createReponseSansDelivranceCSPourCompositionApiPACSNonInscrit } from "@hook/reponseSansDelivrance/ReponseSansDelivranceCSFonctions";
 import { IReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
 import { NOM_DOCUMENT_REFUS_PACS_NON_INSCRIT } from "@model/composition/IReponseSansDelivranceCSPACSNonInscritComposition";
 import { Nationalite } from "@model/etatcivil/enum/Nationalite";
@@ -10,9 +8,11 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
-import { mappingRequeteTableauVersRequeteDelivrance } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { replaceUrl } from "@util/route/UrlUtil";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
+import { useReponseSansDelivranceCS } from "@views/common/hook/reponseSansDelivrance/ChoixReponseSansDelivranceCSHook";
+import { createReponseSansDelivranceCSPourCompositionApiPACSNonInscrit } from "@views/common/hook/reponseSansDelivrance/ReponseSansDelivranceCSFonctions";
+import { mappingRequeteTableauVersRequeteDelivrance } from "@views/pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import LiensRECE from "../../../../router/LiensRECE";

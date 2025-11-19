@@ -1,5 +1,3 @@
-import { ADRESSE, CHOIX_COURRIER, OPTION, REQUERANT } from "@composant/formulaire/ConstantesNomsForm";
-import { ICreerCourrierECParams, useCreerCourrierEC } from "@hook/requete/creerCourrierECHook";
 import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
 import { OptionCourrier, OptionsCourrier } from "@model/requete/IOptionCourrier";
@@ -7,7 +5,6 @@ import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { DocumentDelivrance, IDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { RequerantCourrierFormValidationSchema } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/RequerantCourrierForm";
 import { useReinitialisationComposant } from "@util/form/useReinitialisation";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { Formulaire } from "@widget/formulaire/Formulaire";
@@ -15,14 +12,16 @@ import { AdresseFormValidationSchema, AdresseFormValidationSchemaRequired } from
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
-
-import { ReinitialiserValiderFormBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
+import { EditionDelivranceContext } from "../../../../../../contexts/EditionDelivranceContextProvider";
+import { ADRESSE, CHOIX_COURRIER, OPTION, REQUERANT } from "../../../../../../views/common/composant/formulaire/ConstantesNomsForm";
+import { ReinitialiserValiderFormBoutons } from "../../../../../../views/common/composant/formulaire/boutons/ReinitialiserValiderBoutons";
+import { ICreerCourrierECParams, useCreerCourrierEC } from "../../../../../../views/common/hook/requete/creerCourrierECHook";
 import {
   controleFormulaire,
   getDefaultValuesCourrier,
   getDocumentReponseAModifier,
   getTypesCourrier
-} from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
+} from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import {
   getAdresseCourrierForm,
   getChoixCourrier,
@@ -30,11 +29,11 @@ import {
   getRequerantCourrierForm,
   getRequeteCourrierForm,
   getTexteLibre
-} from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierForms";
-import { ValidationSchemaChoixCourrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/ChoixCourrierForm";
-import { texteOptionCourrierModifie } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/GestionOptionsCourrier";
-import { ValidationSchemaOptionCourrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/OptionsCourrierForm";
-import { EditionDelivranceContext } from "../../../../../../contexts/EditionDelivranceContextProvider";
+} from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierForms";
+import { ValidationSchemaChoixCourrier } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/ChoixCourrierForm";
+import { texteOptionCourrierModifie } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/GestionOptionsCourrier";
+import { ValidationSchemaOptionCourrier } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/OptionsCourrierForm";
+import { RequerantCourrierFormValidationSchema } from "../../../../../../views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/RequerantCourrierForm";
 import BoutonsValiderEtReinitialiser from "../../boutons/BoutonsValiderEtReinitialiser";
 import { ECleOngletRequete } from "../../partieActeRequete/PartieActeRequete";
 

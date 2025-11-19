@@ -1,10 +1,10 @@
-import { EXISTENCE, TEXTE } from "@composant/formulaire/ConstantesNomsForm";
 import EExistenceContratMariage from "@model/etatcivil/enum/EExistenceContratMariage";
 import { enumVersOptions, TROIS } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { withNamespace } from "@widget/formulaire/utils/FormUtil";
 import React from "react";
+import { EXISTENCE, TEXTE } from "../../../../../../../../common/composant/formulaire/ConstantesNomsForm";
 import "./scss/ContratMariageForm.scss";
 
 interface ContratMariageFormProps {

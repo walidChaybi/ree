@@ -1,10 +1,3 @@
-import { BandeauRequete } from "@composant/bandeauApercuRequete/BandeauApercuRequete";
-import { HistoriqueActionsRequete } from "@composant/suivis/HistoriqueActionsRequete";
-import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
-import {
-  ICreationActionMiseAjourStatutHookParams,
-  useCreationActionMiseAjourStatut
-} from "@hook/requete/CreationActionMiseAjourStatutHook";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
@@ -13,6 +6,13 @@ import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
+import { BandeauRequete } from "@views/common/composant/bandeauApercuRequete/BandeauApercuRequete";
+import { HistoriqueActionsRequete } from "@views/common/composant/suivis/HistoriqueActionsRequete";
+import { SuiviObservationsRequete } from "@views/common/composant/suivis/SuiviObservationsRequete";
+import {
+  ICreationActionMiseAjourStatutHookParams,
+  useCreationActionMiseAjourStatut
+} from "@views/common/hook/requete/CreationActionMiseAjourStatutHook";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import AccessibleAvecDroits from "../../../../composants/commun/accessibleAvecDroits/AccessibleAvecDroits";

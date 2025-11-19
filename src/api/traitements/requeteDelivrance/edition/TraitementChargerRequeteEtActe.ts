@@ -1,12 +1,12 @@
 import { CONFIG_GET_RESUME_ACTE } from "@api/configurations/etatCivil/acte/GetResumeActeConfigApi";
 import { CONFIG_GET_DETAIL_REQUETE } from "@api/configurations/requete/GetDetailRequeteConfigApi";
 import { TRAITEMENT_SANS_ERREUR, TTraitementApi } from "@api/traitements/TTraitementApi";
-import { mappingRequeteDelivrance } from "@hook/requete/DetailRequeteHook";
 import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { useContext, useState } from "react";
 import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
+import { mappingRequeteDelivrance } from "../../../../views/common/hook/requete/DetailRequeteHook";
 
 interface IParamsChargement {
   idRequete: string;

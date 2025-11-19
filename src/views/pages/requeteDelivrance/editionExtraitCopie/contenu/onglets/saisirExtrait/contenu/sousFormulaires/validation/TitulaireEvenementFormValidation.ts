@@ -1,3 +1,8 @@
+import { ITitulaireEvtForm } from "@model/form/delivrance/ISaisieExtraitForm";
+import { estNonRenseigne, estRenseigne } from "@util/Utils";
+import { CARACTERES_AUTORISES_MESSAGE, CHAMP_OBLIGATOIRE } from "@widget/formulaire/FormulaireMessages";
+import * as Yup from "yup";
+import { CaracteresAutorises } from "../../../../../../../../../../ressources/Regex";
 import {
   DECLARATION_CONJOINTE,
   EVENEMENT,
@@ -9,23 +14,15 @@ import {
   PARENT_NAISS2,
   PRENOMS,
   SEXE
-} from "@composant/formulaire/ConstantesNomsForm";
-import { creerValidationSchemaPrenom } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
-import { DeclarationConjointeValidationSchema } from "@composant/formulaire/validation/DeclarationConjointeFormValidation";
+} from "../../../../../../../../../common/composant/formulaire/ConstantesNomsForm";
+import { creerValidationSchemaPrenom } from "../../../../../../../../../common/composant/formulaire/nomsPrenoms/PrenomsForm";
+import { DeclarationConjointeValidationSchema } from "../../../../../../../../../common/composant/formulaire/validation/DeclarationConjointeFormValidation";
 import {
   EvenementActeMariageValidationSchema,
   EvenementValidationSchema
-} from "@composant/formulaire/validation/EvenementValidationSchema";
-import { NomSecableFormValidation } from "@composant/formulaire/validation/NomSecableFormValidation";
-import { sexeObligatoireValidation } from "@composant/formulaire/validation/SexeObligatoireValidation";
-import { ITitulaireEvtForm } from "@model/form/delivrance/ISaisieExtraitForm";
-import { estNonRenseigne, estRenseigne, getLibelle } from "@util/Utils";
-import {
-  CARACTERES_AUTORISES_MESSAGE,
-  CHAMP_OBLIGATOIRE
-} from "@widget/formulaire/FormulaireMessages";
-import * as Yup from "yup";
-import { CaracteresAutorises } from "../../../../../../../../../../ressources/Regex";
+} from "../../../../../../../../../common/composant/formulaire/validation/EvenementValidationSchema";
+import { NomSecableFormValidation } from "../../../../../../../../../common/composant/formulaire/validation/NomSecableFormValidation";
+import { sexeObligatoireValidation } from "../../../../../../../../../common/composant/formulaire/validation/SexeObligatoireValidation";
 import {
   ParentNaissSansDateAgeDeValidationSchema,
   ParentNaissSansSexeDateAgeDeValidationSchema,
@@ -33,9 +30,7 @@ import {
 } from "./ParentNaissValidationSchema";
 
 const validationComplete = {
-  [NOM_NAISSANCE]: Yup.string()
-    .required(CHAMP_OBLIGATOIRE)
-    .matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
+  [NOM_NAISSANCE]: Yup.string().required(CHAMP_OBLIGATOIRE).matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
   [PRENOMS]: creerValidationSchemaPrenom(),
   [SEXE]: Yup.string().required(),
   [EVENEMENT]: EvenementValidationSchema,
@@ -63,9 +58,7 @@ const validationSansSexeDateAgeDePourLesParents = {
   [PARENT_ADOPTANT_NAISS2]: ParentNaissSansSexeDateAgeDeValidationSchema
 };
 
-export const TitulaireEvtActeMariageValidationSchema = Yup.object(
-  validationSansSexeDateAgeDePourLesParents
-)
+export const TitulaireEvtActeMariageValidationSchema = Yup.object(validationSansSexeDateAgeDePourLesParents)
   .test("sexeObligatoire", function (value: any, error: any) {
     return sexeObligatoireValidation(this, value, error);
   })
@@ -73,15 +66,10 @@ export const TitulaireEvtActeMariageValidationSchema = Yup.object(
     let res: any = true;
     const titulaireEvtForm = value as ITitulaireEvtForm;
 
-    if (
-      estRenseigne(titulaireEvtForm.parentNaiss2?.nomNaissance) &&
-      estNonRenseigne(titulaireEvtForm.parentNaiss1?.nomNaissance)
-    ) {
+    if (estRenseigne(titulaireEvtForm.parentNaiss2?.nomNaissance) && estNonRenseigne(titulaireEvtForm.parentNaiss1?.nomNaissance)) {
       const paramsError = {
         path: `${error.path}.${PARENT_NAISS1}.${NOM_NAISSANCE}`,
-        message: getLibelle(
-          "Le nom de naissance est obligatoire (parent 2 renseigné)"
-        )
+        message: "Le nom de naissance est obligatoire (parent 2 renseigné)"
       };
       res = this.createError(paramsError);
     } else if (
@@ -90,9 +78,7 @@ export const TitulaireEvtActeMariageValidationSchema = Yup.object(
     ) {
       const paramsError = {
         path: `${error.path}.${PARENT_ADOPTANT_NAISS1}.${NOM_NAISSANCE}`,
-        message: getLibelle(
-          "Le nom de naissance est obligatoire (parent adoptant 2 renseigné)"
-        )
+        message: "Le nom de naissance est obligatoire (parent adoptant 2 renseigné)"
       };
       res = this.createError(paramsError);
     }
@@ -106,11 +92,9 @@ const validationSansDateAgeDePourLesParents = {
   [PARENT_NAISS1]: ParentNaissSansDateAgeDeValidationSchema,
   [PARENT_NAISS2]: ParentNaissSansDateAgeDeValidationSchema
 };
-export const TitulaireEvtActeDecesValidationSchema = Yup.object(
-  validationSansDateAgeDePourLesParents
-).test("sexeObligatoire", function (value: any, error: any) {
-  return sexeObligatoireValidation(this, value, error);
-});
-
-
-
+export const TitulaireEvtActeDecesValidationSchema = Yup.object(validationSansDateAgeDePourLesParents).test(
+  "sexeObligatoire",
+  function (value: any, error: any) {
+    return sexeObligatoireValidation(this, value, error);
+  }
+);

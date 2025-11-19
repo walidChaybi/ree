@@ -1,4 +1,3 @@
-import { IGenerationECParams } from "@hook/generation/generationECHook/generationECHook";
 import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { filtrerFormaterEtTrierMentionsPlurilingues } from "@model/etatcivil/acte/mention/Mention";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -6,6 +5,7 @@ import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { EValidation } from "@model/requete/enum/EValidation";
 import { gestionnaireMentionsRetireesAuto } from "@utilMetier/mention/GestionnaireMentionsRetireesAuto";
+import { IGenerationECParams } from "@views/common/hook/generation/generationECHook/generationECHook";
 
 export const getParamsCreationEC = (typeDocument: string, requete: IRequeteDelivrance, acte: FicheActe | null): IGenerationECParams => {
   const choixDelivrance = DocumentDelivrance.getChoixDelivranceFromUUID(typeDocument);

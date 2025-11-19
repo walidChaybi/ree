@@ -1,14 +1,14 @@
-import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { IEchange } from "@model/requete/IEchange";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
 import { SituationFamiliale } from "@model/requete/enum/SituationFamiliale";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
-import TableauSuiviDossier from "@pages/requeteCreation/commun/composants/TableauSuiviDossier/TableauSuiviDossier";
 import { ZERO } from "@util/Utils";
 import { FeatureFlag } from "@util/featureFlag/FeatureFlag";
 import { gestionnaireFeatureFlag } from "@util/featureFlag/gestionnaireFeatureFlag";
+import { SuiviObservationsRequete } from "@views/common/composant/suivis/SuiviObservationsRequete";
+import TableauSuiviDossier from "@views/pages/requeteCreation/commun/composants/TableauSuiviDossier/TableauSuiviDossier";
 import React, { useState } from "react";
 import { useParams } from "react-router";
 import { Item } from "../../commun/resumeRequeteCreationEtablissement/items/Item";

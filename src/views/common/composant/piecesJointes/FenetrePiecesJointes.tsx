@@ -1,8 +1,8 @@
-import { useGetPieceJointeApi } from "@hook/requete/piecesJointes/GetPieceJointeHook";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { VisionneuseAvecTitre } from "@widget/visionneuseDocument/VisionneuseAvecTitre";
 import React from "react";
 import FenetreExterne from "../../../../composants/commun/conteneurs/FenetreExterne";
+import { useGetPieceJointeApi } from "../../hook/requete/piecesJointes/GetPieceJointeHook";
 
 interface FenetrePieceProps {
   idPiece: string;
@@ -21,7 +21,7 @@ export const FenetrePiecesJointes: React.FC<FenetrePieceProps> = props => {
     <FenetreExterne
       titre={`${props.nom} - Req N°${props.numRequete}`}
       apresFermeture={() => {
-        onClose(props);
+        props.toggleFenetre();
       }}
       ratioLargeur={RATIO_WIDTH}
       ratioHauteur={RATIO_HEIGHT}
@@ -36,7 +36,3 @@ export const FenetrePiecesJointes: React.FC<FenetrePieceProps> = props => {
     </FenetreExterne>
   );
 };
-
-function onClose(props: React.PropsWithChildren<FenetrePieceProps>) {
-  props.toggleFenetre();
-}

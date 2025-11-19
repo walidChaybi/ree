@@ -1,9 +1,9 @@
-import { IModifierCorpsExtraitParams, useModifierCorpsExtrait } from "@hook/acte/ModifierCorpsExtraitApiHook";
-import { creationCompositionExtraitCopieActeTexte } from "@hook/generation/generationECHook/creationComposition/creationCompositionExtraitCopieActeTexte";
-import { IGenerationECParams, useGenerationEC } from "@hook/generation/generationECHook/generationECHook";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { EValidation } from "@model/requete/enum/EValidation";
+import { IModifierCorpsExtraitParams, useModifierCorpsExtrait } from "@views/common/hook/acte/ModifierCorpsExtraitApiHook";
+import { creationCompositionExtraitCopieActeTexte } from "@views/common/hook/generation/generationECHook/creationComposition/creationCompositionExtraitCopieActeTexte";
+import { IGenerationECParams, useGenerationEC } from "@views/common/hook/generation/generationECHook/generationECHook";
 import { Form, Formik } from "formik";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { EditionDelivranceContext } from "../../../../../../contexts/EditionDelivranceContextProvider";

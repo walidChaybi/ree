@@ -1,5 +1,5 @@
-import { genererDefaultValuesPrenoms } from "@composant/formulaire/nomsPrenoms/PrenomsForm";
 import { describe, expect, test } from "vitest";
+import { genererDefaultValuesPrenoms } from "../../../../views/common/composant/formulaire/nomsPrenoms/PrenomsForm";
 
 describe("Test du composant Prenoms", () => {
   test("Doit créer la bonne structure de données avec 12 prénoms", () => {

@@ -1,5 +1,3 @@
-import { reinitialiserOnClick } from "@composant/menuTransfert/MenuTransfertUtil";
-import { useReponseSansDelivranceCS } from "@hook/reponseSansDelivrance/ChoixReponseSansDelivranceCSHook";
 import { IReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
 import { NOM_DOCUMENT_REFUS_DEMANDE_INCOMPLETE } from "@model/composition/IReponseSansDelivranceCSDemandeIncompleteComposition";
 import { NOM_DOCUMENT_REFUS_FRANCAIS } from "@model/composition/IReponseSansDelivranceCSFrancaisComposition";
@@ -8,6 +6,8 @@ import { NOM_DOCUMENT_REFUS_PACS_NON_INSCRIT } from "@model/composition/IReponse
 import { IActionOption } from "@model/requete/IActionOption";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { filtrerListeActionsParSousTypes } from "@util/RequetesUtils";
+import { reinitialiserOnClick } from "@views/common/composant/menuTransfert/MenuTransfertUtil";
+import { useReponseSansDelivranceCS } from "@views/common/hook/reponseSansDelivrance/ChoixReponseSansDelivranceCSHook";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import { ConfirmationPopin } from "@widget/popin/ConfirmationPopin";

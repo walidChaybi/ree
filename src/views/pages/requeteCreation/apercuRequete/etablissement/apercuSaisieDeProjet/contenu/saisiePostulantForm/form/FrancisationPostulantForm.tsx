@@ -1,10 +1,10 @@
-import { NOM, PRENOMS } from "@composant/formulaire/ConstantesNomsForm";
 import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import { ZERO } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { FormikComponentProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
+import { NOM, PRENOMS } from "../../../../../../../../common/composant/formulaire/ConstantesNomsForm";
 import Item from "../../../../commun/resumeRequeteCreationEtablissement/items/Item";
 import { filtrePrenomsFrancises } from "../SaisiePostulantFormUtils";
 

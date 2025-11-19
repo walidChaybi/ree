@@ -1,3 +1,16 @@
+import { IEvenement } from "@model/etatcivil/acte/IEvenement";
+import { TitulaireActe } from "@model/etatcivil/acte/TitulaireActe";
+import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
+import { estRenseigne, mapPrenomsVersPrenomsOrdonnes } from "@util/Utils";
+import { EvenementForm } from "@views/common/composant/formulaire/EvenementForm";
+import { CheckboxField } from "@widget/formulaire/champsSaisie/CheckBoxField";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
+import { FormikComponentProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
+import { connect } from "formik";
+import React, { useContext } from "react";
 import {
   ADOPTE_PAR,
   DECLARATION_CONJOINTE,
@@ -6,23 +19,10 @@ import {
   NOM_SECABLE,
   PRENOMS,
   SEXE
-} from "@composant/formulaire/ConstantesNomsForm";
-import DeclarationConjointeForm from "@composant/formulaire/DeclarationConjointeForm";
-import { EvenementForm } from "@composant/formulaire/EvenementForm";
-import NomSecableForm from "@composant/formulaire/NomSecableForm";
-import PrenomsForm from "@composant/formulaire/nomsPrenoms/PrenomsForm";
-import { IEvenement } from "@model/etatcivil/acte/IEvenement";
-import { TitulaireActe } from "@model/etatcivil/acte/TitulaireActe";
-import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
-import { Sexe } from "@model/etatcivil/enum/Sexe";
-import { IPrenomOrdonnes } from "@model/requete/IPrenomOrdonnes";
-import { estRenseigne, mapPrenomsVersPrenomsOrdonnes } from "@util/Utils";
-import { CheckboxField } from "@widget/formulaire/champsSaisie/CheckBoxField";
-import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
-import { FormikComponentProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
-import { connect } from "formik";
-import React, { useContext } from "react";
+} from "../../../../../../../../common/composant/formulaire/ConstantesNomsForm";
+import DeclarationConjointeForm from "../../../../../../../../common/composant/formulaire/DeclarationConjointeForm";
+import NomSecableForm from "../../../../../../../../common/composant/formulaire/NomSecableForm";
+import PrenomsForm from "../../../../../../../../common/composant/formulaire/nomsPrenoms/PrenomsForm";
 import { SaisirExtraitFormContext } from "../../SaisirExtraitForm";
 import { EvenementNaissanceAgeDeForm } from "./EvenementNaissanceAgeDeForm";
 import { getLabels } from "./LabelsUtil";

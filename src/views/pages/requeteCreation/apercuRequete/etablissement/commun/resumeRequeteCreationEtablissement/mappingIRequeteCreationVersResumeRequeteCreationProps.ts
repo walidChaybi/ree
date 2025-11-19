@@ -13,7 +13,7 @@ import DateUtils from "@util/DateUtils";
 import { triPrenoms } from "@util/Utils";
 import { ResumeRequeteCreationEtablissementProps } from "./ResumeRequeteCreationEtablissement";
 import { ItemEnfantMajeurProps } from "./items/ItemEnfantMajeur";
-import { ItemEnfantMineurProps } from "./items/ItemEnfantMineur";
+import { IItemEnfantMineurProps } from "./items/ItemEnfantMineur";
 import { ItemFraterieProps } from "./items/ItemFraterie";
 import { ItemParentProps } from "./items/ItemParent";
 import { ItemRequeteProps } from "./items/ItemRequete";
@@ -73,12 +73,12 @@ const mappingIRequeteCreationVersResumeRequeteCreationProps = (
     titulaire: titulaire && mappingITitulaireRequeteCreationVersItemTitulaireProps(titulaire, parentsTitulaire, nbUnionsAnterieurs),
     union: union && mappingITitulaireRequeteCreationVersItemUnionProps(union),
     unionsAnterieurs: mappingTableau(mappingITitulaireRequeteCreationVersItemUnionProps, unionsAnterieurs),
-    effetsCollectifs: mappingTableau(mappingITitulaireRequeteCreationVersItemEnfantMineurProps, effetsCollectifs),
+    effetsCollectifs: mappingTableau(mappingITitulaireRequeteCreationVersIItemEnfantMineurProps, effetsCollectifs),
     enfantsMineursHorsEffetCollectif: mappingTableau(
-      mappingITitulaireRequeteCreationVersItemEnfantMineurProps,
+      mappingITitulaireRequeteCreationVersIItemEnfantMineurProps,
       enfantsMineursHorsEffetCollectif
     ),
-    enfantsMineursAttenteSDANF: mappingTableau(mappingITitulaireRequeteCreationVersItemEnfantMineurProps, enfantsMineursAttenteSDANF),
+    enfantsMineursAttenteSDANF: mappingTableau(mappingITitulaireRequeteCreationVersIItemEnfantMineurProps, enfantsMineursAttenteSDANF),
     enfantsMajeurs: mappingTableau(mappingITitulaireRequeteCreationVersItemEnfantMajeurProps, enfantsMajeurs),
     frateries: mappingTableau(mappingITitulaireRequeteCreationVersItemFraterieProps, frateries)
   };
@@ -236,7 +236,7 @@ const mappingEvenementUnionDeces = (dateDeces: any): DateCoordonneesType => {
   };
 };
 
-const mappingITitulaireRequeteCreationVersItemEnfantMineurProps = (enfantMineur: ITitulaireRequeteCreation): ItemEnfantMineurProps => {
+const mappingITitulaireRequeteCreationVersIItemEnfantMineurProps = (enfantMineur: ITitulaireRequeteCreation): IItemEnfantMineurProps => {
   // TODO: cette version de la condition sera correcte lorsque demandeEffetCollectif sera utilisé (voir avec Alice)
   // const statut =
   //   effetCollectif.valideEffetCollectif === "OUI"

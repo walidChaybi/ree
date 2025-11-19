@@ -1,11 +1,3 @@
-import {
-  NavigationApercuReqCreationParams,
-  useNavigationApercuCreation
-} from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
-import {
-  INavigationApercuDelivranceParams,
-  useNavigationApercuDelivrance
-} from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceHook";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
@@ -13,6 +5,14 @@ import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete
 import { ETypeRequete } from "@model/requete/enum/TypeRequete";
 import { RequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 import { useEffect, useState } from "react";
+import {
+  NavigationApercuReqCreationParams,
+  useNavigationApercuCreation
+} from "../navigationApercuRequeteCreation/NavigationApercuCreationHook";
+import {
+  INavigationApercuDelivranceParams,
+  useNavigationApercuDelivrance
+} from "../navigationApercuRequeteDelivrance/NavigationApercuDelivranceHook";
 import { ICreationActionMiseAjourStatutHookParams, useCreationActionMiseAjourStatut } from "./CreationActionMiseAjourStatutHook";
 
 export interface ICreationActionMiseAjourStatutEtRedirectionParams {

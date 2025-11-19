@@ -1,11 +1,11 @@
 import { CONFIG_GET_RECOMPOSER_DOCUMENT_FINAL } from "@api/configurations/etatCivil/acte/GetRecomposerDocumentFinalConfigApi";
-import { AlertesActes } from "@composant/alertesActe/AlertesActes";
-import VisionneuseActe from "@composant/visionneuseActe/VisionneuseActe";
 import React, { useEffect, useState } from "react";
 import AffichageDocument from "../../../../../composants/commun/affichageDocument/AffichageDocument";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";
 import { EMimeType } from "../../../../../ressources/EMimeType";
 import AfficherMessage from "../../../../../utils/AfficherMessage";
+import { AlertesActes } from "../../../../common/composant/alertesActe/AlertesActes";
+import VisionneuseActe from "../../../../common/composant/visionneuseActe/VisionneuseActe";
 
 interface ActeRegistreProps {
   idActeAAfficher?: string;

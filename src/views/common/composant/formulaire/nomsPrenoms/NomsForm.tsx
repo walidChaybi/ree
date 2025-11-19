@@ -1,17 +1,9 @@
-import {
-  NOM_NAISSANCE,
-  NOM_USAGE
-} from "@composant/formulaire/ConstantesNomsForm";
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { getLibelle } from "@util/Utils";
+import { NOM_NAISSANCE, NOM_USAGE } from "@views/common/composant/formulaire/ConstantesNomsForm";
 import { CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import InputFieldAvecBoutonMajuscule from "@widget/formulaire/champsSaisie/InputFieldAvecBoutonMajuscule";
-import {
-  IGNORER_TABULATION,
-  NB_CARACT_MAX_SAISIE,
-  SubFormProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { IGNORER_TABULATION, NB_CARACT_MAX_SAISIE, SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
@@ -26,14 +18,8 @@ export const NomsFormDefaultValues = {
 
 // Schéma de validation des champs
 export const NomsFormValidationSchema = Yup.object().shape({
-  [NOM_NAISSANCE]: Yup.string().matches(
-    CaracteresAutorises,
-    CARACTERES_AUTORISES_MESSAGE
-  ),
-  [NOM_USAGE]: Yup.string().matches(
-    CaracteresAutorises,
-    CARACTERES_AUTORISES_MESSAGE
-  )
+  [NOM_NAISSANCE]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE),
+  [NOM_USAGE]: Yup.string().matches(CaracteresAutorises, CARACTERES_AUTORISES_MESSAGE)
 });
 
 interface INomsFormProps {
@@ -94,9 +80,7 @@ const NomsForm: React.FC<NomsFormProps> = props => {
           label={getLibelle("Nom de naissance")}
           maxLength={NB_CARACT_MAX_SAISIE}
         />
-        {!nomUsagePresent && (
-          <div className="BoutonsConteneur">{getBoutonAjouter()}</div>
-        )}
+        {!nomUsagePresent && <div className="BoutonsConteneur">{getBoutonAjouter()}</div>}
       </div>
       {nomUsagePresent && (
         <div className="NomsForm">

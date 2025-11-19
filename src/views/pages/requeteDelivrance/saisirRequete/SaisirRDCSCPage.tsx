@@ -1,7 +1,3 @@
-import { ADRESSE, DOCUMENT, PIECES_JOINTES, REQUERANT, TITULAIRES } from "@composant/formulaire/ConstantesNomsForm";
-import { useReponseSansDelivranceCS } from "@hook/reponseSansDelivrance/ChoixReponseSansDelivranceCSHook";
-import { useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
-import { usePostPiecesJointesApi } from "@hook/requete/piecesJointes/PostPiecesJointesHook";
 import { IReponseSansDelivranceCS } from "@model/composition/IReponseSansDelivranceCS";
 import { SaisieRequeteRDCSC } from "@model/form/delivrance/ISaisirRDCSCPageForm";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
@@ -25,7 +21,11 @@ import LiensRECE from "../../../../router/LiensRECE";
 import { INFO_PAGE_MODIFICATION_REQUETE_DELIVRANCE_CERTIFICAT_SITUATION_COURRIER } from "../../../../router/infoPages/InfoPagesEspaceDelivrance";
 import AfficherMessage from "../../../../utils/AfficherMessage";
 import { PieceJointe } from "../../../../utils/FileUtils";
+import { ADRESSE, DOCUMENT, PIECES_JOINTES, REQUERANT, TITULAIRES } from "../../../common/composant/formulaire/ConstantesNomsForm";
 import SaisirRequeteBoutons from "../../../common/composant/formulaire/boutons/SaisirRequeteBoutons";
+import { useReponseSansDelivranceCS } from "../../../common/hook/reponseSansDelivrance/ChoixReponseSansDelivranceCSHook";
+import { useDetailRequeteApiHook } from "../../../common/hook/requete/DetailRequeteHook";
+import { usePostPiecesJointesApi } from "../../../common/hook/requete/piecesJointes/PostPiecesJointesHook";
 import { creerTitulaire, getMaxTitulaires, getPiecesJointesAMettreAJour, initialiserTitulaires } from "./contenu/SaisirRDCSCPageFonctions";
 import {
   getAdresseForm,

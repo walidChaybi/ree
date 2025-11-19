@@ -3,12 +3,12 @@ import { Sexe } from "@model/etatcivil/enum/Sexe";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { NatureProjetEtablissement } from "@model/requete/enum/NatureProjetEtablissement";
 import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
-import { FenetreFiche } from "@pages/fiche/FenetreFiche";
-import { IFenetreFicheActe } from "@pages/rechercheMultiCriteres/common/IFenetreFicheActeInscription";
 import DateUtils from "@util/DateUtils";
 import { getValeurOuVide, supprimeElement } from "@util/Utils";
 import { replaceUrl } from "@util/route/UrlUtil";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
+import { FenetreFiche } from "@views/pages/fiche/FenetreFiche";
+import { IFenetreFicheActe } from "@views/pages/rechercheMultiCriteres/common/IFenetreFicheActeInscription";
 import { getLigneTableauVide } from "@widget/tableau/TableUtils";
 import {
   NB_LIGNES_PAR_APPEL_PERSONNE,

@@ -1,16 +1,3 @@
-import { GestionnaireElementScroll } from "@composant/GestionnaireElementScroll/GestionnaireElementScroll";
-import {
-  ACQUISITION,
-  AUTRES,
-  FRANCISATION_POSTULANT,
-  NATURE_ACTE,
-  PARENT1,
-  PARENT2,
-  PARENTS,
-  PROJET,
-  TITULAIRE,
-  TYPE
-} from "@composant/formulaire/ConstantesNomsForm";
 import { ISaisieProjetPostulantForm } from "@model/form/creation/etablissement/ISaisiePostulantForm";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
@@ -23,6 +10,19 @@ import FormikEffect from "@widget/formulaire/utils/FormikEffect";
 import { FormikHelpers } from "formik";
 import React, { useContext, useMemo } from "react";
 import { RECEContextActions, RECEContextData } from "../../../../../../../../contexts/RECEContextProvider";
+import { GestionnaireElementScroll } from "../../../../../../../common/composant/GestionnaireElementScroll/GestionnaireElementScroll";
+import {
+  ACQUISITION,
+  AUTRES,
+  FRANCISATION_POSTULANT,
+  NATURE_ACTE,
+  PARENT1,
+  PARENT2,
+  PARENTS,
+  PROJET,
+  TITULAIRE,
+  TYPE
+} from "../../../../../../../common/composant/formulaire/ConstantesNomsForm";
 import { estJourMoisVide } from "./SaisiePostulantFormUtils";
 import AcquisitionForm from "./form/AcquisitionForm";
 import AutresForm from "./form/AutresForm";

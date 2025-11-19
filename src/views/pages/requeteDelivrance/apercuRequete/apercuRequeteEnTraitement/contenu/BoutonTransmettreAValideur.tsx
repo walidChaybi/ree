@@ -1,7 +1,7 @@
-import { getValideursVersOptions } from "@composant/menuTransfert/MenuTransfertUtil";
-import { ITransfertPopinForm, TransfertPopin } from "@composant/menuTransfert/TransfertPopin";
-import { ITransmettreAValideurParams, useTransmettreAValideurApiHook } from "@hook/requete/TransmettreAValideur";
 import { getUrlPrecedente, replaceUrl } from "@util/route/UrlUtil";
+import { getValideursVersOptions } from "@views/common/composant/menuTransfert/MenuTransfertUtil";
+import { ITransfertPopinForm, TransfertPopin } from "@views/common/composant/menuTransfert/TransfertPopin";
+import { ITransmettreAValideurParams, useTransmettreAValideurApiHook } from "@views/common/hook/requete/TransmettreAValideur";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";

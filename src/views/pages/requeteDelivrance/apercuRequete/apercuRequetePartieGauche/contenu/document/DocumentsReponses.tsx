@@ -1,4 +1,3 @@
-import { useGetDocumentReponseApi } from "@hook/DocumentReponseHook";
 import { DocumentReponse, IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import Avatar from "@mui/material/Avatar";
@@ -10,6 +9,7 @@ import { getIdDocumentReponseAAfficher } from "@util/RequetesUtils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import React, { useCallback, useEffect, useState } from "react";
 import { MdImage, MdPictureAsPdf } from "react-icons/md";
+import { useGetDocumentReponseApi } from "../../../../../../common/hook/DocumentReponseHook";
 import { FenetreDocumentReponse } from "./FenetreDocumentReponse";
 import "./scss/DocumentsReponses.scss";
 

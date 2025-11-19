@@ -1,7 +1,7 @@
-import { CONTENU, LIBELLE_OPTION } from "@composant/formulaire/ConstantesNomsForm";
 import { OptionCourrier } from "@model/requete/IOptionCourrier";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { CONTENU, LIBELLE_OPTION } from "@views/common/composant/formulaire/ConstantesNomsForm";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import { SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";

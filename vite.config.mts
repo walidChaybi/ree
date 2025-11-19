@@ -66,18 +66,15 @@ export default defineConfig({
       "@mock": path.resolve(__dirname, "/src/__tests__/mock"),
       "@model": path.resolve(__dirname, "/src/model"),
       "@ressources": path.resolve(__dirname, "/src/ressources"),
-      "@views": path.resolve(__dirname, "/src/views"),
       "@scss": path.resolve(__dirname, "/src/scss"),
-      "@layouts": path.resolve(__dirname, "/src/layouts"),
-      "@pages": path.resolve(__dirname, "/src/views/pages"),
-      "@router": path.resolve(__dirname, "/src/views/router"),
+      "@pages": path.resolve(__dirname, "/src/pages"),
+      "@router": path.resolve(__dirname, "/src/router"),
       "@util": path.resolve(__dirname, "/src/views/common/util"),
-      "@hook": path.resolve(__dirname, "/src/views/common/hook"),
-      "@composant": path.resolve(__dirname, "/src/views/common/composant"),
-      "@core": path.resolve(__dirname, "/src/views/core"),
+      "@hook": path.resolve(__dirname, "/src/hook"),
+      "@composants": path.resolve(__dirname, "/src/composants"),
       "@widget": path.resolve(__dirname, "/src/views/common/widget"),
       "@utilMetier": path.resolve(__dirname, "/src/views/common/utilMetier"),
-      dsfr: path.resolve(__dirname, "/public/dsfr")
+      "@views": path.resolve(__dirname, "/src/views")
     },
     extensions: [".ts", ".tsx", ".mts", ".json", ".js", ".jsx", ".mjs"]
   },

@@ -1,6 +1,6 @@
-import { DATE_EFFET_POUR_TIERS, getContentLieu } from "@pages/fiche/hook/constructionComposants/pacs/FichePacsUtils";
 import DateUtils from "@util/DateUtils";
 import { SectionPartProps } from "@widget/section/SectionPart";
+import { DATE_EFFET_POUR_TIERS, getContentLieu } from "../../../views/pages/fiche/hook/constructionComposants/pacs/FichePacsUtils";
 import { IActionDatee } from "../commun/IActionDatee";
 import { IAutorite } from "../commun/IAutorite";
 import { DecisionAnnulation, DecisionAnnulationUtil } from "../enum/DecisionAnnulation";
@@ -23,7 +23,7 @@ export const AnnulationUtils = {
     return DateUtils.getFormatDateFromTimestamp(annulation.dateEffet);
   },
   getJuridiction(annulation: IAnnulation): string {
-    return annulation.autorite?.typeJuridiction ? annulation.autorite.typeJuridiction : "";
+    return annulation.autorite?.typeJuridiction ?? "";
   },
   getEnrolementRG(annulation: IAnnulation): string {
     return annulation.enrolementRG ?? "";

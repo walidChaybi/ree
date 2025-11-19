@@ -3,13 +3,8 @@ import { IRetenueSdanf } from "@model/requete/IRetenueSdanf";
 import { IdentiteType } from "@model/requete/IdentiteType";
 import { NationaliteType } from "@model/requete/NationaliteType";
 import { Residence } from "@model/requete/enum/Residence";
-import Labels from "@pages/requeteCreation/commun/Labels";
-import {
-  estRenseigne,
-  formatLigne,
-  formatMajusculesMinusculesMotCompose,
-  getLibelle
-} from "@util/Utils";
+import { estRenseigne, formatLigne, formatMajusculesMinusculesMotCompose } from "@util/Utils";
+import Labels from "../../../../../commun/Labels";
 import { formatLigneNationalites } from "../formatages";
 import { LigneDateNaissanceAdresse } from "../lignes/LigneDateNaissanceAdresse";
 import { LigneFrancisationIdentification } from "../lignes/LigneFrancisationIdentification";
@@ -18,7 +13,8 @@ import Item, { ItemProps } from "./Item";
 import { ItemLigne } from "./ItemLigne";
 import { ItemLigneSdanf } from "./ItemLigneSdanf";
 import ItemParent, { ItemParentProps } from "./ItemParent";
-export interface ItemEnfantMineurProps {
+
+export interface IItemEnfantMineurProps {
   numeros: {
     requeteLiee?: string;
   };
@@ -32,7 +28,7 @@ export interface ItemEnfantMineurProps {
   retenueSdanf?: IRetenueSdanf;
 }
 
-const ItemEnfantMineur: React.FC<ItemEnfantMineurProps & ItemProps> = props => {
+const ItemEnfantMineur: React.FC<IItemEnfantMineurProps & ItemProps> = props => {
   const idDeuxiemeParent = 2;
 
   return (
@@ -45,38 +41,20 @@ const ItemEnfantMineur: React.FC<ItemEnfantMineurProps & ItemProps> = props => {
       <div className="itemLigneEnfantMineur">
         <ItemLigneSdanf
           separateur={""}
-          texteSdanf={
-            props.retenueSdanf?.nomNaissance
-              ? `${props.retenueSdanf?.nomNaissance}`
-              : undefined
-          }
-          texteTitulaire={
-            props.identite.noms.naissance
-              ? `${props.identite.noms.naissance}`
-              : undefined
-          }
+          texteSdanf={props.retenueSdanf?.nomNaissance ? `${props.retenueSdanf?.nomNaissance}` : undefined}
+          texteTitulaire={props.identite.noms.naissance ? `${props.identite.noms.naissance}` : undefined}
         />
 
         <ItemLigneSdanf
-          texteSdanf={
-            props.retenueSdanf?.nomUsage
-              ? `(${getLibelle("Usage :")}${props.retenueSdanf?.nomUsage})`
-              : undefined
-          }
-          texteTitulaire={
-            props.identite.noms.usage
-              ? `(${getLibelle("Usage :")}${props.identite.noms.usage})`
-              : undefined
-          }
+          texteSdanf={props.retenueSdanf?.nomUsage ? `(${"Usage :"}${props.retenueSdanf?.nomUsage})` : undefined}
+          texteTitulaire={props.identite.noms.usage ? `(${"Usage :"}${props.identite.noms.usage})` : undefined}
           separateurVisible={false}
         />
       </div>
       <div>
         <ItemLigneSdanf
           texteTitulaire={formatLigne(props.identite.prenoms.naissance)}
-          texteSdanf={formatLigne(
-            formatagePrenoms(props.retenueSdanf?.prenomsRetenu)
-          )}
+          texteSdanf={formatLigne(formatagePrenoms(props.retenueSdanf?.prenomsRetenu))}
           separateurVisible={false}
         />
       </div>
@@ -89,14 +67,13 @@ const ItemEnfantMineur: React.FC<ItemEnfantMineurProps & ItemProps> = props => {
         retenueSdanf={props.retenueSdanf}
       />
       <ItemLigne
-        texte={
-          formatMajusculesMinusculesMotCompose(
-            formatLigneNationalites(props.nationalites)
-          ) ?? Labels.resume.nationalite.defaut
-        }
+        texte={formatMajusculesMinusculesMotCompose(formatLigneNationalites(props.nationalites)) ?? Labels.resume.nationalite.defaut}
       />
       {props.statut === "Non renseigné" ? (
-        <ItemLigne label={Labels.resume.effetCollectif} texte={props.statut} />
+        <ItemLigne
+          label={Labels.resume.effetCollectif}
+          texte={props.statut}
+        />
       ) : null}
       {props.parent && (
         <ItemParent

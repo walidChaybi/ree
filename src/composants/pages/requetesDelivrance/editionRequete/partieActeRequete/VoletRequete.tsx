@@ -1,7 +1,6 @@
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { ResumeRequetePartieHaute } from "@pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequetePartieHaute";
-import { UN } from "@util/Utils";
 import React from "react";
+import { ResumeRequetePartieHaute } from "../../../../../views/pages/requeteDelivrance/apercuRequete/apercuRequetePartieGauche/contenu/resume/ResumeRequetePartieHaute";
 import ConteneurAccordeon from "../../../../commun/conteneurs/accordeon/ConteneurAccordeon";
 import ObservationsRequete from "../../commun/requete/ObservationsRequete";
 import TypeRequete from "../../commun/requete/TypeRequete";
@@ -33,7 +32,7 @@ const VoletRequete: React.FC<IVoletRequeteProps> = ({ requete }) => (
     <ConteneurAccordeon titre="Suivi requête">
       <div className="grid gap-1 p-4 text-left">
         {requete.actions
-          ?.sort((actA, actB) => (actA.numeroOrdre > actB.numeroOrdre ? UN : -UN))
+          ?.sort((actA, actB) => (actA.numeroOrdre > actB.numeroOrdre ? 1 : -1))
           .map(action => (
             <div key={action.id}>{action.phraseHistorique}</div>
           ))}

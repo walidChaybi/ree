@@ -1,5 +1,5 @@
-import { getColonnesTableauPersonnes, getLigneTableauVide } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
 import { getLibelle } from "@util/Utils";
+import { getColonnesTableauPersonnes, getLigneTableauVide } from "@views/pages/rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
 import { NB_LIGNES_PAR_APPEL_PERSONNE, NB_LIGNES_PAR_PAGE_PERSONNE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import { TableauTypeColumn } from "@widget/tableau/TableauRece/TableauTypeColumn";

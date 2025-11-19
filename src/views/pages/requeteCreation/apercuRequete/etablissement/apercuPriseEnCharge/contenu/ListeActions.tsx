@@ -1,10 +1,10 @@
-import {
-  RetourSDANFParams,
-  useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook
-} from "@hook/requete/creation/EnvoyerMessageSdanfEtMiseAJourStatutApiHook";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IEchange } from "@model/requete/IEchange";
 import { estSuperieurA500Caracteres, getLibelle } from "@util/Utils";
+import {
+  RetourSDANFParams,
+  useEnvoyerMessageRetourSDANFEtMiseAJourStatutApiHook
+} from "@views/common/hook/requete/creation/EnvoyerMessageSdanfEtMiseAJourStatutApiHook";
 import { GroupeBouton } from "@widget/menu/GroupeBouton";
 import { ConfirmationPopinAvecMessage } from "@widget/popin/ConfirmationPopinAvecMessage";
 import React, { useContext, useEffect, useState } from "react";

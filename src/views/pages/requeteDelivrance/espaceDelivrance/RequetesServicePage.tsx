@@ -1,9 +1,4 @@
 import { IQueryParametersPourRequetes, TypeAppelRequete } from "@api/appels/requeteApi";
-import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
-import {
-  ICreationActionMiseAjourStatutEtRedirectionParams,
-  useCreationActionMiseAjourStatutEtRedirectionHook
-} from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { IFiltreServiceRequeteDelivranceFormValues } from "@model/form/delivrance/IFiltreServiceRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
@@ -26,6 +21,11 @@ import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
 import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../router/LiensRECE";
 import { INFO_PAGE_REQUETES_DELIVRANCE_SERVICE } from "../../../../router/infoPages/InfoPagesEspaceDelivrance";
+import { MenuTransfert } from "../../../common/composant/menuTransfert/MenuTransfert";
+import {
+  ICreationActionMiseAjourStatutEtRedirectionParams,
+  useCreationActionMiseAjourStatutEtRedirectionHook
+} from "../../../common/hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { HeaderTableauRequete, dateStatutColumnHeaders, requeteColumnHeaders } from "./EspaceDelivranceParams";
 import { goToLinkRequete, miseAjourOuRedirection } from "./EspaceDelivranceUtils";
 import { FiltreServiceRequeteDelivranceForm } from "./contenu/FiltreServiceRequeteDelivranceForm";

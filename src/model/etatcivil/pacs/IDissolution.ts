@@ -1,11 +1,11 @@
+import DateUtils from "@util/DateUtils";
+import { SectionPartProps } from "@widget/section/SectionPart";
 import {
   DATE_EFFET_POUR_TIERS,
   getContentAutorite,
   getContentLieu,
   getContentNotaire
-} from "@pages/fiche/hook/constructionComposants/pacs/FichePacsUtils";
-import DateUtils from "@util/DateUtils";
-import { SectionPartProps } from "@widget/section/SectionPart";
+} from "../../../views/pages/fiche/hook/constructionComposants/pacs/FichePacsUtils";
 import { IActionDatee } from "../commun/IActionDatee";
 import { IAutorite } from "../commun/IAutorite";
 

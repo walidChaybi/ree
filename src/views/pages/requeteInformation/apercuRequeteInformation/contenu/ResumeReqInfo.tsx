@@ -1,4 +1,3 @@
-import { ListePiecesJointes } from "@composant/piecesJointes/ListePiecesJointes";
 import { Requerant } from "@model/requete/IRequerant";
 import { Requete } from "@model/requete/IRequete";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
@@ -8,6 +7,7 @@ import { Qualite } from "@model/requete/enum/Qualite";
 import { IPieceComplementInformation } from "@model/requete/pieceJointe/IPieceComplementInformation";
 import { IPieceJointe, TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import { getLibelle, getValeurOuVide } from "@util/Utils";
+import { ListePiecesJointes } from "@views/common/composant/piecesJointes/ListePiecesJointes";
 import { SectionContentProps } from "@widget/section/SectionContent";
 import { SectionPanel, SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPartProps } from "@widget/section/SectionPart";

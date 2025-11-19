@@ -1,4 +1,3 @@
-import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import MockSaisieProjetActeContextProvider from "@mock/context/MockSaisieProjetActeContextProvider";
 import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscription";
@@ -7,6 +6,7 @@ import { afterAll, beforeAll, describe, expect, test, vi } from "vitest";
 import ApercuProjetActe from "../../../../../../composants/pages/requetesConsulaire/saisieProjet/apercuProjet/ApercuProjetActe";
 import { EEventState } from "../../../../../../hooks/EventHook";
 import ModeleTexte, { EModeleTexteDocument } from "../../../../../../utils/ModeleTexte";
+import { mappingRequeteCreation } from "../../../../../../views/common/hook/requete/DetailRequeteHook";
 
 beforeAll(() => {
   ModeleTexte.enregistrerModeleTexteDocument(

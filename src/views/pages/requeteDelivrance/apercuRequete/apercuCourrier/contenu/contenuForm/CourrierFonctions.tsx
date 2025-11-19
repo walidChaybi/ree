@@ -1,3 +1,10 @@
+import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
+import { IDocumentReponse } from "@model/requete/IDocumentReponse";
+import { OptionsCourrier } from "@model/requete/IOptionCourrier";
+import { Requerant } from "@model/requete/IRequerant";
+import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
+import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import {
   ADRESSE,
   ADRESSE_COURRIEL,
@@ -25,14 +32,7 @@ import {
   TEXTE,
   TEXTE_LIBRE,
   VOIE
-} from "@composant/formulaire/ConstantesNomsForm";
-import { SaisieCourrier } from "@model/form/delivrance/ISaisieCourrierForm";
-import { IDocumentReponse } from "@model/requete/IDocumentReponse";
-import { OptionsCourrier } from "@model/requete/IOptionCourrier";
-import { Requerant } from "@model/requete/IRequerant";
-import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
-import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+} from "@views/common/composant/formulaire/ConstantesNomsForm";
 
 import { MotifDelivrance } from "@model/requete/enum/MotifDelivrance";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";

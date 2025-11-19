@@ -1,4 +1,3 @@
-import { getUtilisateursParTypeRequeteVersOptions } from "@composant/menuTransfert/MenuTransfertUtil";
 import {
   FILTRES_SERVICE_STATUTS_REQUETE_DELIVRANCE,
   IFiltreServiceRequeteDelivranceFormValues
@@ -14,6 +13,7 @@ import React, { useContext } from "react";
 import { FaSearch } from "react-icons/fa";
 import { FaCircleXmark } from "react-icons/fa6";
 import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
+import { getUtilisateursParTypeRequeteVersOptions } from "../../../../common/composant/menuTransfert/MenuTransfertUtil";
 import "./scss/FiltreServiceRequeteDelivranceForm.scss";
 
 // TOREFACTO à couvrir (ignoré le 28/11/24)

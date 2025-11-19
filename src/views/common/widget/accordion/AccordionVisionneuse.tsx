@@ -1,6 +1,3 @@
-import { FenetrePiecesJointes } from "@composant/piecesJointes/FenetrePiecesJointes";
-import { IMajLibellePjParams, useMiseAJourLibellePjApiHook } from "@hook/requete/creation/MiseAJourLibellePjApiHook";
-import { useGetPieceJointeApi } from "@hook/requete/piecesJointes/GetPieceJointeHook";
 import { TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -8,6 +5,9 @@ import React, { useEffect, useState } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { FaSquareXmark } from "react-icons/fa6";
 import AffichageDocument from "../../../../composants/commun/affichageDocument/AffichageDocument";
+import { FenetrePiecesJointes } from "../../composant/piecesJointes/FenetrePiecesJointes";
+import { IMajLibellePjParams, useMiseAJourLibellePjApiHook } from "../../hook/requete/creation/MiseAJourLibellePjApiHook";
+import { useGetPieceJointeApi } from "../../hook/requete/piecesJointes/GetPieceJointeHook";
 import { AccordionTitle } from "./AccordionTitle";
 import { BoutonAccordionTitle } from "./BoutonAccordionTitle";
 import "./scss/AccordionVisionneuse.scss";
@@ -47,7 +47,7 @@ export const AccordionVisionneuse: React.FC<AccordionVisionneuseProps> = ({
   const resultatMaj = useMiseAJourLibellePjApiHook(majTitreParams);
 
   useEffect(() => {
-    if (resultatMaj && resultatMaj.resultat && majTitreParams?.nouveauLibelle) {
+    if (resultatMaj?.resultat && majTitreParams?.nouveauLibelle) {
       setTitreActuel(majTitreParams?.nouveauLibelle);
     }
   }, [resultatMaj]);

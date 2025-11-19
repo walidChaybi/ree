@@ -1,14 +1,14 @@
-import {
-  ICreationActionMiseAjourStatutEtRedirectionParams,
-  useCreationActionMiseAjourStatutEtRedirectionHook
-} from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { mappingRequeteDelivranceToRequeteTableau } from "@pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { replaceUrl } from "@util/route/UrlUtil";
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import LiensRECE from "../../../../../router/LiensRECE";
 import { INFO_PAGE_APERCU_REQUETE_DELIVRANCE_PRISE_EN_CHARGE } from "../../../../../router/infoPages/InfoPagesEspaceDelivrance";
+import {
+  ICreationActionMiseAjourStatutEtRedirectionParams,
+  useCreationActionMiseAjourStatutEtRedirectionHook
+} from "../../../../../views/common/hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
+import { mappingRequeteDelivranceToRequeteTableau } from "../../../../../views/pages/requeteDelivrance/apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { IBoutonProps } from "../../../../commun/bouton/Bouton";
 import { BoutonAvecChargement } from "../../../../commun/bouton/BoutonAvecChargement";
 

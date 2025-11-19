@@ -1,11 +1,11 @@
 import { getRequetesInformation, IQueryParametersPourRequetes, postRequetesInformation, TypeAppelRequete } from "@api/appels/requeteApi";
 import { IFiltresServiceRequeteInformationFormValues } from "@model/requete/IFiltreServiceRequeteInformation";
 import { IRequeteTableauInformation, mappingRequetesTableauInformation } from "@model/requete/IRequeteTableauInformation";
-import { VALEUR_FILTRE_INFORMATION_DEFAUT } from "@pages/requeteInformation/commun/FiltresServiceRequeteInformationForm/FiltresServiceRequeteInformationForm";
 import { getParamsTableauDepuisReponseApi, IParamsTableau } from "@util/GestionDesLiensApi";
 import { useContext, useEffect, useState } from "react";
 import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import AfficherMessage, { estTableauErreurApi } from "../../../../../utils/AfficherMessage";
+import { VALEUR_FILTRE_INFORMATION_DEFAUT } from "../../commun/FiltresServiceRequeteInformationForm/FiltresServiceRequeteInformationForm";
 
 export const useRequeteInformationApi = (
   queryParameters: IQueryParametersPourRequetes,

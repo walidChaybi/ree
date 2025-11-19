@@ -5,9 +5,9 @@ import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
 import { TypeMandataireReq } from "@model/requete/enum/TypeMandataireReq";
-import { mappingRequeteDelivranceVersFormulaireRDCSC } from "@pages/requeteDelivrance/saisirRequete/hook/mappingRequeteDelivranceVersFormulaireRDCSC";
+import { EMimeType } from "@ressources/EMimeType";
 import { describe, expect, test } from "vitest";
-import { EMimeType } from "../../../ressources/EMimeType";
+import { mappingRequeteDelivranceVersFormulaireRDCSC } from "../../../views/pages/requeteDelivrance/saisirRequete/hook/mappingRequeteDelivranceVersFormulaireRDCSC";
 
 describe("Test du bloc Postulant de l'onglet Postulant", () => {
   test("Attendu: Requerant.setRequerant mandataire", () => {

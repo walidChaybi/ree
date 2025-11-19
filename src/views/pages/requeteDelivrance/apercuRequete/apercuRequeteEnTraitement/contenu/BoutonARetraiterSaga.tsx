@@ -1,13 +1,14 @@
-/*
- * fichier non testé car composant à supprimer dans étape 2
- */
-import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
+// Composant à supprimer en délivrance cible
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { GestionnaireARetraiterDansSaga } from "@util/migration/GestionnaireARetraiterDansSaga";
 import { goBack } from "@util/route/UrlUtil";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import {
+  ICreationActionEtMiseAjourStatutParams,
+  usePostCreationActionEtMiseAjourStatutApi
+} from "../../../../../common/hook/requete/ActionHook";
 import "./scss/BoutonARetraiterSaga.scss";
 
 interface BoutonARetraiterSagaProps {

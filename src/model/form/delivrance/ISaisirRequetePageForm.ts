@@ -39,7 +39,7 @@ import {
   TYPE_REQUERANT,
   VILLE_EVENEMENT,
   VOIE
-} from "@composant/formulaire/ConstantesNomsForm";
+} from "../../../views/common/composant/formulaire/ConstantesNomsForm";
 
 export interface ISaisieRequerant {
   [TYPE_REQUERANT]: string;

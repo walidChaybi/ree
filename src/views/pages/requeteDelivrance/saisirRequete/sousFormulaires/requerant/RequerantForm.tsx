@@ -1,13 +1,18 @@
-import { AUTRE_PROFESSIONNEL, INSTITUTI0NNEL, MANDATAIRE, PARTICULIER, TYPE_REQUERANT } from "@composant/formulaire/ConstantesNomsForm";
 import { Requerant } from "@model/requete/IRequerant";
 import { Qualite } from "@model/requete/enum/Qualite";
-import { getLibelle } from "@util/Utils";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
 import { SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
+import {
+  AUTRE_PROFESSIONNEL,
+  INSTITUTI0NNEL,
+  MANDATAIRE,
+  PARTICULIER,
+  TYPE_REQUERANT
+} from "../../../../../common/composant/formulaire/ConstantesNomsForm";
 import AutreProfessionnelForm, {
   AutreProfessionnelFormDefaultValues,
   AutreProfessionnelFormValidationSchema
@@ -43,7 +48,7 @@ export const RequerantFormValidationSchema = Yup.object()
 
     const paramsError = {
       path: `${error.path}.mandataire.type`,
-      message: getLibelle("La sélection d'un Type est obligatoire 1 ")
+      message: "La sélection d'un Type est obligatoire 1 "
     };
 
     return typeRequerant === "MANDATAIRE" && mandataire["type"] == null ? this.createError(paramsError) : true;
@@ -54,7 +59,7 @@ export const RequerantFormValidationSchema = Yup.object()
 
     const paramsError = {
       path: `${error.path}.institutionnel.type`,
-      message: getLibelle("La sélection d'un Type est obligatoire")
+      message: "La sélection d'un Type est obligatoire"
     };
 
     return typeRequerant === "INSTITUTIONNEL" && institutionnel["type"] == null ? this.createError(paramsError) : true;
@@ -65,7 +70,7 @@ export const RequerantFormValidationSchema = Yup.object()
 
     const paramsError = {
       path: `${error.path}.autreProfessionnel.nature`,
-      message: getLibelle("La saisie d'une Nature est obligatoire")
+      message: "La saisie d'une Nature est obligatoire"
     };
 
     return typeRequerant === "AUTRE_PROFESSIONNEL" && autreProfessionnel["nature"] == null ? this.createError(paramsError) : true;
@@ -128,24 +133,22 @@ const RequerantForm: React.FC<SubFormProps> = props => {
   };
 
   return (
-    <>
-      <SousFormulaire titre={props.titre}>
-        <div className="RequerantForm">
-          <RadioField
-            name={typeRequerantWithNamespace}
-            label={getLibelle("Requérant")}
-            values={props.options ? props.options : []}
-            onChange={e => {
-              onChangeRequerant(e);
-            }}
-          />
-          {requerantSousForm === "PARTICULIER" && <ParticulierForm {...particulierFromProps} />}
-          {requerantSousForm === "MANDATAIRE" && <MandataireForm {...mandataireFromProps} />}
-          {requerantSousForm === "INSTITUTIONNEL" && <InstitutionnelForm {...institutionnelFromProps} />}
-          {requerantSousForm === "AUTRE_PROFESSIONNEL" && <AutreProfessionnelForm {...autreProfessionnelFromProps} />}
-        </div>
-      </SousFormulaire>
-    </>
+    <SousFormulaire titre={props.titre}>
+      <div className="RequerantForm">
+        <RadioField
+          name={typeRequerantWithNamespace}
+          label={"Requérant"}
+          values={props.options ?? []}
+          onChange={e => {
+            onChangeRequerant(e);
+          }}
+        />
+        {requerantSousForm === "PARTICULIER" && <ParticulierForm {...particulierFromProps} />}
+        {requerantSousForm === "MANDATAIRE" && <MandataireForm {...mandataireFromProps} />}
+        {requerantSousForm === "INSTITUTIONNEL" && <InstitutionnelForm {...institutionnelFromProps} />}
+        {requerantSousForm === "AUTRE_PROFESSIONNEL" && <AutreProfessionnelForm {...autreProfessionnelFromProps} />}
+      </div>
+    </SousFormulaire>
   );
 };
 

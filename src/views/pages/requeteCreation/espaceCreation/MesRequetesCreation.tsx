@@ -1,13 +1,13 @@
 import { IQueryParametersPourRequetes, TypeAppelRequete } from "@api/appels/requeteApi";
+import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import {
   NavigationApercuReqCreationParams,
   useNavigationApercuCreation
-} from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
+} from "@views/common/hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
 import {
   ICreationActionMiseAjourStatutEtRedirectionParams,
   useCreationActionMiseAjourStatutEtRedirectionHook
-} from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
-import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
+} from "@views/common/hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { SortOrder } from "@widget/tableau/TableUtils";

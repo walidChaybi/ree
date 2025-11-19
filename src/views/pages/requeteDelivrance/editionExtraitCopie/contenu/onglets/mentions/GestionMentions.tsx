@@ -1,6 +1,3 @@
-import { ReinitialiserValiderBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
-import { IMentionsParams, useMentionsApiHook } from "@hook/acte/mentions/MentionsApiHook";
-import { SauvegarderMentionsParam, useSauvegarderMentions } from "@hook/acte/mentions/SauvegarderMentionsHook";
 import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { IMentionAffichage, mappingVersMentionAffichage, modificationEffectuee } from "@model/etatcivil/acte/mention/IMentionAffichage";
 import { EStatutMention } from "@model/etatcivil/enum/EStatutMention";
@@ -14,6 +11,9 @@ import React, { useCallback, useContext, useEffect, useMemo, useState } from "re
 import { ECleOngletDocumentDelivre } from "../../../../../../../composants/pages/requetesDelivrance/editionRequete/partieDocument/voletDocuments/VoletDocumentDelivre";
 import { EditionDelivranceContext } from "../../../../../../../contexts/EditionDelivranceContextProvider";
 import { RECEContextActions } from "../../../../../../../contexts/RECEContextProvider";
+import { ReinitialiserValiderBoutons } from "../../../../../../common/composant/formulaire/boutons/ReinitialiserValiderBoutons";
+import { IMentionsParams, useMentionsApiHook } from "../../../../../../common/hook/acte/mentions/MentionsApiHook";
+import { SauvegarderMentionsParam, useSauvegarderMentions } from "../../../../../../common/hook/acte/mentions/SauvegarderMentionsHook";
 import {
   boutonReinitialiserEstDisabled,
   getTexteAPartirMentionPlurilingue,

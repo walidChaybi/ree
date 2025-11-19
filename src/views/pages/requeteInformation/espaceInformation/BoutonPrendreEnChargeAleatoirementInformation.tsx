@@ -1,6 +1,5 @@
 import { HTTP_NOT_FOUND } from "@api/ApiManager";
 import CONFIG_GET_REQUETE_INFORMATION_A_PRENDRE_EN_CHARGE from "@api/configurations/requete/information/GetRequeteInformationAPrendreEnChargeConfigApi";
-import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import WithHabilitation from "@util/habilitation/WithHabilitation";
 import { BoutonOperationEnCours } from "@widget/attente/BoutonOperationEnCours";
@@ -10,6 +9,7 @@ import useFetchApi from "../../../../hooks/api/FetchApiHook";
 import LiensRECE from "../../../../router/LiensRECE";
 import { INFO_PAGE_APERCU_REQUETE_INFORMATION } from "../../../../router/infoPages/InfoPagesEspaceInformation";
 import AfficherMessage from "../../../../utils/AfficherMessage";
+import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "../../../common/hook/requete/ActionHook";
 
 interface IBoutonPrendreEnChargeAleatoirementInformationProps {
   disabled: boolean;

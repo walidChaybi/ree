@@ -1,8 +1,8 @@
 /* v8 ignore start */
-import App from "@core/App";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import PolicesEtStylesRECE from "./utils/PolicesEtStylesRECE";
+import App from "./views/core/App";
 
 PolicesEtStylesRECE.chargerPolices();
 

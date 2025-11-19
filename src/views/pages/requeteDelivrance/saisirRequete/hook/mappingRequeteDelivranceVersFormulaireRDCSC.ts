@@ -1,8 +1,8 @@
-import { ADRESSE, DOCUMENT, PIECES_JOINTES, REQUERANT, TITULAIRES } from "@composant/formulaire/ConstantesNomsForm";
 import { SaisieRequeteRDCSC } from "@model/form/delivrance/ISaisirRDCSCPageForm";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { ITitulaireRequete, TitulaireRequete } from "@model/requete/ITitulaireRequete";
 import { DEUX, UN } from "@util/Utils";
+import { ADRESSE, DOCUMENT, PIECES_JOINTES, REQUERANT, TITULAIRES } from "@views/common/composant/formulaire/ConstantesNomsForm";
 import { IdentiteFormDefaultValuesRDCSC } from "../sousFormulaires/identite/IdentiteForm";
 import { saisieAdresse, saisiePJ, saisieRequerant, saisieTitulaire } from "./mappingCommun";
 

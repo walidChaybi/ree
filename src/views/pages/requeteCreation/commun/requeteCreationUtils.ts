@@ -1,4 +1,3 @@
-import { NavigationApercuReqCreationParams } from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
 import { Requete } from "@model/requete/IRequete";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
@@ -7,6 +6,7 @@ import { ESousTypeCreation, SousTypeCreation } from "@model/requete/enum/SousTyp
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeObjetTitulaire } from "@model/requete/enum/TypeObjetTitulaire";
 import { UN } from "@util/Utils";
+import { NavigationApercuReqCreationParams } from "@views/common/hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
 
 export function setParamsUseApercuCreation(
   idRequete: string,

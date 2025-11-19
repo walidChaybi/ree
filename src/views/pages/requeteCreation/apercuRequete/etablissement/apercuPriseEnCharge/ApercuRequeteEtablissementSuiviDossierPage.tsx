@@ -1,15 +1,15 @@
-import { IDetailRequeteParams, useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
-import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
-import { OngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/OngletRMCPersonne";
-import { useDataTableauxOngletRMCPersonne } from "@pages/requeteCreation/commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import { DEUX } from "@util/Utils";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
+import { IDetailRequeteParams, useDetailRequeteApiHook } from "../../../../../common/hook/requete/DetailRequeteHook";
+import { OngletPiecesJustificatives } from "../../../commun/composants/OngletPiecesJustificatives";
+import { OngletRMCPersonne } from "../../../commun/composants/ongletRMCPersonne/OngletRMCPersonne";
+import { useDataTableauxOngletRMCPersonne } from "../../../commun/composants/ongletRMCPersonne/hook/DataTableauxOngletRMCPersonneHook";
 import "../../../commun/scss/ApercuReqCreationPage.scss";
 import {
   getConteneurPieceJustificative,

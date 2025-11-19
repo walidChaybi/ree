@@ -1,3 +1,4 @@
+import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
 import {
   ACQUISITION,
   ADOPTE_PAR,
@@ -30,6 +31,7 @@ import {
   PARENT1,
   PARENT2,
   PARENTS,
+  PAS_DE_PRENOM_CONNU,
   PAYS,
   PAYS_NAISSANCE,
   PRENOM,
@@ -43,9 +45,7 @@ import {
   TYPE,
   VILLE,
   VILLE_NAISSANCE
-} from "@composant/formulaire/ConstantesNomsForm";
-import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
-import { PAS_DE_PRENOM_CONNU } from "../../../../views/common/composant/formulaire/ConstantesNomsForm";
+} from "../../../../views/common/composant/formulaire/ConstantesNomsForm";
 
 export interface ISaisieProjetPostulantForm {
   [PROJET]: ISaisieProjetSousForm;

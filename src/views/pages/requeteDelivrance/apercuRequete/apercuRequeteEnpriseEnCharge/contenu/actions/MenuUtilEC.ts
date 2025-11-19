@@ -1,4 +1,3 @@
-import { reinitialiserOnClick } from "@composant/menuTransfert/MenuTransfertUtil";
 import { TitulaireActe } from "@model/etatcivil/acte/TitulaireActe";
 import { ELienParente } from "@model/etatcivil/enum/ELienParente";
 import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
@@ -17,6 +16,7 @@ import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
 import { replaceUrl } from "@util/route/UrlUtil";
+import { reinitialiserOnClick } from "@views/common/composant/menuTransfert/MenuTransfertUtil";
 import { IBoutonPopin } from "@widget/popin/ConfirmationPopin";
 import React, { MutableRefObject } from "react";
 import { NavigateFunction } from "react-router";

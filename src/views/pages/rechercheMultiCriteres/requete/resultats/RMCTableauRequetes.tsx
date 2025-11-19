@@ -1,19 +1,3 @@
-import {
-  NavigationApercuReqCreationParams,
-  useNavigationApercuCreation
-} from "@hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
-import {
-  INavigationApercuDelivranceParams,
-  useNavigationApercuDelivrance
-} from "@hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceHook";
-import {
-  INavigationApercuReqInfoParams,
-  useNavigationApercuInformation
-} from "@hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
-import {
-  ICreationActionMiseAjourStatutEtRedirectionParams,
-  useCreationActionMiseAjourStatutEtRedirectionHook
-} from "@hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
@@ -23,6 +7,22 @@ import { RequeteTableauRMC, TRequeteTableauRMC } from "@model/rmc/requete/Requet
 import { IParamsTableau } from "@util/GestionDesLiensApi";
 import { autorisePrendreEnChargeReqTableauCreation, autorisePrendreEnChargeReqTableauDelivrance } from "@util/RequetesUtils";
 import { RenderMessageZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
+import {
+  NavigationApercuReqCreationParams,
+  useNavigationApercuCreation
+} from "@views/common/hook/navigationApercuRequeteCreation/NavigationApercuCreationHook";
+import {
+  INavigationApercuDelivranceParams,
+  useNavigationApercuDelivrance
+} from "@views/common/hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceHook";
+import {
+  INavigationApercuReqInfoParams,
+  useNavigationApercuInformation
+} from "@views/common/hook/navigationApercuRequeteInformation/NavigationApercuInformationHook";
+import {
+  ICreationActionMiseAjourStatutEtRedirectionParams,
+  useCreationActionMiseAjourStatutEtRedirectionHook
+} from "@views/common/hook/requete/CreationActionMiseAjourStatutEtRedirectionHook";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { NB_LIGNES_PAR_APPEL_REQUETE, NB_LIGNES_PAR_PAGE_REQUETE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";

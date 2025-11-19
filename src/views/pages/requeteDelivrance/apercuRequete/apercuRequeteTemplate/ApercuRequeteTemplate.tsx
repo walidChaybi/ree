@@ -1,5 +1,3 @@
-import { BandeauRequete } from "@composant/bandeauApercuRequete/BandeauApercuRequete";
-import { IDetailRequeteParams, useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
@@ -7,17 +5,18 @@ import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
+import { BandeauRequete } from "../../../../common/composant/bandeauApercuRequete/BandeauApercuRequete";
+import { IDetailRequeteParams, useDetailRequeteApiHook } from "../../../../common/hook/requete/DetailRequeteHook";
 import { ApercuRequetePartieGauche } from "../apercuRequetePartieGauche/ApercuRequetePartieGauche";
 import "./scss/ApercuRequeteTemplate.scss";
 
-interface TemplateProps {
+interface ITemplateProps {
   idRequeteAAfficher?: string;
-  title: string;
   setRequete: (req: IRequeteDelivrance) => void;
   setDocumentAfficheCallback?: (docReponse: IDocumentReponse) => void;
 }
 
-export const ApercuRequeteTemplate: React.FC<React.PropsWithChildren<TemplateProps>> = props => {
+export const ApercuRequeteTemplate: React.FC<React.PropsWithChildren<ITemplateProps>> = props => {
   const [idRequete, setIdRequete] = useState<string>();
   const { idRequeteParam } = useParams<TUuidRequeteParams>();
   const location = useLocation();

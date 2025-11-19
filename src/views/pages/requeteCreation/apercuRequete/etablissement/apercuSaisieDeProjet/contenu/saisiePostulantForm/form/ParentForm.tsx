@@ -1,3 +1,13 @@
+import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
+import { InputField } from "@widget/formulaire/champsSaisie/InputField";
+import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
+import { OptionVide, SelectField } from "@widget/formulaire/champsSaisie/SelectField";
+import { MessageAvertissement } from "@widget/formulaire/erreur/MessageAvertissement";
+import { compteNombreDePrenoms, FormikComponentProps, NB_CARACT_MAX_SAISIE, withNamespace } from "@widget/formulaire/utils/FormUtil";
+import { connect } from "formik";
+import React from "react";
 import {
   ARRONDISSEMENT_NAISSANCE,
   DATE_NAISSANCE,
@@ -10,22 +20,11 @@ import {
   REGION_NAISSANCE,
   SEXE,
   VILLE_NAISSANCE
-} from "@composant/formulaire/ConstantesNomsForm";
-import DateNaissanceOuAgeDeForm from "@composant/formulaire/DateNaissanceOuAgeDeForm";
-import LieuForm, { ILieuProps } from "@composant/formulaire/LieuForm";
-import PrenomsForm from "@composant/formulaire/nomsPrenoms/PrenomsForm";
-import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
-import { Sexe } from "@model/etatcivil/enum/Sexe";
-import Item from "@pages/requeteCreation/apercuRequete/etablissement/commun/resumeRequeteCreationEtablissement/items/Item";
-import { getLibelle } from "@util/Utils";
-import { LieuxUtils } from "@utilMetier/LieuxUtils";
-import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import { RadioField } from "@widget/formulaire/champsSaisie/RadioField";
-import { OptionVide, SelectField } from "@widget/formulaire/champsSaisie/SelectField";
-import { MessageAvertissement } from "@widget/formulaire/erreur/MessageAvertissement";
-import { compteNombreDePrenoms, FormikComponentProps, NB_CARACT_MAX_SAISIE, withNamespace } from "@widget/formulaire/utils/FormUtil";
-import { connect } from "formik";
-import React from "react";
+} from "../../../../../../../../common/composant/formulaire/ConstantesNomsForm";
+import DateNaissanceOuAgeDeForm from "../../../../../../../../common/composant/formulaire/DateNaissanceOuAgeDeForm";
+import LieuForm, { ILieuProps } from "../../../../../../../../common/composant/formulaire/LieuForm";
+import PrenomsForm from "../../../../../../../../common/composant/formulaire/nomsPrenoms/PrenomsForm";
+import Item from "../../../../commun/resumeRequeteCreationEtablissement/items/Item";
 import "../scss/Parent.scss";
 
 interface IParentFormProps {
@@ -47,21 +46,21 @@ const ParentForm: React.FC<ParentFormProps> = props => {
     lieu: (
       <RadioField
         name={withNamespace(lieuNaissanceNamespace, LIEU_DE_NAISSANCE)}
-        label={getLibelle("Lieu de naissance")}
+        label={"Lieu de naissance"}
         values={EtrangerFrance.getAllEnumsAsOptions()}
       />
     ),
     ville: (
       <InputField
         name={villeNamespace}
-        label={getLibelle("Ville")}
+        label={"Ville"}
         maxLength={NB_CARACT_MAX_SAISIE}
       />
     ),
     arrondissement: (
       <SelectField
         name={withNamespace(lieuNaissanceNamespace, ARRONDISSEMENT_NAISSANCE)}
-        label={getLibelle("Arrondissement")}
+        label={"Arrondissement"}
         options={LieuxUtils.getOptionsArrondissement(props.formik.getFieldProps(villeNamespace).value)}
         optionVide={OptionVide.SELECTIONNABLE}
       />
@@ -69,21 +68,21 @@ const ParentForm: React.FC<ParentFormProps> = props => {
     departement: (
       <InputField
         name={withNamespace(lieuNaissanceNamespace, DEPARTEMENT_NAISSANCE)}
-        label={getLibelle("Département")}
+        label={"Département"}
         maxLength={NB_CARACT_MAX_SAISIE}
       />
     ),
     region: (
       <InputField
         name={withNamespace(lieuNaissanceNamespace, REGION_NAISSANCE)}
-        label={getLibelle("Etat, canton, province")}
+        label={"Etat, canton, province"}
         maxLength={NB_CARACT_MAX_SAISIE}
       />
     ),
     pays: (
       <InputField
         name={withNamespace(lieuNaissanceNamespace, PAYS_NAISSANCE)}
-        label={getLibelle(`Pays`)}
+        label={`Pays`}
         maxLength={NB_CARACT_MAX_SAISIE}
       />
     )
@@ -99,7 +98,7 @@ const ParentForm: React.FC<ParentFormProps> = props => {
       <Item titre={props.libelle}>
         <InputField
           name={withNamespace(props.nom, NOM)}
-          label={getLibelle("Nom")}
+          label={"Nom"}
           maxLength={NB_CARACT_MAX_SAISIE}
         />
         <PrenomsForm
@@ -111,10 +110,10 @@ const ParentForm: React.FC<ParentFormProps> = props => {
           <RadioField
             className="SexeRadio"
             name={withNamespace(props.nom, SEXE)}
-            label={getLibelle("Sexe")}
+            label={"Sexe"}
             values={Sexe.getAllEnumsAsOptionsSansInconnu()}
           />
-          <MessageAvertissement afficherMessage={afficherMessageSexe}>{getLibelle("Attention, sexe indéterminé")}</MessageAvertissement>
+          <MessageAvertissement afficherMessage={afficherMessageSexe}>{"Attention, sexe indéterminé"}</MessageAvertissement>
         </div>
         <div className="AvertissementConteneur">
           <div className="ConteneurDateCompose">

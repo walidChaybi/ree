@@ -1,15 +1,9 @@
-import { PARENT_ADOPTANT_NAISS1, PARENT_ADOPTANT_NAISS2, TITULAIRE_EVT_1 } from "@composant/formulaire/ConstantesNomsForm";
-import { BoutonVerrouillage } from "@composant/formulaire/boutons/BoutonVerrouillage";
-import { ReinitialiserValiderFormBoutons } from "@composant/formulaire/boutons/ReinitialiserValiderBoutons";
-import { IExtraitSaisiAEnvoyer } from "@hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
-import { ISauvegardeValidationSaisieExtraitParams, useSauvegardeValidationSaisieExtrait } from "@hook/requete/ValidationSaisieExtraitHook";
 import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { Filiation } from "@model/etatcivil/acte/Filiation";
 import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import { ISaisieExtraitForm } from "@model/form/delivrance/ISaisieExtraitForm";
 import { IRequeteDelivrance, RequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { getDefaultValuesCourrier } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import { useReinitialisationComposant } from "@util/form/useReinitialisation";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { StaticField } from "@widget/formulaire/champFixe/StaticField";
@@ -21,6 +15,19 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { ECleOngletDocumentDelivre } from "../../../../../../../composants/pages/requetesDelivrance/editionRequete/partieDocument/voletDocuments/VoletDocumentDelivre";
 import { EditionDelivranceContext } from "../../../../../../../contexts/EditionDelivranceContextProvider";
 import { RECEContextActions } from "../../../../../../../contexts/RECEContextProvider";
+import {
+  PARENT_ADOPTANT_NAISS1,
+  PARENT_ADOPTANT_NAISS2,
+  TITULAIRE_EVT_1
+} from "../../../../../../common/composant/formulaire/ConstantesNomsForm";
+import { BoutonVerrouillage } from "../../../../../../common/composant/formulaire/boutons/BoutonVerrouillage";
+import { ReinitialiserValiderFormBoutons } from "../../../../../../common/composant/formulaire/boutons/ReinitialiserValiderBoutons";
+import { IExtraitSaisiAEnvoyer } from "../../../../../../common/hook/acte/MajEtatCivilSuiteSaisieExtraitApiHook";
+import {
+  ISauvegardeValidationSaisieExtraitParams,
+  useSauvegardeValidationSaisieExtrait
+} from "../../../../../../common/hook/requete/ValidationSaisieExtraitHook";
+import { getDefaultValuesCourrier } from "../../../../apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import {
   IProprietesFormulaire,
   getTitulairesEvenementsEtParentsForm,

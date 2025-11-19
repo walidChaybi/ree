@@ -1,15 +1,12 @@
-import {
-  IPersonneRMCPersonne,
-  IRMCPersonneResultat
-} from "@hook/rmcAuto/IRMCPersonneResultat";
 import { SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { IDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/IDataTableauRMCPersonne";
+import { Options } from "@util/Type";
+import { IPersonneRMCPersonne, IRMCPersonneResultat } from "@views/common/hook/rmcAuto/IRMCPersonneResultat";
+import { IDataTableauRMCPersonne } from "@views/pages/rechercheMultiCriteres/personne/IDataTableauRMCPersonne";
 import {
   formatDataTableauPersonne,
   getLibelleMenuItemPersonne
-} from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
-import { Options } from "@util/Type";
+} from "@views/pages/rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
 import { IDataTableauActeInscriptionSelectionne } from "../tableauActesInscriptionsSelectionnes/IDataTableauActeInscriptionSelectionne";
 import { IDataTableauPersonneSelectionnee } from "../tableauPersonnesSelectionnees/IDataTableauPersonneSelectionne";
 
@@ -32,11 +29,7 @@ export function mapDataTableauRMCPersonneVersDataTableauActeInscriptionSelection
   resultatRMCPersonne: IRMCPersonneResultat[]
 ): IDataTableauActeInscriptionSelectionne {
   const personne = resultatRMCPersonne.find(resultatCourant =>
-    resultatCourant.actesInscriptions.some(
-      acteInscriptionLie =>
-        acteInscriptionLie.idActeInscription ===
-        data.idPersonneOuActeInscription
-    )
+    resultatCourant.actesInscriptions.some(acteInscriptionLie => acteInscriptionLie.idActeInscription === data.idPersonneOuActeInscription)
   )?.personne as IPersonneRMCPersonne;
 
   return {
@@ -66,10 +59,7 @@ export function triDataTableauPersonneSelectionneeSurNomPrenom(
   return compareNom || comparePrenoms;
 }
 
-export function getTitulairesAsOptions(
-  sousTypeRequete?: SousTypeCreation,
-  titulaires?: ITitulaireRequeteCreation[]
-): Options {
+export function getTitulairesAsOptions(sousTypeRequete?: SousTypeCreation, titulaires?: ITitulaireRequeteCreation[]): Options {
   return titulaires
     ? titulaires.map(titulaire => ({
         cle: titulaire.id,

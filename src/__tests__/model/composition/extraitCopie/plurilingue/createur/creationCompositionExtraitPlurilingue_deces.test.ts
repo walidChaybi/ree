@@ -1,10 +1,10 @@
-import { creationCompositionExtraitPlurilingue } from "@hook/generation/generationECHook/creationComposition/creationCompositionExtraitPlurilingue";
 import { MOCK_EVENEMENT } from "@mock/data/etatcivil/acte/mockIEvenement";
 import { MOCK_TITULAIRE_ACTE } from "@mock/data/etatcivil/acte/mockTitulaireActe";
 import { MockFicheActeBuilder } from "@mock/model/etatcivil/acte/MockFicheActe";
 import { EValidation } from "@model/requete/enum/EValidation";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { describe, expect, test } from "vitest";
+import { creationCompositionExtraitPlurilingue } from "../../../../../../views/common/hook/generation/generationECHook/creationComposition/creationCompositionExtraitPlurilingue";
 
 const mentionsRetirees: string[] = [];
 

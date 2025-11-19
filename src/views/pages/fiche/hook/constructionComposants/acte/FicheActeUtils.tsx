@@ -1,9 +1,9 @@
-import VisionneuseActe from "@composant/visionneuseActe/VisionneuseActe";
 import { UtilisateurConnecte } from "@model/agent/Utilisateur";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { FicheActe } from "@model/etatcivil/acte/FicheActe";
 import { ETypeVisibiliteArchiviste } from "@model/etatcivil/enum/TypeVisibiliteArchiviste";
+import VisionneuseActe from "@views/common/composant/visionneuseActe/VisionneuseActe";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
 import { IAccordionReceSection } from "../../../FicheUtils";

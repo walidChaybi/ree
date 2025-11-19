@@ -1,6 +1,4 @@
 import { CONFIG_POST_REQUETE_MISE_A_JOUR } from "@api/configurations/requete/miseAJour/PostRequeteMiseAJourApiConfig";
-import { AddAlerteActeApiHookParameters, useAddAlerteActeApiHook } from "@hook/alertes/AddAlerteActeHookApi";
-import { DeleteAlerteActeApiHookParameters, useDeleteAlerteActeApiHook } from "@hook/alertes/DeleteAlerteActeHookApi";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
 import { FicheActe } from "@model/etatcivil/acte/FicheActe";
@@ -31,6 +29,8 @@ import {
   INFO_PAGE_MISE_A_JOUR_MENTION_SUITE_AVIS
 } from "../../../router/infoPages/InfoPagesEspaceMiseAJour";
 import AfficherMessage from "../../../utils/AfficherMessage";
+import { AddAlerteActeApiHookParameters, useAddAlerteActeApiHook } from "../../common/hook/alertes/AddAlerteActeHookApi";
+import { DeleteAlerteActeApiHookParameters, useDeleteAlerteActeApiHook } from "../../common/hook/alertes/DeleteAlerteActeHookApi";
 import { BoutonCreationRDD } from "./BoutonCreationRDD/BoutonCreationRDD";
 import { setFiche } from "./FicheUtils";
 import { BandeauAlertesActe } from "./contenu/BandeauAlertesActe";

@@ -1,13 +1,13 @@
 import { CONFIG_POST_RMC_AUTO_PERSONNE } from "@api/configurations/etatCivil/personnes/PostRMCAutoPersonneConfigApi";
-import { IRMCPersonneResultat } from "@hook/rmcAuto/IRMCPersonneResultat";
-import { concatValeursRMCAutoPersonneRequest, mappingRMCPersonneResultat } from "@hook/rmcAuto/RMCAutoPersonneUtils";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import {
   IRMCAutoTitulaireDto,
   titulaireRequeteVersRMCAutoTitulaireDto
 } from "@model/rmc/acteInscription/rechercheForm/IRMCAutoTitulaireDto";
-import { getPostulantNationaliteOuTitulaireActeTranscritDresse } from "@pages/requeteCreation/commun/requeteCreationUtils";
 import { useCacheLocalPage } from "@util/cacheLocalPageHook/CacheLocalPageHook";
+import { IRMCPersonneResultat } from "@views/common/hook/rmcAuto/IRMCPersonneResultat";
+import { concatValeursRMCAutoPersonneRequest, mappingRMCPersonneResultat } from "@views/common/hook/rmcAuto/RMCAutoPersonneUtils";
+import { getPostulantNationaliteOuTitulaireActeTranscritDresse } from "@views/pages/requeteCreation/commun/requeteCreationUtils";
 import { NB_LIGNES_PAR_APPEL_PERSONNE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { useEffect, useState } from "react";
 import useFetchApi from "../../../../../../../hooks/api/FetchApiHook";

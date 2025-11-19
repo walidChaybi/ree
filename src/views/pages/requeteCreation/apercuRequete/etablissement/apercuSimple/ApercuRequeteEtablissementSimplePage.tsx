@@ -1,11 +1,11 @@
-import { IDetailRequeteParams, useDetailRequeteApiHook } from "@hook/requete/DetailRequeteHook";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { IRequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
-import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
 import { OperationLocaleEnCoursSimple } from "@widget/attente/OperationLocaleEnCoursSimple";
 import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
+import { IDetailRequeteParams, useDetailRequeteApiHook } from "../../../../../common/hook/requete/DetailRequeteHook";
+import { OngletPiecesJustificatives } from "../../../commun/composants/OngletPiecesJustificatives";
 import "../../../commun/scss/ApercuReqCreationPage.scss";
 import { SuiviDossier } from "../apercuPriseEnCharge/contenu/SuiviDossier";
 import {

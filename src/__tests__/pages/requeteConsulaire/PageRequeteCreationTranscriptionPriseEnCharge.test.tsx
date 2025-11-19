@@ -16,7 +16,7 @@ import PageRequeteCreationTranscriptionPriseEnCharge from "../../../pages/requet
 import { createTestingRouter } from "../../__tests__utils__/testsUtil";
 
 describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
-  vi.mock("@pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats", () => ({
+  vi.mock("@views/pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats", () => ({
     RMCRequetesAssocieesResultats: () => <div data-testid="rmc-mock">Requetes associees</div>
   }));
 

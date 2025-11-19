@@ -9,7 +9,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import {
   aucuneMentionsNationalite,
   getNaturesMentions
-} from "@pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
+} from "@views/pages/requeteDelivrance/editionExtraitCopie/contenu/onglets/mentions/GestionMentionsUtil";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { RECEContextData } from "../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../hooks/api/FetchApiHook";

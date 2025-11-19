@@ -1,14 +1,3 @@
-import {
-  ADRESSE,
-  ARRONDISSEMENT,
-  AUTRE_DECLARANT,
-  DECLARANT,
-  DEPARTEMENT,
-  PAYS,
-  RECONNAISSANCE,
-  VILLE
-} from "@composant/formulaire/ConstantesNomsForm";
-import LieuForm, { ILieuProps } from "@composant/formulaire/LieuForm";
 import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
 import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
 import { TypeReconnaissance } from "@model/requete/enum/TypeReconnaissance";
@@ -19,6 +8,17 @@ import { OptionVide, SelectField } from "@widget/formulaire/champsSaisie/SelectF
 import { FormikComponentProps, NB_CARACT_MAX_SAISIE, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
+import {
+  ADRESSE,
+  ARRONDISSEMENT,
+  AUTRE_DECLARANT,
+  DECLARANT,
+  DEPARTEMENT,
+  PAYS,
+  RECONNAISSANCE,
+  VILLE
+} from "../../../../../../../../common/composant/formulaire/ConstantesNomsForm";
+import LieuForm, { ILieuProps } from "../../../../../../../../common/composant/formulaire/LieuForm";
 import Item from "../../../../commun/resumeRequeteCreationEtablissement/items/Item";
 
 interface IAutresFormProps {

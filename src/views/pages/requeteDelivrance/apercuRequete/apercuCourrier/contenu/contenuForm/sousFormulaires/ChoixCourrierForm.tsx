@@ -1,17 +1,10 @@
-import { COURRIER, DELIVRANCE } from "@composant/formulaire/ConstantesNomsForm";
 import { Options } from "@util/Type";
 import { getLibelle } from "@util/Utils";
+import { COURRIER, DELIVRANCE } from "@views/common/composant/formulaire/ConstantesNomsForm";
 import { SousFormulaire } from "@widget/formulaire/SousFormulaire";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import {
-  OptionVide,
-  SelectField
-} from "@widget/formulaire/champsSaisie/SelectField";
-import {
-  NB_CARACT_MAX_SAISIE,
-  SubFormProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { OptionVide, SelectField } from "@widget/formulaire/champsSaisie/SelectField";
+import { NB_CARACT_MAX_SAISIE, SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React from "react";
 import * as Yup from "yup";
@@ -34,10 +27,7 @@ const ChoixCourrierForm: React.FC<ChoixCourrierSubFormProps> = props => {
     if (props.onChange) {
       props.onChange(e.target.value);
     }
-    props.formik.setFieldValue(
-      withNamespace(props.nom, COURRIER),
-      e.target.value
-    );
+    props.formik.setFieldValue(withNamespace(props.nom, COURRIER), e.target.value);
   };
 
   return (

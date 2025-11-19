@@ -7,10 +7,7 @@ export const ApercuRequetePriseEnChargePage: React.FC = () => {
   const [requete, setRequete] = useState<IRequeteDelivrance | null>(null);
 
   return (
-    <ApercuRequeteTemplate
-      title={"Aperçu de la requête en prise en charge"}
-      setRequete={setRequete}
-    >
+    <ApercuRequeteTemplate setRequete={setRequete}>
       {requete && (
         <div className="ApercuRequetePriseEnCharge">
           <ApercuRequetePriseEnChargePartieDroite detailRequete={requete} />

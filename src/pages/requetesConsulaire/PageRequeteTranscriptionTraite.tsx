@@ -1,5 +1,4 @@
 import { CONFIG_GET_DETAIL_REQUETE } from "@api/configurations/requete/GetDetailRequeteConfigApi";
-import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
@@ -9,6 +8,7 @@ import PartieGaucheTraite from "../../composants/pages/requetesConsulaire/traite
 import useFetchApi from "../../hooks/api/FetchApiHook";
 import LiensRECE from "../../router/LiensRECE";
 import AfficherMessage from "../../utils/AfficherMessage";
+import { mappingRequeteCreation } from "../../views/common/hook/requete/DetailRequeteHook";
 
 const PageRequeteTranscriptionTraite: React.FC = () => {
   const { idRequeteParam } = useParams();

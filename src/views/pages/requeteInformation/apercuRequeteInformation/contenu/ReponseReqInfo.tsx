@@ -1,4 +1,3 @@
-import { MenuTransfert } from "@composant/menuTransfert/MenuTransfert";
 import { IReponseRequeteInfo, ReponseRequeteInfo } from "@model/requete/IReponseRequeteInfo";
 import { BesoinUsager } from "@model/requete/enum/BesoinUsager";
 import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
@@ -8,6 +7,7 @@ import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import React, { useContext, useEffect, useState } from "react";
 import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
+import { MenuTransfert } from "../../../../common/composant/menuTransfert/MenuTransfert";
 import { RequeteInfoProps } from "./ResumeReqInfo";
 import { BoutonReponseLibre } from "./choixReponse/BoutonReponseLibre";
 import { MenuReponsesProposees } from "./choixReponse/MenuReponsesProposees";

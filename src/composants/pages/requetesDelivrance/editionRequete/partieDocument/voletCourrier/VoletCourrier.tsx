@@ -1,4 +1,4 @@
-import { courrierExiste } from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
+import { courrierExiste } from "@views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/CourrierFonctions";
 import { useContext, useMemo } from "react";
 import { EditionDelivranceContext } from "../../../../../../contexts/EditionDelivranceContextProvider";
 import ConteneurFormulaire from "../../../../../commun/conteneurs/formulaire/ConteneurFormulaire";

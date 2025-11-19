@@ -1,7 +1,7 @@
-import { ANNEE, JOUR, MOIS } from "@composant/formulaire/ConstantesNomsForm";
 import { ITitulaireRequete } from "@model/requete/ITitulaireRequete";
 import IconButton from "@mui/material/IconButton";
 import { UN, ZERO, rempliAGaucheAvecZero } from "@util/Utils";
+import { ANNEE, JOUR, MOIS } from "@views/common/composant/formulaire/ConstantesNomsForm";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import { ASTERISQUE_MESSAGE, CARACTERES_AUTORISES_MESSAGE } from "@widget/formulaire/FormulaireMessages";
 import DateComposeForm, { DateComposeFormProps, DateDefaultValues } from "@widget/formulaire/champsDate/DateComposeForm";

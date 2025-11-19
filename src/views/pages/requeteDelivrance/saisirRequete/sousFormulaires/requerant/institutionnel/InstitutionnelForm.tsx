@@ -1,23 +1,12 @@
-import {
-  NATURE,
-  NOM,
-  NOM_INSTITUTION,
-  PRENOM,
-  TYPE
-} from "@composant/formulaire/ConstantesNomsForm";
 import { TypeInstitutionnel } from "@model/requete/enum/TypeInstitutionnel";
-import { getLibelle } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
 import InputFieldAvecBoutonMajuscule from "@widget/formulaire/champsSaisie/InputFieldAvecBoutonMajuscule";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { sortieChampPremiereLettreEnMajuscule } from "@widget/formulaire/utils/ControlesUtil";
-import {
-  NB_CARACT_MAX_SAISIE,
-  SubFormProps,
-  withNamespace
-} from "@widget/formulaire/utils/FormUtil";
+import { NB_CARACT_MAX_SAISIE, SubFormProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useState } from "react";
+import { NATURE, NOM, NOM_INSTITUTION, PRENOM, TYPE } from "../../../../../../common/composant/formulaire/ConstantesNomsForm";
 import { getFormValidationCarAutorisesEtNAtureObligatoireShema } from "../../commun/communValidation";
 import "./../scss/RequerantForm.scss";
 
@@ -31,8 +20,7 @@ export const InstitutionnelFormDefaultValues = {
 };
 
 // Schéma de validation des champs
-export const InstitutionnelFormValidationSchema =
-  getFormValidationCarAutorisesEtNAtureObligatoireShema(NOM_INSTITUTION);
+export const InstitutionnelFormValidationSchema = getFormValidationCarAutorisesEtNAtureObligatoireShema(NOM_INSTITUTION);
 
 const InstitutionnelForm: React.FC<SubFormProps> = props => {
   const nomWithNamespace = withNamespace(props.nom, NOM);
@@ -40,15 +28,10 @@ const InstitutionnelForm: React.FC<SubFormProps> = props => {
 
   const [natureInactif, setNatureInactif] = useState<boolean>(true);
 
-  const onChangeTypeInstitutionnel = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const onChangeTypeInstitutionnel = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNatureInactif(e.target.value !== "AUTRE");
     if (e.target.value !== "AUTRE") {
-      props.formik.setFieldValue(
-        withNamespace(props.nom, NATURE),
-        InstitutionnelFormDefaultValues[NATURE]
-      );
+      props.formik.setFieldValue(withNamespace(props.nom, NATURE), InstitutionnelFormDefaultValues[NATURE]);
     }
     props.formik.handleChange(e);
   };
@@ -57,7 +40,7 @@ const InstitutionnelForm: React.FC<SubFormProps> = props => {
     <div className="RequerantSousForm">
       <SelectField
         name={withNamespace(props.nom, TYPE)}
-        label={getLibelle("Type")}
+        label={"Type"}
         options={TypeInstitutionnel.getAllEnumsAsOptions()}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           onChangeTypeInstitutionnel(e);
@@ -66,32 +49,26 @@ const InstitutionnelForm: React.FC<SubFormProps> = props => {
       {!natureInactif && (
         <InputField
           name={withNamespace(props.nom, NATURE)}
-          label={getLibelle("Nature")}
+          label={"Nature"}
           maxLength={NB_CARACT_MAX_SAISIE}
           disabled={natureInactif}
         />
       )}
       <InputField
         name={withNamespace(props.nom, NOM_INSTITUTION)}
-        label={getLibelle("Nom institution")}
+        label={"Nom institution"}
         maxLength={NB_CARACT_MAX_SAISIE}
       />
       <InputFieldAvecBoutonMajuscule
         name={nomWithNamespace}
-        label={getLibelle("Nom représentant")}
+        label={"Nom représentant"}
         maxLength={NB_CARACT_MAX_SAISIE}
       />
       <InputField
         name={prenomWithNamespace}
-        label={getLibelle("Prénom représentant")}
+        label={"Prénom représentant"}
         maxLength={NB_CARACT_MAX_SAISIE}
-        onBlur={e =>
-          sortieChampPremiereLettreEnMajuscule(
-            e,
-            props.formik,
-            prenomWithNamespace
-          )
-        }
+        onBlur={e => sortieChampPremiereLettreEnMajuscule(e, props.formik, prenomWithNamespace)}
       />
     </div>
   );

@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from "react";
-import DefilementAutomatique from "../../composants/commun/defilementAutomatique/DefilementAutomatique";
-import { RMCContextProvider } from "../../contexts/RMCContextProvider";
-
 import { CONFIG_POST_RMC_ARCHIVE } from "@api/configurations/etatCivil/acte/PostRMCArchiveConfigApi";
 import { RMCArchiveForm } from "@model/form/rmc/RMCArchiveForm";
 import { ResultatRMCActe } from "@model/rmc/acteInscription/resultat/ResultatRMCActe";
 import { ICriteresRMC } from "@model/rmc/commun/IRMCFormulaire";
-import { RMCActeArchiveResultats } from "@pages/rechercheMultiCriteres/acteArchive/resultats/RMCActeArchiveResultats";
 import { getParamsTableauRMCDepuisHeaders, TParamsTableauRMC } from "@util/GestionDesLiensApi";
 import { NB_LIGNES_PAR_APPEL_ACTE } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
+import React, { useEffect, useState } from "react";
+import DefilementAutomatique from "../../composants/commun/defilementAutomatique/DefilementAutomatique";
 import RMCArchive from "../../composants/pages/rmc/formulaire/RMCArchive";
+import { RMCContextProvider } from "../../contexts/RMCContextProvider";
 import useFetchApi from "../../hooks/api/FetchApiHook";
 import AfficherMessage from "../../utils/AfficherMessage";
 import { StockageLocal } from "../../utils/StockageLocal";
+import { RMCActeArchiveResultats } from "../../views/pages/rechercheMultiCriteres/acteArchive/resultats/RMCActeArchiveResultats";
 
 interface IRMCActeArchiveApiResultat {
   resultatRMCActe: ResultatRMCActe[];

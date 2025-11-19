@@ -1,16 +1,16 @@
-import {
-  IGenerationCertificatSituationParams,
-  useGenerationCertificatSituationHook
-} from "@hook/generation/generationCertificatSituationHook/GenerationCertificatSituationHook";
-import { specificationPhraseDelivrer } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseDelivrer";
-import { INbInscriptionsInfos } from "@hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
-import { useGenerationInscriptionsHook } from "@hook/generation/generationInscriptionsHook/GenerationInscriptionsHook";
-import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@hook/requete/ActionHook";
 import { IInscriptionRc } from "@model/etatcivil/rcrca/IInscriptionRC";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { TResultatRMCInscription } from "@model/rmc/acteInscription/resultat/ResultatRMCInscription";
+import {
+  IGenerationCertificatSituationParams,
+  useGenerationCertificatSituationHook
+} from "@views/common/hook/generation/generationCertificatSituationHook/GenerationCertificatSituationHook";
+import { specificationPhraseDelivrer } from "@views/common/hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseDelivrer";
+import { INbInscriptionsInfos } from "@views/common/hook/generation/generationCertificatSituationHook/specificationTitreDecretPhrase/specificationPhraseRMCAutoVide";
+import { useGenerationInscriptionsHook } from "@views/common/hook/generation/generationInscriptionsHook/GenerationInscriptionsHook";
+import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@views/common/hook/requete/ActionHook";
 import { useEffect, useState } from "react";
 import { useSupprimerAnciensDocumentsReponseHook } from "./SupprimerAnciensDocumentsReponseHook";
 

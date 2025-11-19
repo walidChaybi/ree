@@ -1,5 +1,4 @@
 import { CONFIG_GET_MODELE_TEXTE } from "@api/configurations/etatCivil/acte/transcription/GetModeleTexteConfigApi";
-import { mappingRequeteCreation } from "@hook/requete/DetailRequeteHook";
 import { MockApi } from "@mock/appelsApi/MockApi";
 import MockRECEContextProvider from "@mock/context/MockRECEContextProvider";
 import MockSaisieProjetActeContextProvider from "@mock/context/MockSaisieProjetActeContextProvider";
@@ -7,6 +6,7 @@ import { requeteCreationTranscription } from "@mock/data/requeteCreationTranscri
 import { render, waitFor } from "@testing-library/react";
 import { describe, expect, test, vi } from "vitest";
 import PartieGaucheSaisieProjet from "../../../../../composants/pages/requetesConsulaire/saisieProjet/PartieGaucheSaisieProjet";
+import { mappingRequeteCreation } from "../../../../../views/common/hook/requete/DetailRequeteHook";
 
 describe("PartieGaucheSaisieProjet - Tests du composant", () => {
   test("Doit afficher correctement le composant", async () => {

@@ -1,5 +1,3 @@
-import { ICreationObservationParams, useCreationObservationApi } from "@hook/observation/CreationObservationApiHook";
-import { ISuppressionObservationParams, useSuppressionObservationApi } from "@hook/observation/SuppressionObservationApiHook";
 import { IObservation, Observation } from "@model/requete/IObservation";
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
@@ -9,6 +7,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { FaPlusCircle, FaTrashAlt } from "react-icons/fa";
 import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import AfficherMessage from "../../../../utils/AfficherMessage";
+import { ICreationObservationParams, useCreationObservationApi } from "../../hook/observation/CreationObservationApiHook";
+import { ISuppressionObservationParams, useSuppressionObservationApi } from "../../hook/observation/SuppressionObservationApiHook";
 import { IAjouterObservationFormValue, OBSERVATION, PopinAjouterObservation } from "./contenu/PopinAjouterObservation";
 import "./scss/Suivis.scss";
 

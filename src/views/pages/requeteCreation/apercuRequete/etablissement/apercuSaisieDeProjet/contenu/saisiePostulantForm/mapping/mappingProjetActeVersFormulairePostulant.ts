@@ -1,3 +1,45 @@
+import { IAdresse } from "@model/etatcivil/acte/IAdresse";
+import { IDeclarant } from "@model/etatcivil/acte/IDeclarant";
+import { IDecretNaturalisation } from "@model/etatcivil/acte/IDecretNaturalisation";
+import { IEvenement } from "@model/etatcivil/acte/IEvenement";
+import { IProjetAnalyseMarginale } from "@model/etatcivil/acte/projetActe/IAnalyseMarginaleProjetActe";
+import { IFiliationProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/IFiliationProjetActe";
+import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
+import { ITitulaireProjetActe } from "@model/etatcivil/acte/projetActe/ITitulaireProjetActe";
+import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
+import { NatureActe } from "@model/etatcivil/enum/NatureActe";
+import { Sexe } from "@model/etatcivil/enum/Sexe";
+import {
+  ISaisieAcquisitionSousForm,
+  ISaisieAnalyseMarginale,
+  ISaisieAutresSousForm,
+  ISaisieDate,
+  ISaisieDateNaissanceOuAgeDe,
+  ISaisieLieuNaissance,
+  ISaisieLieuNaissanceParent,
+  ISaisieParentSousForm,
+  ISaisiePostulantSousForm,
+  ISaisiePrenoms,
+  ISaisieProjetPostulantForm
+} from "@model/form/creation/etablissement/ISaisiePostulantForm";
+import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
+import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
+import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
+import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
+import { TypeNature } from "@model/requete/enum/TypeNature";
+import { TypeReconnaissance } from "@model/requete/enum/TypeReconnaissance";
+import DateUtils from "@util/DateUtils";
+import {
+  DEUX,
+  SPC,
+  UN,
+  ZERO,
+  formatPremieresLettresMajusculesNomCompose,
+  getValeurOuVide,
+  numberToString,
+  rempliAGaucheAvecZero
+} from "@util/Utils";
+import { LieuxUtils } from "@utilMetier/LieuxUtils";
 import {
   ACQUISITION,
   ADOPTE_PAR,
@@ -44,49 +86,7 @@ import {
   TYPE,
   VILLE,
   VILLE_NAISSANCE
-} from "@composant/formulaire/ConstantesNomsForm";
-import { IAdresse } from "@model/etatcivil/acte/IAdresse";
-import { IDeclarant } from "@model/etatcivil/acte/IDeclarant";
-import { IDecretNaturalisation } from "@model/etatcivil/acte/IDecretNaturalisation";
-import { IEvenement } from "@model/etatcivil/acte/IEvenement";
-import { IProjetAnalyseMarginale } from "@model/etatcivil/acte/projetActe/IAnalyseMarginaleProjetActe";
-import { IFiliationProjetActeTranscrit } from "@model/etatcivil/acte/projetActe/IFiliationProjetActe";
-import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
-import { ITitulaireProjetActe } from "@model/etatcivil/acte/projetActe/ITitulaireProjetActe";
-import { EtrangerFrance } from "@model/etatcivil/enum/EtrangerFrance";
-import { NatureActe } from "@model/etatcivil/enum/NatureActe";
-import { Sexe } from "@model/etatcivil/enum/Sexe";
-import {
-  ISaisieAcquisitionSousForm,
-  ISaisieAnalyseMarginale,
-  ISaisieAutresSousForm,
-  ISaisieDate,
-  ISaisieDateNaissanceOuAgeDe,
-  ISaisieLieuNaissance,
-  ISaisieLieuNaissanceParent,
-  ISaisieParentSousForm,
-  ISaisiePostulantSousForm,
-  ISaisiePrenoms,
-  ISaisieProjetPostulantForm
-} from "@model/form/creation/etablissement/ISaisiePostulantForm";
-import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
-import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { QualiteFamille } from "@model/requete/enum/QualiteFamille";
-import { TypeDeclarant } from "@model/requete/enum/TypeDeclarant";
-import { TypeNature } from "@model/requete/enum/TypeNature";
-import { TypeReconnaissance } from "@model/requete/enum/TypeReconnaissance";
-import DateUtils from "@util/DateUtils";
-import {
-  DEUX,
-  SPC,
-  UN,
-  ZERO,
-  formatPremieresLettresMajusculesNomCompose,
-  getValeurOuVide,
-  numberToString,
-  rempliAGaucheAvecZero
-} from "@util/Utils";
-import { LieuxUtils } from "@utilMetier/LieuxUtils";
+} from "../../../../../../../../common/composant/formulaire/ConstantesNomsForm";
 import { mapFrancisationPostulant } from "./mappingTitulaireVersFormulairePostulant";
 
 export const mappingProjetActeVersFormulairePostulant = (

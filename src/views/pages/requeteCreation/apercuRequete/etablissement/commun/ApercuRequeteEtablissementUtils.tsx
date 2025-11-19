@@ -1,18 +1,3 @@
-import {
-  ANALYSE_MARGINALE,
-  ANNEE,
-  DATE_NAISSANCE,
-  ETAT_CANTON_PROVINCE,
-  JOUR,
-  LIEU_DE_NAISSANCE,
-  MOIS,
-  NOM,
-  PAYS_NAISSANCE,
-  PRENOMS,
-  SEXE,
-  TITULAIRE,
-  VILLE_NAISSANCE
-} from "@composant/formulaire/ConstantesNomsForm";
 import { IDecretNaturalisation } from "@model/etatcivil/acte/IDecretNaturalisation";
 import { Registre } from "@model/etatcivil/acte/Registre";
 import { IProjetAnalyseMarginale } from "@model/etatcivil/acte/projetActe/IAnalyseMarginaleProjetActe";
@@ -28,11 +13,26 @@ import { Prenoms } from "@model/form/delivrance/ISaisirRequetePageForm";
 import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { IRequeteCreationEtablissement, RequeteCreationEtablissement } from "@model/requete/IRequeteCreationEtablissement";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
-import Labels from "@pages/requeteCreation/commun/Labels";
-import { OngletPiecesJustificatives } from "@pages/requeteCreation/commun/composants/OngletPiecesJustificatives";
 import { UN, getValeurOuVide, jointAvec, rempliAGaucheAvecZero } from "@util/Utils";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
 import { FormikHelpers } from "formik";
+import {
+  ANALYSE_MARGINALE,
+  ANNEE,
+  DATE_NAISSANCE,
+  ETAT_CANTON_PROVINCE,
+  JOUR,
+  LIEU_DE_NAISSANCE,
+  MOIS,
+  NOM,
+  PAYS_NAISSANCE,
+  PRENOMS,
+  SEXE,
+  TITULAIRE,
+  VILLE_NAISSANCE
+} from "../../../../../common/composant/formulaire/ConstantesNomsForm";
+import Labels from "../../../commun/Labels";
+import { OngletPiecesJustificatives } from "../../../commun/composants/OngletPiecesJustificatives";
 import ResumeRequeteCreationEtablissement from "./resumeRequeteCreationEtablissement/ResumeRequeteCreationEtablissement";
 import mappingIRequeteCreationVersResumeRequeteCreationProps from "./resumeRequeteCreationEtablissement/mappingIRequeteCreationVersResumeRequeteCreationProps";
 

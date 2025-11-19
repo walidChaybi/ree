@@ -1,9 +1,9 @@
 import { EvenementUnion } from "@model/requete/IEvenementUnion";
 import { ITitulaireRequeteCreation, TitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { resume } from "@pages/requeteCreation/commun/Labels";
 import { DEUX, UN } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import React from "react";
+import { resume } from "../../../../commun/Labels";
 import { LigneAccordion } from "./LigneAccordion";
 
 interface AccordionTranscriptionTitulaireProps {

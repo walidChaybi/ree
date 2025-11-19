@@ -1,9 +1,9 @@
-import { IMentionMiseAJourDto } from "@hook/acte/mentions/MiseAJourMentionsApiHook";
 import { champsObligatoiresDuDtoAbsents } from "@model/commun/dtoUtils";
 import { ENatureActe } from "@model/etatcivil/enum/NatureActe";
 import DateUtils from "@util/DateUtils";
 import { triListeObjetsSurPropriete } from "@util/Utils";
 import { LieuxUtils } from "@utilMetier/LieuxUtils";
+import { IMentionMiseAJourDto } from "../../../../views/common/hook/acte/mentions/MiseAJourMentionsApiHook";
 import {
   MARIAGE,
   NatureMention,

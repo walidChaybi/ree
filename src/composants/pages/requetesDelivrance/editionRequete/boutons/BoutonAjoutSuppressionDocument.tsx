@@ -1,14 +1,14 @@
 import { deleteDocumentComplementaire } from "@api/appels/requeteApi";
-import { IGenerationECParams, useGenerationEC } from "@hook/generation/generationECHook/generationECHook";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { ChoixDelivrance } from "@model/requete/enum/ChoixDelivrance";
 import { DocumentDelivrance, ECodeDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
 import { SousTypeDelivrance } from "@model/requete/enum/SousTypeDelivrance";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
-import { getParamsCreationEC } from "@pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopieUtils";
 import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { MdAdd, MdClear } from "react-icons/md";
 import { EditionDelivranceContext } from "../../../../../contexts/EditionDelivranceContextProvider";
+import { IGenerationECParams, useGenerationEC } from "../../../../../views/common/hook/generation/generationECHook/generationECHook";
+import { getParamsCreationEC } from "../../../../../views/pages/requeteDelivrance/editionExtraitCopie/EditionExtraitCopieUtils";
 import Bouton from "../../../../commun/bouton/Bouton";
 import PageChargeur from "../../../../commun/chargeurs/PageChargeur";
 

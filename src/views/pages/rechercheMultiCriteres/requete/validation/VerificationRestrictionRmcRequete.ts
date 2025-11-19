@@ -1,17 +1,17 @@
 import { ETypeRequete } from "@model/requete/enum/TypeRequete";
 import { IRMCRequeteForm } from "@model/rmc/requete/IRMCRequete";
+import { aucuneProprieteRenseignee, estNonRenseigne, estRenseigne } from "@util/Utils";
 import {
   getMessageSiVerificationEnErreur,
   IVerificationErreur
-} from "@pages/rechercheMultiCriteres/common/validation/VerificationRestrictionProcesseur";
+} from "@views/pages/rechercheMultiCriteres/common/validation/VerificationRestrictionProcesseur";
 import {
   dateOuPaysNaissanceSaisiSansCritereDuBlocTitulaire,
   messageErreurDateOuPaysNaissanceSaisiSansCritereDuBlocTitulaire,
   messageErreurFiltreDateCreationInformatiqueSaisiSeul,
   messageErreurPrenomSaisiSansNom,
   prenomSaisiSansNom
-} from "@pages/rechercheMultiCriteres/common/validation/VerificationRestrictionRegles";
-import { aucuneProprieteRenseignee, estNonRenseigne, estRenseigne } from "@util/Utils";
+} from "@views/pages/rechercheMultiCriteres/common/validation/VerificationRestrictionRegles";
 
 const verificationsRestrictionCriteresErreurs: IVerificationErreur[] = [
   {

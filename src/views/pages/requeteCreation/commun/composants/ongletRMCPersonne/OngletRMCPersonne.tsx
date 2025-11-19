@@ -1,4 +1,3 @@
-import { IRMCPersonneResultat } from "@hook/rmcAuto/IRMCPersonneResultat";
 import { getTypeRedactionActeParSousTypeCreation } from "@model/etatcivil/enum/ETypeRedactionActe";
 import { ITitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
 import { NatureActeRequete } from "@model/requete/enum/NatureActeRequete";
@@ -9,9 +8,6 @@ import {
   IRMCAutoTitulaireDto,
   titulaireRequeteVersRMCAutoTitulaireDto
 } from "@model/rmc/acteInscription/rechercheForm/IRMCAutoTitulaireDto";
-import { IDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/IDataTableauRMCPersonne";
-import { TableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonne";
-import { mapDataTableauRMCPersonne } from "@pages/rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
 import { BoutonDoubleSubmit } from "@widget/boutonAntiDoubleSubmit/BoutonDoubleSubmit";
 import { BoutonMenu } from "@widget/boutonMenu/BoutonMenu";
 import {
@@ -20,6 +16,10 @@ import {
 } from "@widget/tableau/TableauRece/colonneElements/IColonneElementsParams";
 import React, { useContext, useEffect, useState } from "react";
 import { RECEContextActions, RECEContextData } from "../../../../../../contexts/RECEContextProvider";
+import { IRMCPersonneResultat } from "../../../../../common/hook/rmcAuto/IRMCPersonneResultat";
+import { IDataTableauRMCPersonne } from "../../../../rechercheMultiCriteres/personne/IDataTableauRMCPersonne";
+import { TableauRMCPersonne } from "../../../../rechercheMultiCriteres/personne/TableauRMCPersonne";
+import { mapDataTableauRMCPersonne } from "../../../../rechercheMultiCriteres/personne/TableauRMCPersonneUtils";
 import { IDataTableauActeInscriptionSelectionne } from "../tableauActesInscriptionsSelectionnes/IDataTableauActeInscriptionSelectionne";
 import { TableauActesInscriptionsSelectionnes } from "../tableauActesInscriptionsSelectionnes/TableauActesInscriptionsSelectionnes";
 import { IDataTableauPersonneSelectionnee } from "../tableauPersonnesSelectionnees/IDataTableauPersonneSelectionne";

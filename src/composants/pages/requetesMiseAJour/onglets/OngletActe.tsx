@@ -1,13 +1,13 @@
 import { compositionApi } from "@api/appels/compositionApi";
 import { CONFIG_GET_DONNEES_POUR_COMPOSITION_ACTE_TEXTE } from "@api/configurations/etatCivil/acte/GetDonneesPourCompositionActeTexteConfigApi";
-import { AlertesActes } from "@composant/alertesActe/AlertesActes";
+import AffichageDocument from "@composants/commun/affichageDocument/AffichageDocument";
+import OngletsContenu from "@composants/commun/onglets/OngletsContenu";
 import { useContext, useEffect, useState } from "react";
 import { EditionMiseAJourContext } from "../../../../contexts/EditionMiseAJourContextProvider";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
 import { EMimeType } from "../../../../ressources/EMimeType";
 import AfficherMessage from "../../../../utils/AfficherMessage";
-import AffichageDocument from "../../../commun/affichageDocument/AffichageDocument";
-import OngletsContenu from "../../../commun/onglets/OngletsContenu";
+import { AlertesActes } from "../../../../views/common/composant/alertesActe/AlertesActes";
 
 interface IOngletActeProps {
   estActif: boolean;

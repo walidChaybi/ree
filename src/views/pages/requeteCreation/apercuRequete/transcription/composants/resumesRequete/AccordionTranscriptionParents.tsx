@@ -1,9 +1,9 @@
 import { EvenementUnion } from "@model/requete/IEvenementUnion";
 import { ITitulaireRequeteCreation, TitulaireRequeteCreation } from "@model/requete/ITitulaireRequeteCreation";
-import { resume } from "@pages/requeteCreation/commun/Labels";
 import { DEUX, UN, estRenseigne } from "@util/Utils";
 import { AccordionRece } from "@widget/accordion/AccordionRece";
 import React from "react";
+import { resume } from "../../../../commun/Labels";
 import { LigneAccordion } from "./LigneAccordion";
 
 interface AccordionTranscriptionParentsProps {
@@ -30,7 +30,6 @@ export const AccordionTranscriptionParents: React.FC<AccordionTranscriptionParen
   return (
     <div className="AccordionTranscriptionParents">
       <AccordionRece
-        key={`${props.parents}`}
         titre={getTitreAccordionParents()}
         className={{
           container: "accordionContainer",

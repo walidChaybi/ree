@@ -1,12 +1,12 @@
-import { ADRESSE, CHOIX_COURRIER, OPTION, REQUERANT, REQUETE, TEXTE_LIBRE } from "@composant/formulaire/ConstantesNomsForm";
 import { OptionsCourrier } from "@model/requete/IOptionCourrier";
 import { IRequerant } from "@model/requete/IRequerant";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IDocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { Options } from "@util/Type";
+import { ADRESSE, CHOIX_COURRIER, OPTION, REQUERANT, REQUETE, TEXTE_LIBRE } from "@views/common/composant/formulaire/ConstantesNomsForm";
 import RequerantCourrierForm, {
   IRequerantCourrierFormProps
-} from "@pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/RequerantCourrierForm";
-import { Options } from "@util/Type";
+} from "@views/pages/requeteDelivrance/apercuRequete/apercuCourrier/contenu/contenuForm/sousFormulaires/RequerantCourrierForm";
 import AdresseForm from "@widget/formulaire/adresse/AdresseForm";
 import RequeteForm from "@widget/formulaire/requete/RequeteForm";
 import { SubFormProps } from "@widget/formulaire/utils/FormUtil";

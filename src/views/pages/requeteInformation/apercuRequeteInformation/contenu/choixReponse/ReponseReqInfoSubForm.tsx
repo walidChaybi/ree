@@ -1,10 +1,9 @@
-import { REPONSE } from "@composant/formulaire/ConstantesNomsForm";
-import { getLibelle } from "@util/Utils";
 import { InputField } from "@widget/formulaire/champsSaisie/InputField";
-import { FormikComponentProps, withNamespace } from "@widget/formulaire/utils/FormUtil";
+import { FormikComponentProps } from "@widget/formulaire/utils/FormUtil";
 import { connect } from "formik";
 import React, { useEffect } from "react";
 import * as Yup from "yup";
+import { REPONSE } from "../../../../../common/composant/formulaire/ConstantesNomsForm";
 import "../scss/ReponseReqInfo.scss";
 import { ReponseReqInfoProps } from "./ReponseReqInfoForm";
 
@@ -32,8 +31,8 @@ export const ValidationSchemaReponseInfoSubForm = Yup.object({
 });
 
 const ReponseReqInfoSubForm: React.FC<ReponseReqInfoSubFormProps> = ({ reponse, formik, formulaireDisabled }) => {
-  const libelleWithNamespace = withNamespace(REPONSE, LIBELLE);
-  const corpsMailWithNamespace = withNamespace(REPONSE, CORPS_MAIL);
+  const libelleWithNamespace = `${REPONSE}.${LIBELLE}`;
+  const corpsMailWithNamespace = `${REPONSE}.${CORPS_MAIL}`;
 
   useEffect(() => {
     if (reponse?.libelle) {
@@ -49,12 +48,12 @@ const ReponseReqInfoSubForm: React.FC<ReponseReqInfoSubFormProps> = ({ reponse, 
     <>
       <InputField
         name={libelleWithNamespace}
-        label={getLibelle("Libellé de la réponse")}
+        label={"Libellé de la réponse"}
         disabled={true}
       />
       <InputField
         name={corpsMailWithNamespace}
-        label={getLibelle("Mail de la réponse")}
+        label={"Mail de la réponse"}
         component={"textarea"}
         maxLength={(NB_CARACTERES_CORPS_MAIL + 1).toString()}
         rows={NB_LIGNE_CORPS_MAIL}

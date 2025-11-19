@@ -1,11 +1,11 @@
-import { HistoriqueActionsRequete } from "@composant/suivis/HistoriqueActionsRequete";
-import { SuiviObservationsRequete } from "@composant/suivis/SuiviObservationsRequete";
+import HistoriqueActionsRequete from "@composants/commun/suivi/HistoriqueActionsRequete";
 import { Droit } from "@model/agent/enum/Droit";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import React from "react";
 import AccessibleAvecDroits from "../../../../../composants/commun/accessibleAvecDroits/AccessibleAvecDroits";
+import { SuiviObservationsRequete } from "../../../../common/composant/suivis/SuiviObservationsRequete";
 import { RMCRequetesAssocieesResultats } from "../../../rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { DocumentsReponses } from "./contenu/document/DocumentsReponses";
 import { ResumeRequete } from "./contenu/resume/ResumeRequete";

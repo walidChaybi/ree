@@ -1,7 +1,7 @@
 import { CONFIG_GET_DOCUMENTS_REPONSE_DELIVRANCE } from "@api/configurations/requete/documentsReponses/GetDocumentsReponseDelivranceConfigApi";
-import { AlertesActes } from "@composant/alertesActe/AlertesActes";
-import VisionneuseActe from "@composant/visionneuseActe/VisionneuseActe";
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
+import { AlertesActes } from "@views/common/composant/alertesActe/AlertesActes";
+import VisionneuseActe from "@views/common/composant/visionneuseActe/VisionneuseActe";
 import React, { Dispatch, SetStateAction, useContext, useEffect, useMemo, useState } from "react";
 import { EditionDelivranceContext } from "../../../../../contexts/EditionDelivranceContextProvider";
 import useFetchApi from "../../../../../hooks/api/FetchApiHook";

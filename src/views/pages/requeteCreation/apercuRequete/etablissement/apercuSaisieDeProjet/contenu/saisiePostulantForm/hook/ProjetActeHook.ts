@@ -1,10 +1,13 @@
-import { useEnregistrerProjetActeApiHook } from "@hook/acte/EnregistrerProjetActeApiHook";
-import { useModifierProjetActeApiHook } from "@hook/acte/ModifierProjetActeApiHook";
-import { useRecupererProjetActeApiHook } from "@hook/acte/RecupererProjetActeApiHook";
-import { IMiseAJourSuiviDossierParams, useMiseAJourSuiviDossierApiHook } from "@hook/requete/MiseAJourSuiviDossierApiHook";
 import { IProjetActe } from "@model/etatcivil/acte/projetActe/IProjetActe";
 import { AvancementProjetActe } from "@model/requete/enum/AvancementProjetActe";
 import { useEffect, useState } from "react";
+import { useEnregistrerProjetActeApiHook } from "../../../../../../../../common/hook/acte/EnregistrerProjetActeApiHook";
+import { useModifierProjetActeApiHook } from "../../../../../../../../common/hook/acte/ModifierProjetActeApiHook";
+import { useRecupererProjetActeApiHook } from "../../../../../../../../common/hook/acte/RecupererProjetActeApiHook";
+import {
+  IMiseAJourSuiviDossierParams,
+  useMiseAJourSuiviDossierApiHook
+} from "../../../../../../../../common/hook/requete/MiseAJourSuiviDossierApiHook";
 
 interface IProjetActeHookResultat<TValeursForm> {
   projetActe?: IProjetActe;

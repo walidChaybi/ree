@@ -1,13 +1,17 @@
-import { IAccordionReceSection } from "@pages/fiche/FicheUtils";
-import { getContentAutorite, getContentLieu, getContentNotaire } from "@pages/fiche/hook/constructionComposants/pacs/FichePacsUtils";
-import { getFichesPersonne } from "@pages/fiche/hook/constructionComposants/personne/FichePersonne";
-import { getStatuts } from "@pages/fiche/hook/constructionComposants/statut/StatutUtils";
 import DateUtils, { TDateArrayDTO } from "@util/DateUtils";
 import { SectionPanelProps } from "@widget/section/SectionPanel";
 import { SectionPanelAreaProps } from "@widget/section/SectionPanelArea";
 import { SectionPartProps } from "@widget/section/SectionPart";
 import { AjoutePartAuPanelAreas } from "@widget/section/SectionUtils";
 import DateRECE from "../../../utils/DateRECE";
+import { IAccordionReceSection } from "../../../views/pages/fiche/FicheUtils";
+import {
+  getContentAutorite,
+  getContentLieu,
+  getContentNotaire
+} from "../../../views/pages/fiche/hook/constructionComposants/pacs/FichePacsUtils";
+import { getFichesPersonne } from "../../../views/pages/fiche/hook/constructionComposants/personne/FichePersonne";
+import { getStatuts } from "../../../views/pages/fiche/hook/constructionComposants/statut/StatutUtils";
 import { IAutorite } from "../commun/IAutorite";
 import { IPersonneDTO, Personne } from "../commun/Personne";
 import { EStatutPacs } from "../enum/EStatutPacs";

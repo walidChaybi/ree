@@ -1,4 +1,3 @@
-import { IgnorerParams, useIgnorerApi } from "@hook/requete/IgnorerHook";
 import { IRequete } from "@model/requete/IRequete";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
@@ -6,6 +5,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Options } from "@util/Type";
 import { getUrlPrecedente } from "@util/route/UrlUtil";
+import { IgnorerParams, useIgnorerApi } from "@views/common/hook/requete/IgnorerHook";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import { Formulaire } from "@widget/formulaire/Formulaire";
 import { ALERTE_AUTRE, ALERTE_OBLIGATOIRE, COMPLEMENT_DESCRIPTION_LIMITE_TAILLE } from "@widget/formulaire/FormulaireMessages";
