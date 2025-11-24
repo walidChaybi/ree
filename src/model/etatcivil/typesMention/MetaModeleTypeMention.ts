@@ -214,6 +214,10 @@ export class MetaModeleTypeMention {
           switch (champ.type) {
             case "text":
             case "zoneDeTexte":
+              return SchemaValidation.texte({
+                obligatoire: champ.estObligatoire,
+                max: champ.tailleMax ? { valeur: champ.tailleMax } : undefined
+              });
             case "radioBouton":
             case "pocopa":
               return SchemaValidation.texte({ obligatoire: champ.estObligatoire });
