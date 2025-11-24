@@ -5,7 +5,7 @@ import createBundler from '@bahmutov/cypress-esbuild-preprocessor';
 import createEsbuildPlugin from '@badeball/cypress-cucumber-preprocessor/esbuild';
 import cypressOnFix from "cypress-on-fix";
 
-const baseOrigin = 'http://tech.rece.devng.diplomatie.gouv.fr/rece/';
+const baseOrigin = 'http://e2e.rece.devng.diplomatie.gouv.fr/rece/';
 const basePath = 'rece-ui/';
 
 export default defineConfig({

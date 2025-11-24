@@ -17,8 +17,7 @@
 import './commands/login';
 import './commands/main';
 
-import devConfig from './../cypress.config';
-import uat1Config from './../uat1.config';
+import e2eConfig from './../cypress.config';
 
 // Import pour pouvoir utiliser cy.addTestContext()
 import 'cypress-mochawesome-reporter/register';

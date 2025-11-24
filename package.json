@@ -47,7 +47,7 @@
     "autoprefixer": "10.4.21",
     "axios-mock-adapter": "2.1.0",
     "bluebird": "3.7.2",
-    "cypress": "14.3.3",
+    "cypress": "15.2.0",
     "cypress-cucumber-tagging": "1.0.3",
     "cypress-mochawesome-reporter": "4.0.2",
     "cypress-multi-reporters": "2.0.5",
@@ -82,10 +82,8 @@
     "package": "npm run build",
     "transpil": "tsc",
     "unused": "ts-unused-exports tsconfig.json",
-    "cy:open:dev": "npx cypress open --config-file e2e/cypress.config.ts",
-    "cy:run:dev": "npx cypress run --config-file e2e/cypress.config.ts --browser firefox",
-    "cy:open:uat1": "npx cypress open --config-file e2e/uat1.config.ts",
-    "cy:run:uat1": "npx cypress run --config-file e2e/uat1.config.ts --browser firefox"
+    "cy:open:e2e": "npx cypress open --config-file e2e/cypress.config.ts",
+    "cy:run:e2e": "npx cypress run --config-file e2e/cypress.config.ts --browser firefox"
   },
   "eslintConfig": {
     "extends": "react-app"
