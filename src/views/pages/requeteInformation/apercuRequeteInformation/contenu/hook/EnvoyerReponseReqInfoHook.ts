@@ -4,7 +4,7 @@ import { IMail } from "@model/mail/IMail";
 import { IPieceJustificativeMail } from "@model/mail/IPieceJustificativeMail";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
-import { getObjetRequeteInfoLibelle } from "@model/requete/enum/ObjetRequeteInfo";
+import { EObjetRequeteInfo } from "@model/requete/enum/EObjetRequeteInfo";
 import DateUtils from "@util/DateUtils";
 import { useEffect, useState } from "react";
 import AfficherMessage, { estTableauErreurApi } from "../../../../../../utils/AfficherMessage";
@@ -60,7 +60,7 @@ const getReponseAEnvoyer = (
     mail.listeDestinataireCopieCache = [];
     mail.champs = {
       champ1: requete.sousType.libelle, // "Sous-type demande"
-      champ2: getObjetRequeteInfoLibelle(requete.objet), //  "Objet demande"
+      champ2: EObjetRequeteInfo[requete.objet], //  "Objet demande"
       champ3: ComplementObjetRequete.estReponseLibreAgent(requete.complementObjet) ? "--" : requete.complementObjet.libelle, //  "Complément objet demande"
       champ4: requete.numero, // "Référence demande"
       champ5: DateUtils.getFormatDateFromTimestamp(requete.dateCreation), //  "Date création demande"

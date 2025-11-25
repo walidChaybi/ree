@@ -1,4 +1,4 @@
-import { CONFIG_GET_REQUETES_CONSULAIRES } from "@api/configurations/requete/consulaire/GetRequetesConsulaires";
+import { CONFIG_GET_MES_REQUETES_CONSULAIRES } from "@api/configurations/requete/consulaire/GetMesRequetesConsulairesConfigApi";
 import { MockApi } from "@mock/appelsApi/MockApi";
 import { mesRequetesConsulaire } from "@mock/data/requeteCreationTranscription";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
@@ -40,7 +40,7 @@ vi.mock("@api/appels/requeteApi", async () => {
 describe("TableauMesRequetesConsulaire ", () => {
   beforeEach(() => {
     MockApi.deployer(
-      CONFIG_GET_REQUETES_CONSULAIRES,
+      CONFIG_GET_MES_REQUETES_CONSULAIRES,
       { regexp: true },
       {
         data: mesRequetesConsulaire,

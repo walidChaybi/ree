@@ -1,25 +1,29 @@
-import { getUrlPrecedente } from "@util/route/UrlUtil";
-import React from "react";
-import { Link, useLocation } from "react-router";
-import LiensRECE from "../../../../router/LiensRECE";
+import LiensRECE from "@router/LiensRECE";
+import { INFO_PAGE_MES_REQUETES_DELIVRANCE, INFO_PAGE_REQUETES_DELIVRANCE_SERVICE } from "@router/infoPages/InfoPagesEspaceDelivrance";
+import { INFO_PAGE_RECHERCHE_REQUETE } from "@router/infoPages/InfoPagesEspaceRecherche";
+import React, { useMemo } from "react";
+import { MdReplay } from "react-icons/md";
+import Bouton from "../../../../composants/commun/bouton/Bouton";
 import { URL_ACCUEIL } from "../../../../router/infoPages/InfoPagesBase";
-import {
-  INFO_PAGE_MES_REQUETES_DELIVRANCE,
-  INFO_PAGE_REQUETES_DELIVRANCE_SERVICE
-} from "../../../../router/infoPages/InfoPagesEspaceDelivrance";
-import { INFO_PAGE_RECHERCHE_REQUETE } from "../../../../router/infoPages/InfoPagesEspaceRecherche";
+import GestionnaireFilAriane, { IElementFilAriane } from "../../../../utils/GestionnaireFilAriane";
 
 export const BoutonRetour: React.FC = () => {
-  const location = useLocation();
-  const [libelle, retourUrl] = getLibelleEtUrl(getUrlPrecedente(location.pathname));
+  const { titre, url }: IElementFilAriane = useMemo(
+    () =>
+      GestionnaireFilAriane.elementsFilAriane.niveau2
+        ? GestionnaireFilAriane.elementsFilAriane.niveau1!
+        : { titre: "Accueil", url: URL_ACCUEIL },
+    [GestionnaireFilAriane.elementsFilAriane]
+  );
 
   return (
-    <Link
-      to={retourUrl}
-      className="Bouton BoutonRetour"
+    <Bouton
+      lienVers={url}
+      className="float-left flex items-center justify-center gap-2"
     >
-      {`<< Retour ${libelle}`}
-    </Link>
+      <MdReplay size={17} />
+      {`Retour ${titre}`.toUpperCase()}
+    </Bouton>
   );
 };
 
@@ -36,4 +40,4 @@ const getLibelleEtUrl = (url: string) => {
     default:
       return ["", URL_ACCUEIL];
   }
-}
+};

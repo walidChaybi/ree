@@ -1,7 +1,6 @@
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { RequeteTableauRMC } from "@model/rmc/requete/RequeteTableauRMC";
 import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@views/common/hook/requete/ActionHook";
 import { useContext, useEffect, useState } from "react";
@@ -10,13 +9,7 @@ import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 export interface ICreationActionMiseAjourStatutHookParams {
   statutRequete: keyof typeof EStatutRequete;
   libelleAction: string;
-  requete?:
-    | IRequeteTableauInformation
-    | IRequeteTableauDelivrance
-    | IRequeteTableauCreation
-    | RequeteTableauRMC<"DELIVRANCE">
-    | RequeteTableauRMC<"CREATION">
-    | RequeteTableauRMC<"INFORMATION">;
+  requete?: IRequeteTableauDelivrance | IRequeteTableauCreation | RequeteTableauRMC<"DELIVRANCE"> | RequeteTableauRMC<"CREATION">;
   callback?: () => void;
 }
 

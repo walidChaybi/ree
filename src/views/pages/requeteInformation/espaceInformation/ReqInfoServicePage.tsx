@@ -2,15 +2,14 @@ import { IQueryParametersPourRequetes, TypeAppelRequete } from "@api/appels/requ
 import { IFiltresServiceRequeteInformationFormValues } from "@model/requete/IFiltreServiceRequeteInformation";
 import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
+import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { RenderMessageSaisirFiltreOuZeroRequete } from "@util/tableauRequete/TableauRequeteUtils";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
-import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { SortOrder } from "@widget/tableau/TableUtils";
 import { NB_LIGNES_PAR_APPEL_DEFAUT, NB_LIGNES_PAR_PAGE_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useEffect, useState } from "react";
-import { useLocation } from "react-router";
 import PageChargeur from "../../../../composants/commun/chargeurs/PageChargeur";
 import { MenuTransfert } from "../../../common/composant/menuTransfert/MenuTransfert";
 import {
@@ -23,14 +22,12 @@ import FiltresServiceRequeteInformationForm, {
 } from "../commun/FiltresServiceRequeteInformationForm/FiltresServiceRequeteInformationForm";
 import { StatutsRequetesInformation, requeteInformationRequetesServiceColumnHeaders } from "./EspaceReqInfoParams";
 import { useRequeteInformationApi } from "./hook/DonneesRequeteInformationApiHook";
-import "./scss/RequeteTableau.scss";
 
 interface LocalProps {
   parametresReqInfo: IQueryParametersPourRequetes;
 }
 
 export const ReqInfoServicePage: React.FC<LocalProps> = ({ parametresReqInfo }) => {
-  const location = useLocation();
   const [operationEnCours, setOperationEnCours] = useState<boolean>(false);
   const [paramsNavReqInfo, setParamsNavReqInfo] = useState<INavigationApercuReqInfoParams | undefined>();
   const [linkParameters, setLinkParameters] = useState<IQueryParametersPourRequetes>(parametresReqInfo);
@@ -61,12 +58,13 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({ parametresReqInfo }) 
 
   const onClickOnLine = (_: string, data: IRequeteTableauInformation[], idx: number) => {
     const requete = data[idx];
-    const urlCourante = location.pathname;
     setOperationEnCours(true);
     setParamsNavReqInfo({
-      requete,
-      callback: finOperationEnCours,
-      urlCourante
+      requete: {
+        id: requete.idRequete,
+        idUtilisateur: requete.idUtilisateur ?? null,
+        statut: (requete.statut ?? "") as keyof typeof EStatutRequete
+      }
     });
   };
 
@@ -139,7 +137,6 @@ export const ReqInfoServicePage: React.FC<LocalProps> = ({ parametresReqInfo }) 
           handleChangeSort={handleChangeSort}
         />
       )}
-      <BoutonRetour />
     </>
   );
 };

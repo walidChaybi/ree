@@ -30,7 +30,10 @@ describe("PartieGaucheSaisieProjet - Tests du composant", () => {
       expect(mockApi.history.get.length).toBe(1);
     });
 
-    expect(container.firstChild).toMatchSnapshot();
+    await waitFor(() => {
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
     MockApi.stopMock();
   });
 });

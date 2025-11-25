@@ -1,9 +1,9 @@
 import { IReponseRequeteInfo } from "@model/requete/IReponseRequeteInfo";
-import { ObjetRequeteInfo, objetsRequeteInfoCommeOptions } from "@model/requete/enum/ObjetRequeteInfo";
+import { EObjetRequeteInfo } from "@model/requete/enum/EObjetRequeteInfo";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { Option } from "@util/Type";
-import { getLibelle } from "@util/Utils";
+import { enumVersOptions, getLibelle } from "@util/Utils";
 import NestedMenuItem from "@widget/menu/NestedMenuItem";
 import React from "react";
 import "./scss/MenuToutesLesReponses.scss";
@@ -56,7 +56,7 @@ export const MenuToutesLesReponses: React.FC<MenuToutesLesReponsesProps> = props
             }}
             MenuListProps={{ onMouseLeave: handleCloseMenu, className: "bg-bleu-sombre text-white" }}
           >
-            {objetsRequeteInfoCommeOptions([ObjetRequeteInfo.COMPLETION_REQUETE_EN_COURS]).map((optionObjetRequeteInfo: Option) => {
+            {enumVersOptions(EObjetRequeteInfo, { clesAExclure: ["COMPLETION_REQUETE_EN_COURS"] }).map((optionObjetRequeteInfo: Option) => {
               let reponsesFiltrees: IReponseRequeteInfo[] = [];
               if (props.listeReponse) {
                 reponsesFiltrees = props.listeReponse.filter(rep => rep.objet === optionObjetRequeteInfo.cle);

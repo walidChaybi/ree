@@ -1,8 +1,9 @@
 import { IQueryParametersPourRequetes } from "@api/appels/requeteApi";
-import { NomComposant } from "@util/habilitation/habilitationsDescription";
+import { BoutonRetour } from "@widget/navigation/BoutonRetour";
 import { BoiteAOnglets, IOngletProps } from "@widget/onglets/BoiteAOnglets";
 import { NB_LIGNES_PAR_APPEL_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React from "react";
+import { TableauMesRequetesInformation } from "../../../../composants/pages/requetesInformation/mesRequetes/TableauMesRequetesInformation";
 import LiensRECE from "../../../../router/LiensRECE";
 import {
   INFO_PAGE_MES_REQUETES_INFORMATION,
@@ -10,19 +11,19 @@ import {
 } from "../../../../router/infoPages/InfoPagesEspaceInformation";
 import BoutonPrendreEnChargeAleatoirementInformation from "./BoutonPrendreEnChargeAleatoirementInformation";
 import { StatutsRequetesInformation } from "./EspaceReqInfoParams";
-import { MesRequetesInformationPage } from "./MesRequetesInformation";
 import { ReqInfoServicePage } from "./ReqInfoServicePage";
 import "./scss/EspaceInformationPage.scss";
-interface LocalProps {
+
+interface IEspaceInformationPageProps {
   selectedTab?: number;
 }
 
-const parametresReqInfo = {
+const parametresReqInfo: IQueryParametersPourRequetes = {
   statuts: StatutsRequetesInformation,
   tri: "dateCreation",
   sens: "ASC",
   range: `0-${NB_LIGNES_PAR_APPEL_DEFAUT}`
-} as IQueryParametersPourRequetes;
+};
 
 const getOnglets = (): IOngletProps[] => {
   return [
@@ -32,24 +33,24 @@ const getOnglets = (): IOngletProps[] => {
         url: LiensRECE.genererLien(INFO_PAGE_MES_REQUETES_INFORMATION.url)
       },
       corps: {
-        composant: <MesRequetesInformationPage parametresReqInfo={parametresReqInfo} />
+        composant: <TableauMesRequetesInformation />
       }
     },
     {
       enTete: {
         titre: "Les requêtes d'information de mon service",
         url: LiensRECE.genererLien(INFO_PAGE_REQUETES_INFORMATION_SERVICE.url),
-        nomHabilitation: "LinkTabRequetesInfoService" as NomComposant
+        nomHabilitation: "LinkTabRequetesInfoService"
       },
       corps: {
         composant: <ReqInfoServicePage parametresReqInfo={parametresReqInfo} />,
-        nomHabilitation: "TabPanelRequetesInfoService" as NomComposant
+        nomHabilitation: "TabPanelRequetesInfoService"
       }
     }
   ];
 };
 
-const EspaceInformationPage: React.FC<LocalProps> = ({ selectedTab }) => {
+const EspaceInformationPage: React.FC<IEspaceInformationPageProps> = ({ selectedTab }) => {
   const selectedTabState = selectedTab ?? 0;
 
   return (
@@ -69,6 +70,7 @@ const EspaceInformationPage: React.FC<LocalProps> = ({ selectedTab }) => {
         classOnglet="ongletPageEspace"
         classOngletPrincipale="headerOngletPageEspace"
       />
+      <BoutonRetour />
     </div>
   );
 };

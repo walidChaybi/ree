@@ -1,3 +1,5 @@
+import { EObjetRequeteInfo } from "./enum/EObjetRequeteInfo";
+
 export interface IReponseRequeteInfo {
   id: string;
   libelle: string;
@@ -7,38 +9,27 @@ export interface IReponseRequeteInfo {
   reponse?: string;
 }
 
-export const ReponseRequeteInfo = {
-  getNomenclatureReponseRequetInfoFromObjetEtComplementObjet(
-    reponseRequeteInfo:
-      | IReponseRequeteInfo
-      | { objet: string; complementObjet: string },
+export const ReponseRequeteInfoUtils = {
+  getNomenclatureReponseRequeteInfoFromObjetEtComplementObjet(
+    reponseRequeteInfo: IReponseRequeteInfo | { objet: keyof typeof EObjetRequeteInfo; complementObjet: string },
     nomenclatureReponseRequetesInfos: IReponseRequeteInfo[]
   ): IReponseRequeteInfo | undefined {
     return nomenclatureReponseRequetesInfos.find(
-      reponse =>
-        reponse.objet === reponseRequeteInfo.objet &&
-        reponse.complementObjet === reponseRequeteInfo.complementObjet
+      reponse => reponse.objet === reponseRequeteInfo.objet && reponse.complementObjet === reponseRequeteInfo.complementObjet
     );
   },
-  getNomenclatureReponseRequetInfoFromId(
+  getNomenclatureReponseRequeteInfoParId(
     reponseRequeteInfo: IReponseRequeteInfo,
     nomenclatureReponseRequetesInfos: IReponseRequeteInfo[]
   ): IReponseRequeteInfo | undefined {
-    return nomenclatureReponseRequetesInfos.find(
-      reponse => reponse.id === reponseRequeteInfo.reponse
-    );
+    return nomenclatureReponseRequetesInfos.find(reponse => reponse.id === reponseRequeteInfo.reponse);
   },
-  getLibelleNomenclatureReponseRequeteInfoFromId(
+  getLibelleNomenclatureReponseRequeteInfoParId(
     reponseRequeteInfo: IReponseRequeteInfo,
     nomenclatureReponseRequetesInfos: IReponseRequeteInfo[]
   ): string {
-    const nomenclatureReponseRequetInfo = this.getNomenclatureReponseRequetInfoFromId(
-      reponseRequeteInfo,
-      nomenclatureReponseRequetesInfos
-    );
+    const nomenclatureReponseRequetInfo = this.getNomenclatureReponseRequeteInfoParId(reponseRequeteInfo, nomenclatureReponseRequetesInfos);
 
-    return nomenclatureReponseRequetInfo
-      ? nomenclatureReponseRequetInfo.libelle
-      : "";
+    return nomenclatureReponseRequetInfo ? nomenclatureReponseRequetInfo.libelle : "";
   }
 };

@@ -1,4 +1,4 @@
-import { getRequetesInformation, IQueryParametersPourRequetes, postRequetesInformation, TypeAppelRequete } from "@api/appels/requeteApi";
+import { IQueryParametersPourRequetes, postRequetesInformation, TypeAppelRequete } from "@api/appels/requeteApi";
 import { IFiltresServiceRequeteInformationFormValues } from "@model/requete/IFiltreServiceRequeteInformation";
 import { IRequeteTableauInformation, mappingRequetesTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { getParamsTableauDepuisReponseApi, IParamsTableau } from "@util/GestionDesLiensApi";
@@ -16,20 +16,11 @@ export const useRequeteInformationApi = (
   const [dataState, setDataState] = useState<IRequeteTableauInformation[]>([]);
   const [paramsTableau, setParamsTableau] = useState<IParamsTableau>({});
   const { utilisateurs, services } = useContext(RECEContextData);
+
   useEffect(() => {
-    const estTypeRequeteInfoService = typeRequete === TypeAppelRequete.REQUETE_INFO_SERVICE;
+    if (!peutChercher) return;
 
-    if (estTypeRequeteInfoService && !peutChercher) {
-      return;
-    }
-
-    const callRequetesInfo = async (): Promise<any> => {
-      return estTypeRequeteInfoService
-        ? await postRequetesInformation(queryParameters, filtresRequetes || VALEUR_FILTRE_INFORMATION_DEFAUT)
-        : await getRequetesInformation(queryParameters);
-    };
-
-    callRequetesInfo()
+    postRequetesInformation(queryParameters, filtresRequetes || VALEUR_FILTRE_INFORMATION_DEFAUT)
       .then(result => {
         const mesRequetes = mappingRequetesTableauInformation(result?.body?.data, false, utilisateurs, services);
         setDataState(mesRequetes);

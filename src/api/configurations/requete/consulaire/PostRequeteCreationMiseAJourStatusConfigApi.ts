@@ -17,5 +17,6 @@ export const CONFIG_POST_MAJ_STATUT_REQUETE_CONSULAIRE: TConfigurationApi<
 > = {
   api: REQUETE_API,
   methode: "POST",
-  uri: URI
+  uri: URI,
+  avecAxios: true
 };

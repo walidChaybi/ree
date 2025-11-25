@@ -6,7 +6,6 @@ import { IRequeteCreation } from "@model/requete/IRequeteCreation";
 import { IRequeteDelivrance, RequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauCreation } from "@model/requete/IRequeteTableauCreation";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { EProvenance, Provenance } from "@model/requete/enum/Provenance";
 import { ESousTypeCreation, SousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { ESousTypeDelivrance, SousTypeDelivrance, SousTypeDelivranceUtils } from "@model/requete/enum/SousTypeDelivrance";
@@ -67,26 +66,8 @@ export const autorisePrendreEnChargeReqTableauDelivrance = (
 
 export const autorisePrendreEnChargeReqTableauInformation = (
   utilisateurConnecte: UtilisateurConnecte,
-  requete: IRequeteTableauInformation | RequeteTableauRMC<"INFORMATION">
-) => {
-  let type: keyof typeof ETypeRequete | "";
-  let statut: keyof typeof EStatutRequete | "";
-
-  // Type gard à supprimer quand IRequeteTableauInformation sera supprimé
-  if ("idRequete" in requete) {
-    type = ((TypeRequete.getEnumFromLibelle(requete.type ?? "") as TypeRequete)?.nom as keyof typeof ETypeRequete) ?? "";
-    statut = (StatutRequete.getEnumFromLibelle(requete.statut)?.nom as keyof typeof EStatutRequete) ?? "";
-  } else {
-    type = requete.type;
-    statut = requete.statut;
-  }
-
-  return (
-    type === "INFORMATION" &&
-    ["A_TRAITER", "TRANSFEREE"].includes(statut) &&
-    utilisateurConnecte.id === (requete.idUtilisateur ?? undefined)
-  );
-};
+  requete: { statut: keyof typeof EStatutRequete; idUtilisateur: string | null }
+) => ["A_TRAITER", "TRANSFEREE"].includes(requete.statut) && utilisateurConnecte.id === (requete.idUtilisateur ?? undefined);
 
 const estRequeteCreationAuStatutATraiter = (
   type: keyof typeof ETypeRequete,

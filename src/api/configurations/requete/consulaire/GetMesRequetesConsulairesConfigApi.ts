@@ -15,7 +15,7 @@ interface IQueryParams {
 }
 
 // TODO : créer un DTO
-export const CONFIG_GET_REQUETES_CONSULAIRES: TConfigurationApi<typeof URI, undefined, IQueryParams, IRequeteConsulaire[]> = {
+export const CONFIG_GET_MES_REQUETES_CONSULAIRES: TConfigurationApi<typeof URI, undefined, IQueryParams, IRequeteConsulaire[]> = {
   api: REQUETE_API,
   methode: "GET",
   uri: URI,

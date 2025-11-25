@@ -1,5 +1,4 @@
 import { IReponseRequeteInfo } from "@model/requete/IReponseRequeteInfo";
-import { getLibelle } from "@util/Utils";
 import React from "react";
 
 interface BoutonReponseLibreProps {
@@ -15,8 +14,11 @@ export const BoutonReponseLibre: React.FC<BoutonReponseLibreProps> = props => {
 
   return (
     <div className="MenuReponse">
-      <button disabled={props.disabled} onClick={handleClick}>
-        {getLibelle("Réponse libre")}
+      <button
+        disabled={props.disabled}
+        onClick={handleClick}
+      >
+        {"Réponse libre"}
       </button>
     </div>
   );

@@ -55,10 +55,10 @@ export class ResultatRMCActe {
 
   public static readonly depuisDto = (acte: IResultatRMCActeDto): ResultatRMCActe | null => {
     switch (true) {
-      case champsObligatoiresDuDtoAbsents("ResultatRMCActeDto", acte, this.champsObligatoires):
-      case valeurDtoAbsenteDansEnum("ResultatRMCActeDto", acte, "nature", ENatureActe):
-      case valeurDtoAbsenteDansEnum("ResultatRMCActeDto", acte, "familleRegistre", ETypeFamille):
-      case valeurDtoAbsenteDansEnum("ResultatRMCActeDto", acte, "type", ETypeActe):
+      case champsObligatoiresDuDtoAbsents("IResultatRMCActeDto", acte, this.champsObligatoires):
+      case valeurDtoAbsenteDansEnum("IResultatRMCActeDto", acte, "nature", ENatureActe):
+      case valeurDtoAbsenteDansEnum("IResultatRMCActeDto", acte, "familleRegistre", ETypeFamille):
+      case valeurDtoAbsenteDansEnum("IResultatRMCActeDto", acte, "type", ETypeActe):
         return null;
     }
 

@@ -1,4 +1,4 @@
-import { CONFIG_POST_MAJ_STATUT_REQUETE_CONSULAIRE } from "@api/configurations/requete/consulaire/PostRequeteCreationMiseAJourStatusConfig";
+import { CONFIG_POST_MAJ_STATUT_REQUETE_CONSULAIRE } from "@api/configurations/requete/consulaire/PostRequeteCreationMiseAJourStatusConfigApi";
 import { IRequeteTableauConsulaire } from "@model/requete/IRequeteTableauConsulaire";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { useNavigate } from "react-router";

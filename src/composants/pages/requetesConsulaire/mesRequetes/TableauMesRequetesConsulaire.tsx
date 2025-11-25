@@ -1,4 +1,4 @@
-import { CONFIG_GET_REQUETES_CONSULAIRES } from "@api/configurations/requete/consulaire/GetRequetesConsulaires";
+import { CONFIG_GET_MES_REQUETES_CONSULAIRES } from "@api/configurations/requete/consulaire/GetMesRequetesConsulairesConfigApi";
 import { IRequeteTableauConsulaire, mappingRequetesTableauConsulaire } from "@model/requete/IRequeteTableauConsulaire";
 import { ESousTypeCreation } from "@model/requete/enum/SousTypeCreation";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
@@ -97,7 +97,7 @@ const TableauMesRequetesConsulaire: React.FC = () => {
   );
 
   const { appelApi: getRequetesConsulaires, enAttenteDeReponseApi: recuperationRequetesEnCours } =
-    useFetchApi(CONFIG_GET_REQUETES_CONSULAIRES);
+    useFetchApi(CONFIG_GET_MES_REQUETES_CONSULAIRES);
 
   useEffect(() => {
     if (!parametresRecherche.range) return;

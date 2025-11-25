@@ -1,7 +1,8 @@
 import { DocumentDelivrance } from "@model/requete/enum/DocumentDelivrance";
-import { TypeRequerant } from "@model/requete/enum/TypeRequerant";
+import { ETypeRequerant } from "@model/requete/enum/ETypeRequerant";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import { TRequete } from "@model/requete/IRequete";
+import { enumVersOptions } from "@util/Utils";
 import { ADRESSE, DOCUMENT, PIECES_JOINTES, REQUERANT, TITULAIRES } from "@views/common/composant/formulaire/ConstantesNomsForm";
 import AdresseForm from "@widget/formulaire/adresse/AdresseForm";
 import { SelectField } from "@widget/formulaire/champsSaisie/SelectField";
@@ -57,9 +58,7 @@ export const getRequerantForm = (nbTitulaires: number, requete?: TRequete): JSX.
   const requerantFromProps = {
     nom: REQUERANT,
     titre: "Identité du requérant",
-    options: TypeRequerant.getAllEnumsAsOptions({
-      exclusions: nbTitulaires < limitesTitulaires.MAX ? [TypeRequerant.TITULAIRE2] : undefined
-    }),
+    options: enumVersOptions(ETypeRequerant, { clesAExclure: nbTitulaires < limitesTitulaires.MAX ? ["TITULAIRE2"] : undefined }),
     requete
   } as SubFormProps;
   return (

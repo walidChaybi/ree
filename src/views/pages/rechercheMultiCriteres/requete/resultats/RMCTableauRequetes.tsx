@@ -28,8 +28,6 @@ import { NB_LIGNES_PAR_APPEL_REQUETE, NB_LIGNES_PAR_PAGE_REQUETE } from "@widget
 import { TableauRece } from "@widget/tableau/TableauRece/TableauRece";
 import React, { useCallback, useContext, useState } from "react";
 import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
-import LiensRECE from "../../../../../router/LiensRECE";
-import { INFO_PAGE_RECHERCHE_REQUETE } from "../../../../../router/infoPages/InfoPagesEspaceRecherche";
 import { goToLinkRMC } from "../../acteInscription/resultats/RMCTableauCommun";
 import { columnsTableauRequete } from "./RMCTableauRequetesParams";
 
@@ -89,8 +87,6 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({ dataRMC
     }
   };
 
-  const urlCourante = LiensRECE.genererLien(INFO_PAGE_RECHERCHE_REQUETE.url);
-
   const onClickReqDelivrance = (requete: RequeteTableauRMC<"DELIVRANCE">) => {
     setOperationEnCours(true);
     if (autorisePrendreEnChargeReqTableauDelivrance(utilisateurConnecte, requete)) {
@@ -110,9 +106,7 @@ export const RMCTableauRequetes: React.FC<RMCResultatRequetesProps> = ({ dataRMC
   const onClickReqInformation = (requete: RequeteTableauRMC<"INFORMATION">) => {
     setOperationEnCours(true);
     setParamsNavReqInfo({
-      requete,
-      callback: finOperationEnCours,
-      urlCourante
+      requete
     });
   };
 

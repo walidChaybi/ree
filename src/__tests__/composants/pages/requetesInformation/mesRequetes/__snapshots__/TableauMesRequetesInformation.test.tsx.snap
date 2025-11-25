@@ -1,0 +1,213 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Test TableauMesRequetesInformation > Doit récupérer les lignes du tableau et les afficher 1`] = `
+<table
+  class="min-w-full border-spacing-0 rounded-t-xl border border-solid border-gris-sombre text-sm shadow-lg"
+>
+  <thead
+    class=""
+  >
+    <tr>
+      <th
+        class="text-center first:text-left"
+      >
+        <span
+          class="px-4 font-marianne-bold text-bleu"
+        >
+          N° requête
+        </span>
+      </th>
+      <th
+        class="text-center first:text-left"
+      >
+        <span
+          class="px-4 font-marianne-bold text-bleu"
+        >
+          Sous-type
+        </span>
+      </th>
+      <th
+        class="text-center first:text-left"
+      >
+        <span
+          class="px-4 font-marianne-bold text-bleu"
+        >
+          Objet
+        </span>
+      </th>
+      <th
+        class="text-center first:text-left"
+      >
+        <button
+          aria-label="Trier par date création"
+          class="m-0 min-w-0 rounded-md border border-solid px-4 py-2 uppercase transition-colors border-bleu-sombre bg-bleu-sombre text-blanc hover:bg-bleu hover:border-bleu focus:bg-bleu focus:border-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-bleu-sombre disabled:border-gris-sombre disabled:bg-gris-sombre disabled:text-blanc relative border-none bg-transparent text-bleu hover:bg-transparent focus:bg-transparent"
+          title="Trier par date création"
+          type="button"
+        >
+          <span
+            class="text-sm normal-case underline"
+          >
+            Date création
+          </span>
+          <svg
+            class="absolute -right-1 top-1/2 -translate-y-1/2  "
+            fill="currentColor"
+            font-size="inherit"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0V0z"
+              fill="none"
+            />
+            <path
+              d="m4 12 1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"
+            />
+          </svg>
+        </button>
+      </th>
+      <th
+        class="text-center first:text-left"
+      >
+        <span
+          class="px-4 font-marianne-bold text-bleu"
+        >
+          Statut
+        </span>
+      </th>
+      <th
+        class="text-center first:text-left"
+      >
+        <span
+          class="px-4 font-marianne-bold text-bleu"
+        >
+          Type requérant
+        </span>
+      </th>
+      <th
+        class="text-center first:text-left"
+      >
+        <span
+          class="px-4 font-marianne-bold text-bleu"
+        >
+          Prénom / Nom requérant
+        </span>
+      </th>
+      <th
+        class="text-center first:text-left"
+      >
+        <span
+          class="px-4 font-marianne-bold text-bleu"
+        >
+          Prénom / Nom de naissance titulaire
+        </span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      class="cursor-pointer text-left hover:bg-bleu/50 odd:bg-bleu/15"
+    >
+      <td
+        class="px-4 py-1.5 text-center first:text-left"
+      >
+        noRequete1
+      </td>
+      <td
+        class="px-4 py-1.5 text-center first:text-left"
+      >
+        Information
+      </td>
+      <td
+        class="px-4 py-1.5 text-center first:text-left"
+      >
+        Demande de copie d'acte : naissance, mariage, décès
+      </td>
+      <td
+        class="px-4 py-1.5 text-center first:text-left"
+      >
+        02/10/2025
+      </td>
+      <td
+        class="px-4 py-1.5 text-center first:text-left"
+      >
+        Prise en charge
+      </td>
+      <td
+        class="px-4 py-1.5 text-center first:text-left"
+      >
+        Généalogiste
+      </td>
+      <td
+        class="px-4 py-1.5 text-center first:text-left"
+      >
+        John Cena
+      </td>
+      <td
+        class="px-4 py-1.5 text-center first:text-left"
+      >
+        <div>
+          <div>
+            Steve Cena
+          </div>
+          <div>
+            Sandrine Cena
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr
+      class="cursor-pointer text-left hover:bg-bleu/50 odd:bg-bleu/15"
+    >
+      <td
+        class="px-4 py-1.5 text-center first:text-left"
+      >
+        noRequete2
+      </td>
+      <td
+        class="px-4 py-1.5 text-center first:text-left"
+      >
+        Complétion requête en cours
+      </td>
+      <td
+        class="px-4 py-1.5 text-center first:text-left"
+      >
+        Complétion requête en cours
+      </td>
+      <td
+        class="px-4 py-1.5 text-center first:text-left"
+      >
+        01/11/2025
+      </td>
+      <td
+        class="px-4 py-1.5 text-center first:text-left"
+      >
+        À traiter
+      </td>
+      <td
+        class="px-4 py-1.5 text-center first:text-left"
+      >
+        Particulier
+      </td>
+      <td
+        class="px-4 py-1.5 text-center first:text-left"
+      >
+        Buffalo Bill
+      </td>
+      <td
+        class="px-4 py-1.5 text-center first:text-left"
+      >
+        <div>
+          <div>
+            Buffalo Bill
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;

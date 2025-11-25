@@ -5,10 +5,6 @@ import { RouteObject, createMemoryRouter } from "react-router";
 import { EditionDelivranceContext } from "../../contexts/EditionDelivranceContextProvider";
 import requeteDelivrance from "../mock/data/requeteDelivrance";
 
-export const deepCopie = (objet: any) => {
-  return JSON.parse(JSON.stringify(objet));
-};
-
 export const createTestingRouter = (routes: RouteObject[], initialEntries: string[]) => {
   return createMemoryRouter(
     routes.map(route => {

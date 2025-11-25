@@ -3,16 +3,12 @@ import { Droit } from "@model/agent/enum/Droit";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
 import { Requete, TRequete } from "@model/requete/IRequete";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
-import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { EStatutRequete } from "@model/requete/enum/StatutRequete";
 import { ProtectionApercu } from "@util/route/Protection/ProtectionApercu";
 import { BandeauRequete } from "@views/common/composant/bandeauApercuRequete/BandeauApercuRequete";
 import { HistoriqueActionsRequete } from "@views/common/composant/suivis/HistoriqueActionsRequete";
 import { SuiviObservationsRequete } from "@views/common/composant/suivis/SuiviObservationsRequete";
-import {
-  ICreationActionMiseAjourStatutHookParams,
-  useCreationActionMiseAjourStatut
-} from "@views/common/hook/requete/CreationActionMiseAjourStatutHook";
+import { ICreationActionEtMiseAjourStatutParams, usePostCreationActionEtMiseAjourStatutApi } from "@views/common/hook/requete/ActionHook";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import AccessibleAvecDroits from "../../../../composants/commun/accessibleAvecDroits/AccessibleAvecDroits";
@@ -34,11 +30,11 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
   const { idRequeteParam } = useParams<TUuidRequeteParams>();
   const [affichageBoutonPrendreEnCharge, setAffichageBoutonPrendreEnCharge] = useState(false);
 
-  const [paramsMAJReqInfo, setParamsMAJReqInfo] = useState<ICreationActionMiseAjourStatutHookParams>();
+  const [paramsMAJReqInfo, setParamsMAJReqInfo] = useState<ICreationActionEtMiseAjourStatutParams>();
 
   const estModeConsultation = props.idRequeteAAfficher !== undefined;
 
-  useCreationActionMiseAjourStatut(paramsMAJReqInfo);
+  usePostCreationActionEtMiseAjourStatutApi(paramsMAJReqInfo);
 
   const location = useLocation();
 
@@ -73,10 +69,7 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
       setParamsMAJReqInfo({
         libelleAction: EStatutRequete.PRISE_EN_CHARGE,
         statutRequete: "PRISE_EN_CHARGE",
-        requete: {
-          idRequete: detailRequeteState?.id,
-          statut: detailRequeteState?.statutCourant.statut
-        } as IRequeteTableauInformation,
+        requeteId: detailRequeteState?.id,
         callback: () => {
           setDetailRequeteParams({ idRequete: detailRequeteParams.idRequete });
         }

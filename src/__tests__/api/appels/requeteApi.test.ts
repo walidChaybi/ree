@@ -8,16 +8,13 @@ import {
   getPrendreEnChargeRequeteSuivante,
   getReponsesReqInfo,
   getRequetesCreation,
-  getRequetesInformation,
   getTableauRequetesDelivrance,
-  IQueryParametersPourRequetes,
   mettreAJourStatutApresSignature,
   patchMiseAJourIdSuiviDossier,
   patchMiseAJourLibellePJ,
   patchModificationAvancementProjet,
   postAjoutPieceJustificativeAUneRequeteCreation,
   postCreationAction,
-  postCreationActionEtMiseAjourStatut,
   postDocumentReponseApi,
   postIgnorerRequete,
   postMessageRetourSDANFEtUpdateStatutRequete,
@@ -121,7 +118,6 @@ describe("Test des appels API requête", () => {
   test("Couverture en attendant le passage a useFetch 2", async () => {
     await getTableauRequetesDelivrance("test", { statuts: ["test"], tri: "test", sens: "ASC" });
     getRequetesCreation("test", { statuts: ["test"], tri: "test", sens: "ASC" });
-    getRequetesInformation({} as IQueryParametersPourRequetes);
     getDetailRequete("id", false);
     creationRequeteDelivrance({ requete: {} as IRequeteDelivrance, futurStatut: StatutRequete.ABANDONNEE, refus: true });
     updateRequeteDelivrance({ idRequete: "id", requete: {} as IRequeteDelivrance, futurStatut: StatutRequete.ABANDONNEE, refus: true });
@@ -130,7 +126,6 @@ describe("Test des appels API requête", () => {
     getPieceComplementInformationById("id");
     postPieceComplementInformationApi("id", "test");
     getPieceJustificativeById("id");
-    postCreationActionEtMiseAjourStatut("id", "libelle", "BROUILLON");
     await updateChoixDelivrance("id", null);
     postIgnorerRequete("id", "test");
     getPrendreEnChargeRequeteSuivante();

@@ -4,17 +4,17 @@ import { CreationRequeteRDCSC, IComplementCreationUpdateRequete, UpdateRequeteRD
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
 import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
-import { useCallback, useState } from "react";
-import AfficherMessage from "../../../../../utils/AfficherMessage";
 import {
   INavigationApercuDelivranceParams,
   useNavigationApercuDelivrance
-} from "../../../../common/hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceHook";
-import { CreationActionHookParams, useCreationAction } from "../../../../common/hook/requete/CreationAction";
+} from "@views/common/hook/navigationApercuRequeteDelivrance/NavigationApercuDelivranceHook";
+import { ICreationActionHookParams, useCreationAction } from "@views/common/hook/requete/CreationAction";
 import {
   ICreationActionMiseAjourStatutHookParams,
   useCreationActionMiseAjourStatut
-} from "../../../../common/hook/requete/CreationActionMiseAjourStatutHook";
+} from "@views/common/hook/requete/CreationActionMiseAjourStatutHook";
+import { useCallback, useState } from "react";
+import AfficherMessage from "../../../../../utils/AfficherMessage";
 import { mappingRequeteDelivranceToRequeteTableau } from "../../apercuRequete/mapping/ReqDelivranceToReqTableau";
 import { createReponseSansDelivranceCS } from "../contenu/SaisirRDCSCPageFonctions";
 import { ICreationOuMiseAJourRDCSCResultat } from "./SoumissionFormulaireRDCSCHook";
@@ -27,7 +27,7 @@ export const useRedirectionApresSoumissionRDCSCHook = (
   miseAJourRDCSCParams?: UpdateRequeteRDCSC & IComplementCreationUpdateRequete,
   requeteRDCSCResultat?: ICreationOuMiseAJourRDCSCResultat
 ) => {
-  const [paramsCreationAction, setParamsCreationAction] = useState<CreationActionHookParams>();
+  const [paramsCreationAction, setParamsCreationAction] = useState<ICreationActionHookParams>();
   const [creationActionMiseAjourStatutParams, setCreationActionMiseAjourStatutParams] =
     useState<ICreationActionMiseAjourStatutHookParams>();
   const [navigationApercuDelivranceParams, setNavigationApercuDelivranceParams] = useState<INavigationApercuDelivranceParams | null>(null);

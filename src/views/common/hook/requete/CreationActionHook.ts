@@ -2,7 +2,7 @@ import { postCreationAction } from "@api/appels/requeteApi";
 import { useEffect, useState } from "react";
 import AfficherMessage, { estTableauErreurApi } from "../../../../utils/AfficherMessage";
 
-interface ICreationActionParams {
+export interface ICreationActionParams {
   libelleAction?: string;
   requeteId?: string;
 }
@@ -22,7 +22,6 @@ export const usePostCreationActionApi = (params?: ICreationActionParams) => {
           });
         });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
   return idAction;
 };

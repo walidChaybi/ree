@@ -1,6 +1,6 @@
 import { BesoinUsager } from "./enum/BesoinUsager";
 import { ComplementObjetRequete } from "./enum/ComplementObjetRequete";
-import { ObjetRequeteInfo } from "./enum/ObjetRequeteInfo";
+import { EObjetRequeteInfo } from "./enum/EObjetRequeteInfo";
 import { Provenance } from "./enum/Provenance";
 import { SousTypeInformation } from "./enum/SousTypeInformation";
 import { TypeRequete } from "./enum/TypeRequete";
@@ -10,7 +10,7 @@ import { IPieceComplementInformation } from "./pieceJointe/IPieceComplementInfor
 
 export interface IRequeteInformation extends IRequete {
   sousType: SousTypeInformation;
-  objet: ObjetRequeteInfo;
+  objet: keyof typeof EObjetRequeteInfo;
   complementObjet: ComplementObjetRequete;
   commentaire: string;
   reponseChoisie?: IReponseRequeteInfo;

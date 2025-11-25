@@ -44,17 +44,6 @@ export const configRequetesCreation = [
         };
       }
 
-      // Création d'une action et maj statut de la requête
-      if (
-        url ===
-          "/requetes/action/majStatut?idRequete=3ed9aa4e-921b-489f-b8fe-531dd703c60c&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" ||
-        url ===
-          "/requetes/action/majStatut?idRequete=dd96cc3a-9865-4c83-b634-37fad2680f41&libelleAction=Saisie%20du%20projet&statutRequete=EN_TRAITEMENT" ||
-        url ===
-          "/requetes/action/majStatut?idRequete=3ed9aa4e-921b-489f-b8fe-531dd703c60c&libelleAction=Saisie%20du%20projet&statutRequete=EN_TRAITEMENT"
-      ) {
-        return { data: "123456789" };
-      }
       if (url === "/requetes/creation/requete-a-prendre-en-charge") {
         return {
           data: requeteCreationATraiter

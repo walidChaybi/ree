@@ -1,18 +1,16 @@
 import { IRequeteTableauDelivrance } from "@model/requete/IRequeteTableauDelivrance";
-import { IRequeteTableauInformation } from "@model/requete/IRequeteTableauInformation";
 import { useContext, useEffect, useState } from "react";
 import { useNavigation } from "react-router";
 import { RECEContextData } from "../../../../contexts/RECEContextProvider";
-import { ICreationActionParams } from "./ActionHook";
-import { usePostCreationActionApi } from "./CreationActionHook";
+import { ICreationActionParams, usePostCreationActionApi } from "./CreationActionHook";
 
-export interface CreationActionHookParams {
+export interface ICreationActionHookParams {
   libelleAction: string;
-  requete?: IRequeteTableauInformation | IRequeteTableauDelivrance;
+  requete?: IRequeteTableauDelivrance;
   callback?: () => void;
 }
 
-export const useCreationAction = (params: CreationActionHookParams | undefined) => {
+export const useCreationAction = (params: ICreationActionHookParams | undefined) => {
   const navigation = useNavigation();
   const [creationActionParams, setCreationActionParams] = useState<ICreationActionParams | undefined>();
 
@@ -33,9 +31,7 @@ export const useCreationAction = (params: CreationActionHookParams | undefined) 
     if (idAction && params?.requete) {
       // Mise à jour de l'id utilisateur
       params.requete.idUtilisateur = utilisateurConnecte.id;
-      if (params.callback) {
-        params.callback();
-      }
+      params.callback?.();
     }
   }, [idAction, params, navigation]);
 };

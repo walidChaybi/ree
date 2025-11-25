@@ -1,12 +1,11 @@
-import { IReponseRequeteInfo, ReponseRequeteInfo } from "@model/requete/IReponseRequeteInfo";
+import { IReponseRequeteInfo, ReponseRequeteInfoUtils } from "@model/requete/IReponseRequeteInfo";
 import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
-import { ObjetRequeteInfo } from "@model/requete/enum/ObjetRequeteInfo";
 import { expect, test } from "vitest";
 import { NOMENCLATURE_REPONSE } from "../../mock/data/NomenclatureReponse";
 
 test("Attendu: ReponseRequeteInfo.getLibelleNomenclatureReponseRequeteInfoFromId fonctionne correctement", () => {
   expect(
-    ReponseRequeteInfo.getLibelleNomenclatureReponseRequeteInfoFromId(
+    ReponseRequeteInfoUtils.getLibelleNomenclatureReponseRequeteInfoParId(
       {
         reponse: "7c713156-8c88-4d20-8e90-9aa63c903b01"
       } as IReponseRequeteInfo,
@@ -17,9 +16,9 @@ test("Attendu: ReponseRequeteInfo.getLibelleNomenclatureReponseRequeteInfoFromId
 
 test("Attendu: ReponseRequeteInfo.getNomenclatureReponseRequetInfoFromObjetEtComplementObjet fonctionne correctement", () => {
   expect(
-    ReponseRequeteInfo.getNomenclatureReponseRequetInfoFromObjetEtComplementObjet(
+    ReponseRequeteInfoUtils.getNomenclatureReponseRequeteInfoFromObjetEtComplementObjet(
       {
-        objet: ObjetRequeteInfo.COMPLETION_REQUETE_EN_COURS,
+        objet: "COMPLETION_REQUETE_EN_COURS",
         complementObjet: ComplementObjetRequete.REPONSE_LIBRE_AGENT.nom
       },
       NOMENCLATURE_REPONSE

@@ -1,13 +1,13 @@
-import { IReponseRequeteInfo, ReponseRequeteInfo } from "@model/requete/IReponseRequeteInfo";
+import { IReponseRequeteInfo, ReponseRequeteInfoUtils } from "@model/requete/IReponseRequeteInfo";
 import { BesoinUsager } from "@model/requete/enum/BesoinUsager";
 import { ComplementObjetRequete } from "@model/requete/enum/ComplementObjetRequete";
-import { ObjetRequeteInfo, getObjetRequeteInfoLibelle } from "@model/requete/enum/ObjetRequeteInfo";
+import { EObjetRequeteInfo } from "@model/requete/enum/EObjetRequeteInfo";
 import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
+import { MenuTransfert } from "@views/common/composant/menuTransfert/MenuTransfert";
 import { Fieldset } from "@widget/fieldset/Fieldset";
 import React, { useContext, useEffect, useState } from "react";
 import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
-import { MenuTransfert } from "../../../../common/composant/menuTransfert/MenuTransfert";
 import { RequeteInfoProps } from "./ResumeReqInfo";
 import { BoutonReponseLibre } from "./choixReponse/BoutonReponseLibre";
 import { MenuReponsesProposees } from "./choixReponse/MenuReponsesProposees";
@@ -25,7 +25,7 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
   const SAISIE_LIBRE_REPONSE = {
     id: "",
     libelle: "Réponse libre agent",
-    objet: getObjetRequeteInfoLibelle(requete.objet),
+    objet: EObjetRequeteInfo[requete.objet],
     complementObjet: requete.complementObjet.libelle,
     corpsMail: ""
   };
@@ -61,12 +61,12 @@ export const ReponseReqInfo: React.FC<RequeteInfoProps> = ({
     if (requete.reponseChoisie?.corpsMail) {
       setReponseChoisie({
         ...requete.reponseChoisie,
-        libelle: ReponseRequeteInfo.getLibelleNomenclatureReponseRequeteInfoFromId(requete.reponseChoisie, reponsesReqInfo)
+        libelle: ReponseRequeteInfoUtils.getLibelleNomenclatureReponseRequeteInfoParId(requete.reponseChoisie, reponsesReqInfo)
       });
     } else if (requete.sousType === SousTypeInformation.COMPLETION_REQUETE_EN_COURS) {
-      const reponseLibre = ReponseRequeteInfo.getNomenclatureReponseRequetInfoFromObjetEtComplementObjet(
+      const reponseLibre = ReponseRequeteInfoUtils.getNomenclatureReponseRequeteInfoFromObjetEtComplementObjet(
         {
-          objet: ObjetRequeteInfo.COMPLETION_REQUETE_EN_COURS,
+          objet: "COMPLETION_REQUETE_EN_COURS",
           complementObjet: ComplementObjetRequete.REPONSE_LIBRE_AGENT.nom
         },
         reponsesReqInfo

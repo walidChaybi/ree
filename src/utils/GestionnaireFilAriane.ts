@@ -1,4 +1,4 @@
-interface IElementFilAriane {
+export interface IElementFilAriane {
   titre: string;
   url: string;
 }

@@ -8,7 +8,7 @@ import {
   IFiltresServiceRequeteInformationFormValues
 } from "@model/requete/IFiltreServiceRequeteInformation";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
-import { EStatutRequete, StatutRequete } from "@model/requete/enum/StatutRequete";
+import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IPieceJustificative } from "@model/requete/pieceJointe/IPieceJustificative";
 import { SortOrder } from "@widget/tableau/TableUtils";
 import { HttpMethod } from "../ApiManager";
@@ -19,7 +19,6 @@ const URL_REQUETES_INFO_SERVICE = "/requetes/information/requetes-de-mon-service
 const URL_REQUETES_CREATION_SERVICE = "/requetes/creation/requetes-service";
 const URL_REQUETES = "/requetes";
 const URL_MES_REQUETES_DELIVRANCE = "/requetes/mesrequetes";
-const URL_MES_REQUETES_INFO = "/requetes/information/mesrequetes";
 const URL_MES_REQUETES_CREATION = "/requetes/creation/mes-requetes";
 const URL_CREATION = "/requetes/creation/";
 const URL_SAUVEGARDER_REPONSE_REQINFO = "/requetes/information/reponse";
@@ -37,7 +36,6 @@ const URL_PIECE_JUSTIFICATIVE = "/piecejustificative";
 const URL_FICHIER_PIECE_JUSTIFICATIVE = "/requetes/fichierpiecejustificative/";
 const URL_LIBELLE = "/libelle";
 const URL_ACTION = "/requetes/action";
-const URL_ACTION_MAJ_STATUT = "/requetes/action/majStatut";
 const URL_RETOUR_VALIDEUR = "/requetes/action/retourValideur";
 const URL_OBSERVATION = "/requetes/observation";
 const URL_IGNORER = "/requetes/action/ignorer";
@@ -127,20 +125,6 @@ export const getRequetesCreation = (listeStatuts: string, queryParameters: IQuer
   );
 };
 
-export const getRequetesInformation = (queryParameters: IQueryParametersPourRequetes): Promise<any> => {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.GET,
-      uri: URL_MES_REQUETES_INFO,
-      parameters: {
-        statuts: queryParameters?.statuts?.join(","),
-        tri: queryParameters.tri,
-        sens: queryParameters.sens,
-        range: queryParameters.range
-      }
-    })
-  );
-};
 /* v8 ignore start */
 export const postRequetesInformation = (
   queryParameters: IQueryParametersPourRequetes,
@@ -364,24 +348,6 @@ export const postCreationAction = (idRequete: string, libelleAction: string) => 
       parameters: {
         idRequete,
         libelleAction
-      }
-    })
-  );
-};
-
-export const postCreationActionEtMiseAjourStatut = (
-  idRequete: string,
-  libelleAction: string,
-  statutRequete: keyof typeof EStatutRequete
-) => {
-  return getApiManager().then(api =>
-    api.fetch({
-      method: HttpMethod.POST,
-      uri: `${URL_ACTION_MAJ_STATUT}`,
-      parameters: {
-        idRequete,
-        libelleAction,
-        statutRequete: statutRequete
       }
     })
   );

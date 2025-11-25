@@ -2,7 +2,7 @@ import { Requerant } from "@model/requete/IRequerant";
 import { Requete } from "@model/requete/IRequete";
 import { IRequeteInformation } from "@model/requete/IRequeteInformation";
 import { TitulaireRequete } from "@model/requete/ITitulaireRequete";
-import { getObjetRequeteInfoLibelle } from "@model/requete/enum/ObjetRequeteInfo";
+import { EObjetRequeteInfo } from "@model/requete/enum/EObjetRequeteInfo";
 import { Qualite } from "@model/requete/enum/Qualite";
 import { IPieceComplementInformation } from "@model/requete/pieceJointe/IPieceComplementInformation";
 import { IPieceJointe, TypePieceJointe } from "@model/requete/pieceJointe/IPieceJointe";
@@ -91,10 +91,10 @@ const getRequete = (detailRequete: IRequeteInformation): SectionPartProps[] => {
 const getRequeteInfo = (detailRequete: IRequeteInformation): SectionContentProps[] => {
   const infosRequete = [] as SectionContentProps[];
 
-  ajouterContentPartAuPartUneValeur(infosRequete, `Sous-type`, detailRequete.sousType.libelle);
-  ajouterContentPartAuPartUneValeur(infosRequete, `Objet`, getObjetRequeteInfoLibelle(detailRequete.objet));
-  ajouterContentPartAuPartUneValeur(infosRequete, `Complément d'objet`, detailRequete.complementObjet.libelle);
-  ajouterContentPartAuPartUneValeur(infosRequete, `Date de création`, Requete.getDateCreation(detailRequete));
+  ajouterContentPartAuPartUneValeur(infosRequete, "Sous-type", detailRequete.sousType.libelle);
+  ajouterContentPartAuPartUneValeur(infosRequete, "Objet", EObjetRequeteInfo[detailRequete.objet]);
+  ajouterContentPartAuPartUneValeur(infosRequete, "Complément d'objet", detailRequete.complementObjet.libelle);
+  ajouterContentPartAuPartUneValeur(infosRequete, "Date de création", Requete.getDateCreation(detailRequete));
 
   let requeteLiee: string | JSX.Element = "";
 

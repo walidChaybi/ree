@@ -4,7 +4,6 @@ import {
   ReponseAppelDetailRequeteInformationSansCorbeilleAgent
 } from "../data/DetailRequeteInformation";
 import {
-  ReponseMesRequetesInformation,
   ReponseRequetesInfoService,
   ReponseRequetesInfoServiceFiltreObjet,
   ReponseRequetesInfoServiceFiltreSousType,
@@ -32,22 +31,6 @@ export const configRequetesInformation = [
      * @param context object the context of running the fixtures function
      */
     fixtures: function (match: any, params: any, headers: any, context: any) {
-      // Mes requetes d'information (espace information)
-      if (
-        match[1] ===
-          "/requetes/information/mesrequetes?statuts=TRAITEE_AUTO%2CPRISE_EN_CHARGE%2CA_TRAITER%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105" ||
-        match[1] ===
-          "/requetes/information/mesrequetes?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105"
-      ) {
-        return {
-          data: ReponseMesRequetesInformation,
-          headers: {
-            "content-range": "0-15/" + ReponseMesRequetesInformation.length,
-            link: '<http://localhost:80/rece/rece-requete-api/v2/requetes/information/mesrequetes?statuts=PRISE_EN_CHARGE%2CA_TRAITER%2CTRANSFEREE&tri=dateCreation&sens=ASC&range=0-105>;rel="next"'
-          }
-        };
-      }
-
       // Requetes d'information de mon service (espace information)
       if (
         match[1] === "/requetes/information/requetes-de-mon-service?tri=dateCreation&sens=ASC&range=0-105" &&
@@ -156,29 +139,6 @@ export const configRequetesInformation = [
       // Sauvegarde réponse
       if (match[1] === "/requetes/information/reponse/bbd05aed-8ea9-45ba-a7d7-b8d55ad10856") {
         return { data: "12345" };
-      }
-
-      // Mise à jour statut requête Information
-      if (
-        match[1] ===
-        "/requetes/action/majStatut?idRequete=0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE"
-      ) {
-        return { data: ["0b7a1f7b-b4f1-4163-8a81-e5adf53cbf62"] };
-      }
-      if (
-        match[1] ===
-        "/requetes/action/majStatut?idRequete=bbd05aed-8ea9-45ba-a7d7-b8d55ad10857&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE"
-      ) {
-        return { data: ["bbd05aed-8ea9-45ba-a7d7-b8d55ad10857"] };
-      }
-
-      // Création d'une action et maj statut de la requête
-      if (
-        match[1] ===
-          "/requetes/action/majStatut?idRequete=0b7a1f7b-b4f1-4163-8a81-e5adf53cbf63&libelleAction=Prise%20en%20charge&statutRequete=PRISE_EN_CHARGE" &&
-        context.method === "post"
-      ) {
-        return { data: "123456789" };
       }
     },
 

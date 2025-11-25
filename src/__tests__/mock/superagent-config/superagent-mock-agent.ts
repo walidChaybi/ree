@@ -1,6 +1,3 @@
-import { MockHabilitation } from "../data/habilitationMock";
-import { serviceEtablissement } from "../data/serviceEtablissement";
-
 export const configAgent = [
   {
     /**
@@ -17,14 +14,6 @@ export const configAgent = [
      * @param context object the context of running the fixtures function
      */
     fixtures: function (match: any, params: any, headers: any, context: any) {
-      if (match[1] === "/utilisateurs/connexion") {
-        return { data: MockHabilitation };
-      }
-
-      if (match[1].startsWith("/services?idService=6737566d-0f25-45dc-8443-97b444e6753a")) {
-        return { ...serviceEtablissement };
-      }
-
       if (match[1].startsWith("/testhtml")) {
         return "<html>test html<html/>";
       }

@@ -1,11 +1,12 @@
 import { IFiltresServiceRequeteInformationFormValues } from "@model/requete/IFiltreServiceRequeteInformation";
-import { ObjetRequeteInfo, objetsRequeteInfoCommeOptions } from "@model/requete/enum/ObjetRequeteInfo";
+import { EObjetRequeteInfo } from "@model/requete/enum/EObjetRequeteInfo";
 import { SousTypeInformation } from "@model/requete/enum/SousTypeInformation";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { TypeRequerantInformation } from "@model/requete/enum/TypeRequerantInformation";
 import { TypeRequete } from "@model/requete/enum/TypeRequete";
 import Button from "@mui/material/Button";
 import { Options } from "@util/Type";
+import { enumVersOptions } from "@util/Utils";
 import { ChampRechercheField } from "@widget/formulaire/champRecherche/ChampRechercheField";
 import { OptionVide, SelectField } from "@widget/formulaire/champsSaisie/SelectField";
 import { Formik } from "formik";
@@ -28,6 +29,9 @@ export const VALEUR_FILTRE_INFORMATION_DEFAUT: IFiltresServiceRequeteInformation
   statut: ""
 };
 
+const OPTIONS_OBJETS_REQUETE_INFO: Options = enumVersOptions(EObjetRequeteInfo, { clesAExclure: ["COMPLETION_REQUETE_EN_COURS"] });
+const OPTIONS_TYPES_REQUERANT: Options = TypeRequerantInformation.getAllEnumsAsOptions();
+
 const FiltresServiceRequeteInformationForm: React.FC<IFiltresServiceRequeteInformationFormProps> = ({ onSubmit }) => {
   const { utilisateurs, utilisateurConnecte } = useContext(RECEContextData);
   const sousTypeInformationOptions: Options = useMemo(() => SousTypeInformation.getAllEnumsAsOptions(), []);
@@ -39,10 +43,6 @@ const FiltresServiceRequeteInformationForm: React.FC<IFiltresServiceRequeteInfor
       ),
     []
   );
-
-  const objetRequeteOptions: Options = useMemo(() => objetsRequeteInfoCommeOptions([ObjetRequeteInfo.COMPLETION_REQUETE_EN_COURS]), []);
-
-  const typeRequerantOptions: Options = useMemo(() => TypeRequerantInformation.getAllEnumsAsOptions(), []);
 
   const listeAgents: Options = useMemo(() => {
     const listeServicesEtServicesFils = [utilisateurConnecte.idService].concat(utilisateurConnecte.idServicesFils);
@@ -77,7 +77,7 @@ const FiltresServiceRequeteInformationForm: React.FC<IFiltresServiceRequeteInfor
           <SelectField
             name="objet"
             label={"Objet"}
-            options={objetRequeteOptions}
+            options={OPTIONS_OBJETS_REQUETE_INFO}
             optionVide={OptionVide.NON_SELECTIONNABLE}
           />
           <ChampRechercheField
@@ -101,7 +101,7 @@ const FiltresServiceRequeteInformationForm: React.FC<IFiltresServiceRequeteInfor
           <SelectField
             name="typeRequerant"
             label={"Type requérant"}
-            options={typeRequerantOptions}
+            options={OPTIONS_TYPES_REQUERANT}
           />
           <Button
             onClick={() => handleReset()}
