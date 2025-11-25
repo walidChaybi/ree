@@ -1,6 +1,7 @@
 import { NB_LIGNES_PAR_APPEL_DEFAUT, NB_LIGNES_PAR_PAGE_DEFAUT } from "@widget/tableau/TableauRece/TableauPaginationConstantes";
 import React, { useEffect, useMemo, useState } from "react";
 import { MdArrowUpward, MdChevronLeft, MdChevronRight, MdReport } from "react-icons/md";
+import TableauUtils from "../../../utils/TableauUtils";
 import Bouton from "../bouton/Bouton";
 
 type TSensTri = "ASC" | "DESC";
@@ -43,7 +44,7 @@ const Tableau: React.FC<ITableauProps> = ({
   const lignesAAfficher = useMemo(() => {
     if (!lignes) return null;
 
-    const plageActuelle = parseInt(parametresRecherche.range?.split("-")[0] ?? "0");
+    const plageActuelle = TableauUtils.recupererPlageDepuisParametresRecherche(parametresRecherche);
 
     return lignes.slice(
       pageActuelle * nombreLignesParPage - plageActuelle * nombreElementsParPlage,
@@ -62,7 +63,7 @@ const Tableau: React.FC<ITableauProps> = ({
   }, [nombreLignesParPage, nombreTotalLignes, pageActuelle]);
 
   useEffect(() => {
-    const plageActuelle = parseInt(parametresRecherche.range?.split("-")[0] ?? "0");
+    const plageActuelle = TableauUtils.recupererPlageDepuisParametresRecherche(parametresRecherche);
     const nouvellePlage = Math.floor((pageActuelle * nombreLignesParPage) / nombreElementsParPlage);
     if (plageActuelle === nouvellePlage) return;
 

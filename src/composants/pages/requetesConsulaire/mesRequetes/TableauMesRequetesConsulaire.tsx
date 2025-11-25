@@ -7,6 +7,7 @@ import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import useFetchApi from "../../../../hooks/api/FetchApiHook";
 import useNavigationRequeteTableauConsulaire from "../../../../hooks/requeteConsulaire/NavigationRequeteTableauConsulaireHook";
 import AfficherMessage from "../../../../utils/AfficherMessage";
+import TableauUtils from "../../../../utils/TableauUtils";
 import ComposantChargeur from "../../../commun/chargeurs/ComposantChargeur";
 import Tableau, { IEnTeteTableau, IParametresRecherche, TLigneTableau } from "../../../commun/tableau/Tableau";
 
@@ -115,7 +116,7 @@ const TableauMesRequetesConsulaire: React.FC = () => {
         const requetesTableau: IRequeteTableauConsulaire[] = mappingRequetesTableauConsulaire(requetes, false, utilisateurs, services);
         setLignesTableau(mapResultatCommeLignesTableau(requetesTableau));
 
-        setNombreTotalLignes(parseInt((headers["content-range"] ?? "").split("/")[1] ?? ""));
+        setNombreTotalLignes(TableauUtils.recupererNombreTotalLignesDepuisHeaders(headers));
       },
       apresErreur: erreurs => {
         AfficherMessage.erreur("Impossible de récupérer les requêtes consulaires", { erreurs });

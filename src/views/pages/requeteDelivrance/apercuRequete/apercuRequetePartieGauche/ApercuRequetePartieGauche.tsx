@@ -3,10 +3,10 @@ import { Droit } from "@model/agent/enum/Droit";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { IDocumentReponse } from "@model/requete/IDocumentReponse";
 import { IRequeteDelivrance } from "@model/requete/IRequeteDelivrance";
+import { SuiviObservationsRequete } from "@views/common/composant/suivis/SuiviObservationsRequete";
 import React from "react";
 import AccessibleAvecDroits from "../../../../../composants/commun/accessibleAvecDroits/AccessibleAvecDroits";
-import { SuiviObservationsRequete } from "../../../../common/composant/suivis/SuiviObservationsRequete";
-import { RMCRequetesAssocieesResultats } from "../../../rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
+import TableauRMCRequetesAssociees from "../../../../../composants/pages/rmc/TableauRMCRequetesAssociees";
 import { DocumentsReponses } from "./contenu/document/DocumentsReponses";
 import { ResumeRequete } from "./contenu/resume/ResumeRequete";
 
@@ -27,7 +27,7 @@ export const ApercuRequetePartieGauche: React.FC<ApercuRequetePartieGaucheProps>
         disabledActions={props.disabled}
       />
       <AccessibleAvecDroits auMoinsUnDesDroits={[Droit.CONSULTER]}>
-        {afficherResultatRequeteAssocieesResultats && <RMCRequetesAssocieesResultats requete={props.requete} />}
+        {afficherResultatRequeteAssocieesResultats && <TableauRMCRequetesAssociees titulairesRequete={props.requete.titulaires} />}
       </AccessibleAvecDroits>
       <SuiviObservationsRequete
         observations={props.requete.observations}

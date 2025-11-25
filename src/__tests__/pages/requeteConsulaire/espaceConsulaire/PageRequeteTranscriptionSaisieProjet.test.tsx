@@ -14,9 +14,11 @@ import { describe, expect, test, vi } from "vitest";
 import PageRequeteTranscriptionSaisieProjet from "../../../../pages/requetesConsulaire/PageRequeteTranscriptionSaisieProjet";
 import { createTestingRouter } from "../../../__tests__utils__/testsUtil";
 
-vi.mock("@views/pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats", () => ({
-  RMCRequetesAssocieesResultats: () => <div data-testid="rmc-mock">Requetes associees</div>
-}));
+vi.mock("../../../../composants/pages/rmc/TableauRMCRequetesAssociees", () => {
+  return {
+    default: () => <div data-testid="rmc-mock">Requetes associees</div>
+  };
+});
 
 describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
   test("affiche PartieGauche et PartieDroite après récupération de la requête", async () => {

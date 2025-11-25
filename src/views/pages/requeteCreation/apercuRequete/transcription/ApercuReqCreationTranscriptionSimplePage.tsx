@@ -1,6 +1,5 @@
 import { Droit } from "@model/agent/enum/Droit";
 import { TUuidRequeteParams } from "@model/params/TUuidRequeteParams";
-import { IRequete } from "@model/requete/IRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { OperationEnCours } from "@widget/attente/OperationEnCours";
 import ConteneurRetractable from "@widget/conteneurRetractable/ConteneurRetractable";
@@ -9,10 +8,10 @@ import { VoletAvecOnglet } from "@widget/voletAvecOnglet/VoletAvecOnglet";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import AccessibleAvecDroits from "../../../../../composants/commun/accessibleAvecDroits/AccessibleAvecDroits";
+import TableauRMCRequetesAssociees from "../../../../../composants/pages/rmc/TableauRMCRequetesAssociees";
 import { RECEContextData } from "../../../../../contexts/RECEContextProvider";
 import LiensRECE from "../../../../../router/LiensRECE";
 import { IDetailRequeteParams, useDetailRequeteApiHook } from "../../../../common/hook/requete/DetailRequeteHook";
-import { RMCRequetesAssocieesResultats } from "../../../rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import Labels from "../../commun/Labels";
 import "../../commun/scss/ApercuReqCreationPage.scss";
 import { getComposantResumeRequeteEnFonctionNatureActe } from "./ApercuReqCreationTranscriptionUtils";
@@ -58,7 +57,7 @@ export const ApercuReqCreationTranscriptionSimplePage: React.FC<ApercuReqCreatio
             {getComposantResumeRequeteEnFonctionNatureActe(requete)}
 
             <AccessibleAvecDroits auMoinsUnDesDroits={[Droit.CONSULTER]}>
-              {!estModeConsultation && <RMCRequetesAssocieesResultats requete={requete as IRequete} />}
+              {!estModeConsultation && <TableauRMCRequetesAssociees titulairesRequete={requete.titulaires} />}
             </AccessibleAvecDroits>
           </ConteneurRetractable>
 

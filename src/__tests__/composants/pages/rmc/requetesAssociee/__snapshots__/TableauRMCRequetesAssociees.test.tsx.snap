@@ -1,0 +1,388 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TableauRMCRequetesAssociees > DOIT afficher le composant un chargement QUAND le chargement des requêtes est en cours 1`] = `
+<div
+  class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
+>
+  <button
+    aria-label="Étendre la section"
+    class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
+    title="Étendre la section"
+    type="button"
+  >
+    <span
+      class="truncate"
+    >
+      Autres requêtes associées au titulaire
+    </span>
+    <svg
+      aria-hidden="true"
+      class="absolute right-2 text-2xl transition-transform duration-200 ease-in rotate-180"
+      fill="currentColor"
+      height="1em"
+      stroke="currentColor"
+      stroke-width="0"
+      viewBox="0 0 24 24"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M0 0h24v24H0z"
+        fill="none"
+      />
+      <path
+        d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+      />
+    </svg>
+  </button>
+  <div
+    class="grid transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+  >
+    <div
+      class="min-h-0"
+    >
+      <div
+        class="grid gap-y-4 p-4 "
+      >
+        <div
+          class="grid w-full place-content-center py-6"
+        >
+          <span
+            class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-1wxecgq-MuiCircularProgress-root"
+            role="progressbar"
+            style="width: 40px; height: 40px;"
+          >
+            <svg
+              class="MuiCircularProgress-svg css-54pwck-MuiCircularProgress-svg"
+              viewBox="22 22 44 44"
+            >
+              <circle
+                class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-19t5dcl-MuiCircularProgress-circle"
+                cx="44"
+                cy="44"
+                fill="none"
+                r="20.2"
+                stroke-width="3.6"
+              />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`TableauRMCRequetesAssociees > DOIT afficher un tableau de requête QUAND le tableau de requête est assigné 1`] = `
+<div
+  class="mb-3 overflow-hidden rounded-xl border-[1px] border-solid border-bleu shadow-xl"
+>
+  <button
+    aria-label="Étendre la section"
+    class="text-blanc-rece font-marianne relative m-0 w-full rounded-none bg-bleu px-4 py-2 font-bold normal-case focus-visible:bg-bleu-sombre"
+    title="Étendre la section"
+    type="button"
+  >
+    <span
+      class="truncate"
+    >
+      Autres requêtes associées au titulaire
+    </span>
+    <svg
+      aria-hidden="true"
+      class="absolute right-2 text-2xl transition-transform duration-200 ease-in rotate-180"
+      fill="currentColor"
+      height="1em"
+      stroke="currentColor"
+      stroke-width="0"
+      viewBox="0 0 24 24"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M0 0h24v24H0z"
+        fill="none"
+      />
+      <path
+        d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+      />
+    </svg>
+  </button>
+  <div
+    class="grid transition-[grid-template-rows] duration-200 ease-in grid grid-rows-[1fr]"
+  >
+    <div
+      class="min-h-0"
+    >
+      <div
+        class="grid gap-y-4 p-4 "
+      >
+        <table
+          class="min-w-full border-spacing-0 rounded-t-xl border border-solid border-gris-sombre text-sm shadow-lg"
+        >
+          <thead
+            class=""
+          >
+            <tr>
+              <th
+                class="text-center first:text-left"
+              >
+                <span
+                  class="px-4 font-marianne-bold text-bleu"
+                >
+                  Titulaire(s)
+                </span>
+              </th>
+              <th
+                class="text-center first:text-left"
+              >
+                <span
+                  class="px-4 font-marianne-bold text-bleu"
+                >
+                  Sous-Type
+                </span>
+              </th>
+              <th
+                class="text-center first:text-left"
+              >
+                <span
+                  class="px-4 font-marianne-bold text-bleu"
+                >
+                  Date création
+                </span>
+              </th>
+              <th
+                class="text-center first:text-left"
+              >
+                <span
+                  class="px-4 font-marianne-bold text-bleu"
+                >
+                  Statut
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="cursor-pointer text-left hover:bg-bleu/50 odd:bg-bleu/15"
+            >
+              <td
+                class="px-4 py-1.5 text-center first:text-left"
+              >
+                <span>
+                  ROSSI
+                  <br />
+                </span>
+              </td>
+              <td
+                class="px-4 py-1.5 text-center first:text-left"
+              >
+                RCTC
+              </td>
+              <td
+                class="px-4 py-1.5 text-center first:text-left"
+              >
+                14/11/2025
+              </td>
+              <td
+                class="px-4 py-1.5 text-center first:text-left"
+              >
+                À traiter
+              </td>
+            </tr>
+            <tr
+              class="cursor-pointer text-left hover:bg-bleu/50 odd:bg-bleu/15"
+            >
+              <td
+                class="px-4 py-1.5 text-center first:text-left"
+              >
+                <span>
+                  ROSSI
+                  <br />
+                </span>
+              </td>
+              <td
+                class="px-4 py-1.5 text-center first:text-left"
+              >
+                RCTC
+              </td>
+              <td
+                class="px-4 py-1.5 text-center first:text-left"
+              >
+                14/11/2025
+              </td>
+              <td
+                class="px-4 py-1.5 text-center first:text-left"
+              >
+                À traiter
+              </td>
+            </tr>
+            <tr
+              class="cursor-pointer text-left hover:bg-bleu/50 odd:bg-bleu/15"
+            >
+              <td
+                class="px-4 py-1.5 text-center first:text-left"
+              >
+                <span>
+                  ROSSI
+                  <br />
+                </span>
+              </td>
+              <td
+                class="px-4 py-1.5 text-center first:text-left"
+              >
+                RCTC
+              </td>
+              <td
+                class="px-4 py-1.5 text-center first:text-left"
+              >
+                14/11/2025
+              </td>
+              <td
+                class="px-4 py-1.5 text-center first:text-left"
+              >
+                À traiter
+              </td>
+            </tr>
+            <tr
+              class="cursor-pointer text-left hover:bg-bleu/50 odd:bg-bleu/15"
+            >
+              <td
+                class="px-4 py-1.5 text-center first:text-left"
+              >
+                <span>
+                  ROSSI
+                  <br />
+                </span>
+              </td>
+              <td
+                class="px-4 py-1.5 text-center first:text-left"
+              >
+                RCTC
+              </td>
+              <td
+                class="px-4 py-1.5 text-center first:text-left"
+              >
+                14/11/2025
+              </td>
+              <td
+                class="px-4 py-1.5 text-center first:text-left"
+              >
+                À traiter
+              </td>
+            </tr>
+            <tr
+              class="cursor-pointer text-left hover:bg-bleu/50 odd:bg-bleu/15"
+            >
+              <td
+                class="px-4 py-1.5 text-center first:text-left"
+              >
+                <span>
+                  ROSSI
+                  <br />
+                </span>
+              </td>
+              <td
+                class="px-4 py-1.5 text-center first:text-left"
+              >
+                RCTC
+              </td>
+              <td
+                class="px-4 py-1.5 text-center first:text-left"
+              >
+                14/11/2025
+              </td>
+              <td
+                class="px-4 py-1.5 text-center first:text-left"
+              >
+                À traiter
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div
+          class="mt-4 flex items-center justify-end gap-4"
+        >
+          <span
+            class="text-gris"
+          >
+            1-5 sur 7
+          </span>
+          <button
+            aria-label="Page précédente"
+            class="m-0 min-w-0 p-0 text-gris hover:text-bleu-sombre disabled:bg-transparent disabled:text-gris"
+            disabled=""
+            title="Page précédente"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="text-xl"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+              />
+            </svg>
+          </button>
+          <button
+            aria-label="Page suivante"
+            class="m-0 min-w-0 p-0 text-gris-sombre hover:text-bleu-sombre disabled:bg-transparent disabled:text-gris"
+            title="Page suivante"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="text-xl"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+              />
+            </svg>
+          </button>
+        </div>
+        <button
+          aria-label="Nouvelle recherche multi critères"
+          class="m-0 grid w-fit min-w-0 place-content-center rounded p-[.3rem] uppercase transition-colors duration-200 ease-in-out  bg-bleu-sombre text-blanc hover:bg-bleu focus-visible:bg-bleu focus:outline-none focus-visible:ring-2 focus-visible:ring-bleu focus-visible:ring-offset-2 disabled:bg-gris-sombre disabled:cursor-not-allowed mt-[-3rem] h-8 px-8"
+          type="button"
+        >
+          <svg
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

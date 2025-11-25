@@ -8,14 +8,6 @@ export interface IParamsTableau {
 
 export type TParamsTableauRMC = Pick<IParamsTableau, "minRangeState" | "maxRangeState" | "rowsNumberState">;
 
-export const PARAMS_TABLEAU_VIDE: IParamsTableau = {
-  previousDataLinkState: "",
-  nextDataLinkState: "",
-  rowsNumberState: 0,
-  minRangeState: 0,
-  maxRangeState: 0
-};
-
 export const PARAMS_TABLEAU_RMC_VIDE: TParamsTableauRMC = {
   rowsNumberState: 0,
   minRangeState: 0,

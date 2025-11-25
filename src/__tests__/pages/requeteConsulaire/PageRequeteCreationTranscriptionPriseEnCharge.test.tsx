@@ -16,9 +16,11 @@ import PageRequeteCreationTranscriptionPriseEnCharge from "../../../pages/requet
 import { createTestingRouter } from "../../__tests__utils__/testsUtil";
 
 describe("PageRequeteTranscriptionSaisieProjet - affichage des parties", () => {
-  vi.mock("@views/pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats", () => ({
-    RMCRequetesAssocieesResultats: () => <div data-testid="rmc-mock">Requetes associees</div>
-  }));
+  vi.mock("../../../composants/pages/rmc/TableauRMCRequetesAssociees", () => {
+    return {
+      default: () => <div data-testid="rmc-mock">Requetes associees</div>
+    };
+  });
 
   test("affiche PartieGauche et PartieDroite après récupération de la requête", async () => {
     const router = createTestingRouter(

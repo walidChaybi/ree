@@ -16,10 +16,10 @@ import {
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import AccessibleAvecDroits from "../../../../composants/commun/accessibleAvecDroits/AccessibleAvecDroits";
+import TableauRMCRequetesAssociees from "../../../../composants/pages/rmc/TableauRMCRequetesAssociees";
 import { RECEContextData } from "../../../../contexts/RECEContextProvider";
 import { IDetailRequeteParams, useAvecRejeuDetailRequeteApiHook } from "../../../common/hook/requete/DetailRequeteHook";
 import { TableauRMC } from "../../rechercheMultiCriteres/autoActesInscriptions/TableauRMC";
-import { RMCRequetesAssocieesResultats } from "../../rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { ReponseReqInfo } from "./contenu/ReponseReqInfo";
 import { ResumeReqInfo } from "./contenu/ResumeReqInfo";
 import "./scss/ApercuReqInfoPage.scss";
@@ -101,7 +101,9 @@ export const ApercuReqInfoPage: React.FC<ApercuReqInfoPageProps> = props => {
                 idRequete={requete.id}
               ></SuiviObservationsRequete>
               <AccessibleAvecDroits auMoinsUnDesDroits={[Droit.CONSULTER]}>
-                {!estModeConsultation && !affichageBoutonPrendreEnCharge && <RMCRequetesAssocieesResultats requete={requete} />}
+                {!estModeConsultation && !affichageBoutonPrendreEnCharge && (
+                  <TableauRMCRequetesAssociees titulairesRequete={requete.titulaires} />
+                )}
               </AccessibleAvecDroits>
               <HistoriqueActionsRequete actions={requete.actions}></HistoriqueActionsRequete>
             </div>

@@ -3,11 +3,9 @@ import { CONFIG_POST_MAJ_STATUT_ET_ACTION } from "@api/configurations/requete/ac
 import { CONFIG_POST_PRENDRE_EN_CHARGE } from "@api/configurations/requete/creation/PostPrendreEnChargeRequeteTranscriptionConfigApi";
 import { Droit } from "@model/agent/enum/Droit";
 import { Perimetre } from "@model/agent/enum/Perimetre";
-import { IRequete } from "@model/requete/IRequete";
 import { IRequeteCreationTranscription } from "@model/requete/IRequeteCreationTranscription";
 import { StatutRequete } from "@model/requete/enum/StatutRequete";
 import { mappingRequeteCreation } from "@views/common/hook/requete/DetailRequeteHook";
-import { RMCRequetesAssocieesResultats } from "@views/pages/rechercheMultiCriteres/autoRequetes/resultats/RMCRequetesAssocieesResultats";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 import AccessibleAvecDroits from "../../composants/commun/accessibleAvecDroits/AccessibleAvecDroits";
@@ -17,6 +15,7 @@ import OngletsBouton from "../../composants/commun/onglets/OngletsBouton";
 import HistoriqueActionsRequete from "../../composants/commun/suivi/HistoriqueActionsRequete";
 import ResumeDetailsRequete from "../../composants/pages/requetesConsulaire/commun/ResumeDetailsRequete";
 import ConteneurVoletEdition from "../../composants/pages/requetesDelivrance/editionRequete/ConteneurVoletEdition";
+import TableauRMCRequetesAssociees from "../../composants/pages/rmc/TableauRMCRequetesAssociees";
 import { RECEContextActions, RECEContextData } from "../../contexts/RECEContextProvider";
 import useFetchApi from "../../hooks/api/FetchApiHook";
 import LiensRECE from "../../router/LiensRECE";
@@ -179,7 +178,7 @@ const PageRequeteCreationTranscriptionPriseEnCharge: React.FC = () => {
                   <div className="mb-4 mr-4 mt-4">
                     {!estModeConsultation && (
                       <div className="mt-2">
-                        <RMCRequetesAssocieesResultats requete={requete as IRequete} />
+                        <TableauRMCRequetesAssociees titulairesRequete={requete.titulaires} />
                       </div>
                     )}
                   </div>
